@@ -1,6 +1,7 @@
 #include "building.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -176,25 +177,25 @@ int rankcur = 0;
 void initialize_home_adata()
 {
     p = 7;
-    adata(15, p) = 143;
+    area_data[p].appearance = 143;
     if (game_data.home_scale == 0)
     {
-        adata(15, p) = 138;
+        area_data[p].appearance = 138;
     }
     if (game_data.home_scale == 4)
     {
-        adata(15, p) = 148;
+        area_data[p].appearance = 148;
     }
     if (game_data.home_scale == 5)
     {
-        adata(15, p) = 144;
+        area_data[p].appearance = 144;
     }
     if (game_data.home_scale != 0)
     {
-        adata(1, p) = cdata.player().position.x;
-        adata(2, p) = cdata.player().position.y;
+        area_data[p].position.x = cdata.player().position.x;
+        area_data[p].position.y = cdata.player().position.y;
     }
-    adata(30, p) = gdata(850);
+    area_data[p].outer_map = gdata(850);
 }
 
 TurnResult build_new_building()
@@ -215,7 +216,7 @@ TurnResult build_new_building()
     area = -1;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::none)
+        if (area_data[cnt].id == mdata_t::MapId::none)
         {
             area = cnt;
             break;
@@ -248,8 +249,8 @@ TurnResult build_new_building()
         levelexitby = 2;
         gdata_destination_map = 7;
         gdata_destination_dungeon_level = 1;
-        game_data.pc_x_in_world_map = adata(1, 7);
-        game_data.pc_y_in_world_map = adata(2, 7);
+        game_data.pc_x_in_world_map = area_data[7].position.x;
+        game_data.pc_y_in_world_map = area_data[7].position.y;
         snd(58);
         txtef(2);
         txt(i18n::s.get("core.locale.building.built_new_house"));
@@ -259,55 +260,55 @@ TurnResult build_new_building()
     }
     ctrl_file(FileOperation::temp_dir_delete_area);
     p = area;
-    adata(1, p) = cdata.player().position.x;
-    adata(2, p) = cdata.player().position.y;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(18, p) = 3;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(4, p) = 1;
-    adata(3, p) = 8;
-    adata(30, p) = gdata(850);
+    area_data[p].position.x = cdata.player().position.x;
+    area_data[p].position.y = cdata.player().position.y;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::player_owned);
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].tile_type = 3;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].entrance = 8;
+    area_data[p].outer_map = gdata(850);
     if (inv[ci].id == 521)
     {
-        adata(16, p) = static_cast<int>(mdata_t::MapId::museum);
-        adata(15, p) = 151;
-        adata(21, p) = 1;
+        area_data[p].id = static_cast<int>(mdata_t::MapId::museum);
+        area_data[p].appearance = 151;
+        area_data[p].is_indoor = true;
     }
     if (inv[ci].id == 522)
     {
-        adata(16, p) = static_cast<int>(mdata_t::MapId::shop);
-        adata(15, p) = 150;
-        adata(21, p) = 1;
+        area_data[p].id = static_cast<int>(mdata_t::MapId::shop);
+        area_data[p].appearance = 150;
+        area_data[p].is_indoor = true;
     }
     if (inv[ci].id == 542)
     {
-        adata(16, p) = static_cast<int>(mdata_t::MapId::crop);
-        adata(15, p) = 152;
-        adata(21, p) = 2;
+        area_data[p].id = static_cast<int>(mdata_t::MapId::crop);
+        area_data[p].appearance = 152;
+        area_data[p].is_indoor = false;
     }
     if (inv[ci].id == 543)
     {
-        adata(16, p) = static_cast<int>(mdata_t::MapId::storage_house);
-        adata(15, p) = 153;
-        adata(21, p) = 1;
+        area_data[p].id = static_cast<int>(mdata_t::MapId::storage_house);
+        area_data[p].appearance = 153;
+        area_data[p].is_indoor = true;
     }
     if (inv[ci].id == 572)
     {
-        adata(16, p) = static_cast<int>(mdata_t::MapId::ranch);
-        adata(15, p) = 154;
-        adata(21, p) = 2;
-        adata(12, p) = 1;
+        area_data[p].id = static_cast<int>(mdata_t::MapId::ranch);
+        area_data[p].appearance = 154;
+        area_data[p].is_indoor = false;
+        area_data[p].default_ai_calm = 1;
     }
     if (inv[ci].id == 712)
     {
-        adata(16, p) = static_cast<int>(mdata_t::MapId::your_dungeon);
-        adata(15, p) = 138;
-        adata(21, p) = 1;
-        adata(12, p) = 1;
+        area_data[p].id = static_cast<int>(mdata_t::MapId::your_dungeon);
+        area_data[p].appearance = 138;
+        area_data[p].is_indoor = true;
+        area_data[p].default_ai_calm = 1;
     }
     s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
     snd(58);
@@ -378,7 +379,7 @@ TurnResult show_house_board()
         p(0),
         p(1),
         p(2)));
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         if (getworker(gdata_current_map) != -1)
         {
@@ -392,7 +393,7 @@ TurnResult show_house_board()
                 "core.locale.building.shop.no_assigned_shopkeeper"));
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::ranch)
     {
         if (getworker(gdata_current_map) != -1)
         {
@@ -427,7 +428,7 @@ TurnResult show_house_board()
     txtnew();
     txt(i18n::s.get("core.locale.building.house_board.what_do"));
     p = 0;
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get(
@@ -444,7 +445,7 @@ TurnResult show_house_board()
                 ""s + 5);
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::ranch)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get(
@@ -932,7 +933,7 @@ void update_shop_and_report()
     std::string midbk = mid;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::shop)
+        if (area_data[cnt].id == mdata_t::MapId::shop)
         {
             area = cnt;
             mid = ""s + area + u8"_"s + 101;
@@ -940,7 +941,7 @@ void update_shop_and_report()
         }
     }
     mid = midbk;
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         update_shop();
     }

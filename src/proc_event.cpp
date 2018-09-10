@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -213,7 +214,7 @@ void proc_event()
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
         tc = rc;
-        adata(20, gdata_current_map) = tc;
+        area_data[gdata_current_map].has_been_conquered = tc;
         txtef(3);
         txt(i18n::s.get(
             "core.locale.event.guarded_by_lord",
@@ -239,7 +240,7 @@ void proc_event()
             }
         }
         tc = rc;
-        adata(20, gdata_current_map) = tc;
+        area_data[gdata_current_map].has_been_conquered = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         txt(i18n::s.get("core.locale.event.reached_deepest_level"));
         txtef(3);
@@ -285,13 +286,13 @@ void proc_event()
         cdata.player().fame += gdata(74);
         if (gdata_current_map == mdata_t::MapId::the_void)
         {
-            adata(20, gdata_current_map) = 0;
+            area_data[gdata_current_map].has_been_conquered = 0;
             gdata(186) = gdata(186) + 5;
             txt(i18n::s.get("core.locale.event.seal_broken"));
         }
         else
         {
-            adata(20, gdata_current_map) = -1;
+            area_data[gdata_current_map].has_been_conquered = -1;
         }
         break;
     case 16:

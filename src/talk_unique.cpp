@@ -1,3 +1,4 @@
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -1779,7 +1780,7 @@ TalkResult talk_unique_pael()
     if (gdata_pael_and_her_mom == 1000)
     {
         if (gdata_current_map == mdata_t::MapId::noyel
-            && adata(29, gdata_current_map))
+            && area_data[gdata_current_map].christmas_festival)
         {
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.pael.festival");
@@ -1987,7 +1988,7 @@ TalkResult talk_unique_paels_mom()
     if (gdata_pael_and_her_mom == 1000)
     {
         if (gdata_current_map == mdata_t::MapId::noyel
-            && adata(29, gdata_current_map))
+            && area_data[gdata_current_map].christmas_festival)
         {
             buff = i18n::s.get(
                 "core.locale.talk.unique.paels_mom.progress.festival.dialog");
@@ -4829,7 +4830,7 @@ void _part_time_worker_switch_religion()
 TalkResult talk_unique_part_time_worker()
 {
     if (gdata_current_map != mdata_t::MapId::noyel
-        || adata(29, gdata_current_map) == 0)
+        || area_data[gdata_current_map].christmas_festival == 0)
     {
         return TalkResult::talk_end;
     }

@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -2779,11 +2780,13 @@ label_2181_internal:
                 }
             }
             txt(i18n::s.get("core.locale.magic.escape.begin"));
-            if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+            if (area_data[gdata_current_map].id
+                == mdata_t::MapId::random_dungeon)
             {
-                if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+                if (gdata_current_dungeon_level
+                    == area_data[gdata_current_map].deepest_level)
                 {
-                    if (adata(20, gdata_current_map) != -1)
+                    if (area_data[gdata_current_map].has_been_conquered != -1)
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.escape.lord_may_disappear"));

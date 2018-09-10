@@ -1,6 +1,7 @@
 #include "quest.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -665,10 +666,10 @@ int quest_generate()
         {
             rewardfix = 140
                 + dist(
-                      adata(1, gdata_current_map),
-                      adata(2, gdata_current_map),
-                      adata(1, p),
-                      adata(2, p))
+                      area_data[gdata_current_map].position.x,
+                      area_data[gdata_current_map].position.y,
+                      area_data[p].position.x,
+                      area_data[p].position.y)
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(
@@ -681,10 +682,10 @@ int quest_generate()
         {
             rewardfix = 130
                 + dist(
-                      adata(1, gdata_current_map),
-                      adata(2, gdata_current_map),
-                      adata(1, p),
-                      adata(2, p))
+                      area_data[gdata_current_map].position.x,
+                      area_data[gdata_current_map].position.y,
+                      area_data[p].position.x,
+                      area_data[p].position.y)
                     * 2;
             qdata(9, rq) = rnd(5) + 2;
             qdata(5, rq) = clamp(rewardfix / 10 + 1, 1, 40);
@@ -693,10 +694,10 @@ int quest_generate()
         {
             rewardfix = 80
                 + dist(
-                      adata(1, gdata_current_map),
-                      adata(2, gdata_current_map),
-                      adata(1, p),
-                      adata(2, p))
+                      area_data[gdata_current_map].position.x,
+                      area_data[gdata_current_map].position.y,
+                      area_data[p].position.x,
+                      area_data[p].position.y)
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
@@ -802,10 +803,10 @@ int quest_generate()
             p = qdata(1, i);
             rewardfix = 70
                 + dist(
-                      adata(1, gdata_current_map),
-                      adata(2, gdata_current_map),
-                      adata(1, p),
-                      adata(2, p))
+                      area_data[gdata_current_map].position.x,
+                      area_data[gdata_current_map].position.y,
+                      area_data[p].position.x,
+                      area_data[p].position.y)
                     * 2;
             if (p == 33 || gdata_current_map == mdata_t::MapId::noyel)
             {
@@ -1017,7 +1018,7 @@ void quest_failed(int val0)
 {
     if (val0 == 1)
     {
-        adata(22, gdata_previous_map2) = 0;
+        area_data[gdata_previous_map2].winning_streak_in_arena = 0;
         txt(i18n::s.get("core.locale.quest.you_were_defeated"));
         modrank(0, -100);
     }
@@ -1126,12 +1127,14 @@ void quest_team_victorious()
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         cdata.player().fame += gdata(74);
         modrank(1, 100, 2);
-        ++adata(23, gdata_previous_map2);
-        if (adata(23, gdata_previous_map2) % 20 == 0)
+        ++area_data[gdata_previous_map2].winning_streak_in_pet_arena;
+        if (area_data[gdata_previous_map2].winning_streak_in_pet_arena % 20
+            == 0)
         {
             matgetmain(41, 1);
         }
-        else if (adata(23, gdata_previous_map2) % 5 == 0)
+        else if (
+            area_data[gdata_previous_map2].winning_streak_in_pet_arena % 5 == 0)
         {
             matgetmain(40, 1);
         }
@@ -1140,7 +1143,7 @@ void quest_team_victorious()
     {
         txtef(8);
         txt(i18n::s.get("core.locale.quest.arena.your_team_is_defeated"));
-        adata(23, gdata_previous_map2) = 0;
+        area_data[gdata_previous_map2].winning_streak_in_pet_arena = 0;
         modrank(1, -100);
         int stat = decfame(0, 60);
         p = stat;
@@ -1170,12 +1173,13 @@ void quest_all_targets_killed()
         cdata.player().fame += gdata(74);
         txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
         map_placeupstairs(mdata_map_width / 2, mdata_map_height / 2);
-        ++adata(22, gdata_previous_map2);
-        if (adata(22, gdata_previous_map2) % 20 == 0)
+        ++area_data[gdata_previous_map2].winning_streak_in_arena;
+        if (area_data[gdata_previous_map2].winning_streak_in_arena % 20 == 0)
         {
             matgetmain(41, 1);
         }
-        else if (adata(22, gdata_previous_map2) % 5 == 0)
+        else if (
+            area_data[gdata_previous_map2].winning_streak_in_arena % 5 == 0)
         {
             matgetmain(40, 1);
         }

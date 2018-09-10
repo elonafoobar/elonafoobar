@@ -1,4 +1,5 @@
 #include "ui_menu_town_economy.hpp"
+#include "../area.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
 
@@ -134,7 +135,7 @@ static void _draw_economy_details()
 
 static bool _map_has_economy()
 {
-    return adata(28, gdata_current_map) != 0
+    return area_data[gdata_current_map].quest_town_id != 0
         && gdata_current_dungeon_level == 1;
 }
 

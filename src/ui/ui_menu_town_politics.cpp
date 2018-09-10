@@ -1,4 +1,5 @@
 #include "ui_menu_town_politics.hpp"
+#include "../area.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
 
@@ -9,7 +10,7 @@ namespace ui
 
 static void _load_politics_list(bool is_town)
 {
-    int city = adata(28, gdata_current_map);
+    int city = area_data[gdata_current_map].quest_town_id;
 
     // TODO: untranslated
     listmax = 0;

@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "building.hpp"
@@ -2141,11 +2142,12 @@ TurnResult do_use_command()
             continuous_action_others();
             return TurnResult::turn_end;
         }
-        if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon)
         {
-            if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+            if (gdata_current_dungeon_level
+                == area_data[gdata_current_map].deepest_level)
             {
-                if (adata(20, gdata_current_map) != -1)
+                if (area_data[gdata_current_map].has_been_conquered != -1)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use.shelter.during_quest"));
@@ -2684,7 +2686,7 @@ TurnResult do_open_command()
         }
         if (inv[ci].count == 5)
         {
-            if (adata(16, gdata_current_map) != mdata_t::MapId::shop)
+            if (area_data[gdata_current_map].id != mdata_t::MapId::shop)
             {
                 txt(i18n::s.get("core.locale.action.open.only_in_shop"));
                 update_screen();
@@ -2829,7 +2831,8 @@ TurnResult do_use_stairs_command(int val0)
             if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751)
                 != -1)
             {
-                if (gdata_current_dungeon_level >= adata(10, gdata_current_map))
+                if (gdata_current_dungeon_level
+                    >= area_data[gdata_current_map].deepest_level)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.cannot_go.down"));
@@ -2846,7 +2849,8 @@ TurnResult do_use_stairs_command(int val0)
             if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750)
                 != -1)
             {
-                if (gdata_current_dungeon_level <= adata(17, gdata_current_map))
+                if (gdata_current_dungeon_level
+                    <= area_data[gdata_current_map].danger_level)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.cannot_go.up"));
@@ -2954,11 +2958,12 @@ TurnResult do_use_stairs_command(int val0)
         txt(i18n::s.get("core.locale.action.use_stairs.locked"));
         return TurnResult::turn_end;
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon)
     {
-        if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+        if (gdata_current_dungeon_level
+            == area_data[gdata_current_map].deepest_level)
         {
-            if (adata(20, gdata_current_map) != -1)
+            if (area_data[gdata_current_map].has_been_conquered != -1)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_quest"));
@@ -3039,8 +3044,8 @@ static TurnResult _bump_into_character()
         || (cdata[tc].relationship == -1
             && !Config::instance().attack_neutral_npcs)
         || (cdata[tc].relationship == 0
-            && (adata(16, gdata_current_map) == mdata_t::MapId::museum
-                || adata(16, gdata_current_map) == mdata_t::MapId::shop
+            && (area_data[gdata_current_map].id == mdata_t::MapId::museum
+                || area_data[gdata_current_map].id == mdata_t::MapId::shop
                 || key_shift)))
     {
         if (cdata[tc].is_hung_on_sand_bag() == 0)
@@ -3461,7 +3466,7 @@ TurnResult do_get_command()
             }
             area = feat(2) + feat(3) * 100;
             map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
-            adata(16, area) = static_cast<int>(mdata_t::MapId::none);
+            area_data[area].id = static_cast<int>(mdata_t::MapId::none);
             removeworker(area);
             map_global_prepare();
             ctrl_file(FileOperation::temp_dir_delete_area);

@@ -1,3 +1,4 @@
+#include "area.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "debug.hpp"
@@ -896,13 +897,14 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
         {
             const auto q_ =
                 map(x, y, 6) / 100000 % 100 + map(x, y, 6) / 10000000 * 100;
-            if (adata(16, q_) == mdata_t::MapId::random_dungeon)
+            if (area_data[q_].id == mdata_t::MapId::random_dungeon)
             {
-                if (adata(6, q_) == adata(10, q_))
+                if (area_data[q_].visited_deepest_level
+                    == area_data[q_].deepest_level)
                 {
                     draw("conquered_nefia_icon", dx + 16, dy - 16);
                 }
-                else if (adata(6, q_) != 0)
+                else if (area_data[q_].visited_deepest_level != 0)
                 {
                     draw("invaded_nefia_icon", dx + 16, dy - 16);
                 }

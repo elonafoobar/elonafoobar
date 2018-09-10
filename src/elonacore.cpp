@@ -3,6 +3,7 @@
 #include "adventurer.hpp"
 #include "ai.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "blending.hpp"
@@ -807,31 +808,31 @@ std::string txttargetlevel(int cc, int tc)
 
 std::string mapfile(int prm_365)
 {
-    if (adata(16, prm_365) == mdata_t::MapId::vernis)
+    if (area_data[prm_365].id == mdata_t::MapId::vernis)
     {
         return u8"vernis"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::port_kapul)
+    if (area_data[prm_365].id == mdata_t::MapId::port_kapul)
     {
         return u8"kapul"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::yowyn)
+    if (area_data[prm_365].id == mdata_t::MapId::yowyn)
     {
         return u8"yowyn"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::derphy)
+    if (area_data[prm_365].id == mdata_t::MapId::derphy)
     {
         return u8"rogueden"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::palmia)
+    if (area_data[prm_365].id == mdata_t::MapId::palmia)
     {
         return u8"palmia"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::noyel)
+    if (area_data[prm_365].id == mdata_t::MapId::noyel)
     {
         return u8"noyel"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::lumiest)
+    if (area_data[prm_365].id == mdata_t::MapId::lumiest)
     {
         return u8"lumiest"s;
     }
@@ -4763,8 +4764,8 @@ void removeworker(int map_id)
 
 void monster_respawn()
 {
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum
-        || adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum
+        || area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         if (game_data.crowd_density < mdata_map_max_crowd_density / 2)
         {
@@ -4847,14 +4848,15 @@ TurnResult exit_map()
     }
     rdtry = 0;
     fixstart = 0;
-    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon)
     {
-        if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+        if (gdata_current_dungeon_level
+            == area_data[gdata_current_map].deepest_level)
         {
-            if (adata(20, gdata_current_map) > 0)
+            if (area_data[gdata_current_map].has_been_conquered > 0)
             {
-                chara_vanquish(adata(20, gdata_current_map));
-                adata(20, gdata_current_map) = -1;
+                chara_vanquish(area_data[gdata_current_map].has_been_conquered);
+                area_data[gdata_current_map].has_been_conquered = -1;
             }
         }
     }
@@ -4899,7 +4901,7 @@ TurnResult exit_map()
             {
                 ++gdata_current_dungeon_level;
                 gdata_current_dungeon_level -=
-                    (adata(3, gdata_current_map) == 2) * 2;
+                    (area_data[gdata_current_map].entrance == 2) * 2;
             }
             else
             {
@@ -4917,7 +4919,7 @@ TurnResult exit_map()
             {
                 --gdata_current_dungeon_level;
                 gdata_current_dungeon_level +=
-                    (adata(3, gdata_current_map) == 2) * 2;
+                    (area_data[gdata_current_map].entrance == 2) * 2;
             }
             else
             {
@@ -4934,7 +4936,7 @@ TurnResult exit_map()
                 if (feat(2) != 0 || feat(3) != 0)
                 {
                     gdata_current_map = feat(2) + feat(3) * 100;
-                    if (adata(16, gdata_current_map)
+                    if (area_data[gdata_current_map].id
                         == mdata_t::MapId::the_void)
                     {
                         if (itemfind(0, 742) == -1)
@@ -4946,7 +4948,8 @@ TurnResult exit_map()
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (adata(16, gdata_current_map) == mdata_t::MapId::pyramid)
+                    if (area_data[gdata_current_map].id
+                        == mdata_t::MapId::pyramid)
                     {
                         if (gdata_pyramid_trial == 0)
                         {
@@ -4958,7 +4961,7 @@ TurnResult exit_map()
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (adata(16, gdata_current_map) == mdata_t::MapId::jail)
+                    if (area_data[gdata_current_map].id == mdata_t::MapId::jail)
                     {
                         txt(i18n::s.get(
                             "core.locale.action.exit_map.cannot_enter_jail"));
@@ -4990,12 +4993,13 @@ TurnResult exit_map()
         if (mdata_t::is_nefia(mdata_map_type)
             || mdata_map_type == static_cast<int>(mdata_t::MapType::shelter))
         {
-            if (gdata_current_dungeon_level < adata(17, gdata_current_map))
+            if (gdata_current_dungeon_level
+                < area_data[gdata_current_map].danger_level)
             {
                 gdata_current_map = gdata(850);
             }
         }
-        if (adata(0, gdata_current_map) == mdata_t::MapType::town)
+        if (area_data[gdata_current_map].type == mdata_t::MapType::town)
         {
             if (gdata_current_map == gdata_previous_map)
             {
@@ -5031,8 +5035,10 @@ TurnResult exit_map()
         {
             if (gdata_previous_map != 2)
             {
-                game_data.pc_x_in_world_map = adata(1, gdata_current_map);
-                game_data.pc_y_in_world_map = adata(2, gdata_current_map);
+                game_data.pc_x_in_world_map =
+                    area_data[gdata_current_map].position.x;
+                game_data.pc_y_in_world_map =
+                    area_data[gdata_current_map].position.y;
                 weather_changes_by_location();
             }
         }
@@ -5049,7 +5055,7 @@ TurnResult exit_map()
         rc = 0;
         revive_player();
         gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
-        gdata(850) = adata(30, 7);
+        gdata(850) = area_data[7].outer_map;
         gdata_current_dungeon_level = 1;
     }
     if (rdtry > 1)
@@ -5067,8 +5073,8 @@ TurnResult exit_map()
             gdata_distance_between_town = 0;
             gdata_left_town_map = gdata_previous_map;
         }
-        if (adata(0, gdata_current_map) != mdata_t::MapType::world_map
-            && adata(0, gdata_current_map) != mdata_t::MapType::field
+        if (area_data[gdata_current_map].type != mdata_t::MapType::world_map
+            && area_data[gdata_current_map].type != mdata_t::MapType::field
             && gdata_current_map != mdata_t::MapId::show_house)
         {
             autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
@@ -5080,8 +5086,10 @@ TurnResult exit_map()
             {
                 if (fixtransfermap == 0)
                 {
-                    game_data.pc_x_in_world_map = adata(1, gdata_previous_map);
-                    game_data.pc_y_in_world_map = adata(2, gdata_previous_map);
+                    game_data.pc_x_in_world_map =
+                        area_data[gdata_previous_map].position.x;
+                    game_data.pc_y_in_world_map =
+                        area_data[gdata_previous_map].position.y;
                 }
                 else
                 {
@@ -5091,7 +5099,7 @@ TurnResult exit_map()
         }
         if (fixstart == 0)
         {
-            game_data.entrance_type = adata(3, gdata_current_map);
+            game_data.entrance_type = area_data[gdata_current_map].entrance;
         }
         if (event_find(6))
         {
@@ -5099,7 +5107,8 @@ TurnResult exit_map()
                 "core.locale.action.exit_map.delivered_to_your_home");
             weather_changes_by_location();
         }
-        else if (adata(0, gdata_previous_map) == mdata_t::MapType::world_map)
+        else if (
+            area_data[gdata_previous_map].type == mdata_t::MapType::world_map)
         {
             msgtemp += i18n::s.get(
                 "core.locale.action.exit_map.entered",
@@ -5119,8 +5128,8 @@ TurnResult exit_map()
         }
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
-            if (adata(0, gdata_current_map) == mdata_t::MapType::world_map
-                || adata(0, gdata_current_map) == mdata_t::MapType::field)
+            if (area_data[gdata_current_map].type == mdata_t::MapType::world_map
+                || area_data[gdata_current_map].type == mdata_t::MapType::field)
             {
                 msgtemp += i18n::s.get(
                     "core.locale.action.exit_map.burdened_by_cargo");
@@ -5132,14 +5141,16 @@ TurnResult exit_map()
         if (gdata_current_dungeon_level == 2)
         {
             gdata_current_map = static_cast<int>(mdata_t::MapId::mountain_pass);
-            gdata_current_dungeon_level = adata(10, gdata_current_map) - 1;
+            gdata_current_dungeon_level =
+                area_data[gdata_current_map].deepest_level - 1;
             game_data.entrance_type = 1;
             msgtemp += i18n::s.get("core.locale.action.exit_map.mountain_pass");
         }
     }
     if (gdata_current_map == mdata_t::MapId::mountain_pass)
     {
-        if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+        if (gdata_current_dungeon_level
+            == area_data[gdata_current_map].deepest_level)
         {
             gdata_current_map = static_cast<int>(mdata_t::MapId::larna);
             gdata_current_dungeon_level = 1;
@@ -5261,10 +5272,12 @@ void save_map_local_data()
 
 void map_proc_regen_and_update()
 {
-    if (game_data.date.hours() >= adata(25, gdata_current_map))
+    if (game_data.date.hours() >= area_data[gdata_current_map]
+                                      .time_of_next_update_of_arena_random_seed)
     {
-        adata(24, gdata_current_map) = rnd(10000);
-        adata(25, gdata_current_map) = game_data.date.hours() + 24;
+        area_data[gdata_current_map].arena_random_seed = rnd(10000);
+        area_data[gdata_current_map].time_of_next_update_of_arena_random_seed =
+            game_data.date.hours() + 24;
     }
     if (game_data.date.hours() >= mdata_map_next_regenerate_date)
     {
@@ -5370,11 +5383,11 @@ void map_proc_regen_and_update()
             renewmulti =
                 (game_data.date.hours() - mdata_map_next_restock_date) / 24 + 1;
         }
-        if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::ranch)
         {
             update_ranch();
         }
-        if (adata(16, gdata_current_map) == mdata_t::MapId::your_home)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::your_home)
         {
             for (auto&& cnt : cdata.others())
             {
@@ -5574,9 +5587,9 @@ int initialize_world_map()
     p = 0;
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
+        if (area_data[cnt].id == mdata_t::MapId::random_dungeon)
         {
-            if (adata(20, cnt) != -1)
+            if (area_data[cnt].has_been_conquered != -1)
             {
                 ++p;
             }
@@ -5607,19 +5620,19 @@ void map_global_proc_diastrophism()
         map_global_prepare();
         for (int cnt = 450; cnt < 500; ++cnt)
         {
-            adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
+            area_data[cnt].id = static_cast<int>(mdata_t::MapId::none);
         }
     }
     p = 0;
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::none)
+        if (area_data[cnt].id == mdata_t::MapId::none)
         {
             continue;
         }
-        if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
+        if (area_data[cnt].id == mdata_t::MapId::random_dungeon)
         {
-            if (adata(20, cnt) != -1)
+            if (area_data[cnt].has_been_conquered != -1)
             {
                 ++p;
             }
@@ -5631,11 +5644,11 @@ void map_global_proc_diastrophism()
         msgtemp += i18n::s.get("core.locale.action.move.global.diastrophism");
         for (int cnt = 450; cnt < 500; ++cnt)
         {
-            if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
+            if (area_data[cnt].id == mdata_t::MapId::random_dungeon)
             {
-                if (rnd(5) == 0 || adata(20, cnt) == -1)
+                if (rnd(5) == 0 || area_data[cnt].has_been_conquered == -1)
                 {
-                    adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
+                    area_data[cnt].id = static_cast<int>(mdata_t::MapId::none);
                 }
             }
         }
@@ -5682,41 +5695,45 @@ void map_global_place_entrances()
     }
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::none || adata(15, cnt) == 0)
+        if (area_data[cnt].id == mdata_t::MapId::none
+            || area_data[cnt].appearance == 0)
         {
             continue;
         }
-        if (adata(30, cnt) != gdata(850))
+        if (area_data[cnt].outer_map != gdata(850))
         {
             continue;
         }
-        if (adata(16, cnt) == 900)
+        if (area_data[cnt].id == 900)
         {
-            adata(16, cnt) = 40;
+            area_data[cnt].id = 40;
             continue;
         }
-        if (adata(16, cnt) >= 900)
+        if (area_data[cnt].id >= 900)
         {
-            adata(16, cnt) -= 800;
+            area_data[cnt].id -= 800;
             continue;
         }
-        if (adata(1, cnt) <= 0 || adata(2, cnt) <= 0
-            || adata(1, cnt) >= mdata_map_width
-            || adata(2, cnt) >= mdata_map_height)
+        if (area_data[cnt].position.x <= 0 || area_data[cnt].position.y <= 0
+            || area_data[cnt].position.x >= mdata_map_width
+            || area_data[cnt].position.y >= mdata_map_height)
         {
-            adata(1, cnt) = mdata_map_width / 2;
-            adata(2, cnt) = mdata_map_height / 2;
+            area_data[cnt].position.x = mdata_map_width / 2;
+            area_data[cnt].position.y = mdata_map_height / 2;
         }
         p = cnt;
-        if (chipm(7, map(adata(1, cnt), adata(2, cnt), 0)) & 4
-            || map(adata(1, cnt), adata(2, cnt), 6) != 0)
+        if (chipm(
+                7, map(area_data[cnt].position.x, area_data[cnt].position.y, 0))
+                & 4
+            || map(area_data[cnt].position.x, area_data[cnt].position.y, 6)
+                != 0)
         {
             for (int cnt = 0;; ++cnt)
             {
                 dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
                 dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
-                x = adata(1, p) + rnd(dx(0)) - rnd(dx(0));
-                y = adata(2, p) + rnd(dy) - rnd(dy);
+                x = area_data[p].position.x + rnd(dx(0)) - rnd(dx(0));
+                y = area_data[p].position.y + rnd(dy) - rnd(dy);
                 if (x <= 0 || y <= 0 || x >= mdata_map_width - 1
                     || y >= mdata_map_height - 1)
                 {
@@ -5734,22 +5751,22 @@ void map_global_place_entrances()
                 {
                     continue;
                 }
-                adata(1, p) = x;
-                adata(2, p) = y;
+                area_data[p].position.x = x;
+                area_data[p].position.y = y;
                 break;
             }
         }
         cell_featset(
-            adata(1, cnt),
-            adata(2, cnt),
-            adata(15, cnt),
+            area_data[cnt].position.x,
+            area_data[cnt].position.y,
+            area_data[cnt].appearance,
             15,
             cnt % 100,
             cnt / 100);
-        if (adata(0, cnt) == mdata_t::MapType::town
-            || adata(0, cnt) == mdata_t::MapType::guild)
+        if (area_data[cnt].type == mdata_t::MapType::town
+            || area_data[cnt].type == mdata_t::MapType::guild)
         {
-            map(adata(1, cnt), adata(2, cnt), 9) = 11;
+            map(area_data[cnt].position.x, area_data[cnt].position.y, 9) = 11;
         }
     }
 }
@@ -5780,719 +5797,719 @@ void map_clear_material_spots_and_light()
 void initialize_adata()
 {
     p = static_cast<int>(mdata_t::MapId::test_world);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 6;
-    adata(4, p) = 2;
-    adata(18, p) = 1;
-    adata(9, p) = 50000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 47;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::world_map);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 6;
+    area_data[p].tile_set = 2;
+    area_data[p].tile_type = 1;
+    area_data[p].turn_cost_base = 50000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 47;
     p = static_cast<int>(mdata_t::MapId::test_world_north_border);
-    adata(16, p) = p;
-    adata(15, p) = 158;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 28;
-    adata(2, p) = 1;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 47;
+    area_data[p].id = p;
+    area_data[p].appearance = 158;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 28;
+    area_data[p].position.y = 1;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 47;
     p = static_cast<int>(mdata_t::MapId::south_tyris);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 6;
-    adata(4, p) = 2;
-    adata(18, p) = 1;
-    adata(9, p) = 50000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 44;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::world_map);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 6;
+    area_data[p].tile_set = 2;
+    area_data[p].tile_type = 1;
+    area_data[p].turn_cost_base = 50000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 44;
     p = static_cast<int>(mdata_t::MapId::south_tyris_north_border);
-    adata(16, p) = p;
-    adata(15, p) = 158;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 42;
-    adata(2, p) = 1;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 44;
+    area_data[p].id = p;
+    area_data[p].appearance = 158;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 42;
+    area_data[p].position.y = 1;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 44;
     p = static_cast<int>(mdata_t::MapId::the_smoke_and_pipe);
-    adata(16, p) = p;
-    adata(15, p) = 159;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 39;
-    adata(2, p) = 13;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 44;
+    area_data[p].id = p;
+    area_data[p].appearance = 159;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 39;
+    area_data[p].position.y = 13;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 44;
     p = static_cast<int>(mdata_t::MapId::north_tyris);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 6;
-    adata(4, p) = 2;
-    adata(18, p) = 1;
-    adata(9, p) = 50000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::world_map);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 6;
+    area_data[p].tile_set = 2;
+    area_data[p].tile_type = 1;
+    area_data[p].turn_cost_base = 50000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::vernis);
-    adata(16, p) = p;
-    adata(15, p) = 132;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 132;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::yowyn);
-    adata(16, p) = p;
-    adata(15, p) = 142;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 43;
-    adata(2, p) = 32;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 2;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 142;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 43;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 2;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::palmia);
-    adata(16, p) = p;
-    adata(15, p) = 136;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 53;
-    adata(2, p) = 24;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 3;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 136;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 53;
+    area_data[p].position.y = 24;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 3;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::derphy);
-    adata(16, p) = p;
-    adata(15, p) = 142;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 14;
-    adata(2, p) = 35;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 4;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 142;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 14;
+    area_data[p].position.y = 35;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 4;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::port_kapul);
-    adata(16, p) = p;
-    adata(15, p) = 132;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 3;
-    adata(2, p) = 15;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 5;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 132;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 3;
+    area_data[p].position.y = 15;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 5;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::noyel);
-    adata(16, p) = p;
-    adata(15, p) = 156;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 89;
-    adata(2, p) = 14;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 6;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 156;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 89;
+    area_data[p].position.y = 14;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 6;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::lumiest);
-    adata(16, p) = p;
-    adata(15, p) = 132;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 61;
-    adata(2, p) = 32;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 7;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 132;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 61;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 7;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fields);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::field);
-    adata(1, p) = 0;
-    adata(2, p) = 0;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::field);
+    area_data[p].position.x = 0;
+    area_data[p].position.y = 0;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::your_home);
-    adata(16, p) = p;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
-    adata(3, p) = 8;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 10;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
+    area_data[p].id = p;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::player_owned);
+    area_data[p].entrance = 8;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 10;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
     if (game_data.home_scale == 0)
     {
-        adata(15, p) = 138;
-        adata(1, p) = 22;
-        adata(2, p) = 21;
-        adata(4, p) = 1;
-        adata(18, p) = 3;
-        adata(30, p) = 4;
+        area_data[p].appearance = 138;
+        area_data[p].position.x = 22;
+        area_data[p].position.y = 21;
+        area_data[p].tile_set = 1;
+        area_data[p].tile_type = 3;
+        area_data[p].outer_map = 4;
     }
     p = static_cast<int>(mdata_t::MapId::show_house);
-    adata(16, p) = p;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(3, p) = 8;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 1;
-    adata(15, p) = 158;
-    adata(1, p) = 35;
-    adata(2, p) = 27;
-    adata(4, p) = 1;
-    adata(18, p) = 3;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].entrance = 8;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].appearance = 158;
+    area_data[p].position.x = 35;
+    area_data[p].position.y = 27;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 3;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::arena);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(1, p) = 22;
-    adata(2, p) = 21;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].position.x = 22;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::pet_arena);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(1, p) = 23;
-    adata(2, p) = 21;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].position.x = 23;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::quest);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(1, p) = 22;
-    adata(2, p) = 21;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].position.x = 22;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::lesimas);
-    adata(16, p) = p;
-    adata(15, p) = 139;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 23;
-    adata(2, p) = 29;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 45;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 139;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 23;
+    area_data[p].position.y = 29;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 45;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::the_void);
-    adata(16, p) = p;
-    adata(15, p) = 139;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 81;
-    adata(2, p) = 51;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 50;
-    adata(10, p) = 99999999;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 139;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 81;
+    area_data[p].position.y = 51;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 50;
+    area_data[p].deepest_level = 99999999;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::tower_of_fire);
-    adata(16, p) = p;
-    adata(15, p) = 145;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_tower);
-    adata(1, p) = 43;
-    adata(2, p) = 4;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 15;
-    adata(10, p) = 18;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 145;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon_tower);
+    area_data[p].position.x = 43;
+    area_data[p].position.y = 4;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 15;
+    area_data[p].deepest_level = 18;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::crypt_of_the_damned);
-    adata(16, p) = p;
-    adata(15, p) = 141;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 37;
-    adata(2, p) = 20;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 25;
-    adata(10, p) = 30;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 141;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 37;
+    area_data[p].position.y = 20;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 25;
+    area_data[p].deepest_level = 30;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::ancient_castle);
-    adata(16, p) = p;
-    adata(15, p) = 144;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_castle);
-    adata(1, p) = 26;
-    adata(2, p) = 44;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 17;
-    adata(10, p) = 22;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 144;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon_castle);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 44;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 17;
+    area_data[p].deepest_level = 22;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::dragons_nest);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 13;
-    adata(2, p) = 32;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 30;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 13;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 30;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::mountain_pass);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 64;
-    adata(2, p) = 43;
-    adata(3, p) = 2;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 25;
-    adata(10, p) = 29;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 64;
+    area_data[p].position.y = 43;
+    area_data[p].entrance = 2;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 25;
+    area_data[p].deepest_level = 29;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::puppy_cave);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 29;
-    adata(2, p) = 24;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 2;
-    adata(10, p) = 5;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 29;
+    area_data[p].position.y = 24;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 2;
+    area_data[p].deepest_level = 5;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::minotaurs_nest);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 43;
-    adata(2, p) = 39;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 23;
-    adata(10, p) = 27;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 43;
+    area_data[p].position.y = 39;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 23;
+    area_data[p].deepest_level = 27;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::yeeks_nest);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 38;
-    adata(2, p) = 31;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 5;
-    adata(10, p) = 5;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 38;
+    area_data[p].position.y = 31;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 5;
+    area_data[p].deepest_level = 5;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::pyramid);
-    adata(16, p) = p;
-    adata(15, p) = 160;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 4;
-    adata(2, p) = 11;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 20;
-    adata(10, p) = 21;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 160;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 4;
+    area_data[p].position.y = 11;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 20;
+    area_data[p].deepest_level = 21;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::lumiest_graveyard);
-    adata(16, p) = p;
-    adata(15, p) = 141;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 74;
-    adata(2, p) = 31;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 141;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 74;
+    area_data[p].position.y = 31;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::truce_ground);
-    adata(16, p) = p;
-    adata(15, p) = 147;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 51;
-    adata(2, p) = 9;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 147;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 51;
+    area_data[p].position.y = 9;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::jail);
-    adata(16, p) = p;
-    adata(15, p) = 161;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 28;
-    adata(2, p) = 37;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 12;
-    adata(9, p) = 100000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 161;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 28;
+    area_data[p].position.y = 37;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 12;
+    area_data[p].turn_cost_base = 100000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::cyber_dome);
-    adata(16, p) = p;
-    adata(15, p) = 148;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 21;
-    adata(2, p) = 27;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 8;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 148;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 21;
+    area_data[p].position.y = 27;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 8;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::larna);
-    adata(16, p) = p;
-    adata(15, p) = 142;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 64;
-    adata(2, p) = 47;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 9;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 142;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 64;
+    area_data[p].position.y = 47;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 9;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::miral_and_garoks_workshop);
-    adata(16, p) = p;
-    adata(15, p) = 157;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 88;
-    adata(2, p) = 25;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 157;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 88;
+    area_data[p].position.y = 25;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::mansion_of_younger_sister);
-    adata(16, p) = p;
-    adata(15, p) = 162;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 18;
-    adata(2, p) = 2;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 162;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 18;
+    area_data[p].position.y = 2;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::embassy);
-    adata(16, p) = p;
-    adata(15, p) = 155;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 53;
-    adata(2, p) = 21;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 155;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 53;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::north_tyris_south_border);
-    adata(16, p) = p;
-    adata(15, p) = 158;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 27;
-    adata(2, p) = 52;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 158;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 27;
+    area_data[p].position.y = 52;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_beast);
-    adata(16, p) = p;
-    adata(15, p) = 149;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 13;
-    adata(2, p) = 43;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 33;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 149;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 13;
+    area_data[p].position.y = 43;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 33;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_machine);
-    adata(16, p) = p;
-    adata(15, p) = 149;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 51;
-    adata(2, p) = 32;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 33;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 149;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 51;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 33;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_collapsed);
-    adata(16, p) = p;
-    adata(15, p) = 149;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 35;
-    adata(2, p) = 10;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 33;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 149;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 35;
+    area_data[p].position.y = 10;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 33;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::shelter_);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
-    adata(1, p) = 35;
-    adata(2, p) = 10;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 1000000;
-    adata(17, p) = -999999;
-    adata(10, p) = 999999;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::player_owned);
+    area_data[p].position.x = 35;
+    area_data[p].position.y = 10;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 1000000;
+    area_data[p].danger_level = -999999;
+    area_data[p].deepest_level = 999999;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::test_site);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 20;
-    adata(2, p) = 20;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 45;
-    adata(21, p) = 2;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 20;
+    area_data[p].position.y = 20;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 45;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
 }
 
 
@@ -6501,7 +6518,7 @@ int place_random_nefias()
 {
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) != mdata_t::MapId::none)
+        if (area_data[cnt].id != mdata_t::MapId::none)
         {
             continue;
         }
@@ -6530,13 +6547,15 @@ int place_random_nefias()
             p = 1;
             for (int cnt = 0; cnt < 500; ++cnt)
             {
-                if (adata(16, cnt) == mdata_t::MapId::none)
+                if (area_data[cnt].id == mdata_t::MapId::none)
                 {
                     continue;
                 }
-                if (x >= adata(1, cnt) - 2 && x <= adata(1, cnt) + 2)
+                if (x >= area_data[cnt].position.x - 2
+                    && x <= area_data[cnt].position.x + 2)
                 {
-                    if (y >= adata(2, cnt) - 2 && y <= adata(2, cnt) + 2)
+                    if (y >= area_data[cnt].position.y - 2
+                        && y <= area_data[cnt].position.y + 2)
                     {
                         p = 0;
                         break;
@@ -6558,54 +6577,55 @@ int place_random_nefias()
         p = cnt;
         area = p;
         ctrl_file(FileOperation::temp_dir_delete_area);
-        adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
-        adata(16, p) = static_cast<int>(mdata_t::MapId::random_dungeon);
-        adata(15, p) = 133;
-        adata(1, p) = x;
-        adata(2, p) = y;
-        adata(3, p) = 1;
-        adata(4, p) = 1;
-        adata(18, p) = 1;
-        adata(9, p) = 10000;
-        adata(21, p) = 1;
-        adata(30, p) = gdata(850);
+        area_data[p].type =
+            static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
+        area_data[p].id = static_cast<int>(mdata_t::MapId::random_dungeon);
+        area_data[p].appearance = 133;
+        area_data[p].position.x = x;
+        area_data[p].position.y = y;
+        area_data[p].entrance = 1;
+        area_data[p].tile_set = 1;
+        area_data[p].tile_type = 1;
+        area_data[p].turn_cost_base = 10000;
+        area_data[p].is_indoor = true;
+        area_data[p].outer_map = gdata(850);
         if (rnd(3))
         {
-            adata(17, p) = rnd(cdata.player().level + 5) + 1;
+            area_data[p].danger_level = rnd(cdata.player().level + 5) + 1;
         }
         else
         {
-            adata(17, p) = rnd(50) + 1;
+            area_data[p].danger_level = rnd(50) + 1;
             if (rnd(5) == 0)
             {
-                adata(17, p) *= rnd(3) + 1;
+                area_data[p].danger_level *= rnd(3) + 1;
             }
         }
-        adata(10, p) = adata(17, p) + rnd(4) + 2;
-        adata(11, p) = 1;
-        adata(12, p) = 0;
-        adata(20, p) = 0;
-        adata(5, p) = rnd(mapnamerd.i_size());
+        area_data[p].deepest_level = area_data[p].danger_level + rnd(4) + 2;
+        area_data[p].is_generated_every_time = false;
+        area_data[p].default_ai_calm = 0;
+        area_data[p].has_been_conquered = 0;
+        area_data[p].dungeon_prefix = rnd(mapnamerd.i_size());
         map(x, y, 6) = 1;
-        if (adata(0, p) == mdata_t::MapType::dungeon)
+        if (area_data[p].type == mdata_t::MapType::dungeon)
         {
-            adata(15, p) = 133;
-            adata(18, p) = 0;
+            area_data[p].appearance = 133;
+            area_data[p].tile_type = 0;
         }
-        if (adata(0, p) == mdata_t::MapType::dungeon_tower)
+        if (area_data[p].type == mdata_t::MapType::dungeon_tower)
         {
-            adata(15, p) = 137;
-            adata(18, p) = 100;
+            area_data[p].appearance = 137;
+            area_data[p].tile_type = 100;
         }
-        if (adata(0, p) == mdata_t::MapType::dungeon_forest)
+        if (area_data[p].type == mdata_t::MapType::dungeon_forest)
         {
-            adata(15, p) = 135;
-            adata(18, p) = 300;
+            area_data[p].appearance = 135;
+            area_data[p].tile_type = 300;
         }
-        if (adata(0, p) == mdata_t::MapType::dungeon_castle)
+        if (area_data[p].type == mdata_t::MapType::dungeon_castle)
         {
-            adata(15, p) = 140;
-            adata(18, p) = 200;
+            area_data[p].appearance = 140;
+            area_data[p].tile_type = 200;
         }
         break;
     }
@@ -6816,7 +6836,7 @@ void map_proc_special_events()
                 "core.locale.misc.map.shelter.no_longer_need_to_stay"));
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
     {
         if (game_data.crowd_density > 0)
         {
@@ -6880,7 +6900,7 @@ void map_proc_special_events()
             return;
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         if (game_data.crowd_density > 0)
         {
@@ -6908,7 +6928,7 @@ void map_reload_noyel()
 
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
-    if (adata(29, gdata_current_map) == 1)
+    if (area_data[gdata_current_map].christmas_festival == 1)
     {
         flt();
         int stat = itemcreate(-1, 763, 29, 16, 0);
@@ -8877,7 +8897,7 @@ void try_to_return()
     p = 0;
     p = 0;
     i = 7;
-    if (adata(30, i) == gdata(850))
+    if (area_data[i].outer_map == gdata(850))
     {
         list(0, p) = i;
         list(1, p) = 1;
@@ -8887,34 +8907,34 @@ void try_to_return()
     for (int cnt = 0; cnt < 500; ++cnt)
     {
         i = 500 - (cnt + 1);
-        if (adata(16, i) == mdata_t::MapId::none)
+        if (area_data[i].id == mdata_t::MapId::none)
         {
             continue;
         }
-        if (adata(30, i) != gdata(850))
+        if (area_data[i].outer_map != gdata(850))
         {
             continue;
         }
-        if (adata(16, i) == mdata_t::MapId::your_home)
+        if (area_data[i].id == mdata_t::MapId::your_home)
         {
             continue;
         }
-        if (adata(6, i) == 0)
+        if (area_data[i].visited_deepest_level == 0)
         {
             continue;
         }
         f = 0;
-        if (adata(16, i) == mdata_t::MapId::lesimas
-            || adata(16, i) == mdata_t::MapId::larna
-            || adata(16, i) == mdata_t::MapId::mansion_of_younger_sister
-            || adata(16, i) == mdata_t::MapId::the_void)
+        if (area_data[i].id == mdata_t::MapId::lesimas
+            || area_data[i].id == mdata_t::MapId::larna
+            || area_data[i].id == mdata_t::MapId::mansion_of_younger_sister
+            || area_data[i].id == mdata_t::MapId::the_void)
         {
             f = 1;
         }
         if (gdata_wizard)
         {
-            if (adata(0, i) == mdata_t::MapType::town
-                || adata(0, i) == mdata_t::MapType::guild)
+            if (area_data[i].type == mdata_t::MapType::town
+                || area_data[i].type == mdata_t::MapType::guild)
             {
                 f = 1;
             }
@@ -8922,9 +8942,12 @@ void try_to_return()
         if (f == 1)
         {
             list(0, p) = i;
-            list(1, p) = adata(6, i);
+            list(1, p) = area_data[i].visited_deepest_level;
             ELONA_APPEND_PROMPT(
-                mapname(i) + u8" "s + cnvrank((adata(6, i) - adata(17, i) + 1))
+                mapname(i) + u8" "s
+                    + cnvrank(
+                          (area_data[i].visited_deepest_level
+                           - area_data[i].danger_level + 1))
                     + i18n::s.get("core.locale.misc.dungeon_level"),
                 u8"null"s,
                 ""s + promptmax);
@@ -8944,11 +8967,12 @@ void try_to_return()
     if (rtval >= 0)
     {
         txt(i18n::s.get("core.locale.misc.return.air_becomes_charged"));
-        if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon)
         {
-            if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+            if (gdata_current_dungeon_level
+                == area_data[gdata_current_map].deepest_level)
             {
-                if (adata(20, gdata_current_map) != -1)
+                if (area_data[gdata_current_map].has_been_conquered != -1)
                 {
                     txt(
                         i18n::s.get("core.locale.misc.return.lord_of_dungeon_"
@@ -9316,9 +9340,9 @@ void initialize_map_adjust_spawns()
     }
     if (gdata_current_map == mdata_t::MapId::your_home)
     {
-        adata(17, gdata_current_map) = 0;
-        adata(10, gdata_current_map) = 10;
-        adata(12, gdata_current_map) = 1;
+        area_data[gdata_current_map].danger_level = 0;
+        area_data[gdata_current_map].deepest_level = 10;
+        area_data[gdata_current_map].default_ai_calm = 1;
         mdata_map_designated_spawns = 1;
         event_add(17);
         calccosthire();
@@ -10479,7 +10503,7 @@ void sleep_start()
     msg_halt();
     play_music();
     autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         update_shop();
     }
@@ -12224,7 +12248,7 @@ int pick_up_item()
         }
         int stat = convertartifact(ti);
         ti = stat;
-        if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)
             {
@@ -12788,9 +12812,9 @@ void proc_autopick()
         return;
     if (key_ctrl)
         return;
-    if (adata(0, gdata_current_map) == mdata_t::MapType::player_owned
-        && adata(16, gdata_current_map) != mdata_t::MapId::shelter_
-        && adata(16, gdata_current_map) != mdata_t::MapId::ranch)
+    if (area_data[gdata_current_map].type == mdata_t::MapType::player_owned
+        && area_data[gdata_current_map].id != mdata_t::MapId::shelter_
+        && area_data[gdata_current_map].id != mdata_t::MapId::ranch)
         return;
 
 
@@ -12980,7 +13004,7 @@ void sense_map_feats_on_move()
             if (feat(1) == 15)
             {
                 txt(mapname(feat(2) + feat(3) * 100, true));
-                if (adata(16, feat(2) + feat(3) * 100)
+                if (area_data[feat(2) + feat(3) * 100].id
                     == mdata_t::MapId::random_dungeon)
                 {
                     if (Config::instance().extrahelp)
@@ -14868,22 +14892,22 @@ void initialize_economy()
     scy = cdata.player().position.y;
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::none)
+        if (area_data[cnt].id == mdata_t::MapId::none)
         {
             continue;
         }
-        if (adata(28, cnt) == 0)
+        if (area_data[cnt].quest_town_id == 0)
         {
             continue;
         }
-        gdata_current_map = adata(16, cnt);
+        gdata_current_map = area_data[cnt].id;
         gdata_current_dungeon_level = 1;
         if (gdata_current_map != bkdata(0)
             || gdata_current_dungeon_level != bkdata(1))
         {
             initialize_map();
         }
-        p = adata(28, cnt);
+        p = area_data[cnt].quest_town_id;
         if (initeco)
         {
             if (p == 1)
@@ -15277,7 +15301,7 @@ void weather_changes_by_location()
 
 void weather_changes()
 {
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
     {
         update_museum();
     }
@@ -15599,7 +15623,7 @@ void weather_changes()
             || gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7
             || gdata_pael_and_her_mom == 9)
         {
-            if (adata(16, gdata_current_map) != mdata_t::MapId::noyel)
+            if (area_data[gdata_current_map].id != mdata_t::MapId::noyel)
             {
                 if (rnd(20) == 0)
                 {

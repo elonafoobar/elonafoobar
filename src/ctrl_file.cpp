@@ -1,6 +1,7 @@
 #include "ctrl_file.hpp"
 #include <set>
 #include "ability.hpp"
+#include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "elona.hpp"
@@ -599,10 +600,12 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load_v2(filepath, adata, 0, 40, 0, 500);
+                area_data.unpack_from(adata);
             }
         }
         else
         {
+            area_data.pack_to(adata);
             save_v2(filepath, adata, 0, 40, 0, 500);
         }
     }
@@ -1413,10 +1416,8 @@ void fmode_11_12(FileOperation file_operation)
 // deletes files inside the temporary directory (tmp/)
 void fmode_13()
 {
-    for (int i = 0; i < 40; ++i)
-    {
-        adata(i, area) = 0;
-    }
+    area_data[area].clear();
+
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::save(playerid),
              filesystem::DirEntryRange::Type::file,

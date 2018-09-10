@@ -2,6 +2,7 @@
 #include <cassert>
 #include <type_traits>
 #include "ability.hpp"
+#include "area.hpp"
 #include "calc.hpp"
 #include "cat.hpp"
 #include "character_status.hpp"
@@ -996,7 +997,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::yeeks_nest)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::yeeks_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         if (rnd(2))
@@ -1005,7 +1006,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::minotaurs_nest)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::minotaurs_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         if (rnd(2))
@@ -1019,8 +1020,8 @@ void chara_set_generation_filter()
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum
-        || adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum
+        || area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         flt(calcobjlv(100), calcfixlv(Quality::bad));
         if (rnd(1))
