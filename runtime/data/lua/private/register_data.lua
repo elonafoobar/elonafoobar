@@ -26,7 +26,8 @@ local function register_data(mod_name, datatype_mod_name, datatype_name, filepat
    end
 
    if data == nil then
-      error(filepath .. ": No data found for datatype " .. datatype_name)
+      -- No data to load.
+      return
    end
 
    if data[1] ~= nil then

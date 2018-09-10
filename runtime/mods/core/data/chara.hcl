@@ -93,6 +93,8 @@ chara caravan_master {
     category = 0
     rarity = 100000
     coefficient = 400
+
+    dialog_id = "core.dialog:dialog.redirect"
 }
 
 chara bartender {
@@ -540,6 +542,8 @@ chara whom_dwell_in_the_vanity {
     category = 0
     rarity = 1000
     coefficient = 400
+
+    dialog_id = "core.dialog:core.whom_dwell_in_the_vanity"
 }
 
 chara loyter {

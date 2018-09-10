@@ -65,6 +65,22 @@ inline std::vector<std::string> split_lines(const std::string& str)
 
 
 
+inline std::pair<std::string, std::string> split_on_string(
+    const std::string& str,
+    const std::string& split)
+{
+    auto pos = str.find(split);
+    if (pos == std::string::npos)
+    {
+        throw std::runtime_error(
+            "Cannot find \"" + split + "\" in \"" + str + "\"");
+    }
+
+    return std::make_pair(str.substr(0, pos), str.substr(pos + 1));
+}
+
+
+
 inline std::string remove_str(
     const std::string& str,
     const std::string& pattern)

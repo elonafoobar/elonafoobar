@@ -127,6 +127,7 @@ struct CharacterData
     int rarity;
     int coefficient;
     optional<std::string> corpse_eating_callback;
+    optional<std::string> dialog_id;
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };

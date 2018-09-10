@@ -94,18 +94,6 @@ TalkResult talk_unique_orphe()
 }
 
 
-TalkResult talk_unique_whom_dwell_in_the_vanity()
-{
-    listmax = 0;
-    buff = i18n::s.get("core.locale.talk.unique.whom_dwell_in_the_vanity");
-    tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
-    chatesc = 1;
-    ELONA_TALK_SCENE_CUT();
-    return TalkResult::talk_end;
-}
-
-
 void _loyter_goto_map()
 {
     mdata_map_stair_down_pos =
@@ -4912,7 +4900,6 @@ TalkResult talk_unique()
     {
     case 2: return talk_unique_zeome();
     case 23: return talk_unique_orphe();
-    case 28: return talk_unique_whom_dwell_in_the_vanity();
     case 29: return talk_unique_loyter();
     case 30: return talk_unique_miches();
     case 31: return talk_unique_shena();

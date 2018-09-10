@@ -179,6 +179,10 @@ set(CORE_SOURCES
   src/lua_env/lua_class/lua_class_item.cpp
   src/lua_env/lua_class/lua_class_position.cpp
 
+  src/dialog/dialog.cpp
+  src/dialog/dialog_data.cpp
+  src/dialog/dialog_decoder.cpp
+
   src/pic_loader/pic_loader.cpp
 
   src/ui/ui_menu_adventurers.cpp
@@ -193,6 +197,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_chat_history.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
+  src/ui/ui_menu_dialog.cpp
   src/ui/ui_menu_equipment.cpp
   src/ui/ui_menu_feats.cpp
   src/ui/ui_menu_game_help.cpp
@@ -310,6 +315,7 @@ else()
       src/tests/util.cpp
       src/tests/config.cpp
       src/tests/config_def.cpp
+      src/tests/dialog.cpp
       src/tests/spec.cpp
       src/tests/lua_api.cpp
       src/tests/lua_callbacks.cpp
