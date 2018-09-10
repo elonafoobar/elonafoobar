@@ -16,6 +16,7 @@
 namespace elona
 {
 
+
 ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
@@ -904,7 +905,6 @@ int read_scroll();
 int do_zap();
 int do_magic_attempt();
 int pick_up_item();
-int drop_item();
 int unlock_box(int);
 void do_ranged_attack();
 

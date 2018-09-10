@@ -230,6 +230,10 @@ bool inv_getspace(int);
 int inv_getfreeid_force();
 
 
+void item_drop(Item& item_in_inventory, int num, bool building_shelter = false);
+void item_build_shelter(Item& shelter);
+
+
 enum class ItemDescriptionType : int
 {
     normal = 0, // rgb(0, 0, 0)

@@ -1126,8 +1126,7 @@ label_2061_internal:
                 in = 1;
             }
             savecycle();
-            dropval = 0;
-            drop_item();
+            item_drop(inv[ci], in);
             if (dropcontinue)
             {
                 menucycle = 1;

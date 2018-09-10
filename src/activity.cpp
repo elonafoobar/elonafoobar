@@ -1375,9 +1375,7 @@ void continuous_action_others()
     {
         snd(58);
         txt(i18n::s.get("core.locale.activity.construct.finish", inv[ci]));
-        in = 1;
-        dropval = 1;
-        drop_item();
+        item_build_shelter(inv[ci]);
     }
     if (gdata(91) == 102)
     {
