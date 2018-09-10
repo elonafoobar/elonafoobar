@@ -25,6 +25,7 @@
 - Port English translation from omake EN, omake overhaul EN, and omake overhaul EN hack. Great thanks to Doorknob, the main translator of them.
 - Migrate config file from JSON to HCL.
   - Almost all of options get avaiable ingame now. You don't need touch it directly, maybe.
+- Add a minute hand to the top left clock.
 
 ### Fixed
 
