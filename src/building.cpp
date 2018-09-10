@@ -683,7 +683,8 @@ void show_home_value()
     key_list = key_cancel;
 
     s(0) = i18n::s.get("core.locale.building.home.rank.title");
-    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key");
+    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key")
+        + i18n::s.get("core.locale.ui.hint.close");
     windowshadow = 1;
     display_window((windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
     display_topic(
