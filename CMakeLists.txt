@@ -381,12 +381,7 @@ else()
   endif()
 
   # Thirdparty libraries
-  if(MSVC)
-    # boost_zlib isn't picked up on Windows unless explicitly declared
-    find_package(Boost REQUIRED COMPONENTS system filesystem locale iostreams zlib)
-  else()
-    find_package(Boost REQUIRED COMPONENTS system filesystem locale iostreams)
-  endif()
+  find_package(Boost REQUIRED COMPONENTS system filesystem locale)
   include_directories(${Boost_INCLUDE_DIRS})
   target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
