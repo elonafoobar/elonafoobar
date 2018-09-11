@@ -15351,13 +15351,13 @@ label_2684_internal:
         y = y1 + 31 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - s(0).size() * 4;
-        dx = 80 + s(0).size() * 8;
+        dx = 80 + strlen_u(s(0)) * 8;
         if (dx < 180)
         {
             dx = 0;
         }
         pos(windoww / 2, y + 4);
-        gmode(6, 70);
+        gmode(2, 95);
         gcopy_c(3, 456, 144, 344, 72, dx, 72);
     }
     x = 40;
