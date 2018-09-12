@@ -102,6 +102,8 @@ script:
        ./Elona_foobar;
     elif [[ "$BUILD_TYPE" == "osx" ]]; then
        make tests VERBOSE=1;
+       cd bin;
+       ./Elona_foobar;
     elif [[ "$BUILD_TYPE" == "android" ]]; then
        make android;
     fi
