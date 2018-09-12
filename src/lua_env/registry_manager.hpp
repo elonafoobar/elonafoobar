@@ -38,6 +38,8 @@ public:
         std::string mod_name;
     };
 
+    void clear();
+
     /***
      * Loads the data declared by each mod in a data.hcl file inside
      * the mod's root directory, if it exists;

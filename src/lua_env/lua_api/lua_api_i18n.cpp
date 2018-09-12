@@ -304,6 +304,7 @@ void I18N::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, I18N, get_enum_property);
     api_table.set_function(
         "get_enum_property_optional", I18N::get_enum_property_optional);
+    api_table.set_function("register_function", i18n::register_function);
 }
 
 } // namespace lua

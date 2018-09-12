@@ -22,7 +22,7 @@ using namespace elona;
 
 BENCHMARK(Database, BenchInitializeLion, 3, 1)
 {
-    lua::lua.reset(new lua::lua_env());
+    lua::lua.reset(new lua::LuaEnv());
     lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
     initialize_lion_db();
 }

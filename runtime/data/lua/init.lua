@@ -8,4 +8,7 @@ Elona.core.Math = require "math_ext"
 Elona.core.ReadOnly = require "readonly"
 Elona.core.table = require "table_ext"
 
+-- TEMP
+Elona.core.I18N.register_function("name", function() return "Dood" end)
+
 _LOADED = true
