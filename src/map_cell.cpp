@@ -53,7 +53,6 @@ void cell_featset(
     }
     map(prm_592, prm_593, 6) = feat_at_m80 + feat_at_m80(1) * 1000
         + feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
-    return;
 }
 
 
@@ -72,7 +71,6 @@ int cell_featread(int prm_598, int prm_599, int)
 void cell_featclear(int prm_601, int prm_602)
 {
     map(prm_601, prm_602, 6) = 0;
-    return;
 }
 
 
@@ -105,7 +103,6 @@ void cell_check(int prm_603, int prm_604)
     {
         cellaccess = 0;
     }
-    return;
 }
 
 

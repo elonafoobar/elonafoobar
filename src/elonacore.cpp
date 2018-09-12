@@ -445,7 +445,6 @@ void initialize_rankn()
     ranknorma(1) = 60;
     ranknorma(2) = 45;
     ranknorma(6) = 30;
-    return;
 }
 
 
@@ -481,7 +480,6 @@ void initialize_post_data()
     pochart(0, 2, 0) = 5;
     pochart(1, 2, 0) = 6;
     DIM3(podata, 300, 20);
-    return;
 }
 
 
@@ -564,7 +562,6 @@ void initialize_pc_character()
         inv[cnt].identification_state = IdentifyState::completely_identified;
     }
     chara_refresh(0);
-    return;
 }
 
 
@@ -588,7 +585,6 @@ void clear_trait_data()
     DIM2(traitref, 10);
     SDIM3(traitrefn, 80, 9);
     SDIM3(traitrefn2, 20, 6);
-    return;
 }
 
 
@@ -643,7 +639,6 @@ void gain_race_feat()
         trait(160) = 1;
         trait(161) = 1;
     }
-    return;
 }
 
 
@@ -675,7 +670,6 @@ void setunid(int prm_282, int prm_283)
     cdata[prm_282].cnpc_id = prm_283;
     cdata[prm_282].image = 825 + prm_283;
     cdata[prm_282].image += 0;
-    return;
 }
 
 
@@ -929,7 +923,6 @@ void initialize_picfood()
     picfood(7, 7) = 113;
     picfood(8, 7) = 115;
     picfood(9, 7) = 111;
-    return;
 }
 
 
@@ -971,7 +964,6 @@ void csvsort(
         }
         p_at_m40(0) += strsize;
     }
-    return;
 }
 
 
@@ -1053,7 +1045,6 @@ void getinheritance(int prm_440, elona_vector1<int>& inhlist_, int& inhmax_)
         }
     }
     randomize();
-    return;
 }
 
 
@@ -1088,7 +1079,6 @@ void fltn(const std::string& prm_447)
         p_at_m44 += strsize;
         ++filtermax;
     }
-    return;
 }
 
 
@@ -1133,7 +1123,6 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
         }
         p_at_m67 += strsize;
     }
-    return;
 }
 
 
@@ -1523,7 +1512,6 @@ void cursor_check()
     {
         key = key_list(cs);
     }
-    return;
 }
 
 
@@ -1540,7 +1528,6 @@ void lenfix(std::string& prm_644, int prm_645)
     {
         prm_644 += u8" "s;
     }
-    return;
 }
 
 
@@ -1573,7 +1560,6 @@ void page_save()
     pagebk = page;
     csprev = cs;
     pagesaved = 1;
-    return;
 }
 
 
@@ -1586,7 +1572,6 @@ void page_load()
         cs = csprev;
         pagesaved = 0;
     }
-    return;
 }
 
 
@@ -1629,7 +1614,6 @@ void imeset(int prm_709)
     himc_at_ime_control = ImmGetContext(hwnd);
     ImmSetOpenStatus(himc_at_ime_control, prm_709);
     ImmReleaseContext(hwnd, himc_at_ime_control);
-    return;
 }
 
 
@@ -1706,7 +1690,6 @@ void fixaiact(int prm_753)
     {
         cdata[prm_753].ai_heal = 0;
     }
-    return;
 }
 
 
@@ -2028,7 +2011,6 @@ void animeload(int prm_807, int prm_808)
         await(i_at_m133(1));
     }
     gmode(2);
-    return;
 }
 
 
@@ -2188,7 +2170,6 @@ void spillblood(int prm_830, int prm_831, int prm_832)
             ++map(dx_at_m136, dy_at_m136, 7);
         }
     }
-    return;
 }
 
 
@@ -2222,7 +2203,6 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
                 + (map(dx_at_m136, dy_at_m136, 7) / 10 + 1) * 10;
         }
     }
-    return;
 }
 
 
@@ -2303,7 +2283,6 @@ void check_kill(int prm_836, int prm_837)
     {
         modify_karma(cdata.player(), p_at_m137);
     }
-    return;
 }
 
 
@@ -2361,7 +2340,6 @@ void cnvbonus(int prm_895, int prm_896)
                 + u8"に <red>"s + prm_896 + u8"<col> のマイナス修正\n"s;
         }
     }
-    return;
 }
 
 
@@ -2603,7 +2581,6 @@ void start_stealing()
 {
     gdata(91) = 105;
     continuous_action_others();
-    return;
 }
 
 
@@ -2919,7 +2896,6 @@ void refresh_burden_state()
         cdata.player().inventory_weight_type = 0;
     }
     refresh_speed(cdata.player());
-    return;
 }
 
 
@@ -2968,7 +2944,6 @@ void chara_set_revived_status()
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
     cdata[rc].set_state(Character::State::alive);
-    return;
 }
 
 
@@ -3015,7 +2990,6 @@ void chara_clear_status_effects()
         }
     }
     chara_refresh(rc);
-    return;
 }
 
 
@@ -3050,7 +3024,6 @@ void revive_player()
         chara_gain_fixed_skill_exp(cdata[rc], 183, 1000);
     }
     chara_refresh(rc);
-    return;
 }
 
 
@@ -4331,7 +4304,6 @@ void character_drops_item()
     {
         supply_new_equipment();
     }
-    return;
 }
 
 
@@ -5593,7 +5565,6 @@ void map_prepare_tileset_atlas()
     gmode(0);
     gsel(0);
     gmode(2);
-    return;
 }
 
 
@@ -5672,7 +5643,6 @@ void map_global_proc_diastrophism()
         map_global_prepare();
     }
     gdata(79) = 0;
-    return;
 }
 
 
@@ -5681,7 +5651,6 @@ void map_global_prepare()
 {
     map_clear_material_spots_and_light();
     map_global_place_entrances();
-    return;
 }
 
 
@@ -5783,7 +5752,6 @@ void map_global_place_entrances()
             map(adata(1, cnt), adata(2, cnt), 9) = 11;
         }
     }
-    return;
 }
 
 
@@ -5805,7 +5773,6 @@ void map_clear_material_spots_and_light()
             map(x, y, 9) = 0;
         }
     }
-    return;
 }
 
 
@@ -6526,7 +6493,6 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    return;
 }
 
 
@@ -7218,7 +7184,6 @@ void map_reload_noyel()
             }
         }
     }
-    return;
 }
 
 
@@ -7333,7 +7298,6 @@ void atxinit()
         gcopy(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
         gsel(0);
     }
-    return;
 }
 
 
@@ -7345,7 +7309,6 @@ void begintempinv()
     {
         inv[cnt].remove();
     }
-    return;
 }
 
 
@@ -7353,7 +7316,6 @@ void begintempinv()
 void exittempinv()
 {
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
-    return;
 }
 
 
@@ -7379,7 +7341,6 @@ void god_fail_to_take_over_penalty()
         tc = 0;
         magic();
     }
-    return;
 }
 
 
@@ -7601,7 +7562,6 @@ void supply_income()
             }
         }
     }
-    return;
 }
 
 
@@ -7757,7 +7717,6 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         }
     }
     cansee = 1;
-    return;
 }
 
 
@@ -8612,7 +8571,6 @@ void sort_list_by_column1()
             break;
         }
     }
-    return;
 }
 
 
@@ -8650,7 +8608,6 @@ void sort_list_and_listn_by_column1()
             break;
         }
     }
-    return;
 }
 
 
@@ -8665,7 +8622,6 @@ void savecycle()
             lastctrl = invctrl;
         }
     }
-    return;
 }
 
 
@@ -8900,7 +8856,6 @@ void build_target_list()
             break;
         }
     }
-    return;
 }
 
 
@@ -9334,7 +9289,6 @@ void remove_card_and_figures()
             inv[cnt].remove();
         }
     }
-    return;
 }
 
 
@@ -9647,7 +9601,6 @@ void get_inheritance()
     {
         mat(cnt) = mat(cnt) / 3;
     }
-    return;
 }
 
 
@@ -9827,7 +9780,6 @@ void create_cnpc()
     cdata[rc].original_relationship = cdata[rc].relationship;
     fixaiact(rc);
     setunid(rc, cun);
-    return;
 }
 
 
@@ -10425,7 +10377,6 @@ label_21451_internal:
             }
         }
     }
-    return;
 }
 
 
@@ -10679,7 +10630,6 @@ void do_rest()
     }
     txt(i18n::s.get("core.locale.activity.rest.finish"));
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 
@@ -10821,7 +10771,6 @@ void map_global_proc_travel_events()
     traveldone = 1;
     gdata_distance_between_town += 4;
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 
@@ -12053,7 +12002,6 @@ void heal_completely()
     cdata[tc].hp = cdata[tc].max_hp;
     cdata[tc].mp = cdata[tc].max_mp;
     cdata[tc].sp = cdata[tc].max_sp;
-    return;
 }
 
 
@@ -12461,7 +12409,6 @@ void lost_body_part(int cc)
                 cdata[cc].body_parts[cnt] / 10000 * 10000;
         }
     }
-    return;
 }
 
 
@@ -13270,7 +13217,6 @@ void sense_map_feats_on_move()
             }
         }
     }
-    return;
 }
 
 
@@ -13506,7 +13452,6 @@ void open_box()
     {
         modify_karma(cdata.player(), -8);
     }
-    return;
 }
 
 
@@ -13672,7 +13617,6 @@ void open_new_year_gift()
         cdata.player().position.x,
         cdata.player().position.y,
         1);
-    return;
 }
 
 
@@ -13966,7 +13910,6 @@ void try_to_melee_attack()
         do_physical_attack();
     }
     attackvar = 0;
-    return;
 }
 
 
@@ -14595,7 +14538,6 @@ void proc_weapon_enchantments()
                 sdata(attackskill, cc) * 10 + 100);
         }
     }
-    return;
 }
 
 
@@ -14603,7 +14545,6 @@ void proc_weapon_enchantments()
 void discover_trap()
 {
     cell_featset(refx, refy, tile_trap, -1, -1);
-    return;
 }
 
 
@@ -14612,7 +14553,6 @@ void discover_hidden_path()
 {
     map(refx, refy, 0) = tile_tunnel;
     cell_featset(refx, refy, 0, 0);
-    return;
 }
 
 
@@ -14646,7 +14586,6 @@ void dipcursed(int prm_1078, int)
         return;
     }
     txt(i18n::s.get("core.locale.common.nothing_happens"));
-    return;
 }
 
 
@@ -14866,7 +14805,6 @@ void grow_plant(int val0)
             try_to_grow_plant(val0);
         }
     }
-    return;
 }
 
 
@@ -14910,7 +14848,6 @@ void try_to_grow_plant(int val0)
     {
         feat(3) += 50;
     }
-    return;
 }
 
 
@@ -14958,7 +14895,6 @@ void harvest_plant(int val)
         feat(3));
     txtef(2);
     txt(i18n::s.get("core.locale.action.plant.new_plant_grows"));
-    return;
 }
 
 
@@ -15006,7 +14942,6 @@ void create_harvested_item()
     itemcreate(0, dbid, -1, -1, 0);
     txt(i18n::s.get("core.locale.action.plant.harvest", inv[ci]));
     item_stack(0, ci, 1);
-    return;
 }
 
 
@@ -15105,7 +15040,6 @@ void initialize_economy()
     initialize_map();
     initeco = 0;
     msgtemp = "";
-    return;
 }
 
 
@@ -15407,7 +15341,6 @@ void scene_fade_to_black()
     scenemode = 0;
     msgtemp = msgtempprev;
     msgtempprev = "";
-    return;
 }
 
 
@@ -15436,7 +15369,6 @@ void weather_changes_by_location()
             txt(i18n::s.get("core.locale.action.weather.changes"));
         }
     }
-    return;
 }
 
 
@@ -16012,7 +15944,6 @@ void play_the_last_scene_again()
     }
     gdata_main_quest_flag = 180;
     update_screen();
-    return;
 }
 
 

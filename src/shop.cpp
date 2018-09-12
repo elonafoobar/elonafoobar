@@ -50,7 +50,6 @@ void shop_refresh_on_talk()
     }
     invfile = cdata[tc].shop_store_id;
     shop_load_shoptmp();
-    return;
 }
 
 void shop_load_shoptmp()
@@ -58,7 +57,6 @@ void shop_load_shoptmp()
     ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     mode = 0;
-    return;
 }
 
 void shop_refresh()
@@ -766,7 +764,6 @@ void calc_number_of_items_sold_at_shop()
         rtval = 1;
         return;
     }
-    return;
 }
 
 void calc_trade_goods_price()
@@ -847,7 +844,6 @@ void calc_trade_goods_price()
         trate(cnt) += rnd(15) - rnd(15);
     }
     randomize();
-    return;
 }
 
 void shop_sell_item()
@@ -864,7 +860,6 @@ void shop_sell_item()
         }
     }
     ctrl_inventory();
-    return;
 }
 
 } // namespace elona

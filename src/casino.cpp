@@ -55,7 +55,6 @@ void casino_dealer()
         return;
     }
     casino_acquire_items();
-    return;
 }
 
 void casino_choose_card()
@@ -289,7 +288,6 @@ void casino_adv_draw_mat()
     }
     gmode(2);
     atxpic = 0;
-    return;
 }
 
 void casino_fade_in_choices()
@@ -309,7 +307,6 @@ void casino_fade_in_choices()
         await(15);
         redraw();
     }
-    return;
 }
 
 void casino_prepare_choice_graphic()
@@ -351,7 +348,6 @@ void casino_prepare_choice_graphic()
     gsel(0);
     gmode(2);
     cs = 0;
-    return;
 }
 
 void casino_acquire_items()
@@ -385,7 +381,6 @@ void casino_acquire_items()
     await(100);
     snd(39);
     play_music();
-    return;
 }
 
 void casino_random_site()
@@ -851,7 +846,6 @@ void casino_adv_finish_search()
     txtadvscreenupdate = 1;
     casino_choose_card();
     casino_acquire_items();
-    return;
 }
 
 void casino_wrapper()

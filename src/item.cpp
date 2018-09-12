@@ -445,7 +445,6 @@ void cell_refresh(int prm_493, int prm_494)
         }
         map(prm_493, prm_494, 4) *= -1;
     }
-    return;
 }
 
 
@@ -900,7 +899,6 @@ void itemname_additional_info()
             s_ += lang(u8"ジュアの"s, u8" of Jure"s);
         }
     }
-    return;
 }
 
 

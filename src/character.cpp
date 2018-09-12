@@ -1034,7 +1034,6 @@ void chara_set_generation_filter()
         return;
     }
     flt(calcobjlv(cdata.player().level), calcfixlv(Quality::bad));
-    return;
 }
 
 
@@ -1122,7 +1121,6 @@ void initialize_character()
     cdata[rc].set_state(Character::State::alive);
 
     cm = 0;
-    return;
 }
 
 

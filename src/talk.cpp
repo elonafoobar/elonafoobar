@@ -34,7 +34,6 @@ void talk_start()
     gsel(7);
     picload(filesystem::dir::graphic() / u8"ie_chat.bmp");
     gsel(0);
-    return;
 }
 
 void talk_to_npc()
@@ -566,7 +565,6 @@ void talk_end()
         screenupdate = -1;
         update_screen();
     }
-    return;
 }
 
 

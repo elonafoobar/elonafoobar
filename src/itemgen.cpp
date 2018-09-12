@@ -555,7 +555,6 @@ void init_item_quality_curse_state_material_and_equipments()
     {
         inv[ci].quality = Quality::good;
     }
-    return;
 }
 
 void calc_furniture_value()
@@ -567,7 +566,6 @@ void calc_furniture_value()
             inv[ci].value = inv[ci].value * (80 + inv[ci].subname * 20) / 100;
         }
     }
-    return;
 }
 
 
@@ -575,7 +573,6 @@ void initialize_item_material()
 {
     determine_item_material();
     apply_item_material();
-    return;
 }
 
 void determine_item_material()
@@ -669,7 +666,6 @@ void determine_item_material()
     {
         inv[ci].material = 35;
     }
-    return;
 }
 
 void change_item_material()
@@ -700,7 +696,6 @@ void change_item_material()
     apply_item_material();
     calc_furniture_value();
     chara_refresh(cc);
-    return;
 }
 
 void apply_item_material()
@@ -770,7 +765,6 @@ void apply_item_material()
             inv[ci].dice_y * the_item_material_db[p]->dice_y / (p(1) + rnd(25));
     }
     set_material_specific_attributes();
-    return;
 }
 
 void set_material_specific_attributes()
@@ -791,7 +785,6 @@ void set_material_specific_attributes()
             ibitmod(2, ci, 1);
         }
     }
-    return;
 }
 
 } // namespace elona

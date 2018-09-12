@@ -195,7 +195,6 @@ void initialize_home_adata()
         adata(2, p) = cdata.player().position.y;
     }
     adata(30, p) = gdata(850);
-    return;
 }
 
 TurnResult build_new_building()
@@ -339,7 +338,6 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
     bddata(1, prm_1082, p_at_m194) = prm_1084;
     bddata(2, prm_1082, p_at_m194) = prm_1085;
     bddata(3, prm_1082, p_at_m194) = bdref(0, prm_1083) + 363;
-    return;
 }
 
 TurnResult show_house_board()
@@ -946,7 +944,6 @@ void update_shop_and_report()
     {
         update_shop();
     }
-    return;
 }
 
 void show_shop_log()
@@ -1210,7 +1207,6 @@ void show_shop_log()
     mode = 0;
     ctrl_file(FileOperation2::map_items_write, u8"shop5.s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
-    return;
 }
 
 void update_shop()
@@ -1239,7 +1235,6 @@ void update_shop()
         }
         cell_refresh(x, y);
     }
-    return;
 }
 
 void calc_collection_value(bool val0)
@@ -1274,7 +1269,6 @@ void calc_collection_value(bool val0)
             rtval = 15;
         }
     }
-    return;
 }
 
 void update_museum()
@@ -1333,7 +1327,6 @@ void update_museum()
             rankn(10, 3)));
     }
     mdata_map_max_crowd_density = (100 - gdata(123) / 100) / 2 + 1;
-    return;
 }
 
 
@@ -1414,7 +1407,6 @@ void calc_home_rank()
             ranktitle(4),
             rankn(10, 4)));
     }
-    return;
 }
 
 

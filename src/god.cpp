@@ -106,7 +106,6 @@ void set_npc_religion()
     {
         cdata[tc].has_learned_words() = true;
     }
-    return;
 }
 
 
@@ -395,7 +394,6 @@ void god_proc_switching_penalty()
         msg_halt();
     }
     chara_refresh(0);
-    return;
 }
 
 
@@ -436,7 +434,6 @@ void switch_religion()
         }
         txtgod(cdata.player().god_id, 5);
     }
-    return;
 }
 
 

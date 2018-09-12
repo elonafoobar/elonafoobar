@@ -579,7 +579,6 @@ void healcon(int prm_827, int prm_828, int prm_829)
             }
         }
     }
-    return;
 }
 
 

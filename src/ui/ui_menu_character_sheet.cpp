@@ -242,7 +242,6 @@ static void _trainer_get_gainable_skills()
             ++listmax;
         }
     }
-    return;
 }
 
 static void _load_skill_list(CharacterSheetOperation op)

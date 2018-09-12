@@ -122,7 +122,6 @@ void eat_rotten_food()
     nutrition = 1000;
     dmgcon(cc, StatusAilment::paralyzed, 100);
     dmgcon(cc, StatusAilment::confused, 200);
-    return;
 }
 
 
@@ -377,7 +376,6 @@ void cook()
         chara_gain_skill_exp(cdata[cc], 184, 30 + rank * 5);
     }
     refresh_burden_state();
-    return;
 }
 
 
@@ -1356,7 +1354,6 @@ void apply_general_eating_effect(int cieat)
         }
     }
     eatstatus(inv[cieat].curse_state, cc);
-    return;
 }
 
 

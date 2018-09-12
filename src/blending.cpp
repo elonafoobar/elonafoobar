@@ -118,7 +118,6 @@ label_19341_internal:
         goto label_19341_internal;
     }
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 void initialize_recipememory()
@@ -127,7 +126,6 @@ void initialize_recipememory()
     {
         recipememory(200 + cnt) = 1;
     }
-    return;
 }
 
 void initialize_recipe()
@@ -331,7 +329,6 @@ void initialize_recipe()
     rfnameorg(1, 5) = i18n::s.get_enum("core.locale.blending.ingredient", 4);
     rfnameorg(0, 4) = "";
     rfnameorg(1, 4) = i18n::s.get_enum("core.locale.blending.ingredient", 5);
-    return;
 }
 
 void window_recipe2(int val0)
@@ -647,7 +644,6 @@ void window_recipe_(
         dy_at_m184 += 16;
         ++p_at_m184;
     }
-    return;
 }
 
 TurnResult blending_menu()
@@ -1539,7 +1535,6 @@ void clear_rprefmat()
     {
         rpref(10 + cnt * 2) = -1;
     }
-    return;
 }
 
 
@@ -1664,7 +1659,6 @@ void blending_start_attempt()
     }
     --rpref(1);
     blending_spend_materials();
-    return;
 }
 
 // TODO: Much duplication with do_dip_command()
@@ -1862,7 +1856,6 @@ void blending_proc_on_success_events()
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
     chara_refresh(0);
-    return;
 }
 
 } // namespace elona
