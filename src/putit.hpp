@@ -3,8 +3,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include <boost/iostreams/filter/gzip.hpp>
-#include <boost/iostreams/filtering_stream.hpp>
+
+
 
 namespace elona
 {
@@ -25,14 +25,10 @@ class OArchiveBase
 class BinaryIArchive : public IArchiveBase
 {
 public:
-    BinaryIArchive(std::istream& in, bool gzip = false)
-        : memory(new char[sizeof(long long)])
+    BinaryIArchive(std::istream& in)
+        : in(in)
+        , memory(new char[sizeof(long long)])
     {
-        if (gzip)
-        {
-            fin.push(boost::iostreams::gzip_decompressor());
-        }
-        fin.push(in);
     }
 
 
@@ -59,7 +55,7 @@ public:
         char* buf;
         buf = memory.get();
 
-        fin.read(buf, sizeof(T));
+        in.read(buf, sizeof(T));
         data = *reinterpret_cast<T*>(buf);
     }
 
@@ -73,7 +69,7 @@ public:
         char* buf;
         buf = new char[sizeof(T)];
 
-        fin.read(buf, sizeof(T));
+        in.read(buf, sizeof(T));
         data = *reinterpret_cast<T*>(buf);
 
         delete[] buf;
@@ -86,7 +82,7 @@ public:
     {
         char* buf = new char[sizeof(T) * size];
 
-        fin.read(buf, sizeof(T) * size);
+        in.read(buf, sizeof(T) * size);
         for (size_t i = 0; i < size; ++i)
         {
             data[i] = reinterpret_cast<T*>(buf)[i];
@@ -97,7 +93,7 @@ public:
 
 
 private:
-    boost::iostreams::filtering_istream fin;
+    std::istream& in;
     std::unique_ptr<char[]> memory;
 };
 
@@ -106,13 +102,9 @@ private:
 class BinaryOArchive : public OArchiveBase
 {
 public:
-    BinaryOArchive(std::ostream& out, bool gzip = false)
+    BinaryOArchive(std::ostream& out)
+        : out(out)
     {
-        if (gzip)
-        {
-            fout.push(boost::iostreams::gzip_compressor());
-        }
-        fout.push(out);
     }
 
 
@@ -133,19 +125,19 @@ public:
     template <typename T>
     void primitive(const T& data)
     {
-        fout.write(reinterpret_cast<const char*>(&data), sizeof(data));
+        out.write(reinterpret_cast<const char*>(&data), sizeof(data));
     }
 
 
     template <typename T>
     void primitive_array(const T* data, size_t size)
     {
-        fout.write(reinterpret_cast<const char*>(data), sizeof(T) * size);
+        out.write(reinterpret_cast<const char*>(data), sizeof(T) * size);
     }
 
 
 private:
-    boost::iostreams::filtering_ostream fout;
+    std::ostream& out;
 };
 
 
