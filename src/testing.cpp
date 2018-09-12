@@ -71,7 +71,7 @@ void start_in_map(int map, int level)
 
 void start_in_debug_map()
 {
-    start_in_map(9999, 2);
+    start_in_map(499, 2);
 }
 
 void run_in_temporary_map(int map, int level, std::function<void()> f)

@@ -1741,7 +1741,7 @@ void generate_debug_map()
     }
 
     mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "name", 9999);
+        i18n::s.get_enum_property("core.locale.map.unique", "name", 499);
     map_converttile();
 
     mapstartx = 25;

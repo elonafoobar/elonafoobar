@@ -144,7 +144,7 @@ enum class MapId
     crop = 103,
     storage_house = 104,
 
-    debug_map = 9999,
+    debug_map = 499,
 };
 
 // FIXME: Delete them for secure comparison.

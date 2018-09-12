@@ -1246,7 +1246,7 @@ void initialize_world()
 
 void initialize_testbed()
 {
-    gdata_current_map = 9999;
+    gdata_current_map = 499;
     gdata_current_dungeon_level = 2;
 }
 
