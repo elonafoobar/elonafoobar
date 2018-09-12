@@ -77,7 +77,6 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             color(0, 0, 0);
         }
     }
-    return;
 }
 
 
@@ -129,7 +128,6 @@ void eqrandweaponmage(int prm_929)
         eqweapon1(0) = 10006;
         eqweapon1(1) = prm_929;
     }
-    return;
 }
 
 void wear_most_valuable_equipment_for_all_body_parts()
@@ -143,7 +141,6 @@ void wear_most_valuable_equipment_for_all_body_parts()
         }
         wear_most_valuable_equipment();
     }
-    return;
 }
 
 
@@ -208,7 +205,6 @@ void wear_most_valuable_equipment()
             }
         }
     }
-    return;
 }
 
 
@@ -344,7 +340,6 @@ void supply_new_equipment()
             }
         }
     }
-    return;
 }
 
 
@@ -1177,7 +1172,6 @@ void supply_initial_equipments()
     eqtwohand = 0;
     eqtwowield = 0;
     eqmultiweapon = 0;
-    return;
 }
 
 void colorres(int)
@@ -1227,7 +1221,6 @@ void colorres(int)
     {
         color(150, 50, 0);
     }
-    return;
 }
 
 } // namespace elona

@@ -55,7 +55,6 @@ void event_add(int prm_289, int prm_290, int prm_291)
         evdata2(evnum) = prm_291;
     }
     ++evnum;
-    return;
 }
 
 TurnResult event_start_proc()

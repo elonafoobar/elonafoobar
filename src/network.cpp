@@ -118,7 +118,6 @@ void netload(const std::string& prm_194)
     }
     neterror(estr_at_m0);
     dialog(u8"エラー:"s + estr_at_m0);
-    return;
 }
 
 
@@ -580,7 +579,6 @@ void initialize_server_info()
         votereadurl = u8"http://www."s + cgiurl3 + u8"/voteen.txt"s;
     }
     textreadurl = u8"http://www."s + cgiurl3 + u8"/text.txt"s;
-    return;
 }
 
 
@@ -629,7 +627,6 @@ void show_chat_dialog()
               inputlog(0)));
     chatturn = 0;
     chatdeny = 1;
-    return;
 }
 
 

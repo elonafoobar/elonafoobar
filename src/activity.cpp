@@ -36,7 +36,6 @@ void rowact_check(int prm_789)
             cdata[prm_789].stops_continuous_action_if_damaged = 1;
         }
     }
-    return;
 }
 
 
@@ -209,7 +208,6 @@ void prompt_stop_continuous_action()
             u8"_"s + static_cast<int>(cdata[cc].continuous_action.type))));
     ELONA_YES_NO_PROMPT();
     rtval = show_prompt(promptx, prompty, 160);
-    return;
 }
 
 
@@ -632,7 +630,6 @@ void continuous_action_perform()
     {
         chara_gain_skill_exp(cdata[cc], 183, experience, 0, 0);
     }
-    return;
 }
 
 void continuous_action_sex()
@@ -852,7 +849,6 @@ void continuous_action_eating()
     }
     continuous_action_eating_finish();
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 
@@ -920,7 +916,6 @@ void continuous_action_eating_finish()
         }
         ++cdata[cc].choked;
     }
-    return;
 }
 
 void continuous_action_others()
@@ -1414,7 +1409,6 @@ void continuous_action_others()
         }
     }
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 
@@ -1456,7 +1450,6 @@ void select_random_fish()
             }
         }
     }
-    return;
 }
 
 
@@ -1470,7 +1463,6 @@ void get_fish()
     inv[ci].weight = the_fish_db[fish]->weight;
     txt(i18n::s.get("core.locale.activity.fishing.get", inv[ci]));
     item_stack(0, ci, 1);
-    return;
 }
 
 
@@ -1627,7 +1619,6 @@ void spot_fishing()
     }
     txt(i18n::s.get("core.locale.activity.fishing.fail"));
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 
@@ -1649,7 +1640,6 @@ void spot_material()
         return;
     }
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 
@@ -1763,7 +1753,6 @@ void spot_digging()
     }
     spillfrag(refx, refy, 1);
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 
@@ -1899,7 +1888,6 @@ void spot_mining_or_wall()
     }
     txt(i18n::s.get("core.locale.activity.dig_mining.fail"));
     cdata[cc].continuous_action.finish();
-    return;
 }
 
 TurnResult do_dig_after_sp_check()
@@ -2108,7 +2096,6 @@ void matdelmain(int material_id, int amount)
     txtef(4);
     txt(i18n::s.get(
         "core.locale.activity.material.lose_total", mat(material_id)));
-    return;
 }
 
 

@@ -151,7 +151,6 @@ void cpflip()
         ch_at_tcg = 3;
         th_at_tcg = 0;
     }
-    return;
 }
 
 
@@ -176,7 +175,6 @@ void cpisme()
         ch_at_tcg = 3;
         th_at_tcg = 0;
     }
-    return;
 }
 
 
@@ -201,7 +199,6 @@ void cpisenemy()
         ch_at_tcg = 0;
         th_at_tcg = 3;
     }
-    return;
 }
 
 
@@ -364,7 +361,6 @@ void makecardlist()
         }
     }
     tcg_proc_ai_elist();
-    return;
 }
 
 
@@ -391,7 +387,6 @@ void cardhelp(const std::string& prm_992, int prm_993 = 0)
     }
     helpmsg_at_tcg = prm_992;
     helpdur_at_tcg = dur_at_tcg;
-    return;
 }
 
 
@@ -541,7 +536,6 @@ void tcgdrawcard(int prm_994, int prm_995)
             }
         }
     }
-    return;
 }
 
 
@@ -815,7 +809,6 @@ void efllistadd(
             break;
         }
     }
-    return;
 }
 
 
@@ -894,7 +887,6 @@ void cardpos(int prm_1004, int prm_1005)
         card_at_tcg(4, p_at_tcg) = x_at_tcg + cnt * x2_at_tcg;
         card_at_tcg(5, p_at_tcg) = spotiy_at_tcg(prm_1004);
     }
-    return;
 }
 
 
@@ -939,7 +931,6 @@ void gravecard(int prm_1006)
     makecardlist();
     cardpos(card_at_tcg(1, prm_1006), -1);
     tcg_update_mana();
-    return;
 }
 
 
@@ -964,7 +955,6 @@ void dmgcard(int prm_1007, int prm_1008)
         tcgdraw();
         gravecard(prm_1007);
     }
-    return;
 }
 
 
@@ -981,7 +971,6 @@ void dmgplayer(int prm_1009, int prm_1010)
     {
         cpdata_at_tcg(4, prm_1009) = 0;
     }
-    return;
 }
 
 
@@ -1008,7 +997,6 @@ void delbottomcard(int prm_1011)
     }
     tcgdraw();
     gravecard(delcard_at_tcg);
-    return;
 }
 
 
@@ -1198,7 +1186,6 @@ void getrandomcard(int prm_1018)
         delbottomcard(prm_1018);
     }
     makecardlist();
-    return;
 }
 
 
@@ -1257,7 +1244,6 @@ void saccard(int prm_1019, int prm_1020)
         card_at_tcg(3, prm_1019),
         cpx_at_tcg(prm_1020),
         cpy_at_tcg(prm_1020));
-    return;
 }
 
 
@@ -1267,7 +1253,6 @@ void opencard(int prm_1021)
     snd(71);
     cdbitmod(1, prm_1021, 1);
     tcgdraw();
-    return;
 }
 
 
@@ -1284,7 +1269,6 @@ void tcg_show_refs()
     p_at_tcg = 3;
     cdrefn_at_tcg(p_at_tcg) =
         i18n::s.get("core.locale.tcg.ref.return_creature");
-    return;
 }
 
 
@@ -1450,7 +1434,6 @@ void actionproc()
 void tcg_clear_stack()
 {
     stack_at_tcg = 0;
-    return;
 }
 
 
@@ -1556,7 +1539,6 @@ void tcgdrawbg()
         }
     }
     gmode(2);
-    return;
 }
 
 
@@ -1638,7 +1620,6 @@ void tcginit()
     picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
     tcg_prepare_cnt2();
     tcgdrawbg();
-    return;
 }
 
 
@@ -1655,7 +1636,6 @@ void calcstartattb(int prm_1027)
 {
     cpdata_at_tcg(4, prm_1027) = 40 - cpdata_at_tcg(9, prm_1027) * 5;
     cpdata_at_tcg(6, prm_1027) = 0;
-    return;
 }
 
 
@@ -1687,7 +1667,6 @@ void calcdomain()
         }
         calcstartattb(p_at_tcg);
     }
-    return;
 }
 
 
@@ -1717,7 +1696,6 @@ void calcdecksize()
         }
     }
     calcstartattb(0);
-    return;
 }
 
 
@@ -1897,7 +1875,6 @@ void tcgmain()
 
 void tcg_game_over()
 {
-    return;
 }
 
 
@@ -1925,7 +1902,6 @@ void tcg_phase_one()
         card_at_tcg(12, cnt) = card_at_tcg(16, cnt);
         cdbitmod(0, cnt, 0);
     }
-    return;
 }
 
 
@@ -1937,7 +1913,6 @@ void tcg_phase_two()
     await(50);
     getrandomcard(cp_at_tcg);
     tcgdraw();
-    return;
 }
 
 
@@ -1957,7 +1932,6 @@ void tcg_phase_three()
         selectmode_at_tcg = -1;
         tcg_proc_ai();
     }
-    return;
 }
 
 
@@ -1977,7 +1951,6 @@ void tcg_phase_four()
     {
         tcgdraw();
     }
-    return;
 }
 
 
@@ -2014,7 +1987,6 @@ void csfix()
     {
         cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
     }
-    return;
 }
 
 
@@ -2050,7 +2022,6 @@ void cslineup()
     {
         cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
     }
-    return;
 }
 
 
@@ -2090,7 +2061,6 @@ void cslinedown()
     {
         cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
     }
-    return;
 }
 
 
@@ -2179,7 +2149,6 @@ void tcg_update_mana()
     }
     color(0, 0, 0);
     gsel(0);
-    return;
 }
 
 
@@ -2266,7 +2235,6 @@ void tcg_draw_selection()
     mes(u8"Page "s + dsc_at_tcg / 8 / 3 + u8"/"s
         + (dlistmax_at_tcg - 1) / 8 / 3);
     color(0, 0, 0);
-    return;
 }
 
 
@@ -2390,7 +2358,6 @@ void tcg_draw_deck_editor()
     font(12 + en - en * 2);
     pos(basex_at_tcg + 146, basey_at_tcg + 545);
     mes(helpmsg_at_tcg);
-    return;
 }
 
 
@@ -2403,7 +2370,6 @@ void tcg_prepare_cnt2()
         cnt2_at_tcg = cnt;
     }
     gsel(0);
-    return;
 }
 
 
@@ -2427,7 +2393,6 @@ void tcg_update_page()
         page_at_tcg = dsc_at_tcg / 8;
     }
     page_at_tcg = page_at_tcg - page_at_tcg % 3;
-    return;
 }
 
 
@@ -3019,7 +2984,6 @@ void tcg_prompt_action()
 void tcg_clear_cursor()
 {
     cursor_at_tcg = 0;
-    return;
 }
 
 
@@ -3119,7 +3083,6 @@ void tcg_update_selection()
 
 void tcg_card_selected()
 {
-    return;
 }
 
 
@@ -3213,7 +3176,6 @@ void tcg_proc_ai_elist()
             break;
         }
     }
-    return;
 }
 
 
@@ -3374,7 +3336,6 @@ void tcg_proc_ai_sacrifice()
     {
         return;
     }
-    return;
 }
 
 

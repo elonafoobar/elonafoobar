@@ -25,7 +25,6 @@ void cardplayerinit(int prm_417, int prm_418)
     DIM3(cardplayer_at_cardcontrol, 100, prm_417);
     cardplayermax_at_cardcontrol = prm_417;
     cardholdermax_at_cardcontrol = prm_418;
-    return;
 }
 
 void cardplayeradd(int prm_419, int prm_420, int prm_421)
@@ -36,7 +35,6 @@ void cardplayeradd(int prm_419, int prm_420, int prm_421)
     {
         cardplayer_at_cardcontrol(10 + cnt, prm_419) = -1;
     }
-    return;
 }
 
 void initcard(int prm_422, int prm_423, int)
@@ -73,7 +71,6 @@ void initcard(int prm_422, int prm_423, int)
         card_at_cardcontrol(0, i_at_cardcontrol(1)) = p_at_cardcontrol;
         card_at_cardcontrol(1, i_at_cardcontrol(1)) = p_at_cardcontrol(1);
     }
-    return;
 }
 
 void showcard2(int prm_425, int prm_426)
@@ -228,7 +225,6 @@ void showcard2(int prm_425, int prm_426)
             font(12 - en * 2);
         }
     }
-    return;
 }
 
 void showcardpile()
@@ -276,7 +272,6 @@ void showcard()
         }
         showcard2(cnt);
     }
-    return;
 }
 
 int servecard(int prm_427)
@@ -368,7 +363,6 @@ void showcardholder()
             gcopy(3, 528, 216, 80, 112);
         }
     }
-    return;
 }
 
 int opencard2(int prm_428, int prm_429)

@@ -57,7 +57,6 @@ void mef_delete(int prm_581)
         }
         --i_at_m79;
     }
-    return;
 }
 
 
@@ -114,7 +113,6 @@ void mef_add(
     mef(7, i_at_m79) = prm_589;
     mef(8, i_at_m79) = prm_590;
     map(pos_x, pos_y, 8) = i_at_m79 + 1;
-    return;
 }
 
 void mef_update()

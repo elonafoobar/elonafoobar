@@ -187,7 +187,6 @@ void quest_check()
             }
         }
     }
-    return;
 }
 
 
@@ -420,7 +419,6 @@ void quest_set_data(int val0)
         }
     }
     randomize();
-    return;
 }
 
 
@@ -925,7 +923,6 @@ void quest_gen_scale_by_level()
                + clamp((qdata(5, rq) - cdata.player().level) / 5 * 25, 0, 200))
             / 100;
     }
-    return;
 }
 
 void quest_check_all_for_failed()
@@ -953,7 +950,6 @@ void quest_check_all_for_failed()
             quest_failed(qdata(3, rq));
         }
     }
-    return;
 }
 
 
@@ -1000,7 +996,6 @@ void quest_exit_map()
     gdata(71) = 0;
     gdata_executing_immediate_quest = 0;
     gdata(73) = 0;
-    return;
 }
 
 
@@ -1105,7 +1100,6 @@ void quest_failed(int val0)
     p = stat;
     txtef(3);
     txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
-    return;
 }
 
 
@@ -1156,7 +1150,6 @@ void quest_team_victorious()
             txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
         }
     }
-    return;
 }
 
 
@@ -1206,7 +1199,6 @@ void quest_all_targets_killed()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.conquer.complete"));
     }
-    return;
 }
 
 void quest_complete()
@@ -1328,7 +1320,6 @@ void quest_complete()
     qdata(3, rq) = 0;
     qdata(8, rq) = 0;
     autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
-    return;
 }
 
 } // namespace elona

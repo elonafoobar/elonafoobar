@@ -913,7 +913,6 @@ void parse_talk_file()
     noteget(s, p);
     buff = s;
     text_replace_tags_in_quest_board();
-    return;
 }
 
 
@@ -934,7 +933,6 @@ void read_talk_file(const std::string& valn)
     }
     p = instr(buff, 0, valn + u8","s + i18n::s.get("core.locale.meta.tag"));
     parse_talk_file();
-    return;
 }
 
 
@@ -1064,7 +1062,6 @@ void get_npc_talk()
             buff, 0, u8"%DEFAULT,"s + i18n::s.get("core.locale.meta.tag"));
     }
     parse_talk_file();
-    return;
 }
 
 
@@ -1133,7 +1130,6 @@ void quest_update_main_quest_journal()
     talk_conv(s1, 40 - en * 4);
     buff += s1;
     noteadd(""s);
-    return;
 }
 
 
@@ -2039,7 +2035,6 @@ void append_subquest_journal(int val0)
             noteadd(""s);
         }
     }
-    return;
 }
 
 
@@ -2076,7 +2071,6 @@ void append_quest_item_journal()
             + i18n::s.get("core.locale.quest.journal.item.sages_magic_stone")
             + "]");
     }
-    return;
 }
 
 
@@ -2108,7 +2102,6 @@ void parse_quest_board_text(int val0)
     {
         buff = buff2;
     }
-    return;
 }
 
 
@@ -2545,7 +2538,6 @@ void text_replace_tags_in_quest_text()
         }
         buff = s(1) + s + s(2);
     }
-    return;
 }
 
 

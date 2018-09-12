@@ -463,7 +463,6 @@ void initialize_enchantment_data()
     encprocref(3, 25) = 10000;
     encprocref(4, 25) = 0;
     encprocref(5, 25) = 100;
-    return;
 }
 
 std::string enchantment_print_level(int prm_448)
@@ -1049,7 +1048,6 @@ void enchantment_sort(int prm_454)
             break;
         }
     }
-    return;
 }
 
 
@@ -1092,7 +1090,6 @@ void enchantment_remove(int prm_455, int prm_456, int prm_457)
     }
     inv[prm_455].value = inv[prm_455].value * 100 / encref(1, p_at_m48);
     enchantment_sort(prm_455);
-    return;
 }
 
 
@@ -1297,7 +1294,6 @@ void add_enchantments_depending_on_ego()
             8);
     }
     inv[ci].subname = 20000 + rnd(maxegominorn);
-    return;
 }
 
 
@@ -1344,7 +1340,6 @@ void add_enchantment_by_fixed_ego()
             enchantment_gen_p(),
             25);
     }
-    return;
 }
 
 
@@ -1499,7 +1494,6 @@ void add_enchantments()
             enchantment_add(ci, enchantment_generate(-1), enchantment_gen_p());
         }
     }
-    return;
 }
 
 
@@ -1607,6 +1601,5 @@ void ego_add(int prm_465, int prm_466)
             egoenc(cnt * 2, prm_466),
             enchantment_gen_p(egoenc(cnt * 2 + 1, prm_466)));
     }
-    return;
 }
 } // namespace elona

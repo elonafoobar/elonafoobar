@@ -847,7 +847,6 @@ void initialize_map_chip()
         chipm(2, 476) = 0;
         chipm(2, 509) = 0;
     }
-    return;
 }
 
 

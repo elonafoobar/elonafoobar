@@ -71,7 +71,6 @@ void map_initialize()
     DIM3(mapsync, mdata_map_width, mdata_map_height);
     DIM3(mef, 9, MEF_MAX);
     map_tileset(mdata_map_tileset);
-    return;
 }
 
 
@@ -183,7 +182,6 @@ void initialize_cell_object_data()
     cellobjdata(3, maxobjid) = tile_doorclosed4;
     cellobjname(maxobjid) = u8"扉JAIL"s;
     ++maxobjid;
-    return;
 }
 
 
@@ -228,7 +226,6 @@ void map_converttile()
             }
         }
     }
-    return;
 }
 
 
@@ -397,7 +394,6 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     cyinit = y_at_m167;
     rc = prm_936;
     chara_place();
-    return;
 }
 
 
@@ -434,7 +430,6 @@ void map_placearena(int prm_939, int prm_940)
         }
         map(cdata[prm_939].position.x, cdata[prm_939].position.y, 1) = 0;
     }
-    return;
 }
 
 
@@ -486,7 +481,6 @@ void map_placeplayer()
         }
         map_placecharaonentrance(cnt, game_data.entrance_type);
     }
-    return;
 }
 
 
@@ -500,7 +494,6 @@ void map_randomtile(int prm_941, int prm_942)
     {
         map(rnd(mdata_map_width), rnd(mdata_map_height), 0) = prm_941;
     }
-    return;
 }
 
 
@@ -889,7 +882,6 @@ void map_setfog(int, int)
                 tile_fog + (rnd(tile_fog(2)) == 0) * rnd(tile_fog(1));
         }
     }
-    return;
 }
 
 void rndshuffle(elona_vector1<int>& prm_534)
@@ -905,7 +897,6 @@ void rndshuffle(elona_vector1<int>& prm_534)
         prm_534(r_at_m68) = prm_534(p_at_m68);
         prm_534(p_at_m68) = i_at_m68;
     }
-    return;
 }
 
 void map_createroomdoor()
@@ -996,7 +987,6 @@ void map_createroomdoor()
             break;
         }
     }
-    return;
 }
 
 
@@ -1466,7 +1456,6 @@ void map_randsite(int prm_971, int prm_972)
         itemcreate(-1, 0, x_at_m169, y_at_m169, 0);
         return;
     }
-    return;
 }
 
 
@@ -2236,7 +2225,6 @@ void generate_random_nefia()
             cell_featset(x, y, tile_downlocked, 11);
         }
     }
-    return;
 }
 
 
@@ -2285,7 +2273,6 @@ void initialize_random_nefia_rdtype6()
         itemcreate(-1, 0, -1, -1, 0);
         inv[ci].own_state = 1;
     }
-    return;
 }
 
 
@@ -3110,7 +3097,6 @@ void initialize_quest_map_town()
             map(x, y, 6) = 0;
         }
     }
-    return;
 }
 
 
@@ -3198,7 +3184,6 @@ void initialize_random_nefia_rdtype8()
             break;
         }
     }
-    return;
 }
 
 
@@ -3215,7 +3200,6 @@ void dimmix(elona_vector1<int>& prm_983)
         prm_983(r_at_m172) = prm_983(cnt);
         prm_983(cnt) = tmp_at_m172;
     }
-    return;
 }
 
 
@@ -3230,7 +3214,6 @@ void initialize_random_nefia_rdtype9()
     rdsecond = 1;
     mapgen_dig_maze();
     rdsecond = 0;
-    return;
 }
 
 
@@ -3433,7 +3416,6 @@ void mapgen_dig_maze()
         map_placedownstairs(dx, dy);
         break;
     }
-    return;
 }
 
 
@@ -3635,7 +3617,6 @@ void initialize_random_nefia_rdtype10()
             }
         }
     }
-    return;
 }
 
 void map_tileset(int prm_933)
@@ -3815,7 +3796,6 @@ void map_tileset(int prm_933)
             tile_default = 45;
         }
     }
-    return;
 }
 
 void initialize_home_mdata()
@@ -3851,7 +3831,6 @@ void initialize_home_mdata()
         mdata_map_max_item_count = 400;
         gdata_basic_point_of_home_rank = 10000;
     }
-    return;
 }
 
 void map_initcustom(const std::string& prm_934)
@@ -3912,7 +3891,6 @@ void map_initcustom(const std::string& prm_934)
     }
     nooracle = 0;
     mdata_map_user_map_flag = 1;
-    return;
 }
 
 

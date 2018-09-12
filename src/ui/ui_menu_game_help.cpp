@@ -82,7 +82,6 @@ void UIMenuGameHelp::_remove_parenthesis_around_keys()
             instr(s(cnt), 0, u8"("s) + 1,
             instr(s(cnt), 0, u8")"s) - instr(s(cnt), 0, u8"("s) - 1));
     }
-    return;
 }
 
 void UIMenuGameHelp::_update_key_list()

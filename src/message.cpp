@@ -93,7 +93,6 @@ namespace elona
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;
-    return;
 }
 
 
@@ -138,7 +137,6 @@ void anime_halt()
         redraw();
     }
     gmode(2);
-    return;
 }
 
 
@@ -150,7 +148,6 @@ void msg_halt()
     anime_halt();
     screenupdate = -1;
     update_screen();
-    return;
 }
 
 
@@ -160,7 +157,6 @@ void help_halt()
     x_at_txtfunc = wx + dx - 140;
     y_at_txtfunc = wy + dy - 1;
     anime_halt();
-    return;
 }
 
 
@@ -223,7 +219,6 @@ void msg_newline()
     }
     gmode(2);
     msgtempprev = "";
-    return;
 }
 
 
@@ -238,7 +233,6 @@ void txtnew()
             message_width = 2;
         }
     }
-    return;
 }
 
 
@@ -250,7 +244,6 @@ void msg_clear()
     {
         msg_newline();
     }
-    return;
 }
 
 

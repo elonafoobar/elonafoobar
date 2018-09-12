@@ -23,7 +23,6 @@ void create_all_adventurers()
         rc = cnt;
         create_adventurer();
     }
-    return;
 }
 
 
@@ -68,7 +67,6 @@ void create_adventurer()
     cdata[rc].current_dungeon_level = 1;
     cdata[rc].fame = cdata[rc].level * cdata[rc].level * 30
         + rnd((cdata[rc].level * 200 + 100)) + rnd(500);
-    return;
 }
 
 
@@ -115,7 +113,6 @@ void addnews2(const std::string& prm_401, int prm_402)
     }
     talk_conv(n_at_m36, 38 - en * 5);
     newsbuff += n_at_m36 + u8"\n"s;
-    return;
 }
 
 
@@ -126,7 +123,6 @@ void addnewstopic(const std::string& prm_403, const std::string& prm_404)
         prm_403 + u8" "s + game_data.date.year + u8"/"s + game_data.date.month
         + u8"/"s + game_data.date.day + u8" h"s + game_data.date.hour + ""s
         + u8" "s + prm_404);
-    return;
 }
 
 
@@ -303,7 +299,6 @@ void adventurer_update()
             notedel(0);
         }
     }
-    return;
 }
 
 
