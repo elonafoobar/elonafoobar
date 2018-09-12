@@ -268,10 +268,7 @@ std::string maplevel(int)
         if (adata(16, gdata_current_map) == mdata_t::MapId::lesimas
             || adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon
             || adata(16, gdata_current_map) == mdata_t::MapId::quest
-            || (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
-                && mdata_map_type
-                    <= static_cast<int>(mdata_t::MapType::dungeon_castle))
-                == 1)
+            || mdata_t::is_nefia(mdata_map_type))
         {
             return ""s
                 + cnvrank(
@@ -290,8 +287,7 @@ std::string mapname_dungeon(int id)
     std::string name = mapnamerd(
         adata(5, id), std::min(adata(17, id) / 5, int(mapnamerd.j_size() - 1)));
 
-    if (suffix_id >= static_cast<int>(mdata_t::MapType::dungeon)
-        && suffix_id <= static_cast<int>(mdata_t::MapType::dungeon_castle))
+    if (mdata_t::is_nefia(suffix_id))
     {
         name += i18n::s.get_enum("core.locale.map.nefia.suffix", suffix_id);
     }
@@ -351,7 +347,7 @@ std::string mapname(int id, bool description)
         {
             return desc;
         }
-        else if (adata(0, id) >= static_cast<int>(mdata_t::MapType::dungeon))
+        else if (mdata_t::is_nefia(adata(0, id)))
         {
             return i18n::s.get(
                 "core.locale.map.you_see_an_entrance", name, adata(17, id));

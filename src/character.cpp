@@ -1014,7 +1014,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon))
+    if (mdata_t::is_nefia(mdata_map_type))
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         return;

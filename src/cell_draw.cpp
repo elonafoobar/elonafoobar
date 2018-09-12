@@ -1183,9 +1183,7 @@ void cell_draw()
 
     if (gdata_torch == 1)
     {
-        if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
-            && mdata_map_type
-                <= static_cast<int>(mdata_t::MapType::dungeon_castle))
+        if (mdata_t::is_nefia(mdata_map_type))
         {
             light_ -= 50;
         }
