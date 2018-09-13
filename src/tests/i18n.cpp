@@ -69,6 +69,7 @@ TEST_CASE("test format character by function", "[I18N: Formatting]")
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
+    REQUIRE(i18n::fmt_hil("${basename(_1)}: ${_2}", chara, 42) == u8"プチ: 42");
 }
 
 TEST_CASE("test format item by function", "[I18N: Formatting]")

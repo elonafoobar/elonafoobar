@@ -4,6 +4,7 @@
 #include "../lua_env/lua_env.hpp"
 #include "../testing.hpp"
 #include "../variables.hpp"
+#include "util.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -12,7 +13,9 @@ void lua_testcase(const std::string& filename)
 {
     std::cout << "TEST FILE: " << filename << std::endl;
     elona::testing::reset_state();
+    testing::set_english();
     elona::fixlv = Quality::none;
+
     elona::lua::lua->get_state()->open_libraries(sol::lib::os);
     elona::lua::lua->get_api_manager().set_on(*elona::lua::lua);
     REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script_file(

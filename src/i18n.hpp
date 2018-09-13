@@ -142,14 +142,24 @@ struct LocalizedText
 
 std::string space_if_needed();
 
+void register_function(
+    const std::string& language,
+    const std::string& name,
+    sol::protected_function function);
+void clear_functions();
+optional<sol::protected_function> find_function(const std::string& name);
+
 namespace detail
 {
 
+typedef std::unordered_map<std::string, sol::protected_function>
+    I18NFunctionMapType;
+
 /**
  * Functions registered in Lua that can be used in locale text
- * interpolations. The key is the function name.
+ * interpolations. Indexed by [language][function_name].
  */
-extern std::unordered_map<std::string, sol::protected_function> functions;
+extern std::unordered_map<std::string, I18NFunctionMapType> functions;
 
 /**
  * Does argument "_1" have argument index 1?
@@ -185,7 +195,7 @@ inline optional<int> arg_index(std::string ident)
         }
         char c = ident[1];
         int c_as_digit = c - '0';
-        if (c < 0 || c > 9)
+        if (c_as_digit < 0 || c_as_digit > 9)
         {
             return none;
         }
@@ -301,7 +311,7 @@ int make_args(sol::table& args, int size, Head const& head, Tail&&... tail)
     return make_args(args, size + 1, std::forward<Tail>(tail)...);
 }
 
-std::string run_i18n_function(
+inline std::string run_i18n_function(
     sol::protected_function& function,
     sol::table& args)
 {
@@ -330,20 +340,22 @@ std::string run_i18n_function(
     }
 }
 
-std::string format_function_call(
+inline std::string format_function_call(
     const hil::FunctionCall& call,
-    sol::table& args)
+    sol::table& args,
+    int args_size)
 {
-    auto it = functions.find(call.name);
-    if (it == functions.end())
+    auto it = find_function(call.name);
+    if (!it)
     {
         return "<unknown function " + call.name + ">";
     }
-    sol::protected_function function = it->second;
+    sol::protected_function function = *it;
 
     // Create a new Lua table and push the arguments needed for the function
     // call to it, then unpack the table when calling the function.
     sol::table function_args = lua::lua->get_state()->create_table();
+    int i = 1;
     for (const auto& arg : call.args)
     {
         if (arg.is<std::string>())
@@ -351,28 +363,32 @@ std::string format_function_call(
             std::string ident = arg.as<std::string>();
             if (auto index = arg_index(ident))
             {
-                if (*index >= 0 && *index < size)
+                if (*index > 0 && *index <= args_size)
                 {
-                    function_args.add(args[*index]);
+                    function_args.set(i++, args[*index]);
                 }
                 else
                 {
-                    return "<unknown parameter "s + call.name + ", " + *index
-                        + ">"s;
+                    return "<unknown parameter "s + call.name + ", _" + *index
+                        + "/"s + args_size + ">"s;
                 }
+            }
+            else
+            {
+                return "<unknown argument "s + ident + ">"s;
             }
         }
         else if (arg.is<bool>())
         {
-            function_args.add(arg.as<bool>());
+            function_args.set(i++, arg.as<bool>());
         }
         else if (arg.is<int>())
         {
-            function_args.add(arg.as<int>());
+            function_args.set(i++, arg.as<int>());
         }
     }
 
-    return run_i18n_function(function, args);
+    return run_i18n_function(function, function_args);
 }
 
 template <typename... Tail>
@@ -382,7 +398,7 @@ void fmt_internal_with_function(
     Tail&&... tail)
 {
     sol::table args = lua::lua->get_state()->create_table();
-    int size = make_args(args, 0, std::forward<Tail>(tail)...);
+    int args_size = make_args(args, 0, std::forward<Tail>(tail)...);
 
     for (size_t i = 0; i < formatted.size(); i++)
     {
@@ -392,7 +408,7 @@ void fmt_internal_with_function(
             std::string ident = v.as<std::string>();
             if (auto index = arg_index(ident))
             {
-                if (*index >= 0 && *index < size)
+                if (*index >= 0 && *index < args_size)
                 {
                     formatted.at(i) =
                         format_literal_type(args[*index].get<sol::object>());
@@ -401,8 +417,8 @@ void fmt_internal_with_function(
         }
         else if (v.is<hil::FunctionCall>())
         {
-            formatted.at(i) =
-                format_function_call(v.as<hil::FunctionCall>(), args);
+            formatted.at(i) = format_function_call(
+                v.as<hil::FunctionCall>(), args, args_size);
         }
     }
 }
@@ -428,9 +444,9 @@ void fmt_internal_without_function(
 {
     for (size_t i = 0; i < formatted.size(); i++)
     {
+        hil::Value v = ctxt.hilParts.at(i);
         assert(!v.is<hil::FunctionCall>());
 
-        hil::Value v = ctxt.hilParts.at(i);
         if (v.is<std::string>())
         {
             const std::string& arg_ident = v.as<std::string>();
@@ -493,11 +509,6 @@ void fmt_internal(
 }
 
 } // namespace detail
-
-void register_function(
-    const std::string& name,
-    sol::protected_function function);
-void clear_functions();
 
 inline std::string fmt_interpolate_converted(
     const hil::Context& ctxt,

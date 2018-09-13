@@ -398,8 +398,6 @@ collect_mod_datafile_locations()
 
 void initialize_lion_db()
 {
-    lua::lua->get_registry_manager().clear();
-
     // Register base game data types. Without these, it wouldn't be
     // possible to run the game, so they're baked in.
     lua::lua->get_registry_manager().register_native_datatype(

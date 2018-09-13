@@ -27,6 +27,8 @@ void LuaItem::bind(sol::state& lua)
         &Item::count,
         "name",
         sol::property([](Item& i) { return elona::itemname(i.index); }),
+        "basename",
+        sol::property([](Item& i) { return elona::ioriginalnameref(i.id); }),
         "subname",
         &Item::subname,
         "param1",

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <memory>
 #include "cat.hpp"
+#include "config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -20,7 +21,7 @@ namespace i18n
 
 namespace detail
 {
-std::unordered_map<std::string, sol::protected_function> functions;
+std::unordered_map<std::string, I18NFunctionMapType> functions;
 }
 
 i18n::Store s;
@@ -148,10 +149,15 @@ void Store::visit(
 }
 
 void register_function(
+    const std::string& language,
     const std::string& name,
     sol::protected_function function)
 {
-    detail::functions[name] = std::move(function);
+    if (detail::functions.find(language) == detail::functions.end())
+    {
+        detail::functions[language] = detail::I18NFunctionMapType();
+    }
+    detail::functions[language][name] = std::move(function);
 }
 
 void clear_functions()
@@ -159,6 +165,23 @@ void clear_functions()
     detail::functions.clear();
 }
 
+optional<sol::protected_function> find_function(const std::string& name)
+{
+    const std::string& language = Config::instance().language;
+
+    if (detail::functions.find(language) == detail::functions.end())
+    {
+        return none;
+    }
+
+    auto it = detail::functions[language].find(name);
+    if (it == detail::functions[language].end())
+    {
+        return none;
+    }
+
+    return it->second;
+}
 
 // #define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value)    \
 //     if (func.name == func_name) \

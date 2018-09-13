@@ -131,6 +131,8 @@ void pre_init()
     initialize_cat_db();
     configure_lua();
     initialize_i18n();
+
+    lua::lua->get_registry_manager().clear();
     initialize_lion_db();
 
     initialize_elona();
