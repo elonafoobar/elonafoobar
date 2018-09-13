@@ -4987,7 +4987,7 @@ TurnResult exit_map()
                 gdata_current_map = gdata(850);
             }
         }
-        if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
+        if (mdata_t::is_nefia(mdata_map_type)
             || mdata_map_type == static_cast<int>(mdata_t::MapType::shelter))
         {
             if (gdata_current_dungeon_level < adata(17, gdata_current_map))

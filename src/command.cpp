@@ -3208,9 +3208,7 @@ TurnResult do_movement_command()
     if (mdata_map_type == mdata_t::MapType::shelter
         || (gdata_current_dungeon_level == 1
             && mdata_map_type != mdata_t::MapType::world_map
-            && (mdata_map_type < static_cast<int>(mdata_t::MapType::dungeon)
-                || static_cast<int>(mdata_t::MapType::dungeon_castle)
-                    < mdata_map_type)))
+            && !mdata_t::is_nefia(mdata_map_type)))
     {
         if (cdata[cc].next_position.x < 0
             || cdata[cc].next_position.x > mdata_map_width - 1

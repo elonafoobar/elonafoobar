@@ -1368,8 +1368,7 @@ void map_randsite(int prm_971, int prm_972)
     {
         return;
     }
-    if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
-        && mdata_map_type <= static_cast<int>(mdata_t::MapType::dungeon_castle))
+    if (mdata_t::is_nefia(mdata_map_type))
     {
         if (mdata_map_next_regenerate_date == 0)
         {
@@ -1390,8 +1389,7 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
-        && mdata_map_type <= static_cast<int>(mdata_t::MapType::dungeon_castle))
+    if (mdata_t::is_nefia(mdata_map_type))
     {
         if (rnd(14) == 0)
         {

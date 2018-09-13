@@ -64,6 +64,30 @@ inline bool operator!=(MapType lhs, int rhs)
     return !(lhs == rhs);
 }
 
+
+
+inline bool is_nefia(MapType type)
+{
+    switch (type)
+    {
+    case MapType::dungeon:
+    case MapType::dungeon_tower:
+    case MapType::dungeon_forest:
+    case MapType::dungeon_castle: return true;
+    default: return false;
+    }
+}
+
+
+
+// TODO: Delete it!
+inline bool is_nefia(int type)
+{
+    return is_nefia(static_cast<MapType>(type));
+}
+
+
+
 enum class MapId
 {
     none = 0,
