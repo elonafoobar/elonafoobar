@@ -17,9 +17,11 @@ class IArchiveBase
 };
 
 
+
 class OArchiveBase
 {
 };
+
 
 
 class BinaryIArchive : public IArchiveBase
@@ -27,7 +29,6 @@ class BinaryIArchive : public IArchiveBase
 public:
     BinaryIArchive(std::istream& in)
         : in(in)
-        , memory(new char[sizeof(long long)])
     {
     }
 
@@ -52,11 +53,8 @@ public:
             nullptr>
     void primitive(T& data)
     {
-        char* buf;
-        buf = memory.get();
-
-        in.read(buf, sizeof(T));
-        data = *reinterpret_cast<T*>(buf);
+        in.read(memory, sizeof(T));
+        data = *reinterpret_cast<T*>(memory);
     }
 
 
@@ -93,8 +91,10 @@ public:
 
 
 private:
+    static constexpr auto memory_size = sizeof(long long);
+
     std::istream& in;
-    std::unique_ptr<char[]> memory;
+    char memory[memory_size];
 };
 
 
