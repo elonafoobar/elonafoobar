@@ -1234,7 +1234,7 @@ void cell_draw()
         // Out of map
         if (y < 0 || y >= mdata_map_height)
         {
-            for (int i = scx; i < scx + inf_screenw; ++i, dx_ -= inf_tiles)
+            for (int i = 0; i < repw; ++i, dx_ -= inf_tiles)
             {
                 draw_one_map_tile(dx_, dy_, tile_fog);
             }
