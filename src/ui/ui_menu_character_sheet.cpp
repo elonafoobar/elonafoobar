@@ -579,6 +579,7 @@ static void _draw_portrait_face()
     if (cdata[cc].portrait >= 0)
     {
         int portrait_id = cdata[cc].sex * 64 + cdata[cc].portrait;
+        boxf(wx + 560, wy + 27, 80, 112, snail::Color{0, 0, 0, 255});
         pos(wx + 560, wy + 27);
         gcopy(4, portrait_id % 16 * 48, portrait_id / 16 * 72, 48, 72, 80, 112);
     }
@@ -590,6 +591,7 @@ static void _draw_portrait_face()
         {
             if (fs::exists(filepath))
             {
+                boxf(wx + 560, wy + 27, 80, 112, snail::Color{0, 0, 0, 255});
                 pos(wx + 560, wy + 27);
                 gcopy(4, 0, 0, 80, 112, 80, 112);
             }

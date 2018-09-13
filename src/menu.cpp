@@ -1091,11 +1091,13 @@ label_2041_internal:
         {
             p = cdata[cc].sex * 64 + cdata[cc].portrait;
             pos(wx + 238, wy + 75);
+            boxf(wx + 238, wy + 75, 80, 112, snail::Color{0, 0, 0, 255});
             gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
         }
         else if (cdata[cc].portrait != -1)
         {
             pos(wx + 238, wy + 75);
+            boxf(wx + 238, wy + 75, 80, 112, snail::Color{0, 0, 0, 255});
             gcopy(
                 7,
                 std::abs((cdata[cc].portrait + 2)) * 80,

@@ -697,6 +697,7 @@ void talk_window_show()
         {
             p = elona::stoi(actor(1, rc));
         }
+        boxf(wx + 42, wy + 42, 80, 112, snail::Color{0, 0, 0, 255});
         pos(wx + 42, wy + 42);
         gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
     }
@@ -723,6 +724,7 @@ void talk_window_show()
                 gsel(0);
                 chatpicloaded = 1;
             }
+            boxf(wx + 42, wy + 42, 80, 112, snail::Color{0, 0, 0, 255});
             pos(wx + 42, wy + 42);
             gcopy(4, 0, 0, 80, 112, 80, 112);
         }
