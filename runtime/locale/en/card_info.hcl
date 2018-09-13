@@ -270,7 +270,7 @@ locale {
         _177 = "<Utima> the destroyer of Xeren"
         _178 = "<Azzrssil> the impure"
         _179 = "master of pet arena"
-        _208 = "<Garokk> the legendary smith"
+        _208 = "<Garok> the legendary smith"
         _209 = "<Miral> the legendary smith"
         _180 = "twintail"
         _181 = "silver wolf"
