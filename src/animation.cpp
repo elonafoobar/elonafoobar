@@ -1196,6 +1196,11 @@ void RagnarokAnimation::do_play()
 
 void BreakingAnimation::do_play()
 {
+    if (!is_in_fov(position))
+    {
+        return;
+    }
+
     do_particle_animation(
         rendering_base_position_center(position),
         "breaking_effect",
