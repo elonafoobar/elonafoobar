@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include "defines.hpp"
 
 
 
@@ -10,6 +11,81 @@ namespace elona
 {
 namespace putit
 {
+
+
+
+namespace detail
+{
+
+
+uint8_t byte_swap(uint8_t n)
+{
+    return n;
+}
+
+
+
+uint16_t byte_swap(uint16_t n)
+{
+    return n << 8 | n >> 8;
+}
+
+
+
+/* clang-format off */
+uint32_t byte_swap(uint32_t n)
+{
+    return 0
+        | (n & 0x0000'00FF) << (8 * 3)
+        | (n & 0x0000'FF00) << (8 * 1)
+        | (n & 0x00FF'0000) >> (8 * 1)
+        | (n & 0xFF00'0000) >> (8 * 3);
+}
+
+
+
+uint64_t byte_swap(uint64_t n)
+{
+    return 0
+        | (n & 0x0000'0000'0000'00FF) << (8 * 7)
+        | (n & 0x0000'0000'0000'FF00) << (8 * 5)
+        | (n & 0x0000'0000'00FF'0000) << (8 * 3)
+        | (n & 0x0000'0000'FF00'0000) << (8 * 1)
+        | (n & 0x0000'00FF'0000'0000) >> (8 * 1)
+        | (n & 0x0000'FF00'0000'0000) >> (8 * 3)
+        | (n & 0x00FF'0000'0000'0000) >> (8 * 5)
+        | (n & 0xFF00'0000'0000'0000) >> (8 * 7);
+}
+/* clang-format on */
+
+
+
+template <
+    typename Int,
+    std::enable_if_t<(sizeof(Int) > 1), std::nullptr_t> = nullptr>
+Int byte_swap_if_needed(Int n)
+{
+#ifdef ELONA_BIG_ENDIAN
+    using UInt = std::make_unsigned_t<Int>;
+    return static_cast<Int>(byte_swap(static_cast<UInt>(n)));
+#else
+    return n;
+#endif
+}
+
+
+
+template <
+    typename Int,
+    std::enable_if_t<sizeof(Int) == 1, std::nullptr_t> = nullptr>
+Int byte_swap_if_needed(Int n)
+{
+    return n;
+}
+
+
+} // namespace detail
+
 
 
 class IArchiveBase
@@ -47,30 +123,14 @@ public:
     }
 
 
-    template <
-        typename T,
-        std::enable_if_t<sizeof(T) <= sizeof(long long), std::nullptr_t> =
-            nullptr>
+
+    template <typename T>
     void primitive(T& data)
     {
+        static_assert(memory_size >= sizeof(T), "T's size is too big.");
+
         in.read(memory, sizeof(T));
-        data = *reinterpret_cast<T*>(memory);
-    }
-
-
-    template <
-        typename T,
-        std::enable_if_t<(sizeof(T) > sizeof(long long)), std::nullptr_t> =
-            nullptr>
-    void primitive(T& data)
-    {
-        char* buf;
-        buf = new char[sizeof(T)];
-
-        in.read(buf, sizeof(T));
-        data = *reinterpret_cast<T*>(buf);
-
-        delete[] buf;
+        data = detail::byte_swap_if_needed(*reinterpret_cast<T*>(memory));
     }
 
 
@@ -83,15 +143,13 @@ public:
             return;
         }
 
-        char* buf = new char[sizeof(T) * size];
-
-        in.read(buf, sizeof(T) * size);
+        std::unique_ptr<char[]> buf{new char[sizeof(T) * size]};
+        in.read(buf.get(), sizeof(T) * size);
         for (size_t i = 0; i < size; ++i)
         {
-            data[i] = reinterpret_cast<T*>(buf)[i];
+            data[i] =
+                detail::byte_swap_if_needed(reinterpret_cast<T*>(buf.get())[i]);
         }
-
-        delete[] buf;
     }
 
 
@@ -130,7 +188,8 @@ public:
     template <typename T>
     void primitive(const T& data)
     {
-        out.write(reinterpret_cast<const char*>(&data), sizeof(data));
+        T tmp = detail::byte_swap_if_needed(data);
+        out.write(reinterpret_cast<const char*>(&tmp), sizeof(data));
     }
 
 
@@ -142,7 +201,13 @@ public:
             return;
         }
 
-        out.write(reinterpret_cast<const char*>(data), sizeof(T) * size);
+        std::unique_ptr<T[]> buf{new T[size]};
+        for (size_t i = 0; i < size; ++i)
+        {
+            buf.get()[i] = detail::byte_swap_if_needed(data[i]);
+        }
+
+        out.write(reinterpret_cast<char*>(buf.get()), sizeof(T) * size);
     }
 
 
