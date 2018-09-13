@@ -78,6 +78,11 @@ public:
     template <typename T>
     void primitive_array(T* data, size_t size)
     {
+        if (size == 0)
+        {
+            return;
+        }
+
         char* buf = new char[sizeof(T) * size];
 
         in.read(buf, sizeof(T) * size);
@@ -132,6 +137,11 @@ public:
     template <typename T>
     void primitive_array(const T* data, size_t size)
     {
+        if (size == 0)
+        {
+            return;
+        }
+
         out.write(reinterpret_cast<const char*>(data), sizeof(T) * size);
     }
 
@@ -220,7 +230,7 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
-    std::string::size_type length;
+    uint64_t length;
     ar.primitive(length);
     std::unique_ptr<char[]> buf{new char[length]};
     ar.primitive_array(buf.get(), length);
@@ -236,7 +246,7 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
-    const auto length = data.size();
+    const uint64_t length = data.size();
     ar.primitive(length);
     ar.primitive_array(data.c_str(), length);
 }
@@ -251,7 +261,7 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
-    typename std::vector<T>::size_type length;
+    uint64_t length;
     ar.primitive(length);
     std::unique_ptr<T[]> buf{new T[length]};
     ar.primitive_array(buf.get(), length);
@@ -268,12 +278,9 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
-    const auto length = data.size();
+    const uint64_t length = data.size();
     ar.primitive(length);
-    if (length != 0)
-    {
-        ar.primitive_array(data.data(), length);
-    }
+    ar.primitive_array(data.data(), length);
 }
 
 
