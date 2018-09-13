@@ -3,6 +3,7 @@
 #include <type_traits>
 #include "ability.hpp"
 #include "activity.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "blending.hpp"
 #include "building.hpp"
@@ -2270,7 +2271,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     screenupdate = -1;
     update_screen();
 
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
     {
         if (mode == 0)
         {

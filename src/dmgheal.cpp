@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "character.hpp"
@@ -1062,10 +1063,11 @@ int damage_hp(
                             gdata_kill_count_of_little_sister));
                     }
                     if (gdata_current_dungeon_level
-                            == adata(10, gdata_current_map)
+                            == area_data[gdata_current_map].deepest_level
                         || gdata_current_map == mdata_t::MapId::the_void)
                     {
-                        if (adata(20, gdata_current_map) == victim.index
+                        if (area_data[gdata_current_map].has_been_conquered
+                                == victim.index
                             && victim.is_lord_of_dungeon() == 1)
                         {
                             event_add(5);
@@ -1082,7 +1084,8 @@ int damage_hp(
                 }
                 else if (gdata_current_map == mdata_t::MapId::the_void)
                 {
-                    if (adata(20, gdata_current_map) == victim.index
+                    if (area_data[gdata_current_map].has_been_conquered
+                            == victim.index
                         && victim.is_lord_of_dungeon() == 1)
                     {
                         event_add(5);

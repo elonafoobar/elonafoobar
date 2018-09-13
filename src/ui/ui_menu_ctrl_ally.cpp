@@ -1,5 +1,6 @@
 #include "ui_menu_ctrl_ally.hpp"
 #include "../ability.hpp"
+#include "../area.hpp"
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../character.hpp"
@@ -175,7 +176,7 @@ static void _update_pet_arena()
 
 static void _update_staying()
 {
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.shop.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.shop.title");
@@ -183,7 +184,7 @@ static void _update_staying()
         s(12) = i18n::s.get("core.locale.ui.ally_list.name");
         s(13) = i18n::s.get("core.locale.ui.ally_list.shop.chr_negotiation");
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::ranch)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.ranch.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.ranch.title");
@@ -327,12 +328,12 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 {
     std::string _s = "";
 
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         _s = u8"   "s + sdata(17, chara.index) + u8" / "
             + sdata(156, chara.index);
     }
-    else if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
+    else if (area_data[gdata_current_map].id == mdata_t::MapId::ranch)
     {
         _s = u8"   "s + cbreeder(chara.index);
     }

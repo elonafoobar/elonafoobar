@@ -1,3 +1,4 @@
+#include "area.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -263,17 +264,17 @@ std::string maplevel(int)
             }
         }
     }
-    if (adata(0, gdata_current_map) != mdata_t::MapType::town)
+    if (area_data[gdata_current_map].type != mdata_t::MapType::town)
     {
-        if (adata(16, gdata_current_map) == mdata_t::MapId::lesimas
-            || adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon
-            || adata(16, gdata_current_map) == mdata_t::MapId::quest
+        if (area_data[gdata_current_map].id == mdata_t::MapId::lesimas
+            || area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon
+            || area_data[gdata_current_map].id == mdata_t::MapId::quest
             || mdata_t::is_nefia(mdata_map_type))
         {
             return ""s
                 + cnvrank(
                        (gdata_current_dungeon_level
-                        - adata(17, gdata_current_map) + 1))
+                        - area_data[gdata_current_map].danger_level + 1))
                 + i18n::s.get("core.locale.map.nefia.level");
         }
     }
@@ -283,9 +284,10 @@ std::string maplevel(int)
 
 std::string mapname_dungeon(int id)
 {
-    int suffix_id = adata(0, id);
+    int suffix_id = area_data[id].type;
     std::string name = mapnamerd(
-        adata(5, id), std::min(adata(17, id) / 5, int(mapnamerd.j_size() - 1)));
+        area_data[id].dungeon_prefix,
+        std::min(area_data[id].danger_level / 5, int(mapnamerd.j_size() - 1)));
 
     if (mdata_t::is_nefia(suffix_id))
     {
@@ -299,7 +301,7 @@ std::string mapname(int id, bool description)
     std::string name;
     std::string desc;
 
-    switch (static_cast<mdata_t::MapId>(adata(16, id)))
+    switch (static_cast<mdata_t::MapId>(area_data[id].id))
     {
     case mdata_t::MapId::quest:
         if (gdata_executing_immediate_quest_type == 1001)
@@ -315,7 +317,7 @@ std::string mapname(int id, bool description)
     case mdata_t::MapId::random_dungeon: name = mapname_dungeon(id); break;
     default:
         auto name_opt = i18n::s.get_enum_property_opt(
-            "core.locale.map.unique", "name", adata(16, id));
+            "core.locale.map.unique", "name", area_data[id].id);
         if (name_opt)
         {
             name = *name_opt;
@@ -326,7 +328,7 @@ std::string mapname(int id, bool description)
         }
 
         auto desc_opt = i18n::s.get_enum_property_opt(
-            "core.locale.map.unique", "desc", adata(16, id));
+            "core.locale.map.unique", "desc", area_data[id].id);
         if (desc_opt)
         {
             desc = *desc_opt;
@@ -339,7 +341,7 @@ std::string mapname(int id, bool description)
 
     if (description)
     {
-        if (adata(16, id) == mdata_t::MapId::mansion_of_younger_sister)
+        if (area_data[id].id == mdata_t::MapId::mansion_of_younger_sister)
         {
             return "";
         }
@@ -347,10 +349,12 @@ std::string mapname(int id, bool description)
         {
             return desc;
         }
-        else if (mdata_t::is_nefia(adata(0, id)))
+        else if (mdata_t::is_nefia(area_data[id].type))
         {
             return i18n::s.get(
-                "core.locale.map.you_see_an_entrance", name, adata(17, id));
+                "core.locale.map.you_see_an_entrance",
+                name,
+                area_data[id].danger_level);
         }
         else
         {
@@ -1018,7 +1022,7 @@ void get_npc_talk()
                 break;
             }
         }
-        if (adata(29, gdata_current_map))
+        if (area_data[gdata_current_map].christmas_festival)
         {
             if (gdata_current_map == mdata_t::MapId::noyel)
             {

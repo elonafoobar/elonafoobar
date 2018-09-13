@@ -1,5 +1,6 @@
 #include "calc.hpp"
 #include "ability.hpp"
+#include "area.hpp"
 #include "buff.hpp"
 #include "character.hpp"
 #include "db_item.hpp"
@@ -1118,7 +1119,7 @@ int calccostbuilding()
 
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        switch (static_cast<mdata_t::MapId>(adata(16, cnt)))
+        switch (static_cast<mdata_t::MapId>(area_data[cnt].id))
         {
         case mdata_t::MapId::museum: cost += 1500; break;
         case mdata_t::MapId::ranch: cost += 1000; break;

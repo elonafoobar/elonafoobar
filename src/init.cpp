@@ -1,6 +1,7 @@
 #include "init.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "blending.hpp"
@@ -540,6 +541,7 @@ void initialize_elona()
     SDIM1(msgtempprev);
     DIM3(mef, 9, MEF_MAX);
     DIM3(adata, 40, 500);
+    area_data.clear();
     DIM3(qdata, 20, 500);
     SDIM3(qname, 40, 500);
     DIM2(gdata, 1000);
@@ -951,8 +953,8 @@ void initialize_debug_globals()
     game_data.date.minute = 10;
     gdata_played_scene = 50;
     gdata_has_not_been_to_vernis = 1;
-    adata(30, 7) = 4;
-    gdata(850) = adata(30, gdata_current_map);
+    area_data[7].outer_map = 4;
+    gdata(850) = area_data[gdata_current_map].outer_map;
     gdata_acquirable_feat_count = 2;
     gdata_save_count_of_little_sister = 1000;
     gdata_rights_to_succeed_to = 1000;
@@ -1244,7 +1246,7 @@ void initialize_world()
 
 void initialize_testbed()
 {
-    gdata_current_map = 9999;
+    gdata_current_map = 499;
     gdata_current_dungeon_level = 2;
 }
 

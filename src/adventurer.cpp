@@ -1,6 +1,7 @@
 #include "adventurer.hpp"
 #include <string>
 #include "ability.hpp"
+#include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "db_item.hpp"
@@ -45,9 +46,9 @@ void create_adventurer()
     cdatan(1, rc) = random_title();
     cdata[rc].character_role = 13;
     p = rnd(450);
-    if (adata(16, p) == mdata_t::MapId::none
-        || adata(16, p) == mdata_t::MapId::your_home
-        || adata(0, p) == mdata_t::MapType::temporary)
+    if (area_data[p].id == mdata_t::MapId::none
+        || area_data[p].id == mdata_t::MapId::your_home
+        || area_data[p].type == mdata_t::MapType::temporary)
     {
         p = 4;
     }
@@ -239,14 +240,15 @@ void adventurer_update()
                 {
                     p = rnd(300);
                 }
-                if (adata(16, p) == mdata_t::MapId::none || p == 7
-                    || adata(0, p) == mdata_t::MapType::temporary || p == 9)
+                if (area_data[p].id == mdata_t::MapId::none || p == 7
+                    || area_data[p].type == mdata_t::MapType::temporary
+                    || p == 9)
                 {
                     p = 4;
                 }
                 if (cnt < 5)
                 {
-                    if (adata(0, p) != mdata_t::MapType::town)
+                    if (area_data[p].type != mdata_t::MapType::town)
                     {
                         continue;
                     }
@@ -262,7 +264,7 @@ void adventurer_update()
         }
         if (rnd(200) == 0)
         {
-            if (adata(0, cdata[rc].current_map) != mdata_t::MapType::town)
+            if (area_data[cdata[rc].current_map].type != mdata_t::MapType::town)
             {
                 adventurer_discover_equipment();
             }

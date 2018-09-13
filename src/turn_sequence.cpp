@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "ai.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "building.hpp"
@@ -965,7 +966,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         else if (rnd(1500) == 0)
         {
-            if (adata(16, gdata_current_map) != mdata_t::MapId::your_home
+            if (area_data[gdata_current_map].id != mdata_t::MapId::your_home
                 && gdata_current_map != mdata_t::MapId::shelter_)
             {
                 modify_ether_disease_stage(10);

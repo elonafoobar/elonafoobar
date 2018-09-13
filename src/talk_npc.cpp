@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "adventurer.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -253,20 +254,26 @@ TalkResult talk_arena_master(int chatval_)
     gdata(74) = calcfame(
         0,
         (220 - gdata(120) / 50)
-                * (100 + clamp(adata(22, gdata_current_map), 0, 50)) / 100
+                * (100
+                   + clamp(
+                         area_data[gdata_current_map].winning_streak_in_arena,
+                         0,
+                         50))
+                / 100
             + 2);
     listmax = 0;
-    randomize(adata(26, gdata_current_map));
+    randomize(area_data[gdata_current_map].time_of_next_arena);
     if (chatval_ == 21)
     {
-        if (adata(26, gdata_current_map) > game_data.date.hours())
+        if (area_data[gdata_current_map].time_of_next_arena
+            > game_data.date.hours())
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
                 cdata[tc]);
             return TalkResult::talk_npc;
         }
-        randomize(adata(24, gdata_current_map));
+        randomize(area_data[gdata_current_map].arena_random_seed);
         for (int cnt = 0; cnt < 50; ++cnt)
         {
             arenaop(0) = 0;
@@ -307,7 +314,8 @@ TalkResult talk_arena_master(int chatval_)
     }
     else
     {
-        if (adata(27, gdata_current_map) > game_data.date.hours())
+        if (area_data[gdata_current_map].time_of_next_rumble
+            > game_data.date.hours())
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
@@ -339,11 +347,13 @@ TalkResult talk_arena_master(int chatval_)
     }
     if (arenaop == 0)
     {
-        adata(26, gdata_current_map) = game_data.date.hours() + 24;
+        area_data[gdata_current_map].time_of_next_arena =
+            game_data.date.hours() + 24;
     }
     if (arenaop == 1)
     {
-        adata(27, gdata_current_map) = game_data.date.hours() + 24;
+        area_data[gdata_current_map].time_of_next_rumble =
+            game_data.date.hours() + 24;
     }
     gdata_executing_immediate_quest_type = 1;
     gdata(71) = 1;
@@ -365,7 +375,13 @@ TalkResult talk_pet_arena_master(int chatval_)
     gdata(74) = calcfame(
         0,
         (220 - gdata(121) / 50)
-                * (50 + clamp(adata(23, gdata_current_map), 0, 50)) / 100
+                * (50
+                   + clamp(
+                         area_data[gdata_current_map]
+                             .winning_streak_in_pet_arena,
+                         0,
+                         50))
+                / 100
             + 2);
     listmax = 0;
     if (chatval_ == 40)
@@ -439,7 +455,7 @@ TalkResult talk_pet_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(23, gdata_current_map),
+        area_data[gdata_current_map].winning_streak_in_pet_arena,
         cdata[tc]);
     return TalkResult::talk_npc;
 }
@@ -448,7 +464,7 @@ TalkResult talk_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(22, gdata_current_map),
+        area_data[gdata_current_map].winning_streak_in_arena,
         cdata[tc]);
     return TalkResult::talk_npc;
 }
@@ -1262,13 +1278,13 @@ TalkResult talk_caravan_master_hire()
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return TalkResult::talk_npc;
     }
-    gdata_destination_map = adata(30, chatval_);
+    gdata_destination_map = area_data[chatval_].outer_map;
     gdata_destination_dungeon_level = 1;
     levelexitby = 4;
     gdata(79) = 1;
-    gdata(850) = adata(30, chatval_);
-    game_data.pc_x_in_world_map = adata(1, chatval_);
-    game_data.pc_y_in_world_map = adata(2, chatval_);
+    gdata(850) = area_data[chatval_].outer_map;
+    game_data.pc_x_in_world_map = area_data[chatval_].position.x;
+    game_data.pc_y_in_world_map = area_data[chatval_].position.y;
     fixtransfermap = 1;
     chatteleport = 1;
     return TalkResult::talk_end;

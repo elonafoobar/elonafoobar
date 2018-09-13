@@ -60,6 +60,7 @@ set(CORE_SOURCES
   src/adventurer.cpp
   src/ai.cpp
   src/animation.cpp
+  src/area.cpp
   src/audio.cpp
   src/autopick.cpp
   src/blending.cpp
