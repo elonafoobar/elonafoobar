@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include "defines.hpp"
 
 
 
@@ -12,9 +13,85 @@ namespace putit
 {
 
 
+
+namespace detail
+{
+
+
+uint8_t byte_swap(uint8_t n)
+{
+    return n;
+}
+
+
+
+uint16_t byte_swap(uint16_t n)
+{
+    return n << 8 | n >> 8;
+}
+
+
+
+/* clang-format off */
+uint32_t byte_swap(uint32_t n)
+{
+    return 0
+        | (n & 0x0000'00FF) << (8 * 3)
+        | (n & 0x0000'FF00) << (8 * 1)
+        | (n & 0x00FF'0000) >> (8 * 1)
+        | (n & 0xFF00'0000) >> (8 * 3);
+}
+
+
+
+uint64_t byte_swap(uint64_t n)
+{
+    return 0
+        | (n & 0x0000'0000'0000'00FF) << (8 * 7)
+        | (n & 0x0000'0000'0000'FF00) << (8 * 5)
+        | (n & 0x0000'0000'00FF'0000) << (8 * 3)
+        | (n & 0x0000'0000'FF00'0000) << (8 * 1)
+        | (n & 0x0000'00FF'0000'0000) >> (8 * 1)
+        | (n & 0x0000'FF00'0000'0000) >> (8 * 3)
+        | (n & 0x00FF'0000'0000'0000) >> (8 * 5)
+        | (n & 0xFF00'0000'0000'0000) >> (8 * 7);
+}
+/* clang-format on */
+
+
+
+template <
+    typename Int,
+    std::enable_if_t<(sizeof(Int) > 1), std::nullptr_t> = nullptr>
+Int byte_swap_if_needed(Int n)
+{
+#ifdef ELONA_BIG_ENDIAN
+    using UInt = std::make_unsigned_t<Int>;
+    return static_cast<Int>(byte_swap(static_cast<UInt>(n)));
+#else
+    return n;
+#endif
+}
+
+
+
+template <
+    typename Int,
+    std::enable_if_t<sizeof(Int) == 1, std::nullptr_t> = nullptr>
+Int byte_swap_if_needed(Int n)
+{
+    return n;
+}
+
+
+} // namespace detail
+
+
+
 class IArchiveBase
 {
 };
+
 
 
 class OArchiveBase
@@ -22,12 +99,12 @@ class OArchiveBase
 };
 
 
+
 class BinaryIArchive : public IArchiveBase
 {
 public:
     BinaryIArchive(std::istream& in)
         : in(in)
-        , memory(new char[sizeof(long long)])
     {
     }
 
@@ -46,33 +123,14 @@ public:
     }
 
 
-    template <
-        typename T,
-        std::enable_if_t<sizeof(T) <= sizeof(long long), std::nullptr_t> =
-            nullptr>
+
+    template <typename T>
     void primitive(T& data)
     {
-        char* buf;
-        buf = memory.get();
+        static_assert(memory_size >= sizeof(T), "T's size is too big.");
 
-        in.read(buf, sizeof(T));
-        data = *reinterpret_cast<T*>(buf);
-    }
-
-
-    template <
-        typename T,
-        std::enable_if_t<(sizeof(T) > sizeof(long long)), std::nullptr_t> =
-            nullptr>
-    void primitive(T& data)
-    {
-        char* buf;
-        buf = new char[sizeof(T)];
-
-        in.read(buf, sizeof(T));
-        data = *reinterpret_cast<T*>(buf);
-
-        delete[] buf;
+        in.read(memory, sizeof(T));
+        data = detail::byte_swap_if_needed(*reinterpret_cast<T*>(memory));
     }
 
 
@@ -80,21 +138,26 @@ public:
     template <typename T>
     void primitive_array(T* data, size_t size)
     {
-        char* buf = new char[sizeof(T) * size];
-
-        in.read(buf, sizeof(T) * size);
-        for (size_t i = 0; i < size; ++i)
+        if (size == 0)
         {
-            data[i] = reinterpret_cast<T*>(buf)[i];
+            return;
         }
 
-        delete[] buf;
+        std::unique_ptr<char[]> buf{new char[sizeof(T) * size]};
+        in.read(buf.get(), sizeof(T) * size);
+        for (size_t i = 0; i < size; ++i)
+        {
+            data[i] =
+                detail::byte_swap_if_needed(reinterpret_cast<T*>(buf.get())[i]);
+        }
     }
 
 
 private:
+    static constexpr auto memory_size = sizeof(long long);
+
     std::istream& in;
-    std::unique_ptr<char[]> memory;
+    char memory[memory_size];
 };
 
 
@@ -125,14 +188,26 @@ public:
     template <typename T>
     void primitive(const T& data)
     {
-        out.write(reinterpret_cast<const char*>(&data), sizeof(data));
+        T tmp = detail::byte_swap_if_needed(data);
+        out.write(reinterpret_cast<const char*>(&tmp), sizeof(data));
     }
 
 
     template <typename T>
     void primitive_array(const T* data, size_t size)
     {
-        out.write(reinterpret_cast<const char*>(data), sizeof(T) * size);
+        if (size == 0)
+        {
+            return;
+        }
+
+        std::unique_ptr<T[]> buf{new T[size]};
+        for (size_t i = 0; i < size; ++i)
+        {
+            buf.get()[i] = detail::byte_swap_if_needed(data[i]);
+        }
+
+        out.write(reinterpret_cast<char*>(buf.get()), sizeof(T) * size);
     }
 
 
@@ -220,7 +295,7 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
-    std::string::size_type length;
+    uint64_t length;
     ar.primitive(length);
     std::unique_ptr<char[]> buf{new char[length]};
     ar.primitive_array(buf.get(), length);
@@ -236,7 +311,7 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
-    const auto length = data.size();
+    const uint64_t length = data.size();
     ar.primitive(length);
     ar.primitive_array(data.c_str(), length);
 }
@@ -251,7 +326,7 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
-    typename std::vector<T>::size_type length;
+    uint64_t length;
     ar.primitive(length);
     std::unique_ptr<T[]> buf{new T[length]};
     ar.primitive_array(buf.get(), length);
@@ -268,12 +343,9 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
-    const auto length = data.size();
+    const uint64_t length = data.size();
     ar.primitive(length);
-    if (length != 0)
-    {
-        ar.primitive_array(data.data(), length);
-    }
+    ar.primitive_array(data.data(), length);
 }
 
 
