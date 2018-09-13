@@ -1,4 +1,6 @@
 #include <ctype.h>
+#include <iomanip>
+#include <sstream>
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -285,8 +287,10 @@ void txt_conv()
             }
             if (Config::instance().msgaddtime)
             {
-                msgtemp(0) =
-                    u8"["s + game_data.date.minute + u8"] " + msgtemp(0);
+                std::stringstream ss;
+                ss << "[" << std::setw(2) << std::setfill('0')
+                   << game_data.date.minute << "] ";
+                msgtemp(0) = ss.str() + msgtemp(0);
             }
             else
             {
