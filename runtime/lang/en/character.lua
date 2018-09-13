@@ -951,7 +951,7 @@ character['179'] = {
   name = "master of pet arena",
 }
 character['208'] = {
-  name = "<Garokk> the legendary smith",
+  name = "<Garok> the legendary smith",
   text_100 = {"You hear the rhythmic clang of a hammer on steel", "You hear the whoosh of a bellows being pumped", "You hear the perfect ring of steel-on-steel. It makes your blood race", "\"And just what shall you be, oh noble ingot? A dagger perhaps, an axe blade by chance? Let us find out...\"", "\"Ah! A good shipment of steel today. Oh, what to make, decisions, decisions...\"", "\"With this, I have created half a legend. Your wielder will make the other half with you.\"", "\"Let's just sit you on the shelf oh noble blade, for soon your brothers shall join you.\""},
 }
 character['209'] = {

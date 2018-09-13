@@ -12,7 +12,7 @@ locale {
             skills {
                 _178 = "Alchemy"
                 _176 = "Carpentry"
-                _179 = "Jewelling"
+                _179 = "Jeweler"
                 _177 = "Tailoring"
             }
 

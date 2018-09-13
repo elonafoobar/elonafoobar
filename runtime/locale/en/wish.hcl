@@ -12,7 +12,7 @@ locale {
 
         wish_gold = "Lots of gold pieces appear."
         wish_platinum = "Platinum pieces appear."
-        wish_small_medal = "A small coin appears."
+        wish_small_medal = "Some small coins appear."
         wish_sex = "${name(_1)} become ${_2}!"
         wish_youth = "A typical wish."
         wish_man_inside = "There's no God inside."

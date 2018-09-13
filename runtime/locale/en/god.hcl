@@ -56,7 +56,7 @@ locale {
             _1 {
                 text = "Mani is a clockwork god of machinery. Those faithful to Mani<br>receive immense knowledge of machines and learn a way to use them<br>effectively.<p>"
                 offering = "Corpses/Guns/Machinery<p>"
-                bonus = "DEX/PER/Gun/Healing/Detection/Jeweller/Lockpick/Carpentry<p>"
+                bonus = "DEX/PER/Firearm/Healing/Detection/Jeweler/Lockpick/Carpentry<p>"
                 ability = "Mani's decomposition (Passive: Extract materials<br>from traps.)<p>"
             }
 
@@ -103,7 +103,7 @@ locale {
             # Kumiromi
             _7 {
                 text = "Kumiromi is a god of harvest. Those faithful to Kumiromi receive<br>the blessings of nature.<p><p>"
-                offering = "Corpses/Vegetables<p>"
+                offering = "Corpses/Vegetables/Seeds<p>"
                 bonus = "PER/DEX/LER/Gardening/Alchemy/Tailoring/Literacy<p>"
                 ability = "Kumiromi's recycle (Passive: Extract seeds from rotten <p>foods.)<p>"
             }
