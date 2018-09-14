@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(Elona_foobar VERSION 0.2.7)
+project(Elona_foobar VERSION 0.2.8)
 
 # Android version code. Increment on every distinct release.
 set(PROJECT_VERSION_CODE 1)
