@@ -344,7 +344,6 @@ MainMenuResult main_menu_continue()
         ++save_data_count;
     }
     listmax = save_data_count;
-    windowshadow = 1;
 
     while (true)
     {
@@ -370,6 +369,7 @@ MainMenuResult main_menu_continue()
             s = u8"Which save game do you want to continue?"s;
         }
         draw_caption();
+        windowshadow = 1;
     savegame_draw_page:
         if (jp)
         {
