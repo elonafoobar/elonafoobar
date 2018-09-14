@@ -17,6 +17,7 @@ struct Version
     int major;
     int minor;
     int patch;
+    int serial_id;
     std::string revision;
     std::string timestamp;
     std::string platform;
@@ -47,6 +48,7 @@ struct Version
         ar(major);
         ar(minor);
         ar(patch);
+        ar(serial_id);
         ar(revision);
         ar(timestamp);
         ar(platform);

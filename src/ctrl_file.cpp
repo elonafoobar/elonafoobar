@@ -415,8 +415,6 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 // - other things...
 void fmode_7_8(bool read, const fs::path& dir)
 {
-    foobar_data.version = latest_version;
-
     if (!fs::exists(dir))
     {
         fs::create_directory(dir);
@@ -427,6 +425,19 @@ void fmode_7_8(bool read, const fs::path& dir)
         playerheader =
             cdatan(0, 0) + u8" Lv:" + cdata.player().level + u8" " + mdatan(0);
         bsave(dir / u8"header.txt", playerheader);
+    }
+
+    {
+        const auto filepath = dir / u8"version.s0";
+        if (read)
+        {
+            // Do nothing.
+        }
+        else
+        {
+            auto v = latest_version;
+            putit::BinaryOArchive::save(filepath, v);
+        }
     }
 
     {
@@ -452,16 +463,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath.native(), std::ios::binary};
-                putit::BinaryIArchive ar{in};
-                ar.load(foobar_data);
+                putit::BinaryIArchive::load(filepath, foobar_data);
             }
         }
         else
         {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
-            ar.save(foobar_data);
+            putit::BinaryOArchive::save(filepath, foobar_data);
         }
     }
 

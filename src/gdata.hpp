@@ -175,7 +175,6 @@ struct FoobarData
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
-    Version version;
     bool is_autodig_enabled{};
 
 
@@ -183,7 +182,6 @@ struct FoobarData
     void serialize(Archive& ar)
     {
         // WARNING: Changing this will break save compatibility!
-        ar(version);
         ar(is_autodig_enabled);
     }
 };
