@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "ai.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "building.hpp"
@@ -329,7 +330,8 @@ TurnResult npc_turn()
                             && cdata.player().position.y
                                 < cdata[cc].position.y + 10)
                         {
-                            if (cdata.player().continuous_action_id != 6)
+                            if (cdata.player().continuous_action.type
+                                != ContinuousAction::Type::perform)
                             {
                                 if (cdata[cc].hate <= 0)
                                 {
@@ -733,7 +735,7 @@ TurnResult turn_begin()
     bool update_turn_cost = true;
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action_turn > 2)
+        if (cdata.player().continuous_action.turn > 2)
         {
             cdata.player().turn_cost = mdata_map_turn_cost;
             update_turn_cost = false;
@@ -756,23 +758,23 @@ TurnResult turn_begin()
         }
     }
 
-    gdata_second += turncost / 5 + 1;
-    if (gdata_second >= 60)
+    game_data.date.second += turncost / 5 + 1;
+    if (game_data.date.second >= 60)
     {
-        ++gdata_play_turns;
+        ++game_data.play_turns;
         cc = 0;
-        if (gdata_play_turns % 20 == 0)
+        if (game_data.play_turns % 20 == 0)
         {
             monster_respawn();
         }
-        if (gdata_play_turns % 10 == 1)
+        if (game_data.play_turns % 10 == 1)
         {
             auto_identify();
         }
-        gdata_minute += gdata_second / 60;
+        game_data.date.minute += game_data.date.second / 60;
         if (gdata_left_minutes_of_executing_quest > 0)
         {
-            gdata_left_minutes_of_executing_quest -= gdata_second / 60;
+            gdata_left_minutes_of_executing_quest -= game_data.date.second / 60;
             if (gdata(87) > gdata_left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
@@ -787,11 +789,11 @@ TurnResult turn_begin()
                 event_add(14);
             }
         }
-        gdata_second = gdata_second % 60;
-        if (gdata_minute >= 60)
+        game_data.date.second = game_data.date.second % 60;
+        if (game_data.date.minute >= 60)
         {
-            gdata_hour += gdata_minute / 60;
-            gdata_minute = gdata_minute % 60;
+            game_data.date.hour += game_data.date.minute / 60;
+            game_data.date.minute = game_data.date.minute % 60;
             weather_changes();
         }
     }
@@ -858,7 +860,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         if (p == 4)
         {
-            if (cdata.player().continuous_action_id == 0)
+            if (!cdata.player().continuous_action)
             {
                 heal_sp(cdata.player(), 2);
             }
@@ -934,7 +936,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             return TurnResult::pc_died;
         }
-        if (gdata_weather == 1)
+        if (game_data.weather == 1)
         {
             if (mdata_map_indoors_flag == 2)
             {
@@ -943,7 +945,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
                     if (gdata_protects_from_etherwind == 0)
                     {
                         modify_ether_disease_stage(
-                            5 + clamp(gdata_play_turns / 20000, 0, 15));
+                            5 + clamp(game_data.play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
@@ -964,7 +966,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         else if (rnd(1500) == 0)
         {
-            if (adata(16, gdata_current_map) != mdata_t::MapId::your_home
+            if (area_data[gdata_current_map].id != mdata_t::MapId::your_home
                 && gdata_current_map != mdata_t::MapId::shelter_)
             {
                 modify_ether_disease_stage(10);
@@ -1109,7 +1111,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             proc_pregnant();
         }
     }
-    if (cdata[cc].continuous_action_id != 0)
+    if (cdata[cc].continuous_action)
     {
         if (auto result = activity_proc(cdata[cc]))
         {
@@ -1143,7 +1145,7 @@ void update_emoicon()
     {
         cdata[cc].emotion_icon = 0;
     }
-    if (mdata_map_indoors_flag == 2 && gdata_weather >= 3)
+    if (mdata_map_indoors_flag == 2 && game_data.weather >= 3)
     {
         cdata[cc].wet = 50;
     }
@@ -1605,7 +1607,7 @@ label_2747:
         if (getkey(snail::Key::f6))
         {
             dbg_skipevent = 1;
-            ++gdata_hour;
+            ++game_data.date.hour;
             weather_changes();
             dbg_skipevent = 0;
             mode = 0;

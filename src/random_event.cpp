@@ -162,7 +162,7 @@ optional<RandomEvent> generate_random_event()
     }
     if (mdata_map_type != mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action_id != 0)
+        if (cdata.player().continuous_action)
         {
             return none;
         }
@@ -261,7 +261,7 @@ void run_random_event(RandomEvent event)
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            p = rnd(gdata_crowd_density + 1) + 57;
+            p = rnd(game_data.crowd_density + 1) + 57;
             if (p >= ELONA_MAX_CHARACTERS)
             {
                 --cnt;
@@ -521,7 +521,7 @@ void run_random_event(RandomEvent event)
             modify_karma(cdata.player(), -2);
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
-                flt(0, calcfixlv(3));
+                flt(0, calcfixlv(Quality::good));
                 if (rnd(3) == 0)
                 {
                     flttypemajor = fsetwear(rnd(fsetwear.size()));

@@ -279,7 +279,7 @@ label_20591:
                 {
                     continue;
                 }
-                if (inv[cnt].quality == 6)
+                if (inv[cnt].quality == Quality::special)
                 {
                     continue;
                 }
@@ -425,7 +425,8 @@ label_20591:
                 }
                 if (invctrl(1) == 7)
                 {
-                    if (inv[cnt].quality >= 4 || reftype >= 50000)
+                    if (inv[cnt].quality >= Quality::miracle
+                        || reftype >= 50000)
                     {
                         continue;
                     }
@@ -1125,8 +1126,7 @@ label_2061_internal:
                 in = 1;
             }
             savecycle();
-            dropval = 0;
-            drop_item();
+            item_drop(inv[ci], in);
             if (dropcontinue)
             {
                 menucycle = 1;
@@ -1740,11 +1740,11 @@ label_2061_internal:
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
-            if (cdata[tc].continuous_action_id != 0)
+            if (cdata[tc].continuous_action)
             {
-                cdata[tc].continuous_action_id = 0;
-                cdata[tc].continuous_action_turn = 0;
-                cdata[tc].continuous_action_item = 0;
+                cdata[tc].continuous_action.type = ContinuousAction::Type::none;
+                cdata[tc].continuous_action.turn = 0;
+                cdata[tc].continuous_action.item = 0;
             }
             snd(13);
             ibitmod(12, citrade, 0);

@@ -3,7 +3,10 @@
 #include <type_traits>
 #include "ability.hpp"
 #include "activity.hpp"
+#include "area.hpp"
+#include "audio.hpp"
 #include "blending.hpp"
+#include "building.hpp"
 #include "character.hpp"
 #include "crafting.hpp"
 #include "db_item.hpp"
@@ -285,9 +288,10 @@ int itemusingfind(int ci, bool disallow_pc)
         {
             continue;
         }
-        if (cnt.continuous_action_id != 0 && cnt.continuous_action_id != 11
-            && cnt.continuous_action_turn > 0
-            && cnt.continuous_action_item == ci)
+        if (cnt.continuous_action
+            && cnt.continuous_action.type != ContinuousAction::Type::sex
+            && cnt.continuous_action.turn > 0
+            && cnt.continuous_action.item == ci)
         {
             if (!disallow_pc || cnt.index != 0)
             {
@@ -372,6 +376,7 @@ void cell_refresh(int prm_493, int prm_494)
     {
         return;
     }
+
     p_at_m55 = 0;
     map(prm_493, prm_494, 4) = 0;
     map(prm_493, prm_494, 9) = 0;
@@ -441,7 +446,6 @@ void cell_refresh(int prm_493, int prm_494)
         }
         map(prm_493, prm_494, 4) *= -1;
     }
-    return;
 }
 
 
@@ -896,7 +900,6 @@ void itemname_additional_info()
             s_ += lang(u8"ジュアの"s, u8" of Jure"s);
         }
     }
-    return;
 }
 
 
@@ -916,7 +919,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     {
         return i18n::s.get("core.locale.item.unknown_item");
     }
-    if (inv[prm_518].quality >= 5)
+    if (inv[prm_518].quality >= Quality::godly)
     {
         iqiality_(prm_518) = 5;
     }
@@ -1175,9 +1178,9 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                         + i18n::space_if_needed();
                 }
             }
-            if (inv[prm_518].quality != 6)
+            if (inv[prm_518].quality != Quality::special)
             {
-                if (inv[prm_518].quality >= 4)
+                if (inv[prm_518].quality >= Quality::miracle)
                 {
                     s_ += i18n::_(
                               u8"item_material",
@@ -1215,7 +1218,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         inv[prm_518].identification_state
         != IdentifyState::completely_identified)
     {
-        if (inv[prm_518].quality < 4 || a_ >= 50000)
+        if (inv[prm_518].quality < Quality::miracle || a_ >= 50000)
         {
             s_ += ioriginalnameref(inv[prm_518].id);
         }
@@ -1224,7 +1227,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             s_ += iknownnameref(inv[prm_518].id);
         }
     }
-    else if (inv[prm_518].quality == 6 || ibit(5, prm_518) == 1)
+    else if (inv[prm_518].quality == Quality::special || ibit(5, prm_518) == 1)
     {
         if (jp)
         {
@@ -1237,7 +1240,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     else
     {
-        if (inv[prm_518].quality >= 4 && jp)
+        if (inv[prm_518].quality >= Quality::miracle && jp)
         {
             s_ = u8"☆"s + s_;
         }
@@ -1257,7 +1260,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         if (inv[prm_518].subname >= 40000)
         {
             randomize(inv[prm_518].subname - 40000);
-            if (inv[prm_518].quality == 4)
+            if (inv[prm_518].quality == Quality::miracle)
             {
                 s_ += i18n::space_if_needed()
                     + i18n::s.get(
@@ -1279,7 +1282,7 @@ label_0313_internal:
         {
             if (inv[prm_518].identification_state
                     == IdentifyState::completely_identified
-                && (inv[prm_518].quality >= 4 && a_ < 50000))
+                && (inv[prm_518].quality >= Quality::miracle && a_ < 50000))
             {
                 s_ = u8"the "s + s_;
             }
@@ -1385,7 +1388,10 @@ label_0313_internal:
         && a_ < 50000)
     {
         s_ += u8" ("s
-            + cnven(i18n::_(u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))
+            + cnven(i18n::_(
+                  u8"ui",
+                  u8"quality",
+                  u8"_"s + static_cast<int>(inv[prm_518].quality)))
             + u8")"s;
         if (jp)
         {
@@ -1444,21 +1450,11 @@ label_0313_internal:
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (ibit(7, prm_518) == 1
-        && gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                + gdata_year * 24 * 30 * 12
-            < inv[prm_518].count)
+    if (ibit(7, prm_518) == 1 && game_data.date.hours() < inv[prm_518].count)
     {
         s_ += lang(
-            u8"("s
-                + (inv[prm_518].count
-                   - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                      + gdata_year * 24 * 30 * 12))
-                + u8"時間)"s,
-            u8"(Next: "s
-                + (inv[prm_518].count
-                   - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                      + gdata_year * 24 * 30 * 12))
+            u8"("s + (inv[prm_518].count - game_data.date.hours()) + u8"時間)"s,
+            u8"(Next: "s + (inv[prm_518].count - game_data.date.hours())
                 + u8"h.)"s);
     }
     if (inv[prm_518].id == 555 && inv[prm_518].count != 0)
@@ -1508,7 +1504,8 @@ void remain_make(int ci, int cc)
 
 int item_stack(int inventory_id, int ci, int show_message)
 {
-    if (inv[ci].quality == 6 && the_item_db[inv[ci].id]->category < 50000)
+    if (inv[ci].quality == Quality::special
+        && the_item_db[inv[ci].id]->category < 50000)
     {
         return 0;
     }
@@ -1632,7 +1629,8 @@ bool item_fire(int owner, int ci)
 
     if (owner != -1)
     {
-        if (sdata(50, owner) / 50 >= 6 || cdata[owner].quality >= 4)
+        if (sdata(50, owner) / 50 >= 6
+            || cdata[owner].quality >= Quality::miracle)
         {
             return false;
         }
@@ -1708,7 +1706,8 @@ bool item_fire(int owner, int ci)
             continue;
         }
 
-        if (a_ == 72000 || a_ == 59000 || a_ == 68000 || inv[ci_].quality >= 4)
+        if (a_ == 72000 || a_ == 59000 || a_ == 68000
+            || inv[ci_].quality >= Quality::miracle)
         {
             continue;
         }
@@ -1775,7 +1774,7 @@ bool item_fire(int owner, int ci)
                     txtef(8);
                     txt(i18n::s.get(
                         "core.locale.item.item_someone_equips_turns_to_dust",
-                        inv[ci_],
+                        itemname(inv[ci_].index, p_),
                         p_,
                         cdata[owner]));
                 }
@@ -1790,7 +1789,7 @@ bool item_fire(int owner, int ci)
                 txtef(8);
                 txt(i18n::s.get(
                     "core.locale.item.someones_item_turns_to_dust",
-                    inv[ci_],
+                    itemname(inv[ci_].index, p_, 1),
                     p_,
                     cdata[owner]));
             }
@@ -1800,7 +1799,7 @@ bool item_fire(int owner, int ci)
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.item.item_on_the_ground_turns_to_dust",
-                inv[ci_],
+                itemname(inv[ci_].index, p_),
                 p_));
         }
         inv[ci_].modify_number(-p_);
@@ -1860,7 +1859,8 @@ bool item_cold(int owner, int ci)
     }
     if (owner != -1)
     {
-        if (sdata(51, owner) / 50 >= 6 || cdata[owner].quality >= 4)
+        if (sdata(51, owner) / 50 >= 6
+            || cdata[owner].quality >= Quality::miracle)
         {
             return false;
         }
@@ -1908,7 +1908,7 @@ bool item_cold(int owner, int ci)
         {
             continue;
         }
-        if (inv[ci_].quality >= 4 || inv[ci_].body_part != 0)
+        if (inv[ci_].quality >= Quality::miracle || inv[ci_].body_part != 0)
         {
             continue;
         }
@@ -1955,7 +1955,7 @@ bool item_cold(int owner, int ci)
                 txtef(8);
                 txt(i18n::s.get(
                     "core.locale.item.someones_item_breaks_to_pieces",
-                    inv[ci_],
+                    itemname(inv[ci_].index, p_, 1),
                     p_,
                     cdata[owner]));
             }
@@ -1965,7 +1965,7 @@ bool item_cold(int owner, int ci)
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.item.item_on_the_ground_breaks_to_pieces",
-                inv[ci_],
+                itemname(inv[ci_].index, p_),
                 p_));
         }
         inv[ci_].modify_number(-p_);
@@ -2212,6 +2212,91 @@ int inv_getfreeid_force()
         }
     }
     return p;
+}
+
+
+
+void item_drop(Item& item_in_inventory, int num, bool building_shelter)
+{
+    ti = inv_getfreeid(-1);
+    if (ti == -1)
+    {
+        txt(i18n::s.get("core.locale.action.drop.too_many_items"));
+        update_screen();
+        return;
+    }
+
+    item_copy(item_in_inventory.index, ti);
+    inv[ti].position = cdata[cc].position;
+    inv[ti].set_number(num);
+    itemturn(ti);
+
+    if (building_shelter)
+    {
+        inv[ti].own_state = 3;
+        inv[ti].count = gdata_next_shelter_serial_id + 100;
+        ++gdata_next_shelter_serial_id;
+    }
+    else
+    {
+        snd(16);
+        txt(i18n::s.get("core.locale.action.drop.execute", itemname(ti, num)));
+    }
+
+    if (inv[ti].id == 516) // Water
+    {
+        int altar = item_find(60002, 0);
+        if (altar != -1)
+        {
+            // The altar is your god's.
+            if (core_god::int2godid(inv[altar].param1) == cdata[cc].god_id)
+            {
+                if (inv[ti].curse_state != CurseState::blessed)
+                {
+                    snd(64);
+                    inv[ti].curse_state = CurseState::blessed;
+                    txtef(2);
+                    txt(i18n::s.get(
+                        "core.locale.action.drop.water_is_blessed"));
+                }
+            }
+        }
+    }
+
+    item_stack(-1, ti);
+    item_in_inventory.modify_number(-num);
+
+    refresh_burden_state();
+    cell_refresh(inv[ti].position.x, inv[ti].position.y);
+    screenupdate = -1;
+    update_screen();
+
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
+    {
+        if (mode == 0)
+        {
+            update_museum();
+        }
+    }
+    if (gdata_current_map == mdata_t::MapId::your_home)
+    {
+        if (mode == 0)
+        {
+            calc_home_rank();
+        }
+    }
+    if (inv[ti].id == 255)
+    {
+        mdata_map_play_campfire_sound = 1;
+        play_music();
+    }
+}
+
+
+
+void item_build_shelter(Item& shelter)
+{
+    item_drop(shelter, 1, true);
 }
 
 

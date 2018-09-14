@@ -483,7 +483,6 @@ label_2700_internal:
     cs = 0;
     update_screen();
     quickkeywait = 1;
-    return;
 }
 
 void show_ex_help()
@@ -571,7 +570,6 @@ void show_ex_help()
             break;
         }
     }
-    return;
 }
 
 void show_game_help()
@@ -612,7 +610,6 @@ void load_showroom_user_info()
     usermsg = ""s + s;
     noteget(s, 6);
     userrelation = elona::stoi(s(0));
-    return;
 }
 
 int cnvjkey(const std::string& prm_1092)
@@ -738,7 +735,6 @@ void draw_spell_power_entry(int skill_id)
         s += u8" "s;
     }
     s += i18n::_(u8"ability", std::to_string(skill_id), u8"description");
-    return;
 }
 
 MenuResult _show_character_sheet_menu(size_t menu_index)
@@ -979,7 +975,6 @@ void set_pcc_info(int val0)
             rtvaln = "";
         }
     }
-    return;
 }
 
 int change_appearance()
@@ -1096,11 +1091,13 @@ label_2041_internal:
         {
             p = cdata[cc].sex * 64 + cdata[cc].portrait;
             pos(wx + 238, wy + 75);
+            boxf(wx + 238, wy + 75, 80, 112, snail::Color{0, 0, 0, 255});
             gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
         }
         else if (cdata[cc].portrait != -1)
         {
             pos(wx + 238, wy + 75);
+            boxf(wx + 238, wy + 75, 80, 112, snail::Color{0, 0, 0, 255});
             gcopy(
                 7,
                 std::abs((cdata[cc].portrait + 2)) * 80,
@@ -1451,7 +1448,6 @@ void append_accuracy_info(int val0)
         s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.dist");
         show_weapon_dice(val0);
     }
-    return;
 }
 
 void show_weapon_dice(int val0)
@@ -1502,7 +1498,6 @@ void show_weapon_dice(int val0)
         noteadd(s(1) + "   : " + fixtxt(s(3), 12) + " " + fixtxt(s, 20));
     }
     ++p(2);
-    return;
 }
 
 static TurnResult _visit_quest_giver(int quest_index)
@@ -1535,7 +1530,7 @@ TurnResult show_quest_board()
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action_turn == 0)
+                if (cdata.player().continuous_action.turn == 0)
                 {
                     gdata(204) = 1;
                     ghelp = 4;

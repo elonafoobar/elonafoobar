@@ -118,7 +118,6 @@ void netload(const std::string& prm_194)
     }
     neterror(estr_at_m0);
     dialog(u8"エラー:"s + estr_at_m0);
-    return;
 }
 
 
@@ -580,7 +579,6 @@ void initialize_server_info()
         votereadurl = u8"http://www."s + cgiurl3 + u8"/voteen.txt"s;
     }
     textreadurl = u8"http://www."s + cgiurl3 + u8"/text.txt"s;
-    return;
 }
 
 
@@ -629,7 +627,6 @@ void show_chat_dialog()
               inputlog(0)));
     chatturn = 0;
     chatdeny = 1;
-    return;
 }
 
 
@@ -658,8 +655,7 @@ label_14001_internal:
     listn(0, listmax) = i18n::s.get("core.locale.network.alias.submit");
     ++listmax;
     net_read(1);
-    if (gdata_next_voting_time > gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+    if (gdata_next_voting_time > game_data.date.hours())
     {
         comctrl = 0;
         txt(i18n::s.get(
@@ -789,15 +785,13 @@ label_1402_internal:
             rtval = show_prompt(promptx, prompty, 200);
             goto label_14001_internal;
         }
-        if (gdata_next_voting_time > gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+        if (gdata_next_voting_time > game_data.date.hours())
         {
             snd(27);
             txt(i18n::s.get("core.locale.network.alias.need_to_wait"));
             goto label_1401_internal;
         }
-        gdata_next_voting_time = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
+        gdata_next_voting_time = game_data.date.hours() + 168;
         txt(i18n::s.get(
             "core.locale.network.alias.i_like",
             listn(0, (cs + pagesize * page))));

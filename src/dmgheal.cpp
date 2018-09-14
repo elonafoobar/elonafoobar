@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "character.hpp"
@@ -516,7 +517,7 @@ int damage_hp(
             }
             if (element == 52)
             {
-                if (rnd(3 + (victim.quality >= 4) * 3) == 0)
+                if (rnd(3 + (victim.quality >= Quality::miracle) * 3) == 0)
                 {
                     ++victim.paralyzed;
                 }
@@ -906,15 +907,12 @@ int damage_hp(
         else if (victim.character_role == 13)
         {
             victim.set_state(Character::State::adventurer_dead);
-            victim.time_to_revive = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
-                + rnd(12);
+            victim.time_to_revive = game_data.date.hours() + 24 + rnd(12);
         }
         else
         {
             victim.set_state(Character::State::villager_dead);
-            victim.time_to_revive = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
+            victim.time_to_revive = game_data.date.hours() + 48;
         }
         if (victim.index != 0)
         {
@@ -953,7 +951,7 @@ int damage_hp(
         }
         if (victim.index == 0)
         {
-            ++gdata_death_count;
+            ++game_data.death_count;
         }
         if (victim.index == gdata(94))
         {
@@ -1065,10 +1063,11 @@ int damage_hp(
                             gdata_kill_count_of_little_sister));
                     }
                     if (gdata_current_dungeon_level
-                            == adata(10, gdata_current_map)
+                            == area_data[gdata_current_map].deepest_level
                         || gdata_current_map == mdata_t::MapId::the_void)
                     {
-                        if (adata(20, gdata_current_map) == victim.index
+                        if (area_data[gdata_current_map].has_been_conquered
+                                == victim.index
                             && victim.is_lord_of_dungeon() == 1)
                         {
                             event_add(5);
@@ -1085,7 +1084,8 @@ int damage_hp(
                 }
                 else if (gdata_current_map == mdata_t::MapId::the_void)
                 {
-                    if (adata(20, gdata_current_map) == victim.index
+                    if (area_data[gdata_current_map].has_been_conquered
+                            == victim.index
                         && victim.is_lord_of_dungeon() == 1)
                     {
                         event_add(5);
@@ -1280,7 +1280,7 @@ void heal_sp(Character& cc, int delta)
 
 void damage_insanity(Character& cc, int delta)
 {
-    if (cc.quality >= 4)
+    if (cc.quality >= Quality::miracle)
         return;
 
     int resistance = std::max(sdata(54, cc.index) / 50, 1);

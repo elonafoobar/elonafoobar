@@ -51,7 +51,7 @@ struct Item
     int value = 0;
     int image = 0;
     int id = 0;
-    int quality = 0;
+    Quality quality = Quality::none;
     Position position;
     int weight = 0;
     IdentifyState identification_state = IdentifyState::unidentified;
@@ -228,6 +228,10 @@ int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
 int inv_getfreeid_force();
+
+
+void item_drop(Item& item_in_inventory, int num, bool building_shelter = false);
+void item_build_shelter(Item& shelter);
 
 
 enum class ItemDescriptionType : int

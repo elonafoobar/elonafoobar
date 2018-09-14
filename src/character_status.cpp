@@ -96,7 +96,7 @@ void modify_ether_disease_stage(int delta)
                 {
                     if (mode == 0)
                     {
-                        if (cdata.player().continuous_action_turn == 0)
+                        if (cdata.player().continuous_action.turn == 0)
                         {
                             gdata(215) = 1;
                             ghelp = 15;

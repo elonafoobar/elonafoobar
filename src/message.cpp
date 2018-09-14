@@ -1,4 +1,6 @@
 #include <ctype.h>
+#include <iomanip>
+#include <sstream>
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -93,7 +95,6 @@ namespace elona
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;
-    return;
 }
 
 
@@ -138,7 +139,6 @@ void anime_halt()
         redraw();
     }
     gmode(2);
-    return;
 }
 
 
@@ -150,7 +150,6 @@ void msg_halt()
     anime_halt();
     screenupdate = -1;
     update_screen();
-    return;
 }
 
 
@@ -160,7 +159,6 @@ void help_halt()
     x_at_txtfunc = wx + dx - 140;
     y_at_txtfunc = wy + dy - 1;
     anime_halt();
-    return;
 }
 
 
@@ -223,7 +221,6 @@ void msg_newline()
     }
     gmode(2);
     msgtempprev = "";
-    return;
 }
 
 
@@ -238,7 +235,6 @@ void txtnew()
             message_width = 2;
         }
     }
-    return;
 }
 
 
@@ -250,7 +246,6 @@ void msg_clear()
     {
         msg_newline();
     }
-    return;
 }
 
 
@@ -292,7 +287,10 @@ void txt_conv()
             }
             if (Config::instance().msgaddtime)
             {
-                msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);
+                std::stringstream ss;
+                ss << "[" << std::setw(2) << std::setfill('0')
+                   << game_data.date.minute << "] ";
+                msgtemp(0) = ss.str() + msgtemp(0);
             }
             else
             {

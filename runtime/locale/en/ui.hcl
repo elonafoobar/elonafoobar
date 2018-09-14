@@ -1,5 +1,8 @@
 locale {
     ui {
+        bye = "Bye bye."
+        more = "(More)"
+
         save = "*saving*"
         playtime = "${_1}:${_2}:${_3} Sec"
         save_on_suspend = "App focus was lost. Quicksaving game."

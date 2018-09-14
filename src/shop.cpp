@@ -34,15 +34,12 @@ void shop_refresh_on_talk()
         }
         else
         {
-            ++gdata_next_inventory_serial_id;
-            cdata[tc].shop_store_id = gdata_next_inventory_serial_id;
+            ++game_data.next_inventory_serial_id;
+            cdata[tc].shop_store_id = game_data.next_inventory_serial_id;
         }
         shop_refresh();
     }
-    else if (
-        gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12
-        >= cdata[tc].time_to_restore)
+    else if (game_data.date.hours() >= cdata[tc].time_to_restore)
     {
         shop_refresh();
     }
@@ -53,7 +50,6 @@ void shop_refresh_on_talk()
     }
     invfile = cdata[tc].shop_store_id;
     shop_load_shoptmp();
-    return;
 }
 
 void shop_load_shoptmp()
@@ -61,7 +57,6 @@ void shop_load_shoptmp()
     ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     mode = 0;
-    return;
 }
 
 void shop_refresh()
@@ -93,7 +88,7 @@ void shop_refresh()
     }
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        flt(calcobjlv(cdata[tc].shop_rank), calcfixlv(2));
+        flt(calcobjlv(cdata[tc].shop_rank), calcfixlv(Quality::bad));
         dbid = 0;
         if (cdata[tc].character_role == 1004)
         {
@@ -161,11 +156,11 @@ void shop_refresh()
             }
             if (rnd(3) == 0)
             {
-                fixlv = 3;
+                fixlv = Quality::great;
             }
             if (rnd(10) == 0)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
         }
         if (cdata[tc].character_role == 1006)
@@ -236,21 +231,21 @@ void shop_refresh()
             flttypemajor = choice(fsetwear);
             if (rnd(3) == 0)
             {
-                fixlv = 3;
+                fixlv = Quality::great;
             }
             if (rnd(10) == 0)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
         }
         if (cdata[tc].character_role == 1010
             || cdata[tc].character_role == 2003)
         {
             flttypemajor = choice(fsetwear);
-            fixlv = 3;
+            fixlv = Quality::great;
             if (rnd(2) == 0)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
         }
         if (cdata[tc].character_role == 1005)
@@ -600,7 +595,7 @@ void shop_refresh()
             flttypemajor = 60000;
         }
         calc_number_of_items_sold_at_shop();
-        inv[ci].set_number(rnd(rtval) + 1);
+        inv[ci].set_number(rnd(rtval(0)) + 1);
         if (cdata[tc].character_role == 1009)
         {
             p = trate(inv[ci].param1);
@@ -699,14 +694,12 @@ void shop_refresh()
     }
     if (Config::instance().restock_interval)
     {
-        cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-            + 24 * Config::instance().restock_interval;
+        cdata[tc].time_to_restore =
+            game_data.date.hours() + 24 * Config::instance().restock_interval;
     }
     else
     {
-        cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 - 1;
+        cdata[tc].time_to_restore = game_data.date.hours() - 1;
     }
 }
 
@@ -771,7 +764,6 @@ void calc_number_of_items_sold_at_shop()
         rtval = 1;
         return;
     }
-    return;
 }
 
 void calc_trade_goods_price()
@@ -846,16 +838,12 @@ void calc_trade_goods_price()
         trate(6) = 100;
         trate(7) = 70;
     }
-    randomize(
-        (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-         + gdata_year * 24 * 30 * 12)
-        / 100);
+    randomize(game_data.date.hours() / 100);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         trate(cnt) += rnd(15) - rnd(15);
     }
     randomize();
-    return;
 }
 
 void shop_sell_item()
@@ -872,7 +860,6 @@ void shop_sell_item()
         }
     }
     ctrl_inventory();
-    return;
 }
 
 } // namespace elona

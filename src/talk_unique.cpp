@@ -1,3 +1,4 @@
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -91,18 +92,6 @@ TalkResult talk_unique_orphe()
         return TalkResult::talk_end;
     }
     return TalkResult::talk_ignored;
-}
-
-
-TalkResult talk_unique_whom_dwell_in_the_vanity()
-{
-    listmax = 0;
-    buff = i18n::s.get("core.locale.talk.unique.whom_dwell_in_the_vanity");
-    tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
-    chatesc = 1;
-    ELONA_TALK_SCENE_CUT();
-    return TalkResult::talk_end;
 }
 
 
@@ -251,10 +240,10 @@ TalkResult talk_unique_loyter()
 
 void _miches_receive_reward()
 {
-    flt(calcobjlv(10), calcfixlv(3));
+    flt(calcobjlv(10), calcfixlv(Quality::good));
     itemcreate(
         -1, 449, cdata.player().position.x, cdata.player().position.y, 0);
-    flt(calcobjlv(10), calcfixlv(3));
+    flt(calcobjlv(10), calcfixlv(Quality::good));
     itemcreate(-1, 66, cdata.player().position.x, cdata.player().position.y, 0);
     flt();
     itemcreate(
@@ -1136,7 +1125,7 @@ void _slan_receive_reward()
 {
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         flttypemajor = fltsetdungeon();
         itemcreate(-1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
     }
@@ -1607,7 +1596,7 @@ void _karam_receive_reward()
 {
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         flttypemajor = fltsetdungeon();
         itemcreate(-1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
     }
@@ -1791,7 +1780,7 @@ TalkResult talk_unique_pael()
     if (gdata_pael_and_her_mom == 1000)
     {
         if (gdata_current_map == mdata_t::MapId::noyel
-            && adata(29, gdata_current_map))
+            && area_data[gdata_current_map].christmas_festival)
         {
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.pael.festival");
@@ -1999,7 +1988,7 @@ TalkResult talk_unique_paels_mom()
     if (gdata_pael_and_her_mom == 1000)
     {
         if (gdata_current_map == mdata_t::MapId::noyel
-            && adata(29, gdata_current_map))
+            && area_data[gdata_current_map].christmas_festival)
         {
             buff = i18n::s.get(
                 "core.locale.talk.unique.paels_mom.progress.festival.dialog");
@@ -4086,7 +4075,7 @@ void _doria_start_trial()
         {
             continue;
         }
-        if (cdata.tmp().quality >= 4)
+        if (cdata.tmp().quality >= Quality::miracle)
         {
             continue;
         }
@@ -4139,7 +4128,7 @@ void _doria_update_quota()
         {
             continue;
         }
-        if (cdata.tmp().quality >= 4)
+        if (cdata.tmp().quality >= Quality::miracle)
         {
             continue;
         }
@@ -4155,7 +4144,7 @@ void _doria_update_quota()
 void _doria_receive_reward()
 {
     gdata_fighters_guild_quota2 = 0;
-    flt(51 - gdata(128) / 200, calcfixlv(3));
+    flt(51 - gdata(128) / 200, calcfixlv(Quality::good));
     flttypemajor = 10000;
     itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
     flt();
@@ -4541,7 +4530,7 @@ void _strange_scientist_pick_reward()
         {
             continue;
         }
-        randomize(gdata_day + cnt);
+        randomize(game_data.date.day + cnt);
         f = 0;
         if (itemmemory(0, cnt))
         {
@@ -4570,11 +4559,11 @@ void _strange_scientist_pick_reward()
         }
         if (f)
         {
-            flt(cdata.player().level * 3 / 2, calcfixlv(3));
+            flt(cdata.player().level * 3 / 2, calcfixlv(Quality::good));
             int stat = itemcreate(-1, cnt, -1, -1, 0);
             if (stat == 1)
             {
-                if (inv[ci].quality < 4)
+                if (inv[ci].quality < Quality::miracle)
                 {
                     inv[ci].remove();
                 }
@@ -4841,7 +4830,7 @@ void _part_time_worker_switch_religion()
 TalkResult talk_unique_part_time_worker()
 {
     if (gdata_current_map != mdata_t::MapId::noyel
-        || adata(29, gdata_current_map) == 0)
+        || area_data[gdata_current_map].christmas_festival == 0)
     {
         return TalkResult::talk_end;
     }
@@ -4912,7 +4901,6 @@ TalkResult talk_unique()
     {
     case 2: return talk_unique_zeome();
     case 23: return talk_unique_orphe();
-    case 28: return talk_unique_whom_dwell_in_the_vanity();
     case 29: return talk_unique_loyter();
     case 30: return talk_unique_miches();
     case 31: return talk_unique_shena();

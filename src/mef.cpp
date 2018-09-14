@@ -57,7 +57,6 @@ void mef_delete(int prm_581)
         }
         --i_at_m79;
     }
-    return;
 }
 
 
@@ -114,7 +113,6 @@ void mef_add(
     mef(7, i_at_m79) = prm_589;
     mef(8, i_at_m79) = prm_590;
     map(pos_x, pos_y, 8) = i_at_m79 + 1;
-    return;
 }
 
 void mef_update()
@@ -132,7 +130,7 @@ void mef_update()
             {
                 if (mdata_map_type != mdata_t::MapType::world_map)
                 {
-                    if (gdata_weather == 3 || gdata_weather == 4)
+                    if (game_data.weather == 3 || game_data.weather == 4)
                     {
                         mef_delete(cnt);
                         continue;

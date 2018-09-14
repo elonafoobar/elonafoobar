@@ -1,6 +1,7 @@
 #include "ctrl_file.hpp"
 #include <set>
 #include "ability.hpp"
+#include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "elona.hpp"
@@ -210,8 +211,7 @@ void load_v1(
     const fs::path& filepath,
     elona_vector1<T>& data,
     size_t begin,
-    size_t end,
-    bool gzip = false)
+    size_t end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
@@ -220,7 +220,7 @@ void load_v1(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::BinaryIArchive ar(in, gzip);
+    putit::BinaryIArchive ar(in);
     for (size_t i = begin; i < end; ++i)
     {
         ar.load(data(i));
@@ -233,8 +233,7 @@ void save_v1(
     const fs::path& filepath,
     elona_vector1<T>& data,
     size_t begin,
-    size_t end,
-    bool gzip = false)
+    size_t end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
     if (out.fail())
@@ -242,7 +241,7 @@ void save_v1(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::BinaryOArchive ar(out, gzip);
+    putit::BinaryOArchive ar(out);
     for (size_t i = begin; i < end; ++i)
     {
         ar.save(data(i));
@@ -257,8 +256,7 @@ void load_v2(
     size_t i_begin,
     size_t i_end,
     size_t j_begin,
-    size_t j_end,
-    bool gzip = false)
+    size_t j_end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
@@ -266,7 +264,7 @@ void load_v2(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::BinaryIArchive ar{in, gzip};
+    putit::BinaryIArchive ar{in};
     for (size_t j = j_begin; j < j_end; ++j)
     {
         for (size_t i = i_begin; i < i_end; ++i)
@@ -284,8 +282,7 @@ void save_v2(
     size_t i_begin,
     size_t i_end,
     size_t j_begin,
-    size_t j_end,
-    bool gzip = false)
+    size_t j_end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
     if (out.fail())
@@ -293,7 +290,7 @@ void save_v2(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::BinaryOArchive ar{out, gzip};
+    putit::BinaryOArchive ar{out};
     for (size_t j = j_begin; j < j_end; ++j)
     {
         for (size_t i = i_begin; i < i_end; ++i)
@@ -313,8 +310,7 @@ void load_v3(
     size_t j_begin,
     size_t j_end,
     size_t k_begin,
-    size_t k_end,
-    bool gzip = false)
+    size_t k_end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
@@ -322,7 +318,7 @@ void load_v3(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::BinaryIArchive ar{in, gzip};
+    putit::BinaryIArchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
     {
         for (size_t j = j_begin; j < j_end; ++j)
@@ -345,8 +341,7 @@ void save_v3(
     size_t j_begin,
     size_t j_end,
     size_t k_begin,
-    size_t k_end,
-    bool gzip = false)
+    size_t k_end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
     if (out.fail())
@@ -354,7 +349,7 @@ void save_v3(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::BinaryOArchive ar{out, gzip};
+    putit::BinaryOArchive ar{out};
     for (size_t k = k_begin; k < k_end; ++k)
     {
         for (size_t j = j_begin; j < j_end; ++j)
@@ -420,8 +415,6 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 // - other things...
 void fmode_7_8(bool read, const fs::path& dir)
 {
-    foobar_data.version = latest_version;
-
     if (!fs::exists(dir))
     {
         fs::create_directory(dir);
@@ -435,16 +428,31 @@ void fmode_7_8(bool read, const fs::path& dir)
     }
 
     {
+        const auto filepath = dir / u8"version.s0";
+        if (read)
+        {
+            // Do nothing.
+        }
+        else
+        {
+            auto v = latest_version;
+            putit::BinaryOArchive::save(filepath, v);
+        }
+    }
+
+    {
         const auto filepath = dir / u8"gdata.s1";
         if (read)
         {
             if (fs::exists(filepath))
             {
                 load_v1(filepath, gdata, 0, 1000);
+                game_data.unpack_from(gdata);
             }
         }
         else
         {
+            game_data.pack_to(gdata);
             save_v1(filepath, gdata, 0, 1000);
         }
     }
@@ -455,16 +463,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath.native(), std::ios::binary};
-                putit::BinaryIArchive ar{in};
-                ar.load(foobar_data);
+                putit::BinaryIArchive::load(filepath, foobar_data);
             }
         }
         else
         {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
-            ar.save(foobar_data);
+            putit::BinaryOArchive::save(filepath, foobar_data);
         }
     }
 
@@ -603,10 +607,12 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load_v2(filepath, adata, 0, 40, 0, 500);
+                area_data.unpack_from(adata);
             }
         }
         else
         {
+            area_data.pack_to(adata);
             save_v2(filepath, adata, 0, 40, 0, 500);
         }
     }
@@ -1134,15 +1140,14 @@ void fmode_16()
         0,
         mdata_map_height,
         0,
-        3,
-        true);
+        3);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
     {
         return;
     }
-    load_v2(filepath, cmapdata, 0, 5, 0, 400, true);
+    load_v2(filepath, cmapdata, 0, 5, 0, 400);
 }
 
 
@@ -1160,7 +1165,7 @@ void fmode_5_6(bool read)
         const auto filepath = fmapfile + u8".idx"s;
         if (read)
         {
-            load_v1(filepath, mdatatmp, 0, 100, true);
+            load_v1(filepath, mdatatmp, 0, 100);
             for (int j = 0; j < 5; ++j)
             {
                 mdata(j) = mdatatmp(j);
@@ -1168,7 +1173,7 @@ void fmode_5_6(bool read)
         }
         else
         {
-            save_v1(filepath, mdata, 0, 100, true);
+            save_v1(filepath, mdata, 0, 100);
         }
     }
 
@@ -1182,28 +1187,12 @@ void fmode_5_6(bool read)
                 mdata_map_width,
                 mdata_map_height); // TODO length_exception
             load_v3(
-                filepath,
-                map,
-                0,
-                mdata_map_width,
-                0,
-                mdata_map_height,
-                0,
-                10,
-                true);
+                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
         }
         else
         {
             save_v3(
-                filepath,
-                map,
-                0,
-                mdata_map_width,
-                0,
-                mdata_map_height,
-                0,
-                10,
-                true);
+                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
         }
     }
 
@@ -1213,12 +1202,12 @@ void fmode_5_6(bool read)
         {
             if (fs::exists(filepath))
             {
-                load_v2(filepath, cmapdata, 0, 5, 0, 400, true);
+                load_v2(filepath, cmapdata, 0, 5, 0, 400);
             }
         }
         else
         {
-            save_v2(filepath, cmapdata, 0, 5, 0, 400, true);
+            save_v2(filepath, cmapdata, 0, 5, 0, 400);
         }
     }
 }
@@ -1434,10 +1423,8 @@ void fmode_11_12(FileOperation file_operation)
 // deletes files inside the temporary directory (tmp/)
 void fmode_13()
 {
-    for (int i = 0; i < 40; ++i)
-    {
-        adata(i, area) = 0;
-    }
+    area_data[area].clear();
+
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::save(playerid),
              filesystem::DirEntryRange::Type::file,

@@ -55,7 +55,6 @@ void casino_dealer()
         return;
     }
     casino_acquire_items();
-    return;
 }
 
 void casino_choose_card()
@@ -289,7 +288,6 @@ void casino_adv_draw_mat()
     }
     gmode(2);
     atxpic = 0;
-    return;
 }
 
 void casino_fade_in_choices()
@@ -309,7 +307,6 @@ void casino_fade_in_choices()
         await(15);
         redraw();
     }
-    return;
 }
 
 void casino_prepare_choice_graphic()
@@ -351,7 +348,6 @@ void casino_prepare_choice_graphic()
     gsel(0);
     gmode(2);
     cs = 0;
-    return;
 }
 
 void casino_acquire_items()
@@ -385,7 +381,6 @@ void casino_acquire_items()
     await(100);
     snd(39);
     play_music();
-    return;
 }
 
 void casino_random_site()
@@ -851,7 +846,6 @@ void casino_adv_finish_search()
     txtadvscreenupdate = 1;
     casino_choose_card();
     casino_acquire_items();
-    return;
 }
 
 void casino_wrapper()
@@ -1165,7 +1159,7 @@ bool casino_blackjack()
             {
                 p = 60;
             }
-            if (rnd(sdata(12, 0)) < rnd(p))
+            if (rnd(sdata(12, 0)) < rnd(p(0)))
             {
                 atxinit();
                 noteadd(i18n::s.get(
@@ -1201,27 +1195,27 @@ bool casino_blackjack()
             "core.locale.casino.blackjack.game.total_wins", winrow));
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            i = 2;
+            Quality quality = Quality::good;
             if (winrow > 2)
             {
-                i = 3;
+                quality = Quality::great;
             }
             if (winrow > 7)
             {
                 if (stake >= 5)
                 {
-                    i = 4;
+                    quality = Quality::miracle;
                 }
             }
             if (winrow > 15)
             {
                 if (stake >= 20)
                 {
-                    i = 5;
+                    quality = Quality::godly;
                 }
             }
             flt(calcobjlv(rnd(stake + winrow * 2) + winrow * 3 / 2 + stake / 2),
-                i);
+                quality);
             flttypemajor = choice(fsetwear);
             itemcreate(-1, 0, -1, -1, 0);
             if (inv[ci].number() == 0)

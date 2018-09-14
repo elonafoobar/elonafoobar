@@ -242,7 +242,6 @@ static void _trainer_get_gainable_skills()
             ++listmax;
         }
     }
-    return;
 }
 
 static void _load_skill_list(CharacterSheetOperation op)
@@ -580,6 +579,7 @@ static void _draw_portrait_face()
     if (cdata[cc].portrait >= 0)
     {
         int portrait_id = cdata[cc].sex * 64 + cdata[cc].portrait;
+        boxf(wx + 560, wy + 27, 80, 112, snail::Color{0, 0, 0, 255});
         pos(wx + 560, wy + 27);
         gcopy(4, portrait_id % 16 * 48, portrait_id / 16 * 72, 48, 72, 80, 112);
     }
@@ -591,6 +591,7 @@ static void _draw_portrait_face()
         {
             if (fs::exists(filepath))
             {
+                boxf(wx + 560, wy + 27, 80, 112, snail::Color{0, 0, 0, 255});
                 pos(wx + 560, wy + 27);
                 gcopy(4, 0, 0, 80, 112, 80, 112);
             }
@@ -893,10 +894,10 @@ static void _draw_first_page_stats_fame()
 static void _draw_first_page_stats_time()
 {
     s(0) = i18n::s.get(
-        "core.locale.ui.chara_sheet.time.turn_counter", gdata_play_turns);
+        "core.locale.ui.chara_sheet.time.turn_counter", game_data.play_turns);
     s(1) = i18n::s.get(
-        "core.locale.ui.chara_sheet.time.days_counter", gdata_play_days);
-    s(2) = ""s + gdata_kill_count;
+        "core.locale.ui.chara_sheet.time.days_counter", game_data.play_days);
+    s(2) = ""s + game_data.kill_count;
     s(3) = ""s
         + cnvplaytime((gdata_play_time + timeGetTime() / 1000 - time_begin));
     s(4) = "";
@@ -916,7 +917,7 @@ static void _draw_first_page_stats_weight()
         cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s + cnveqweight(cc);
     s(3) = i18n::s.get(
         "core.locale.ui.chara_sheet.weight.level_counter",
-        cnvrank(gdata_deepest_dungeon_level));
+        cnvrank(game_data.deepest_dungeon_level));
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         pos(wx + 287 + en * 14, wy + 299 + cnt * 15);

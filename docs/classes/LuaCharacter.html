@@ -30,10 +30,10 @@
     <a href="../index.html"><h1 style="padding-top: 8px">Lua API</h1></a>
 
     <!-- project description -->
-    <p class="project-desc">ElonaFoobar Mod API</p>
+    <p class="project-desc">Elona foobar Mod API</p>
 
     <!-- project full description -->
-    <span>  Core API for modding ElonaFoobar</span>
+    <span>  Core API for modding Elona foobar</span>
     </div>
 
 
@@ -52,6 +52,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Modules</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
@@ -59,13 +60,18 @@
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
     </ul>
     </li>
@@ -75,6 +81,8 @@
     <h2 class="uk-panel-title">Topics</h2>
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/readme.md.html"><span class="module-name-item">readme.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n.md.html"><span class="module-name-item">i18n.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n_functions.md.html"><span class="module-name-item">i18n_functions.md</span></a></div></li>
     </ul>
     </li>
     </ul>
@@ -82,6 +90,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Examples</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     </ul>
     </li>
@@ -118,7 +127,7 @@
     <!-- module content header start -->
 
     <h2><span class="body-module-name"><strong><em>LuaCharacter</em></strong></span> classmod</h2>
-    <p>Represents a character.</p>
+    <p>Represents this character.</p>
     <p>
 
 </p>
@@ -187,6 +196,10 @@
     <td class="name"><a href="#LuaCharacter.character_role">LuaCharacter.character_role</a></td>
     <td class="summary">[RW] The role this character takes on.</td>
     </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter.experience">LuaCharacter.experience</a></td>
+    <td class="summary">[RW] The character's current experience points.</td>
+    </tr>
     </tbody>
     </table>
     <table class="section-content-list">
@@ -213,15 +226,39 @@
     </tr>
     <tr>
     <td class="name"><a href="#LuaCharacter:set_flag">LuaCharacter:set_flag (flag, value)</a></td>
-    <td class="summary">Sets a flag on a character.</td>
+    <td class="summary">Sets a flag on this character.</td>
     </tr>
     <tr>
     <td class="name"><a href="#LuaCharacter:gain_skill">LuaCharacter:gain_skill (id, initial_level[, initial_stock])</a></td>
-    <td class="summary">Makes a character gain a new skill or spell.</td>
+    <td class="summary">Makes this character gain a new skill or spell.</td>
     </tr>
     <tr>
     <td class="name"><a href="#LuaCharacter:gain_skill_exp">LuaCharacter:gain_skill_exp (id, amount)</a></td>
-    <td class="summary">Makes a character gain experience in a skill or spell.</td>
+    <td class="summary">Makes this character gain experience in a skill or spell.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:modify_resistance">LuaCharacter:modify_resistance (element, delta)</a></td>
+    <td class="summary">Modifies this character's resistance.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:modify_sanity">LuaCharacter:modify_sanity (delta)</a></td>
+    <td class="summary">Modifies this character's sanity.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:modify_karma">LuaCharacter:modify_karma (delta)</a></td>
+    <td class="summary">Modifies this character's karma.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:modify_corruption">LuaCharacter:modify_corruption (delta)</a></td>
+    <td class="summary">Modifies this character's ether corruption.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:make_pregnant">LuaCharacter:make_pregnant ()</a></td>
+    <td class="summary">Makes this character pregnant.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:eat_rotten_food">LuaCharacter:eat_rotten_food ()</a></td>
+    <td class="summary">Applies the effects of eating rotten food to this character.</td>
     </tr>
     </tbody>
     </table>
@@ -866,6 +903,59 @@
     <!-- usage end -->
 
     </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter.experience" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter.experience">LuaCharacter.experience</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">[RW] The character's current experience points.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-module-field-li">
+
+    <strong><em>experience</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+
+
+
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
     </dl>
     <h3><span id="Methods" class="section-title"><a href="#Methods">Methods</a></span></h3>
     <dl class="section-body-container">
@@ -1129,10 +1219,10 @@ chara:apply_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Sets a flag on a character.</p>
+    <p class="section-item-summary">Sets a flag on this character.</p>
     <p class="section-item-description"> <b>Note</b>: Currently, all flags up
  to <code>IsQuickTempered</code> are "intrinsic" and are always
- reset when a character is refreshed each turn. To change these
+ reset when this character is refreshed each turn. To change these
  flags, you must call this function inside a handler for
  <code>Event.EventKind.CharaRefreshed</code>, or the flag will be
  reset later.</p>
@@ -1199,7 +1289,7 @@ chara:apply_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>
   chara:set_flag(Enums.CharaFlag.IsInvisible, <span class="keyword">true</span>) <span class="comment">-- intrinsic, reset on refresh
 </span><span class="keyword">end</span>
 
-<span class="comment">-- force this flag to be overridden after a character is refreshed.
+<span class="comment">-- force this flag to be overridden after this character is refreshed.
 </span>Event.register(Event.EventKind.CharaRefreshed, make_invisible)
 Event.register(Event.EventKind.CharaCreated, make_invisible)</code></pre>
     <!-- usage end -->
@@ -1215,7 +1305,7 @@ Event.register(Event.EventKind.CharaCreated, make_invisible)</code></pre>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Makes a character gain a new skill or spell.</p>
+    <p class="section-item-summary">Makes this character gain a new skill or spell.</p>
     <p class="section-item-description"> This only has an
  effect if the character does not already know the skill/spell.</p>
 
@@ -1299,7 +1389,7 @@ Event.register(Event.EventKind.CharaCreated, make_invisible)</code></pre>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Makes a character gain experience in a skill or spell.</p>
+    <p class="section-item-summary">Makes this character gain experience in a skill or spell.</p>
     <p class="section-item-description"> This only
  has an effect if the character already knows the skill/spell.</p>
 
@@ -1356,6 +1446,285 @@ Event.register(Event.EventKind.CharaCreated, make_invisible)</code></pre>
     <!-- usage end -->
 
     </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:modify_resistance" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:modify_resistance">LuaCharacter:modify_resistance (element, delta)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Modifies this character's resistance.</p>
+    <p class="section-item-description"> Since the effect is
+ permanent, once your resistance is modified, it will not be reset
+ on refreshing.</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>element</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the corresponding element
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>delta</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the amount of increase/decrease (can be negative)
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:modify_sanity" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:modify_sanity">LuaCharacter:modify_sanity (delta)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Modifies this character's sanity.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>delta</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the amount of increase/decrease (can be negative)
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:modify_karma" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:modify_karma">LuaCharacter:modify_karma (delta)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Modifies this character's karma.</p>
+    <p class="section-item-description"> Currently only has an effect if
+ the character is the player.</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>delta</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the amount of increase/decrease (can be negative)
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:modify_corruption" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:modify_corruption">LuaCharacter:modify_corruption (delta)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Modifies this character's ether corruption.</p>
+    <p class="section-item-description"> Currently only has an
+ effect if the character is the player.</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>delta</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the amount of increase/decrease (can be negative)
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:make_pregnant" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:make_pregnant">LuaCharacter:make_pregnant ()</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Makes this character pregnant.</p>
+    <p class="section-item-description"> Only has an effect if the character
+ is not already pregnant.</p>
+
+    <!-- parameters start -->
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:eat_rotten_food" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:eat_rotten_food">LuaCharacter:eat_rotten_food ()</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Applies the effects of eating rotten food to this character.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
     </dl>
 
     <!-- section end -->
@@ -1371,7 +1740,7 @@ Event.register(Event.EventKind.CharaCreated, make_invisible)</code></pre>
     <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
     </div>
     <div class="content-footer column col-9 col-sm-12">
-    <i>Last updated 2018-06-10 11:00:06 UTC</i>
+    <i>Last updated 2018-09-10 14:50:37 UTC</i>
     </div>
     </div>
     </div>

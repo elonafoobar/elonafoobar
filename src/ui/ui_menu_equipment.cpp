@@ -142,7 +142,7 @@ static void _draw_window_deco(bool show_resistances)
     gcopy(3, 960, 96, 96, 120);
     pos(wx, wy + wh - 164);
     gcopy(3, 960, 216, 72, 144);
-    if (!show_resistances)
+    if (show_resistances)
     {
         pos(wx + 320, wy + 40);
         mes(i18n::s.get("core.locale.ui.equip.resist"));

@@ -196,7 +196,7 @@ void render_weather_effect_snow()
         pos(particle.x, particle.y);
         gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == Position{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
             particle.x = rnd(windoww);
             particle.y = -rnd(windowh / 2);
@@ -235,7 +235,7 @@ void render_weather_effect_etherwind()
         pos(particle.x, particle.y);
         gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == Position{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
             particle.x = rnd(windoww);
             particle.y = windowh - inf_verh - 8 - rnd(100);
@@ -261,7 +261,7 @@ void render_weather_effect()
     if (mdata_map_indoors_flag != 2)
         return;
 
-    switch (gdata_weather)
+    switch (game_data.weather)
     {
     case 3: render_weather_effect_rain(); break;
     case 4: render_weather_effect_hard_rain(); break;
@@ -270,7 +270,7 @@ void render_weather_effect()
     default: break;
     }
 
-    weatherbk = gdata_weather;
+    weatherbk = game_data.weather;
     gmode(2);
 }
 
@@ -547,7 +547,7 @@ void render_clock()
         "clock_hand",
         inf_clockarrowx,
         inf_clockarrowy,
-        gdata_hour * 30 + gdata_minute / 2);
+        game_data.date.hour * 30 + game_data.date.minute / 2);
     // Long hand
     draw_rotated(
         "clock_hand",
@@ -555,13 +555,14 @@ void render_clock()
         inf_clockarrowy,
         info.width / 2,
         info.height,
-        gdata_minute * 6);
+        game_data.date.minute * 6);
 
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
+    mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s
+        + game_data.date.day);
     bmes(
-        i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
-            + i18n::_(u8"ui", u8"weather", u8"_"s + gdata_weather),
+        i18n::_(u8"ui", u8"time", u8"_"s + game_data.date.hour / 4) + u8" "s
+            + i18n::_(u8"ui", u8"weather", u8"_"s + game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
 }
@@ -1284,7 +1285,7 @@ void render_hud()
         {
             if (mdata_map_type != mdata_t::MapType::world_map)
             {
-                if (cdata.player().continuous_action_id == 0)
+                if (!cdata.player().continuous_action)
                 {
                     gmode(4, 150);
                 }
@@ -1328,22 +1329,25 @@ void load_continuous_action_animation()
 {
     gsel(9);
     pos(0, 0);
-    if (cdata.player().continuous_action_id == 5)
+    if (cdata.player().continuous_action.type
+        == ContinuousAction::Type::dig_wall)
     {
         picload(filesystem::dir::graphic() / u8"anime1.bmp");
     }
-    if (cdata.player().continuous_action_id == 7)
+    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre)
         {
             picload(filesystem::dir::graphic() / u8"anime2.bmp");
         }
     }
-    if (cdata.player().continuous_action_id == 8)
+    if (cdata.player().continuous_action.type
+        == ContinuousAction::Type::search_material)
     {
         picload(filesystem::dir::graphic() / u8"anime3.bmp");
     }
-    if (cdata.player().continuous_action_id == 9)
+    if (cdata.player().continuous_action.type
+        == ContinuousAction::Type::dig_ground)
     {
         picload(filesystem::dir::graphic() / u8"anime4.bmp");
     }
@@ -1359,14 +1363,15 @@ void render_autoturn_animation()
         load_continuous_action_animation();
     }
     if (msgtemp != ""s
-        || (cdata.player().continuous_action_id == 7 && rowactre == 0
-            && fishanime == 0))
+        || (cdata.player().continuous_action.type
+                == ContinuousAction::Type::fish
+            && rowactre == 0 && fishanime == 0))
     {
         ui_render_non_hud();
         msgtemp = "";
         render_hud();
     }
-    if (cdata.player().continuous_action_id == 7)
+    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre == 0 && Config::instance().animewait != 0)
         {
@@ -1382,12 +1387,17 @@ void render_autoturn_animation()
     font(13 - en * 2, snail::Font::Style::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     gmode(2);
-    draw_rotated("hourglass", sx + 18, sy + 12, gdata_minute / 4 * 24);
+    draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
 
-    if (cdata.player().continuous_action_id == 9
-        || cdata.player().continuous_action_id == 5
-        || cdata.player().continuous_action_id == 8
-        || (cdata.player().continuous_action_id == 7 && rowactre != 0))
+    if (cdata.player().continuous_action.type
+            == ContinuousAction::Type::dig_ground
+        || cdata.player().continuous_action.type
+            == ContinuousAction::Type::dig_wall
+        || cdata.player().continuous_action.type
+            == ContinuousAction::Type::search_material
+        || (cdata.player().continuous_action.type
+                == ContinuousAction::Type::fish
+            && rowactre != 0))
     {
         if (Config::instance().animewait != 0)
         {
@@ -1398,7 +1408,8 @@ void render_autoturn_animation()
                 {
                     gmode(0);
                     pos(sx + 2, sy - 102);
-                    if (cdata.player().continuous_action_id == 5)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::dig_wall)
                     {
                         if (cnt == 2)
                         {
@@ -1407,7 +1418,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2);
                     }
-                    if (cdata.player().continuous_action_id == 7)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::fish)
                     {
                         if (racount == 0)
                         {
@@ -1419,7 +1431,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2.5);
                     }
-                    if (cdata.player().continuous_action_id == 8)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::search_material)
                     {
                         if (cnt == 4)
                         {
@@ -1428,7 +1441,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2.75);
                     }
-                    if (cdata.player().continuous_action_id == 9)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::dig_ground)
                     {
                         if (cnt == 2)
                         {

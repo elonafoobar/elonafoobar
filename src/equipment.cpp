@@ -77,7 +77,6 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             color(0, 0, 0);
         }
     }
-    return;
 }
 
 
@@ -129,7 +128,6 @@ void eqrandweaponmage(int prm_929)
         eqweapon1(0) = 10006;
         eqweapon1(1) = prm_929;
     }
-    return;
 }
 
 void wear_most_valuable_equipment_for_all_body_parts()
@@ -143,7 +141,6 @@ void wear_most_valuable_equipment_for_all_body_parts()
         }
         wear_most_valuable_equipment();
     }
-    return;
 }
 
 
@@ -208,7 +205,6 @@ void wear_most_valuable_equipment()
             }
         }
     }
-    return;
 }
 
 
@@ -250,11 +246,11 @@ void supply_new_equipment()
         }
         if (cdata[rc].character_role == 13)
         {
-            flt(cdata[rc].level, 3);
+            flt(cdata[rc].level, Quality::great);
         }
         else
         {
-            flt(cdata[rc].level, calcfixlv(2));
+            flt(cdata[rc].level, calcfixlv(Quality::bad));
         }
         mustequip = 0;
         for (int cnt = 0; cnt < 30; ++cnt)
@@ -325,7 +321,7 @@ void supply_new_equipment()
             break;
         }
         inv[ci].identification_state = IdentifyState::completely_identified;
-        if (inv[ci].quality >= 4)
+        if (inv[ci].quality >= Quality::miracle)
         {
             if (the_item_db[inv[ci].id]->category < 50000)
             {
@@ -344,7 +340,6 @@ void supply_new_equipment()
             }
         }
     }
-    return;
 }
 
 
@@ -396,17 +391,17 @@ void supply_initial_equipments()
         fixeq = 0;
         probeq = 10;
     }
-    else if (cdata[rc].quality <= 2)
+    else if (cdata[rc].quality <= Quality::good)
     {
         probeq = 3;
         fixeq = 0;
     }
-    else if (cdata[rc].quality == 3)
+    else if (cdata[rc].quality == Quality::great)
     {
         probeq = 6;
         fixeq = 0;
     }
-    else if (cdata[rc].quality == 4)
+    else if (cdata[rc].quality == Quality::miracle)
     {
         probeq = 8;
         fixeq = 1;
@@ -633,7 +628,7 @@ void supply_initial_equipments()
             eqcloack(1) = 1;
         }
     }
-    if (cdata[rc].quality >= 4)
+    if (cdata[rc].quality >= Quality::miracle)
     {
         for (int cnt = 0; cnt < 2; ++cnt)
         {
@@ -739,7 +734,7 @@ void supply_initial_equipments()
                 if (eqamulet1 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqamulet1(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqamulet1(1))));
                     flttypeminor = eqamulet1;
                     dbid = -1;
                 }
@@ -759,7 +754,7 @@ void supply_initial_equipments()
                 if (eqamulet2 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqamulet2(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqamulet2(1))));
                     flttypeminor = eqamulet2;
                     dbid = -1;
                 }
@@ -782,7 +777,7 @@ void supply_initial_equipments()
                 if (eqring1 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqring1(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqring1(1))));
                     flttypeminor = eqring1;
                     dbid = -1;
                 }
@@ -802,7 +797,7 @@ void supply_initial_equipments()
                 if (eqring2 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqring2(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqring2(1))));
                     flttypeminor = eqring2;
                     dbid = -1;
                 }
@@ -825,7 +820,7 @@ void supply_initial_equipments()
                 if (eqcloack >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqcloack(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqcloack(1))));
                     flttypeminor = eqcloack;
                     dbid = -1;
                 }
@@ -849,7 +844,7 @@ void supply_initial_equipments()
                 if (eqgirdle >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqgirdle(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqgirdle(1))));
                     flttypeminor = eqgirdle;
                     dbid = -1;
                 }
@@ -873,7 +868,7 @@ void supply_initial_equipments()
                 if (eqhelm >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqhelm(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqhelm(1))));
                     flttypeminor = eqhelm;
                     dbid = -1;
                 }
@@ -897,7 +892,7 @@ void supply_initial_equipments()
                 if (eqarmor >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqarmor(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqarmor(1))));
                     flttypeminor = eqarmor;
                     dbid = -1;
                 }
@@ -921,7 +916,7 @@ void supply_initial_equipments()
                 if (eqglove >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqglove(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqglove(1))));
                     flttypeminor = eqglove;
                     dbid = -1;
                 }
@@ -945,7 +940,7 @@ void supply_initial_equipments()
                 if (eqboots >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqboots(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqboots(1))));
                     flttypeminor = eqboots;
                     dbid = -1;
                 }
@@ -968,7 +963,8 @@ void supply_initial_equipments()
             {
                 for (int cnt = 0; cnt < 15; ++cnt)
                 {
-                    flt(calcobjlv(cdata[rc].level), calcfixlv(2 + fixeq));
+                    flt(calcobjlv(cdata[rc].level),
+                        calcfixlv(static_cast<Quality>(2 + fixeq)));
                     itemcreate(rc, eqmultiweapon, -1, -1, 0);
                     if (inv[ci].weight > 1500)
                     {
@@ -992,7 +988,8 @@ void supply_initial_equipments()
                     for (int cnt = 0; cnt < 15; ++cnt)
                     {
                         flt(calcobjlv(cdata[rc].level),
-                            calcfixlv(fixeq + eqweapon1(1)));
+                            calcfixlv(
+                                static_cast<Quality>(fixeq + eqweapon1(1))));
                         flttypeminor = eqweapon1;
                         dbid = -1;
                         itemcreate(rc, dbid, -1, -1, 0);
@@ -1039,7 +1036,8 @@ void supply_initial_equipments()
                     for (int cnt = 0; cnt < 15; ++cnt)
                     {
                         flt(calcobjlv(cdata[rc].level),
-                            calcfixlv(fixeq + eqweapon2(1)));
+                            calcfixlv(
+                                static_cast<Quality>(fixeq + eqweapon2(1))));
                         flttypeminor = eqweapon2;
                         dbid = -1;
                         itemcreate(rc, dbid, -1, -1, 0);
@@ -1073,7 +1071,7 @@ void supply_initial_equipments()
                 if (eqshield >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqshield(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqshield(1))));
                     flttypeminor = eqshield;
                     dbid = -1;
                 }
@@ -1097,7 +1095,7 @@ void supply_initial_equipments()
                 if (eqrange >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqrange(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqrange(1))));
                     flttypeminor = eqrange;
                     dbid = -1;
                 }
@@ -1121,7 +1119,7 @@ void supply_initial_equipments()
                 if (eqammo >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
-                        calcfixlv(fixeq + eqammo(1)));
+                        calcfixlv(static_cast<Quality>(fixeq + eqammo(1))));
                     flttypeminor = eqammo;
                     dbid = -1;
                 }
@@ -1174,7 +1172,6 @@ void supply_initial_equipments()
     eqtwohand = 0;
     eqtwowield = 0;
     eqmultiweapon = 0;
-    return;
 }
 
 void colorres(int)
@@ -1224,7 +1221,6 @@ void colorres(int)
     {
         color(150, 50, 0);
     }
-    return;
 }
 
 } // namespace elona

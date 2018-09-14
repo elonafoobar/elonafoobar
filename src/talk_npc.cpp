@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "adventurer.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -253,21 +254,26 @@ TalkResult talk_arena_master(int chatval_)
     gdata(74) = calcfame(
         0,
         (220 - gdata(120) / 50)
-                * (100 + clamp(adata(22, gdata_current_map), 0, 50)) / 100
+                * (100
+                   + clamp(
+                         area_data[gdata_current_map].winning_streak_in_arena,
+                         0,
+                         50))
+                / 100
             + 2);
     listmax = 0;
-    randomize(adata(26, gdata_current_map));
+    randomize(area_data[gdata_current_map].time_of_next_arena);
     if (chatval_ == 21)
     {
-        if (adata(26, gdata_current_map) > gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+        if (area_data[gdata_current_map].time_of_next_arena
+            > game_data.date.hours())
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
                 cdata[tc]);
             return TalkResult::talk_npc;
         }
-        randomize(adata(24, gdata_current_map));
+        randomize(area_data[gdata_current_map].arena_random_seed);
         for (int cnt = 0; cnt < 50; ++cnt)
         {
             arenaop(0) = 0;
@@ -283,7 +289,7 @@ TalkResult talk_arena_master(int chatval_)
             }
             minlevel = arenaop(1) / 3 * 2;
             flt(arenaop(1));
-            fixlv = arenaop(2);
+            fixlv = static_cast<Quality>(arenaop(2));
             chara_create(56, 0, -3, 0);
             if (cmshade)
             {
@@ -308,8 +314,8 @@ TalkResult talk_arena_master(int chatval_)
     }
     else
     {
-        if (adata(27, gdata_current_map) > gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+        if (area_data[gdata_current_map].time_of_next_rumble
+            > game_data.date.hours())
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
@@ -341,13 +347,13 @@ TalkResult talk_arena_master(int chatval_)
     }
     if (arenaop == 0)
     {
-        adata(26, gdata_current_map) = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
+        area_data[gdata_current_map].time_of_next_arena =
+            game_data.date.hours() + 24;
     }
     if (arenaop == 1)
     {
-        adata(27, gdata_current_map) = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
+        area_data[gdata_current_map].time_of_next_rumble =
+            game_data.date.hours() + 24;
     }
     gdata_executing_immediate_quest_type = 1;
     gdata(71) = 1;
@@ -369,7 +375,13 @@ TalkResult talk_pet_arena_master(int chatval_)
     gdata(74) = calcfame(
         0,
         (220 - gdata(121) / 50)
-                * (50 + clamp(adata(23, gdata_current_map), 0, 50)) / 100
+                * (50
+                   + clamp(
+                         area_data[gdata_current_map]
+                             .winning_streak_in_pet_arena,
+                         0,
+                         50))
+                / 100
             + 2);
     listmax = 0;
     if (chatval_ == 40)
@@ -443,7 +455,7 @@ TalkResult talk_pet_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(23, gdata_current_map),
+        area_data[gdata_current_map].winning_streak_in_pet_arena,
         cdata[tc]);
     return TalkResult::talk_npc;
 }
@@ -452,7 +464,7 @@ TalkResult talk_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(22, gdata_current_map),
+        area_data[gdata_current_map].winning_streak_in_arena,
         cdata[tc]);
     return TalkResult::talk_npc;
 }
@@ -663,7 +675,7 @@ TalkResult talk_slave_buy(int chatval_)
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         flt(cdata.player().level / 2 + 5);
-        fixlv = 2;
+        fixlv = Quality::good;
         if (chatval_ == 36)
         {
             fltn(u8"man"s);
@@ -1007,8 +1019,7 @@ TalkResult talk_adventurer_hire()
         cdata.player().gold -= calchireadv(tc);
         cdata[tc].relationship = 10;
         cdata[tc].is_contracting() = true;
-        cdata[tc].period_of_contract = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
+        cdata[tc].period_of_contract = game_data.date.hours() + 168;
         ++cdata[tc].hire_count;
         snd(64);
         txtef(5);
@@ -1267,13 +1278,13 @@ TalkResult talk_caravan_master_hire()
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return TalkResult::talk_npc;
     }
-    gdata_destination_map = adata(30, chatval_);
+    gdata_destination_map = area_data[chatval_].outer_map;
     gdata_destination_dungeon_level = 1;
     levelexitby = 4;
     gdata(79) = 1;
-    gdata(850) = adata(30, chatval_);
-    gdata_pc_x_in_world_map = adata(1, chatval_);
-    gdata_pc_y_in_world_map = adata(2, chatval_);
+    gdata(850) = area_data[chatval_].outer_map;
+    game_data.pc_x_in_world_map = area_data[chatval_].position.x;
+    game_data.pc_y_in_world_map = area_data[chatval_].position.y;
     fixtransfermap = 1;
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -1686,7 +1697,7 @@ TalkResult talk_quest_giver()
                 {
                     dbid = 0;
                 }
-                flt(qdata(5, rq) + cnt, 1);
+                flt(qdata(5, rq) + cnt, Quality::bad);
                 fltn(u8"man"s);
                 int stat = chara_create(56, dbid, -3, 0);
                 f = stat;
@@ -1819,8 +1830,7 @@ TalkResult talk_npc()
                         }
                     }
                     cdata[tc].interest -= rnd(30);
-                    cdata[tc].time_interest_revive = gdata_hour + gdata_day * 24
-                        + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 8;
+                    cdata[tc].time_interest_revive = game_data.date.hours() + 8;
                 }
             }
         }
@@ -1945,7 +1955,8 @@ TalkResult talk_npc()
             13,
             i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat") + u8" ("s
                 + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
-        if (gdata_weather == 1 || gdata_weather == 4 || gdata_weather == 2)
+        if (game_data.weather == 1 || game_data.weather == 4
+            || game_data.weather == 2)
         {
             ELONA_APPEND_RESPONSE(
                 43,

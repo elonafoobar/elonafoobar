@@ -528,8 +528,6 @@ void pos(int x, int y = 0);
 void redraw();
 
 
-int stick(int allow_repeat_keys = 0);
-
 
 size_t strlen_u(const std::string& str);
 

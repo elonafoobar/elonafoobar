@@ -1,3 +1,4 @@
+#include "area.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "debug.hpp"
@@ -801,7 +802,7 @@ bool hp_bar_visible(const Character& chara)
 
 bool is_night()
 {
-    return gdata_hour > 17 || gdata_hour < 6;
+    return game_data.date.hour > 17 || game_data.date.hour < 6;
 }
 
 
@@ -896,13 +897,14 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
         {
             const auto q_ =
                 map(x, y, 6) / 100000 % 100 + map(x, y, 6) / 10000000 * 100;
-            if (adata(16, q_) == mdata_t::MapId::random_dungeon)
+            if (area_data[q_].id == mdata_t::MapId::random_dungeon)
             {
-                if (adata(6, q_) == adata(10, q_))
+                if (area_data[q_].visited_deepest_level
+                    == area_data[q_].deepest_level)
                 {
                     draw("conquered_nefia_icon", dx + 16, dy - 16);
                 }
-                else if (adata(6, q_) != 0)
+                else if (area_data[q_].visited_deepest_level != 0)
                 {
                     draw("invaded_nefia_icon", dx + 16, dy - 16);
                 }
@@ -1183,9 +1185,7 @@ void cell_draw()
 
     if (gdata_torch == 1)
     {
-        if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
-            && mdata_map_type
-                <= static_cast<int>(mdata_t::MapType::dungeon_castle))
+        if (mdata_t::is_nefia(mdata_map_type))
         {
             light_ -= 50;
         }
@@ -1234,7 +1234,7 @@ void cell_draw()
         // Out of map
         if (y < 0 || y >= mdata_map_height)
         {
-            for (int i = scx; i < scx + inf_screenw; ++i, dx_ -= inf_tiles)
+            for (int i = 0; i < repw; ++i, dx_ -= inf_tiles)
             {
                 draw_one_map_tile(dx_, dy_, tile_fog);
             }
@@ -1293,7 +1293,8 @@ void cell_draw()
 
                 if (py_ < windowh - inf_verh - 24)
                 {
-                    if (cdata.player().continuous_action_id == 7)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::fish)
                     {
                         ani_ = 0;
                     }

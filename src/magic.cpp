@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -131,9 +132,9 @@ int magic()
                     if (efstatus == CurseState::blessed)
                     {
                         cdata[tc].birth_year += rnd(3) + 1;
-                        if (cdata[tc].birth_year + 12 > gdata_year)
+                        if (cdata[tc].birth_year + 12 > game_data.date.year)
                         {
-                            cdata[tc].birth_year = gdata_year - 12;
+                            cdata[tc].birth_year = game_data.date.year - 12;
                         }
                         if (is_in_fov(cdata[tc]))
                         {
@@ -696,7 +697,7 @@ int magic()
                 if (efid == 613)
                 {
                     p = rnd(10);
-                    if ((cdata[tc].quality >= 4 && rnd(4))
+                    if ((cdata[tc].quality >= Quality::miracle && rnd(4))
                         || encfind(tc, 60010 + p) != -1)
                     {
                         p = -1;
@@ -723,7 +724,8 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
+                    if (game_data.crowd_density + 100
+                        >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
@@ -756,9 +758,10 @@ int magic()
                 {
                     p = 10;
                 }
-                for (int cnt = 0, cnt_end = (1 + rnd(p)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (1 + rnd(p(0))); cnt < cnt_end;
+                     ++cnt)
                 {
-                    flt(calcobjlv(efp), 2);
+                    flt(calcobjlv(efp), Quality::good);
                     dbid = 0;
                     if (efid == 425)
                     {
@@ -979,7 +982,7 @@ int magic()
                                     cdata[tc]));
                             }
                         }
-                        rowactend(cc);
+                        cdata[cc].continuous_action.finish();
                         ccprev = cc;
                         cc = tc;
                         proc_trap();
@@ -2008,7 +2011,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.resurrection.cursed"));
             for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata.player().level), calcfixlv(3));
+                flt(calcobjlv(cdata.player().level), calcfixlv(Quality::good));
                 fltn(u8"undead"s);
                 chara_create(
                     -1,
@@ -2548,7 +2551,7 @@ label_2181_internal:
         {
             break;
         }
-        if (cdata[tc].quality >= 4)
+        if (cdata[tc].quality >= Quality::miracle)
         {
             break;
         }
@@ -2726,7 +2729,7 @@ label_2181_internal:
             const auto attr = p(cnt) - 10;
             if (is_cursed(efstatus))
             {
-                if (cdata[tc].quality <= 3)
+                if (cdata[tc].quality <= Quality::great)
                 {
                     cdata[tc].attr_adjs[attr] -=
                         rnd(sdata.get(p(cnt), tc).original_level) / 5 + rnd(5);
@@ -2777,11 +2780,13 @@ label_2181_internal:
                 }
             }
             txt(i18n::s.get("core.locale.magic.escape.begin"));
-            if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+            if (area_data[gdata_current_map].id
+                == mdata_t::MapId::random_dungeon)
             {
-                if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+                if (gdata_current_dungeon_level
+                    == area_data[gdata_current_map].deepest_level)
                 {
-                    if (adata(20, gdata_current_map) != -1)
+                    if (area_data[gdata_current_map].has_been_conquered != -1)
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.escape.lord_may_disappear"));
@@ -2907,7 +2912,7 @@ label_2181_internal:
         {
             p += encfind(tc, 43) / 2;
         }
-        if (rnd(p) > efp / 2 + (is_cursed(efstatus)) * 100)
+        if (rnd(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
         {
             break;
         }
@@ -2961,7 +2966,7 @@ label_2181_internal:
         }
         if (i > 0)
         {
-            i = p(rnd(i));
+            i = p(rnd(i(0)));
             const auto valn = itemname(i, 1, 1);
             if (inv[i].curse_state == CurseState::cursed)
             {
@@ -3023,7 +3028,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
-        flt(cdata.player().level / 2 + 5, 3);
+        flt(cdata.player().level / 2 + 5, Quality::great);
         p = 0;
         if (rnd(3) == 0)
         {
@@ -3077,7 +3082,8 @@ label_2181_internal:
         {
             f = 0;
         }
-        if (cdata[tc].quality >= 4 || cdata[tc].character_role != 0
+        if (cdata[tc].quality >= Quality::miracle
+            || cdata[tc].character_role != 0
             || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
@@ -3136,8 +3142,8 @@ label_2181_internal:
         snd(68);
         for (int cnt = 0, cnt_end = (p(1)); cnt < cnt_end; ++cnt)
         {
-            x = rnd(p) + tlocx - rnd(p);
-            y = rnd(p) + tlocy - rnd(p);
+            x = rnd(p(0)) + tlocx - rnd(p(0));
+            y = rnd(p(0)) + tlocy - rnd(p(0));
             f = 1;
             if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
             {
@@ -3198,7 +3204,8 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         ctrl_inventory();
-        if (inv[ci].quality < 4 || inv[ci].quality == 6)
+        if (inv[ci].quality < Quality::miracle
+            || inv[ci].quality == Quality::special)
         {
             txt(i18n::s.get("core.locale.common.it_is_impossible"));
             obvious = 0;
@@ -3237,7 +3244,7 @@ label_2181_internal:
                 break;
             }
         }
-        if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
+        if (inv[ci].quality >= Quality::miracle || ibit(10, ci) == 1)
         {
             txt(i18n::s.get("core.locale.magic.garoks_hammer.no_effect"));
             fixmaterial = 0;
@@ -3247,7 +3254,7 @@ label_2181_internal:
         randomize(inv[efcibk].param1);
         equip = inv[ci].body_part;
         animeload(8, cc);
-        inv[ci].quality = 4;
+        inv[ci].quality = Quality::miracle;
         fixmaterial = inv[ci].material;
         change_item_material();
         randomize(inv[efcibk].param1);
@@ -3260,9 +3267,9 @@ label_2181_internal:
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100
+                enchantment_gen_p() + (fixlv == Quality::godly) * 100
                     + (ibit(15, ci) == 1) * 100,
-                20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
+                20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
         txt(i18n::s.get("core.locale.magic.garoks_hammer.apply", inv[ci]));
@@ -3295,7 +3302,7 @@ label_2181_internal:
             MenuResult result = ctrl_inventory();
             f = result.succeeded ? 1 : 0;
         }
-        if (inv[ci].quality == 5 || ibit(10, ci) == 1)
+        if (inv[ci].quality == Quality::godly || ibit(10, ci) == 1)
         {
             if (efid == 1127)
             {
@@ -3305,7 +3312,7 @@ label_2181_internal:
         equip = inv[ci].body_part;
         if (f == 1)
         {
-            if (inv[ci].quality == 6)
+            if (inv[ci].quality == Quality::special)
             {
                 if (efp < 350)
                 {
@@ -3428,15 +3435,15 @@ label_2181_internal:
         }
         if (efid == 630)
         {
-            if (gdata_charge_power < 10)
+            if (game_data.charge_power < 10)
             {
                 txt(i18n::s.get(
                     "core.locale.magic.fill_charge.more_power_needed"));
                 break;
             }
-            gdata_charge_power -= 10;
+            game_data.charge_power -= 10;
             txt(i18n::s.get(
-                "core.locale.magic.fill_charge.spend", gdata_charge_power));
+                "core.locale.magic.fill_charge.spend", game_data.charge_power));
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -3562,12 +3569,12 @@ label_2181_internal:
                 }
                 animeload(8, cc);
                 p = p * inv[ci].count;
-                gdata_charge_power += p;
+                game_data.charge_power += p;
                 txt(i18n::s.get(
                     "core.locale.magic.draw_charge",
                     inv[ci],
                     p(0),
-                    gdata_charge_power));
+                    game_data.charge_power));
                 inv[ci].remove();
                 refresh_burden_state();
             }
@@ -3586,8 +3593,8 @@ label_2181_internal:
         {
             f = 0;
         }
-        if (cdata[tc].quality >= 4 || cdata[tc].character_role != 0
-            || cdata[tc].is_escorted() == 1
+        if (cdata[tc].quality >= Quality::miracle
+            || cdata[tc].character_role != 0 || cdata[tc].is_escorted() == 1
             || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
@@ -3600,7 +3607,7 @@ label_2181_internal:
         {
             animeload(8, tc);
             txt(i18n::s.get("core.locale.magic.change.apply", cdata[tc]));
-            flt(calcobjlv(cdata[tc].level + 3), 2);
+            flt(calcobjlv(cdata[tc].level + 3), Quality::good);
             chara_create(56, 0, -3, 0);
             chara_relocate(cdata.tmp(), tc(0), CharaRelocationMode::change);
             cdata[tc].enemy_id = cc;
@@ -3698,7 +3705,7 @@ label_2181_internal:
         }
         if (f)
         {
-            if (inv[ci].quality > 4 || ibit(5, ci) == 1)
+            if (inv[ci].quality > Quality::miracle || ibit(5, ci) == 1)
             {
                 f = 0;
             }
@@ -3712,7 +3719,7 @@ label_2181_internal:
             inv[ci].remove();
             for (int cnt = 0;; ++cnt)
             {
-                flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
+                flt(calcobjlv(efp / 10) + 5, calcfixlv(Quality::good));
                 if (cnt < 10)
                 {
                     flttypemajor = fltbk;
@@ -4189,7 +4196,7 @@ label_2181_internal:
         for (int i = 0; i < clamp(4 + rnd(efp / 50 + 1), 1, 15); ++i)
         {
             snd(64);
-            flt(calcobjlv(efp / 10), calcfixlv(3));
+            flt(calcobjlv(efp / 10), calcfixlv(Quality::good));
             dbid = 54;
             int number = 400 + rnd(efp);
             if (rnd(30) == 0)

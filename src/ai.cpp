@@ -198,7 +198,7 @@ TurnResult ai_proc_basic()
             efid = act;
             if (cdata[cc].mp < cdata[cc].max_mp / 7)
             {
-                if (rnd(3) || cc < 16 || cdata[cc].quality >= 4
+                if (rnd(3) || cc < 16 || cdata[cc].quality >= Quality::miracle
                     || cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
@@ -409,7 +409,8 @@ TurnResult proc_npc_movement_event(bool retreat)
             return ai_proc_basic();
         }
         else if (
-            (cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level)
+            (cdata[cc].quality > Quality::great
+             && cdata[cc].level > cdata[tc].level)
             || cdata[tc].is_hung_on_sand_bag())
         {
             if (cdata[cc].enemy_id != tc)
@@ -420,9 +421,10 @@ TurnResult proc_npc_movement_event(bool retreat)
                     txt(i18n::s.get(
                         "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
-                if (cdata[tc].continuous_action_id == 1)
+                if (cdata[tc].continuous_action.type
+                    == ContinuousAction::Type::eat)
                 {
-                    if (cdata[tc].continuous_action_turn > 0)
+                    if (cdata[tc].continuous_action.turn > 0)
                     {
                         if (is_in_fov(cdata[cc]))
                         {
@@ -431,7 +433,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                                 cdata[cc],
                                 cdata[tc]));
                         }
-                        rowactend(tc);
+                        cdata[tc].continuous_action.finish();
                     }
                 }
                 return TurnResult::turn_end;
@@ -440,7 +442,7 @@ TurnResult proc_npc_movement_event(bool retreat)
     }
     if (cc >= 16)
     {
-        if (cdata[cc].quality > 3)
+        if (cdata[cc].quality > Quality::great)
         {
             if (cdata[cc].relationship <= -2)
             {
@@ -726,9 +728,9 @@ label_2692_internal:
         if (mdata_map_type == mdata_t::MapType::town
             || mdata_map_type == mdata_t::MapType::guild)
         {
-            if (gdata_hour >= 22 || gdata_hour < 7)
+            if (game_data.date.hour >= 22 || game_data.date.hour < 7)
             {
-                if (cdata[cc].continuous_action_id == 0)
+                if (!cdata[cc].continuous_action)
                 {
                     if (rnd(100) == 0)
                     {
@@ -1020,7 +1022,7 @@ label_2692_internal:
             {
                 if (distance == 1)
                 {
-                    if (cdata[tc].continuous_action_id == 0)
+                    if (!cdata[tc].continuous_action)
                     {
                         cdata[cc].enemy_id = 0;
                         continuous_action_sex();

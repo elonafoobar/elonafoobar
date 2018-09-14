@@ -131,10 +131,10 @@ void chara_gain_skill_exp(
 
 void gain_digging_experience();
 void gain_literacy_experience();
-void gain_negotiation_experience(int cc);
+void gain_negotiation_experience(int cc, int gold);
 void gain_lock_picking_experience(int cc);
 void gain_detection_experience(int cc);
-void gain_casting_experience(int cc);
+void gain_casting_experience(int cc, int spell_id);
 void gain_mana_capacity_experience(int cc);
 void gain_healing_and_meditation_experience(int cc);
 void gain_stealth_experience(int cc);

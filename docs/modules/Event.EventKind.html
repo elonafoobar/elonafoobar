@@ -30,10 +30,10 @@
     <a href="../index.html"><h1 style="padding-top: 8px">Lua API</h1></a>
 
     <!-- project description -->
-    <p class="project-desc">ElonaFoobar Mod API</p>
+    <p class="project-desc">Elona foobar Mod API</p>
 
     <!-- project full description -->
-    <span>  Core API for modding ElonaFoobar</span>
+    <span>  Core API for modding Elona foobar</span>
     </div>
 
 
@@ -42,6 +42,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Modules</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
@@ -49,13 +50,18 @@
     <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
     </ul>
     </li>
@@ -75,6 +81,8 @@
     <h2 class="uk-panel-title">Topics</h2>
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/readme.md.html"><span class="module-name-item">readme.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n.md.html"><span class="module-name-item">i18n.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n_functions.md.html"><span class="module-name-item">i18n_functions.md</span></a></div></li>
     </ul>
     </li>
     </ul>
@@ -82,6 +90,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Examples</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     </ul>
     </li>
@@ -198,6 +207,22 @@ Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)</code></pre>
     <td class="name"><a href="#MapInitialized">MapInitialized</a></td>
     <td class="summary">Fired after a map has been either created or loaded.</td>
     </tr>
+    <tr>
+    <td class="name"><a href="#MapLoaded">MapLoaded</a></td>
+    <td class="summary">Fired after a previously existing map has been loaded.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#MapUnloading">MapUnloading</a></td>
+    <td class="summary">Fired before the current map is unloaded.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#AllModsLoaded">AllModsLoaded</a></td>
+    <td class="summary">Fired when all mods have finished loading.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#ScriptLoaded">ScriptLoaded</a></td>
+    <td class="summary">Fired when the startup script finished loading.</td>
+    </tr>
     </tbody>
     </table>
     <!-- module section list end -->
@@ -218,7 +243,9 @@ Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)</code></pre>
     <div class="section-item-body">
 
     <p class="section-item-summary">Fired after the game has finished initially loading.</p>
-    <p class="section-item-description"> This will only ever be fired once per game session.</p>
+    <p class="section-item-description"> This will
+ only ever be fired once per game session. The starting map will be
+ initialized before this is called.</p>
 
     <!-- parameters start -->
     <!-- parameters end -->
@@ -761,6 +788,121 @@ Event.register(Event.EventKind.MapInitialized, place_characters)</code></pre>
     <!-- usage end -->
 
     </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#MapLoaded" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="MapLoaded">MapLoaded</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Fired after a previously existing map has been loaded.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#MapUnloading" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="MapUnloading">MapUnloading</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Fired before the current map is unloaded.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#AllModsLoaded" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="AllModsLoaded">AllModsLoaded</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Fired when all mods have finished loading.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#ScriptLoaded" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="ScriptLoaded">ScriptLoaded</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Fired when the startup script finished loading.</p>
+    <p class="section-item-description"> This is only valid
+ when the startup script feature is used.</p>
+
+    <!-- parameters start -->
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
     </dl>
 
     <!-- section end -->
@@ -776,7 +918,7 @@ Event.register(Event.EventKind.MapInitialized, place_characters)</code></pre>
     <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
     </div>
     <div class="content-footer column col-9 col-sm-12">
-    <i>Last updated 2018-06-10 11:00:06 UTC</i>
+    <i>Last updated 2018-09-10 14:50:37 UTC</i>
     </div>
     </div>
     </div>

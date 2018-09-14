@@ -2,6 +2,7 @@
 #include <cmath>
 #include <unordered_map>
 #include <boost/math/special_functions/gamma.hpp>
+#include "area.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
@@ -40,15 +41,15 @@ SharedId get_default_music()
 {
     optional<std::string> music_id = none;
 
-    if (adata(0, gdata_current_map) == mdata_t::MapType::field)
+    if (area_data[gdata_current_map].type == mdata_t::MapType::field)
     {
         return musicprev;
     }
-    if (adata(0, gdata_current_map) == mdata_t::MapType::town)
+    if (area_data[gdata_current_map].type == mdata_t::MapType::town)
     {
         music_id = "core.music:core.mcTown1"s;
     }
-    if (adata(0, gdata_current_map) == mdata_t::MapType::player_owned)
+    if (area_data[gdata_current_map].type == mdata_t::MapType::player_owned)
     {
         music_id = "core.music:core.mcHome"s;
     }
@@ -56,8 +57,7 @@ SharedId get_default_music()
     {
         music_id = **the_music_db.get_id_from_legacy(mdata_map_bgm);
     }
-    if (adata(0, gdata_current_map)
-        >= static_cast<int>(mdata_t::MapType::dungeon))
+    if (mdata_t::is_nefia(area_data[gdata_current_map].type))
     {
         static const std::vector<std::string> choices = {
             "core.music:core.mcDungeon1",
@@ -66,14 +66,15 @@ SharedId get_default_music()
             "core.music:core.mcDungeon4",
             "core.music:core.mcDungeon5",
             "core.music:core.mcDungeon6"};
-        music_id = choices[gdata_hour % 6];
+        music_id = choices[game_data.date.hour % 6];
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon
-        || adata(16, gdata_current_map) == mdata_t::MapId::the_void)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon
+        || area_data[gdata_current_map].id == mdata_t::MapId::the_void)
     {
-        if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+        if (gdata_current_dungeon_level
+            == area_data[gdata_current_map].deepest_level)
         {
-            if (adata(20, gdata_current_map) != -1)
+            if (area_data[gdata_current_map].has_been_conquered != -1)
             {
                 music_id = "core.music:core.mcBoss"s;
             }
@@ -139,13 +140,14 @@ SharedId get_default_music()
         music_id = "core.music:core.mcTown6"s;
     }
 
-    if (!music_id || adata(0, gdata_current_map) == mdata_t::MapType::world_map)
+    if (!music_id
+        || area_data[gdata_current_map].type == mdata_t::MapType::world_map)
     {
         static const std::vector<std::string> choices = {
             "core.music:core.mcField1",
             "core.music:core.mcField2",
             "core.music:core.mcField3"};
-        music_id = choices[gdata_day % 3];
+        music_id = choices[game_data.date.day % 3];
     }
 
     return SharedId(*music_id);
@@ -407,15 +409,15 @@ void sound_play_environmental()
 {
     int env{};
 
-    if (gdata_weather == 3)
+    if (game_data.weather == 3)
     {
         env = 75;
     }
-    if (gdata_weather == 4)
+    if (game_data.weather == 4)
     {
         env = 76;
     }
-    if (gdata_weather == 1)
+    if (game_data.weather == 1)
     {
         env = 77;
     }

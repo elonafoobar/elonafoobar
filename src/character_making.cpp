@@ -602,7 +602,6 @@ void draw_race_or_class_info()
             ty += 14;
         }
     }
-    return;
 }
 
 } // namespace elona

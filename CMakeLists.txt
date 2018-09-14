@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(Elona_foobar VERSION 0.2.7)
+project(Elona_foobar VERSION 0.2.8)
 
 # Android version code. Increment on every distinct release.
 set(PROJECT_VERSION_CODE 1)
@@ -60,6 +60,7 @@ set(CORE_SOURCES
   src/adventurer.cpp
   src/ai.cpp
   src/animation.cpp
+  src/area.cpp
   src/audio.cpp
   src/autopick.cpp
   src/blending.cpp
@@ -179,6 +180,10 @@ set(CORE_SOURCES
   src/lua_env/lua_class/lua_class_item.cpp
   src/lua_env/lua_class/lua_class_position.cpp
 
+  src/dialog/dialog.cpp
+  src/dialog/dialog_data.cpp
+  src/dialog/dialog_decoder.cpp
+
   src/pic_loader/pic_loader.cpp
 
   src/ui/ui_menu_adventurers.cpp
@@ -193,6 +198,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_chat_history.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
+  src/ui/ui_menu_dialog.cpp
   src/ui/ui_menu_equipment.cpp
   src/ui/ui_menu_feats.cpp
   src/ui/ui_menu_game_help.cpp
@@ -288,14 +294,18 @@ if(ANDROID)
   target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams snail )
 else()
   # Options
-  option(WITH_TESTS "Build test executable (TESTS or BENCH)" "NONE")
+  option(WITH_TESTS "Build test executable (TESTS or BENCH)" "OFF")
 
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+    unset(SNAIL_HEADLESS CACHE)
     SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
     add_definitions(-DSNAIL_RENDERER_HEADLESS)
-  else()
+  elseif(WITH_TESTS STREQUAL "OFF")
+    unset(SNAIL_HEADLESS CACHE)
     SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
     add_definitions(-DSNAIL_RENDERER_SDL)
+  else()
+    # Use the previous flags.
   endif()
 
   # Executable
@@ -310,6 +320,7 @@ else()
       src/tests/util.cpp
       src/tests/config.cpp
       src/tests/config_def.cpp
+      src/tests/dialog.cpp
       src/tests/spec.cpp
       src/tests/lua_api.cpp
       src/tests/lua_callbacks.cpp
@@ -375,12 +386,7 @@ else()
   endif()
 
   # Thirdparty libraries
-  if(MSVC)
-    # boost_zlib isn't picked up on Windows unless explicitly declared
-    find_package(Boost REQUIRED COMPONENTS system filesystem locale iostreams zlib)
-  else()
-    find_package(Boost REQUIRED COMPONENTS system filesystem locale iostreams)
-  endif()
+  find_package(Boost REQUIRED COMPONENTS system filesystem locale)
   include_directories(${Boost_INCLUDE_DIRS})
   target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
@@ -442,6 +448,10 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
   endif()
 
+  if(MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+  endif()
+
   if(WITH_TESTS STREQUAL "BENCH")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
   endif()
@@ -464,8 +474,10 @@ else()
 
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
     target_link_libraries(${PROJECT_NAME} snail_headless)
-  else()
+  elseif(WITH_TESTS STREQUAL "OFF")
     target_link_libraries(${PROJECT_NAME} snail)
+  else()
+    # Use the previous flags.
   endif()
 
 
@@ -531,6 +543,7 @@ copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/lang/ "${RUNTIME_DIR}/lang/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/mods/ "${RUNTIME_DIR}/mods/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/original/ "${RUNTIME_DIR}/original/")
 copy_file(${CMAKE_SOURCE_DIR}/runtime/__init__.lua "${RUNTIME_DIR}")
@@ -540,13 +553,12 @@ copy_file(${CMAKE_SOURCE_DIR}/runtime/assets.hcl "${RUNTIME_DIR}")
 if (NOT ANDROID OR ANDROID_BUNDLE_ASSETS)
   if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
     copy_dir("${CMAKE_PREFIX_PATH}/elona/graphic" "${ASSET_DIR}/graphic")
-    copy_dir("${CMAKE_PREFIX_PATH}/elona/map" "${ASSET_DIR}/map")
     copy_dir("${CMAKE_PREFIX_PATH}/elona/original" "${ASSET_DIR}/original")
     copy_dir("${CMAKE_PREFIX_PATH}/elona/sound" "${ASSET_DIR}/sound")
     copy_dir("${CMAKE_PREFIX_PATH}/elona/user" "${ASSET_DIR}/user")
     message("Elona 1.22 distribution found.")
   else()
-    message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
+    message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'original', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
   endif()
 endif()
 

@@ -2,6 +2,7 @@
 #include <cassert>
 #include <type_traits>
 #include "ability.hpp"
+#include "area.hpp"
 #include "calc.hpp"
 #include "cat.hpp"
 #include "character_status.hpp"
@@ -55,14 +56,14 @@ int chara_create_internal()
     {
         if (fltselect == 0 && filtermax == 0 && fltnrace(0).empty())
         {
-            if (fixlv == 3)
+            if (fixlv == Quality::great)
             {
                 if (rnd(20) == 0)
                 {
                     fltselect = 2;
                 }
             }
-            if (fixlv == 4)
+            if (fixlv == Quality::miracle)
             {
                 if (rnd(10) == 0)
                 {
@@ -74,9 +75,9 @@ int chara_create_internal()
         get_random_npc_id();
         if (dbid == 0)
         {
-            if (fltselect == 2 || fixlv == 6)
+            if (fltselect == 2 || fixlv == Quality::special)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
             flt(objlv + 10, fixlv);
             dbmode = 1;
@@ -99,9 +100,9 @@ int chara_create_internal()
         if (rnd(5))
         {
             objlv *= 2;
-            if (fixlv >= 4)
+            if (fixlv >= Quality::miracle)
             {
-                fixlv = 3;
+                fixlv = Quality::great;
             }
             cmshade = 1;
             flt(objlv, fixlv);
@@ -131,7 +132,7 @@ int chara_create_internal()
         cdatan(0, rc) = i18n::s.get("core.locale.chara.job.shade");
         cdata[rc].image = 280;
     }
-    cdata[rc].quality = fixlv;
+    cdata[rc].quality = static_cast<Quality>(fixlv);
     cdata[rc].index = rc;
     initialize_character();
 
@@ -397,8 +398,7 @@ void failed_to_place_character(Character& cc)
     if (cc.character_role == 13)
     {
         cc.set_state(Character::State::adventurer_dead);
-        cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
+        cc.time_to_revive = game_data.date.hours() + 24 + rnd(12);
     }
 }
 
@@ -838,14 +838,14 @@ void chara_set_generation_filter()
     dbid = 0;
     if (gdata_current_map == mdata_t::MapId::cyber_dome)
     {
-        flt(calcobjlv(10), calcfixlv(2));
+        flt(calcobjlv(10), calcfixlv(Quality::bad));
         fltn(u8"sf"s);
         return;
     }
     if (mdata_map_type == mdata_t::MapType::town
         || mdata_map_type == mdata_t::MapType::guild)
     {
-        flt(calcobjlv(10), calcfixlv(2));
+        flt(calcobjlv(10), calcfixlv(Quality::bad));
         fltselect = 5;
         if (gdata_current_dungeon_level == 1)
         {
@@ -928,7 +928,7 @@ void chara_set_generation_filter()
     }
     if (gdata_current_map == mdata_t::MapId::lesimas)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         if (gdata_current_dungeon_level < 4)
         {
             if (objlv > 5)
@@ -940,29 +940,30 @@ void chara_set_generation_filter()
     }
     if (gdata_current_map == mdata_t::MapId::the_void)
     {
-        flt(calcobjlv(gdata_current_dungeon_level % 50 + 5), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level % 50 + 5),
+            calcfixlv(Quality::bad));
         return;
     }
     if (gdata_current_map == mdata_t::MapId::dragons_nest)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         return;
     }
     if (gdata_current_map == mdata_t::MapId::crypt_of_the_damned)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         fltn(u8"undead"s);
         return;
     }
     if (gdata_current_map == mdata_t::MapId::tower_of_fire)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         fltn(u8"fire"s);
         return;
     }
     if (gdata_current_map == mdata_t::MapId::ancient_castle)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         if (rnd(2) == 0)
         {
             fltn(u8"man"s);
@@ -971,14 +972,14 @@ void chara_set_generation_filter()
     }
     if (gdata_current_map == mdata_t::MapId::pyramid)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         flttypemajor = 13;
         return;
     }
     if (gdata_current_map == mdata_t::MapId::lumiest_graveyard
         || gdata_current_map == mdata_t::MapId::truce_ground)
     {
-        flt(calcobjlv(20), calcfixlv(2));
+        flt(calcobjlv(20), calcfixlv(Quality::bad));
         fltselect = 4;
         return;
     }
@@ -987,7 +988,7 @@ void chara_set_generation_filter()
         if (gdata_executing_immediate_quest_type >= 1000)
         {
             flt(calcobjlv(qdata(5, gdata_executing_immediate_quest) + 1),
-                calcfixlv(2));
+                calcfixlv(Quality::bad));
         }
         if (gdata_executing_immediate_quest_type == 1006)
         {
@@ -996,33 +997,33 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::yeeks_nest)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::yeeks_nest)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         if (rnd(2))
         {
             fltn(u8"yeek"s);
         }
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::minotaurs_nest)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::minotaurs_nest)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         if (rnd(2))
         {
             fltn(u8"mino"s);
         }
         return;
     }
-    if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon))
+    if (mdata_t::is_nefia(mdata_map_type))
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum
-        || adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum
+        || area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
-        flt(calcobjlv(100), calcfixlv(2));
+        flt(calcobjlv(100), calcfixlv(Quality::bad));
         if (rnd(1))
         {
             fltselect = 5;
@@ -1033,8 +1034,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    flt(calcobjlv(cdata.player().level), calcfixlv(2));
-    return;
+    flt(calcobjlv(cdata.player().level), calcfixlv(Quality::bad));
 }
 
 
@@ -1122,7 +1122,6 @@ void initialize_character()
     cdata[rc].set_state(Character::State::alive);
 
     cm = 0;
-    return;
 }
 
 
@@ -1502,7 +1501,7 @@ void chara_refresh(int cc)
     {
         if (cdata[cc].attr_adjs[cnt] != 0)
         {
-            if (cdata[cc].quality >= 4)
+            if (cdata[cc].quality >= Quality::miracle)
             {
                 if (cdata[cc].attr_adjs[cnt]
                     < sdata.get(10 + cnt, cc).original_level / 5)
@@ -1581,11 +1580,11 @@ void chara_refresh(int cc)
             + (cdata[cc].pv + cdata[cc].level / 2
                + cdata[cc].pv_correction_value / 25)
                 * cdata[cc].pv_correction_value / 100;
-        if (cdata[cc].quality == 3)
+        if (cdata[cc].quality == Quality::great)
         {
             cdata[cc].max_hp = cdata[cc].max_hp * 3 / 2;
         }
-        if (cdata[cc].quality >= 4)
+        if (cdata[cc].quality >= Quality::miracle)
         {
             cdata[cc].max_hp = cdata[cc].max_hp * 5;
         }
@@ -2244,13 +2243,13 @@ bool belong_to_same_team(const Character& c1, const Character& c2)
 
 void chara_add_quality_parens()
 {
-    if (fixlv == 4)
+    if (fixlv == Quality::miracle)
     {
         cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc)
             + i18n::_(u8"ui", u8"bracket_right");
         cdata[rc].level = cdata[rc].level * 10 / 8;
     }
-    else if (fixlv == 5)
+    else if (fixlv == Quality::godly)
     {
         cdatan(0, rc) =
             i18n::s.get("core.locale.chara.name_with_title", cdata[rc]);

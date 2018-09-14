@@ -54,7 +54,10 @@ public:
     /***
      * Obtains the root table for a datatype. For example, to get the
      * raw data of all characters, which have IDs like
-     * "core.chara.<xxx>", pass in "core" and "chara" as arguments.
+     * "core.chara:<mod_name>.<data_id>", pass in "core" and "chara" as
+     * arguments.
+     *
+     * The returned table is indexed by [mod_name][data_id].
      */
     sol::optional<sol::table> get_table(
         const std::string& mod_name,

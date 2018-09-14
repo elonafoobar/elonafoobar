@@ -18,20 +18,35 @@ elona_vector2<int> encref;
 
 
 
+// Check up to 2 filters.
+// No filter: Always returns `true`.
+// 1 filter: Returns if `category` matches with the filter.
+// 2 filters: Returns if `category` matches with either of them.
 bool check_enchantment_filters(int category, int type)
 {
-    constexpr auto max_enchantment_filters = 2;
+    const auto filter1 = encref(3, type);
 
-    for (int i = 0; i < max_enchantment_filters; ++i)
+    if (filter1 == 0)
     {
-        const auto filter = encref(3 + i, type);
-        if (filter == 0 || enchantment_filter(category, filter))
-        {
-            return true;
-        }
+        return true; // No filter.
     }
 
-    return false;
+    const auto match_filter1 = enchantment_filter(category, filter1);
+    if (match_filter1)
+    {
+        return true;
+    }
+
+    const auto filter2 = encref(4, type);
+    if (filter2 == 0)
+    {
+        return false;
+    }
+    else
+    {
+        const auto match_filter2 = enchantment_filter(category, filter2);
+        return match_filter2;
+    }
 }
 
 
@@ -448,7 +463,6 @@ void initialize_enchantment_data()
     encprocref(3, 25) = 10000;
     encprocref(4, 25) = 0;
     encprocref(5, 25) = 100;
-    return;
 }
 
 std::string enchantment_print_level(int prm_448)
@@ -954,19 +968,9 @@ int enchantment_generate(int prm_451)
                 continue;
             }
         }
-        if (encref(3, cnt) != 0)
+        if (!check_enchantment_filters(reftype, cnt))
         {
-            if (enchantment_filter(reftype, encref(3, cnt)) == 0)
-            {
-                if (encref(4, cnt) == 0)
-                {
-                    continue;
-                }
-                else if (enchantment_filter(reftype, encref(4, cnt)) == 0)
-                {
-                    continue;
-                }
-            }
+            continue;
         }
         sum_at_m47 += encref(2, cnt);
         enclist(0, max_at_m47) = cnt;
@@ -1044,7 +1048,6 @@ void enchantment_sort(int prm_454)
             break;
         }
     }
-    return;
 }
 
 
@@ -1087,7 +1090,6 @@ void enchantment_remove(int prm_455, int prm_456, int prm_457)
     }
     inv[prm_455].value = inv[prm_455].value * 100 / encref(1, p_at_m48);
     enchantment_sort(prm_455);
-    return;
 }
 
 
@@ -1110,10 +1112,13 @@ bool enchantment_add(
 
     if (!force)
     {
-        if (!check_enchantment_filters(
-                category, type >= 10000 ? type / 10000 : type))
+        const auto type_ = type >= 10000 ? type / 10000 : type;
+        if (encref(3, type_) != 0)
         {
-            return false;
+            if (!check_enchantment_filters(category, type_))
+            {
+                return false;
+            }
         }
         else if (category == 25000 && !not_halve)
         {
@@ -1289,7 +1294,6 @@ void add_enchantments_depending_on_ego()
             8);
     }
     inv[ci].subname = 20000 + rnd(maxegominorn);
-    return;
 }
 
 
@@ -1317,7 +1321,7 @@ void add_enchantment_by_fixed_ego()
     {
         return;
     }
-    p = egolist(rnd(p));
+    p = egolist(rnd(p(0)));
     inv[ci].subname = 10000 + p;
     ego_add(ci, p);
     if (rnd(2) == 0)
@@ -1336,7 +1340,6 @@ void add_enchantment_by_fixed_ego()
             enchantment_gen_p(),
             25);
     }
-    return;
 }
 
 
@@ -1347,11 +1350,11 @@ void add_enchantments()
     {
         inv[ci].count = -1;
     }
-    if (fixlv <= 2)
+    if (fixlv <= Quality::good)
     {
         return;
     }
-    if (fixlv == 6)
+    if (fixlv == Quality::special)
     {
         egolv = 4;
     }
@@ -1359,8 +1362,11 @@ void add_enchantments()
     {
         egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
         inv[ci].value = inv[ci].value * 3;
-        inv[ci].difficulty_of_identification =
-            50 + rnd((std::abs((fixlv - 2)) * 100 + 100));
+        inv[ci].difficulty_of_identification = 50
+            + rnd(std::abs(
+                      static_cast<int>(fixlv) - static_cast<int>(Quality::good))
+                      * 100
+                  + 100);
     }
     if (reftypeminor == 10006)
     {
@@ -1391,7 +1397,7 @@ void add_enchantments()
             }
         }
     }
-    if (fixlv < 4)
+    if (fixlv < Quality::miracle)
     {
         if (rnd(2))
         {
@@ -1402,10 +1408,11 @@ void add_enchantments()
             add_enchantment_by_fixed_ego();
         }
     }
-    if (fixlv == 4 || fixlv == 5)
+    if (fixlv == Quality::miracle || fixlv == Quality::godly)
     {
         inv[ci].subname = 40000 + rnd(30000);
-        if (fixlv == 5 || (fixlv == 4 && rnd(10) == 0))
+        if (fixlv == Quality::godly
+            || (fixlv == Quality::miracle && rnd(10) == 0))
         {
             enchantment_add(ci, enchantment_generate(99), enchantment_gen_p());
         }
@@ -1418,11 +1425,11 @@ void add_enchantments()
                 return;
             }
         }
-        if (fixlv == 4)
+        if (fixlv == Quality::miracle)
         {
             p = rnd(rnd(rnd(10) + 1) + 3) + 3;
         }
-        if (fixlv == 5)
+        if (fixlv == Quality::godly)
         {
             p = rnd(rnd(rnd(10) + 1) + 3) + 6;
         }
@@ -1444,12 +1451,12 @@ void add_enchantments()
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100
+                enchantment_gen_p() + (fixlv == Quality::godly) * 100
                     + (ibit(15, ci) == 1) * 100,
-                20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
+                20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
         }
     }
-    if (fixlv == 6)
+    if (fixlv == Quality::special)
     {
         for (int cnt = 0, cnt_end = (rnd(3)); cnt < cnt_end; ++cnt)
         {
@@ -1487,7 +1494,6 @@ void add_enchantments()
             enchantment_add(ci, enchantment_generate(-1), enchantment_gen_p());
         }
     }
-    return;
 }
 
 
@@ -1595,6 +1601,5 @@ void ego_add(int prm_465, int prm_466)
             egoenc(cnt * 2, prm_466),
             enchantment_gen_p(egoenc(cnt * 2 + 1, prm_466)));
     }
-    return;
 }
 } // namespace elona

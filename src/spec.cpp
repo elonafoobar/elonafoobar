@@ -279,8 +279,8 @@ EnumDef Object::visit_enum(
 
     hcl::List hcl_variants = item.at("variants").as<hcl::List>();
     std::vector<std::string> variants;
-    int default_index = -1;
-    int i = 0;
+    optional<size_t> default_index;
+    size_t i = 0;
     for (auto& item : hcl_variants)
     {
         std::string variant = item.as<std::string>();
@@ -289,10 +289,10 @@ EnumDef Object::visit_enum(
             default_index = i;
         }
         variants.emplace_back(std::move(variant));
-        i++;
+        ++i;
     }
 
-    if (default_index == -1)
+    if (!default_index)
     {
         throw SpecError(
             hcl_file,
@@ -302,7 +302,7 @@ EnumDef Object::visit_enum(
     }
 
     def.variants = variants;
-    def.default_index = default_index;
+    def.default_index = *default_index;
 
     return def;
 }

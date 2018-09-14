@@ -14,7 +14,8 @@ MKDIR := mkdir
 .PHONY: FORCE
 
 
-all: build
+all:
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make
 
 
 build: $(BIN_DIR) $(PROGRAM)
@@ -37,7 +38,7 @@ $(BIN_DIR):
 
 
 $(PROGRAM): FORCE
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF; make
 
 
 $(TEST_RUNNER):

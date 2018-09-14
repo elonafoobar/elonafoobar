@@ -1,6 +1,7 @@
 #include "init.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "blending.hpp"
@@ -166,11 +167,11 @@ void load_character_sprite()
 
 void start_elona()
 {
-    gdata_year = 517;
-    gdata_month = 8;
-    gdata_day = 12;
-    gdata_hour = 16;
-    gdata_minute = 10;
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 16;
+    game_data.date.minute = 10;
     quickpage = 1;
     if (Config::instance().noadebug)
     {
@@ -503,6 +504,8 @@ void initialize_elona()
     picload(filesystem::dir::graphic() / u8"interface_ex2.png", 1);
     pos(144, 752);
     picload(filesystem::dir::graphic() / u8"interface_ex3.png", 1);
+    pos(456, 144);
+    picload(filesystem::dir::graphic() / u8"interface_ex4.png", 1);
 
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
@@ -538,6 +541,7 @@ void initialize_elona()
     SDIM1(msgtempprev);
     DIM3(mef, 9, MEF_MAX);
     DIM3(adata, 40, 500);
+    area_data.clear();
     DIM3(qdata, 20, 500);
     SDIM3(qname, 40, 500);
     DIM2(gdata, 1000);
@@ -716,7 +720,7 @@ void initialize_elona()
     initialize_cell_object_data();
     load_random_name_table();
     load_random_title_table();
-    gdata_random_seed = rnd(800) + 2;
+    game_data.random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
     set_item_info();
     clear_trait_data();
@@ -920,21 +924,21 @@ void initialize_debug_globals()
     gdata(41) = 424;
     gdata(42) = 300;
     gdata(43) = 631;
-    gdata_next_inventory_serial_id = 1000;
+    game_data.next_inventory_serial_id = 1000;
     gdata_next_shelter_serial_id = 100;
-    gdata_pc_x_in_world_map = 22;
-    gdata_pc_y_in_world_map = 21;
+    game_data.pc_x_in_world_map = 22;
+    game_data.pc_y_in_world_map = 21;
     gdata_previous_map = -1;
-    gdata_random_seed = rnd(800) + 2;
+    game_data.random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
     gdata_current_map = static_cast<int>(mdata_t::MapId::north_tyris);
     gdata_current_dungeon_level = 0;
-    gdata_entrance_type = 7;
+    game_data.entrance_type = 7;
     mapstartx = 22;
     mapstarty = 21;
     gdata_current_map = static_cast<int>(mdata_t::MapId::vernis);
     gdata_current_dungeon_level = 1;
-    gdata_entrance_type = 7;
+    game_data.entrance_type = 7;
     mapstartx = 10;
     mapstarty = 23;
     initlv = 50;
@@ -942,21 +946,21 @@ void initialize_debug_globals()
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
-    gdata_year = 517;
-    gdata_month = 12;
-    gdata_day = 30;
-    gdata_hour = 1;
-    gdata_minute = 10;
+    game_data.date.year = 517;
+    game_data.date.month = 12;
+    game_data.date.day = 30;
+    game_data.date.hour = 1;
+    game_data.date.minute = 10;
     gdata_played_scene = 50;
     gdata_has_not_been_to_vernis = 1;
-    adata(30, 7) = 4;
-    gdata(850) = adata(30, gdata_current_map);
+    area_data[7].outer_map = 4;
+    gdata(850) = area_data[gdata_current_map].outer_map;
     gdata_acquirable_feat_count = 2;
     gdata_save_count_of_little_sister = 1000;
     gdata_rights_to_succeed_to = 1000;
-    gdata_home_scale = 0;
+    game_data.home_scale = 0;
     gdata_number_of_waiting_guests = 2;
-    gdata_charge_power = 1000;
+    game_data.charge_power = 1000;
     cdata.player().god_id = core_god::int2godid(2);
     cdata.player().piety_point = 1000;
     cdata.player().praying_point = 1000;
@@ -1201,13 +1205,13 @@ void initialize_noa_items()
     }
     for (int cnt = 0; cnt < 40; ++cnt)
     {
-        flt(50, 5);
+        flt(50, Quality::godly);
         flttypemajor = 56000;
         itemcreate(0, -1, -1, -1, 0);
-        flt(50, 5);
+        flt(50, Quality::godly);
         flttypemajor = 34000;
         itemcreate(0, -1, -1, -1, 0);
-        flt(50, 5);
+        flt(50, Quality::godly);
         flttypemajor = 32000;
         itemcreate(0, -1, -1, -1, 0);
     }
@@ -1216,24 +1220,24 @@ void initialize_noa_items()
 
 void initialize_world()
 {
-    gdata_year = 517;
-    gdata_month = 8;
-    gdata_day = 12;
-    gdata_hour = 1;
-    gdata_minute = 10;
-    gdata_pc_x_in_world_map = 22;
-    gdata_pc_y_in_world_map = 21;
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 1;
+    game_data.date.minute = 10;
+    game_data.pc_x_in_world_map = 22;
+    game_data.pc_y_in_world_map = 21;
     gdata_previous_map = -1;
     gdata(850) = 4;
     ghelp = 1;
     gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
     gdata_current_dungeon_level = 1;
-    gdata_entrance_type = 4;
+    game_data.entrance_type = 4;
     gdata_version = 1220;
-    gdata_home_scale = 0;
+    game_data.home_scale = 0;
     initialize_adata();
-    gdata_weather = 3;
-    gdata_hours_until_weather_changes = 6;
+    game_data.weather = 3;
+    game_data.hours_until_weather_changes = 6;
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         gdata(120 + cnt) = 10000;
@@ -1242,7 +1246,7 @@ void initialize_world()
 
 void initialize_testbed()
 {
-    gdata_current_map = 9999;
+    gdata_current_map = 499;
     gdata_current_dungeon_level = 2;
 }
 
@@ -1286,7 +1290,7 @@ void initialize_game()
     }
     if (mode == 2)
     {
-        gdata_next_inventory_serial_id = 1000;
+        game_data.next_inventory_serial_id = 1000;
         gdata_next_shelter_serial_id = 100;
         initialize_recipememory();
     }

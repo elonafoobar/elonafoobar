@@ -45,7 +45,7 @@ inline std::string to_lower(const std::string& source)
         std::begin(source),
         std::end(source),
         std::back_inserter(ret),
-        [](char c) { return std::tolower(c); });
+        [](char c) { return static_cast<char>(std::tolower(c)); });
     return ret;
 }
 
@@ -61,6 +61,22 @@ inline std::vector<std::string> split_lines(const std::string& str)
         lines.push_back(buf);
     }
     return lines;
+}
+
+
+
+inline std::pair<std::string, std::string> split_on_string(
+    const std::string& str,
+    const std::string& split)
+{
+    auto pos = str.find(split);
+    if (pos == std::string::npos)
+    {
+        throw std::runtime_error(
+            "Cannot find \"" + split + "\" in \"" + str + "\"");
+    }
+
+    return std::make_pair(str.substr(0, pos), str.substr(pos + 1));
 }
 
 

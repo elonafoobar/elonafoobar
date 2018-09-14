@@ -122,7 +122,6 @@ void eat_rotten_food()
     nutrition = 1000;
     dmgcon(cc, StatusAilment::paralyzed, 100);
     dmgcon(cc, StatusAilment::confused, 200);
-    return;
 }
 
 
@@ -337,7 +336,7 @@ void cook()
     p = rnd(p + 1);
     if (p > 3)
     {
-        p = rnd(p);
+        p = rnd(p(0));
     }
     if (sdata(184, cc) >= 5)
     {
@@ -377,7 +376,6 @@ void cook()
         chara_gain_skill_exp(cdata[cc], 184, 30 + rank * 5);
     }
     refresh_burden_state();
-    return;
 }
 
 
@@ -389,8 +387,7 @@ void make_dish(int ci, int type)
     inv[ci].param2 = type;
     if (inv[ci].material == 35 && inv[ci].param3 >= 0)
     {
-        inv[ci].param3 = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 72;
+        inv[ci].param3 = game_data.date.hours() + 72;
     }
 }
 
@@ -1357,7 +1354,6 @@ void apply_general_eating_effect(int cieat)
         }
     }
     eatstatus(inv[cieat].curse_state, cc);
-    return;
 }
 
 

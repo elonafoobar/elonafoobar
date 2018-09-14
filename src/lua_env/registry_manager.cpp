@@ -259,7 +259,6 @@ void RegistryManager::load_single_declared_mod_data(
             data_hcl_file.string() + ": Bad datatype name \"" + datatype_fqn
             + "\"");
     }
-
     std::string datatype_mod_name = datatype_fqn.substr(0, period_pos);
     std::string datatype_name = datatype_fqn.substr(period_pos + 1);
 

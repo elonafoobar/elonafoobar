@@ -53,9 +53,8 @@ static snail::Color _desc_to_color(int desc)
     case ItemDescriptionType::enchantment: return {80, 50, 0};
     case ItemDescriptionType::maintains_skill: return {0, 100, 100};
     case ItemDescriptionType::negative_effect: return {180, 0, 0};
+    default: return {0, 0, 0};
     }
-
-    return {0, 0, 0};
 }
 
 static void _set_color(int list_item)

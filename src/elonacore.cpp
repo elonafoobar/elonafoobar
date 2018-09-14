@@ -3,6 +3,7 @@
 #include "adventurer.hpp"
 #include "ai.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "blending.hpp"
@@ -46,6 +47,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "network.hpp"
+#include "putit.hpp"
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -136,9 +138,8 @@ void select_house_board_tile()
         gmode(2);
         redraw();
         await(Config::instance().wait1);
-        int a{};
-        a = stick();
-        if (a == static_cast<int>(StickKey::mouse_left))
+        const auto input = stick();
+        if (input == StickKey::mouse_left)
         {
             p = mousex / 24 + mousey / 24 * 33;
             if (p >= listmax)
@@ -151,7 +152,7 @@ void select_house_board_tile()
             house_board_update_screen();
             return;
         }
-        if (a == static_cast<int>(StickKey::mouse_right))
+        if (input == StickKey::mouse_right)
         {
             house_board_update_screen();
             return;
@@ -446,7 +447,6 @@ void initialize_rankn()
     ranknorma(1) = 60;
     ranknorma(2) = 45;
     ranknorma(6) = 30;
-    return;
 }
 
 
@@ -482,7 +482,6 @@ void initialize_post_data()
     pochart(0, 2, 0) = 5;
     pochart(1, 2, 0) = 6;
     DIM3(podata, 300, 20);
-    return;
 }
 
 
@@ -508,7 +507,7 @@ void initialize_building_daga()
 
 void initialize_pc_character()
 {
-    cdata.player().quality = 2;
+    cdata.player().quality = Quality::good;
     cdata.player().relationship = 10;
     cdata.player().original_relationship = 10;
     cdata.player().has_own_sprite() = true;
@@ -565,7 +564,6 @@ void initialize_pc_character()
         inv[cnt].identification_state = IdentifyState::completely_identified;
     }
     chara_refresh(0);
-    return;
 }
 
 
@@ -589,7 +587,6 @@ void clear_trait_data()
     DIM2(traitref, 10);
     SDIM3(traitrefn, 80, 9);
     SDIM3(traitrefn2, 20, 6);
-    return;
 }
 
 
@@ -644,7 +641,6 @@ void gain_race_feat()
         trait(160) = 1;
         trait(161) = 1;
     }
-    return;
 }
 
 
@@ -676,7 +672,6 @@ void setunid(int prm_282, int prm_283)
     cdata[prm_282].cnpc_id = prm_283;
     cdata[prm_282].image = 825 + prm_283;
     cdata[prm_282].image += 0;
-    return;
 }
 
 
@@ -814,31 +809,31 @@ std::string txttargetlevel(int cc, int tc)
 
 std::string mapfile(int prm_365)
 {
-    if (adata(16, prm_365) == mdata_t::MapId::vernis)
+    if (area_data[prm_365].id == mdata_t::MapId::vernis)
     {
         return u8"vernis"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::port_kapul)
+    if (area_data[prm_365].id == mdata_t::MapId::port_kapul)
     {
         return u8"kapul"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::yowyn)
+    if (area_data[prm_365].id == mdata_t::MapId::yowyn)
     {
         return u8"yowyn"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::derphy)
+    if (area_data[prm_365].id == mdata_t::MapId::derphy)
     {
         return u8"rogueden"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::palmia)
+    if (area_data[prm_365].id == mdata_t::MapId::palmia)
     {
         return u8"palmia"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::noyel)
+    if (area_data[prm_365].id == mdata_t::MapId::noyel)
     {
         return u8"noyel"s;
     }
-    if (adata(16, prm_365) == mdata_t::MapId::lumiest)
+    if (area_data[prm_365].id == mdata_t::MapId::lumiest)
     {
         return u8"lumiest"s;
     }
@@ -930,7 +925,6 @@ void initialize_picfood()
     picfood(7, 7) = 113;
     picfood(8, 7) = 115;
     picfood(9, 7) = 111;
-    return;
 }
 
 
@@ -972,7 +966,6 @@ void csvsort(
         }
         p_at_m40(0) += strsize;
     }
-    return;
 }
 
 
@@ -1054,12 +1047,11 @@ void getinheritance(int prm_440, elona_vector1<int>& inhlist_, int& inhmax_)
         }
     }
     randomize();
-    return;
 }
 
 
 
-void flt(int level, int quality)
+void flt(int level, Quality quality)
 {
     filtermax = 0;
     fltselect = 0;
@@ -1067,7 +1059,7 @@ void flt(int level, int quality)
     flttypeminor = 0;
     fltnrace = "";
     objlv = level == 0 ? calcobjlv(gdata_current_dungeon_level) : level;
-    fixlv = quality == 0 ? calcfixlv(2) : quality;
+    fixlv = quality == Quality::none ? calcfixlv(Quality::bad) : quality;
 }
 
 
@@ -1089,7 +1081,6 @@ void fltn(const std::string& prm_447)
         p_at_m44 += strsize;
         ++filtermax;
     }
-    return;
 }
 
 
@@ -1134,7 +1125,6 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
         }
         p_at_m67 += strsize;
     }
-    return;
 }
 
 
@@ -1524,7 +1514,6 @@ void cursor_check()
     {
         key = key_list(cs);
     }
-    return;
 }
 
 
@@ -1541,7 +1530,6 @@ void lenfix(std::string& prm_644, int prm_645)
     {
         prm_644 += u8" "s;
     }
-    return;
 }
 
 
@@ -1574,7 +1562,6 @@ void page_save()
     pagebk = page;
     csprev = cs;
     pagesaved = 1;
-    return;
 }
 
 
@@ -1587,7 +1574,6 @@ void page_load()
         cs = csprev;
         pagesaved = 0;
     }
-    return;
 }
 
 
@@ -1630,7 +1616,6 @@ void imeset(int prm_709)
     himc_at_ime_control = ImmGetContext(hwnd);
     ImmSetOpenStatus(himc_at_ime_control, prm_709);
     ImmReleaseContext(hwnd, himc_at_ime_control);
-    return;
 }
 
 
@@ -1707,7 +1692,6 @@ void fixaiact(int prm_753)
     {
         cdata[prm_753].ai_heal = 0;
     }
-    return;
 }
 
 
@@ -1722,7 +1706,7 @@ void ride_begin(int mount)
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
     gdata_mount = mount;
     create_pcpic(0, true);
-    rowactend(gdata_mount);
+    cdata[gdata_mount].continuous_action.finish();
     refresh_speed(cdata[gdata_mount]);
     txt(""s + cdata[mount].current_speed + u8") "s);
     if (cdata[gdata_mount].is_suitable_for_mount())
@@ -1741,7 +1725,7 @@ void ride_end()
 {
     int mount = gdata_mount;
     cdata[mount].is_ridden() = false;
-    rowactend(mount);
+    cdata[mount].continuous_action.finish();
     gdata_mount = 0;
     create_pcpic(0, true);
     refresh_speed(cdata[mount]);
@@ -1888,14 +1872,14 @@ void hostileaction(int prm_787, int prm_788)
             }
         }
     }
-    rowactend(prm_788);
+    cdata[prm_788].continuous_action.finish();
 }
 
 
 
 void wake_up()
 {
-    if (gdata_hour >= 7 && gdata_hour <= 22)
+    if (game_data.date.hour >= 7 && game_data.date.hour <= 22)
     {
         for (auto&& cnt : cdata.others())
         {
@@ -2029,7 +2013,6 @@ void animeload(int prm_807, int prm_808)
         await(i_at_m133(1));
     }
     gmode(2);
-    return;
 }
 
 
@@ -2189,7 +2172,6 @@ void spillblood(int prm_830, int prm_831, int prm_832)
             ++map(dx_at_m136, dy_at_m136, 7);
         }
     }
-    return;
 }
 
 
@@ -2223,7 +2205,6 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
                 + (map(dx_at_m136, dy_at_m136, 7) / 10 + 1) * 10;
         }
     }
-    return;
 }
 
 
@@ -2244,7 +2225,7 @@ void check_kill(int prm_836, int prm_837)
         {
             if (prm_837 >= 16)
             {
-                ++gdata_kill_count;
+                ++game_data.kill_count;
                 if (cdata[prm_837].id == gdata_fighters_guild_target)
                 {
                     if (gdata_fighters_guild_quota > 0)
@@ -2304,7 +2285,6 @@ void check_kill(int prm_836, int prm_837)
     {
         modify_karma(cdata.player(), p_at_m137);
     }
-    return;
 }
 
 
@@ -2362,7 +2342,6 @@ void cnvbonus(int prm_895, int prm_896)
                 + u8"に <red>"s + prm_896 + u8"<col> のマイナス修正\n"s;
         }
     }
-    return;
 }
 
 
@@ -2485,7 +2464,8 @@ int try_to_cast_spell()
         }
         for (int cnt = 0, cnt_end = (2 + rnd(3)); cnt < cnt_end; ++cnt)
         {
-            flt(calcobjlv(cdata.player().level * 3 / 2 + 3), calcfixlv(2));
+            flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
+                calcfixlv(Quality::bad));
             int stat =
                 chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
             if (stat != 0)
@@ -2581,7 +2561,7 @@ int try_to_perceive_npc(int cc)
                     cdata[r2].position.y)
                     * 150
                 + (sdata(157, cc) * 100 + 150) + 1;
-            if (rnd(p) < rnd(sdata(13, r2) * 60 + 150))
+            if (rnd(p(0)) < rnd(sdata(13, r2) * 60 + 150))
             {
                 return 1;
             }
@@ -2603,7 +2583,6 @@ void start_stealing()
 {
     gdata(91) = 105;
     continuous_action_others();
-    return;
 }
 
 
@@ -2691,7 +2670,7 @@ void proc_turn_end(int cc)
         }
         if (cc >= 16)
         {
-            if (cdata[cc].quality >= 4)
+            if (cdata[cc].quality >= Quality::miracle)
             {
                 if (rnd(200) == 0)
                 {
@@ -2806,11 +2785,12 @@ void proc_turn_end(int cc)
         {
             if (cdata[cc].nutrition < 1000)
             {
-                if (cdata[cc].continuous_action_id != 1)
+                if (cdata[cc].continuous_action.type
+                    != ContinuousAction::Type::eat)
                 {
                     damage_hp(
                         cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
-                    if (gdata_play_turns % 10 == 0)
+                    if (game_data.play_turns % 10 == 0)
                     {
                         rowact_check(cc);
                         if (rnd(50) == 0)
@@ -2828,7 +2808,7 @@ void proc_turn_end(int cc)
             {
                 gdata_continuous_active_hours = 0;
             }
-            if (gdata_play_turns % 100 == 0)
+            if (game_data.play_turns % 100 == 0)
             {
                 txt(i18n::s.get("core.locale.misc.status_ailment.sleepy"));
             }
@@ -2918,7 +2898,6 @@ void refresh_burden_state()
         cdata.player().inventory_weight_type = 0;
     }
     refresh_speed(cdata.player());
-    return;
 }
 
 
@@ -2967,7 +2946,6 @@ void chara_set_revived_status()
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
     cdata[rc].set_state(Character::State::alive);
-    return;
 }
 
 
@@ -2975,7 +2953,7 @@ void chara_set_revived_status()
 void chara_clear_status_effects()
 {
     cdata[rc].is_contracting_with_reaper() = false;
-    rowactend(rc);
+    cdata[rc].continuous_action.finish();
     cdata[rc].poisoned = 0;
     cdata[rc].sleep = 0;
     cdata[rc].confused = 0;
@@ -3014,7 +2992,6 @@ void chara_clear_status_effects()
         }
     }
     chara_refresh(rc);
-    return;
 }
 
 
@@ -3049,7 +3026,6 @@ void revive_player()
         chara_gain_fixed_skill_exp(cdata[rc], 183, 1000);
     }
     chara_refresh(rc);
-    return;
 }
 
 
@@ -3063,7 +3039,7 @@ int convertartifact(int prm_930, int prm_931)
     {
         return prm_930;
     }
-    if (inv[prm_930].quality != 6)
+    if (inv[prm_930].quality != Quality::special)
     {
         return prm_930;
     }
@@ -3114,7 +3090,7 @@ int convertartifact(int prm_930, int prm_931)
 
     while (1)
     {
-        flt(the_item_db[inv[prm_930].id]->level, 4);
+        flt(the_item_db[inv[prm_930].id]->level, Quality::miracle);
         flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
         inv[prm_930].remove();
 
@@ -3124,7 +3100,7 @@ int convertartifact(int prm_930, int prm_931)
             inv[prm_930].position.x,
             inv[prm_930].position.y,
             0);
-        if (inv[prm_930].quality != 6)
+        if (inv[prm_930].quality != Quality::special)
         {
             break;
         }
@@ -3602,7 +3578,7 @@ void character_drops_item()
         {
             break;
         }
-        if (inv[ci].quality > 4 || inv[ci].id == 55)
+        if (inv[ci].quality > Quality::miracle || inv[ci].id == 55)
         {
             f = 1;
         }
@@ -3610,7 +3586,7 @@ void character_drops_item()
         {
             f = 1;
         }
-        if (cdata[rc].quality >= 4)
+        if (cdata[rc].quality >= Quality::miracle)
         {
             if (rnd(2) == 0)
             {
@@ -3631,7 +3607,7 @@ void character_drops_item()
                 f = 0;
             }
         }
-        if (inv[ci].quality == 6)
+        if (inv[ci].quality == Quality::special)
         {
             f = 1;
         }
@@ -3649,7 +3625,7 @@ void character_drops_item()
             {
                 if (the_item_db[inv[ci].id]->category < 50000)
                 {
-                    if (inv[ci].quality >= 3)
+                    if (inv[ci].quality >= Quality::great)
                     {
                         if (rnd(3))
                         {
@@ -3692,8 +3668,8 @@ void character_drops_item()
         }
         inv[ci].remove();
     }
-    if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
-        || rc < 16)
+    if (cdata[rc].quality >= Quality::miracle || rnd(20) == 0
+        || cdata[rc].drops_gold() == 1 || rc < 16)
     {
         if (cdata[rc].gold > 0)
         {
@@ -3715,7 +3691,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3725,7 +3701,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3735,7 +3711,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3745,7 +3721,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3753,7 +3729,7 @@ void character_drops_item()
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3763,7 +3739,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3773,7 +3749,7 @@ void character_drops_item()
         if (rnd(50) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3790,7 +3766,7 @@ void character_drops_item()
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3798,7 +3774,7 @@ void character_drops_item()
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3806,7 +3782,7 @@ void character_drops_item()
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3814,7 +3790,7 @@ void character_drops_item()
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3822,7 +3798,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3832,7 +3808,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3843,7 +3819,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3854,7 +3830,7 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 32000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3862,7 +3838,7 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 34000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3870,7 +3846,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3878,7 +3854,7 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3886,7 +3862,7 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3894,7 +3870,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3902,7 +3878,7 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3910,7 +3886,7 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3920,7 +3896,7 @@ void character_drops_item()
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3928,7 +3904,7 @@ void character_drops_item()
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3936,7 +3912,7 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3944,7 +3920,7 @@ void character_drops_item()
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3954,7 +3930,7 @@ void character_drops_item()
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3962,7 +3938,7 @@ void character_drops_item()
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3970,7 +3946,7 @@ void character_drops_item()
         if (rnd(15) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3978,7 +3954,7 @@ void character_drops_item()
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3986,7 +3962,7 @@ void character_drops_item()
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3994,7 +3970,7 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -4002,7 +3978,7 @@ void character_drops_item()
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -4010,7 +3986,7 @@ void character_drops_item()
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -4021,7 +3997,7 @@ void character_drops_item()
     if (rnd(40) == 0)
     {
         p = 0;
-        flt(calcobjlv(cdata[tc].level), calcfixlv(2));
+        flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
         flttypemajor = 62000;
         flttypeminor = 0;
         itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -4035,9 +4011,9 @@ void character_drops_item()
     if (gdata_current_map != mdata_t::MapId::arena
         && cdata[rc].character_role != 20)
     {
-        if (rnd(175) == 0 || cdata[rc].quality == 6 || 0
-            || (cdata[rc].quality == 4 && rnd(2) == 0)
-            || (cdata[rc].quality == 5 && rnd(3) == 0))
+        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0
+            || (cdata[rc].quality == Quality::miracle && rnd(2) == 0)
+            || (cdata[rc].quality == Quality::godly && rnd(3) == 0))
         {
             flt();
             itemcreate(-1, 504, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -4045,9 +4021,9 @@ void character_drops_item()
             inv[ci].subname = cdata[rc].id;
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
-        if (rnd(175) == 0 || cdata[rc].quality == 6 || 0
-            || (cdata[rc].quality == 4 && rnd(2) == 0)
-            || (cdata[rc].quality == 5 && rnd(3) == 0))
+        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0
+            || (cdata[rc].quality == Quality::miracle && rnd(2) == 0)
+            || (cdata[rc].quality == Quality::godly && rnd(3) == 0))
         {
             flt();
             itemcreate(-1, 503, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -4063,7 +4039,7 @@ void character_drops_item()
         inv[ci].param1 = cdata[rc].shop_store_id;
         inv[ci].own_state = 2;
     }
-    if (rollanatomy == 1 || cdata[rc].quality >= 4 || 0
+    if (rollanatomy == 1 || cdata[rc].quality >= Quality::miracle || 0
         || cdata[rc].is_livestock() == 1 || 0)
     {
         flt();
@@ -4276,7 +4252,7 @@ void character_drops_item()
     {
         for (int cnt = 0, cnt_end = (2 + rnd(4)); cnt < cnt_end; ++cnt)
         {
-            flt(cdata[rc].level, 2);
+            flt(cdata[rc].level, Quality::good);
             flttypemajor = 92000;
             nostack = 1;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -4330,15 +4306,13 @@ void character_drops_item()
     {
         supply_new_equipment();
     }
-    return;
 }
 
 
 
 void food_gets_rotten()
 {
-    i = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-        + gdata_year * 24 * 30 * 12;
+    i = game_data.date.hours();
     for (int cnt = 0; cnt < 246; ++cnt)
     {
         if (cnt == ELONA_MAX_CHARACTERS)
@@ -4378,7 +4352,7 @@ void food_gets_rotten()
                                                 0))
                                         == 1)
                                     {
-                                        if (gdata_weather != 0)
+                                        if (game_data.weather != 0)
                                         {
                                             continue;
                                         }
@@ -4386,10 +4360,8 @@ void food_gets_rotten()
                                             "core.locale.misc.corpse_is_dried_"
                                             "up",
                                             inv[cnt]));
-                                        inv[cnt].param3 = gdata_hour
-                                            + gdata_day * 24
-                                            + gdata_month * 24 * 30
-                                            + gdata_year * 24 * 30 * 12 + 2160;
+                                        inv[cnt].param3 =
+                                            game_data.date.hours() + 2160;
                                         inv[cnt].image = 337;
                                         inv[cnt].id = 571;
                                         inv[cnt].param1 = 0;
@@ -4434,9 +4406,7 @@ void food_gets_rotten()
                                         flttypeminor = 58500;
                                         itemcreate(0, 0, -1, -1, p);
                                         p = 0;
-                                        i = gdata_hour + gdata_day * 24
-                                            + gdata_month * 24 * 30
-                                            + gdata_year * 24 * 30 * 12;
+                                        i = game_data.date.hours();
                                     }
                                 }
                             }
@@ -4642,7 +4612,7 @@ void proc_negative_equipments()
                                  ++cnt)
                             {
                                 flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
-                                    calcfixlv(2));
+                                    calcfixlv(Quality::bad));
                                 chara_create(
                                     -1,
                                     0,
@@ -4706,7 +4676,9 @@ void auto_identify()
                         "core.locale.misc.identify.almost_identified",
                         inv[ci],
                         i18n::_(
-                            u8"ui", u8"quality", u8"_"s + inv[ci].quality)));
+                            u8"ui",
+                            u8"quality",
+                            u8"_"s + static_cast<int>(inv[ci].quality))));
                 }
                 item_identify(inv[ci], IdentifyState::almost_identified);
                 chara_gain_skill_exp(cdata.player(), 162, 50);
@@ -4793,10 +4765,10 @@ void removeworker(int map_id)
 
 void monster_respawn()
 {
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum
-        || adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum
+        || area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
-        if (gdata_crowd_density < mdata_map_max_crowd_density / 2)
+        if (game_data.crowd_density < mdata_map_max_crowd_density / 2)
         {
             if (rnd(2) == 0)
             {
@@ -4809,7 +4781,7 @@ void monster_respawn()
     {
         return;
     }
-    if (gdata_crowd_density < mdata_map_max_crowd_density / 4)
+    if (game_data.crowd_density < mdata_map_max_crowd_density / 4)
     {
         if (rnd(2) == 0)
         {
@@ -4817,7 +4789,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_crowd_density < mdata_map_max_crowd_density / 2)
+    if (game_data.crowd_density < mdata_map_max_crowd_density / 2)
     {
         if (rnd(4) == 0)
         {
@@ -4825,7 +4797,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_crowd_density < mdata_map_max_crowd_density)
+    if (game_data.crowd_density < mdata_map_max_crowd_density)
     {
         if (rnd(8) == 0)
         {
@@ -4852,7 +4824,7 @@ TurnResult exit_map()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(201) = 1;
                         ghelp = 1;
@@ -4877,14 +4849,15 @@ TurnResult exit_map()
     }
     rdtry = 0;
     fixstart = 0;
-    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon)
     {
-        if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+        if (gdata_current_dungeon_level
+            == area_data[gdata_current_map].deepest_level)
         {
-            if (adata(20, gdata_current_map) > 0)
+            if (area_data[gdata_current_map].has_been_conquered > 0)
             {
-                chara_vanquish(adata(20, gdata_current_map));
-                adata(20, gdata_current_map) = -1;
+                chara_vanquish(area_data[gdata_current_map].has_been_conquered);
+                area_data[gdata_current_map].has_been_conquered = -1;
             }
         }
     }
@@ -4895,7 +4868,7 @@ TurnResult exit_map()
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
         mapstartx = gdata_previous_x;
         mapstarty = gdata_previous_y;
-        gdata_entrance_type = 7;
+        game_data.entrance_type = 7;
         fixstart = 1;
         levelexitby = 5;
     }
@@ -4922,14 +4895,14 @@ TurnResult exit_map()
         {
             msgtemp += i18n::s.get("core.locale.misc.walk_down_stairs");
             f = 1;
-            gdata_entrance_type = 1;
+            game_data.entrance_type = 1;
             mdata_map_stair_down_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
                 ++gdata_current_dungeon_level;
                 gdata_current_dungeon_level -=
-                    (adata(3, gdata_current_map) == 2) * 2;
+                    (area_data[gdata_current_map].entrance == 2) * 2;
             }
             else
             {
@@ -4940,14 +4913,14 @@ TurnResult exit_map()
         {
             msgtemp += i18n::s.get("core.locale.misc.walk_up_stairs");
             f = 1;
-            gdata_entrance_type = 2;
+            game_data.entrance_type = 2;
             mdata_map_stair_up_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
                 --gdata_current_dungeon_level;
                 gdata_current_dungeon_level +=
-                    (adata(3, gdata_current_map) == 2) * 2;
+                    (area_data[gdata_current_map].entrance == 2) * 2;
             }
             else
             {
@@ -4958,13 +4931,13 @@ TurnResult exit_map()
         {
             if (mdata_map_type == mdata_t::MapType::world_map)
             {
-                gdata_pc_x_in_world_map = cdata[cc].position.x;
-                gdata_pc_y_in_world_map = cdata[cc].position.y;
+                game_data.pc_x_in_world_map = cdata[cc].position.x;
+                game_data.pc_y_in_world_map = cdata[cc].position.y;
                 gdata_current_dungeon_level = 1;
                 if (feat(2) != 0 || feat(3) != 0)
                 {
                     gdata_current_map = feat(2) + feat(3) * 100;
-                    if (adata(16, gdata_current_map)
+                    if (area_data[gdata_current_map].id
                         == mdata_t::MapId::the_void)
                     {
                         if (itemfind(0, 742) == -1)
@@ -4976,7 +4949,8 @@ TurnResult exit_map()
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (adata(16, gdata_current_map) == mdata_t::MapId::pyramid)
+                    if (area_data[gdata_current_map].id
+                        == mdata_t::MapId::pyramid)
                     {
                         if (gdata_pyramid_trial == 0)
                         {
@@ -4988,7 +4962,7 @@ TurnResult exit_map()
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (adata(16, gdata_current_map) == mdata_t::MapId::jail)
+                    if (area_data[gdata_current_map].id == mdata_t::MapId::jail)
                     {
                         txt(i18n::s.get(
                             "core.locale.action.exit_map.cannot_enter_jail"));
@@ -5017,15 +4991,16 @@ TurnResult exit_map()
                 gdata_current_map = gdata(850);
             }
         }
-        if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
+        if (mdata_t::is_nefia(mdata_map_type)
             || mdata_map_type == static_cast<int>(mdata_t::MapType::shelter))
         {
-            if (gdata_current_dungeon_level < adata(17, gdata_current_map))
+            if (gdata_current_dungeon_level
+                < area_data[gdata_current_map].danger_level)
             {
                 gdata_current_map = gdata(850);
             }
         }
-        if (adata(0, gdata_current_map) == mdata_t::MapType::town)
+        if (area_data[gdata_current_map].type == mdata_t::MapType::town)
         {
             if (gdata_current_map == gdata_previous_map)
             {
@@ -5050,7 +5025,7 @@ TurnResult exit_map()
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
         mapstartx = gdata_previous_x;
         mapstarty = gdata_previous_y;
-        gdata_entrance_type = 7;
+        game_data.entrance_type = 7;
         fixstart = 1;
     }
     if (levelexitby == 2)
@@ -5061,8 +5036,10 @@ TurnResult exit_map()
         {
             if (gdata_previous_map != 2)
             {
-                gdata_pc_x_in_world_map = adata(1, gdata_current_map);
-                gdata_pc_y_in_world_map = adata(2, gdata_current_map);
+                game_data.pc_x_in_world_map =
+                    area_data[gdata_current_map].position.x;
+                game_data.pc_y_in_world_map =
+                    area_data[gdata_current_map].position.y;
                 weather_changes_by_location();
             }
         }
@@ -5070,7 +5047,7 @@ TurnResult exit_map()
         {
             mapstartx = 29;
             mapstarty = 3;
-            gdata_entrance_type = 7;
+            game_data.entrance_type = 7;
             fixstart = 1;
         }
     }
@@ -5079,7 +5056,7 @@ TurnResult exit_map()
         rc = 0;
         revive_player();
         gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
-        gdata(850) = adata(30, 7);
+        gdata(850) = area_data[7].outer_map;
         gdata_current_dungeon_level = 1;
     }
     if (rdtry > 1)
@@ -5093,13 +5070,12 @@ TurnResult exit_map()
             || gdata_previous_map == mdata_t::MapId::your_home
             || gdata_departure_date == 0)
         {
-            gdata_departure_date = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
+            gdata_departure_date = game_data.date.hours();
             gdata_distance_between_town = 0;
             gdata_left_town_map = gdata_previous_map;
         }
-        if (adata(0, gdata_current_map) != mdata_t::MapType::world_map
-            && adata(0, gdata_current_map) != mdata_t::MapType::field
+        if (area_data[gdata_current_map].type != mdata_t::MapType::world_map
+            && area_data[gdata_current_map].type != mdata_t::MapType::field
             && gdata_current_map != mdata_t::MapId::show_house)
         {
             autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
@@ -5111,8 +5087,10 @@ TurnResult exit_map()
             {
                 if (fixtransfermap == 0)
                 {
-                    gdata_pc_x_in_world_map = adata(1, gdata_previous_map);
-                    gdata_pc_y_in_world_map = adata(2, gdata_previous_map);
+                    game_data.pc_x_in_world_map =
+                        area_data[gdata_previous_map].position.x;
+                    game_data.pc_y_in_world_map =
+                        area_data[gdata_previous_map].position.y;
                 }
                 else
                 {
@@ -5122,7 +5100,7 @@ TurnResult exit_map()
         }
         if (fixstart == 0)
         {
-            gdata_entrance_type = adata(3, gdata_current_map);
+            game_data.entrance_type = area_data[gdata_current_map].entrance;
         }
         if (event_find(6))
         {
@@ -5130,7 +5108,8 @@ TurnResult exit_map()
                 "core.locale.action.exit_map.delivered_to_your_home");
             weather_changes_by_location();
         }
-        else if (adata(0, gdata_previous_map) == mdata_t::MapType::world_map)
+        else if (
+            area_data[gdata_previous_map].type == mdata_t::MapType::world_map)
         {
             msgtemp += i18n::s.get(
                 "core.locale.action.exit_map.entered",
@@ -5150,8 +5129,8 @@ TurnResult exit_map()
         }
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
-            if (adata(0, gdata_current_map) == mdata_t::MapType::world_map
-                || adata(0, gdata_current_map) == mdata_t::MapType::field)
+            if (area_data[gdata_current_map].type == mdata_t::MapType::world_map
+                || area_data[gdata_current_map].type == mdata_t::MapType::field)
             {
                 msgtemp += i18n::s.get(
                     "core.locale.action.exit_map.burdened_by_cargo");
@@ -5163,18 +5142,20 @@ TurnResult exit_map()
         if (gdata_current_dungeon_level == 2)
         {
             gdata_current_map = static_cast<int>(mdata_t::MapId::mountain_pass);
-            gdata_current_dungeon_level = adata(10, gdata_current_map) - 1;
-            gdata_entrance_type = 1;
+            gdata_current_dungeon_level =
+                area_data[gdata_current_map].deepest_level - 1;
+            game_data.entrance_type = 1;
             msgtemp += i18n::s.get("core.locale.action.exit_map.mountain_pass");
         }
     }
     if (gdata_current_map == mdata_t::MapId::mountain_pass)
     {
-        if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+        if (gdata_current_dungeon_level
+            == area_data[gdata_current_map].deepest_level)
         {
             gdata_current_map = static_cast<int>(mdata_t::MapId::larna);
             gdata_current_dungeon_level = 1;
-            gdata_entrance_type = 2;
+            game_data.entrance_type = 2;
             msgtemp += i18n::s.get("core.locale.action.exit_map.larna");
         }
     }
@@ -5182,7 +5163,7 @@ TurnResult exit_map()
     {
         cdata[cnt].hate = 0;
         cdata[cnt].enemy_id = 0;
-        rowactend(cnt);
+        cdata[cnt].continuous_action.finish();
         if (cdata[cnt].state() != Character::State::alive)
         {
             if (cdata[cnt].state() == Character::State::pet_in_other_map)
@@ -5253,7 +5234,7 @@ void prepare_charas_for_map_unload()
     // interrupt continuous actions
     for (int cnt = 0; cnt < 57; ++cnt)
     {
-        rowactend(cnt);
+        cdata[cnt].continuous_action.finish();
         cdata[cnt].item_which_will_be_used = 0;
     }
 
@@ -5292,17 +5273,14 @@ void save_map_local_data()
 
 void map_proc_regen_and_update()
 {
-    if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12
-        >= adata(25, gdata_current_map))
+    if (game_data.date.hours() >= area_data[gdata_current_map]
+                                      .time_of_next_update_of_arena_random_seed)
     {
-        adata(24, gdata_current_map) = rnd(10000);
-        adata(25, gdata_current_map) = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
+        area_data[gdata_current_map].arena_random_seed = rnd(10000);
+        area_data[gdata_current_map].time_of_next_update_of_arena_random_seed =
+            game_data.date.hours() + 24;
     }
-    if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12
-        >= mdata_map_next_regenerate_date)
+    if (game_data.date.hours() >= mdata_map_next_regenerate_date)
     {
         if (mdata_map_should_regenerate == 0)
         {
@@ -5393,12 +5371,9 @@ void map_proc_regen_and_update()
                 map_randsite();
             }
         }
-        mdata_map_next_regenerate_date = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 120;
+        mdata_map_next_regenerate_date = game_data.date.hours() + 120;
     }
-    if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12
-        >= mdata_map_next_restock_date)
+    if (game_data.date.hours() >= mdata_map_next_restock_date)
     {
         if (mdata_map_next_restock_date == 0)
         {
@@ -5407,16 +5382,13 @@ void map_proc_regen_and_update()
         else
         {
             renewmulti =
-                (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                 + gdata_year * 24 * 30 * 12 - mdata_map_next_restock_date)
-                    / 24
-                + 1;
+                (game_data.date.hours() - mdata_map_next_restock_date) / 24 + 1;
         }
-        if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::ranch)
         {
             update_ranch();
         }
-        if (adata(16, gdata_current_map) == mdata_t::MapId::your_home)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::your_home)
         {
             for (auto&& cnt : cdata.others())
             {
@@ -5499,7 +5471,8 @@ void map_proc_regen_and_update()
                     {
                         if (inv_sum(rc) < 8)
                         {
-                            flt(calcobjlv(cdata[rc].level), calcfixlv(2));
+                            flt(calcobjlv(cdata[rc].level),
+                                calcfixlv(Quality::bad));
                             int stat = itemcreate(rc, 0, -1, -1, 0);
                             if (stat != 0)
                             {
@@ -5514,8 +5487,7 @@ void map_proc_regen_and_update()
                 }
             }
         }
-        mdata_map_next_restock_date = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
+        mdata_map_next_restock_date = game_data.date.hours() + 24;
     }
 }
 
@@ -5543,40 +5515,41 @@ void map_prepare_tileset_atlas()
     int shadow = 5;
     if (mdata_map_indoors_flag == 2)
     {
-        if (gdata_hour >= 24 || (gdata_hour >= 0 && gdata_hour < 4))
+        if (game_data.date.hour >= 24
+            || (game_data.date.hour >= 0 && game_data.date.hour < 4))
         {
             shadow = 110;
         }
-        if (gdata_hour >= 4 && gdata_hour < 10)
+        if (game_data.date.hour >= 4 && game_data.date.hour < 10)
         {
-            shadow = std::min(10, 70 - (gdata_hour - 3) * 10);
+            shadow = std::min(10, 70 - (game_data.date.hour - 3) * 10);
         }
-        if (gdata_hour >= 10 && gdata_hour < 12)
+        if (game_data.date.hour >= 10 && game_data.date.hour < 12)
         {
             shadow = 10;
         }
-        if (gdata_hour >= 12 && gdata_hour < 17)
+        if (game_data.date.hour >= 12 && game_data.date.hour < 17)
         {
             shadow = 1;
         }
-        if (gdata_hour >= 17 && gdata_hour < 21)
+        if (game_data.date.hour >= 17 && game_data.date.hour < 21)
         {
-            shadow = (gdata_hour - 17) * 20;
+            shadow = (game_data.date.hour - 17) * 20;
         }
-        if (gdata_hour >= 21 && gdata_hour < 24)
+        if (game_data.date.hour >= 21 && game_data.date.hour < 24)
         {
-            shadow = 80 + (gdata_hour - 21) * 10;
+            shadow = 80 + (game_data.date.hour - 21) * 10;
         }
-        if (gdata_weather == 3 && shadow < 40)
+        if (game_data.weather == 3 && shadow < 40)
         {
             shadow = 40;
         }
-        if (gdata_weather == 4 && shadow < 65)
+        if (game_data.weather == 4 && shadow < 65)
         {
             shadow = 65;
         }
         if (gdata_current_map == mdata_t::MapId::noyel
-            && (gdata_hour >= 17 || gdata_hour < 7))
+            && (game_data.date.hour >= 17 || game_data.date.hour < 7))
         {
             shadow += 35;
         }
@@ -5606,7 +5579,6 @@ void map_prepare_tileset_atlas()
     gmode(0);
     gsel(0);
     gmode(2);
-    return;
 }
 
 
@@ -5616,9 +5588,9 @@ int initialize_world_map()
     p = 0;
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
+        if (area_data[cnt].id == mdata_t::MapId::random_dungeon)
         {
-            if (adata(20, cnt) != -1)
+            if (area_data[cnt].has_been_conquered != -1)
             {
                 ++p;
             }
@@ -5649,19 +5621,19 @@ void map_global_proc_diastrophism()
         map_global_prepare();
         for (int cnt = 450; cnt < 500; ++cnt)
         {
-            adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
+            area_data[cnt].id = static_cast<int>(mdata_t::MapId::none);
         }
     }
     p = 0;
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::none)
+        if (area_data[cnt].id == mdata_t::MapId::none)
         {
             continue;
         }
-        if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
+        if (area_data[cnt].id == mdata_t::MapId::random_dungeon)
         {
-            if (adata(20, cnt) != -1)
+            if (area_data[cnt].has_been_conquered != -1)
             {
                 ++p;
             }
@@ -5673,11 +5645,11 @@ void map_global_proc_diastrophism()
         msgtemp += i18n::s.get("core.locale.action.move.global.diastrophism");
         for (int cnt = 450; cnt < 500; ++cnt)
         {
-            if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
+            if (area_data[cnt].id == mdata_t::MapId::random_dungeon)
             {
-                if (rnd(5) == 0 || adata(20, cnt) == -1)
+                if (rnd(5) == 0 || area_data[cnt].has_been_conquered == -1)
                 {
-                    adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
+                    area_data[cnt].id = static_cast<int>(mdata_t::MapId::none);
                 }
             }
         }
@@ -5685,7 +5657,6 @@ void map_global_proc_diastrophism()
         map_global_prepare();
     }
     gdata(79) = 0;
-    return;
 }
 
 
@@ -5694,7 +5665,6 @@ void map_global_prepare()
 {
     map_clear_material_spots_and_light();
     map_global_place_entrances();
-    return;
 }
 
 
@@ -5726,41 +5696,45 @@ void map_global_place_entrances()
     }
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::none || adata(15, cnt) == 0)
+        if (area_data[cnt].id == mdata_t::MapId::none
+            || area_data[cnt].appearance == 0)
         {
             continue;
         }
-        if (adata(30, cnt) != gdata(850))
+        if (area_data[cnt].outer_map != gdata(850))
         {
             continue;
         }
-        if (adata(16, cnt) == 900)
+        if (area_data[cnt].id == 900)
         {
-            adata(16, cnt) = 40;
+            area_data[cnt].id = 40;
             continue;
         }
-        if (adata(16, cnt) >= 900)
+        if (area_data[cnt].id >= 900)
         {
-            adata(16, cnt) -= 800;
+            area_data[cnt].id -= 800;
             continue;
         }
-        if (adata(1, cnt) <= 0 || adata(2, cnt) <= 0
-            || adata(1, cnt) >= mdata_map_width
-            || adata(2, cnt) >= mdata_map_height)
+        if (area_data[cnt].position.x <= 0 || area_data[cnt].position.y <= 0
+            || area_data[cnt].position.x >= mdata_map_width
+            || area_data[cnt].position.y >= mdata_map_height)
         {
-            adata(1, cnt) = mdata_map_width / 2;
-            adata(2, cnt) = mdata_map_height / 2;
+            area_data[cnt].position.x = mdata_map_width / 2;
+            area_data[cnt].position.y = mdata_map_height / 2;
         }
         p = cnt;
-        if (chipm(7, map(adata(1, cnt), adata(2, cnt), 0)) & 4
-            || map(adata(1, cnt), adata(2, cnt), 6) != 0)
+        if (chipm(
+                7, map(area_data[cnt].position.x, area_data[cnt].position.y, 0))
+                & 4
+            || map(area_data[cnt].position.x, area_data[cnt].position.y, 6)
+                != 0)
         {
             for (int cnt = 0;; ++cnt)
             {
                 dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
                 dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
-                x = adata(1, p) + rnd(dx) - rnd(dx);
-                y = adata(2, p) + rnd(dy) - rnd(dy);
+                x = area_data[p].position.x + rnd(dx(0)) - rnd(dx(0));
+                y = area_data[p].position.y + rnd(dy) - rnd(dy);
                 if (x <= 0 || y <= 0 || x >= mdata_map_width - 1
                     || y >= mdata_map_height - 1)
                 {
@@ -5778,25 +5752,24 @@ void map_global_place_entrances()
                 {
                     continue;
                 }
-                adata(1, p) = x;
-                adata(2, p) = y;
+                area_data[p].position.x = x;
+                area_data[p].position.y = y;
                 break;
             }
         }
         cell_featset(
-            adata(1, cnt),
-            adata(2, cnt),
-            adata(15, cnt),
+            area_data[cnt].position.x,
+            area_data[cnt].position.y,
+            area_data[cnt].appearance,
             15,
             cnt % 100,
             cnt / 100);
-        if (adata(0, cnt) == mdata_t::MapType::town
-            || adata(0, cnt) == mdata_t::MapType::guild)
+        if (area_data[cnt].type == mdata_t::MapType::town
+            || area_data[cnt].type == mdata_t::MapType::guild)
         {
-            map(adata(1, cnt), adata(2, cnt), 9) = 11;
+            map(area_data[cnt].position.x, area_data[cnt].position.y, 9) = 11;
         }
     }
-    return;
 }
 
 
@@ -5818,7 +5791,6 @@ void map_clear_material_spots_and_light()
             map(x, y, 9) = 0;
         }
     }
-    return;
 }
 
 
@@ -5826,720 +5798,719 @@ void map_clear_material_spots_and_light()
 void initialize_adata()
 {
     p = static_cast<int>(mdata_t::MapId::test_world);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 6;
-    adata(4, p) = 2;
-    adata(18, p) = 1;
-    adata(9, p) = 50000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 47;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::world_map);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 6;
+    area_data[p].tile_set = 2;
+    area_data[p].tile_type = 1;
+    area_data[p].turn_cost_base = 50000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 47;
     p = static_cast<int>(mdata_t::MapId::test_world_north_border);
-    adata(16, p) = p;
-    adata(15, p) = 158;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 28;
-    adata(2, p) = 1;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 47;
+    area_data[p].id = p;
+    area_data[p].appearance = 158;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 28;
+    area_data[p].position.y = 1;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 47;
     p = static_cast<int>(mdata_t::MapId::south_tyris);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 6;
-    adata(4, p) = 2;
-    adata(18, p) = 1;
-    adata(9, p) = 50000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 44;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::world_map);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 6;
+    area_data[p].tile_set = 2;
+    area_data[p].tile_type = 1;
+    area_data[p].turn_cost_base = 50000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 44;
     p = static_cast<int>(mdata_t::MapId::south_tyris_north_border);
-    adata(16, p) = p;
-    adata(15, p) = 158;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 42;
-    adata(2, p) = 1;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 44;
+    area_data[p].id = p;
+    area_data[p].appearance = 158;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 42;
+    area_data[p].position.y = 1;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 44;
     p = static_cast<int>(mdata_t::MapId::the_smoke_and_pipe);
-    adata(16, p) = p;
-    adata(15, p) = 159;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 39;
-    adata(2, p) = 13;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 44;
+    area_data[p].id = p;
+    area_data[p].appearance = 159;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 39;
+    area_data[p].position.y = 13;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 44;
     p = static_cast<int>(mdata_t::MapId::north_tyris);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 6;
-    adata(4, p) = 2;
-    adata(18, p) = 1;
-    adata(9, p) = 50000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::world_map);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 6;
+    area_data[p].tile_set = 2;
+    area_data[p].tile_type = 1;
+    area_data[p].turn_cost_base = 50000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::vernis);
-    adata(16, p) = p;
-    adata(15, p) = 132;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 26;
-    adata(2, p) = 23;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 132;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 23;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::yowyn);
-    adata(16, p) = p;
-    adata(15, p) = 142;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 43;
-    adata(2, p) = 32;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 2;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 142;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 43;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 2;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::palmia);
-    adata(16, p) = p;
-    adata(15, p) = 136;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 53;
-    adata(2, p) = 24;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 3;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 136;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 53;
+    area_data[p].position.y = 24;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 3;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::derphy);
-    adata(16, p) = p;
-    adata(15, p) = 142;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 14;
-    adata(2, p) = 35;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 4;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 142;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 14;
+    area_data[p].position.y = 35;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 4;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::port_kapul);
-    adata(16, p) = p;
-    adata(15, p) = 132;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 3;
-    adata(2, p) = 15;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 5;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 132;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 3;
+    area_data[p].position.y = 15;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 5;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::noyel);
-    adata(16, p) = p;
-    adata(15, p) = 156;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 89;
-    adata(2, p) = 14;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 6;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 156;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 89;
+    area_data[p].position.y = 14;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 6;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::lumiest);
-    adata(16, p) = p;
-    adata(15, p) = 132;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
-    adata(1, p) = 61;
-    adata(2, p) = 32;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 999;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(28, p) = 7;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 132;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::town);
+    area_data[p].position.x = 61;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 999;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].quest_town_id = 7;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fields);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::field);
-    adata(1, p) = 0;
-    adata(2, p) = 0;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::field);
+    area_data[p].position.x = 0;
+    area_data[p].position.y = 0;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::your_home);
-    adata(16, p) = p;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
-    adata(3, p) = 8;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 10;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    if (gdata_home_scale == 0)
+    area_data[p].id = p;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::player_owned);
+    area_data[p].entrance = 8;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 10;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    if (game_data.home_scale == 0)
     {
-        adata(15, p) = 138;
-        adata(1, p) = 22;
-        adata(2, p) = 21;
-        adata(4, p) = 1;
-        adata(18, p) = 3;
-        adata(30, p) = 4;
+        area_data[p].appearance = 138;
+        area_data[p].position.x = 22;
+        area_data[p].position.y = 21;
+        area_data[p].tile_set = 1;
+        area_data[p].tile_type = 3;
+        area_data[p].outer_map = 4;
     }
     p = static_cast<int>(mdata_t::MapId::show_house);
-    adata(16, p) = p;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(3, p) = 8;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 1;
-    adata(15, p) = 158;
-    adata(1, p) = 35;
-    adata(2, p) = 27;
-    adata(4, p) = 1;
-    adata(18, p) = 3;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].entrance = 8;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].appearance = 158;
+    area_data[p].position.x = 35;
+    area_data[p].position.y = 27;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 3;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::arena);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(1, p) = 22;
-    adata(2, p) = 21;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].position.x = 22;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::pet_arena);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(1, p) = 23;
-    adata(2, p) = 21;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].position.x = 23;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::quest);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
-    adata(1, p) = 22;
-    adata(2, p) = 21;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::temporary);
+    area_data[p].position.x = 22;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::lesimas);
-    adata(16, p) = p;
-    adata(15, p) = 139;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 23;
-    adata(2, p) = 29;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 45;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 139;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 23;
+    area_data[p].position.y = 29;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 45;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::the_void);
-    adata(16, p) = p;
-    adata(15, p) = 139;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 81;
-    adata(2, p) = 51;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 50;
-    adata(10, p) = 99999999;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 139;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 81;
+    area_data[p].position.y = 51;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 50;
+    area_data[p].deepest_level = 99999999;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::tower_of_fire);
-    adata(16, p) = p;
-    adata(15, p) = 145;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_tower);
-    adata(1, p) = 43;
-    adata(2, p) = 4;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 15;
-    adata(10, p) = 18;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 145;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon_tower);
+    area_data[p].position.x = 43;
+    area_data[p].position.y = 4;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 15;
+    area_data[p].deepest_level = 18;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::crypt_of_the_damned);
-    adata(16, p) = p;
-    adata(15, p) = 141;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 37;
-    adata(2, p) = 20;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 25;
-    adata(10, p) = 30;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 141;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 37;
+    area_data[p].position.y = 20;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 25;
+    area_data[p].deepest_level = 30;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::ancient_castle);
-    adata(16, p) = p;
-    adata(15, p) = 144;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_castle);
-    adata(1, p) = 26;
-    adata(2, p) = 44;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 17;
-    adata(10, p) = 22;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 144;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon_castle);
+    area_data[p].position.x = 26;
+    area_data[p].position.y = 44;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 17;
+    area_data[p].deepest_level = 22;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::dragons_nest);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 13;
-    adata(2, p) = 32;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 30;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 13;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 30;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::mountain_pass);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 64;
-    adata(2, p) = 43;
-    adata(3, p) = 2;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 25;
-    adata(10, p) = 29;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 64;
+    area_data[p].position.y = 43;
+    area_data[p].entrance = 2;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 25;
+    area_data[p].deepest_level = 29;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::puppy_cave);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 29;
-    adata(2, p) = 24;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 2;
-    adata(10, p) = 5;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 29;
+    area_data[p].position.y = 24;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 2;
+    area_data[p].deepest_level = 5;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::minotaurs_nest);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 43;
-    adata(2, p) = 39;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 23;
-    adata(10, p) = 27;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 43;
+    area_data[p].position.y = 39;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 23;
+    area_data[p].deepest_level = 27;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::yeeks_nest);
-    adata(16, p) = p;
-    adata(15, p) = 146;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 38;
-    adata(2, p) = 31;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 5;
-    adata(10, p) = 5;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 146;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 38;
+    area_data[p].position.y = 31;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 5;
+    area_data[p].deepest_level = 5;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::pyramid);
-    adata(16, p) = p;
-    adata(15, p) = 160;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
-    adata(1, p) = 4;
-    adata(2, p) = 11;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 0;
-    adata(9, p) = 10000;
-    adata(17, p) = 20;
-    adata(10, p) = 21;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 160;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::dungeon);
+    area_data[p].position.x = 4;
+    area_data[p].position.y = 11;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 0;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 20;
+    area_data[p].deepest_level = 21;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::lumiest_graveyard);
-    adata(16, p) = p;
-    adata(15, p) = 141;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 74;
-    adata(2, p) = 31;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 141;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 74;
+    area_data[p].position.y = 31;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::truce_ground);
-    adata(16, p) = p;
-    adata(15, p) = 147;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 51;
-    adata(2, p) = 9;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 147;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 51;
+    area_data[p].position.y = 9;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::jail);
-    adata(16, p) = p;
-    adata(15, p) = 161;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 28;
-    adata(2, p) = 37;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 12;
-    adata(9, p) = 100000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 161;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 28;
+    area_data[p].position.y = 37;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 12;
+    area_data[p].turn_cost_base = 100000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::cyber_dome);
-    adata(16, p) = p;
-    adata(15, p) = 148;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 21;
-    adata(2, p) = 27;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 8;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 148;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 21;
+    area_data[p].position.y = 27;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 8;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::larna);
-    adata(16, p) = p;
-    adata(15, p) = 142;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 64;
-    adata(2, p) = 47;
-    adata(3, p) = 3;
-    adata(4, p) = 1;
-    adata(18, p) = 9;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 142;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 64;
+    area_data[p].position.y = 47;
+    area_data[p].entrance = 3;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 9;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::miral_and_garoks_workshop);
-    adata(16, p) = p;
-    adata(15, p) = 157;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 88;
-    adata(2, p) = 25;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 157;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 88;
+    area_data[p].position.y = 25;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::mansion_of_younger_sister);
-    adata(16, p) = p;
-    adata(15, p) = 162;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 18;
-    adata(2, p) = 2;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 2;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 162;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 18;
+    area_data[p].position.y = 2;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::embassy);
-    adata(16, p) = p;
-    adata(15, p) = 155;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 53;
-    adata(2, p) = 21;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 155;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 53;
+    area_data[p].position.y = 21;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::north_tyris_south_border);
-    adata(16, p) = p;
-    adata(15, p) = 158;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
-    adata(1, p) = 27;
-    adata(2, p) = 52;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 2;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 1;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 158;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::guild);
+    area_data[p].position.x = 27;
+    area_data[p].position.y = 52;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 2;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 1;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_beast);
-    adata(16, p) = p;
-    adata(15, p) = 149;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 13;
-    adata(2, p) = 43;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 33;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 149;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 13;
+    area_data[p].position.y = 43;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 33;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_machine);
-    adata(16, p) = p;
-    adata(15, p) = 149;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 51;
-    adata(2, p) = 32;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 33;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 149;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 51;
+    area_data[p].position.y = 32;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 33;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_collapsed);
-    adata(16, p) = p;
-    adata(15, p) = 149;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 35;
-    adata(2, p) = 10;
-    adata(3, p) = 8;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 10000;
-    adata(17, p) = 33;
-    adata(10, p) = 33;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 149;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 35;
+    area_data[p].position.y = 10;
+    area_data[p].entrance = 8;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 33;
+    area_data[p].deepest_level = 33;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::shelter_);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
-    adata(1, p) = 35;
-    adata(2, p) = 10;
-    adata(3, p) = 1;
-    adata(4, p) = 1;
-    adata(18, p) = 100;
-    adata(9, p) = 1000000;
-    adata(17, p) = -999999;
-    adata(10, p) = 999999;
-    adata(21, p) = 1;
-    adata(11, p) = 1;
-    adata(12, p) = 1;
-    adata(30, p) = 4;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::player_owned);
+    area_data[p].position.x = 35;
+    area_data[p].position.y = 10;
+    area_data[p].entrance = 1;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 100;
+    area_data[p].turn_cost_base = 1000000;
+    area_data[p].danger_level = -999999;
+    area_data[p].deepest_level = 999999;
+    area_data[p].is_indoor = true;
+    area_data[p].is_generated_every_time = false;
+    area_data[p].default_ai_calm = 1;
+    area_data[p].outer_map = 4;
     p = static_cast<int>(mdata_t::MapId::test_site);
-    adata(16, p) = p;
-    adata(15, p) = 0;
-    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
-    adata(1, p) = 20;
-    adata(2, p) = 20;
-    adata(3, p) = 4;
-    adata(4, p) = 1;
-    adata(18, p) = 4;
-    adata(9, p) = 10000;
-    adata(17, p) = 1;
-    adata(10, p) = 45;
-    adata(21, p) = 2;
-    adata(11, p) = 0;
-    adata(12, p) = 0;
-    adata(30, p) = 4;
-    return;
+    area_data[p].id = p;
+    area_data[p].appearance = 0;
+    area_data[p].type = static_cast<int>(mdata_t::MapType::shelter);
+    area_data[p].position.x = 20;
+    area_data[p].position.y = 20;
+    area_data[p].entrance = 4;
+    area_data[p].tile_set = 1;
+    area_data[p].tile_type = 4;
+    area_data[p].turn_cost_base = 10000;
+    area_data[p].danger_level = 1;
+    area_data[p].deepest_level = 45;
+    area_data[p].is_indoor = false;
+    area_data[p].is_generated_every_time = true;
+    area_data[p].default_ai_calm = 0;
+    area_data[p].outer_map = 4;
 }
 
 
@@ -6548,7 +6519,7 @@ int place_random_nefias()
 {
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) != mdata_t::MapId::none)
+        if (area_data[cnt].id != mdata_t::MapId::none)
         {
             continue;
         }
@@ -6577,13 +6548,15 @@ int place_random_nefias()
             p = 1;
             for (int cnt = 0; cnt < 500; ++cnt)
             {
-                if (adata(16, cnt) == mdata_t::MapId::none)
+                if (area_data[cnt].id == mdata_t::MapId::none)
                 {
                     continue;
                 }
-                if (x >= adata(1, cnt) - 2 && x <= adata(1, cnt) + 2)
+                if (x >= area_data[cnt].position.x - 2
+                    && x <= area_data[cnt].position.x + 2)
                 {
-                    if (y >= adata(2, cnt) - 2 && y <= adata(2, cnt) + 2)
+                    if (y >= area_data[cnt].position.y - 2
+                        && y <= area_data[cnt].position.y + 2)
                     {
                         p = 0;
                         break;
@@ -6605,54 +6578,55 @@ int place_random_nefias()
         p = cnt;
         area = p;
         ctrl_file(FileOperation::temp_dir_delete_area);
-        adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
-        adata(16, p) = static_cast<int>(mdata_t::MapId::random_dungeon);
-        adata(15, p) = 133;
-        adata(1, p) = x;
-        adata(2, p) = y;
-        adata(3, p) = 1;
-        adata(4, p) = 1;
-        adata(18, p) = 1;
-        adata(9, p) = 10000;
-        adata(21, p) = 1;
-        adata(30, p) = gdata(850);
+        area_data[p].type =
+            static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
+        area_data[p].id = static_cast<int>(mdata_t::MapId::random_dungeon);
+        area_data[p].appearance = 133;
+        area_data[p].position.x = x;
+        area_data[p].position.y = y;
+        area_data[p].entrance = 1;
+        area_data[p].tile_set = 1;
+        area_data[p].tile_type = 1;
+        area_data[p].turn_cost_base = 10000;
+        area_data[p].is_indoor = true;
+        area_data[p].outer_map = gdata(850);
         if (rnd(3))
         {
-            adata(17, p) = rnd(cdata.player().level + 5) + 1;
+            area_data[p].danger_level = rnd(cdata.player().level + 5) + 1;
         }
         else
         {
-            adata(17, p) = rnd(50) + 1;
+            area_data[p].danger_level = rnd(50) + 1;
             if (rnd(5) == 0)
             {
-                adata(17, p) *= rnd(3) + 1;
+                area_data[p].danger_level *= rnd(3) + 1;
             }
         }
-        adata(10, p) = adata(17, p) + rnd(4) + 2;
-        adata(11, p) = 1;
-        adata(12, p) = 0;
-        adata(20, p) = 0;
-        adata(5, p) = rnd(mapnamerd.i_size());
+        area_data[p].deepest_level = area_data[p].danger_level + rnd(4) + 2;
+        area_data[p].is_generated_every_time = false;
+        area_data[p].default_ai_calm = 0;
+        area_data[p].has_been_conquered = 0;
+        area_data[p].dungeon_prefix = rnd(mapnamerd.i_size());
         map(x, y, 6) = 1;
-        if (adata(0, p) == mdata_t::MapType::dungeon)
+        if (area_data[p].type == mdata_t::MapType::dungeon)
         {
-            adata(15, p) = 133;
-            adata(18, p) = 0;
+            area_data[p].appearance = 133;
+            area_data[p].tile_type = 0;
         }
-        if (adata(0, p) == mdata_t::MapType::dungeon_tower)
+        if (area_data[p].type == mdata_t::MapType::dungeon_tower)
         {
-            adata(15, p) = 137;
-            adata(18, p) = 100;
+            area_data[p].appearance = 137;
+            area_data[p].tile_type = 100;
         }
-        if (adata(0, p) == mdata_t::MapType::dungeon_forest)
+        if (area_data[p].type == mdata_t::MapType::dungeon_forest)
         {
-            adata(15, p) = 135;
-            adata(18, p) = 300;
+            area_data[p].appearance = 135;
+            area_data[p].tile_type = 300;
         }
-        if (adata(0, p) == mdata_t::MapType::dungeon_castle)
+        if (area_data[p].type == mdata_t::MapType::dungeon_castle)
         {
-            adata(15, p) = 140;
-            adata(18, p) = 200;
+            area_data[p].appearance = 140;
+            area_data[p].tile_type = 200;
         }
         break;
     }
@@ -6669,7 +6643,7 @@ void map_proc_special_events()
         {
             if (cdata[gdata_fire_giant].state() == Character::State::alive)
             {
-                if (gdata_crowd_density < 70)
+                if (game_data.crowd_density < 70)
                 {
                     if (rnd(4) == 0)
                     {
@@ -6691,7 +6665,7 @@ void map_proc_special_events()
     {
         if (qdata(8, gdata_executing_immediate_quest) != 3)
         {
-            if (gdata_crowd_density
+            if (game_data.crowd_density
                 < gdata_left_minutes_of_executing_quest / 60)
             {
                 dbid = 0;
@@ -6832,7 +6806,8 @@ void map_proc_special_events()
     }
     if (gdata_current_map == mdata_t::MapId::shelter_)
     {
-        if (gdata_weather == 2 || gdata_weather == 4 || gdata_weather == 1)
+        if (game_data.weather == 2 || game_data.weather == 4
+            || game_data.weather == 1)
         {
             if (cdata.player().nutrition < 5000)
             {
@@ -6862,9 +6837,9 @@ void map_proc_special_events()
                 "core.locale.misc.map.shelter.no_longer_need_to_stay"));
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
     {
-        if (gdata_crowd_density > 0)
+        if (game_data.crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -6926,9 +6901,9 @@ void map_proc_special_events()
             return;
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
-        if (gdata_crowd_density > 0)
+        if (game_data.crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -6954,7 +6929,7 @@ void map_reload_noyel()
 
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
-    if (adata(29, gdata_current_map) == 1)
+    if (area_data[gdata_current_map].christmas_festival == 1)
     {
         flt();
         int stat = itemcreate(-1, 763, 29, 16, 0);
@@ -7230,7 +7205,6 @@ void map_reload_noyel()
             }
         }
     }
-    return;
 }
 
 
@@ -7345,7 +7319,6 @@ void atxinit()
         gcopy(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
         gsel(0);
     }
-    return;
 }
 
 
@@ -7357,7 +7330,6 @@ void begintempinv()
     {
         inv[cnt].remove();
     }
-    return;
 }
 
 
@@ -7365,7 +7337,6 @@ void begintempinv()
 void exittempinv()
 {
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
-    return;
 }
 
 
@@ -7391,7 +7362,6 @@ void god_fail_to_take_over_penalty()
         tc = 0;
         magic();
     }
-    return;
 }
 
 
@@ -7485,7 +7455,8 @@ void supply_income()
         {
             dbid = 0;
             flt(calcobjlv((100 - gdata((120 + cnt2)) / 100) / 2 + 1),
-                calcfixlv(3 + (rnd(12) < trait(39))));
+                calcfixlv(
+                    (rnd(12) < trait(39)) ? Quality::miracle : Quality::great));
             flttypemajor = choice(fsetincome);
             if (rnd(5) == 0)
             {
@@ -7528,7 +7499,7 @@ void supply_income()
         }
         autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     }
-    if (gdata_day == 1)
+    if (game_data.date.day == 1)
     {
         if (cdata.player().level > 5)
         {
@@ -7603,7 +7574,7 @@ void supply_income()
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action_turn == 0)
+                if (cdata.player().continuous_action.turn == 0)
                 {
                     gdata(216) = 1;
                     ghelp = 16;
@@ -7612,7 +7583,6 @@ void supply_income()
             }
         }
     }
-    return;
 }
 
 
@@ -7768,7 +7738,6 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         }
     }
     cansee = 1;
-    return;
 }
 
 
@@ -7834,7 +7803,7 @@ TurnResult step_into_gate()
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action_turn == 0)
+                if (cdata.player().continuous_action.turn == 0)
                 {
                     gdata(217) = 1;
                     ghelp = 17;
@@ -8260,14 +8229,13 @@ int target_position()
                 wait_key_released();
                 continue;
             }
-            int a{};
-            a = stick(
-                static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
-            if (a == static_cast<int>(StickKey::mouse_left))
+            const auto input =
+                stick(StickKey::mouse_left | StickKey::mouse_right);
+            if (input == StickKey::mouse_left)
             {
                 key = key_enter;
             }
-            if (a == static_cast<int>(StickKey::mouse_right))
+            if (input == StickKey::mouse_right)
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 2
                     || chipm(0, map(tlocx, tlocy, 0)) == 1)
@@ -8580,7 +8548,7 @@ void equip_melee_weapon()
 
 TurnResult try_interact_with_npc()
 {
-    if (cdata[tc].continuous_action_turn != 0)
+    if (cdata[tc].continuous_action.turn != 0)
     {
         i18n::s.get("core.locale.action.npc.is_busy_now", cdata[tc]);
         update_screen();
@@ -8624,7 +8592,6 @@ void sort_list_by_column1()
             break;
         }
     }
-    return;
 }
 
 
@@ -8662,7 +8629,6 @@ void sort_list_and_listn_by_column1()
             break;
         }
     }
-    return;
 }
 
 
@@ -8677,7 +8643,6 @@ void savecycle()
             lastctrl = invctrl;
         }
     }
-    return;
 }
 
 
@@ -8912,7 +8877,6 @@ void build_target_list()
             break;
         }
     }
-    return;
 }
 
 
@@ -8934,7 +8898,7 @@ void try_to_return()
     p = 0;
     p = 0;
     i = 7;
-    if (adata(30, i) == gdata(850))
+    if (area_data[i].outer_map == gdata(850))
     {
         list(0, p) = i;
         list(1, p) = 1;
@@ -8944,34 +8908,34 @@ void try_to_return()
     for (int cnt = 0; cnt < 500; ++cnt)
     {
         i = 500 - (cnt + 1);
-        if (adata(16, i) == mdata_t::MapId::none)
+        if (area_data[i].id == mdata_t::MapId::none)
         {
             continue;
         }
-        if (adata(30, i) != gdata(850))
+        if (area_data[i].outer_map != gdata(850))
         {
             continue;
         }
-        if (adata(16, i) == mdata_t::MapId::your_home)
+        if (area_data[i].id == mdata_t::MapId::your_home)
         {
             continue;
         }
-        if (adata(6, i) == 0)
+        if (area_data[i].visited_deepest_level == 0)
         {
             continue;
         }
         f = 0;
-        if (adata(16, i) == mdata_t::MapId::lesimas
-            || adata(16, i) == mdata_t::MapId::larna
-            || adata(16, i) == mdata_t::MapId::mansion_of_younger_sister
-            || adata(16, i) == mdata_t::MapId::the_void)
+        if (area_data[i].id == mdata_t::MapId::lesimas
+            || area_data[i].id == mdata_t::MapId::larna
+            || area_data[i].id == mdata_t::MapId::mansion_of_younger_sister
+            || area_data[i].id == mdata_t::MapId::the_void)
         {
             f = 1;
         }
         if (gdata_wizard)
         {
-            if (adata(0, i) == mdata_t::MapType::town
-                || adata(0, i) == mdata_t::MapType::guild)
+            if (area_data[i].type == mdata_t::MapType::town
+                || area_data[i].type == mdata_t::MapType::guild)
             {
                 f = 1;
             }
@@ -8979,9 +8943,12 @@ void try_to_return()
         if (f == 1)
         {
             list(0, p) = i;
-            list(1, p) = adata(6, i);
+            list(1, p) = area_data[i].visited_deepest_level;
             ELONA_APPEND_PROMPT(
-                mapname(i) + u8" "s + cnvrank((adata(6, i) - adata(17, i) + 1))
+                mapname(i) + u8" "s
+                    + cnvrank(
+                          (area_data[i].visited_deepest_level
+                           - area_data[i].danger_level + 1))
                     + i18n::s.get("core.locale.misc.dungeon_level"),
                 u8"null"s,
                 ""s + promptmax);
@@ -9001,11 +8968,12 @@ void try_to_return()
     if (rtval >= 0)
     {
         txt(i18n::s.get("core.locale.misc.return.air_becomes_charged"));
-        if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon)
         {
-            if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+            if (gdata_current_dungeon_level
+                == area_data[gdata_current_map].deepest_level)
             {
-                if (adata(20, gdata_current_map) != -1)
+                if (area_data[gdata_current_map].has_been_conquered != -1)
                 {
                     txt(
                         i18n::s.get("core.locale.misc.return.lord_of_dungeon_"
@@ -9103,8 +9071,9 @@ void dump_player_info()
     notesel(buff);
     noteadd(latest_version.long_string());
     noteadd(
-        u8"キャラクター情報 "s + gdata_year + u8"年"s + gdata_month + u8"月"s
-        + gdata_day + u8"日 "s + gdata_hour + u8"時"s + gdata_minute + u8"分  "s
+        u8"キャラクター情報 "s + game_data.date.year + u8"年"s
+        + game_data.date.month + u8"月"s + game_data.date.day + u8"日 "s
+        + game_data.date.hour + u8"時"s + game_data.date.minute + u8"分  "s
         + mdatan(0));
     noteadd(""s);
     noteadd(
@@ -9125,17 +9094,18 @@ void dump_player_info()
         + fixtxt((u8"所属      : "s + guildname()), 32));
     noteadd(
         fixtxt(u8"レベル     : "s + cdata.player().level, 30)
-        + fixtxt((u8"経過日数  : "s + gdata_play_days), 32));
+        + fixtxt((u8"経過日数  : "s + game_data.play_days), 32));
     noteadd(
         fixtxt(u8"残りBP     : "s + cdata.player().skill_bonus, 30)
-        + fixtxt((u8"経過ターン: "s + gdata_play_turns), 32));
+        + fixtxt((u8"経過ターン: "s + game_data.play_turns), 32));
     noteadd(
         fixtxt(u8"金貨       : "s + cdata.player().gold, 30)
-        + fixtxt((u8"殺害数    : "s + gdata_kill_count), 32));
+        + fixtxt((u8"殺害数    : "s + game_data.kill_count), 32));
     noteadd(
         fixtxt(u8"プラチナ   : "s + cdata.player().platinum_coin, 30)
         + fixtxt(
-              (u8"最深到達  : "s + gdata_deepest_dungeon_level + u8"階相当"s),
+              (u8"最深到達  : "s + game_data.deepest_dungeon_level
+               + u8"階相当"s),
               32));
     noteadd(fixtxt(
         u8"プレイ時間 : "s
@@ -9344,7 +9314,6 @@ void remove_card_and_figures()
             inv[cnt].remove();
         }
     }
-    return;
 }
 
 
@@ -9372,236 +9341,13 @@ void initialize_map_adjust_spawns()
     }
     if (gdata_current_map == mdata_t::MapId::your_home)
     {
-        adata(17, gdata_current_map) = 0;
-        adata(10, gdata_current_map) = 10;
-        adata(12, gdata_current_map) = 1;
+        area_data[gdata_current_map].danger_level = 0;
+        area_data[gdata_current_map].deepest_level = 10;
+        area_data[gdata_current_map].default_ai_calm = 1;
         mdata_map_designated_spawns = 1;
         event_add(17);
         calccosthire();
     }
-}
-
-
-
-void migrate_save_data(const fs::path& save_dir)
-{
-    int p1 = 0;
-    int p3 = 0;
-    if (gdata_version != 1220)
-    {
-        dialog(i18n::s.get("core.locale.misc.save.update", gdata_version));
-    }
-    if (gdata_rights_to_succeed_to < 0)
-    {
-        gdata_rights_to_succeed_to = 1;
-    }
-    if (gdata_departure_date == 0)
-    {
-        gdata_departure_date = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
-    }
-    for (int i = 0; i < 20; ++i)
-    {
-        if (gdata(120 + i) == 0)
-        {
-            gdata(120 + i) = 10000;
-        }
-    }
-    itemmemory(2, 289) = 0;
-    itemmemory(2, 732) = 0;
-    if (gdata_version < 1170)
-    {
-        if (adata(0, gdata_current_map) != mdata_t::MapType::town)
-        {
-            dialog(i18n::s.get("core.locale.misc.save.need_to_save_in_town"));
-            finish_elona();
-            return;
-        }
-        dialog(i18n::s.get("core.locale.misc.save.take_a_while"));
-        memcpy(adata, 0, 300, adata, 0, 100, 8000);
-        memcpy(adata, 0, 450, adata, 0, 150, 8000);
-        for (int cnt = 100; cnt < 200; ++cnt)
-        {
-            p = cnt;
-            for (int cnt = 0; cnt < 40; ++cnt)
-            {
-                adata(cnt, p) = 0;
-            }
-            for (const auto& entry : filesystem::dir_entries(
-                     filesystem::dir::tmp(),
-                     filesystem::DirEntryRange::Type::file,
-                     std::regex{u8R"(.*_)"s + std::to_string(p)
-                                + u8R"(_.*\..*)"}))
-            {
-                const auto file = entry.path().filename();
-                p1 = instr(filesystem::to_utf8_path(file), 0, u8"_"s);
-                p2 = instr(filesystem::to_utf8_path(file), p1 + 1, u8"_"s);
-                if (p >= 150)
-                {
-                    p3 = p - 150 + 450;
-                }
-                else
-                {
-                    p3 = p - 100 + 300;
-                }
-                const auto file_cnv = filesystem::dir::tmp()
-                    / ((strmid(filesystem::to_utf8_path(file), 0, (p1 + 1))
-                        + p3)
-                       + strmid(
-                             filesystem::to_utf8_path(file),
-                             (p1 + p2 + 1),
-                             20));
-                const auto file_ = filesystem::dir::tmp() / file;
-                fs::copy_file(
-                    file_, file_cnv, fs::copy_option::overwrite_if_exists);
-                Save::instance().add(file_cnv.filename());
-                fs::remove_all(file_);
-                Save::instance().remove(file_.filename());
-            }
-        }
-        for (int cnt = 0; cnt < 500; ++cnt)
-        {
-            if (adata(16, cnt) != mdata_t::MapId::none)
-            {
-                if (adata(30, cnt) == 0)
-                {
-                    adata(30, cnt) = 4;
-                }
-            }
-        }
-        gdata(850) = 4;
-    }
-    if (gdata_version != 1220)
-    {
-        gdata(79) = 1;
-    }
-    chara_delete(56);
-    if (gdata_version > 1220)
-    {
-        dialog(u8"invalid version"s);
-        finish_elona();
-        return;
-    }
-    gdata_version = 1220;
-    cdata.player().has_own_sprite() = true;
-    initialize_recipememory();
-
-    // TODO: Delete these lines when v1.0.0 stable is released.
-    if (foobar_data.version.id() == 0)
-    {
-        ELONA_LOG("Fix version: " << latest_version.short_string());
-        foobar_data.version = latest_version;
-    }
-
-    if (foobar_data.version.id() <= 205)
-    {
-        ELONA_LOG("Update v0.2.5 save");
-        // Fix corrupted map data.
-        // Iterate all map file
-        for (const auto& entry : filesystem::dir_entries(
-                 save_dir,
-                 filesystem::DirEntryRange::Type::file,
-                 std::regex{R"(map_\d+_\d+\.s2)"}))
-        {
-            int map_id;
-            int level;
-            {
-                const std::regex pattern{R"(map_(\d+)_(\d+)\.s2)"};
-                std::smatch match;
-                const auto str = entry.path().filename().string();
-                std::regex_match(str, match, pattern);
-                map_id = std::stoi(match.str(1));
-                level = std::stoi(match.str(2)) - 100;
-                mid =
-                    std::to_string(map_id) + "_" + std::to_string(level + 100);
-            }
-            // Read mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(FileOperation::map_read);
-            // Read inv.
-            ctrl_file(FileOperation2::map_items_read, "inv_" + mid + ".s2");
-
-            ELONA_LOG("Fix corrupted map: " << mdatan(0) << "(" << mid << ")");
-            if (mdata_map_refresh_type == 1 && mdata_map_should_regenerate == 0
-                && level == 1)
-            {
-                fs::path map_filename;
-                switch (map_id)
-                {
-                case 36: map_filename = u8"lumiest"; break;
-                case 5: map_filename = u8"vernis"; break;
-                case 15: map_filename = u8"palmia"; break;
-                case 11: map_filename = u8"kapul"; break;
-                case 12: map_filename = u8"yowyn"; break;
-                case 14: map_filename = u8"rogueden"; break;
-                case 33: map_filename = u8"noyel"; break;
-                default:
-                    ELONA_LOG("Refresh map data: 1");
-                    for (const auto& i : items(-1))
-                    {
-                        if (inv[i].number() > 0)
-                        {
-                            ELONA_LOG("  " << cnvitemname(inv[i].id));
-                            cell_refresh(inv[i].position.x, inv[i].position.y);
-                        }
-                    }
-                    // Write inv.
-                    ctrl_file(
-                        FileOperation2::map_items_write, "inv_" + mid + ".s2");
-                    // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-                    ctrl_file(FileOperation::map_write);
-                    continue;
-                }
-
-                ELONA_LOG("Reinitialize map items.");
-                fmapfile =
-                    (filesystem::dir::map() / map_filename).generic_string();
-                ctrl_file(FileOperation::map_load_map_obj_files);
-
-                for (int i = 0; i < 400; ++i)
-                {
-                    if (cmapdata(0, i) == 0)
-                        continue;
-                    const auto x = cmapdata(1, i);
-                    const auto y = cmapdata(2, i);
-                    for (const auto& i : items(-1))
-                    {
-                        if (inv[i].number() > 0
-                            && inv[i].position == Position{x, y})
-                        {
-                            inv[i].remove();
-                        }
-                    }
-                    if (cmapdata(4, i) == 0)
-                    {
-                        flt();
-                        int stat = itemcreate(-1, cmapdata(0, i), x, y, 0);
-                        if (stat != 0)
-                        {
-                            inv[ci].own_state = cmapdata(3, i);
-                        }
-                        cell_refresh(x, y);
-                    }
-                }
-            }
-            else
-            {
-                ELONA_LOG("Refresh map data: 2");
-                for (const auto& i : items(-1))
-                {
-                    if (inv[i].number() > 0)
-                    {
-                        cell_refresh(inv[i].position.x, inv[i].position.y);
-                    }
-                }
-            }
-            // Write inv.
-            ctrl_file(FileOperation2::map_items_write, "inv_" + mid + ".s2");
-            // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(FileOperation::map_write);
-        }
-    }
-
-    foobar_data.version = latest_version;
 }
 
 
@@ -9658,7 +9404,6 @@ void get_inheritance()
     {
         mat(cnt) = mat(cnt) / 3;
     }
-    return;
 }
 
 
@@ -9699,7 +9444,7 @@ void load_gene_files()
         {
             continue;
         }
-        if (inv[cnt].quality == 6)
+        if (inv[cnt].quality == Quality::special)
         {
             continue;
         }
@@ -9829,49 +9574,68 @@ void create_cnpc()
     }
     if (userdata(5, cun))
     {
-        fixlv = clamp(userdata(5, cun), 0, 6);
+        fixlv = static_cast<Quality>(clamp(
+            userdata(5, cun),
+            static_cast<int>(Quality::none),
+            static_cast<int>(Quality::special)));
     }
     cspecialeq = 0;
     cdata[rc].original_relationship = cdata[rc].relationship;
     fixaiact(rc);
     setunid(rc, cun);
-    return;
 }
 
 
 
-// TODO: Delete this function when v1.0.0 stable is released.
-// Save data in v0.2.5 is not compatible with that in v0.2.6 or later. To make
-// matters worse, foobar's version is not saved in v0.2.5 save. As a result, we
-// cannot migrate save data in a usual way, `migrate_save_data()` function.
-// This function
-// 1. Delete old meta data file, `foobar_save.s1`.
-// 2. Set v0.2.5 to foobar_data.
-// Now, you can detect that the version is v0.2.5 and use usual migration code,
-// `migrate_save_data()`.
-void migrate_save_data_from_025_to_026(const fs::path& save_dir)
+void update_save_data(const fs::path& save_dir, int serial_id)
 {
-    const auto old_meta_data_filepath = save_dir / "foobar_save.s1";
-
-    if (!fs::exists(old_meta_data_filepath))
-        // v0.2.6 or later
-        return;
-
-    // v0.2.5
-    fs::remove(old_meta_data_filepath);
-    foobar_data.version = {0, 2, 5, "", "", ""};
-
-    for (const auto entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{R"(.*\.s2)"}))
+    switch (serial_id)
     {
-        ELONA_LOG("v0.2.5:copy:" << entry.path());
-        fs::copy_file(
-            entry.path(),
-            filesystem::dir::tmp() / entry.path().filename(),
-            fs::copy_option::overwrite_if_exists);
+    case 0:
+    {
+        bool is_autodig_enabled;
+        {
+            int dummy_i;
+            std::string dummy_s;
+            std::ifstream in{(save_dir / "foobar_data.s1").native(),
+                             std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            ar.load(dummy_i);
+            ar.load(dummy_i);
+            ar.load(dummy_i);
+            ar.load(dummy_s);
+            ar.load(dummy_s);
+            ar.load(dummy_s);
+            ar.load(is_autodig_enabled);
+        }
+        {
+            std::ofstream out{(save_dir / "foobar_data.s1").native(),
+                              std::ios::binary};
+            putit::BinaryOArchive ar{out};
+            ar.save(is_autodig_enabled);
+        }
     }
+    break;
+    default: break;
+    }
+}
+
+
+
+void update_save_data(const fs::path& save_dir)
+{
+    const auto version_filepath = save_dir / "version.s0";
+
+    Version version;
+    putit::BinaryIArchive::load(version_filepath, version);
+    for (int serial_id = version.serial_id;
+         serial_id != latest_version.serial_id;
+         ++serial_id)
+    {
+        update_save_data(save_dir, serial_id);
+    }
+    version = latest_version;
+    putit::BinaryOArchive::save(version_filepath, version);
 }
 
 
@@ -9889,17 +9653,41 @@ void load_save_data()
     ctrl_file(FileOperation::temp_dir_delete);
     const auto save_dir = filesystem::dir::save(playerid);
 
-    // TODO: Delete these lines when v1.0.0 stable is released.
-    // Delete unnecessary file in old save data.
-    if (fs::exists(save_dir / u8"filelist.txt"))
+    // TODO: Delete this line when the v1.0.0 stable is released!
+    if (!fs::exists(save_dir / "version.s0"))
     {
-        fs::remove(save_dir / u8"filelist.txt");
+        if (!fs::exists(save_dir / "foobar_data.s1"))
+        {
+            throw std::runtime_error{
+                "Please update your save in v0.2.7 first."};
+        }
+
+        int major;
+        int minor;
+        int patch;
+        {
+            std::ifstream in{(save_dir / "foobar_data.s1").native(),
+                             std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            ar.load(major);
+            ar.load(minor);
+            ar.load(patch);
+        }
+
+        if (!(major == 0 && minor == 2 && patch == 7))
+        {
+            throw std::runtime_error{
+                "Please update your save in v0.2.7 first."};
+        }
+
+        Version v028 = {0, 2, 8, 0, "", "", ""};
+        putit::BinaryOArchive::save(save_dir / "version.s0", v028);
     }
 
-    migrate_save_data_from_025_to_026(save_dir);
+    update_save_data(save_dir);
     ctrl_file(FileOperation2::global_read, save_dir);
-    migrate_save_data(save_dir);
-    ELONA_LOG("migrate:end");
+
+    chara_delete(56);
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
     {
@@ -10133,9 +9921,8 @@ TurnResult do_debug_console()
     while (1)
     {
         await(Config::instance().wait1);
-        int a{};
-        a = stick();
-        if (a == static_cast<int>(StickKey::escape))
+        const auto input = stick();
+        if (input == StickKey::escape)
         {
             return do_exit_debug_console();
         }
@@ -10362,7 +10149,7 @@ label_21451_internal:
                                     "core.locale.magic.teleport.disappears",
                                     cdata[cc]));
                             }
-                            rowactend(cc);
+                            cdata[cc].continuous_action.finish();
                             update_screen();
                             break;
                         }
@@ -10434,7 +10221,6 @@ label_21451_internal:
             }
         }
     }
-    return;
 }
 
 
@@ -10532,7 +10318,7 @@ void sleep_start()
     timeslept = 7 + rnd(5);
     for (int cnt = 0, cnt_end = (timeslept); cnt < cnt_end; ++cnt)
     {
-        ++gdata_hour;
+        ++game_data.date.hour;
         weather_changes();
         if (mode != 9)
         {
@@ -10540,7 +10326,7 @@ void sleep_start()
             mode = 9;
         }
         gdata_continuous_active_hours = 0;
-        gdata_minute = 0;
+        game_data.date.minute = 0;
         cc = 0;
         draw_sleep_background_frame();
         await(Config::instance().animewait * 25);
@@ -10580,13 +10366,13 @@ void sleep_start()
     txtef(2);
     txt(i18n::s.get("core.locale.activity.sleep.slept_for", timeslept));
     f = 0;
-    if (cdata.player().continuous_action_item == -1)
+    if (cdata.player().continuous_action.item == -1)
     {
         f = 1;
     }
     else
     {
-        ci = cdata.player().continuous_action_item;
+        ci = cdata.player().continuous_action.item;
         if (inv[ci].param1 == 0 || inv[ci].number() == 0
             || the_item_db[inv[ci].id]->subcategory != 60004)
         {
@@ -10635,7 +10421,7 @@ void sleep_start()
     msg_halt();
     play_music();
     autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
-    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::shop)
     {
         update_shop();
     }
@@ -10645,21 +10431,21 @@ void sleep_start()
 
 void do_rest()
 {
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 4;
-        cdata[cc].continuous_action_turn = 50;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::sleep;
+        cdata[cc].continuous_action.turn = 50;
         txt(i18n::s.get("core.locale.activity.rest.start"));
         update_screen();
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
-        if (cdata[cc].continuous_action_turn % 2 == 0)
+        if (cdata[cc].continuous_action.turn % 2 == 0)
         {
             heal_sp(cdata[cc], 1);
         }
-        if (cdata[cc].continuous_action_turn % 3 == 0)
+        if (cdata[cc].continuous_action.turn % 3 == 0)
         {
             heal_hp(cdata[cc], 1);
             heal_mp(cdata[cc], 1);
@@ -10680,48 +10466,47 @@ void do_rest()
         if (f == 1)
         {
             txt(i18n::s.get("core.locale.activity.rest.drop_off_to_sleep"));
-            cdata[cc].continuous_action_item = -1;
+            cdata[cc].continuous_action.item = -1;
             sleep_start();
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             return;
         }
     }
     txt(i18n::s.get("core.locale.activity.rest.finish"));
-    rowactend(cc);
-    return;
+    cdata[cc].continuous_action.finish();
 }
 
 
 
 void map_global_proc_travel_events()
 {
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 3;
-        cdata[cc].continuous_action_turn = 20;
-        if (gdata_weather == 3)
+        cdata[cc].continuous_action.type = ContinuousAction::Type::travel;
+        cdata[cc].continuous_action.turn = 20;
+        if (game_data.weather == 3)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 13 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 13 / 10;
         }
-        if (gdata_weather == 4)
+        if (game_data.weather == 4)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 16 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 16 / 10;
         }
-        if (gdata_weather == 2
+        if (game_data.weather == 2
             || chipm(0, map(cdata[cc].position.x, cdata[cc].position.y, 0))
                 == 4)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 22 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 22 / 10;
         }
-        if (gdata_weather == 1)
+        if (game_data.weather == 1)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 5 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 5 / 10;
         }
-        cdata[cc].continuous_action_turn = cdata[cc].continuous_action_turn
+        cdata[cc].continuous_action.turn = cdata[cc].continuous_action.turn
             * 100 / (100 + gdata_seven_league_boot_effect + sdata(182, 0));
         return;
     }
@@ -10751,7 +10536,7 @@ void map_global_proc_travel_events()
             continuous_action_eating_finish();
         }
     }
-    if (gdata_weather == 2
+    if (game_data.weather == 2
         || chipm(0, map(cdata[cc].position.x, cdata[cc].position.y, 0)) == 4)
     {
         if (gdata_protects_from_bad_weather == 0)
@@ -10764,7 +10549,7 @@ void map_global_proc_travel_events()
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.action.move.global.weather.snow.sound"));
-                    cdata[cc].continuous_action_turn += 10;
+                    cdata[cc].continuous_action.turn += 10;
                 }
             }
             if (rnd(1000) == 0)
@@ -10772,7 +10557,7 @@ void map_global_proc_travel_events()
                 txtef(8);
                 txt(i18n::s.get(
                     "core.locale.action.move.global.weather.snow.message"));
-                cdata[cc].continuous_action_turn += 50;
+                cdata[cc].continuous_action.turn += 50;
             }
         }
         if (cdata.player().nutrition <= 2000)
@@ -10788,7 +10573,7 @@ void map_global_proc_travel_events()
             }
         }
     }
-    if (gdata_weather == 4)
+    if (game_data.weather == 4)
     {
         if (gdata_protects_from_bad_weather == 0)
         {
@@ -10801,7 +10586,7 @@ void map_global_proc_travel_events()
                     txt(i18n::s.get(
                         "core.locale.action.move.global.weather.heavy_rain."
                         "sound"));
-                    cdata[cc].continuous_action_turn += 5;
+                    cdata[cc].continuous_action.turn += 5;
                 }
             }
             if (cdata.player().confused == 0)
@@ -10822,22 +10607,21 @@ void map_global_proc_travel_events()
         }
         cdata.player().blind = 3;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
-        ++gdata_minute;
+        ++game_data.date.minute;
         return;
     }
     traveldone = 1;
     gdata_distance_between_town += 4;
-    rowactend(cc);
-    return;
+    cdata[cc].continuous_action.finish();
 }
 
 
 int decode_book()
 {
     int cibkread = 0;
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
         if (inv[ci].id == 687)
         {
@@ -10857,7 +10641,7 @@ int decode_book()
             }
             return 0;
         }
-        cdata[cc].continuous_action_id = 2;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::read;
         if (inv[ci].id == 783)
         {
             p = 50;
@@ -10870,8 +10654,8 @@ int decode_book()
         {
             p = the_ability_db[efid]->sdataref4;
         }
-        cdata[cc].continuous_action_turn = p / (2 + sdata(150, 0)) + 1;
-        cdata[cc].continuous_action_item = ci;
+        cdata[cc].continuous_action.turn = p / (2 + sdata(150, 0)) + 1;
+        cdata[cc].continuous_action.item = ci;
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
@@ -10880,9 +10664,9 @@ int decode_book()
         item_separate(ci);
         return 0;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
-        ci = cdata[cc].continuous_action_item;
+        ci = cdata[cc].continuous_action.item;
         cibkread = ci;
         gain_literacy_experience();
         if (inv[ci].id == 783)
@@ -10912,7 +10696,7 @@ int decode_book()
         ci = cibkread;
         if (stat == 0)
         {
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             --inv[ci].count;
             if (inv[ci].count < 0)
             {
@@ -10939,7 +10723,7 @@ int decode_book()
     {
         if (inv[ci].param1 == 0)
         {
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             return 1;
         }
         txt(i18n::s.get("core.locale.action.read.recipe.learned", inv[ci]));
@@ -10951,7 +10735,7 @@ int decode_book()
             txt(i18n::s.get(
                 "core.locale.action.read.book.falls_apart", inv[ci]));
         }
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return 1;
     }
     if (inv[ci].id == 687)
@@ -10997,7 +10781,7 @@ int decode_book()
             }
         }
     }
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return 1;
 }
 
@@ -11087,8 +10871,7 @@ int do_cast_magic()
     if (stat == 1)
     {
         cc = ccbk;
-        r2 = spellbk;
-        gain_casting_experience(cc);
+        gain_casting_experience(cc, spellbk);
         return 1;
     }
     return 0;
@@ -11135,7 +10918,7 @@ int do_cast_magic_attempt()
                 efsource = 0;
                 return 0;
             }
-            if (gdata_play_turns % 10 > 4)
+            if (game_data.play_turns % 10 > 4)
             {
                 efsource = 0;
                 return 0;
@@ -11467,7 +11250,8 @@ int drink_well()
             txt(i18n::s.get("core.locale.action.drink.well.effect.monster"));
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata[cc].level * 3 / 2 + 3), calcfixlv(2));
+                flt(calcobjlv(cdata[cc].level * 3 / 2 + 3),
+                    calcfixlv(Quality::bad));
                 chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
             }
             break;
@@ -12062,7 +11846,6 @@ void heal_completely()
     cdata[tc].hp = cdata[tc].max_hp;
     cdata[tc].mp = cdata[tc].max_mp;
     cdata[tc].sp = cdata[tc].max_sp;
-    return;
 }
 
 
@@ -12099,9 +11882,9 @@ int pick_up_item()
     {
         if (gdata_mount != 0)
         {
-            if (cdata[gdata_mount].continuous_action_id != 0)
+            if (cdata[gdata_mount].continuous_action)
             {
-                if (cdata[gdata_mount].continuous_action_item == ci)
+                if (cdata[gdata_mount].continuous_action.item == ci)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.pick_up.used_by_mount",
@@ -12114,7 +11897,7 @@ int pick_up_item()
         {
             if (inv[ci].own_state == 4)
             {
-                if (cdata.player().continuous_action_id == 0)
+                if (!cdata.player().continuous_action)
                 {
                     if (!inv_getspace(0))
                     {
@@ -12251,14 +12034,12 @@ int pick_up_item()
                 {
                     if (inv[ti].param3 > 0)
                     {
-                        inv[ti].param3 += gdata_hour + gdata_day * 24
-                            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
+                        inv[ti].param3 += game_data.date.hours();
                     }
                 }
                 else if (inv[ti].param3 != 0 && inv[ti].material == 35)
                 {
-                    inv[ti].param3 = gdata_hour + gdata_day * 24
-                        + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
+                    inv[ti].param3 = game_data.date.hours()
                         + the_item_db[inv[ti].id]->expiration_date;
                     if (inv[ti].param2 != 0)
                     {
@@ -12270,9 +12051,7 @@ int pick_up_item()
             {
                 if (inv[ti].param3 > 0)
                 {
-                    inv[ti].param3 = inv[ti].param3
-                        - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                           + gdata_year * 24 * 30 * 12);
+                    inv[ti].param3 = inv[ti].param3 - game_data.date.hours();
                 }
             }
         }
@@ -12346,8 +12125,7 @@ int pick_up_item()
         }
         else
         {
-            r2 = sellgold;
-            gain_negotiation_experience(0);
+            gain_negotiation_experience(0, sellgold);
         }
     }
     else
@@ -12388,7 +12166,7 @@ int pick_up_item()
         }
         int stat = convertartifact(ti);
         ti = stat;
-        if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
+        if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)
             {
@@ -12407,84 +12185,6 @@ int pick_up_item()
     if (cc == -1)
     {
         refresh_burden_state();
-    }
-
-    return 1;
-}
-
-int drop_item()
-{
-    inumbk = inv[ci].number() - in;
-    inv[ci].set_number(in);
-    inv[ci].position.x = cdata[cc].position.x;
-    inv[ci].position.y = cdata[cc].position.y;
-    itemturn(ci);
-    int stat = item_stack(-1, ci);
-    const auto tibk = ti; // TODO: refactor
-    if (stat == 0)
-    {
-        ti = inv_getfreeid(-1);
-        if (ti == -1)
-        {
-            txt(i18n::s.get("core.locale.action.drop.too_many_items"));
-            update_screen();
-            return 0;
-        }
-        item_copy(ci, ti);
-    }
-    if (dropval == 1)
-    {
-        inv[ti].own_state = 3;
-        inv[ti].count = gdata_next_shelter_serial_id + 100;
-        ++gdata_next_shelter_serial_id;
-    }
-    inv[ci].set_number(inumbk);
-    cell_refresh(inv[ti].position.x, inv[ti].position.y);
-    if (dropval == 0)
-    {
-        screenupdate = -1;
-        update_screen();
-        snd(16);
-        txt(i18n::s.get("core.locale.action.drop.execute", itemname(ti, in)));
-    }
-    refresh_burden_state();
-    if (inv[tibk].id == 516)
-    {
-        int stat = item_find(60002, 0);
-        if (stat != -1)
-        {
-            p = stat;
-            if (core_god::int2godid(inv[p].param1) == cdata[cc].god_id)
-            {
-                if (inv[tibk].curse_state != CurseState::blessed)
-                {
-                    snd(64);
-                    inv[tibk].curse_state = CurseState::blessed;
-                    txtef(2);
-                    txt(i18n::s.get(
-                        "core.locale.action.drop.water_is_blessed"));
-                }
-            }
-        }
-    }
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
-    {
-        if (mode == 0)
-        {
-            update_museum();
-        }
-    }
-    if (gdata_current_map == mdata_t::MapId::your_home)
-    {
-        if (mode == 0)
-        {
-            calc_home_rank();
-        }
-    }
-    if (inv[ti].id == 255)
-    {
-        mdata_map_play_campfire_sound = 1;
-        play_music();
     }
 
     return 1;
@@ -12553,7 +12253,6 @@ void lost_body_part(int cc)
                 cdata[cc].body_parts[cnt] / 10000 * 10000;
         }
     }
-    return;
 }
 
 
@@ -12659,7 +12358,7 @@ TurnResult do_bash()
             flt(calcobjlv(
                     gdata_current_dungeon_level
                     * (gdata_current_map != mdata_t::MapId::shelter_)),
-                calcfixlv(2));
+                calcfixlv(Quality::bad));
             flttypemajor = choice(fsetbarrel);
             itemcreate(-1, 0, x, y, 0);
             if (is_in_fov(cdata[cc]))
@@ -12680,7 +12379,7 @@ TurnResult do_bash()
             {
                 p *= 20;
             }
-            if (rnd(p) < sdata(10, cc) && rnd(2))
+            if (rnd(p(0)) < sdata(10, cc) && rnd(2))
             {
                 txt(i18n::s.get("core.locale.action.bash.door.destroyed"));
                 if (feat(2) > sdata(10, cc))
@@ -12714,7 +12413,8 @@ TurnResult do_bash()
                 }
                 if (rnd(3) == 0)
                 {
-                    if (cdata[cc].quality < 4 && encfind(cc, 60010) == -1)
+                    if (cdata[cc].quality < Quality::miracle
+                        && encfind(cc, 60010) == -1)
                     {
                         --cdata[cc].attr_adjs[0];
                         chara_refresh(cc);
@@ -12858,14 +12558,14 @@ TurnResult proc_movement_event()
                 {
                     encounter = 1;
                 }
-                if (gdata_weather == 4)
+                if (game_data.weather == 4)
                 {
                     if (rnd(10) == 0)
                     {
                         encounter = 1;
                     }
                 }
-                if (gdata_weather == 1)
+                if (game_data.weather == 1)
                 {
                     if (rnd(13) == 0)
                     {
@@ -12957,7 +12657,7 @@ TurnResult proc_movement_event()
                 {
                     encounterlv /= 2;
                 }
-                else if (gdata_weather == 1)
+                else if (game_data.weather == 1)
                 {
                     encounterlv = encounterlv * 3 / 2 + 10;
                 }
@@ -13030,9 +12730,9 @@ void proc_autopick()
         return;
     if (key_ctrl)
         return;
-    if (adata(0, gdata_current_map) == mdata_t::MapType::player_owned
-        && adata(16, gdata_current_map) != mdata_t::MapId::shelter_
-        && adata(16, gdata_current_map) != mdata_t::MapId::ranch)
+    if (area_data[gdata_current_map].type == mdata_t::MapType::player_owned
+        && area_data[gdata_current_map].id != mdata_t::MapId::shelter_
+        && area_data[gdata_current_map].id != mdata_t::MapId::ranch)
         return;
 
 
@@ -13217,12 +12917,12 @@ void sense_map_feats_on_move()
             if (feat(1) == 32)
             {
                 txtef(5);
-                i18n::s.get("core.locale.action.move.twinkle");
+                txt(i18n::s.get("core.locale.action.move.twinkle"));
             }
             if (feat(1) == 15)
             {
                 txt(mapname(feat(2) + feat(3) * 100, true));
-                if (adata(16, feat(2) + feat(3) * 100)
+                if (area_data[feat(2) + feat(3) * 100].id
                     == mdata_t::MapId::random_dungeon)
                 {
                     if (Config::instance().extrahelp)
@@ -13231,7 +12931,7 @@ void sense_map_feats_on_move()
                         {
                             if (mode == 0)
                             {
-                                if (cdata.player().continuous_action_turn == 0)
+                                if (cdata.player().continuous_action.turn == 0)
                                 {
                                     gdata(206) = 1;
                                     ghelp = 6;
@@ -13349,7 +13049,7 @@ void sense_map_feats_on_move()
                     {
                         if (mode == 0)
                         {
-                            if (cdata.player().continuous_action_turn == 0)
+                            if (cdata.player().continuous_action.turn == 0)
                             {
                                 gdata(205) = 1;
                                 ghelp = 5;
@@ -13361,7 +13061,6 @@ void sense_map_feats_on_move()
             }
         }
     }
-    return;
 }
 
 
@@ -13460,30 +13159,31 @@ void open_box()
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
         dbid = 0;
+        Quality base_quality;
         if (cnt == 0)
         {
-            p = 3;
+            base_quality = Quality::great;
         }
         else
         {
-            p = 2;
+            base_quality = Quality::good;
         }
         if (inv[ri].id == 239)
         {
             if (cnt == 0 && rnd(3) == 0)
             {
-                p = 4;
+                base_quality = Quality::miracle;
             }
             else
             {
-                p = 3;
+                base_quality = Quality::great;
             }
             if (rnd(60) == 0)
             {
                 dbid = 559;
             }
         }
-        flt(calcobjlv(inv[ri].param1), calcfixlv(p));
+        flt(calcobjlv(inv[ri].param1), calcfixlv(base_quality));
         flttypemajor = choice(fsetchest);
         if (cnt > 0)
         {
@@ -13518,10 +13218,10 @@ void open_box()
         {
             flttypeminor = 0;
             flttypemajor = choice(fsetwear);
-            fixlv = 3;
+            fixlv = Quality::great;
             if (inv[ri].id == 416)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
             if (rnd(30) == 0)
             {
@@ -13596,7 +13296,6 @@ void open_box()
     {
         modify_karma(cdata.player(), -8);
     }
-    return;
 }
 
 
@@ -13623,7 +13322,8 @@ void open_new_year_gift()
             }
             for (int cnt = 0, cnt_end = (3 + rnd(3)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata.player().level * 3 / 2 + 3), calcfixlv(2));
+                flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
+                    calcfixlv(Quality::bad));
                 chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
             }
             return;
@@ -13761,7 +13461,6 @@ void open_new_year_gift()
         cdata.player().position.x,
         cdata.player().position.y,
         1);
-    return;
 }
 
 
@@ -14055,7 +13754,6 @@ void try_to_melee_attack()
         do_physical_attack();
     }
     attackvar = 0;
-    return;
 }
 
 
@@ -14134,11 +13832,11 @@ label_22191_internal:
         }
         if (attackskill != 106)
         {
-            if (inv[cw].quality >= 4)
+            if (inv[cw].quality >= Quality::miracle)
             {
-                if (inv[cw].quality == 6)
+                if (inv[cw].quality == Quality::special)
                 {
-                    s(1) = i18n::s.get("core.locale.misc.wields_proudly")
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the")
                         + iknownnameref(inv[cw].id);
                 }
                 else if (inv[cw].subname >= 40000)
@@ -14149,10 +13847,10 @@ label_22191_internal:
                 }
                 else
                 {
-                    s(1) = i18n::s.get("core.locale.misc.wields_proudly")
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the")
                         + iknownnameref(inv[cw].id);
                 }
-                if (inv[cw].quality == 5)
+                if (inv[cw].quality == Quality::godly)
                 {
                     s(1) = i18n::s.get("core.locale.item.godly_paren", s(1));
                 }
@@ -14684,7 +14382,6 @@ void proc_weapon_enchantments()
                 sdata(attackskill, cc) * 10 + 100);
         }
     }
-    return;
 }
 
 
@@ -14692,7 +14389,6 @@ void proc_weapon_enchantments()
 void discover_trap()
 {
     cell_featset(refx, refy, tile_trap, -1, -1);
-    return;
 }
 
 
@@ -14701,7 +14397,6 @@ void discover_hidden_path()
 {
     map(refx, refy, 0) = tile_tunnel;
     cell_featset(refx, refy, 0, 0);
-    return;
 }
 
 
@@ -14735,7 +14430,6 @@ void dipcursed(int prm_1078, int)
         return;
     }
     txt(i18n::s.get("core.locale.common.nothing_happens"));
-    return;
 }
 
 
@@ -14955,7 +14649,6 @@ void grow_plant(int val0)
             try_to_grow_plant(val0);
         }
     }
-    return;
 }
 
 
@@ -14990,7 +14683,7 @@ void try_to_grow_plant(int val0)
     }
     if (feat == tile_plant)
     {
-        if (gdata_weather < 3)
+        if (game_data.weather < 3)
         {
             p = p * 2;
         }
@@ -14999,7 +14692,6 @@ void try_to_grow_plant(int val0)
     {
         feat(3) += 50;
     }
-    return;
 }
 
 
@@ -15027,7 +14719,7 @@ void harvest_plant(int val)
     {
         p = p * 2;
     }
-    if (gdata_weather < 3)
+    if (game_data.weather < 3)
     {
         p = p * 4 / 3;
     }
@@ -15047,7 +14739,6 @@ void harvest_plant(int val)
         feat(3));
     txtef(2);
     txt(i18n::s.get("core.locale.action.plant.new_plant_grows"));
-    return;
 }
 
 
@@ -15056,7 +14747,7 @@ void create_harvested_item()
 {
     chara_gain_skill_exp(cdata.player(), 180, 75);
     snd(55);
-    flt(sdata(180, 0) / 2 + 15, 2);
+    flt(sdata(180, 0) / 2 + 15, Quality::good);
     dbid = 0;
     if (feat(2) == 39)
     {
@@ -15069,7 +14760,7 @@ void create_harvested_item()
     if (feat(2) == 40 || (feat(2) == 39 && rnd(50) == 0))
     {
         flttypemajor = choice(fsetplantartifact);
-        fixlv = 4;
+        fixlv = Quality::miracle;
         autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     }
     if (feat(2) == 36)
@@ -15095,7 +14786,6 @@ void create_harvested_item()
     itemcreate(0, dbid, -1, -1, 0);
     txt(i18n::s.get("core.locale.action.plant.harvest", inv[ci]));
     item_stack(0, ci, 1);
-    return;
 }
 
 
@@ -15120,22 +14810,22 @@ void initialize_economy()
     scy = cdata.player().position.y;
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::MapId::none)
+        if (area_data[cnt].id == mdata_t::MapId::none)
         {
             continue;
         }
-        if (adata(28, cnt) == 0)
+        if (area_data[cnt].quest_town_id == 0)
         {
             continue;
         }
-        gdata_current_map = adata(16, cnt);
+        gdata_current_map = area_data[cnt].id;
         gdata_current_dungeon_level = 1;
         if (gdata_current_map != bkdata(0)
             || gdata_current_dungeon_level != bkdata(1))
         {
             initialize_map();
         }
-        p = adata(28, cnt);
+        p = area_data[cnt].quest_town_id;
         if (initeco)
         {
             if (p == 1)
@@ -15194,7 +14884,6 @@ void initialize_economy()
     initialize_map();
     initeco = 0;
     msgtemp = "";
-    return;
 }
 
 
@@ -15266,9 +14955,8 @@ void do_play_scene()
     }
     scidx += s(0).size();
 label_2681:
-    int a{};
-    a = stick(static_cast<int>(StickKey::escape));
-    if (a == static_cast<int>(StickKey::escape))
+    const auto input = stick(StickKey::escape);
+    if (input == StickKey::escape)
     {
         scene_cut = 1;
     }
@@ -15441,13 +15129,13 @@ label_2684_internal:
         y = y1 + 31 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - s(0).size() * 4;
-        dx = 80 + s(0).size() * 8;
+        dx = 80 + strlen_u(s(0)) * 8;
         if (dx < 180)
         {
             dx = 0;
         }
         pos(windoww / 2, y + 4);
-        gmode(6, 70);
+        gmode(2, 95);
         gcopy_c(3, 456, 144, 344, 72, dx, 72);
     }
     x = 40;
@@ -15463,8 +15151,8 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        a = stick(static_cast<int>(StickKey::escape));
-        if (a == static_cast<int>(StickKey::escape))
+        const auto input = stick(StickKey::escape);
+        if (input == StickKey::escape)
         {
             scene_cut = 1;
         }
@@ -15497,41 +15185,41 @@ void scene_fade_to_black()
     scenemode = 0;
     msgtemp = msgtempprev;
     msgtempprev = "";
-    return;
 }
 
 
 
 void weather_changes_by_location()
 {
-    if (gdata_weather == 2)
+    if (game_data.weather == 2)
     {
-        if (gdata_pc_x_in_world_map < 65 && gdata_pc_y_in_world_map > 10)
+        if (game_data.pc_x_in_world_map < 65
+            && game_data.pc_y_in_world_map > 10)
         {
-            gdata_weather = 3;
+            game_data.weather = 3;
             sound_play_environmental();
-            gdata_hours_until_weather_changes += 3;
+            game_data.hours_until_weather_changes += 3;
             txt(i18n::s.get("core.locale.action.weather.changes"));
         }
     }
-    if (gdata_weather == 4 || gdata_weather == 3)
+    if (game_data.weather == 4 || game_data.weather == 3)
     {
-        if (gdata_pc_x_in_world_map > 65 || gdata_pc_y_in_world_map < 10)
+        if (game_data.pc_x_in_world_map > 65
+            || game_data.pc_y_in_world_map < 10)
         {
-            gdata_weather = 2;
+            game_data.weather = 2;
             sound_play_environmental();
-            gdata_hours_until_weather_changes += 3;
+            game_data.hours_until_weather_changes += 3;
             txt(i18n::s.get("core.locale.action.weather.changes"));
         }
     }
-    return;
 }
 
 
 
 void weather_changes()
 {
-    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
+    if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
     {
         update_museum();
     }
@@ -15541,32 +15229,33 @@ void weather_changes()
     }
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        gdata_pc_x_in_world_map = cdata.player().position.x;
-        gdata_pc_y_in_world_map = cdata.player().position.y;
+        game_data.pc_x_in_world_map = cdata.player().position.x;
+        game_data.pc_y_in_world_map = cdata.player().position.y;
     }
-    --gdata_hours_until_weather_changes;
+    --game_data.hours_until_weather_changes;
     weather_changes_by_location();
-    if (gdata_hours_until_weather_changes < 0)
+    if (game_data.hours_until_weather_changes < 0)
     {
-        gdata_hours_until_weather_changes = rnd(22) + 2;
-        p = gdata_weather;
+        game_data.hours_until_weather_changes = rnd(22) + 2;
+        p = game_data.weather;
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            if (gdata_month % 3 == 0)
+            if (game_data.date.month % 3 == 0)
             {
-                if (gdata_day >= 1 && gdata_day <= 10)
+                if (game_data.date.day >= 1 && game_data.date.day <= 10)
                 {
-                    if (gdata_last_etherwind_month != gdata_month)
+                    if (gdata_last_etherwind_month != game_data.date.month)
                     {
-                        if (rnd(15) < gdata_day + 5)
+                        if (rnd(15) < game_data.date.day + 5)
                         {
-                            gdata_weather = 1;
+                            game_data.weather = 1;
                             txtef(3);
                             txt(
                                 i18n::s.get("core.locale.action.weather.ether_"
                                             "wind.starts"));
-                            gdata_last_etherwind_month = gdata_month;
-                            gdata_hours_until_weather_changes = rnd(24) + 24;
+                            gdata_last_etherwind_month = game_data.date.month;
+                            game_data.hours_until_weather_changes =
+                                rnd(24) + 24;
                             break;
                         }
                     }
@@ -15579,18 +15268,18 @@ void weather_changes()
                 {
                     if (rnd(4) == 0)
                     {
-                        gdata_weather = 3;
+                        game_data.weather = 3;
                         txt(i18n::s.get(
                             "core.locale.action.weather.rain.draw_cloud"));
                         break;
                     }
                 }
-                if (gdata_pc_x_in_world_map > 65
-                    || gdata_pc_y_in_world_map < 10)
+                if (game_data.pc_x_in_world_map > 65
+                    || game_data.pc_y_in_world_map < 10)
                 {
                     if (rnd(2) == 0)
                     {
-                        gdata_weather = 2;
+                        game_data.weather = 2;
                         i18n::s.get("core.locale.action.weather.snow.starts");
                         break;
                     }
@@ -15599,20 +15288,20 @@ void weather_changes()
                 {
                     if (rnd(10) == 0)
                     {
-                        gdata_weather = 3;
+                        game_data.weather = 3;
                         i18n::s.get("core.locale.action.weather.rain.starts");
                         break;
                     }
                     if (rnd(40) == 0)
                     {
-                        gdata_weather = 4;
+                        game_data.weather = 4;
                         i18n::s.get(
                             "core.locale.action.weather.rain.starts_heavy");
                         break;
                     }
                     if (rnd(60) == 0)
                     {
-                        gdata_weather = 2;
+                        game_data.weather = 2;
                         i18n::s.get("core.locale.action.weather.snow.starts");
                         break;
                     }
@@ -15622,13 +15311,13 @@ void weather_changes()
             {
                 if (rnd(4) == 0)
                 {
-                    gdata_weather = 0;
+                    game_data.weather = 0;
                     txt(i18n::s.get("core.locale.action.weather.rain.stops"));
                     break;
                 }
                 if (rnd(15) == 0)
                 {
-                    gdata_weather = 4;
+                    game_data.weather = 4;
                     txt(i18n::s.get(
                         "core.locale.action.weather.rain.becomes_heavier"));
                     break;
@@ -15638,7 +15327,7 @@ void weather_changes()
             {
                 if (rnd(3) == 0)
                 {
-                    gdata_weather = 3;
+                    game_data.weather = 3;
                     txt(i18n::s.get(
                         "core.locale.action.weather.rain.becomes_lighter"));
                     break;
@@ -15648,7 +15337,7 @@ void weather_changes()
             {
                 if (rnd(2) == 0)
                 {
-                    gdata_weather = 0;
+                    game_data.weather = 0;
                     txt(i18n::s.get(
                         "core.locale.action.weather.ether_wind.stops"));
                     break;
@@ -15658,13 +15347,13 @@ void weather_changes()
             {
                 if (rnd(3) == 0)
                 {
-                    gdata_weather = 0;
+                    game_data.weather = 0;
                     txt(i18n::s.get("core.locale.action.weather.snow.stops"));
                     break;
                 }
             }
         }
-        if (gdata_weather == 4)
+        if (game_data.weather == 4)
         {
             if (Config::instance().extrahelp)
             {
@@ -15672,7 +15361,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata.player().continuous_action_turn == 0)
+                        if (cdata.player().continuous_action.turn == 0)
                         {
                             gdata(211) = 1;
                             ghelp = 11;
@@ -15682,7 +15371,7 @@ void weather_changes()
                 }
             }
         }
-        if (gdata_weather == 2)
+        if (game_data.weather == 2)
         {
             if (Config::instance().extrahelp)
             {
@@ -15690,7 +15379,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata.player().continuous_action_turn == 0)
+                        if (cdata.player().continuous_action.turn == 0)
                         {
                             gdata(212) = 1;
                             ghelp = 12;
@@ -15700,7 +15389,7 @@ void weather_changes()
                 }
             }
         }
-        if (gdata_weather == 1)
+        if (game_data.weather == 1)
         {
             if (Config::instance().extrahelp)
             {
@@ -15708,7 +15397,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata.player().continuous_action_turn == 0)
+                        if (cdata.player().continuous_action.turn == 0)
                         {
                             gdata(213) = 1;
                             ghelp = 13;
@@ -15718,7 +15407,7 @@ void weather_changes()
                 }
             }
         }
-        if (p != gdata_weather)
+        if (p != game_data.weather)
         {
             sound_play_environmental();
         }
@@ -15749,7 +15438,7 @@ void weather_changes()
     {
         ++gdata_continuous_active_hours;
     }
-    if (gdata_hour == 6)
+    if (game_data.date.hour == 6)
     {
         txtef(5);
         txt(i18n::s.get("core.locale.action.day_breaks"));
@@ -15762,7 +15451,7 @@ void weather_changes()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(209) = 1;
                         ghelp = 9;
@@ -15780,7 +15469,7 @@ void weather_changes()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(210) = 1;
                         ghelp = 10;
@@ -15790,7 +15479,7 @@ void weather_changes()
             }
         }
     }
-    if (gdata_hour >= 24)
+    if (game_data.date.hour >= 24)
     {
         if (gdata_number_of_waiting_guests < 3)
         {
@@ -15823,28 +15512,28 @@ void weather_changes()
         }
         snd(74);
         event_add(10);
-        gdata_play_days += gdata_hour / 24;
-        gdata_day += gdata_hour / 24;
-        gdata_hour = gdata_hour % 24;
-        if (gdata_day >= 31)
+        game_data.play_days += game_data.date.hour / 24;
+        game_data.date.day += game_data.date.hour / 24;
+        game_data.date.hour = game_data.date.hour % 24;
+        if (game_data.date.day >= 31)
         {
-            ++gdata_month;
-            gdata_day = gdata_day - 30;
-            if (gdata_month % 2 == 0)
+            ++game_data.date.month;
+            game_data.date.day = game_data.date.day - 30;
+            if (game_data.date.month % 2 == 0)
             {
                 ++gdata_holy_well_count;
             }
         }
-        if (gdata_month >= 13)
+        if (game_data.date.month >= 13)
         {
-            ++gdata_year;
-            gdata_month = 1;
+            ++game_data.date.year;
+            game_data.date.month = 1;
             gdata_last_month_when_trainer_visited = 0;
             gdata_wish_count = clamp(gdata_wish_count - 1, 0, 10);
             gdata_lost_wallet_count =
                 clamp(gdata_lost_wallet_count - 1, 0, 999999);
         }
-        if (gdata_day == 1 || gdata_day == 15)
+        if (game_data.date.day == 1 || game_data.date.day == 15)
         {
             supply_income();
         }
@@ -15852,7 +15541,7 @@ void weather_changes()
             || gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7
             || gdata_pael_and_her_mom == 9)
         {
-            if (adata(16, gdata_current_map) != mdata_t::MapId::noyel)
+            if (area_data[gdata_current_map].id != mdata_t::MapId::noyel)
             {
                 if (rnd(20) == 0)
                 {
@@ -15885,9 +15574,10 @@ void weather_changes()
     {
         cdata.player().piety_point = 0;
     }
-    if (cdata.player().continuous_action_turn != 0)
+    if (cdata.player().continuous_action.turn != 0)
     {
-        if (cdata.player().continuous_action_id != 3)
+        if (cdata.player().continuous_action.type
+            != ContinuousAction::Type::travel)
         {
             update_screen();
         }
@@ -16052,13 +15742,16 @@ void conquer_lesimas()
     pos(wx + 40, wy + 116);
     mes(i18n::s.get(
         "core.locale.win.window.have_killed",
-        gdata_deepest_dungeon_level,
-        gdata_kill_count));
+        game_data.deepest_dungeon_level,
+        game_data.kill_count));
     pos(wx + 40, wy + 146);
     mes(i18n::s.get("core.locale.win.window.score", calcscore()));
     pos(wx + 40, wy + 186);
     mes(i18n::s.get(
-        "core.locale.win.window.lesimas", gdata_year, gdata_month, gdata_day));
+        "core.locale.win.window.lesimas",
+        game_data.date.year,
+        game_data.date.month,
+        game_data.date.day));
     pos(wx + 40, wy + 206);
     mes(i18n::s.get("core.locale.win.window.comment", wincomment));
     pos(wx + 40, wy + 246);
@@ -16095,7 +15788,6 @@ void play_the_last_scene_again()
     }
     gdata_main_quest_flag = 180;
     update_screen();
-    return;
 }
 
 
@@ -16140,7 +15832,10 @@ TurnResult pc_died()
         + last_words;
     lenfix(s, 60);
     s += i18n::s.get(
-        "core.locale.misc.death.date", gdata_year, gdata_month, gdata_day);
+        "core.locale.misc.death.date",
+        game_data.date.year,
+        game_data.date.month,
+        game_data.date.day);
     noteadd(""s, 0);
     noteadd(s, 1);
     s = i18n::s.get("core.locale.misc.death.you_died", ndeathcause, mdatan(0));

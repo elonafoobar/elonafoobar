@@ -17,6 +17,8 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "dialog/dialog.hpp"
+
 namespace elona
 {
 
@@ -32,7 +34,6 @@ void talk_start()
     gsel(7);
     picload(filesystem::dir::graphic() / u8"ie_chat.bmp");
     gsel(0);
-    return;
 }
 
 void talk_to_npc()
@@ -46,7 +47,7 @@ void talk_to_npc()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(207) = 1;
                         ghelp = 7;
@@ -66,7 +67,7 @@ void talk_to_npc()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(208) = 1;
                         ghelp = 8;
@@ -97,9 +98,7 @@ void talk_to_npc()
             return;
         }
     }
-    if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12
-        >= cdata[tc].time_interest_revive)
+    if (game_data.date.hours() >= cdata[tc].time_interest_revive)
     {
         cdata[tc].interest = 100;
     }
@@ -117,7 +116,7 @@ void talk_to_npc()
     }
     chatval_unique_chara_id = none;
     chatval_show_impress = true;
-    if (cdata[tc].quality == 6 && tc >= 16)
+    if (cdata[tc].quality == Quality::special && tc >= 16)
     {
         chatval_unique_chara_id = cdata[tc].id;
         chatval_show_impress = false;
@@ -137,7 +136,7 @@ void talk_to_npc()
         talk_wrapper(TalkResult::talk_sleeping);
         return;
     }
-    if (cdata[tc].continuous_action_id)
+    if (cdata[tc].continuous_action)
     {
         talk_wrapper(TalkResult::talk_busy);
         return;
@@ -152,17 +151,24 @@ void talk_to_npc()
         cdata[tc].visited_just_now() = false;
         talk_wrapper(TalkResult::talk_house_visitor);
     }
-    if (chatval_unique_chara_id)
+
+    if (chatval_unique_chara_id
+        && gdata_current_map != mdata_t::MapId::show_house && tc >= 16)
     {
-        if (gdata_current_map != mdata_t::MapId::show_house)
+        const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
+
+        if (dialog_id)
         {
-            if (tc >= 16)
-            {
-                talk_wrapper(TalkResult::talk_unique);
-                return;
-            }
+            dialog_start(*dialog_id);
         }
+        else
+        {
+            talk_wrapper(TalkResult::talk_unique);
+        }
+
+        return;
     }
+
     if (quest_teleport)
     {
         quest_teleport = false;
@@ -170,6 +176,7 @@ void talk_to_npc()
         return;
     }
     buff = "";
+
     talk_wrapper(TalkResult::talk_npc);
 }
 
@@ -558,7 +565,6 @@ void talk_end()
         screenupdate = -1;
         update_screen();
     }
-    return;
 }
 
 
@@ -604,9 +610,8 @@ int talk_window_query()
         await(Config::instance().wait1);
         key_check();
         cursor_check();
-        int a{};
-        a = stick(static_cast<int>(StickKey::escape));
-        if (a == static_cast<int>(StickKey::escape))
+        const auto input = stick(StickKey::escape);
+        if (input == StickKey::escape)
         {
             if (scenemode)
             {
@@ -692,6 +697,7 @@ void talk_window_show()
         {
             p = elona::stoi(actor(1, rc));
         }
+        boxf(wx + 42, wy + 42, 80, 112, snail::Color{0, 0, 0, 255});
         pos(wx + 42, wy + 42);
         gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
     }
@@ -718,6 +724,7 @@ void talk_window_show()
                 gsel(0);
                 chatpicloaded = 1;
             }
+            boxf(wx + 42, wy + 42, 80, 112, snail::Color{0, 0, 0, 255});
             pos(wx + 42, wy + 42);
             gcopy(4, 0, 0, 80, 112, 80, 112);
         }

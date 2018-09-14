@@ -215,7 +215,7 @@ locale {
 
         living_weapon_taste_blood = "${itemname(_1)} has tasted enough blood!"
         caught_by_assassins = "You are caught by assassins. You have to protect your client."
-        finished_eating = "${name(_1)} ${have(_1)} finished eating ${itemname(_1, 1)}."
+        finished_eating = "${name(_1)} ${have(_1)} finished eating ${itemname(_2, 1)}."
         spell_passes_through = "The spell passes through ${name(_1)}."
         shakes_head = "${name(_1)} shake${s(_1)} ${his(_1)} head."
 
@@ -231,6 +231,14 @@ locale {
         }
 
         tax {
+            bill = "A bill has been sent to your house."
+            no_duty = "You don't have to pay tax until you hit level 6."
+            caution = "Caution! "
+            warning = "Warning!! "
+            have_to_go_embassy = "You have to go to the Embassy of Palmia and pay tax at once. "
+            left_bills = "You are in arrears with your tax for ${_1} month${s(_1)}."
+            accused = "You have been accused for being in arrears with your tax for${_1} months."
+            lose_fame = "You lose ${_1} fame."
         }
     }
 }

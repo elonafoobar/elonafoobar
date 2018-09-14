@@ -16,6 +16,7 @@
 namespace elona
 {
 
+
 ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
@@ -466,7 +467,7 @@ ELONA_EXTERN(int firstturn);
 ELONA_EXTERN(int fish);
 ELONA_EXTERN(int fishx);
 ELONA_EXTERN(int fishy);
-ELONA_EXTERN(int fixlv);
+ELONA_EXTERN(Quality fixlv);
 ELONA_EXTERN(int fixmaterial);
 ELONA_EXTERN(int fixtransfermap);
 ELONA_EXTERN(int fltselect);
@@ -861,7 +862,7 @@ void removeworker(int = 0);
 //// flt
 int fltsetdungeon();
 std::string fltname(int = 0);
-void flt(int = 0, int = 0);
+void flt(int = 0, Quality quality = Quality::none);
 void fltn(const std::string&);
 
 
@@ -904,7 +905,6 @@ int read_scroll();
 int do_zap();
 int do_magic_attempt();
 int pick_up_item();
-int drop_item();
 int unlock_box(int);
 void do_ranged_attack();
 

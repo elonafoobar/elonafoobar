@@ -1,0 +1,480 @@
+
+
+    <!doctype html>
+    <html class="no-js" lang="">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>i18n.md topic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../uikit.min.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+    </head>
+    <body>
+
+    <div class="uk-container uk-container-center">
+    <div class="uk-grid uk-margin-top">
+
+    <img src="../red_putit.png" alt="Lua API" class="icon">
+
+    <!-- sidebar start -->
+    <aside class="uk-width-medium-1-5 uk-row-first">
+    <div id="sidebar" class="uk-panel">
+
+    <div class="sidebar-custom">
+
+    <div class="project-infobox">
+
+    <!-- project title -->
+
+    <a href="../index.html"><h1 style="padding-top: 8px">Lua API</h1></a>
+
+    <!-- project description -->
+    <p class="project-desc">Elona foobar Mod API</p>
+
+    <!-- project full description -->
+    <span>  Core API for modding Elona foobar</span>
+    </div>
+
+
+    <!-- sidebar navigation -->
+    <ul class="uk-nav">
+    <li class="nav-item">
+    <h2 class="uk-panel-title">Topics</h2>
+    <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/readme.md.html"><span class="module-name-item">readme.md</span></a></div></li>
+    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../topics/i18n.md.html"><span class="module-name-item">i18n.md</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n_functions.md.html"><span class="module-name-item">i18n_functions.md</span></a></div></li>
+    </ul>
+    </li>
+    </ul>
+    <ul class="uk-nav">
+    <li class="nav-item">
+    <h2 class="uk-panel-title">Modules</h2>
+    <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.html"><span class="module-name-item">Event</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
+    </ul>
+    </li>
+    </ul>
+    <ul class="uk-nav">
+    <li class="nav-item">
+    <h2 class="uk-panel-title">Classes</h2>
+    <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../classes/LuaCharacter.html"><span class="module-name-item">LuaCharacter</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../classes/LuaItem.html"><span class="module-name-item">LuaItem</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../classes/LuaPosition.html"><span class="module-name-item">LuaPosition</span></a></div></li>
+    </ul>
+    </li>
+    </ul>
+    <ul class="uk-nav">
+    <li class="nav-item">
+    <h2 class="uk-panel-title">Examples</h2>
+    <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
+    </ul>
+    </li>
+    </ul>
+
+
+
+    <!-- list of items in a module -->
+    </div>
+    </div>
+    </aside>
+    <!-- sidebar end -->
+
+    <!-- content body start -->
+    <div class="uk-width-medium-4-5 uk-push-1">
+
+    <!-- module list on the main page start -->
+    <!-- module list on the main page end -->
+
+    <!-- module contents -->
+
+    <!-- module content header start -->
+
+    <h2><span class="body-module-name"><strong><em>i18n.md</em></strong></span> topic</h2>
+    <p></p>
+    <p></p>
+
+
+
+
+<h1>Localization</h1>
+
+
+<p>In order to allow players who are fluent in different languages to understand all kinds of content in the game, a localization system is needed. This allows a single piece of text to be translated across any language, instead of hard-coding strings for all possible languages in the code.</p>
+
+
+
+<p><a name="Getting_started"></a></p>
+
+
+<h2>Getting started</h2>
+
+
+<p>In Elona foobar, locale files are written in the <a href="https://github.com/hashicorp/hcl">Hashicorp Configuration Language</a>, or HCL. HCL is a friendlier alternative to other configuration syntaxes, and is easy to read and write. Here is a simple example of a locale file.</p>
+
+
+
+<pre><code> locale {
+     my_string = "Hello, world!"
+ }
+</code></pre>
+
+
+<p>Let's say the above config file is part of a mod named <code>my_mod</code>. Locale files would be placed in a folder structure like <code>my_mod/locale/en/my_strings.hcl</code>. The placement of the <code>my_strings.hcl</code> file in the <code>en/</code> folder indicates it is to be used with the English language. When the locale files are loaded, the localization ID <code>my_mod.locale.my_string</code> will be automatically generated for you, pointing to the text <code>"Hello, world!"</code>. When you want to use this text somewhere, you can use the <code>I18N</code> API.</p>
+
+
+
+<pre><code> local I18N = Elona.require("I18N")
+ local my_string = I18N.get("my_mod.locale.my_string")
+
+ -- Assuming English is the current language:
+ assert(my_string == "Hello, world!")
+</code></pre>
+
+
+<p>Now all a translator has to do in order to add language support is to add a new subfolder in their native language in the <code>locale</code> directory, like this:</p>
+
+
+
+<pre><code> locale {
+     my_string = "こんにちは世界！"
+ }
+</code></pre>
+
+
+<p>If this file is named <code>my_mod/locale/ja/my_strings.hcl</code>, then switching the language to Japanese will have this effect:</p>
+
+
+
+<pre><code> local I18N = Elona.require("I18N")
+ local my_string = I18N.get("my_mod.locale.my_string")
+ assert(my_string == "こんにちは世界！")
+</code></pre>
+
+
+<p>Notice that we didn't have to change any code, yet got a different result based on the language. This system will allow for easily allowing people fluent in any language to play the game and understand additional content added by modders.</p>
+
+
+
+<p>Note that if a given translation string doesn't exist, a warning will be returned instead, like <code>"&lt;Unknown ID: ...&gt;"</code>. Make sure that all the translations you want to define have been placed in <code>locale</code>, or things will break. (You can also make optional translations for specific circumstances. See below for details.)</p>
+
+
+
+<p><a name="Organization"></a></p>
+
+
+<h2>Organization</h2>
+
+
+<p>When creating new translation strings, it helps to organize sets of related localizations by grouping them together. HCL allows for this by the usage of objects, or sections:</p>
+
+
+
+<pre><code> locale {
+   some_section {
+     greeting = "Hello, world!"
+   }
+   other_section {
+     greeting = "Welcome, traveler!"
+   }
+ }
+</code></pre>
+
+
+<p>Once again, assume this file is part of a mod named <code>my_mod</code>. When this file is loaded, both <code>my_mod.locale.some_section.greeting</code> and <code>my_mod.locale.other_section.greeting</code> will be available for use.</p>
+
+
+
+<p>It also helps to name translation files logically. For example, all the translations relating to characters being added could go in <code>chara.hcl</code>, and translations for items in <code>item.hcl</code>.</p>
+
+
+
+<p>A handy feature of HCL is the ability to add comments. Use them for adding more detail.</p>
+
+
+
+<pre><code> locale {
+   # You can write comments like this.
+   // Or this.
+   my_string = "Hello, world!"
+ }
+</code></pre>
+
+
+<p><a name="Interpolation"></a></p>
+
+
+<h2>Interpolation</h2>
+
+
+<p>This is nice and all, but you may be wondering: what happens if I want to insert text somewhere inside the localized text? For example, a common case is adding the name of a character or place in a string. This is possible using the <a href="https://github.com/hashicorp/hil">Hashicorp Interpolation Language</a>, or HIL. Don't worry, it's easier than it seems:</p>
+
+
+
+<pre><code> locale {
+   you_see = "You see ${_1}."
+ }
+</code></pre>
+
+
+<p>You can tell that this string uses HIL by the dollar sign and brace syntax (<code>${_1}</code>). The thing inside the braces indicates what gets placed there. In this case, the <code>_1</code> stands for the first argument passed to the localization formatter. You can pass arguments to translations like this:</p>
+
+
+
+<pre><code> local my_string = I18N.get("my_mod.locale.you_see", "Vernis")
+ assert(my_string == "You see Vernis.")
+</code></pre>
+
+
+<p>Note that you can pass more arguments to the formatter without any difference.</p>
+
+
+
+<pre><code> local my_string = I18N.get("my_mod.locale.you_see", "Vernis", "and some putits")
+ assert(my_string == "You see Vernis.")
+</code></pre>
+
+
+<p>However, passing <em>less</em> arguments than the locale string uses will result in formatting issues. These won't cause errors, but unsightly <code>&lt;missing&gt;</code> text will show up in the formatted string.</p>
+
+
+
+<pre><code> local my_string = I18N.get("my_mod.locale.you_see")
+ assert(my_string == "You see &lt;missing&gt;.")
+</code></pre>
+
+
+<p><a name="Functions_in_interpolations"></a></p>
+
+
+<h2>Functions in interpolations</h2>
+
+
+<p>Say you want to insert the name of a character in a localized string. You attempt to do something like this:</p>
+
+
+
+<pre><code> locale {
+   greeting = "Hello, ${_1}!"
+ }
+</code></pre>
+
+
+<p>Then you try passing a character in:</p>
+
+
+
+<pre><code> local player = Chara.player()
+ local my_string = I18N.get("my_mod.locale.greeting", player)
+</code></pre>
+
+
+<p>But this gives you the text <code>&lt;character: 0&gt;</code>. What's going on? The issue is you passed in a character <code>object</code> instead of the character's name. This could be remedied like so:</p>
+
+
+
+<pre><code> local my_string = I18N.get("my_mod.locale.greeting", player.name)
+</code></pre>
+
+
+<p>However, there's a better way to do this, which makes the intent of the localization clearer. You can pass the character object to the function as before, but change the locale file to this:</p>
+
+
+
+<pre><code> locale {
+   greeting = "Hello, ${name(_1)}!"
+ }
+</code></pre>
+
+
+<p>This has the effect of placing the character's name in the string. Now it's clear that the thing being passed to the formatter is a character, since the <code>name</code> function is being called. There are various functions that may be called; see the <code>I18N</code> documentation for a complete list.</p>
+
+
+
+<p><a name="Enums"></a></p>
+
+
+<h2>Enums</h2>
+
+
+<p>Some of the legacy localizations that are part of the base game have this format.</p>
+
+
+
+<pre><code> locale {
+     fruit {
+         _0 = "apple",
+         _1 = "banana",
+         _2 = "pear"
+     }
+ }
+</code></pre>
+
+
+<p>This indicates that the object <code>fruit</code> is an <em>enum</em>, or enumeration. These are used for translating strings tied to specific integer IDs that are used by the game. In these cases, it is important that each numbered item in the enum has the same format (strings or objects).</p>
+
+
+
+<p>You could do something like this to retrieve an enum's property.</p>
+
+
+
+<pre><code> local fruit_id = 1
+ local fruit = I18N.get("core.locale.fruit._" .. fruit_id)
+</code></pre>
+
+
+<p>However, it's cleaner to do this instead.</p>
+
+
+
+<pre><code> local fruit_id = 1
+ local fruit = I18N.get_enum("core.locale.fruit", fruit_id)
+</code></pre>
+
+
+<p><code>I18N.get_enum</code> is equivalent to the first version and will retrieve the given localized string for the enum. Of course, this depends on the localization group having the enum format.</p>
+
+
+
+<p><a name="Enums_with_properties"></a></p>
+
+
+<h2>Enums with properties</h2>
+
+
+<p>Sometimes enums will have multiple properties per ID, like this.</p>
+
+
+<pre><code> locale {
+     fruit {
+         _0 {
+             name = "apple"
+             color = "red"
+         _1 {
+             name = "banana"
+             color = "yellow"
+         _2 {
+             name = "pear"
+             color = "green"
+         }
+     }
+ }
+</code></pre>
+
+
+<p>In this case <code>I18N.get_enum</code> shouldn't be used, since it's for enums whose IDs point to single strings. Instead, use <code>I18N.get_enum_property</code>.</p>
+
+
+
+<pre><code> local fruit_id = 1
+ local fruit = I18N.get_enum_property("core.locale.fruit", "name", fruit_id)
+</code></pre>
+
+
+<p><a name="Optional_enum_translations"></a></p>
+
+
+<h2>Optional enum translations</h2>
+
+
+<p>Sometimes, translations for a given enum item might not exist. For example, some map entrances lack descriptions:</p>
+
+
+
+<pre><code> locale {
+     map {
+         _4 {
+             name = "North Tyris"
+         }
+         _5 {
+             name = "Vernis"
+             desc = "You see Vernis. The mining town is full of liveliness."
+         }
+
+         // ...
+     }
+ }
+</code></pre>
+
+
+<p>But the <code>I18N.get_enum_property</code> function will return a warning if a given translation string doesn't exist. The solution is to use <code>I18N.get_enum_property_optional</code> instead:</p>
+
+
+
+<pre><code> local town_id = 4
+ local town_name = I18N.get_enum_property("core.locale.map", "name", town_id)
+ local town_desc = I18N.get_enum_property_optional("core.locale.map", "desc", town_id)
+ if town_desc ~= nil then
+     GUI.txt(town_desc)
+ else
+     GUI.txt(town_name)
+ end
+</code></pre>
+
+
+<p>In summary, use <code>I18N.get_enum_property</code> for properties that must exist, and <code>I18N.get_enum_property_optional</code> for ones that might not.</p>
+
+
+
+
+    <!-- module info start -->
+    <!-- module info end -->
+
+    <!-- module usage start -->
+    <!-- module usage end -->
+
+    <!-- module content header end -->
+
+    <!-- module section list start -->
+    <!-- module section list end -->
+
+    <br />
+
+    <!-- section start -->
+
+    </div>
+
+    <!-- section end -->
+
+    </div>
+    </div>
+    </div>
+
+    <div class="uk-container uk-container-center uk-hidden-small">
+    <hr/>
+    <div class="footer-columns columns">
+    <div class="sidebar-footer column col-3 col-sm-12">
+    <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+    </div>
+    <div class="content-footer column col-9 col-sm-12">
+    <i>Last updated 2018-09-10 14:50:37 UTC</i>
+    </div>
+    </div>
+    </div>
+    </body>
+    </html>

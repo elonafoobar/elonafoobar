@@ -50,16 +50,34 @@ public:
     }
 
     template <typename... Args>
-    void call(const std::string& name, Args&&... args) const
+    void call_unsafely(const std::string& name, Args&&... args) const
     {
         if (auto func = get_exported_function(name))
         {
-            func->call(std::forward<Args>(args)...);
+            func->call_unsafely(std::forward<Args>(args)...);
         }
         else
         {
+            throw std::runtime_error(
+                "Script callback error (" + name
+                + "): no such exported function was found");
+        }
+    }
+
+    template <typename... Args>
+    void call(const std::string& name, Args&&... args) const
+    {
+        try
+        {
+            call_unsafely(name, std::forward<Args>(args)...);
+        }
+        catch (const std::exception& e)
+        {
+            std::string message =
+                "Script callback error (" + name + "): " + e.what();
             txtef(ColorIndex::red);
-            txt(name + ": Script callback error: no such exported function was found");
+            txt(message);
+            std::cerr << message << std::endl;
         }
     }
 
@@ -76,8 +94,13 @@ public:
         }
         else
         {
+            std::string message =
+                "Script callback error (" + name + "): no such exported function was "
+                  "found";
+
             txtef(ColorIndex::red);
-            txt(name + ": Script callback error: no such exported function was found");
+            txt(message);
+            std::cerr << message << std::endl;
             return default_value;
         }
     }

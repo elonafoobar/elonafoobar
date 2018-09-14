@@ -72,16 +72,16 @@ locale {
 
         item_on_the_ground_get_broiled = "${itemname(_1)} on the ground get${_s(_1)} perfectly broiled."
         someones_item_get_broiled = "${name(_2)}${his_owned(_2)} ${itemname(_1, 0, false)} get${_s(_1)} perfectly broiled."
-        fireproof_blanket_protects_item = "${itemname(_1, 1)} protects {name(_2)}{his_owned(_2)} stuff from fire."
+        fireproof_blanket_protects_item = "${itemname(_1, 1)} protects ${name(_2)}${his_owned(_2)} stuff from fire."
         fireproof_blanket_turns_to_dust = "${itemname(_1, 1)} turns to dust."
-        item_someone_equips_turns_to_dust = "${itemname(_1, _2)} ${name(_3)} equip${s(_3)} turn${s2(_2)} to dust."
-        someones_item_turns_to_dust = "${name(_3)}${his_owned(_3)} ${itemname(_1, _2, false)} turn${s2(_2)} to dust."
-        item_on_the_ground_turns_to_dust = "${itemname(_1, _2)} on the ground turn${s2(_2)} to dust."
+        item_someone_equips_turns_to_dust = "${_1} ${name(_3)} equip${s(_3)} turn${s2(_2)} to dust."
+        someones_item_turns_to_dust = "${name(_3)}${his_owned(_3)} ${_1} turn${s2(_2)} to dust."
+        item_on_the_ground_turns_to_dust = "${_1} on the ground turn${s2(_2)} to dust."
 
-        coldproof_blanket_protects_item = "${itemname(_1, 1)} protects {name(_2)}{his_owned(_2)} stuff from cold."
+        coldproof_blanket_protects_item = "${itemname(_1, 1)} protects ${name(_2)}${his_owned(_2)} stuff from cold."
         coldproof_blanket_is_broken_to_pieces = "${itemname(_1, 1)} is broken to pieces."
-        someones_item_breaks_to_pieces = "${name(_3)}${his_owned(_3)} ${itemname(_1, _2, false)} break${s2(_2)} to pieces."
-        item_on_the_ground_breaks_to_pieces = "${itemname(_1, _2)} on the ground break${s2(_2)} to pieces."
+        someones_item_breaks_to_pieces = "${name(_3)}${his_owned(_3)} ${_1} break${s2(_2)} to pieces."
+        item_on_the_ground_breaks_to_pieces = "${_1} on the ground break${s2(_2)} to pieces."
 
         items_are_destroyed = "Too many item data! Some items in this area are destroyed."
 
@@ -98,49 +98,49 @@ locale {
         }
 
         gift_rank {
-            _0 = "つまらない"
-            _1 = "普通の"
-            _2 = "ちょっとドキドキする"
-            _3 = "高価な"
-            _4 = "気絶しそうなほど素晴らしい"
-            _5 = "王様が羨むほどの"
+            _0 = "cheap"
+            _1 = "so so"
+            _2 = "exciting"
+            _3 = "expensive"
+            _4 = "hot and gorgeous"
+            _5 = "crazy epic"
         }
 
         kitty_bank_rank {
-            _0 = "5百金貨"
-            _1 = "2千金貨"
-            _2 = "1万金貨"
-            _3 = "5万金貨"
-            _4 = "50万金貨"
-            _5 = "500万金貨"
-            _6 = "1億金貨"
+            _0 = "(500 GP)"
+            _1 = "(2k GP)"
+            _2 = "(10K GP)"
+            _3 = "(50K GP)"
+            _4 = "(500K GP)"
+            _5 = "(5M GP)"
+            _6 = "(500M GP)"
         }
 
         bait_rank {
-            _0 = "ミジンコ"
-            _1 = "バッタ"
-            _2 = "テントウ"
-            _3 = "トンボ"
-            _4 = "セミ"
-            _5 = "ヘラクレス"
+            _0 = "water flea"
+            _1 = "grasshopper"
+            _2 = "ladybug"
+            _3 = "dragonfly"
+            _4 = "locust"
+            _5 = "beetle"
         }
 
         ancient_book_title {
-            _0 = "ヴォイニッチ写本"
-            _1 = "ドール賛歌"
-            _2 = "ポナペ教教典"
-            _3 = "グラーキ黙示録"
-            _4 = "グ＝ハーン断章"
-            _5 = "断罪の書"
-            _6 = "ドジアンの書"
-            _7 = "エイボンの書"
-            _8 = "大いなる教書"
-            _9 = "セラエノ断章"
-            _10 = "ネクロノミコン"
-            _11 = "ルルイエ異本"
-            _12 = "エルトダウン・シャールズ"
-            _13 = "金枝篇"
-            _14 = "終焉の書"
+            _0 = "Voynich Manuscript"
+            _1 = "Dhol Chants"
+            _2 = "Ponape Scripture"
+            _3 = "Revelations of Glaaki"
+            _4 = "G'harne Fragments"
+            _5 = "Liber Damnatus"
+            _6 = "Book of Dzyan"
+            _7 = "Book of Eibon"
+            _8 = "Grand Grimoire"
+            _9 = "Celaeno Fragments"
+            _10 = "Necronomicon"
+            _11 = "The R'lyeh Text"
+            _12 = "Eltdown Shards"
+            _13 = "The Golden Bough"
+            _14 = "Apocalypse"
         }
     }
 }

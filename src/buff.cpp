@@ -161,7 +161,7 @@ void buff_add(
         {
             resists = false;
         }
-        if (cc.quality > 3)
+        if (cc.quality > Quality::great)
         {
             if (rnd(4))
             {
@@ -172,7 +172,7 @@ void buff_add(
                 turns = turns / 5 + 1;
             }
         }
-        if (cc.quality >= 4 && id == 16)
+        if (cc.quality >= Quality::miracle && id == 16)
         {
             resists = true;
         }

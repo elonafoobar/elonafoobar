@@ -1,6 +1,7 @@
 #include "adventurer.hpp"
 #include <string>
 #include "ability.hpp"
+#include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "db_item.hpp"
@@ -23,14 +24,13 @@ void create_all_adventurers()
         rc = cnt;
         create_adventurer();
     }
-    return;
 }
 
 
 
 void create_adventurer()
 {
-    flt(0, 4);
+    flt(0, Quality::miracle);
     initlv = rnd(60 + cdata.player().level) + 1;
     p(0) = 75;
     p(1) = 41;
@@ -46,9 +46,9 @@ void create_adventurer()
     cdatan(1, rc) = random_title();
     cdata[rc].character_role = 13;
     p = rnd(450);
-    if (adata(16, p) == mdata_t::MapId::none
-        || adata(16, p) == mdata_t::MapId::your_home
-        || adata(0, p) == mdata_t::MapType::temporary)
+    if (area_data[p].id == mdata_t::MapId::none
+        || area_data[p].id == mdata_t::MapId::your_home
+        || area_data[p].type == mdata_t::MapType::temporary)
     {
         p = 4;
     }
@@ -68,7 +68,6 @@ void create_adventurer()
     cdata[rc].current_dungeon_level = 1;
     cdata[rc].fame = cdata[rc].level * cdata[rc].level * 30
         + rnd((cdata[rc].level * 200 + 100)) + rnd(500);
-    return;
 }
 
 
@@ -115,7 +114,6 @@ void addnews2(const std::string& prm_401, int prm_402)
     }
     talk_conv(n_at_m36, 38 - en * 5);
     newsbuff += n_at_m36 + u8"\n"s;
-    return;
 }
 
 
@@ -123,9 +121,9 @@ void addnews2(const std::string& prm_401, int prm_402)
 void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 {
     addnews2(
-        prm_403 + u8" "s + gdata_year + u8"/"s + gdata_month + u8"/"s
-        + gdata_day + u8" h"s + gdata_hour + ""s + u8" "s + prm_404);
-    return;
+        prm_403 + u8" "s + game_data.date.year + u8"/"s + game_data.date.month
+        + u8"/"s + game_data.date.day + u8" h"s + game_data.date.hour + ""s
+        + u8" "s + prm_404);
 }
 
 
@@ -192,8 +190,7 @@ void adventurer_update()
         cc = rc;
         if (cdata[rc].period_of_contract != 0)
         {
-            if (cdata[rc].period_of_contract < gdata_hour + gdata_day * 24
-                    + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+            if (cdata[rc].period_of_contract < game_data.date.hours())
             {
                 cdata[rc].period_of_contract = 0;
                 cdata[rc].is_contracting() = false;
@@ -211,9 +208,7 @@ void adventurer_update()
             }
             if (cdata[rc].state() == Character::State::adventurer_dead)
             {
-                if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                        + gdata_year * 24 * 30 * 12
-                    >= cdata[rc].time_to_revive)
+                if (game_data.date.hours() >= cdata[rc].time_to_revive)
                 {
                     if (rnd(3) == 0)
                     {
@@ -245,14 +240,15 @@ void adventurer_update()
                 {
                     p = rnd(300);
                 }
-                if (adata(16, p) == mdata_t::MapId::none || p == 7
-                    || adata(0, p) == mdata_t::MapType::temporary || p == 9)
+                if (area_data[p].id == mdata_t::MapId::none || p == 7
+                    || area_data[p].type == mdata_t::MapType::temporary
+                    || p == 9)
                 {
                     p = 4;
                 }
                 if (cnt < 5)
                 {
-                    if (adata(0, p) != mdata_t::MapType::town)
+                    if (area_data[p].type != mdata_t::MapType::town)
                     {
                         continue;
                     }
@@ -268,7 +264,7 @@ void adventurer_update()
         }
         if (rnd(200) == 0)
         {
-            if (adata(0, cdata[rc].current_map) != mdata_t::MapType::town)
+            if (area_data[cdata[rc].current_map].type != mdata_t::MapType::town)
             {
                 adventurer_discover_equipment();
             }
@@ -305,7 +301,6 @@ void adventurer_update()
             notedel(0);
         }
     }
-    return;
 }
 
 
@@ -339,7 +334,7 @@ int adventurer_discover_equipment()
     {
         return 0;
     }
-    flt(cdata[rc].level, 4);
+    flt(cdata[rc].level, Quality::miracle);
     if (rnd(3) == 0)
     {
         flttypemajor = choice(fsetwear);
@@ -354,7 +349,7 @@ int adventurer_discover_equipment()
         return 0;
     }
     inv[ci].identification_state = IdentifyState::completely_identified;
-    if (inv[ci].quality >= 4)
+    if (inv[ci].quality >= Quality::miracle)
     {
         if (the_item_db[inv[ci].id]->category < 50000)
         {

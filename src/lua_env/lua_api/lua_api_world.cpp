@@ -7,8 +7,7 @@ namespace lua
 
 int World::time()
 {
-    return gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-        + gdata_year * 24 * 30 * 12;
+    return game_data.date.hours();
 }
 
 void World::bind(sol::table& api_table)

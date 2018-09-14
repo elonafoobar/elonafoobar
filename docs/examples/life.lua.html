@@ -30,10 +30,10 @@
     <a href="../index.html"><h1 style="padding-top: 8px">Lua API</h1></a>
 
     <!-- project description -->
-    <p class="project-desc">ElonaFoobar Mod API</p>
+    <p class="project-desc">Elona foobar Mod API</p>
 
     <!-- project full description -->
-    <span>  Core API for modding ElonaFoobar</span>
+    <span>  Core API for modding Elona foobar</span>
     </div>
 
 
@@ -43,6 +43,7 @@
     <h2 class="uk-panel-title">Examples</h2>
     <ul class="nav">
     <li class="nav-item active"><div class="nav-item-block-active block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
+    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
     </ul>
     </li>
     </ul>
@@ -50,6 +51,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Modules</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
@@ -57,13 +59,18 @@
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
     </ul>
     </li>
@@ -83,6 +90,8 @@
     <h2 class="uk-panel-title">Topics</h2>
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/readme.md.html"><span class="module-name-item">readme.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n.md.html"><span class="module-name-item">i18n.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n_functions.md.html"><span class="module-name-item">i18n_functions.md</span></a></div></li>
     </ul>
     </li>
     </ul>
@@ -164,15 +173,15 @@
 
 <span class="keyword">local</span> <span class="keyword">function</span> run_life()
    <span class="keyword">if</span> <span class="keyword">not</span> Map.is_overworld() <span class="keyword">then</span>
-      <span class="keyword">local</span> grid = Store.grid
+      <span class="keyword">local</span> grid = Store.map_local.grid
       <span class="keyword">if</span> grid == <span class="keyword">nil</span> <span class="keyword">then</span>
-         Store.grid = create_life_grid()
-         grid = Store.grid
+         Store.map_local.grid = create_life_grid()
+         grid = Store.map_local.grid
       <span class="keyword">end</span>
       <span class="keyword">for</span> y = <span class="number">1</span>, Map.width() <span class="keyword">do</span>
          <span class="keyword">for</span> x = <span class="number">1</span>, Map.height() <span class="keyword">do</span>
             <span class="keyword">local</span> tile
-            <span class="keyword">if</span> Store.grid[x][y] == <span class="number">1</span> <span class="keyword">and</span> Map.can_access(x, y) <span class="keyword">then</span>
+            <span class="keyword">if</span> Store.map_local.grid[x][y] == <span class="number">1</span> <span class="keyword">and</span> Map.can_access(x, y) <span class="keyword">then</span>
                tile = Map.generate_tile(Enums.TileKind.Wall)
             <span class="keyword">else</span>
                tile = Map.generate_tile(Enums.TileKind.Room)
@@ -181,7 +190,7 @@
             Map.set_tile_memory(x, y, tile)
          <span class="keyword">end</span>
       <span class="keyword">end</span>
-      Store.grid = evolve(grid)
+      Store.map_local.grid = evolve(grid)
    <span class="keyword">end</span>
 <span class="keyword">end</span>
 
@@ -216,7 +225,7 @@ Event.register(Event.EventKind.AllTurnsFinished, run_life)</code></pre>
     <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
     </div>
     <div class="content-footer column col-9 col-sm-12">
-    <i>Last updated 2018-06-10 11:00:06 UTC</i>
+    <i>Last updated 2018-09-10 14:50:37 UTC</i>
     </div>
     </div>
     </div>

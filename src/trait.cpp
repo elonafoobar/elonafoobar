@@ -238,6 +238,30 @@ void trait_format(int tid, int min, int max)
         trait_format_other(i18n_prefix, tid, min, max);
     }
 }
+
+
+
+/**
+ * Returns if you can acquire the trait. Note that it returns true for traits
+ * other than feats such as ether disease.
+ */
+bool is_acquirable(int id)
+{
+    switch (id)
+    {
+    case 4: return trait(id) == 0 || cdata.player().level >= 5;
+    case 6: return sdata.get(159, 0).original_level > 0;
+    case 7: return trait(id) == 0 || cdata.player().level >= 5;
+    case 10: return sdata.get(173, 0).original_level > 0;
+    case 12: return sdata.get(172, 0).original_level > 0;
+    case 16: return sdata.get(156, 0).original_level > 0;
+    case 19: return sdata.get(166, 0).original_level > 0;
+    case 43: return sdata.get(168, 0).original_level > 0;
+    default: return true;
+    }
+}
+
+
 } // namespace
 
 
@@ -256,7 +280,8 @@ int trait_get_info(int traitmode, int tid)
         traitref(2) = data->max;
 
         trait_format(tid, data->min, data->max);
-        return 1;
+
+        return is_acquirable(tid) ? 1 : -1;
     }
 
     if (tid == 24)
@@ -741,6 +766,7 @@ int trait_get_info(int traitmode, int tid)
     }
     return 0;
 }
+
 
 
 void trait_load_desc()

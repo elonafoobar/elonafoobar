@@ -38,19 +38,19 @@ label_19341_internal:
     rpid = rpref(0);
     if (rpid == 0)
     {
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return;
     }
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
         txtnew();
         txt(i18n::s.get(
             "core.locale.blending.started", cdata[cc], rpname(rpid)));
-        cdata[cc].continuous_action_id = 12;
-        cdata[cc].continuous_action_turn = rpref(2) % 10000;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::blend;
+        cdata[cc].continuous_action.turn = rpref(2) % 10000;
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         if (rnd(30) == 0)
         {
@@ -61,11 +61,11 @@ label_19341_internal:
     }
     if (rpref(2) >= 10000)
     {
-        cdata[cc].continuous_action_turn = rpref(2) / 10000;
+        cdata[cc].continuous_action.turn = rpref(2) / 10000;
         for (int cnt = 0;; ++cnt)
         {
             mode = 12;
-            ++gdata_hour;
+            ++game_data.date.hour;
             weather_changes();
             render_hud();
             if (cnt % 5 == 0)
@@ -75,10 +75,10 @@ label_19341_internal:
             }
             redraw();
             await(Config::instance().animewait * 5);
-            gdata_minute = 0;
+            game_data.date.minute = 0;
             cc = 0;
-            --cdata[cc].continuous_action_turn;
-            if (cdata[cc].continuous_action_turn <= 0)
+            --cdata[cc].continuous_action.turn;
+            if (cdata[cc].continuous_action.turn <= 0)
             {
                 int stat = blending_find_required_mat();
                 if (stat == 0)
@@ -90,7 +90,7 @@ label_19341_internal:
                 blending_start_attempt();
                 if (rpref(1) > 0)
                 {
-                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
+                    cdata[cc].continuous_action.turn = rpref(2) / 10000;
                     cnt = 0 - 1;
                     continue;
                 }
@@ -100,7 +100,7 @@ label_19341_internal:
                 }
             }
         }
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         mode = 0;
         return;
     }
@@ -108,17 +108,16 @@ label_19341_internal:
     if (stat == 0)
     {
         txt(i18n::s.get("core.locale.blending.required_material_not_found"));
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return;
     }
     blending_start_attempt();
     if (rpref(1) > 0)
     {
-        cdata[cc].continuous_action_id = 0;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::none;
         goto label_19341_internal;
     }
-    rowactend(cc);
-    return;
+    cdata[cc].continuous_action.finish();
 }
 
 void initialize_recipememory()
@@ -127,7 +126,6 @@ void initialize_recipememory()
     {
         recipememory(200 + cnt) = 1;
     }
-    return;
 }
 
 void initialize_recipe()
@@ -331,7 +329,6 @@ void initialize_recipe()
     rfnameorg(1, 5) = i18n::s.get_enum("core.locale.blending.ingredient", 4);
     rfnameorg(0, 4) = "";
     rfnameorg(1, 4) = i18n::s.get_enum("core.locale.blending.ingredient", 5);
-    return;
 }
 
 void window_recipe2(int val0)
@@ -647,7 +644,6 @@ void window_recipe_(
         dy_at_m184 += 16;
         ++p_at_m184;
     }
-    return;
 }
 
 TurnResult blending_menu()
@@ -1539,7 +1535,6 @@ void clear_rprefmat()
     {
         rpref(10 + cnt * 2) = -1;
     }
-    return;
 }
 
 
@@ -1664,7 +1659,6 @@ void blending_start_attempt()
     }
     --rpref(1);
     blending_spend_materials();
-    return;
 }
 
 // TODO: Much duplication with do_dip_command()
@@ -1862,7 +1856,6 @@ void blending_proc_on_success_events()
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
     chara_refresh(0);
-    return;
 }
 
 } // namespace elona

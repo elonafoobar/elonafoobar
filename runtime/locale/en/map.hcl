@@ -227,7 +227,7 @@ locale {
             _48 {
                 name = "Test World north border"
             }
-            _9999 {
+            _499 {
                 name = "Debug Map"
             }
         }

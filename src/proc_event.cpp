@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -180,7 +181,7 @@ void proc_event()
             u8"bg_re14");
         for (int i = 0; i < 5; ++i)
         {
-            flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
+            flt(calcobjlv(cdata[marry].level + 5), calcfixlv(Quality::good));
             flttypemajor = choice(fsetchest);
             itemcreate(
                 -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
@@ -199,21 +200,21 @@ void proc_event()
         break;
     case 29:
     {
-        randomize(gdata_year + gdata_current_dungeon_level);
+        randomize(game_data.date.year + gdata_current_dungeon_level);
         int c = choice(std::initializer_list<int>{
             300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
             145, 242, 25, 257, 230, 202, 37, 33,  80,  332,
         });
         randomize();
         flt();
-        fixlv = 4;
+        fixlv = Quality::miracle;
         initlv = clamp(gdata_current_dungeon_level / 4, 50, 250);
         chara_create(-1, c, -3, 0);
         cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
         tc = rc;
-        adata(20, gdata_current_map) = tc;
+        area_data[gdata_current_map].has_been_conquered = tc;
         txtef(3);
         txt(i18n::s.get(
             "core.locale.event.guarded_by_lord",
@@ -225,7 +226,7 @@ void proc_event()
         while (1)
         {
             chara_set_generation_filter();
-            fixlv = 4;
+            fixlv = Quality::miracle;
             initlv = gdata_current_dungeon_level + rnd(5);
             int stat = chara_create(-1, 0, -3, 0);
             if (stat == 0)
@@ -239,7 +240,7 @@ void proc_event()
             }
         }
         tc = rc;
-        adata(20, gdata_current_map) = tc;
+        area_data[gdata_current_map].has_been_conquered = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         txt(i18n::s.get("core.locale.event.reached_deepest_level"));
         txtef(3);
@@ -285,13 +286,13 @@ void proc_event()
         cdata.player().fame += gdata(74);
         if (gdata_current_map == mdata_t::MapId::the_void)
         {
-            adata(20, gdata_current_map) = 0;
+            area_data[gdata_current_map].has_been_conquered = 0;
             gdata(186) = gdata(186) + 5;
             txt(i18n::s.get("core.locale.event.seal_broken"));
         }
         else
         {
-            adata(20, gdata_current_map) = -1;
+            area_data[gdata_current_map].has_been_conquered = -1;
         }
         break;
     case 16:
@@ -389,10 +390,11 @@ void proc_event()
         }
         if (rnd(3) == 0)
         {
-            flt(0, 2);
+            flt(0, Quality::good);
             for (int i = 0; i < 1; ++i)
             {
-                if (gdata_last_month_when_trainer_visited != gdata_month
+                if (gdata_last_month_when_trainer_visited
+                        != game_data.date.month
                     || rnd(5) == 0)
                 {
                     if (rnd(3))
@@ -827,7 +829,7 @@ void proc_event()
     case 18:
         if (mdata_map_type == mdata_t::MapType::world_map)
             break;
-        gdata_weather = 1;
+        game_data.weather = 1;
         sound_play_environmental();
         txt(i18n::s.get("core.locale.event.ragnarok"));
         msg_halt();
@@ -859,7 +861,7 @@ void proc_event()
             mapitem_fire(x, y);
             if (i % 4 == 0)
             {
-                flt(100, calcfixlv(3));
+                flt(100, calcfixlv(Quality::good));
                 if (rnd(4))
                 {
                     fltnrace = u8"dragon"s;

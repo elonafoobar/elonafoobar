@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <random>
+#include <type_traits>
 #include <utility>
 #include <vector>
 #include "optional.hpp"
@@ -31,10 +32,14 @@ inline void randomize(
 
 
 // [0, max)
-inline int rnd(int max)
+template <
+    typename Integer,
+    std::enable_if_t<std::is_integral<Integer>::value, std::nullptr_t> =
+        nullptr>
+inline Integer rnd(Integer max)
 {
-    return std::uniform_int_distribution<>{
-        0, std::max(0, max - 1)}(detail::engine);
+    return std::uniform_int_distribution<Integer>{
+        Integer{0}, std::max(Integer{0}, max - 1)}(detail::engine);
 }
 
 

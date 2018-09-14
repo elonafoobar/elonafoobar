@@ -10,6 +10,7 @@ namespace elona
 
 enum class StickKey
 {
+    none = 0,
     left = 1 << 0,
     up = 1 << 1,
     right = 1 << 2,
@@ -94,6 +95,28 @@ enum class IdentifyState : int
     almost_identified = 2,
     completely_identified = 3,
 };
+
+
+
+/**
+ * Quality of items or characters. They are mainly used for identification.
+ * "unique" is also used instead of special.
+ */
+enum class Quality : int
+{
+    none,
+    bad,
+    good,
+    great,
+    miracle,
+    godly,
+    special,
+};
+
+
+ENUMUTIL_DEFINE_COMPARISON_OPERATORS(Quality)
+
+
 
 enum class DamageSource : int
 {

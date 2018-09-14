@@ -113,7 +113,7 @@ Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
 
 TEST_CASE("Test preservation of global data", "[Lua: Serialization]")
 {
-    start_in_map(9999, 2);
+    start_in_debug_map();
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_serial_global", R"(
@@ -145,7 +145,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_hook)
 
 TEST_CASE("Test preservation of map local data", "[Lua: Serialization]")
 {
-    start_in_map(9999, 2);
+    start_in_debug_map();
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_serial_map_local", R"(
@@ -171,7 +171,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_hook)
     });
 
     // TODO after serialization is implemented
-    // run_in_temporary_map(9999, 2);
+    // run_in_temporary_map(499, 2);
     // REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod("test",
     // "assert(Store.map_local.val == 42)"));
 }
