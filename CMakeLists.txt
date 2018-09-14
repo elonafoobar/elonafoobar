@@ -294,14 +294,18 @@ if(ANDROID)
   target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams snail )
 else()
   # Options
-  option(WITH_TESTS "Build test executable (TESTS or BENCH)" "NONE")
+  option(WITH_TESTS "Build test executable (TESTS or BENCH)" "OFF")
 
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+    unset(SNAIL_HEADLESS CACHE)
     SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
     add_definitions(-DSNAIL_RENDERER_HEADLESS)
-  else()
+  elseif(WITH_TESTS STREQUAL "OFF")
+    unset(SNAIL_HEADLESS CACHE)
     SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
     add_definitions(-DSNAIL_RENDERER_SDL)
+  else()
+    # Use the previous flags.
   endif()
 
   # Executable
@@ -470,8 +474,10 @@ else()
 
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
     target_link_libraries(${PROJECT_NAME} snail_headless)
-  else()
+  elseif(WITH_TESTS STREQUAL "OFF")
     target_link_libraries(${PROJECT_NAME} snail)
+  else()
+    # Use the previous flags.
   endif()
 
 

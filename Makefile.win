@@ -18,7 +18,8 @@ CMAKE_ARGS = \
         -G "Visual Studio 15 2017 Win64"
 
 
-all: build
+all:
+	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) & cmake --build .
 
 
 build: $(BIN_DIR) $(PROGRAM)
@@ -35,7 +36,7 @@ $(BIN_DIR):
 
 
 $(PROGRAM): FORCE
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) & cmake --build .
+	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF & cmake --build .
 
 
 $(TEST_RUNNER):
