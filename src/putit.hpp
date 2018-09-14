@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "defines.hpp"
+#include "filesystem.hpp"
 
 
 
@@ -18,14 +19,8 @@ namespace detail
 {
 
 
-uint8_t byte_swap(uint8_t n)
-{
-    return n;
-}
 
-
-
-uint16_t byte_swap(uint16_t n)
+inline uint16_t byte_swap(uint16_t n)
 {
     return n << 8 | n >> 8;
 }
@@ -33,7 +28,7 @@ uint16_t byte_swap(uint16_t n)
 
 
 /* clang-format off */
-uint32_t byte_swap(uint32_t n)
+inline uint32_t byte_swap(uint32_t n)
 {
     return 0
         | (n & 0x0000'00FF) << (8 * 3)
@@ -44,7 +39,7 @@ uint32_t byte_swap(uint32_t n)
 
 
 
-uint64_t byte_swap(uint64_t n)
+inline uint64_t byte_swap(uint64_t n)
 {
     return 0
         | (n & 0x0000'0000'0000'00FF) << (8 * 7)
@@ -110,6 +105,15 @@ public:
 
 
     template <typename T>
+    static void load(const fs::path& filepath, T& data)
+    {
+        std::ifstream in{filepath.native(), std::ios::binary};
+        BinaryIArchive ar{in};
+        ar.load(data);
+    }
+
+
+    template <typename T>
     void load(T& data)
     {
         serialize(*this, data);
@@ -168,6 +172,15 @@ public:
     BinaryOArchive(std::ostream& out)
         : out(out)
     {
+    }
+
+
+    template <typename T>
+    static void save(const fs::path& filepath, T& data)
+    {
+        std::ofstream out{filepath.native(), std::ios::binary};
+        BinaryOArchive ar{out};
+        ar.save(data);
     }
 
 

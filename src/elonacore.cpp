@@ -47,6 +47,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "network.hpp"
+#include "putit.hpp"
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -9351,130 +9352,6 @@ void initialize_map_adjust_spawns()
 
 
 
-void migrate_save_data(const fs::path& save_dir)
-{
-    chara_delete(56);
-
-    // TODO: Delete these lines when v1.0.0 stable is released.
-    if (foobar_data.version.id() == 0)
-    {
-        ELONA_LOG("Fix version: " << latest_version.short_string());
-        foobar_data.version = latest_version;
-    }
-
-    if (foobar_data.version.id() <= 205)
-    {
-        ELONA_LOG("Update v0.2.5 save");
-        // Fix corrupted map data.
-        // Iterate all map file
-        for (const auto& entry : filesystem::dir_entries(
-                 save_dir,
-                 filesystem::DirEntryRange::Type::file,
-                 std::regex{R"(map_\d+_\d+\.s2)"}))
-        {
-            int map_id;
-            int level;
-            {
-                const std::regex pattern{R"(map_(\d+)_(\d+)\.s2)"};
-                std::smatch match;
-                const auto str = entry.path().filename().string();
-                std::regex_match(str, match, pattern);
-                map_id = std::stoi(match.str(1));
-                level = std::stoi(match.str(2)) - 100;
-                mid =
-                    std::to_string(map_id) + "_" + std::to_string(level + 100);
-            }
-            // Read mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(FileOperation::map_read);
-            // Read inv.
-            ctrl_file(FileOperation2::map_items_read, "inv_" + mid + ".s2");
-
-            ELONA_LOG("Fix corrupted map: " << mdatan(0) << "(" << mid << ")");
-            if (mdata_map_refresh_type == 1 && mdata_map_should_regenerate == 0
-                && level == 1)
-            {
-                fs::path map_filename;
-                switch (map_id)
-                {
-                case 36: map_filename = u8"lumiest"; break;
-                case 5: map_filename = u8"vernis"; break;
-                case 15: map_filename = u8"palmia"; break;
-                case 11: map_filename = u8"kapul"; break;
-                case 12: map_filename = u8"yowyn"; break;
-                case 14: map_filename = u8"rogueden"; break;
-                case 33: map_filename = u8"noyel"; break;
-                default:
-                    ELONA_LOG("Refresh map data: 1");
-                    for (const auto& i : items(-1))
-                    {
-                        if (inv[i].number() > 0)
-                        {
-                            ELONA_LOG("  " << cnvitemname(inv[i].id));
-                            cell_refresh(inv[i].position.x, inv[i].position.y);
-                        }
-                    }
-                    // Write inv.
-                    ctrl_file(
-                        FileOperation2::map_items_write, "inv_" + mid + ".s2");
-                    // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-                    ctrl_file(FileOperation::map_write);
-                    continue;
-                }
-
-                ELONA_LOG("Reinitialize map items.");
-                fmapfile =
-                    (filesystem::dir::map() / map_filename).generic_string();
-                ctrl_file(FileOperation::map_load_map_obj_files);
-
-                for (int i = 0; i < 400; ++i)
-                {
-                    if (cmapdata(0, i) == 0)
-                        continue;
-                    const auto x = cmapdata(1, i);
-                    const auto y = cmapdata(2, i);
-                    for (const auto& i : items(-1))
-                    {
-                        if (inv[i].number() > 0
-                            && inv[i].position == Position{x, y})
-                        {
-                            inv[i].remove();
-                        }
-                    }
-                    if (cmapdata(4, i) == 0)
-                    {
-                        flt();
-                        int stat = itemcreate(-1, cmapdata(0, i), x, y, 0);
-                        if (stat != 0)
-                        {
-                            inv[ci].own_state = cmapdata(3, i);
-                        }
-                        cell_refresh(x, y);
-                    }
-                }
-            }
-            else
-            {
-                ELONA_LOG("Refresh map data: 2");
-                for (const auto& i : items(-1))
-                {
-                    if (inv[i].number() > 0)
-                    {
-                        cell_refresh(inv[i].position.x, inv[i].position.y);
-                    }
-                }
-            }
-            // Write inv.
-            ctrl_file(FileOperation2::map_items_write, "inv_" + mid + ".s2");
-            // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(FileOperation::map_write);
-        }
-    }
-
-    foobar_data.version = latest_version;
-}
-
-
-
 void clear_existing_quest_list()
 {
     ++gdata(184);
@@ -9710,38 +9587,55 @@ void create_cnpc()
 
 
 
-// TODO: Delete this function when v1.0.0 stable is released.
-// Save data in v0.2.5 is not compatible with that in v0.2.6 or later. To make
-// matters worse, foobar's version is not saved in v0.2.5 save. As a result, we
-// cannot migrate save data in a usual way, `migrate_save_data()` function.
-// This function
-// 1. Delete old meta data file, `foobar_save.s1`.
-// 2. Set v0.2.5 to foobar_data.
-// Now, you can detect that the version is v0.2.5 and use usual migration code,
-// `migrate_save_data()`.
-void migrate_save_data_from_025_to_026(const fs::path& save_dir)
+void update_save_data(const fs::path& save_dir, int serial_id)
 {
-    const auto old_meta_data_filepath = save_dir / "foobar_save.s1";
-
-    if (!fs::exists(old_meta_data_filepath))
-        // v0.2.6 or later
-        return;
-
-    // v0.2.5
-    fs::remove(old_meta_data_filepath);
-    foobar_data.version = {0, 2, 5, "", "", ""};
-
-    for (const auto entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{R"(.*\.s2)"}))
+    switch (serial_id)
     {
-        ELONA_LOG("v0.2.5:copy:" << entry.path());
-        fs::copy_file(
-            entry.path(),
-            filesystem::dir::tmp() / entry.path().filename(),
-            fs::copy_option::overwrite_if_exists);
+    case 0:
+    {
+        bool is_autodig_enabled;
+        {
+            int dummy_i;
+            std::string dummy_s;
+            std::ifstream in{(save_dir / "foobar_data.s1").native(),
+                             std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            ar.load(dummy_i);
+            ar.load(dummy_i);
+            ar.load(dummy_i);
+            ar.load(dummy_s);
+            ar.load(dummy_s);
+            ar.load(dummy_s);
+            ar.load(is_autodig_enabled);
+        }
+        {
+            std::ofstream out{(save_dir / "foobar_data.s1").native(),
+                              std::ios::binary};
+            putit::BinaryOArchive ar{out};
+            ar.save(is_autodig_enabled);
+        }
     }
+    break;
+    default: break;
+    }
+}
+
+
+
+void update_save_data(const fs::path& save_dir)
+{
+    const auto version_filepath = save_dir / "version.s0";
+
+    Version version;
+    putit::BinaryIArchive::load(version_filepath, version);
+    for (int serial_id = version.serial_id;
+         serial_id != latest_version.serial_id;
+         ++serial_id)
+    {
+        update_save_data(save_dir, serial_id);
+    }
+    version = latest_version;
+    putit::BinaryOArchive::save(version_filepath, version);
 }
 
 
@@ -9759,17 +9653,41 @@ void load_save_data()
     ctrl_file(FileOperation::temp_dir_delete);
     const auto save_dir = filesystem::dir::save(playerid);
 
-    // TODO: Delete these lines when v1.0.0 stable is released.
-    // Delete unnecessary file in old save data.
-    if (fs::exists(save_dir / u8"filelist.txt"))
+    // TODO: Delete this line when the v1.0.0 stable is released!
+    if (!fs::exists(save_dir / "version.s0"))
     {
-        fs::remove(save_dir / u8"filelist.txt");
+        if (!fs::exists(save_dir / "foobar_data.s1"))
+        {
+            throw std::runtime_error{
+                "Please update your save in v0.2.7 first."};
+        }
+
+        int major;
+        int minor;
+        int patch;
+        {
+            std::ifstream in{(save_dir / "foobar_data.s1").native(),
+                             std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            ar.load(major);
+            ar.load(minor);
+            ar.load(patch);
+        }
+
+        if (!(major == 0 && minor == 2 && patch == 7))
+        {
+            throw std::runtime_error{
+                "Please update your save in v0.2.7 first."};
+        }
+
+        Version v028 = {0, 2, 8, 0, "", "", ""};
+        putit::BinaryOArchive::save(save_dir / "version.s0", v028);
     }
 
-    migrate_save_data_from_025_to_026(save_dir);
+    update_save_data(save_dir);
     ctrl_file(FileOperation2::global_read, save_dir);
-    migrate_save_data(save_dir);
-    ELONA_LOG("migrate:end");
+
+    chara_delete(56);
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
     {
