@@ -2,6 +2,43 @@
 
 
 
+## [0.2.8] - 2018-09-15
+
+### Added
+
+- Adjust tone of shadow in cutscenes.
+- Show current minute zero-filled in log window like this `[05]`.
+- Improve save data's portability especially for endianness.
+  - Elona foobar always saves data in little endian. If your machine runs in big endian, foobar converts data on loading and saving.
+
+
+### Deleted
+
+- Delete support of old vanilla's save(older than 1.22).
+  - We have a plan to provide an importer/exporter in the future.
+- Delete support of old foobar's save(v0.2.6 or earlier).
+  - Please update your save in v0.2.7 before you load it in v0.2.8(this version).
+
+
+### Fixed
+
+- [vanilla] Fix shelter stacking when you build it on another shelter.
+- [vanilla] Fix glitch of drawing bottom left of small map if the window size is large enough.
+- Fix special ammo enchantment not being added.
+- Fix living weapon not destroying the last enchantment when the weapon has 15 enchantments and sucks blood.
+- Fix water dropped on an alter not geting blessed.
+- Fix crashes when an item is burned/broken by fire or cold.
+- Fix character's tone changing in one dialog(only in Japanese mode).
+- Add a missing key hint to home rank window you can see via house board.
+- Fix heirloom ranking listing only the most valuable item.
+- Fix black pixels(`#000`) in portraits being transparent.
+- Do not play breaking animation if you cannot see there.
+- Fix shadow of window in selecting save menu disappearing once you change page.
+- Fix being able to unacquirable feats. For example, you were able to acquire Negotiator feat even if you did not have Negotiation skill.
+- Fix typos.
+
+
+
 ## [0.2.7] - 2018-09-05
 
 ### Added
@@ -26,6 +63,7 @@
 - Migrate config file from JSON to HCL.
   - Almost all of options get avaiable ingame now. You don't need touch it directly, maybe.
 - Add a minute hand to the top left clock.
+
 
 ### Fixed
 
@@ -75,6 +113,7 @@
 - Stack goods at shop.
 - Add Lua API: `LuaCharacter.experience`.
 
+
 ### Fixed
 
 - Fix some of errors not being displayed.
@@ -113,10 +152,12 @@
 - Add option to toggle damage popup(`damage_popup`).
 - Adjust formula to calculate PC's weight.
 
+
 ### Deleted
 
 - Do not copy `original\config.txt`, no longer needed.
 - Hide stair position markers in minimap in muggle mode.
+
 
 ### Fixed
 
@@ -163,6 +204,7 @@
 - You can change how frequently shopkeepers restock their items.
   - 0-10 days(default: 3 days). If you set 0, sold items are updated every time you talk to the shopkeeper.
 
+
 ### Fixed
 
 - Fix gaining performance experience by bard's performance.
@@ -199,6 +241,7 @@
 - Update README.md to fit current state.
 - Add README-jp.md, Japanese version README.
 
+
 ### Fixed
 
 - [vanilla] Fix not being able to leave the cave if you die in the cave without leaving there.
@@ -221,10 +264,12 @@
 
 - Dump error log and some information to runtime/log.txt.
 
+
 ### Deleted
 
 - Remove support of vanilla's custom file format.
   - It is temporary. Of course, it will be implemented again.
+
 
 ### Fixed
 
@@ -262,6 +307,7 @@
 - Implement autopick(experimental).
 - Card collection using deck.
 
+
 ### Deleted
 
 - Delete unavailable option, `cfg_msg_box`.
@@ -269,6 +315,7 @@
 - Disable rendering high quality shadow temporarily.
 - Disable voldemort mode by default.
   - It is available and you can enable it via [F12].
+
 
 ### Fixed
 
@@ -310,10 +357,12 @@
 - Abolish upper limit of number of NPC's actions(10 -> unlimited).
 - Minimum attribute roll in character making.
 
+
 ### Deleted
 
 - Delete F12 console commands.
 - Remove compatibility with too old versions(older than 1.16).
+
 
 ### Fixed
 
