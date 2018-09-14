@@ -14,6 +14,7 @@ using namespace std::literals::string_literals;
 
 TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -53,6 +54,7 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
 
 TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -94,6 +96,7 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
 
 TEST_CASE("Test that handle methods can be called", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -114,6 +117,7 @@ TEST_CASE("Test that handle methods can be called", "[Lua: Handles]")
 
 TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -166,6 +170,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
 
 TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
@@ -208,6 +213,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
 TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
@@ -248,6 +254,7 @@ TEST_CASE(
     "Test calling C++ functions taking handles as arguments",
     "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
@@ -304,6 +311,7 @@ TEST_CASE(
     "Test uniqueness of handle after original handle has been replaced",
     "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
@@ -345,6 +353,7 @@ TEST_CASE(
     "Test validity of handles for items that are picked up",
     "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -360,6 +369,7 @@ TEST_CASE(
 
 TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -383,6 +393,7 @@ TEST_CASE(
     "Test relocation of character handle caused by in-place change",
     "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -405,6 +416,7 @@ TEST_CASE(
 
 TEST_CASE("Test copying of character handles", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -432,6 +444,7 @@ TEST_CASE("Test copying of character handles", "[Lua: Handles]")
 
 TEST_CASE("Test deletion of character causing handle removal", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -448,6 +461,7 @@ TEST_CASE(
     "Test state change of character causing handle removal",
     "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -474,6 +488,7 @@ TEST_CASE(
     "Test setting of item amount causing handle deletion",
     "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 2;
@@ -505,6 +520,7 @@ TEST_CASE(
     "Test modifying of item amount causing handle deletion",
     "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 2;
@@ -534,6 +550,7 @@ TEST_CASE(
 
 TEST_CASE("Test separation of item handles", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 3;
@@ -556,6 +573,7 @@ TEST_CASE("Test separation of item handles", "[Lua: Handles]")
 
 TEST_CASE("Test copying of item handles", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 1;
@@ -587,6 +605,7 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
 
 TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
 {
+    reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 

@@ -1,4 +1,5 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
+local _ENV = _ENV
 local Chara = Elona.require("Chara")
 local FOV = Elona.require("FOV")
 local I18N = Elona.require("I18N")
@@ -6,6 +7,10 @@ local Item = Elona.require("Item")
 local string = Elona.require("string")
 
 local i18n = {}
+
+-- local print = print
+-- local tostring = tostring
+-- local type = type
 
 --
 -- English

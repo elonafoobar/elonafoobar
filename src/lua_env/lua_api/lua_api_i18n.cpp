@@ -296,6 +296,15 @@ sol::optional<std::string> I18N::get_enum_property_optional(
     return sol::nullopt;
 }
 
+void I18N::register_function(
+    const std::string& language,
+    const std::string& name,
+    sol::protected_function function)
+{
+    lua::lua->get_i18n_function_manager().register_function(
+        language, name, function);
+}
+
 void I18N::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, I18N, get);
@@ -304,7 +313,7 @@ void I18N::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, I18N, get_enum_property);
     api_table.set_function(
         "get_enum_property_optional", I18N::get_enum_property_optional);
-    api_table.set_function("register_function", i18n::register_function);
+    LUA_API_BIND_FUNCTION(api_table, I18N, register_function);
 }
 
 } // namespace lua

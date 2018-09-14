@@ -19,11 +19,6 @@ namespace elona
 namespace i18n
 {
 
-namespace detail
-{
-std::unordered_map<std::string, I18NFunctionMapType> functions;
-}
-
 i18n::Store s;
 
 void Store::init(const std::vector<Store::Location>& locations)
@@ -146,41 +141,6 @@ void Store::visit(
     {
         visit_object(value.as<hcl::Object>(), current_key, hcl_file);
     }
-}
-
-void register_function(
-    const std::string& language,
-    const std::string& name,
-    sol::protected_function function)
-{
-    if (detail::functions.find(language) == detail::functions.end())
-    {
-        detail::functions[language] = detail::I18NFunctionMapType();
-    }
-    detail::functions[language][name] = std::move(function);
-}
-
-void clear_functions()
-{
-    detail::functions.clear();
-}
-
-optional<sol::protected_function> find_function(const std::string& name)
-{
-    const std::string& language = Config::instance().language;
-
-    if (detail::functions.find(language) == detail::functions.end())
-    {
-        return none;
-    }
-
-    auto it = detail::functions[language].find(name);
-    if (it == detail::functions[language].end())
-    {
-        return none;
-    }
-
-    return it->second;
 }
 
 // #define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value)    \

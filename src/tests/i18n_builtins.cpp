@@ -15,6 +15,7 @@ using namespace elona;
 
 TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     Character& you = elona::cdata.player();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
@@ -42,6 +43,7 @@ TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     Character& you = elona::cdata.player();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
@@ -69,6 +71,7 @@ TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: him()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     Character& you = elona::cdata.player();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
@@ -96,6 +99,7 @@ TEST_CASE("test i18n builtin: him()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: name()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -110,6 +114,7 @@ TEST_CASE("test i18n builtin: name()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -123,6 +128,7 @@ TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
@@ -140,6 +146,7 @@ TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: itembasename()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
@@ -150,6 +157,7 @@ TEST_CASE("test i18n builtin: itembasename()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
@@ -169,6 +177,7 @@ TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -188,6 +197,7 @@ TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -200,6 +210,7 @@ TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: himself()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -214,6 +225,7 @@ TEST_CASE("test i18n builtin: himself()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: his_owned()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -227,6 +239,7 @@ TEST_CASE("test i18n builtin: his_owned()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: name_nojob()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -239,6 +252,7 @@ TEST_CASE("test i18n builtin: name_nojob()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_japanese();
     Character& you = elona::cdata.player();
@@ -253,6 +267,7 @@ TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: you()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
 
     SECTION("Japanese")

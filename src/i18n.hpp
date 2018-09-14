@@ -142,24 +142,8 @@ struct LocalizedText
 
 std::string space_if_needed();
 
-void register_function(
-    const std::string& language,
-    const std::string& name,
-    sol::protected_function function);
-void clear_functions();
-optional<sol::protected_function> find_function(const std::string& name);
-
 namespace detail
 {
-
-typedef std::unordered_map<std::string, sol::protected_function>
-    I18NFunctionMapType;
-
-/**
- * Functions registered in Lua that can be used in locale text
- * interpolations. Indexed by [language][function_name].
- */
-extern std::unordered_map<std::string, I18NFunctionMapType> functions;
 
 /**
  * Does argument "_1" have argument index 1?
@@ -345,12 +329,12 @@ inline std::string format_function_call(
     sol::table& args,
     int args_size)
 {
-    auto it = find_function(call.name);
+    auto it = lua::lua->get_i18n_function_manager().find_function(call.name);
     if (!it)
     {
         return "<unknown function " + call.name + ">";
     }
-    sol::protected_function function = *it;
+    sol::protected_function& function = *it;
 
     // Create a new Lua table and push the arguments needed for the function
     // call to it, then unpack the table when calling the function.
@@ -408,7 +392,7 @@ void fmt_internal_with_function(
             std::string ident = v.as<std::string>();
             if (auto index = arg_index(ident))
             {
-                if (*index >= 0 && *index < args_size)
+                if (*index > 0 && *index <= args_size)
                 {
                     formatted.at(i) =
                         format_literal_type(args[*index].get<sol::object>());
