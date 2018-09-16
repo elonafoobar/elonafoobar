@@ -308,7 +308,7 @@ TEST_CASE("test i18n builtin: ordinal()", "[I18N: Builtins]")
     REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 11) == u8"11th");
     REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 12) == u8"12th");
     REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 13) == u8"13th");
-    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 14) == u8"13th");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 14) == u8"14th");
     REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 21) == u8"21st");
     REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 22) == u8"22nd");
     REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 23) == u8"23rd");

@@ -221,7 +221,6 @@ void LuaCharacter::bind(sol::state& lua)
         &Character::experience,
         "talk_type",
         &Character::talk_type,
-
         "sex",
         sol::property(
             [](Character& c) {

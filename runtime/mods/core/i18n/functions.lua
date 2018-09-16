@@ -132,6 +132,16 @@ function i18n.en.is(object)
 end
 
 function i18n.en.s(object, need_e)
+   if object == true then
+      if need_e then
+         return "es"
+      else
+         return "s"
+      end
+   elseif object == false then
+      return ""
+   end
+
    if type(object) == "number" then
       if object == 1 then
          return ""

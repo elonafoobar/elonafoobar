@@ -39,7 +39,7 @@ local function print_handle_error(handle, key)
       return
    end
 
-   if Elona.core and Elona.core.GUI then
+   if Elona and Elona.core and Elona.core.GUI then
       Elona.core.GUI.txt_color(3)
       Elona.core.GUI.txt("Error: handle is not valid! ")
       if key ~= nil then
@@ -220,7 +220,7 @@ end
 --- __index field with the new value, if it exists. If the handle
 --- exists, the target slot must not be occupied. If not, the
 --- destination slot will be set to empty as well.
-function Handle.relocate_handle(cpp_ref, new_index, kind)
+function Handle.relocate_handle(cpp_ref, dest_cpp_ref, new_index, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
    if Handle.is_valid(handle) then
@@ -229,6 +229,7 @@ function Handle.relocate_handle(cpp_ref, new_index, kind)
       assert(not Handle.is_valid(handles_by_index[kind][new_index]))
       handle.__index = new_index
       handles_by_index[kind][new_index] = handle
+      Handle.set_ref(handle, dest_cpp_ref)
    else
       -- When the handle is not valid, set the destination slot to be
       -- invalid as well, to reflect relocating an empty handle.

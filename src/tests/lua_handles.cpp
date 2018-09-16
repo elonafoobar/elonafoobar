@@ -387,6 +387,7 @@ TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
     REQUIRE(elona::rc != first_index);
     REQUIRE(handle["__index"].get<int>() == elona::rc);
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
+    REQUIRE(handle["__index"].get<int>() == handle["index"].get<int>());
 }
 
 TEST_CASE(

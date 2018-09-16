@@ -139,9 +139,10 @@ public:
     }
 
     template <typename T>
-    void relocate_handle(const T& obj, int new_index)
+    void relocate_handle(const T& source, const T& destination, int new_index)
     {
-        handle_env["Handle"]["relocate_handle"](obj, new_index, T::lua_type());
+        handle_env["Handle"]["relocate_handle"](
+            source, destination, new_index, T::lua_type());
     }
 
     template <typename T>

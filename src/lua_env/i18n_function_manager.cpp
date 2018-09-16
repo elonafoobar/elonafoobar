@@ -47,7 +47,7 @@ optional<sol::protected_function> I18NFunctionManager::find_function(
     sol::optional<sol::protected_function> function =
         i18n_function_env[language][name];
 
-    if (!function)
+    if (!function || *function == sol::lua_nil)
     {
         return none;
     }
