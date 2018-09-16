@@ -32,7 +32,7 @@ void proc_event()
     {
     case 8: quest_all_targets_killed(); break;
     case 14:
-        switch (gdata_executing_immediate_quest_type)
+        switch (game_data.executing_immediate_quest_type)
         {
         case 1009:
             txt(i18n::s.get("core.locale.quest.party.is_over"));
@@ -40,12 +40,12 @@ void proc_event()
             calcpartyscore2();
             txt(i18n::s.get(
                 "core.locale.quest.party.final_score",
-                qdata(13, gdata_executing_immediate_quest)));
-            if (qdata(12, gdata_executing_immediate_quest)
-                <= qdata(13, gdata_executing_immediate_quest))
+                qdata(13, game_data.executing_immediate_quest)));
+            if (qdata(12, game_data.executing_immediate_quest)
+                <= qdata(13, game_data.executing_immediate_quest))
             {
                 gdata(73) = 3;
-                qdata(8, gdata_executing_immediate_quest) = 3;
+                qdata(8, game_data.executing_immediate_quest) = 3;
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.party.complete"));
                 msg_halt();
@@ -57,11 +57,11 @@ void proc_event()
             }
             break;
         case 1006:
-            if (qdata(12, gdata_executing_immediate_quest)
-                < qdata(13, gdata_executing_immediate_quest))
+            if (qdata(12, game_data.executing_immediate_quest)
+                < qdata(13, game_data.executing_immediate_quest))
             {
                 gdata(73) = 3;
-                qdata(8, gdata_executing_immediate_quest) = 3;
+                qdata(8, game_data.executing_immediate_quest) = 3;
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.collect.complete"));
                 msg_halt();
@@ -304,7 +304,7 @@ void proc_event()
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
         break;
     case 15:
-        for (int i = 0; i < gdata_number_of_existing_quests; ++i)
+        for (int i = 0; i < game_data.number_of_existing_quests; ++i)
         {
             if (qdata(3, i) == 1007 && qdata(8, i) == 1
                 && qdata(13, i) == evdata1(evnum - (evnum != 0) * 1))
@@ -334,7 +334,7 @@ void proc_event()
         {
             txt(i18n::s.get("core.locale.event.death_penalty_not_applied"));
         }
-        if (gdata_ether_disease_stage >= 20000)
+        if (game_data.ether_disease_stage >= 20000)
         {
             modify_ether_disease_stage(-2000);
         }

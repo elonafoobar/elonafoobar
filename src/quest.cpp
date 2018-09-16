@@ -154,7 +154,7 @@ void quest_check()
             }
         }
     }
-    if (gdata_executing_immediate_quest_type == 0)
+    if (game_data.executing_immediate_quest_type == 0)
     {
         return;
     }
@@ -180,9 +180,9 @@ void quest_check()
                 txt(i18n::s.get("core.locale.quest.hunt.remaining", p_at_m119));
             }
         }
-        if (gdata_executing_immediate_quest_type == 1008)
+        if (game_data.executing_immediate_quest_type == 1008)
         {
-            if (chara_find(qdata(12, gdata_executing_immediate_quest)) == 0)
+            if (chara_find(qdata(12, game_data.executing_immediate_quest)) == 0)
             {
                 event_add(8);
             }
@@ -224,7 +224,7 @@ void quest_set_data(int val0)
         s(10) = ""s + cnvweight(qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
         s(4) = i18n::s.get("core.locale.quest.info.harvest.text", s(10));
-        if (gdata_executing_immediate_quest == rq)
+        if (game_data.executing_immediate_quest == rq)
         {
             s(4) += i18n::s.get(
                 "core.locale.quest.info.now", cnvweight(qdata(13, rq)));
@@ -239,7 +239,7 @@ void quest_set_data(int val0)
             i18n::s.get("core.locale.quest.info.party.points", qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
         s(4) = i18n::s.get("core.locale.quest.info.party.text", s(10));
-        if (gdata_executing_immediate_quest == rq)
+        if (game_data.executing_immediate_quest == rq)
         {
             s(4) += i18n::s.get("core.locale.quest.info.now", qdata(13, rq));
         }
@@ -473,7 +473,7 @@ void quest_on_map_initialize()
         qdata(1, i) = game_data.current_map;
         qname(i) = cdatan(0, cnt.index);
         cnt.related_quest_id = i + 1;
-        gdata_number_of_existing_quests = i + 1;
+        game_data.number_of_existing_quests = i + 1;
     }
 }
 
@@ -481,7 +481,7 @@ void quest_on_map_initialize()
 
 void quest_refresh_list()
 {
-    for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {
@@ -768,12 +768,12 @@ int quest_generate()
     if (rnd(6) == 0)
     {
         i = -1;
-        for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
-            p = rnd(gdata_number_of_existing_quests);
-            for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+            p = rnd(game_data.number_of_existing_quests);
+            for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -929,7 +929,7 @@ void quest_gen_scale_by_level()
 
 void quest_check_all_for_failed()
 {
-    for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {
@@ -958,7 +958,7 @@ void quest_check_all_for_failed()
 
 void quest_exit_map()
 {
-    if (gdata_executing_immediate_quest_type == 1006)
+    if (game_data.executing_immediate_quest_type == 1006)
     {
         for (const auto& cnt : items(0))
         {
@@ -971,17 +971,17 @@ void quest_exit_map()
     }
     if (gdata(73) != 3)
     {
-        if (gdata_executing_immediate_quest_type >= 1000)
+        if (game_data.executing_immediate_quest_type >= 1000)
         {
-            rq = gdata_executing_immediate_quest;
+            rq = game_data.executing_immediate_quest;
         }
-        if (gdata_executing_immediate_quest_type == 1007)
+        if (game_data.executing_immediate_quest_type == 1007)
         {
             if (qdata(8, rq) == 0)
             {
-                gdata_executing_immediate_quest_type = 0;
+                game_data.executing_immediate_quest_type = 0;
                 gdata(71) = 0;
-                gdata_executing_immediate_quest = 0;
+                game_data.executing_immediate_quest = 0;
                 gdata(73) = 0;
                 return;
             }
@@ -991,12 +991,12 @@ void quest_exit_map()
                     "core.locale.quest.escort.you_left_your_client"));
             }
         }
-        quest_failed(gdata_executing_immediate_quest_type);
+        quest_failed(game_data.executing_immediate_quest_type);
         msg_halt();
     }
-    gdata_executing_immediate_quest_type = 0;
+    game_data.executing_immediate_quest_type = 0;
     gdata(71) = 0;
-    gdata_executing_immediate_quest = 0;
+    game_data.executing_immediate_quest = 0;
     gdata(73) = 0;
 }
 
@@ -1164,7 +1164,7 @@ void quest_all_targets_killed()
     musicloop = 1;
     play_music("core.mcFanfare");
     gdata(73) = 3;
-    if (gdata_executing_immediate_quest_type == 1)
+    if (game_data.executing_immediate_quest_type == 1)
     {
         snd(69);
         txtef(2);
@@ -1187,22 +1187,22 @@ void quest_all_targets_killed()
             matgetmain(40, 1);
         }
     }
-    if (gdata_executing_immediate_quest_type == 1001
-        || gdata_executing_immediate_quest_type == 1010)
+    if (game_data.executing_immediate_quest_type == 1001
+        || game_data.executing_immediate_quest_type == 1010)
     {
-        qdata(8, gdata_executing_immediate_quest) = 3;
+        qdata(8, game_data.executing_immediate_quest) = 3;
         txtef(2);
         txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
-    if (gdata_executing_immediate_quest_type == 1007)
+    if (game_data.executing_immediate_quest_type == 1007)
     {
         txtef(2);
         txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
-    if (gdata_executing_immediate_quest_type == 1008)
+    if (game_data.executing_immediate_quest_type == 1008)
     {
-        gdata_left_minutes_of_executing_quest = 0;
-        qdata(8, gdata_executing_immediate_quest) = 3;
+        game_data.left_minutes_of_executing_quest = 0;
+        qdata(8, game_data.executing_immediate_quest) = 3;
         txtef(2);
         txt(i18n::s.get("core.locale.quest.conquer.complete"));
     }

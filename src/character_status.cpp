@@ -69,7 +69,7 @@ void modify_ether_disease_stage(int delta)
     int mod_at_m134 = 0;
     int cnt2_at_m134 = 0;
     int i_at_m134 = 0;
-    org_at_m134 = gdata_ether_disease_stage / 1000;
+    org_at_m134 = game_data.ether_disease_stage / 1000;
     p_at_m134 = delta + (delta > 0) * gdata_ether_disease_speed;
     if (trait(168))
     {
@@ -78,12 +78,12 @@ void modify_ether_disease_stage(int delta)
             p_at_m134 = p_at_m134 * 100 / 150;
         }
     }
-    gdata_ether_disease_stage += p_at_m134;
-    if (gdata_ether_disease_stage < 0)
+    game_data.ether_disease_stage += p_at_m134;
+    if (game_data.ether_disease_stage < 0)
     {
-        gdata_ether_disease_stage = 0;
+        game_data.ether_disease_stage = 0;
     }
-    mod_at_m134 = gdata_ether_disease_stage / 1000 - org_at_m134;
+    mod_at_m134 = game_data.ether_disease_stage / 1000 - org_at_m134;
     if (mod_at_m134 > 0)
     {
         if (org_at_m134 == 0)
@@ -421,10 +421,12 @@ void refresh_speed(Character& cc)
     if (mdata_map_type == mdata_t::MapType::world_map
         || mdata_map_type == mdata_t::MapType::field)
     {
-        if (gdata_cargo_weight > gdata_current_cart_limit)
+        if (game_data.cargo_weight > game_data.current_cart_limit)
         {
-            cdata.player().speed_percentage_in_next_turn -=
-                25 + 25 * (gdata_cargo_weight / (gdata_current_cart_limit + 1));
+            cdata.player().speed_percentage_in_next_turn -= 25
+                + 25
+                    * (game_data.cargo_weight
+                       / (game_data.current_cart_limit + 1));
         }
     }
     gspd = cdata.player().current_speed
@@ -531,7 +533,7 @@ void gain_level(Character& cc)
             {
                 if (cc.level <= 50)
                 {
-                    ++gdata_acquirable_feat_count;
+                    ++game_data.acquirable_feat_count;
                 }
             }
         }

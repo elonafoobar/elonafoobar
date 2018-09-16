@@ -2,38 +2,6 @@
 
 #include "version.hpp"
 
-#define gdata_next_shelter_serial_id gdata(27)
-#define gdata_seven_league_boot_effect gdata(28)
-#define gdata_protects_from_etherwind gdata(29)
-#define gdata_played_scene gdata(36)
-#define gdata_torch gdata(37)
-#define gdata_angband_flag gdata(38)
-#define gdata_number_of_learned_skills_by_trainer gdata(39)
-
-#define gdata_is_returning_or_escaping gdata(63)
-#define gdata_executing_immediate_quest_type gdata(70)
-#define gdata_executing_immediate_quest gdata(72)
-#define gdata_number_of_existing_quests gdata(75)
-#define gdata_basic_point_of_home_rank gdata(76)
-#define gdata_cargo_weight gdata(80)
-#define gdata_initial_cart_limit gdata(81)
-#define gdata_current_cart_limit gdata(82)
-#define gdata_protects_from_bad_weather gdata(83)
-#define gdata_left_minutes_of_executing_quest gdata(84)
-#define gdata_ether_disease_stage gdata(85)
-#define gdata_time_when_textbook_becomes_available gdata(88)
-#define gdata_continuous_active_hours gdata(90)
-#define gdata_sleep_experience gdata(92)
-#define gdata_acquirable_feat_count gdata(93)
-#define gdata_wish_count gdata(95)
-#define gdata_version gdata(96)
-#define gdata_rights_to_succeed_to gdata(97)
-#define gdata_next_voting_time gdata(99)
-#define gdata_cost_to_hire gdata(170)
-#define gdata_left_bill gdata(179)
-#define gdata_distance_between_town gdata(180)
-#define gdata_departure_date gdata(181)
-#define gdata_left_town_map gdata(182)
 #define gdata_mount gdata(183)
 #define gdata_catches_god_signal gdata(185)
 #define gdata_reveals_religion gdata(187)
@@ -151,16 +119,47 @@ struct GameData
     int previous_dungeon_level;
     int previous_x;
     int previous_y;
+    int next_shelter_serial_id;
+    int seven_league_boot_effect;
+    int protects_from_etherwind;
+    int played_scene;
+    int torch;
+    int angband_flag;
+    int number_of_learned_skills_by_trainer;
+    int is_returning_or_escaping;
+    int executing_immediate_quest_type;
+    int executing_immediate_quest;
+    int number_of_existing_quests;
+    int basic_point_of_home_rank;
+    int cargo_weight;
+    int initial_cart_limit;
+    int current_cart_limit;
+    int protects_from_bad_weather;
+    int left_minutes_of_executing_quest;
+    int ether_disease_stage;
+    int time_when_textbook_becomes_available;
+    int continuous_active_hours;
+    int sleep_experience;
+    int acquirable_feat_count;
+    int wish_count;
+    int version;
+    int rights_to_succeed_to;
+    int next_voting_time;
+    int cost_to_hire;
+    int left_bill;
+    int distance_between_town;
+    int departure_date;
+    int left_town_map;
 
     /**
-     * Moves this struct's fields into `gdata` so they can be serialized, for
-     * compatibility. To be called before serializing `gdata`.
+     * Moves this struct's fields into `gdata` so they can be serialized,
+     * for compatibility. To be called before serializing `gdata`.
      */
     void pack_to(elona_vector1<int>&);
 
     /**
-     * Moves `gdata` fields into this struct. To be called after deserializing
-     * `gdata`.
+     * Moves `gdata` fields into this struct. To be called after
+     * deserializing `gdata`.
      */
     void unpack_from(elona_vector1<int>&);
 };
@@ -169,8 +168,8 @@ extern GameData game_data;
 
 struct FoobarData
 {
-    // NOTE: Don't add new fields unless you add them to serialization, which
-    // will break save compatibility.
+    // NOTE: Don't add new fields unless you add them to serialization,
+    // which will break save compatibility.
     bool is_autodig_enabled{};
 
 

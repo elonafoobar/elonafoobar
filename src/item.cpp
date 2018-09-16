@@ -2172,7 +2172,7 @@ int inv_weight(int owner)
     int weight{};
     if (owner == 0)
     {
-        gdata_cargo_weight = 0;
+        game_data.cargo_weight = 0;
     }
     for (const auto& cnt : items(owner))
     {
@@ -2184,7 +2184,7 @@ int inv_weight(int owner)
             }
             else if (owner == 0)
             {
-                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number();
+                game_data.cargo_weight += -inv[cnt].weight * inv[cnt].number();
             }
         }
     }
@@ -2234,8 +2234,8 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     if (building_shelter)
     {
         inv[ti].own_state = 3;
-        inv[ti].count = gdata_next_shelter_serial_id + 100;
-        ++gdata_next_shelter_serial_id;
+        inv[ti].count = game_data.next_shelter_serial_id + 100;
+        ++game_data.next_shelter_serial_id;
     }
     else
     {

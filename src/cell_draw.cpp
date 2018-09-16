@@ -1183,7 +1183,7 @@ void cell_draw()
     int light_ = gdata(89);
     randomize(scrturn_);
 
-    if (gdata_torch == 1)
+    if (game_data.torch == 1)
     {
         if (mdata_t::is_nefia(mdata_map_type))
         {

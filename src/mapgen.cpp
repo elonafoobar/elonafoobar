@@ -1988,29 +1988,29 @@ void generate_random_nefia()
         }
         if (area_data[game_data.current_map].id == mdata_t::MapId::quest)
         {
-            if (gdata_executing_immediate_quest_type == 1001)
+            if (game_data.executing_immediate_quest_type == 1001)
             {
                 mdata_map_tileset = 300;
                 mdata_map_width = 28 + rnd(6);
                 mdata_map_height = 20 + rnd(6);
                 rdtype = 6;
             }
-            if (gdata_executing_immediate_quest_type == 1009)
+            if (game_data.executing_immediate_quest_type == 1009)
             {
                 initialize_quest_map_party();
                 return;
             }
-            if (gdata_executing_immediate_quest_type == 1006)
+            if (game_data.executing_immediate_quest_type == 1006)
             {
                 initialize_quest_map_crop();
                 return;
             }
-            if (gdata_executing_immediate_quest_type == 1008)
+            if (game_data.executing_immediate_quest_type == 1008)
             {
                 initialize_quest_map_town();
                 return;
             }
-            if (gdata_executing_immediate_quest_type == 1010)
+            if (game_data.executing_immediate_quest_type == 1010)
             {
                 initialize_quest_map_town();
                 return;
@@ -2288,7 +2288,7 @@ void initialize_random_nefia_rdtype6()
 
 int initialize_quest_map_crop()
 {
-    gdata_left_minutes_of_executing_quest = 120;
+    game_data.left_minutes_of_executing_quest = 120;
     gdata(87) = 9999;
     mdata_map_indoors_flag = 2;
     mdata_map_tileset = 4;
@@ -2724,7 +2724,7 @@ int initialize_random_nefia_rdtype3()
 int initialize_quest_map_party()
 {
     int roomdiff = 0;
-    gdata_left_minutes_of_executing_quest = 60;
+    game_data.left_minutes_of_executing_quest = 60;
     gdata(87) = 9999;
     rdroomsizemin = 5;
     mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
@@ -2893,8 +2893,8 @@ int initialize_quest_map_party()
         ry = roomy(cnt) + 1;
         rh = roomheight(cnt) - 2;
         rdsize = rw * rh;
-        roomdiff =
-            clamp(rnd(qdata(5, gdata_executing_immediate_quest) / 3 + 3), 0, 9);
+        roomdiff = clamp(
+            rnd(qdata(5, game_data.executing_immediate_quest) / 3 + 3), 0, 9);
         if (rnd(2) == 0)
         {
             x = rnd(rw) + rx;
@@ -3057,26 +3057,27 @@ void initialize_quest_map_town()
     game_data.entrance_type = 5;
     map_placeplayer();
     mdata_map_user_map_flag = 0;
-    if (gdata_executing_immediate_quest_type == 1008)
+    if (game_data.executing_immediate_quest_type == 1008)
     {
-        gdata_left_minutes_of_executing_quest = 720;
+        game_data.left_minutes_of_executing_quest = 720;
         gdata(87) = 9999;
         flt();
-        initlv = qdata(5, gdata_executing_immediate_quest);
+        initlv = qdata(5, game_data.executing_immediate_quest);
         fixlv = Quality::godly;
-        chara_create(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
+        chara_create(-1, qdata(12, game_data.executing_immediate_quest), -3, 0);
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
-        qdata(13, gdata_executing_immediate_quest) = rc;
+        qdata(13, game_data.executing_immediate_quest) = rc;
     }
-    if (gdata_executing_immediate_quest_type == 1010)
+    if (game_data.executing_immediate_quest_type == 1010)
     {
         for (int cnt = 0, cnt_end = (6 + rnd(4)); cnt < cnt_end; ++cnt)
         {
             flt();
-            initlv = qdata(5, gdata_executing_immediate_quest) * 3 / 2;
+            initlv = qdata(5, game_data.executing_immediate_quest) * 3 / 2;
             fixlv = Quality::bad;
-            chara_create(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
+            chara_create(
+                -1, qdata(12, game_data.executing_immediate_quest), -3, 0);
             cdata[rc].relationship = -3;
             cdata[rc].original_relationship = -3;
         }
@@ -3812,33 +3813,33 @@ void initialize_home_mdata()
     if (game_data.home_scale == 0)
     {
         mdata_map_max_item_count = 100;
-        gdata_basic_point_of_home_rank = 1000;
+        game_data.basic_point_of_home_rank = 1000;
     }
     if (game_data.home_scale == 1)
     {
         mdata_map_max_item_count = 150;
-        gdata_basic_point_of_home_rank = 3000;
+        game_data.basic_point_of_home_rank = 3000;
     }
     if (game_data.home_scale == 2)
     {
         mdata_map_max_item_count = 200;
-        gdata_basic_point_of_home_rank = 5000;
+        game_data.basic_point_of_home_rank = 5000;
     }
     if (game_data.home_scale == 3)
     {
         mdata_map_max_item_count = 300;
-        gdata_basic_point_of_home_rank = 7000;
+        game_data.basic_point_of_home_rank = 7000;
     }
     if (game_data.home_scale == 4)
     {
         mdata_map_max_item_count = 350;
-        gdata_basic_point_of_home_rank = 8000;
+        game_data.basic_point_of_home_rank = 8000;
         mdata_map_tileset = 8;
     }
     if (game_data.home_scale == 5)
     {
         mdata_map_max_item_count = 400;
-        gdata_basic_point_of_home_rank = 10000;
+        game_data.basic_point_of_home_rank = 10000;
     }
 }
 

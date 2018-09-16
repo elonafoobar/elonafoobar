@@ -713,7 +713,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                if (gdata_version >= 1200)
+                if (game_data.version >= 1200)
                 {
                     load_v1(filepath, recipememory, 0, 1200);
                 }

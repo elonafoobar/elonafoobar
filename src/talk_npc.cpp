@@ -356,9 +356,9 @@ TalkResult talk_arena_master(int chatval_)
         area_data[game_data.current_map].time_of_next_rumble =
             game_data.date.hours() + 24;
     }
-    gdata_executing_immediate_quest_type = 1;
+    game_data.executing_immediate_quest_type = 1;
     gdata(71) = 1;
-    gdata_executing_immediate_quest = 0;
+    game_data.executing_immediate_quest = 0;
     gdata(73) = 1;
     game_data.previous_map2 = game_data.current_map;
     game_data.previous_dungeon_level = game_data.current_dungeon_level;
@@ -437,9 +437,9 @@ TalkResult talk_pet_arena_master(int chatval_)
             "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
         return TalkResult::talk_npc;
     }
-    gdata_executing_immediate_quest_type = 2;
+    game_data.executing_immediate_quest_type = 2;
     gdata(71) = 0;
-    gdata_executing_immediate_quest = 0;
+    game_data.executing_immediate_quest = 0;
     gdata(73) = 1;
     game_data.previous_map2 = game_data.current_map;
     game_data.previous_dungeon_level = game_data.current_dungeon_level;
@@ -1441,9 +1441,9 @@ TalkResult talk_accepted_quest()
             }
         }
     }
-    gdata_executing_immediate_quest_type = qdata(3, rq);
+    game_data.executing_immediate_quest_type = qdata(3, rq);
     gdata(71) = qdata(14, rq);
-    gdata_executing_immediate_quest = rq;
+    game_data.executing_immediate_quest = rq;
     gdata(73) = 1;
     game_data.previous_map2 = game_data.current_map;
     game_data.previous_dungeon_level = game_data.current_dungeon_level;
@@ -1524,7 +1524,7 @@ TalkResult talk_trainer(bool is_training)
         {
             cdata.player().platinum_coin -= calclearncost(selected_skill, cc);
             chara_gain_skill(cdata[cc], selected_skill);
-            ++gdata_number_of_learned_skills_by_trainer;
+            ++game_data.number_of_learned_skills_by_trainer;
             buff = i18n::s.get(
                 "core.locale.talk.npc.trainer.finish.learning", cdata[tc]);
         }
@@ -1631,7 +1631,7 @@ TalkResult talk_quest_giver()
     if (chatval_ == 1)
     {
         p = 0;
-        for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
@@ -1915,7 +1915,7 @@ TalkResult talk_npc()
                         i18n::s.get("core.locale.talk.npc.ally.choices.ask_for_"
                                     "marriage"));
                 }
-                else if (gdata_continuous_active_hours >= 15)
+                else if (game_data.continuous_active_hours >= 15)
                 {
                     ELONA_APPEND_RESPONSE(
                         39,
@@ -2146,7 +2146,7 @@ TalkResult talk_npc()
     deliver(1) = -1;
     if (game_data.current_dungeon_level == 1)
     {
-        for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
@@ -2163,7 +2163,7 @@ TalkResult talk_npc()
     }
     if (f == 1)
     {
-        for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {

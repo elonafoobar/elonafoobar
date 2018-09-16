@@ -772,20 +772,21 @@ TurnResult turn_begin()
             auto_identify();
         }
         game_data.date.minute += game_data.date.second / 60;
-        if (gdata_left_minutes_of_executing_quest > 0)
+        if (game_data.left_minutes_of_executing_quest > 0)
         {
-            gdata_left_minutes_of_executing_quest -= game_data.date.second / 60;
-            if (gdata(87) > gdata_left_minutes_of_executing_quest / 10)
+            game_data.left_minutes_of_executing_quest -=
+                game_data.date.second / 60;
+            if (gdata(87) > game_data.left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
                 txt(i18n::s.get(
                     "core.locale.quest.minutes_left",
-                    (gdata_left_minutes_of_executing_quest + 1)));
-                gdata(87) = gdata_left_minutes_of_executing_quest / 10;
+                    (game_data.left_minutes_of_executing_quest + 1)));
+                gdata(87) = game_data.left_minutes_of_executing_quest / 10;
             }
-            if (gdata_left_minutes_of_executing_quest <= 0)
+            if (game_data.left_minutes_of_executing_quest <= 0)
             {
-                gdata_left_minutes_of_executing_quest = 0;
+                game_data.left_minutes_of_executing_quest = 0;
                 event_add(14);
             }
         }
@@ -865,18 +866,18 @@ TurnResult pass_one_turn(bool label_2738_flg)
                 heal_sp(cdata.player(), 2);
             }
         }
-        if (gdata_is_returning_or_escaping != 0)
+        if (game_data.is_returning_or_escaping != 0)
         {
-            --gdata_is_returning_or_escaping;
+            --game_data.is_returning_or_escaping;
             if (mdata_map_type == mdata_t::MapType::temporary
                 || game_data.current_map == mdata_t::MapId::shelter_
                 || game_data.current_map == mdata_t::MapId::jail)
             {
-                gdata_is_returning_or_escaping = 0;
+                game_data.is_returning_or_escaping = 0;
                 txt(i18n::s.get("core.locale.magic.return.prevented.normal"));
                 goto label_2740_internal;
             }
-            if (gdata_is_returning_or_escaping <= 0 && !event_was_set())
+            if (game_data.is_returning_or_escaping <= 0 && !event_was_set())
             {
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)
@@ -942,7 +943,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             {
                 if (rnd(2) == 0)
                 {
-                    if (gdata_protects_from_etherwind == 0)
+                    if (game_data.protects_from_etherwind == 0)
                     {
                         modify_ether_disease_stage(
                             5 + clamp(game_data.play_turns / 20000, 0, 15));
@@ -952,7 +953,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
                         modify_ether_disease_stage(5);
                     }
                 }
-                if (gdata_protects_from_etherwind == 0 || rnd(4) == 0)
+                if (game_data.protects_from_etherwind == 0 || rnd(4) == 0)
                 {
                     if (rnd(2000) == 0)
                     {
@@ -1262,7 +1263,7 @@ TurnResult pc_turn(bool advance_time)
         {
             map(cdata.player().position.x, cdata.player().position.y, 1) = 1;
         }
-        if (gdata_ether_disease_stage >= 20000)
+        if (game_data.ether_disease_stage >= 20000)
         {
             damage_hp(cdata.player(), 999999, -14);
         }

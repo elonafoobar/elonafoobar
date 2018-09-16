@@ -232,7 +232,7 @@ static void _draw_acquirable_trait_number(int tc_)
     {
         note = i18n::s.get(
             "core.locale.trait.window.you_can_acquire",
-            gdata_acquirable_feat_count);
+            game_data.acquirable_feat_count);
     }
     else
     {
@@ -370,7 +370,7 @@ static bool _gain_trait(int p_, bool show_text)
         return false;
     }
 
-    --gdata_acquirable_feat_count;
+    --game_data.acquirable_feat_count;
     cs = -10000 + tid;
     snd(61);
     ++trait(tid);
@@ -381,7 +381,8 @@ static bool _gain_trait(int p_, bool show_text)
 
 static bool _can_select_trait(int p_, int tc_)
 {
-    return gdata_acquirable_feat_count > 0 && list(1, p_) < 10000 && tc_ == 0;
+    return game_data.acquirable_feat_count > 0 && list(1, p_) < 10000
+        && tc_ == 0;
 }
 
 static void _switch_target(bool is_forwards)
@@ -429,7 +430,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
         {
             if (_operation == Operation::character_making)
             {
-                if (gdata_acquirable_feat_count == 0)
+                if (game_data.acquirable_feat_count == 0)
                 {
                     return UIMenuFeats::Result::finish(
                         UIMenuCompositeCharacterResult{FeatsResult::confirmed});

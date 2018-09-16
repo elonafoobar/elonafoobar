@@ -45,7 +45,7 @@ bool UIMenuJournal::init()
     noteadd(u8" - Quest - "s);
     noteadd(""s);
     quest_update_main_quest_journal();
-    for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {
@@ -123,17 +123,17 @@ bool UIMenuJournal::init()
     noteadd(""s);
     noteadd(i18n::s.get("core.locale.ui.journal.income.bills.title"));
     noteadd(i18n::s.get(
-        "core.locale.ui.journal.income.bills.labor", gdata_cost_to_hire));
+        "core.locale.ui.journal.income.bills.labor", game_data.cost_to_hire));
     noteadd(i18n::s.get(
         "core.locale.ui.journal.income.bills.maintenance", calccostbuilding()));
     noteadd(
         i18n::s.get("core.locale.ui.journal.income.bills.tax", calccosttax()));
     noteadd(i18n::s.get(
         "core.locale.ui.journal.income.bills.sum",
-        (gdata_cost_to_hire + calccostbuilding() + calccosttax())));
+        (game_data.cost_to_hire + calccostbuilding() + calccosttax())));
     noteadd(""s);
     noteadd(i18n::s.get(
-        "core.locale.ui.journal.income.bills.unpaid", gdata_left_bill));
+        "core.locale.ui.journal.income.bills.unpaid", game_data.left_bill));
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;

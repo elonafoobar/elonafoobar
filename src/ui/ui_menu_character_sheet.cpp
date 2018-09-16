@@ -911,8 +911,8 @@ static void _draw_first_page_stats_time()
 
 static void _draw_first_page_stats_weight()
 {
-    s(0) = ""s + cnvweight(gdata_cargo_weight);
-    s(1) = cnvweight(gdata_current_cart_limit);
+    s(0) = ""s + cnvweight(game_data.cargo_weight);
+    s(1) = cnvweight(game_data.current_cart_limit);
     s(2) =
         cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s + cnveqweight(cc);
     s(3) = i18n::s.get(

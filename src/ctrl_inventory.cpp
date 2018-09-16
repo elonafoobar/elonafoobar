@@ -890,7 +890,7 @@ label_2061_internal:
               "core.locale.ui.inv.window.total_weight",
               cnvweight(cdata.player().inventory_weight),
               cnvweight(cdata.player().max_inventory_weight),
-              cnvweight(gdata_cargo_weight))
+              cnvweight(game_data.cargo_weight))
         + ")"s;
     if (invctrl == 25)
     {
@@ -1194,7 +1194,7 @@ label_2061_internal:
             {
                 if (invctrl(1) == 1)
                 {
-                    if (gdata_rights_to_succeed_to < 1)
+                    if (game_data.rights_to_succeed_to < 1)
                     {
                         txt(i18n::s.get("core.locale.ui.inv.take.no_claim"));
                         goto label_2060_internal;
@@ -1331,12 +1331,12 @@ label_2061_internal:
             {
                 if (invctrl(1) == 1)
                 {
-                    --gdata_rights_to_succeed_to;
+                    --game_data.rights_to_succeed_to;
                     if (invctrl(1) == 1)
                     {
                         txt(i18n::s.get(
                             "core.locale.ui.inv.take.can_claim_more",
-                            gdata_rights_to_succeed_to));
+                            game_data.rights_to_succeed_to));
                     }
                 }
                 if (invctrl(1) == 4)
@@ -1823,15 +1823,17 @@ label_2061_internal:
                 }
                 else
                 {
-                    qdata(13, gdata_executing_immediate_quest) +=
+                    qdata(13, game_data.executing_immediate_quest) +=
                         inv[ci].weight * inv[ci].number();
                     txtef(2);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.harvest",
                         inv[ci],
                         cnvweight(inv[ci].weight * inv[ci].number()),
-                        cnvweight(qdata(13, gdata_executing_immediate_quest)),
-                        cnvweight(qdata(12, gdata_executing_immediate_quest))));
+                        cnvweight(
+                            qdata(13, game_data.executing_immediate_quest)),
+                        cnvweight(
+                            qdata(12, game_data.executing_immediate_quest))));
                 }
                 inv[ci].remove();
                 refresh_burden_state();
@@ -1846,7 +1848,7 @@ label_2061_internal:
                         "core.locale.ui.inv.put.tax.not_enough_money"));
                     goto label_2060_internal;
                 }
-                if (gdata_left_bill <= 0)
+                if (game_data.left_bill <= 0)
                 {
                     snd(27);
                     txt(i18n::s.get(
@@ -1858,7 +1860,7 @@ label_2061_internal:
                 txtef(2);
                 txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
                 inv[ci].modify_number(-1);
-                --gdata_left_bill;
+                --game_data.left_bill;
                 screenupdate = -1;
                 update_screen();
                 goto label_20591;

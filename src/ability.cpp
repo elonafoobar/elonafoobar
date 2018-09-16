@@ -385,7 +385,7 @@ void chara_gain_skill_exp(
                 cc.experience += lvl_exp;
                 if (cc.index == 0)
                 {
-                    gdata_sleep_experience += lvl_exp;
+                    game_data.sleep_experience += lvl_exp;
                 }
             }
         }
