@@ -964,11 +964,11 @@ void initialize_debug_globals()
     cdata.player().god_id = core_god::int2godid(2);
     cdata.player().piety_point = 1000;
     cdata.player().praying_point = 1000;
-    gdata_pael_and_her_mom = 1000;
+    game_data.quest_flags.pael_and_her_mom = 1000;
     earn_gold(cdata.player(), 1000000);
     cdata.player().platinum_coin = 30;
     cdata.player().fame = 65000;
-    gdata_main_quest_flag = 100;
+    game_data.quest_flags.main_quest = 100;
     chara_refresh(0);
 
     cdata.player().can_cast_rapid_magic() = true;

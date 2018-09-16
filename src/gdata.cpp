@@ -38,7 +38,6 @@ FoobarData foobar_data;
     SERIALIZE(24, home_scale); \
     SERIALIZE(25, charge_power); \
     SERIALIZE(26, entrance_type); \
-\
     SERIALIZE(27, next_shelter_serial_id); \
     SERIALIZE(28, seven_league_boot_effect); \
     SERIALIZE(29, protects_from_etherwind); \
@@ -76,7 +75,32 @@ FoobarData foobar_data;
     SERIALIZE(179, left_bill); \
     SERIALIZE(180, distance_between_town); \
     SERIALIZE(181, departure_date); \
-    SERIALIZE(182, left_town_map);
+    SERIALIZE(182, left_town_map); \
+    SERIALIZE(250, quest_flags.tutorial); \
+    SERIALIZE(252, quest_flags.main_quest); \
+    SERIALIZE(253, quest_flags.magic_stone_of_fool); \
+    SERIALIZE(254, quest_flags.magic_stone_of_sage); \
+    SERIALIZE(255, quest_flags.magic_stone_of_king); \
+    SERIALIZE(450, quest_flags.putit_attacks); \
+    SERIALIZE(451, quest_flags.thieves_hideout); \
+    SERIALIZE(452, quest_flags.nightmare); \
+    SERIALIZE(453, quest_flags.pael_and_her_mom); \
+    SERIALIZE(454, quest_flags.wife_collector); \
+    SERIALIZE(455, quest_flags.puppys_cave); \
+    SERIALIZE(456, quest_flags.cat_house); \
+    SERIALIZE(457, quest_flags.defense_line); \
+    SERIALIZE(458, quest_flags.novice_knight); \
+    SERIALIZE(459, quest_flags.kamikaze_attack); \
+    SERIALIZE(460, quest_flags.mias_dream); \
+    SERIALIZE(461, quest_flags.rare_books); \
+    SERIALIZE(462, quest_flags.pyramid_trial); \
+    SERIALIZE(463, quest_flags.red_blossom_in_palmia); \
+    SERIALIZE(464, quest_flags.ambitious_scientist); \
+    SERIALIZE(465, quest_flags.sewer_sweeping); \
+    SERIALIZE(472, quest_flags.minotaur_king); \
+    SERIALIZE(473, quest_flags.little_sister); \
+    SERIALIZE(474, quest_flags.blue_capsule_drug);
+
 
 #define SERIALIZE GDATA_PACK
 void GameData::pack_to(elona_vector1<int>& gdata)

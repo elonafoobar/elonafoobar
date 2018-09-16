@@ -40,7 +40,7 @@ TalkResult talk_unique_zeome()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
 
-    gdata_main_quest_flag = 170;
+    game_data.quest_flags.main_quest = 170;
 
     return TalkResult::talk_end;
 }
@@ -136,7 +136,7 @@ TalkResult talk_unique_loyter()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_nightmare == 1000)
+    if (game_data.quest_flags.nightmare == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.complete");
@@ -146,7 +146,7 @@ TalkResult talk_unique_loyter()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_nightmare == 0)
+    if (game_data.quest_flags.nightmare == 0)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -180,11 +180,12 @@ TalkResult talk_unique_loyter()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_nightmare = 1;
+        game_data.quest_flags.nightmare = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_nightmare == 1 || gdata_nightmare == 2)
+    if (game_data.quest_flags.nightmare == 1
+        || game_data.quest_flags.nightmare == 2)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -214,12 +215,12 @@ TalkResult talk_unique_loyter()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_nightmare = 2;
+        game_data.quest_flags.nightmare = 2;
         _loyter_goto_map();
 
         return TalkResult::talk_end;
     }
-    if (gdata_nightmare == 3)
+    if (game_data.quest_flags.nightmare == 3)
     {
         _loyter_receive_reward();
 
@@ -230,7 +231,7 @@ TalkResult talk_unique_loyter()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_nightmare = 1000;
+        game_data.quest_flags.nightmare = 1000;
 
         return TalkResult::talk_end;
     }
@@ -258,7 +259,7 @@ void _miches_receive_reward()
 
 TalkResult talk_unique_miches()
 {
-    if (gdata_putit_attacks == 1000)
+    if (game_data.quest_flags.putit_attacks == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.complete");
@@ -268,7 +269,7 @@ TalkResult talk_unique_miches()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_putit_attacks == 0)
+    if (game_data.quest_flags.putit_attacks == 0)
     {
         listmax = 0;
         buff =
@@ -302,11 +303,11 @@ TalkResult talk_unique_miches()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_putit_attacks = 1;
+        game_data.quest_flags.putit_attacks = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_putit_attacks == 1)
+    if (game_data.quest_flags.putit_attacks == 1)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.quest.waiting");
@@ -316,7 +317,7 @@ TalkResult talk_unique_miches()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_putit_attacks == 2)
+    if (game_data.quest_flags.putit_attacks == 2)
     {
         _miches_receive_reward();
 
@@ -327,7 +328,7 @@ TalkResult talk_unique_miches()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_putit_attacks = 1000;
+        game_data.quest_flags.putit_attacks = 1000;
 
         return TalkResult::talk_end;
     }
@@ -358,7 +359,7 @@ void _shena_receive_reward()
 
 TalkResult talk_unique_shena()
 {
-    if (gdata_thieves_hideout == 1000)
+    if (game_data.quest_flags.thieves_hideout == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.complete");
@@ -368,7 +369,7 @@ TalkResult talk_unique_shena()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_thieves_hideout == 0)
+    if (game_data.quest_flags.thieves_hideout == 0)
     {
         listmax = 0;
         buff =
@@ -402,12 +403,12 @@ TalkResult talk_unique_shena()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_thieves_hideout = 1;
+        game_data.quest_flags.thieves_hideout = 1;
         cell_featset(48, 5, tile_downstairs, 11, 4);
 
         return TalkResult::talk_end;
     }
-    if (gdata_thieves_hideout == 1)
+    if (game_data.quest_flags.thieves_hideout == 1)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.quest.waiting");
@@ -417,7 +418,7 @@ TalkResult talk_unique_shena()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_thieves_hideout == 2)
+    if (game_data.quest_flags.thieves_hideout == 2)
     {
         _shena_receive_reward();
 
@@ -428,7 +429,7 @@ TalkResult talk_unique_shena()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_thieves_hideout = 1000;
+        game_data.quest_flags.thieves_hideout = 1000;
 
         return TalkResult::talk_end;
     }
@@ -614,7 +615,7 @@ TalkResult talk_unique_lomias()
 {
     if (chatflag == 0)
     {
-        if (gdata_tutorial_flag == 0)
+        if (game_data.quest_flags.tutorial == 0)
         {
             buff = i18n::s.get(
                 "core.locale.talk.unique.lomias.tutorial.before.dialog");
@@ -627,7 +628,7 @@ TalkResult talk_unique_lomias()
                 i18n::s.get("core.locale.talk.unique.lomias.tutorial.before."
                             "choices.no"));
         }
-        if (gdata_tutorial_flag == 1)
+        if (game_data.quest_flags.tutorial == 1)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -661,7 +662,7 @@ TalkResult talk_unique_lomias()
                 i18n::s.get("core.locale.talk.unique.lomias.tutorial.movement."
                             "choices.ate"));
         }
-        if (gdata_tutorial_flag == 2)
+        if (game_data.quest_flags.tutorial == 2)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -684,7 +685,7 @@ TalkResult talk_unique_lomias()
                 i18n::s.get(
                     "core.locale.talk.unique.lomias.tutorial.skills.response"));
         }
-        if (gdata_tutorial_flag == 3)
+        if (game_data.quest_flags.tutorial == 3)
         {
             _lomias_create_scroll_of_identify();
 
@@ -696,9 +697,9 @@ TalkResult talk_unique_lomias()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
-            gdata_tutorial_flag = 4;
+            game_data.quest_flags.tutorial = 4;
         }
-        if (gdata_tutorial_flag == 4)
+        if (game_data.quest_flags.tutorial == 4)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -725,7 +726,7 @@ TalkResult talk_unique_lomias()
                 i18n::s.get("core.locale.talk.unique.lomias.tutorial.identify."
                             "choices.done"));
         }
-        if (gdata_tutorial_flag == 5)
+        if (game_data.quest_flags.tutorial == 5)
         {
             buff = i18n::s.get(
                 "core.locale.talk.unique.lomias.tutorial.equip.dialog");
@@ -738,7 +739,7 @@ TalkResult talk_unique_lomias()
                 i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip."
                             "choices.done"));
         }
-        if (gdata_tutorial_flag == 6)
+        if (game_data.quest_flags.tutorial == 6)
         {
             p = chara_find(3);
             if (p != 0)
@@ -761,9 +762,9 @@ TalkResult talk_unique_lomias()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
-            gdata_tutorial_flag = 7;
+            game_data.quest_flags.tutorial = 7;
         }
-        if (gdata_tutorial_flag == 7)
+        if (game_data.quest_flags.tutorial == 7)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -793,11 +794,11 @@ TalkResult talk_unique_lomias()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
-            gdata_tutorial_flag = 8;
+            game_data.quest_flags.tutorial = 8;
 
             return TalkResult::talk_end;
         }
-        if (gdata_tutorial_flag == 8)
+        if (game_data.quest_flags.tutorial == 8)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -828,9 +829,9 @@ TalkResult talk_unique_lomias()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
-            gdata_tutorial_flag = 99;
+            game_data.quest_flags.tutorial = 99;
         }
-        if (gdata_tutorial_flag == 99)
+        if (game_data.quest_flags.tutorial == 99)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -847,11 +848,11 @@ TalkResult talk_unique_lomias()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
-            gdata_tutorial_flag = -1;
+            game_data.quest_flags.tutorial = -1;
 
             return TalkResult::talk_end;
         }
-        if (gdata_tutorial_flag == -1)
+        if (game_data.quest_flags.tutorial == -1)
         {
             buff = i18n::s.get("core.locale.talk.unique.lomias.after.dialog");
             ELONA_APPEND_RESPONSE(
@@ -859,7 +860,8 @@ TalkResult talk_unique_lomias()
                 i18n::s.get(
                     "core.locale.talk.unique.lomias.after.choices.nothing"));
         }
-        if (gdata_tutorial_flag == 0 || gdata_tutorial_flag == -1)
+        if (game_data.quest_flags.tutorial == 0
+            || game_data.quest_flags.tutorial == -1)
         {
             ELONA_APPEND_RESPONSE(
                 2,
@@ -879,7 +881,7 @@ TalkResult talk_unique_lomias()
         ELONA_TALK_SCENE_CUT();
 
         _lomias_create_corpse();
-        gdata_tutorial_flag = 1;
+        game_data.quest_flags.tutorial = 1;
 
         return TalkResult::talk_unique;
     }
@@ -957,7 +959,7 @@ TalkResult talk_unique_lomias()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_tutorial_flag = 2;
+        game_data.quest_flags.tutorial = 2;
 
         return TalkResult::talk_unique;
     }
@@ -979,7 +981,7 @@ TalkResult talk_unique_lomias()
         ELONA_TALK_SCENE_CUT();
 
         _lomias_create_equipment();
-        gdata_tutorial_flag = 5;
+        game_data.quest_flags.tutorial = 5;
 
         return TalkResult::talk_unique;
     }
@@ -1008,7 +1010,7 @@ TalkResult talk_unique_lomias()
         ELONA_TALK_SCENE_CUT();
 
         _lomias_release_putits();
-        gdata_tutorial_flag = 6;
+        game_data.quest_flags.tutorial = 6;
     }
     return TalkResult::talk_end;
 }
@@ -1016,7 +1018,7 @@ TalkResult talk_unique_lomias()
 
 TalkResult talk_unique_stersha()
 {
-    if (gdata_main_quest_flag == 200)
+    if (game_data.quest_flags.main_quest == 200)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.stersha.late");
@@ -1026,7 +1028,7 @@ TalkResult talk_unique_stersha()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_main_quest_flag < 90)
+    if (game_data.quest_flags.main_quest < 90)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.stersha.early");
@@ -1067,7 +1069,7 @@ void _xabi_receive_reward()
 
 TalkResult talk_unique_xabi()
 {
-    if (gdata_main_quest_flag >= 60)
+    if (game_data.quest_flags.main_quest >= 60)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.xabi.late");
@@ -1077,7 +1079,7 @@ TalkResult talk_unique_xabi()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_main_quest_flag == 50)
+    if (game_data.quest_flags.main_quest == 50)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.xabi.mid");
@@ -1087,9 +1089,9 @@ TalkResult talk_unique_xabi()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_main_quest_flag == 40)
+    if (game_data.quest_flags.main_quest == 40)
     {
-        gdata_main_quest_flag = 50;
+        game_data.quest_flags.main_quest = 50;
 
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.xabi.early", 0);
@@ -1147,9 +1149,9 @@ void _slan_receive_reward()
 
 TalkResult talk_unique_slan()
 {
-    if (gdata_main_quest_flag == 20)
+    if (game_data.quest_flags.main_quest == 20)
     {
-        gdata_main_quest_flag = 30;
+        game_data.quest_flags.main_quest = 30;
 
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.slan.dialog", 0);
@@ -1187,7 +1189,7 @@ void _erystia_receive_reward()
     itemcreate(
         -1, 360, cdata.player().position.x, cdata.player().position.y, 0);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-    gdata_main_quest_flag = 125;
+    game_data.quest_flags.main_quest = 125;
 }
 
 void _erystia_receive_key_17th_level()
@@ -1195,7 +1197,7 @@ void _erystia_receive_key_17th_level()
     snd(44);
     txtef(2);
     txt(i18n::s.get("core.locale.talk.unique.erystia.stones.you_receive"));
-    gdata_main_quest_flag = 110;
+    game_data.quest_flags.main_quest = 110;
 }
 
 void _erystia_receive_key_4th_level()
@@ -1205,12 +1207,12 @@ void _erystia_receive_key_4th_level()
     txt(
         i18n::s.get("core.locale.talk.unique.erystia.introduction.pledge_"
                     "strength.you_receive"));
-    gdata_main_quest_flag = 60;
+    game_data.quest_flags.main_quest = 60;
 }
 
 TalkResult talk_unique_erystia()
 {
-    if (gdata_main_quest_flag == 200)
+    if (game_data.quest_flags.main_quest == 200)
     {
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.erystia.late", 0);
@@ -1236,7 +1238,7 @@ TalkResult talk_unique_erystia()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_main_quest_flag == 120)
+    if (game_data.quest_flags.main_quest == 120)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -1275,7 +1277,7 @@ TalkResult talk_unique_erystia()
 
         return TalkResult::talk_end;
     }
-    if (gdata_main_quest_flag == 105)
+    if (game_data.quest_flags.main_quest == 105)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -1325,7 +1327,7 @@ TalkResult talk_unique_erystia()
 
         return TalkResult::talk_end;
     }
-    if (gdata_main_quest_flag >= 60)
+    if (game_data.quest_flags.main_quest >= 60)
     {
         buff = i18n::s.get(
             "core.locale.talk.unique.erystia.investigation.dialog",
@@ -1338,7 +1340,8 @@ TalkResult talk_unique_erystia()
             5,
             i18n::s.get("core.locale.talk.unique.erystia.investigation.choices."
                         "mission"));
-        if (gdata_main_quest_flag >= 100 && gdata_main_quest_flag <= 120)
+        if (game_data.quest_flags.main_quest >= 100
+            && game_data.quest_flags.main_quest <= 120)
         {
             ELONA_APPEND_RESPONSE(
                 3,
@@ -1397,7 +1400,7 @@ TalkResult talk_unique_erystia()
         }
         if (chatval_ == 5)
         {
-            if (gdata_main_quest_flag >= 125)
+            if (game_data.quest_flags.main_quest >= 125)
             {
                 listmax = 0;
                 buff = i18n::s.get_enum(
@@ -1419,7 +1422,7 @@ TalkResult talk_unique_erystia()
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
             }
-            if (gdata_main_quest_flag >= 110)
+            if (game_data.quest_flags.main_quest >= 110)
             {
                 listmax = 0;
                 buff = i18n::s.get_enum(
@@ -1520,7 +1523,7 @@ TalkResult talk_unique_erystia()
         }
         return TalkResult::talk_end;
     }
-    if (gdata_main_quest_flag == 50)
+    if (game_data.quest_flags.main_quest == 50)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -1617,9 +1620,9 @@ void _karam_receive_reward()
 
 TalkResult talk_unique_karam()
 {
-    if (gdata_main_quest_flag == 90)
+    if (game_data.quest_flags.main_quest == 90)
     {
-        gdata_main_quest_flag = 100;
+        game_data.quest_flags.main_quest = 100;
 
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.karam.dialog", 0);
@@ -1779,7 +1782,7 @@ TalkResult talk_unique_miral()
 
 TalkResult talk_unique_pael()
 {
-    if (gdata_pael_and_her_mom == 1000)
+    if (game_data.quest_flags.pael_and_her_mom == 1000)
     {
         if (game_data.current_map == mdata_t::MapId::noyel
             && area_data[game_data.current_map].christmas_festival)
@@ -1800,7 +1803,7 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 1001)
+    if (game_data.quest_flags.pael_and_her_mom == 1001)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.pael.after_death");
@@ -1810,7 +1813,7 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 1002)
+    if (game_data.quest_flags.pael_and_her_mom == 1002)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.pael.after_sold");
@@ -1820,7 +1823,7 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 0)
+    if (game_data.quest_flags.pael_and_her_mom == 0)
     {
         buff = i18n::s.get("core.locale.talk.unique.pael.before");
         bool stat = talk_give_potion_of_cure_corruption();
@@ -1829,10 +1832,11 @@ TalkResult talk_unique_pael()
             return TalkResult::talk_end;
         }
         quest_update_journal_msg();
-        gdata_pael_and_her_mom = 1;
+        game_data.quest_flags.pael_and_her_mom = 1;
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 1 || gdata_pael_and_her_mom == 3)
+    if (game_data.quest_flags.pael_and_her_mom == 1
+        || game_data.quest_flags.pael_and_her_mom == 3)
     {
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 0);
@@ -1842,7 +1846,8 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7)
+    if (game_data.quest_flags.pael_and_her_mom == 5
+        || game_data.quest_flags.pael_and_her_mom == 7)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -1853,7 +1858,8 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 2 || gdata_pael_and_her_mom == 4)
+    if (game_data.quest_flags.pael_and_her_mom == 2
+        || game_data.quest_flags.pael_and_her_mom == 4)
     {
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.pael.progress", 2, cdatan(0, 0));
@@ -1863,10 +1869,10 @@ TalkResult talk_unique_pael()
             return TalkResult::talk_end;
         }
         quest_update_journal_msg();
-        ++gdata_pael_and_her_mom;
+        ++game_data.quest_flags.pael_and_her_mom;
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 6)
+    if (game_data.quest_flags.pael_and_her_mom == 6)
     {
         buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 3);
 
@@ -1876,10 +1882,10 @@ TalkResult talk_unique_pael()
             return TalkResult::talk_end;
         }
         quest_update_journal_msg();
-        ++gdata_pael_and_her_mom;
+        ++game_data.quest_flags.pael_and_her_mom;
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 8)
+    if (game_data.quest_flags.pael_and_her_mom == 8)
     {
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.pael.progress", 4, cdatan(0, 0));
@@ -1889,10 +1895,10 @@ TalkResult talk_unique_pael()
             return TalkResult::talk_end;
         }
         quest_update_journal_msg();
-        ++gdata_pael_and_her_mom;
+        ++game_data.quest_flags.pael_and_her_mom;
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 9)
+    if (game_data.quest_flags.pael_and_her_mom == 9)
     {
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 5);
@@ -1902,7 +1908,7 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 10)
+    if (game_data.quest_flags.pael_and_her_mom == 10)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -1947,7 +1953,7 @@ void _paels_mom_give_potion()
 
 TalkResult talk_unique_paels_mom()
 {
-    if (gdata_pael_and_her_mom == 1002)
+    if (game_data.quest_flags.pael_and_her_mom == 1002)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.paels_mom.after_sold");
@@ -1957,7 +1963,7 @@ TalkResult talk_unique_paels_mom()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom == 10)
+    if (game_data.quest_flags.pael_and_her_mom == 10)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -1984,10 +1990,10 @@ TalkResult talk_unique_paels_mom()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_pael_and_her_mom = 1000;
+        game_data.quest_flags.pael_and_her_mom = 1000;
         cdata[tc].is_silent() = true;
     }
-    if (gdata_pael_and_her_mom == 1000)
+    if (game_data.quest_flags.pael_and_her_mom == 1000)
     {
         if (game_data.current_map == mdata_t::MapId::noyel
             && area_data[game_data.current_map].christmas_festival)
@@ -2033,7 +2039,7 @@ TalkResult talk_unique_paels_mom()
             return TalkResult::talk_end;
         }
     }
-    if (gdata_pael_and_her_mom == 1000)
+    if (game_data.quest_flags.pael_and_her_mom == 1000)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -2101,7 +2107,7 @@ TalkResult talk_unique_paels_mom()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom > 7)
+    if (game_data.quest_flags.pael_and_her_mom > 7)
     {
         listmax = 0;
         buff =
@@ -2112,7 +2118,7 @@ TalkResult talk_unique_paels_mom()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom > 5)
+    if (game_data.quest_flags.pael_and_her_mom > 5)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -2123,7 +2129,7 @@ TalkResult talk_unique_paels_mom()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pael_and_her_mom > 3)
+    if (game_data.quest_flags.pael_and_her_mom > 3)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.mid");
@@ -2167,7 +2173,7 @@ void _raphael_receive_reward()
     txt(i18n::s.get("core.locale.quest.completed"));
     snd(51);
     quest_update_journal_msg();
-    gdata_wife_collector = 1000;
+    game_data.quest_flags.wife_collector = 1000;
 }
 
 void _raphael_receive_wife_reward()
@@ -2184,7 +2190,7 @@ void _raphael_receive_wife_reward()
 
 TalkResult talk_unique_raphael()
 {
-    if (gdata_wife_collector == 0)
+    if (game_data.quest_flags.wife_collector == 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -2211,11 +2217,12 @@ TalkResult talk_unique_raphael()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_wife_collector = 1;
+        game_data.quest_flags.wife_collector = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_wife_collector == 1 || gdata_wife_collector == 1000)
+    if (game_data.quest_flags.wife_collector == 1
+        || game_data.quest_flags.wife_collector == 1000)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -2297,7 +2304,7 @@ TalkResult talk_unique_raphael()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
-        if (gdata_wife_collector == 1)
+        if (game_data.quest_flags.wife_collector == 1)
         {
             _raphael_receive_reward();
         }
@@ -2330,12 +2337,12 @@ void _ainc_receive_reward()
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_novice_knight = 1000;
+    game_data.quest_flags.novice_knight = 1000;
 }
 
 TalkResult talk_unique_ainc()
 {
-    if (gdata_novice_knight == 1000)
+    if (game_data.quest_flags.novice_knight == 1000)
     {
         listmax = 0;
         buff =
@@ -2346,7 +2353,7 @@ TalkResult talk_unique_ainc()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_novice_knight == 0)
+    if (game_data.quest_flags.novice_knight == 0)
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.unique.ainc.quest.choices.do_it"));
@@ -2371,11 +2378,11 @@ TalkResult talk_unique_ainc()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_novice_knight = 1;
+        game_data.quest_flags.novice_knight = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_novice_knight == 1)
+    if (game_data.quest_flags.novice_knight == 1)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.waiting");
@@ -2385,7 +2392,7 @@ TalkResult talk_unique_ainc()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_novice_knight == 2)
+    if (game_data.quest_flags.novice_knight == 2)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.end");
@@ -2414,7 +2421,7 @@ void _poppy_add_to_party()
 
 TalkResult talk_unique_poppy()
 {
-    if (gdata_puppys_cave == 1000)
+    if (game_data.quest_flags.puppys_cave == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.poppy.complete");
@@ -2459,7 +2466,7 @@ void _rilian_receive_reward()
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_puppys_cave = 1000;
+    game_data.quest_flags.puppys_cave = 1000;
     chara_vanquish(chara_find_ally(225));
     flt();
     chara_create(-1, 225, 31, 4);
@@ -2468,7 +2475,7 @@ void _rilian_receive_reward()
 
 TalkResult talk_unique_rilian()
 {
-    if (gdata_puppys_cave == 1000)
+    if (game_data.quest_flags.puppys_cave == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.rilian.complete");
@@ -2478,7 +2485,7 @@ TalkResult talk_unique_rilian()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_puppys_cave == 0)
+    if (game_data.quest_flags.puppys_cave == 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -2504,11 +2511,11 @@ TalkResult talk_unique_rilian()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_puppys_cave = 1;
+        game_data.quest_flags.puppys_cave = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_puppys_cave == 1)
+    if (game_data.quest_flags.puppys_cave == 1)
     {
         if (chara_find_ally(225) == -1)
         {
@@ -2556,7 +2563,7 @@ void _tam_receive_reward()
 
 TalkResult talk_unique_tam()
 {
-    if (gdata_cat_house == 1000)
+    if (game_data.quest_flags.cat_house == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.complete");
@@ -2566,7 +2573,7 @@ TalkResult talk_unique_tam()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_cat_house == 0)
+    if (game_data.quest_flags.cat_house == 0)
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.unique.tam.quest.choices.yes"));
@@ -2592,12 +2599,12 @@ TalkResult talk_unique_tam()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_cat_house = 1;
+        game_data.quest_flags.cat_house = 1;
         cell_featset(23, 22, tile_downstairs, 11, 3);
 
         return TalkResult::talk_end;
     }
-    if (gdata_cat_house == 1)
+    if (game_data.quest_flags.cat_house == 1)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.quest.waiting");
@@ -2607,7 +2614,7 @@ TalkResult talk_unique_tam()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_cat_house == 2)
+    if (game_data.quest_flags.cat_house == 2)
     {
         _tam_receive_reward();
 
@@ -2617,7 +2624,7 @@ TalkResult talk_unique_tam()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        gdata_cat_house = 1000;
+        game_data.quest_flags.cat_house = 1000;
         return TalkResult::talk_end;
     }
     return TalkResult::talk_ignored;
@@ -2626,7 +2633,7 @@ TalkResult talk_unique_tam()
 
 void _gilbert_goto_map()
 {
-    gdata_defense_line = 2;
+    game_data.quest_flags.defense_line = 2;
     mdata_map_stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
     game_data.destination_map = 12;
@@ -2653,7 +2660,7 @@ void _gilbert_receive_reward()
 
 TalkResult talk_unique_gilbert()
 {
-    if (gdata_defense_line == 1000)
+    if (game_data.quest_flags.defense_line == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.complete");
@@ -2673,7 +2680,7 @@ TalkResult talk_unique_gilbert()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_defense_line == 0)
+    if (game_data.quest_flags.defense_line == 0)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -2708,11 +2715,12 @@ TalkResult talk_unique_gilbert()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_defense_line = 1;
+        game_data.quest_flags.defense_line = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_defense_line == 1 || gdata_defense_line == 2)
+    if (game_data.quest_flags.defense_line == 1
+        || game_data.quest_flags.defense_line == 2)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -2748,7 +2756,7 @@ TalkResult talk_unique_gilbert()
 
         return TalkResult::talk_end;
     }
-    if (gdata_defense_line == 3)
+    if (game_data.quest_flags.defense_line == 3)
     {
         _gilbert_receive_reward();
 
@@ -2759,7 +2767,7 @@ TalkResult talk_unique_gilbert()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_defense_line = 1000;
+        game_data.quest_flags.defense_line = 1000;
 
         return TalkResult::talk_end;
     }
@@ -2769,7 +2777,7 @@ TalkResult talk_unique_gilbert()
 
 void _arnord_goto_map()
 {
-    gdata_kamikaze_attack = 2;
+    game_data.quest_flags.kamikaze_attack = 2;
     mdata_map_stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
     game_data.destination_map = 11;
@@ -2796,7 +2804,7 @@ void _arnord_receive_reward()
 
 TalkResult talk_unique_arnord()
 {
-    if (gdata_kamikaze_attack == 1000)
+    if (game_data.quest_flags.kamikaze_attack == 1000)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -2807,7 +2815,7 @@ TalkResult talk_unique_arnord()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_kamikaze_attack == 0)
+    if (game_data.quest_flags.kamikaze_attack == 0)
     {
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.dialog");
         ELONA_APPEND_RESPONSE(
@@ -2833,11 +2841,12 @@ TalkResult talk_unique_arnord()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_kamikaze_attack = 1;
+        game_data.quest_flags.kamikaze_attack = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_kamikaze_attack == 1 || gdata_kamikaze_attack == 2)
+    if (game_data.quest_flags.kamikaze_attack == 1
+        || game_data.quest_flags.kamikaze_attack == 2)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -2871,7 +2880,7 @@ TalkResult talk_unique_arnord()
 
         return TalkResult::talk_end;
     }
-    if (gdata_kamikaze_attack == 3)
+    if (game_data.quest_flags.kamikaze_attack == 3)
     {
         _arnord_receive_reward();
 
@@ -2882,7 +2891,7 @@ TalkResult talk_unique_arnord()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_kamikaze_attack = 1000;
+        game_data.quest_flags.kamikaze_attack = 1000;
 
         return TalkResult::talk_end;
     }
@@ -2904,7 +2913,7 @@ void _mia_receive_reward()
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_mias_dream = 1000;
+    game_data.quest_flags.mias_dream = 1000;
     chara_relocate(cdata[chara_find_ally(246)], none);
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
@@ -2913,7 +2922,7 @@ void _mia_receive_reward()
 
 TalkResult talk_unique_mia()
 {
-    if (gdata_mias_dream == 1000)
+    if (game_data.quest_flags.mias_dream == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.mia.complete");
@@ -2923,7 +2932,7 @@ TalkResult talk_unique_mia()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_mias_dream == 0)
+    if (game_data.quest_flags.mias_dream == 0)
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.unique.mia.quest.choices.yes"));
@@ -2949,11 +2958,11 @@ TalkResult talk_unique_mia()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_mias_dream = 1;
+        game_data.quest_flags.mias_dream = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_mias_dream == 1)
+    if (game_data.quest_flags.mias_dream == 1)
     {
         if (chara_find_ally(246) == -1)
         {
@@ -3028,12 +3037,12 @@ void _renton_receive_reward()
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_rare_books = 1000;
+    game_data.quest_flags.rare_books = 1000;
 }
 
 TalkResult talk_unique_renton()
 {
-    if (gdata_rare_books == 1000)
+    if (game_data.quest_flags.rare_books == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.renton.complete");
@@ -3043,7 +3052,8 @@ TalkResult talk_unique_renton()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_rare_books == 0 || gdata_rare_books == 1)
+    if (game_data.quest_flags.rare_books == 0
+        || game_data.quest_flags.rare_books == 1)
     {
         listmax = 0;
         buff =
@@ -3074,10 +3084,10 @@ TalkResult talk_unique_renton()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        if (gdata_rare_books == 0)
+        if (game_data.quest_flags.rare_books == 0)
         {
             quest_update_journal_msg();
-            gdata_rare_books = 1;
+            game_data.quest_flags.rare_books = 1;
             return TalkResult::talk_end;
         }
 
@@ -3182,7 +3192,7 @@ void _marks_receive_invitation()
 
 TalkResult talk_unique_marks()
 {
-    if (gdata_pyramid_trial != 0)
+    if (game_data.quest_flags.pyramid_trial != 0)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.marks.complete");
@@ -3202,7 +3212,7 @@ TalkResult talk_unique_marks()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_pyramid_trial == 0)
+    if (game_data.quest_flags.pyramid_trial == 0)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -3243,7 +3253,7 @@ TalkResult talk_unique_marks()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_pyramid_trial = 1;
+        game_data.quest_flags.pyramid_trial = 1;
 
         return TalkResult::talk_end;
     }
@@ -3264,7 +3274,7 @@ void _noel_receive_reward()
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_red_blossom_in_palmia = 1000;
+    game_data.quest_flags.red_blossom_in_palmia = 1000;
 }
 
 void _noel_buy_nuke()
@@ -3279,7 +3289,7 @@ void _noel_buy_nuke()
 
 TalkResult talk_unique_noel()
 {
-    if (gdata_red_blossom_in_palmia == 1000)
+    if (game_data.quest_flags.red_blossom_in_palmia == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.complete");
@@ -3288,7 +3298,7 @@ TalkResult talk_unique_noel()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
-    if (gdata_red_blossom_in_palmia == 1)
+    if (game_data.quest_flags.red_blossom_in_palmia == 1)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.waiting");
@@ -3297,7 +3307,7 @@ TalkResult talk_unique_noel()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
-    if (gdata_red_blossom_in_palmia == 2)
+    if (game_data.quest_flags.red_blossom_in_palmia == 2)
     {
         _noel_receive_reward();
 
@@ -3308,7 +3318,7 @@ TalkResult talk_unique_noel()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
-    if (gdata_red_blossom_in_palmia == 0)
+    if (game_data.quest_flags.red_blossom_in_palmia == 0)
     {
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.noel.quest.dialog", 0);
@@ -3335,7 +3345,7 @@ TalkResult talk_unique_noel()
         }
 
         quest_update_journal_msg();
-        gdata_red_blossom_in_palmia = 1;
+        game_data.quest_flags.red_blossom_in_palmia = 1;
 
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.of_course");
@@ -3395,7 +3405,7 @@ int _icolle_check_monster_balls()
     const auto invrange = tmp.second;
     for (int cnt = invhead, cnt_end = invhead + invrange; cnt < cnt_end; ++cnt)
     {
-        if (gdata_ambitious_scientist >= 6)
+        if (game_data.quest_flags.ambitious_scientist >= 6)
         {
             break;
         }
@@ -3406,7 +3416,7 @@ int _icolle_check_monster_balls()
                 if (inv[cnt].subname != 0)
                 {
                     inv[cnt].modify_number(-1);
-                    ++gdata_ambitious_scientist;
+                    ++game_data.quest_flags.ambitious_scientist;
                     f_ = 1;
                     txt(i18n::s.get(
                         "core.locale.talk.unique.icolle.quest.give.deliver",
@@ -3435,12 +3445,12 @@ void _icolle_receive_reward()
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_ambitious_scientist = 1000;
+    game_data.quest_flags.ambitious_scientist = 1000;
 }
 
 TalkResult talk_unique_icolle()
 {
-    if (gdata_ambitious_scientist >= 1000)
+    if (game_data.quest_flags.ambitious_scientist >= 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.icolle.complete");
@@ -3450,7 +3460,7 @@ TalkResult talk_unique_icolle()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_ambitious_scientist == 0)
+    if (game_data.quest_flags.ambitious_scientist == 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -3480,11 +3490,12 @@ TalkResult talk_unique_icolle()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_ambitious_scientist = 1;
+        game_data.quest_flags.ambitious_scientist = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
+    if (game_data.quest_flags.ambitious_scientist >= 1
+        && game_data.quest_flags.ambitious_scientist <= 5)
     {
         f = _icolle_check_monster_balls();
         if (f)
@@ -3509,7 +3520,7 @@ TalkResult talk_unique_icolle()
         }
         refresh_burden_state();
     }
-    if (gdata_ambitious_scientist >= 6)
+    if (game_data.quest_flags.ambitious_scientist >= 6)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.icolle.quest.end");
@@ -3547,7 +3558,7 @@ void _balzak_receive_reward()
 
 TalkResult talk_unique_balzak()
 {
-    if (gdata_sewer_sweeping == 1000)
+    if (game_data.quest_flags.sewer_sweeping == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.complete");
@@ -3557,7 +3568,7 @@ TalkResult talk_unique_balzak()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_sewer_sweeping == 0)
+    if (game_data.quest_flags.sewer_sweeping == 0)
     {
         listmax = 0;
         buff =
@@ -3591,12 +3602,12 @@ TalkResult talk_unique_balzak()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_sewer_sweeping = 1;
+        game_data.quest_flags.sewer_sweeping = 1;
         cell_featset(18, 45, tile_downstairs, 11, 20);
 
         return TalkResult::talk_end;
     }
-    if (gdata_sewer_sweeping == 1)
+    if (game_data.quest_flags.sewer_sweeping == 1)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.quest.waiting");
@@ -3606,7 +3617,7 @@ TalkResult talk_unique_balzak()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_sewer_sweeping == 2)
+    if (game_data.quest_flags.sewer_sweeping == 2)
     {
         _balzak_receive_reward();
 
@@ -3616,7 +3627,7 @@ TalkResult talk_unique_balzak()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        gdata_sewer_sweeping = 1000;
+        game_data.quest_flags.sewer_sweeping = 1000;
         return TalkResult::talk_end;
     }
     return TalkResult::talk_ignored;
@@ -4340,12 +4351,12 @@ void _conery_receive_reward()
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_minotaur_king = 1000;
+    game_data.quest_flags.minotaur_king = 1000;
 }
 
 TalkResult talk_unique_conery()
 {
-    if (gdata_minotaur_king == 1000)
+    if (game_data.quest_flags.minotaur_king == 1000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.conery.complete");
@@ -4355,7 +4366,7 @@ TalkResult talk_unique_conery()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_minotaur_king == 0)
+    if (game_data.quest_flags.minotaur_king == 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -4383,11 +4394,11 @@ TalkResult talk_unique_conery()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
-        gdata_minotaur_king = 1;
+        game_data.quest_flags.minotaur_king = 1;
 
         return TalkResult::talk_end;
     }
-    if (gdata_minotaur_king == 1)
+    if (game_data.quest_flags.minotaur_king == 1)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.conery.quest.waiting");
@@ -4397,7 +4408,7 @@ TalkResult talk_unique_conery()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (gdata_minotaur_king == 2)
+    if (game_data.quest_flags.minotaur_king == 2)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.conery.quest.end");
@@ -4496,13 +4507,13 @@ TalkResult talk_unique_rogue_boss()
 
 void _strange_scientist_receive_little_balls()
 {
-    gdata_little_sister = 0;
+    game_data.quest_flags.little_sister = 0;
     flt();
     itemcreate(
         -1, 699, cdata.player().position.x, cdata.player().position.y, 0);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
-    gdata_little_sister = 1;
+    game_data.quest_flags.little_sister = 1;
 }
 
 bool _strange_scientist_can_receive_reward()
@@ -4540,21 +4551,21 @@ void _strange_scientist_pick_reward()
         }
         if (cnt == 662)
         {
-            if (gdata_kamikaze_attack >= 1000)
+            if (game_data.quest_flags.kamikaze_attack >= 1000)
             {
                 f = 1;
             }
         }
         if (cnt == 655)
         {
-            if (gdata_rare_books >= 1000)
+            if (game_data.quest_flags.rare_books >= 1000)
             {
                 f = 1;
             }
         }
         if (cnt == 639)
         {
-            if (gdata_pael_and_her_mom >= 1000)
+            if (game_data.quest_flags.pael_and_her_mom >= 1000)
             {
                 f = 1;
             }
@@ -4608,7 +4619,7 @@ void _strange_scientist_turn_over()
 
 TalkResult talk_unique_strange_scientist()
 {
-    if (gdata_little_sister == 0)
+    if (game_data.quest_flags.little_sister == 0)
     {
         listmax = 0;
         i18n::s.get("core.locale.talk.unique.strange_scientist.first");
@@ -4621,7 +4632,7 @@ TalkResult talk_unique_strange_scientist()
 
         return TalkResult::talk_end;
     }
-    if (gdata_little_sister > 0)
+    if (game_data.quest_flags.little_sister > 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -4712,7 +4723,7 @@ void _kaneda_bike_join_party()
 {
     rc = tc;
     new_ally_joins();
-    gdata_blue_capsule_drug = 0;
+    game_data.quest_flags.blue_capsule_drug = 0;
 }
 
 void _kaneda_bike_give_drug()
@@ -4727,7 +4738,7 @@ void _kaneda_bike_give_drug()
 
 TalkResult talk_unique_kaneda_bike()
 {
-    if (gdata_blue_capsule_drug >= 3)
+    if (game_data.quest_flags.blue_capsule_drug >= 3)
     {
         buff = i18n::s.get(
             "core.locale.talk.unique.kaneda_bike.after_drug.dialog");
@@ -4804,7 +4815,7 @@ TalkResult talk_unique_kaneda_bike()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
 
-                ++gdata_blue_capsule_drug;
+                ++game_data.quest_flags.blue_capsule_drug;
 
                 return TalkResult::talk_end;
             }

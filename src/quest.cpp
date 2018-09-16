@@ -85,9 +85,9 @@ void quest_check()
         {
             if (quest_targets_remaining() == 0)
             {
-                if (gdata_putit_attacks < 2)
+                if (game_data.quest_flags.putit_attacks < 2)
                 {
-                    gdata_putit_attacks = 2;
+                    game_data.quest_flags.putit_attacks = 2;
                     quest_update_journal_msg();
                 }
             }
@@ -96,9 +96,9 @@ void quest_check()
         {
             if (quest_targets_remaining() == 0)
             {
-                if (gdata_thieves_hideout < 2)
+                if (game_data.quest_flags.thieves_hideout < 2)
                 {
-                    gdata_thieves_hideout = 2;
+                    game_data.quest_flags.thieves_hideout = 2;
                     quest_update_journal_msg();
                 }
             }
@@ -107,9 +107,9 @@ void quest_check()
         {
             if (quest_targets_remaining() == 0)
             {
-                if (gdata_nightmare < 3)
+                if (game_data.quest_flags.nightmare < 3)
                 {
-                    gdata_nightmare = 3;
+                    game_data.quest_flags.nightmare = 3;
                     quest_update_journal_msg();
                 }
             }
@@ -121,9 +121,9 @@ void quest_check()
         {
             if (quest_targets_remaining() == 0)
             {
-                if (gdata_cat_house < 2)
+                if (game_data.quest_flags.cat_house < 2)
                 {
-                    gdata_cat_house = 2;
+                    game_data.quest_flags.cat_house = 2;
                     quest_update_journal_msg();
                 }
             }
@@ -132,9 +132,9 @@ void quest_check()
         {
             if (quest_targets_remaining() == 0)
             {
-                if (gdata_defense_line < 3)
+                if (game_data.quest_flags.defense_line < 3)
                 {
-                    gdata_defense_line = 3;
+                    game_data.quest_flags.defense_line = 3;
                     quest_update_journal_msg();
                 }
             }
@@ -146,9 +146,9 @@ void quest_check()
         {
             if (quest_targets_remaining() == 0)
             {
-                if (gdata_sewer_sweeping < 2)
+                if (game_data.quest_flags.sewer_sweeping < 2)
                 {
-                    gdata_sewer_sweeping = 2;
+                    game_data.quest_flags.sewer_sweeping = 2;
                     quest_update_journal_msg();
                 }
             }
