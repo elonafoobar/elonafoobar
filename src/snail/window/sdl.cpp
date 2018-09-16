@@ -6,13 +6,21 @@ namespace snail
 
 class Window::Impl
 {
-    Impl(SDL_Window* ptr, decltype(&::SDL_DestroyWindow) deleter)
-        : ptr(ptr, deleter)
+public:
+    Impl(::SDL_Window* ptr, decltype(&::SDL_DestroyWindow) deleter)
+        : _ptr(ptr, deleter)
     {
     }
 
 
-    std::unique_ptr<::SDL_Window, decltype(&::SDL_DestroyWindow)> ptr;
+    ::SDL_Window* ptr()
+    {
+        return _ptr.get();
+    }
+
+
+private:
+    std::unique_ptr<::SDL_Window, decltype(&::SDL_DestroyWindow)> _ptr;
 };
 
 
@@ -24,7 +32,7 @@ Window::Window(
     int width,
     int height,
     Flag flag)
-    : pimpl(
+    : pimpl(std::make_unique<Impl>(
           detail::enforce_sdl(::SDL_CreateWindow(
               title.c_str(),
               x,
@@ -32,19 +40,19 @@ Window::Window(
               width,
               height,
               static_cast<SDL_WindowFlags>(flag))),
-          ::SDL_DestroyWindow)
+          ::SDL_DestroyWindow))
 {
 }
 
 
 
-~Window() = default;
+Window::~Window() = default;
 
 
 
 ::SDL_Window* Window::ptr()
 {
-    return pimpl->ptr;
+    return pimpl->ptr();
 }
 
 

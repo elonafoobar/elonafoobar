@@ -16,7 +16,7 @@ Window::Window(const std::string&, int, int, int, int, Flag)
 
 
 
-~Window() = default;
+Window::~Window() = default;
 
 
 
