@@ -46,7 +46,7 @@ void Window::set_size(int, int)
 
 
 
-void Window::set_display_mode()
+void Window::set_display_mode(::SDL_DisplayMode)
 {
 }
 
