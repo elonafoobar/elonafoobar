@@ -199,7 +199,7 @@ void adventurer_update()
                     "core.locale.chara.contract_expired", cdata[rc]));
             }
         }
-        if (cdata[rc].current_map != gdata_current_map)
+        if (cdata[rc].current_map != game_data.current_map)
         {
             if (cdata[rc].state() == Character::State::adventurer_empty)
             {
@@ -226,7 +226,7 @@ void adventurer_update()
                 }
             }
         }
-        if ((cdata[rc].current_map != gdata_current_map
+        if ((cdata[rc].current_map != game_data.current_map
              || mdata_map_type == mdata_t::MapType::world_map)
             && rnd(60) == 0)
         {
@@ -258,7 +258,7 @@ void adventurer_update()
             cdata[rc].current_map = p;
             cdata[rc].current_dungeon_level = 1;
         }
-        if (cdata[rc].current_map == gdata_current_map)
+        if (cdata[rc].current_map == game_data.current_map)
         {
             continue;
         }

@@ -32,10 +32,19 @@ FoobarData foobar_data;
     SERIALIZE(16, next_inventory_serial_id); \
     SERIALIZE(17, weather); \
     SERIALIZE(18, hours_until_weather_changes); \
-\
+    SERIALIZE(19, previous_map); \
+    SERIALIZE(20, current_map); \
+    SERIALIZE(22, current_dungeon_level); \
     SERIALIZE(24, home_scale); \
     SERIALIZE(25, charge_power); \
-    SERIALIZE(26, entrance_type);
+    SERIALIZE(26, entrance_type); \
+\
+    SERIALIZE(64, destination_map); \
+    SERIALIZE(65, destination_dungeon_level); \
+    SERIALIZE(66, previous_map2); \
+    SERIALIZE(67, previous_dungeon_level); \
+    SERIALIZE(68, previous_x); \
+    SERIALIZE(69, previous_y);
 
 #define SERIALIZE GDATA_PACK
 void GameData::pack_to(elona_vector1<int>& gdata)

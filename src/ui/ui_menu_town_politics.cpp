@@ -10,7 +10,7 @@ namespace ui
 
 static void _load_politics_list(bool is_town)
 {
-    int city = area_data[gdata_current_map].quest_town_id;
+    int city = area_data[game_data.current_map].quest_town_id;
 
     // TODO: untranslated
     listmax = 0;
@@ -94,7 +94,7 @@ static void _draw_window()
     {
         pos(wx + 285, wy + 52);
         mes(i18n::s.get(
-            "core.locale.ui.politics.law_of", mapname(gdata_current_map)));
+            "core.locale.ui.politics.law_of", mapname(game_data.current_map)));
     }
 
     pos(wx + 155, wy + 46);

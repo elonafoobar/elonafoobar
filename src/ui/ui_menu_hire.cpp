@@ -34,7 +34,7 @@ bool UIMenuHire::_should_display_chara(const Character& chara)
         }
         if (chara.index < 16)
         {
-            if (chara.current_map != gdata_current_map)
+            if (chara.current_map != game_data.current_map)
             {
                 return false;
             }

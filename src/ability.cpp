@@ -370,7 +370,7 @@ void chara_gain_skill_exp(
     {
         exp = experience;
     }
-    if (gdata_current_map == mdata_t::MapId::show_house)
+    if (game_data.current_map == mdata_t::MapId::show_house)
     {
         exp /= 5;
     }
@@ -487,7 +487,9 @@ void gain_lock_picking_experience(int cc)
 void gain_detection_experience(int cc)
 {
     chara_gain_skill_exp(
-        cdata[cc], 159, calc_exp_gain_detection(gdata_current_dungeon_level));
+        cdata[cc],
+        159,
+        calc_exp_gain_detection(game_data.current_dungeon_level));
 }
 
 

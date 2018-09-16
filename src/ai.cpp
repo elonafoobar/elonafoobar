@@ -744,7 +744,7 @@ label_2692_internal:
     {
         if (cdata[cc].relationship != 10)
         {
-            if (gdata_current_map == mdata_t::MapId::quest)
+            if (game_data.current_map == mdata_t::MapId::quest)
             {
                 if (gdata_executing_immediate_quest_type == 1009)
                 {
@@ -771,8 +771,8 @@ label_2692_internal:
                     }
                 }
             }
-            if (gdata_current_map == mdata_t::MapId::noyel
-                || gdata_current_map
+            if (game_data.current_map == mdata_t::MapId::noyel
+                || game_data.current_map
                     == mdata_t::MapId::mansion_of_younger_sister)
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)

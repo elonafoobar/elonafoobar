@@ -240,8 +240,8 @@ optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
 
 int calcobjlv(int base)
 {
-    int ret = base <= 0 ? gdata_current_dungeon_level : base;
-    if (gdata_current_map == mdata_t::MapId::shelter_)
+    int ret = base <= 0 ? game_data.current_dungeon_level : base;
+    if (game_data.current_map == mdata_t::MapId::shelter_)
     {
         ret = 1;
     }
@@ -1308,8 +1308,8 @@ int calcinitgold(int owner)
 {
     if (owner < 0)
     {
-        return rnd(gdata_current_dungeon_level * 25
-                       * (gdata_current_map != mdata_t::MapId::shelter_)
+        return rnd(game_data.current_dungeon_level * 25
+                       * (game_data.current_map != mdata_t::MapId::shelter_)
                    + 10)
             + 1;
     }

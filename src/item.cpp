@@ -2271,14 +2271,14 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     screenupdate = -1;
     update_screen();
 
-    if (area_data[gdata_current_map].id == mdata_t::MapId::museum)
+    if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
     {
         if (mode == 0)
         {
             update_museum();
         }
     }
-    if (gdata_current_map == mdata_t::MapId::your_home)
+    if (game_data.current_map == mdata_t::MapId::your_home)
     {
         if (mode == 0)
         {

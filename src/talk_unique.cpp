@@ -99,8 +99,8 @@ void _loyter_goto_map()
 {
     mdata_map_stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
-    gdata_destination_map = 5;
-    gdata_destination_dungeon_level = 5;
+    game_data.destination_map = 5;
+    game_data.destination_dungeon_level = 5;
     levelexitby = 2;
     chatteleport = 1;
 }
@@ -1125,7 +1125,8 @@ void _slan_receive_reward()
 {
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
+        flt(calcobjlv(game_data.current_dungeon_level),
+            calcfixlv(Quality::bad));
         flttypemajor = fltsetdungeon();
         itemcreate(-1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
     }
@@ -1596,7 +1597,8 @@ void _karam_receive_reward()
 {
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
+        flt(calcobjlv(game_data.current_dungeon_level),
+            calcfixlv(Quality::bad));
         flttypemajor = fltsetdungeon();
         itemcreate(-1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
     }
@@ -1779,8 +1781,8 @@ TalkResult talk_unique_pael()
 {
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == mdata_t::MapId::noyel
-            && area_data[gdata_current_map].christmas_festival)
+        if (game_data.current_map == mdata_t::MapId::noyel
+            && area_data[game_data.current_map].christmas_festival)
         {
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.pael.festival");
@@ -1987,8 +1989,8 @@ TalkResult talk_unique_paels_mom()
     }
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == mdata_t::MapId::noyel
-            && area_data[gdata_current_map].christmas_festival)
+        if (game_data.current_map == mdata_t::MapId::noyel
+            && area_data[game_data.current_map].christmas_festival)
         {
             buff = i18n::s.get(
                 "core.locale.talk.unique.paels_mom.progress.festival.dialog");
@@ -2627,8 +2629,8 @@ void _gilbert_goto_map()
     gdata_defense_line = 2;
     mdata_map_stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
-    gdata_destination_map = 12;
-    gdata_destination_dungeon_level = 4;
+    game_data.destination_map = 12;
+    game_data.destination_dungeon_level = 4;
     levelexitby = 2;
     chatteleport = 1;
 }
@@ -2770,8 +2772,8 @@ void _arnord_goto_map()
     gdata_kamikaze_attack = 2;
     mdata_map_stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
-    gdata_destination_map = 11;
-    gdata_destination_dungeon_level = 25;
+    game_data.destination_map = 11;
+    game_data.destination_dungeon_level = 25;
     levelexitby = 2;
     chatteleport = 1;
 }
@@ -4829,8 +4831,8 @@ void _part_time_worker_switch_religion()
 
 TalkResult talk_unique_part_time_worker()
 {
-    if (gdata_current_map != mdata_t::MapId::noyel
-        || area_data[gdata_current_map].christmas_festival == 0)
+    if (game_data.current_map != mdata_t::MapId::noyel
+        || area_data[game_data.current_map].christmas_festival == 0)
     {
         return TalkResult::talk_end;
     }

@@ -153,7 +153,7 @@ void talk_to_npc()
     }
 
     if (chatval_unique_chara_id
-        && gdata_current_map != mdata_t::MapId::show_house && tc >= 16)
+        && game_data.current_map != mdata_t::MapId::show_house && tc >= 16)
     {
         const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
 
@@ -840,20 +840,20 @@ int talk_guide_quest_client()
         const auto quest_id = gdata(160 + i);
         if (qdata(8, quest_id) != 1)
             continue;
-        if (gdata_current_dungeon_level != 1)
+        if (game_data.current_dungeon_level != 1)
             continue;
 
         auto client = -1;
         if (qdata(3, quest_id) == 1011)
         {
-            if (qdata(1, quest_id) == gdata_current_map)
+            if (qdata(1, quest_id) == game_data.current_map)
             {
                 client = qdata(10, quest_id);
             }
         }
         if (qdata(3, quest_id) == 1002)
         {
-            if (qdata(1, qdata(10, quest_id)) == gdata_current_map)
+            if (qdata(1, qdata(10, quest_id)) == game_data.current_map)
             {
                 client = qdata(0, qdata(10, quest_id));
             }
@@ -891,9 +891,9 @@ int talk_check_trade(int prm_1081)
         p_at_m193 = gdata(160 + cnt);
         if (qdata(8, p_at_m193) == 1)
         {
-            if (gdata_current_dungeon_level == 1)
+            if (game_data.current_dungeon_level == 1)
             {
-                if (qdata(1, p_at_m193) == gdata_current_map)
+                if (qdata(1, p_at_m193) == game_data.current_map)
                 {
                     if (prm_1081 == qdata(10, p_at_m193))
                     {

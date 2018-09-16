@@ -272,7 +272,7 @@ int damage_hp(
                     victim.hp = 1;
                 }
             }
-            if (gdata_current_map == mdata_t::MapId::pet_arena)
+            if (game_data.current_map == mdata_t::MapId::pet_arena)
             {
                 victim.hp = 1;
             }
@@ -990,9 +990,9 @@ int damage_hp(
         }
         if (victim.index != 0)
         {
-            if (gdata_current_map != mdata_t::MapId::show_house)
+            if (game_data.current_map != mdata_t::MapId::show_house)
             {
-                if (gdata_current_map != mdata_t::MapId::the_void)
+                if (game_data.current_map != mdata_t::MapId::the_void)
                 {
                     if (victim.id == 2)
                     {
@@ -1062,11 +1062,11 @@ int damage_hp(
                             gdata_save_count_of_little_sister,
                             gdata_kill_count_of_little_sister));
                     }
-                    if (gdata_current_dungeon_level
-                            == area_data[gdata_current_map].deepest_level
-                        || gdata_current_map == mdata_t::MapId::the_void)
+                    if (game_data.current_dungeon_level
+                            == area_data[game_data.current_map].deepest_level
+                        || game_data.current_map == mdata_t::MapId::the_void)
                     {
-                        if (area_data[gdata_current_map].has_been_conquered
+                        if (area_data[game_data.current_map].has_been_conquered
                                 == victim.index
                             && victim.is_lord_of_dungeon() == 1)
                         {
@@ -1082,9 +1082,9 @@ int damage_hp(
                     }
                     quest_check();
                 }
-                else if (gdata_current_map == mdata_t::MapId::the_void)
+                else if (game_data.current_map == mdata_t::MapId::the_void)
                 {
-                    if (area_data[gdata_current_map].has_been_conquered
+                    if (area_data[game_data.current_map].has_been_conquered
                             == victim.index
                         && victim.is_lord_of_dungeon() == 1)
                     {
@@ -1137,7 +1137,7 @@ int damage_hp(
         }
         rc = victim.index;
         character_drops_item();
-        if (gdata_current_map == mdata_t::MapId::pet_arena)
+        if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
             if (rnd(5) == 0)
             {

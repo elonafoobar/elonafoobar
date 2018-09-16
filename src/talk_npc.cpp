@@ -256,16 +256,17 @@ TalkResult talk_arena_master(int chatval_)
         (220 - gdata(120) / 50)
                 * (100
                    + clamp(
-                         area_data[gdata_current_map].winning_streak_in_arena,
+                         area_data[game_data.current_map]
+                             .winning_streak_in_arena,
                          0,
                          50))
                 / 100
             + 2);
     listmax = 0;
-    randomize(area_data[gdata_current_map].time_of_next_arena);
+    randomize(area_data[game_data.current_map].time_of_next_arena);
     if (chatval_ == 21)
     {
-        if (area_data[gdata_current_map].time_of_next_arena
+        if (area_data[game_data.current_map].time_of_next_arena
             > game_data.date.hours())
         {
             buff = i18n::s.get(
@@ -273,7 +274,7 @@ TalkResult talk_arena_master(int chatval_)
                 cdata[tc]);
             return TalkResult::talk_npc;
         }
-        randomize(area_data[gdata_current_map].arena_random_seed);
+        randomize(area_data[game_data.current_map].arena_random_seed);
         for (int cnt = 0; cnt < 50; ++cnt)
         {
             arenaop(0) = 0;
@@ -314,7 +315,7 @@ TalkResult talk_arena_master(int chatval_)
     }
     else
     {
-        if (area_data[gdata_current_map].time_of_next_rumble
+        if (area_data[game_data.current_map].time_of_next_rumble
             > game_data.date.hours())
         {
             buff = i18n::s.get(
@@ -347,24 +348,24 @@ TalkResult talk_arena_master(int chatval_)
     }
     if (arenaop == 0)
     {
-        area_data[gdata_current_map].time_of_next_arena =
+        area_data[game_data.current_map].time_of_next_arena =
             game_data.date.hours() + 24;
     }
     if (arenaop == 1)
     {
-        area_data[gdata_current_map].time_of_next_rumble =
+        area_data[game_data.current_map].time_of_next_rumble =
             game_data.date.hours() + 24;
     }
     gdata_executing_immediate_quest_type = 1;
     gdata(71) = 1;
     gdata_executing_immediate_quest = 0;
     gdata(73) = 1;
-    gdata_previous_map2 = gdata_current_map;
-    gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata.player().position.x;
-    gdata_previous_y = cdata.player().position.y;
-    gdata_destination_map = 6;
-    gdata_destination_dungeon_level = 1;
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = 6;
+    game_data.destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -377,7 +378,7 @@ TalkResult talk_pet_arena_master(int chatval_)
         (220 - gdata(121) / 50)
                 * (50
                    + clamp(
-                         area_data[gdata_current_map]
+                         area_data[game_data.current_map]
                              .winning_streak_in_pet_arena,
                          0,
                          50))
@@ -440,12 +441,12 @@ TalkResult talk_pet_arena_master(int chatval_)
     gdata(71) = 0;
     gdata_executing_immediate_quest = 0;
     gdata(73) = 1;
-    gdata_previous_map2 = gdata_current_map;
-    gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata.player().position.x;
-    gdata_previous_y = cdata.player().position.y;
-    gdata_destination_map = 40;
-    gdata_destination_dungeon_level = 1;
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = 40;
+    game_data.destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -455,7 +456,7 @@ TalkResult talk_pet_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        area_data[gdata_current_map].winning_streak_in_pet_arena,
+        area_data[game_data.current_map].winning_streak_in_pet_arena,
         cdata[tc]);
     return TalkResult::talk_npc;
 }
@@ -464,7 +465,7 @@ TalkResult talk_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        area_data[gdata_current_map].winning_streak_in_arena,
+        area_data[game_data.current_map].winning_streak_in_arena,
         cdata[tc]);
     return TalkResult::talk_npc;
 }
@@ -804,7 +805,7 @@ TalkResult talk_ally_marriage()
 
 TalkResult talk_ally_gene()
 {
-    if (gdata_current_map == mdata_t::MapId::shelter_)
+    if (game_data.current_map == mdata_t::MapId::shelter_)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.refuses");
@@ -837,12 +838,12 @@ TalkResult talk_innkeeper_shelter()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    gdata_previous_map2 = gdata_current_map;
-    gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata.player().position.x;
-    gdata_previous_y = cdata.player().position.y;
-    gdata_destination_map = 30;
-    gdata_destination_dungeon_level = 1;
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = 30;
+    game_data.destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
     snd(49);
@@ -1240,19 +1241,19 @@ TalkResult talk_prostitute_buy()
 
 TalkResult talk_caravan_master_hire()
 {
-    if (gdata_current_map == mdata_t::MapId::north_tyris_south_border)
+    if (game_data.current_map == mdata_t::MapId::north_tyris_south_border)
     {
         p(0) = 45;
         p(1) = 48;
         p(2) = 0;
     }
-    if (gdata_current_map == mdata_t::MapId::south_tyris_north_border)
+    if (game_data.current_map == mdata_t::MapId::south_tyris_north_border)
     {
         p(0) = 43;
         p(1) = 48;
         p(2) = 0;
     }
-    if (gdata_current_map == mdata_t::MapId::test_world_north_border)
+    if (game_data.current_map == mdata_t::MapId::test_world_north_border)
     {
         p(0) = 43;
         p(1) = 45;
@@ -1278,8 +1279,8 @@ TalkResult talk_caravan_master_hire()
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return TalkResult::talk_npc;
     }
-    gdata_destination_map = area_data[chatval_].outer_map;
-    gdata_destination_dungeon_level = 1;
+    game_data.destination_map = area_data[chatval_].outer_map;
+    game_data.destination_dungeon_level = 1;
     levelexitby = 4;
     gdata(79) = 1;
     gdata(850) = area_data[chatval_].outer_map;
@@ -1444,12 +1445,12 @@ TalkResult talk_accepted_quest()
     gdata(71) = qdata(14, rq);
     gdata_executing_immediate_quest = rq;
     gdata(73) = 1;
-    gdata_previous_map2 = gdata_current_map;
-    gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata.player().position.x;
-    gdata_previous_y = cdata.player().position.y;
-    gdata_destination_map = 13;
-    gdata_destination_dungeon_level = 1;
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = 13;
+    game_data.destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -1577,7 +1578,7 @@ TalkResult talk_invest()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    if (gdata_current_map == mdata_t::MapId::your_home)
+    if (game_data.current_map == mdata_t::MapId::your_home)
     {
         calccosthire();
     }
@@ -2113,7 +2114,7 @@ TalkResult talk_npc()
     }
     if (cdata[tc].drunk != 0 || 0)
     {
-        if (gdata_current_map != mdata_t::MapId::show_house)
+        if (game_data.current_map != mdata_t::MapId::show_house)
         {
             if (tc >= 16)
             {
@@ -2143,13 +2144,13 @@ TalkResult talk_npc()
     f = 0;
     deliver(0) = -1;
     deliver(1) = -1;
-    if (gdata_current_dungeon_level == 1)
+    if (game_data.current_dungeon_level == 1)
     {
         for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
-            if (qdata(1, cnt) == gdata_current_map)
+            if (qdata(1, cnt) == game_data.current_map)
             {
                 if (qdata(0, cnt) == tc)
                 {
@@ -2267,7 +2268,7 @@ TalkResult talk_npc()
             i18n::s.get(
                 "core.locale.talk.npc.quest_giver.choices.here_is_delivery"));
     }
-    if (gdata_current_map == mdata_t::MapId::your_home)
+    if (game_data.current_map == mdata_t::MapId::your_home)
     {
         if (tc >= 57)
         {
@@ -2316,8 +2317,8 @@ TalkResult talk_npc()
             if (cdata.player().karma < -30
                 && cdata.player().is_incognito() == 0)
             {
-                if (gdata_current_map != mdata_t::MapId::derphy
-                    && gdata_current_map != mdata_t::MapId::your_home)
+                if (game_data.current_map != mdata_t::MapId::derphy
+                    && game_data.current_map != mdata_t::MapId::your_home)
                 {
                     listmax = 0;
                     if (chatval_ == 10)

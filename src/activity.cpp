@@ -999,7 +999,7 @@ void continuous_action_others()
             }
             if (game_data.weather != 0 && game_data.weather != 3)
             {
-                if (gdata_current_map == mdata_t::MapId::shelter_
+                if (game_data.current_map == mdata_t::MapId::shelter_
                     || (mdata_map_indoors_flag == 1
                         && (mdata_map_type == mdata_t::MapType::player_owned
                             || mdata_map_type == mdata_t::MapType::town
@@ -1055,11 +1055,11 @@ void continuous_action_others()
             p = 25;
             if (game_data.weather != 0 && game_data.weather != 3)
             {
-                if (gdata_current_map == mdata_t::MapId::shelter_)
+                if (game_data.current_map == mdata_t::MapId::shelter_)
                 {
                     p = 5;
                 }
-                if (gdata_current_map != mdata_t::MapId::shelter_
+                if (game_data.current_map != mdata_t::MapId::shelter_
                     && mdata_map_indoors_flag == 1)
                 {
                     if (mdata_map_type == mdata_t::MapType::player_owned
@@ -1376,12 +1376,12 @@ void continuous_action_others()
     {
         txt(i18n::s.get("core.locale.activity.pull_hatch.finish"));
         chatteleport = 1;
-        gdata_previous_map2 = gdata_current_map;
-        gdata_previous_dungeon_level = gdata_current_dungeon_level;
-        gdata_previous_x = cdata.player().position.x;
-        gdata_previous_y = cdata.player().position.y;
-        gdata_destination_map = 30;
-        gdata_destination_dungeon_level = inv[ci].count;
+        game_data.previous_map2 = game_data.current_map;
+        game_data.previous_dungeon_level = game_data.current_dungeon_level;
+        game_data.previous_x = cdata.player().position.x;
+        game_data.previous_y = cdata.player().position.y;
+        game_data.destination_map = 30;
+        game_data.destination_dungeon_level = inv[ci].count;
         levelexitby = 2;
         snd(49);
     }
@@ -1741,7 +1741,7 @@ void spot_digging()
                                 i18n::s.get("core.locale.common.something_is_"
                                             "put_on_the_ground"));
                             autosave = 1
-                                * (gdata_current_map
+                                * (game_data.current_map
                                    != mdata_t::MapId::show_house);
                             inv[cnt].modify_number(-1);
                             break;
@@ -1826,7 +1826,7 @@ void spot_mining_or_wall()
         }
         if (f == 1
             || (gdata_tutorial_flag == 2
-                && gdata_current_map == mdata_t::MapId::your_home))
+                && game_data.current_map == mdata_t::MapId::your_home))
         {
             rtval = 0;
             if (rnd(5) == 0)
@@ -1851,7 +1851,7 @@ void spot_mining_or_wall()
             BreakingAnimation({refx, refy}).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (gdata_tutorial_flag == 2
-                && gdata_current_map == mdata_t::MapId::your_home)
+                && game_data.current_map == mdata_t::MapId::your_home)
             {
                 flt();
                 itemcreate(-1, 208, digx, digy, 0);
@@ -1860,7 +1860,7 @@ void spot_mining_or_wall()
                 gdata_tutorial_flag = 3;
             }
             else if (
-                rtval != 0 && gdata_current_map != mdata_t::MapId::shelter_)
+                rtval != 0 && game_data.current_map != mdata_t::MapId::shelter_)
             {
                 if (rtval > 0)
                 {
@@ -1869,7 +1869,7 @@ void spot_mining_or_wall()
                 }
                 else if (rtval == -1)
                 {
-                    flt(calcobjlv(gdata_current_dungeon_level),
+                    flt(calcobjlv(game_data.current_dungeon_level),
                         calcfixlv(Quality::good));
                     flttypemajor = 77000;
                     itemcreate(-1, 0, digx, digy, 0);
@@ -1916,7 +1916,7 @@ int search_material_spot()
         return 0;
     }
     atxspot = 11;
-    atxlv = gdata_current_dungeon_level;
+    atxlv = game_data.current_dungeon_level;
     if (mdata_map_type == mdata_t::MapType::dungeon)
     {
         atxspot = 9;
