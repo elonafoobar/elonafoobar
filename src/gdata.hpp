@@ -5,11 +5,7 @@
 #define gdata_mount gdata(183)
 #define gdata_catches_god_signal gdata(185)
 #define gdata_reveals_religion gdata(187)
-#define gdata_tutorial_flag gdata(250)
-#define gdata_main_quest_flag gdata(252)
-#define gdata_magic_stone_of_fool gdata(253)
-#define gdata_magic_stone_of_sage gdata(254)
-#define gdata_magic_stone_of_king gdata(255)
+
 #define gdata_used_casino_once gdata(256)
 #define gdata_has_not_been_to_vernis gdata(257)
 #define gdata_released_fire_giant gdata(258)
@@ -24,31 +20,13 @@
 #define gdata_fighters_guild_quota gdata(267)
 #define gdata_fighters_guild_target gdata(268)
 #define gdata_thieves_guild_quota gdata(269)
-#define gdata_putit_attacks gdata(450)
-#define gdata_thieves_hideout gdata(451)
-#define gdata_nightmare gdata(452)
-#define gdata_pael_and_her_mom gdata(453)
-#define gdata_wife_collector gdata(454)
-#define gdata_puppys_cave gdata(455)
-#define gdata_cat_house gdata(456)
-#define gdata_defense_line gdata(457)
-#define gdata_novice_knight gdata(458)
-#define gdata_kamikaze_attack gdata(459)
-#define gdata_mias_dream gdata(460)
-#define gdata_rare_books gdata(461)
-#define gdata_pyramid_trial gdata(462)
-#define gdata_red_blossom_in_palmia gdata(463)
-#define gdata_ambitious_scientist gdata(464)
-#define gdata_sewer_sweeping gdata(465)
+
 #define gdata_joining_mages_guild gdata(466)
 #define gdata_joining_fighters_guild gdata(467)
 #define gdata_joining_thieves_guild gdata(468)
 #define gdata_mages_guild_quota2 gdata(469)
 #define gdata_fighters_guild_quota2 gdata(470)
 #define gdata_thieves_guild_quota2 gdata(471)
-#define gdata_minotaur_king gdata(472)
-#define gdata_little_sister gdata(473)
-#define gdata_blue_capsule_drug gdata(474)
 #define gdata_ether_disease_speed gdata(800)
 #define gdata_left_turns_of_timestop gdata(801)
 #define gdata_ex_arena_level gdata(803)
@@ -87,6 +65,36 @@ struct Date
     {
         return hour + (day * 24) + (month * 24 * 30) + (year * 24 * 30 * 12);
     }
+};
+
+struct QuestFlags
+{
+    int tutorial;
+
+    int main_quest;
+    int magic_stone_of_fool;
+    int magic_stone_of_sage;
+    int magic_stone_of_king;
+
+    int putit_attacks;
+    int thieves_hideout;
+    int nightmare;
+    int pael_and_her_mom;
+    int wife_collector;
+    int puppys_cave;
+    int cat_house;
+    int defense_line;
+    int novice_knight;
+    int kamikaze_attack;
+    int mias_dream;
+    int rare_books;
+    int pyramid_trial;
+    int red_blossom_in_palmia;
+    int ambitious_scientist;
+    int sewer_sweeping;
+    int minotaur_king;
+    int little_sister;
+    int blue_capsule_drug;
 };
 
 /**
@@ -150,6 +158,8 @@ struct GameData
     int distance_between_town;
     int departure_date;
     int left_town_map;
+
+    QuestFlags quest_flags;
 
     /**
      * Moves this struct's fields into `gdata` so they can be serialized,

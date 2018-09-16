@@ -356,7 +356,7 @@ void proc_event()
             cdata[evdata1(evnum - (evnum != 0) * 1)].position.x,
             cdata[evdata1(evnum - (evnum != 0) * 1)].position.y,
             4);
-        gdata_pael_and_her_mom = 1001;
+        game_data.quest_flags.pael_and_her_mom = 1001;
         tc = chara_find(221);
         if (tc != 0)
         {
@@ -811,9 +811,9 @@ void proc_event()
         if (evdata1(evnum - (evnum != 0) * 1) == 33
             && evdata2(evnum - (evnum != 0) * 1) == 16
             && game_data.current_map == mdata_t::MapId::palmia
-            && gdata_red_blossom_in_palmia == 1)
+            && game_data.quest_flags.red_blossom_in_palmia == 1)
         {
-            gdata_red_blossom_in_palmia = 2;
+            game_data.quest_flags.red_blossom_in_palmia = 2;
             quest_update_journal_msg();
         }
         if (mdata_map_type == mdata_t::MapType::town

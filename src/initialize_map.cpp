@@ -1216,7 +1216,7 @@ label_1741_internal:
         flt();
         chara_create(-1, 326, 15, 22);
         cdata[rc].character_role = 3;
-        if (gdata_mias_dream == 1000)
+        if (game_data.quest_flags.mias_dream == 1000)
         {
             flt();
             chara_create(-1, 246, 42, 11);
@@ -1348,7 +1348,7 @@ label_1741_internal:
             map_initcustom(u8"lumiest"s);
             map_placeplayer();
             mdata_map_user_map_flag = 0;
-            if (gdata_sewer_sweeping)
+            if (game_data.quest_flags.sewer_sweeping)
             {
                 cell_featset(18, 45, tile_downstairs, 11, 20);
             }
@@ -1522,7 +1522,7 @@ label_1741_internal:
             map_initcustom(u8"yowyn"s);
             map_placeplayer();
             mdata_map_user_map_flag = 0;
-            if (gdata_cat_house)
+            if (game_data.quest_flags.cat_house)
             {
                 cell_featset(23, 22, tile_downstairs, 11, 3);
             }
@@ -1695,7 +1695,7 @@ label_1741_internal:
         flt();
         chara_create(-1, 221, 19, 3);
         cdata[rc].character_role = 3;
-        if (gdata_pael_and_her_mom != 1001)
+        if (game_data.quest_flags.pael_and_her_mom != 1001)
         {
             flt();
             chara_create(-1, 222, 19, 2);
@@ -1987,7 +1987,7 @@ label_1741_internal:
             map_initcustom(u8"vernis"s);
             map_placeplayer();
             mdata_map_user_map_flag = 0;
-            if (gdata_thieves_hideout)
+            if (game_data.quest_flags.thieves_hideout)
             {
                 cell_featset(48, 5, tile_downstairs, 11, 4);
             }
@@ -2011,7 +2011,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 326, 42, 24);
             cdata[rc].character_role = 3;
-            if (gdata_puppys_cave == 1000)
+            if (game_data.quest_flags.puppys_cave == 1000)
             {
                 flt();
                 chara_create(-1, 225, 31, 4);
@@ -2411,7 +2411,7 @@ label_1741_internal:
                 mdata_map_bgm = 66;
                 mdatan(0) = i18n::s.get_enum_property(
                     "core.locale.map.unique", "the_depth", 3);
-                if (gdata_main_quest_flag < 170)
+                if (game_data.quest_flags.main_quest < 170)
                 {
                     event_add(3);
                 }
@@ -2516,7 +2516,7 @@ label_1741_internal:
         if (game_data.current_dungeon_level
             == area_data[game_data.current_map].deepest_level)
         {
-            if (gdata_puppys_cave < 2)
+            if (game_data.quest_flags.puppys_cave < 2)
             {
                 if (chara_find_ally(225) == -1)
                 {
@@ -2533,7 +2533,7 @@ label_1741_internal:
         if (game_data.current_dungeon_level
             == area_data[game_data.current_map].deepest_level)
         {
-            if (gdata_minotaur_king < 2)
+            if (game_data.quest_flags.minotaur_king < 2)
             {
                 flt();
                 chara_create(-1, 300, -3, 0);
@@ -2546,7 +2546,7 @@ label_1741_internal:
         if (game_data.current_dungeon_level
             == area_data[game_data.current_map].deepest_level)
         {
-            if (gdata_novice_knight < 2)
+            if (game_data.quest_flags.novice_knight < 2)
             {
                 flt();
                 chara_create(-1, 242, -3, 0);
@@ -2749,7 +2749,7 @@ label_1741_internal:
 label_1742_internal:
     if (game_data.current_map == mdata_t::MapId::north_tyris)
     {
-        if (gdata_main_quest_flag == 180)
+        if (game_data.quest_flags.main_quest == 180)
         {
             cdata.player().position.x = area_data[11].position.x;
             cdata.player().position.y = area_data[11].position.y;
@@ -3058,162 +3058,165 @@ label_1744_internal:
         // This result will be ignored by the caller.
         return TurnResult::turn_begin;
     }
-    if (gdata_main_quest_flag == 9)
+    if (game_data.quest_flags.main_quest == 9)
     {
         sceneid = 2;
         do_play_scene();
-        gdata_main_quest_flag = 10;
+        game_data.quest_flags.main_quest = 10;
     }
-    if (gdata_main_quest_flag == 60)
+    if (game_data.quest_flags.main_quest == 60)
     {
         sceneid = 5;
         do_play_scene();
-        gdata_main_quest_flag = 65;
+        game_data.quest_flags.main_quest = 65;
     }
-    if (gdata_main_quest_flag == 110)
+    if (game_data.quest_flags.main_quest == 110)
     {
         sceneid = 26;
         do_play_scene();
-        gdata_main_quest_flag = 115;
+        game_data.quest_flags.main_quest = 115;
     }
-    if (gdata_main_quest_flag == 115)
+    if (game_data.quest_flags.main_quest == 115)
     {
-        if (gdata_magic_stone_of_fool + gdata_magic_stone_of_king
-                + gdata_magic_stone_of_sage
+        if (game_data.quest_flags.magic_stone_of_fool
+                + game_data.quest_flags.magic_stone_of_king
+                + game_data.quest_flags.magic_stone_of_sage
             >= 1)
         {
             sceneid = 28;
             do_play_scene();
-            gdata_main_quest_flag = 116;
+            game_data.quest_flags.main_quest = 116;
         }
     }
-    if (gdata_main_quest_flag == 116)
+    if (game_data.quest_flags.main_quest == 116)
     {
-        if (gdata_magic_stone_of_fool + gdata_magic_stone_of_king
-                + gdata_magic_stone_of_sage
+        if (game_data.quest_flags.magic_stone_of_fool
+                + game_data.quest_flags.magic_stone_of_king
+                + game_data.quest_flags.magic_stone_of_sage
             >= 2)
         {
             sceneid = 29;
             do_play_scene();
-            gdata_main_quest_flag = 117;
+            game_data.quest_flags.main_quest = 117;
         }
     }
-    if (gdata_main_quest_flag == 117)
+    if (game_data.quest_flags.main_quest == 117)
     {
-        if (gdata_magic_stone_of_fool + gdata_magic_stone_of_king
-                + gdata_magic_stone_of_sage
+        if (game_data.quest_flags.magic_stone_of_fool
+                + game_data.quest_flags.magic_stone_of_king
+                + game_data.quest_flags.magic_stone_of_sage
             >= 3)
         {
             sceneid = 30;
             do_play_scene();
-            gdata_main_quest_flag = 120;
+            game_data.quest_flags.main_quest = 120;
         }
     }
     if (game_data.current_map == mdata_t::MapId::lesimas)
     {
-        if (gdata_main_quest_flag == 10)
+        if (game_data.quest_flags.main_quest == 10)
         {
             sceneid = 3;
             do_play_scene();
-            gdata_main_quest_flag = 20;
+            game_data.quest_flags.main_quest = 20;
         }
         if (game_data.current_dungeon_level == 4)
         {
-            if (gdata_main_quest_flag == 65)
+            if (game_data.quest_flags.main_quest == 65)
             {
                 sceneid = 7;
                 do_play_scene();
-                gdata_main_quest_flag = 70;
+                game_data.quest_flags.main_quest = 70;
             }
         }
         if (game_data.current_dungeon_level == 7)
         {
-            if (gdata_main_quest_flag == 70)
+            if (game_data.quest_flags.main_quest == 70)
             {
                 sceneid = 15;
                 do_play_scene();
-                gdata_main_quest_flag = 75;
+                game_data.quest_flags.main_quest = 75;
             }
         }
         if (game_data.current_dungeon_level == 10)
         {
-            if (gdata_main_quest_flag == 75)
+            if (game_data.quest_flags.main_quest == 75)
             {
                 sceneid = 16;
                 do_play_scene();
-                gdata_main_quest_flag = 80;
+                game_data.quest_flags.main_quest = 80;
             }
         }
         if (game_data.current_dungeon_level == 14)
         {
-            if (gdata_main_quest_flag == 80)
+            if (game_data.quest_flags.main_quest == 80)
             {
                 sceneid = 17;
                 do_play_scene();
-                gdata_main_quest_flag = 85;
+                game_data.quest_flags.main_quest = 85;
             }
         }
         if (game_data.current_dungeon_level == 16)
         {
-            if (gdata_main_quest_flag == 85)
+            if (game_data.quest_flags.main_quest == 85)
             {
                 sceneid = 24;
                 do_play_scene();
-                gdata_main_quest_flag = 90;
+                game_data.quest_flags.main_quest = 90;
             }
         }
         if (game_data.current_dungeon_level == 26)
         {
-            if (gdata_main_quest_flag == 125)
+            if (game_data.quest_flags.main_quest == 125)
             {
                 sceneid = 33;
                 do_play_scene();
-                gdata_main_quest_flag = 130;
+                game_data.quest_flags.main_quest = 130;
             }
         }
         if (game_data.current_dungeon_level == 28)
         {
-            if (gdata_main_quest_flag == 130)
+            if (game_data.quest_flags.main_quest == 130)
             {
                 sceneid = 35;
                 do_play_scene();
-                gdata_main_quest_flag = 135;
+                game_data.quest_flags.main_quest = 135;
             }
         }
         if (game_data.current_dungeon_level == 31)
         {
-            if (gdata_main_quest_flag == 135)
+            if (game_data.quest_flags.main_quest == 135)
             {
                 sceneid = 40;
                 do_play_scene();
-                gdata_main_quest_flag = 140;
+                game_data.quest_flags.main_quest = 140;
             }
         }
         if (game_data.current_dungeon_level == 35)
         {
-            if (gdata_main_quest_flag == 140)
+            if (game_data.quest_flags.main_quest == 140)
             {
                 sceneid = 60;
                 do_play_scene();
-                gdata_main_quest_flag = 145;
+                game_data.quest_flags.main_quest = 145;
             }
         }
         if (game_data.current_dungeon_level == 38)
         {
-            if (gdata_main_quest_flag == 145)
+            if (game_data.quest_flags.main_quest == 145)
             {
                 sceneid = 70;
                 do_play_scene();
-                gdata_main_quest_flag = 150;
+                game_data.quest_flags.main_quest = 150;
             }
         }
         if (game_data.current_dungeon_level == 42)
         {
-            if (gdata_main_quest_flag == 150)
+            if (game_data.quest_flags.main_quest == 150)
             {
                 sceneid = 90;
                 do_play_scene();
-                gdata_main_quest_flag = 160;
+                game_data.quest_flags.main_quest = 160;
             }
         }
     }
@@ -3222,7 +3225,7 @@ label_1744_internal:
         tc = chara_find(222);
         if (tc != 0)
         {
-            if (gdata_pael_and_her_mom >= 10)
+            if (game_data.quest_flags.pael_and_her_mom >= 10)
             {
                 cdata[tc].image = 360;
                 cdata[tc].portrait = -1;
@@ -3252,11 +3255,11 @@ label_1744_internal:
     }
     if (game_data.current_map == mdata_t::MapId::vernis)
     {
-        if (gdata_main_quest_flag == 0)
+        if (game_data.quest_flags.main_quest == 0)
         {
             sceneid = 1;
             do_play_scene();
-            gdata_main_quest_flag = 9;
+            game_data.quest_flags.main_quest = 9;
         }
         if (gdata_has_not_been_to_vernis == 0)
         {
@@ -3266,26 +3269,26 @@ label_1744_internal:
     }
     if (game_data.current_map == mdata_t::MapId::palmia)
     {
-        if (gdata_main_quest_flag == 30)
+        if (game_data.quest_flags.main_quest == 30)
         {
             sceneid = 4;
             do_play_scene();
-            gdata_main_quest_flag = 40;
+            game_data.quest_flags.main_quest = 40;
         }
-        if (gdata_main_quest_flag == 100)
+        if (game_data.quest_flags.main_quest == 100)
         {
             sceneid = 25;
             do_play_scene();
-            gdata_main_quest_flag = 105;
+            game_data.quest_flags.main_quest = 105;
         }
     }
     if (game_data.current_map == mdata_t::MapId::north_tyris)
     {
-        if (gdata_main_quest_flag == 180)
+        if (game_data.quest_flags.main_quest == 180)
         {
             sceneid = 100;
             do_play_scene();
-            gdata_main_quest_flag = 200;
+            game_data.quest_flags.main_quest = 200;
             game_data.date.year += 3;
         }
     }
@@ -3346,7 +3349,7 @@ label_1744_internal:
     txt_conv();
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        if (gdata_main_quest_flag != 0)
+        if (game_data.quest_flags.main_quest != 0)
         {
             if (chara_find(33) != 0)
             {
@@ -3360,7 +3363,7 @@ label_1744_internal:
     }
     if (game_data.current_map == mdata_t::MapId::palmia)
     {
-        if (gdata_main_quest_flag >= 90)
+        if (game_data.quest_flags.main_quest >= 90)
         {
             if (chara_find(80) != 0)
             {

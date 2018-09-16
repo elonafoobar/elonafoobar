@@ -1004,7 +1004,7 @@ int damage_hp(
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.fool"));
                         snd(51);
-                        gdata_magic_stone_of_fool = 1;
+                        game_data.quest_flags.magic_stone_of_fool = 1;
                     }
                     if (victim.id == 143)
                     {
@@ -1012,7 +1012,7 @@ int damage_hp(
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.king"));
                         snd(51);
-                        gdata_magic_stone_of_king = 1;
+                        game_data.quest_flags.magic_stone_of_king = 1;
                     }
                     if (victim.id == 144)
                     {
@@ -1020,21 +1020,21 @@ int damage_hp(
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.sage"));
                         snd(51);
-                        gdata_magic_stone_of_sage = 1;
+                        game_data.quest_flags.magic_stone_of_sage = 1;
                     }
                     if (victim.id == 242)
                     {
-                        if (gdata_novice_knight < 1000)
+                        if (game_data.quest_flags.novice_knight < 1000)
                         {
-                            gdata_novice_knight = 2;
+                            game_data.quest_flags.novice_knight = 2;
                             quest_update_journal_msg();
                         }
                     }
                     if (victim.id == 257)
                     {
-                        if (gdata_pyramid_trial < 1000)
+                        if (game_data.quest_flags.pyramid_trial < 1000)
                         {
-                            gdata_pyramid_trial = 1000;
+                            game_data.quest_flags.pyramid_trial = 1000;
                             quest_update_journal_msg();
                             txt(i18n::s.get("core.locale.quest.completed"));
                             snd(51);
@@ -1042,9 +1042,9 @@ int damage_hp(
                     }
                     if (victim.id == 300)
                     {
-                        if (gdata_minotaur_king < 1000)
+                        if (game_data.quest_flags.minotaur_king < 1000)
                         {
-                            gdata_minotaur_king = 2;
+                            game_data.quest_flags.minotaur_king = 2;
                             quest_update_journal_msg();
                         }
                     }

@@ -4953,7 +4953,7 @@ TurnResult exit_map()
                     if (area_data[game_data.current_map].id
                         == mdata_t::MapId::pyramid)
                     {
-                        if (gdata_pyramid_trial == 0)
+                        if (game_data.quest_flags.pyramid_trial == 0)
                         {
                             txt(
                                 i18n::s.get("core.locale.action.exit_map.no_"
@@ -6764,7 +6764,7 @@ void map_proc_special_events()
             if (gdata_duration_of_kamikaze_attack == 250)
             {
                 quest_update_journal_msg();
-                gdata_kamikaze_attack = 3;
+                game_data.quest_flags.kamikaze_attack = 3;
                 txtef(9);
                 txt(i18n::s.get(
                     "core.locale.misc.quest.kamikaze_attack.message"));
@@ -15549,15 +15549,17 @@ void weather_changes()
         {
             supply_income();
         }
-        if (gdata_pael_and_her_mom == 1 || gdata_pael_and_her_mom == 3
-            || gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7
-            || gdata_pael_and_her_mom == 9)
+        if (game_data.quest_flags.pael_and_her_mom == 1
+            || game_data.quest_flags.pael_and_her_mom == 3
+            || game_data.quest_flags.pael_and_her_mom == 5
+            || game_data.quest_flags.pael_and_her_mom == 7
+            || game_data.quest_flags.pael_and_her_mom == 9)
         {
             if (area_data[game_data.current_map].id != mdata_t::MapId::noyel)
             {
                 if (rnd(20) == 0)
                 {
-                    ++gdata_pael_and_her_mom;
+                    ++game_data.quest_flags.pael_and_her_mom;
                     quest_update_journal_msg();
                 }
             }
@@ -15798,7 +15800,7 @@ void play_the_last_scene_again()
         conquer_lesimas();
         return;
     }
-    gdata_main_quest_flag = 180;
+    game_data.quest_flags.main_quest = 180;
     update_screen();
 }
 

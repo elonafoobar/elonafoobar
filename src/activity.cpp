@@ -1825,7 +1825,7 @@ void spot_mining_or_wall()
             }
         }
         if (f == 1
-            || (gdata_tutorial_flag == 2
+            || (game_data.quest_flags.tutorial == 2
                 && game_data.current_map == mdata_t::MapId::your_home))
         {
             rtval = 0;
@@ -1850,14 +1850,14 @@ void spot_mining_or_wall()
             snd(45);
             BreakingAnimation({refx, refy}).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
-            if (gdata_tutorial_flag == 2
+            if (game_data.quest_flags.tutorial == 2
                 && game_data.current_map == mdata_t::MapId::your_home)
             {
                 flt();
                 itemcreate(-1, 208, digx, digy, 0);
                 inv[ci].curse_state = CurseState::cursed;
                 txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
-                gdata_tutorial_flag = 3;
+                game_data.quest_flags.tutorial = 3;
             }
             else if (
                 rtval != 0 && game_data.current_map != mdata_t::MapId::shelter_)

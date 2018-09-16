@@ -2305,7 +2305,7 @@ TurnResult do_use_command()
         }
         if (cdata.player().position.x != 33 || cdata.player().position.y != 16)
         {
-            if (gdata_red_blossom_in_palmia == 1)
+            if (game_data.quest_flags.red_blossom_in_palmia == 1)
             {
                 txt(i18n::s.get("core.locale.action.use.nuke.not_quest_goal"));
                 ELONA_YES_NO_PROMPT();
@@ -2912,28 +2912,28 @@ TurnResult do_use_stairs_command(int val0)
         f = 0;
         if (game_data.current_dungeon_level == 3)
         {
-            if (gdata_main_quest_flag >= 65)
+            if (game_data.quest_flags.main_quest >= 65)
             {
                 f = 1;
             }
         }
         if (game_data.current_dungeon_level == 17)
         {
-            if (gdata_main_quest_flag >= 115)
+            if (game_data.quest_flags.main_quest >= 115)
             {
                 f = 1;
             }
         }
         if (game_data.current_dungeon_level == 25)
         {
-            if (gdata_main_quest_flag >= 125)
+            if (game_data.quest_flags.main_quest >= 125)
             {
                 f = 1;
             }
         }
         if (game_data.current_dungeon_level == 44)
         {
-            if (gdata_main_quest_flag >= 125)
+            if (game_data.quest_flags.main_quest >= 125)
             {
                 f = 1;
             }

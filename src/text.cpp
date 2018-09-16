@@ -1095,35 +1095,43 @@ void quest_update_main_quest_journal()
     int progress;
 
     noteadd("@QM[" + i18n::s.get("core.locale.quest.journal.main.title") + "]");
-    if (gdata_main_quest_flag >= 0 && gdata_main_quest_flag < 30)
+    if (game_data.quest_flags.main_quest >= 0
+        && game_data.quest_flags.main_quest < 30)
     {
         progress = 0;
     }
-    if (gdata_main_quest_flag >= 30 && gdata_main_quest_flag < 50)
+    if (game_data.quest_flags.main_quest >= 30
+        && game_data.quest_flags.main_quest < 50)
     {
         progress = 1;
     }
-    if (gdata_main_quest_flag >= 50 && gdata_main_quest_flag < 60)
+    if (game_data.quest_flags.main_quest >= 50
+        && game_data.quest_flags.main_quest < 60)
     {
         progress = 2;
     }
-    if (gdata_main_quest_flag >= 60 && gdata_main_quest_flag < 100)
+    if (game_data.quest_flags.main_quest >= 60
+        && game_data.quest_flags.main_quest < 100)
     {
         progress = 3;
     }
-    if (gdata_main_quest_flag >= 100 && gdata_main_quest_flag < 110)
+    if (game_data.quest_flags.main_quest >= 100
+        && game_data.quest_flags.main_quest < 110)
     {
         progress = 4;
     }
-    if (gdata_main_quest_flag >= 110 && gdata_main_quest_flag < 125)
+    if (game_data.quest_flags.main_quest >= 110
+        && game_data.quest_flags.main_quest < 125)
     {
         progress = 5;
     }
-    if (gdata_main_quest_flag >= 125 && gdata_main_quest_flag < 180)
+    if (game_data.quest_flags.main_quest >= 125
+        && game_data.quest_flags.main_quest < 180)
     {
         progress = 6;
     }
-    if (gdata_main_quest_flag >= 180 && gdata_main_quest_flag < 1000)
+    if (game_data.quest_flags.main_quest >= 180
+        && game_data.quest_flags.main_quest < 1000)
     {
         progress = 7;
     }
@@ -1144,10 +1152,10 @@ void append_subquest_journal(int val0)
             "@QM[" + i18n::s.get("core.locale.quest.journal.sub.title") + "]");
     }
     p = 0;
-    if (gdata_putit_attacks != 0)
+    if (game_data.quest_flags.putit_attacks != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.putit_attacks.title");
-        p = gdata_putit_attacks;
+        p = game_data.quest_flags.putit_attacks;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1181,10 +1189,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_thieves_hideout != 0)
+    if (game_data.quest_flags.thieves_hideout != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.thieves_hideout.title");
-        p = gdata_thieves_hideout;
+        p = game_data.quest_flags.thieves_hideout;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1218,10 +1226,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_puppys_cave != 0)
+    if (game_data.quest_flags.puppys_cave != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.puppys_cave.title");
-        p = gdata_puppys_cave;
+        p = game_data.quest_flags.puppys_cave;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1244,10 +1252,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_nightmare != 0)
+    if (game_data.quest_flags.nightmare != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.nightmare.title");
-        p = gdata_nightmare;
+        p = game_data.quest_flags.nightmare;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1292,10 +1300,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_pael_and_her_mom != 0)
+    if (game_data.quest_flags.pael_and_her_mom != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.pael_and_her_mom.title");
-        p = gdata_pael_and_her_mom;
+        p = game_data.quest_flags.pael_and_her_mom;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1417,10 +1425,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_wife_collector != 0)
+    if (game_data.quest_flags.wife_collector != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.wife_collector.title");
-        p = gdata_wife_collector;
+        p = game_data.quest_flags.wife_collector;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1443,10 +1451,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_cat_house != 0)
+    if (game_data.quest_flags.cat_house != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.cat_house.title");
-        p = gdata_cat_house;
+        p = game_data.quest_flags.cat_house;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1480,10 +1488,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_defense_line != 0)
+    if (game_data.quest_flags.defense_line != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.defense_line.title");
-        p = gdata_defense_line;
+        p = game_data.quest_flags.defense_line;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1528,10 +1536,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_novice_knight != 0)
+    if (game_data.quest_flags.novice_knight != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.novice_knight.title");
-        p = gdata_novice_knight;
+        p = game_data.quest_flags.novice_knight;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1565,10 +1573,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_kamikaze_attack != 0)
+    if (game_data.quest_flags.kamikaze_attack != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.kamikaze_attack.title");
-        p = gdata_kamikaze_attack;
+        p = game_data.quest_flags.kamikaze_attack;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1613,10 +1621,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_mias_dream != 0)
+    if (game_data.quest_flags.mias_dream != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.mias_dream.title");
-        p = gdata_mias_dream;
+        p = game_data.quest_flags.mias_dream;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1639,10 +1647,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_rare_books != 0)
+    if (game_data.quest_flags.rare_books != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.rare_books.title");
-        p = gdata_rare_books;
+        p = game_data.quest_flags.rare_books;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1665,10 +1673,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_pyramid_trial != 0)
+    if (game_data.quest_flags.pyramid_trial != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.pyramid_trial.title");
-        p = gdata_pyramid_trial;
+        p = game_data.quest_flags.pyramid_trial;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1691,11 +1699,11 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_red_blossom_in_palmia != 0)
+    if (game_data.quest_flags.red_blossom_in_palmia != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.red_blossom_in_palmia.title");
-        p = gdata_red_blossom_in_palmia;
+        p = game_data.quest_flags.red_blossom_in_palmia;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1731,11 +1739,11 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_ambitious_scientist != 0)
+    if (game_data.quest_flags.ambitious_scientist != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.ambitious_scientist.title");
-        p = gdata_ambitious_scientist;
+        p = game_data.quest_flags.ambitious_scientist;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1749,23 +1757,24 @@ void append_subquest_journal(int val0)
     if (val0 == 0)
     {
         if (p
-            == gdata_ambitious_scientist * (gdata_ambitious_scientist < 6)
-                + (gdata_ambitious_scientist == 0))
+            == game_data.quest_flags.ambitious_scientist
+                    * (game_data.quest_flags.ambitious_scientist < 6)
+                + (game_data.quest_flags.ambitious_scientist == 0))
         {
             s1 = i18n::s.get_enum(
                 "core.locale.quest.journal.sub.ambitious_scientist.progress",
                 0,
-                (6 - gdata_ambitious_scientist));
+                (6 - game_data.quest_flags.ambitious_scientist));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
     }
     p = 0;
-    if (gdata_sewer_sweeping != 0)
+    if (game_data.quest_flags.sewer_sweeping != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.sewer_sweeping.title");
-        p = gdata_sewer_sweeping;
+        p = game_data.quest_flags.sewer_sweeping;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1974,10 +1983,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_minotaur_king != 0)
+    if (game_data.quest_flags.minotaur_king != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.minotaur_king.title");
-        p = gdata_minotaur_king;
+        p = game_data.quest_flags.minotaur_king;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -2011,10 +2020,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_little_sister != 0)
+    if (game_data.quest_flags.little_sister != 0)
     {
         s = i18n::s.get("core.locale.quest.journal.sub.little_sister.title");
-        p = gdata_little_sister;
+        p = game_data.quest_flags.little_sister;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -2044,28 +2053,28 @@ void append_quest_item_journal()
 {
     noteadd(
         "[" + i18n::s.get("core.locale.quest.journal.item.old_talisman") + "]");
-    if (gdata_main_quest_flag >= 30)
+    if (game_data.quest_flags.main_quest >= 30)
     {
         noteadd(
             "["
             + i18n::s.get("core.locale.quest.journal.item.letter_to_the_king")
             + "]");
     }
-    if (gdata_magic_stone_of_fool != 0)
+    if (game_data.quest_flags.magic_stone_of_fool != 0)
     {
         noteadd(
             "["
             + i18n::s.get("core.locale.quest.journal.item.fools_magic_stone")
             + "]");
     }
-    if (gdata_magic_stone_of_king != 0)
+    if (game_data.quest_flags.magic_stone_of_king != 0)
     {
         noteadd(
             "["
             + i18n::s.get("core.locale.quest.journal.item.kings_magic_stone")
             + "]");
     }
-    if (gdata_magic_stone_of_sage != 0)
+    if (game_data.quest_flags.magic_stone_of_sage != 0)
     {
         noteadd(
             "["

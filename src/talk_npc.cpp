@@ -1093,7 +1093,7 @@ TalkResult talk_moyer_sell_paels_mom()
         modify_karma(cdata.player(), -20);
         snd(11);
         earn_gold(cdata.player(), 50000);
-        gdata_pael_and_her_mom = 1002;
+        game_data.quest_flags.pael_and_her_mom = 1002;
         rc = chara_find(222);
         cdata[rc].ai_calm = 3;
         cdata[rc].relationship = 0;
@@ -2288,7 +2288,7 @@ TalkResult talk_npc()
     }
     if (cdata[tc].character_role == 1015)
     {
-        if (gdata_pael_and_her_mom == 1000)
+        if (game_data.quest_flags.pael_and_her_mom == 1000)
         {
             rc = chara_find(222);
             if (rc != 0)
