@@ -1,5 +1,4 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local _ENV = _ENV
 local Chara = Elona.require("Chara")
 local FOV = Elona.require("FOV")
 local I18N = Elona.require("I18N")
@@ -39,7 +38,7 @@ function i18n.en.capitalize(str)
       return str
    end
 
-   return "todo"
+   return str:gsub("^%l", string.upper)
 end
 
 function i18n.en.he(chara, ignore_sight)
