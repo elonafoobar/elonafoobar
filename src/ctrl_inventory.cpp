@@ -436,7 +436,7 @@ label_20591:
             {
                 if (invctrl(1) == 0)
                 {
-                    if (gdata_current_map == mdata_t::MapId::lumiest)
+                    if (game_data.current_map == mdata_t::MapId::lumiest)
                     {
                         if (inv[cnt].id != 687 || inv[cnt].param2 == 0)
                         {
@@ -596,7 +596,7 @@ label_20591:
     {
         if (invctrl(1) == 0)
         {
-            if (gdata_current_map == mdata_t::MapId::lumiest)
+            if (game_data.current_map == mdata_t::MapId::lumiest)
             {
                 if (gdata_mages_guild_quota <= 0)
                 {
@@ -678,7 +678,7 @@ label_20591:
         {
             if (invctrl(1) == 0)
             {
-                if (gdata_current_map == mdata_t::MapId::lumiest)
+                if (game_data.current_map == mdata_t::MapId::lumiest)
                 {
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.guild.remaining",
@@ -1800,7 +1800,7 @@ label_2061_internal:
             if (invctrl(1) == 0)
             {
                 snd(100);
-                if (gdata_current_map == mdata_t::MapId::lumiest)
+                if (game_data.current_map == mdata_t::MapId::lumiest)
                 {
                     gdata_mages_guild_quota -=
                         (inv[ci].param1 + 1) * inv[ci].number();

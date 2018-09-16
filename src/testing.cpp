@@ -63,8 +63,8 @@ void start_in_map(int map, int level)
     elona::playerid = player_id;
     fs::remove_all(filesystem::dir::save(player_id));
 
-    gdata_current_map = map; // Debug map
-    gdata_current_dungeon_level = level;
+    game_data.current_map = map; // Debug map
+    game_data.current_dungeon_level = level;
     init_fovlist();
     initialize_map();
 }
@@ -76,12 +76,12 @@ void start_in_debug_map()
 
 void run_in_temporary_map(int map, int level, std::function<void()> f)
 {
-    gdata_previous_map2 = gdata_current_map;
-    gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata.player().position.x;
-    gdata_previous_y = cdata.player().position.y;
-    gdata_destination_map = map;
-    gdata_destination_dungeon_level = level;
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = map;
+    game_data.destination_dungeon_level = level;
     levelexitby = 2;
     exit_map();
 

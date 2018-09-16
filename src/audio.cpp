@@ -41,15 +41,15 @@ SharedId get_default_music()
 {
     optional<std::string> music_id = none;
 
-    if (area_data[gdata_current_map].type == mdata_t::MapType::field)
+    if (area_data[game_data.current_map].type == mdata_t::MapType::field)
     {
         return musicprev;
     }
-    if (area_data[gdata_current_map].type == mdata_t::MapType::town)
+    if (area_data[game_data.current_map].type == mdata_t::MapType::town)
     {
         music_id = "core.music:core.mcTown1"s;
     }
-    if (area_data[gdata_current_map].type == mdata_t::MapType::player_owned)
+    if (area_data[game_data.current_map].type == mdata_t::MapType::player_owned)
     {
         music_id = "core.music:core.mcHome"s;
     }
@@ -57,7 +57,7 @@ SharedId get_default_music()
     {
         music_id = **the_music_db.get_id_from_legacy(mdata_map_bgm);
     }
-    if (mdata_t::is_nefia(area_data[gdata_current_map].type))
+    if (mdata_t::is_nefia(area_data[game_data.current_map].type))
     {
         static const std::vector<std::string> choices = {
             "core.music:core.mcDungeon1",
@@ -68,19 +68,19 @@ SharedId get_default_music()
             "core.music:core.mcDungeon6"};
         music_id = choices[game_data.date.hour % 6];
     }
-    if (area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon
-        || area_data[gdata_current_map].id == mdata_t::MapId::the_void)
+    if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon
+        || area_data[game_data.current_map].id == mdata_t::MapId::the_void)
     {
-        if (gdata_current_dungeon_level
-            == area_data[gdata_current_map].deepest_level)
+        if (game_data.current_dungeon_level
+            == area_data[game_data.current_map].deepest_level)
         {
-            if (area_data[gdata_current_map].has_been_conquered != -1)
+            if (area_data[game_data.current_map].has_been_conquered != -1)
             {
                 music_id = "core.music:core.mcBoss"s;
             }
         }
     }
-    if (gdata_current_map == mdata_t::MapId::quest)
+    if (game_data.current_map == mdata_t::MapId::quest)
     {
         if (gdata_executing_immediate_quest_type == 1001)
         {
@@ -103,45 +103,45 @@ SharedId get_default_music()
             music_id = "core.music:core.mcArena";
         }
     }
-    if (gdata_current_map == mdata_t::MapId::arena)
+    if (game_data.current_map == mdata_t::MapId::arena)
     {
         music_id = "core.music:core.mcArena"s;
     }
-    if (gdata_current_map == mdata_t::MapId::larna)
+    if (game_data.current_map == mdata_t::MapId::larna)
     {
         music_id = "core.music:core.mcVillage1"s;
     }
-    if (gdata_current_map == mdata_t::MapId::port_kapul)
+    if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
         music_id = "core.music:core.mcTown2"s;
     }
-    if (gdata_current_map == mdata_t::MapId::lumiest)
+    if (game_data.current_map == mdata_t::MapId::lumiest)
     {
         music_id = "core.music:core.mcTown2"s;
     }
-    if (gdata_current_map == mdata_t::MapId::yowyn)
+    if (game_data.current_map == mdata_t::MapId::yowyn)
     {
         music_id = "core.music:core.mcVillage1"s;
     }
-    if (gdata_current_map == mdata_t::MapId::derphy)
+    if (game_data.current_map == mdata_t::MapId::derphy)
     {
         music_id = "core.music:core.mcTown3"s;
     }
-    if (gdata_current_map == mdata_t::MapId::palmia)
+    if (game_data.current_map == mdata_t::MapId::palmia)
     {
         music_id = "core.music:core.mcTown4"s;
     }
-    if (gdata_current_map == mdata_t::MapId::cyber_dome)
+    if (game_data.current_map == mdata_t::MapId::cyber_dome)
     {
         music_id = "core.music:core.mcTown5"s;
     }
-    if (gdata_current_map == mdata_t::MapId::noyel)
+    if (game_data.current_map == mdata_t::MapId::noyel)
     {
         music_id = "core.music:core.mcTown6"s;
     }
 
     if (!music_id
-        || area_data[gdata_current_map].type == mdata_t::MapType::world_map)
+        || area_data[game_data.current_map].type == mdata_t::MapType::world_map)
     {
         static const std::vector<std::string> choices = {
             "core.music:core.mcField1",
@@ -441,8 +441,8 @@ void sound_play_environmental()
         DSSETVOLUME(13, max_volume * 0.8);
     }
     else if (
-        gdata_current_dungeon_level == 1
-        || gdata_current_map == mdata_t::MapId::shelter_)
+        game_data.current_dungeon_level == 1
+        || game_data.current_map == mdata_t::MapId::shelter_)
     {
         DSSETVOLUME(13, max_volume * 0.2);
     }
@@ -450,7 +450,7 @@ void sound_play_environmental()
     {
         DSSETVOLUME(13, max_volume);
     }
-    if (gdata_current_map == mdata_t::MapId::port_kapul)
+    if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
         snd(78, true);
     }

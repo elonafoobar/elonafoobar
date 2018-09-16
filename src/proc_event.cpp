@@ -88,7 +88,7 @@ void proc_event()
             -1, 23, cdata.player().position.x, cdata.player().position.y);
         break;
     case 27:
-        if (gdata_current_map == mdata_t::MapId::show_house)
+        if (game_data.current_map == mdata_t::MapId::show_house)
         {
             break;
         }
@@ -196,11 +196,11 @@ void proc_event()
             cdata.player().position.y,
             rnd(3) + 2);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
+        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
         break;
     case 29:
     {
-        randomize(game_data.date.year + gdata_current_dungeon_level);
+        randomize(game_data.date.year + game_data.current_dungeon_level);
         int c = choice(std::initializer_list<int>{
             300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
             145, 242, 25, 257, 230, 202, 37, 33,  80,  332,
@@ -208,17 +208,17 @@ void proc_event()
         randomize();
         flt();
         fixlv = Quality::miracle;
-        initlv = clamp(gdata_current_dungeon_level / 4, 50, 250);
+        initlv = clamp(game_data.current_dungeon_level / 4, 50, 250);
         chara_create(-1, c, -3, 0);
         cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
         tc = rc;
-        area_data[gdata_current_map].has_been_conquered = tc;
+        area_data[game_data.current_map].has_been_conquered = tc;
         txtef(3);
         txt(i18n::s.get(
             "core.locale.event.guarded_by_lord",
-            mapname(gdata_current_map),
+            mapname(game_data.current_map),
             cdata[tc]));
     }
     break;
@@ -227,7 +227,7 @@ void proc_event()
         {
             chara_set_generation_filter();
             fixlv = Quality::miracle;
-            initlv = gdata_current_dungeon_level + rnd(5);
+            initlv = game_data.current_dungeon_level + rnd(5);
             int stat = chara_create(-1, 0, -3, 0);
             if (stat == 0)
             {
@@ -240,13 +240,13 @@ void proc_event()
             }
         }
         tc = rc;
-        area_data[gdata_current_map].has_been_conquered = tc;
+        area_data[game_data.current_map].has_been_conquered = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         txt(i18n::s.get("core.locale.event.reached_deepest_level"));
         txtef(3);
         txt(i18n::s.get(
             "core.locale.event.guarded_by_lord",
-            mapname(gdata_current_map),
+            mapname(game_data.current_map),
             cdata[tc]));
         break;
     case 5:
@@ -270,7 +270,7 @@ void proc_event()
             55,
             cdata.player().position.x,
             cdata.player().position.y,
-            clamp(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
+            clamp(rnd(3) + game_data.current_dungeon_level / 10, 1, 6));
         flt();
         itemcreate(
             -1, 239, cdata.player().position.x, cdata.player().position.y, 0);
@@ -280,19 +280,19 @@ void proc_event()
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
-        gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
+        gdata(74) = calcfame(0, game_data.current_dungeon_level * 30 + 200);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         cdata.player().fame += gdata(74);
-        if (gdata_current_map == mdata_t::MapId::the_void)
+        if (game_data.current_map == mdata_t::MapId::the_void)
         {
-            area_data[gdata_current_map].has_been_conquered = 0;
+            area_data[game_data.current_map].has_been_conquered = 0;
             gdata(186) = gdata(186) + 5;
             txt(i18n::s.get("core.locale.event.seal_broken"));
         }
         else
         {
-            area_data[gdata_current_map].has_been_conquered = -1;
+            area_data[game_data.current_map].has_been_conquered = -1;
         }
         break;
     case 16:
@@ -342,7 +342,7 @@ void proc_event()
         cdata.player().gold -= cdata.player().gold / 3;
         decfame(0, 10);
         chara_refresh(0);
-        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
+        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
         break;
     case 20:
         damage_hp(cdata[evdata1(evnum - (evnum != 0) * 1)], 9999, -11);
@@ -449,7 +449,7 @@ void proc_event()
                 if (cdata[i].state()
                         == Character::State::adventurer_in_other_map
                     && cdata[i].is_contracting() == 0
-                    && cdata[i].current_map != gdata_current_map
+                    && cdata[i].current_map != game_data.current_map
                     && cdata[i].relationship >= 0)
                 {
                     if (rnd(25) < p)
@@ -607,7 +607,7 @@ void proc_event()
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
                 if (cdata[cc].character_role != 0 || cdata[cc].relationship == 0
-                    || cdata[cc].current_map == gdata_current_map)
+                    || cdata[cc].current_map == game_data.current_map)
                 {
                     cdata[cc].emotion_icon = 2006;
                     int stat = chara_custom_talk(cc, 104);
@@ -810,7 +810,7 @@ void proc_event()
         }
         if (evdata1(evnum - (evnum != 0) * 1) == 33
             && evdata2(evnum - (evnum != 0) * 1) == 16
-            && gdata_current_map == mdata_t::MapId::palmia
+            && game_data.current_map == mdata_t::MapId::palmia
             && gdata_red_blossom_in_palmia == 1)
         {
             gdata_red_blossom_in_palmia = 2;

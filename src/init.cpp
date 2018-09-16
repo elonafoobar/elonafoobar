@@ -928,16 +928,16 @@ void initialize_debug_globals()
     gdata_next_shelter_serial_id = 100;
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
-    gdata_previous_map = -1;
+    game_data.previous_map = -1;
     game_data.random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
-    gdata_current_map = static_cast<int>(mdata_t::MapId::north_tyris);
-    gdata_current_dungeon_level = 0;
+    game_data.current_map = static_cast<int>(mdata_t::MapId::north_tyris);
+    game_data.current_dungeon_level = 0;
     game_data.entrance_type = 7;
     mapstartx = 22;
     mapstarty = 21;
-    gdata_current_map = static_cast<int>(mdata_t::MapId::vernis);
-    gdata_current_dungeon_level = 1;
+    game_data.current_map = static_cast<int>(mdata_t::MapId::vernis);
+    game_data.current_dungeon_level = 1;
     game_data.entrance_type = 7;
     mapstartx = 10;
     mapstarty = 23;
@@ -954,7 +954,7 @@ void initialize_debug_globals()
     gdata_played_scene = 50;
     gdata_has_not_been_to_vernis = 1;
     area_data[7].outer_map = 4;
-    gdata(850) = area_data[gdata_current_map].outer_map;
+    gdata(850) = area_data[game_data.current_map].outer_map;
     gdata_acquirable_feat_count = 2;
     gdata_save_count_of_little_sister = 1000;
     gdata_rights_to_succeed_to = 1000;
@@ -1227,11 +1227,11 @@ void initialize_world()
     game_data.date.minute = 10;
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
-    gdata_previous_map = -1;
+    game_data.previous_map = -1;
     gdata(850) = 4;
     ghelp = 1;
-    gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
-    gdata_current_dungeon_level = 1;
+    game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
+    game_data.current_dungeon_level = 1;
     game_data.entrance_type = 4;
     gdata_version = 1220;
     game_data.home_scale = 0;
@@ -1246,8 +1246,8 @@ void initialize_world()
 
 void initialize_testbed()
 {
-    gdata_current_map = 499;
-    gdata_current_dungeon_level = 2;
+    game_data.current_map = 499;
+    game_data.current_dungeon_level = 2;
 }
 
 void initialize_game()

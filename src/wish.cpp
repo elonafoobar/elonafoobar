@@ -731,7 +731,7 @@ bool process_wish()
     txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
 
     msgtemp = "";
-    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
+    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
     tcopy = 1;
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")

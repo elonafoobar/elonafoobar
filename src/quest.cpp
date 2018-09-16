@@ -79,9 +79,9 @@ int quest_targets_remaining()
 void quest_check()
 {
     int p_at_m119 = 0;
-    if (gdata_current_map == mdata_t::MapId::vernis)
+    if (game_data.current_map == mdata_t::MapId::vernis)
     {
-        if (gdata_current_dungeon_level == 3)
+        if (game_data.current_dungeon_level == 3)
         {
             if (quest_targets_remaining() == 0)
             {
@@ -92,7 +92,7 @@ void quest_check()
                 }
             }
         }
-        if (gdata_current_dungeon_level == 4)
+        if (game_data.current_dungeon_level == 4)
         {
             if (quest_targets_remaining() == 0)
             {
@@ -103,7 +103,7 @@ void quest_check()
                 }
             }
         }
-        if (gdata_current_dungeon_level == 5)
+        if (game_data.current_dungeon_level == 5)
         {
             if (quest_targets_remaining() == 0)
             {
@@ -115,9 +115,9 @@ void quest_check()
             }
         }
     }
-    if (gdata_current_map == mdata_t::MapId::yowyn)
+    if (game_data.current_map == mdata_t::MapId::yowyn)
     {
-        if (gdata_current_dungeon_level == 3)
+        if (game_data.current_dungeon_level == 3)
         {
             if (quest_targets_remaining() == 0)
             {
@@ -128,7 +128,7 @@ void quest_check()
                 }
             }
         }
-        if (gdata_current_dungeon_level == 4)
+        if (game_data.current_dungeon_level == 4)
         {
             if (quest_targets_remaining() == 0)
             {
@@ -140,9 +140,9 @@ void quest_check()
             }
         }
     }
-    if (gdata_current_map == mdata_t::MapId::lumiest)
+    if (game_data.current_map == mdata_t::MapId::lumiest)
     {
-        if (gdata_current_dungeon_level == 20)
+        if (game_data.current_dungeon_level == 20)
         {
             if (quest_targets_remaining() == 0)
             {
@@ -320,8 +320,8 @@ void quest_set_data(int val0)
         parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(qdata(11, rq)));
         s(11) = ""s + mapname(qdata(1, rq));
-        if (gdata_current_map == qdata(1, rq)
-            && gdata_current_dungeon_level == 1)
+        if (game_data.current_map == qdata(1, rq)
+            && game_data.current_dungeon_level == 1)
         {
             s(12) = ""s + cdatan(0, qdata(10, rq));
         }
@@ -458,7 +458,7 @@ void quest_on_map_initialize()
         {
             if (qdata(0, cnt) == cnt2)
             {
-                if (qdata(1, cnt) == gdata_current_map)
+                if (qdata(1, cnt) == game_data.current_map)
                 {
                     i = -1;
                     break;
@@ -470,7 +470,7 @@ void quest_on_map_initialize()
             break;
         }
         qdata(0, i) = cnt.index;
-        qdata(1, i) = gdata_current_map;
+        qdata(1, i) = game_data.current_map;
         qname(i) = cdatan(0, cnt.index);
         cnt.related_quest_id = i + 1;
         gdata_number_of_existing_quests = i + 1;
@@ -489,7 +489,7 @@ void quest_refresh_list()
         {
             continue;
         }
-        if (qdata(1, cnt) != gdata_current_map)
+        if (qdata(1, cnt) != game_data.current_map)
         {
             continue;
         }
@@ -566,7 +566,7 @@ int quest_generate()
         {
             qdata(10, rq) = i;
             qdata(11, rq) = i(1);
-            qdata(1, rq) = gdata_current_map;
+            qdata(1, rq) = game_data.current_map;
             rewardfix = 60;
             qdata(7, rq) = 5;
             qdata(3, rq) = 1011;
@@ -656,7 +656,7 @@ int quest_generate()
         while (1)
         {
             qdata(12, rq) = choice(asettown);
-            if (qdata(12, rq) != gdata_current_map)
+            if (qdata(12, rq) != game_data.current_map)
             {
                 break;
             }
@@ -666,8 +666,8 @@ int quest_generate()
         {
             rewardfix = 140
                 + dist(
-                      area_data[gdata_current_map].position.x,
-                      area_data[gdata_current_map].position.y,
+                      area_data[game_data.current_map].position.x,
+                      area_data[game_data.current_map].position.y,
                       area_data[p].position.x,
                       area_data[p].position.y)
                     * 2;
@@ -682,8 +682,8 @@ int quest_generate()
         {
             rewardfix = 130
                 + dist(
-                      area_data[gdata_current_map].position.x,
-                      area_data[gdata_current_map].position.y,
+                      area_data[game_data.current_map].position.x,
+                      area_data[game_data.current_map].position.y,
                       area_data[p].position.x,
                       area_data[p].position.y)
                     * 2;
@@ -694,22 +694,23 @@ int quest_generate()
         {
             rewardfix = 80
                 + dist(
-                      area_data[gdata_current_map].position.x,
-                      area_data[gdata_current_map].position.y,
+                      area_data[game_data.current_map].position.x,
+                      area_data[game_data.current_map].position.y,
                       area_data[p].position.x,
                       area_data[p].position.y)
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
         }
-        if (qdata(12, rq) == 33 || gdata_current_map == mdata_t::MapId::noyel)
+        if (qdata(12, rq) == 33
+            || game_data.current_map == mdata_t::MapId::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }
         return 0;
     }
     if (rnd(23) == 0
-        || (gdata_current_map == mdata_t::MapId::palmia && rnd(8) == 0))
+        || (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(sdata(183, 0) + 10),
@@ -728,7 +729,7 @@ int quest_generate()
         return 0;
     }
     if (rnd(30) == 0
-        || (gdata_current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
+        || (game_data.current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(cdata.player().level + 5) + rnd((cdata.player().fame / 800 + 1))
@@ -791,7 +792,7 @@ int quest_generate()
             }
             if (qdata(0, p) != 0)
             {
-                if (qdata(1, p) != gdata_current_map || 0)
+                if (qdata(1, p) != game_data.current_map || 0)
                 {
                     i = p;
                     break;
@@ -803,12 +804,12 @@ int quest_generate()
             p = qdata(1, i);
             rewardfix = 70
                 + dist(
-                      area_data[gdata_current_map].position.x,
-                      area_data[gdata_current_map].position.y,
+                      area_data[game_data.current_map].position.x,
+                      area_data[game_data.current_map].position.y,
                       area_data[p].position.x,
                       area_data[p].position.y)
                     * 2;
-            if (p == 33 || gdata_current_map == mdata_t::MapId::noyel)
+            if (p == 33 || game_data.current_map == mdata_t::MapId::noyel)
             {
                 rewardfix = rewardfix * 175 / 100;
             }
@@ -1008,7 +1009,7 @@ TurnResult quest_pc_died_during_immediate_quest()
     chara_gain_skill_exp(cdata.player(), 17, -500);
     chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;
-    gdata_current_dungeon_level = 0;
+    game_data.current_dungeon_level = 0;
     return TurnResult::exit_map;
 }
 
@@ -1018,7 +1019,7 @@ void quest_failed(int val0)
 {
     if (val0 == 1)
     {
-        area_data[gdata_previous_map2].winning_streak_in_arena = 0;
+        area_data[game_data.previous_map2].winning_streak_in_arena = 0;
         txt(i18n::s.get("core.locale.quest.you_were_defeated"));
         modrank(0, -100);
     }
@@ -1127,14 +1128,15 @@ void quest_team_victorious()
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         cdata.player().fame += gdata(74);
         modrank(1, 100, 2);
-        ++area_data[gdata_previous_map2].winning_streak_in_pet_arena;
-        if (area_data[gdata_previous_map2].winning_streak_in_pet_arena % 20
+        ++area_data[game_data.previous_map2].winning_streak_in_pet_arena;
+        if (area_data[game_data.previous_map2].winning_streak_in_pet_arena % 20
             == 0)
         {
             matgetmain(41, 1);
         }
         else if (
-            area_data[gdata_previous_map2].winning_streak_in_pet_arena % 5 == 0)
+            area_data[game_data.previous_map2].winning_streak_in_pet_arena % 5
+            == 0)
         {
             matgetmain(40, 1);
         }
@@ -1143,7 +1145,7 @@ void quest_team_victorious()
     {
         txtef(8);
         txt(i18n::s.get("core.locale.quest.arena.your_team_is_defeated"));
-        area_data[gdata_previous_map2].winning_streak_in_pet_arena = 0;
+        area_data[game_data.previous_map2].winning_streak_in_pet_arena = 0;
         modrank(1, -100);
         int stat = decfame(0, 60);
         p = stat;
@@ -1173,13 +1175,14 @@ void quest_all_targets_killed()
         cdata.player().fame += gdata(74);
         txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
         map_placeupstairs(mdata_map_width / 2, mdata_map_height / 2);
-        ++area_data[gdata_previous_map2].winning_streak_in_arena;
-        if (area_data[gdata_previous_map2].winning_streak_in_arena % 20 == 0)
+        ++area_data[game_data.previous_map2].winning_streak_in_arena;
+        if (area_data[game_data.previous_map2].winning_streak_in_arena % 20
+            == 0)
         {
             matgetmain(41, 1);
         }
         else if (
-            area_data[gdata_previous_map2].winning_streak_in_arena % 5 == 0)
+            area_data[game_data.previous_map2].winning_streak_in_arena % 5 == 0)
         {
             matgetmain(40, 1);
         }
@@ -1323,7 +1326,7 @@ void quest_complete()
     }
     qdata(3, rq) = 0;
     qdata(8, rq) = 0;
-    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
+    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
 }
 
 } // namespace elona

@@ -773,7 +773,7 @@ void calc_trade_goods_price()
     {
         trate(cnt) = 100;
     }
-    if (gdata_current_map == mdata_t::MapId::vernis)
+    if (game_data.current_map == mdata_t::MapId::vernis)
     {
         trate(0) = 130;
         trate(1) = 70;
@@ -782,7 +782,7 @@ void calc_trade_goods_price()
         trate(6) = 150;
         trate(7) = 120;
     }
-    if (gdata_current_map == mdata_t::MapId::port_kapul)
+    if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
         trate(0) = 65;
         trate(1) = 110;
@@ -792,7 +792,7 @@ void calc_trade_goods_price()
         trate(6) = 200;
         trate(7) = 150;
     }
-    if (gdata_current_map == mdata_t::MapId::palmia)
+    if (game_data.current_map == mdata_t::MapId::palmia)
     {
         trate(0) = 120;
         trate(2) = 75;
@@ -801,7 +801,7 @@ void calc_trade_goods_price()
         trate(6) = 110;
         trate(7) = 80;
     }
-    if (gdata_current_map == mdata_t::MapId::yowyn)
+    if (game_data.current_map == mdata_t::MapId::yowyn)
     {
         trate(0) = 120;
         trate(3) = 75;
@@ -809,7 +809,7 @@ void calc_trade_goods_price()
         trate(6) = 160;
         trate(7) = 100;
     }
-    if (gdata_current_map == mdata_t::MapId::derphy)
+    if (game_data.current_map == mdata_t::MapId::derphy)
     {
         trate(0) = 85;
         trate(3) = 70;
@@ -818,7 +818,7 @@ void calc_trade_goods_price()
         trate(6) = 130;
         trate(7) = 90;
     }
-    if (gdata_current_map == mdata_t::MapId::noyel)
+    if (game_data.current_map == mdata_t::MapId::noyel)
     {
         trate(1) = 175;
         trate(0) = 170;
@@ -828,7 +828,7 @@ void calc_trade_goods_price()
         trate(6) = 75;
         trate(7) = 120;
     }
-    if (gdata_current_map == mdata_t::MapId::lumiest)
+    if (game_data.current_map == mdata_t::MapId::lumiest)
     {
         trate(1) = 145;
         trate(0) = 130;

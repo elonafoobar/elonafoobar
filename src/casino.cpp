@@ -394,7 +394,7 @@ void casino_random_site()
     if (atxid(1) == 0)
     {
         atxid(1) = 3;
-        atxlv = gdata_current_dungeon_level;
+        atxlv = game_data.current_dungeon_level;
         if (mdata_map_type == mdata_t::MapType::dungeon)
         {
             atxid(1) = 1;
@@ -963,7 +963,7 @@ bool casino_blackjack()
     stake = rtval;
     winrow = 0;
     cardround = 0;
-    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
+    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
     for (int cnt = 0;; ++cnt)
     {
         screenupdate = -1;

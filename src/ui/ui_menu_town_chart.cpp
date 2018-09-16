@@ -32,7 +32,7 @@ void UIMenuTownChart::update()
     render_hud();
     windowshadow = 1;
 
-    _city = area_data[gdata_current_map].quest_town_id;
+    _city = area_data[game_data.current_map].quest_town_id;
     lv = 0;
 
     cs_bk = -1;
@@ -56,8 +56,8 @@ void UIMenuTownChart::draw()
     int j0 = 0;
     int n = 0;
     cs_listbk();
-    if (area_data[gdata_current_map].quest_town_id == 0
-        || gdata_current_dungeon_level != 1)
+    if (area_data[game_data.current_map].quest_town_id == 0
+        || game_data.current_dungeon_level != 1)
     {
         font(14 - en * 2);
         pos(wx + 40, wy + 50);
@@ -68,7 +68,7 @@ void UIMenuTownChart::draw()
         display_topic(
             i18n::s.get(
                 "core.locale.ui.town_chart.chart",
-                mapname(area_data[gdata_current_map].id)),
+                mapname(area_data[game_data.current_map].id)),
             wx + 40,
             wy + 34);
         for (int cnt = 0;; ++cnt)

@@ -86,8 +86,8 @@ int modpiety(int prm_1035)
         txt(i18n::s.get("core.locale.god.indifferent"));
         return 0;
     }
-    cdata.player().piety_point +=
-        prm_1035 / (1 + (gdata_current_map == mdata_t::MapId::show_house) * 9);
+    cdata.player().piety_point += prm_1035
+        / (1 + (game_data.current_map == mdata_t::MapId::show_house) * 9);
     return 1;
 }
 
@@ -99,7 +99,7 @@ void set_npc_religion()
     {
         return;
     }
-    randomize(game_data.random_seed + gdata_current_map);
+    randomize(game_data.random_seed + game_data.current_map);
     cdata[tc].god_id = core_god::int2godid(rnd(8));
     randomize();
     if (cdata[tc].god_id.empty() || rnd(4) == 0)

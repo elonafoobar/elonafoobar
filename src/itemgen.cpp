@@ -369,8 +369,8 @@ int do_create_item(int slot, int x, int y)
 
     if (reftype == 72000)
     {
-        inv[ci].param1 = gdata_current_dungeon_level
-                * (gdata_current_map != mdata_t::MapId::shelter_)
+        inv[ci].param1 = game_data.current_dungeon_level
+                * (game_data.current_map != mdata_t::MapId::shelter_)
             + 5;
         if (inv[ci].id == 283)
         {
@@ -381,8 +381,8 @@ int do_create_item(int slot, int x, int y)
             inv[ci].param1 = cdata.player().level;
         }
         inv[ci].param2 =
-            rnd(std::abs(gdata_current_dungeon_level)
-                    * (gdata_current_map != mdata_t::MapId::shelter_)
+            rnd(std::abs(game_data.current_dungeon_level)
+                    * (game_data.current_map != mdata_t::MapId::shelter_)
                 + 1);
         if (inv[ci].id == 284 || inv[ci].id == 283)
         {

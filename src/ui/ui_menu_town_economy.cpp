@@ -135,8 +135,8 @@ static void _draw_economy_details()
 
 static bool _map_has_economy()
 {
-    return area_data[gdata_current_map].quest_town_id != 0
-        && gdata_current_dungeon_level == 1;
+    return area_data[game_data.current_map].quest_town_id != 0
+        && game_data.current_dungeon_level == 1;
 }
 
 void UIMenuTownEconomy::draw()

@@ -25,7 +25,7 @@ static void _trainer_get_gainable_skills()
     ++dbmax;
     dblist(0, dbmax) = 173;
     ++dbmax;
-    if (gdata_current_map == mdata_t::MapId::yowyn)
+    if (game_data.current_map == mdata_t::MapId::yowyn)
     {
         dblist(0, dbmax) = 154;
         ++dbmax;
@@ -46,7 +46,7 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 153;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::MapId::vernis)
+    if (game_data.current_map == mdata_t::MapId::vernis)
     {
         dblist(0, dbmax) = 178;
         ++dbmax;
@@ -63,7 +63,7 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 158;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::MapId::palmia)
+    if (game_data.current_map == mdata_t::MapId::palmia)
     {
         dblist(0, dbmax) = 151;
         ++dbmax;
@@ -84,7 +84,7 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 178;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::MapId::noyel)
+    if (game_data.current_map == mdata_t::MapId::noyel)
     {
         dblist(0, dbmax) = 181;
         ++dbmax;
@@ -101,9 +101,9 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 153;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::MapId::lumiest)
+    if (game_data.current_map == mdata_t::MapId::lumiest)
     {
-        if (gdata_current_dungeon_level == 1)
+        if (game_data.current_dungeon_level == 1)
         {
             dblist(0, dbmax) = 172;
             ++dbmax;
@@ -123,9 +123,9 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::MapId::lumiest)
+    if (game_data.current_map == mdata_t::MapId::lumiest)
     {
-        if (gdata_current_dungeon_level == 3)
+        if (game_data.current_dungeon_level == 3)
         {
             dblist(0, dbmax) = 172;
             ++dbmax;
@@ -145,9 +145,9 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::MapId::derphy)
+    if (game_data.current_map == mdata_t::MapId::derphy)
     {
-        if (gdata_current_dungeon_level == 1)
+        if (game_data.current_dungeon_level == 1)
         {
             dblist(0, dbmax) = 158;
             ++dbmax;
@@ -167,9 +167,9 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::MapId::derphy)
+    if (game_data.current_map == mdata_t::MapId::derphy)
     {
-        if (gdata_current_dungeon_level == 3)
+        if (game_data.current_dungeon_level == 3)
         {
             dblist(0, dbmax) = 300;
             ++dbmax;
@@ -183,9 +183,9 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::MapId::port_kapul)
+    if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
-        if (gdata_current_dungeon_level == 1)
+        if (game_data.current_dungeon_level == 1)
         {
             dblist(0, dbmax) = 156;
             ++dbmax;
@@ -201,9 +201,9 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::MapId::port_kapul)
+    if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
-        if (gdata_current_dungeon_level == 3)
+        if (game_data.current_dungeon_level == 3)
         {
             dblist(0, dbmax) = 153;
             ++dbmax;

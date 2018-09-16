@@ -12,7 +12,7 @@ namespace ui
 
 static bool _should_display_quest(int cnt)
 {
-    if (qdata(1, cnt) != gdata_current_map)
+    if (qdata(1, cnt) != game_data.current_map)
     {
         return false;
     }

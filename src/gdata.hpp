@@ -2,11 +2,6 @@
 
 #include "version.hpp"
 
-
-#define gdata_previous_map gdata(19)
-#define gdata_current_map gdata(20)
-#define gdata_current_dungeon_level gdata(22)
-
 #define gdata_next_shelter_serial_id gdata(27)
 #define gdata_seven_league_boot_effect gdata(28)
 #define gdata_protects_from_etherwind gdata(29)
@@ -14,13 +9,8 @@
 #define gdata_torch gdata(37)
 #define gdata_angband_flag gdata(38)
 #define gdata_number_of_learned_skills_by_trainer gdata(39)
+
 #define gdata_is_returning_or_escaping gdata(63)
-#define gdata_destination_map gdata(64)
-#define gdata_destination_dungeon_level gdata(65)
-#define gdata_previous_map2 gdata(66)
-#define gdata_previous_dungeon_level gdata(67)
-#define gdata_previous_x gdata(68)
-#define gdata_previous_y gdata(69)
 #define gdata_executing_immediate_quest_type gdata(70)
 #define gdata_executing_immediate_quest gdata(72)
 #define gdata_number_of_existing_quests gdata(75)
@@ -149,12 +139,18 @@ struct GameData
     int next_inventory_serial_id;
     int weather;
     int hours_until_weather_changes;
-    // int previous_map;
-    // int current_map;
-    // int current_dungeon_level;
+    int previous_map;
+    int current_map;
+    int current_dungeon_level;
     int home_scale;
     int charge_power;
     int entrance_type;
+    int destination_map;
+    int destination_dungeon_level;
+    int previous_map2;
+    int previous_dungeon_level;
+    int previous_x;
+    int previous_y;
 
     /**
      * Moves this struct's fields into `gdata` so they can be serialized, for

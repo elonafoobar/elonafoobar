@@ -250,31 +250,32 @@ void initialize_nefia_names()
 
 std::string maplevel(int)
 {
-    if (gdata_current_map == mdata_t::MapId::your_home)
+    if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        if (gdata_current_dungeon_level != 1)
+        if (game_data.current_dungeon_level != 1)
         {
-            if (gdata_current_dungeon_level > 0)
+            if (game_data.current_dungeon_level > 0)
             {
-                return u8"B."s + (gdata_current_dungeon_level - 1);
+                return u8"B."s + (game_data.current_dungeon_level - 1);
             }
             else
             {
-                return u8"L."s + (gdata_current_dungeon_level - 2) * -1;
+                return u8"L."s + (game_data.current_dungeon_level - 2) * -1;
             }
         }
     }
-    if (area_data[gdata_current_map].type != mdata_t::MapType::town)
+    if (area_data[game_data.current_map].type != mdata_t::MapType::town)
     {
-        if (area_data[gdata_current_map].id == mdata_t::MapId::lesimas
-            || area_data[gdata_current_map].id == mdata_t::MapId::random_dungeon
-            || area_data[gdata_current_map].id == mdata_t::MapId::quest
+        if (area_data[game_data.current_map].id == mdata_t::MapId::lesimas
+            || area_data[game_data.current_map].id
+                == mdata_t::MapId::random_dungeon
+            || area_data[game_data.current_map].id == mdata_t::MapId::quest
             || mdata_t::is_nefia(mdata_map_type))
         {
             return ""s
                 + cnvrank(
-                       (gdata_current_dungeon_level
-                        - area_data[gdata_current_map].danger_level + 1))
+                       (game_data.current_dungeon_level
+                        - area_data[game_data.current_map].danger_level + 1))
                 + i18n::s.get("core.locale.map.nefia.level");
         }
     }
@@ -1022,16 +1023,16 @@ void get_npc_talk()
                 break;
             }
         }
-        if (area_data[gdata_current_map].christmas_festival)
+        if (area_data[game_data.current_map].christmas_festival)
         {
-            if (gdata_current_map == mdata_t::MapId::noyel)
+            if (game_data.current_map == mdata_t::MapId::noyel)
             {
                 if (rnd(3))
                 {
                     p = instr(
                         buff,
                         0,
-                        u8"%FEST,"s + gdata_current_map + u8","s
+                        u8"%FEST,"s + game_data.current_map + u8","s
                             + i18n::s.get("core.locale.meta.tag"));
                     break;
                 }
@@ -1051,7 +1052,7 @@ void get_npc_talk()
             p = instr(
                 buff,
                 0,
-                u8"%AREA,"s + gdata_current_map + u8","s
+                u8"%AREA,"s + game_data.current_map + u8","s
                     + i18n::s.get("core.locale.meta.tag"));
             break;
         }

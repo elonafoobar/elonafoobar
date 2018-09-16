@@ -1537,7 +1537,7 @@ void update_scrolling_info()
         sy(0) = tlocy - scy;
         sy(1) = tlocy;
     }
-    if (gdata_current_map == mdata_t::MapId::pet_arena)
+    if (game_data.current_map == mdata_t::MapId::pet_arena)
     {
         sx(0) = cdata[camera].position.x - scx;
         sx(1) = cdata[camera].position.x;
@@ -1653,7 +1653,7 @@ void update_slight()
                 ++lx;
                 continue;
             }
-            if (gdata_current_map == mdata_t::MapId::pet_arena)
+            if (game_data.current_map == mdata_t::MapId::pet_arena)
             {
                 goto label_1430_internal;
             }
@@ -1715,7 +1715,7 @@ void ui_render_non_hud()
 {
     cell_draw();
 
-    if (gdata_current_map == mdata_t::MapId::pet_arena)
+    if (game_data.current_map == mdata_t::MapId::pet_arena)
     {
         highlight_characters_in_pet_arena();
     }
