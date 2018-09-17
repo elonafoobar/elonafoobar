@@ -3236,21 +3236,21 @@ label_1744_internal:
     {
         if (game_data.current_dungeon_level == 3)
         {
-            event_add(22, gdata_belongs_to_mages_guild);
+            event_add(22, game_data.guild.belongs_to_mages_guild);
         }
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::derphy)
     {
         if (game_data.current_dungeon_level == 3)
         {
-            event_add(22, gdata_belongs_to_thieves_guild);
+            event_add(22, game_data.guild.belongs_to_thieves_guild);
         }
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::port_kapul)
     {
         if (game_data.current_dungeon_level == 3)
         {
-            event_add(22, gdata_belongs_to_fighters_guild);
+            event_add(22, game_data.guild.belongs_to_fighters_guild);
         }
     }
     if (game_data.current_map == mdata_t::MapId::vernis)

@@ -453,15 +453,15 @@ void initialize_rankn()
 
 std::string guildname()
 {
-    if (gdata_belongs_to_mages_guild)
+    if (game_data.guild.belongs_to_mages_guild)
     {
         return i18n::s.get("core.locale.guild.mages.name");
     }
-    else if (gdata_belongs_to_fighters_guild)
+    else if (game_data.guild.belongs_to_fighters_guild)
     {
         return i18n::s.get("core.locale.guild.fighters.name");
     }
-    else if (gdata_belongs_to_thieves_guild)
+    else if (game_data.guild.belongs_to_thieves_guild)
     {
         return i18n::s.get("core.locale.guild.thieves.name");
     }
@@ -2226,11 +2226,11 @@ void check_kill(int prm_836, int prm_837)
             if (prm_837 >= 16)
             {
                 ++game_data.kill_count;
-                if (cdata[prm_837].id == gdata_fighters_guild_target)
+                if (cdata[prm_837].id == game_data.guild.fighters_guild_target)
                 {
-                    if (gdata_fighters_guild_quota > 0)
+                    if (game_data.guild.fighters_guild_quota > 0)
                     {
-                        --gdata_fighters_guild_quota;
+                        --game_data.guild.fighters_guild_quota;
                     }
                 }
                 if (cdata[prm_837].original_relationship >= 0)
@@ -12095,16 +12095,16 @@ int pick_up_item()
                 txt(i18n::s.get(
                     "core.locale.action.pick_up.you_sell_stolen",
                     itemname(ti, in)));
-                if (gdata_thieves_guild_quota > 0)
+                if (game_data.guild.thieves_guild_quota > 0)
                 {
-                    gdata_thieves_guild_quota -= sellgold;
-                    if (gdata_thieves_guild_quota < 0)
+                    game_data.guild.thieves_guild_quota -= sellgold;
+                    if (game_data.guild.thieves_guild_quota < 0)
                     {
-                        gdata_thieves_guild_quota = 0;
+                        game_data.guild.thieves_guild_quota = 0;
                     }
                     txt(i18n::s.get(
                         "core.locale.action.pick_up.thieves_guild_quota",
-                        gdata_thieves_guild_quota));
+                        game_data.guild.thieves_guild_quota));
                 }
             }
             snd(11);

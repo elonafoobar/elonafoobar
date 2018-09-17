@@ -954,7 +954,7 @@ int calcitemvalue(int ci, int situation)
     {
         int max = ret / 2;
         ret = ret * 100 / (100 + sdata(156, 0));
-        if (gdata_belongs_to_mages_guild != 0)
+        if (game_data.guild.belongs_to_mages_guild != 0)
         {
             if (category == 54000)
             {
@@ -980,7 +980,7 @@ int calcitemvalue(int ci, int situation)
         }
         if (ibit(9, ci))
         {
-            if (gdata_belongs_to_thieves_guild == 0)
+            if (game_data.guild.belongs_to_thieves_guild == 0)
             {
                 ret /= 10;
             }
@@ -1248,7 +1248,7 @@ int calcidentifyvalue(int type)
     }
     cost = cost * 100 / (100 + sdata(156, 0) * 2);
 
-    return gdata_belongs_to_fighters_guild ? cost / 2 : cost;
+    return game_data.guild.belongs_to_fighters_guild ? cost / 2 : cost;
 }
 
 
@@ -1300,7 +1300,7 @@ int calcslavevalue(int pet)
 
 int calcrestorecost()
 {
-    return gdata_belongs_to_fighters_guild ? 250 : 500;
+    return game_data.guild.belongs_to_fighters_guild ? 250 : 500;
 }
 
 

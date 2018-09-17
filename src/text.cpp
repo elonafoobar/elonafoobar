@@ -1808,11 +1808,11 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_joining_mages_guild != 0)
+    if (game_data.guild.joining_mages_guild != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.joining_mages_guild.title");
-        p = gdata_joining_mages_guild;
+        p = game_data.guild.joining_mages_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1830,18 +1830,18 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.locale.quest.journal.sub.joining_mages_guild.progress",
                 0,
-                gdata_mages_guild_quota);
+                game_data.guild.mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
     }
     p = 0;
-    if (gdata_joining_thieves_guild != 0)
+    if (game_data.guild.joining_thieves_guild != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.joining_thieves_guild.title");
-        p = gdata_joining_thieves_guild;
+        p = game_data.guild.joining_thieves_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1865,11 +1865,11 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (gdata_joining_fighters_guild != 0)
+    if (game_data.guild.joining_fighters_guild != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.joining_fighters_guild.title");
-        p = gdata_joining_fighters_guild;
+        p = game_data.guild.joining_fighters_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1887,19 +1887,19 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.locale.quest.journal.sub.joining_fighters_guild.progress",
                 0,
-                gdata_fighters_guild_quota,
-                chara_refstr(gdata_fighters_guild_target, 2));
+                game_data.guild.fighters_guild_quota,
+                chara_refstr(game_data.guild.fighters_guild_target, 2));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
     }
     p = 0;
-    if (gdata_mages_guild_quota2 != 0)
+    if (game_data.guild.mages_guild_quota_recurring != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.quota_mages_guild.title");
-        p = gdata_mages_guild_quota2;
+        p = game_data.guild.mages_guild_quota_recurring;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1917,18 +1917,18 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.locale.quest.journal.sub.quota_mages_guild.progress",
                 0,
-                gdata_mages_guild_quota);
+                game_data.guild.mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
     }
     p = 0;
-    if (gdata_fighters_guild_quota2 != 0)
+    if (game_data.guild.fighters_guild_quota_recurring != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.quota_fighters_guild.title");
-        p = gdata_fighters_guild_quota2;
+        p = game_data.guild.fighters_guild_quota_recurring;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1946,19 +1946,19 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.locale.quest.journal.sub.quota_fighters_guild.progress",
                 0,
-                gdata_fighters_guild_quota,
-                chara_refstr(gdata_fighters_guild_target, 2));
+                game_data.guild.fighters_guild_quota,
+                chara_refstr(game_data.guild.fighters_guild_target, 2));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
     }
     p = 0;
-    if (gdata_thieves_guild_quota2 != 0)
+    if (game_data.guild.thieves_guild_quota_recurring != 0)
     {
         s = i18n::s.get(
             "core.locale.quest.journal.sub.quota_thieves_guild.title");
-        p = gdata_thieves_guild_quota2;
+        p = game_data.guild.thieves_guild_quota_recurring;
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1976,7 +1976,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.locale.quest.journal.sub.quota_thieves_guild.progress",
                 0,
-                gdata_thieves_guild_quota);
+                game_data.guild.thieves_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);

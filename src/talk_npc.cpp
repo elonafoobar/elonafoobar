@@ -2104,7 +2104,7 @@ TalkResult talk_npc()
     }
     if (cdata[tc].character_role == 1020)
     {
-        if (gdata_belongs_to_mages_guild != 0)
+        if (game_data.guild.belongs_to_mages_guild != 0)
         {
             ELONA_APPEND_RESPONSE(
                 55,

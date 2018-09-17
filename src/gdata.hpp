@@ -13,20 +13,7 @@
 #define gdata_holy_well_count gdata(260)
 #define gdata_duration_of_kamikaze_attack gdata(261)
 #define gdata_diastrophism_flag gdata(262)
-#define gdata_belongs_to_mages_guild gdata(263)
-#define gdata_belongs_to_fighters_guild gdata(264)
-#define gdata_belongs_to_thieves_guild gdata(265)
-#define gdata_mages_guild_quota gdata(266)
-#define gdata_fighters_guild_quota gdata(267)
-#define gdata_fighters_guild_target gdata(268)
-#define gdata_thieves_guild_quota gdata(269)
 
-#define gdata_joining_mages_guild gdata(466)
-#define gdata_joining_fighters_guild gdata(467)
-#define gdata_joining_thieves_guild gdata(468)
-#define gdata_mages_guild_quota2 gdata(469)
-#define gdata_fighters_guild_quota2 gdata(470)
-#define gdata_thieves_guild_quota2 gdata(471)
 #define gdata_ether_disease_speed gdata(800)
 #define gdata_left_turns_of_timestop gdata(801)
 #define gdata_ex_arena_level gdata(803)
@@ -97,6 +84,26 @@ struct QuestFlags
     int blue_capsule_drug;
 };
 
+struct GuildData
+{
+    int belongs_to_mages_guild;
+    int belongs_to_fighters_guild;
+    int belongs_to_thieves_guild;
+
+    int mages_guild_quota;
+    int fighters_guild_quota;
+    int fighters_guild_target;
+    int thieves_guild_quota;
+
+    int joining_mages_guild;
+    int joining_fighters_guild;
+    int joining_thieves_guild;
+
+    int mages_guild_quota_recurring;
+    int fighters_guild_quota_recurring;
+    int thieves_guild_quota_recurring;
+};
+
 /**
  * Global game data that is serialized. Replaces gdata.
  */
@@ -160,6 +167,7 @@ struct GameData
     int left_town_map;
 
     QuestFlags quest_flags;
+    GuildData guild;
 
     /**
      * Moves this struct's fields into `gdata` so they can be serialized,
