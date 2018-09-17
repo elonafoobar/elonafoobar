@@ -107,7 +107,6 @@ config {
 
         debug {
             wizard = false
-            noa_debug = false
         }
 
         message {

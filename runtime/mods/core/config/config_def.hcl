@@ -549,7 +549,6 @@ DOC
                 default = false
                 preload = true
             }
-            noa_debug = false
         }
     }
 }

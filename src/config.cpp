@@ -295,7 +295,6 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("anime.window_anime"s, bool, Config::instance().windowanime);
     CONFIG_OPTION(
         "balance.restock_interval"s, int, Config::instance().restock_interval);
-    CONFIG_OPTION("debug.noa_debug"s, bool, Config::instance().noadebug);
     CONFIG_OPTION("font.file"s, std::string, Config::instance().font_filename);
     CONFIG_OPTION("font.size_adjustment"s, int, sizefix);
     CONFIG_OPTION("font.vertical_offset"s, int, vfix);
