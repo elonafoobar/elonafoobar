@@ -75,7 +75,6 @@ public:
     bool net;
     bool netchat;
     bool netwish;
-    bool noadebug;
     bool objectshadow;
     std::string pcc_graphic_scale;
     int restock_interval;
