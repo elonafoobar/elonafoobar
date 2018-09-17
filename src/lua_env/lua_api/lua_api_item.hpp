@@ -14,6 +14,8 @@ bool has_enchantment(const LuaItemHandle, int);
 
 void remove(LuaItemHandle);
 
+std::string itemname(LuaItemHandle, int, bool);
+
 sol::optional<LuaItemHandle> create(const Position&, int, int);
 sol::optional<LuaItemHandle> create_xy(int, int, int, int);
 sol::optional<LuaItemHandle>

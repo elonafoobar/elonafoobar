@@ -10,6 +10,12 @@ namespace lua
 RegistryManager::RegistryManager(LuaEnv* lua)
 {
     lua_ = lua;
+    clear();
+}
+
+void RegistryManager::clear()
+{
+    native_initializers.clear();
     registry_env = sol::environment(
         *(lua_->get_state()), sol::create, lua_->get_state()->globals());
 

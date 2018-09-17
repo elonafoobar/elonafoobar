@@ -214,10 +214,13 @@ void LuaCharacter::bind(sol::state& lua)
         "position",
         &Character::position,
         "name",
+        sol::property([](Character& c) { return elona::name(c.index); }),
+        "basename",
         sol::property([](Character& c) { return elona::cdatan(0, c.index); }),
         "experience",
         &Character::experience,
-
+        "talk_type",
+        &Character::talk_type,
         "sex",
         sol::property(
             [](Character& c) {

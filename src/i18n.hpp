@@ -10,9 +10,9 @@
 #include "character.hpp"
 #include "filesystem.hpp"
 #include "hcl.hpp"
-#include "item.hpp"
 #include "log.hpp"
-#include "lua_env/api_manager.hpp"
+#include "lua_env/exported_function.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "optional.hpp"
 
@@ -25,6 +25,7 @@ namespace elona
 using I18NKey = std::string;
 
 struct Character;
+struct Item;
 
 
 namespace i18n
@@ -119,10 +120,42 @@ FormattableString fmt(const std::string& key_head, const Args&... key_tail)
     return fmt(key_head, {key_tail...});
 }
 
-inline bool ident_eq(std::string ident, int count)
+struct LocalizedText
+{
+    LocalizedText(hil::Context context)
+        : context(context)
+    {
+        has_function_call = false;
+
+        for (hil::Value value : context.hilParts)
+        {
+            if (value.is<hil::FunctionCall>())
+            {
+                has_function_call = true;
+                break;
+            }
+        }
+    }
+    hil::Context context;
+    bool has_function_call;
+};
+
+std::string space_if_needed();
+
+namespace detail
+{
+
+/**
+ * Does argument "_1" have argument index 1?
+ */
+inline bool arg_has_index(std::string ident, int count)
 {
     if (ident.size() == 2)
     {
+        if (ident[0] != '_')
+        {
+            return false;
+        }
         char c = ident[1];
         int c_as_digit = c - '0';
         if (c_as_digit == count)
@@ -133,30 +166,27 @@ inline bool ident_eq(std::string ident, int count)
     return false;
 }
 
-
 /**
- * NOTE: When using functions in inline HCL, only the first argument position
- * can have a substituted argument. For example, itemname(_1, 1) is valid, but
- * itemname(_1, _2) is not. This is because the formatting uses a variadic
- * parameter and each function has to be evaluated when looking at an individual
- * argument that is in the function's first argument position.
- *
- * This could be fixed by defining all the functions in Lua instead.
+ * For argument "_1", return argument index 1.
  */
-
-std::string format_builtins_argless(const hil::FunctionCall&);
-std::string format_builtins_bool(const hil::FunctionCall&, bool);
-std::string format_builtins_string(const hil::FunctionCall&, std::string);
-std::string format_builtins_integer(const hil::FunctionCall&, int);
-std::string format_builtins_character(
-    const hil::FunctionCall&,
-    const Character&);
-std::string format_builtins_item(const hil::FunctionCall&, const Item&);
-
-std::string space_if_needed();
-
-namespace detail
+inline optional<int> arg_index(std::string ident)
 {
+    if (ident.size() == 2)
+    {
+        if (ident[0] != '_')
+        {
+            return none;
+        }
+        char c = ident[1];
+        int c_as_digit = c - '0';
+        if (c_as_digit < 0 || c_as_digit > 9)
+        {
+            return none;
+        }
+        return c_as_digit;
+    }
+    return none;
+}
 
 template <typename Head = Character const&>
 std::string format_literal_type(Character const& c)
@@ -220,122 +250,178 @@ std::string format_literal_type(Head const& head)
     return std::to_string(head);
 }
 
-template <typename Head = const Character&>
-std::string format_function_type(
-    hil::FunctionCall const& func,
-    const Character& chara)
+template <typename Head = Item const&>
+void add_arg(sol::table& args, Item const& head)
 {
-    return format_builtins_character(func, chara);
+    args.add(lua::lua->get_handle_manager().get_handle(head));
 }
 
-template <typename Head = const Item&>
-std::string format_function_type(
-    hil::FunctionCall const& func,
-    const Item& item)
+template <typename Head = Character const&>
+void add_arg(sol::table& args, Character const& head)
 {
-    return format_builtins_item(func, item);
+    args.add(lua::lua->get_handle_manager().get_handle(head));
 }
 
-template <typename Head = const sol::object&>
-std::string format_function_type(
-    hil::FunctionCall const& func,
-    const sol::object& object)
+template <typename Head = const char* const&>
+void add_arg(sol::table& args, const char* const& head)
 {
-    if (object.is<bool>())
-    {
-        return format_builtins_bool(func, object.as<bool>());
-    }
-    else if (object.is<std::string>())
-    {
-        return format_builtins_string(func, object.as<std::string>());
-    }
-    else if (object.is<int>())
-    {
-        return format_builtins_integer(func, object.as<int>());
-    }
-    else if (object.is<sol::table>())
-    {
-        sol::table table = object.as<sol::table>();
-        if (lua::lua->get_handle_manager().handle_is<Character>(table))
-        {
-            auto& chara =
-                lua::lua->get_handle_manager().get_ref<Character>(table);
-            return format_builtins_character(func, chara);
-        }
-        else if (lua::lua->get_handle_manager().handle_is<Item>(table))
-        {
-            auto& item_ref =
-                lua::lua->get_handle_manager().get_ref<Item>(table);
-            return format_builtins_item(func, item_ref);
-        }
-    }
-
-    return "<unknown lua object (" + func.name + ")>";
+    args.add(std::string(head));
 }
 
-template <typename Head = bool>
-std::string format_function_type(
-    hil::FunctionCall const& func,
-    bool const& value)
+template <typename Head, typename... Tail>
+void add_arg(sol::table& args, Head const& head)
 {
-    return format_builtins_bool(func, value);
+    args.add(head);
 }
 
-template <typename Head = int>
-std::string format_function_type(
-    hil::FunctionCall const& func,
-    int const& value)
+inline int make_args(sol::table& args, int size)
 {
-    return format_builtins_integer(func, value);
-}
+    UNUSED(args);
 
-template <typename Head = std::string>
-std::string format_function_type(
-    hil::FunctionCall const& func,
-    std::string const& value)
-{
-    return format_builtins_string(func, value);
+    return size;
 }
 
 template <typename Head>
-std::string format_function_type(
-    hil::FunctionCall const& func,
-    Head const& head)
+int make_args(sol::table& args, int size, Head const& head)
 {
-    UNUSED(head);
-
-    return "<unknown function (" + func.name + ", unknown type)>";
+    add_arg(args, head);
+    return size + 1;
 }
 
+template <typename Head, typename... Tail>
+int make_args(sol::table& args, int size, Head const& head, Tail&&... tail)
+{
+    add_arg(args, head);
+    return make_args(args, size + 1, std::forward<Tail>(tail)...);
+}
+
+inline std::string run_i18n_function(
+    sol::protected_function& function,
+    sol::table& args)
+{
+    lua::lua->get_state()->set("_FUNCTION", function);
+    lua::lua->get_state()->set("_ARGS", args);
+    auto result = lua::lua->get_state()->safe_script(
+        "return _FUNCTION(table.unpack(_ARGS))");
+    lua::lua->get_state()->set("_FUNCTION", sol::lua_nil);
+    lua::lua->get_state()->set("_ARGS", sol::lua_nil);
+
+    if (!result.valid())
+    {
+        return "<error>";
+    }
+    else
+    {
+        auto text = result.get<sol::optional<std::string>>();
+        if (!text)
+        {
+            return "<invalid type>";
+        }
+        else
+        {
+            return *text;
+        }
+    }
+}
+
+inline std::string format_function_call(
+    const hil::FunctionCall& call,
+    sol::table& args,
+    int args_size)
+{
+    auto it = lua::lua->get_i18n_function_manager().find_function(call.name);
+    if (!it)
+    {
+        return "<unknown function " + call.name + ">";
+    }
+    sol::protected_function& function = *it;
+
+    // Create a new Lua table and push the arguments needed for the function
+    // call to it, then unpack the table when calling the function.
+    sol::table function_args = lua::lua->get_state()->create_table();
+    int i = 1;
+    for (const auto& arg : call.args)
+    {
+        if (arg.is<std::string>())
+        {
+            std::string ident = arg.as<std::string>();
+            if (auto index = arg_index(ident))
+            {
+                if (*index > 0 && *index <= args_size)
+                {
+                    function_args.set(i++, args[*index]);
+                }
+                else
+                {
+                    return "<unknown parameter "s + call.name + ", _" + *index
+                        + "/"s + args_size + ">"s;
+                }
+            }
+            else
+            {
+                return "<unknown argument "s + ident + ">"s;
+            }
+        }
+        else if (arg.is<bool>())
+        {
+            function_args.set(i++, arg.as<bool>());
+        }
+        else if (arg.is<int>())
+        {
+            function_args.set(i++, arg.as<int>());
+        }
+    }
+
+    return run_i18n_function(function, function_args);
+}
 
 template <typename... Tail>
-void fmt_internal(
+void fmt_internal_with_function(
     const hil::Context& ctxt,
-    int count,
-    std::vector<optional<std::string>>& formatted)
+    std::vector<optional<std::string>>& formatted,
+    Tail&&... tail)
 {
-    UNUSED(count);
+    sol::table args = lua::lua->get_state()->create_table();
+    int args_size = make_args(args, 0, std::forward<Tail>(tail)...);
 
     for (size_t i = 0; i < formatted.size(); i++)
     {
         hil::Value v = ctxt.hilParts.at(i);
-        if (v.is<hil::FunctionCall>())
+        if (v.is<std::string>())
         {
-            hil::FunctionCall func = v.as<hil::FunctionCall>();
-
-            if (func.args.size() == 0)
+            std::string ident = v.as<std::string>();
+            if (auto index = arg_index(ident))
             {
-                formatted.at(i) = format_builtins_argless(func);
+                if (*index > 0 && *index <= args_size)
+                {
+                    formatted.at(i) =
+                        format_literal_type(args[*index].get<sol::object>());
+                }
             }
+        }
+        else if (v.is<hil::FunctionCall>())
+        {
+            formatted.at(i) = format_function_call(
+                v.as<hil::FunctionCall>(), args, args_size);
         }
     }
 }
 
+template <typename... Tail>
+void fmt_internal_without_function(
+    const hil::Context& ctxt,
+    int arg_index,
+    std::vector<optional<std::string>>& formatted)
+{
+    UNUSED(ctxt);
+    UNUSED(arg_index);
+    UNUSED(formatted);
+}
 
 template <typename Head, typename... Tail>
-void fmt_internal(
+void fmt_internal_without_function(
     const hil::Context& ctxt,
-    int count,
+    int arg_index,
     std::vector<optional<std::string>>& formatted,
     Head const& head,
     Tail&&... tail)
@@ -343,44 +429,67 @@ void fmt_internal(
     for (size_t i = 0; i < formatted.size(); i++)
     {
         hil::Value v = ctxt.hilParts.at(i);
+        assert(!v.is<hil::FunctionCall>());
+
         if (v.is<std::string>())
         {
-            std::string ident = v.as<std::string>();
-            if (ident_eq(ident, count))
+            const std::string& arg_ident = v.as<std::string>();
+            if (arg_has_index(arg_ident, arg_index))
             {
+                // Substitute the argument at position "arg_index" into an
+                // interpolation like "${_1}"
                 formatted.at(i) = format_literal_type(head);
-            }
-        }
-        else if (v.is<hil::FunctionCall>())
-        {
-            hil::FunctionCall func = v.as<hil::FunctionCall>();
-
-            if (func.args.size() == 0)
-            {
-                formatted.at(i) = format_builtins_argless(func);
-            }
-            else if (func.args.at(0).is<std::string>())
-            {
-                std::string ident = func.args.at(0).as<std::string>();
-                if (ident_eq(ident, count))
-                {
-                    formatted.at(i) = format_function_type(func, head);
-                }
-            }
-            else if (func.args.at(0).is<bool>())
-            {
-                formatted.at(i) =
-                    format_builtins_bool(func, func.args.at(0).as<bool>());
-            }
-            else if (func.args.at(0).is<int>())
-            {
-                formatted.at(i) =
-                    format_builtins_integer(func, func.args.at(0).as<int>());
             }
         }
     }
 
-    fmt_internal(ctxt, count + 1, formatted, std::forward<Tail>(tail)...);
+    fmt_internal_without_function(
+        ctxt, arg_index + 1, formatted, std::forward<Tail>(tail)...);
+}
+
+template <typename... Tail>
+void fmt_internal(
+    const LocalizedText& localized,
+    std::vector<optional<std::string>>& formatted,
+    Tail&&... tail)
+{
+    if (localized.has_function_call)
+    {
+        // Slow case: Push all args into Lua and call formatting function
+        // registered in Lua.
+
+        // A system like gettext would be too brittle because there are many
+        // cases in the English translation where "is/are" are used depending on
+        // the plurality of an argument, and this did not map cleanly on the
+        // arguments of the Japanese translation. The original codebase also
+        // used functions like yourself(), itemname(), and many
+        // Japanese-specific sentence endings inside string interpolations that
+        // depend on the state of a character who is speaking.
+
+        // The result is the need to either pass every string fragment needed
+        // for a string in every language supported to each format string (which
+        // is infeasable as it makes mod localization far more complex), or use
+        // functions in localized string interpolations that operate on
+        // non-string arguments like characters/items.
+
+        // Each interpolation function is implemented in Lua and can take
+        // arguments of various types. The system is intended to support all the
+        // ways that strings were once constructed in C++ with inline
+        // interpolation, but externally.
+
+        fmt_internal_with_function(
+            localized.context, formatted, std::forward<Tail>(tail)...);
+    }
+    else
+    {
+        // Normal case: Use templated functions.
+
+        // This could be replaced with a word-reordering capable version of
+        // printf by converting the HIL string to a printf format string.
+
+        fmt_internal_without_function(
+            localized.context, 1, formatted, std::forward<Tail>(tail)...);
+    }
 }
 
 } // namespace detail
@@ -409,29 +518,18 @@ inline std::string fmt_interpolate_converted(
     return s;
 }
 
-template <typename Head, typename... Tail>
-std::string
-fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&... tail)
-{
-    if (ctxt.textParts.size() == 1)
-        return ctxt.textParts[0];
-
-    std::vector<optional<std::string>> formatted(ctxt.hilParts.size());
-    detail::fmt_internal(ctxt, 1, formatted, head, std::forward<Tail>(tail)...);
-
-    return fmt_interpolate_converted(ctxt, formatted);
-}
-
 template <typename... Tail>
-std::string fmt_with_context(const hil::Context& ctxt, Tail&&... tail)
+std::string fmt_with_context(const LocalizedText& localized, Tail&&... tail)
 {
-    if (ctxt.textParts.size() == 1)
-        return ctxt.textParts[0];
+    // If there is only text with no HIL interpolation, return the whole string.
+    if (localized.context.textParts.size() == 1)
+        return localized.context.textParts[0];
 
-    std::vector<optional<std::string>> formatted(ctxt.hilParts.size());
-    detail::fmt_internal(ctxt, 1, formatted, std::forward<Tail>(tail)...);
+    std::vector<optional<std::string>> formatted(
+        localized.context.hilParts.size());
+    detail::fmt_internal(localized, formatted, std::forward<Tail>(tail)...);
 
-    return fmt_interpolate_converted(ctxt, formatted);
+    return fmt_interpolate_converted(localized.context, formatted);
 }
 
 // For testing use
@@ -451,7 +549,8 @@ std::string fmt_hil(const std::string& hil, Tail&&... tail)
         return p.errorReason;
     }
 
-    return fmt_with_context(p.context, std::forward<Tail>(tail)...);
+    LocalizedText wrapped(p.context);
+    return fmt_with_context(wrapped, std::forward<Tail>(tail)...);
 }
 
 
@@ -484,7 +583,7 @@ public:
         storage.clear();
     }
 
-    optional<const hil::Context&> find_translation(const I18NKey& key)
+    optional<const LocalizedText&> find_translation(const I18NKey& key)
     {
         // In the unlikely event that a single locale key refers to
         // both a single string and a list, the string will be chosen.
@@ -714,7 +813,7 @@ private:
     /***
      * Storage for single pieces of localized texts.
      */
-    std::unordered_map<I18NKey, hil::Context> storage;
+    std::unordered_map<I18NKey, LocalizedText> storage;
 
     /***
      * Storage for lists of localized text.
@@ -722,7 +821,7 @@ private:
      * When retrieving text using a locale key referring to a list element,
      * the text will be chosen randomly.
      */
-    std::unordered_map<I18NKey, std::vector<hil::Context>> list_storage;
+    std::unordered_map<I18NKey, std::vector<LocalizedText>> list_storage;
 
     std::set<I18NKey> unknown_keys;
 

@@ -117,6 +117,8 @@ public:
         using namespace std::chrono;
         steady_clock::time_point begin = steady_clock::now();
 
+        clear();
+
         // Read tables of this format:
         // root_table[mod_name][data_id]
         for (const auto& root_pair : root_table)

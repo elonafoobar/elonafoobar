@@ -65,15 +65,18 @@ TEST_CASE("test format item", "[I18N: Formatting]")
 TEST_CASE("test format character by function", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
+    testing::set_japanese();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
+    REQUIRE(i18n::fmt_hil("${basename(_1)}: ${_2}", chara, 42) == u8"プチ: 42");
 }
 
 TEST_CASE("test format item by function", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
+    testing::set_japanese();
     Item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
 
     REQUIRE(i18n::fmt_hil("${itemname(_1)}", i) == u8"3個のプチトロ"s);

@@ -26,6 +26,11 @@ sol::optional<std::string> get_enum_property_optional(
     int,
     sol::variadic_args);
 
+void register_function(
+    const std::string& language,
+    const std::string& name,
+    sol::protected_function function);
+
 
 void bind(sol::table&);
 } // namespace I18N

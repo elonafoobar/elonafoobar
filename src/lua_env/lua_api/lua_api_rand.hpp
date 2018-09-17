@@ -14,6 +14,8 @@ bool one_in(int n);
 
 bool coinflip();
 
+sol::object choice(sol::table table);
+
 
 void bind(sol::table&);
 }; // namespace Rand

@@ -28,6 +28,13 @@ void Item::remove(LuaItemHandle handle)
     item_ref.remove();
 }
 
+std::string Item::itemname(LuaItemHandle handle, int number, bool needs_article)
+{
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    return elona::itemname(item_ref.index, number, needs_article ? 0 : 1);
+}
+
 sol::optional<LuaItemHandle>
 Item::create(const Position& position, int id, int number)
 {
@@ -81,6 +88,7 @@ void Item::bind(sol::table& api_table)
             Item::create_from_id_xy));
     LUA_API_BIND_FUNCTION(api_table, Item, remove);
     LUA_API_BIND_FUNCTION(api_table, Item, has_enchantment);
+    LUA_API_BIND_FUNCTION(api_table, Item, itemname);
 }
 
 } // namespace lua

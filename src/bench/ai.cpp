@@ -27,7 +27,7 @@ public:
         for (int i = 1; i < 10; i++)
         {
             chara_delete(i);
-            cdata[i].set_state(character::state_t::empty);
+            cdata[i].set_state(Character::State::empty);
         }
         testing::post_run();
     }
@@ -70,7 +70,7 @@ public:
         for (int i = 1; i < 10; i++)
         {
             chara_delete(i);
-            cdata[i].set_state(character::state_t::empty);
+            cdata[i].set_state(Character::State::empty);
         }
         testing::post_run();
     }

@@ -15,3 +15,8 @@ function one_in(n) end
 --- Returns true 50% of the time.
 -- @treturn bool true 50% of the time
 function coinflip() end
+
+--- Returns a random object from a table.
+-- @tparam t a table
+-- @treturn object an object from the table
+function choice(t) end

@@ -4,6 +4,7 @@
 #include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
+#include "i18n_function_manager.hpp"
 #include "mod_manager.hpp"
 #include "registry_manager.hpp"
 
@@ -18,6 +19,7 @@ class ExportManager;
 class ModManager;
 class HandleManager;
 class RegistryManager;
+class I18NFunctionManager;
 
 /***
  * Main singleton encapsulating various Lua subsystems. Delegates
@@ -58,6 +60,11 @@ public:
     HandleManager& get_handle_manager()
     {
         return *handle_mgr;
+    }
+
+    I18NFunctionManager& get_i18n_function_manager()
+    {
+        return *i18n_function_mgr;
     }
 
     ModManager& get_mod_manager()
@@ -101,6 +108,7 @@ private:
     std::unique_ptr<ExportManager> export_mgr;
     std::unique_ptr<HandleManager> handle_mgr;
     std::unique_ptr<RegistryManager> registry_mgr;
+    std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
 };
 
 extern std::unique_ptr<LuaEnv> lua;

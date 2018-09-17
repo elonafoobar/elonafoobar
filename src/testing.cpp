@@ -21,6 +21,8 @@ namespace testing
 const std::string save_dir = "tests/data/save";
 const std::string player_id = "sav_testbed";
 
+void reset_state();
+
 fs::path get_test_data_path()
 {
     return filesystem::dir::exe() / "tests" / "data";
@@ -51,6 +53,25 @@ void save_and_reload()
     elona::testing::reset_state();
     elona::firstturn = 1;
     load_save_data();
+}
+
+void load_translations(const std::string& hcl)
+{
+    i18n::s.clear();
+
+    std::stringstream ss(hcl);
+    i18n::s.load(ss, "test.hcl", "test");
+}
+
+void configure_lua()
+{
+    lua::lua.reset(new lua::LuaEnv());
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
+
+    sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
+    Testing.set_function("start_in_debug_map", start_in_debug_map);
+    Testing.set_function("reset_state", reset_state);
+    Testing.set_function("load_translations", load_translations);
 }
 
 void start_in_map(int map, int level)
@@ -91,25 +112,6 @@ void run_in_temporary_map(int map, int level, std::function<void()> f)
     exit_map();
 }
 
-void load_translations(const std::string& hcl)
-{
-    i18n::s.clear();
-
-    std::stringstream ss(hcl);
-    i18n::s.load(ss, "test.hcl", "test");
-}
-
-void configure_lua()
-{
-    lua::lua.reset(new lua::LuaEnv());
-    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
-
-    sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
-    Testing.set_function("start_in_debug_map", start_in_debug_map);
-    Testing.set_function("reset_state", reset_state);
-    Testing.set_function("load_translations", load_translations);
-}
-
 void pre_init()
 {
     log::initialize();
@@ -131,6 +133,8 @@ void pre_init()
     initialize_cat_db();
     configure_lua();
     initialize_i18n();
+
+    lua::lua->get_registry_manager().clear();
     initialize_lion_db();
 
     initialize_elona();

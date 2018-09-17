@@ -36,6 +36,7 @@ LuaEnv::LuaEnv()
     handle_mgr = std::make_unique<HandleManager>(this);
     registry_mgr = std::make_unique<RegistryManager>(this);
     export_mgr = std::make_unique<ExportManager>(this);
+    i18n_function_mgr = std::make_unique<I18NFunctionManager>(this);
 }
 
 void LuaEnv::clear()

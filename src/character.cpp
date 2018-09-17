@@ -2128,7 +2128,8 @@ void chara_relocate(
     // not always exist, since if the mode is "change" the
     // source's state will be empty. If the source's state is empty, the
     // destination slot will instead be set to empty as well.
-    lua::lua->get_handle_manager().relocate_handle<Character>(source, slot);
+    lua::lua->get_handle_manager().relocate_handle<Character>(
+        source, destination, slot);
 
     for (int cnt = 0; cnt < 10; ++cnt)
     {
