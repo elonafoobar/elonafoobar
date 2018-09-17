@@ -272,7 +272,7 @@ int magic()
                             {
                                 if (tc >= 16)
                                 {
-                                    gdata(809) = 2;
+                                    gdata_proc_damage_events_flag = 2;
                                     txt3rd = 1;
                                     txt(i18n::s.get(
                                         "core.locale.magic.bolt.other",
@@ -442,7 +442,7 @@ int magic()
                                 {
                                     if (tc >= 16)
                                     {
-                                        gdata(809) = 2;
+                                        gdata_proc_damage_events_flag = 2;
                                         txt3rd = 1;
                                         txt(i18n::s.get(
                                             "core.locale.magic.explosion.other",
@@ -466,7 +466,7 @@ int magic()
                             {
                                 if (tc >= 16)
                                 {
-                                    gdata(809) = 2;
+                                    gdata_proc_damage_events_flag = 2;
                                     txt3rd = 1;
                                     txt(i18n::s.get(
                                         "core.locale.magic.ball.other",
@@ -528,7 +528,7 @@ int magic()
                 {
                     if (tc >= 16)
                     {
-                        gdata(809) = 2;
+                        gdata_proc_damage_events_flag = 2;
                         txt3rd = 1;
                         txt(i18n::s.get(
                             "core.locale.magic.arrow.other", cdata[tc]));
@@ -624,7 +624,7 @@ int magic()
                     {
                         if (tc >= 16)
                         {
-                            gdata(809) = 2;
+                            gdata_proc_damage_events_flag = 2;
                             txt(i18n::s.get(
                                 "core.locale.magic.sucks_blood.other",
                                 cdata[cc],
@@ -650,7 +650,7 @@ int magic()
                 {
                     if (tc >= 16)
                     {
-                        gdata(809) = 2;
+                        gdata_proc_damage_events_flag = 2;
                         txt(i18n::s.get(
                             "core.locale.magic.touch.other",
                             cdata[cc],
@@ -1066,7 +1066,7 @@ int magic()
                             {
                                 if (tc >= 16)
                                 {
-                                    gdata(809) = 2;
+                                    gdata_proc_damage_events_flag = 2;
                                     txt3rd = 1;
                                     txt(i18n::s.get(
                                         "core.locale.magic.breath.other",
@@ -1703,7 +1703,7 @@ label_2181_internal:
         {
             cdata.player().direction = 0;
         }
-        gdata(35) = cdata.player().direction;
+        gdata_player_next_move_direction = cdata.player().direction;
         fishx = x;
         fishy = y;
         addefmap(fishx, fishy, 1, 3);
@@ -2646,7 +2646,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.vorpal.sound"));
             if (tc >= 16)
             {
-                gdata(809) = 2;
+                gdata_proc_damage_events_flag = 2;
                 txt3rd = 1;
                 txt(i18n::s.get(
                     "core.locale.magic.vorpal.other", cdata[cc], cdata[tc]));
@@ -2795,7 +2795,7 @@ label_2181_internal:
                     }
                 }
             }
-            game_data.destination_map = gdata(850);
+            game_data.destination_map = gdata_destination_outer_map;
             game_data.destination_dungeon_level = 1;
             if (is_cursed(efstatus))
             {

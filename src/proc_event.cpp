@@ -44,7 +44,7 @@ void proc_event()
             if (qdata(12, game_data.executing_immediate_quest)
                 <= qdata(13, game_data.executing_immediate_quest))
             {
-                gdata(73) = 3;
+                gdata_executing_immediate_quest_status = 3;
                 qdata(8, game_data.executing_immediate_quest) = 3;
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.party.complete"));
@@ -60,7 +60,7 @@ void proc_event()
             if (qdata(12, game_data.executing_immediate_quest)
                 < qdata(13, game_data.executing_immediate_quest))
             {
-                gdata(73) = 3;
+                gdata_executing_immediate_quest_status = 3;
                 qdata(8, game_data.executing_immediate_quest) = 3;
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.collect.complete"));
@@ -132,7 +132,7 @@ void proc_event()
     case 23:
         tc = chara_find(302);
         talk_to_npc();
-        gdata(171) = 23;
+        gdata_rogue_boss_encountered = 23;
         break;
     case 12:
         update_screen();
@@ -280,14 +280,17 @@ void proc_event()
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
-        gdata(74) = calcfame(0, game_data.current_dungeon_level * 30 + 200);
+        gdata_executing_immediate_quest_fame_gained =
+            calcfame(0, game_data.current_dungeon_level * 30 + 200);
         txtef(2);
-        txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
-        cdata.player().fame += gdata(74);
+        txt(i18n::s.get(
+            "core.locale.quest.gain_fame",
+            gdata_executing_immediate_quest_fame_gained));
+        cdata.player().fame += gdata_executing_immediate_quest_fame_gained;
         if (game_data.current_map == mdata_t::MapId::the_void)
         {
             area_data[game_data.current_map].has_been_conquered = 0;
-            gdata(186) = gdata(186) + 5;
+            gdata_void_next_lord_floor = gdata_void_next_lord_floor + 5;
             txt(i18n::s.get("core.locale.event.seal_broken"));
         }
         else
@@ -580,7 +583,7 @@ void proc_event()
                 cdata[tc].position.y);
             if (c == 0)
             {
-                gdata(35) = cdata[c].direction;
+                gdata_player_next_move_direction = cdata[c].direction;
             }
         }
         talk_to_npc();

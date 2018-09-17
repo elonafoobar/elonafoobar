@@ -92,13 +92,13 @@ void modify_ether_disease_stage(int delta)
             txt(i18n::s.get("core.locale.chara.corruption.symptom"));
             if (Config::instance().extrahelp)
             {
-                if (gdata(215) == 0)
+                if (gdata_exhelp_flag(15) == 0)
                 {
                     if (mode == 0)
                     {
                         if (cdata.player().continuous_action.turn == 0)
                         {
-                            gdata(215) = 1;
+                            gdata_exhelp_flag(15) = 1;
                             ghelp = 15;
                             show_ex_help();
                         }

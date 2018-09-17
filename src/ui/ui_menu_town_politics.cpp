@@ -20,8 +20,8 @@ static void _load_politics_list(bool is_town)
     cs_bk = -1;
     curmenu = 2;
     list(0, listmax) = 1;
-    listn(0, listmax) =
-        i18n::s.get("core.locale.ui.politics.name", mapname(gdata(815)));
+    listn(0, listmax) = i18n::s.get(
+        "core.locale.ui.politics.name", mapname(gdata_politics_map_id));
     ++listmax;
 
     if (is_town)

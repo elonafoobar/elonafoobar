@@ -52,7 +52,7 @@ void end_dmghp(const Character& victim)
             }
         }
     }
-    gdata(809) = 0;
+    gdata_proc_damage_events_flag = 0;
     txt3rd = 0;
 }
 
@@ -262,7 +262,7 @@ int damage_hp(
     }
     if (victim.index == 0)
     {
-        gdata(30) = 0;
+        gdata_player_cellaccess_check_flag = 0;
         if (victim.hp < 0)
         {
             if (event_id() != -1)
@@ -330,7 +330,7 @@ int damage_hp(
         {
             spillblood(victim.position.x, victim.position.y, 1 + rnd(2));
         }
-        if (gdata(809) == 1)
+        if (gdata_proc_damage_events_flag == 1)
         {
             txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
             goto label_1369_internal;
@@ -350,7 +350,7 @@ int damage_hp(
                 }
             }
         }
-        if (gdata(809) == 2)
+        if (gdata_proc_damage_events_flag == 2)
         {
             txtcontinue();
             if (damage_level == -1)
@@ -599,7 +599,7 @@ int damage_hp(
         if (attacker_is_player)
         {
             hostileaction(0, victim.index);
-            gdata(94) = victim.index;
+            gdata_chara_last_attacked_by_player = victim.index;
         }
         if (victim.index == 0)
         {
@@ -636,7 +636,7 @@ int damage_hp(
         }
         if (victim.splits())
         {
-            if (gdata(809) != 1)
+            if (gdata_proc_damage_events_flag != 1)
             {
                 if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
@@ -653,7 +653,7 @@ int damage_hp(
         }
         if (victim.splits2())
         {
-            if (gdata(809) != 1)
+            if (gdata_proc_damage_events_flag != 1)
             {
                 if (rnd(3) == 0)
                 {
@@ -675,7 +675,7 @@ int damage_hp(
         }
         if (victim.is_quick_tempered())
         {
-            if (gdata(809) != 1)
+            if (gdata_proc_damage_events_flag != 1)
             {
                 if (victim.furious == 0)
                 {
@@ -761,7 +761,7 @@ int damage_hp(
         {
             if (element)
             {
-                if (victim.index >= 16 && gdata(809) == 2)
+                if (victim.index >= 16 && gdata_proc_damage_events_flag == 2)
                 {
                     txtcontinue();
                     txteledmg(1, attacker_is_player, victim.index, element);
@@ -776,7 +776,8 @@ int damage_hp(
                 int death_type = rnd(4);
                 if (death_type == 0)
                 {
-                    if (victim.index >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16
+                        && gdata_proc_damage_events_flag == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -796,7 +797,8 @@ int damage_hp(
                 }
                 if (death_type == 1)
                 {
-                    if (victim.index >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16
+                        && gdata_proc_damage_events_flag == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -814,7 +816,8 @@ int damage_hp(
                 }
                 if (death_type == 2)
                 {
-                    if (victim.index >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16
+                        && gdata_proc_damage_events_flag == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -832,7 +835,8 @@ int damage_hp(
                 }
                 if (death_type == 3)
                 {
-                    if (victim.index >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16
+                        && gdata_proc_damage_events_flag == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -953,9 +957,9 @@ int damage_hp(
         {
             ++game_data.death_count;
         }
-        if (victim.index == gdata(94))
+        if (victim.index == gdata_chara_last_attacked_by_player)
         {
-            gdata(94) = 0;
+            gdata_chara_last_attacked_by_player = 0;
         }
         if (attacker)
         {
@@ -985,7 +989,7 @@ int damage_hp(
             {
                 attacker->enemy_id = 0;
                 cdata.player().enemy_id = 0;
-                gdata(94) = 0;
+                gdata_chara_last_attacked_by_player = 0;
             }
         }
         if (victim.index != 0)

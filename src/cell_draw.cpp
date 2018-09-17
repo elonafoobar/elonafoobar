@@ -796,7 +796,8 @@ bool you_can_see(const Character& chara)
 
 bool hp_bar_visible(const Character& chara)
 {
-    return chara.has_been_used_stethoscope() || gdata(94) == chara.index
+    return chara.has_been_used_stethoscope()
+        || gdata_chara_last_attacked_by_player == chara.index
         || debug::voldemort;
 }
 

@@ -1609,7 +1609,7 @@ TurnResult do_use_command()
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        gdata(91) = 100;
+        gdata_continuous_action_about_to_start = 100;
         continuous_action_others();
         return TurnResult::turn_end;
     }
@@ -1929,14 +1929,14 @@ TurnResult do_use_command()
         if (tc == 0)
         {
             txt(i18n::s.get("core.locale.action.use.stethoscope.self"));
-            gdata(94) = 0;
+            gdata_chara_last_attacked_by_player = 0;
             return TurnResult::turn_end;
         }
         if (tc > 0 && tc < 16)
         {
             if (cdata[tc].state() == Character::State::alive)
             {
-                gdata(94) = 0;
+                gdata_chara_last_attacked_by_player = 0;
                 if (cdata[tc].has_been_used_stethoscope() == 1)
                 {
                     cdata[tc].has_been_used_stethoscope() = false;
@@ -2138,7 +2138,7 @@ TurnResult do_use_command()
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
-            gdata(91) = 101;
+            gdata_continuous_action_about_to_start = 101;
             continuous_action_others();
             return TurnResult::turn_end;
         }
@@ -2162,7 +2162,7 @@ TurnResult do_use_command()
                 }
             }
         }
-        gdata(91) = 102;
+        gdata_continuous_action_about_to_start = 102;
         continuous_action_others();
         goto label_2229_internal;
     case 11:
@@ -2884,7 +2884,8 @@ TurnResult do_use_stairs_command(int val0)
                 {
                     movelevelbystairs = 1;
                     if (game_data.current_map == mdata_t::MapId::the_void
-                        && game_data.current_dungeon_level >= gdata(186))
+                        && game_data.current_dungeon_level
+                            >= gdata_void_next_lord_floor)
                     {
                         txt(
                             i18n::s.get("core.locale.action.use_stairs.blocked_"
@@ -3228,7 +3229,7 @@ TurnResult do_movement_command()
             txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
             if (mdata_map_type == mdata_t::MapType::temporary)
             {
-                if (gdata(73) != 3)
+                if (gdata_executing_immediate_quest_status != 3)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.move.leave.abandoning_quest"));
@@ -3239,8 +3240,8 @@ TurnResult do_movement_command()
             update_screen();
             if (rtval == 0)
             {
-                gdata(60) = cdata.player().position.x;
-                gdata(61) = cdata.player().position.y;
+                gdata_player_x_on_map_leave = cdata.player().position.x;
+                gdata_player_y_on_map_leave = cdata.player().position.y;
                 snd(49);
                 --game_data.current_dungeon_level;
                 levelexitby = 4;

@@ -132,7 +132,7 @@ static void _draw_skill_name(int cnt, int skill_id)
     std::string skill_shortcut = "";
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        if (gdata(40 + cnt) == skill_id)
+        if (gdata_skill_shortcut(cnt) == skill_id)
         {
             skill_shortcut = u8"{"s + cnt + u8"}"s;
         }
@@ -197,19 +197,19 @@ void UIMenuSkills::draw()
 static void _assign_shortcut(int sc_, int skill_id)
 {
     snd(20);
-    if (gdata(40 + sc_) == skill_id)
+    if (gdata_skill_shortcut(sc_) == skill_id)
     {
-        gdata(40 + sc_) = 0;
+        gdata_skill_shortcut(sc_) = 0;
         return;
     }
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        if (gdata(40 + cnt) == skill_id)
+        if (gdata_skill_shortcut(cnt) == skill_id)
         {
-            gdata(40 + cnt) = 0;
+            gdata_skill_shortcut(cnt) = 0;
         }
     }
-    gdata(40 + sc_) = skill_id;
+    gdata_skill_shortcut(sc_) = skill_id;
     txt(i18n::s.get("core.locale.ui.assign_shortcut", sc_));
     display_msg(inf_screeny + inf_tiles);
 }

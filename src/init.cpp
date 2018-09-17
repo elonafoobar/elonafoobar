@@ -946,7 +946,7 @@ void initialize_debug_globals()
     game_data.played_scene = 50;
     game_data.has_not_been_to_vernis = 1;
     area_data[7].outer_map = 4;
-    gdata(850) = area_data[game_data.current_map].outer_map;
+    gdata_destination_outer_map = area_data[game_data.current_map].outer_map;
     game_data.acquirable_feat_count = 2;
     game_data.quest_flags.save_count_of_little_sister = 1000;
     game_data.rights_to_succeed_to = 1000;
@@ -988,7 +988,7 @@ void initialize_world()
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
     game_data.previous_map = -1;
-    gdata(850) = 4;
+    gdata_destination_outer_map = 4;
     ghelp = 1;
     game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
     game_data.current_dungeon_level = 1;

@@ -148,15 +148,15 @@ optional<TurnResult> activity_proc(Character& chara)
     }
     if (chara.continuous_action.type == ContinuousAction::Type::others)
     {
-        if (gdata(91) == 103)
+        if (gdata_continuous_action_about_to_start == 103)
         {
             auto_turn(Config::instance().animewait * 2);
         }
-        else if (gdata(91) == 104)
+        else if (gdata_continuous_action_about_to_start == 104)
         {
             auto_turn(Config::instance().animewait * 2);
         }
-        else if (gdata(91) == 105)
+        else if (gdata_continuous_action_about_to_start == 105)
         {
             auto_turn(Config::instance().animewait * 2.5);
         }
@@ -930,13 +930,13 @@ void continuous_action_others()
         cdata[cc].continuous_action.type = ContinuousAction::Type::others;
         cdata[cc].continuous_action.item = ci;
         cdata[cc].continuous_action_target = tc;
-        if (gdata(91) == 105)
+        if (gdata_continuous_action_about_to_start == 105)
         {
             txt(i18n::s.get("core.locale.activity.steal.start", inv[ci]));
             cdata[cc].continuous_action.turn =
                 2 + clamp(inv[ci].weight / 500, 0, 50);
         }
-        if (gdata(91) == 100)
+        if (gdata_continuous_action_about_to_start == 100)
         {
             if (mdata_map_type == mdata_t::MapType::player_owned
                 || mdata_map_type == mdata_t::MapType::town
@@ -951,17 +951,17 @@ void continuous_action_others()
                 cdata[cc].continuous_action.turn = 20;
             }
         }
-        if (gdata(91) == 101)
+        if (gdata_continuous_action_about_to_start == 101)
         {
             txt(i18n::s.get("core.locale.activity.construct.start", inv[ci]));
             cdata[cc].continuous_action.turn = 25;
         }
-        if (gdata(91) == 102)
+        if (gdata_continuous_action_about_to_start == 102)
         {
             txt(i18n::s.get("core.locale.activity.pull_hatch.start", inv[ci]));
             cdata[cc].continuous_action.turn = 10;
         }
-        if (gdata(91) == 103)
+        if (gdata_continuous_action_about_to_start == 103)
         {
             txt(i18n::s.get("core.locale.activity.dig", inv[ci]));
             cdata[cc].continuous_action.turn = 10
@@ -970,7 +970,7 @@ void continuous_action_others()
                         1,
                         100);
         }
-        if (gdata(91) == 104)
+        if (gdata_continuous_action_about_to_start == 104)
         {
             if (game_data.weather == 0 || game_data.weather == 3)
             {
@@ -1017,7 +1017,7 @@ void continuous_action_others()
     tc = cdata[cc].continuous_action_target;
     if (cdata[cc].continuous_action.turn > 0)
     {
-        if (gdata(91) == 103)
+        if (gdata_continuous_action_about_to_start == 103)
         {
             if (rnd(5) == 0)
             {
@@ -1050,7 +1050,7 @@ void continuous_action_others()
                 txt(i18n::s.get("core.locale.activity.harvest.sound"));
             }
         }
-        if (gdata(91) == 104)
+        if (gdata_continuous_action_about_to_start == 104)
         {
             p = 25;
             if (game_data.weather != 0 && game_data.weather != 3)
@@ -1083,7 +1083,7 @@ void continuous_action_others()
                 chara_gain_skill_exp(cdata[cc], randattb(), 25);
             }
         }
-        if (gdata(91) == 105)
+        if (gdata_continuous_action_about_to_start == 105)
         {
             if (inv[ci].id == 688)
             {
@@ -1293,7 +1293,7 @@ void continuous_action_others()
         }
         return;
     }
-    if (gdata(91) == 105)
+    if (gdata_continuous_action_about_to_start == 105)
     {
         tg = inv_getowner(ci);
         if ((tg != -1 && cdata[tg].state() != Character::State::alive)
@@ -1361,18 +1361,18 @@ void continuous_action_others()
             }
         }
     }
-    if (gdata(91) == 100)
+    if (gdata_continuous_action_about_to_start == 100)
     {
         txt(i18n::s.get("core.locale.activity.sleep.finish"));
         sleep_start();
     }
-    if (gdata(91) == 101)
+    if (gdata_continuous_action_about_to_start == 101)
     {
         snd(58);
         txt(i18n::s.get("core.locale.activity.construct.finish", inv[ci]));
         item_build_shelter(inv[ci]);
     }
-    if (gdata(91) == 102)
+    if (gdata_continuous_action_about_to_start == 102)
     {
         txt(i18n::s.get("core.locale.activity.pull_hatch.finish"));
         chatteleport = 1;
@@ -1385,7 +1385,7 @@ void continuous_action_others()
         levelexitby = 2;
         snd(49);
     }
-    if (gdata(91) == 103)
+    if (gdata_continuous_action_about_to_start == 103)
     {
         txt(i18n::s.get(
             "core.locale.activity.harvest.finish",
@@ -1394,7 +1394,7 @@ void continuous_action_others()
         in = inv[ci].number();
         pick_up_item();
     }
-    if (gdata(91) == 104)
+    if (gdata_continuous_action_about_to_start == 104)
     {
         if (inv[ci].id == 563)
         {
@@ -1940,19 +1940,20 @@ int search_material_spot()
         {
             atxlv = 30 + rnd((rnd(atxlv - 30) + 1));
         }
-        if (4 <= gdata(62) && gdata(62) < 9)
+        if (4 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 9)
         {
             atxspot = 10;
         }
-        if (264 <= gdata(62) && gdata(62) < 363)
+        if (264 <= gdata_stood_world_map_tile
+            && gdata_stood_world_map_tile < 363)
         {
             atxspot = 11;
         }
-        if (9 <= gdata(62) && gdata(62) < 13)
+        if (9 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 13)
         {
             atxspot = 10;
         }
-        if (13 <= gdata(62) && gdata(62) < 17)
+        if (13 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 17)
         {
             atxspot = 11;
         }

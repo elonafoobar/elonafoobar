@@ -1,6 +1,56 @@
 #pragma once
 #include "version.hpp"
 
+#define gdata_continuous_action_about_to_start gdata(91)
+#define gdata_executing_immediate_quest_show_hunt_remain gdata(71)
+#define gdata_executing_immediate_quest_status gdata(73)
+#define gdata_executing_immediate_quest_fame_gained gdata(74)
+#define gdata_executing_immediate_quest_time_left_display_period gdata(87)
+#define gdata_rogue_boss_encountered gdata(171)
+#define gdata_void_next_lord_floor gdata(186)
+#define gdata_player_next_move_direction gdata(35)
+
+// tc + (0 or 10000)
+#define gdata_character_and_status_for_gene gdata(98)
+
+#define gdata_player_is_changing_equipment gdata(808)
+#define gdata_player_cellaccess_check_flag gdata(30)
+#define gdata_player_cellaccess_w gdata(31)
+#define gdata_player_cellaccess_n gdata(32)
+#define gdata_player_cellaccess_e gdata(33)
+#define gdata_player_cellaccess_s gdata(34)
+#define gdata_player_x_on_map_leave gdata(60)
+#define gdata_player_y_on_map_leave gdata(61)
+#define gdata_stood_world_map_tile gdata(62)
+#define gdata_chara_last_attacked_by_player gdata(94)
+#define gdata_map_regenerate_count gdata(184)
+#define gdata_politics_map_id gdata(815)
+
+// whether or not to proc fury/splitting/active form damage text
+// 1 if not, 2 if yes
+#define gdata_proc_damage_events_flag gdata(809)
+
+#define gdata_destination_outer_map gdata(850)
+#define gdata_reset_world_map_in_diastrophism_flag gdata(79)
+#define gdata_ex_arena_wins gdata(802)
+
+#define gdata_exhelp_flag(n) gdata(200 + n)
+
+// 40-59
+#define gdata_skill_shortcut(n) gdata(40 + n)
+
+// 120-128
+#define gdata_rank(n) gdata(120 + n)
+
+// 140-148
+#define gdata_rank_deadline(n) gdata(140 + n)
+
+// 160-164
+#define gdata_taken_quest(n) gdata(160 + n)
+
+// 750-760
+#define gdata_tracked_skill(n) gdata(750 + n)
+
 namespace elona
 {
 

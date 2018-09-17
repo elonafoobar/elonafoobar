@@ -295,7 +295,7 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     }
     if (prm_937 == 3)
     {
-        if (gdata(35) == 1)
+        if (gdata_player_next_move_direction == 1)
         {
             x_at_m167 = mdata_map_width - 2;
             y_at_m167 = mdata_map_height / 2;
@@ -309,7 +309,7 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
                 y_at_m167 = 21;
             }
         }
-        if (gdata(35) == 2)
+        if (gdata_player_next_move_direction == 2)
         {
             x_at_m167 = 1;
             y_at_m167 = mdata_map_height / 2;
@@ -323,7 +323,7 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
                 y_at_m167 = 1;
             }
         }
-        if (gdata(35) == 3)
+        if (gdata_player_next_move_direction == 3)
         {
             x_at_m167 = mdata_map_width / 2;
             y_at_m167 = mdata_map_height - 2;
@@ -341,7 +341,7 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
                 y_at_m167 = 21;
             }
         }
-        if (gdata(35) == 0)
+        if (gdata_player_next_move_direction == 0)
         {
             x_at_m167 = mdata_map_width / 2;
             y_at_m167 = 1;
@@ -360,10 +360,10 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
             x_at_m167 = 1;
             y_at_m167 = 14;
         }
-        if (gdata(60) != -1)
+        if (gdata_player_x_on_map_leave != -1)
         {
-            x_at_m167 = gdata(60);
-            y_at_m167 = gdata(61);
+            x_at_m167 = gdata_player_x_on_map_leave;
+            y_at_m167 = gdata_player_y_on_map_leave;
         }
     }
     if (prm_937 == 4)
@@ -2290,7 +2290,7 @@ void initialize_random_nefia_rdtype6()
 int initialize_quest_map_crop()
 {
     game_data.left_minutes_of_executing_quest = 120;
-    gdata(87) = 9999;
+    gdata_executing_immediate_quest_time_left_display_period = 9999;
     mdata_map_indoors_flag = 2;
     mdata_map_tileset = 4;
     mdata_map_width = 58 + rnd(16);
@@ -2726,7 +2726,7 @@ int initialize_quest_map_party()
 {
     int roomdiff = 0;
     game_data.left_minutes_of_executing_quest = 60;
-    gdata(87) = 9999;
+    gdata_executing_immediate_quest_time_left_display_period = 9999;
     rdroomsizemin = 5;
     mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
     mdata_map_indoors_flag = 1;
@@ -3061,7 +3061,7 @@ void initialize_quest_map_town()
     if (game_data.executing_immediate_quest_type == 1008)
     {
         game_data.left_minutes_of_executing_quest = 720;
-        gdata(87) = 9999;
+        gdata_executing_immediate_quest_time_left_display_period = 9999;
         flt();
         initlv = qdata(5, game_data.executing_immediate_quest);
         fixlv = Quality::godly;
@@ -3782,26 +3782,27 @@ void map_tileset(int prm_933)
     {
         tile_default = 0;
         tile_fog = 528;
-        if (4 <= gdata(62) && gdata(62) < 9)
+        if (4 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 9)
         {
             tile_default = 7;
             tile_fog = 528;
         }
-        if (264 <= gdata(62) && gdata(62) < 363)
+        if (264 <= gdata_stood_world_map_tile
+            && gdata_stood_world_map_tile < 363)
         {
             tile_default = 12;
         }
-        if (9 <= gdata(62) && gdata(62) < 13)
+        if (9 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 13)
         {
             tile_fog = 528;
             tile_default = 3;
         }
-        if (13 <= gdata(62) && gdata(62) < 17)
+        if (13 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 17)
         {
             tile_fog = 531;
             tile_default = 19;
         }
-        if (chipm(0, gdata(62)) == 4)
+        if (chipm(0, gdata_stood_world_map_tile) == 4)
         {
             tile_fog = 532;
             tile_default = 45;

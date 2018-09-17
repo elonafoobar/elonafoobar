@@ -1526,13 +1526,13 @@ TurnResult show_quest_board()
 {
     if (Config::instance().extrahelp)
     {
-        if (gdata(204) == 0)
+        if (gdata_exhelp_flag(4) == 0)
         {
             if (mode == 0)
             {
                 if (cdata.player().continuous_action.turn == 0)
                 {
-                    gdata(204) = 1;
+                    gdata_exhelp_flag(4) = 1;
                     ghelp = 4;
                     show_ex_help();
                     screenupdate = -1;

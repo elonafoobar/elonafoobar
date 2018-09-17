@@ -89,16 +89,16 @@ bool UIMenuJournal::init()
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        if (gdata(120 + cnt) < 10000)
+        if (gdata_rank(cnt) < 10000)
         {
-            noteadd(
-                ""s + ranktitle(cnt) + u8" Rank."s + gdata((120 + cnt)) / 100);
+            noteadd(""s + ranktitle(cnt) + u8" Rank."s + gdata_rank(cnt) / 100);
             s = i18n::s.get("core.locale.ui.journal.rank.pay", calcincome(cnt));
             gold += calcincome(cnt);
             if (cnt != 3 && cnt != 4 && cnt != 5 && cnt != 8)
             {
                 s += i18n::s.get(
-                    "core.locale.ui.journal.rank.deadline", gdata(140 + cnt));
+                    "core.locale.ui.journal.rank.deadline",
+                    gdata_rank_deadline(cnt));
             }
             noteadd(s);
             noteadd(""s);
@@ -106,7 +106,7 @@ bool UIMenuJournal::init()
     }
     noteadd(i18n::s.get(
         "core.locale.ui.journal.rank.arena",
-        gdata(802),
+        gdata_ex_arena_wins,
         cnvrank(game_data.ex_arena_level)));
     noteadd(""s);
     for (int cnt = 0,

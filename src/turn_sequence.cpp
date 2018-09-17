@@ -776,13 +776,15 @@ TurnResult turn_begin()
         {
             game_data.left_minutes_of_executing_quest -=
                 game_data.date.second / 60;
-            if (gdata(87) > game_data.left_minutes_of_executing_quest / 10)
+            if (gdata_executing_immediate_quest_time_left_display_period
+                > game_data.left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
                 txt(i18n::s.get(
                     "core.locale.quest.minutes_left",
                     (game_data.left_minutes_of_executing_quest + 1)));
-                gdata(87) = game_data.left_minutes_of_executing_quest / 10;
+                gdata_executing_immediate_quest_time_left_display_period =
+                    game_data.left_minutes_of_executing_quest / 10;
             }
             if (game_data.left_minutes_of_executing_quest <= 0)
             {
@@ -902,9 +904,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
                         "core.locale.magic.return.prevented.overweight"));
                     goto label_2740_internal;
                 }
-                if (game_data.destination_map == gdata(850))
+                if (game_data.destination_map == gdata_destination_outer_map)
                 {
-                    if (game_data.current_map == gdata(850))
+                    if (game_data.current_map == gdata_destination_outer_map)
                     {
                         txt(i18n::s.get("core.locale.common.nothing_happens"));
                         goto label_2740_internal;
@@ -1175,12 +1177,12 @@ TurnResult turn_end()
     if (cc == 0)
     {
         chatturn = 10;
-        if (gdata(98) != 0)
+        if (gdata_character_and_status_for_gene != 0)
         {
-            if (gdata(98) < 10000)
+            if (gdata_character_and_status_for_gene < 10000)
             {
-                gdata(98) += 10000;
-                gdata(91) = 100;
+                gdata_character_and_status_for_gene += 10000;
+                gdata_continuous_action_about_to_start = 100;
                 continuous_action_others();
             }
         }
@@ -1253,7 +1255,7 @@ TurnResult pc_turn(bool advance_time)
                 txtgod(cdata.player().god_id, 12);
             }
         }
-        gdata(808) = 0;
+        gdata_player_is_changing_equipment = 0;
         tgloc = 0;
         if (game_data.mount != 0)
         {
@@ -1271,7 +1273,7 @@ TurnResult pc_turn(bool advance_time)
         {
             return TurnResult::pc_died;
         }
-        if (gdata(30))
+        if (gdata_player_cellaccess_check_flag)
         {
             await(Config::instance().wait1 / 3);
             for (int dy = -1; dy <= 1; ++dy)
@@ -1289,53 +1291,55 @@ TurnResult pc_turn(bool advance_time)
                         p = map(x, y, 1) - 1;
                         if (p != 0 && cdata[p].relationship <= -3)
                         {
-                            gdata(30) = 0;
+                            gdata_player_cellaccess_check_flag = 0;
                         }
                     }
                 }
             }
             x = cdata.player().position.x;
             y = cdata.player().position.y;
-            cdata.player().next_position.x = x + dirxy(0, gdata(35));
-            cdata.player().next_position.y = y + dirxy(1, gdata(35));
+            cdata.player().next_position.x =
+                x + dirxy(0, gdata_player_next_move_direction);
+            cdata.player().next_position.y =
+                y + dirxy(1, gdata_player_next_move_direction);
             if (map(x, y, 5) != 0)
             {
-                gdata(30) = 0;
+                gdata_player_cellaccess_check_flag = 0;
             }
             if (map(x, y, 6) != 0 && map(x, y, 6) != 999)
             {
-                gdata(30) = 0;
+                gdata_player_cellaccess_check_flag = 0;
             }
             cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
-            if (cellaccess != gdata(33))
+            if (cellaccess != gdata_player_cellaccess_e)
             {
                 if (cellchara >= 16 || cellchara == -1)
                 {
-                    gdata(30) = 0;
+                    gdata_player_cellaccess_check_flag = 0;
                 }
             }
             cell_check(cdata[cc].position.x - 1, cdata[cc].position.y);
-            if (cellaccess != gdata(31))
+            if (cellaccess != gdata_player_cellaccess_w)
             {
                 if (cellchara >= 16 || cellchara == -1)
                 {
-                    gdata(30) = 0;
+                    gdata_player_cellaccess_check_flag = 0;
                 }
             }
             cell_check(cdata[cc].position.x, cdata[cc].position.y + 1);
-            if (cellaccess != gdata(34))
+            if (cellaccess != gdata_player_cellaccess_s)
             {
                 if (cellchara >= 16 || cellchara == -1)
                 {
-                    gdata(30) = 0;
+                    gdata_player_cellaccess_check_flag = 0;
                 }
             }
             cell_check(cdata[cc].position.x, cdata[cc].position.y - 1);
-            if (cellaccess != gdata(32))
+            if (cellaccess != gdata_player_cellaccess_n)
             {
                 if (cellchara >= 16 || cellchara == -1)
                 {
-                    gdata(30) = 0;
+                    gdata_player_cellaccess_check_flag = 0;
                 }
             }
             cell_check(
@@ -1344,7 +1348,7 @@ TurnResult pc_turn(bool advance_time)
             {
                 if (cellchara >= 16 || cellchara == -1)
                 {
-                    gdata(30) = 0;
+                    gdata_player_cellaccess_check_flag = 0;
                 }
             }
         }
@@ -1369,7 +1373,7 @@ TurnResult pc_turn(bool advance_time)
         }
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
-            gdata(73) = 3;
+            gdata_executing_immediate_quest_status = 3;
             bool pet_exists = false;
             for (int cc = 1; cc < 16; ++cc)
             {
@@ -1525,7 +1529,7 @@ label_2747:
         firstturn = 0;
     }
 
-    if (gdata(808))
+    if (gdata_player_is_changing_equipment)
     {
         txt(i18n::s.get("core.locale.action.equip.you_change"));
         return TurnResult::turn_end;
@@ -2229,7 +2233,7 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x;
         cdata.player().next_position.y = cdata.player().position.y - 1;
-        gdata(35) = 3;
+        gdata_player_next_move_direction = 3;
         dirsub = 0;
     }
     if (key == key_south)
@@ -2237,7 +2241,7 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x;
         cdata.player().next_position.y = cdata.player().position.y + 1;
-        gdata(35) = 0;
+        gdata_player_next_move_direction = 0;
         dirsub = 4;
     }
     if (key == key_west)
@@ -2245,7 +2249,7 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x - 1;
         cdata.player().next_position.y = cdata.player().position.y;
-        gdata(35) = 1;
+        gdata_player_next_move_direction = 1;
         dirsub = 6;
     }
     if (key == key_east)
@@ -2253,7 +2257,7 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x + 1;
         cdata.player().next_position.y = cdata.player().position.y;
-        gdata(35) = 2;
+        gdata_player_next_move_direction = 2;
         dirsub = 2;
     }
     if (key == key_northwest)
@@ -2261,7 +2265,7 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x - 1;
         cdata.player().next_position.y = cdata.player().position.y - 1;
-        gdata(35) = 3;
+        gdata_player_next_move_direction = 3;
         dirsub = 7;
     }
     if (key == key_northeast)
@@ -2269,7 +2273,7 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x + 1;
         cdata.player().next_position.y = cdata.player().position.y - 1;
-        gdata(35) = 3;
+        gdata_player_next_move_direction = 3;
         dirsub = 1;
     }
     if (key == key_southwest)
@@ -2277,7 +2281,7 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x - 1;
         cdata.player().next_position.y = cdata.player().position.y + 1;
-        gdata(35) = 0;
+        gdata_player_next_move_direction = 0;
         dirsub = 5;
     }
     if (key == key_southeast)
@@ -2285,10 +2289,10 @@ label_2747:
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x + 1;
         cdata.player().next_position.y = cdata.player().position.y + 1;
-        gdata(35) = 0;
+        gdata_player_next_move_direction = 0;
         dirsub = 3;
     }
-    cdata.player().direction = gdata(35);
+    cdata.player().direction = gdata_player_next_move_direction;
     if (p == 1)
     {
         // Autodig

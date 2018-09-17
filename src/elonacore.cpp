@@ -1246,20 +1246,18 @@ void go_hostile()
 
 
 
-void modrank(int prm_552, int prm_553, int prm_554)
+void modrank(int rank_id, int amount, int prm_554)
 {
-    elona_vector1<int> p_at_m75;
     int orgrank_at_m75 = 0;
     int i_at_m75 = 0;
-    p_at_m75 = 120 + prm_552;
-    p_at_m75(1) = gdata(p_at_m75) / 100;
-    orgrank_at_m75 = gdata(p_at_m75);
-    i_at_m75 = prm_553;
-    if (prm_553 > 0)
+    int rank_factor = gdata_rank(rank_id) / 100;
+    orgrank_at_m75 = gdata_rank(rank_id);
+    i_at_m75 = amount;
+    if (amount > 0)
     {
-        i_at_m75 = prm_553 * (p_at_m75(1) + 20) * (p_at_m75(1) + 20) / 2500;
-        gdata(140 + prm_552) = ranknorma(prm_552);
-        if (gdata(p_at_m75) == 100)
+        i_at_m75 = amount * (rank_factor + 20) * (rank_factor + 20) / 2500;
+        gdata_rank_deadline(rank_id) = ranknorma(rank_id);
+        if (gdata_rank(rank_id) == 100)
         {
             return;
         }
@@ -1271,18 +1269,18 @@ void modrank(int prm_552, int prm_553, int prm_554)
             }
         }
     }
-    gdata(p_at_m75) -= i_at_m75;
-    if (gdata(p_at_m75) >= 10000)
+    gdata_rank(rank_id) -= i_at_m75;
+    if (gdata_rank(rank_id) >= 10000)
     {
-        gdata(p_at_m75) = 10000;
+        gdata_rank(rank_id) = 10000;
     }
-    if (gdata(p_at_m75) < 100)
+    if (gdata_rank(rank_id) < 100)
     {
-        gdata(p_at_m75) = 100;
+        gdata_rank(rank_id) = 100;
     }
-    if (orgrank_at_m75 / 100 != gdata(p_at_m75) / 100)
+    if (orgrank_at_m75 / 100 != gdata_rank(rank_id) / 100)
     {
-        i_at_m75 = gdata(p_at_m75) / 100 - orgrank_at_m75 / 100;
+        i_at_m75 = gdata_rank(rank_id) / 100 - orgrank_at_m75 / 100;
         if (i_at_m75 < 0)
         {
             txtef(2);
@@ -1292,13 +1290,13 @@ void modrank(int prm_552, int prm_553, int prm_554)
             txtef(8);
         }
         const auto from = orgrank_at_m75 / 100;
-        const auto to = gdata(p_at_m75) / 100;
+        const auto to = gdata_rank(rank_id) / 100;
         txt(i18n::s.get(
             "core.locale.misc.ranking.changed",
-            rankn(10, prm_552),
+            rankn(10, rank_id),
             from,
             to,
-            ranktitle(prm_552)));
+            ranktitle(rank_id)));
     }
     else if (i_at_m75 > 0)
     {
@@ -2581,7 +2579,7 @@ int try_to_perceive_npc(int cc)
 
 void start_stealing()
 {
-    gdata(91) = 105;
+    gdata_continuous_action_about_to_start = 105;
     continuous_action_others();
 }
 
@@ -4815,18 +4813,18 @@ TurnResult exit_map()
     int previous_dungeon_level = game_data.current_dungeon_level;
     int fixstart = 0;
     game_data.left_minutes_of_executing_quest = 0;
-    gdata(171) = 0;
+    gdata_rogue_boss_encountered = 0;
     if (mdata_map_type == mdata_t::MapType::player_owned)
     {
         if (Config::instance().extrahelp)
         {
-            if (gdata(201) == 0)
+            if (gdata_exhelp_flag(1) == 0)
             {
                 if (mode == 0)
                 {
                     if (cdata.player().continuous_action.turn == 0)
                     {
-                        gdata(201) = 1;
+                        gdata_exhelp_flag(1) = 1;
                         ghelp = 1;
                         show_ex_help();
                     }
@@ -4990,7 +4988,7 @@ TurnResult exit_map()
                 || mdata_map_type == mdata_t::MapType::shelter
                 || mdata_map_type == mdata_t::MapType::guild)
             {
-                game_data.current_map = gdata(850);
+                game_data.current_map = gdata_destination_outer_map;
             }
         }
         if (mdata_t::is_nefia(mdata_map_type)
@@ -4999,7 +4997,7 @@ TurnResult exit_map()
             if (game_data.current_dungeon_level
                 < area_data[game_data.current_map].danger_level)
             {
-                game_data.current_map = gdata(850);
+                game_data.current_map = gdata_destination_outer_map;
             }
         }
         if (area_data[game_data.current_map].type == mdata_t::MapType::town)
@@ -5058,7 +5056,7 @@ TurnResult exit_map()
         rc = 0;
         revive_player();
         game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-        gdata(850) = area_data[7].outer_map;
+        gdata_destination_outer_map = area_data[7].outer_map;
         game_data.current_dungeon_level = 1;
     }
     if (rdtry > 1)
@@ -5623,7 +5621,7 @@ int initialize_world_map()
 
 void map_global_proc_diastrophism()
 {
-    if (gdata(79) == 1)
+    if (gdata_reset_world_map_in_diastrophism_flag == 1)
     {
         initialize_adata();
         map_global_prepare();
@@ -5648,7 +5646,7 @@ void map_global_proc_diastrophism()
         }
     }
     if (p <= 25 || rnd(150) == 0 || game_data.diastrophism_flag != 0
-        || gdata(79))
+        || gdata_reset_world_map_in_diastrophism_flag)
     {
         game_data.diastrophism_flag = 0;
         msgtemp += i18n::s.get("core.locale.action.move.global.diastrophism");
@@ -5665,7 +5663,7 @@ void map_global_proc_diastrophism()
         initialize_world_map();
         map_global_prepare();
     }
-    gdata(79) = 0;
+    gdata_reset_world_map_in_diastrophism_flag = 0;
 }
 
 
@@ -5684,7 +5682,7 @@ void map_global_place_entrances()
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         int cnt2 = cnt;
-        if (gdata(850) != 4)
+        if (gdata_destination_outer_map != 4)
         {
             break;
         }
@@ -5710,7 +5708,7 @@ void map_global_place_entrances()
         {
             continue;
         }
-        if (area_data[cnt].outer_map != gdata(850))
+        if (area_data[cnt].outer_map != gdata_destination_outer_map)
         {
             continue;
         }
@@ -6598,7 +6596,7 @@ int place_random_nefias()
         area_data[p].tile_type = 1;
         area_data[p].turn_cost_base = 10000;
         area_data[p].is_indoor = true;
-        area_data[p].outer_map = gdata(850);
+        area_data[p].outer_map = gdata_destination_outer_map;
         if (rnd(3))
         {
             area_data[p].danger_level = rnd(cdata.player().level + 5) + 1;
@@ -6869,7 +6867,7 @@ void map_proc_special_events()
                     {
                         break;
                     }
-                    if (gdata(123) > 8000)
+                    if (gdata_rank(3) > 8000)
                     {
                         txt(u8"「退屈ぅー」"s,
                             u8"「あまり見るものがないな」"s,
@@ -6877,7 +6875,7 @@ void map_proc_special_events()
                             u8"館内は少し寂しい…"s);
                         break;
                     }
-                    if (gdata(123) > 5000)
+                    if (gdata_rank(3) > 5000)
                     {
                         txt(u8"「いいんじゃない〜」"s,
                             u8"「まあ、普通の博物館だ」"s,
@@ -6885,7 +6883,7 @@ void map_proc_special_events()
                             u8"まあまあの客足だ。"s);
                         break;
                     }
-                    if (gdata(123) > 2500)
+                    if (gdata_rank(3) > 2500)
                     {
                         txt(u8"「この雰囲気好きだなぁ」"s,
                             u8"「もう一度来ようよ」"s,
@@ -6893,7 +6891,7 @@ void map_proc_special_events()
                             u8"館内はなかなか賑わっている。"s);
                         break;
                     }
-                    if (gdata(123) > 500)
+                    if (gdata_rank(3) > 500)
                     {
                         txt(u8"「来て良かった♪」"s,
                             u8"「よくこんなに集めたなあ」"s,
@@ -7441,7 +7439,7 @@ void supply_income()
     income(1) = 0;
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        if (gdata(120 + cnt) >= 10000)
+        if (gdata_rank(cnt) >= 10000)
         {
             continue;
         }
@@ -7580,13 +7578,13 @@ void supply_income()
     mode = 0;
     if (Config::instance().extrahelp)
     {
-        if (gdata(216) == 0)
+        if (gdata_exhelp_flag(16) == 0)
         {
             if (mode == 0)
             {
                 if (cdata.player().continuous_action.turn == 0)
                 {
-                    gdata(216) = 1;
+                    gdata_exhelp_flag(16) = 1;
                     ghelp = 16;
                     show_ex_help();
                 }
@@ -7809,13 +7807,13 @@ TurnResult step_into_gate()
 {
     if (Config::instance().extrahelp)
     {
-        if (gdata(217) == 0)
+        if (gdata_exhelp_flag(17) == 0)
         {
             if (mode == 0)
             {
                 if (cdata.player().continuous_action.turn == 0)
                 {
-                    gdata(217) = 1;
+                    gdata_exhelp_flag(17) = 1;
                     ghelp = 17;
                     show_ex_help();
                     screenupdate = -1;
@@ -8407,23 +8405,23 @@ int target_position()
 TurnResult do_short_cut()
 {
     menucycle = 0;
-    if (gdata(40 + sc) == 0)
+    if (gdata_skill_shortcut(sc) == 0)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (gdata(40 + sc) >= 10000)
+    if (gdata_skill_shortcut(sc) >= 10000)
     {
-        invsc = gdata((40 + sc)) % 10000;
-        invctrl(0) = gdata((40 + sc)) / 10000;
+        invsc = gdata_skill_shortcut(sc) % 10000;
+        invctrl(0) = gdata_skill_shortcut(sc) / 10000;
         invctrl(1) = 0;
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    efid = gdata(40 + sc);
+    efid = gdata_skill_shortcut(sc);
     if (efid >= 300 && efid < 400)
     {
         return do_use_magic();
@@ -8908,7 +8906,7 @@ void try_to_return()
     p = 0;
     p = 0;
     i = 7;
-    if (area_data[i].outer_map == gdata(850))
+    if (area_data[i].outer_map == gdata_destination_outer_map)
     {
         list(0, p) = i;
         list(1, p) = 1;
@@ -8922,7 +8920,7 @@ void try_to_return()
         {
             continue;
         }
-        if (area_data[i].outer_map != gdata(850))
+        if (area_data[i].outer_map != gdata_destination_outer_map)
         {
             continue;
         }
@@ -9067,7 +9065,7 @@ int read_textbook()
             }
         }
     }
-    gdata(91) = 104;
+    gdata_continuous_action_about_to_start = 104;
     continuous_action_others();
     return 1;
 }
@@ -9290,10 +9288,9 @@ void dump_player_info()
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        if (gdata(120 + cnt) < 10000)
+        if (gdata_rank(cnt) < 10000)
         {
-            noteadd(
-                ""s + ranktitle(cnt) + u8" Rank."s + gdata((120 + cnt)) / 100);
+            noteadd(""s + ranktitle(cnt) + u8" Rank."s + gdata_rank(cnt) / 100);
             s = u8"給料: 約 "s + calcincome(cnt) + u8" gold  "s + u8"ノルマ: "s;
             gold += calcincome(cnt);
             if (cnt == 3 || cnt == 4 || cnt == 5 || cnt == 8)
@@ -9302,7 +9299,7 @@ void dump_player_info()
             }
             else
             {
-                s += ""s + gdata((140 + cnt)) + u8"日以内"s;
+                s += ""s + gdata_rank_deadline(cnt) + u8"日以内"s;
             }
             noteadd(s);
             noteadd(""s);
@@ -9365,7 +9362,7 @@ void initialize_map_adjust_spawns()
 
 void clear_existing_quest_list()
 {
-    ++gdata(184);
+    ++gdata_map_regenerate_count;
     DIM3(qdata, 20, 500);
     SDIM3(qname, 40, 500);
     game_data.number_of_existing_quests = 0;
@@ -10270,7 +10267,7 @@ void sleep_start()
     if (game_data.current_map == mdata_t::MapId::quest)
     {
         txt(i18n::s.get("core.locale.activity.sleep.but_you_cannot"));
-        gdata(98) = 0;
+        gdata_character_and_status_for_gene = 0;
         return;
     }
     if (game_data.catches_god_signal)
@@ -10342,7 +10339,7 @@ void sleep_start()
         draw_sleep_background_frame();
         await(Config::instance().animewait * 25);
     }
-    if (gdata(98) != 0)
+    if (gdata_character_and_status_for_gene != 0)
     {
         tc = -1;
         for (int cnt = 1; cnt < 16; ++cnt)
@@ -10370,7 +10367,7 @@ void sleep_start()
         }
     }
     draw_sleep_background_frame();
-    gdata(98) = 0;
+    gdata_character_and_status_for_gene = 0;
     mode = 0;
     wake_up();
     cdata[cc].nutrition -= 1500 / (trait(158) + 1);
@@ -11917,7 +11914,7 @@ int pick_up_item()
                             "core.locale.ui.inv.common.inventory_is_full"));
                         return 0;
                     }
-                    gdata(91) = 103;
+                    gdata_continuous_action_about_to_start = 103;
                     continuous_action_others();
                     return -1;
                 }
@@ -12562,7 +12559,8 @@ TurnResult proc_movement_event()
         if (cc == 0)
         {
             encounter = 0;
-            gdata(62) = map(cdata[cc].position.x, cdata[cc].position.y, 0);
+            gdata_stood_world_map_tile =
+                map(cdata[cc].position.x, cdata[cc].position.y, 0);
             if (map(cdata[cc].position.x, cdata[cc].position.y, 6) == 0)
             {
                 p = map(cdata[cc].position.x, cdata[cc].position.y, 0);
@@ -12609,7 +12607,7 @@ TurnResult proc_movement_event()
                 {
                     for (int cnt = 0; cnt < 5; ++cnt)
                     {
-                        rq = gdata(160 + cnt);
+                        rq = gdata_taken_quest(cnt);
                         if (qdata(3, rq) == 1007)
                         {
                             if (qdata(8, rq) == 1)
@@ -12856,24 +12854,24 @@ void sense_map_feats_on_move()
 {
     if (cc == 0)
     {
-        gdata(60) = -1;
-        gdata(61) = -1;
+        gdata_player_x_on_map_leave = -1;
+        gdata_player_y_on_map_leave = -1;
         x = cdata.player().position.x;
         y = cdata.player().position.y;
-        if (key_shift && gdata(30) == 0 && cdata.player().confused == 0
-            && cdata.player().dimmed == 0)
+        if (key_shift && gdata_player_cellaccess_check_flag == 0
+            && cdata.player().confused == 0 && cdata.player().dimmed == 0)
         {
             if (mdata_map_type != mdata_t::MapType::world_map)
             {
-                gdata(30) = 1;
+                gdata_player_cellaccess_check_flag = 1;
                 cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
-                gdata(33) = cellaccess;
+                gdata_player_cellaccess_e = cellaccess;
                 cell_check(cdata[cc].position.x - 1, cdata[cc].position.y);
-                gdata(31) = cellaccess;
+                gdata_player_cellaccess_w = cellaccess;
                 cell_check(cdata[cc].position.x, cdata[cc].position.y + 1);
-                gdata(34) = cellaccess;
+                gdata_player_cellaccess_s = cellaccess;
                 cell_check(cdata[cc].position.x, cdata[cc].position.y - 1);
-                gdata(32) = cellaccess;
+                gdata_player_cellaccess_n = cellaccess;
             }
         }
         if (map(x, y, 4) != 0)
@@ -12940,13 +12938,13 @@ void sense_map_feats_on_move()
                 {
                     if (Config::instance().extrahelp)
                     {
-                        if (gdata(206) == 0)
+                        if (gdata_exhelp_flag(6) == 0)
                         {
                             if (mode == 0)
                             {
                                 if (cdata.player().continuous_action.turn == 0)
                                 {
-                                    gdata(206) = 1;
+                                    gdata_exhelp_flag(6) = 1;
                                     ghelp = 6;
                                     show_ex_help();
                                 }
@@ -13058,13 +13056,13 @@ void sense_map_feats_on_move()
             {
                 if (Config::instance().extrahelp)
                 {
-                    if (gdata(205) == 0)
+                    if (gdata_exhelp_flag(5) == 0)
                     {
                         if (mode == 0)
                         {
                             if (cdata.player().continuous_action.turn == 0)
                             {
-                                gdata(205) = 1;
+                                gdata_exhelp_flag(5) = 1;
                                 ghelp = 5;
                                 show_ex_help();
                             }
@@ -13904,7 +13902,7 @@ label_22191_internal:
             {
                 if (tc >= 16)
                 {
-                    gdata(809) = 2;
+                    gdata_proc_damage_events_flag = 2;
                     txt(i18n::s.get(
                         "core.locale.damage.weapon.attacks_unarmed_and",
                         cdata[cc],
@@ -13937,7 +13935,7 @@ label_22191_internal:
                 {
                     if (tc >= 16)
                     {
-                        gdata(809) = 2;
+                        gdata_proc_damage_events_flag = 2;
                         if (attackskill == 111)
                         {
                             txt(i18n::s.get(
@@ -14189,7 +14187,7 @@ label_22191_internal:
     }
     if (tc == 0)
     {
-        gdata(30) = 0;
+        gdata_player_cellaccess_check_flag = 0;
     }
     rowact_check(tc);
     if (attackskill != 106)
@@ -14292,7 +14290,7 @@ void proc_weapon_enchantments()
             s = chara_refstr(cdata[tc].id, 8);
             if (strutil::contains(s(0), u8"/dragon/"))
             {
-                gdata(809) = 1;
+                gdata_proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
@@ -14302,7 +14300,7 @@ void proc_weapon_enchantments()
             s = chara_refstr(cdata[tc].id, 8);
             if (strutil::contains(s(0), u8"/god/"))
             {
-                gdata(809) = 1;
+                gdata_proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
@@ -14312,7 +14310,7 @@ void proc_weapon_enchantments()
             s = chara_refstr(cdata[tc].id, 8);
             if (strutil::contains(s(0), u8"/undead/"))
             {
-                gdata(809) = 1;
+                gdata_proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
@@ -14332,7 +14330,7 @@ void proc_weapon_enchantments()
                 {
                     continue;
                 }
-                gdata(809) = 1;
+                gdata_proc_damage_events_flag = 1;
                 damage_hp(
                     cdata[tc],
                     rnd(orgdmg * (100 + inv[cw].enchantments[cnt].power) / 1000
@@ -14386,7 +14384,7 @@ void proc_weapon_enchantments()
     {
         if (cdata[tc].state() == Character::State::alive)
         {
-            gdata(809) = 1;
+            gdata_proc_damage_events_flag = 1;
             damage_hp(
                 cdata[tc],
                 orgdmg * 2 / 3,
@@ -14808,7 +14806,7 @@ void initialize_economy()
     elona_vector1<int> bkdata;
     if (initeco)
     {
-        gdata(815) = 15;
+        gdata_politics_map_id = static_cast<int>(mdata_t::MapId::palmia);
     }
     bkdata(0) = game_data.current_map;
     bkdata(1) = game_data.current_dungeon_level;
@@ -14891,7 +14889,7 @@ void initialize_economy()
     game_data.current_dungeon_level = bkdata(1);
     cdata.player().position.x = bkdata(2);
     cdata.player().position.y = bkdata(3);
-    gdata(79) = 1;
+    gdata_reset_world_map_in_diastrophism_flag = 1;
     mode = 3;
     mapsubroutine = 1;
     initialize_map();
@@ -15371,13 +15369,13 @@ void weather_changes()
         {
             if (Config::instance().extrahelp)
             {
-                if (gdata(211) == 0)
+                if (gdata_exhelp_flag(11) == 0)
                 {
                     if (mode == 0)
                     {
                         if (cdata.player().continuous_action.turn == 0)
                         {
-                            gdata(211) = 1;
+                            gdata_exhelp_flag(11) = 1;
                             ghelp = 11;
                             show_ex_help();
                         }
@@ -15389,13 +15387,13 @@ void weather_changes()
         {
             if (Config::instance().extrahelp)
             {
-                if (gdata(212) == 0)
+                if (gdata_exhelp_flag(12) == 0)
                 {
                     if (mode == 0)
                     {
                         if (cdata.player().continuous_action.turn == 0)
                         {
-                            gdata(212) = 1;
+                            gdata_exhelp_flag(12) = 1;
                             ghelp = 12;
                             show_ex_help();
                         }
@@ -15407,13 +15405,13 @@ void weather_changes()
         {
             if (Config::instance().extrahelp)
             {
-                if (gdata(213) == 0)
+                if (gdata_exhelp_flag(13) == 0)
                 {
                     if (mode == 0)
                     {
                         if (cdata.player().continuous_action.turn == 0)
                         {
-                            gdata(213) = 1;
+                            gdata_exhelp_flag(13) = 1;
                             ghelp = 13;
                             show_ex_help();
                         }
@@ -15461,13 +15459,13 @@ void weather_changes()
     {
         if (Config::instance().extrahelp)
         {
-            if (gdata(209) == 0)
+            if (gdata_exhelp_flag(9) == 0)
             {
                 if (mode == 0)
                 {
                     if (cdata.player().continuous_action.turn == 0)
                     {
-                        gdata(209) = 1;
+                        gdata_exhelp_flag(9) = 1;
                         ghelp = 9;
                         show_ex_help();
                     }
@@ -15479,13 +15477,13 @@ void weather_changes()
     {
         if (Config::instance().extrahelp)
         {
-            if (gdata(210) == 0)
+            if (gdata_exhelp_flag(10) == 0)
             {
                 if (mode == 0)
                 {
                     if (cdata.player().continuous_action.turn == 0)
                     {
-                        gdata(210) = 1;
+                        gdata_exhelp_flag(10) = 1;
                         ghelp = 10;
                         show_ex_help();
                     }
