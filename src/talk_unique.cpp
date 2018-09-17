@@ -3637,17 +3637,17 @@ TalkResult talk_unique_balzak()
 void _lexus_join_mages_guild()
 {
     gdata(128) = 10000;
-    gdata_belongs_to_thieves_guild = 0;
-    gdata_belongs_to_fighters_guild = 0;
-    gdata_belongs_to_mages_guild = 1;
-    gdata_mages_guild_quota = 0;
-    gdata_thieves_guild_quota = 0;
-    gdata_joining_mages_guild = 1000;
-    gdata_joining_thieves_guild = 0;
-    gdata_joining_fighters_guild = 0;
-    gdata_fighters_guild_quota2 = 0;
-    gdata_mages_guild_quota2 = 0;
-    gdata_thieves_guild_quota2 = 0;
+    game_data.guild.belongs_to_thieves_guild = 0;
+    game_data.guild.belongs_to_fighters_guild = 0;
+    game_data.guild.belongs_to_mages_guild = 1;
+    game_data.guild.mages_guild_quota = 0;
+    game_data.guild.thieves_guild_quota = 0;
+    game_data.guild.joining_mages_guild = 1000;
+    game_data.guild.joining_thieves_guild = 0;
+    game_data.guild.joining_fighters_guild = 0;
+    game_data.guild.fighters_guild_quota_recurring = 0;
+    game_data.guild.mages_guild_quota_recurring = 0;
+    game_data.guild.thieves_guild_quota_recurring = 0;
     txt(i18n::s.get("core.locale.quest.completed"));
     snd(51);
     quest_update_journal_msg();
@@ -3657,15 +3657,15 @@ void _lexus_join_mages_guild()
 
 void _lexus_start_trial()
 {
-    gdata_joining_mages_guild = 1;
-    gdata_mages_guild_quota = 30;
+    game_data.guild.joining_mages_guild = 1;
+    game_data.guild.mages_guild_quota = 30;
     quest_update_journal_msg();
 }
 
 void _lexus_update_quota()
 {
-    gdata_mages_guild_quota2 = 1;
-    gdata_mages_guild_quota = 75 - gdata(128) / 200;
+    game_data.guild.mages_guild_quota_recurring = 1;
+    game_data.guild.mages_guild_quota = 75 - gdata(128) / 200;
     quest_update_journal_msg();
 }
 
@@ -3678,7 +3678,7 @@ void _lexus_move_self()
 
 void _lexus_receive_reward()
 {
-    gdata_mages_guild_quota2 = 0;
+    game_data.guild.mages_guild_quota_recurring = 0;
     flt(51 - gdata(128) / 200);
     flttypemajor = 54000;
     itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
@@ -3705,7 +3705,7 @@ void _lexus_receive_reward()
 
 TalkResult talk_unique_lexus()
 {
-    if (gdata_belongs_to_mages_guild == 0)
+    if (game_data.guild.belongs_to_mages_guild == 0)
     {
         ELONA_APPEND_RESPONSE(
             2,
@@ -3731,7 +3731,7 @@ TalkResult talk_unique_lexus()
         }
         if (chatval_ == 1)
         {
-            if (gdata_joining_mages_guild == 0)
+            if (game_data.guild.joining_mages_guild == 0)
             {
                 listmax = 0;
                 buff = i18n::s.get_enum(
@@ -3759,7 +3759,7 @@ TalkResult talk_unique_lexus()
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
             }
-            if (gdata_mages_guild_quota > 0)
+            if (game_data.guild.mages_guild_quota > 0)
             {
                 listmax = 0;
                 buff = i18n::s.get(
@@ -3794,7 +3794,7 @@ TalkResult talk_unique_lexus()
     }
     _lexus_move_self();
 
-    if (gdata_mages_guild_quota2 == 0)
+    if (game_data.guild.mages_guild_quota_recurring == 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -3821,7 +3821,7 @@ TalkResult talk_unique_lexus()
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.unique.lexus.member.new_quota",
-            gdata_mages_guild_quota);
+            game_data.guild.mages_guild_quota);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -3830,7 +3830,7 @@ TalkResult talk_unique_lexus()
     }
     if (chatval_ == 2)
     {
-        if (gdata_mages_guild_quota > 0)
+        if (game_data.guild.mages_guild_quota > 0)
         {
             listmax = 0;
             buff = i18n::s.get(
@@ -3859,24 +3859,24 @@ TalkResult talk_unique_lexus()
 
 void _abyss_start_trial()
 {
-    gdata_joining_thieves_guild = 1;
+    game_data.guild.joining_thieves_guild = 1;
     quest_update_journal_msg();
 }
 
 void _abyss_join_thieves_guild()
 {
     gdata(128) = 10000;
-    gdata_belongs_to_thieves_guild = 1;
-    gdata_belongs_to_fighters_guild = 0;
-    gdata_belongs_to_mages_guild = 0;
-    gdata_mages_guild_quota = 0;
-    gdata_thieves_guild_quota = 0;
-    gdata_joining_mages_guild = 0;
-    gdata_joining_thieves_guild = 1000;
-    gdata_joining_fighters_guild = 0;
-    gdata_fighters_guild_quota2 = 0;
-    gdata_mages_guild_quota2 = 0;
-    gdata_thieves_guild_quota2 = 0;
+    game_data.guild.belongs_to_thieves_guild = 1;
+    game_data.guild.belongs_to_fighters_guild = 0;
+    game_data.guild.belongs_to_mages_guild = 0;
+    game_data.guild.mages_guild_quota = 0;
+    game_data.guild.thieves_guild_quota = 0;
+    game_data.guild.joining_mages_guild = 0;
+    game_data.guild.joining_thieves_guild = 1000;
+    game_data.guild.joining_fighters_guild = 0;
+    game_data.guild.fighters_guild_quota_recurring = 0;
+    game_data.guild.mages_guild_quota_recurring = 0;
+    game_data.guild.thieves_guild_quota_recurring = 0;
     txt(i18n::s.get("core.locale.quest.completed"));
     snd(51);
     quest_update_journal_msg();
@@ -3893,14 +3893,14 @@ void _abyss_move_self()
 
 void _abyss_update_quota()
 {
-    gdata_thieves_guild_quota2 = 1;
-    gdata_thieves_guild_quota = (10000 - gdata(128)) * 6 + 1000;
+    game_data.guild.thieves_guild_quota_recurring = 1;
+    game_data.guild.thieves_guild_quota = (10000 - gdata(128)) * 6 + 1000;
     quest_update_journal_msg();
 }
 
 void _abyss_receive_reward()
 {
-    gdata_thieves_guild_quota2 = 0;
+    game_data.guild.thieves_guild_quota_recurring = 0;
     flt(51 - gdata(128) / 200);
     flttypemajor = 60000;
     itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
@@ -3927,7 +3927,7 @@ void _abyss_receive_reward()
 
 TalkResult talk_unique_abyss()
 {
-    if (gdata_belongs_to_thieves_guild == 0)
+    if (game_data.guild.belongs_to_thieves_guild == 0)
     {
         ELONA_APPEND_RESPONSE(
             2,
@@ -3953,7 +3953,7 @@ TalkResult talk_unique_abyss()
         }
         if (chatval_ == 1)
         {
-            if (gdata_joining_thieves_guild == 0)
+            if (game_data.guild.joining_thieves_guild == 0)
             {
                 listmax = 0;
                 buff = i18n::s.get_enum(
@@ -4009,7 +4009,7 @@ TalkResult talk_unique_abyss()
     }
     _abyss_move_self();
 
-    if (gdata_thieves_guild_quota2 == 0)
+    if (game_data.guild.thieves_guild_quota_recurring == 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -4036,7 +4036,7 @@ TalkResult talk_unique_abyss()
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.unique.abyss.member.new_quota",
-            gdata_thieves_guild_quota);
+            game_data.guild.thieves_guild_quota);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -4045,7 +4045,7 @@ TalkResult talk_unique_abyss()
     }
     if (chatval_ == 2)
     {
-        if (gdata_thieves_guild_quota > 0)
+        if (game_data.guild.thieves_guild_quota > 0)
         {
             listmax = 0;
             buff = i18n::s.get(
@@ -4074,7 +4074,7 @@ TalkResult talk_unique_abyss()
 
 void _doria_start_trial()
 {
-    gdata_joining_fighters_guild = 1;
+    game_data.guild.joining_fighters_guild = 1;
     quest_update_journal_msg();
     while (1)
     {
@@ -4094,25 +4094,25 @@ void _doria_start_trial()
         }
         break;
     }
-    gdata_fighters_guild_quota = 15;
-    gdata_fighters_guild_target = cdata.tmp().id;
+    game_data.guild.fighters_guild_quota = 15;
+    game_data.guild.fighters_guild_target = cdata.tmp().id;
     chara_vanquish(56);
 }
 
 void _doria_join_fighters_guild()
 {
     gdata(128) = 10000;
-    gdata_belongs_to_thieves_guild = 0;
-    gdata_belongs_to_fighters_guild = 1;
-    gdata_belongs_to_mages_guild = 0;
-    gdata_mages_guild_quota = 0;
-    gdata_thieves_guild_quota = 0;
-    gdata_joining_mages_guild = 0;
-    gdata_joining_thieves_guild = 0;
-    gdata_joining_fighters_guild = 1000;
-    gdata_fighters_guild_quota2 = 0;
-    gdata_mages_guild_quota2 = 0;
-    gdata_thieves_guild_quota2 = 0;
+    game_data.guild.belongs_to_thieves_guild = 0;
+    game_data.guild.belongs_to_fighters_guild = 1;
+    game_data.guild.belongs_to_mages_guild = 0;
+    game_data.guild.mages_guild_quota = 0;
+    game_data.guild.thieves_guild_quota = 0;
+    game_data.guild.joining_mages_guild = 0;
+    game_data.guild.joining_thieves_guild = 0;
+    game_data.guild.joining_fighters_guild = 1000;
+    game_data.guild.fighters_guild_quota_recurring = 0;
+    game_data.guild.mages_guild_quota_recurring = 0;
+    game_data.guild.thieves_guild_quota_recurring = 0;
     txt(i18n::s.get("core.locale.quest.completed"));
     snd(51);
     quest_update_journal_msg();
@@ -4147,16 +4147,16 @@ void _doria_update_quota()
         }
         break;
     }
-    gdata_fighters_guild_quota = 2 + rnd(3);
-    gdata_fighters_guild_target = cdata.tmp().id;
+    game_data.guild.fighters_guild_quota = 2 + rnd(3);
+    game_data.guild.fighters_guild_target = cdata.tmp().id;
     chara_vanquish(56);
-    gdata_fighters_guild_quota2 = 1;
+    game_data.guild.fighters_guild_quota_recurring = 1;
     quest_update_journal_msg();
 }
 
 void _doria_receive_reward()
 {
-    gdata_fighters_guild_quota2 = 0;
+    game_data.guild.fighters_guild_quota_recurring = 0;
     flt(51 - gdata(128) / 200, calcfixlv(Quality::good));
     flttypemajor = 10000;
     itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
@@ -4183,7 +4183,7 @@ void _doria_receive_reward()
 
 TalkResult talk_unique_doria()
 {
-    if (gdata_belongs_to_fighters_guild == 0)
+    if (game_data.guild.belongs_to_fighters_guild == 0)
     {
         ELONA_APPEND_RESPONSE(
             2,
@@ -4209,7 +4209,7 @@ TalkResult talk_unique_doria()
         }
         if (chatval_ == 1)
         {
-            if (gdata_joining_fighters_guild == 0)
+            if (game_data.guild.joining_fighters_guild == 0)
             {
                 listmax = 0;
                 buff = i18n::s.get_enum(
@@ -4225,21 +4225,21 @@ TalkResult talk_unique_doria()
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.doria.nonmember.want_to_join",
                     1,
-                    gdata_fighters_guild_quota,
-                    chara_refstr(gdata_fighters_guild_target, 2));
+                    game_data.guild.fighters_guild_quota,
+                    chara_refstr(game_data.guild.fighters_guild_target, 2));
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
             }
-            if (gdata_fighters_guild_quota > 0)
+            if (game_data.guild.fighters_guild_quota > 0)
             {
                 listmax = 0;
                 buff = i18n::s.get(
                     "core.locale.talk.unique.doria.nonmember.quota",
-                    gdata_fighters_guild_quota,
-                    chara_refstr(gdata_fighters_guild_target, 2));
+                    game_data.guild.fighters_guild_quota,
+                    chara_refstr(game_data.guild.fighters_guild_target, 2));
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -4270,7 +4270,7 @@ TalkResult talk_unique_doria()
     }
     _doria_move_self();
 
-    if (gdata_fighters_guild_quota2 == 0)
+    if (game_data.guild.fighters_guild_quota_recurring == 0)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -4297,8 +4297,8 @@ TalkResult talk_unique_doria()
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.unique.doria.member.new_quota",
-            gdata_fighters_guild_quota,
-            chara_refstr(gdata_fighters_guild_target, 2));
+            game_data.guild.fighters_guild_quota,
+            chara_refstr(game_data.guild.fighters_guild_target, 2));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -4307,7 +4307,7 @@ TalkResult talk_unique_doria()
     }
     if (chatval_ == 2)
     {
-        if (gdata_fighters_guild_quota > 0)
+        if (game_data.guild.fighters_guild_quota > 0)
         {
             listmax = 0;
             buff = i18n::s.get(

@@ -598,7 +598,7 @@ label_20591:
         {
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                if (gdata_mages_guild_quota <= 0)
+                if (game_data.guild.mages_guild_quota <= 0)
                 {
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.guild.have_no_quota"));
@@ -682,7 +682,7 @@ label_20591:
                 {
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.guild.remaining",
-                        gdata_mages_guild_quota));
+                        game_data.guild.mages_guild_quota));
                 }
             }
         }
@@ -1802,18 +1802,18 @@ label_2061_internal:
                 snd(100);
                 if (game_data.current_map == mdata_t::MapId::lumiest)
                 {
-                    gdata_mages_guild_quota -=
+                    game_data.guild.mages_guild_quota -=
                         (inv[ci].param1 + 1) * inv[ci].number();
-                    if (gdata_mages_guild_quota <= 0)
+                    if (game_data.guild.mages_guild_quota <= 0)
                     {
-                        gdata_mages_guild_quota = 0;
+                        game_data.guild.mages_guild_quota = 0;
                     }
                     txtef(2);
                     txt(i18n::s.get(
                             "core.locale.ui.inv.put.guild.you_deliver", inv[ci])
                         + u8"("s + (inv[ci].param1 + 1) * inv[ci].number()
                         + u8" Guild Point)"s);
-                    if (gdata_mages_guild_quota == 0)
+                    if (game_data.guild.mages_guild_quota == 0)
                     {
                         snd(51);
                         txtef(2);

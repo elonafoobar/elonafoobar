@@ -651,21 +651,21 @@ int _trainer_calc_skills()
         guildname(),
         plat,
         cdata[tc]);
-    if (gdata_belongs_to_mages_guild != 0)
+    if (game_data.guild.belongs_to_mages_guild != 0)
     {
         p(0) = 16;
         p(1) = 15;
         p(2) = 14;
         p(3) = -1;
     }
-    else if (gdata_belongs_to_fighters_guild != 0)
+    else if (game_data.guild.belongs_to_fighters_guild != 0)
     {
         p(0) = 10;
         p(1) = 11;
         p(2) = 12;
         p(3) = -1;
     }
-    else if (gdata_belongs_to_thieves_guild != 0)
+    else if (game_data.guild.belongs_to_thieves_guild != 0)
     {
         p(0) = 12;
         p(1) = 13;

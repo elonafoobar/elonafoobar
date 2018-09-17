@@ -81,6 +81,13 @@ FoobarData foobar_data;
     SERIALIZE(253, quest_flags.magic_stone_of_fool); \
     SERIALIZE(254, quest_flags.magic_stone_of_sage); \
     SERIALIZE(255, quest_flags.magic_stone_of_king); \
+    SERIALIZE(263, guild.belongs_to_mages_guild); \
+    SERIALIZE(264, guild.belongs_to_fighters_guild); \
+    SERIALIZE(265, guild.belongs_to_thieves_guild); \
+    SERIALIZE(266, guild.mages_guild_quota); \
+    SERIALIZE(267, guild.fighters_guild_quota); \
+    SERIALIZE(268, guild.fighters_guild_target); \
+    SERIALIZE(269, guild.thieves_guild_quota); \
     SERIALIZE(450, quest_flags.putit_attacks); \
     SERIALIZE(451, quest_flags.thieves_hideout); \
     SERIALIZE(452, quest_flags.nightmare); \
@@ -99,7 +106,13 @@ FoobarData foobar_data;
     SERIALIZE(465, quest_flags.sewer_sweeping); \
     SERIALIZE(472, quest_flags.minotaur_king); \
     SERIALIZE(473, quest_flags.little_sister); \
-    SERIALIZE(474, quest_flags.blue_capsule_drug);
+    SERIALIZE(474, quest_flags.blue_capsule_drug); \
+    SERIALIZE(466, guild.joining_mages_guild); \
+    SERIALIZE(467, guild.joining_fighters_guild); \
+    SERIALIZE(468, guild.joining_thieves_guild); \
+    SERIALIZE(469, guild.mages_guild_quota_recurring); \
+    SERIALIZE(470, guild.fighters_guild_quota_recurring); \
+    SERIALIZE(471, guild.thieves_guild_quota_recurring);
 
 
 #define SERIALIZE GDATA_PACK

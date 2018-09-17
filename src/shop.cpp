@@ -669,7 +669,7 @@ void shop_refresh()
         }
         if (cdata[tc].character_role == 1007)
         {
-            if (gdata_belongs_to_thieves_guild != 0)
+            if (game_data.guild.belongs_to_thieves_guild != 0)
             {
                 inv[ci].value *= 2;
             }
