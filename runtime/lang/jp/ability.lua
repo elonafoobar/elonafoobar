@@ -205,12 +205,12 @@ ability['153'] = {
 }
 ability['152'] = {
   name = "戦術",
-  description = "近接攻撃の威力をあげる",
+  description = "近接攻撃の威力を上げる",
   enchantment_description = "戦術の理解を深める",
 }
 ability['189'] = {
   name = "射撃",
-  description = "射撃の威力をあげる",
+  description = "射撃の威力を上げる",
   enchantment_description = "射撃の理解を深める",
 }
 ability['154'] = {
@@ -220,13 +220,13 @@ ability['154'] = {
 }
 ability['163'] = {
   name = "採掘",
-  description = "壁を掘る効率をあげる",
+  description = "壁を掘る効率を上げる",
   enchantment_description = "採掘能力を強化する",
 }
 ability['176'] = {
   name = "大工",
   description = "木を加工し、アイテムを作り出す",
-  enchantment_description = "大工の腕をあげる",
+  enchantment_description = "大工の腕を上げる",
 }
 ability['169'] = {
   name = "重装備",
@@ -256,17 +256,17 @@ ability['175'] = {
 ability['177'] = {
   name = "裁縫",
   description = "革や蔓を用い、アイテムを作り出す",
-  enchantment_description = "裁縫の腕をあげる",
+  enchantment_description = "裁縫の腕を上げる",
 }
 ability['179'] = {
   name = "宝石細工",
   description = "宝石を加工し、アイテムを作り出す",
-  enchantment_description = "宝石細工の腕をあげる",
+  enchantment_description = "宝石細工の腕を上げる",
 }
 ability['300'] = {
   name = "窃盗",
   description = "貴重な物品を盗む",
-  enchantment_description = "窃盗の腕をあげる",
+  enchantment_description = "窃盗の腕を上げる",
 }
 ability['157'] = {
   name = "隠密",
@@ -291,12 +291,12 @@ ability['186'] = {
 ability['185'] = {
   name = "釣り",
   description = "釣りを可能にする",
-  enchantment_description = "釣りの腕をあげる",
+  enchantment_description = "釣りの腕を上げる",
 }
 ability['187'] = {
   name = "見切り",
   description = "不正確な攻撃を確実に避ける",
-  enchantment_description = "見切りの腕をあげる",
+  enchantment_description = "見切りの腕を上げる",
 }
 ability['161'] = {
   name = "解剖学",
@@ -316,12 +316,12 @@ ability['165'] = {
 ability['178'] = {
   name = "錬金術",
   description = "様々な材料を調合し、ポーションを作り出す",
-  enchantment_description = "錬金の腕をあげる",
+  enchantment_description = "錬金の腕を上げる",
 }
 ability['180'] = {
   name = "栽培",
   description = "植物を育て、採取する",
-  enchantment_description = "栽培の腕をあげる",
+  enchantment_description = "栽培の腕を上げる",
 }
 ability['151'] = {
   name = "遺伝子学",
@@ -341,11 +341,11 @@ ability['155'] = {
 ability['174'] = {
   name = "魔道具",
   description = "道具から魔力を効果的に引き出す",
-  enchantment_description = "魔道具の効果をあげる",
+  enchantment_description = "魔道具の効果を上げる",
 }
 ability['172'] = {
   name = "詠唱",
-  description = "魔法詠唱の成功率をあげる",
+  description = "魔法詠唱の成功率を上げる",
   enchantment_description = "",
 }
 ability['188'] = {
@@ -366,12 +366,12 @@ ability['181'] = {
 ability['182'] = {
   name = "旅歩き",
   description = "旅の進行を早め経験を深める",
-  enchantment_description = "旅の熟練をあげる",
+  enchantment_description = "旅の熟練を上げる",
 }
 ability['301'] = {
   name = "乗馬",
   description = "上手に乗りこなす",
-  enchantment_description = "乗馬の腕をあげる",
+  enchantment_description = "乗馬の腕を上げる",
 }
 ability['156'] = {
   name = "交渉",
@@ -386,7 +386,7 @@ ability['160'] = {
 ability['183'] = {
   name = "演奏",
   description = "質の高い演奏を可能にする",
-  enchantment_description = "演奏の質をあげる",
+  enchantment_description = "演奏の質を上げる",
 }
 ability['400'] = {
   name = "軽傷治癒",

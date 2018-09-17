@@ -89,7 +89,7 @@ locale {
                 name = "the Tower of Fire"
             }
             _17 {
-                name = " the crypt of the damned "
+                name = "the crypt of the damned"
             }
             _18 {
                 name = "the Ancient Castle"
