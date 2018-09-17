@@ -141,7 +141,7 @@ int net_send(const std::string& prm_883, int prm_884)
         url_at_m147 = chatsendurl;
         msg_at_m147 = u8"&comment="s + chattemp;
     }
-    else if (gdata_wizard)
+    else if (game_data.wizard)
     {
         return 1;
     }

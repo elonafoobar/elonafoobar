@@ -36,7 +36,7 @@ void UIMenuCharamakeAlias::_reroll_aliases()
     {
         if (list(0, 0) == -1 && _locked_aliases(cnt) == 0)
         {
-            if (gdata_wizard == 1)
+            if (game_data.wizard == 1)
             {
                 listn(0, cnt) = u8"*Debug*"s;
             }

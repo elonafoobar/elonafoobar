@@ -450,10 +450,10 @@ void map_placeplayer()
         }
         if (cnt != 0)
         {
-            if (gdata_mount == cnt)
+            if (game_data.mount == cnt)
             {
-                cdata[gdata_mount].position.x = cdata.player().position.x;
-                cdata[gdata_mount].position.y = cdata.player().position.y;
+                cdata[game_data.mount].position.x = cdata.player().position.x;
+                cdata[game_data.mount].position.y = cdata.player().position.y;
                 continue;
             }
         }
@@ -2216,7 +2216,8 @@ void generate_random_nefia()
     }
     if (mdata_map_refresh_type == 1)
     {
-        if (rnd(15 + gdata_kill_count_of_little_sister * 2) == 0)
+        if (rnd(15 + game_data.quest_flags.kill_count_of_little_sister * 2)
+            == 0)
         {
             flt();
             chara_create(-1, 318, -3, 0);

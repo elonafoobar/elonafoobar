@@ -4518,15 +4518,17 @@ void _strange_scientist_receive_little_balls()
 
 bool _strange_scientist_can_receive_reward()
 {
-    p = gdata_kill_count_of_little_sister;
-    for (int cnt = 1, cnt_end = cnt + (gdata_gift_count_of_little_sister + 1);
+    p = game_data.quest_flags.kill_count_of_little_sister;
+    for (int cnt = 1,
+             cnt_end =
+                 cnt + (game_data.quest_flags.gift_count_of_little_sister + 1);
          cnt < cnt_end;
          ++cnt)
     {
         p += cnt;
     }
 
-    return gdata_save_count_of_little_sister >= p || 0;
+    return game_data.quest_flags.save_count_of_little_sister >= p || 0;
 }
 
 void _strange_scientist_pick_reward()
@@ -4607,12 +4609,12 @@ void _strange_scientist_turn_over()
 {
     txt(i18n::s.get(
         "core.locale.talk.unique.strange_scientist.turn_over.text"));
-    ++gdata_save_count_of_little_sister;
+    ++game_data.quest_flags.save_count_of_little_sister;
     txtef(2);
     txt(i18n::s.get(
         "core.locale.talk.unique.strange_scientist.saved_count",
-        gdata_save_count_of_little_sister,
-        gdata_kill_count_of_little_sister));
+        game_data.quest_flags.save_count_of_little_sister,
+        game_data.quest_flags.kill_count_of_little_sister));
     chara_vanquish(chara_find_ally(319));
     snd(51);
 }

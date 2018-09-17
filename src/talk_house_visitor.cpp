@@ -645,7 +645,7 @@ int _trainer_calc_skills()
 {
     int plat = 3;
 
-    gdata_last_month_when_trainer_visited = game_data.date.month;
+    game_data.last_month_when_trainer_visited = game_data.date.month;
     buff = i18n::s.get(
         "core.locale.talk.visitor.trainer.dialog.member",
         guildname(),
@@ -707,7 +707,7 @@ TalkResult _talk_hv_trainer()
 {
     int plat = 0;
 
-    if (gdata_last_month_when_trainer_visited == game_data.date.month)
+    if (game_data.last_month_when_trainer_visited == game_data.date.month)
     {
         listmax = 0;
         buff = i18n::s.get(

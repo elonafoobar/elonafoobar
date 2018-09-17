@@ -1294,12 +1294,12 @@ void apply_general_eating_effect(int cieat)
         }
         if (enc == 40)
         {
-            if (gdata_left_turns_of_timestop == 0)
+            if (game_data.left_turns_of_timestop == 0)
             {
                 txtef(9);
                 txt(i18n::s.get(
                     "core.locale.action.time_stop.begins", cdata[cc]));
-                gdata_left_turns_of_timestop =
+                game_data.left_turns_of_timestop =
                     inv[ci].enchantments[cnt].power / 100 + 1 + 1;
                 continue;
             }

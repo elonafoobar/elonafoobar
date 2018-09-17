@@ -944,14 +944,14 @@ void initialize_debug_globals()
     game_data.date.hour = 1;
     game_data.date.minute = 10;
     game_data.played_scene = 50;
-    gdata_has_not_been_to_vernis = 1;
+    game_data.has_not_been_to_vernis = 1;
     area_data[7].outer_map = 4;
     gdata(850) = area_data[game_data.current_map].outer_map;
     game_data.acquirable_feat_count = 2;
-    gdata_save_count_of_little_sister = 1000;
+    game_data.quest_flags.save_count_of_little_sister = 1000;
     game_data.rights_to_succeed_to = 1000;
     game_data.home_scale = 0;
-    gdata_number_of_waiting_guests = 2;
+    game_data.number_of_waiting_guests = 2;
     game_data.charge_power = 1000;
     cdata.player().god_id = core_god::int2godid(2);
     cdata.player().piety_point = 1000;

@@ -452,12 +452,12 @@ void cell_refresh(int prm_493, int prm_494)
 
 void itemturn(int ci)
 {
-    if (gdata_item_turns < 0)
+    if (game_data.item_turns < 0)
     {
-        gdata_item_turns = 0;
+        game_data.item_turns = 0;
     }
-    ++gdata_item_turns;
-    inv[ci].turn = gdata_item_turns;
+    ++game_data.item_turns;
+    inv[ci].turn = game_data.item_turns;
 }
 
 

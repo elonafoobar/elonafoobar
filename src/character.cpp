@@ -1059,7 +1059,7 @@ bool chara_place()
         return false;
     }
 
-    if (gdata_mount != 0 && gdata_mount == rc)
+    if (game_data.mount != 0 && game_data.mount == rc)
     {
         cdata[rc].position = cdata.player().position;
         return true;
@@ -1196,12 +1196,12 @@ void chara_refresh(int cc)
     if (cc == 0)
     {
         game_data.seven_league_boot_effect = 0;
-        gdata_ether_disease_speed = 0;
+        game_data.ether_disease_speed = 0;
         game_data.protects_from_etherwind = 0;
         game_data.protects_from_bad_weather = 0;
         gdata(89) = 70;
-        gdata_catches_god_signal = 0;
-        gdata_reveals_religion = 0;
+        game_data.catches_god_signal = 0;
+        game_data.reveals_religion = 0;
     }
     for (int cnt = 0; cnt < 600; ++cnt)
     {
@@ -1303,7 +1303,7 @@ void chara_refresh(int cc)
         {
             if (cc == 0)
             {
-                gdata_ether_disease_speed += 5;
+                game_data.ether_disease_speed += 5;
             }
         }
         for (int cnt = 0; cnt < 15; ++cnt)
@@ -1351,7 +1351,7 @@ void chara_refresh(int cc)
                 {
                     if (cc == 0)
                     {
-                        gdata_catches_god_signal = 1;
+                        game_data.catches_god_signal = 1;
                         continue;
                     }
                 }
@@ -1359,7 +1359,7 @@ void chara_refresh(int cc)
                 {
                     if (cc == 0)
                     {
-                        gdata_reveals_religion = 1;
+                        game_data.reveals_religion = 1;
                         continue;
                     }
                 }
@@ -1904,7 +1904,7 @@ void chara_vanquish(int cc)
     if (cc == 0)
         return;
 
-    if (cc == gdata_mount)
+    if (cc == game_data.mount)
     {
         ride_end();
     }
@@ -2060,7 +2060,7 @@ void chara_relocate(
     optional<int> destination_slot,
     CharaRelocationMode mode)
 {
-    if (source.index == gdata_mount)
+    if (source.index == game_data.mount)
     {
         ride_end();
         source.position = cdata.player().position;

@@ -867,12 +867,12 @@ bool casino_start()
     noteadd(i18n::s.get_enum("core.locale.casino.window.desc", 0));
     noteadd(i18n::s.get_enum("core.locale.casino.window.desc", 1));
     noteadd(i18n::s.get_enum("core.locale.casino.window.desc", 2));
-    if (gdata_used_casino_once == 0)
+    if (game_data.used_casino_once == 0)
     {
         noteadd(""s);
         noteadd(i18n::s.get_enum("core.locale.casino.window.first", 0));
         noteadd(i18n::s.get_enum("core.locale.casino.window.first", 1));
-        gdata_used_casino_once = 1;
+        game_data.used_casino_once = 1;
         snd(41);
         mat(1) += 10;
         noteadd(

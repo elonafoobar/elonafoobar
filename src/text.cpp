@@ -817,7 +817,7 @@ std::string replace_tag(const std::string source)
     if (source == u8"ref"s && talkref == 1)
     {
         return i18n::s.get(
-            "core.locale.talk.tag.ref", gdata_number_of_waiting_guests);
+            "core.locale.talk.tag.ref", game_data.number_of_waiting_guests);
     }
     if (source == u8"you"s)
     {
@@ -957,7 +957,7 @@ void get_npc_talk()
     {
         if (cdata[tc].character_role == 18)
         {
-            if (gdata_number_of_waiting_guests > 0)
+            if (game_data.number_of_waiting_guests > 0)
             {
                 talkref = 1;
                 p = instr(

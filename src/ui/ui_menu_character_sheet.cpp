@@ -899,7 +899,8 @@ static void _draw_first_page_stats_time()
         "core.locale.ui.chara_sheet.time.days_counter", game_data.play_days);
     s(2) = ""s + game_data.kill_count;
     s(3) = ""s
-        + cnvplaytime((gdata_play_time + timeGetTime() / 1000 - time_begin));
+        + cnvplaytime(
+               (game_data.play_time + timeGetTime() / 1000 - time_begin));
     s(4) = "";
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)

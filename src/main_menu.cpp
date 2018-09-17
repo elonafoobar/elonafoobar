@@ -289,7 +289,7 @@ MainMenuResult main_menu_new_game()
 {
     if (Config::instance().wizard)
     {
-        gdata_wizard = 1;
+        game_data.wizard = 1;
     }
     if (geneuse != ""s)
     {

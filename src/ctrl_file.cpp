@@ -1508,7 +1508,8 @@ void Save::save(const fs::path& save_dir)
 
 void ctrl_file(FileOperation file_operation)
 {
-    gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
+    game_data.play_time =
+        game_data.play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
     switch (file_operation)
@@ -1541,7 +1542,8 @@ void ctrl_file(FileOperation file_operation)
 
 void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
 {
-    gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
+    game_data.play_time =
+        game_data.play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
     switch (file_operation)

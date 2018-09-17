@@ -1341,7 +1341,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 4)
                 {
-                    ++gdata_gift_count_of_little_sister;
+                    ++game_data.quest_flags.gift_count_of_little_sister;
                     invsubroutine = 0;
                     result.succeeded = true;
                     return result;

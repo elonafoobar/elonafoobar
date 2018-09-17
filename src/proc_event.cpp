@@ -382,7 +382,7 @@ void proc_event()
         txt(""s + usermsg);
         break;
     case 25:
-        --gdata_number_of_waiting_guests;
+        --game_data.number_of_waiting_guests;
         if (chara_get_free_slot() == -1)
         {
             txt(i18n::s.get("core.locale.event.guest_lost_his_way"));
@@ -393,7 +393,7 @@ void proc_event()
             flt(0, Quality::good);
             for (int i = 0; i < 1; ++i)
             {
-                if (gdata_last_month_when_trainer_visited
+                if (game_data.last_month_when_trainer_visited
                         != game_data.date.month
                     || rnd(5) == 0)
                 {
@@ -511,9 +511,9 @@ void proc_event()
             {
                 continue;
             }
-            if (gdata_mount != 0)
+            if (game_data.mount != 0)
             {
-                if (c == gdata_mount)
+                if (c == game_data.mount)
                 {
                     continue;
                 }
@@ -623,7 +623,7 @@ void proc_event()
             txtef(9);
             txt(i18n::s.get("core.locale.event.okaeri"));
         }
-        if (gdata_number_of_waiting_guests != 0)
+        if (game_data.number_of_waiting_guests != 0)
         {
             tc = 0;
             for (auto&& cc : cdata.all())

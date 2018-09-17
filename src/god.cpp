@@ -57,27 +57,27 @@ void txtgod(const GodId& id, int type)
 
 int modpiety(int prm_1035)
 {
-    if (gdata_god_rank == 4)
+    if (game_data.god_rank == 4)
     {
         if (cdata.player().piety_point >= 4000)
         {
-            ++gdata_god_rank;
+            ++game_data.god_rank;
             txtgod(cdata.player().god_id, 8);
         }
     }
-    if (gdata_god_rank == 2)
+    if (game_data.god_rank == 2)
     {
         if (cdata.player().piety_point >= 2500)
         {
-            ++gdata_god_rank;
+            ++game_data.god_rank;
             txtgod(cdata.player().god_id, 7);
         }
     }
-    if (gdata_god_rank == 0)
+    if (game_data.god_rank == 0)
     {
         if (cdata.player().piety_point >= 1500)
         {
-            ++gdata_god_rank;
+            ++game_data.god_rank;
             txtgod(cdata.player().god_id, 7);
         }
     }
@@ -402,7 +402,7 @@ void switch_religion()
 {
     cdata.player().piety_point = 0;
     cdata.player().praying_point = 500;
-    gdata_god_rank = 0;
+    game_data.god_rank = 0;
     spact(23) = 0;
     spact(24) = 0;
     spact(25) = 0;
@@ -477,10 +477,10 @@ TurnResult do_pray()
     magic();
     cdata.player().praying_point = 0;
     cdata.player().piety_point = cdata.player().piety_point * 85 / 100;
-    if (gdata_god_rank % 2 == 1)
+    if (game_data.god_rank % 2 == 1)
     {
         txtgod(cdata.player().god_id, 6);
-        if (gdata_god_rank == 1)
+        if (game_data.god_rank == 1)
         {
             f = 0;
             p = 0;
@@ -517,7 +517,7 @@ TurnResult do_pray()
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
-                    ++gdata_god_rank;
+                    ++game_data.god_rank;
                 }
                 return TurnResult::turn_end;
             }
@@ -564,7 +564,7 @@ TurnResult do_pray()
             rc = 56;
             new_ally_joins();
         }
-        if (gdata_god_rank == 3)
+        if (game_data.god_rank == 3)
         {
             flt();
             dbid = 0;
@@ -634,7 +634,7 @@ TurnResult do_pray()
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
         }
-        if (gdata_god_rank == 5)
+        if (game_data.god_rank == 5)
         {
             flt();
             dbid = 0;
@@ -679,7 +679,7 @@ TurnResult do_pray()
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
         }
-        ++gdata_god_rank;
+        ++game_data.god_rank;
     }
     return TurnResult::turn_end;
 }

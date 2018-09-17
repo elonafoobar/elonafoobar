@@ -1261,10 +1261,10 @@ void render_hud()
     font(12 - en * 2, snail::Font::Style::bold);
     render_hp_bar(cdata.player(), inf_hpx, inf_hpy, true);
     render_mp_bar(cdata.player(), inf_mpx, inf_mpy, true);
-    if (gdata_mount != 0
-        && cdata[gdata_mount].state() == Character::State::alive)
+    if (game_data.mount != 0
+        && cdata[game_data.mount].state() == Character::State::alive)
     {
-        render_hp_bar(cdata[gdata_mount], inf_hpx - 120, inf_hpy);
+        render_hp_bar(cdata[game_data.mount], inf_hpx - 120, inf_hpy);
     }
 
     // Basic attributes and PV/DV.

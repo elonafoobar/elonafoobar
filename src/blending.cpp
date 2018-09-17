@@ -1805,7 +1805,7 @@ void blending_proc_on_success_events()
         break;
     case 10008:
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-            || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
+            || (inv[ci].id == 602 && game_data.holy_well_count <= 0))
         {
             txt(i18n::s.get(
                 "core.locale.action.dip.result.natural_potion_dry", inv[ci]));
@@ -1821,7 +1821,7 @@ void blending_proc_on_success_events()
         cibk = ci;
         if (inv[ci].id == 602)
         {
-            --gdata_holy_well_count;
+            --game_data.holy_well_count;
             flt();
             int stat = itemcreate(0, 516, -1, -1, 0);
             if (stat != 0)

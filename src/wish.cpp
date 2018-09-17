@@ -157,7 +157,7 @@ std::string remove_extra_str(const std::string& text)
 
 void wish_end()
 {
-    if (gdata_wizard || wishfilter)
+    if (game_data.wizard || wishfilter)
         return;
 
     net_send(
@@ -356,7 +356,7 @@ bool grant_special_wishing(const std::string& wish)
     else if (match_special_wish(
                  wish, "alias", {"aka", "title", "name", "alias"}))
     {
-        if (gdata_wizard)
+        if (game_data.wizard)
         {
             txt(i18n::s.get("core.locale.wish.wish_alias.impossible"));
         }
@@ -446,7 +446,7 @@ bool grant_special_wishing(const std::string& wish)
         itemcreate(
             -1, 55, cdata.player().position.x, cdata.player().position.y, 5);
     }
-    else if (gdata_wizard)
+    else if (game_data.wizard)
     {
         if (match_special_wish(wish, "fame", {"fame"}))
         {
@@ -565,7 +565,7 @@ bool wish_for_item(const std::string& input)
         // Unwishable item
         if (ibit(5, ci) || inv[ci].quality == Quality::special)
         {
-            if (!gdata_wizard)
+            if (!game_data.wizard)
             {
                 // Remove this item and retry.
                 selector.remove(id);

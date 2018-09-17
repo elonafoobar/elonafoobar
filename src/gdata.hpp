@@ -1,37 +1,5 @@
 #pragma once
-
 #include "version.hpp"
-
-#define gdata_mount gdata(183)
-#define gdata_catches_god_signal gdata(185)
-#define gdata_reveals_religion gdata(187)
-
-#define gdata_used_casino_once gdata(256)
-#define gdata_has_not_been_to_vernis gdata(257)
-#define gdata_released_fire_giant gdata(258)
-#define gdata_fire_giant gdata(259)
-#define gdata_holy_well_count gdata(260)
-#define gdata_duration_of_kamikaze_attack gdata(261)
-#define gdata_diastrophism_flag gdata(262)
-
-#define gdata_ether_disease_speed gdata(800)
-#define gdata_left_turns_of_timestop gdata(801)
-#define gdata_ex_arena_level gdata(803)
-#define gdata_time_when_uploding_becomes_available gdata(804)
-#define gdata_play_time gdata(805)
-#define gdata_last_etherwind_month gdata(806)
-#define gdata_god_rank gdata(807)
-#define gdata_kill_count_of_little_sister gdata(810)
-#define gdata_save_count_of_little_sister gdata(811)
-#define gdata_gift_count_of_little_sister gdata(812)
-#define gdata_number_of_waiting_guests gdata(814)
-#define gdata_last_month_when_trainer_visited gdata(825)
-#define gdata_item_turns gdata(826)
-#define gdata_next_level_minus_one_kumiromis_experience_becomes_available \
-    gdata(827)
-#define gdata_wizard gdata(828)
-#define gdata_lost_wallet_count gdata(851)
-
 
 namespace elona
 {
@@ -82,6 +50,11 @@ struct QuestFlags
     int minotaur_king;
     int little_sister;
     int blue_capsule_drug;
+
+    int duration_of_kamikaze_attack;
+    int kill_count_of_little_sister;
+    int save_count_of_little_sister;
+    int gift_count_of_little_sister;
 };
 
 struct GuildData
@@ -165,6 +138,28 @@ struct GameData
     int distance_between_town;
     int departure_date;
     int left_town_map;
+    int mount;
+    int catches_god_signal;
+    int reveals_religion;
+    int used_casino_once;
+    int has_not_been_to_vernis;
+    int released_fire_giant;
+    int fire_giant;
+    int holy_well_count;
+    int diastrophism_flag;
+    int ether_disease_speed;
+    int left_turns_of_timestop;
+    int ex_arena_level;
+    int time_when_uploding_becomes_available;
+    int play_time;
+    int last_etherwind_month;
+    int god_rank;
+    int number_of_waiting_guests;
+    int last_month_when_trainer_visited;
+    int item_turns;
+    int next_level_minus_one_kumiromis_experience_becomes_available;
+    int wizard;
+    int lost_wallet_count;
 
     QuestFlags quest_flags;
     GuildData guild;

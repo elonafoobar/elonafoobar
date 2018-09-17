@@ -764,7 +764,7 @@ void talk_window_show()
             + i18n::s.get(
                   "core.locale.talk.window.shop_rank", cdata[tc].shop_rank);
     }
-    if (gdata_reveals_religion)
+    if (game_data.reveals_religion)
     {
         s += u8" ("s + i18n::_(u8"god", cdata[tc].god_id, u8"name") + u8")"s;
     }
