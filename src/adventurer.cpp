@@ -139,6 +139,7 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
             i18n::s.get(
                 "core.locale.news.discovery.text",
                 cdatan(1, adventurer),
+                cdatan(0, adventurer),
                 valn,
                 mapname(cdata[adventurer].current_map)),
             1);
@@ -149,6 +150,7 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
             i18n::s.get(
                 "core.locale.news.growth.text",
                 cdatan(1, adventurer),
+                cdatan(0, adventurer),
                 cdata[adventurer].level),
             1);
         break;
@@ -156,7 +158,9 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
         addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.recovery.title"));
         addnews2(
             i18n::s.get(
-                "core.locale.news.recovery.text", cdatan(1, adventurer)),
+                "core.locale.news.recovery.text",
+                cdatan(1, adventurer),
+                cdatan(0, adventurer)),
             1);
         break;
     case 4:
@@ -166,6 +170,7 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
             i18n::s.get(
                 "core.locale.news.accomplishment.text",
                 cdatan(1, adventurer),
+                cdatan(0, adventurer),
                 fame),
             1);
         break;
@@ -174,7 +179,9 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
             u8"@04"s, i18n::s.get("core.locale.news.retirement.title"));
         addnews2(
             i18n::s.get(
-                "core.locale.news.retirement.text", cdatan(1, adventurer)),
+                "core.locale.news.retirement.text",
+                cdatan(1, adventurer),
+                cdatan(0, adventurer)),
             1);
         break;
     }
