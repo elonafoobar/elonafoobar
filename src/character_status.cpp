@@ -90,21 +90,7 @@ void modify_ether_disease_stage(int delta)
         {
             txtef(8);
             txt(i18n::s.get("core.locale.chara.corruption.symptom"));
-            if (Config::instance().extrahelp)
-            {
-                if (gdata_exhelp_flag(15) == 0)
-                {
-                    if (mode == 0)
-                    {
-                        if (cdata.player().continuous_action.turn == 0)
-                        {
-                            gdata_exhelp_flag(15) = 1;
-                            ghelp = 15;
-                            show_ex_help();
-                        }
-                    }
-                }
-            }
+            maybe_show_ex_help(15);
         }
         if (original_amount + mod_amount >= 20)
         {

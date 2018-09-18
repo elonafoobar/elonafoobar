@@ -4815,21 +4815,7 @@ TurnResult exit_map()
     gdata_rogue_boss_encountered = 0;
     if (mdata_map_type == mdata_t::MapType::player_owned)
     {
-        if (Config::instance().extrahelp)
-        {
-            if (gdata_exhelp_flag(1) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(1) = 1;
-                        ghelp = 1;
-                        show_ex_help();
-                    }
-                }
-            }
-        }
+        maybe_show_ex_help(1);
     }
     if (mdata_map_type == mdata_t::MapType::temporary)
     {
@@ -7574,21 +7560,7 @@ void supply_income()
     ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     mode = 0;
-    if (Config::instance().extrahelp)
-    {
-        if (gdata_exhelp_flag(16) == 0)
-        {
-            if (mode == 0)
-            {
-                if (cdata.player().continuous_action.turn == 0)
-                {
-                    gdata_exhelp_flag(16) = 1;
-                    ghelp = 16;
-                    show_ex_help();
-                }
-            }
-        }
-    }
+    maybe_show_ex_help(16);
 }
 
 
@@ -7803,24 +7775,11 @@ int key_direction()
 
 TurnResult step_into_gate()
 {
-    if (Config::instance().extrahelp)
+    if (maybe_show_ex_help(17, true))
     {
-        if (gdata_exhelp_flag(17) == 0)
-        {
-            if (mode == 0)
-            {
-                if (cdata.player().continuous_action.turn == 0)
-                {
-                    gdata_exhelp_flag(17) = 1;
-                    ghelp = 17;
-                    show_ex_help();
-                    screenupdate = -1;
-                    update_screen();
-                    return TurnResult::pc_turn_user_error;
-                }
-            }
-        }
+        return TurnResult::pc_turn_user_error;
     }
+
     if (1 && game_data.wizard == 0)
     {
         do_save_game();
@@ -12863,21 +12822,7 @@ void sense_map_feats_on_move()
                 if (area_data[feat(2) + feat(3) * 100].id
                     == mdata_t::MapId::random_dungeon)
                 {
-                    if (Config::instance().extrahelp)
-                    {
-                        if (gdata_exhelp_flag(6) == 0)
-                        {
-                            if (mode == 0)
-                            {
-                                if (cdata.player().continuous_action.turn == 0)
-                                {
-                                    gdata_exhelp_flag(6) = 1;
-                                    ghelp = 6;
-                                    show_ex_help();
-                                }
-                            }
-                        }
-                    }
+                    maybe_show_ex_help(6);
                 }
             }
             if (feat(1) == 34)
@@ -12981,21 +12926,7 @@ void sense_map_feats_on_move()
             }
             if (feat(1) >= 24 && feat(1) <= 28)
             {
-                if (Config::instance().extrahelp)
-                {
-                    if (gdata_exhelp_flag(5) == 0)
-                    {
-                        if (mode == 0)
-                        {
-                            if (cdata.player().continuous_action.turn == 0)
-                            {
-                                gdata_exhelp_flag(5) = 1;
-                                ghelp = 5;
-                                show_ex_help();
-                            }
-                        }
-                    }
-                }
+                maybe_show_ex_help(5);
             }
         }
     }
@@ -15294,57 +15225,15 @@ void weather_changes()
         }
         if (game_data.weather == 4)
         {
-            if (Config::instance().extrahelp)
-            {
-                if (gdata_exhelp_flag(11) == 0)
-                {
-                    if (mode == 0)
-                    {
-                        if (cdata.player().continuous_action.turn == 0)
-                        {
-                            gdata_exhelp_flag(11) = 1;
-                            ghelp = 11;
-                            show_ex_help();
-                        }
-                    }
-                }
-            }
+            maybe_show_ex_help(11);
         }
         if (game_data.weather == 2)
         {
-            if (Config::instance().extrahelp)
-            {
-                if (gdata_exhelp_flag(12) == 0)
-                {
-                    if (mode == 0)
-                    {
-                        if (cdata.player().continuous_action.turn == 0)
-                        {
-                            gdata_exhelp_flag(12) = 1;
-                            ghelp = 12;
-                            show_ex_help();
-                        }
-                    }
-                }
-            }
+            maybe_show_ex_help(12);
         }
         if (game_data.weather == 1)
         {
-            if (Config::instance().extrahelp)
-            {
-                if (gdata_exhelp_flag(13) == 0)
-                {
-                    if (mode == 0)
-                    {
-                        if (cdata.player().continuous_action.turn == 0)
-                        {
-                            gdata_exhelp_flag(13) = 1;
-                            ghelp = 13;
-                            show_ex_help();
-                        }
-                    }
-                }
-            }
+            maybe_show_ex_help(13);
         }
         if (p != game_data.weather)
         {
@@ -15384,39 +15273,11 @@ void weather_changes()
     }
     if (game_data.continuous_active_hours >= 15)
     {
-        if (Config::instance().extrahelp)
-        {
-            if (gdata_exhelp_flag(9) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(9) = 1;
-                        ghelp = 9;
-                        show_ex_help();
-                    }
-                }
-            }
-        }
+        maybe_show_ex_help(9);
     }
     if (cdata.player().nutrition < 5000)
     {
-        if (Config::instance().extrahelp)
-        {
-            if (gdata_exhelp_flag(10) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(10) = 1;
-                        ghelp = 10;
-                        show_ex_help();
-                    }
-                }
-            }
-        }
+        maybe_show_ex_help(10);
     }
     if (game_data.date.hour >= 24)
     {

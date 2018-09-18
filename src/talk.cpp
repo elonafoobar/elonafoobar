@@ -43,41 +43,12 @@ void talk_to_npc()
     {
         if (Config::instance().extrahelp)
         {
-            if (gdata_exhelp_flag(7) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(7) = 1;
-                        ghelp = 7;
-                        show_ex_help();
-                        screenupdate = -1;
-                        update_screen();
-                    }
-                }
-            }
+            maybe_show_ex_help(7, true);
         }
     }
     if (cdata[tc].character_role == 7)
     {
-        if (Config::instance().extrahelp)
-        {
-            if (gdata_exhelp_flag(8) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(8) = 1;
-                        ghelp = 8;
-                        show_ex_help();
-                        screenupdate = -1;
-                        update_screen();
-                    }
-                }
-            }
-        }
+        maybe_show_ex_help(8, true);
     }
     set_npc_religion();
     if (scenemode == 0)

@@ -3448,57 +3448,15 @@ label_1744_internal:
     }
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        if (Config::instance().extrahelp)
-        {
-            if (gdata_exhelp_flag(2) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(2) = 1;
-                        ghelp = 2;
-                        show_ex_help();
-                    }
-                }
-            }
-        }
+        maybe_show_ex_help(2);
     }
     if (mdata_map_type == mdata_t::MapType::town)
     {
-        if (Config::instance().extrahelp)
-        {
-            if (gdata_exhelp_flag(3) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(3) = 1;
-                        ghelp = 3;
-                        show_ex_help();
-                    }
-                }
-            }
-        }
+        maybe_show_ex_help(3);
     }
     if (game_data.current_map == mdata_t::MapId::shelter_)
     {
-        if (Config::instance().extrahelp)
-        {
-            if (gdata_exhelp_flag(14) == 0)
-            {
-                if (mode == 0)
-                {
-                    if (cdata.player().continuous_action.turn == 0)
-                    {
-                        gdata_exhelp_flag(14) = 1;
-                        ghelp = 14;
-                        show_ex_help();
-                    }
-                }
-            }
-        }
+        maybe_show_ex_help(14);
     }
     if (mdata_map_type == mdata_t::MapType::town
         || game_data.current_map == mdata_t::MapId::your_home

@@ -485,6 +485,35 @@ label_2700_internal:
     quickkeywait = 1;
 }
 
+bool maybe_show_ex_help(int id, bool should_update_screen)
+{
+    if (Config::instance().extrahelp)
+    {
+        if (gdata_exhelp_flag(id) == 0)
+        {
+            if (mode == 0)
+            {
+                if (cdata.player().continuous_action.turn == 0)
+                {
+                    gdata_exhelp_flag(id) = 1;
+                    ghelp = id;
+                    show_ex_help();
+
+                    if (should_update_screen)
+                    {
+                        screenupdate = -1;
+                        update_screen();
+                    }
+
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 void show_ex_help()
 {
     gsel(3);
@@ -1524,23 +1553,7 @@ static TurnResult _visit_quest_giver(int quest_index)
 
 TurnResult show_quest_board()
 {
-    if (Config::instance().extrahelp)
-    {
-        if (gdata_exhelp_flag(4) == 0)
-        {
-            if (mode == 0)
-            {
-                if (cdata.player().continuous_action.turn == 0)
-                {
-                    gdata_exhelp_flag(4) = 1;
-                    ghelp = 4;
-                    show_ex_help();
-                    screenupdate = -1;
-                    update_screen();
-                }
-            }
-        }
-    }
+    maybe_show_ex_help(4, true);
 
     auto result = ui::UIMenuQuestBoard().show();
 
