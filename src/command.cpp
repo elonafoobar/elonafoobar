@@ -954,6 +954,7 @@ TurnResult do_change_ammo_command()
     {
         inv[ci].count = list(0, cs);
     }
+    txtnew();
     txt(i18n::s.get("core.locale.action.ammo.current") + ":");
     for (int cnt = 0, cnt_end = (listmax + 1); cnt < cnt_end; ++cnt)
     {
