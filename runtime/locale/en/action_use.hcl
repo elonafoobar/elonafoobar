@@ -196,6 +196,7 @@ locale {
             gene_machine {
                 choose_original = "Choose an original body."
                 choose_subject  = "Choose a gene. Once you extract a gene, the subject will be lost forever."
+                precious_ally = "${name(_1)} is your precious ally. You need to unwatch ${his(_1)} health to extract ${his(_1)} gene."
                 prompt = "Really add ${basename(_1)}'s gene to ${basename(_2)}?"
                 has_inherited = "${basename(_1)} has inherited ${basename(_2)}'s gene!"
                 gains {

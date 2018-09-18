@@ -196,6 +196,8 @@ locale {
             gene_machine {
                 choose_original = "まずは素体となる仲間を選ぶ必要がある。"
                 choose_subject  = "遺伝子を取り出す仲間を選ぶ必要がある。この仲間は合成後、永久に失われる。"
+                precious_ally = "${name(_1)}はあなたの大事な仲間だ。遺伝子を取り出すには聴診器を外す必要がある。"
+
                 prompt = "本当に${basename(_2)}に${basename(_1)}の遺伝子を組み込む？"
                 has_inherited = "${basename(_1)}は${basename(_2)}の遺伝子を受けついだ！"
                 gains {
