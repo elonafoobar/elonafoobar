@@ -910,7 +910,7 @@ void initialize_debug_globals()
 {
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        gdata(120 + cnt) = 5000;
+        gdata_rank(cnt) = 5000;
     }
     game_data.version = 1220;
     gdata(41) = 424;
@@ -1000,7 +1000,7 @@ void initialize_world()
     game_data.hours_until_weather_changes = 6;
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        gdata(120 + cnt) = 10000;
+        gdata_rank(cnt) = 10000;
     }
 }
 

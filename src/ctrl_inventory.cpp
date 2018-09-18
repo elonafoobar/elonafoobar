@@ -994,7 +994,7 @@ label_2061_internal:
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            if (gdata(40 + cnt) == inv[p].id + invctrl * 10000)
+            if (gdata_skill_shortcut(cnt) == inv[p].id + invctrl * 10000)
             {
                 s += u8"{"s + cnt + u8"}"s;
             }
@@ -2227,19 +2227,19 @@ label_2061_internal:
             }
             snd(20);
             p = inv[list(0, pagesize * page + cs)].id + invctrl * 10000;
-            if (gdata(40 + sc) == p)
+            if (gdata_skill_shortcut(sc) == p)
             {
-                gdata(40 + sc) = 0;
+                gdata_skill_shortcut(sc) = 0;
                 goto label_2060_internal;
             }
             for (int cnt = 0; cnt < 20; ++cnt)
             {
-                if (gdata(40 + cnt) == p)
+                if (gdata_skill_shortcut(cnt) == p)
                 {
-                    gdata(40 + cnt) = 0;
+                    gdata_skill_shortcut(cnt) = 0;
                 }
             }
-            gdata(40 + sc) = p;
+            gdata_skill_shortcut(sc) = p;
             txt(i18n::s.get("core.locale.ui.assign_shortcut", sc));
             goto label_2060_internal;
         }

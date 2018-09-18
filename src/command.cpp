@@ -3570,23 +3570,23 @@ TurnResult do_cast_command()
 TurnResult do_short_cut_command()
 {
     menucycle = 0;
-    if (gdata(40 + sc) == 0)
+    if (gdata_skill_shortcut(sc) == 0)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (gdata(40 + sc) >= 10000)
+    if (gdata_skill_shortcut(sc) >= 10000)
     {
-        invsc = gdata((40 + sc)) % 10000;
-        invctrl(0) = gdata((40 + sc)) / 10000;
+        invsc = gdata_skill_shortcut(sc) % 10000;
+        invctrl(0) = gdata_skill_shortcut(sc) / 10000;
         invctrl(1) = 0;
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    efid = gdata(40 + sc);
+    efid = gdata_skill_shortcut(sc);
     if (efid >= 300 && efid < 400)
     {
         return do_use_magic();

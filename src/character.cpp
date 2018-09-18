@@ -1199,7 +1199,7 @@ void chara_refresh(int cc)
         game_data.ether_disease_speed = 0;
         game_data.protects_from_etherwind = 0;
         game_data.protects_from_bad_weather = 0;
-        gdata(89) = 70;
+        gdata_light = 70;
         game_data.catches_god_signal = 0;
         game_data.reveals_religion = 0;
     }

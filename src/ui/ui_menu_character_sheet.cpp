@@ -15,7 +15,7 @@ namespace ui
 {
 
 /*
-        gdata(750 - 760) => tracked skills (ctrl +f for [TRACKING])
+        gdata_tracked_skill(0 - 10) => tracked skills (ctrl +f for [TRACKING])
 */
 
 static void _trainer_get_gainable_skills()
@@ -1280,7 +1280,7 @@ void UIMenuCharacterSheet::draw()
 
 static void _track_skill(int skill_id)
 {
-    int gdata_index = 750;
+    int tracked_skill_index = 0;
     int max_tracked_skills =
         elona::Config::instance().allow_enhanced_skill ? 10 : 3;
 
@@ -1288,16 +1288,16 @@ static void _track_skill(int skill_id)
     {
         if (gdata_tracked_skill(cnt) % 10000 == 0)
         {
-            gdata_index = cnt;
+            tracked_skill_index = cnt;
         }
         if (gdata_tracked_skill(cnt) == cc * 10000 + skill_id)
         {
-            gdata_index = cnt;
+            tracked_skill_index = cnt;
             skill_id = 0;
             break;
         }
     }
-    gdata_tracked_skill(gdata_index) = cc * 10000 + skill_id;
+    gdata_tracked_skill(tracked_skill_index) = cc * 10000 + skill_id;
     snd(20);
 }
 

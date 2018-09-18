@@ -232,27 +232,26 @@ int extraattack = 0;
 
 
 
-std::string ranktitle(int prm_265)
+std::string ranktitle(int rank_id)
 {
-    int p_at_m6 = 0;
-    p_at_m6 = gdata((prm_265 + 120)) / 100;
-    if (p_at_m6 == 1)
+    int rank_value = gdata_rank(rank_id) / 100;
+    if (rank_value == 1)
     {
-        return rankn(0, prm_265);
+        return rankn(0, rank_id);
     }
-    if (p_at_m6 <= 5)
+    if (rank_value <= 5)
     {
-        return rankn(1, prm_265);
+        return rankn(1, rank_id);
     }
-    if (p_at_m6 <= 10)
+    if (rank_value <= 10)
     {
-        return rankn(2, prm_265);
+        return rankn(2, rank_id);
     }
-    if (p_at_m6 <= 80)
+    if (rank_value <= 80)
     {
-        return rankn(p_at_m6 / 15 + 3, prm_265);
+        return rankn(rank_value / 15 + 3, rank_id);
     }
-    return rankn(9, prm_265);
+    return rankn(9, rank_id);
 }
 
 
@@ -7373,47 +7372,46 @@ void god_fail_to_take_over_penalty()
 
 
 
-int calcincome(int prm_1036)
+int calcincome(int rank_id)
 {
-    int p_at_m176 = 0;
-    p_at_m176 = 100 - gdata((120 + prm_1036)) / 100;
-    if (p_at_m176 == 99)
+    int rank_amount = 100 - gdata_rank(rank_id) / 100;
+    if (rank_amount == 99)
     {
-        p_at_m176 = p_at_m176 * 70;
+        rank_amount = rank_amount * 70;
     }
     else
     {
-        p_at_m176 = p_at_m176 * 50;
+        rank_amount = rank_amount * 50;
     }
-    if (prm_1036 == 2)
+    if (rank_id == 2)
     {
-        p_at_m176 = p_at_m176 * 120 / 100;
+        rank_amount = rank_amount * 120 / 100;
     }
-    if (prm_1036 == 4)
+    if (rank_id == 4)
     {
-        p_at_m176 = p_at_m176 * 60 / 100;
+        rank_amount = rank_amount * 60 / 100;
     }
-    if (prm_1036 == 0)
+    if (rank_id == 0)
     {
-        p_at_m176 = p_at_m176 * 80 / 100;
+        rank_amount = rank_amount * 80 / 100;
     }
-    if (prm_1036 == 1)
+    if (rank_id == 1)
     {
-        p_at_m176 = p_at_m176 * 70 / 100;
+        rank_amount = rank_amount * 70 / 100;
     }
-    if (prm_1036 == 6)
+    if (rank_id == 6)
     {
-        p_at_m176 = p_at_m176 * 25 / 100;
+        rank_amount = rank_amount * 25 / 100;
     }
-    if (prm_1036 == 5)
+    if (rank_id == 5)
     {
-        p_at_m176 = p_at_m176 * 20 / 100;
+        rank_amount = rank_amount * 20 / 100;
     }
-    if (prm_1036 == 8)
+    if (rank_id == 8)
     {
-        p_at_m176 = p_at_m176 * 15 / 100;
+        rank_amount = rank_amount * 15 / 100;
     }
-    return p_at_m176;
+    return rank_amount;
 }
 
 
@@ -7457,11 +7455,11 @@ void supply_income()
             continue;
         }
         p = rnd(rnd(3) + 1) + 1;
-        int cnt2 = cnt;
+        int rank_id = cnt;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             dbid = 0;
-            flt(calcobjlv((100 - gdata((120 + cnt2)) / 100) / 2 + 1),
+            flt(calcobjlv((100 - gdata_rank(rank_id) / 100) / 2 + 1),
                 calcfixlv(
                     (rnd(12) < trait(39)) ? Quality::miracle : Quality::great));
             flttypemajor = choice(fsetincome);
@@ -7469,7 +7467,7 @@ void supply_income()
             {
                 flttypemajor = choice(fsetwear);
             }
-            if (rnd(100 + gdata((120 + cnt2)) / 5) < 2)
+            if (rnd(100 + gdata_rank(rank_id) / 5) < 2)
             {
                 dbid = 559;
             }
@@ -8398,77 +8396,6 @@ int target_position()
             return -1;
         }
     }
-}
-
-
-
-TurnResult do_short_cut()
-{
-    menucycle = 0;
-    if (gdata_skill_shortcut(sc) == 0)
-    {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
-        update_screen();
-        return TurnResult::pc_turn_user_error;
-    }
-    if (gdata_skill_shortcut(sc) >= 10000)
-    {
-        invsc = gdata_skill_shortcut(sc) % 10000;
-        invctrl(0) = gdata_skill_shortcut(sc) / 10000;
-        invctrl(1) = 0;
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    efid = gdata_skill_shortcut(sc);
-    if (efid >= 300 && efid < 400)
-    {
-        return do_use_magic();
-    }
-    if (efid >= 600)
-    {
-        if (mdata_map_type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            return TurnResult::pc_turn_user_error;
-        }
-        if (efid < 661)
-        {
-            if (spact(efid - 600) == 0)
-            {
-                txt(i18n::s.get(
-                    "core.locale.action.shortcut.cannot_use_anymore"));
-                update_screen();
-                return TurnResult::pc_turn_user_error;
-            }
-        }
-        return do_use_magic();
-    }
-    if (efid >= 400)
-    {
-        if (mdata_map_type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            return TurnResult::pc_turn_user_error;
-        }
-        if (spell(efid - 400) <= 0)
-        {
-            ++msgdup;
-            txt(i18n::s.get(
-                "core.locale.action.shortcut.cannot_use_spell_anymore"));
-            update_screen();
-            return TurnResult::pc_turn_user_error;
-        }
-        return do_cast_command();
-    }
-    return TurnResult::pc_turn_user_error;
 }
 
 
@@ -15503,23 +15430,22 @@ void weather_changes()
         txtef(5);
         txt(i18n::s.get("core.locale.action.new_day"));
         update_shop_and_report();
-        for (int cnt = 0; cnt < 9; ++cnt)
+        for (int rank_id = 0; rank_id < 9; ++rank_id)
         {
-            p = 120 + cnt;
-            if (gdata(p) >= 10000)
+            if (gdata_rank(rank_id) >= 10000)
             {
-                gdata(p) = 10000;
+                gdata_rank(rank_id) = 10000;
                 continue;
             }
-            if (cnt == 3 || cnt == 4 || cnt == 5 || cnt == 8)
+            if (rank_id == 3 || rank_id == 4 || rank_id == 5 || rank_id == 8)
             {
                 continue;
             }
-            --gdata(140 + cnt);
-            if (gdata(140 + cnt) <= 0)
+            --gdata_rank_deadline(rank_id);
+            if (gdata_rank_deadline(rank_id) <= 0)
             {
-                modrank(cnt, (gdata(p) / 12 + 100) * -1);
-                gdata(140 + cnt) = ranknorma(cnt);
+                modrank(rank_id, (gdata_rank(rank_id) / 12 + 100) * -1);
+                gdata_rank_deadline(rank_id) = ranknorma(rank_id);
             }
         }
         snd(74);

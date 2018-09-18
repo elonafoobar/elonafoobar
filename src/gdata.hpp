@@ -22,9 +22,14 @@
 #define gdata_player_x_on_map_leave gdata(60)
 #define gdata_player_y_on_map_leave gdata(61)
 #define gdata_stood_world_map_tile gdata(62)
+#define gdata_total_deco_value gdata(77)
+#define gdata_total_heirloom_value gdata(78)
+#define gdata_light gdata(89)
 #define gdata_chara_last_attacked_by_player gdata(94)
 #define gdata_map_regenerate_count gdata(184)
+#define gdata_tcg_used_deck gdata(813)
 #define gdata_politics_map_id gdata(815)
+#define gdata_politics_tax_amount gdata(820)
 
 // whether or not to proc fury/splitting/active form damage text
 // 1 if not, 2 if yes
@@ -48,8 +53,14 @@
 // 160-164
 #define gdata_taken_quest(n) gdata(160 + n)
 
-// 750-760
+// 700-749?
+#define gdata_ether_disease_history(n) gdata(700 + n)
+
+// 750-759
 #define gdata_tracked_skill(n) gdata(750 + n)
+
+// 830-834
+#define gdata_tcg_deck(n) gdata(830 + n)
 
 namespace elona
 {

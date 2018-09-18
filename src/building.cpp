@@ -145,7 +145,7 @@ void add_heirloom_if_valuable_enough(
     const auto category = the_item_db[heirloom.id]->category;
     if (category == 60000)
     {
-        gdata(77) += clamp(heirloom.value / 50, 50, 500);
+        gdata_total_deco_value += clamp(heirloom.value / 50, 50, 500);
     }
 
     const auto value = calc_heirloom_value(heirloom);
@@ -749,8 +749,8 @@ void show_home_value()
     s(2) = i18n::s.get("core.locale.building.home.rank.type.heir");
     s(3) = i18n::s.get("core.locale.building.home.rank.type.total");
     p(0) = game_data.basic_point_of_home_rank;
-    p(1) = gdata(77);
-    p(2) = gdata(78);
+    p(1) = gdata_total_deco_value;
+    p(2) = gdata_total_heirloom_value;
     p(3) = (p + p(1) + p(2)) / 3;
     for (int cnt = 0; cnt < 4; ++cnt)
     {
@@ -1340,8 +1340,8 @@ void calc_home_rank()
     }
     rankorg = gdata_rank(4);
     rankcur = 0;
-    gdata(77) = 0;
-    gdata(78) = 0;
+    gdata_total_deco_value = 0;
+    gdata_total_heirloom_value = 0;
 
     std::vector<ItemAndValue> heirlooms{heirloom_list_size};
     for (const auto& cnt : items(-1))
@@ -1370,19 +1370,21 @@ void calc_home_rank()
     {
         if (list(0, cnt) != 0)
         {
-            gdata(78) += clamp(list(1, cnt), 100, 2000);
+            gdata_total_heirloom_value += clamp(list(1, cnt), 100, 2000);
         }
     }
-    if (gdata(77) > 10000)
+    if (gdata_total_deco_value > 10000)
     {
-        gdata(77) = 10000;
+        gdata_total_deco_value = 10000;
     }
-    if (gdata(78) > 10000)
+    if (gdata_total_heirloom_value > 10000)
     {
-        gdata(78) = 10000;
+        gdata_total_heirloom_value = 10000;
     }
     rankcur = 10000
-        - (game_data.basic_point_of_home_rank + gdata(77) + gdata(78)) / 3;
+        - (game_data.basic_point_of_home_rank + gdata_total_deco_value
+           + gdata_total_heirloom_value)
+            / 3;
     if (rankcur < 100)
     {
         rankcur = 100;
@@ -1401,8 +1403,8 @@ void calc_home_rank()
         txtnew();
         txt(i18n::s.get(
             "core.locale.building.home.rank.change",
-            gdata(77) / 100,
-            gdata(78) / 100,
+            gdata_total_deco_value / 100,
+            gdata_total_heirloom_value / 100,
             cnvrank(rankorg / 100),
             cnvrank(rankcur / 100),
             ranktitle(4),

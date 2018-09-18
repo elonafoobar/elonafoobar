@@ -1181,7 +1181,7 @@ void cell_draw()
         scrturnnew_ = 0;
     }
 
-    int light_ = gdata(89);
+    int light_ = gdata_light;
     randomize(scrturn_);
 
     if (game_data.torch == 1)

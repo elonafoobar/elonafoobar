@@ -107,8 +107,8 @@ static void _draw_economy_info(int _city)
     _show_economy_info(
         x,
         y,
-        i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s + gdata(820)
-            + u8"%)"s,
+        i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s
+            + gdata_politics_tax_amount + u8"%)"s,
         podata(102, _city),
         podata(103, _city));
     _show_economy_info(
