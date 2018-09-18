@@ -115,8 +115,8 @@ label_17401:
         {
             goto label_1741_internal;
         }
-        if (mdata_map_regenerate_count != gdata_map_regenerate_count
-            || (gdata_reset_world_map_in_diastrophism_flag == 1
+        if (mdata_map_regenerate_count != game_data.map_regenerate_count
+            || (game_data.reset_world_map_in_diastrophism_flag == 1
                 && mdata_map_type == mdata_t::MapType::world_map))
         {
             if (mdata_map_type == mdata_t::MapType::town
@@ -2162,7 +2162,8 @@ label_1741_internal:
             }
         }
         mdatan(0) = "";
-        if (4 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 9)
+        if (4 <= game_data.stood_world_map_tile
+            && game_data.stood_world_map_tile < 9)
         {
             mdatan(0) = i18n::s.get_enum_property(
                 "core.locale.map.unique", "forest", 2);
@@ -2179,13 +2180,14 @@ label_1741_internal:
                 map(inv[ci].position.x, inv[ci].position.y, 0) = 0;
             }
         }
-        if (264 <= gdata_stood_world_map_tile
-            && gdata_stood_world_map_tile < 363)
+        if (264 <= game_data.stood_world_map_tile
+            && game_data.stood_world_map_tile < 363)
         {
             mdatan(0) =
                 i18n::s.get_enum_property("core.locale.map.unique", "sea", 2);
         }
-        if (9 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 13)
+        if (9 <= game_data.stood_world_map_tile
+            && game_data.stood_world_map_tile < 13)
         {
             mdatan(0) = i18n::s.get_enum_property(
                 "core.locale.map.unique", "grassland", 2);
@@ -2205,7 +2207,8 @@ label_1741_internal:
                 inv[ci].own_state = 1;
             }
         }
-        if (13 <= gdata_stood_world_map_tile && gdata_stood_world_map_tile < 17)
+        if (13 <= game_data.stood_world_map_tile
+            && game_data.stood_world_map_tile < 17)
         {
             mdatan(0) = i18n::s.get_enum_property(
                 "core.locale.map.unique", "desert", 2);
@@ -2221,7 +2224,7 @@ label_1741_internal:
                 inv[ci].own_state = 1;
             }
         }
-        if (chipm(0, gdata_stood_world_map_tile) == 4)
+        if (chipm(0, game_data.stood_world_map_tile) == 4)
         {
             mdatan(0) = i18n::s.get_enum_property(
                 "core.locale.map.unique", "snow_field", 2);
@@ -2260,8 +2263,8 @@ label_1741_internal:
             }
         }
         map_placeplayer();
-        if (264 > gdata_stood_world_map_tile
-            || gdata_stood_world_map_tile >= 363)
+        if (264 > game_data.stood_world_map_tile
+            || game_data.stood_world_map_tile >= 363)
         {
             for (int cnt = 0, cnt_end = (4 + rnd(5)); cnt < cnt_end; ++cnt)
             {
@@ -2304,9 +2307,9 @@ label_1741_internal:
             mdata_map_type = static_cast<int>(mdata_t::MapType::temporary);
             rq = encounterref;
             game_data.executing_immediate_quest_type = 1007;
-            gdata_executing_immediate_quest_show_hunt_remain = 1;
+            game_data.executing_immediate_quest_show_hunt_remain = 1;
             game_data.executing_immediate_quest = rq;
-            gdata_executing_immediate_quest_status = 1;
+            game_data.executing_immediate_quest_status = 1;
             p = rnd(3) + 5;
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
             {
@@ -2361,8 +2364,8 @@ label_1741_internal:
                 flt(calcobjlv(encounterlv), calcfixlv(Quality::bad));
                 if (game_data.weather == 1)
                 {
-                    if ((33 > gdata_stood_world_map_tile
-                         || gdata_stood_world_map_tile >= 66)
+                    if ((33 > game_data.stood_world_map_tile
+                         || game_data.stood_world_map_tile >= 66)
                         && rnd(3) == 0)
                     {
                         fixlv = Quality::godly;
@@ -2388,12 +2391,12 @@ label_1741_internal:
     if (game_data.current_map == mdata_t::MapId::the_void)
     {
         generate_random_nefia();
-        if (gdata_void_next_lord_floor == 0)
+        if (game_data.void_next_lord_floor == 0)
         {
-            gdata_void_next_lord_floor =
+            game_data.void_next_lord_floor =
                 area_data[game_data.current_map].danger_level + 4;
         }
-        if (gdata_void_next_lord_floor <= game_data.current_dungeon_level)
+        if (game_data.void_next_lord_floor <= game_data.current_dungeon_level)
         {
             event_add(29);
         }
@@ -2747,7 +2750,7 @@ label_1741_internal:
         }
     }
     randomize();
-    mdata_map_regenerate_count = gdata_map_regenerate_count;
+    mdata_map_regenerate_count = game_data.map_regenerate_count;
     mdata_map_mefs_loaded_flag = 1;
     lua::lua->get_event_manager().run_callbacks<lua::EventKind::map_created>();
     loaded_from_file = false;
@@ -2758,8 +2761,8 @@ label_1742_internal:
         {
             cdata.player().position.x = area_data[11].position.x;
             cdata.player().position.y = area_data[11].position.y;
-            gdata_player_next_move_direction = 1;
-            gdata_player_x_on_map_leave = -1;
+            game_data.player_next_move_direction = 1;
+            game_data.player_x_on_map_leave = -1;
             msg_newline();
             msgtemp =
                 "  " + i18n::s.get("core.locale.scenario.three_years_later");
@@ -3347,7 +3350,7 @@ label_1744_internal:
     wake_up();
     pcattacker = 0;
     cdata.player().enemy_id = 0;
-    gdata_chara_last_attacked_by_player = 0;
+    game_data.chara_last_attacked_by_player = 0;
     mode = 0;
     screenupdate = -1;
     update_entire_screen();

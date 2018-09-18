@@ -145,7 +145,7 @@ void add_heirloom_if_valuable_enough(
     const auto category = the_item_db[heirloom.id]->category;
     if (category == 60000)
     {
-        gdata_total_deco_value += clamp(heirloom.value / 50, 50, 500);
+        game_data.total_deco_value += clamp(heirloom.value / 50, 50, 500);
     }
 
     const auto value = calc_heirloom_value(heirloom);
@@ -195,7 +195,7 @@ void initialize_home_adata()
         area_data[p].position.x = cdata.player().position.x;
         area_data[p].position.y = cdata.player().position.y;
     }
-    area_data[p].outer_map = gdata_destination_outer_map;
+    area_data[p].outer_map = game_data.destination_outer_map;
 }
 
 TurnResult build_new_building()
@@ -271,7 +271,7 @@ TurnResult build_new_building()
     area_data[p].deepest_level = 1;
     area_data[p].tile_set = 1;
     area_data[p].entrance = 8;
-    area_data[p].outer_map = gdata_destination_outer_map;
+    area_data[p].outer_map = game_data.destination_outer_map;
     if (inv[ci].id == 521)
     {
         area_data[p].id = static_cast<int>(mdata_t::MapId::museum);
@@ -749,8 +749,8 @@ void show_home_value()
     s(2) = i18n::s.get("core.locale.building.home.rank.type.heir");
     s(3) = i18n::s.get("core.locale.building.home.rank.type.total");
     p(0) = game_data.basic_point_of_home_rank;
-    p(1) = gdata_total_deco_value;
-    p(2) = gdata_total_heirloom_value;
+    p(1) = game_data.total_deco_value;
+    p(2) = game_data.total_heirloom_value;
     p(3) = (p + p(1) + p(2)) / 3;
     for (int cnt = 0; cnt < 4; ++cnt)
     {
@@ -1340,8 +1340,8 @@ void calc_home_rank()
     }
     rankorg = gdata_rank(4);
     rankcur = 0;
-    gdata_total_deco_value = 0;
-    gdata_total_heirloom_value = 0;
+    game_data.total_deco_value = 0;
+    game_data.total_heirloom_value = 0;
 
     std::vector<ItemAndValue> heirlooms{heirloom_list_size};
     for (const auto& cnt : items(-1))
@@ -1370,20 +1370,20 @@ void calc_home_rank()
     {
         if (list(0, cnt) != 0)
         {
-            gdata_total_heirloom_value += clamp(list(1, cnt), 100, 2000);
+            game_data.total_heirloom_value += clamp(list(1, cnt), 100, 2000);
         }
     }
-    if (gdata_total_deco_value > 10000)
+    if (game_data.total_deco_value > 10000)
     {
-        gdata_total_deco_value = 10000;
+        game_data.total_deco_value = 10000;
     }
-    if (gdata_total_heirloom_value > 10000)
+    if (game_data.total_heirloom_value > 10000)
     {
-        gdata_total_heirloom_value = 10000;
+        game_data.total_heirloom_value = 10000;
     }
     rankcur = 10000
-        - (game_data.basic_point_of_home_rank + gdata_total_deco_value
-           + gdata_total_heirloom_value)
+        - (game_data.basic_point_of_home_rank + game_data.total_deco_value
+           + game_data.total_heirloom_value)
             / 3;
     if (rankcur < 100)
     {
@@ -1403,8 +1403,8 @@ void calc_home_rank()
         txtnew();
         txt(i18n::s.get(
             "core.locale.building.home.rank.change",
-            gdata_total_deco_value / 100,
-            gdata_total_heirloom_value / 100,
+            game_data.total_deco_value / 100,
+            game_data.total_heirloom_value / 100,
             cnvrank(rankorg / 100),
             cnvrank(rankcur / 100),
             ranktitle(4),

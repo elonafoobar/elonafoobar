@@ -41,10 +41,19 @@ FoobarData foobar_data;
     SERIALIZE(27, next_shelter_serial_id); \
     SERIALIZE(28, seven_league_boot_effect); \
     SERIALIZE(29, protects_from_etherwind); \
+    SERIALIZE(30, player_cellaccess_check_flag); \
+    SERIALIZE(31, player_cellaccess_w); \
+    SERIALIZE(32, player_cellaccess_n); \
+    SERIALIZE(33, player_cellaccess_e); \
+    SERIALIZE(34, player_cellaccess_s); \
+    SERIALIZE(35, player_next_move_direction); \
     SERIALIZE(36, played_scene); \
     SERIALIZE(37, torch); \
     SERIALIZE(38, angband_flag); \
     SERIALIZE(39, number_of_learned_skills_by_trainer); \
+    SERIALIZE(60, player_x_on_map_leave); \
+    SERIALIZE(61, player_y_on_map_leave); \
+    SERIALIZE(62, stood_world_map_tile); \
     SERIALIZE(63, is_returning_or_escaping); \
     SERIALIZE(64, destination_map); \
     SERIALIZE(65, destination_dungeon_level); \
@@ -53,30 +62,44 @@ FoobarData foobar_data;
     SERIALIZE(68, previous_x); \
     SERIALIZE(69, previous_y); \
     SERIALIZE(70, executing_immediate_quest_type); \
+    SERIALIZE(71, executing_immediate_quest_show_hunt_remain); \
     SERIALIZE(72, executing_immediate_quest); \
+    SERIALIZE(73, executing_immediate_quest_status); \
+    SERIALIZE(74, executing_immediate_quest_fame_gained); \
     SERIALIZE(75, number_of_existing_quests); \
     SERIALIZE(76, basic_point_of_home_rank); \
+    SERIALIZE(77, total_deco_value); \
+    SERIALIZE(78, total_heirloom_value); \
+    SERIALIZE(79, reset_world_map_in_diastrophism_flag); \
     SERIALIZE(80, cargo_weight); \
     SERIALIZE(81, initial_cart_limit); \
     SERIALIZE(82, current_cart_limit); \
     SERIALIZE(83, protects_from_bad_weather); \
     SERIALIZE(84, left_minutes_of_executing_quest); \
     SERIALIZE(85, ether_disease_stage); \
+    SERIALIZE(87, executing_immediate_quest_time_left_display_period); \
     SERIALIZE(88, time_when_textbook_becomes_available); \
+    SERIALIZE(89, light); \
     SERIALIZE(90, continuous_active_hours); \
+    SERIALIZE(91, continuous_action_about_to_start); \
     SERIALIZE(92, sleep_experience); \
     SERIALIZE(93, acquirable_feat_count); \
+    SERIALIZE(94, chara_last_attacked_by_player); \
     SERIALIZE(95, wish_count); \
     SERIALIZE(96, version); \
     SERIALIZE(97, rights_to_succeed_to); \
+    SERIALIZE(98, character_and_status_for_gene); \
     SERIALIZE(99, next_voting_time); \
     SERIALIZE(170, cost_to_hire); \
+    SERIALIZE(171, rogue_boss_encountered); \
     SERIALIZE(179, left_bill); \
     SERIALIZE(180, distance_between_town); \
     SERIALIZE(181, departure_date); \
     SERIALIZE(182, left_town_map); \
     SERIALIZE(183, mount); \
+    SERIALIZE(184, map_regenerate_count); \
     SERIALIZE(185, catches_god_signal); \
+    SERIALIZE(186, void_next_lord_floor); \
     SERIALIZE(187, reveals_religion); \
     SERIALIZE(250, quest_flags.tutorial); \
     SERIALIZE(252, quest_flags.main_quest); \
@@ -113,31 +136,38 @@ FoobarData foobar_data;
     SERIALIZE(463, quest_flags.red_blossom_in_palmia); \
     SERIALIZE(464, quest_flags.ambitious_scientist); \
     SERIALIZE(465, quest_flags.sewer_sweeping); \
-    SERIALIZE(472, quest_flags.minotaur_king); \
-    SERIALIZE(473, quest_flags.little_sister); \
-    SERIALIZE(474, quest_flags.blue_capsule_drug); \
     SERIALIZE(466, guild.joining_mages_guild); \
     SERIALIZE(467, guild.joining_fighters_guild); \
     SERIALIZE(468, guild.joining_thieves_guild); \
     SERIALIZE(469, guild.mages_guild_quota_recurring); \
     SERIALIZE(470, guild.fighters_guild_quota_recurring); \
     SERIALIZE(471, guild.thieves_guild_quota_recurring); \
+    SERIALIZE(472, quest_flags.minotaur_king); \
+    SERIALIZE(473, quest_flags.little_sister); \
+    SERIALIZE(474, quest_flags.blue_capsule_drug); \
     SERIALIZE(800, ether_disease_speed); \
     SERIALIZE(801, left_turns_of_timestop); \
+    SERIALIZE(802, ex_arena_wins); \
     SERIALIZE(803, ex_arena_level); \
     SERIALIZE(804, time_when_uploding_becomes_available); \
     SERIALIZE(805, play_time); \
     SERIALIZE(806, last_etherwind_month); \
     SERIALIZE(807, god_rank); \
+    SERIALIZE(808, player_is_changing_equipment); \
+    SERIALIZE(809, proc_damage_events_flag); \
     SERIALIZE(810, quest_flags.kill_count_of_little_sister); \
     SERIALIZE(811, quest_flags.save_count_of_little_sister); \
     SERIALIZE(812, quest_flags.gift_count_of_little_sister); \
+    SERIALIZE(813, tcg_used_deck); \
     SERIALIZE(814, number_of_waiting_guests); \
+    SERIALIZE(815, politics_map_id); \
+    SERIALIZE(820, politics_tax_amount); \
     SERIALIZE(825, last_month_when_trainer_visited); \
     SERIALIZE(826, item_turns); \
     SERIALIZE( \
         827, next_level_minus_one_kumiromis_experience_becomes_available); \
     SERIALIZE(828, wizard); \
+    SERIALIZE(850, destination_outer_map); \
     SERIALIZE(851, lost_wallet_count);
 
 

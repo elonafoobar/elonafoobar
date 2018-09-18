@@ -1745,7 +1745,7 @@ void tcgdeck()
                     s_at_tcg(cnt) +=
                         u8" (NG "s + gdata_tcg_deck(cnt) + u8"/"s + 30 + u8")"s;
                 }
-                if (gdata_tcg_used_deck == cnt)
+                if (game_data.tcg_used_deck == cnt)
                 {
                     s_at_tcg(cnt) += u8" [Use]"s;
                 }
@@ -1778,7 +1778,7 @@ void tcgdeck()
             }
             if (rtval == 1)
             {
-                gdata_tcg_used_deck = curdeck;
+                game_data.tcg_used_deck = curdeck;
                 continue;
             }
             if (rtval == 0)

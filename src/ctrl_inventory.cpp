@@ -1392,7 +1392,7 @@ label_2061_internal:
             snd(13);
             txtnew();
             txt(i18n::s.get("core.locale.ui.inv.equip.you_equip", inv[ci]));
-            gdata_player_is_changing_equipment = 1;
+            game_data.player_is_changing_equipment = 1;
             switch (inv[ci].curse_state)
             {
             case CurseState::doomed:

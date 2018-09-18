@@ -1,46 +1,6 @@
 #pragma once
 #include "version.hpp"
 
-#define gdata_continuous_action_about_to_start gdata(91)
-#define gdata_executing_immediate_quest_show_hunt_remain gdata(71)
-#define gdata_executing_immediate_quest_status gdata(73)
-#define gdata_executing_immediate_quest_fame_gained gdata(74)
-#define gdata_executing_immediate_quest_time_left_display_period gdata(87)
-#define gdata_rogue_boss_encountered gdata(171)
-#define gdata_void_next_lord_floor gdata(186)
-#define gdata_player_next_move_direction gdata(35)
-
-// tc + (0 or 10000)
-#define gdata_character_and_status_for_gene gdata(98)
-
-#define gdata_player_is_changing_equipment gdata(808)
-#define gdata_player_cellaccess_check_flag gdata(30)
-#define gdata_player_cellaccess_w gdata(31)
-#define gdata_player_cellaccess_n gdata(32)
-#define gdata_player_cellaccess_e gdata(33)
-#define gdata_player_cellaccess_s gdata(34)
-#define gdata_player_x_on_map_leave gdata(60)
-#define gdata_player_y_on_map_leave gdata(61)
-#define gdata_stood_world_map_tile gdata(62)
-#define gdata_total_deco_value gdata(77)
-#define gdata_total_heirloom_value gdata(78)
-#define gdata_light gdata(89)
-#define gdata_chara_last_attacked_by_player gdata(94)
-#define gdata_map_regenerate_count gdata(184)
-#define gdata_tcg_used_deck gdata(813)
-#define gdata_politics_map_id gdata(815)
-#define gdata_politics_tax_amount gdata(820)
-
-// whether or not to proc fury/splitting/active form damage text
-// 1 if not, 2 if yes
-#define gdata_proc_damage_events_flag gdata(809)
-
-#define gdata_destination_outer_map gdata(850)
-#define gdata_reset_world_map_in_diastrophism_flag gdata(79)
-#define gdata_ex_arena_wins gdata(802)
-
-#define gdata_exhelp_flag(n) gdata(200 + n)
-
 // 40-59
 #define gdata_skill_shortcut(n) gdata(40 + n)
 
@@ -52,6 +12,9 @@
 
 // 160-164
 #define gdata_taken_quest(n) gdata(160 + n)
+
+// 200-217
+#define gdata_exhelp_flag(n) gdata(200 + n)
 
 // 700-749?
 #define gdata_ether_disease_history(n) gdata(700 + n)
@@ -162,45 +125,71 @@ struct GameData
     int home_scale;
     int charge_power;
     int entrance_type;
+    int next_shelter_serial_id;
+    int seven_league_boot_effect;
+    int protects_from_etherwind;
+    int player_cellaccess_check_flag;
+    int player_cellaccess_w;
+    int player_cellaccess_n;
+    int player_cellaccess_e;
+    int player_cellaccess_s;
+    int player_next_move_direction;
+    int played_scene;
+    int torch;
+    int angband_flag;
+    int number_of_learned_skills_by_trainer;
+    int player_x_on_map_leave;
+    int player_y_on_map_leave;
+    int stood_world_map_tile;
+    int is_returning_or_escaping;
     int destination_map;
     int destination_dungeon_level;
     int previous_map2;
     int previous_dungeon_level;
     int previous_x;
     int previous_y;
-    int next_shelter_serial_id;
-    int seven_league_boot_effect;
-    int protects_from_etherwind;
-    int played_scene;
-    int torch;
-    int angband_flag;
-    int number_of_learned_skills_by_trainer;
-    int is_returning_or_escaping;
     int executing_immediate_quest_type;
+    int executing_immediate_quest_show_hunt_remain;
     int executing_immediate_quest;
+    int executing_immediate_quest_status;
+    int executing_immediate_quest_fame_gained;
     int number_of_existing_quests;
     int basic_point_of_home_rank;
+    int total_deco_value;
+    int total_heirloom_value;
+    int reset_world_map_in_diastrophism_flag;
     int cargo_weight;
     int initial_cart_limit;
     int current_cart_limit;
     int protects_from_bad_weather;
     int left_minutes_of_executing_quest;
     int ether_disease_stage;
+    int executing_immediate_quest_time_left_display_period;
     int time_when_textbook_becomes_available;
+    int light;
     int continuous_active_hours;
+    int continuous_action_about_to_start;
     int sleep_experience;
     int acquirable_feat_count;
+    int chara_last_attacked_by_player;
     int wish_count;
     int version;
     int rights_to_succeed_to;
+
+    // tc + (0 if continuous action not started, 10000 if so)
+    int character_and_status_for_gene;
+
     int next_voting_time;
     int cost_to_hire;
+    int rogue_boss_encountered;
     int left_bill;
     int distance_between_town;
     int departure_date;
     int left_town_map;
     int mount;
+    int map_regenerate_count;
     int catches_god_signal;
+    int void_next_lord_floor;
     int reveals_religion;
     int used_casino_once;
     int has_not_been_to_vernis;
@@ -210,16 +199,27 @@ struct GameData
     int diastrophism_flag;
     int ether_disease_speed;
     int left_turns_of_timestop;
+    int ex_arena_wins;
     int ex_arena_level;
     int time_when_uploding_becomes_available;
     int play_time;
     int last_etherwind_month;
     int god_rank;
+    int player_is_changing_equipment;
+
+    // proc fury/splitting/active-form damage text from damage_hp?
+    // 1 if not, 2 if yes
+    int proc_damage_events_flag;
+
+    int tcg_used_deck;
     int number_of_waiting_guests;
+    int politics_map_id;
+    int politics_tax_amount;
     int last_month_when_trainer_visited;
     int item_turns;
     int next_level_minus_one_kumiromis_experience_becomes_available;
     int wizard;
+    int destination_outer_map;
     int lost_wallet_count;
 
     QuestFlags quest_flags;

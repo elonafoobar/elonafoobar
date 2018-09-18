@@ -797,7 +797,7 @@ bool you_can_see(const Character& chara)
 bool hp_bar_visible(const Character& chara)
 {
     return chara.has_been_used_stethoscope()
-        || gdata_chara_last_attacked_by_player == chara.index
+        || game_data.chara_last_attacked_by_player == chara.index
         || debug::voldemort;
 }
 
@@ -1181,7 +1181,7 @@ void cell_draw()
         scrturnnew_ = 0;
     }
 
-    int light_ = gdata_light;
+    int light_ = game_data.light;
     randomize(scrturn_);
 
     if (game_data.torch == 1)

@@ -2578,7 +2578,7 @@ int try_to_perceive_npc(int cc)
 
 void start_stealing()
 {
-    gdata_continuous_action_about_to_start = 105;
+    game_data.continuous_action_about_to_start = 105;
     continuous_action_others();
 }
 
@@ -4812,7 +4812,7 @@ TurnResult exit_map()
     int previous_dungeon_level = game_data.current_dungeon_level;
     int fixstart = 0;
     game_data.left_minutes_of_executing_quest = 0;
-    gdata_rogue_boss_encountered = 0;
+    game_data.rogue_boss_encountered = 0;
     if (mdata_map_type == mdata_t::MapType::player_owned)
     {
         maybe_show_ex_help(1);
@@ -4973,7 +4973,7 @@ TurnResult exit_map()
                 || mdata_map_type == mdata_t::MapType::shelter
                 || mdata_map_type == mdata_t::MapType::guild)
             {
-                game_data.current_map = gdata_destination_outer_map;
+                game_data.current_map = game_data.destination_outer_map;
             }
         }
         if (mdata_t::is_nefia(mdata_map_type)
@@ -4982,7 +4982,7 @@ TurnResult exit_map()
             if (game_data.current_dungeon_level
                 < area_data[game_data.current_map].danger_level)
             {
-                game_data.current_map = gdata_destination_outer_map;
+                game_data.current_map = game_data.destination_outer_map;
             }
         }
         if (area_data[game_data.current_map].type == mdata_t::MapType::town)
@@ -5041,7 +5041,7 @@ TurnResult exit_map()
         rc = 0;
         revive_player();
         game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-        gdata_destination_outer_map = area_data[7].outer_map;
+        game_data.destination_outer_map = area_data[7].outer_map;
         game_data.current_dungeon_level = 1;
     }
     if (rdtry > 1)
@@ -5606,7 +5606,7 @@ int initialize_world_map()
 
 void map_global_proc_diastrophism()
 {
-    if (gdata_reset_world_map_in_diastrophism_flag == 1)
+    if (game_data.reset_world_map_in_diastrophism_flag == 1)
     {
         initialize_adata();
         map_global_prepare();
@@ -5631,7 +5631,7 @@ void map_global_proc_diastrophism()
         }
     }
     if (p <= 25 || rnd(150) == 0 || game_data.diastrophism_flag != 0
-        || gdata_reset_world_map_in_diastrophism_flag)
+        || game_data.reset_world_map_in_diastrophism_flag)
     {
         game_data.diastrophism_flag = 0;
         msgtemp += i18n::s.get("core.locale.action.move.global.diastrophism");
@@ -5648,7 +5648,7 @@ void map_global_proc_diastrophism()
         initialize_world_map();
         map_global_prepare();
     }
-    gdata_reset_world_map_in_diastrophism_flag = 0;
+    game_data.reset_world_map_in_diastrophism_flag = 0;
 }
 
 
@@ -5667,7 +5667,7 @@ void map_global_place_entrances()
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         int cnt2 = cnt;
-        if (gdata_destination_outer_map != 4)
+        if (game_data.destination_outer_map != 4)
         {
             break;
         }
@@ -5693,7 +5693,7 @@ void map_global_place_entrances()
         {
             continue;
         }
-        if (area_data[cnt].outer_map != gdata_destination_outer_map)
+        if (area_data[cnt].outer_map != game_data.destination_outer_map)
         {
             continue;
         }
@@ -6581,7 +6581,7 @@ int place_random_nefias()
         area_data[p].tile_type = 1;
         area_data[p].turn_cost_base = 10000;
         area_data[p].is_indoor = true;
-        area_data[p].outer_map = gdata_destination_outer_map;
+        area_data[p].outer_map = game_data.destination_outer_map;
         if (rnd(3))
         {
             area_data[p].danger_level = rnd(cdata.player().level + 5) + 1;
@@ -8792,7 +8792,7 @@ void try_to_return()
     p = 0;
     p = 0;
     i = 7;
-    if (area_data[i].outer_map == gdata_destination_outer_map)
+    if (area_data[i].outer_map == game_data.destination_outer_map)
     {
         list(0, p) = i;
         list(1, p) = 1;
@@ -8806,7 +8806,7 @@ void try_to_return()
         {
             continue;
         }
-        if (area_data[i].outer_map != gdata_destination_outer_map)
+        if (area_data[i].outer_map != game_data.destination_outer_map)
         {
             continue;
         }
@@ -8951,7 +8951,7 @@ int read_textbook()
             }
         }
     }
-    gdata_continuous_action_about_to_start = 104;
+    game_data.continuous_action_about_to_start = 104;
     continuous_action_others();
     return 1;
 }
@@ -9248,7 +9248,7 @@ void initialize_map_adjust_spawns()
 
 void clear_existing_quest_list()
 {
-    ++gdata_map_regenerate_count;
+    ++game_data.map_regenerate_count;
     DIM3(qdata, 20, 500);
     SDIM3(qname, 40, 500);
     game_data.number_of_existing_quests = 0;
@@ -10153,7 +10153,7 @@ void sleep_start()
     if (game_data.current_map == mdata_t::MapId::quest)
     {
         txt(i18n::s.get("core.locale.activity.sleep.but_you_cannot"));
-        gdata_character_and_status_for_gene = 0;
+        game_data.character_and_status_for_gene = 0;
         return;
     }
     if (game_data.catches_god_signal)
@@ -10225,7 +10225,7 @@ void sleep_start()
         draw_sleep_background_frame();
         await(Config::instance().animewait * 25);
     }
-    if (gdata_character_and_status_for_gene != 0)
+    if (game_data.character_and_status_for_gene != 0)
     {
         tc = -1;
         for (int cnt = 1; cnt < 16; ++cnt)
@@ -10253,7 +10253,7 @@ void sleep_start()
         }
     }
     draw_sleep_background_frame();
-    gdata_character_and_status_for_gene = 0;
+    game_data.character_and_status_for_gene = 0;
     mode = 0;
     wake_up();
     cdata[cc].nutrition -= 1500 / (trait(158) + 1);
@@ -11800,7 +11800,7 @@ int pick_up_item()
                             "core.locale.ui.inv.common.inventory_is_full"));
                         return 0;
                     }
-                    gdata_continuous_action_about_to_start = 103;
+                    game_data.continuous_action_about_to_start = 103;
                     continuous_action_others();
                     return -1;
                 }
@@ -12445,7 +12445,7 @@ TurnResult proc_movement_event()
         if (cc == 0)
         {
             encounter = 0;
-            gdata_stood_world_map_tile =
+            game_data.stood_world_map_tile =
                 map(cdata[cc].position.x, cdata[cc].position.y, 0);
             if (map(cdata[cc].position.x, cdata[cc].position.y, 6) == 0)
             {
@@ -12740,24 +12740,24 @@ void sense_map_feats_on_move()
 {
     if (cc == 0)
     {
-        gdata_player_x_on_map_leave = -1;
-        gdata_player_y_on_map_leave = -1;
+        game_data.player_x_on_map_leave = -1;
+        game_data.player_y_on_map_leave = -1;
         x = cdata.player().position.x;
         y = cdata.player().position.y;
-        if (key_shift && gdata_player_cellaccess_check_flag == 0
+        if (key_shift && game_data.player_cellaccess_check_flag == 0
             && cdata.player().confused == 0 && cdata.player().dimmed == 0)
         {
             if (mdata_map_type != mdata_t::MapType::world_map)
             {
-                gdata_player_cellaccess_check_flag = 1;
+                game_data.player_cellaccess_check_flag = 1;
                 cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
-                gdata_player_cellaccess_e = cellaccess;
+                game_data.player_cellaccess_e = cellaccess;
                 cell_check(cdata[cc].position.x - 1, cdata[cc].position.y);
-                gdata_player_cellaccess_w = cellaccess;
+                game_data.player_cellaccess_w = cellaccess;
                 cell_check(cdata[cc].position.x, cdata[cc].position.y + 1);
-                gdata_player_cellaccess_s = cellaccess;
+                game_data.player_cellaccess_s = cellaccess;
                 cell_check(cdata[cc].position.x, cdata[cc].position.y - 1);
-                gdata_player_cellaccess_n = cellaccess;
+                game_data.player_cellaccess_n = cellaccess;
             }
         }
         if (map(x, y, 4) != 0)
@@ -13760,7 +13760,7 @@ label_22191_internal:
             {
                 if (tc >= 16)
                 {
-                    gdata_proc_damage_events_flag = 2;
+                    game_data.proc_damage_events_flag = 2;
                     txt(i18n::s.get(
                         "core.locale.damage.weapon.attacks_unarmed_and",
                         cdata[cc],
@@ -13793,7 +13793,7 @@ label_22191_internal:
                 {
                     if (tc >= 16)
                     {
-                        gdata_proc_damage_events_flag = 2;
+                        game_data.proc_damage_events_flag = 2;
                         if (attackskill == 111)
                         {
                             txt(i18n::s.get(
@@ -14045,7 +14045,7 @@ label_22191_internal:
     }
     if (tc == 0)
     {
-        gdata_player_cellaccess_check_flag = 0;
+        game_data.player_cellaccess_check_flag = 0;
     }
     rowact_check(tc);
     if (attackskill != 106)
@@ -14148,7 +14148,7 @@ void proc_weapon_enchantments()
             s = chara_refstr(cdata[tc].id, 8);
             if (strutil::contains(s(0), u8"/dragon/"))
             {
-                gdata_proc_damage_events_flag = 1;
+                game_data.proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
@@ -14158,7 +14158,7 @@ void proc_weapon_enchantments()
             s = chara_refstr(cdata[tc].id, 8);
             if (strutil::contains(s(0), u8"/god/"))
             {
-                gdata_proc_damage_events_flag = 1;
+                game_data.proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
@@ -14168,7 +14168,7 @@ void proc_weapon_enchantments()
             s = chara_refstr(cdata[tc].id, 8);
             if (strutil::contains(s(0), u8"/undead/"))
             {
-                gdata_proc_damage_events_flag = 1;
+                game_data.proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
@@ -14188,7 +14188,7 @@ void proc_weapon_enchantments()
                 {
                     continue;
                 }
-                gdata_proc_damage_events_flag = 1;
+                game_data.proc_damage_events_flag = 1;
                 damage_hp(
                     cdata[tc],
                     rnd(orgdmg * (100 + inv[cw].enchantments[cnt].power) / 1000
@@ -14242,7 +14242,7 @@ void proc_weapon_enchantments()
     {
         if (cdata[tc].state() == Character::State::alive)
         {
-            gdata_proc_damage_events_flag = 1;
+            game_data.proc_damage_events_flag = 1;
             damage_hp(
                 cdata[tc],
                 orgdmg * 2 / 3,
@@ -14664,7 +14664,7 @@ void initialize_economy()
     elona_vector1<int> bkdata;
     if (initeco)
     {
-        gdata_politics_map_id = static_cast<int>(mdata_t::MapId::palmia);
+        game_data.politics_map_id = static_cast<int>(mdata_t::MapId::palmia);
     }
     bkdata(0) = game_data.current_map;
     bkdata(1) = game_data.current_dungeon_level;
@@ -14747,7 +14747,7 @@ void initialize_economy()
     game_data.current_dungeon_level = bkdata(1);
     cdata.player().position.x = bkdata(2);
     cdata.player().position.y = bkdata(3);
-    gdata_reset_world_map_in_diastrophism_flag = 1;
+    game_data.reset_world_map_in_diastrophism_flag = 1;
     mode = 3;
     mapsubroutine = 1;
     initialize_map();

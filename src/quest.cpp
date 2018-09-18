@@ -158,9 +158,9 @@ void quest_check()
     {
         return;
     }
-    if (gdata_executing_immediate_quest_status != 3)
+    if (game_data.executing_immediate_quest_status != 3)
     {
-        if (gdata_executing_immediate_quest_show_hunt_remain == 1)
+        if (game_data.executing_immediate_quest_show_hunt_remain == 1)
         {
             p_at_m119 = 0;
             for (auto&& cnt : cdata.others())
@@ -969,7 +969,7 @@ void quest_exit_map()
         }
         refresh_burden_state();
     }
-    if (gdata_executing_immediate_quest_status != 3)
+    if (game_data.executing_immediate_quest_status != 3)
     {
         if (game_data.executing_immediate_quest_type >= 1000)
         {
@@ -980,9 +980,9 @@ void quest_exit_map()
             if (qdata(8, rq) == 0)
             {
                 game_data.executing_immediate_quest_type = 0;
-                gdata_executing_immediate_quest_show_hunt_remain = 0;
+                game_data.executing_immediate_quest_show_hunt_remain = 0;
                 game_data.executing_immediate_quest = 0;
-                gdata_executing_immediate_quest_status = 0;
+                game_data.executing_immediate_quest_status = 0;
                 return;
             }
             else
@@ -995,9 +995,9 @@ void quest_exit_map()
         msg_halt();
     }
     game_data.executing_immediate_quest_type = 0;
-    gdata_executing_immediate_quest_show_hunt_remain = 0;
+    game_data.executing_immediate_quest_show_hunt_remain = 0;
     game_data.executing_immediate_quest = 0;
-    gdata_executing_immediate_quest_status = 0;
+    game_data.executing_immediate_quest_status = 0;
 }
 
 
@@ -1127,8 +1127,8 @@ void quest_team_victorious()
         txtef(2);
         txt(i18n::s.get(
             "core.locale.quest.gain_fame",
-            gdata_executing_immediate_quest_fame_gained));
-        cdata.player().fame += gdata_executing_immediate_quest_fame_gained;
+            game_data.executing_immediate_quest_fame_gained));
+        cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
         modrank(1, 100, 2);
         ++area_data[game_data.previous_map2].winning_streak_in_pet_arena;
         if (area_data[game_data.previous_map2].winning_streak_in_pet_arena % 20
@@ -1165,7 +1165,7 @@ void quest_all_targets_killed()
 {
     musicloop = 1;
     play_music("core.mcFanfare");
-    gdata_executing_immediate_quest_status = 3;
+    game_data.executing_immediate_quest_status = 3;
     if (game_data.executing_immediate_quest_type == 1)
     {
         snd(69);
@@ -1174,9 +1174,9 @@ void quest_all_targets_killed()
         txtef(2);
         txt(i18n::s.get(
             "core.locale.quest.gain_fame",
-            gdata_executing_immediate_quest_fame_gained));
+            game_data.executing_immediate_quest_fame_gained));
         modrank(0, 100, 2);
-        cdata.player().fame += gdata_executing_immediate_quest_fame_gained;
+        cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
         txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
         map_placeupstairs(mdata_map_width / 2, mdata_map_height / 2);
         ++area_data[game_data.previous_map2].winning_streak_in_arena;
@@ -1317,15 +1317,15 @@ void quest_complete()
         }
     }
     modify_karma(cdata.player(), 1);
-    gdata_executing_immediate_quest_fame_gained =
+    game_data.executing_immediate_quest_fame_gained =
         calcfame(0, qdata(5, rq) * 3 + 10);
     txtef(2);
     txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)));
     txtef(2);
     txt(i18n::s.get(
         "core.locale.quest.gain_fame",
-        gdata_executing_immediate_quest_fame_gained));
-    cdata.player().fame += gdata_executing_immediate_quest_fame_gained;
+        game_data.executing_immediate_quest_fame_gained));
+    cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     if (qdata(3, rq) == 1002)
     {

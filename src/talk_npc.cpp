@@ -251,7 +251,7 @@ TalkResult talk_arena_master(int chatval_)
             "core.locale.magic.mount.dismount", cdata[game_data.mount]));
         ride_end();
     }
-    gdata_executing_immediate_quest_fame_gained = calcfame(
+    game_data.executing_immediate_quest_fame_gained = calcfame(
         0,
         (220 - gdata_rank(0) / 50)
                 * (100
@@ -357,9 +357,9 @@ TalkResult talk_arena_master(int chatval_)
             game_data.date.hours() + 24;
     }
     game_data.executing_immediate_quest_type = 1;
-    gdata_executing_immediate_quest_show_hunt_remain = 1;
+    game_data.executing_immediate_quest_show_hunt_remain = 1;
     game_data.executing_immediate_quest = 0;
-    gdata_executing_immediate_quest_status = 1;
+    game_data.executing_immediate_quest_status = 1;
     game_data.previous_map2 = game_data.current_map;
     game_data.previous_dungeon_level = game_data.current_dungeon_level;
     game_data.previous_x = cdata.player().position.x;
@@ -373,7 +373,7 @@ TalkResult talk_arena_master(int chatval_)
 
 TalkResult talk_pet_arena_master(int chatval_)
 {
-    gdata_executing_immediate_quest_fame_gained = calcfame(
+    game_data.executing_immediate_quest_fame_gained = calcfame(
         0,
         (220 - gdata_rank(1) / 50)
                 * (50
@@ -438,9 +438,9 @@ TalkResult talk_pet_arena_master(int chatval_)
         return TalkResult::talk_npc;
     }
     game_data.executing_immediate_quest_type = 2;
-    gdata_executing_immediate_quest_show_hunt_remain = 0;
+    game_data.executing_immediate_quest_show_hunt_remain = 0;
     game_data.executing_immediate_quest = 0;
-    gdata_executing_immediate_quest_status = 1;
+    game_data.executing_immediate_quest_status = 1;
     game_data.previous_map2 = game_data.current_map;
     game_data.previous_dungeon_level = game_data.current_dungeon_level;
     game_data.previous_x = cdata.player().position.x;
@@ -824,7 +824,7 @@ TalkResult talk_ally_gene()
     cdata[tc].has_made_gene() = true;
     if (game_data.wizard == 0)
     {
-        gdata_character_and_status_for_gene = tc;
+        game_data.character_and_status_for_gene = tc;
     }
     return TalkResult::talk_end;
 }
@@ -1282,8 +1282,8 @@ TalkResult talk_caravan_master_hire()
     game_data.destination_map = area_data[chatval_].outer_map;
     game_data.destination_dungeon_level = 1;
     levelexitby = 4;
-    gdata_reset_world_map_in_diastrophism_flag = 1;
-    gdata_destination_outer_map = area_data[chatval_].outer_map;
+    game_data.reset_world_map_in_diastrophism_flag = 1;
+    game_data.destination_outer_map = area_data[chatval_].outer_map;
     game_data.pc_x_in_world_map = area_data[chatval_].position.x;
     game_data.pc_y_in_world_map = area_data[chatval_].position.y;
     fixtransfermap = 1;
@@ -1442,9 +1442,9 @@ TalkResult talk_accepted_quest()
         }
     }
     game_data.executing_immediate_quest_type = qdata(3, rq);
-    gdata_executing_immediate_quest_show_hunt_remain = qdata(14, rq);
+    game_data.executing_immediate_quest_show_hunt_remain = qdata(14, rq);
     game_data.executing_immediate_quest = rq;
-    gdata_executing_immediate_quest_status = 1;
+    game_data.executing_immediate_quest_status = 1;
     game_data.previous_map2 = game_data.current_map;
     game_data.previous_dungeon_level = game_data.current_dungeon_level;
     game_data.previous_x = cdata.player().position.x;

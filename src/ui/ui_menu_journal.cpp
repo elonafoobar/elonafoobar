@@ -106,7 +106,7 @@ bool UIMenuJournal::init()
     }
     noteadd(i18n::s.get(
         "core.locale.ui.journal.rank.arena",
-        gdata_ex_arena_wins,
+        game_data.ex_arena_wins,
         cnvrank(game_data.ex_arena_level)));
     noteadd(""s);
     for (int cnt = 0,

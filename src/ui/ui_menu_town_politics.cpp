@@ -21,7 +21,7 @@ static void _load_politics_list(bool is_town)
     curmenu = 2;
     list(0, listmax) = 1;
     listn(0, listmax) = i18n::s.get(
-        "core.locale.ui.politics.name", mapname(gdata_politics_map_id));
+        "core.locale.ui.politics.name", mapname(game_data.politics_map_id));
     ++listmax;
 
     if (is_town)
