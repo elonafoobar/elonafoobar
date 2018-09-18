@@ -107,7 +107,7 @@ bool UIMenuJournal::init()
     noteadd(i18n::s.get(
         "core.locale.ui.journal.rank.arena",
         gdata(802),
-        cnvrank(gdata_ex_arena_level)));
+        cnvrank(game_data.ex_arena_level)));
     noteadd(""s);
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));

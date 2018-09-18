@@ -1675,7 +1675,7 @@ label_1741_internal:
         mdata_map_user_map_flag = 0;
         flt();
         chara_create(-1, 202, 46, 18);
-        gdata_fire_giant = rc;
+        game_data.fire_giant = rc;
         cdata[rc].character_role = 3;
         flt();
         chara_create(-1, 203, 47, 18);
@@ -1963,7 +1963,7 @@ label_1741_internal:
             mdata_map_refresh_type = 0;
             mdatan(0) = i18n::s.get("core.locale.map.unique.doom_ground.name");
             game_data.entrance_type = 4;
-            gdata_duration_of_kamikaze_attack = 0;
+            game_data.quest_flags.duration_of_kamikaze_attack = 0;
             map_placeplayer();
             for (int cnt = 0; cnt < 10; ++cnt)
             {
@@ -2868,7 +2868,7 @@ label_1742_internal:
                                 }
                                 map_reload(u8"noyel"s);
                             }
-                            gdata_released_fire_giant = 0;
+                            game_data.released_fire_giant = 0;
                         }
                     }
                 }
@@ -2961,7 +2961,7 @@ label_1742_internal:
                     }
                 }
             }
-            if (rc == 0 || gdata_mount != rc)
+            if (rc == 0 || game_data.mount != rc)
             {
                 cell_check(cdata[rc].position.x, cdata[rc].position.y);
                 if (map(cdata[rc].position.x, cdata[rc].position.y, 1) != 0
@@ -3261,9 +3261,9 @@ label_1744_internal:
             do_play_scene();
             game_data.quest_flags.main_quest = 9;
         }
-        if (gdata_has_not_been_to_vernis == 0)
+        if (game_data.has_not_been_to_vernis == 0)
         {
-            gdata_has_not_been_to_vernis = 1;
+            game_data.has_not_been_to_vernis = 1;
             event_add(12);
         }
     }

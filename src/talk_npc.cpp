@@ -237,7 +237,7 @@ TalkResult talk_trade()
 
 TalkResult talk_arena_master(int chatval_)
 {
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
         int stat = cell_findspace(
             cdata.player().position.x, cdata.player().position.y, 1);
@@ -246,9 +246,9 @@ TalkResult talk_arena_master(int chatval_)
             txt(i18n::s.get("core.locale.magic.mount.no_place_to_get_off"));
             return TalkResult::talk_end;
         }
-        cell_setchara(gdata_mount, rtval, rtval(1));
+        cell_setchara(game_data.mount, rtval, rtval(1));
         txt(i18n::s.get(
-            "core.locale.magic.mount.dismount", cdata[gdata_mount]));
+            "core.locale.magic.mount.dismount", cdata[game_data.mount]));
         ride_end();
     }
     gdata(74) = calcfame(
@@ -553,8 +553,8 @@ TalkResult talk_guard_return_item()
         chatesc = 1;
         talk_window_query();
         modify_karma(cdata.player(), 5);
-        ++gdata_lost_wallet_count;
-        if (gdata_lost_wallet_count >= 4)
+        ++game_data.lost_wallet_count;
+        if (game_data.lost_wallet_count >= 4)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -822,7 +822,7 @@ TalkResult talk_ally_gene()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     cdata[tc].has_made_gene() = true;
-    if (gdata_wizard == 0)
+    if (game_data.wizard == 0)
     {
         gdata(98) = tc;
     }
@@ -1192,7 +1192,7 @@ TalkResult talk_sex()
 
 TalkResult talk_result_maid_chase_out()
 {
-    --gdata_number_of_waiting_guests;
+    --game_data.number_of_waiting_guests;
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.maid.do_not_meet", cdata[tc]);
     tc = tc * 1 + 0;
@@ -1838,7 +1838,7 @@ TalkResult talk_npc()
     }
     if (cdata[tc].character_role == 18)
     {
-        if (gdata_number_of_waiting_guests > 0)
+        if (game_data.number_of_waiting_guests > 0)
         {
             ELONA_APPEND_RESPONSE(
                 58,
@@ -2392,7 +2392,7 @@ TalkResult talk_npc()
     case 56: return talk_sex();
     case 58:
     {
-        if (gdata_left_turns_of_timestop == 0)
+        if (game_data.left_turns_of_timestop == 0)
         {
             event_add(25);
         }

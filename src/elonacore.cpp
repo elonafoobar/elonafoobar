@@ -1704,16 +1704,16 @@ void ride_begin(int mount)
         cdata[mount].current_speed));
     cdata[mount].is_ridden() = true;
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
-    gdata_mount = mount;
+    game_data.mount = mount;
     create_pcpic(0, true);
-    cdata[gdata_mount].continuous_action.finish();
-    refresh_speed(cdata[gdata_mount]);
+    cdata[game_data.mount].continuous_action.finish();
+    refresh_speed(cdata[game_data.mount]);
     txt(""s + cdata[mount].current_speed + u8") "s);
-    if (cdata[gdata_mount].is_suitable_for_mount())
+    if (cdata[game_data.mount].is_suitable_for_mount())
     {
         txt(i18n::s.get("core.locale.magic.mount.mount.suitable"));
     }
-    else if (cdata[gdata_mount].is_unsuitable_for_mount())
+    else if (cdata[game_data.mount].is_unsuitable_for_mount())
     {
         txt(i18n::s.get("core.locale.magic.mount.mount.unsuitable"));
     }
@@ -1723,10 +1723,10 @@ void ride_begin(int mount)
 
 void ride_end()
 {
-    int mount = gdata_mount;
+    int mount = game_data.mount;
     cdata[mount].is_ridden() = false;
     cdata[mount].continuous_action.finish();
-    gdata_mount = 0;
+    game_data.mount = 0;
     create_pcpic(0, true);
     refresh_speed(cdata[mount]);
 }
@@ -1823,7 +1823,7 @@ void hostileaction(int prm_787, int prm_788)
         }
         if (cdata[prm_788].id == 202)
         {
-            if (gdata_released_fire_giant == 0)
+            if (game_data.released_fire_giant == 0)
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -5647,9 +5647,10 @@ void map_global_proc_diastrophism()
             }
         }
     }
-    if (p <= 25 || rnd(150) == 0 || gdata_diastrophism_flag != 0 || gdata(79))
+    if (p <= 25 || rnd(150) == 0 || game_data.diastrophism_flag != 0
+        || gdata(79))
     {
-        gdata_diastrophism_flag = 0;
+        game_data.diastrophism_flag = 0;
         msgtemp += i18n::s.get("core.locale.action.move.global.diastrophism");
         for (int cnt = 450; cnt < 500; ++cnt)
         {
@@ -6647,9 +6648,9 @@ void map_proc_special_events()
 {
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        if (gdata_released_fire_giant == 1)
+        if (game_data.released_fire_giant == 1)
         {
-            if (cdata[gdata_fire_giant].state() == Character::State::alive)
+            if (cdata[game_data.fire_giant].state() == Character::State::alive)
             {
                 if (game_data.crowd_density < 70)
                 {
@@ -6721,7 +6722,7 @@ void map_proc_special_events()
     {
         if (game_data.current_dungeon_level == 25)
         {
-            ++gdata_duration_of_kamikaze_attack;
+            ++game_data.quest_flags.duration_of_kamikaze_attack;
             x = 1;
             y = rnd(mdata_map_height);
             if (rnd(4) == 0)
@@ -6740,28 +6741,28 @@ void map_proc_special_events()
                 y = mdata_map_height - 2;
             }
             p = 237;
-            if (gdata_duration_of_kamikaze_attack > 50)
+            if (game_data.quest_flags.duration_of_kamikaze_attack > 50)
             {
                 if (rnd(10) == 0)
                 {
                     p = 245;
                 }
             }
-            if (gdata_duration_of_kamikaze_attack > 100)
+            if (game_data.quest_flags.duration_of_kamikaze_attack > 100)
             {
                 if (rnd(10) == 0)
                 {
                     p = 244;
                 }
             }
-            if (gdata_duration_of_kamikaze_attack > 150)
+            if (game_data.quest_flags.duration_of_kamikaze_attack > 150)
             {
                 if (rnd(10) == 0)
                 {
                     p = 244;
                 }
             }
-            if (gdata_duration_of_kamikaze_attack == 250)
+            if (game_data.quest_flags.duration_of_kamikaze_attack == 250)
             {
                 quest_update_journal_msg();
                 game_data.quest_flags.kamikaze_attack = 3;
@@ -7824,7 +7825,7 @@ TurnResult step_into_gate()
             }
         }
     }
-    if (1 && gdata_wizard == 0)
+    if (1 && game_data.wizard == 0)
     {
         do_save_game();
     }
@@ -7840,7 +7841,7 @@ TurnResult step_into_gate()
 int query_for_showroom_to_visit()
 {
 label_19431_internal:
-    if (1 && gdata_wizard == 0)
+    if (1 && game_data.wizard == 0)
     {
         do_save_game();
     }
@@ -8539,7 +8540,7 @@ void equip_melee_weapon()
         }
         if (cc == 0)
         {
-            if (gdata_mount != 0)
+            if (game_data.mount != 0)
             {
                 if (inv[cw].weight >= 4000)
                 {
@@ -8941,7 +8942,7 @@ void try_to_return()
         {
             f = 1;
         }
-        if (gdata_wizard)
+        if (game_data.wizard)
         {
             if (area_data[i].type == mdata_t::MapType::town
                 || area_data[i].type == mdata_t::MapType::guild)
@@ -9120,7 +9121,7 @@ void dump_player_info()
     noteadd(fixtxt(
         u8"プレイ時間 : "s
             + cnvplaytime(
-                  (gdata_play_time + timeGetTime() / 1000 - time_begin)),
+                  (game_data.play_time + timeGetTime() / 1000 - time_begin)),
         30));
     noteadd(""s);
     s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s
@@ -9473,7 +9474,7 @@ void load_gene_files()
     {
         chara_delete(cnt.index);
     }
-    gdata_play_time = genetemp(805);
+    game_data.play_time = genetemp(805);
 }
 
 
@@ -9706,7 +9707,7 @@ void load_save_data()
             create_pcpic(cnt, true);
         }
     }
-    if (gdata_wizard == 1)
+    if (game_data.wizard == 1)
     {
         cdatan(1, 0) = u8"*Debug*"s;
     }
@@ -10008,10 +10009,10 @@ label_21451_internal:
     map(cdata[cc].next_position.x, cdata[cc].next_position.y, 1) = cc + 1;
     if (cc == 0)
     {
-        if (gdata_mount != 0)
+        if (game_data.mount != 0)
         {
-            cdata[gdata_mount].position.x = cdata.player().position.x;
-            cdata[gdata_mount].position.y = cdata.player().position.y;
+            cdata[game_data.mount].position.x = cdata.player().position.x;
+            cdata[game_data.mount].position.y = cdata.player().position.y;
         }
     }
     movx = cdata[cc].position.x;
@@ -10272,7 +10273,7 @@ void sleep_start()
         gdata(98) = 0;
         return;
     }
-    if (gdata_catches_god_signal)
+    if (game_data.catches_god_signal)
     {
         txtgod(cdata.player().god_id, 10);
     }
@@ -11128,7 +11129,7 @@ int drink_potion()
 int drink_well()
 {
     if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-        || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
+        || (inv[ci].id == 602 && game_data.holy_well_count <= 0))
     {
         const auto valn = itemname(ci);
         txt(i18n::s.get("core.locale.action.drink.well.is_dry", valn));
@@ -11309,7 +11310,7 @@ int drink_well()
     }
     if (inv[ci].id == 602)
     {
-        --gdata_holy_well_count;
+        --game_data.holy_well_count;
     }
     else
     {
@@ -11808,18 +11809,18 @@ void heal_both_rider_and_mount()
 {
     int subloop = 0;
     subloop = 1;
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
-        if (tc == gdata_mount || tc == 0)
+        if (tc == game_data.mount || tc == 0)
         {
             subloop = 2;
-            if (tc == gdata_mount)
+            if (tc == game_data.mount)
             {
                 tc(1) = 0;
             }
             else
             {
-                tc(1) = gdata_mount;
+                tc(1) = game_data.mount;
             }
         }
     }
@@ -11891,15 +11892,15 @@ int pick_up_item()
     }
     if (cc == 0)
     {
-        if (gdata_mount != 0)
+        if (game_data.mount != 0)
         {
-            if (cdata[gdata_mount].continuous_action)
+            if (cdata[game_data.mount].continuous_action)
             {
-                if (cdata[gdata_mount].continuous_action.item == ci)
+                if (cdata[game_data.mount].continuous_action.item == ci)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.pick_up.used_by_mount",
-                        cdata[gdata_mount]));
+                        cdata[game_data.mount]));
                     return 1;
                 }
             }
@@ -12797,7 +12798,7 @@ void proc_autopick()
             }
             if (int(op.type) & int(Autopick::Operation::Type::save))
             {
-                if (gdata_wizard == 0)
+                if (game_data.wizard == 0)
                 {
                     do_save_game();
                 }
@@ -14014,7 +14015,7 @@ label_22191_internal:
             }
             if (cc == 0)
             {
-                if (gdata_mount != 0)
+                if (game_data.mount != 0)
                 {
                     chara_gain_skill_exp(
                         cdata.player(), 301, 30 / expmodifer, 0, 5);
@@ -14273,14 +14274,14 @@ void proc_weapon_enchantments()
         }
         if (enc == 40)
         {
-            if (gdata_left_turns_of_timestop == 0)
+            if (game_data.left_turns_of_timestop == 0)
             {
                 if (rnd(25) == 0)
                 {
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.action.time_stop.begins", cdata[cc]));
-                    gdata_left_turns_of_timestop =
+                    game_data.left_turns_of_timestop =
                         inv[cw].enchantments[cnt].power / 100 + 1 + 1;
                 }
                 continue;
@@ -14379,7 +14380,7 @@ void proc_weapon_enchantments()
     {
         txtef(9);
         txt(i18n::s.get("core.locale.action.time_stop.begins", cdata[cc]));
-        gdata_left_turns_of_timestop = 4;
+        game_data.left_turns_of_timestop = 4;
     }
     if (ammoproc == 3)
     {
@@ -15256,7 +15257,7 @@ void weather_changes()
             {
                 if (game_data.date.day >= 1 && game_data.date.day <= 10)
                 {
-                    if (gdata_last_etherwind_month != game_data.date.month)
+                    if (game_data.last_etherwind_month != game_data.date.month)
                     {
                         if (rnd(15) < game_data.date.day + 5)
                         {
@@ -15265,7 +15266,8 @@ void weather_changes()
                             txt(
                                 i18n::s.get("core.locale.action.weather.ether_"
                                             "wind.starts"));
-                            gdata_last_etherwind_month = game_data.date.month;
+                            game_data.last_etherwind_month =
+                                game_data.date.month;
                             game_data.hours_until_weather_changes =
                                 rnd(24) + 24;
                             break;
@@ -15493,11 +15495,11 @@ void weather_changes()
     }
     if (game_data.date.hour >= 24)
     {
-        if (gdata_number_of_waiting_guests < 3)
+        if (game_data.number_of_waiting_guests < 3)
         {
-            if (rnd(8 + gdata_number_of_waiting_guests * 5) == 0)
+            if (rnd(8 + game_data.number_of_waiting_guests * 5) == 0)
             {
-                ++gdata_number_of_waiting_guests;
+                ++game_data.number_of_waiting_guests;
             }
         }
         txtef(5);
@@ -15533,17 +15535,17 @@ void weather_changes()
             game_data.date.day = game_data.date.day - 30;
             if (game_data.date.month % 2 == 0)
             {
-                ++gdata_holy_well_count;
+                ++game_data.holy_well_count;
             }
         }
         if (game_data.date.month >= 13)
         {
             ++game_data.date.year;
             game_data.date.month = 1;
-            gdata_last_month_when_trainer_visited = 0;
+            game_data.last_month_when_trainer_visited = 0;
             game_data.wish_count = clamp(game_data.wish_count - 1, 0, 10);
-            gdata_lost_wallet_count =
-                clamp(gdata_lost_wallet_count - 1, 0, 999999);
+            game_data.lost_wallet_count =
+                clamp(game_data.lost_wallet_count - 1, 0, 999999);
         }
         if (game_data.date.day == 1 || game_data.date.day == 15)
         {
@@ -15942,7 +15944,7 @@ TurnResult pc_died()
               ndeathcause,
               mdatan(0),
               last_words);
-    if (gdata_wizard == 0)
+    if (game_data.wizard == 0)
     {
         net_send(s);
     }

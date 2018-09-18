@@ -70,7 +70,7 @@ void modify_ether_disease_stage(int delta)
     int cnt2_at_m134 = 0;
     int i_at_m134 = 0;
     org_at_m134 = game_data.ether_disease_stage / 1000;
-    p_at_m134 = delta + (delta > 0) * gdata_ether_disease_speed;
+    p_at_m134 = delta + (delta > 0) * game_data.ether_disease_speed;
     if (trait(168))
     {
         if (delta > 0)
@@ -352,27 +352,27 @@ void refresh_speed(Character& cc)
     }
     cc.speed_percentage_in_next_turn = 0;
 
-    if (cc.index != 0 && gdata_mount != cc.index)
+    if (cc.index != 0 && game_data.mount != cc.index)
         return;
 
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
-        const auto mount_speed = sdata(18, gdata_mount)
-            * clamp(100 - cdata[gdata_mount].speed_correction_value, 0, 100)
+        const auto mount_speed = sdata(18, game_data.mount)
+            * clamp(100 - cdata[game_data.mount].speed_correction_value, 0, 100)
             / 100;
 
         cdata.player().current_speed = mount_speed * 100
-            / clamp(100 + mount_speed - sdata(10, gdata_mount) * 3 / 2
+            / clamp(100 + mount_speed - sdata(10, game_data.mount) * 3 / 2
                         - sdata(301, 0) * 2
-                        - (cdata[gdata_mount].is_suitable_for_mount() == 1)
+                        - (cdata[game_data.mount].is_suitable_for_mount() == 1)
                             * 50,
                     100,
                     1000);
-        if (cdata[gdata_mount].is_unsuitable_for_mount())
+        if (cdata[game_data.mount].is_unsuitable_for_mount())
         {
             cdata.player().current_speed /= 10;
         }
-        if (gdata_mount == cc.index)
+        if (game_data.mount == cc.index)
         {
             cc.current_speed =
                 clamp(sdata(10, cc.index) + sdata(301, 0), 10, mount_speed);
@@ -382,7 +382,7 @@ void refresh_speed(Character& cc)
 
     gspdorg = sdata.get(18, 0).original_level;
 
-    if (gdata_mount == 0)
+    if (game_data.mount == 0)
     {
         int n = cdata.player().nutrition / 1000 * 1000;
         if (n < 1000)

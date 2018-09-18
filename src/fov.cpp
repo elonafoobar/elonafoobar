@@ -31,7 +31,7 @@ bool is_in_fov(const Position& pos)
 
 bool is_in_fov(const Character& cc)
 {
-    return cc.vision_flag == msync || cc.index == gdata_mount;
+    return cc.vision_flag == msync || cc.index == game_data.mount;
 }
 
 

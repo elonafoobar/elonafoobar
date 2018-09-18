@@ -63,9 +63,9 @@ TurnResult do_give_command()
     tc -= 1;
     if (tc == 0)
     {
-        if (gdata_mount != 0)
+        if (game_data.mount != 0)
         {
-            tc = gdata_mount;
+            tc = game_data.mount;
         }
     }
     if (tc != 0)
@@ -183,7 +183,7 @@ TurnResult do_interact_command()
         i18n::s.get("core.locale.action.interact.choices.name"),
         u8"null"s,
         ""s + 3);
-    if (0 || gdata_wizard)
+    if (0 || game_data.wizard)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get("core.locale.action.interact.choices.info"),
@@ -1353,7 +1353,7 @@ TurnResult do_dip_command()
             else
             {
                 if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-                    || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
+                    || (inv[ci].id == 602 && game_data.holy_well_count <= 0))
                 {
                     txt(i18n::s.get(
                         "core.locale.action.dip.result.natural_potion_dry",
@@ -1370,7 +1370,7 @@ TurnResult do_dip_command()
                 }
                 if (inv[ci].id == 602)
                 {
-                    --gdata_holy_well_count;
+                    --game_data.holy_well_count;
                     flt();
                     int stat = itemcreate(0, 516, -1, -1, 0);
                     if (stat != 0)
@@ -2238,7 +2238,7 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 26:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
-        gdata_diastrophism_flag = 1;
+        game_data.diastrophism_flag = 1;
         snd(64);
         txtef(5);
         txt(i18n::s.get("core.locale.action.use.statue.opatos"));
@@ -2357,7 +2357,8 @@ TurnResult do_use_command()
         magic();
         goto label_2229_internal;
     case 41:
-        if (gdata_next_level_minus_one_kumiromis_experience_becomes_available
+        if (game_data
+                .next_level_minus_one_kumiromis_experience_becomes_available
             > cdata.player().level)
         {
             txt(
@@ -2367,7 +2368,8 @@ TurnResult do_use_command()
             return TurnResult::pc_turn_user_error;
         }
         snd(64);
-        gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
+        game_data.next_level_minus_one_kumiromis_experience_becomes_available +=
+            10;
         inv[ci].modify_number(-1);
         ++game_data.acquirable_feat_count;
         txt(i18n::s.get(
@@ -2643,9 +2645,9 @@ TurnResult do_open_command()
         {
             if (game_data.current_dungeon_level == 1)
             {
-                if (gdata_released_fire_giant == 0)
+                if (game_data.released_fire_giant == 0)
                 {
-                    if (cdata[gdata_fire_giant].state()
+                    if (cdata[game_data.fire_giant].state()
                         == Character::State::alive)
                     {
                         tc = chara_find(203);
@@ -2654,10 +2656,10 @@ TurnResult do_open_command()
                             txtef(9);
                             txt(i18n::s.get(
                                 "core.locale.action.open.shackle.dialog"));
-                            cdata[gdata_fire_giant].enemy_id = tc;
-                            cdata[gdata_fire_giant].hate = 1000;
+                            cdata[game_data.fire_giant].enemy_id = tc;
+                            cdata[game_data.fire_giant].hate = 1000;
                         }
-                        gdata_released_fire_giant = 1;
+                        game_data.released_fire_giant = 1;
                     }
                 }
             }
@@ -3163,17 +3165,18 @@ TurnResult do_movement_command()
         cdata[cc].next_position.x = cdata[cc].position.x + rnd(3) - 1;
         cdata[cc].next_position.y = cdata[cc].position.y + rnd(3) - 1;
     }
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
-        if (cdata[gdata_mount].continuous_action)
+        if (cdata[game_data.mount].continuous_action)
         {
-            if (cdata[gdata_mount].continuous_action.turn > 0)
+            if (cdata[game_data.mount].continuous_action.turn > 0)
             {
                 txt(i18n::s.get(
-                    "core.locale.action.move.interrupt", cdata[gdata_mount]));
-                cdata[gdata_mount].continuous_action.type =
+                    "core.locale.action.move.interrupt",
+                    cdata[game_data.mount]));
+                cdata[game_data.mount].continuous_action.type =
                     ContinuousAction::Type::none;
-                cdata[gdata_mount].continuous_action.turn = 0;
+                cdata[game_data.mount].continuous_action.turn = 0;
             }
         }
     }

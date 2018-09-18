@@ -476,7 +476,7 @@ int calc_accuracy(bool consider_distance)
         }
     }
 
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
         if (cc == 0)
         {
@@ -489,7 +489,7 @@ int calc_accuracy(bool consider_distance)
                     (inv[cw].weight - 4000 + 400) / (10 + sdata(301, cc) / 5);
             }
         }
-        if (cc == gdata_mount)
+        if (cc == game_data.mount)
         {
             accuracy =
                 accuracy * 100 / clamp((150 - sdata(10, cc) / 2), 115, 150);
@@ -1359,7 +1359,7 @@ int calcspellfail(int id, int cc)
 
     if (cc != 0)
     {
-        if (gdata_mount == cc)
+        if (game_data.mount == cc)
         {
             return 95 - clamp(30 - sdata(301, 0) / 2, 0, 30);
         }
@@ -1384,7 +1384,7 @@ int calcspellfail(int id, int cc)
     {
         penalty = 4;
     }
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
         penalty += 4;
     }
@@ -1489,7 +1489,7 @@ int calcscore()
     {
         score = score / 10 + 1;
     }
-    if (gdata_wizard)
+    if (game_data.wizard)
     {
         score = 0;
     }

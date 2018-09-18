@@ -788,19 +788,19 @@ label_2692_internal:
                         {
                             if (rnd(4) == 0)
                             {
-                                if (cdata[gdata_fire_giant].state()
+                                if (cdata[game_data.fire_giant].state()
                                     == Character::State::alive)
                                 {
-                                    if (is_in_fov(cdata[gdata_fire_giant]))
+                                    if (is_in_fov(cdata[game_data.fire_giant]))
                                     {
                                         flt();
                                         int stat =
                                             itemcreate(cc, 587, -1, -1, 0);
                                         if (stat == 1)
                                         {
-                                            tlocx = cdata[gdata_fire_giant]
+                                            tlocx = cdata[game_data.fire_giant]
                                                         .position.x;
-                                            tlocy = cdata[gdata_fire_giant]
+                                            tlocy = cdata[game_data.fire_giant]
                                                         .position.y;
                                             txtef(9);
                                             txt(i18n::s.get(

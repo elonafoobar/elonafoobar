@@ -45,7 +45,6 @@ FoobarData foobar_data;
     SERIALIZE(37, torch); \
     SERIALIZE(38, angband_flag); \
     SERIALIZE(39, number_of_learned_skills_by_trainer); \
-\
     SERIALIZE(63, is_returning_or_escaping); \
     SERIALIZE(64, destination_map); \
     SERIALIZE(65, destination_dungeon_level); \
@@ -76,11 +75,21 @@ FoobarData foobar_data;
     SERIALIZE(180, distance_between_town); \
     SERIALIZE(181, departure_date); \
     SERIALIZE(182, left_town_map); \
+    SERIALIZE(183, mount); \
+    SERIALIZE(185, catches_god_signal); \
+    SERIALIZE(187, reveals_religion); \
     SERIALIZE(250, quest_flags.tutorial); \
     SERIALIZE(252, quest_flags.main_quest); \
     SERIALIZE(253, quest_flags.magic_stone_of_fool); \
     SERIALIZE(254, quest_flags.magic_stone_of_sage); \
     SERIALIZE(255, quest_flags.magic_stone_of_king); \
+    SERIALIZE(256, used_casino_once); \
+    SERIALIZE(257, has_not_been_to_vernis); \
+    SERIALIZE(258, released_fire_giant); \
+    SERIALIZE(259, fire_giant); \
+    SERIALIZE(260, holy_well_count); \
+    SERIALIZE(261, quest_flags.duration_of_kamikaze_attack); \
+    SERIALIZE(262, diastrophism_flag); \
     SERIALIZE(263, guild.belongs_to_mages_guild); \
     SERIALIZE(264, guild.belongs_to_fighters_guild); \
     SERIALIZE(265, guild.belongs_to_thieves_guild); \
@@ -112,7 +121,24 @@ FoobarData foobar_data;
     SERIALIZE(468, guild.joining_thieves_guild); \
     SERIALIZE(469, guild.mages_guild_quota_recurring); \
     SERIALIZE(470, guild.fighters_guild_quota_recurring); \
-    SERIALIZE(471, guild.thieves_guild_quota_recurring);
+    SERIALIZE(471, guild.thieves_guild_quota_recurring); \
+    SERIALIZE(800, ether_disease_speed); \
+    SERIALIZE(801, left_turns_of_timestop); \
+    SERIALIZE(803, ex_arena_level); \
+    SERIALIZE(804, time_when_uploding_becomes_available); \
+    SERIALIZE(805, play_time); \
+    SERIALIZE(806, last_etherwind_month); \
+    SERIALIZE(807, god_rank); \
+    SERIALIZE(810, quest_flags.kill_count_of_little_sister); \
+    SERIALIZE(811, quest_flags.save_count_of_little_sister); \
+    SERIALIZE(812, quest_flags.gift_count_of_little_sister); \
+    SERIALIZE(814, number_of_waiting_guests); \
+    SERIALIZE(825, last_month_when_trainer_visited); \
+    SERIALIZE(826, item_turns); \
+    SERIALIZE( \
+        827, next_level_minus_one_kumiromis_experience_becomes_available); \
+    SERIALIZE(828, wizard); \
+    SERIALIZE(851, lost_wallet_count);
 
 
 #define SERIALIZE GDATA_PACK

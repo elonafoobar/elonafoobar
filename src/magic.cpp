@@ -117,11 +117,11 @@ int magic()
                 }
                 if (efid == 625 || efid == 446)
                 {
-                    if ((tc == 0 && cc == 0) || cc == gdata_mount)
+                    if ((tc == 0 && cc == 0) || cc == game_data.mount)
                     {
-                        if (gdata_mount != 0)
+                        if (game_data.mount != 0)
                         {
-                            tc = gdata_mount;
+                            tc = game_data.mount;
                         }
                     }
                 }
@@ -252,9 +252,9 @@ int magic()
                         tc = map(dx, dy, 1) - 1;
                         if (cc != tc)
                         {
-                            if (gdata_mount != 0)
+                            if (game_data.mount != 0)
                             {
-                                if (gdata_mount == cc)
+                                if (game_data.mount == cc)
                                 {
                                     if (tc == 0)
                                     {
@@ -409,9 +409,9 @@ int magic()
                         {
                             continue;
                         }
-                        if (gdata_mount != 0)
+                        if (game_data.mount != 0)
                         {
-                            if (gdata_mount == cc)
+                            if (game_data.mount == cc)
                             {
                                 if (tc == 0)
                                 {
@@ -806,9 +806,9 @@ int magic()
                 goto the_end;
             case 5:
                 tcprev = tc;
-                if (gdata_mount != 0)
+                if (game_data.mount != 0)
                 {
-                    if (gdata_mount == tc)
+                    if (game_data.mount == tc)
                     {
                         goto the_end;
                     }
@@ -822,7 +822,7 @@ int magic()
                     telex = cdata[tc].position.x;
                     teley = cdata[tc].position.y;
                     tc = cc;
-                    if (gdata_mount != 0 && gdata_mount == tc)
+                    if (game_data.mount != 0 && game_data.mount == tc)
                     {
                         goto the_end;
                     }
@@ -897,9 +897,9 @@ int magic()
                         earn_gold(cdata[cc], p);
                     }
                     tc = cc;
-                    if (gdata_mount != 0)
+                    if (game_data.mount != 0)
                     {
-                        if (gdata_mount == tc)
+                        if (game_data.mount == tc)
                         {
                             goto the_end;
                         }
@@ -1038,9 +1038,9 @@ int magic()
                     {
                         continue;
                     }
-                    if (gdata_mount != 0)
+                    if (game_data.mount != 0)
                     {
-                        if (gdata_mount == cc)
+                        if (game_data.mount == cc)
                         {
                             if (tc == 0)
                             {
@@ -1474,7 +1474,7 @@ label_2181_internal:
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
-        if (gdata_mount != 0)
+        if (game_data.mount != 0)
         {
             if (tc == cc)
             {
@@ -1486,11 +1486,12 @@ label_2181_internal:
                         "core.locale.magic.mount.no_place_to_get_off"));
                     break;
                 }
-                cell_setchara(gdata_mount, rtval, rtval(1));
+                cell_setchara(game_data.mount, rtval, rtval(1));
                 txt(i18n::s.get(
-                    "core.locale.magic.mount.dismount", cdata[gdata_mount]));
+                    "core.locale.magic.mount.dismount",
+                    cdata[game_data.mount]));
                 txtef(9);
-                txt(name(gdata_mount)
+                txt(name(game_data.mount)
                     + i18n::s.get("core.locale.magic.mount.dismount_dialog"));
                 ride_end();
                 break;
@@ -1509,7 +1510,7 @@ label_2181_internal:
         }
         if (tc == cc)
         {
-            if (gdata_mount == 0)
+            if (game_data.mount == 0)
             {
                 txt(i18n::s.get(
                     "core.locale.magic.mount.ride_self", cdata[cc]));
@@ -1521,18 +1522,18 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.mount.stays_in_area"));
             break;
         }
-        if (gdata_mount != 0)
+        if (game_data.mount != 0)
         {
             txt(i18n::s.get(
                 "core.locale.magic.mount.currently_riding",
                 cdata[cc],
-                cdata[gdata_mount]));
+                cdata[game_data.mount]));
         }
         else
         {
             ride_begin(tc);
             txtef(9);
-            txt(name(gdata_mount)
+            txt(name(game_data.mount)
                 + i18n::s.get("core.locale.magic.mount.mount.dialog"));
         }
         break;

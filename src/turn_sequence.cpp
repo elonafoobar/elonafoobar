@@ -265,25 +265,25 @@ TurnResult npc_turn()
     }
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        if (cc != gdata_fire_giant)
+        if (cc != game_data.fire_giant)
         {
             if (cc >= 16)
             {
-                if (gdata_released_fire_giant != 0)
+                if (game_data.released_fire_giant != 0)
                 {
-                    if (cdata[gdata_fire_giant].state()
+                    if (cdata[game_data.fire_giant].state()
                         == Character::State::alive)
                     {
-                        cdata[cc].enemy_id = gdata_fire_giant;
+                        cdata[cc].enemy_id = game_data.fire_giant;
                         cdata[cc].hate = 500;
                     }
                 }
             }
         }
     }
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
-        if (cdata[cc].enemy_id == gdata_mount)
+        if (cdata[cc].enemy_id == game_data.mount)
         {
             if (rnd(3))
             {
@@ -296,7 +296,7 @@ TurnResult npc_turn()
             {
                 if (rnd(3) == 0)
                 {
-                    cdata[cc].enemy_id = gdata_mount;
+                    cdata[cc].enemy_id = game_data.mount;
                 }
             }
         }
@@ -499,7 +499,7 @@ label_2689_internal:
                                         != mdata_t::MapType::player_owned)
                                     {
                                         in = inv[ci].number();
-                                        if (gdata_mount != cc)
+                                        if (game_data.mount != cc)
                                         {
                                             int stat = pick_up_item();
                                             if (stat == 1)
@@ -1214,11 +1214,11 @@ TurnResult turn_end()
             }
         }
     }
-    if (gdata_left_turns_of_timestop > 0)
+    if (game_data.left_turns_of_timestop > 0)
     {
-        --gdata_left_turns_of_timestop;
+        --game_data.left_turns_of_timestop;
         if (cdata[cc].state() != Character::State::alive
-            || gdata_left_turns_of_timestop == 0)
+            || game_data.left_turns_of_timestop == 0)
         {
             txtef(9);
             txt(i18n::s.get("core.locale.action.time_stop.ends"));
@@ -1246,7 +1246,7 @@ TurnResult pc_turn(bool advance_time)
     {
         lua::lua->get_event_manager()
             .run_callbacks<lua::EventKind::player_turn>();
-        if (gdata_catches_god_signal)
+        if (game_data.catches_god_signal)
         {
             if (rnd(1000) == 0)
             {
@@ -1255,9 +1255,9 @@ TurnResult pc_turn(bool advance_time)
         }
         gdata(808) = 0;
         tgloc = 0;
-        if (gdata_mount != 0)
+        if (game_data.mount != 0)
         {
-            cdata[gdata_mount].position = cdata.player().position;
+            cdata[game_data.mount].position = cdata.player().position;
         }
         if (mdata_map_type == mdata_t::MapType::world_map)
         {
@@ -1351,7 +1351,7 @@ TurnResult pc_turn(bool advance_time)
         if (autosave)
         {
             autosave = 0;
-            if (gdata_wizard == 0
+            if (game_data.wizard == 0
                 && game_data.current_map != mdata_t::MapId::pet_arena
                 && Config::instance().autosave)
             {
@@ -1518,7 +1518,7 @@ TurnResult pc_turn(bool advance_time)
 label_2747:
     if (firstturn == 1)
     {
-        if (gdata_catches_god_signal)
+        if (game_data.catches_god_signal)
         {
             txtgod(cdata.player().god_id, 11);
         }
@@ -1592,7 +1592,7 @@ label_2747:
         goto label_2747;
     }
 
-    if (gdata_wizard)
+    if (game_data.wizard)
     {
         if (getkey(snail::Key::f3))
         {
@@ -1692,7 +1692,7 @@ label_2747:
         debug::voldemort = true;
         if (debug::voldemort)
         {
-            gdata_wizard = 1;
+            game_data.wizard = 1;
             for (int i = 400; i < 467; ++i)
             {
                 if (i != 426 && i != 427)

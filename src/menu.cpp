@@ -1031,7 +1031,7 @@ label_2040_internal:
         {
             s(9) = i18n::s.get("core.locale.ui.appearance.basic.riding");
         }
-        p = 9 + (cc != 0) + (cc == 0) * (gdata_mount != 0);
+        p = 9 + (cc != 0) + (cc == 0) * (game_data.mount != 0);
     }
     else
     {

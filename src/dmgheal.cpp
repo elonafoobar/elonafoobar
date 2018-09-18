@@ -896,7 +896,7 @@ int damage_hp(
                 }
             }
         }
-        if (gdata_mount != victim.index || victim.index == 0)
+        if (game_data.mount != victim.index || victim.index == 0)
         {
             cell_removechara(victim.position.x, victim.position.y);
         }
@@ -1054,13 +1054,13 @@ int damage_hp(
                     }
                     if (victim.id == 319)
                     {
-                        ++gdata_kill_count_of_little_sister;
+                        ++game_data.quest_flags.kill_count_of_little_sister;
                         txtef(3);
                         txt(i18n::s.get(
                             "core.locale.talk.unique.strange_scientist.saved_"
                             "count",
-                            gdata_save_count_of_little_sister,
-                            gdata_kill_count_of_little_sister));
+                            game_data.quest_flags.save_count_of_little_sister,
+                            game_data.quest_flags.kill_count_of_little_sister));
                     }
                     if (game_data.current_dungeon_level
                             == area_data[game_data.current_map].deepest_level
@@ -1108,9 +1108,9 @@ int damage_hp(
             // if they are dead.
             modify_crowd_density(victim.index, -1);
         }
-        if (gdata_mount)
+        if (game_data.mount)
         {
-            if (victim.index == gdata_mount)
+            if (victim.index == game_data.mount)
             {
                 txt(i18n::s.get("core.locale.damage.get_off_corpse", victim));
                 ride_end();
@@ -1171,7 +1171,7 @@ int damage_hp(
         }
         if (attacker_is_player)
         {
-            if (gdata_catches_god_signal)
+            if (game_data.catches_god_signal)
             {
                 if (rnd(20) == 0)
                 {

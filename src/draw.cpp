@@ -627,7 +627,7 @@ void create_pcpic(int cc, bool prm_410)
         }
     }
     load_pcc_part(cc, 1, u8"hairbk_");
-    if (cc == 0 && gdata_mount != 0 && pcc(16, cc) != 0)
+    if (cc == 0 && game_data.mount != 0 && pcc(16, cc) != 0)
     {
         load_pcc_part(cc, 16, u8"ridebk_");
     }
@@ -636,7 +636,7 @@ void create_pcpic(int cc, bool prm_410)
         load_pcc_part(cc, 15, u8"body_");
     }
     load_pcc_part(cc, 14, u8"eye_");
-    if (cc != 0 || gdata_mount == 0 || pcc(16, cc) == 0)
+    if (cc != 0 || game_data.mount == 0 || pcc(16, cc) == 0)
     {
         load_pcc_part(cc, 7, u8"pants_");
     }
@@ -647,7 +647,7 @@ void create_pcpic(int cc, bool prm_410)
         {
             load_pcc_part(cc, 2, u8"chest_");
         }
-        if ((cc != 0 || gdata_mount == 0 || pcc(16, cc) == 0)
+        if ((cc != 0 || game_data.mount == 0 || pcc(16, cc) == 0)
             && pcc(21, cc) == 0)
         {
             load_pcc_part(cc, 3, u8"leg_");
@@ -663,7 +663,7 @@ void create_pcpic(int cc, bool prm_410)
     }
     if (cc == 0)
     {
-        if (gdata_mount != 0)
+        if (game_data.mount != 0)
         {
             load_pcc_part(cc, 16, u8"ride_");
         }

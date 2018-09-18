@@ -929,9 +929,9 @@ void trait_load_desc()
                   cdata[tc].speed_correction_value);
         ++listmax;
     }
-    if (tc == 0 && gdata_ether_disease_speed != 0)
+    if (tc == 0 && game_data.ether_disease_speed != 0)
     {
-        if (gdata_ether_disease_speed > 0)
+        if (game_data.ether_disease_speed > 0)
         {
             list(0, listmax) = 1;
             list(1, listmax) = 99999;

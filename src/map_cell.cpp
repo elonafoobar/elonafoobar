@@ -111,9 +111,9 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 {
     int x2_at_m81 = 0;
     int y2_at_m81 = 0;
-    if (gdata_mount != 0)
+    if (game_data.mount != 0)
     {
-        if (gdata_mount == prm_605 || gdata_mount == prm_606)
+        if (game_data.mount == prm_605 || game_data.mount == prm_606)
         {
             return false;
         }
@@ -146,10 +146,10 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     cdata[prm_605].position.y = y2_at_m81;
     if (prm_605 == 0 || tc_at_m81 == 0)
     {
-        if (gdata_mount)
+        if (game_data.mount)
         {
-            cdata[gdata_mount].position.x = cdata.player().position.x;
-            cdata[gdata_mount].position.y = cdata.player().position.y;
+            cdata[game_data.mount].position.x = cdata.player().position.x;
+            cdata[game_data.mount].position.y = cdata.player().position.y;
         }
     }
     return true;
