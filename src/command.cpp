@@ -37,6 +37,41 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+
+
+namespace
+{
+
+
+template <typename F>
+bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
+{
+    for (int dx = -1; dx <= 1; ++dx)
+    {
+        for (int dy = -1; dy <= 1; ++dy)
+        {
+            if (ignore_pc && dx == 0 && dy == 0)
+            {
+                continue;
+            }
+            const auto x = cdata.player().position.x + dx;
+            const auto y = cdata.player().position.y + dy;
+            const auto chara = map(x, y, 1) - 1;
+            if (chara != -1 && predicate(cdata[chara]))
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -1823,35 +1858,45 @@ TurnResult do_use_command()
         update_screen();
         return TurnResult::show_house_board;
     case 19:
-        txt(i18n::s.get("core.locale.action.use.dresser.prompt"));
+    {
+        int chara = -1;
+        // Are there any of your pets around you?
+        const auto alone = !any_of_characters_around_you(
+            [](const auto& chara) { return chara.index < 16; });
+        if (alone)
         {
+            chara = 0;
+        }
+        else
+        {
+            txt(i18n::s.get("core.locale.action.use.dresser.prompt"));
             int stat = ask_direction();
-            f = 0;
             if (stat != 0)
             {
-                if (map(x, y, 1) > 0)
+                const auto cc = map(x, y, 1) - 1;
+                if (cc != -1 && cc < 16)
                 {
-                    tc = map(x, y, 1) - 1;
-                    if (tc < 16)
-                    {
-                        screenupdate = -1;
-                        update_screen();
-                        ccbk = cc;
-                        cc = tc;
-                        change_appearance_equipment();
-                        cc = ccbk;
-                        f = 1;
-                    }
+                    chara = cc;
                 }
             }
         }
-        if (f == 0)
+        if (chara != -1)
+        {
+            tc = chara;
+            screenupdate = -1;
+            update_screen();
+            ccbk = cc;
+            cc = tc;
+            change_appearance_equipment();
+            cc = ccbk;
+        }
+        else
         {
             txt(i18n::s.get("core.locale.common.it_is_impossible"));
         }
         update_screen();
         return TurnResult::pc_turn_user_error;
-        break;
+    }
     case 15:
         efid = 184;
         magic();
