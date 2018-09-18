@@ -89,16 +89,18 @@ bool UIMenuJournal::init()
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        if (gdata_rank(cnt) < 10000)
+        if (game_data.ranks.at(cnt) < 10000)
         {
-            noteadd(""s + ranktitle(cnt) + u8" Rank."s + gdata_rank(cnt) / 100);
+            noteadd(
+                ""s + ranktitle(cnt) + u8" Rank."s
+                + game_data.ranks.at(cnt) / 100);
             s = i18n::s.get("core.locale.ui.journal.rank.pay", calcincome(cnt));
             gold += calcincome(cnt);
             if (cnt != 3 && cnt != 4 && cnt != 5 && cnt != 8)
             {
                 s += i18n::s.get(
                     "core.locale.ui.journal.rank.deadline",
-                    gdata_rank_deadline(cnt));
+                    game_data.rank_deadlines.at(cnt));
             }
             noteadd(s);
             noteadd(""s);

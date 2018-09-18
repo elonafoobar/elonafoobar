@@ -253,7 +253,7 @@ TalkResult talk_arena_master(int chatval_)
     }
     game_data.executing_immediate_quest_fame_gained = calcfame(
         0,
-        (220 - gdata_rank(0) / 50)
+        (220 - game_data.ranks.at(0) / 50)
                 * (100
                    + clamp(
                          area_data[game_data.current_map]
@@ -278,13 +278,13 @@ TalkResult talk_arena_master(int chatval_)
         for (int cnt = 0; cnt < 50; ++cnt)
         {
             arenaop(0) = 0;
-            arenaop(1) = (100 - gdata_rank(0) / 100) / 3 + 1;
+            arenaop(1) = (100 - game_data.ranks.at(0) / 100) / 3 + 1;
             arenaop(2) = 3;
-            if (gdata_rank(0) / 100 < 30)
+            if (game_data.ranks.at(0) / 100 < 30)
             {
                 arenaop(2) = 4;
             }
-            if (gdata_rank(0) / 100 < 10)
+            if (game_data.ranks.at(0) / 100 < 10)
             {
                 arenaop(2) = 5;
             }
@@ -324,7 +324,7 @@ TalkResult talk_arena_master(int chatval_)
             return TalkResult::talk_npc;
         }
         arenaop(0) = 1;
-        arenaop(1) = (100 - gdata_rank(0) / 100) / 2 + 1;
+        arenaop(1) = (100 - game_data.ranks.at(0) / 100) / 2 + 1;
         buff = i18n::s.get(
             "core.locale.talk.npc.arena_master.enter.target_group",
             arenaop(1),
@@ -375,7 +375,7 @@ TalkResult talk_pet_arena_master(int chatval_)
 {
     game_data.executing_immediate_quest_fame_gained = calcfame(
         0,
-        (220 - gdata_rank(1) / 50)
+        (220 - game_data.ranks.at(1) / 50)
                 * (50
                    + clamp(
                          area_data[game_data.current_map]
@@ -389,7 +389,7 @@ TalkResult talk_pet_arena_master(int chatval_)
     {
         arenaop(0) = 0;
         arenaop(1) = 1;
-        arenaop(2) = (100 - gdata_rank(1) / 100) / 3 * 2 + 3;
+        arenaop(2) = (100 - game_data.ranks.at(1) / 100) / 3 * 2 + 3;
         buff = i18n::s.get(
             "core.locale.talk.npc.pet_arena_master.register.target",
             arenaop(2),
@@ -399,7 +399,7 @@ TalkResult talk_pet_arena_master(int chatval_)
     {
         arenaop(0) = 1;
         arenaop(1) = 2;
-        arenaop(2) = (100 - gdata_rank(1) / 100) / 2 + 1;
+        arenaop(2) = (100 - game_data.ranks.at(1) / 100) / 2 + 1;
         arenaop(1) = rnd(7) + 2;
         buff = i18n::s.get(
             "core.locale.talk.npc.pet_arena_master.register.target_group",
@@ -1653,18 +1653,18 @@ TalkResult talk_quest_giver()
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
-            p = gdata_taken_quest(cnt);
+            p = game_data.taken_quests.at(cnt);
             f = 0;
             for (int cnt = 0; cnt < 5; ++cnt)
             {
-                if (gdata_taken_quest(cnt) == p)
+                if (game_data.taken_quests.at(cnt) == p)
                 {
                     ++f;
                 }
             }
             if (qdata(8, p) == 0 || f > 1)
             {
-                gdata_taken_quest(cnt) = rq;
+                game_data.taken_quests.at(cnt) = rq;
                 break;
             }
         }

@@ -121,7 +121,7 @@ void modify_ether_disease_stage(int delta)
                 }
                 --trait(tid);
                 i_at_m134 = original_amount + cnt2_at_m134;
-                gdata_ether_disease_history(i_at_m134) = tid;
+                game_data.ether_disease_history.at(i_at_m134) = tid;
                 txtef(8);
                 txt(i18n::s.get("core.locale.chara.corruption.add"));
                 txtef(3);
@@ -171,9 +171,9 @@ void modify_ether_disease_stage(int delta)
                 if (cnt == 0)
                 {
                     i_at_m134 = original_amount - cnt2_at_m134 - 1;
-                    if (gdata_ether_disease_history(i_at_m134) != 0)
+                    if (game_data.ether_disease_history.at(i_at_m134) != 0)
                     {
-                        tid = gdata_ether_disease_history(i_at_m134);
+                        tid = game_data.ether_disease_history.at(i_at_m134);
                     }
                 }
                 int stat = trait_get_info(0, tid);

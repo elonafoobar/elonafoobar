@@ -908,7 +908,7 @@ void initialize_debug_globals()
 {
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        gdata_rank(cnt) = 5000;
+        game_data.ranks.at(cnt) = 5000;
     }
     game_data.version = 1220;
     game_data.next_inventory_serial_id = 1000;
@@ -993,9 +993,9 @@ void initialize_world()
     initialize_adata();
     game_data.weather = 3;
     game_data.hours_until_weather_changes = 6;
-    for (int cnt = 0; cnt < 20; ++cnt)
+    for (int cnt = 0; cnt < 9; ++cnt)
     {
-        gdata_rank(cnt) = 10000;
+        game_data.ranks.at(cnt) = 10000;
     }
 }
 

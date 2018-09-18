@@ -3636,7 +3636,7 @@ TalkResult talk_unique_balzak()
 
 void _lexus_join_mages_guild()
 {
-    gdata_rank(8) = 10000;
+    game_data.ranks.at(8) = 10000;
     game_data.guild.belongs_to_thieves_guild = 0;
     game_data.guild.belongs_to_fighters_guild = 0;
     game_data.guild.belongs_to_mages_guild = 1;
@@ -3665,7 +3665,7 @@ void _lexus_start_trial()
 void _lexus_update_quota()
 {
     game_data.guild.mages_guild_quota_recurring = 1;
-    game_data.guild.mages_guild_quota = 75 - gdata_rank(8) / 200;
+    game_data.guild.mages_guild_quota = 75 - game_data.ranks.at(8) / 200;
     quest_update_journal_msg();
 }
 
@@ -3679,7 +3679,7 @@ void _lexus_move_self()
 void _lexus_receive_reward()
 {
     game_data.guild.mages_guild_quota_recurring = 0;
-    flt(51 - gdata_rank(8) / 200);
+    flt(51 - game_data.ranks.at(8) / 200);
     flttypemajor = 54000;
     itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
     flt();
@@ -3688,14 +3688,14 @@ void _lexus_receive_reward()
         54,
         cdata.player().position.x,
         cdata.player().position.y,
-        10000 - gdata_rank(8) + 1000);
+        10000 - game_data.ranks.at(8) + 1000);
     flt();
     itemcreate(
         -1,
         55,
         cdata.player().position.x,
         cdata.player().position.y,
-        clamp(4 - gdata_rank(8) / 2500, 1, 4));
+        clamp(4 - game_data.ranks.at(8) / 2500, 1, 4));
     txt(i18n::s.get("core.locale.quest.completed"));
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -3865,7 +3865,7 @@ void _abyss_start_trial()
 
 void _abyss_join_thieves_guild()
 {
-    gdata_rank(8) = 10000;
+    game_data.ranks.at(8) = 10000;
     game_data.guild.belongs_to_thieves_guild = 1;
     game_data.guild.belongs_to_fighters_guild = 0;
     game_data.guild.belongs_to_mages_guild = 0;
@@ -3894,14 +3894,15 @@ void _abyss_move_self()
 void _abyss_update_quota()
 {
     game_data.guild.thieves_guild_quota_recurring = 1;
-    game_data.guild.thieves_guild_quota = (10000 - gdata_rank(8)) * 6 + 1000;
+    game_data.guild.thieves_guild_quota =
+        (10000 - game_data.ranks.at(8)) * 6 + 1000;
     quest_update_journal_msg();
 }
 
 void _abyss_receive_reward()
 {
     game_data.guild.thieves_guild_quota_recurring = 0;
-    flt(51 - gdata_rank(8) / 200);
+    flt(51 - game_data.ranks.at(8) / 200);
     flttypemajor = 60000;
     itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
     flt();
@@ -3910,14 +3911,14 @@ void _abyss_receive_reward()
         54,
         cdata.player().position.x,
         cdata.player().position.y,
-        10000 - gdata_rank(8) + 1000);
+        10000 - game_data.ranks.at(8) + 1000);
     flt();
     itemcreate(
         -1,
         55,
         cdata.player().position.x,
         cdata.player().position.y,
-        clamp(3 - gdata_rank(8) / 3000, 1, 3));
+        clamp(3 - game_data.ranks.at(8) / 3000, 1, 3));
     txt(i18n::s.get("core.locale.quest.completed"));
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -4101,7 +4102,7 @@ void _doria_start_trial()
 
 void _doria_join_fighters_guild()
 {
-    gdata_rank(8) = 10000;
+    game_data.ranks.at(8) = 10000;
     game_data.guild.belongs_to_thieves_guild = 0;
     game_data.guild.belongs_to_fighters_guild = 1;
     game_data.guild.belongs_to_mages_guild = 0;
@@ -4157,7 +4158,7 @@ void _doria_update_quota()
 void _doria_receive_reward()
 {
     game_data.guild.fighters_guild_quota_recurring = 0;
-    flt(51 - gdata_rank(8) / 200, calcfixlv(Quality::good));
+    flt(51 - game_data.ranks.at(8) / 200, calcfixlv(Quality::good));
     flttypemajor = 10000;
     itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
     flt();
@@ -4166,14 +4167,14 @@ void _doria_receive_reward()
         54,
         cdata.player().position.x,
         cdata.player().position.y,
-        10000 - gdata_rank(8) + 1000);
+        10000 - game_data.ranks.at(8) + 1000);
     flt();
     itemcreate(
         -1,
         55,
         cdata.player().position.x,
         cdata.player().position.y,
-        clamp(4 - gdata_rank(8) / 2500, 1, 4));
+        clamp(4 - game_data.ranks.at(8) / 2500, 1, 4));
     txt(i18n::s.get("core.locale.quest.completed"));
     snd(51);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));

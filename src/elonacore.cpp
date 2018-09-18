@@ -234,7 +234,7 @@ int extraattack = 0;
 
 std::string ranktitle(int rank_id)
 {
-    int rank_value = gdata_rank(rank_id) / 100;
+    int rank_value = game_data.ranks.at(rank_id) / 100;
     if (rank_value == 1)
     {
         return rankn(0, rank_id);
@@ -1249,14 +1249,14 @@ void modrank(int rank_id, int amount, int prm_554)
 {
     int orgrank_at_m75 = 0;
     int i_at_m75 = 0;
-    int rank_factor = gdata_rank(rank_id) / 100;
-    orgrank_at_m75 = gdata_rank(rank_id);
+    int rank_factor = game_data.ranks.at(rank_id) / 100;
+    orgrank_at_m75 = game_data.ranks.at(rank_id);
     i_at_m75 = amount;
     if (amount > 0)
     {
         i_at_m75 = amount * (rank_factor + 20) * (rank_factor + 20) / 2500;
-        gdata_rank_deadline(rank_id) = ranknorma(rank_id);
-        if (gdata_rank(rank_id) == 100)
+        game_data.rank_deadlines.at(rank_id) = ranknorma(rank_id);
+        if (game_data.ranks.at(rank_id) == 100)
         {
             return;
         }
@@ -1268,18 +1268,18 @@ void modrank(int rank_id, int amount, int prm_554)
             }
         }
     }
-    gdata_rank(rank_id) -= i_at_m75;
-    if (gdata_rank(rank_id) >= 10000)
+    game_data.ranks.at(rank_id) -= i_at_m75;
+    if (game_data.ranks.at(rank_id) >= 10000)
     {
-        gdata_rank(rank_id) = 10000;
+        game_data.ranks.at(rank_id) = 10000;
     }
-    if (gdata_rank(rank_id) < 100)
+    if (game_data.ranks.at(rank_id) < 100)
     {
-        gdata_rank(rank_id) = 100;
+        game_data.ranks.at(rank_id) = 100;
     }
-    if (orgrank_at_m75 / 100 != gdata_rank(rank_id) / 100)
+    if (orgrank_at_m75 / 100 != game_data.ranks.at(rank_id) / 100)
     {
-        i_at_m75 = gdata_rank(rank_id) / 100 - orgrank_at_m75 / 100;
+        i_at_m75 = game_data.ranks.at(rank_id) / 100 - orgrank_at_m75 / 100;
         if (i_at_m75 < 0)
         {
             txtef(2);
@@ -1289,7 +1289,7 @@ void modrank(int rank_id, int amount, int prm_554)
             txtef(8);
         }
         const auto from = orgrank_at_m75 / 100;
-        const auto to = gdata_rank(rank_id) / 100;
+        const auto to = game_data.ranks.at(rank_id) / 100;
         txt(i18n::s.get(
             "core.locale.misc.ranking.changed",
             rankn(10, rank_id),
@@ -6852,7 +6852,7 @@ void map_proc_special_events()
                     {
                         break;
                     }
-                    if (gdata_rank(3) > 8000)
+                    if (game_data.ranks.at(3) > 8000)
                     {
                         txt(u8"「退屈ぅー」"s,
                             u8"「あまり見るものがないな」"s,
@@ -6860,7 +6860,7 @@ void map_proc_special_events()
                             u8"館内は少し寂しい…"s);
                         break;
                     }
-                    if (gdata_rank(3) > 5000)
+                    if (game_data.ranks.at(3) > 5000)
                     {
                         txt(u8"「いいんじゃない〜」"s,
                             u8"「まあ、普通の博物館だ」"s,
@@ -6868,7 +6868,7 @@ void map_proc_special_events()
                             u8"まあまあの客足だ。"s);
                         break;
                     }
-                    if (gdata_rank(3) > 2500)
+                    if (game_data.ranks.at(3) > 2500)
                     {
                         txt(u8"「この雰囲気好きだなぁ」"s,
                             u8"「もう一度来ようよ」"s,
@@ -6876,7 +6876,7 @@ void map_proc_special_events()
                             u8"館内はなかなか賑わっている。"s);
                         break;
                     }
-                    if (gdata_rank(3) > 500)
+                    if (game_data.ranks.at(3) > 500)
                     {
                         txt(u8"「来て良かった♪」"s,
                             u8"「よくこんなに集めたなあ」"s,
@@ -7360,7 +7360,7 @@ void god_fail_to_take_over_penalty()
 
 int calcincome(int rank_id)
 {
-    int rank_amount = 100 - gdata_rank(rank_id) / 100;
+    int rank_amount = 100 - game_data.ranks.at(rank_id) / 100;
     if (rank_amount == 99)
     {
         rank_amount = rank_amount * 70;
@@ -7423,7 +7423,7 @@ void supply_income()
     income(1) = 0;
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        if (gdata_rank(cnt) >= 10000)
+        if (game_data.ranks.at(cnt) >= 10000)
         {
             continue;
         }
@@ -7445,7 +7445,7 @@ void supply_income()
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             dbid = 0;
-            flt(calcobjlv((100 - gdata_rank(rank_id) / 100) / 2 + 1),
+            flt(calcobjlv((100 - game_data.ranks.at(rank_id) / 100) / 2 + 1),
                 calcfixlv(
                     (rnd(12) < trait(39)) ? Quality::miracle : Quality::great));
             flttypemajor = choice(fsetincome);
@@ -7453,7 +7453,7 @@ void supply_income()
             {
                 flttypemajor = choice(fsetwear);
             }
-            if (rnd(100 + gdata_rank(rank_id) / 5) < 2)
+            if (rnd(100 + game_data.ranks.at(rank_id) / 5) < 2)
             {
                 dbid = 559;
             }
@@ -9174,9 +9174,11 @@ void dump_player_info()
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        if (gdata_rank(cnt) < 10000)
+        if (game_data.ranks.at(cnt) < 10000)
         {
-            noteadd(""s + ranktitle(cnt) + u8" Rank."s + gdata_rank(cnt) / 100);
+            noteadd(
+                ""s + ranktitle(cnt) + u8" Rank."s
+                + game_data.ranks.at(cnt) / 100);
             s = u8"給料: 約 "s + calcincome(cnt) + u8" gold  "s + u8"ノルマ: "s;
             gold += calcincome(cnt);
             if (cnt == 3 || cnt == 4 || cnt == 5 || cnt == 8)
@@ -9185,7 +9187,7 @@ void dump_player_info()
             }
             else
             {
-                s += ""s + gdata_rank_deadline(cnt) + u8"日以内"s;
+                s += ""s + game_data.rank_deadlines.at(cnt) + u8"日以内"s;
             }
             noteadd(s);
             noteadd(""s);
@@ -12493,7 +12495,7 @@ TurnResult proc_movement_event()
                 {
                     for (int cnt = 0; cnt < 5; ++cnt)
                     {
-                        rq = gdata_taken_quest(cnt);
+                        rq = game_data.taken_quests.at(cnt);
                         if (qdata(3, rq) == 1007)
                         {
                             if (qdata(8, rq) == 1)
@@ -15293,20 +15295,20 @@ void weather_changes()
         update_shop_and_report();
         for (int rank_id = 0; rank_id < 9; ++rank_id)
         {
-            if (gdata_rank(rank_id) >= 10000)
+            if (game_data.ranks.at(rank_id) >= 10000)
             {
-                gdata_rank(rank_id) = 10000;
+                game_data.ranks.at(rank_id) = 10000;
                 continue;
             }
             if (rank_id == 3 || rank_id == 4 || rank_id == 5 || rank_id == 8)
             {
                 continue;
             }
-            --gdata_rank_deadline(rank_id);
-            if (gdata_rank_deadline(rank_id) <= 0)
+            --game_data.rank_deadlines.at(rank_id);
+            if (game_data.rank_deadlines.at(rank_id) <= 0)
             {
-                modrank(rank_id, (gdata_rank(rank_id) / 12 + 100) * -1);
-                gdata_rank_deadline(rank_id) = ranknorma(rank_id);
+                modrank(rank_id, (game_data.ranks.at(rank_id) / 12 + 100) * -1);
+                game_data.rank_deadlines.at(rank_id) = ranknorma(rank_id);
             }
         }
         snd(74);

@@ -965,7 +965,7 @@ void show_shop_log()
     income(0) = 0;
     income(1) = 0;
     listmax = 0;
-    shoplv = 100 - gdata_rank(5) / 100;
+    shoplv = 100 - game_data.ranks.at(5) / 100;
     customer = 0;
     for (int cnt = 0; cnt < 3; ++cnt)
     {
@@ -1201,7 +1201,7 @@ void show_shop_log()
         chara_gain_skill_exp(
             cdata[worker], 156, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
-    if (sold > (110 - gdata_rank(5) / 100) / 10)
+    if (sold > (110 - game_data.ranks.at(5) / 100) / 10)
     {
         modrank(5, 30, 2);
     }
@@ -1212,7 +1212,7 @@ void show_shop_log()
 
 void update_shop()
 {
-    mdata_map_max_crowd_density = (100 - gdata_rank(5) / 100) / 4 + 1;
+    mdata_map_max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
     for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
@@ -1274,7 +1274,7 @@ void calc_collection_value(bool val0)
 
 void update_museum()
 {
-    rankorg = gdata_rank(3);
+    rankorg = game_data.ranks.at(3);
     rankcur = 0;
     DIM3(dblist, 2, 800);
     for (const auto& cnt : items(-1))
@@ -1308,7 +1308,7 @@ void update_museum()
     {
         rankcur = 100;
     }
-    gdata_rank(3) = rankcur;
+    game_data.ranks.at(3) = rankcur;
     if (rankorg != rankcur)
     {
         if (rankorg > rankcur)
@@ -1327,7 +1327,7 @@ void update_museum()
             ranktitle(3),
             rankn(10, 3)));
     }
-    mdata_map_max_crowd_density = (100 - gdata_rank(3) / 100) / 2 + 1;
+    mdata_map_max_crowd_density = (100 - game_data.ranks.at(3) / 100) / 2 + 1;
 }
 
 
@@ -1338,7 +1338,7 @@ void calc_home_rank()
     {
         return;
     }
-    rankorg = gdata_rank(4);
+    rankorg = game_data.ranks.at(4);
     rankcur = 0;
     game_data.total_deco_value = 0;
     game_data.total_heirloom_value = 0;
@@ -1389,7 +1389,7 @@ void calc_home_rank()
     {
         rankcur = 100;
     }
-    gdata_rank(4) = rankcur;
+    game_data.ranks.at(4) = rankcur;
     if (rankorg != rankcur)
     {
         if (rankorg > rankcur)

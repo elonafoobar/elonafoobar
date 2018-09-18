@@ -299,7 +299,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
             {
                 for (int i = 0; i < 10; ++i)
                 {
-                    if (gdata_tracked_skill(i) % 10000 != 0)
+                    if (game_data.tracked_skills.at(i) % 10000 != 0)
                     {
                         y += 16;
                     }

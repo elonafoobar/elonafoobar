@@ -1,29 +1,6 @@
 #pragma once
+#include <array>
 #include "version.hpp"
-
-// 40-59
-#define gdata_skill_shortcut(n) gdata(40 + n)
-
-// 120-128
-#define gdata_rank(n) gdata(120 + n)
-
-// 140-148
-#define gdata_rank_deadline(n) gdata(140 + n)
-
-// 160-164
-#define gdata_taken_quest(n) gdata(160 + n)
-
-// 200-217
-#define gdata_exhelp_flag(n) gdata(200 + n)
-
-// 700-749?
-#define gdata_ether_disease_history(n) gdata(700 + n)
-
-// 750-759
-#define gdata_tracked_skill(n) gdata(750 + n)
-
-// 830-834
-#define gdata_tcg_deck(n) gdata(830 + n)
 
 namespace elona
 {
@@ -106,6 +83,9 @@ struct GuildData
  */
 struct GameData
 {
+    template <size_t N>
+    using ArrayType = std::array<int, N>;
+
     int death_count;
     int deepest_dungeon_level;
     int kill_count;
@@ -138,6 +118,7 @@ struct GameData
     int torch;
     int angband_flag;
     int number_of_learned_skills_by_trainer;
+    ArrayType<20> skill_shortcuts;
     int player_x_on_map_leave;
     int player_y_on_map_leave;
     int stood_world_map_tile;
@@ -175,11 +156,12 @@ struct GameData
     int wish_count;
     int version;
     int rights_to_succeed_to;
-
-    // tc + (0 if continuous action not started, 10000 if so)
-    int character_and_status_for_gene;
-
+    int character_and_status_for_gene; // tc + (0 if continuous action not
+                                       // started, 10000 if so)
     int next_voting_time;
+    ArrayType<20> ranks;
+    ArrayType<9> rank_deadlines;
+    ArrayType<5> taken_quests;
     int cost_to_hire;
     int rogue_boss_encountered;
     int left_bill;
@@ -191,12 +173,15 @@ struct GameData
     int catches_god_signal;
     int void_next_lord_floor;
     int reveals_religion;
+    ArrayType<18> exhelp_flags;
     int used_casino_once;
     int has_not_been_to_vernis;
     int released_fire_giant;
     int fire_giant;
     int holy_well_count;
     int diastrophism_flag;
+    ArrayType<20> ether_disease_history;
+    ArrayType<10> tracked_skills;
     int ether_disease_speed;
     int left_turns_of_timestop;
     int ex_arena_wins;
@@ -206,11 +191,8 @@ struct GameData
     int last_etherwind_month;
     int god_rank;
     int player_is_changing_equipment;
-
-    // proc fury/splitting/active-form damage text from damage_hp?
-    // 1 if not, 2 if yes
-    int proc_damage_events_flag;
-
+    int proc_damage_events_flag; // proc fury/splitting/active-form damage text
+                                 // from damage_hp()? 1 if not, 2 if yes
     int tcg_used_deck;
     int number_of_waiting_guests;
     int politics_map_id;
@@ -219,6 +201,7 @@ struct GameData
     int item_turns;
     int next_level_minus_one_kumiromis_experience_becomes_available;
     int wizard;
+    ArrayType<5> tcg_decks;
     int destination_outer_map;
     int lost_wallet_count;
 

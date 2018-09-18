@@ -808,7 +808,7 @@ int talk_guide_quest_client()
 
     for (int i = 0; i < max_quest; ++i)
     {
-        const auto quest_id = gdata_taken_quest(i);
+        const auto quest_id = game_data.taken_quests.at(i);
         if (qdata(8, quest_id) != 1)
             continue;
         if (game_data.current_dungeon_level != 1)
@@ -835,7 +835,7 @@ int talk_guide_quest_client()
             bool duplicated{};
             for (int j = 0; j < i; ++j)
             {
-                if (gdata_taken_quest(j) == quest_id)
+                if (game_data.taken_quests.at(j) == quest_id)
                 {
                     duplicated = true;
                     break;
@@ -859,7 +859,7 @@ int talk_check_trade(int prm_1081)
     j_at_m193 = 0;
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        p_at_m193 = gdata_taken_quest(cnt);
+        p_at_m193 = game_data.taken_quests.at(cnt);
         if (qdata(8, p_at_m193) == 1)
         {
             if (game_data.current_dungeon_level == 1)

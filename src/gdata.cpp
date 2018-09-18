@@ -13,6 +13,10 @@ FoobarData foobar_data;
 #define GDATA_PACK(x, ident) gdata(x) = ident;
 #define GDATA_UNPACK(x, ident) ident = gdata(x);
 
+#define SERIALIZE_ARRAY(x, ident) \
+    for (size_t i = 0; i < ident.size(); i++) \
+        SERIALIZE(x + i, ident.at(i));
+
 #define SERIALIZE_ALL() \
     SERIALIZE(0, death_count); \
     SERIALIZE(1, deepest_dungeon_level); \
@@ -51,6 +55,7 @@ FoobarData foobar_data;
     SERIALIZE(37, torch); \
     SERIALIZE(38, angband_flag); \
     SERIALIZE(39, number_of_learned_skills_by_trainer); \
+    SERIALIZE_ARRAY(40, skill_shortcuts); \
     SERIALIZE(60, player_x_on_map_leave); \
     SERIALIZE(61, player_y_on_map_leave); \
     SERIALIZE(62, stood_world_map_tile); \
@@ -90,6 +95,9 @@ FoobarData foobar_data;
     SERIALIZE(97, rights_to_succeed_to); \
     SERIALIZE(98, character_and_status_for_gene); \
     SERIALIZE(99, next_voting_time); \
+    SERIALIZE_ARRAY(120, ranks); \
+    SERIALIZE_ARRAY(140, rank_deadlines); \
+    SERIALIZE_ARRAY(160, taken_quests); \
     SERIALIZE(170, cost_to_hire); \
     SERIALIZE(171, rogue_boss_encountered); \
     SERIALIZE(179, left_bill); \
@@ -101,6 +109,7 @@ FoobarData foobar_data;
     SERIALIZE(185, catches_god_signal); \
     SERIALIZE(186, void_next_lord_floor); \
     SERIALIZE(187, reveals_religion); \
+    SERIALIZE_ARRAY(200, exhelp_flags); \
     SERIALIZE(250, quest_flags.tutorial); \
     SERIALIZE(252, quest_flags.main_quest); \
     SERIALIZE(253, quest_flags.magic_stone_of_fool); \
@@ -145,6 +154,8 @@ FoobarData foobar_data;
     SERIALIZE(472, quest_flags.minotaur_king); \
     SERIALIZE(473, quest_flags.little_sister); \
     SERIALIZE(474, quest_flags.blue_capsule_drug); \
+    SERIALIZE_ARRAY(700, ether_disease_history); \
+    SERIALIZE_ARRAY(750, tracked_skills); \
     SERIALIZE(800, ether_disease_speed); \
     SERIALIZE(801, left_turns_of_timestop); \
     SERIALIZE(802, ex_arena_wins); \
@@ -167,6 +178,7 @@ FoobarData foobar_data;
     SERIALIZE( \
         827, next_level_minus_one_kumiromis_experience_becomes_available); \
     SERIALIZE(828, wizard); \
+    SERIALIZE_ARRAY(830, tcg_decks); \
     SERIALIZE(850, destination_outer_map); \
     SERIALIZE(851, lost_wallet_count);
 

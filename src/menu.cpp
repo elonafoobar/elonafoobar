@@ -489,13 +489,13 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
 {
     if (Config::instance().extrahelp)
     {
-        if (gdata_exhelp_flag(id) == 0)
+        if (game_data.exhelp_flags.at(id) == 0)
         {
             if (mode == 0)
             {
                 if (cdata.player().continuous_action.turn == 0)
                 {
-                    gdata_exhelp_flag(id) = 1;
+                    game_data.exhelp_flags.at(id) = 1;
                     ghelp = id;
                     show_ex_help();
 

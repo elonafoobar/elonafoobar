@@ -3570,23 +3570,23 @@ TurnResult do_cast_command()
 TurnResult do_short_cut_command()
 {
     menucycle = 0;
-    if (gdata_skill_shortcut(sc) == 0)
+    if (game_data.skill_shortcuts.at(sc) == 0)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (gdata_skill_shortcut(sc) >= 10000)
+    if (game_data.skill_shortcuts.at(sc) >= 10000)
     {
-        invsc = gdata_skill_shortcut(sc) % 10000;
-        invctrl(0) = gdata_skill_shortcut(sc) / 10000;
+        invsc = game_data.skill_shortcuts.at(sc) % 10000;
+        invctrl(0) = game_data.skill_shortcuts.at(sc) / 10000;
         invctrl(1) = 0;
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    efid = gdata_skill_shortcut(sc);
+    efid = game_data.skill_shortcuts.at(sc);
     if (efid >= 300 && efid < 400)
     {
         return do_use_magic();

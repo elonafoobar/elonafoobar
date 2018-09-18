@@ -994,7 +994,8 @@ label_2061_internal:
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            if (gdata_skill_shortcut(cnt) == inv[p].id + invctrl * 10000)
+            if (game_data.skill_shortcuts.at(cnt)
+                == inv[p].id + invctrl * 10000)
             {
                 s += u8"{"s + cnt + u8"}"s;
             }
@@ -2227,19 +2228,19 @@ label_2061_internal:
             }
             snd(20);
             p = inv[list(0, pagesize * page + cs)].id + invctrl * 10000;
-            if (gdata_skill_shortcut(sc) == p)
+            if (game_data.skill_shortcuts.at(sc) == p)
             {
-                gdata_skill_shortcut(sc) = 0;
+                game_data.skill_shortcuts.at(sc) = 0;
                 goto label_2060_internal;
             }
             for (int cnt = 0; cnt < 20; ++cnt)
             {
-                if (gdata_skill_shortcut(cnt) == p)
+                if (game_data.skill_shortcuts.at(cnt) == p)
                 {
-                    gdata_skill_shortcut(cnt) = 0;
+                    game_data.skill_shortcuts.at(cnt) = 0;
                 }
             }
-            gdata_skill_shortcut(sc) = p;
+            game_data.skill_shortcuts.at(sc) = p;
             txt(i18n::s.get("core.locale.ui.assign_shortcut", sc));
             goto label_2060_internal;
         }

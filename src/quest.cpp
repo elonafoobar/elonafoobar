@@ -28,7 +28,7 @@ int quest_is_return_forbidden()
     f = 0;
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        p = gdata_taken_quest(cnt);
+        p = game_data.taken_quests.at(cnt);
         if (qdata(8, p) == 1)
         {
             if (qdata(3, p) == 1007 || qdata(3, p) == 1002)
