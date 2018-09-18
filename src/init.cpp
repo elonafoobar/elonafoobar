@@ -140,7 +140,6 @@ void load_character_sprite()
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
     SDIM1(untaglist);
-    gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
 
     pos(0, 0);
@@ -713,7 +712,6 @@ void initialize_elona()
     load_random_name_table();
     load_random_title_table();
     game_data.random_seed = rnd(800) + 2;
-    gdata(9) = rnd(200) + 2;
     set_item_info();
     clear_trait_data();
     initialize_rankn();
@@ -913,16 +911,12 @@ void initialize_debug_globals()
         gdata_rank(cnt) = 5000;
     }
     game_data.version = 1220;
-    gdata(41) = 424;
-    gdata(42) = 300;
-    gdata(43) = 631;
     game_data.next_inventory_serial_id = 1000;
     game_data.next_shelter_serial_id = 100;
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
     game_data.previous_map = -1;
     game_data.random_seed = rnd(800) + 2;
-    gdata(9) = rnd(200) + 2;
     game_data.current_map = static_cast<int>(mdata_t::MapId::north_tyris);
     game_data.current_dungeon_level = 0;
     game_data.entrance_type = 7;
