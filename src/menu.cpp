@@ -1112,7 +1112,12 @@ label_2041_internal:
     {
         pos(wx + 280, wy + 130);
         gmode(2);
-        gcopy_c(20 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
+        const auto is_fullscale =
+            Config::instance().pcc_graphic_scale == "fullscale";
+        const auto width = is_fullscale ? (32 * 2) : (24 * 2);
+        const auto height = is_fullscale ? (48 * 2) : (40 * 2);
+        gcopy_c(
+            20 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, width, height);
     }
     else
     {
