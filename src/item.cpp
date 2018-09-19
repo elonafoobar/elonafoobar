@@ -585,7 +585,10 @@ int item_separate(int ci)
         inv[ti].position = inv[ci].position;
         itemturn(ti);
         cell_refresh(inv[ti].position.x, inv[ti].position.y);
-        txt(i18n::s.get("core.locale.item.something_falls_from_backpack"));
+        if (inv_getowner(ci) != -1)
+        {
+            txt(i18n::s.get("core.locale.item.something_falls_from_backpack"));
+        }
         refresh_burden_state();
     }
 
