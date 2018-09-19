@@ -197,9 +197,9 @@ private:
         }
 
         bmes(
-            ""s + key_prev + u8","s + key_next + u8",Tab ["s
+            ""s + key_prev + u8","s + key_next + u8",Tab,Ctrl+Tab ["s
                 + i18n::s.get("core.locale.ui.menu.change") + u8"]"s,
-            x + width - 150,
+            x + width - 215,
             y + 28);
     }
 

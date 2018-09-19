@@ -486,6 +486,15 @@ void key_check(KeyWaitDelay delay_type)
         key = "";
     }
 
+    if (getkey(snail::Key::ctrl))
+    {
+        key_ctrl = 1;
+    }
+    else
+    {
+        key_ctrl = 0;
+    }
+
     if (getkey(snail::Key::keypad_0))
         key = "0 ";
     else if (getkey(snail::Key::keypad_1))
@@ -525,7 +534,7 @@ void key_check(KeyWaitDelay delay_type)
         if (input == StickKey::tab)
         {
             key_tab = 1;
-            key = key_next;
+            key = key_ctrl ? key_prev : key_next;
         }
     }
     else
@@ -586,14 +595,6 @@ void key_check(KeyWaitDelay delay_type)
             input = StickKey::none;
             delay_keypress = true;
         }
-    }
-    if (getkey(snail::Key::ctrl))
-    {
-        key_ctrl = 1;
-    }
-    else
-    {
-        key_ctrl = 0;
     }
     if (getkey(snail::Key::alt))
     {

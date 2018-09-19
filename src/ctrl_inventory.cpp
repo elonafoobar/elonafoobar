@@ -822,9 +822,9 @@ label_2060_internal:
             }
         }
         bmes(
-            ""s + key_prev + u8","s + key_next + u8",Tab "s + "["
+            ""s + key_prev + u8","s + key_next + u8",Tab,Ctrl+Tab "s + "["
                 + i18n::s.get("core.locale.ui.inv.window.change") + "]",
-            x + 325,
+            x + 260,
             y + 32);
     }
 label_2061_internal:
