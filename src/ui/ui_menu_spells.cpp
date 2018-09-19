@@ -127,7 +127,7 @@ static void _draw_spell_name(int cnt, int spell_id)
     std::string spell_shortcut = "";
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        if (gdata(40 + cnt) == spell_id)
+        if (game_data.skill_shortcuts.at(cnt) == spell_id)
         {
             spell_shortcut = u8"{"s + cnt + u8"}"s;
         }
@@ -197,19 +197,19 @@ void UIMenuSpells::draw()
 static void _assign_shortcut(int sc_, int spell_id)
 {
     snd(20);
-    if (gdata(40 + sc_) == spell_id)
+    if (game_data.skill_shortcuts.at(sc_) == spell_id)
     {
-        gdata(40 + sc_) = 0;
+        game_data.skill_shortcuts.at(sc_) = 0;
         return;
     }
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        if (gdata(40 + cnt) == spell_id)
+        if (game_data.skill_shortcuts.at(cnt) == spell_id)
         {
-            gdata(40 + cnt) = 0;
+            game_data.skill_shortcuts.at(cnt) = 0;
         }
     }
-    gdata(40 + sc_) = spell_id;
+    game_data.skill_shortcuts.at(sc_) = spell_id;
     txt(i18n::s.get("core.locale.ui.assign_shortcut", sc_));
     display_msg(inf_screeny + inf_tiles);
 }

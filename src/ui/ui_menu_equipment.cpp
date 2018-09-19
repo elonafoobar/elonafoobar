@@ -280,7 +280,7 @@ void UIMenuEquipment::draw()
 
 static void _unequip_item()
 {
-    gdata(808) = 1;
+    game_data.player_is_changing_equipment = 1;
     ci = cdata[cc].body_parts[body - 100] % 10000 - 1;
     if (is_cursed(inv[ci].curse_state))
     {

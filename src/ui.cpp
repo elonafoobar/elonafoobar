@@ -574,15 +574,15 @@ void render_skill_trackers()
     int y{};
     for (int i = 0; i < 10; ++i)
     {
-        const auto skill = gdata(750 + i) % 10000;
+        const auto skill = game_data.tracked_skills.at(i) % 10000;
         if (skill == 0)
         {
             continue;
         }
-        const auto chara = gdata(750 + i) / 10000;
+        const auto chara = game_data.tracked_skills.at(i) / 10000;
         if (chara != 0 && cdata[chara].state() != Character::State::alive)
         {
-            gdata(750 + i) = 0;
+            game_data.tracked_skills.at(i) = 0;
             continue;
         }
         bmes(

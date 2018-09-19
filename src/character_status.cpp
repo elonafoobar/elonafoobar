@@ -64,60 +64,46 @@ namespace elona
 
 void modify_ether_disease_stage(int delta)
 {
-    int org_at_m134 = 0;
-    int p_at_m134 = 0;
-    int mod_at_m134 = 0;
+    int original_amount = 0;
+    int add_amount = 0;
+    int mod_amount = 0;
     int cnt2_at_m134 = 0;
     int i_at_m134 = 0;
-    org_at_m134 = game_data.ether_disease_stage / 1000;
-    p_at_m134 = delta + (delta > 0) * game_data.ether_disease_speed;
+    original_amount = game_data.ether_disease_stage / 1000;
+    add_amount = delta + (delta > 0) * game_data.ether_disease_speed;
     if (trait(168))
     {
         if (delta > 0)
         {
-            p_at_m134 = p_at_m134 * 100 / 150;
+            add_amount = add_amount * 100 / 150;
         }
     }
-    game_data.ether_disease_stage += p_at_m134;
+    game_data.ether_disease_stage += add_amount;
     if (game_data.ether_disease_stage < 0)
     {
         game_data.ether_disease_stage = 0;
     }
-    mod_at_m134 = game_data.ether_disease_stage / 1000 - org_at_m134;
-    if (mod_at_m134 > 0)
+    mod_amount = game_data.ether_disease_stage / 1000 - original_amount;
+    if (mod_amount > 0)
     {
-        if (org_at_m134 == 0)
+        if (original_amount == 0)
         {
             txtef(8);
             txt(i18n::s.get("core.locale.chara.corruption.symptom"));
-            if (Config::instance().extrahelp)
-            {
-                if (gdata(215) == 0)
-                {
-                    if (mode == 0)
-                    {
-                        if (cdata.player().continuous_action.turn == 0)
-                        {
-                            gdata(215) = 1;
-                            ghelp = 15;
-                            show_ex_help();
-                        }
-                    }
-                }
-            }
+            maybe_show_ex_help(15);
         }
-        if (org_at_m134 + mod_at_m134 >= 20)
+        if (original_amount + mod_amount >= 20)
         {
-            p_at_m134 = 20 - org_at_m134;
+            add_amount = 20 - original_amount;
         }
         else
         {
-            p_at_m134 = mod_at_m134;
+            add_amount = mod_amount;
         }
-        for (int cnt = 0, cnt_end = (p_at_m134); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (add_amount); cnt < cnt_end; ++cnt)
         {
             cnt2_at_m134 = cnt;
-            if (org_at_m134 + cnt2_at_m134 > 20)
+            if (original_amount + cnt2_at_m134 > 20)
             {
                 break;
             }
@@ -134,8 +120,8 @@ void modify_ether_disease_stage(int delta)
                     continue;
                 }
                 --trait(tid);
-                i_at_m134 = 700 + org_at_m134 + cnt2_at_m134;
-                gdata(i_at_m134) = tid;
+                i_at_m134 = original_amount + cnt2_at_m134;
+                game_data.ether_disease_history.at(i_at_m134) = tid;
                 txtef(8);
                 txt(i18n::s.get("core.locale.chara.corruption.add"));
                 txtef(3);
@@ -162,21 +148,21 @@ void modify_ether_disease_stage(int delta)
         chara_refresh(0);
         return;
     }
-    if (mod_at_m134 < 0)
+    if (mod_amount < 0)
     {
-        if (org_at_m134 + mod_at_m134 < 0)
+        if (original_amount + mod_amount < 0)
         {
-            p_at_m134 = org_at_m134;
+            add_amount = original_amount;
         }
         else
         {
-            p_at_m134 = std::abs(mod_at_m134);
+            add_amount = std::abs(mod_amount);
         }
-        if (p_at_m134 < 0)
+        if (add_amount < 0)
         {
-            p_at_m134 = 0;
+            add_amount = 0;
         }
-        for (int cnt = 0, cnt_end = (p_at_m134); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (add_amount); cnt < cnt_end; ++cnt)
         {
             cnt2_at_m134 = cnt;
             for (int cnt = 0; cnt < 100000; ++cnt)
@@ -184,10 +170,10 @@ void modify_ether_disease_stage(int delta)
                 int tid = rnd(17) + 200;
                 if (cnt == 0)
                 {
-                    i_at_m134 = 700 + org_at_m134 - cnt2_at_m134 - 1;
-                    if (gdata(i_at_m134) != 0)
+                    i_at_m134 = original_amount - cnt2_at_m134 - 1;
+                    if (game_data.ether_disease_history.at(i_at_m134) != 0)
                     {
-                        tid = gdata(i_at_m134);
+                        tid = game_data.ether_disease_history.at(i_at_m134);
                     }
                 }
                 int stat = trait_get_info(0, tid);

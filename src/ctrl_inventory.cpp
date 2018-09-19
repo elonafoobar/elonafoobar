@@ -994,7 +994,8 @@ label_2061_internal:
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            if (gdata(40 + cnt) == inv[p].id + invctrl * 10000)
+            if (game_data.skill_shortcuts.at(cnt)
+                == inv[p].id + invctrl * 10000)
             {
                 s += u8"{"s + cnt + u8"}"s;
             }
@@ -1392,7 +1393,7 @@ label_2061_internal:
             snd(13);
             txtnew();
             txt(i18n::s.get("core.locale.ui.inv.equip.you_equip", inv[ci]));
-            gdata(808) = 1;
+            game_data.player_is_changing_equipment = 1;
             switch (inv[ci].curse_state)
             {
             case CurseState::doomed:
@@ -2227,19 +2228,19 @@ label_2061_internal:
             }
             snd(20);
             p = inv[list(0, pagesize * page + cs)].id + invctrl * 10000;
-            if (gdata(40 + sc) == p)
+            if (game_data.skill_shortcuts.at(sc) == p)
             {
-                gdata(40 + sc) = 0;
+                game_data.skill_shortcuts.at(sc) = 0;
                 goto label_2060_internal;
             }
             for (int cnt = 0; cnt < 20; ++cnt)
             {
-                if (gdata(40 + cnt) == p)
+                if (game_data.skill_shortcuts.at(cnt) == p)
                 {
-                    gdata(40 + cnt) = 0;
+                    game_data.skill_shortcuts.at(cnt) = 0;
                 }
             }
-            gdata(40 + sc) = p;
+            game_data.skill_shortcuts.at(sc) = p;
             txt(i18n::s.get("core.locale.ui.assign_shortcut", sc));
             goto label_2060_internal;
         }

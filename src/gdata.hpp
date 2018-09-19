@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include "version.hpp"
 
 namespace elona
@@ -82,6 +83,9 @@ struct GuildData
  */
 struct GameData
 {
+    template <size_t N>
+    using ArrayType = std::array<int, N>;
+
     int death_count;
     int deepest_dungeon_level;
     int kill_count;
@@ -101,64 +105,104 @@ struct GameData
     int home_scale;
     int charge_power;
     int entrance_type;
+    int next_shelter_serial_id;
+    int seven_league_boot_effect;
+    int protects_from_etherwind;
+    int player_cellaccess_check_flag;
+    int player_cellaccess_w;
+    int player_cellaccess_n;
+    int player_cellaccess_e;
+    int player_cellaccess_s;
+    int player_next_move_direction;
+    int played_scene;
+    int torch;
+    int angband_flag;
+    int number_of_learned_skills_by_trainer;
+    ArrayType<20> skill_shortcuts;
+    int player_x_on_map_leave;
+    int player_y_on_map_leave;
+    int stood_world_map_tile;
+    int is_returning_or_escaping;
     int destination_map;
     int destination_dungeon_level;
     int previous_map2;
     int previous_dungeon_level;
     int previous_x;
     int previous_y;
-    int next_shelter_serial_id;
-    int seven_league_boot_effect;
-    int protects_from_etherwind;
-    int played_scene;
-    int torch;
-    int angband_flag;
-    int number_of_learned_skills_by_trainer;
-    int is_returning_or_escaping;
     int executing_immediate_quest_type;
+    int executing_immediate_quest_show_hunt_remain;
     int executing_immediate_quest;
+    int executing_immediate_quest_status;
+    int executing_immediate_quest_fame_gained;
     int number_of_existing_quests;
     int basic_point_of_home_rank;
+    int total_deco_value;
+    int total_heirloom_value;
+    int reset_world_map_in_diastrophism_flag;
     int cargo_weight;
     int initial_cart_limit;
     int current_cart_limit;
     int protects_from_bad_weather;
     int left_minutes_of_executing_quest;
     int ether_disease_stage;
+    int executing_immediate_quest_time_left_display_period;
     int time_when_textbook_becomes_available;
+    int light;
     int continuous_active_hours;
+    int continuous_action_about_to_start;
     int sleep_experience;
     int acquirable_feat_count;
+    int chara_last_attacked_by_player;
     int wish_count;
     int version;
     int rights_to_succeed_to;
+    int character_and_status_for_gene; // tc + (0 if continuous action not
+                                       // started, 10000 if so)
     int next_voting_time;
+    ArrayType<20> ranks;
+    ArrayType<9> rank_deadlines;
+    ArrayType<5> taken_quests;
     int cost_to_hire;
+    int rogue_boss_encountered;
     int left_bill;
     int distance_between_town;
     int departure_date;
     int left_town_map;
     int mount;
+    int map_regenerate_count;
     int catches_god_signal;
+    int void_next_lord_floor;
     int reveals_religion;
+    ArrayType<18> exhelp_flags;
     int used_casino_once;
     int has_not_been_to_vernis;
     int released_fire_giant;
     int fire_giant;
     int holy_well_count;
     int diastrophism_flag;
+    ArrayType<20> ether_disease_history;
+    ArrayType<10> tracked_skills;
     int ether_disease_speed;
     int left_turns_of_timestop;
+    int ex_arena_wins;
     int ex_arena_level;
     int time_when_uploding_becomes_available;
     int play_time;
     int last_etherwind_month;
     int god_rank;
+    int player_is_changing_equipment;
+    int proc_damage_events_flag; // proc fury/splitting/active-form damage text
+                                 // from damage_hp()? 1 if not, 2 if yes
+    int tcg_used_deck;
     int number_of_waiting_guests;
+    int politics_map_id;
+    int politics_tax_amount;
     int last_month_when_trainer_visited;
     int item_turns;
     int next_level_minus_one_kumiromis_experience_becomes_available;
     int wizard;
+    ArrayType<5> tcg_decks;
+    int destination_outer_map;
     int lost_wallet_count;
 
     QuestFlags quest_flags;

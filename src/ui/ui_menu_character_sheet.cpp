@@ -15,7 +15,8 @@ namespace ui
 {
 
 /*
-        gdata(750 - 760) => tracked skills (ctrl +f for [TRACKING])
+        game_data.tracked_skills(0 - 10) => tracked skills
+        (ctrl +f for [TRACKING])
 */
 
 static void _trainer_get_gainable_skills()
@@ -1118,7 +1119,7 @@ static void _draw_skill_name(int cnt, int skill_id)
          cnt < (elona::Config::instance().allow_enhanced_skill ? 10 : 3);
          ++cnt)
     {
-        if (gdata(750 + cnt) == cc * 10000 + skill_id)
+        if (game_data.tracked_skills.at(cnt) == cc * 10000 + skill_id)
         {
             skill_name = u8"*"s + skill_name;
         }
@@ -1280,24 +1281,24 @@ void UIMenuCharacterSheet::draw()
 
 static void _track_skill(int skill_id)
 {
-    int gdata_index = 750;
+    int tracked_skill_index = 0;
     int max_tracked_skills =
         elona::Config::instance().allow_enhanced_skill ? 10 : 3;
 
-    for (int cnt = 750; cnt < 750 + max_tracked_skills; ++cnt)
+    for (int cnt = 0; cnt < max_tracked_skills; ++cnt)
     {
-        if (gdata(cnt) % 10000 == 0)
+        if (game_data.tracked_skills.at(cnt) % 10000 == 0)
         {
-            gdata_index = cnt;
+            tracked_skill_index = cnt;
         }
-        if (gdata(cnt) == cc * 10000 + skill_id)
+        if (game_data.tracked_skills.at(cnt) == cc * 10000 + skill_id)
         {
-            gdata_index = cnt;
+            tracked_skill_index = cnt;
             skill_id = 0;
             break;
         }
     }
-    gdata(gdata_index) = cc * 10000 + skill_id;
+    game_data.tracked_skills.at(tracked_skill_index) = cc * 10000 + skill_id;
     snd(20);
 }
 

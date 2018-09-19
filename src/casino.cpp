@@ -414,19 +414,23 @@ void casino_random_site()
         if (mdata_map_type == mdata_t::MapType::world_map)
         {
             atxlv = cdata.player().level;
-            if (4 <= gdata(62) && gdata(62) < 9)
+            if (4 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 9)
             {
                 atxid(1) = 2;
             }
-            if (264 <= gdata(62) && gdata(62) < 363)
+            if (264 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 363)
             {
                 atxid(1) = 3;
             }
-            if (9 <= gdata(62) && gdata(62) < 13)
+            if (9 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 13)
             {
                 atxid(1) = 2;
             }
-            if (13 <= gdata(62) && gdata(62) < 17)
+            if (13 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 17)
             {
                 atxid(1) = 3;
             }

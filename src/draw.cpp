@@ -299,7 +299,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
             {
                 for (int i = 0; i < 10; ++i)
                 {
-                    if (gdata(750 + i) % 10000 != 0)
+                    if (game_data.tracked_skills.at(i) % 10000 != 0)
                     {
                         y += 16;
                     }
@@ -431,7 +431,7 @@ void show_damage_popups()
         }
 
         const auto& cc = cdata[damage_popup.character];
-        if (gdata(20) != 40)
+        if (game_data.current_map != mdata_t::MapId::pet_arena)
         {
             if (!is_in_fov(cc.position))
             {

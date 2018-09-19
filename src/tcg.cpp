@@ -1674,7 +1674,7 @@ void calcdomain()
 void calcdecksize()
 {
     int cardsize_at_tcg = 0;
-    gdata(830 + curdeck) = 0;
+    game_data.tcg_decks.at(curdeck) = 0;
     cardsize_at_tcg = 0;
     cpdata_at_tcg(9, 0) = 0;
     DIM2(domain_at_tcg, 5);
@@ -1685,7 +1685,7 @@ void calcdecksize()
         {
             continue;
         }
-        gdata(830 + curdeck) += deck(card_at_tcg(18, cnt));
+        game_data.tcg_decks.at(curdeck) += deck(card_at_tcg(18, cnt));
         domain_at_tcg(card_at_tcg(23, cnt)) = 1;
     }
     for (int cnt = 0; cnt < 5; ++cnt)
@@ -1740,12 +1740,12 @@ void tcgdeck()
             }
             else
             {
-                if (gdata(830 + cnt) != 30)
+                if (game_data.tcg_decks.at(cnt) != 30)
                 {
-                    s_at_tcg(cnt) +=
-                        u8" (NG "s + gdata((830 + cnt)) + u8"/"s + 30 + u8")"s;
+                    s_at_tcg(cnt) += u8" (NG "s + game_data.tcg_decks.at(cnt)
+                        + u8"/"s + 30 + u8")"s;
                 }
-                if (gdata(813) == cnt)
+                if (game_data.tcg_used_deck == cnt)
                 {
                     s_at_tcg(cnt) += u8" [Use]"s;
                 }
@@ -1778,7 +1778,7 @@ void tcgdeck()
             }
             if (rtval == 1)
             {
-                gdata(813) = curdeck;
+                game_data.tcg_used_deck = curdeck;
                 continue;
             }
             if (rtval == 0)
@@ -1788,7 +1788,7 @@ void tcgdeck()
                     filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
             }
         }
-        decksizebk_at_tcg = gdata(830 + curdeck);
+        decksizebk_at_tcg = game_data.tcg_decks.at(curdeck);
         snd(95);
         calcdecksize();
         deckmode_at_tcg(0) = 0;
@@ -2323,7 +2323,7 @@ void tcg_draw_deck_editor()
         pos(basex_at_tcg + 40, basey_at_tcg + 52);
         mes(u8"Deck\n Editor"s);
         color(0, 0, 0);
-        if (gdata(830 + curdeck) != 30)
+        if (game_data.tcg_decks.at(curdeck) != 30)
         {
             color(255, 100, 100);
         }
@@ -2332,7 +2332,7 @@ void tcg_draw_deck_editor()
             color(100, 255, 100);
         }
         pos(basex_at_tcg + 24, basey_at_tcg + 120);
-        mes(u8"Deck "s + gdata((830 + curdeck)) + u8"/"s + 30);
+        mes(u8"Deck "s + game_data.tcg_decks.at(curdeck) + u8"/"s + 30);
         color(0, 0, 0);
         color(215, 215, 215);
         pos(basex_at_tcg + 24, basey_at_tcg + 140);
@@ -2657,7 +2657,7 @@ label_1830_internal:
             }
             else
             {
-                gdata(830 + curdeck) = decksizebk_at_tcg;
+                game_data.tcg_decks.at(curdeck) = decksizebk_at_tcg;
             }
             if (rtval == -1)
             {

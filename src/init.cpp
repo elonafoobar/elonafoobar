@@ -140,7 +140,6 @@ void load_character_sprite()
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
     SDIM1(untaglist);
-    gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
 
     pos(0, 0);
@@ -713,7 +712,6 @@ void initialize_elona()
     load_random_name_table();
     load_random_title_table();
     game_data.random_seed = rnd(800) + 2;
-    gdata(9) = rnd(200) + 2;
     set_item_info();
     clear_trait_data();
     initialize_rankn();
@@ -910,19 +908,15 @@ void initialize_debug_globals()
 {
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        gdata(120 + cnt) = 5000;
+        game_data.ranks.at(cnt) = 5000;
     }
     game_data.version = 1220;
-    gdata(41) = 424;
-    gdata(42) = 300;
-    gdata(43) = 631;
     game_data.next_inventory_serial_id = 1000;
     game_data.next_shelter_serial_id = 100;
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
     game_data.previous_map = -1;
     game_data.random_seed = rnd(800) + 2;
-    gdata(9) = rnd(200) + 2;
     game_data.current_map = static_cast<int>(mdata_t::MapId::north_tyris);
     game_data.current_dungeon_level = 0;
     game_data.entrance_type = 7;
@@ -946,7 +940,8 @@ void initialize_debug_globals()
     game_data.played_scene = 50;
     game_data.has_not_been_to_vernis = 1;
     area_data[7].outer_map = 4;
-    gdata(850) = area_data[game_data.current_map].outer_map;
+    game_data.destination_outer_map =
+        area_data[game_data.current_map].outer_map;
     game_data.acquirable_feat_count = 2;
     game_data.quest_flags.save_count_of_little_sister = 1000;
     game_data.rights_to_succeed_to = 1000;
@@ -988,7 +983,7 @@ void initialize_world()
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
     game_data.previous_map = -1;
-    gdata(850) = 4;
+    game_data.destination_outer_map = 4;
     ghelp = 1;
     game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
     game_data.current_dungeon_level = 1;
@@ -998,9 +993,9 @@ void initialize_world()
     initialize_adata();
     game_data.weather = 3;
     game_data.hours_until_weather_changes = 6;
-    for (int cnt = 0; cnt < 20; ++cnt)
+    for (int cnt = 0; cnt < 9; ++cnt)
     {
-        gdata(120 + cnt) = 10000;
+        game_data.ranks.at(cnt) = 10000;
     }
 }
 
