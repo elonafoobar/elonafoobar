@@ -2506,12 +2506,28 @@ TurnResult do_use_command()
         txtnew();
         txt(i18n::s.get("core.locale.action.use.gene_machine.choose_subject"));
         {
-            int stat = ctrl_ally(ControlAllyOperation::gene_engineer);
-            if (stat == -1)
+            int chara;
+            while (true)
+            {
+                chara = ctrl_ally(ControlAllyOperation::gene_engineer);
+                if (chara == -1)
+                {
+                    break;
+                }
+                if (cdata[chara].has_been_used_stethoscope())
+                {
+                    txt(i18n::s.get(
+                        "core.locale.action.use.gene_machine.precious_ally",
+                        cdata[chara]));
+                    continue;
+                }
+                break;
+            }
+            if (chara == -1)
             {
                 return TurnResult::turn_end;
             }
-            tc = stat;
+            tc = chara;
         }
         update_screen();
         txtnew();
