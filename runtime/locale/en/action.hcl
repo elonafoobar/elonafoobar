@@ -719,5 +719,9 @@ locale {
                 }
             }
         }
+
+        autopick {
+            reloaded_autopick_file = "Reloaded autopick file."
+        }
     }
 }

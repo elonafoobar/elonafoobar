@@ -4,6 +4,7 @@
 #include "ai.hpp"
 #include "area.hpp"
 #include "audio.hpp"
+#include "autopick.hpp"
 #include "buff.hpp"
 #include "building.hpp"
 #include "character.hpp"
@@ -1704,6 +1705,16 @@ label_2747:
         }
         return do_debug_console();
     }
+
+    if (key_shift
+        && snail::Input::instance().is_pressed(
+               snail::Key::backspace, Config::instance().wait1))
+    {
+        Autopick::instance().load(playerid);
+        txt(i18n::s.get("core.locale.action.autopick.reloaded_autopick_file"));
+        goto label_2747;
+    }
+
     if (key == ""s)
     {
         goto label_2747;
