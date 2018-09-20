@@ -2313,7 +2313,7 @@ label_1741_internal:
             p = rnd(3) + 5;
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
             {
-                flt(qdata(5, rq), Quality::great);
+                flt(quest_data[rq].difficulty, Quality::great);
                 int stat = chara_create(
                     -1,
                     0,
@@ -3385,9 +3385,9 @@ label_1744_internal:
              cnt < cnt_end;
              ++cnt)
         {
-            if (qdata(3, cnt) == 1007)
+            if (quest_data[cnt].id == 1007)
             {
-                if (qdata(8, cnt) == 1)
+                if (quest_data[cnt].progress == 1)
                 {
                     int cnt2 = cnt;
                     for (int cnt = 0; cnt < 16; ++cnt)
@@ -3396,9 +3396,10 @@ label_1744_internal:
                         {
                             if (cdata[cnt].state() == Character::State::alive)
                             {
-                                if (cdata[cnt].id == qdata(13, cnt2))
+                                if (cdata[cnt].id
+                                    == quest_data[cnt2].extra_info_2)
                                 {
-                                    if (qdata(12, cnt2)
+                                    if (quest_data[cnt2].extra_info_1
                                         == game_data.current_map)
                                     {
                                         event_add(16, cnt2, cnt);
@@ -3520,19 +3521,19 @@ label_1744_internal:
             txt(i18n::s.get(
                 "core.locale.map.quest.on_enter.party",
                 game_data.left_minutes_of_executing_quest,
-                qdata(12, game_data.executing_immediate_quest)));
+                quest_data.immediate().extra_info_1));
         }
         if (game_data.executing_immediate_quest_type == 1006)
         {
-            if (qdata(12, game_data.executing_immediate_quest) <= 0)
+            if (quest_data.immediate().extra_info_1 <= 0)
             {
-                qdata(12, game_data.executing_immediate_quest) = 15000;
-                qdata(6, game_data.executing_immediate_quest) = 400;
+                quest_data.immediate().extra_info_1 = 15000;
+                quest_data.immediate().reward_gold = 400;
             }
             txtef(9);
             txt(i18n::s.get(
                 "core.locale.map.quest.on_enter.harvest",
-                cnvweight(qdata(12, game_data.executing_immediate_quest)),
+                cnvweight(quest_data.immediate().extra_info_1),
                 game_data.left_minutes_of_executing_quest));
         }
         if (game_data.executing_immediate_quest_type == 1008)
@@ -3540,7 +3541,7 @@ label_1744_internal:
             txtef(9);
             txt(i18n::s.get(
                 "core.locale.map.quest.on_enter.conquer",
-                chara_refstr(qdata(12, game_data.executing_immediate_quest), 2),
+                chara_refstr(quest_data.immediate().extra_info_1, 2),
                 game_data.left_minutes_of_executing_quest));
         }
     }

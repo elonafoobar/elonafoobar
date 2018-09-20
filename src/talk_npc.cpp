@@ -1384,7 +1384,7 @@ TalkResult talk_guard_where_is(int chatval_)
 
 TalkResult talk_accepted_quest()
 {
-    if (qdata(3, rq) == 1001 || qdata(3, rq) == 1010)
+    if (quest_data[rq].id == 1001 || quest_data[rq].id == 1010)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -1403,7 +1403,7 @@ TalkResult talk_accepted_quest()
             }
         }
     }
-    if (qdata(3, rq) == 1006)
+    if (quest_data[rq].id == 1006)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -1422,7 +1422,7 @@ TalkResult talk_accepted_quest()
             }
         }
     }
-    if (qdata(3, rq) == 1009)
+    if (quest_data[rq].id == 1009)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -1441,8 +1441,9 @@ TalkResult talk_accepted_quest()
             }
         }
     }
-    game_data.executing_immediate_quest_type = qdata(3, rq);
-    game_data.executing_immediate_quest_show_hunt_remain = qdata(14, rq);
+    game_data.executing_immediate_quest_type = quest_data[rq].id;
+    game_data.executing_immediate_quest_show_hunt_remain =
+        quest_data[rq].client_chara_type;
     game_data.executing_immediate_quest = rq;
     game_data.executing_immediate_quest_status = 1;
     game_data.previous_map2 = game_data.current_map;
@@ -1610,7 +1611,7 @@ TalkResult talk_finish_escort()
 
 TalkResult talk_quest_giver()
 {
-    if (qdata(8, rq) == 1)
+    if (quest_data[rq].progress == 1)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.quest_giver.about.during", cdata[tc]);
@@ -1635,11 +1636,11 @@ TalkResult talk_quest_giver()
              cnt < cnt_end;
              ++cnt)
         {
-            if (qdata(3, cnt) == 0)
+            if (quest_data[cnt].id == 0)
             {
                 continue;
             }
-            if (qdata(8, cnt) != 0)
+            if (quest_data[cnt].progress != 0)
             {
                 ++p;
             }
@@ -1662,13 +1663,13 @@ TalkResult talk_quest_giver()
                     ++f;
                 }
             }
-            if (qdata(8, p) == 0 || f > 1)
+            if (quest_data[p].progress == 0 || f > 1)
             {
                 game_data.taken_quests.at(cnt) = rq;
                 break;
             }
         }
-        if (qdata(3, rq) == 1002)
+        if (quest_data[rq].id == 1002)
         {
             if (inv_getfreeid(0) == -1)
             {
@@ -1678,7 +1679,7 @@ TalkResult talk_quest_giver()
                 return TalkResult::talk_npc;
             }
         }
-        if (qdata(3, rq) == 1007)
+        if (quest_data[rq].id == 1007)
         {
             f = chara_get_free_slot_ally();
             if (f == 0)
@@ -1698,7 +1699,7 @@ TalkResult talk_quest_giver()
                 {
                     dbid = 0;
                 }
-                flt(qdata(5, rq) + cnt, Quality::bad);
+                flt(quest_data[rq].difficulty + cnt, Quality::bad);
                 fltn(u8"man"s);
                 int stat = chara_create(56, dbid, -3, 0);
                 f = stat;
@@ -1728,22 +1729,23 @@ TalkResult talk_quest_giver()
             rc = 56;
             new_ally_joins();
             cdata[rc].is_escorted() = true;
-            qdata(13, rq) = cdata[rc].id;
+            quest_data[rq].extra_info_2 = cdata[rc].id;
         }
-        qdata(8, rq) = 1;
-        if (qdata(9, rq) == -1)
+        quest_data[rq].progress = 1;
+        if (quest_data[rq].deadline_days == -1)
         {
             return talk_accepted_quest();
         }
         buff = i18n::s.get(
             "core.locale.talk.npc.quest_giver.about.thanks", cdata[tc]);
-        if (qdata(3, rq) == 1002)
+        if (quest_data[rq].id == 1002)
         {
-            ++qdata(15, qdata(10, rq));
+            ++quest_data[quest_data[rq].target_chara_index]
+                  .delivery_has_package_flag;
             flt();
             itemcreate(
                 0,
-                qdata(11, rq),
+                quest_data[rq].target_item_id,
                 cdata.player().position.x,
                 cdata.player().position.y,
                 0);
@@ -2150,9 +2152,9 @@ TalkResult talk_npc()
              cnt < cnt_end;
              ++cnt)
         {
-            if (qdata(1, cnt) == game_data.current_map)
+            if (quest_data[cnt].originating_map_id == game_data.current_map)
             {
-                if (qdata(0, cnt) == tc)
+                if (quest_data[cnt].client_chara_index == tc)
                 {
                     rq = cnt;
                     f = 1;
@@ -2167,19 +2169,19 @@ TalkResult talk_npc()
              cnt < cnt_end;
              ++cnt)
         {
-            if (qdata(3, cnt) == 0)
+            if (quest_data[cnt].id == 0)
             {
                 continue;
             }
-            if (qdata(8, cnt) != 1)
+            if (quest_data[cnt].progress != 1)
             {
                 continue;
             }
-            if (qdata(14, cnt) == 2)
+            if (quest_data[cnt].client_chara_type == 2)
             {
-                if (qdata(10, cnt) == rq)
+                if (quest_data[cnt].target_chara_index == rq)
                 {
-                    p = qdata(11, cnt);
+                    p = quest_data[cnt].target_item_id;
                     deliver = cnt;
                     for (const auto& cnt : items(0))
                     {
@@ -2196,12 +2198,14 @@ TalkResult talk_npc()
                 }
             }
         }
-        if (qdata(8, rq) == 3)
+        if (quest_data[rq].progress == 3)
         {
             quest_set_data(3);
             quest_complete();
         }
-        else if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
+        else if (
+            quest_data[rq].client_chara_type == 3
+            && quest_data[rq].progress == 1)
         {
             supply = -1;
             for (const auto& cnt : items(0))
@@ -2214,13 +2218,14 @@ TalkResult talk_npc()
                 {
                     continue;
                 }
-                if (qdata(3, rq) == 1003)
+                if (quest_data[rq].id == 1003)
                 {
                     if (the_item_db[inv[cnt].id]->category == 57000)
                     {
-                        if (inv[cnt].param1 / 1000 == qdata(12, rq))
+                        if (inv[cnt].param1 / 1000
+                            == quest_data[rq].extra_info_1)
                         {
-                            if (inv[cnt].param2 == qdata(13, rq))
+                            if (inv[cnt].param2 == quest_data[rq].extra_info_2)
                             {
                                 supply = cnt;
                                 break;
@@ -2228,9 +2233,9 @@ TalkResult talk_npc()
                         }
                     }
                 }
-                if (qdata(3, rq) == 1004 || qdata(3, rq) == 1011)
+                if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (inv[cnt].id == qdata(11, rq))
+                    if (inv[cnt].id == quest_data[rq].target_item_id)
                     {
                         supply = cnt;
                         break;
@@ -2253,7 +2258,7 @@ TalkResult talk_npc()
                                 "about_the_work"));
             }
         }
-        else if (qdata(3, rq) != 0)
+        else if (quest_data[rq].id != 0)
         {
             ELONA_APPEND_RESPONSE(
                 24,

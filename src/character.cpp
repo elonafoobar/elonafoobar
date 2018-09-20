@@ -993,7 +993,7 @@ void chara_set_generation_filter()
     {
         if (game_data.executing_immediate_quest_type >= 1000)
         {
-            flt(calcobjlv(qdata(5, game_data.executing_immediate_quest) + 1),
+            flt(calcobjlv(quest_data.immediate().difficulty + 1),
                 calcfixlv(Quality::bad));
         }
         if (game_data.executing_immediate_quest_type == 1006)

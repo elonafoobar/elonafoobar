@@ -11,6 +11,7 @@
 #include "lua_env/lua_env.hpp"
 #include "mef.hpp"
 #include "putit.hpp"
+#include "quest.hpp"
 #include "variables.hpp"
 
 using namespace elona;
@@ -639,10 +640,12 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load_v2(filepath, qdata, 0, 20, 0, 500);
+                quest_data.unpack_from(qdata);
             }
         }
         else
         {
+            quest_data.pack_to(qdata);
             save_v2(filepath, qdata, 0, 20, 0, 500);
         }
     }

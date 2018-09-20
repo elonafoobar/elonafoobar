@@ -2823,11 +2823,11 @@ void proc_turn_end(int cc)
     else if (cdata[cc].related_quest_id != 0)
     {
         p = cdata[cc].related_quest_id - 1;
-        if (qdata(15, p) > 0)
+        if (quest_data[p].delivery_has_package_flag > 0)
         {
             cdata[cc].emotion_icon = 122;
         }
-        if (qdata(8, p) != 0)
+        if (quest_data[p].progress != 0)
         {
             if (cdata[cc].turn % 2 == 1)
             {
@@ -6655,7 +6655,7 @@ void map_proc_special_events()
     }
     if (game_data.executing_immediate_quest_type == 1008)
     {
-        if (qdata(8, game_data.executing_immediate_quest) != 3)
+        if (quest_data.immediate().progress != 3)
         {
             if (game_data.crowd_density
                 < game_data.left_minutes_of_executing_quest / 60)
@@ -6680,7 +6680,7 @@ void map_proc_special_events()
                         cdata[rc].original_relationship = -1;
                         cdata[rc].hate = 100;
                         cdata[rc].enemy_id =
-                            qdata(13, game_data.executing_immediate_quest);
+                            quest_data.immediate().extra_info_2;
                     }
                 }
             }
@@ -12496,17 +12496,17 @@ TurnResult proc_movement_event()
                     for (int cnt = 0; cnt < 5; ++cnt)
                     {
                         rq = game_data.taken_quests.at(cnt);
-                        if (qdata(3, rq) == 1007)
+                        if (quest_data[rq].id == 1007)
                         {
-                            if (qdata(8, rq) == 1)
+                            if (quest_data[rq].progress == 1)
                             {
-                                if (qdata(4, rq) == 0)
+                                if (quest_data[rq].escort_difficulty == 0)
                                 {
-                                    if (qdata(10, rq) < 2)
+                                    if (quest_data[rq].target_chara_index < 2)
                                     {
                                         encounter = 3;
                                         encounterref = rq;
-                                        ++qdata(10, rq);
+                                        ++quest_data[rq].target_chara_index;
                                         break;
                                     }
                                 }

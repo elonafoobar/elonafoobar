@@ -16,6 +16,7 @@
 #include "item.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
+#include "quest.hpp"
 #include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -1824,17 +1825,15 @@ label_2061_internal:
                 }
                 else
                 {
-                    qdata(13, game_data.executing_immediate_quest) +=
+                    quest_data.immediate().extra_info_2 +=
                         inv[ci].weight * inv[ci].number();
                     txtef(2);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.harvest",
                         inv[ci],
                         cnvweight(inv[ci].weight * inv[ci].number()),
-                        cnvweight(
-                            qdata(13, game_data.executing_immediate_quest)),
-                        cnvweight(
-                            qdata(12, game_data.executing_immediate_quest))));
+                        cnvweight(quest_data.immediate().extra_info_2),
+                        cnvweight(quest_data.immediate().extra_info_1)));
                 }
                 inv[ci].remove();
                 refresh_burden_state();

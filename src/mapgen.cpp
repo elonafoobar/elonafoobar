@@ -10,6 +10,7 @@
 #include "itemgen.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
+#include "quest.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -2894,8 +2895,7 @@ int initialize_quest_map_party()
         ry = roomy(cnt) + 1;
         rh = roomheight(cnt) - 2;
         rdsize = rw * rh;
-        roomdiff = clamp(
-            rnd(qdata(5, game_data.executing_immediate_quest) / 3 + 3), 0, 9);
+        roomdiff = clamp(rnd(quest_data.immediate().difficulty / 3 + 3), 0, 9);
         if (rnd(2) == 0)
         {
             x = rnd(rw) + rx;
@@ -3063,22 +3063,21 @@ void initialize_quest_map_town()
         game_data.left_minutes_of_executing_quest = 720;
         game_data.executing_immediate_quest_time_left_display_period = 9999;
         flt();
-        initlv = qdata(5, game_data.executing_immediate_quest);
+        initlv = quest_data.immediate().difficulty;
         fixlv = Quality::godly;
-        chara_create(-1, qdata(12, game_data.executing_immediate_quest), -3, 0);
+        chara_create(-1, quest_data.immediate().extra_info_1, -3, 0);
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
-        qdata(13, game_data.executing_immediate_quest) = rc;
+        quest_data.immediate().extra_info_2 = rc;
     }
     if (game_data.executing_immediate_quest_type == 1010)
     {
         for (int cnt = 0, cnt_end = (6 + rnd(4)); cnt < cnt_end; ++cnt)
         {
             flt();
-            initlv = qdata(5, game_data.executing_immediate_quest) * 3 / 2;
+            initlv = quest_data.immediate().difficulty * 3 / 2;
             fixlv = Quality::bad;
-            chara_create(
-                -1, qdata(12, game_data.executing_immediate_quest), -3, 0);
+            chara_create(-1, quest_data.immediate().extra_info_1, -3, 0);
             cdata[rc].relationship = -3;
             cdata[rc].original_relationship = -3;
         }

@@ -10,9 +10,12 @@ struct elona_vector2;
 
 struct Quest
 {
-    int seed;
-    int originating_map_id;
+    /**
+     * 0 if empty.
+     */
+    int client_chara_index;
 
+    int originating_map_id;
 
     int deadline_hours;
 
@@ -43,12 +46,12 @@ struct Quest
     int escort_difficulty;
 
     /**
-     * Used only for hunting quests (hunt, huntex).
+     * For hunting quests, target character level is determined as follows.
      *
      * hunt   - difficulty * 10 / 6
      * huntex - difficulty * 3 / 2
      */
-    int hunt_target_level;
+    int difficulty;
 
     int reward_gold;
 
@@ -79,8 +82,10 @@ struct Quest
 
     /**
      * Target character for quests like "collect" (person bragging about item)
+     *
+     * Also may point to the quest giver.
      */
-    int target_chara_id;
+    int target_chara_index;
 
     /**
      * Used for "deliver", "supply" and "collect".
@@ -158,6 +163,9 @@ struct QuestData
         return quests.at(static_cast<size_t>(i));
     }
 
+
+
+    Quest& immediate();
 
 
     void clear();

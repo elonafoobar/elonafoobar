@@ -12,19 +12,19 @@ namespace ui
 
 static bool _should_display_quest(int cnt)
 {
-    if (qdata(1, cnt) != game_data.current_map)
+    if (quest_data[cnt].originating_map_id != game_data.current_map)
     {
         return false;
     }
-    if (qdata(3, cnt) == 0)
+    if (quest_data[cnt].id == 0)
     {
         return false;
     }
-    if (qdata(8, cnt) != 0)
+    if (quest_data[cnt].progress != 0)
     {
         return false;
     }
-    rc = qdata(0, cnt);
+    rc = quest_data[cnt].client_chara_index;
     if (cdata[rc].state() != Character::State::alive)
     {
         return false;
@@ -44,7 +44,7 @@ static void _populate_quest_list()
         if (_should_display_quest(cnt))
         {
             list(0, listmax) = cnt;
-            list(1, listmax) = qdata(5, cnt);
+            list(1, listmax) = quest_data[cnt].difficulty;
             ++listmax;
         }
     }
@@ -233,7 +233,7 @@ static void _draw_list_entry_desc()
 static void _draw_list_entry(int cnt, int rq, int tc)
 {
     quest_set_data(0);
-    int quest_difficulty = qdata(5, rq) / 5 + 1;
+    int quest_difficulty = quest_data[rq].difficulty / 5 + 1;
     p(1) = 14;
 
     _draw_list_entry_title(cnt, s(3));
@@ -241,7 +241,7 @@ static void _draw_list_entry(int cnt, int rq, int tc)
     _draw_list_entry_giver_name(tc);
 
 
-    _draw_list_entry_difficulty(qdata(5, rq), quest_difficulty);
+    _draw_list_entry_difficulty(quest_data[rq].difficulty, quest_difficulty);
     _draw_list_entry_desc();
 }
 
@@ -258,7 +258,7 @@ static void _draw_list_entries()
         }
 
         rq = list(0, index);
-        tc = qdata(0, rq);
+        tc = quest_data[rq].client_chara_index;
 
         _draw_list_entry(cnt, rq, tc);
     }
