@@ -1,7 +1,9 @@
 #pragma once
 
 #include <array>
+#include <set>
 #include <string>
+#include "../lib/enumutil.hpp"
 #include "../lib/noncopyable.hpp"
 #include "../optional.hpp"
 #include "detail/sdl.hpp"
@@ -247,6 +249,17 @@ enum class Key
     _size,
 };
 
+enum class ModKey
+{
+    none = 0,
+    ctrl = 1 << 0,
+    shift = 1 << 1,
+    gui = 1 << 2,
+    alt = 1 << 3
+};
+
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(ModKey);
+
 inline bool is_modifier(Key k)
 {
     switch (k)
@@ -318,6 +331,8 @@ private:
 class Input final : public lib::noncopyable
 {
 public:
+    typedef std::set<snail::Key> PressedKeys;
+
     bool is_pressed(Key k, int key_wait = 1) const;
     bool is_pressed(Mouse::Button b) const;
     bool was_pressed_just_now(Key k) const;
@@ -328,6 +343,16 @@ public:
     void show_soft_keyboard();
     void hide_soft_keyboard();
     void toggle_soft_keyboard();
+
+    const PressedKeys& pressed_keys() const
+    {
+        return _pressed_key_identifiers;
+    }
+
+    snail::ModKey modifiers() const
+    {
+        return _modifiers;
+    }
 
     const Mouse& mouse() const
     {
@@ -390,6 +415,8 @@ public:
 
 private:
     std::array<KeyState, static_cast<size_t>(Key::_size)> _keys;
+    std::set<snail::Key> _pressed_key_identifiers;
+    snail::ModKey _modifiers;
     std::string _text;
     bool _is_ime_active{};
     bool _needs_restore_numlock{};
