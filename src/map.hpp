@@ -8,7 +8,34 @@ namespace elona
 {
 
 template <typename T>
+struct elona_vector1;
+
+template <typename T>
 struct elona_vector3;
+
+
+
+struct MapData
+{
+    int width{};
+    int height{};
+
+
+    /**
+     * Moves this struct's fields into `mdata` so they can be serialized, for
+     * compatibility. To be called before serializing `mdata`.
+     */
+    void pack_to(elona_vector1<int>& legacy_mdata);
+
+    /**
+     * Moves `mdata` fields into this struct. To be called after deserializing
+     * `mdata`.
+     */
+    void unpack_from(elona_vector1<int>& legacy_mdata);
+
+    void clear();
+};
+
 
 struct Cell
 {
@@ -110,35 +137,6 @@ struct Cell
     void clear();
 };
 
-template <typename T>
-struct elona_vector1;
-
-
-
-struct MapData
-{
-    int width{};
-    int height{};
-
-
-    /**
-     * Moves this struct's fields into `mdata` so they can be serialized, for
-     * compatibility. To be called before serializing `mdata`.
-     */
-    void pack_to(elona_vector1<int>& legacy_mdata);
-
-    /**
-     * Moves `adata` fields into this struct. To be called after deserializing
-     * `adata`.
-     */
-    void unpack_from(elona_vector1<int>& legacy_mdata);
-
-    /**
-     * Clear this Area.
-     */
-    void clear();
-};
-
 struct CellData
 {
     template <typename T>
@@ -185,7 +183,9 @@ private:
     Grid<Cell> cells;
 };
 
+
 extern CellData cell_data;
+extern MapData map_data;
 
 
 void map_reload(const std::string& map_filename);

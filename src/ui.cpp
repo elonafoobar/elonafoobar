@@ -279,8 +279,8 @@ void render_weather_effect()
 
 void draw_minimap_pixel(int x, int y)
 {
-    const auto x2 = 120 * x / mdata_map_width;
-    const auto y2 = 84 * y / mdata_map_height;
+    const auto x2 = 120 * x / map_data.width;
+    const auto y2 = 84 * y / map_data.height;
     pos(inf_radarx + x2, inf_radary + y2);
     gcopy(3, 688 + x2, 528 + y2, raderw, raderh);
 }
@@ -334,9 +334,9 @@ void highlight_characters_in_pet_arena()
 void render_pc_position_in_minimap()
 {
     const auto x =
-        clamp(120 * cdata.player().position.x / mdata_map_width, 2, 112);
+        clamp(120 * cdata.player().position.x / map_data.width, 2, 112);
     const auto y =
-        clamp(84 * cdata.player().position.y / mdata_map_height, 2, 76);
+        clamp(84 * cdata.player().position.y / map_data.height, 2, 76);
 
     raderx = x;
     radery = y;
@@ -347,15 +347,15 @@ void render_pc_position_in_minimap()
 
 void render_stair_positions_in_minimap()
 {
-    for (int y = 0; y < mdata_map_height; ++y)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        for (int x = 0; x < mdata_map_width; ++x)
+        for (int x = 0; x < map_data.width; ++x)
         {
             const auto n = cell_data.at(x, y).feats / 1000 % 100;
             if (n == 10 || n == 11)
             {
-                const auto sx = clamp(120 * x / mdata_map_width, 2, 112);
-                const auto sy = clamp(84 * y / mdata_map_height, 2, 76);
+                const auto sx = clamp(120 * x / map_data.width, 2, 112);
+                const auto sy = clamp(84 * y / map_data.height, 2, 76);
                 draw("minimap_position", inf_radarx + sx, inf_radary + sy);
             }
         }
@@ -1229,9 +1229,9 @@ void screen_txtadv()
 
 void update_minimap()
 {
-    for (int y = 0; y < mdata_map_height; ++y)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        for (int x = 0; x < mdata_map_width; ++x)
+        for (int x = 0; x < map_data.width; ++x)
         {
             if (cell_data.at(x, y).chip_id_memory
                 == cell_data.at(x, y).chip_id_actual)
@@ -1570,13 +1570,13 @@ void update_scrolling_info()
             scy = sy(1) - (inf_screenh - scposy - 1);
         }
     }
-    if (scx + inf_screenw >= mdata_map_width)
+    if (scx + inf_screenw >= map_data.width)
     {
-        scx = mdata_map_width - inf_screenw;
+        scx = map_data.width - inf_screenw;
     }
-    if (scy + inf_screenh >= mdata_map_height)
+    if (scy + inf_screenh >= map_data.height)
     {
-        scy = mdata_map_height - inf_screenh;
+        scy = map_data.height - inf_screenh;
     }
     if (scy < 0)
     {
@@ -1621,7 +1621,7 @@ void update_slight()
     {
         sy = cnt;
         lx = 1 + (Config::instance().scroll == 0);
-        if (sy < 0 || sy >= mdata_map_height)
+        if (sy < 0 || sy >= map_data.height)
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
                  ++cnt)
@@ -1642,7 +1642,7 @@ void update_slight()
         for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end; ++cnt)
         {
             sx = cnt;
-            if (sx < 0 || sx >= mdata_map_width)
+            if (sx < 0 || sx >= map_data.width)
             {
                 slight(lx + 1, ly) += 1;
                 slight(lx - 1, ly) += 8;
@@ -1829,14 +1829,14 @@ void ui_scroll_screen()
 void ui_initialize_minimap()
 {
     gsel(3);
-    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
         {
             sx = cnt;
-            sy(1) = 84 * sy / mdata_map_height;
-            sx(1) = 120 * sx / mdata_map_width;
+            sy(1) = 84 * sy / map_data.height;
+            sx(1) = 120 * sx / map_data.width;
             pos(688 + sx(1), 528 + sy(1));
             gcopy(
                 2,
@@ -1854,8 +1854,8 @@ void ui_initialize_minimap()
     boxf(
         688,
         528,
-        raderw * mdata_map_width,
-        raderh * mdata_map_height,
+        raderw * map_data.width,
+        raderh * map_data.height,
         {255, 255, 255, 10});
     gsel(0);
 }
@@ -1936,17 +1936,17 @@ void event_7_modify_screen()
     {
         y = cnt;
         dy = cnt + evy;
-        if (dy >= mdata_map_height)
+        if (dy >= map_data.height)
         {
-            dy = mdata_map_height;
+            dy = map_data.height;
         }
         for (int cnt = 0, cnt_end = (evscrw); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             dx = cnt + evx;
-            if (dx >= mdata_map_width)
+            if (dx >= map_data.width)
             {
-                dx = mdata_map_width;
+                dx = map_data.width;
             }
             ap = cell_data.at(dx, dy).chip_id_actual;
             pos(x * evtiles, y * evtiles);

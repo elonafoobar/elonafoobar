@@ -1352,8 +1352,8 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
         {
             return 0;
         }
-        if (prm_612 < 0 || prm_613 < 0 || prm_612 >= mdata_map_width
-            || prm_613 >= mdata_map_height)
+        if (prm_612 < 0 || prm_613 < 0 || prm_612 >= map_data.width
+            || prm_613 >= map_data.height)
         {
             return 0;
         }
@@ -1426,8 +1426,8 @@ int breath_list()
                 {
                     continue;
                 }
-                if (tx < 0 || ty < 0 || tx >= mdata_map_width
-                    || ty >= mdata_map_height)
+                if (tx < 0 || ty < 0 || tx >= map_data.width
+                    || ty >= map_data.height)
                 {
                     continue;
                 }
@@ -2156,8 +2156,8 @@ void spillblood(int prm_830, int prm_831, int prm_832)
             dx_at_m136 = prm_830 + rnd(2) - rnd(2);
             dy_at_m136 = prm_831 + rnd(2) - rnd(2);
         }
-        if (dx_at_m136 < 0 || dx_at_m136 >= mdata_map_width || dy_at_m136 < 0
-            || dy_at_m136 >= mdata_map_height)
+        if (dx_at_m136 < 0 || dx_at_m136 >= map_data.width || dy_at_m136 < 0
+            || dy_at_m136 >= map_data.height)
         {
             continue;
         }
@@ -2188,8 +2188,8 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
             dx_at_m136 = prm_833 + rnd(2) - rnd(2);
             dy_at_m136 = prm_834 + rnd(2) - rnd(2);
         }
-        if (dx_at_m136 < 0 || dx_at_m136 >= mdata_map_width || dy_at_m136 < 0
-            || dy_at_m136 >= mdata_map_height)
+        if (dx_at_m136 < 0 || dx_at_m136 >= map_data.width || dy_at_m136 < 0
+            || dy_at_m136 >= map_data.height)
         {
             continue;
         }
@@ -5251,9 +5251,9 @@ void prepare_charas_for_map_unload()
 void save_map_local_data()
 {
     prepare_charas_for_map_unload();
-    for (int y = 0; y < mdata_map_height; ++y)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        for (int x = 0; x < mdata_map_width; ++x)
+        for (int x = 0; x < map_data.width; ++x)
         {
             cell_data.at(x, y).blood_and_fragments = 0;
         }
@@ -5284,12 +5284,11 @@ void map_proc_regen_and_update()
         {
             if (mdata_map_next_regenerate_date != 0)
             {
-                for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end;
+                for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end;
                      ++cnt)
                 {
                     y = cnt;
-                    for (int cnt = 0, cnt_end = (mdata_map_width);
-                         cnt < cnt_end;
+                    for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end;
                          ++cnt)
                     {
                         if (cell_data.at(cnt, y).feats != 0)
@@ -5352,7 +5351,7 @@ void map_proc_regen_and_update()
                     }
                 }
             }
-            p = rnd(mdata_map_height * mdata_map_width / 400 + 3);
+            p = rnd(map_data.height * map_data.width / 400 + 3);
             if (mdata_map_type == mdata_t::MapType::world_map)
             {
                 p = rnd(40);
@@ -5405,11 +5404,10 @@ void map_proc_regen_and_update()
         }
         if (mdata_map_should_regenerate == 0)
         {
-            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end;
-                 ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
+                for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end;
                      ++cnt)
                 {
                     if (cell_data.at(cnt, y).feats != 0)
@@ -5607,8 +5605,8 @@ int initialize_world_map()
     }
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        cxinit = rnd(mdata_map_width);
-        cyinit = rnd(mdata_map_height);
+        cxinit = rnd(map_data.width);
+        cyinit = rnd(map_data.height);
         place_random_nefias();
     }
     map_global_prepare();
@@ -5721,11 +5719,11 @@ void map_global_place_entrances()
             continue;
         }
         if (area_data[cnt].position.x <= 0 || area_data[cnt].position.y <= 0
-            || area_data[cnt].position.x >= mdata_map_width
-            || area_data[cnt].position.y >= mdata_map_height)
+            || area_data[cnt].position.x >= map_data.width
+            || area_data[cnt].position.y >= map_data.height)
         {
-            area_data[cnt].position.x = mdata_map_width / 2;
-            area_data[cnt].position.y = mdata_map_height / 2;
+            area_data[cnt].position.x = map_data.width / 2;
+            area_data[cnt].position.y = map_data.height / 2;
         }
         p = cnt;
         if (chipm(
@@ -5741,12 +5739,12 @@ void map_global_place_entrances()
         {
             for (int cnt = 0;; ++cnt)
             {
-                dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
-                dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
+                dx = clamp(rnd(cnt / 4 + 1) + 1, 1, map_data.width);
+                dy = clamp(rnd(cnt / 4 + 1) + 1, 1, map_data.height);
                 x = area_data[p].position.x + rnd(dx(0)) - rnd(dx(0));
                 y = area_data[p].position.y + rnd(dy) - rnd(dy);
-                if (x <= 0 || y <= 0 || x >= mdata_map_width - 1
-                    || y >= mdata_map_height - 1)
+                if (x <= 0 || y <= 0 || x >= map_data.width - 1
+                    || y >= map_data.height - 1)
                 {
                     continue;
                 }
@@ -5788,10 +5786,10 @@ void map_global_place_entrances()
 
 void map_clear_material_spots_and_light()
 {
-    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             cell_featread(x, y);
@@ -6540,8 +6538,8 @@ int place_random_nefias()
         {
             x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
             y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
-            if (x <= 5 || y <= 5 || x >= mdata_map_width - 6
-                || y >= mdata_map_height - 6)
+            if (x <= 5 || y <= 5 || x >= map_data.width - 6
+                || y >= map_data.height - 6)
             {
                 continue;
             }
@@ -6728,21 +6726,21 @@ void map_proc_special_events()
         {
             ++game_data.quest_flags.duration_of_kamikaze_attack;
             x = 1;
-            y = rnd(mdata_map_height);
+            y = rnd(map_data.height);
             if (rnd(4) == 0)
             {
-                x = mdata_map_width - 2;
-                y = rnd(mdata_map_height);
+                x = map_data.width - 2;
+                y = rnd(map_data.height);
             }
             if (rnd(5) == 0)
             {
-                x = rnd(mdata_map_width);
+                x = rnd(map_data.width);
                 y = 1;
             }
             if (rnd(6) == 0)
             {
-                x = rnd(mdata_map_width);
-                y = mdata_map_height - 2;
+                x = rnd(map_data.width);
+                y = map_data.height - 2;
             }
             p = 237;
             if (game_data.quest_flags.duration_of_kamikaze_attack > 50)
@@ -8247,21 +8245,21 @@ int target_position()
                 {
                     cdata.player().position.x = 0;
                 }
-                else if (cdata.player().position.x >= mdata_map_width)
+                else if (cdata.player().position.x >= map_data.width)
                 {
-                    cdata.player().position.x = mdata_map_width - 1;
+                    cdata.player().position.x = map_data.width - 1;
                 }
                 if (cdata.player().position.y < 0)
                 {
                     cdata.player().position.y = 0;
                 }
-                else if (cdata.player().position.y >= mdata_map_height)
+                else if (cdata.player().position.y >= map_data.height)
                 {
-                    cdata.player().position.y = mdata_map_height - 1;
+                    cdata.player().position.y = map_data.height - 1;
                 }
             }
-            tlocx = clamp(tx + scx, 0, mdata_map_width - 1);
-            tlocy = clamp(ty + scy, 0, mdata_map_height - 1);
+            tlocx = clamp(tx + scx, 0, map_data.width - 1);
+            tlocy = clamp(ty + scy, 0, map_data.height - 1);
         }
         else
         {
@@ -8270,8 +8268,8 @@ int target_position()
             {
                 x = tlocx + kdx;
                 y = tlocy + kdy;
-                if (x >= 0 && y >= 0 && x < mdata_map_width
-                    && y < mdata_map_height)
+                if (x >= 0 && y >= 0 && x < map_data.width
+                    && y < map_data.height)
                 {
                     tlocx += kdx;
                     tlocy += kdy;
@@ -9244,8 +9242,8 @@ void initialize_map_adjust_spawns()
     {
         if (cnt.state() == Character::State::alive)
         {
-            if (cnt.position.x < 0 || cnt.position.x >= mdata_map_width
-                || cnt.position.y < 0 || cnt.position.y >= mdata_map_height)
+            if (cnt.position.x < 0 || cnt.position.x >= map_data.width
+                || cnt.position.y < 0 || cnt.position.y >= map_data.height)
             {
                 cnt.position.x = 0;
                 cnt.position.y = 0;
@@ -9802,7 +9800,7 @@ label_2128_internal:
     }
     if (key != ""s)
     {
-        if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
+        if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
         {
             x = cdata.player().position.x;
             y = cdata.player().position.y;
@@ -10055,10 +10053,9 @@ label_21451_internal:
                     }
                     for (int cnt = 0; cnt < 200; ++cnt)
                     {
-                        cdata[cc].next_position.x =
-                            rnd(mdata_map_width - 2) + 1;
+                        cdata[cc].next_position.x = rnd(map_data.width - 2) + 1;
                         cdata[cc].next_position.y =
-                            rnd(mdata_map_height - 2) + 1;
+                            rnd(map_data.height - 2) + 1;
                         cell_check(
                             cdata[cc].next_position.x,
                             cdata[cc].next_position.y);
@@ -12209,7 +12206,7 @@ TurnResult do_bash()
                 inv[ci].image = 592;
                 cell_refresh(x, y);
             }
-            if (y + 1 < mdata_map_height)
+            if (y + 1 < map_data.height)
             {
                 if ((chipm(7, cell_data.at(x, y + 1).chip_id_actual) & 4) == 0)
                 {
@@ -13254,8 +13251,8 @@ void open_new_year_gift()
             {
                 tlocx = cdata.player().position.x + rnd(3) - rnd(3);
                 tlocy = cdata.player().position.y - rnd(3) + rnd(3);
-                if (tlocx < 0 || tlocx >= mdata_map_width || tlocy < 0
-                    || tlocy >= mdata_map_height)
+                if (tlocx < 0 || tlocx >= map_data.width || tlocy < 0
+                    || tlocy >= map_data.height)
                 {
                     continue;
                 }

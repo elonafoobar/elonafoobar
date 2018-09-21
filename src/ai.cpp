@@ -448,11 +448,11 @@ TurnResult proc_npc_movement_event(bool retreat)
             {
                 if (x >= 0)
                 {
-                    if (x < mdata_map_width)
+                    if (x < map_data.width)
                     {
                         if (y >= 0)
                         {
-                            if (y < mdata_map_height)
+                            if (y < map_data.height)
                             {
                                 if (chipm(7, cell_data.at(x, y).chip_id_actual)
                                     & 4)

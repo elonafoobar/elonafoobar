@@ -445,11 +445,11 @@ void continuous_action_perform()
                                     x = clamp(
                                         cdata[cc].position.x - 1 + rnd(3),
                                         0,
-                                        mdata_map_width - 1);
+                                        map_data.width - 1);
                                     y = clamp(
                                         cdata[cc].position.y - 1 + rnd(3),
                                         0,
-                                        mdata_map_height - 1);
+                                        map_data.height - 1);
                                     cell_check(x, y);
                                     if (cellaccess == 0)
                                     {

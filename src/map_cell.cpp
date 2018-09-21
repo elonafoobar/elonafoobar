@@ -80,8 +80,8 @@ void cell_check(int prm_603, int prm_604)
     cellaccess = 1;
     cellchara = -1;
     cellfeat = -1;
-    if (prm_603 < 0 || prm_603 >= mdata_map_width || prm_604 < 0
-        || prm_604 >= mdata_map_height)
+    if (prm_603 < 0 || prm_603 >= map_data.width || prm_604 < 0
+        || prm_604 >= map_data.height)
     {
         cellaccess = 0;
         return;
@@ -237,14 +237,14 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
     for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
     {
         dy_at_m130 = prm_797 + cnt - 1;
-        if (dy_at_m130 < 0 || dy_at_m130 >= mdata_map_height)
+        if (dy_at_m130 < 0 || dy_at_m130 >= map_data.height)
         {
             continue;
         }
         for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
         {
             dx_at_m130 = prm_796 + cnt - 1;
-            if (dx_at_m130 < 0 || dx_at_m130 >= mdata_map_width)
+            if (dx_at_m130 < 0 || dx_at_m130 >= map_data.width)
             {
                 continue;
             }

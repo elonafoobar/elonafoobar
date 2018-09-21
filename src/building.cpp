@@ -645,7 +645,7 @@ void prompt_hiring()
 void fill_tile(int x, int y, int from, int to)
 {
     // out of range
-    if (x < 0 || mdata_map_width <= x || y < 0 || mdata_map_height <= y)
+    if (x < 0 || map_data.width <= x || y < 0 || map_data.height <= y)
         return;
 
     if (cell_data.at(x, y).chip_id_actual != from)
@@ -1219,10 +1219,10 @@ void show_shop_log()
 void update_shop()
 {
     mdata_map_max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
-    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
         {
             cell_data.at(cnt, y).item_appearances_actual = 0;
             cell_data.at(cnt, y).light = 0;
@@ -1236,7 +1236,7 @@ void update_shop()
         }
         x = inv[cnt].position.x;
         y = inv[cnt].position.y;
-        if (x < 0 || x >= mdata_map_width || y < 0 || y >= mdata_map_height)
+        if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
         {
             continue;
         }

@@ -1,7 +1,5 @@
 #pragma once
 
-#define mdata_map_width mdata(0)
-#define mdata_map_height mdata(1)
 #define mdata_map_atlas_number mdata(2)
 #define mdata_map_next_regenerate_date mdata(3)
 #define mdata_map_stair_down_pos mdata(4)

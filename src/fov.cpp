@@ -38,10 +38,10 @@ bool is_in_fov(const Character& cc)
 
 int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
-    if (prm_629 < 0 || mdata_map_width <= prm_629 || prm_630 < 0
-        || mdata_map_height <= prm_630 || prm_631 < 0
-        || mdata_map_width <= prm_631 || prm_632 < 0
-        || mdata_map_height <= prm_632)
+    if (prm_629 < 0 || map_data.width <= prm_629 || prm_630 < 0
+        || map_data.height <= prm_630 || prm_631 < 0
+        || map_data.width <= prm_631 || prm_632 < 0
+        || map_data.height <= prm_632)
     {
         // Out of range
         return 0;

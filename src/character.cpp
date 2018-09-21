@@ -147,7 +147,7 @@ bool is_in_map(const Position& position)
 {
     const auto x = position.x;
     const auto y = position.y;
-    return 0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height;
+    return 0 <= x && x < map_data.width && 0 <= y && y < map_data.height;
 }
 
 
@@ -237,8 +237,8 @@ namespace
 bool can_place_character_at(const Position& position, bool allow_stairs)
 {
     // Out of range
-    if (position.x < 0 || mdata_map_width <= position.x || position.y < 0
-        || mdata_map_height <= position.y)
+    if (position.x < 0 || map_data.width <= position.x || position.y < 0
+        || map_data.height <= position.y)
         return false;
 
     // Wall
@@ -291,13 +291,13 @@ bool chara_place_internal(
         }
         if (i > 99)
         {
-            if (mdata_map_width == 0)
+            if (map_data.width == 0)
             {
                 return false;
             }
-            y = (i - 100) / mdata_map_width;
-            x = (i - 100) % mdata_map_width;
-            if (y >= mdata_map_height)
+            y = (i - 100) / map_data.width;
+            x = (i - 100) % map_data.width;
+            if (y >= map_data.height)
             {
                 if (cc.index != 0)
                 {
@@ -306,8 +306,8 @@ bool chara_place_internal(
                 else
                 {
                     // Make the cell placable.
-                    x = rnd(mdata_map_width);
-                    y = rnd(mdata_map_height);
+                    x = rnd(map_data.width);
+                    y = rnd(map_data.height);
                     // FIXME: I refered to oor, but I think it is not perfect.
                     // Break wall.
                     if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
@@ -347,8 +347,8 @@ bool chara_place_internal(
             }
             else
             {
-                x = rnd(mdata_map_width - 4) + 2;
-                y = rnd(mdata_map_height - 4) + 2;
+                x = rnd(map_data.width - 4) + 2;
+                y = rnd(map_data.height - 4) + 2;
             }
             if (enemy_respawn && i < 20)
             {

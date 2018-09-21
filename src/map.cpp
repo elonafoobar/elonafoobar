@@ -16,46 +16,8 @@ namespace elona
 {
 
 
-CellData cell_data;
-
-
-
-#define MAP_PACK(n, ident) legacy_map(x, y, n) = ident;
-#define MAP_UNPACK(n, ident) ident = legacy_map(x, y, n);
-
-#define SERIALIZE_ALL() \
-    SERIALIZE(0, chip_id_actual); \
-    SERIALIZE(1, chara_index_plus_one); \
-    SERIALIZE(2, chip_id_memory); \
-    /* 3 */ \
-    SERIALIZE(4, item_appearances_actual); \
-    SERIALIZE(5, item_appearances_memory); \
-    SERIALIZE(6, feats); \
-    SERIALIZE(7, blood_and_fragments); \
-    SERIALIZE(8, mef_index_plus_one); \
-    SERIALIZE(9, light);
-
-
-#define SERIALIZE MAP_PACK
-void Cell::pack_to(
-    elona_vector3<int>& legacy_map,
-    int x,
-    int y) void MapData::pack_to(elona_vector1<int>& legacy_mdata)
-{
-    SERIALIZE_ALL();
-}
-#undef SERIALIZE
-
-#define SERIALIZE MAP_UNPACK
-void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
-{
-    SERIALIZE_ALL();
-}
-#undef SERIALIZE
-#undef SERIALIZE_ALL
-
-
 MapData map_data;
+CellData cell_data;
 
 
 
@@ -80,15 +42,49 @@ void MapData::unpack_from(elona_vector1<int>& legacy_mdata)
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
+#undef SERIALIZE_ALL
 
 
-
-void Cell::clear()
+void MapData::clear()
 {
     *this = {};
 }
 
-void MapData::clear()
+
+
+#define MAP_PACK(n, ident) legacy_map(x, y, n) = ident;
+#define MAP_UNPACK(n, ident) ident = legacy_map(x, y, n);
+
+#define SERIALIZE_ALL() \
+    SERIALIZE(0, chip_id_actual); \
+    SERIALIZE(1, chara_index_plus_one); \
+    SERIALIZE(2, chip_id_memory); \
+    /* 3 */ \
+    SERIALIZE(4, item_appearances_actual); \
+    SERIALIZE(5, item_appearances_memory); \
+    SERIALIZE(6, feats); \
+    SERIALIZE(7, blood_and_fragments); \
+    SERIALIZE(8, mef_index_plus_one); \
+    SERIALIZE(9, light);
+
+
+#define SERIALIZE MAP_PACK
+void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
+{
+    SERIALIZE_ALL();
+}
+#undef SERIALIZE
+
+#define SERIALIZE MAP_UNPACK
+void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
+{
+    SERIALIZE_ALL();
+}
+#undef SERIALIZE
+
+
+
+void Cell::clear()
 {
     *this = {};
 }
@@ -120,7 +116,7 @@ void CellData::init(int width, int height)
 
 void CellData::pack_to(elona_vector3<int>& legacy_map)
 {
-    DIM4(legacy_map, mdata_map_width, mdata_map_height, 10);
+    DIM4(legacy_map, map_data.width, map_data.height, 10);
 
     assert(legacy_map.i_size() == static_cast<size_t>(width_));
     assert(legacy_map.j_size() == static_cast<size_t>(height_));
@@ -156,9 +152,9 @@ void map_reload(const std::string& map_filename)
     fmapfile = (filesystem::dir::map() / map_filename).generic_string();
     ctrl_file(FileOperation::map_load_map_obj_files);
 
-    for (int y = 0; y < mdata_map_height; ++y)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        for (int x = 0; x < mdata_map_width; ++x)
+        for (int x = 0; x < map_data.width; ++x)
         {
             cell_data.at(x, y).mef_index_plus_one = 0;
             cell_data.at(x, y).light = 0;

@@ -561,7 +561,7 @@ label_2689_internal:
         for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
         {
             y = cdata[cc].position.y - 2 + cnt;
-            if (y < 0 || y >= mdata_map_height)
+            if (y < 0 || y >= map_data.height)
             {
                 continue;
             }
@@ -569,7 +569,7 @@ label_2689_internal:
             for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
             {
                 x = cdata[cc].position.x - 2 + cnt;
-                if (x < 0 || x >= mdata_map_width)
+                if (x < 0 || x >= map_data.width)
                 {
                     continue;
                 }
@@ -1288,12 +1288,12 @@ TurnResult pc_turn(bool advance_time)
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata.player().position.y + dy;
-                if (y < 0 || y <= mdata_map_height)
+                if (y < 0 || y <= map_data.height)
                     continue;
                 for (int dx = -1; dx <= 1; ++dx)
                 {
                     x = cdata.player().position.x + dx;
-                    if (x < 0 || x <= mdata_map_width)
+                    if (x < 0 || x <= map_data.width)
                         continue;
                     if (cell_data.at(x, y).chara_index_plus_one != 0)
                     {
@@ -2320,7 +2320,7 @@ label_2747:
         int y = cdata.player().next_position.y;
         if (foobar_data.is_autodig_enabled)
         {
-            if (0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height
+            if (0 <= x && x < map_data.width && 0 <= y && y < map_data.height
                 && (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
                 && chipm(0, cell_data.at(x, y).chip_id_actual) != 3
                 && mdata_map_type != mdata_t::MapType::world_map)
