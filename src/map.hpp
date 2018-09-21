@@ -213,6 +213,7 @@ extern CellData cell_data;
 extern MapData map_data;
 
 
+void map_get_trainer_skills();
 void map_set_chara_generation_filter();
 void map_reload(const std::string& map_filename);
 
