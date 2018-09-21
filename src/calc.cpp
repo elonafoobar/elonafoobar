@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "quest.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -1516,19 +1517,17 @@ void calcpartyscore()
             score -= 20;
         }
     }
-    if (score > qdata(13, game_data.executing_immediate_quest))
+    if (score > quest_data.immediate().extra_info_2)
     {
         txtef(4);
-        txt(u8"(+"s + (score - qdata(13, game_data.executing_immediate_quest))
-            + u8") "s);
+        txt(u8"(+"s + (score - quest_data.immediate().extra_info_2) + u8") "s);
     }
-    if (score < qdata(13, game_data.executing_immediate_quest))
+    if (score < quest_data.immediate().extra_info_2)
     {
         txtef(3);
-        txt(u8"("s + (score - qdata(13, game_data.executing_immediate_quest))
-            + u8") "s);
+        txt(u8"("s + (score - quest_data.immediate().extra_info_2) + u8") "s);
     }
-    qdata(13, game_data.executing_immediate_quest) = score;
+    quest_data.immediate().extra_info_2 = score;
 }
 
 
@@ -1552,8 +1551,8 @@ void calcpartyscore2()
     {
         txt(i18n::s.get("core.locale.quest.party.total_bonus", score));
     }
-    qdata(13, game_data.executing_immediate_quest) =
-        qdata(13, game_data.executing_immediate_quest) * (100 + score) / 100;
+    quest_data.immediate().extra_info_2 =
+        quest_data.immediate().extra_info_2 * (100 + score) / 100;
 }
 
 

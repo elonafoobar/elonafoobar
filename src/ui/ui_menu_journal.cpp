@@ -49,7 +49,7 @@ bool UIMenuJournal::init()
          cnt < cnt_end;
          ++cnt)
     {
-        if (qdata(8, cnt) == 0)
+        if (quest_data[cnt].progress == 0)
         {
             continue;
         }

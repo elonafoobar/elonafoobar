@@ -40,12 +40,12 @@ void proc_event()
             calcpartyscore2();
             txt(i18n::s.get(
                 "core.locale.quest.party.final_score",
-                qdata(13, game_data.executing_immediate_quest)));
-            if (qdata(12, game_data.executing_immediate_quest)
-                <= qdata(13, game_data.executing_immediate_quest))
+                quest_data.immediate().extra_info_2));
+            if (quest_data.immediate().extra_info_1
+                <= quest_data.immediate().extra_info_2)
             {
                 game_data.executing_immediate_quest_status = 3;
-                qdata(8, game_data.executing_immediate_quest) = 3;
+                quest_data.immediate().progress = 3;
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.party.complete"));
                 msg_halt();
@@ -57,11 +57,11 @@ void proc_event()
             }
             break;
         case 1006:
-            if (qdata(12, game_data.executing_immediate_quest)
-                < qdata(13, game_data.executing_immediate_quest))
+            if (quest_data.immediate().extra_info_1
+                < quest_data.immediate().extra_info_2)
             {
                 game_data.executing_immediate_quest_status = 3;
-                qdata(8, game_data.executing_immediate_quest) = 3;
+                quest_data.immediate().progress = 3;
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.collect.complete"));
                 msg_halt();
@@ -309,11 +309,12 @@ void proc_event()
     case 15:
         for (int i = 0; i < game_data.number_of_existing_quests; ++i)
         {
-            if (qdata(3, i) == 1007 && qdata(8, i) == 1
-                && qdata(13, i) == evdata1(evnum - (evnum != 0) * 1))
+            if (quest_data[i].id == 1007 && quest_data[i].progress == 1
+                && quest_data[i].extra_info_2
+                    == evdata1(evnum - (evnum != 0) * 1))
             {
                 rq = i;
-                quest_failed(qdata(3, rq));
+                quest_failed(quest_data[rq].id);
                 break;
             }
         }

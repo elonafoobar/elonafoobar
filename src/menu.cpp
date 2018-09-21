@@ -1537,7 +1537,7 @@ void show_weapon_dice(int val0)
 static TurnResult _visit_quest_giver(int quest_index)
 {
     // TODO move the below somewhere else to decouple quest_teleport
-    tc = qdata(0, quest_index);
+    tc = quest_data[quest_index].client_chara_index;
     rq = quest_index;
     client = tc;
     efid = 619;

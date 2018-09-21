@@ -809,24 +809,28 @@ int talk_guide_quest_client()
     for (int i = 0; i < max_quest; ++i)
     {
         const auto quest_id = game_data.taken_quests.at(i);
-        if (qdata(8, quest_id) != 1)
+        if (quest_data[quest_id].progress != 1)
             continue;
         if (game_data.current_dungeon_level != 1)
             continue;
 
         auto client = -1;
-        if (qdata(3, quest_id) == 1011)
+        if (quest_data[quest_id].id == 1011)
         {
-            if (qdata(1, quest_id) == game_data.current_map)
+            if (quest_data[quest_id].originating_map_id
+                == game_data.current_map)
             {
-                client = qdata(10, quest_id);
+                client = quest_data[quest_id].target_chara_index;
             }
         }
-        if (qdata(3, quest_id) == 1002)
+        if (quest_data[quest_id].id == 1002)
         {
-            if (qdata(1, qdata(10, quest_id)) == game_data.current_map)
+            if (quest_data[quest_data[quest_id].target_chara_index]
+                    .originating_map_id
+                == game_data.current_map)
             {
-                client = qdata(0, qdata(10, quest_id));
+                client = quest_data[quest_data[quest_id].target_chara_index]
+                             .client_chara_index;
             }
         }
         if (client != -1)
@@ -860,13 +864,14 @@ int talk_check_trade(int prm_1081)
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         p_at_m193 = game_data.taken_quests.at(cnt);
-        if (qdata(8, p_at_m193) == 1)
+        if (quest_data[p_at_m193].progress == 1)
         {
             if (game_data.current_dungeon_level == 1)
             {
-                if (qdata(1, p_at_m193) == game_data.current_map)
+                if (quest_data[p_at_m193].originating_map_id
+                    == game_data.current_map)
                 {
-                    if (prm_1081 == qdata(10, p_at_m193))
+                    if (prm_1081 == quest_data[p_at_m193].target_chara_index)
                     {
                         j_at_m193 = 1;
                         break;
