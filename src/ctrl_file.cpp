@@ -997,11 +997,13 @@ void fmode_1_2(bool read)
         {
             tmpload(u8"mdata_"s + mid + u8".s2");
             load_v1(filepath, mdata, 0, 100);
+            map_data.unpack_from(mdata);
         }
         else
         {
             Save::instance().add(filepath.filename());
             writeloadedbuff(u8"mdata_"s + mid + u8".s2");
+            map_data.pack_to(mdata);
             save_v1(filepath, mdata, 0, 100);
         }
     }
@@ -1010,12 +1012,12 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"map_"s + mid + u8".s2");
         if (read)
         {
-            DIM4(map, mdata_map_width, mdata_map_height, 10);
-            DIM3(mapsync, mdata_map_width, mdata_map_height);
+            DIM4(map, map_data.width, map_data.height, 10);
+            DIM3(mapsync, map_data.width, map_data.height);
             DIM3(mef, 9, MEF_MAX);
             tmpload(u8"map_"s + mid + u8".s2");
             load_v3(
-                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
             cell_data.unpack_from(map);
         }
         else
@@ -1024,7 +1026,7 @@ void fmode_1_2(bool read)
             writeloadedbuff(u8"map_"s + mid + u8".s2");
             cell_data.pack_to(map);
             save_v3(
-                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
         }
     }
 
@@ -1105,9 +1107,9 @@ void fmode_1_2(bool read)
         {
             if (mdata_map_mefs_loaded_flag == 0)
             {
-                for (int y = 0; y < mdata_map_height; ++y)
+                for (int y = 0; y < map_data.height; ++y)
                 {
-                    for (int x = 0; x < mdata_map_width; ++x)
+                    for (int x = 0; x < map_data.width; ++x)
                     {
                         cell_data.at(x, y).mef_index_plus_one = 0;
                     }
@@ -1139,14 +1141,7 @@ void fmode_16()
     DIM3(cmapdata, 5, 400);
 
     load_v3(
-        fmapfile + u8".map",
-        map,
-        0,
-        mdata_map_width,
-        0,
-        mdata_map_height,
-        0,
-        3);
+        fmapfile + u8".map", map, 0, map_data.width, 0, map_data.height, 0, 3);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
@@ -1176,9 +1171,11 @@ void fmode_5_6(bool read)
             {
                 mdata(j) = mdatatmp(j);
             }
+            map_data.unpack_from(mdata);
         }
         else
         {
+            map_data.pack_to(mdata);
             save_v1(filepath, mdata, 0, 100);
         }
     }
@@ -1187,20 +1184,20 @@ void fmode_5_6(bool read)
         const auto filepath = fmapfile + u8".map"s;
         if (read)
         {
-            DIM4(map, mdata_map_width, mdata_map_height, 10);
+            DIM4(map, map_data.width, map_data.height, 10);
             DIM3(
                 mapsync,
-                mdata_map_width,
-                mdata_map_height); // TODO length_exception
+                map_data.width,
+                map_data.height); // TODO length_exception
             load_v3(
-                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
             cell_data.unpack_from(map);
         }
         else
         {
             cell_data.pack_to(map);
             save_v3(
-                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
         }
     }
 

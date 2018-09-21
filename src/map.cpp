@@ -16,7 +16,39 @@ namespace elona
 {
 
 
+MapData map_data;
 CellData cell_data;
+
+
+
+#define MDATA_PACK(x, ident) legacy_mdata(x) = ident;
+#define MDATA_UNPACK(x, ident) ident = legacy_mdata(x);
+
+#define SERIALIZE_ALL() \
+    SERIALIZE(0, width); \
+    SERIALIZE(1, height);
+
+
+#define SERIALIZE MDATA_PACK
+void MapData::pack_to(elona_vector1<int>& legacy_mdata)
+{
+    SERIALIZE_ALL();
+}
+#undef SERIALIZE
+
+#define SERIALIZE MDATA_UNPACK
+void MapData::unpack_from(elona_vector1<int>& legacy_mdata)
+{
+    SERIALIZE_ALL();
+}
+#undef SERIALIZE
+#undef SERIALIZE_ALL
+
+
+void MapData::clear()
+{
+    *this = {};
+}
 
 
 
@@ -42,7 +74,6 @@ void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
-
 
 #define SERIALIZE MAP_UNPACK
 void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
@@ -85,7 +116,7 @@ void CellData::init(int width, int height)
 
 void CellData::pack_to(elona_vector3<int>& legacy_map)
 {
-    DIM4(legacy_map, mdata_map_width, mdata_map_height, 10);
+    DIM4(legacy_map, map_data.width, map_data.height, 10);
 
     assert(legacy_map.i_size() == static_cast<size_t>(width_));
     assert(legacy_map.j_size() == static_cast<size_t>(height_));
@@ -121,9 +152,9 @@ void map_reload(const std::string& map_filename)
     fmapfile = (filesystem::dir::map() / map_filename).generic_string();
     ctrl_file(FileOperation::map_load_map_obj_files);
 
-    for (int y = 0; y < mdata_map_height; ++y)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        for (int x = 0; x < mdata_map_width; ++x)
+        for (int x = 0; x < map_data.width; ++x)
         {
             cell_data.at(x, y).mef_index_plus_one = 0;
             cell_data.at(x, y).light = 0;

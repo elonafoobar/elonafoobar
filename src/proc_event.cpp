@@ -782,13 +782,13 @@ void proc_event()
         for (int i = 0; i < range_ * 2 + 1; ++i)
         {
             dy = tlocy - range_ + i;
-            if (dy < 0 || dy >= mdata_map_height)
+            if (dy < 0 || dy >= map_data.height)
                 continue;
             {
                 for (int j = 0; j < range_ * 2 + 1; ++j)
                 {
                     dx = tlocx - range_ + j;
-                    if (dx < 0 || dx >= mdata_map_width)
+                    if (dx < 0 || dx >= map_data.width)
                         continue;
                     if (dist(tlocx, tlocy, dx, dy) > range_)
                         continue;
@@ -845,17 +845,17 @@ void proc_event()
         {
             for (int j = 0; j < 2; ++j)
             {
-                x = rnd(mdata_map_width);
-                y = rnd(mdata_map_height);
+                x = rnd(map_data.width);
+                y = rnd(map_data.height);
                 cell_data.at(x, y).chip_id_actual = 37;
             }
             x = rnd(inf_screenw) + scx;
             y = rnd(inf_screenh) + scy;
-            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height
+            if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height
                 || rnd(5) == 0)
             {
-                x = rnd(mdata_map_width);
-                y = rnd(mdata_map_height);
+                x = rnd(map_data.width);
+                y = rnd(map_data.height);
             }
             mef_add(
                 x,

@@ -156,10 +156,10 @@ label_1741_internal:
         }
         maxmedal = 0;
         DIM3(medalbk, 2, 30);
-        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
         {
             y = cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 x = cnt;
                 if (cell_data.at(x, y).feats / 1000 % 100 == 32)
@@ -317,14 +317,14 @@ label_1741_internal:
     }
     if (game_data.current_map == mdata_t::MapId::test_site)
     {
-        mdata_map_width = 16;
-        mdata_map_height = 16;
+        map_data.width = 16;
+        map_data.height = 16;
         mdata_map_max_crowd_density = 0;
         map_initialize();
-        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
         {
             p = cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 cell_data.at(cnt, p).chip_id_actual = tile_default
                     + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
@@ -342,8 +342,8 @@ label_1741_internal:
         }
         for (int cnt = 0; cnt < 100; ++cnt)
         {
-            x = rnd(mdata_map_width);
-            y = rnd(mdata_map_height);
+            x = rnd(map_data.width);
+            y = rnd(map_data.height);
         }
         flt();
         chara_create(
@@ -975,17 +975,17 @@ label_1741_internal:
                     {
                         continue;
                     }
-                    inv[cnt].position.x = mdata_map_width / 2;
-                    inv[cnt].position.y = mdata_map_height / 2;
+                    inv[cnt].position.x = map_data.width / 2;
+                    inv[cnt].position.y = map_data.height / 2;
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
                 ctrl_file(FileOperation::map_home_upgrade);
                 for (auto&& cnt : cdata.others())
                 {
-                    cnt.position.x = mdata_map_width / 2;
-                    cnt.position.y = mdata_map_height / 2;
-                    cnt.initial_position.x = mdata_map_width / 2;
-                    cnt.initial_position.y = mdata_map_height / 2;
+                    cnt.position.x = map_data.width / 2;
+                    cnt.position.y = map_data.height / 2;
+                    cnt.initial_position.x = map_data.width / 2;
+                    cnt.initial_position.y = map_data.height / 2;
                 }
             }
             if (game_data.home_scale == 5)
@@ -1761,16 +1761,16 @@ label_1741_internal:
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            chara_create(-1, 16, rnd(32), rnd(mdata_map_height));
+            chara_create(-1, 16, rnd(32), rnd(map_data.height));
             cdata[rc].character_role = 4;
             flt();
-            chara_create(-1, 39, rnd(32), rnd(mdata_map_height));
+            chara_create(-1, 39, rnd(32), rnd(map_data.height));
             cdata[rc].character_role = 4;
         }
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            chara_create(-1, 77, rnd(32), rnd(mdata_map_height));
+            chara_create(-1, 77, rnd(32), rnd(map_data.height));
             cdata[rc].character_role = 14;
         }
         quest_on_map_initialize();
@@ -1784,7 +1784,7 @@ label_1741_internal:
         {
             dbid = 0;
             chara_set_generation_filter();
-            chara_create(-1, dbid, rnd(55), rnd(mdata_map_height));
+            chara_create(-1, dbid, rnd(55), rnd(map_data.height));
         }
     }
     if (game_data.current_map == mdata_t::MapId::port_kapul)
@@ -2149,15 +2149,15 @@ label_1741_internal:
     }
     if (game_data.current_map == mdata_t::MapId::fields)
     {
-        mdata_map_width = 34;
-        mdata_map_height = 22;
+        map_data.width = 34;
+        map_data.height = 22;
         mdata_map_max_crowd_density = 4;
         mdata_map_user_map_flag = 0;
         map_initialize();
-        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
         {
             p = cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 cell_data.at(cnt, p).chip_id_actual = tile_default
                     + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
@@ -2622,10 +2622,10 @@ label_1741_internal:
         || (game_data.current_map == mdata_t::MapId::quest
             && game_data.executing_immediate_quest_type == 1009))
     {
-        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
         {
             y = cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 cell_data.at(cnt, y).chip_id_memory =
                     cell_data.at(cnt, y).chip_id_actual;
@@ -2663,14 +2663,14 @@ label_1741_internal:
                             for (int cnt = 0;; ++cnt)
                             {
                                 dx = clamp(
-                                    rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
+                                    rnd(cnt / 4 + 1) + 1, 1, map_data.width);
                                 dy = clamp(
-                                    rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
+                                    rnd(cnt / 4 + 1) + 1, 1, map_data.height);
                                 x = area_data[p].position.x + rnd(dx(0))
                                     - rnd(dx(0));
                                 y = area_data[p].position.y + rnd(dy) - rnd(dy);
-                                if (x < 0 || y < 0 || x >= mdata_map_width
-                                    || y >= mdata_map_height)
+                                if (x < 0 || y < 0 || x >= map_data.width
+                                    || y >= map_data.height)
                                 {
                                     continue;
                                 }
@@ -2887,10 +2887,10 @@ label_1742_internal:
                 }
             }
         }
-        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
         {
             y = cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 cell_data.at(cnt, y).chara_index_plus_one = 0;
             }
@@ -2990,8 +2990,8 @@ label_1742_internal:
                             - rnd((cnt / 2 + 2));
                         if (cnt > 100)
                         {
-                            x = rnd(mdata_map_width);
-                            y = rnd(mdata_map_height);
+                            x = rnd(map_data.width);
+                            y = rnd(map_data.height);
                         }
                         if (cnt > 1000)
                         {
@@ -3015,8 +3015,8 @@ label_1742_internal:
         }
     }
 label_1744_internal:
-    DIM4(efmap, 4, mdata_map_width, mdata_map_height);
-    if (mdata_map_width == 0 || mdata_map_height == 0)
+    DIM4(efmap, 4, map_data.width, map_data.height);
+    if (map_data.width == 0 || map_data.height == 0)
     {
         if (medit == 0)
         {
@@ -3056,8 +3056,8 @@ label_1744_internal:
     cdata.player().current_dungeon_level = game_data.current_dungeon_level;
     raderx = -1;
     radery = -1;
-    raderw = 120 / mdata_map_width + 2;
-    raderh = 84 / mdata_map_height + 2;
+    raderw = 120 / map_data.width + 2;
+    raderh = 84 / map_data.height + 2;
     scx = cdata.player().position.x;
     scy = cdata.player().position.y;
     msync = 1;

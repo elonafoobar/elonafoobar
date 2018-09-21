@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "mef.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
@@ -110,8 +111,8 @@ void _adventurer_hate_action()
         {
             tlocx = cdata[tc].position.x + rnd(3) - rnd(3);
             tlocy = cdata[tc].position.y - rnd(3) + rnd(3);
-            if (tlocx < 0 || tlocy < 0 || tlocx >= mdata_map_width
-                || tlocy >= mdata_map_height)
+            if (tlocx < 0 || tlocy < 0 || tlocx >= map_data.width
+                || tlocy >= map_data.height)
             {
                 continue;
             }

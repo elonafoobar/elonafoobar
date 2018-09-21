@@ -116,8 +116,8 @@ int do_create_item(int slot, int x, int y)
         {
             if (x == -1)
             {
-                sx = rnd(mdata_map_width - 2) + 2;
-                sy = rnd(mdata_map_height - 2) + 2;
+                sx = rnd(map_data.width - 2) + 2;
+                sy = rnd(map_data.height - 2) + 2;
                 if (cell_data.at(sx, sy).item_appearances_actual != 0)
                 {
                     continue;
@@ -135,8 +135,8 @@ int do_create_item(int slot, int x, int y)
                     sx = x + rnd(i + 1) - rnd(i + 1);
                     sy = y + rnd(i + 1) - rnd(i + 1);
                 }
-                if (sx < 0 || sy < 0 || sx > mdata_map_width - 1
-                    || sy > mdata_map_height - 1)
+                if (sx < 0 || sy < 0 || sx > map_data.width - 1
+                    || sy > map_data.height - 1)
                 {
                     continue;
                 }

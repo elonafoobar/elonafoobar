@@ -9,12 +9,12 @@ namespace lua
 
 int Map::width()
 {
-    return mdata_map_width;
+    return map_data.width;
 }
 
 int Map::height()
 {
-    return mdata_map_height;
+    return map_data.height;
 }
 
 bool Map::is_overworld()
@@ -58,15 +58,15 @@ bool Map::can_access_xy(int x, int y)
 
 Position Map::bound_within(const Position& position)
 {
-    int x = clamp(position.x, 0, mdata_map_width - 1);
-    int y = clamp(position.y, 0, mdata_map_height - 1);
+    int x = clamp(position.x, 0, map_data.width - 1);
+    int y = clamp(position.y, 0, map_data.height - 1);
     return Position{x, y};
 }
 
 Position Map::random_pos()
 {
-    return Map::bound_within(Position{elona::rnd(mdata_map_width - 1),
-                                      elona::rnd(mdata_map_height - 1)});
+    return Map::bound_within(Position{elona::rnd(map_data.width - 1),
+                                      elona::rnd(map_data.height - 1)});
 }
 
 int Map::generate_tile(const EnumString& type_name)

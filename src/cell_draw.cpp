@@ -1207,14 +1207,14 @@ void cell_draw()
     reph(2) = cdata.player().position.y + (syfix < 0);
     reph(3) = reph(2) + 1;
 
-    if (cdata.player().position.y == mdata_map_height - 2)
+    if (cdata.player().position.y == map_data.height - 2)
     {
         if (syfix < 0)
         {
             --reph(3);
         }
     }
-    if (cdata.player().position.y == mdata_map_height - 1)
+    if (cdata.player().position.y == map_data.height - 1)
     {
         if (syfix > 0)
         {
@@ -1235,7 +1235,7 @@ void cell_draw()
         }
 
         // Out of map
-        if (y < 0 || y >= mdata_map_height)
+        if (y < 0 || y >= map_data.height)
         {
             for (int i = 0; i < repw; ++i, dx_ -= inf_tiles)
             {
@@ -1355,7 +1355,7 @@ void cell_draw()
             }
 
             // Out of map
-            if (x_ < 0 || x_ >= mdata_map_width)
+            if (x_ < 0 || x_ >= map_data.width)
             {
                 draw_one_map_tile(dx_, dy_, tile_fog);
                 continue;
@@ -1363,7 +1363,7 @@ void cell_draw()
 
             // Map tile
             ground_ = cell_data.at(x_, y).chip_id_memory;
-            if (chipm(2, ground_) == 2 && y < mdata_map_height - 1
+            if (chipm(2, ground_) == 2 && y < map_data.height - 1
                 && chipm(2, cell_data.at(x_, y + 1).chip_id_memory) != 2
                 && cell_data.at(x_, y + 1).chip_id_memory != tile_fog)
             {

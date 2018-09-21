@@ -471,14 +471,14 @@ TurnResult do_search_command()
     for (int cnt = 0; cnt < 11; ++cnt)
     {
         y = cdata[cc].position.y + cnt - 5;
-        if (y < 0 || y >= mdata_map_height)
+        if (y < 0 || y >= map_data.height)
         {
             continue;
         }
         for (int cnt = 0; cnt < 11; ++cnt)
         {
             x = cdata[cc].position.x + cnt - 5;
-            if (x < 0 || x >= mdata_map_width)
+            if (x < 0 || x >= map_data.width)
             {
                 continue;
             }
@@ -633,9 +633,9 @@ TurnResult do_throw_command()
         {
             if (y >= 0)
             {
-                if (x < mdata_map_width)
+                if (x < map_data.width)
                 {
-                    if (y < mdata_map_height)
+                    if (y < map_data.height)
                     {
                         if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
                             == 0)
@@ -3271,7 +3271,7 @@ TurnResult do_movement_command()
         {
             x = cdata.player().next_position.x;
             y = cdata.player().next_position.y;
-            if (x >= 0 && x < mdata_map_width && y >= 0 && y < mdata_map_height)
+            if (x >= 0 && x < map_data.width && y >= 0 && y < map_data.height)
             {
                 if (cell_data.at(x, y).chara_index_plus_one == 0)
                 {
@@ -3290,9 +3290,9 @@ TurnResult do_movement_command()
             && !mdata_t::is_nefia(mdata_map_type)))
     {
         if (cdata[cc].next_position.x < 0
-            || cdata[cc].next_position.x > mdata_map_width - 1
+            || cdata[cc].next_position.x > map_data.width - 1
             || cdata[cc].next_position.y < 0
-            || cdata[cc].next_position.y > mdata_map_height - 1)
+            || cdata[cc].next_position.y > map_data.height - 1)
         {
             txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
             if (mdata_map_type == mdata_t::MapType::temporary)

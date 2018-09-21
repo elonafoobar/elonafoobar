@@ -321,7 +321,7 @@ int magic()
                      ++cnt)
                 {
                     dy = tlocy - range_ + cnt;
-                    if (dy < 0 || dy >= mdata_map_height)
+                    if (dy < 0 || dy >= map_data.height)
                     {
                         continue;
                     }
@@ -329,7 +329,7 @@ int magic()
                          ++cnt)
                     {
                         dx = tlocx - range_ + cnt;
-                        if (dx < 0 || dx >= mdata_map_width)
+                        if (dx < 0 || dx >= map_data.width)
                         {
                             continue;
                         }
@@ -939,10 +939,9 @@ int magic()
                     }
                     else
                     {
-                        cdata[tc].next_position.x =
-                            rnd(mdata_map_width - 2) + 1;
+                        cdata[tc].next_position.x = rnd(map_data.width - 2) + 1;
                         cdata[tc].next_position.y =
-                            rnd(mdata_map_height - 2) + 1;
+                            rnd(map_data.height - 2) + 1;
                     }
                     cell_check(
                         cdata[tc].next_position.x, cdata[tc].next_position.y);
@@ -1129,8 +1128,8 @@ label_2181_internal:
             item_separate(ci);
             for (int cnt = 0; cnt < 1000; ++cnt)
             {
-                dx = 4 + rnd((mdata_map_width - 8));
-                dy = 3 + rnd((mdata_map_height - 6));
+                dx = 4 + rnd((map_data.width - 8));
+                dy = 3 + rnd((map_data.height - 6));
                 if (dx >= 50 && dy >= 39 && dx <= 73 && dy <= 54)
                 {
                     continue;
@@ -1645,7 +1644,7 @@ label_2181_internal:
         {
             y = cdata[cc].position.y + cnt - 1;
             x = cdata[cc].position.x;
-            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
+            if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
             {
                 continue;
             }
@@ -1661,8 +1660,8 @@ label_2181_internal:
             {
                 y = cdata[cc].position.y;
                 x = cdata[cc].position.x + cnt - 1;
-                if (x < 0 || y < 0 || x >= mdata_map_width
-                    || y >= mdata_map_height)
+                if (x < 0 || y < 0 || x >= map_data.width
+                    || y >= map_data.height)
                 {
                     continue;
                 }
@@ -2578,11 +2577,10 @@ label_2181_internal:
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end;
-                 ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
+                for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end;
                      ++cnt)
                 {
                     x = cnt;
@@ -3155,7 +3153,7 @@ label_2181_internal:
             x = rnd(p(0)) + tlocx - rnd(p(0));
             y = rnd(p(0)) + tlocy - rnd(p(0));
             f = 1;
-            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
+            if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
             {
                 f = 0;
             }
@@ -3764,7 +3762,7 @@ label_2181_internal:
         x = tlocx;
         y = tlocy;
         f = 1;
-        if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
+        if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
         {
             f = 0;
         }
@@ -3944,10 +3942,10 @@ label_2181_internal:
         txtef(4);
         txt(i18n::s.get("core.locale.magic.meteor"));
         MeteorAnimation().play();
-        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
         {
             dy = cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 dx = cnt;
                 if (rnd(3) == 0)
