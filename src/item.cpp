@@ -11,6 +11,7 @@
 #include "crafting.hpp"
 #include "db_item.hpp"
 #include "elona.hpp"
+#include "enums.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -378,8 +379,8 @@ void cell_refresh(int prm_493, int prm_494)
     }
 
     p_at_m55 = 0;
-    map(prm_493, prm_494, 4) = 0;
-    map(prm_493, prm_494, 9) = 0;
+    cell_data.at(prm_493, prm_494).item_appearances_actual = 0;
+    cell_data.at(prm_493, prm_494).light = 0;
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number() > 0)
@@ -389,19 +390,31 @@ void cell_refresh(int prm_493, int prm_494)
             {
                 floorstack(p_at_m55) = cnt;
                 ++p_at_m55;
-                wpoke(map(prm_493, prm_494, 4), 0, inv[cnt].image);
-                wpoke(map(prm_493, prm_494, 4), 2, inv[cnt].color);
+                wpoke(
+                    cell_data.at(prm_493, prm_494).item_appearances_actual,
+                    0,
+                    inv[cnt].image);
+                wpoke(
+                    cell_data.at(prm_493, prm_494).item_appearances_actual,
+                    2,
+                    inv[cnt].color);
                 if (ilight(inv[cnt].id) != 0)
                 {
-                    map(prm_493, prm_494, 9) = ilight(inv[cnt].id);
+                    cell_data.at(prm_493, prm_494).light = ilight(inv[cnt].id);
                 }
             }
         }
     }
     if (p_at_m55 > 3)
     {
-        wpoke(map(prm_493, prm_494, 4), 0, 363);
-        wpoke(map(prm_493, prm_494, 4), 2, 0);
+        wpoke(
+            cell_data.at(prm_493, prm_494).item_appearances_actual,
+            0,
+            363); // Item bag chip ID
+        wpoke(
+            cell_data.at(prm_493, prm_494).item_appearances_actual,
+            2,
+            static_cast<int>(ColorIndex::none));
     }
     else if (p_at_m55 > 1)
     {
@@ -433,18 +446,20 @@ void cell_refresh(int prm_493, int prm_494)
                 }
             }
         }
-        map(prm_493, prm_494, 4) = floorstack(n_at_m55(0)) - 5080;
-        map(prm_493, prm_494, 4) += (floorstack(n_at_m55(1)) - 5080) * 1000;
+        cell_data.at(prm_493, prm_494).item_appearances_actual =
+            floorstack(n_at_m55(0)) - 5080;
+        cell_data.at(prm_493, prm_494).item_appearances_actual +=
+            (floorstack(n_at_m55(1)) - 5080) * 1000;
         if (p_at_m55 > 2)
         {
-            map(prm_493, prm_494, 4) +=
+            cell_data.at(prm_493, prm_494).item_appearances_actual +=
                 (floorstack(n_at_m55(2)) - 5080) * 1000000;
         }
         else
         {
-            map(prm_493, prm_494, 4) += 999000000;
+            cell_data.at(prm_493, prm_494).item_appearances_actual += 999000000;
         }
-        map(prm_493, prm_494, 4) *= -1;
+        cell_data.at(prm_493, prm_494).item_appearances_actual *= -1;
     }
 }
 
@@ -1818,7 +1833,7 @@ bool item_fire(int owner, int ci)
 
 void mapitem_fire(int x, int y)
 {
-    if (map(x, y, 4) == 0)
+    if (cell_data.at(x, y).item_appearances_actual == 0)
     {
         return;
     }
@@ -1841,7 +1856,7 @@ void mapitem_fire(int x, int y)
         const auto burned = item_fire(-1, ci);
         if (burned)
         {
-            if (map(x, y, 8) == 0)
+            if (cell_data.at(x, y).mef_index_plus_one == 0)
             {
                 mef_add(x, y, 5, 24, rnd(10) + 5, 100, cc);
             }
@@ -1983,7 +1998,7 @@ bool item_cold(int owner, int ci)
 
 void mapitem_cold(int x, int y)
 {
-    if (map(x, y, 4) == 0)
+    if (cell_data.at(x, y).item_appearances_actual == 0)
     {
         return;
     }

@@ -648,15 +648,15 @@ void fill_tile(int x, int y, int from, int to)
     if (x < 0 || mdata_map_width <= x || y < 0 || mdata_map_height <= y)
         return;
 
-    if (map(x, y, 0) != from)
+    if (cell_data.at(x, y).chip_id_actual != from)
         return;
 
-    if ((chipm(7, to) & 4) != 0 && map(x, y, 1) != 0)
+    if ((chipm(7, to) & 4) != 0 && cell_data.at(x, y).chara_index_plus_one != 0)
         return;
 
     // Draw one tile.
-    map(x, y, 0) = tile;
-    map(x, y, 2) = tile;
+    cell_data.at(x, y).chip_id_actual = tile;
+    cell_data.at(x, y).chip_id_memory = tile;
 
     // Draw tiles around.
     fill_tile(x - 1, y, from, to);
@@ -691,9 +691,13 @@ void start_home_map_mode()
 
         if (getkey(snail::Key::ctrl))
         {
-            if (map(tlocx, tlocy, 0) != tile)
+            if (cell_data.at(tlocx, tlocy).chip_id_actual != tile)
             {
-                fill_tile(tlocx, tlocy, map(tlocx, tlocy, 0), tile);
+                fill_tile(
+                    tlocx,
+                    tlocy,
+                    cell_data.at(tlocx, tlocy).chip_id_actual,
+                    tile);
             }
         }
         else if (chipm(7, tile) & 4)
@@ -703,8 +707,8 @@ void start_home_map_mode()
         }
         else
         {
-            map(tlocx, tlocy, 0) = tile;
-            map(tlocx, tlocy, 2) = tile;
+            cell_data.at(tlocx, tlocy).chip_id_actual = tile;
+            cell_data.at(tlocx, tlocy).chip_id_memory = tile;
         }
         tlocinitx = tlocx;
         tlocinity = tlocy;
@@ -839,14 +843,16 @@ void prompt_move_ally()
                 continue;
             }
         }
-        if (chipm(7, map(tlocx, tlocy, 0)) & 4 || map(tlocx, tlocy, 1) != 0)
+        if (chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4
+            || cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
             txt(i18n::s.get("core.locale.building.home.move.invalid"));
             goto label_1718_internal;
         }
         tc = tchome;
-        map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
-        map(tlocx, tlocy, 1) = tc + 1;
+        cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+            .chara_index_plus_one = 0;
+        cell_data.at(tlocx, tlocy).chara_index_plus_one = tc + 1;
         cdata[tc].position.x = tlocx;
         cdata[tc].initial_position.x = tlocx;
         cdata[tc].position.y = tlocy;
@@ -1218,8 +1224,8 @@ void update_shop()
         y = cnt;
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
-            map(cnt, y, 4) = 0;
-            map(cnt, y, 9) = 0;
+            cell_data.at(cnt, y).item_appearances_actual = 0;
+            cell_data.at(cnt, y).light = 0;
         }
     }
     for (const auto& cnt : items(-1))
@@ -1287,7 +1293,10 @@ void update_museum()
         {
             continue;
         }
-        if (wpeek(map(inv[cnt].position.x, inv[cnt].position.y, 4), 0)
+        if (wpeek(
+                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                    .item_appearances_actual,
+                0)
             != inv[cnt].image)
         {
             continue;
@@ -1350,7 +1359,10 @@ void calc_home_rank()
         {
             continue;
         }
-        if (wpeek(map(inv[cnt].position.x, inv[cnt].position.y, 4), 0)
+        if (wpeek(
+                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                    .item_appearances_actual,
+                0)
             != inv[cnt].image)
         {
             continue;
@@ -1495,7 +1507,7 @@ void update_ranch()
             }
             x = rnd(11) + 4;
             y = rnd(8) + 4;
-            if (map(x, y, 4) != 0)
+            if (cell_data.at(x, y).item_appearances_actual != 0)
             {
                 continue;
             }

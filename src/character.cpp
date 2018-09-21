@@ -15,6 +15,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "lua_env/lua_env.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
 #include "random.hpp"
@@ -172,16 +173,16 @@ optional<Position> get_free_space(
         {
             continue;
         }
-        if (map(x, y, 6) != 0)
+        if (cell_data.at(x, y).feats != 0)
         {
-            if (chipm(7, map(x, y, 6) % 1000) & 4)
+            if (chipm(7, cell_data.at(x, y).feats % 1000) & 4)
             {
                 continue;
             }
         }
-        if (map(x, y, 1) == 0)
+        if (cell_data.at(x, y).chara_index_plus_one == 0)
         {
-            if (!(chipm(7, map(x, y, 0)) & 4))
+            if (!(chipm(7, cell_data.at(x, y).chip_id_actual) & 4))
             {
                 return pos;
             }
@@ -241,17 +242,17 @@ bool can_place_character_at(const Position& position, bool allow_stairs)
         return false;
 
     // Wall
-    if (chipm(7, map(position.x, position.y, 0)) & 4)
+    if (chipm(7, cell_data.at(position.x, position.y).chip_id_actual) & 4)
         return false;
 
     // There is someone.
-    if (map(position.x, position.y, 1) != 0)
+    if (cell_data.at(position.x, position.y).chara_index_plus_one != 0)
         return false;
 
-    if (map(position.x, position.y, 6) != 0)
+    if (cell_data.at(position.x, position.y).feats != 0)
     {
         // There is an object which prevents from walking through.
-        if (chipm(7, map(position.x, position.y, 6) % 1000) & 4)
+        if (chipm(7, cell_data.at(position.x, position.y).feats % 1000) & 4)
             return false;
 
         cell_featread(position.x, position.y);
@@ -309,17 +310,17 @@ bool chara_place_internal(
                     y = rnd(mdata_map_height);
                     // FIXME: I refered to oor, but I think it is not perfect.
                     // Break wall.
-                    if (chipm(7, map(x, y, 0)) & 4)
+                    if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
                     {
-                        map(x, y, 0) = tile_tunnel;
+                        cell_data.at(x, y).chip_id_actual = tile_tunnel;
                     }
                     // Delete someone there.
                     // TODO: Work around. Need delete him/her *completely*.
-                    if (map(x, y, 1) != 0)
+                    if (cell_data.at(x, y).chara_index_plus_one != 0)
                     {
-                        map(x, y, 1) = 0;
+                        cell_data.at(x, y).chara_index_plus_one = 0;
                     }
-                    if (map(x, y, 6) != 0)
+                    if (cell_data.at(x, y).feats != 0)
                     {
                         cell_featread(x, y);
                         if (feat(1) == 21)
@@ -330,7 +331,7 @@ bool chara_place_internal(
                         else if (feat(1) == 22)
                         {
                             // Reveal hidden path.
-                            map(x, y, 6) = 0;
+                            cell_data.at(x, y).feats = 0;
                         }
                     }
                     assert(can_place_character_at({x, y}, true));
@@ -369,7 +370,7 @@ bool chara_place_internal(
 
     // Do place character.
     cc.initial_position = cc.position = {x, y};
-    map(x, y, 1) = cc.index + 1;
+    cell_data.at(x, y).chara_index_plus_one = cc.index + 1;
 
     return true; // placed successfully.
 }
@@ -1912,7 +1913,8 @@ void chara_vanquish(int cc)
         cdata[cc].state() == Character::State::alive
         || cdata[cc].state() == Character::State::servant_being_selected)
     {
-        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
+        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+            .chara_index_plus_one = 0;
     }
     cdata[cc].set_state(Character::State::empty);
     cdata[cc].character_role = 0;
@@ -1968,7 +1970,7 @@ int chara_copy(const Character& source)
         destination);
 
     // Place `destination` to the found free space.
-    map(x, y, 1) = slot + 1;
+    cell_data.at(x, y).chara_index_plus_one = slot + 1;
     destination.position = *pos;
 
     // Reset some fields which should not be copied.
@@ -2156,13 +2158,15 @@ void chara_relocate(
         destination.hate = hate;
         destination.enemy_id = enemy_id;
         destination.hp = hp;
-        map(destination.position.x, destination.position.y, 1) = slot + 1;
+        cell_data.at(destination.position.x, destination.position.y)
+            .chara_index_plus_one = slot + 1;
     }
     else
     {
         if (source.index != 56)
         {
-            map(destination.position.x, destination.position.y, 1) = slot + 1;
+            cell_data.at(destination.position.x, destination.position.y)
+                .chara_index_plus_one = slot + 1;
         }
         else
         {

@@ -9,6 +9,7 @@
 #include "item.hpp"
 #include "log.hpp"
 #include "lua_env/lua_env.hpp"
+#include "map.hpp"
 #include "mef.hpp"
 #include "putit.hpp"
 #include "quest.hpp"
@@ -1015,11 +1016,13 @@ void fmode_1_2(bool read)
             tmpload(u8"map_"s + mid + u8".s2");
             load_v3(
                 filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+            cell_data.unpack_from(map);
         }
         else
         {
             Save::instance().add(filepath.filename());
             writeloadedbuff(u8"map_"s + mid + u8".s2");
+            cell_data.pack_to(map);
             save_v3(
                 filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
         }
@@ -1106,7 +1109,7 @@ void fmode_1_2(bool read)
                 {
                     for (int x = 0; x < mdata_map_width; ++x)
                     {
-                        map(x, y, 8) = 0;
+                        cell_data.at(x, y).mef_index_plus_one = 0;
                     }
                 }
                 mdata_map_mefs_loaded_flag = 1;
@@ -1191,9 +1194,11 @@ void fmode_5_6(bool read)
                 mdata_map_height); // TODO length_exception
             load_v3(
                 filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+            cell_data.unpack_from(map);
         }
         else
         {
+            cell_data.pack_to(map);
             save_v3(
                 filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
         }

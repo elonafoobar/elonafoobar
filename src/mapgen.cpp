@@ -8,6 +8,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "quest.hpp"
@@ -69,7 +70,7 @@ void map_initialize()
     {
         roomexist(cnt) = 0;
     }
-    DIM4(map, mdata_map_width, mdata_map_height, 10);
+    cell_data.init(mdata_map_width, mdata_map_height);
     DIM3(mapsync, mdata_map_width, mdata_map_height);
     DIM3(mef, 9, MEF_MAX);
     map_tileset(mdata_map_tileset);
@@ -196,33 +197,33 @@ void map_converttile()
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            if (map(x, y, 0) == 0)
+            if (cell_data.at(x, y).chip_id_actual == 0)
             {
-                map(x, y, 0) = tile_default
+                cell_data.at(x, y).chip_id_actual = tile_default
                     + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
                 continue;
             }
-            if (map(x, y, 0) >= 100)
+            if (cell_data.at(x, y).chip_id_actual >= 100)
             {
-                map(x, y, 0) = tile_tunnel
+                cell_data.at(x, y).chip_id_actual = tile_tunnel
                     + (rnd(tile_tunnel(2)) == 0) * rnd(tile_tunnel(1));
                 continue;
             }
-            if (map(x, y, 0) == 1)
+            if (cell_data.at(x, y).chip_id_actual == 1)
             {
-                map(x, y, 0) =
+                cell_data.at(x, y).chip_id_actual =
                     tile_wall + (rnd(tile_wall(2)) == 0) * rnd(tile_wall(1));
                 continue;
             }
-            if (map(x, y, 0) == 3)
+            if (cell_data.at(x, y).chip_id_actual == 3)
             {
-                map(x, y, 0) =
+                cell_data.at(x, y).chip_id_actual =
                     tile_room + (rnd(tile_room(2)) == 0) * rnd(tile_room(1));
                 continue;
             }
-            if (map(x, y, 0) == 4)
+            if (cell_data.at(x, y).chip_id_actual == 4)
             {
-                map(x, y, 0) = tile_default
+                cell_data.at(x, y).chip_id_actual = tile_default
                     + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
                 continue;
             }
@@ -430,7 +431,8 @@ void map_placearena(int prm_939, int prm_940)
         {
             break;
         }
-        map(cdata[prm_939].position.x, cdata[prm_939].position.y, 1) = 0;
+        cell_data.at(cdata[prm_939].position.x, cdata[prm_939].position.y)
+            .chara_index_plus_one = 0;
     }
 }
 
@@ -494,7 +496,8 @@ void map_randomtile(int prm_941, int prm_942)
          cnt < cnt_end;
          ++cnt)
     {
-        map(rnd(mdata_map_width), rnd(mdata_map_height), 0) = prm_941;
+        cell_data.at(rnd(mdata_map_width), rnd(mdata_map_height))
+            .chip_id_actual = prm_941;
     }
 }
 
@@ -507,11 +510,11 @@ int map_digcheck(int prm_953, int prm_954)
     {
         return 0;
     }
-    if (map(prm_953, prm_954, 0) == 100)
+    if (cell_data.at(prm_953, prm_954).chip_id_actual == 100)
     {
         return 100;
     }
-    return map(prm_953, prm_954, 0) == 0;
+    return cell_data.at(prm_953, prm_954).chip_id_actual == 0;
 }
 
 
@@ -804,10 +807,10 @@ int map_digtoentrance1(
         {
             tx_at_m168 = dx_at_m168;
             ty_at_m168 = dy_at_m168;
-            map(dx_at_m168, dy_at_m168, 0) = 100;
+            cell_data.at(dx_at_m168, dy_at_m168).chip_id_actual = 100;
             if (rnd(200) < rdhiddenpath)
             {
-                map(dx_at_m168, dy_at_m168, 0) = 4;
+                cell_data.at(dx_at_m168, dy_at_m168).chip_id_actual = 4;
                 cell_featset(dx_at_m168, dy_at_m168, 0, 22);
             }
             if (prm_963 == 0)
@@ -880,7 +883,7 @@ void map_setfog(int, int)
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            map(x, y, 2) =
+            cell_data.at(x, y).chip_id_memory =
                 tile_fog + (rnd(tile_fog(2)) == 0) * rnd(tile_fog(1));
         }
     }
@@ -968,7 +971,7 @@ void map_createroomdoor()
                 f = 0;
                 break;
             }
-            if (map(dx, dy, 0) == 1)
+            if (cell_data.at(dx, dy).chip_id_actual == 1)
             {
                 f = 0;
                 break;
@@ -976,7 +979,7 @@ void map_createroomdoor()
         }
         if (f == 1)
         {
-            map(x, y, 0) = 3;
+            cell_data.at(x, y).chip_id_actual = 3;
             if (roomdoor != 3)
             {
                 cell_featset(
@@ -1130,7 +1133,7 @@ int map_createroom(int prm_966)
         }
         if (roompos == 0)
         {
-            if (map(x, y, 0) != 3)
+            if (cell_data.at(x, y).chip_id_actual != 3)
             {
                 continue;
             }
@@ -1266,7 +1269,7 @@ int map_createroom(int prm_966)
                     }
                 }
             }
-            map(x, y, 0) = tile;
+            cell_data.at(x, y).chip_id_actual = tile;
         }
     }
     if (roomdoor == 1)
@@ -1347,10 +1350,12 @@ void map_randsite(int prm_971, int prm_972)
             x_at_m169 = prm_971;
             y_at_m169 = prm_972;
         }
-        if ((chipm(7, map(x_at_m169, y_at_m169, 0)) & 4) == 0)
+        if ((chipm(7, cell_data.at(x_at_m169, y_at_m169).chip_id_actual) & 4)
+            == 0)
         {
-            if (map(x_at_m169, y_at_m169, 6) == 0
-                && map(x_at_m169, y_at_m169, 4) == 0)
+            if (cell_data.at(x_at_m169, y_at_m169).feats == 0
+                && cell_data.at(x_at_m169, y_at_m169).item_appearances_actual
+                    == 0)
             {
                 f_at_m169 = 1;
                 break;
@@ -1359,10 +1364,10 @@ void map_randsite(int prm_971, int prm_972)
     }
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        if ((264 <= map(x_at_m169, y_at_m169, 0)
-             && map(x_at_m169, y_at_m169, 0) < 363)
-            || (33 <= map(x_at_m169, y_at_m169, 0)
-                && map(x_at_m169, y_at_m169, 0) < 66))
+        if ((264 <= cell_data.at(x_at_m169, y_at_m169).chip_id_actual
+             && cell_data.at(x_at_m169, y_at_m169).chip_id_actual < 363)
+            || (33 <= cell_data.at(x_at_m169, y_at_m169).chip_id_actual
+                && cell_data.at(x_at_m169, y_at_m169).chip_id_actual < 66))
         {
             f_at_m169 = 0;
         }
@@ -1483,9 +1488,10 @@ int map_trap(int prm_973, int prm_974, int, int prm_976)
             dx_at_m170 = prm_973;
             dy_at_m170 = prm_974;
         }
-        if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
+        if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) & 4)
+            == 0)
         {
-            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
                 if (prm_976 == 0)
                 {
@@ -1549,9 +1555,10 @@ int map_web(int prm_977, int prm_978, int prm_979)
             dx_at_m170 = prm_977;
             dy_at_m170 = prm_978;
         }
-        if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
+        if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) & 4)
+            == 0)
         {
-            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
                 mef_add(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
                 return 1;
@@ -1585,9 +1592,10 @@ int map_barrel(int prm_980, int prm_981)
             dx_at_m170 = prm_980;
             dy_at_m170 = prm_981;
         }
-        if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
+        if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) & 4)
+            == 0)
         {
-            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
                 cell_featset(dx_at_m170, dy_at_m170, tile_pot, 30);
                 return 1;
@@ -1636,25 +1644,27 @@ int map_connectroom()
                     }
                     if (x != 0)
                     {
-                        if (map(dx, dy - 1, 0) == 3 || map(dx, dy + 1, 0) == 3)
+                        if (cell_data.at(dx, dy - 1).chip_id_actual == 3
+                            || cell_data.at(dx, dy + 1).chip_id_actual == 3)
                         {
                             continue;
                         }
                     }
                     if (y != 0)
                     {
-                        if (map(dx - 1, dy, 0) == 3 || map(dx + 1, dy, 0) == 3)
+                        if (cell_data.at(dx - 1, dy).chip_id_actual == 3
+                            || cell_data.at(dx + 1, dy).chip_id_actual == 3)
                         {
                             continue;
                         }
                     }
                     break;
                 }
-                map(dx, dy, 0) = 3;
+                cell_data.at(dx, dy).chip_id_actual = 3;
                 roomexist(j) = 1;
                 dx += x;
                 dy += y;
-                map(dx, dy, 0) = 100;
+                cell_data.at(dx, dy).chip_id_actual = 100;
                 if (j == cr)
                 {
                     tx = dx;
@@ -1707,7 +1717,7 @@ void map_makedoor()
             }
             dx = tx + roomx(cr);
             dy = ty + roomy(cr);
-            if (map(dx, dy, 0) == 1)
+            if (cell_data.at(dx, dy).chip_id_actual == 1)
             {
                 continue;
             }
@@ -1737,7 +1747,7 @@ void generate_debug_map()
     {
         for (int x = 0; x < mdata_map_width; ++x)
         {
-            map(x, y, 0) = 3;
+            cell_data.at(x, y).chip_id_actual = 3;
         }
     }
 
@@ -2248,7 +2258,7 @@ void initialize_random_nefia_rdtype6()
         p = cnt;
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
-            map(cnt, p, 0) = 3;
+            cell_data.at(cnt, p).chip_id_actual = 3;
         }
     }
     for (int cnt = 0, cnt_end = (rnd(mdata_map_width * mdata_map_height / 30));
@@ -2257,7 +2267,7 @@ void initialize_random_nefia_rdtype6()
     {
         x = rnd(mdata_map_width);
         y = rnd(mdata_map_height);
-        map(x, y, 0) = 1;
+        cell_data.at(x, y).chip_id_actual = 1;
     }
     if (game_data.previous_map2 == 33)
     {
@@ -2302,7 +2312,7 @@ int initialize_quest_map_crop()
         p = cnt;
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
-            map(cnt, p, 0) = tile_default
+            cell_data.at(cnt, p).chip_id_actual = tile_default
                 + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
         }
     }
@@ -2346,8 +2356,9 @@ int initialize_quest_map_crop()
                 {
                     break;
                 }
-                map(x, y, 0) = tile;
-                if (rnd(10) != 0 || map(x, y, 4) != 0)
+                cell_data.at(x, y).chip_id_actual = tile;
+                if (rnd(10) != 0
+                    || cell_data.at(x, y).item_appearances_actual != 0)
                 {
                     continue;
                 }
@@ -2380,9 +2391,10 @@ int initialize_quest_map_crop()
     {
         x = rnd(mdata_map_width);
         y = rnd(mdata_map_height);
-        if (map(x, y, 0) != 30 && map(x, y, 0) != 31)
+        if (cell_data.at(x, y).chip_id_actual != 30
+            && cell_data.at(x, y).chip_id_actual != 31)
         {
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 if (rnd(8))
                 {
@@ -2454,11 +2466,11 @@ int initialize_random_nefia_rdtype4()
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            map(x, y, 0) = 1;
+            cell_data.at(x, y).chip_id_actual = 1;
             if (x > p && y > p && x + 1 < mdata_map_width - p
                 && y + 1 < mdata_map_height - p)
             {
-                map(x, y, 0) = 100;
+                cell_data.at(x, y).chip_id_actual = 100;
             }
         }
     }
@@ -2499,7 +2511,7 @@ int initialize_random_nefia_rdtype4()
                  ++cnt)
             {
                 x = p + cnt;
-                map(x, y, 0) = 1;
+                cell_data.at(x, y).chip_id_actual = 1;
             }
         }
     }
@@ -2522,11 +2534,11 @@ int initialize_random_nefia_rdtype5()
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            map(x, y, 0) = 1;
+            cell_data.at(x, y).chip_id_actual = 1;
             if (x > p && y > p && x + 1 < mdata_map_width - p
                 && y + 1 < mdata_map_height - p)
             {
-                map(x, y, 0) = 100;
+                cell_data.at(x, y).chip_id_actual = 100;
             }
         }
     }
@@ -2567,7 +2579,7 @@ int initialize_random_nefia_rdtype5()
                  ++cnt)
             {
                 x = p + cnt;
-                map(x, y, 0) = 1;
+                cell_data.at(x, y).chip_id_actual = 1;
             }
         }
     }
@@ -2582,7 +2594,7 @@ int initialize_random_nefia_rdtype2()
     map_initialize();
     dx = mdata_map_width / 2;
     dy = mdata_map_height / 2;
-    map(dx, dy, 0) = 3;
+    cell_data.at(dx, dy).chip_id_actual = 3;
     p = 0;
     for (int cnt = 0, cnt_end = (rdtunnel); cnt < cnt_end; ++cnt)
     {
@@ -2626,7 +2638,7 @@ int initialize_random_nefia_rdtype2()
                 dy = 1;
             }
         }
-        map(dx, dy, 0) = 3;
+        cell_data.at(dx, dy).chip_id_actual = 3;
     }
     int stat = map_createroom();
     if (stat == 0)
@@ -2653,7 +2665,7 @@ int initialize_random_nefia_rdtype2()
         {
             x = rnd(mdata_map_width);
             y = rnd(mdata_map_height);
-            if (map(x, y, 0) == 3)
+            if (cell_data.at(x, y).chip_id_actual == 3)
             {
                 dx = rnd(rdroomsizemax) + rdroomsizemin;
                 dy = rnd(rdroomsizemax) + rdroomsizemin;
@@ -2677,7 +2689,7 @@ int initialize_random_nefia_rdtype2()
             dx = x;
             for (int cnt = 0, cnt_end = (rx); cnt < cnt_end; ++cnt)
             {
-                map(dx, dy, 0) = 3;
+                cell_data.at(dx, dy).chip_id_actual = 3;
                 ++dx;
             }
             ++dy;
@@ -2705,7 +2717,7 @@ int initialize_random_nefia_rdtype3()
             {
                 continue;
             }
-            map(x, y, 0) = 3;
+            cell_data.at(x, y).chip_id_actual = 3;
         }
     }
     p(0) = rnd(mdata_map_width / 2) + 2;
@@ -2747,7 +2759,7 @@ int initialize_quest_map_party()
             {
                 continue;
             }
-            map(x, y, 0) = 100;
+            cell_data.at(x, y).chip_id_actual = 100;
         }
     }
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
@@ -2767,11 +2779,13 @@ int initialize_quest_map_party()
             for (int cnt = 0; cnt < 4; ++cnt)
             {
                 x = dx + cnt;
-                if (map(x, y, 0) != tile_tunnel || map(x, y, 4) != 0)
+                if (cell_data.at(x, y).chip_id_actual != tile_tunnel
+                    || cell_data.at(x, y).item_appearances_actual != 0)
                 {
                     p(0) = 0;
                 }
-                if (map(x, y, 0) != tile_room || map(x, y, 4) != 0)
+                if (cell_data.at(x, y).chip_id_actual != tile_room
+                    || cell_data.at(x, y).item_appearances_actual != 0)
                 {
                     p(1) = 0;
                 }
@@ -2791,7 +2805,7 @@ int initialize_quest_map_party()
                     {
                         if (cnt != 0 && cnt != 3 && cnt2 != 0 && cnt2 != 3)
                         {
-                            map(x, y, 0) = 473;
+                            cell_data.at(x, y).chip_id_actual = 473;
                         }
                     }
                     if (n == 2)
@@ -2802,11 +2816,11 @@ int initialize_quest_map_party()
                         }
                         if (cnt == 1 && cnt2 == 1)
                         {
-                            map(x, y, 0) = 664;
+                            cell_data.at(x, y).chip_id_actual = 664;
                         }
                         else
                         {
-                            map(x, y, 0) = 206;
+                            cell_data.at(x, y).chip_id_actual = 206;
                             flt();
                             itemcreate(-1, 91, x, y, 0);
                         }
@@ -2815,7 +2829,7 @@ int initialize_quest_map_party()
                     {
                         if (cnt == 1 && cnt2 == 1)
                         {
-                            map(x, y, 0) = 204;
+                            cell_data.at(x, y).chip_id_actual = 204;
                             flt();
                             itemcreate(-1, 585, x, y, 0);
                         }
@@ -2825,7 +2839,7 @@ int initialize_quest_map_party()
                         if (cnt == 1 && cnt2 == 1)
                         {
                             flt();
-                            map(x, y, 0) = 69;
+                            cell_data.at(x, y).chip_id_actual = 69;
                             itemcreate(-1, 138, x, y, 0);
                         }
                     }
@@ -2900,7 +2914,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 88, x, y, 0);
@@ -2910,7 +2924,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 313, x, y, 0);
@@ -2920,7 +2934,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 156, x, y, 0);
@@ -2930,7 +2944,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 606, x, y, 0);
@@ -2960,7 +2974,8 @@ int initialize_quest_map_party()
     {
         x = rnd(mdata_map_width);
         y = rnd(mdata_map_height);
-        if (map(x, y, 4) != 0 || chipm(7, map(x, y, 0)) & 4)
+        if (cell_data.at(x, y).item_appearances_actual != 0
+            || chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
         {
             continue;
         }
@@ -3104,7 +3119,7 @@ void initialize_quest_map_town()
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            map(x, y, 6) = 0;
+            cell_data.at(x, y).feats = 0;
         }
     }
 }
@@ -3126,7 +3141,7 @@ void initialize_random_nefia_rdtype8()
         for (int cnt = 0, cnt_end = (w); cnt < cnt_end; ++cnt)
         {
             x = cnt + dx;
-            map(x, y, 0) = 100;
+            cell_data.at(x, y).chip_id_actual = 100;
         }
         if (p <= 0)
         {
@@ -3178,7 +3193,7 @@ void initialize_random_nefia_rdtype8()
     {
         x = rnd(mdata_map_width);
         y = rnd(15);
-        if (map(x, y, 0) == 100)
+        if (cell_data.at(x, y).chip_id_actual == 100)
         {
             map_placeupstairs(x, y);
             break;
@@ -3188,7 +3203,7 @@ void initialize_random_nefia_rdtype8()
     {
         x = rnd(mdata_map_width);
         y = mdata_map_height - rnd(15) - 1;
-        if (map(x, y, 0) == 100)
+        if (cell_data.at(x, y).chip_id_actual == 100)
         {
             map_placedownstairs(x, y);
             break;
@@ -3319,7 +3334,7 @@ void mapgen_dig_maze()
                          ++cnt)
                     {
                         x = sdigx + cnt - _bold + 4;
-                        map(x, y, 0) = 100;
+                        cell_data.at(x, y).chip_id_actual = 100;
                     }
                 }
             }
@@ -3333,7 +3348,7 @@ void mapgen_dig_maze()
                          ++cnt)
                     {
                         x = sdigx + cnt - _bold + 4;
-                        map(x, y, 0) = 100;
+                        cell_data.at(x, y).chip_id_actual = 100;
                     }
                 }
             }
@@ -3348,7 +3363,7 @@ void mapgen_dig_maze()
                          ++cnt)
                     {
                         x = sdigx + cnt - _bold + 4;
-                        map(x, y, 0) = 100;
+                        cell_data.at(x, y).chip_id_actual = 100;
                     }
                 }
             }
@@ -3362,7 +3377,7 @@ void mapgen_dig_maze()
                          ++cnt)
                     {
                         x = sdigx + cnt - _bold * 2 - _bold + 4;
-                        map(x, y, 0) = 100;
+                        cell_data.at(x, y).chip_id_actual = 100;
                     }
                 }
             }
@@ -3405,13 +3420,13 @@ void mapgen_dig_maze()
     {
         x = rnd(mdata_map_width);
         y = rnd(mdata_map_height);
-        if (map(x, y, 0) != 100)
+        if (cell_data.at(x, y).chip_id_actual != 100)
         {
             continue;
         }
         dx = rnd(mdata_map_width);
         dy = rnd(mdata_map_height);
-        if (map(dx, dy, 0) != 100)
+        if (cell_data.at(dx, dy).chip_id_actual != 100)
         {
             continue;
         }
@@ -3445,7 +3460,7 @@ void initialize_random_nefia_rdtype10()
         {
             x = rnd(mdata_map_width);
             y = rnd(mdata_map_height);
-            if (map(x, y, 0) != 100)
+            if (cell_data.at(x, y).chip_id_actual != 100)
             {
                 continue;
             }
@@ -3467,11 +3482,11 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx - 1;
                     ty = dy;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
@@ -3479,11 +3494,11 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx + 1;
                     ty = dy;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
@@ -3491,11 +3506,11 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx;
                     ty = dy - 1;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
@@ -3503,11 +3518,11 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx;
                     ty = dy + 1;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
@@ -3515,11 +3530,11 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx - 1;
                     ty = dy - 1;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
@@ -3527,11 +3542,11 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx + 1;
                     ty = dy - 1;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
@@ -3539,11 +3554,11 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx - 1;
                     ty = dy + 1;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
@@ -3551,17 +3566,17 @@ void initialize_random_nefia_rdtype10()
                     }
                     tx = dx + 1;
                     ty = dy + 1;
-                    if (map(tx, ty, 0) != t)
+                    if (cell_data.at(tx, ty).chip_id_actual != t)
                     {
-                        if (map(tx, ty, 0) != 0)
+                        if (cell_data.at(tx, ty).chip_id_actual != 0)
                         {
-                            if (map(tx, ty, 0) != 100)
+                            if (cell_data.at(tx, ty).chip_id_actual != 100)
                             {
                                 continue;
                             }
                         }
                     }
-                    map(dx, dy, 0) = t;
+                    cell_data.at(dx, dy).chip_id_actual = t;
                 }
             }
             break;
@@ -3575,21 +3590,21 @@ void initialize_random_nefia_rdtype10()
              ++cnt)
         {
             x = cnt * 2;
-            if (map(x, y, 0) < 100)
+            if (cell_data.at(x, y).chip_id_actual < 100)
             {
                 continue;
             }
-            if (map(x, y, 6) != 0)
+            if (cell_data.at(x, y).feats != 0)
             {
                 continue;
             }
-            if (map(x - 1, y, 0) >= 100)
+            if (cell_data.at(x - 1, y).chip_id_actual >= 100)
             {
-                if (map(x + 1, y, 0) >= 100)
+                if (cell_data.at(x + 1, y).chip_id_actual >= 100)
                 {
-                    if (map(x, y - 1, 0) == 0)
+                    if (cell_data.at(x, y - 1).chip_id_actual == 0)
                     {
-                        if (map(x, y + 1, 0) == 0)
+                        if (cell_data.at(x, y + 1).chip_id_actual == 0)
                         {
                             cell_featset(
                                 x,
@@ -3604,13 +3619,13 @@ void initialize_random_nefia_rdtype10()
                     continue;
                 }
             }
-            if (map(x, y - 1, 0) >= 100)
+            if (cell_data.at(x, y - 1).chip_id_actual >= 100)
             {
-                if (map(x, y + 1, 0) >= 100)
+                if (cell_data.at(x, y + 1).chip_id_actual >= 100)
                 {
-                    if (map(x - 1, y, 0) == 0)
+                    if (cell_data.at(x - 1, y).chip_id_actual == 0)
                     {
-                        if (map(x + 1, y, 0) == 0)
+                        if (cell_data.at(x + 1, y).chip_id_actual == 0)
                         {
                             cell_featset(
                                 x,

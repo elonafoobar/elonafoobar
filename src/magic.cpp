@@ -247,9 +247,9 @@ int magic()
                     {
                         mapitem_cold(dx, dy);
                     }
-                    if (map(dx, dy, 1) != 0)
+                    if (cell_data.at(dx, dy).chara_index_plus_one != 0)
                     {
-                        tc = map(dx, dy, 1) - 1;
+                        tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
                         if (cc != tc)
                         {
                             if (game_data.mount != 0)
@@ -341,11 +341,11 @@ int magic()
                         {
                             continue;
                         }
-                        if (map(dx, dy, 1) == 0)
+                        if (cell_data.at(dx, dy).chara_index_plus_one == 0)
                         {
                             continue;
                         }
-                        tc = map(dx, dy, 1) - 1;
+                        tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
                         if (efid == 404)
                         {
                             f = 0;
@@ -834,13 +834,13 @@ int magic()
                 }
                 if (efid == 409 || efid == 635)
                 {
-                    if (map(tlocx, tlocy, 1) == 0)
+                    if (cell_data.at(tlocx, tlocy).chara_index_plus_one == 0)
                     {
                         txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
                         goto the_end;
                     }
-                    tc = map(tlocx, tlocy, 1) - 1;
+                    tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
                 }
                 if (game_data.current_map == mdata_t::MapId::pet_arena
                     || mdata_map_type == mdata_t::MapType::world_map
@@ -1056,9 +1056,9 @@ int magic()
                     {
                         mapitem_cold(dx, dy);
                     }
-                    if (map(dx, dy, 1) != 0)
+                    if (cell_data.at(dx, dy).chara_index_plus_one != 0)
                     {
-                        tc = map(dx, dy, 1) - 1;
+                        tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
                         if (cc != tc)
                         {
                             dmg = roll(dice1, dice2, bonus);
@@ -1149,7 +1149,8 @@ label_2181_internal:
                     int cnt2 = cnt;
                     for (int cnt = 0; cnt < 3; ++cnt)
                     {
-                        p = map(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt, 0);
+                        p = cell_data.at(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt)
+                                .chip_id_actual;
                         if ((264 <= p && p < 363) || chipm(7, p) & 4)
                         {
                             f = 0;
@@ -1191,7 +1192,7 @@ label_2181_internal:
             {
                 x = cnt + inv[ci].param1 - 3;
                 sx = cnt * inf_tiles + wx + 46;
-                p = map(x, y, 0);
+                p = cell_data.at(x, y).chip_id_actual;
                 pos(sx + 1, sy + 1);
                 gcopy(
                     2,
@@ -1648,7 +1649,7 @@ label_2181_internal:
             {
                 continue;
             }
-            if (chipm(0, map(x, y, 0)) == 3)
+            if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
             {
                 f = 1;
                 break;
@@ -1665,7 +1666,7 @@ label_2181_internal:
                 {
                     continue;
                 }
-                if (chipm(0, map(x, y, 0)) == 3)
+                if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
                 {
                     f = 1;
                     break;
@@ -1680,7 +1681,10 @@ label_2181_internal:
             return 0;
         }
         if (chipm(
-                0, map(cdata.player().position.x, cdata.player().position.y, 0))
+                0,
+                cell_data
+                    .at(cdata.player().position.x, cdata.player().position.y)
+                    .chip_id_actual)
             == 3)
         {
             txt(i18n::s.get("core.locale.magic.fish.cannot_during_swim"));
@@ -2587,11 +2591,11 @@ label_2181_internal:
                     {
                         if (efid == 429)
                         {
-                            map(x, y, 2) = tile_default;
+                            cell_data.at(x, y).chip_id_memory = tile_default;
                         }
                         if (efid == 430)
                         {
-                            map(x, y, 5) = 0;
+                            cell_data.at(x, y).item_appearances_memory = 0;
                         }
                         continue;
                     }
@@ -2600,13 +2604,17 @@ label_2181_internal:
                     {
                         if (efid == 429)
                         {
-                            map(x, y, 2) = map(x, y, 0);
+                            cell_data.at(x, y).chip_id_memory =
+                                cell_data.at(x, y).chip_id_actual;
                         }
                         if (efid == 430)
                         {
-                            if (map(x, y, 6) != 0 || map(x, y, 5) != 0)
+                            if (cell_data.at(x, y).feats != 0
+                                || cell_data.at(x, y).item_appearances_memory
+                                    != 0)
                             {
-                                map(x, y, 2) = map(x, y, 0);
+                                cell_data.at(x, y).chip_id_memory =
+                                    cell_data.at(x, y).chip_id_actual;
                             }
                         }
                     }
@@ -3151,7 +3159,7 @@ label_2181_internal:
             {
                 f = 0;
             }
-            else if (chipm(7, map(x, y, 0)) & 4)
+            else if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
             {
                 f = 0;
             }
@@ -3762,7 +3770,7 @@ label_2181_internal:
         }
         else
         {
-            if (chipm(7, map(x, y, 0)) & 4)
+            if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
             {
                 if (homemapmode == 0)
                 {
@@ -3770,13 +3778,14 @@ label_2181_internal:
                     {
                         f = 0;
                     }
-                    else if (chipm(0, map(x, y, 0)) == 3)
+                    else if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
                     {
                         f = 0;
                     }
                 }
             }
-            if (map(x, y, 1) != 0 || map(x, y, 6) != 0)
+            if (cell_data.at(x, y).chara_index_plus_one != 0
+                || cell_data.at(x, y).feats != 0)
             {
                 f = 0;
             }
@@ -3794,26 +3803,26 @@ label_2181_internal:
                 {
                     p = tile;
                 }
-                if (map(x, y, 0) != p)
+                if (cell_data.at(x, y).chip_id_actual != p)
                 {
                     snd(65);
                 }
-                map(x, y, 0) = p;
-                map(x, y, 2) = p;
+                cell_data.at(x, y).chip_id_actual = p;
+                cell_data.at(x, y).chip_id_memory = p;
             }
             if (efid == 457)
             {
                 snd(65);
-                if (chipm(0, map(x, y, 0)) == 6)
+                if (chipm(0, cell_data.at(x, y).chip_id_actual) == 6)
                 {
                     txt(i18n::s.get("core.locale.magic.create.door.resist"));
                     break;
                 }
                 txt(i18n::s.get("core.locale.magic.create.door.apply"));
                 cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
-                if (chipm(7, map(x, y, 0)) & 4)
+                if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
                 {
-                    map(x, y, 0) = tile_tunnel;
+                    cell_data.at(x, y).chip_id_actual = tile_tunnel;
                 }
             }
         }
@@ -3869,7 +3878,7 @@ label_2181_internal:
         {
             break;
         }
-        if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
+        if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats != 0)
         {
             break;
         }
@@ -3943,15 +3952,15 @@ label_2181_internal:
                 dx = cnt;
                 if (rnd(3) == 0)
                 {
-                    map(dx, dy, 0) = 12 + rnd(2);
+                    cell_data.at(dx, dy).chip_id_actual = 12 + rnd(2);
                 }
                 if (rnd(40) == 0)
                 {
                     mef_add(dx, dy, 5, 24, rnd(4) + 3, 50);
                 }
-                if (map(dx, dy, 1) != 0)
+                if (cell_data.at(dx, dy).chara_index_plus_one != 0)
                 {
-                    tc = map(dx, dy, 1) - 1;
+                    tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
                     dmg = sdata(16, cc) * efp / 10;
                     damage_hp(cdata[tc], dmg, cc, 50, 1000);
                 }

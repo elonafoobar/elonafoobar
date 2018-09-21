@@ -40,7 +40,7 @@ void mef_delete(int prm_581)
     {
         event_add(21, mef(2, prm_581), mef(3, prm_581));
     }
-    map(mef(2, prm_581), mef(3, prm_581), 8) = 0;
+    cell_data.at(mef(2, prm_581), mef(3, prm_581)).mef_index_plus_one = 0;
     mef(0, prm_581) = 0;
     i_at_m79 = 199;
     for (int cnt = 0, cnt_end = (MEF_MAX - prm_581); cnt < cnt_end; ++cnt)
@@ -51,7 +51,8 @@ void mef_delete(int prm_581)
             {
                 mef(cnt, prm_581) = mef(cnt, i_at_m79);
             }
-            map(mef(2, i_at_m79), mef(3, i_at_m79), 8) = prm_581 + 1;
+            cell_data.at(mef(2, i_at_m79), mef(3, i_at_m79))
+                .mef_index_plus_one = prm_581 + 1;
             mef(0, i_at_m79) = 0;
             break;
         }
@@ -74,7 +75,7 @@ void mef_add(
     int prm_591)
 {
     int p_at_m79 = 0;
-    p_at_m79 = map(pos_x, pos_y, 0);
+    p_at_m79 = cell_data.at(pos_x, pos_y).chip_id_actual;
     if (prm_584 == 5)
     {
         if (chipm(0, p_at_m79) == 3)
@@ -82,9 +83,9 @@ void mef_add(
             return;
         }
     }
-    if (map(pos_x, pos_y, 8) != 0)
+    if (cell_data.at(pos_x, pos_y).mef_index_plus_one != 0)
     {
-        i_at_m79 = map(pos_x, pos_y, 8) - 1;
+        i_at_m79 = cell_data.at(pos_x, pos_y).mef_index_plus_one - 1;
     }
     else
     {
@@ -100,7 +101,8 @@ void mef_add(
         if (i_at_m79 == -1)
         {
             i_at_m79 = rnd(MEF_MAX);
-            map(mef(2, i_at_m79), mef(3, i_at_m79), 8) = 0;
+            cell_data.at(mef(2, i_at_m79), mef(3, i_at_m79))
+                .mef_index_plus_one = 0;
         }
     }
     mef(0, i_at_m79) = prm_584;
@@ -112,7 +114,7 @@ void mef_add(
     mef(6, i_at_m79) = chara;
     mef(7, i_at_m79) = prm_589;
     mef(8, i_at_m79) = prm_590;
-    map(pos_x, pos_y, 8) = i_at_m79 + 1;
+    cell_data.at(pos_x, pos_y).mef_index_plus_one = i_at_m79 + 1;
 }
 
 void mef_update()
@@ -162,9 +164,9 @@ void mef_update()
                             f = 0;
                             continue;
                         }
-                        if (chipm(7, map(x, y, 0)) & 4)
+                        if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
                         {
-                            map(x, y, 0) = 37;
+                            cell_data.at(x, y).chip_id_actual = 37;
                             cnt = 0 - 1;
                             continue;
                         }
@@ -196,7 +198,9 @@ void mef_update()
 
 void mef_proc(int tc)
 {
-    int ef = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
+    int ef = cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+                 .mef_index_plus_one
+        - 1;
     if (mef(0, ef) == 0)
     {
         return;
@@ -286,7 +290,9 @@ void mef_proc(int tc)
 // returns true if turn ended
 bool mef_proc_from_movement(int cc)
 {
-    int i = map(cdata[cc].position.x, cdata[cc].position.y, 8) - 1;
+    int i = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                .mef_index_plus_one
+        - 1;
     if (mef(0, i) == 0)
     {
         return false;
@@ -323,7 +329,9 @@ bool mef_proc_from_movement(int cc)
 // returns true if caller needs to return directly after
 bool mef_proc_from_physical_attack(int tc)
 {
-    int i = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
+    int i = cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+                .mef_index_plus_one
+        - 1;
     if (mef(0, i) == 0)
     {
         return false;

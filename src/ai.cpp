@@ -454,11 +454,13 @@ TurnResult proc_npc_movement_event(bool retreat)
                         {
                             if (y < mdata_map_height)
                             {
-                                if (chipm(7, map(x, y, 0)) & 4)
+                                if (chipm(7, cell_data.at(x, y).chip_id_actual)
+                                    & 4)
                                 {
                                     if (rnd(4) == 0)
                                     {
-                                        map(x, y, 0) = tile_tunnel;
+                                        cell_data.at(x, y).chip_id_actual =
+                                            tile_tunnel;
                                         snd(45);
                                         BreakingAnimation({x, y}).play();
                                         spillfrag(x, y, 2);
@@ -781,9 +783,10 @@ label_2692_internal:
                     {
                         if (chipm(
                                 0,
-                                map(cdata[cc].position.x,
-                                    cdata[cc].position.y,
-                                    0))
+                                cell_data
+                                    .at(cdata[cc].position.x,
+                                        cdata[cc].position.y)
+                                    .chip_id_actual)
                             == 4)
                         {
                             if (rnd(4) == 0)
@@ -841,9 +844,10 @@ label_2692_internal:
                             }
                             if (rnd(10) == 0)
                             {
-                                if (map(cdata[cc].position.x,
-                                        cdata[cc].position.y,
-                                        4)
+                                if (cell_data
+                                        .at(cdata[cc].position.x,
+                                            cdata[cc].position.y)
+                                        .item_appearances_actual
                                     == 0)
                                 {
                                     flt();

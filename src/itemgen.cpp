@@ -9,6 +9,7 @@
 #include "item.hpp"
 #include "item_material.hpp"
 #include "lua_env/lua_env.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -117,7 +118,7 @@ int do_create_item(int slot, int x, int y)
             {
                 sx = rnd(mdata_map_width - 2) + 2;
                 sy = rnd(mdata_map_height - 2) + 2;
-                if (map(sx, sy, 4) != 0)
+                if (cell_data.at(sx, sy).item_appearances_actual != 0)
                 {
                     continue;
                 }
@@ -147,16 +148,16 @@ int do_create_item(int slot, int x, int y)
                 inv[ci].position.y = sy;
                 break;
             }
-            if (map(sx, sy, 6) != 0)
+            if (cell_data.at(sx, sy).feats != 0)
             {
-                if (map(sx, sy, 6) / 1000 % 100 == 22
-                    || map(sx, sy, 6) / 1000 % 100 == 20
-                    || map(sx, sy, 6) / 1000 % 100 == 21)
+                if (cell_data.at(sx, sy).feats / 1000 % 100 == 22
+                    || cell_data.at(sx, sy).feats / 1000 % 100 == 20
+                    || cell_data.at(sx, sy).feats / 1000 % 100 == 21)
                 {
                     continue;
                 }
             }
-            if ((chipm(7, map(sx, sy, 0)) & 4) == 0)
+            if ((chipm(7, cell_data.at(sx, sy).chip_id_actual) & 4) == 0)
             {
                 ok = true;
                 inv[ci].position.x = sx;

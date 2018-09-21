@@ -24,6 +24,7 @@
 #include "item.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
@@ -452,7 +453,9 @@ label_2689_internal:
         {
             if (tc == 0)
             {
-                if (map(cdata[cc].position.x, cdata[cc].position.y, 4) != 0)
+                if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                        .item_appearances_actual
+                    != 0)
                 {
                     const auto item_info = cell_itemoncell(cdata[cc].position);
                     const auto number = item_info.first;
@@ -570,7 +573,7 @@ label_2689_internal:
                 {
                     continue;
                 }
-                c = map(x, y, 1) - 1;
+                c = cell_data.at(x, y).chara_index_plus_one - 1;
                 if (c <= 0)
                 {
                     continue;
@@ -980,7 +983,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
     }
     tc = cc;
-    if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
+    if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+            .mef_index_plus_one
+        != 0)
     {
         mef_proc(tc);
     }
@@ -1266,7 +1271,8 @@ TurnResult pc_turn(bool advance_time)
         }
         if (mdata_map_type == mdata_t::MapType::world_map)
         {
-            map(cdata.player().position.x, cdata.player().position.y, 1) = 1;
+            cell_data.at(cdata.player().position.x, cdata.player().position.y)
+                .chara_index_plus_one = 1;
         }
         if (game_data.ether_disease_stage >= 20000)
         {
@@ -1289,9 +1295,9 @@ TurnResult pc_turn(bool advance_time)
                     x = cdata.player().position.x + dx;
                     if (x < 0 || x <= mdata_map_width)
                         continue;
-                    if (map(x, y, 1) != 0)
+                    if (cell_data.at(x, y).chara_index_plus_one != 0)
                     {
-                        p = map(x, y, 1) - 1;
+                        p = cell_data.at(x, y).chara_index_plus_one - 1;
                         if (p != 0 && cdata[p].relationship <= -3)
                         {
                             game_data.player_cellaccess_check_flag = 0;
@@ -1305,11 +1311,12 @@ TurnResult pc_turn(bool advance_time)
                 x + dirxy(0, game_data.player_next_move_direction);
             cdata.player().next_position.y =
                 y + dirxy(1, game_data.player_next_move_direction);
-            if (map(x, y, 5) != 0)
+            if (cell_data.at(x, y).item_appearances_memory != 0)
             {
                 game_data.player_cellaccess_check_flag = 0;
             }
-            if (map(x, y, 6) != 0 && map(x, y, 6) != 999)
+            if (cell_data.at(x, y).feats != 0
+                && cell_data.at(x, y).feats != 999)
             {
                 game_data.player_cellaccess_check_flag = 0;
             }
@@ -2314,7 +2321,8 @@ label_2747:
         if (foobar_data.is_autodig_enabled)
         {
             if (0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height
-                && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
+                && (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+                && chipm(0, cell_data.at(x, y).chip_id_actual) != 3
                 && mdata_map_type != mdata_t::MapType::world_map)
             {
                 refx = x;
