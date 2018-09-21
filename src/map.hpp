@@ -41,6 +41,9 @@ struct MapData
     int mefs_loaded_flag{};
 
 
+    bool is_town_or_guild() const;
+
+
     /**
      * Moves this struct's fields into `mdata` so they can be serialized, for
      * compatibility. To be called before serializing `mdata`.

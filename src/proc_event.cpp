@@ -823,8 +823,7 @@ void proc_event()
             game_data.quest_flags.red_blossom_in_palmia = 2;
             quest_update_journal_msg();
         }
-        if (map_data.type == mdata_t::MapType::town
-            || map_data.type == mdata_t::MapType::guild)
+        if (map_data.is_town_or_guild())
         {
             modify_karma(cdata.player(), -80 + trait(162) * 60);
         }

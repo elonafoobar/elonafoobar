@@ -71,6 +71,13 @@ void MapData::clear()
 }
 
 
+bool MapData::is_town_or_guild() const
+{
+    return map_data.type == mdata_t::MapType::town
+        || map_data.type == mdata_t::MapType::guild;
+}
+
+
 
 #define MAP_PACK(n, ident) legacy_map(x, y, n) = ident;
 #define MAP_UNPACK(n, ident) ident = legacy_map(x, y, n);

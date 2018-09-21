@@ -727,8 +727,7 @@ TurnResult ai_proc_misc_map_events()
 label_2692_internal:
     if (cc >= 16)
     {
-        if (map_data.type == mdata_t::MapType::town
-            || map_data.type == mdata_t::MapType::guild)
+        if (map_data.is_town_or_guild())
         {
             if (game_data.date.hour >= 22 || game_data.date.hour < 7)
             {

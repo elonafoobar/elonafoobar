@@ -5822,7 +5822,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 47;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::test_world);
     p = static_cast<int>(mdata_t::MapId::test_world_north_border);
     area_data[p].id = p;
     area_data[p].appearance = 158;
@@ -5838,7 +5838,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 47;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::test_world);
     p = static_cast<int>(mdata_t::MapId::south_tyris);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -5854,7 +5854,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 44;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::south_tyris);
     p = static_cast<int>(mdata_t::MapId::south_tyris_north_border);
     area_data[p].id = p;
     area_data[p].appearance = 158;
@@ -5870,7 +5870,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 44;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::south_tyris);
     p = static_cast<int>(mdata_t::MapId::the_smoke_and_pipe);
     area_data[p].id = p;
     area_data[p].appearance = 159;
@@ -5886,7 +5886,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 44;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::south_tyris);
     p = static_cast<int>(mdata_t::MapId::north_tyris);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -5902,7 +5902,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::vernis);
     area_data[p].id = p;
     area_data[p].appearance = 132;
@@ -5919,7 +5919,7 @@ void initialize_adata()
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
     area_data[p].quest_town_id = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::yowyn);
     area_data[p].id = p;
     area_data[p].appearance = 142;
@@ -5936,7 +5936,7 @@ void initialize_adata()
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
     area_data[p].quest_town_id = 2;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::palmia);
     area_data[p].id = p;
     area_data[p].appearance = 136;
@@ -5953,7 +5953,7 @@ void initialize_adata()
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
     area_data[p].quest_town_id = 3;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::derphy);
     area_data[p].id = p;
     area_data[p].appearance = 142;
@@ -5970,7 +5970,7 @@ void initialize_adata()
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
     area_data[p].quest_town_id = 4;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::port_kapul);
     area_data[p].id = p;
     area_data[p].appearance = 132;
@@ -5987,7 +5987,7 @@ void initialize_adata()
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
     area_data[p].quest_town_id = 5;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::noyel);
     area_data[p].id = p;
     area_data[p].appearance = 156;
@@ -6004,7 +6004,7 @@ void initialize_adata()
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
     area_data[p].quest_town_id = 6;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::lumiest);
     area_data[p].id = p;
     area_data[p].appearance = 132;
@@ -6021,7 +6021,7 @@ void initialize_adata()
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
     area_data[p].quest_town_id = 7;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::fields);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -6037,7 +6037,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::your_home);
     area_data[p].id = p;
     area_data[p].type = static_cast<int>(mdata_t::MapType::player_owned);
@@ -6055,7 +6055,7 @@ void initialize_adata()
         area_data[p].position.y = 21;
         area_data[p].tile_set = 1;
         area_data[p].tile_type = 3;
-        area_data[p].outer_map = 4;
+        area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     }
     p = static_cast<int>(mdata_t::MapId::show_house);
     area_data[p].id = p;
@@ -6072,7 +6072,7 @@ void initialize_adata()
     area_data[p].position.y = 27;
     area_data[p].tile_set = 1;
     area_data[p].tile_type = 3;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::arena);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -6088,7 +6088,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::pet_arena);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -6104,7 +6104,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::quest);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -6120,7 +6120,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::lesimas);
     area_data[p].id = p;
     area_data[p].appearance = 139;
@@ -6136,7 +6136,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::the_void);
     area_data[p].id = p;
     area_data[p].appearance = 139;
@@ -6152,7 +6152,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::tower_of_fire);
     area_data[p].id = p;
     area_data[p].appearance = 145;
@@ -6168,7 +6168,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::crypt_of_the_damned);
     area_data[p].id = p;
     area_data[p].appearance = 141;
@@ -6184,7 +6184,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::ancient_castle);
     area_data[p].id = p;
     area_data[p].appearance = 144;
@@ -6200,7 +6200,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::dragons_nest);
     area_data[p].id = p;
     area_data[p].appearance = 146;
@@ -6216,7 +6216,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::mountain_pass);
     area_data[p].id = p;
     area_data[p].appearance = 146;
@@ -6232,7 +6232,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::puppy_cave);
     area_data[p].id = p;
     area_data[p].appearance = 146;
@@ -6248,7 +6248,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::minotaurs_nest);
     area_data[p].id = p;
     area_data[p].appearance = 146;
@@ -6264,7 +6264,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::yeeks_nest);
     area_data[p].id = p;
     area_data[p].appearance = 146;
@@ -6280,7 +6280,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::pyramid);
     area_data[p].id = p;
     area_data[p].appearance = 160;
@@ -6296,7 +6296,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::lumiest_graveyard);
     area_data[p].id = p;
     area_data[p].appearance = 141;
@@ -6312,7 +6312,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::truce_ground);
     area_data[p].id = p;
     area_data[p].appearance = 147;
@@ -6328,7 +6328,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::jail);
     area_data[p].id = p;
     area_data[p].appearance = 161;
@@ -6344,7 +6344,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::cyber_dome);
     area_data[p].id = p;
     area_data[p].appearance = 148;
@@ -6360,7 +6360,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::larna);
     area_data[p].id = p;
     area_data[p].appearance = 142;
@@ -6376,7 +6376,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::miral_and_garoks_workshop);
     area_data[p].id = p;
     area_data[p].appearance = 157;
@@ -6392,7 +6392,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::mansion_of_younger_sister);
     area_data[p].id = p;
     area_data[p].appearance = 162;
@@ -6408,7 +6408,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::embassy);
     area_data[p].id = p;
     area_data[p].appearance = 155;
@@ -6424,7 +6424,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::north_tyris_south_border);
     area_data[p].id = p;
     area_data[p].appearance = 158;
@@ -6440,7 +6440,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_beast);
     area_data[p].id = p;
     area_data[p].appearance = 149;
@@ -6456,7 +6456,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_machine);
     area_data[p].id = p;
     area_data[p].appearance = 149;
@@ -6472,7 +6472,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::fort_of_chaos_collapsed);
     area_data[p].id = p;
     area_data[p].appearance = 149;
@@ -6488,7 +6488,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::shelter_);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -6504,7 +6504,7 @@ void initialize_adata()
     area_data[p].is_indoor = true;
     area_data[p].is_generated_every_time = false;
     area_data[p].default_ai_calm = 1;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
     p = static_cast<int>(mdata_t::MapId::test_site);
     area_data[p].id = p;
     area_data[p].appearance = 0;
@@ -6520,7 +6520,7 @@ void initialize_adata()
     area_data[p].is_indoor = false;
     area_data[p].is_generated_every_time = true;
     area_data[p].default_ai_calm = 0;
-    area_data[p].outer_map = 4;
+    area_data[p].outer_map = static_cast<int>(mdata_t::MapId::north_tyris);
 }
 
 
@@ -14464,8 +14464,7 @@ TurnResult do_plant()
     screenupdate = -1;
     update_screen();
     if (map_data.type == mdata_t::MapType::world_map
-        || map_data.type == mdata_t::MapType::town
-        || map_data.type == mdata_t::MapType::guild)
+        || map_data.is_town_or_guild())
     {
         txt(i18n::s.get("core.locale.action.plant.cannot_plant_it_here"));
         update_screen();
