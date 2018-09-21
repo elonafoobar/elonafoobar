@@ -202,6 +202,7 @@ void quest_all_targets_killed();
 void quest_failed(int);
 void quest_complete();
 int quest_is_return_forbidden();
+void quest_enter_map();
 void quest_exit_map();
 void quest_team_victorious();
 TurnResult quest_pc_died_during_immediate_quest();

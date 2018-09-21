@@ -1082,6 +1082,41 @@ void quest_check_all_for_failed()
 
 
 
+void quest_enter_map()
+{
+    if (game_data.executing_immediate_quest_type == 1009)
+    {
+        txtef(9);
+        txt(i18n::s.get(
+            "core.locale.map.quest.on_enter.party",
+            game_data.left_minutes_of_executing_quest,
+            quest_data.immediate().extra_info_1));
+    }
+    if (game_data.executing_immediate_quest_type == 1006)
+    {
+        if (quest_data.immediate().extra_info_1 <= 0)
+        {
+            quest_data.immediate().extra_info_1 = 15000;
+            quest_data.immediate().reward_gold = 400;
+        }
+        txtef(9);
+        txt(i18n::s.get(
+            "core.locale.map.quest.on_enter.harvest",
+            cnvweight(quest_data.immediate().extra_info_1),
+            game_data.left_minutes_of_executing_quest));
+    }
+    if (game_data.executing_immediate_quest_type == 1008)
+    {
+        txtef(9);
+        txt(i18n::s.get(
+            "core.locale.map.quest.on_enter.conquer",
+            chara_refstr(quest_data.immediate().extra_info_1, 2),
+            game_data.left_minutes_of_executing_quest));
+    }
+}
+
+
+
 void quest_exit_map()
 {
     if (game_data.executing_immediate_quest_type == 1006)

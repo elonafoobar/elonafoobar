@@ -174,6 +174,9 @@ ELONA_EXTERN(elona_vector1<std::string> netbuf);
 // activity.cpp
 ELONA_EXTERN(elona_vector1<int> fsetperform);
 
+// initialize_map.cpp
+ELONA_EXTERN(int noaggrorefresh);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> arenaop);
 ELONA_EXTERN(elona_vector1<int> commark);
@@ -1035,6 +1038,7 @@ void delmef(int = 0);
 
 // Map initialization
 TurnResult initialize_map();
+void initialize_map_from_map_type();
 void map_proc_regen_and_update();
 void map_global_proc_diastrophism();
 void map_global_prepare();
@@ -1042,7 +1046,6 @@ void map_global_place_entrances();
 void map_clear_material_spots_and_light();
 void initialize_adata();
 void map_reload_noyel();
-void initialize_map_adjust_spawns();
 
 // Map lifecycle
 TurnResult exit_map();

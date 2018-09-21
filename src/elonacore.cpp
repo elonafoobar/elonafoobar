@@ -4774,7 +4774,7 @@ void monster_respawn()
         {
             if (rnd(2) == 0)
             {
-                chara_set_generation_filter();
+                map_set_chara_generation_filter();
                 chara_create(-1, dbid, -2, 0);
             }
         }
@@ -4787,7 +4787,7 @@ void monster_respawn()
     {
         if (rnd(2) == 0)
         {
-            chara_set_generation_filter();
+            map_set_chara_generation_filter();
             chara_create(-1, dbid, -2, 0);
         }
     }
@@ -4795,7 +4795,7 @@ void monster_respawn()
     {
         if (rnd(4) == 0)
         {
-            chara_set_generation_filter();
+            map_set_chara_generation_filter();
             chara_create(-1, dbid, -2, 0);
         }
     }
@@ -4803,7 +4803,7 @@ void monster_respawn()
     {
         if (rnd(8) == 0)
         {
-            chara_set_generation_filter();
+            map_set_chara_generation_filter();
             chara_create(-1, dbid, -2, 0);
         }
     }
@@ -9231,40 +9231,6 @@ void remove_card_and_figures()
         {
             inv[cnt].remove();
         }
-    }
-}
-
-
-
-void initialize_map_adjust_spawns()
-{
-    for (auto&& cnt : cdata.all())
-    {
-        if (cnt.state() == Character::State::alive)
-        {
-            if (cnt.position.x < 0 || cnt.position.x >= map_data.width
-                || cnt.position.y < 0 || cnt.position.y >= map_data.height)
-            {
-                cnt.position.x = 0;
-                cnt.position.y = 0;
-            }
-        }
-    }
-    if (map_data.type != mdata_t::MapType::player_owned)
-    {
-        if (map_data.max_item_count != 0)
-        {
-            map_data.max_item_count = 0;
-        }
-    }
-    if (game_data.current_map == mdata_t::MapId::your_home)
-    {
-        area_data[game_data.current_map].danger_level = 0;
-        area_data[game_data.current_map].deepest_level = 10;
-        area_data[game_data.current_map].default_ai_calm = 1;
-        map_data.designated_spawns = 1;
-        event_add(17);
-        calccosthire();
     }
 }
 

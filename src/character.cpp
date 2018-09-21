@@ -834,7 +834,7 @@ void initialize_character_filters()
     filter_creature(353) = u8"/man/";
 }
 
-void chara_set_generation_filter()
+void map_set_chara_generation_filter()
 {
     dbid = 0;
     if (game_data.current_map == mdata_t::MapId::cyber_dome)

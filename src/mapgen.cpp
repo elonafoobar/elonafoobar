@@ -1734,12 +1734,12 @@ void map_makedoor()
 
 void generate_debug_map()
 {
-    map_data.width = 50; // width
-    map_data.height = 50; // height
-    map_data.atlas_number = 1; // world map or local
-    map_data.turn_cost = 10000; // time passed per turn
+    map_data.width = 50;
+    map_data.height = 50;
+    map_data.atlas_number = 1;
+    map_data.turn_cost = 10000;
     map_data.max_crowd_density = map_data.width * map_data.height / 100;
-    map_data.tileset = 3; // tileset
+    map_data.tileset = 3;
     map_data.user_map_flag = 0;
     map_initialize();
 
@@ -2095,7 +2095,7 @@ void generate_random_nefia()
                 flttypemajor = fltsetdungeon();
                 itemcreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry, 0);
             }
-            chara_set_generation_filter();
+            map_set_chara_generation_filter();
             int stat = chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
             if (stat == 1)
             {
@@ -2143,7 +2143,7 @@ void generate_random_nefia()
                              ++cnt)
                         {
                             rdx3 = cnt;
-                            chara_set_generation_filter();
+                            map_set_chara_generation_filter();
                             chara_create(-1, 0, rdx3, rdy3);
                         }
                     }
@@ -2189,7 +2189,7 @@ void generate_random_nefia()
     }
     for (int cnt = 0, cnt_end = (mobdensity); cnt < cnt_end; ++cnt)
     {
-        chara_set_generation_filter();
+        map_set_chara_generation_filter();
         chara_create(-1, 0, -3, 0);
     }
     for (int cnt = 0, cnt_end = (itemdensity); cnt < cnt_end; ++cnt)
@@ -2279,7 +2279,7 @@ void initialize_random_nefia_rdtype6()
     map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
-        chara_set_generation_filter();
+        map_set_chara_generation_filter();
         int stat = chara_create(-1, 0, -3, 0);
         if (stat != 0)
         {
@@ -2413,7 +2413,7 @@ int initialize_quest_map_crop()
     map_data.max_crowd_density = 15;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        chara_set_generation_filter();
+        map_set_chara_generation_filter();
         chara_create(-1, 0, -3, 0);
     }
     return 1;
