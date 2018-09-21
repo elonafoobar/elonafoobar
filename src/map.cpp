@@ -73,10 +73,24 @@ void MapData::clear()
 
 bool MapData::is_town_or_guild() const
 {
-    return map_data.type == mdata_t::MapType::town
-        || map_data.type == mdata_t::MapType::guild;
+    return type == mdata_t::MapType::town || type == mdata_t::MapType::guild;
 }
 
+
+bool MapData::should_reveal_map() const
+{
+    return game_data.current_map == mdata_t::MapId::pet_arena
+        || game_data.current_map == mdata_t::MapId::arena
+        || type == mdata_t::MapType::town || type == mdata_t::MapType::world_map
+        || type == mdata_t::MapType::player_owned
+        || type == mdata_t::MapType::guild
+        || game_data.current_map == mdata_t::MapId::shelter_
+        || game_data.current_map == mdata_t::MapId::embassy
+        || game_data.current_map == mdata_t::MapId::miral_and_garoks_workshop
+        || game_data.current_map == mdata_t::MapId::show_house
+        || (game_data.current_map == mdata_t::MapId::quest
+            && game_data.executing_immediate_quest_type == 1009);
+}
 
 
 #define MAP_PACK(n, ident) legacy_map(x, y, n) = ident;

@@ -2866,8 +2866,7 @@ TurnResult do_use_stairs_command(int val0)
     int stat = item_find(631, 3, -1);
     if (stat != -1)
     {
-        if (map_data.type == mdata_t::MapType::town
-            || map_data.type == mdata_t::MapType::guild)
+        if (map_data.is_town_or_guild())
         {
             ci = stat;
             return step_into_gate();
@@ -3557,8 +3556,7 @@ TurnResult do_get_command()
 
     if (number == 0)
     {
-        if ((map_data.type == mdata_t::MapType::town
-             || map_data.type == mdata_t::MapType::guild)
+        if ((map_data.is_town_or_guild())
             && chipm(
                    0,
                    cell_data

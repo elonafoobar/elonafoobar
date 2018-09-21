@@ -5055,8 +5055,7 @@ TurnResult exit_map()
     }
     if (game_data.current_map != game_data.previous_map)
     {
-        if (map_data.type == mdata_t::MapType::town
-            || map_data.type == mdata_t::MapType::guild
+        if (map_data.is_town_or_guild()
             || game_data.previous_map == mdata_t::MapId::your_home
             || game_data.departure_date == 0)
         {
@@ -5317,8 +5316,7 @@ void map_proc_regen_and_update()
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
                     }
-                    if (map_data.type == mdata_t::MapType::town
-                        || map_data.type == mdata_t::MapType::guild)
+                    if (map_data.is_town_or_guild())
                     {
                         if (inv[cnt].own_state < 0)
                         {
@@ -5436,8 +5434,7 @@ void map_proc_regen_and_update()
                     }
                 }
             }
-            if (map_data.type == mdata_t::MapType::town
-                || map_data.type == mdata_t::MapType::guild
+            if (map_data.is_town_or_guild()
                 || game_data.current_map == mdata_t::MapId::your_home)
             {
                 for (auto&& cnt : cdata.others())

@@ -1422,8 +1422,7 @@ void map_randsite(int prm_971, int prm_972)
         cell_featset(x_at_m169, y_at_m169, tile_re + rnd(3), 24);
         return;
     }
-    if (map_data.type == mdata_t::MapType::town
-        || map_data.type == mdata_t::MapType::guild)
+    if (map_data.is_town_or_guild())
     {
         if (rnd(3) == 0)
         {

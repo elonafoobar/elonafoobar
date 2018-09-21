@@ -43,6 +43,8 @@ struct MapData
 
     bool is_town_or_guild() const;
 
+    bool should_reveal_map() const;
+
 
     /**
      * Moves this struct's fields into `mdata` so they can be serialized, for
@@ -211,6 +213,7 @@ extern CellData cell_data;
 extern MapData map_data;
 
 
+void map_set_chara_generation_filter();
 void map_reload(const std::string& map_filename);
 
 } // namespace elona

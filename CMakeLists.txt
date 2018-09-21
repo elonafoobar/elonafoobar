@@ -120,6 +120,7 @@ set(CORE_SOURCES
   src/main_menu.cpp
   src/map.cpp
   src/map_cell.cpp
+  src/map_chara_filter.cpp
   src/mapgen.cpp
   src/mef.cpp
   src/menu.cpp

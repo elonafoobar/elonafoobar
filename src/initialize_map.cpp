@@ -132,18 +132,7 @@ static void _init_map_data()
 
 static bool _should_reveal_map()
 {
-    return game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::arena || dbg_revealmap
-        || map_data.type == mdata_t::MapType::town
-        || map_data.type == mdata_t::MapType::world_map
-        || map_data.type == mdata_t::MapType::player_owned
-        || map_data.type == mdata_t::MapType::guild
-        || game_data.current_map == mdata_t::MapId::shelter_
-        || game_data.current_map == mdata_t::MapId::embassy
-        || game_data.current_map == mdata_t::MapId::miral_and_garoks_workshop
-        || game_data.current_map == mdata_t::MapId::show_house
-        || (game_data.current_map == mdata_t::MapId::quest
-            && game_data.executing_immediate_quest_type == 1009);
+    return dbg_revealmap || map_data.should_reveal_map();
 }
 
 static void _reveal_map()
@@ -535,8 +524,7 @@ static void _refresh_map_character_other(Character& chara)
             }
         }
     }
-    if (map_data.type == mdata_t::MapType::town
-        || map_data.type == mdata_t::MapType::guild)
+    if (map_data.is_town_or_guild())
     {
         chara.sleep = 0;
         if (game_data.date.hour >= 22 || game_data.date.hour < 7)
@@ -1124,9 +1112,8 @@ static void _proc_map_hooks_2()
     {
         maybe_show_ex_help(14);
     }
-    if (map_data.type == mdata_t::MapType::town
-        || game_data.current_map == mdata_t::MapId::your_home
-        || map_data.type == mdata_t::MapType::guild)
+    if (map_data.is_town_or_guild()
+        || game_data.current_map == mdata_t::MapId::your_home)
     {
         if (game_data.distance_between_town >= 16)
         {
