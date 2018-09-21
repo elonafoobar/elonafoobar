@@ -1057,7 +1057,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             int stack_height{};
             for (int i = 2; i >= 0; --i)
             {
-                if (items[i] == 6079)
+                if (items[i] == 6079) // 5080 + 999
                 {
                     continue;
                 }

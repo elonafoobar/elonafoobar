@@ -11,6 +11,7 @@
 #include "crafting.hpp"
 #include "db_item.hpp"
 #include "elona.hpp"
+#include "enums.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -400,8 +401,8 @@ void cell_refresh(int prm_493, int prm_494)
     }
     if (p_at_m55 > 3)
     {
-        wpoke(map(prm_493, prm_494, 4), 0, 363);
-        wpoke(map(prm_493, prm_494, 4), 2, 0);
+        wpoke(map(prm_493, prm_494, 4), 0, 363); // Item bag chip ID
+        wpoke(map(prm_493, prm_494, 4), 2, static_cast<int>(ColorIndex::none));
     }
     else if (p_at_m55 > 1)
     {
