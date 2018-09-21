@@ -2151,7 +2151,7 @@ TurnResult do_use_command()
         {
             music = 97;
         }
-        mdata_map_bgm = music;
+        map_data.bgm = music;
 
         auto music_id = *the_music_db.get_id_from_legacy(music);
         assert(music_id);
@@ -2169,7 +2169,7 @@ TurnResult do_use_command()
     case 7:
         if (inv[ci].own_state != 3)
         {
-            if (mdata_map_refresh_type == 0
+            if (map_data.refresh_type == 0
                 || game_data.current_map == mdata_t::MapId::quest
                 || game_data.current_map == mdata_t::MapId::shelter_)
             {

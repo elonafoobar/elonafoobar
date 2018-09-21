@@ -73,7 +73,7 @@ void map_initialize()
     cell_data.init(map_data.width, map_data.height);
     DIM3(mapsync, map_data.width, map_data.height);
     DIM3(mef, 9, MEF_MAX);
-    map_tileset(mdata_map_tileset);
+    map_tileset(map_data.tileset);
 }
 
 
@@ -271,12 +271,12 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     int y_at_m167 = 0;
     if (prm_937 == 1)
     {
-        x_at_m167 = mdata_map_stair_up_pos % 1000;
+        x_at_m167 = map_data.stair_up_pos % 1000;
         if (prm_938 != 0)
         {
             x_at_m167 += rnd(prm_938) - rnd(prm_938);
         }
-        y_at_m167 = mdata_map_stair_up_pos / 1000;
+        y_at_m167 = map_data.stair_up_pos / 1000;
         if (prm_938 != 0)
         {
             y_at_m167 += rnd(prm_938) - rnd(prm_938);
@@ -284,12 +284,12 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     }
     if (prm_937 == 2)
     {
-        x_at_m167 = mdata_map_stair_down_pos % 1000;
+        x_at_m167 = map_data.stair_down_pos % 1000;
         if (prm_938 != 0)
         {
             x_at_m167 += rnd(prm_938) - rnd(prm_938);
         }
-        y_at_m167 = mdata_map_stair_down_pos / 1000;
+        y_at_m167 = map_data.stair_down_pos / 1000;
         if (prm_938 != 0)
         {
             y_at_m167 += rnd(prm_938) - rnd(prm_938);
@@ -1302,7 +1302,7 @@ int map_placeupstairs(int prm_967, int prm_968)
         y_at_m169 = prm_968;
     }
     cell_featset(x_at_m169, y_at_m169, tile_upstairs, 10);
-    mdata_map_stair_up_pos = y_at_m169 * 1000 + x_at_m169;
+    map_data.stair_up_pos = y_at_m169 * 1000 + x_at_m169;
     rdroomupstair = cr;
     return 1;
 }
@@ -1327,7 +1327,7 @@ int map_placedownstairs(int prm_969, int prm_970)
         y_at_m169 = prm_970;
     }
     cell_featset(x_at_m169, y_at_m169, tile_downstairs, 11);
-    mdata_map_stair_down_pos = y_at_m169 * 1000 + x_at_m169;
+    map_data.stair_down_pos = y_at_m169 * 1000 + x_at_m169;
     rdroomdownstair = cr;
     return 1;
 }
@@ -1378,7 +1378,7 @@ void map_randsite(int prm_971, int prm_972)
     }
     if (mdata_t::is_nefia(mdata_map_type))
     {
-        if (mdata_map_next_regenerate_date == 0)
+        if (map_data.next_regenerate_date == 0)
         {
             if (rnd(25) == 0)
             {
@@ -1736,11 +1736,11 @@ void generate_debug_map()
 {
     map_data.width = 50; // width
     map_data.height = 50; // height
-    mdata_map_atlas_number = 1; // world map or local
-    mdata_map_turn_cost = 10000; // time passed per turn
-    mdata_map_max_crowd_density = map_data.width * map_data.height / 100;
-    mdata_map_tileset = 3; // tileset
-    mdata_map_user_map_flag = 0;
+    map_data.atlas_number = 1; // world map or local
+    map_data.turn_cost = 10000; // time passed per turn
+    map_data.max_crowd_density = map_data.width * map_data.height / 100;
+    map_data.tileset = 3; // tileset
+    map_data.user_map_flag = 0;
     map_initialize();
 
     for (int y = 0; y < map_data.height; ++y)
@@ -1774,10 +1774,10 @@ void generate_random_nefia()
     {
         randomize();
         ++rdtry;
-        mdata_map_user_map_flag = 0;
+        map_data.user_map_flag = 0;
         map_data.width = 34 + rnd(15);
         map_data.height = 22 + rnd(15);
-        mdata_map_max_crowd_density = map_data.width * map_data.height / 100;
+        map_data.max_crowd_density = map_data.width * map_data.height / 100;
         roomsum = 0;
         rdroomnum = map_data.width * map_data.height / 70;
         rdroomsizemin = 3;
@@ -1813,7 +1813,7 @@ void generate_random_nefia()
             }
             if (rnd(20) == 0)
             {
-                mdata_map_tileset = 10;
+                map_data.tileset = 10;
             }
         }
         if (area_data[game_data.current_map].type
@@ -1855,7 +1855,7 @@ void generate_random_nefia()
             }
             if (rnd(40) == 0)
             {
-                mdata_map_tileset = 10;
+                map_data.tileset = 10;
             }
         }
         if (area_data[game_data.current_map].type
@@ -1876,32 +1876,32 @@ void generate_random_nefia()
             }
             if (rnd(40) == 0)
             {
-                mdata_map_tileset = 10;
+                map_data.tileset = 10;
             }
         }
         if (area_data[game_data.current_map].id == mdata_t::MapId::lesimas)
         {
-            mdata_map_max_crowd_density += game_data.current_dungeon_level / 2;
-            mdata_map_tileset = 101;
+            map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+            map_data.tileset = 101;
             if (rnd(20) == 0)
             {
-                mdata_map_tileset = 10;
+                map_data.tileset = 10;
             }
             if (game_data.current_dungeon_level < 35)
             {
-                mdata_map_tileset = 0;
+                map_data.tileset = 0;
             }
             if (game_data.current_dungeon_level < 20)
             {
-                mdata_map_tileset = 100;
+                map_data.tileset = 100;
             }
             if (game_data.current_dungeon_level < 10)
             {
-                mdata_map_tileset = 200;
+                map_data.tileset = 200;
             }
             if (game_data.current_dungeon_level < 5)
             {
-                mdata_map_tileset = 0;
+                map_data.tileset = 0;
             }
             rdtype = 1;
             for (int cnt = 0; cnt < 1; ++cnt)
@@ -1965,22 +1965,22 @@ void generate_random_nefia()
         if (area_data[game_data.current_map].id
             == mdata_t::MapId::tower_of_fire)
         {
-            mdata_map_max_crowd_density += game_data.current_dungeon_level / 2;
-            mdata_map_tileset = 7;
+            map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+            map_data.tileset = 7;
             rdtype = 1;
         }
         if (area_data[game_data.current_map].id
             == mdata_t::MapId::crypt_of_the_damned)
         {
-            mdata_map_max_crowd_density += game_data.current_dungeon_level / 2;
-            mdata_map_tileset = 0;
+            map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+            map_data.tileset = 0;
             rdtype = 1;
         }
         if (area_data[game_data.current_map].id
             == mdata_t::MapId::ancient_castle)
         {
-            mdata_map_max_crowd_density += game_data.current_dungeon_level / 2;
-            mdata_map_tileset = 200;
+            map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+            map_data.tileset = 200;
             rdtype = 1;
         }
         if (area_data[game_data.current_map].id
@@ -2001,7 +2001,7 @@ void generate_random_nefia()
         {
             if (game_data.executing_immediate_quest_type == 1001)
             {
-                mdata_map_tileset = 300;
+                map_data.tileset = 300;
                 map_data.width = 28 + rnd(6);
                 map_data.height = 20 + rnd(6);
                 rdtype = 6;
@@ -2050,7 +2050,7 @@ void generate_random_nefia()
         }
         if (rdtype == 6)
         {
-            mdata_map_indoors_flag = 2;
+            map_data.indoors_flag = 2;
             initialize_random_nefia_rdtype6();
             return;
         }
@@ -2161,31 +2161,31 @@ void generate_random_nefia()
             }
         }
     }
-    mobdensity = mdata_map_max_crowd_density / 4;
-    itemdensity = mdata_map_max_crowd_density / 4;
+    mobdensity = map_data.max_crowd_density / 4;
+    itemdensity = map_data.max_crowd_density / 4;
     if (rdtype == 3)
     {
         flt();
         flttypemajor = choice(fsetwear);
         fixlv = Quality::miracle;
         itemcreate(-1, 0, -1, -1, 0);
-        mobdensity = mdata_map_max_crowd_density / 2;
-        itemdensity = mdata_map_max_crowd_density / 3;
+        mobdensity = map_data.max_crowd_density / 2;
+        itemdensity = map_data.max_crowd_density / 3;
     }
     if (rdtype == 8)
     {
-        mobdensity = mdata_map_max_crowd_density / 4;
-        itemdensity = mdata_map_max_crowd_density / 10;
+        mobdensity = map_data.max_crowd_density / 4;
+        itemdensity = map_data.max_crowd_density / 10;
     }
     if (rdtype == 10)
     {
-        mobdensity = mdata_map_max_crowd_density / 3;
-        itemdensity = mdata_map_max_crowd_density / 6;
+        mobdensity = map_data.max_crowd_density / 3;
+        itemdensity = map_data.max_crowd_density / 6;
     }
     if (rdtype == 9)
     {
-        mobdensity = mdata_map_max_crowd_density / 3;
-        itemdensity = mdata_map_max_crowd_density / 10;
+        mobdensity = map_data.max_crowd_density / 3;
+        itemdensity = map_data.max_crowd_density / 10;
     }
     for (int cnt = 0, cnt_end = (mobdensity); cnt < cnt_end; ++cnt)
     {
@@ -2225,7 +2225,7 @@ void generate_random_nefia()
             map_barrel(0, 0);
         }
     }
-    if (mdata_map_refresh_type == 1)
+    if (map_data.refresh_type == 1)
     {
         if (rnd(15 + game_data.quest_flags.kill_count_of_little_sister * 2)
             == 0)
@@ -2241,8 +2241,8 @@ void generate_random_nefia()
             || game_data.current_dungeon_level == 25
             || game_data.current_dungeon_level == 44)
         {
-            x = mdata_map_stair_down_pos % 1000;
-            y = mdata_map_stair_down_pos / 1000;
+            x = map_data.stair_down_pos % 1000;
+            y = map_data.stair_down_pos / 1000;
             cell_featset(x, y, tile_downlocked, 11);
         }
     }
@@ -2276,7 +2276,7 @@ void initialize_random_nefia_rdtype6()
     }
     map_converttile();
     map_placeplayer();
-    mdata_map_max_crowd_density = 0;
+    map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
         chara_set_generation_filter();
@@ -2302,8 +2302,8 @@ int initialize_quest_map_crop()
 {
     game_data.left_minutes_of_executing_quest = 120;
     game_data.executing_immediate_quest_time_left_display_period = 9999;
-    mdata_map_indoors_flag = 2;
-    mdata_map_tileset = 4;
+    map_data.indoors_flag = 2;
+    map_data.tileset = 4;
     map_data.width = 58 + rnd(16);
     map_data.height = 50 + rnd(16);
     map_initialize();
@@ -2410,7 +2410,7 @@ int initialize_quest_map_crop()
             }
         }
     }
-    mdata_map_max_crowd_density = 15;
+    map_data.max_crowd_density = 15;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         chara_set_generation_filter();
@@ -2524,7 +2524,7 @@ int initialize_random_nefia_rdtype5()
     rdroomsizemin = 8;
     map_data.width = 48 + rnd(20);
     map_data.height = 22;
-    mdata_map_max_crowd_density = map_data.width * map_data.height / 20;
+    map_data.max_crowd_density = map_data.width * map_data.height / 20;
     map_initialize();
     p = rdroomsizemin - 1;
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
@@ -2702,7 +2702,7 @@ int initialize_random_nefia_rdtype3()
 {
     map_data.width = 48 + rnd(20);
     map_data.height = 22;
-    mdata_map_max_crowd_density = map_data.width * map_data.height / 20;
+    map_data.max_crowd_density = map_data.width * map_data.height / 20;
     map_initialize();
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
@@ -2740,8 +2740,8 @@ int initialize_quest_map_party()
     game_data.executing_immediate_quest_time_left_display_period = 9999;
     rdroomsizemin = 5;
     mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
-    mdata_map_indoors_flag = 1;
-    mdata_map_tileset = 11;
+    map_data.indoors_flag = 1;
+    map_data.tileset = 11;
     map_data.width = 38;
     map_data.height = 28;
     map_initialize();
@@ -2967,7 +2967,7 @@ int initialize_quest_map_party()
     mapstartx = rnd(map_data.width / 3) + map_data.width / 3;
     mapstarty = rnd(map_data.height / 3) + map_data.height / 3;
     map_placeplayer();
-    mdata_map_max_crowd_density = 0;
+    map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (25 + rnd(10)); cnt < cnt_end; ++cnt)
     {
         x = rnd(map_data.width);
@@ -3063,14 +3063,14 @@ int initialize_quest_map_party()
 
 void initialize_quest_map_town()
 {
-    mdata_map_max_crowd_density = 0;
-    mdata_map_indoors_flag = 2;
+    map_data.max_crowd_density = 0;
+    map_data.indoors_flag = 2;
     map_initcustom(mapfile(game_data.previous_map2));
     mdatan(0) = i18n::s.get("core.locale.map.quest.urban_area");
     randomize();
     game_data.entrance_type = 5;
     map_placeplayer();
-    mdata_map_user_map_flag = 0;
+    map_data.user_map_flag = 0;
     if (game_data.executing_immediate_quest_type == 1008)
     {
         game_data.left_minutes_of_executing_quest = 720;
@@ -3128,7 +3128,7 @@ void initialize_random_nefia_rdtype8()
 {
     map_data.width = 30;
     map_data.height = 60 + rnd(60);
-    mdata_map_max_crowd_density = map_data.width * map_data.height / 20;
+    map_data.max_crowd_density = map_data.width * map_data.height / 20;
     map_initialize();
     int w = 6;
     dx = map_data.width / 2 - w / 2;
@@ -3231,7 +3231,7 @@ void initialize_random_nefia_rdtype9()
 {
     map_data.width = _mclass * (_bold * 2) - _bold + 8;
     map_data.height = map_data.width;
-    mdata_map_max_crowd_density = map_data.width * map_data.height / 12;
+    map_data.max_crowd_density = map_data.width * map_data.height / 12;
     map_initialize();
     mapgen_dig_maze();
     rdsecond = 1;
@@ -3447,7 +3447,7 @@ void initialize_random_nefia_rdtype10()
 {
     map_data.width = _mclass * (_bold * 2) - _bold + 8;
     map_data.height = map_data.width;
-    mdata_map_max_crowd_density = map_data.width * map_data.height / 12;
+    map_data.max_crowd_density = map_data.width * map_data.height / 12;
     map_initialize();
     mapgen_dig_maze();
     for (int cnt = 0; cnt < 50; ++cnt)
@@ -3828,33 +3828,33 @@ void initialize_home_mdata()
 {
     if (game_data.home_scale == 0)
     {
-        mdata_map_max_item_count = 100;
+        map_data.max_item_count = 100;
         game_data.basic_point_of_home_rank = 1000;
     }
     if (game_data.home_scale == 1)
     {
-        mdata_map_max_item_count = 150;
+        map_data.max_item_count = 150;
         game_data.basic_point_of_home_rank = 3000;
     }
     if (game_data.home_scale == 2)
     {
-        mdata_map_max_item_count = 200;
+        map_data.max_item_count = 200;
         game_data.basic_point_of_home_rank = 5000;
     }
     if (game_data.home_scale == 3)
     {
-        mdata_map_max_item_count = 300;
+        map_data.max_item_count = 300;
         game_data.basic_point_of_home_rank = 7000;
     }
     if (game_data.home_scale == 4)
     {
-        mdata_map_max_item_count = 350;
+        map_data.max_item_count = 350;
         game_data.basic_point_of_home_rank = 8000;
-        mdata_map_tileset = 8;
+        map_data.tileset = 8;
     }
     if (game_data.home_scale == 5)
     {
-        mdata_map_max_item_count = 400;
+        map_data.max_item_count = 400;
         game_data.basic_point_of_home_rank = 10000;
     }
 }
@@ -3863,7 +3863,7 @@ void map_initcustom(const std::string& prm_934)
 {
     fmapfile = (filesystem::dir::map() / prm_934).generic_string();
     ctrl_file(FileOperation::custom_map_read);
-    map_tileset(mdata_map_tileset);
+    map_tileset(map_data.tileset);
     nooracle = 1;
     for (int cnt = 0; cnt < 400; ++cnt)
     {
@@ -3905,18 +3905,18 @@ void map_initcustom(const std::string& prm_934)
                 cmapdata(3, cnt) / 1000);
             if (cellobjdata(0, cmapdata(0, cnt)) == 10)
             {
-                mdata_map_stair_up_pos =
+                map_data.stair_up_pos =
                     cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
             }
             if (cellobjdata(0, cmapdata(0, cnt)) == 11)
             {
-                mdata_map_stair_down_pos =
+                map_data.stair_down_pos =
                     cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
             }
         }
     }
     nooracle = 0;
-    mdata_map_user_map_flag = 1;
+    map_data.user_map_flag = 1;
 }
 
 

@@ -321,7 +321,7 @@ int decfame(int cc, int base)
 
 int calcshopreform()
 {
-    return mdata_map_max_item_count * 100 + 1000;
+    return map_data.max_item_count * 100 + 1000;
 }
 
 

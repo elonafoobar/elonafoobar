@@ -1105,7 +1105,7 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"mef_"s + mid + u8".s2");
         if (read)
         {
-            if (mdata_map_mefs_loaded_flag == 0)
+            if (map_data.mefs_loaded_flag == 0)
             {
                 for (int y = 0; y < map_data.height; ++y)
                 {
@@ -1114,7 +1114,7 @@ void fmode_1_2(bool read)
                         cell_data.at(x, y).mef_index_plus_one = 0;
                     }
                 }
-                mdata_map_mefs_loaded_flag = 1;
+                map_data.mefs_loaded_flag = 1;
             }
             else
             {

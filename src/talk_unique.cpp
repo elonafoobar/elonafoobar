@@ -11,6 +11,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
@@ -97,7 +98,7 @@ TalkResult talk_unique_orphe()
 
 void _loyter_goto_map()
 {
-    mdata_map_stair_down_pos =
+    map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
     game_data.destination_map = 5;
     game_data.destination_dungeon_level = 5;
@@ -2634,7 +2635,7 @@ TalkResult talk_unique_tam()
 void _gilbert_goto_map()
 {
     game_data.quest_flags.defense_line = 2;
-    mdata_map_stair_down_pos =
+    map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
     game_data.destination_map = 12;
     game_data.destination_dungeon_level = 4;
@@ -2778,7 +2779,7 @@ TalkResult talk_unique_gilbert()
 void _arnord_goto_map()
 {
     game_data.quest_flags.kamikaze_attack = 2;
-    mdata_map_stair_down_pos =
+    map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
     game_data.destination_map = 11;
     game_data.destination_dungeon_level = 25;

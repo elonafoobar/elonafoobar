@@ -693,7 +693,7 @@ void initialize_map_chip()
     // buffers from PicLoader so they can be loaded again, or keep
     // all chips loaded at once.
     DIM3(chipm, 8, 825);
-    if (mdata_map_atlas_number == 0)
+    if (map_data.atlas_number == 0)
     {
         chipm(5, 233) = 0;
         chipm(6, 233) = 0;
@@ -756,7 +756,7 @@ void initialize_map_chip()
         chipm(5, 145) = 16;
         chipm(5, 149) = 16;
     }
-    if (mdata_map_atlas_number == 1)
+    if (map_data.atlas_number == 1)
     {
         for (int cnt = 396; cnt < 825; ++cnt)
         {
@@ -802,7 +802,7 @@ void initialize_map_chip()
         chipm(0, 594) = 3;
         chipm(3, 594) = 3;
     }
-    if (mdata_map_atlas_number == 2)
+    if (map_data.atlas_number == 2)
     {
         for (int cnt = 0; cnt < 11; ++cnt)
         {

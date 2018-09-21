@@ -1001,7 +1001,7 @@ void continuous_action_others()
             if (game_data.weather != 0 && game_data.weather != 3)
             {
                 if (game_data.current_map == mdata_t::MapId::shelter_
-                    || (mdata_map_indoors_flag == 1
+                    || (map_data.indoors_flag == 1
                         && (mdata_map_type == mdata_t::MapType::player_owned
                             || mdata_map_type == mdata_t::MapType::town
                             || mdata_map_type == mdata_t::MapType::guild)))
@@ -1061,7 +1061,7 @@ void continuous_action_others()
                     p = 5;
                 }
                 if (game_data.current_map != mdata_t::MapId::shelter_
-                    && mdata_map_indoors_flag == 1)
+                    && map_data.indoors_flag == 1)
                 {
                     if (mdata_map_type == mdata_t::MapType::player_owned
                         || mdata_map_type == mdata_t::MapType::town

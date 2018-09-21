@@ -259,7 +259,7 @@ void render_weather_effect()
 {
     if (!Config::instance().env)
         return;
-    if (mdata_map_indoors_flag != 2)
+    if (map_data.indoors_flag != 2)
         return;
 
     switch (game_data.weather)

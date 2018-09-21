@@ -19,7 +19,7 @@ int Map::height()
 
 bool Map::is_overworld()
 {
-    return elona::mdata_map_atlas_number == 0;
+    return elona::map_data.atlas_number == 0;
 }
 
 bool Map::valid(const Position& position)

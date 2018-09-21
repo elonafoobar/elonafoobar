@@ -1059,7 +1059,7 @@ label_2692_internal:
     }
     if (cdata[cc].ai_calm == 2)
     {
-        if (mdata_map_designated_spawns == 1
+        if (map_data.designated_spawns == 1
             && dist(
                    cdata[cc].position.x,
                    cdata[cc].position.y,

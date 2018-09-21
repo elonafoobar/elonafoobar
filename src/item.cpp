@@ -2305,7 +2305,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     }
     if (inv[ti].id == 255)
     {
-        mdata_map_play_campfire_sound = 1;
+        map_data.play_campfire_sound = 1;
         play_music();
     }
 }

@@ -6,6 +6,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "map.hpp"
 #include "snail/application.hpp"
 #include "snail/audio.hpp"
 #include "variables.hpp"
@@ -53,9 +54,9 @@ SharedId get_default_music()
     {
         music_id = "core.music:core.mcHome"s;
     }
-    if (mdata_map_bgm != 0)
+    if (map_data.bgm != 0)
     {
-        music_id = **the_music_db.get_id_from_legacy(mdata_map_bgm);
+        music_id = **the_music_db.get_id_from_legacy(map_data.bgm);
     }
     if (mdata_t::is_nefia(area_data[game_data.current_map].type))
     {
@@ -436,7 +437,7 @@ void sound_play_environmental()
             }
         }
     }
-    if (mdata_map_indoors_flag == 2)
+    if (map_data.indoors_flag == 2)
     {
         DSSETVOLUME(13, max_volume * 0.8);
     }
@@ -466,7 +467,7 @@ void sound_play_environmental()
     {
         DSSTOP(15);
     }
-    if (mdata_map_play_campfire_sound == 1)
+    if (map_data.play_campfire_sound == 1)
     {
         snd(80, true);
     }

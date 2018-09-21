@@ -1090,9 +1090,9 @@ label_2061_internal:
                 snd(27);
                 goto label_2060_internal;
             }
-            if (mdata_map_max_item_count != 0)
+            if (map_data.max_item_count != 0)
             {
-                if (inv_sum(-1) >= mdata_map_max_item_count)
+                if (inv_sum(-1) >= map_data.max_item_count)
                 {
                     if (the_item_db[inv[ci].id]->category != 60000)
                     {

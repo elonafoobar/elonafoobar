@@ -128,7 +128,7 @@ void mef_update()
         }
         if (mef(0, cnt) == 5)
         {
-            if (mdata_map_indoors_flag == 2)
+            if (map_data.indoors_flag == 2)
             {
                 if (mdata_map_type != mdata_t::MapType::world_map)
                 {

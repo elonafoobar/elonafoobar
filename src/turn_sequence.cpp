@@ -726,7 +726,7 @@ TurnResult turn_begin()
     {
         gspd = 10;
     }
-    turncost = (mdata_map_turn_cost - cdata.player().turn_cost) / gspd + 1;
+    turncost = (map_data.turn_cost - cdata.player().turn_cost) / gspd + 1;
     if (event_was_set())
     {
         return event_start_proc(); // TODO avoid evnum side effect
@@ -741,7 +741,7 @@ TurnResult turn_begin()
     {
         if (cdata.player().continuous_action.turn > 2)
         {
-            cdata.player().turn_cost = mdata_map_turn_cost;
+            cdata.player().turn_cost = map_data.turn_cost;
             update_turn_cost = false;
         }
     }
@@ -820,9 +820,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
                 ++ct;
                 continue;
             }
-            if (cdata[ct].turn_cost >= mdata_map_turn_cost)
+            if (cdata[ct].turn_cost >= map_data.turn_cost)
             {
-                cdata[ct].turn_cost -= mdata_map_turn_cost;
+                cdata[ct].turn_cost -= map_data.turn_cost;
                 break;
             }
             else
@@ -947,7 +947,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         if (game_data.weather == 1)
         {
-            if (mdata_map_indoors_flag == 2)
+            if (map_data.indoors_flag == 2)
             {
                 if (rnd(2) == 0)
                 {
@@ -1156,7 +1156,7 @@ void update_emoicon()
     {
         cdata[cc].emotion_icon = 0;
     }
-    if (mdata_map_indoors_flag == 2 && game_data.weather >= 3)
+    if (map_data.indoors_flag == 2 && game_data.weather >= 3)
     {
         cdata[cc].wet = 50;
     }
