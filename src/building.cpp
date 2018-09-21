@@ -656,7 +656,7 @@ void fill_tile(int x, int y, int from, int to)
 
     // Draw one tile.
     cell_data.at(x, y).chip_id_actual = tile;
-    map(x, y, 2) = tile;
+    cell_data.at(x, y).chip_id_memory = tile;
 
     // Draw tiles around.
     fill_tile(x - 1, y, from, to);
@@ -708,7 +708,7 @@ void start_home_map_mode()
         else
         {
             cell_data.at(tlocx, tlocy).chip_id_actual = tile;
-            map(tlocx, tlocy, 2) = tile;
+            cell_data.at(tlocx, tlocy).chip_id_memory = tile;
         }
         tlocinitx = tlocx;
         tlocinity = tlocy;
@@ -1224,8 +1224,8 @@ void update_shop()
         y = cnt;
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
-            map(cnt, y, 4) = 0;
-            map(cnt, y, 9) = 0;
+            cell_data.at(cnt, y).item_appearances_actual = 0;
+            cell_data.at(cnt, y).light = 0;
         }
     }
     for (const auto& cnt : items(-1))
@@ -1293,8 +1293,10 @@ void update_museum()
         {
             continue;
         }
-        if (wpeek(cell_data.at(inv[cnt].position.x, inv[cnt].position.y, 4))
-                .chip_id_actual
+        if (wpeek(
+                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                    .item_appearances_actual,
+                0)
             != inv[cnt].image)
         {
             continue;
@@ -1357,8 +1359,10 @@ void calc_home_rank()
         {
             continue;
         }
-        if (wpeek(cell_data.at(inv[cnt].position.x, inv[cnt].position.y, 4))
-                .chip_id_actual
+        if (wpeek(
+                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                    .item_appearances_actual,
+                0)
             != inv[cnt].image)
         {
             continue;
@@ -1503,7 +1507,7 @@ void update_ranch()
             }
             x = rnd(11) + 4;
             y = rnd(8) + 4;
-            if (map(x, y, 4) != 0)
+            if (cell_data.at(x, y).item_appearances_actual != 0)
             {
                 continue;
             }

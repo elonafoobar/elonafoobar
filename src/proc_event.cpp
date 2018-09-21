@@ -13,6 +13,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "quest.hpp"

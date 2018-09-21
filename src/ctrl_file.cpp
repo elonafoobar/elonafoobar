@@ -1106,7 +1106,7 @@ void fmode_1_2(bool read)
                 {
                     for (int x = 0; x < mdata_map_width; ++x)
                     {
-                        map(x, y, 8) = 0;
+                        cell_data.at(x, y).mef_index_plus_one = 0;
                     }
                 }
                 mdata_map_mefs_loaded_flag = 1;

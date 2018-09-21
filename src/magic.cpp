@@ -2591,11 +2591,11 @@ label_2181_internal:
                     {
                         if (efid == 429)
                         {
-                            map(x, y, 2) = tile_default;
+                            cell_data.at(x, y).chip_id_memory = tile_default;
                         }
                         if (efid == 430)
                         {
-                            map(x, y, 5) = 0;
+                            cell_data.at(x, y).item_appearances_memory = 0;
                         }
                         continue;
                     }
@@ -2604,13 +2604,16 @@ label_2181_internal:
                     {
                         if (efid == 429)
                         {
-                            map(x, y, 2) = cell_data.at(x, y).chip_id_actual;
+                            cell_data.at(x, y).chip_id_memory =
+                                cell_data.at(x, y).chip_id_actual;
                         }
                         if (efid == 430)
                         {
-                            if (map(x, y, 6) != 0 || map(x, y, 5) != 0)
+                            if (cell_data.at(x, y).feats != 0
+                                || cell_data.at(x, y).item_appearances_memory
+                                    != 0)
                             {
-                                map(x, y, 2) =
+                                cell_data.at(x, y).chip_id_memory =
                                     cell_data.at(x, y).chip_id_actual;
                             }
                         }
@@ -3782,7 +3785,7 @@ label_2181_internal:
                 }
             }
             if (cell_data.at(x, y).chara_index_plus_one != 0
-                || map(x, y, 6) != 0)
+                || cell_data.at(x, y).feats != 0)
             {
                 f = 0;
             }
@@ -3805,7 +3808,7 @@ label_2181_internal:
                     snd(65);
                 }
                 cell_data.at(x, y).chip_id_actual = p;
-                map(x, y, 2) = p;
+                cell_data.at(x, y).chip_id_memory = p;
             }
             if (efid == 457)
             {
@@ -3875,7 +3878,7 @@ label_2181_internal:
         {
             break;
         }
-        if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
+        if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats != 0)
         {
             break;
         }

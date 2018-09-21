@@ -1361,7 +1361,7 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
         {
             return 0;
         }
-        if (map(prm_612, prm_613, 6) != 0)
+        if (cell_data.at(prm_612, prm_613).feats != 0)
         {
             cell_featread(prm_612, prm_613);
             if (chipm(7, feat) & 1)
@@ -2165,9 +2165,9 @@ void spillblood(int prm_830, int prm_831, int prm_832)
         {
             continue;
         }
-        if (map(dx_at_m136, dy_at_m136, 7) % 10 < 5)
+        if (cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments % 10 < 5)
         {
-            ++map(dx_at_m136, dy_at_m136, 7);
+            ++cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments;
         }
     }
 }
@@ -2197,10 +2197,13 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
         {
             continue;
         }
-        if (map(dx_at_m136, dy_at_m136, 7) / 10 < 4)
+        if (cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments / 10 < 4)
         {
-            map(dx_at_m136, dy_at_m136, 7) = map(dx_at_m136, dy_at_m136, 7) % 10
-                + (map(dx_at_m136, dy_at_m136, 7) / 10 + 1) * 10;
+            cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments =
+                cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments % 10
+                + (cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments / 10
+                   + 1)
+                    * 10;
         }
     }
 }
@@ -4345,9 +4348,10 @@ void food_gets_rotten()
                                 {
                                     if (chipm(
                                             0,
-                                            map(inv[cnt].position.x,
-                                                inv[cnt].position.y,
-                                                0))
+                                            cell_data
+                                                .at(inv[cnt].position.x,
+                                                    inv[cnt].position.y)
+                                                .chip_id_actual)
                                         == 1)
                                     {
                                         if (game_data.weather != 0)
@@ -5251,7 +5255,7 @@ void save_map_local_data()
     {
         for (int x = 0; x < mdata_map_width; ++x)
         {
-            map(x, y, 7) = 0;
+            cell_data.at(x, y).blood_and_fragments = 0;
         }
     }
 
@@ -5288,7 +5292,7 @@ void map_proc_regen_and_update()
                          cnt < cnt_end;
                          ++cnt)
                     {
-                        if (map(cnt, y, 6) != 0)
+                        if (cell_data.at(cnt, y).feats != 0)
                         {
                             cell_featread(cnt, y);
                             if (feat(1) >= 24 && feat(1) <= 28)
@@ -5408,7 +5412,7 @@ void map_proc_regen_and_update()
                 for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
                      ++cnt)
                 {
-                    if (map(cnt, y, 6) != 0)
+                    if (cell_data.at(cnt, y).feats != 0)
                     {
                         cell_featread(cnt, y);
                         x = cnt;
@@ -5730,7 +5734,9 @@ void map_global_place_entrances()
                     .at(area_data[cnt].position.x, area_data[cnt].position.y)
                     .chip_id_actual)
                 & 4
-            || map(area_data[cnt].position.x, area_data[cnt].position.y, 6)
+            || cell_data
+                    .at(area_data[cnt].position.x, area_data[cnt].position.y)
+                    .feats
                 != 0)
         {
             for (int cnt = 0;; ++cnt)
@@ -5753,7 +5759,7 @@ void map_global_place_entrances()
                 {
                     continue;
                 }
-                if (map(x, y, 6) != 0)
+                if (cell_data.at(x, y).feats != 0)
                 {
                     continue;
                 }
@@ -5772,7 +5778,8 @@ void map_global_place_entrances()
         if (area_data[cnt].type == mdata_t::MapType::town
             || area_data[cnt].type == mdata_t::MapType::guild)
         {
-            map(area_data[cnt].position.x, area_data[cnt].position.y, 9) = 11;
+            cell_data.at(area_data[cnt].position.x, area_data[cnt].position.y)
+                .light = 11;
         }
     }
 }
@@ -5791,9 +5798,9 @@ void map_clear_material_spots_and_light()
             // material spot
             if (feat(1) < 24 || feat(1) > 28)
             {
-                map(x, y, 6) = 0;
+                cell_data.at(x, y).feats = 0;
             }
-            map(x, y, 9) = 0;
+            cell_data.at(x, y).light = 0;
         }
     }
 }
@@ -6547,7 +6554,7 @@ int place_random_nefias()
             {
                 continue;
             }
-            if (map(x, y, 6) % 1000 != 0)
+            if (cell_data.at(x, y).feats % 1000 != 0)
             {
                 continue;
             }
@@ -6613,7 +6620,7 @@ int place_random_nefias()
         area_data[p].default_ai_calm = 0;
         area_data[p].has_been_conquered = 0;
         area_data[p].dungeon_prefix = rnd(mapnamerd.i_size());
-        map(x, y, 6) = 1;
+        cell_data.at(x, y).feats = 1;
         if (area_data[p].type == mdata_t::MapType::dungeon)
         {
             area_data[p].appearance = 133;
@@ -7589,10 +7596,11 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
 
     if (number <= 3)
     {
-        if (map(prm_1055, prm_1056, 5) < 0)
+        if (cell_data.at(prm_1055, prm_1056).item_appearances_memory < 0)
         {
             rtvaln = "";
-            p_at_m185(0) = -map(prm_1055, prm_1056, 5);
+            p_at_m185(0) =
+                -cell_data.at(prm_1055, prm_1056).item_appearances_memory;
             p_at_m185(1) = 0;
             i_at_m185(0) = p_at_m185 % 1000 + 5080;
             i_at_m185(1) = p_at_m185 / 1000 % 1000 + 5080;
@@ -7695,7 +7703,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
             ++dy_at_m186;
         }
     }
-    if (map(prm_1057, prm_1058, 5) != 0)
+    if (cell_data.at(prm_1057, prm_1058).item_appearances_memory != 0)
     {
         bmes(
             txtitemoncell(prm_1057, prm_1058),
@@ -7703,26 +7711,27 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
             windowh - inf_verh - 45 - dy_at_m186 * 20);
         ++dy_at_m186;
     }
-    if (map(prm_1057, prm_1058, 6) != 0)
+    if (cell_data.at(prm_1057, prm_1058).feats != 0)
     {
         if (mdata_map_type == mdata_t::MapType::world_map)
         {
-            if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 15)
+            if (cell_data.at(prm_1057, prm_1058).feats / 1000 % 100 == 15)
             {
-                p_at_m186 = map(prm_1057, prm_1058, 6) / 100000 % 100
-                    + map(prm_1057, prm_1058, 6) / 10000000 * 100;
+                p_at_m186 =
+                    cell_data.at(prm_1057, prm_1058).feats / 100000 % 100
+                    + cell_data.at(prm_1057, prm_1058).feats / 10000000 * 100;
                 bmes(
                     mapname(p_at_m186, true),
                     100,
                     windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
             }
-            if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 34)
+            if (cell_data.at(prm_1057, prm_1058).feats / 1000 % 100 == 34)
             {
                 bmes(
                     txtbuilding(
-                        map(prm_1057, prm_1058, 6) / 100000 % 100,
-                        map(prm_1057, prm_1058, 6) / 10000000),
+                        cell_data.at(prm_1057, prm_1058).feats / 100000 % 100,
+                        cell_data.at(prm_1057, prm_1058).feats / 10000000),
                     100,
                     windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
@@ -9919,7 +9928,7 @@ label_21451_internal:
     }
     movx = cdata[cc].position.x;
     movy = cdata[cc].position.y;
-    if (map(movx, movy, 6) != 0)
+    if (cell_data.at(movx, movy).feats != 0)
     {
         cell_featread(movx, movy);
         if (feat(1) == 14)
@@ -12052,8 +12061,10 @@ int pick_up_item()
     else
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        map(inv[ci].position.x, inv[ci].position.y, 5) =
-            map(inv[ci].position.x, inv[ci].position.y, 4);
+        cell_data.at(inv[ci].position.x, inv[ci].position.y)
+            .item_appearances_memory =
+            cell_data.at(inv[ci].position.x, inv[ci].position.y)
+                .item_appearances_actual;
         snd(14 + rnd(2));
         msgkeep = 1;
         txt(i18n::s.get(
@@ -12179,7 +12190,7 @@ void lost_body_part(int cc)
 
 TurnResult do_bash()
 {
-    if (map(x, y, 5) != 0)
+    if (cell_data.at(x, y).item_appearances_memory != 0)
     {
         if (mapitemfind(x, y, 526) != -1)
         {
@@ -12269,12 +12280,12 @@ TurnResult do_bash()
         cdata[tc].sleep = 0;
         return TurnResult::turn_end;
     }
-    if (map(x, y, 6) != 0)
+    if (cell_data.at(x, y).feats != 0)
     {
         cell_featread(x, y);
         if (feat(1) == 30)
         {
-            map(x, y, 6) = 0;
+            cell_data.at(x, y).feats = 0;
             spillfrag(x, y, 2);
             flt(calcobjlv(
                     game_data.current_dungeon_level
@@ -12413,7 +12424,7 @@ TurnResult proc_movement_event()
             }
         }
     }
-    if (map(dx, dy, 6) != 0)
+    if (cell_data.at(dx, dy).feats != 0)
     {
         cell_featread(dx, dy);
         if (feat(1) == 21)
@@ -12427,7 +12438,9 @@ TurnResult proc_movement_event()
             return do_bash();
         }
     }
-    if (map(cdata[cc].position.x, cdata[cc].position.y, 8) != 0)
+    if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+            .mef_index_plus_one
+        != 0)
     {
         bool turn_ended = mef_proc_from_movement(cc);
         if (turn_ended)
@@ -12474,7 +12487,8 @@ TurnResult proc_movement_event()
             game_data.stood_world_map_tile =
                 cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
                     .chip_id_actual;
-            if (map(cdata[cc].position.x, cdata[cc].position.y, 6) == 0)
+            if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats
+                == 0)
             {
                 p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
                         .chip_id_actual;
@@ -12738,7 +12752,8 @@ void proc_autopick()
             txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
             inv[ci].remove();
             cell_refresh(x, y);
-            map(x, y, 5) = map(x, y, 4);
+            cell_data.at(x, y).item_appearances_memory =
+                cell_data.at(x, y).item_appearances_actual;
             break;
         case Autopick::Operation::Type::open:
             // FIXME: DRY
@@ -12792,7 +12807,7 @@ void sense_map_feats_on_move()
                 game_data.player_cellaccess_n = cellaccess;
             }
         }
-        if (map(x, y, 4) != 0)
+        if (cell_data.at(x, y).item_appearances_actual != 0)
         {
             if (cdata.player().blind == 0)
             {
@@ -12840,7 +12855,7 @@ void sense_map_feats_on_move()
             snd(81 + foot % 2);
             ++foot;
         }
-        if (map(x, y, 6) != 0)
+        if (cell_data.at(x, y).feats != 0)
         {
             cell_featread(x, y);
             if (feat(1) == 32)
@@ -13678,7 +13693,9 @@ label_22191_internal:
         txt(i18n::s.get("core.locale.damage.is_frightened", cdata[cc]));
         return;
     }
-    if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
+    if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+            .mef_index_plus_one
+        != 0)
     {
         bool return_now = mef_proc_from_physical_attack(tc);
         if (return_now)
@@ -14491,7 +14508,7 @@ TurnResult do_plant()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
+    if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats != 0)
     {
         txt(i18n::s.get("core.locale.action.plant.cannot_plant_it_here"));
         update_screen();
@@ -14629,7 +14646,8 @@ void harvest_plant(int val)
     }
     if (sdata(180, 0) < rnd(p + 1) || rnd(5) == 0 || feat(2) == 40)
     {
-        map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
+        cell_data.at(cdata.player().position.x, cdata.player().position.y)
+            .feats = 0;
         return;
     }
     feat = tile_plant;

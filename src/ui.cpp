@@ -351,7 +351,7 @@ void render_stair_positions_in_minimap()
     {
         for (int x = 0; x < mdata_map_width; ++x)
         {
-            const auto n = map(x, y, 6) / 1000 % 100;
+            const auto n = cell_data.at(x, y).feats / 1000 % 100;
             if (n == 10 || n == 11)
             {
                 const auto sx = clamp(120 * x / mdata_map_width, 2, 112);
@@ -1233,7 +1233,8 @@ void update_minimap()
     {
         for (int x = 0; x < mdata_map_width; ++x)
         {
-            if (map(x, y, 2) == cell_data.at(x, y).chip_id_actual)
+            if (cell_data.at(x, y).chip_id_memory
+                == cell_data.at(x, y).chip_id_actual)
             {
                 draw_minimap_pixel(x, y);
             }
@@ -1684,14 +1685,15 @@ void update_slight()
                             cdata[cell_data.at(sx, sy).chara_index_plus_one - 1]
                                 .vision_flag = msync;
                         }
-                        if (map(sx, sy, 2)
+                        if (cell_data.at(sx, sy).chip_id_memory
                             != cell_data.at(sx, sy).chip_id_actual)
                         {
-                            map(sx, sy, 2) =
+                            cell_data.at(sx, sy).chip_id_memory =
                                 cell_data.at(sx, sy).chip_id_actual;
                             draw_minimap_pixel(sx, sy);
                         }
-                        map(sx, sy, 5) = map(sx, sy, 4);
+                        cell_data.at(sx, sy).item_appearances_memory =
+                            cell_data.at(sx, sy).item_appearances_actual;
                         ++lx;
                         continue;
                     }

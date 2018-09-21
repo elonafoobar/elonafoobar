@@ -25,7 +25,7 @@ void cell_featset(
     }
     else
     {
-        feat_at_m80 = map(prm_592, prm_593, 6) % 1000;
+        feat_at_m80 = cell_data.at(prm_592, prm_593).feats % 1000;
     }
     if (prm_595 != -1)
     {
@@ -33,7 +33,7 @@ void cell_featset(
     }
     else
     {
-        feat_at_m80(1) = map(prm_592, prm_593, 6) / 1000 % 100;
+        feat_at_m80(1) = cell_data.at(prm_592, prm_593).feats / 1000 % 100;
     }
     if (prm_596 != -1)
     {
@@ -41,7 +41,7 @@ void cell_featset(
     }
     else
     {
-        feat_at_m80(2) = map(prm_592, prm_593, 6) / 100000 % 100;
+        feat_at_m80(2) = cell_data.at(prm_592, prm_593).feats / 100000 % 100;
     }
     if (prm_597 != -1)
     {
@@ -49,9 +49,9 @@ void cell_featset(
     }
     else
     {
-        feat_at_m80(3) = map(prm_592, prm_593, 6) / 10000000;
+        feat_at_m80(3) = cell_data.at(prm_592, prm_593).feats / 10000000;
     }
-    map(prm_592, prm_593, 6) = feat_at_m80 + feat_at_m80(1) * 1000
+    cell_data.at(prm_592, prm_593).feats = feat_at_m80 + feat_at_m80(1) * 1000
         + feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
 }
 
@@ -59,10 +59,10 @@ void cell_featset(
 
 int cell_featread(int prm_598, int prm_599, int)
 {
-    feat(0) = map(prm_598, prm_599, 6) % 1000;
-    feat(1) = map(prm_598, prm_599, 6) / 1000 % 100;
-    feat(2) = map(prm_598, prm_599, 6) / 100000 % 100;
-    feat(3) = map(prm_598, prm_599, 6) / 10000000;
+    feat(0) = cell_data.at(prm_598, prm_599).feats % 1000;
+    feat(1) = cell_data.at(prm_598, prm_599).feats / 1000 % 100;
+    feat(2) = cell_data.at(prm_598, prm_599).feats / 100000 % 100;
+    feat(3) = cell_data.at(prm_598, prm_599).feats / 10000000;
     return 0;
 }
 
@@ -70,7 +70,7 @@ int cell_featread(int prm_598, int prm_599, int)
 
 void cell_featclear(int prm_601, int prm_602)
 {
-    map(prm_601, prm_602, 6) = 0;
+    cell_data.at(prm_601, prm_602).feats = 0;
 }
 
 
@@ -91,10 +91,10 @@ void cell_check(int prm_603, int prm_604)
         cellchara = cell_data.at(prm_603, prm_604).chara_index_plus_one - 1;
         cellaccess = 0;
     }
-    if (map(prm_603, prm_604, 6) != 0)
+    if (cell_data.at(prm_603, prm_604).feats != 0)
     {
-        cellfeat = map(prm_603, prm_604, 6) / 1000 % 100;
-        if (chipm(7, map(prm_603, prm_604, 6) % 1000) & 4)
+        cellfeat = cell_data.at(prm_603, prm_604).feats / 1000 % 100;
+        if (chipm(7, cell_data.at(prm_603, prm_604).feats % 1000) & 4)
         {
             cellaccess = 0;
         }
@@ -257,7 +257,7 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
             {
                 continue;
             }
-            if (chipm(7, map(dx_at_m130, dy_at_m130, 6) % 1000) & 4)
+            if (chipm(7, cell_data.at(dx_at_m130, dy_at_m130).feats % 1000) & 4)
             {
                 continue;
             }

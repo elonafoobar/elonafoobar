@@ -453,7 +453,9 @@ label_2689_internal:
         {
             if (tc == 0)
             {
-                if (map(cdata[cc].position.x, cdata[cc].position.y, 4) != 0)
+                if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                        .item_appearances_actual
+                    != 0)
                 {
                     const auto item_info = cell_itemoncell(cdata[cc].position);
                     const auto number = item_info.first;
@@ -981,7 +983,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
     }
     tc = cc;
-    if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
+    if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+            .mef_index_plus_one
+        != 0)
     {
         mef_proc(tc);
     }
@@ -1307,11 +1311,12 @@ TurnResult pc_turn(bool advance_time)
                 x + dirxy(0, game_data.player_next_move_direction);
             cdata.player().next_position.y =
                 y + dirxy(1, game_data.player_next_move_direction);
-            if (map(x, y, 5) != 0)
+            if (cell_data.at(x, y).item_appearances_memory != 0)
             {
                 game_data.player_cellaccess_check_flag = 0;
             }
-            if (map(x, y, 6) != 0 && map(x, y, 6) != 999)
+            if (cell_data.at(x, y).feats != 0
+                && cell_data.at(x, y).feats != 999)
             {
                 game_data.player_cellaccess_check_flag = 0;
             }

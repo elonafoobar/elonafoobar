@@ -783,9 +783,10 @@ label_2692_internal:
                     {
                         if (chipm(
                                 0,
-                                map(cdata[cc].position.x,
-                                    cdata[cc].position.y,
-                                    0))
+                                cell_data
+                                    .at(cdata[cc].position.x,
+                                        cdata[cc].position.y)
+                                    .chip_id_actual)
                             == 4)
                         {
                             if (rnd(4) == 0)
@@ -843,9 +844,10 @@ label_2692_internal:
                             }
                             if (rnd(10) == 0)
                             {
-                                if (map(cdata[cc].position.x,
-                                        cdata[cc].position.y,
-                                        4)
+                                if (cell_data
+                                        .at(cdata[cc].position.x,
+                                            cdata[cc].position.y)
+                                        .item_appearances_actual
                                     == 0)
                                 {
                                     flt();

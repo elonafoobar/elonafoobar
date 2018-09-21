@@ -71,7 +71,8 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     return 0;
                 }
-                if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -92,7 +93,8 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     return 0;
                 }
-                if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -117,7 +119,8 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -138,7 +141,8 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -174,7 +178,10 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                  & 1)
                 == 0)
             {
-                if ((chipm(7, map(prm_629, (prm_630 + sy_at_modfov), 6) % 1000)
+                if ((chipm(
+                         7,
+                         cell_data.at(prm_629, (prm_630 + sy_at_modfov)).feats
+                             % 1000)
                      & 1)
                     == 0)
                 {
@@ -194,7 +201,10 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                  & 1)
                 == 0)
             {
-                if ((chipm(7, map((prm_629 + sx_at_modfov), prm_630, 6) % 1000)
+                if ((chipm(
+                         7,
+                         cell_data.at((prm_629 + sx_at_modfov), prm_630).feats
+                             % 1000)
                      & 1)
                     == 0)
                 {
@@ -231,7 +241,8 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                & 1)
             {
                 return 0;
             }
@@ -250,7 +261,10 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(
+                        7,
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -291,7 +305,8 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                & 1)
             {
                 return 0;
             }
@@ -310,7 +325,10 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(
+                        7,
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -366,7 +384,8 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     return 0;
                 }
-                if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -393,7 +412,8 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     return 0;
                 }
-                if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -425,7 +445,8 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -452,7 +473,8 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -492,7 +514,10 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                  & 1)
                 == 0)
             {
-                if ((chipm(7, map(prm_633, (prm_634 + sy_at_modfov), 6) % 1000)
+                if ((chipm(
+                         7,
+                         cell_data.at(prm_633, (prm_634 + sy_at_modfov)).feats
+                             % 1000)
                      & 1)
                     == 0)
                 {
@@ -523,7 +548,10 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                  & 1)
                 == 0)
             {
-                if ((chipm(7, map((prm_633 + sx_at_modfov), prm_634, 6) % 1000)
+                if ((chipm(
+                         7,
+                         cell_data.at((prm_633 + sx_at_modfov), prm_634).feats
+                             % 1000)
                      & 1)
                     == 0)
                 {
@@ -576,7 +604,8 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                & 1)
             {
                 return 0;
             }
@@ -601,7 +630,10 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(
+                        7,
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }
@@ -657,7 +689,8 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                & 1)
             {
                 return 0;
             }
@@ -682,7 +715,10 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                if (chipm(
+                        7,
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
+                    & 1)
                 {
                     return 0;
                 }

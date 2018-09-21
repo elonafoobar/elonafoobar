@@ -1,4 +1,5 @@
 #include "lua_api_map.hpp"
+#include "../../map.hpp"
 #include "../../map_cell.hpp"
 
 namespace elona
@@ -109,7 +110,7 @@ void Map::set_tile_memory_xy(int x, int y, int type)
         return;
     }
 
-    elona::map(x, y, 2) = type;
+    elona::cell_data.at(x, y).chip_id_memory = type;
 }
 
 void Map::bind(sol::table& api_table)

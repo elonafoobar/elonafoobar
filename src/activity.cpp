@@ -1838,7 +1838,7 @@ void spot_mining_or_wall()
             {
                 rtval = -1;
             }
-            if (map(refx, refy, 6) != 0)
+            if (cell_data.at(refx, refy).feats != 0)
             {
                 cell_featread(refx, refy);
                 if (feat(1) == 22)
@@ -1908,7 +1908,8 @@ TurnResult do_dig_after_sp_check()
 
 int search_material_spot()
 {
-    if (map(cdata.player().position.x, cdata.player().position.y, 6) == 0)
+    if (cell_data.at(cdata.player().position.x, cdata.player().position.y).feats
+        == 0)
     {
         return 0;
     }
@@ -2038,7 +2039,8 @@ int search_material_spot()
         }
         txt(s);
         cdata[cc].continuous_action.finish();
-        map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
+        cell_data.at(cdata.player().position.x, cdata.player().position.y)
+            .feats = 0;
     }
     return 0;
 }

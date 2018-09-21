@@ -482,7 +482,7 @@ TurnResult do_search_command()
             {
                 continue;
             }
-            if (map(x, y, 6) != 0)
+            if (cell_data.at(x, y).feats != 0)
             {
                 cell_featread(x, y);
                 refx = x;
@@ -525,7 +525,7 @@ TurnResult do_search_command()
                             snd(24);
                             txt(i18n::s.get(
                                 "core.locale.action.search.small_coin.find"));
-                            map(x, y, 6) = 0;
+                            cell_data.at(x, y).feats = 0;
                             flt();
                             itemcreate(-1, 622, x, y, 0);
                         }
@@ -810,7 +810,7 @@ TurnResult do_throw_command()
             }
             if (inv[ci].id == 587)
             {
-                if (map(tlocx, tlocy, 4) != 0)
+                if (cell_data.at(tlocx, tlocy).item_appearances_actual != 0)
                 {
                     cell_itemlist(tlocx, tlocy);
                     f = 0;
@@ -1773,7 +1773,7 @@ TurnResult do_use_command()
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        if (map(x, y, 6) != 0)
+        if (cell_data.at(x, y).feats != 0)
         {
             txt(i18n::s.get("core.locale.action.use.mine.cannot_place_here"));
             return TurnResult::pc_turn_user_error;
@@ -3483,7 +3483,8 @@ TurnResult do_get_command()
     const auto number = item_info.first;
     const auto item = item_info.second;
 
-    if (map(cdata.player().position.x, cdata.player().position.y, 6) != 0
+    if (cell_data.at(cdata.player().position.x, cdata.player().position.y).feats
+            != 0
         && game_data.current_map != mdata_t::MapId::show_house && number == 0)
     {
         cell_featread(cdata.player().position.x, cdata.player().position.y);
@@ -3492,15 +3493,17 @@ TurnResult do_get_command()
             if (feat < tile_plant + 2)
             {
                 txt(i18n::s.get("core.locale.action.get.plant.young"));
-                map(cdata.player().position.x, cdata.player().position.y, 6) =
-                    0;
+                cell_data
+                    .at(cdata.player().position.x, cdata.player().position.y)
+                    .feats = 0;
                 return TurnResult::turn_end;
             }
             if (feat == tile_plant + 3)
             {
                 txt(i18n::s.get("core.locale.action.get.plant.dead"));
-                map(cdata.player().position.x, cdata.player().position.y, 6) =
-                    0;
+                cell_data
+                    .at(cdata.player().position.x, cdata.player().position.y)
+                    .feats = 0;
                 return TurnResult::turn_end;
             }
             if (!inv_getspace(0))
@@ -3513,9 +3516,10 @@ TurnResult do_get_command()
             harvest_plant(
                 chipm(
                     0,
-                    map(cdata.player().position.x,
-                        cdata.player().position.y,
-                        0))
+                    cell_data
+                        .at(cdata.player().position.x,
+                            cdata.player().position.y)
+                        .chip_id_actual)
                         == 2
                     ? 1
                     : 0);
@@ -3539,7 +3543,8 @@ TurnResult do_get_command()
                 return TurnResult::pc_turn_user_error;
             }
             area = feat(2) + feat(3) * 100;
-            map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
+            cell_data.at(cdata.player().position.x, cdata.player().position.y)
+                .feats = 0;
             area_data[area].id = static_cast<int>(mdata_t::MapId::none);
             removeworker(area);
             map_global_prepare();

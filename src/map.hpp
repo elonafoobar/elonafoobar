@@ -19,7 +19,10 @@ struct Cell
     int chip_id_memory{};
 
     /**
-     * Character index at this tile.
+     * Character index at this tile. 0 if empty.
+     *
+     * 1 is added to the index since the character array is 0-indexed, but 0 in
+     * this field indicates nonexistence.
      */
     int chara_index_plus_one{};
 
@@ -72,9 +75,9 @@ struct Cell
     int blood_and_fragments{};
 
     /**
-     * Corresponding mef id plus 1, to be looked up in mef(). 0 if no mef.
+     * Map effect index plus 1, to be looked up in mef(). 0 if no mef.
      */
-    int mef_id_plus_one{};
+    int mef_index_plus_one{};
 
     /**
      * Amount of light generated.

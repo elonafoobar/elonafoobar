@@ -825,13 +825,13 @@ void draw_one_map_tile(int x, int y, int tile, int dx = 0)
 void draw_blood_pool_and_fragments(int x, int y)
 {
     gmode(2);
-    if (map(x, y, 7) != 0 && mapsync(x, y) == msync)
+    if (cell_data.at(x, y).blood_and_fragments != 0 && mapsync(x, y) == msync)
     {
-        if (const auto fragments = map(x, y, 7) / 10)
+        if (const auto fragments = cell_data.at(x, y).blood_and_fragments / 10)
         {
             gcopy(5, fragments * inf_tiles + 288, 1152, inf_tiles, inf_tiles);
         }
-        if (const auto blood = map(x, y, 7) % 10)
+        if (const auto blood = cell_data.at(x, y).blood_and_fragments % 10)
         {
             gcopy(
                 5, std::min(6, blood) * inf_tiles, 1152, inf_tiles, inf_tiles);
@@ -881,9 +881,11 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
 
 void draw_nefia_icons(int x, int y, int dx, int dy)
 {
-    if (map(x, y, 6) != 0 && map(x, y, 2) == cell_data.at(x, y).chip_id_actual)
+    if (cell_data.at(x, y).feats != 0
+        && cell_data.at(x, y).chip_id_memory
+            == cell_data.at(x, y).chip_id_actual)
     {
-        const auto p_ = map(x, y, 6) % 1000;
+        const auto p_ = cell_data.at(x, y).feats % 1000;
         if (p_ != 999 && p_ != 0)
         {
             pos(dx, dy - chipm(5, p_));
@@ -896,8 +898,8 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
         }
         if (mdata_map_type == mdata_t::MapType::world_map)
         {
-            const auto q_ =
-                map(x, y, 6) / 100000 % 100 + map(x, y, 6) / 10000000 * 100;
+            const auto q_ = cell_data.at(x, y).feats / 100000 % 100
+                + cell_data.at(x, y).feats / 10000000 * 100;
             if (area_data[q_].id == mdata_t::MapId::random_dungeon)
             {
                 if (area_data[q_].visited_deepest_level
@@ -918,9 +920,9 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
 
 void draw_mefs(int x, int y, int dx, int dy, int scrturn_)
 {
-    if (map(x, y, 8) != 0 && mapsync(x, y) == msync)
+    if (cell_data.at(x, y).mef_index_plus_one != 0 && mapsync(x, y) == msync)
     {
-        const auto mef_id = map(x, y, 8) - 1;
+        const auto mef_id = cell_data.at(x, y).mef_index_plus_one - 1;
         auto item_chip_id = mef(1, mef_id) % 10000;
         int anim_frame = 0;
         const auto item_chip_color = mef(1, mef_id) / 10000;
@@ -1031,7 +1033,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
 {
     elona_vector1<int> p_;
 
-    if (map(x, y, 5) != 0)
+    if (cell_data.at(x, y).item_appearances_memory != 0)
     {
         const bool mode_6_or_9 = mode == 6 || mode == 9;
         int i_;
@@ -1042,15 +1044,15 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
         }
         else
         {
-            i_ = wpeek(map(x, y, 5), 2);
-            p_ = wpeek(map(x, y, 5), 0);
+            i_ = wpeek(cell_data.at(x, y).item_appearances_memory, 2);
+            p_ = wpeek(cell_data.at(x, y).item_appearances_memory, 0);
         }
 
-        if (map(x, y, 5) < 0 && !mode_6_or_9)
+        if (cell_data.at(x, y).item_appearances_memory < 0 && !mode_6_or_9)
         {
             // Several items are stacked.
             std::array<int, 3> items;
-            p_ = -map(x, y, 5);
+            p_ = -cell_data.at(x, y).item_appearances_memory;
             items[0] = p_ % 1000 + 5080;
             items[1] = p_ / 1000 % 1000 + 5080;
             items[2] = p_ / 1000000 % 1000 + 5080;
@@ -1360,10 +1362,10 @@ void cell_draw()
             }
 
             // Map tile
-            ground_ = map(x_, y, 2);
+            ground_ = cell_data.at(x_, y).chip_id_memory;
             if (chipm(2, ground_) == 2 && y < mdata_map_height - 1
-                && chipm(2, map(x_, y + 1, 2)) != 2
-                && map(x_, y + 1, 2) != tile_fog)
+                && chipm(2, cell_data.at(x_, y + 1).chip_id_memory) != 2
+                && cell_data.at(x_, y + 1).chip_id_memory != tile_fog)
             {
                 ground_ += 33;
             }
@@ -1391,9 +1393,9 @@ void cell_draw()
             draw_npc(x_, y, dx_, dy_, ani_, ground_);
 
             // Light
-            if (map(x_, y, 9) != 0)
+            if (cell_data.at(x_, y).light != 0)
             {
-                const auto& light = lightdata[map(x_, y, 9)];
+                const auto& light = lightdata[cell_data.at(x_, y).light];
                 if ((is_night() || light.always_shines)
                     && mapsync(x_, y) == msync)
                 {
@@ -1423,7 +1425,7 @@ void cell_draw()
                 gmode(0);
                 if (y > 0)
                 {
-                    p_ = map(x_, y - 1, 2);
+                    p_ = cell_data.at(x_, y - 1).chip_id_memory;
                     if (chipm(2, p_) != 2 && p_ != tile_fog && dy_ > 20)
                     {
                         pos(dx_, dy_ - 12);

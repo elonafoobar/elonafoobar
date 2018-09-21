@@ -882,7 +882,7 @@ void map_setfog(int, int)
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            map(x, y, 2) =
+            cell_data.at(x, y).chip_id_memory =
                 tile_fog + (rnd(tile_fog(2)) == 0) * rnd(tile_fog(1));
         }
     }
@@ -1352,8 +1352,9 @@ void map_randsite(int prm_971, int prm_972)
         if ((chipm(7, cell_data.at(x_at_m169, y_at_m169).chip_id_actual) & 4)
             == 0)
         {
-            if (map(x_at_m169, y_at_m169, 6) == 0
-                && map(x_at_m169, y_at_m169, 4) == 0)
+            if (cell_data.at(x_at_m169, y_at_m169).feats == 0
+                && cell_data.at(x_at_m169, y_at_m169).item_appearances_actual
+                    == 0)
             {
                 f_at_m169 = 1;
                 break;
@@ -1489,7 +1490,7 @@ int map_trap(int prm_973, int prm_974, int, int prm_976)
         if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) & 4)
             == 0)
         {
-            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
                 if (prm_976 == 0)
                 {
@@ -1556,7 +1557,7 @@ int map_web(int prm_977, int prm_978, int prm_979)
         if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) & 4)
             == 0)
         {
-            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
                 mef_add(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
                 return 1;
@@ -1593,7 +1594,7 @@ int map_barrel(int prm_980, int prm_981)
         if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) & 4)
             == 0)
         {
-            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
                 cell_featset(dx_at_m170, dy_at_m170, tile_pot, 30);
                 return 1;
@@ -2355,7 +2356,8 @@ int initialize_quest_map_crop()
                     break;
                 }
                 cell_data.at(x, y).chip_id_actual = tile;
-                if (rnd(10) != 0 || map(x, y, 4) != 0)
+                if (rnd(10) != 0
+                    || cell_data.at(x, y).item_appearances_actual != 0)
                 {
                     continue;
                 }
@@ -2391,7 +2393,7 @@ int initialize_quest_map_crop()
         if (cell_data.at(x, y).chip_id_actual != 30
             && cell_data.at(x, y).chip_id_actual != 31)
         {
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 if (rnd(8))
                 {
@@ -2777,12 +2779,12 @@ int initialize_quest_map_party()
             {
                 x = dx + cnt;
                 if (cell_data.at(x, y).chip_id_actual != tile_tunnel
-                    || map(x, y, 4) != 0)
+                    || cell_data.at(x, y).item_appearances_actual != 0)
                 {
                     p(0) = 0;
                 }
                 if (cell_data.at(x, y).chip_id_actual != tile_room
-                    || map(x, y, 4) != 0)
+                    || cell_data.at(x, y).item_appearances_actual != 0)
                 {
                     p(1) = 0;
                 }
@@ -2912,7 +2914,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 88, x, y, 0);
@@ -2922,7 +2924,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 313, x, y, 0);
@@ -2932,7 +2934,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 156, x, y, 0);
@@ -2942,7 +2944,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (map(x, y, 4) == 0)
+            if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
                 itemcreate(-1, 606, x, y, 0);
@@ -2972,7 +2974,7 @@ int initialize_quest_map_party()
     {
         x = rnd(mdata_map_width);
         y = rnd(mdata_map_height);
-        if (map(x, y, 4) != 0
+        if (cell_data.at(x, y).item_appearances_actual != 0
             || chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
         {
             continue;
@@ -3118,7 +3120,7 @@ void initialize_quest_map_town()
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            map(x, y, 6) = 0;
+            cell_data.at(x, y).feats = 0;
         }
     }
 }
@@ -3593,7 +3595,7 @@ void initialize_random_nefia_rdtype10()
             {
                 continue;
             }
-            if (map(x, y, 6) != 0)
+            if (cell_data.at(x, y).feats != 0)
             {
                 continue;
             }

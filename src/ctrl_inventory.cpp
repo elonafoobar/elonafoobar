@@ -15,6 +15,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "macro.hpp"
+#include "map.hpp"
 #include "menu.hpp"
 #include "shop.hpp"
 #include "ui.hpp"

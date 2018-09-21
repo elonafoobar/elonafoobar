@@ -162,7 +162,7 @@ label_1741_internal:
             for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
                 x = cnt;
-                if (map(x, y, 6) / 1000 % 100 == 32)
+                if (cell_data.at(x, y).feats / 1000 % 100 == 32)
                 {
                     if (maxmedal < 30)
                     {
@@ -2627,7 +2627,8 @@ label_1741_internal:
             y = cnt;
             for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
-                map(cnt, y, 2) = cell_data.at(cnt, y).chip_id_actual;
+                cell_data.at(cnt, y).chip_id_memory =
+                    cell_data.at(cnt, y).chip_id_actual;
             }
         }
     }
