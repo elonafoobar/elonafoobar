@@ -156,7 +156,7 @@ int do_create_item(int slot, int x, int y)
                     continue;
                 }
             }
-            if ((chipm(7, map(sx, sy, 0)) & 4) == 0)
+            if ((chipm(7, cell_data.at(sx, sy).chip_id_actual) & 4) == 0)
             {
                 ok = true;
                 inv[ci].position.x = sx;

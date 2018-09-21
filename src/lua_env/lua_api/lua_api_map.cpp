@@ -37,7 +37,7 @@ bool Map::valid_xy(int x, int y)
         return false;
     }
 
-    return elona::map(x, y, 0) != 0;
+    return elona::cell_data.at(x, y).chip_id_actual != 0;
 }
 
 bool Map::can_access(const Position& position)
@@ -90,7 +90,7 @@ void Map::set_tile_xy(int x, int y, int type)
         return;
     }
 
-    elona::map(x, y, 0) = type;
+    elona::cell_data.at(x, y).chip_id_actual = type;
 }
 
 void Map::set_tile_memory(const Position& position, int type)

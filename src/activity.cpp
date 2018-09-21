@@ -15,6 +15,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "optional.hpp"
 #include "status_ailment.hpp"
@@ -292,7 +293,7 @@ void continuous_action_perform()
                 }
                 x = audience.position.x;
                 y = audience.position.y;
-                if (map(x, y, 1) == 0)
+                if (cell_data.at(x, y).chara_index_plus_one == 0)
                 {
                     continue;
                 }
@@ -1773,7 +1774,7 @@ void spot_mining_or_wall()
         {
             txt(i18n::s.get("core.locale.activity.dig_mining.start.spot"));
         }
-        if (chipm(0, map(refx, refy, 0)) == 6)
+        if (chipm(0, cell_data.at(refx, refy).chip_id_actual) == 6)
         {
             txt(i18n::s.get("core.locale.activity.dig_mining.start.hard"));
         }
@@ -1794,7 +1795,7 @@ void spot_mining_or_wall()
         }
         ++countdig;
         f = 0;
-        if (chipm(0, map(refx, refy, 0)) == 6)
+        if (chipm(0, cell_data.at(refx, refy).chip_id_actual) == 6)
         {
             if (rnd(12000) < sdata(10, cc) + sdata(163, cc) * 10)
             {
@@ -1845,7 +1846,7 @@ void spot_mining_or_wall()
                     discover_hidden_path();
                 }
             }
-            map(refx, refy, 0) = tile_tunnel;
+            cell_data.at(refx, refy).chip_id_actual = tile_tunnel;
             spillfrag(refx, refy, 2);
             snd(45);
             BreakingAnimation({refx, refy}).play();

@@ -24,9 +24,9 @@ CellData cell_data;
 #define MAP_UNPACK(n, ident) ident = legacy_map(x, y, n);
 
 #define SERIALIZE_ALL() \
-    SERIALIZE(0, chip_id_memory); \
+    SERIALIZE(0, chip_id_actual); \
     SERIALIZE(1, chara_index_plus_one); \
-    SERIALIZE(2, chip_id_actual); \
+    SERIALIZE(2, chip_id_memory); \
     /* 3 */ \
     SERIALIZE(4, item_appearances_memory); \
     SERIALIZE(5, item_appearances_actual); \
@@ -66,9 +66,13 @@ void CellData::init(int width, int height)
     width_ = width;
     height_ = height;
 
+    cells.reserve(height_);
+
     for (int y = 0; y < height_; y++)
     {
         std::vector<Cell> column;
+        column.reserve(width_);
+
         for (int x = 0; x < width_; x++)
         {
             column.emplace_back(Cell{});
@@ -81,8 +85,8 @@ void CellData::init(int width, int height)
 
 void CellData::pack_to(elona_vector3<int>& legacy_map)
 {
-    assert(legacy_map.j_size() == width_);
-    assert(legacy_map.k_size() == height_);
+    assert(legacy_map.i_size() == width_);
+    assert(legacy_map.j_size() == height_);
 
     for (int y = 0; y < height_; y++)
     {
@@ -97,8 +101,7 @@ void CellData::pack_to(elona_vector3<int>& legacy_map)
 
 void CellData::unpack_from(elona_vector3<int>& legacy_map)
 {
-    assert(legacy_map.j_size() == width_);
-    assert(legacy_map.k_size() == height_);
+    init(legacy_map.i_size(), legacy_map.j_size());
 
     for (int y = 0; y < height_; y++)
     {

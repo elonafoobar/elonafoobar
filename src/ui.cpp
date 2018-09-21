@@ -8,6 +8,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -1232,7 +1233,7 @@ void update_minimap()
     {
         for (int x = 0; x < mdata_map_width; ++x)
         {
-            if (map(x, y, 2) == map(x, y, 0))
+            if (map(x, y, 2) == cell_data.at(x, y).chip_id_actual)
             {
                 draw_minimap_pixel(x, y);
             }
@@ -1678,13 +1679,16 @@ void update_slight()
                     {
                     label_1430_internal:
                         mapsync(sx, sy) = msync;
-                        if (map(sx, sy, 1) != 0)
+                        if (cell_data.at(sx, sy).chara_index_plus_one != 0)
                         {
-                            cdata[map(sx, sy, 1) - 1].vision_flag = msync;
+                            cdata[cell_data.at(sx, sy).chara_index_plus_one - 1]
+                                .vision_flag = msync;
                         }
-                        if (map(sx, sy, 2) != map(sx, sy, 0))
+                        if (map(sx, sy, 2)
+                            != cell_data.at(sx, sy).chip_id_actual)
                         {
-                            map(sx, sy, 2) = map(sx, sy, 0);
+                            map(sx, sy, 2) =
+                                cell_data.at(sx, sy).chip_id_actual;
                             draw_minimap_pixel(sx, sy);
                         }
                         map(sx, sy, 5) = map(sx, sy, 4);
@@ -1758,7 +1762,10 @@ void ui_scroll_screen()
         scrollp = 6;
         keybd_wait = 1000;
         if (chipm(
-                0, map(cdata.player().position.x, cdata.player().position.y, 0))
+                0,
+                cell_data
+                    .at(cdata.player().position.x, cdata.player().position.y)
+                    .chip_id_actual)
             == 4)
         {
             scrollp = 9;
@@ -1831,12 +1838,12 @@ void ui_initialize_minimap()
             pos(688 + sx(1), 528 + sy(1));
             gcopy(
                 2,
-                map(sx, sy, 0) % 33 * inf_tiles + sx % 16,
-                map(sx, sy, 0) / 33 * inf_tiles + sy % 12,
+                cell_data.at(sx, sy).chip_id_actual % 33 * inf_tiles + sx % 16,
+                cell_data.at(sx, sy).chip_id_actual / 33 * inf_tiles + sy % 12,
                 raderw,
                 raderh);
             pos(688 + sx(1), 528 + sy(1));
-            if (chipm(7, map(sx, sy, 0)) & 4)
+            if (chipm(7, cell_data.at(sx, sy).chip_id_actual) & 4)
             {
                 boxf(688 + sx(1), 528 + sy(1), raderw, raderh, {0, 0, 0, 100});
             }
@@ -1939,7 +1946,7 @@ void event_7_modify_screen()
             {
                 dx = mdata_map_width;
             }
-            ap = map(dx, dy, 0);
+            ap = cell_data.at(dx, dy).chip_id_actual;
             pos(x * evtiles, y * evtiles);
             gmode(0);
             gcopy_c(

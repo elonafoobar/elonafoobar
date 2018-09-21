@@ -559,7 +559,9 @@ void proc_event()
                     inv[i].position.y);
                 if (p(2) < p(1))
                 {
-                    if (map(inv[ci].position.x, inv[ci].position.y, 1) == 0
+                    if (cell_data.at(inv[ci].position.x, inv[ci].position.y)
+                                .chara_index_plus_one
+                            == 0
                         || c == 0 || c == tc)
                     {
                         p(0) = ci;
@@ -789,21 +791,21 @@ void proc_event()
                     if (dist(tlocx, tlocy, dx, dy) > range_)
                         continue;
                     f = 0;
-                    if (chipm(7, map(dx, dy, 0)) & 4)
+                    if (chipm(7, cell_data.at(dx, dy).chip_id_actual) & 4)
                     {
                         f = 1;
                     }
                     if (rnd(4) || f == 1)
                     {
-                        map(dx, dy, 0) = 37;
+                        cell_data.at(dx, dy).chip_id_actual = 37;
                     }
                     if (rnd(10) == 0 || f == 1)
                     {
                         mef_add(dx, dy, 5, 24, rnd(15) + 20, 50);
                     }
-                    if (map(dx, dy, 1) != 0)
+                    if (cell_data.at(dx, dy).chara_index_plus_one != 0)
                     {
-                        tc = map(dx, dy, 1) - 1;
+                        tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
                         dmg = 1000;
                         damage_hp(cdata[tc], dmg, -17);
                     }
@@ -843,7 +845,7 @@ void proc_event()
             {
                 x = rnd(mdata_map_width);
                 y = rnd(mdata_map_height);
-                map(x, y, 0) = 37;
+                cell_data.at(x, y).chip_id_actual = 37;
             }
             x = rnd(inf_screenw) + scx;
             y = rnd(inf_screenh) + scy;

@@ -86,9 +86,9 @@ void cell_check(int prm_603, int prm_604)
         cellaccess = 0;
         return;
     }
-    if (map(prm_603, prm_604, 1) != 0)
+    if (cell_data.at(prm_603, prm_604).chara_index_plus_one != 0)
     {
-        cellchara = map(prm_603, prm_604, 1) - 1;
+        cellchara = cell_data.at(prm_603, prm_604).chara_index_plus_one - 1;
         cellaccess = 0;
     }
     if (map(prm_603, prm_604, 6) != 0)
@@ -99,7 +99,7 @@ void cell_check(int prm_603, int prm_604)
             cellaccess = 0;
         }
     }
-    if (chipm(7, map(prm_603, prm_604, 0)) & 4)
+    if (chipm(7, cell_data.at(prm_603, prm_604).chip_id_actual) & 4)
     {
         cellaccess = 0;
     }
@@ -121,15 +121,15 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     tc_at_m81 = prm_606;
     if (tc_at_m81 == -1)
     {
-        if (map(prm_607, prm_608, 1) != 0)
+        if (cell_data.at(prm_607, prm_608).chara_index_plus_one != 0)
         {
-            tc_at_m81 = map(prm_607, prm_608, 1) - 1;
+            tc_at_m81 = cell_data.at(prm_607, prm_608).chara_index_plus_one - 1;
         }
     }
     if (tc_at_m81 != -1)
     {
-        map(cdata[prm_605].position.x, cdata[prm_605].position.y, 1) =
-            tc_at_m81 + 1;
+        cell_data.at(cdata[prm_605].position.x, cdata[prm_605].position.y)
+            .chara_index_plus_one = tc_at_m81 + 1;
         x2_at_m81 = cdata[tc_at_m81].position.x;
         y2_at_m81 = cdata[tc_at_m81].position.y;
         cdata[tc_at_m81].position.x = cdata[prm_605].position.x;
@@ -137,11 +137,12 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     }
     else
     {
-        map(cdata[prm_605].position.x, cdata[prm_605].position.y, 1) = 0;
+        cell_data.at(cdata[prm_605].position.x, cdata[prm_605].position.y)
+            .chara_index_plus_one = 0;
         x2_at_m81 = prm_607;
         y2_at_m81 = prm_608;
     }
-    map(x2_at_m81, y2_at_m81, 1) = prm_605 + 1;
+    cell_data.at(x2_at_m81, y2_at_m81).chara_index_plus_one = prm_605 + 1;
     cdata[prm_605].position.x = x2_at_m81;
     cdata[prm_605].position.y = y2_at_m81;
     if (prm_605 == 0 || tc_at_m81 == 0)
@@ -159,9 +160,9 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 
 void cell_movechara(int cc, int x, int y)
 {
-    if (map(x, y, 1) != 0)
+    if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        if (map(x, y, 1) - 1 == cc)
+        if (cell_data.at(x, y).chara_index_plus_one - 1 == cc)
         {
             return;
         }
@@ -169,9 +170,10 @@ void cell_movechara(int cc, int x, int y)
     }
     else
     {
-        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
+        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+            .chara_index_plus_one = 0;
         cdata[cc].position = {x, y};
-        map(x, y, 1) = cc + 1;
+        cell_data.at(x, y).chara_index_plus_one = cc + 1;
     }
 }
 
@@ -213,7 +215,7 @@ std::pair<int, int> cell_itemoncell(const Position& pos)
 
 void cell_setchara(int cc, int x, int y)
 {
-    map(x, y, 1) = cc + 1;
+    cell_data.at(x, y).chara_index_plus_one = cc + 1;
     cdata[cc].position = Position{x, y};
 }
 
@@ -221,7 +223,7 @@ void cell_setchara(int cc, int x, int y)
 
 void cell_removechara(int x, int y)
 {
-    map(x, y, 1) = 0;
+    cell_data.at(x, y).chara_index_plus_one = 0;
 }
 
 
@@ -246,11 +248,12 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
             {
                 continue;
             }
-            if (map(dx_at_m130, dy_at_m130, 1) != 0)
+            if (cell_data.at(dx_at_m130, dy_at_m130).chara_index_plus_one != 0)
             {
                 continue;
             }
-            if (chipm(7, map(dx_at_m130, dy_at_m130, 0)) & 4)
+            if (chipm(7, cell_data.at(dx_at_m130, dy_at_m130).chip_id_actual)
+                & 4)
             {
                 continue;
             }

@@ -326,7 +326,7 @@ label_1741_internal:
             p = cnt;
             for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
-                map(cnt, p, 0) = tile_default
+                cell_data.at(cnt, p).chip_id_actual = tile_default
                     + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
             }
         }
@@ -794,8 +794,9 @@ label_1741_internal:
                 {
                     if (cnt != 0)
                     {
-                        map(cdata[cnt].position.x, cdata[cnt].position.y, 1) =
-                            0;
+                        cell_data
+                            .at(cdata[cnt].position.x, cdata[cnt].position.y)
+                            .chara_index_plus_one = 0;
                         cdata[cnt].set_state(
                             Character::State::pet_in_other_map);
                     }
@@ -869,7 +870,8 @@ label_1741_internal:
         {
             flt(arenaop(2), calcfixlv(Quality::good));
             chara_create(-1, 0, -3, 0);
-            map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
+            cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
+                .chara_index_plus_one = 0;
             f = 1;
             if (arenaop == 0)
             {
@@ -2157,7 +2159,7 @@ label_1741_internal:
             p = cnt;
             for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
-                map(cnt, p, 0) = tile_default
+                cell_data.at(cnt, p).chip_id_actual = tile_default
                     + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
             }
         }
@@ -2177,7 +2179,8 @@ label_1741_internal:
                 flttypemajor = 80000;
                 itemcreate(-1, 0, -1, -1, 0);
                 inv[ci].own_state = 1;
-                map(inv[ci].position.x, inv[ci].position.y, 0) = 0;
+                cell_data.at(inv[ci].position.x, inv[ci].position.y)
+                    .chip_id_actual = 0;
             }
         }
         if (264 <= game_data.stood_world_map_tile
@@ -2624,7 +2627,7 @@ label_1741_internal:
             y = cnt;
             for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
-                map(cnt, y, 2) = map(cnt, y, 0);
+                map(cnt, y, 2) = cell_data.at(cnt, y).chip_id_actual;
             }
         }
     }
@@ -2670,11 +2673,12 @@ label_1741_internal:
                                 {
                                     continue;
                                 }
-                                if (33 <= map(x, y, 0) && map(x, y, 0) < 66)
+                                if (33 <= cell_data.at(x, y).chip_id_actual
+                                    && cell_data.at(x, y).chip_id_actual < 66)
                                 {
                                     continue;
                                 }
-                                if (map(x, y, 0) > 19)
+                                if (cell_data.at(x, y).chip_id_actual > 19)
                                 {
                                     continue;
                                 }
@@ -2887,7 +2891,7 @@ label_1742_internal:
             y = cnt;
             for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
-                map(cnt, y, 1) = 0;
+                cell_data.at(cnt, y).chara_index_plus_one = 0;
             }
         }
         for (auto&& cnt : cdata.all())
@@ -2972,7 +2976,9 @@ label_1742_internal:
             if (rc == 0 || game_data.mount != rc)
             {
                 cell_check(cdata[rc].position.x, cdata[rc].position.y);
-                if (map(cdata[rc].position.x, cdata[rc].position.y, 1) != 0
+                if (cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
+                            .chara_index_plus_one
+                        != 0
                     || cellaccess != 1)
                 {
                     for (int cnt = 0;; ++cnt)
@@ -3002,7 +3008,8 @@ label_1742_internal:
             }
             if (cdata[rc].is_ridden() == 0)
             {
-                map(cdata[rc].position.x, cdata[rc].position.y, 1) = rc + 1;
+                cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
+                    .chara_index_plus_one = rc + 1;
             }
         }
     }

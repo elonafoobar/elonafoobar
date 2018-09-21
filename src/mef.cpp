@@ -74,7 +74,7 @@ void mef_add(
     int prm_591)
 {
     int p_at_m79 = 0;
-    p_at_m79 = map(pos_x, pos_y, 0);
+    p_at_m79 = cell_data.at(pos_x, pos_y).chip_id_actual;
     if (prm_584 == 5)
     {
         if (chipm(0, p_at_m79) == 3)
@@ -162,9 +162,9 @@ void mef_update()
                             f = 0;
                             continue;
                         }
-                        if (chipm(7, map(x, y, 0)) & 4)
+                        if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
                         {
-                            map(x, y, 0) = 37;
+                            cell_data.at(x, y).chip_id_actual = 37;
                             cnt = 0 - 1;
                             continue;
                         }

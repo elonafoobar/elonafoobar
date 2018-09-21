@@ -56,7 +56,7 @@ bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
             }
             const auto x = cdata.player().position.x + dx;
             const auto y = cdata.player().position.y + dy;
-            const auto chara = map(x, y, 1) - 1;
+            const auto chara = cell_data.at(x, y).chara_index_plus_one - 1;
             if (chara != -1 && predicate(cdata[chara]))
             {
                 return true;
@@ -88,7 +88,7 @@ TurnResult do_give_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    tc = map(x, y, 1);
+    tc = cell_data.at(x, y).chara_index_plus_one;
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
@@ -135,7 +135,7 @@ TurnResult do_interact_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    tc = map(x, y, 1);
+    tc = cell_data.at(x, y).chara_index_plus_one;
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
@@ -397,7 +397,8 @@ TurnResult do_dig_command()
             return TurnResult::turn_end;
         }
     }
-    if ((chipm(7, map(x, y, 0)) & 4) == 0 || chipm(0, map(x, y, 0)) == 3
+    if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0
+        || chipm(0, cell_data.at(x, y).chip_id_actual) == 3
         || mdata_map_type == mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
@@ -636,7 +637,8 @@ TurnResult do_throw_command()
                 {
                     if (y < mdata_map_height)
                     {
-                        if ((chipm(7, map(x, y, 0)) & 4) == 0)
+                        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+                            == 0)
                         {
                             tlocx = x;
                             tlocy = y;
@@ -673,9 +675,9 @@ TurnResult do_throw_command()
     {
         snd(91);
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        if (map(tlocx, tlocy, 1) != 0)
+        if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
-            tc = map(tlocx, tlocy, 1) - 1;
+            tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
             txt(i18n::s.get("core.locale.action.throw.hits", cdata[tc]));
             if (inv[ci].id == 685)
             {
@@ -751,9 +753,9 @@ TurnResult do_throw_command()
                     snd(47);
                 }
             }
-            if (map(tlocx, tlocy, 1) != 0)
+            if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
             {
-                tc = map(tlocx, tlocy, 1) - 1;
+                tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
                 if (is_in_fov(cdata[tc]))
                 {
                     txt(i18n::s.get(
@@ -838,7 +840,7 @@ TurnResult do_throw_command()
             }
             if (inv[ci].id == 587)
             {
-                if (chipm(0, map(tlocx, tlocy, 0)) == 4)
+                if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 4)
                 {
                     return TurnResult::turn_end;
                 }
@@ -915,7 +917,7 @@ TurnResult do_close_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (map(x, y, 1) != 0)
+    if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
         txt(i18n::s.get("core.locale.action.close.blocked"));
         update_screen();
@@ -1874,7 +1876,7 @@ TurnResult do_use_command()
             int stat = ask_direction();
             if (stat != 0)
             {
-                const auto cc = map(x, y, 1) - 1;
+                const auto cc = cell_data.at(x, y).chara_index_plus_one - 1;
                 if (cc != -1 && cc < 16)
                 {
                     chara = cc;
@@ -1971,7 +1973,7 @@ TurnResult do_use_command()
                 return TurnResult::pc_turn_user_error;
             }
         }
-        tc = map(x, y, 1) - 1;
+        tc = cell_data.at(x, y).chara_index_plus_one - 1;
         if (tc == 0)
         {
             txt(i18n::s.get("core.locale.action.use.stethoscope.self"));
@@ -2022,9 +2024,9 @@ TurnResult do_use_command()
             f = 0;
             if (stat != 0)
             {
-                if (map(x, y, 1) > 0)
+                if (cell_data.at(x, y).chara_index_plus_one > 0)
                 {
-                    tc = map(x, y, 1) - 1;
+                    tc = cell_data.at(x, y).chara_index_plus_one - 1;
                     if (tc == 0)
                     {
                         txt(i18n::s.get("core.locale.action.use.leash.self"));
@@ -2090,9 +2092,9 @@ TurnResult do_use_command()
             f = 0;
             if (stat != 0)
             {
-                if (map(x, y, 1) > 0)
+                if (cell_data.at(x, y).chara_index_plus_one > 0)
                 {
-                    tc = map(x, y, 1) - 1;
+                    tc = cell_data.at(x, y).chara_index_plus_one - 1;
                     if (cdata[tc].hp >= cdata[tc].max_hp / 5)
                     {
                         txt(i18n::s.get(
@@ -3094,8 +3096,12 @@ static TurnResult _pre_proc_movement_event()
 {
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        if (264 <= map(cdata[cc].next_position.x, cdata[cc].next_position.y, 0)
-            && map(cdata[cc].next_position.x, cdata[cc].next_position.y, 0)
+        if (264 <= cell_data
+                       .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
+                       .chip_id_actual
+            && cell_data
+                    .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
+                    .chip_id_actual
                 < 363)
         {
             return TurnResult::pc_turn_user_error;
@@ -3267,7 +3273,7 @@ TurnResult do_movement_command()
             y = cdata.player().next_position.y;
             if (x >= 0 && x < mdata_map_width && y >= 0 && y < mdata_map_height)
             {
-                if (map(x, y, 1) == 0)
+                if (cell_data.at(x, y).chara_index_plus_one == 0)
                 {
                     cellaccess = 1;
                 }
@@ -3550,7 +3556,9 @@ TurnResult do_get_command()
              || mdata_map_type == mdata_t::MapType::guild)
             && chipm(
                    0,
-                   map(cdata.player().position.x, cdata.player().position.y, 0))
+                   cell_data
+                       .at(cdata.player().position.x, cdata.player().position.y)
+                       .chip_id_actual)
                 == 4)
         {
             snd(83);
@@ -3760,7 +3768,7 @@ int ask_direction_to_close()
             int x = cdata.player().position.x + dx;
             int y = cdata.player().position.y + dy;
             cell_featread(x, y);
-            if (feat(1) == 20 && map(x, y, 1) == 0)
+            if (feat(1) == 20 && cell_data.at(x, y).chara_index_plus_one == 0)
             {
                 ++number_of_doors;
                 pos = {x, y};

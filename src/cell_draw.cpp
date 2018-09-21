@@ -881,7 +881,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
 
 void draw_nefia_icons(int x, int y, int dx, int dy)
 {
-    if (map(x, y, 6) != 0 && map(x, y, 2) == map(x, y, 0))
+    if (map(x, y, 6) != 0 && map(x, y, 2) == cell_data.at(x, y).chip_id_actual)
     {
         const auto p_ = map(x, y, 6) % 1000;
         if (p_ != 999 && p_ != 0)
@@ -1127,9 +1127,9 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
 
 void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
 {
-    if (map(x, y, 1) != 0)
+    if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        const int c_ = map(x, y, 1) - 1;
+        const int c_ = cell_data.at(x, y).chara_index_plus_one - 1;
         if (c_ != 0 && you_can_see(cdata[c_]))
         {
             if (cdata[c_].has_own_sprite())
@@ -1272,8 +1272,10 @@ void cell_draw()
             if (reph(2) == y && x_ == repw(2)
                 && cdata.player().state() == Character::State::alive)
             {
-                ground_ = map(
-                    cdata.player().position.x, cdata.player().position.y, 0);
+                ground_ = cell_data
+                              .at(cdata.player().position.x,
+                                  cdata.player().position.y)
+                              .chip_id_actual;
                 px_ =
                     (cdata.player().position.x - scx) * inf_tiles + inf_screenx;
                 if (scxbk == scx)
@@ -1444,7 +1446,7 @@ void cell_draw()
             }
             else if (ground_ != tile_fog && y > 0 && dy_ > 48)
             {
-                ground_ = map(x_, y - 1, 0);
+                ground_ = cell_data.at(x_, y - 1).chip_id_actual;
                 if (chipm(2, ground_))
                 {
                     boxf(

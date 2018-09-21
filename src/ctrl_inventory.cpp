@@ -95,7 +95,7 @@ label_20591:
             }
             if (invctrl == 27)
             {
-                p = map(tlocx, tlocy, 1) - 1;
+                p = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
                 if (p == 0 || p == -1)
                 {
                     continue;
@@ -1968,7 +1968,7 @@ label_2061_internal:
                 result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
-            if (chipm(7, map(tlocx, tlocy, 0)) & 4)
+            if (chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4)
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.throw.location_is_blocked"));

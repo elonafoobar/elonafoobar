@@ -153,6 +153,9 @@ private:
     Grid<Cell> cells;
 };
 
+extern CellData cell_data;
+
+
 void map_reload(const std::string& map_filename);
 
 } // namespace elona

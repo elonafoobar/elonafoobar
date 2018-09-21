@@ -454,11 +454,13 @@ TurnResult proc_npc_movement_event(bool retreat)
                         {
                             if (y < mdata_map_height)
                             {
-                                if (chipm(7, map(x, y, 0)) & 4)
+                                if (chipm(7, cell_data.at(x, y).chip_id_actual)
+                                    & 4)
                                 {
                                     if (rnd(4) == 0)
                                     {
-                                        map(x, y, 0) = tile_tunnel;
+                                        cell_data.at(x, y).chip_id_actual =
+                                            tile_tunnel;
                                         snd(45);
                                         BreakingAnimation({x, y}).play();
                                         spillfrag(x, y, 2);

@@ -643,7 +643,8 @@ TalkResult talk_ally_order_wait()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
+    cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+        .chara_index_plus_one = 0;
     cdata[tc].set_state(Character::State::pet_waiting);
     cdata[tc].current_map = 0;
     return TalkResult::talk_end;
@@ -663,7 +664,8 @@ TalkResult talk_ally_abandon()
     {
         txt(i18n::s.get(
             "core.locale.talk.npc.ally.abandon.you_abandoned", cdata[tc]));
-        map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
+        cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+            .chara_index_plus_one = 0;
         chara_delete(tc);
         return TalkResult::talk_end;
     }
@@ -760,7 +762,8 @@ TalkResult talk_slave_sell()
             earn_gold(cdata.player(), calcslavevalue(rc) * 2 / 3);
             if (cdata[rc].state() == Character::State::alive)
             {
-                map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
+                cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
+                    .chara_index_plus_one = 0;
             }
             if (cdata[rc].is_escorted() == 1)
             {
