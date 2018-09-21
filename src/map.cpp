@@ -37,15 +37,45 @@ CellData cell_data;
 
 
 #define SERIALIZE MAP_PACK
-void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
+void Cell::pack_to(
+    elona_vector3<int>& legacy_map,
+    int x,
+    int y) void MapData::pack_to(elona_vector1<int>& legacy_mdata)
 {
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
 
-
 #define SERIALIZE MAP_UNPACK
 void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
+{
+    SERIALIZE_ALL();
+}
+#undef SERIALIZE
+#undef SERIALIZE_ALL
+
+
+MapData map_data;
+
+
+
+#define MDATA_PACK(x, ident) legacy_mdata(x) = ident;
+#define MDATA_UNPACK(x, ident) ident = legacy_mdata(x);
+
+#define SERIALIZE_ALL() \
+    SERIALIZE(0, width); \
+    SERIALIZE(1, height);
+
+
+#define SERIALIZE MDATA_PACK
+void MapData::pack_to(elona_vector1<int>& legacy_mdata)
+{
+    SERIALIZE_ALL();
+}
+#undef SERIALIZE
+
+#define SERIALIZE MDATA_UNPACK
+void MapData::unpack_from(elona_vector1<int>& legacy_mdata)
 {
     SERIALIZE_ALL();
 }
@@ -54,6 +84,11 @@ void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
 
 
 void Cell::clear()
+{
+    *this = {};
+}
+
+void MapData::clear()
 {
     *this = {};
 }
