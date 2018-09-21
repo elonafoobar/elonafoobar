@@ -1,7 +1,5 @@
 #pragma once
 
-#define mdata_map_type mdata(6)
-
 namespace elona
 {
 namespace mdata_t

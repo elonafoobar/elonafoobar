@@ -200,7 +200,7 @@ void initialize_home_adata()
 
 TurnResult build_new_building()
 {
-    if (mdata_map_type != mdata_t::MapType::world_map)
+    if (map_data.type != mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.building.can_only_use_in_world_map"));
         update_screen();
@@ -344,7 +344,7 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 TurnResult show_house_board()
 {
     txtnew();
-    if (mdata_map_type != mdata_t::MapType::player_owned)
+    if (map_data.type != mdata_t::MapType::player_owned)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"));

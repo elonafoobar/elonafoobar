@@ -23,7 +23,7 @@ struct MapData
     int next_regenerate_date{};
     int stair_up_pos{};
     int stair_down_pos{};
-    // int map_type{};
+    int type{};
     int refresh_type{};
     int designated_spawns{};
     int turn_cost{};

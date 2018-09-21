@@ -3,6 +3,7 @@
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
+#include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -270,7 +271,7 @@ std::string maplevel(int)
             || area_data[game_data.current_map].id
                 == mdata_t::MapId::random_dungeon
             || area_data[game_data.current_map].id == mdata_t::MapId::quest
-            || mdata_t::is_nefia(mdata_map_type))
+            || mdata_t::is_nefia(map_data.type))
         {
             return ""s
                 + cnvrank(

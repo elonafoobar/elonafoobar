@@ -99,8 +99,8 @@ void render_weather_effect_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles
-             * (1 + (mdata_map_type == mdata_t::MapType::world_map));
+    for (int i = 0; i
+         < max_particles * (1 + (map_data.type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -143,8 +143,8 @@ void render_weather_effect_hard_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles
-             * (1 + (mdata_map_type == mdata_t::MapType::world_map));
+    for (int i = 0; i
+         < max_particles * (1 + (map_data.type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -1285,7 +1285,7 @@ void render_hud()
     {
         if (mode != 9)
         {
-            if (mdata_map_type != mdata_t::MapType::world_map)
+            if (map_data.type != mdata_t::MapType::world_map)
             {
                 if (!cdata.player().continuous_action)
                 {
@@ -1759,7 +1759,7 @@ void ui_scroll_screen()
         return;
     }
     scrollp = Config::instance().walkwait;
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
         keybd_wait = 1000;

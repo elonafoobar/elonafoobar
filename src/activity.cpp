@@ -939,9 +939,9 @@ void continuous_action_others()
         }
         if (game_data.continuous_action_about_to_start == 100)
         {
-            if (mdata_map_type == mdata_t::MapType::player_owned
-                || mdata_map_type == mdata_t::MapType::town
-                || mdata_map_type == mdata_t::MapType::guild)
+            if (map_data.type == mdata_t::MapType::player_owned
+                || map_data.type == mdata_t::MapType::town
+                || map_data.type == mdata_t::MapType::guild)
             {
                 txt(i18n::s.get("core.locale.activity.sleep.start.other"));
                 cdata[cc].continuous_action.turn = 5;
@@ -1002,9 +1002,9 @@ void continuous_action_others()
             {
                 if (game_data.current_map == mdata_t::MapId::shelter_
                     || (map_data.indoors_flag == 1
-                        && (mdata_map_type == mdata_t::MapType::player_owned
-                            || mdata_map_type == mdata_t::MapType::town
-                            || mdata_map_type == mdata_t::MapType::guild)))
+                        && (map_data.type == mdata_t::MapType::player_owned
+                            || map_data.type == mdata_t::MapType::town
+                            || map_data.type == mdata_t::MapType::guild)))
                 {
                     txt(i18n::s.get(
                         "core.locale.activity.study.start.weather_is_bad"));
@@ -1063,9 +1063,9 @@ void continuous_action_others()
                 if (game_data.current_map != mdata_t::MapId::shelter_
                     && map_data.indoors_flag == 1)
                 {
-                    if (mdata_map_type == mdata_t::MapType::player_owned
-                        || mdata_map_type == mdata_t::MapType::town
-                        || mdata_map_type == mdata_t::MapType::guild)
+                    if (map_data.type == mdata_t::MapType::player_owned
+                        || map_data.type == mdata_t::MapType::town
+                        || map_data.type == mdata_t::MapType::guild)
                     {
                         p = 5;
                         game_data.date.minute += 30;
@@ -1677,7 +1677,7 @@ void spot_digging()
         return;
     }
     txt(i18n::s.get("core.locale.activity.dig_spot.finish"));
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         for (const auto& cnt : items(0))
         {
@@ -1919,23 +1919,23 @@ int search_material_spot()
     }
     atxspot = 11;
     atxlv = game_data.current_dungeon_level;
-    if (mdata_map_type == mdata_t::MapType::dungeon)
+    if (map_data.type == mdata_t::MapType::dungeon)
     {
         atxspot = 9;
     }
-    if (mdata_map_type == mdata_t::MapType::dungeon_tower)
+    if (map_data.type == mdata_t::MapType::dungeon_tower)
     {
         atxspot = 12;
     }
-    if (mdata_map_type == mdata_t::MapType::dungeon_forest)
+    if (map_data.type == mdata_t::MapType::dungeon_forest)
     {
         atxspot = 10;
     }
-    if (mdata_map_type == mdata_t::MapType::dungeon_castle)
+    if (map_data.type == mdata_t::MapType::dungeon_castle)
     {
         atxspot = 12;
     }
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         atxlv = cdata.player().level / 2 + rnd(10);
         if (atxlv > 30)

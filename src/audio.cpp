@@ -459,7 +459,7 @@ void sound_play_environmental()
     {
         DSSTOP(14);
     }
-    if (mdata_map_type == mdata_t::MapType::town)
+    if (map_data.type == mdata_t::MapType::town)
     {
         snd(79, true);
     }

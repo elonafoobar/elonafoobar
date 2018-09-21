@@ -31,7 +31,7 @@ CellData cell_data;
     SERIALIZE(3, next_regenerate_date); \
     SERIALIZE(4, stair_up_pos); \
     SERIALIZE(5, stair_down_pos); \
-    /* SERIALIZE(6, map_type); */ \
+    SERIALIZE(6, type); \
     SERIALIZE(7, refresh_type); \
     SERIALIZE(8, designated_spawns); \
     SERIALIZE(9, turn_cost); \

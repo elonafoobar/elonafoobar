@@ -18,6 +18,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "lua_env/lua_env.hpp"
+#include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "optional.hpp"
@@ -640,7 +641,7 @@ int damage_hp(
             {
                 if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
-                    if (mdata_map_type != mdata_t::MapType::world_map)
+                    if (map_data.type != mdata_t::MapType::world_map)
                     {
                         if (chara_copy(victim) != -1)
                         {
@@ -661,7 +662,7 @@ int damage_hp(
                         && victim.poisoned == 0 && victim.paralyzed == 0
                         && victim.blind == 0)
                     {
-                        if (mdata_map_type != mdata_t::MapType::world_map)
+                        if (map_data.type != mdata_t::MapType::world_map)
                         {
                             if (chara_copy(victim) != -1)
                             {

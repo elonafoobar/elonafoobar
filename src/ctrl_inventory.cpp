@@ -44,7 +44,7 @@ label_20591:
     }
     if (menucycle == 1)
     {
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             p = 0;
             for (int cnt = 0; cnt < 12; ++cnt)
@@ -146,7 +146,7 @@ label_20591:
                 inv[cnt].id = 0;
                 continue;
             }
-            if (mdata_map_type == mdata_t::MapType::world_map)
+            if (map_data.type == mdata_t::MapType::world_map)
             {
                 if (invctrl == 7)
                 {
@@ -738,7 +738,7 @@ label_2060_internal:
             return result;
         }
         invsc = 0;
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             if (invctrl == 9 || invctrl == 15 || invctrl == 26)
             {
@@ -781,7 +781,7 @@ label_2060_internal:
         {
             i = 3;
         }
-        else if (mdata_map_type == mdata_t::MapType::world_map)
+        else if (map_data.type == mdata_t::MapType::world_map)
         {
             i = 1;
         }
@@ -2067,7 +2067,7 @@ label_2061_internal:
             {
                 i = 3;
             }
-            else if (mdata_map_type == mdata_t::MapType::world_map)
+            else if (map_data.type == mdata_t::MapType::world_map)
             {
                 i = 1;
             }

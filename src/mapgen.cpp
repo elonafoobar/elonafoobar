@@ -1362,7 +1362,7 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if ((264 <= cell_data.at(x_at_m169, y_at_m169).chip_id_actual
              && cell_data.at(x_at_m169, y_at_m169).chip_id_actual < 363)
@@ -1376,7 +1376,7 @@ void map_randsite(int prm_971, int prm_972)
     {
         return;
     }
-    if (mdata_t::is_nefia(mdata_map_type))
+    if (mdata_t::is_nefia(map_data.type))
     {
         if (map_data.next_regenerate_date == 0)
         {
@@ -1397,7 +1397,7 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata_t::is_nefia(mdata_map_type))
+    if (mdata_t::is_nefia(map_data.type))
     {
         if (rnd(14) == 0)
         {
@@ -1422,8 +1422,8 @@ void map_randsite(int prm_971, int prm_972)
         cell_featset(x_at_m169, y_at_m169, tile_re + rnd(3), 24);
         return;
     }
-    if (mdata_map_type == mdata_t::MapType::town
-        || mdata_map_type == mdata_t::MapType::guild)
+    if (map_data.type == mdata_t::MapType::town
+        || map_data.type == mdata_t::MapType::guild)
     {
         if (rnd(3) == 0)
         {

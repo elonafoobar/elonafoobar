@@ -15,6 +15,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "optional.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -160,14 +161,14 @@ optional<RandomEvent> generate_random_event()
     {
         return generate_random_event_in_sleep();
     }
-    if (mdata_map_type != mdata_t::MapType::world_map)
+    if (map_data.type != mdata_t::MapType::world_map)
     {
         if (cdata.player().continuous_action)
         {
             return none;
         }
     }
-    if (mdata_map_type == mdata_t::MapType::player_owned)
+    if (map_data.type == mdata_t::MapType::player_owned)
     {
         return none;
     }
@@ -201,7 +202,7 @@ optional<RandomEvent> generate_random_event()
         id = 13;
         luck_threshold = 45;
     }
-    if (mdata_map_type == mdata_t::MapType::town)
+    if (map_data.type == mdata_t::MapType::town)
     {
         if (rnd(25) == 0)
         {
@@ -209,7 +210,7 @@ optional<RandomEvent> generate_random_event()
             luck_threshold = 80;
         }
     }
-    else if (mdata_map_type == mdata_t::MapType::world_map)
+    else if (map_data.type == mdata_t::MapType::world_map)
     {
         if (rnd(40))
         {

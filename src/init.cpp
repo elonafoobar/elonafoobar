@@ -35,6 +35,7 @@
 #include "macro.hpp"
 #include "main.hpp"
 #include "main_menu.hpp"
+#include "map.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
 #include "network.hpp"
@@ -541,7 +542,7 @@ void initialize_elona()
     DIM2(genetemp, 1000);
     SDIM3(gdatan, 40, 50);
     DIM2(mdatatmp, 100);
-    DIM2(mdata, 100);
+    map_data.clear();
     SDIM3(mdatan, 20, 2);
     SDIM4(cdatan, 40, 10, ELONA_MAX_CHARACTERS);
     SDIM2(s1, 1000);

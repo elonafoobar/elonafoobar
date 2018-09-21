@@ -1171,7 +1171,11 @@ void fmode_5_6(bool read)
             {
                 mdata(j) = mdatatmp(j);
             }
-            map_data.unpack_from(mdata);
+            map_data.width = mdata(0);
+            map_data.height = mdata(1);
+            map_data.atlas_number = mdata(2);
+            map_data.next_regenerate_date = mdata(3);
+            map_data.stair_up_pos = mdata(4);
         }
         else
         {

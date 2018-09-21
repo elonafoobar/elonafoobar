@@ -13,6 +13,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
+#include "map.hpp"
 #include "menu.hpp"
 #include "random.hpp"
 #include "ui.hpp"
@@ -395,23 +396,23 @@ void casino_random_site()
     {
         atxid(1) = 3;
         atxlv = game_data.current_dungeon_level;
-        if (mdata_map_type == mdata_t::MapType::dungeon)
+        if (map_data.type == mdata_t::MapType::dungeon)
         {
             atxid(1) = 1;
         }
-        if (mdata_map_type == mdata_t::MapType::dungeon_tower)
+        if (map_data.type == mdata_t::MapType::dungeon_tower)
         {
             atxid(1) = 4;
         }
-        if (mdata_map_type == mdata_t::MapType::dungeon_forest)
+        if (map_data.type == mdata_t::MapType::dungeon_forest)
         {
             atxid(1) = 2;
         }
-        if (mdata_map_type == mdata_t::MapType::dungeon_castle)
+        if (map_data.type == mdata_t::MapType::dungeon_castle)
         {
             atxid(1) = 4;
         }
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             atxlv = cdata.player().level;
             if (4 <= game_data.stood_world_map_tile

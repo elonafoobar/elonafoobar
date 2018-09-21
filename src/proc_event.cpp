@@ -650,7 +650,7 @@ void proc_event()
         }
         break;
     case 21:
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
             break;
         txtef(3);
         txt(i18n::s.get("core.locale.event.bomb"));
@@ -823,8 +823,8 @@ void proc_event()
             game_data.quest_flags.red_blossom_in_palmia = 2;
             quest_update_journal_msg();
         }
-        if (mdata_map_type == mdata_t::MapType::town
-            || mdata_map_type == mdata_t::MapType::guild)
+        if (map_data.type == mdata_t::MapType::town
+            || map_data.type == mdata_t::MapType::guild)
         {
             modify_karma(cdata.player(), -80 + trait(162) * 60);
         }
@@ -834,7 +834,7 @@ void proc_event()
         }
         break;
     case 18:
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
             break;
         game_data.weather = 1;
         sound_play_environmental();
@@ -914,7 +914,7 @@ void proc_event()
         }
         break;
     case 26:
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
             break;
         txt(i18n::s.get("core.locale.event.beggars"));
         for (int i = 0; i < 3; ++i)
