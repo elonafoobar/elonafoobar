@@ -1,10 +1,11 @@
+#include "ability.hpp"
 #include "gdata.hpp"
 #include "variables.hpp"
 
 namespace elona
 {
 
-static void _trainer_skills_yowyn()
+static void _trainer_skills_yowyn(int& dbmax)
 {
     dblist(0, dbmax) = 154;
     ++dbmax;
@@ -26,7 +27,7 @@ static void _trainer_skills_yowyn()
     ++dbmax;
 }
 
-static void _trainer_skills_vernis()
+static void _trainer_skills_vernis(int& dbmax)
 {
     dblist(0, dbmax) = 178;
     ++dbmax;
@@ -44,7 +45,7 @@ static void _trainer_skills_vernis()
     ++dbmax;
 }
 
-static void _trainer_skills_palmia()
+static void _trainer_skills_palmia(int& dbmax)
 {
     dblist(0, dbmax) = 151;
     ++dbmax;
@@ -66,7 +67,7 @@ static void _trainer_skills_palmia()
     ++dbmax;
 }
 
-static void _trainer_skills_noyel()
+static void _trainer_skills_noyel(int& dbmax)
 {
     dblist(0, dbmax) = 181;
     ++dbmax;
@@ -84,7 +85,7 @@ static void _trainer_skills_noyel()
     ++dbmax;
 }
 
-static void _trainer_skills_lumiest()
+static void _trainer_skills_lumiest(int& dbmax)
 {
     if (game_data.current_dungeon_level == 1)
     {
@@ -126,7 +127,7 @@ static void _trainer_skills_lumiest()
     }
 }
 
-static void _trainer_skills_derphy()
+static void _trainer_skills_derphy(int& dbmax)
 {
     if (game_data.current_dungeon_level == 1)
     {
@@ -162,7 +163,7 @@ static void _trainer_skills_derphy()
     }
 }
 
-static void _trainer_skills_port_kapul()
+static void _trainer_skills_port_kapul(int& dbmax)
 {
     if (game_data.current_dungeon_level == 1)
     {
@@ -211,31 +212,31 @@ void map_get_trainer_skills()
 
     if (game_data.current_map == mdata_t::MapId::yowyn)
     {
-        _trainer_skills_yowyn();
+        _trainer_skills_yowyn(dbmax);
     }
     if (game_data.current_map == mdata_t::MapId::vernis)
     {
-        _trainer_skills_yowyn();
+        _trainer_skills_yowyn(dbmax);
     }
     if (game_data.current_map == mdata_t::MapId::palmia)
     {
-        _trainer_skills_palmia();
+        _trainer_skills_palmia(dbmax);
     }
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        _trainer_skills_noyel();
+        _trainer_skills_noyel(dbmax);
     }
     if (game_data.current_map == mdata_t::MapId::lumiest)
     {
-        _trainer_skills_lumiest();
+        _trainer_skills_lumiest(dbmax);
     }
     if (game_data.current_map == mdata_t::MapId::derphy)
     {
-        _trainer_skills_derphy();
+        _trainer_skills_derphy(dbmax);
     }
     if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
-        _trainer_skills_port_kapul();
+        _trainer_skills_port_kapul(dbmax);
     }
 
     for (int cnt = 0, cnt_end = (dbmax); cnt < cnt_end; ++cnt)

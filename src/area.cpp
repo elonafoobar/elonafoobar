@@ -114,4 +114,25 @@ void AreaData::unpack_from(elona_vector2<int>& legacy_adata)
 }
 
 
+
+bool Area::can_return_to()
+{
+    return id == mdata_t::MapId::lesimas || id == mdata_t::MapId::larna
+        || id == mdata_t::MapId::mansion_of_younger_sister
+        || id == mdata_t::MapId::the_void;
+}
+
+
+bool Area::can_return_to_if_wizard()
+{
+    return type == mdata_t::MapType::town || type == mdata_t::MapType::guild;
+}
+
+
+bool Area::is_museum_or_shop()
+{
+    return id == mdata_t::MapId::museum || id == mdata_t::MapId::shop;
+}
+
+
 } // namespace elona

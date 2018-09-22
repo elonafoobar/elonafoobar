@@ -17,7 +17,6 @@ void map_placecharaonentrance(int = 0, int = 0, int = 0);
 int dist_town();
 void map_placeplayer();
 void map_randomtile(int = 0, int = 0);
-void map_randsite(int = 0, int = 0);
 void map_setfog(int = 0, int = 0);
 
 void generate_debug_map();

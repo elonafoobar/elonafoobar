@@ -1,5 +1,9 @@
+#include "area.hpp"
 #include "calc.hpp"
+#include "character.hpp"
 #include "gdata.hpp"
+#include "map.hpp"
+#include "quest.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -33,7 +37,7 @@ static bool _chara_filter_town_noyel()
     return false;
 }
 
-static bool _chara_filter_town_noyel()
+static bool _chara_filter_town_derphy()
 {
     if (rnd(3) == 0)
     {
@@ -82,7 +86,7 @@ static bool _chara_filter_town_palmia()
     return false;
 }
 
-static bool chara_filter_town_normal()
+static bool _chara_filter_town_normal()
 {
     if (game_data.current_map == mdata_t::MapId::yowyn)
     {
@@ -280,12 +284,13 @@ static void _chara_filter_museum_shop()
 void map_set_chara_generation_filter()
 {
     dbid = 0;
+
     if (game_data.current_map == mdata_t::MapId::cyber_dome)
     {
         _chara_filter_cyber_dome();
         return;
     }
-    if (map_data.is_town_or_guild())
+    if (map_is_town_or_guild())
     {
         _chara_filter_town();
         return;
@@ -351,12 +356,12 @@ void map_set_chara_generation_filter()
         _chara_filter_nefia();
         return;
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::museum
-        || area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game_data.current_map].is_museum_or_shop())
     {
         _chara_filter_museum_shop();
         return;
     }
+
     flt(calcobjlv(cdata.player().level), calcfixlv(Quality::bad));
 }
 

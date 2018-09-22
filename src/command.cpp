@@ -410,64 +410,130 @@ TurnResult do_dig_command()
     return do_dig_after_sp_check();
 }
 
-TurnResult do_search_command()
+static void _search_for_crystal()
 {
-    ++msgdup;
-    txt(i18n::s.get("core.locale.action.search.execute"));
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    p = 9999;
+    for (const auto& cnt : items(-1))
     {
-        p = 9999;
-        for (const auto& cnt : items(-1))
+        if (inv[cnt].number() == 0)
         {
-            if (inv[cnt].number() == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].own_state != 5)
-            {
-                continue;
-            }
-            if (inv[cnt].id != 748)
-            {
-                continue;
-            }
-            if (p > dist(
-                        inv[cnt].position.x,
-                        inv[cnt].position.y,
-                        cdata.player().position.x,
-                        cdata.player().position.y))
-            {
-                p = dist(
+            continue;
+        }
+        if (inv[cnt].own_state != 5)
+        {
+            continue;
+        }
+        if (inv[cnt].id != 748)
+        {
+            continue;
+        }
+        if (p > dist(
                     inv[cnt].position.x,
                     inv[cnt].position.y,
                     cdata.player().position.x,
-                    cdata.player().position.y);
+                    cdata.player().position.y))
+        {
+            p = dist(
+                inv[cnt].position.x,
+                inv[cnt].position.y,
+                cdata.player().position.x,
+                cdata.player().position.y);
+        }
+    }
+    if (p != 9999)
+    {
+        while (1)
+        {
+            if (p <= 3)
+            {
+                txt(i18n::s.get("core.locale.action.search.crystal.close"));
+            }
+            if (p <= 9)
+            {
+                txt(i18n::s.get("core.locale.action.search.crystal.normal"));
+                break;
+            }
+            if (p <= 16)
+            {
+                txt(i18n::s.get("core.locale.action.search.crystal.far"));
+                break;
+            }
+            txt(i18n::s.get("core.locale.action.search.crystal.sense"));
+            break;
+        }
+    }
+}
+
+static void _try_to_reveal_small_coin()
+{
+    if (cdata[cc].position.x == x && cdata[cc].position.y == y)
+    {
+        snd(24);
+        txt(i18n::s.get("core.locale.action.search.small_coin.find"));
+        cell_data.at(x, y).feats = 0;
+        flt();
+        itemcreate(-1, 622, x, y, 0);
+    }
+    else
+    {
+        if (dist(cdata[cc].position.x, cdata[cc].position.y, x, y) > 2)
+        {
+            txt(
+                i18n::s.get("core.locale.action.search."
+                            "small_coin.far"));
+        }
+        else
+        {
+            txt(
+                i18n::s.get("core.locale.action.search."
+                            "small_coin.close"));
+        }
+    }
+}
+
+static void _search_for_map_feats()
+{
+    cell_featread(x, y);
+    refx = x;
+    refy = y;
+    if (std::abs(cdata[cc].position.y - y) <= 1
+        && std::abs(cdata[cc].position.x - x) <= 1)
+    {
+        if (feat(1) == 14)
+        {
+            if (feat(0) == 0)
+            {
+                int stat = try_to_reveal();
+                if (stat == 1)
+                {
+                    discover_trap();
+                    txt(i18n::s.get("core.locale.action.search.discover.trap"));
+                }
             }
         }
-        if (p != 9999)
+        if (feat(1) == 22)
         {
-            while (1)
+            int stat = try_to_reveal();
+            if (stat == 1 || 0)
             {
-                if (p <= 3)
-                {
-                    txt(i18n::s.get("core.locale.action.search.crystal.close"));
-                }
-                if (p <= 9)
-                {
-                    txt(i18n::s.get(
-                        "core.locale.action.search.crystal.normal"));
-                    break;
-                }
-                if (p <= 16)
-                {
-                    txt(i18n::s.get("core.locale.action.search.crystal.far"));
-                    break;
-                }
-                txt(i18n::s.get("core.locale.action.search.crystal.sense"));
-                break;
+                discover_hidden_path();
+                txt(
+                    i18n::s.get("core.locale.action.search."
+                                "discover.hidden_path"));
             }
         }
     }
+    if (feat(1) == 32)
+    {
+        if (game_data.current_map != mdata_t::MapId::show_house)
+        {
+            _try_to_reveal_small_coin();
+        }
+    }
+}
+
+static void _search_surroundings()
+{
     for (int cnt = 0; cnt < 11; ++cnt)
     {
         y = cdata[cc].position.y + cnt - 5;
@@ -484,77 +550,14 @@ TurnResult do_search_command()
             }
             if (cell_data.at(x, y).feats != 0)
             {
-                cell_featread(x, y);
-                refx = x;
-                refy = y;
-                if (std::abs(cdata[cc].position.y - y) <= 1
-                    && std::abs(cdata[cc].position.x - x) <= 1)
-                {
-                    if (feat(1) == 14)
-                    {
-                        if (feat(0) == 0)
-                        {
-                            int stat = try_to_reveal();
-                            if (stat == 1)
-                            {
-                                discover_trap();
-                                txt(i18n::s.get(
-                                    "core.locale.action.search.discover.trap"));
-                            }
-                        }
-                    }
-                    if (feat(1) == 22)
-                    {
-                        int stat = try_to_reveal();
-                        if (stat == 1 || 0)
-                        {
-                            discover_hidden_path();
-                            txt(
-                                i18n::s.get("core.locale.action.search."
-                                            "discover.hidden_path"));
-                        }
-                    }
-                }
-                if (feat(1) == 32)
-                {
-                    if (game_data.current_map != mdata_t::MapId::show_house)
-                    {
-                        if (cdata[cc].position.x == x
-                            && cdata[cc].position.y == y)
-                        {
-                            snd(24);
-                            txt(i18n::s.get(
-                                "core.locale.action.search.small_coin.find"));
-                            cell_data.at(x, y).feats = 0;
-                            flt();
-                            itemcreate(-1, 622, x, y, 0);
-                        }
-                        else
-                        {
-                            if (dist(
-                                    cdata[cc].position.x,
-                                    cdata[cc].position.y,
-                                    x,
-                                    y)
-                                > 2)
-                            {
-                                txt(
-                                    i18n::s.get("core.locale.action.search."
-                                                "small_coin.far"));
-                            }
-                            else
-                            {
-                                txt(
-                                    i18n::s.get("core.locale.action.search."
-                                                "small_coin.close"));
-                            }
-                        }
-                    }
-                }
+                _search_for_map_feats();
             }
         }
     }
-    cell_featread(cdata[cc].position.x, cdata[cc].position.y);
+}
+
+static void _proc_manis_disassembly()
+{
     if (feat(1) == 14)
     {
         if (feat(0) == tile_trap)
@@ -570,31 +573,53 @@ TurnResult do_search_command()
             }
         }
     }
+}
+
+static void _dig_material_spot()
+{
+    rowactre(0) = 1;
+    rowactre(1) = cdata[cc].position.x;
+    rowactre(2) = cdata[cc].position.y;
+    if (feat(1) == 24)
+    {
+        spot_digging();
+    }
+    if (feat(1) == 27)
+    {
+        spot_digging();
+    }
+    if (feat(1) == 26)
+    {
+        spot_fishing();
+    }
+    if (feat(1) == 25)
+    {
+        spot_mining_or_wall();
+    }
+    if (feat(1) == 28)
+    {
+        spot_material();
+    }
+}
+
+TurnResult do_search_command()
+{
+    ++msgdup;
+    txt(i18n::s.get("core.locale.action.search.execute"));
+    if (game_data.current_map == mdata_t::MapId::show_house)
+    {
+        _search_for_crystal();
+    }
+
+    _search_surroundings();
+
+    cell_featread(cdata[cc].position.x, cdata[cc].position.y);
+
+    _proc_manis_disassembly();
+
     if (feat(1) >= 24 && feat(1) <= 28)
     {
-        rowactre(0) = 1;
-        rowactre(1) = cdata[cc].position.x;
-        rowactre(2) = cdata[cc].position.y;
-        if (feat(1) == 24)
-        {
-            spot_digging();
-        }
-        if (feat(1) == 27)
-        {
-            spot_digging();
-        }
-        if (feat(1) == 26)
-        {
-            spot_fishing();
-        }
-        if (feat(1) == 25)
-        {
-            spot_mining_or_wall();
-        }
-        if (feat(1) == 28)
-        {
-            spot_material();
-        }
+        _dig_material_spot();
     }
     return TurnResult::turn_end;
 }
@@ -722,9 +747,7 @@ TurnResult do_throw_command()
                     txt(i18n::s.get("core.locale.common.nothing_happens"));
                     return TurnResult::turn_end;
                 }
-                if (game_data.current_map == mdata_t::MapId::arena
-                    || game_data.current_map == mdata_t::MapId::pet_arena
-                    || game_data.current_map == mdata_t::MapId::show_house)
+                if (map_prevents_monster_ball())
                 {
                     txt(i18n::s.get(
                         "core.locale.action.throw.monster_ball.does_not_work"));
@@ -2169,9 +2192,7 @@ TurnResult do_use_command()
     case 7:
         if (inv[ci].own_state != 3)
         {
-            if (map_data.refresh_type == 0
-                || game_data.current_map == mdata_t::MapId::quest
-                || game_data.current_map == mdata_t::MapId::shelter_)
+            if (map_prevents_building_shelter())
             {
                 if (game_data.current_map == mdata_t::MapId::fields)
                 {
@@ -2866,7 +2887,7 @@ TurnResult do_use_stairs_command(int val0)
     int stat = item_find(631, 3, -1);
     if (stat != -1)
     {
-        if (map_data.is_town_or_guild())
+        if (map_is_town_or_guild())
         {
             ci = stat;
             return step_into_gate();
@@ -3116,8 +3137,7 @@ static TurnResult _bump_into_character()
         || (cdata[tc].relationship == -1
             && !Config::instance().attack_neutral_npcs)
         || (cdata[tc].relationship == 0
-            && (area_data[game_data.current_map].id == mdata_t::MapId::museum
-                || area_data[game_data.current_map].id == mdata_t::MapId::shop
+            && (area_data[game_data.current_map].is_museum_or_shop()
                 || key_shift)))
     {
         if (cdata[tc].is_hung_on_sand_bag() == 0)
@@ -3556,7 +3576,7 @@ TurnResult do_get_command()
 
     if (number == 0)
     {
-        if ((map_data.is_town_or_guild())
+        if ((map_is_town_or_guild())
             && chipm(
                    0,
                    cell_data

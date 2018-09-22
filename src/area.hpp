@@ -43,6 +43,11 @@ struct Area
     int outer_map{};
 
 
+    bool can_return_to();
+    bool can_return_to_if_wizard();
+    bool is_museum_or_shop();
+
+
     /**
      * Moves this struct's fields into `adata` so they can be serialized, for
      * compatibility. To be called before serializing `adata`.

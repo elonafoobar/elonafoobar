@@ -974,7 +974,6 @@ void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void proc_pregnant();
 void proc_negative_equipments();
 void damage_by_cursed_equipments();
-void map_proc_special_events();
 
 
 //// proc_movement_event
@@ -1039,13 +1038,11 @@ void delmef(int = 0);
 // Map initialization
 TurnResult initialize_map();
 void initialize_map_from_map_type();
-void map_proc_regen_and_update();
 void map_global_proc_diastrophism();
 void map_global_prepare();
 void map_global_place_entrances();
 void map_clear_material_spots_and_light();
 void initialize_adata();
-void map_reload_noyel();
 
 // Map lifecycle
 TurnResult exit_map();
@@ -1204,7 +1201,6 @@ std::string cheer_up_message(int);
 std::string name(int = 0);
 std::string itemname(int = 0, int = 0, int = 0);
 std::string guildname();
-std::string mapfile(int = 0);
 std::string maplevel(int = 0);
 std::string mapname(int, bool = false);
 std::string ranktitle(int = 0);

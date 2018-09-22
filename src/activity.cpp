@@ -940,7 +940,7 @@ void continuous_action_others()
         if (game_data.continuous_action_about_to_start == 100)
         {
             if (map_data.type == mdata_t::MapType::player_owned
-                || map_data.is_town_or_guild())
+                || map_is_town_or_guild())
             {
                 txt(i18n::s.get("core.locale.activity.sleep.start.other"));
                 cdata[cc].continuous_action.turn = 5;
@@ -1000,9 +1000,7 @@ void continuous_action_others()
             if (game_data.weather != 0 && game_data.weather != 3)
             {
                 if (game_data.current_map == mdata_t::MapId::shelter_
-                    || (map_data.indoors_flag == 1
-                        && (map_data.type == mdata_t::MapType::player_owned
-                            || map_data.is_town_or_guild())))
+                    || map_can_use_bad_weather_in_study())
                 {
                     txt(i18n::s.get(
                         "core.locale.activity.study.start.weather_is_bad"));
@@ -1058,15 +1056,10 @@ void continuous_action_others()
                 {
                     p = 5;
                 }
-                if (game_data.current_map != mdata_t::MapId::shelter_
-                    && map_data.indoors_flag == 1)
+                if (map_can_use_bad_weather_in_study())
                 {
-                    if (map_data.type == mdata_t::MapType::player_owned
-                        || map_data.is_town_or_guild())
-                    {
-                        p = 5;
-                        game_data.date.minute += 30;
-                    }
+                    p = 5;
+                    game_data.date.minute += 30;
                 }
             }
             if (inv[ci].id == 563)

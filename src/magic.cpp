@@ -842,10 +842,7 @@ int magic()
                     }
                     tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
                 }
-                if (game_data.current_map == mdata_t::MapId::pet_arena
-                    || map_data.type == mdata_t::MapType::world_map
-                    || game_data.current_map == mdata_t::MapId::pyramid
-                    || game_data.current_map == mdata_t::MapId::jail)
+                if (map_prevents_teleport())
                 {
                     if (is_in_fov(cdata[tc]))
                     {
@@ -3069,9 +3066,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (game_data.current_map == mdata_t::MapId::arena
-            || game_data.current_map == mdata_t::MapId::pet_arena
-            || game_data.current_map == mdata_t::MapId::the_void)
+        if (map_prevents_domination())
         {
             obvious = 0;
             txt(i18n::s.get(

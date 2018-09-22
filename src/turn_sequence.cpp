@@ -875,9 +875,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         if (game_data.is_returning_or_escaping != 0)
         {
             --game_data.is_returning_or_escaping;
-            if (map_data.type == mdata_t::MapType::temporary
-                || game_data.current_map == mdata_t::MapId::shelter_
-                || game_data.current_map == mdata_t::MapId::jail)
+            if (map_prevents_return())
             {
                 game_data.is_returning_or_escaping = 0;
                 txt(i18n::s.get("core.locale.magic.return.prevented.normal"));

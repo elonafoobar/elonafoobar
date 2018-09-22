@@ -121,6 +121,7 @@ set(CORE_SOURCES
   src/map.cpp
   src/map_cell.cpp
   src/map_chara_filter.cpp
+  src/map_special_events.cpp
   src/map_trainer_skills.cpp
   src/mapgen.cpp
   src/mef.cpp

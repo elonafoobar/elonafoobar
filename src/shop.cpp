@@ -5,8 +5,10 @@
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "db_item.hpp"
+#include "food.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "menu.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -20,7 +22,7 @@ void shop_refresh_on_talk()
     {
         if (cdata[tc].character_role == 1009)
         {
-            calc_trade_goods_price();
+            map_calc_trade_goods_price();
         }
     }
     mode = 6;
@@ -764,86 +766,6 @@ void calc_number_of_items_sold_at_shop()
         rtval = 1;
         return;
     }
-}
-
-void calc_trade_goods_price()
-{
-    DIM2(trate, 8);
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        trate(cnt) = 100;
-    }
-    if (game_data.current_map == mdata_t::MapId::vernis)
-    {
-        trate(0) = 130;
-        trate(1) = 70;
-        trate(3) = 110;
-        trate(2) = 85;
-        trate(6) = 150;
-        trate(7) = 120;
-    }
-    if (game_data.current_map == mdata_t::MapId::port_kapul)
-    {
-        trate(0) = 65;
-        trate(1) = 110;
-        trate(4) = 125;
-        trate(5) = 65;
-        trate(2) = 70;
-        trate(6) = 200;
-        trate(7) = 150;
-    }
-    if (game_data.current_map == mdata_t::MapId::palmia)
-    {
-        trate(0) = 120;
-        trate(2) = 75;
-        trate(4) = 75;
-        trate(1) = 125;
-        trate(6) = 110;
-        trate(7) = 80;
-    }
-    if (game_data.current_map == mdata_t::MapId::yowyn)
-    {
-        trate(0) = 120;
-        trate(3) = 75;
-        trate(2) = 120;
-        trate(6) = 160;
-        trate(7) = 100;
-    }
-    if (game_data.current_map == mdata_t::MapId::derphy)
-    {
-        trate(0) = 85;
-        trate(3) = 70;
-        trate(5) = 120;
-        trate(2) = 130;
-        trate(6) = 130;
-        trate(7) = 90;
-    }
-    if (game_data.current_map == mdata_t::MapId::noyel)
-    {
-        trate(1) = 175;
-        trate(0) = 170;
-        trate(3) = 160;
-        trate(5) = 130;
-        trate(2) = 140;
-        trate(6) = 75;
-        trate(7) = 120;
-    }
-    if (game_data.current_map == mdata_t::MapId::lumiest)
-    {
-        trate(1) = 145;
-        trate(0) = 130;
-        trate(3) = 100;
-        trate(5) = 120;
-        trate(2) = 120;
-        trate(6) = 100;
-        trate(7) = 70;
-    }
-    randomize(game_data.date.hours() / 100);
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        trate(cnt) += rnd(15) - rnd(15);
-    }
-    randomize();
 }
 
 void shop_sell_item()
