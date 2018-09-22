@@ -579,7 +579,7 @@ void chara_set_item_which_will_be_used(Character& cc);
 int chara_armor_class(const Character& cc);
 
 void initialize_character_filters();
-void chara_set_generation_filter();
+void map_set_chara_generation_filter();
 void chara_add_quality_parens();
 
 int access_character_info();

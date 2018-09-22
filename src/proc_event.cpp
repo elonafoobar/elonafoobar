@@ -226,7 +226,7 @@ void proc_event()
     case 4:
         while (1)
         {
-            chara_set_generation_filter();
+            map_set_chara_generation_filter();
             fixlv = Quality::miracle;
             initlv = game_data.current_dungeon_level + rnd(5);
             int stat = chara_create(-1, 0, -3, 0);
