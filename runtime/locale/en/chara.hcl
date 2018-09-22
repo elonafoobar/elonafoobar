@@ -5,7 +5,7 @@ locale {
 
         age_unknown = "Unknown"
 
-        name_with_title = "{${basename(_1)}}"
+        name_with_title = "{${_1}}"
 
         contract_expired = "The period of contract with ${basename(_1)} has been expired."
 
