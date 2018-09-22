@@ -3,8 +3,8 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
-#include "optional.hpp"
-#include "snail/input.hpp"
+#include "../optional.hpp"
+#include "../snail/input.hpp"
 
 namespace elona
 {
@@ -62,6 +62,7 @@ struct Action
         , description_key("")
         , category(category)
         , default_keybinds(default_keybinds)
+        , visible(true)
     {
     }
 
@@ -69,6 +70,7 @@ struct Action
     std::string description_key;
     std::string category;
     std::vector<Keybind> default_keybinds;
+    bool visible;
 };
 
 class KeybindManager

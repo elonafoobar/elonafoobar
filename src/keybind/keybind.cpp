@@ -1,9 +1,9 @@
 #include "keybind.hpp"
 #include <unordered_map>
-#include "config.hpp"
-#include "enums.hpp"
-#include "gdata.hpp"
-#include "variables.hpp"
+#include "../config.hpp"
+#include "../enums.hpp"
+#include "../gdata.hpp"
+#include "../variables.hpp"
 
 using namespace std::literals::string_literals;
 

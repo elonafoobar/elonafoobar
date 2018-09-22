@@ -112,6 +112,7 @@ set(CORE_SOURCES
   src/item_load_desc.cpp
   src/item_material.cpp
   src/itemgen.cpp
+  src/keybind.cpp
   src/lion.cpp
   src/log.cpp
   src/magic.cpp
