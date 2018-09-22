@@ -843,8 +843,8 @@ void chara_set_generation_filter()
         fltn(u8"sf"s);
         return;
     }
-    if (mdata_map_type == mdata_t::MapType::town
-        || mdata_map_type == mdata_t::MapType::guild)
+    if (map_data.type == mdata_t::MapType::town
+        || map_data.type == mdata_t::MapType::guild)
     {
         flt(calcobjlv(10), calcfixlv(Quality::bad));
         fltselect = 5;
@@ -1024,7 +1024,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (mdata_t::is_nefia(mdata_map_type))
+    if (mdata_t::is_nefia(map_data.type))
     {
         flt(calcobjlv(game_data.current_dungeon_level),
             calcfixlv(Quality::bad));

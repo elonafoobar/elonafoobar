@@ -843,7 +843,7 @@ int magic()
                     tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
                 }
                 if (game_data.current_map == mdata_t::MapId::pet_arena
-                    || mdata_map_type == mdata_t::MapType::world_map
+                    || map_data.type == mdata_t::MapType::world_map
                     || game_data.current_map == mdata_t::MapId::pyramid
                     || game_data.current_map == mdata_t::MapId::jail)
                 {
@@ -1109,7 +1109,7 @@ label_2181_internal:
         damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
-        if (mdata_map_type != mdata_t::MapType::world_map)
+        if (map_data.type != mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.magic.map.need_global_map"));
             break;
@@ -2004,7 +2004,7 @@ label_2181_internal:
         ctrl_inventory();
         break;
     case 461:
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -3872,7 +3872,7 @@ label_2181_internal:
         }
         break;
     case 659:
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             break;
         }

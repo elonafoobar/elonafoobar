@@ -19,6 +19,26 @@ struct MapData
 {
     int width{};
     int height{};
+    int atlas_number{};
+    int next_regenerate_date{};
+    int stair_up_pos{};
+    int stair_down_pos{};
+    int type{};
+    int refresh_type{};
+    int designated_spawns{};
+    int turn_cost{};
+    int max_crowd_density{};
+    int current_dungeon_level{};
+    int tileset{};
+    int bgm{};
+    int indoors_flag{};
+    int user_map_flag{};
+    int next_restock_date{};
+    int should_regenerate{};
+    int max_item_count{};
+    int regenerate_count{};
+    int play_campfire_sound{};
+    int mefs_loaded_flag{};
 
 
     /**

@@ -26,7 +26,27 @@ CellData cell_data;
 
 #define SERIALIZE_ALL() \
     SERIALIZE(0, width); \
-    SERIALIZE(1, height);
+    SERIALIZE(1, height); \
+    SERIALIZE(2, atlas_number); \
+    SERIALIZE(3, next_regenerate_date); \
+    SERIALIZE(4, stair_up_pos); \
+    SERIALIZE(5, stair_down_pos); \
+    SERIALIZE(6, type); \
+    SERIALIZE(7, refresh_type); \
+    SERIALIZE(8, designated_spawns); \
+    SERIALIZE(9, turn_cost); \
+    SERIALIZE(10, max_crowd_density); \
+    SERIALIZE(11, current_dungeon_level); \
+    SERIALIZE(12, tileset); \
+    SERIALIZE(13, bgm); \
+    SERIALIZE(14, indoors_flag); \
+    SERIALIZE(15, user_map_flag); \
+    SERIALIZE(16, next_restock_date); \
+    SERIALIZE(17, should_regenerate); \
+    SERIALIZE(18, max_item_count); \
+    SERIALIZE(19, regenerate_count); \
+    SERIALIZE(20, play_campfire_sound); \
+    SERIALIZE(21, mefs_loaded_flag);
 
 
 #define SERIALIZE MDATA_PACK

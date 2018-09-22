@@ -1134,12 +1134,12 @@ int cargocheck()
     {
         return 1;
     }
-    if (mdata_map_type != mdata_t::MapType::world_map
-        && mdata_map_type != mdata_t::MapType::player_owned
-        && mdata_map_type != mdata_t::MapType::town
-        && mdata_map_type != mdata_t::MapType::field
-        && mdata_map_type != mdata_t::MapType::shelter
-        && mdata_map_type != mdata_t::MapType::guild)
+    if (map_data.type != mdata_t::MapType::world_map
+        && map_data.type != mdata_t::MapType::player_owned
+        && map_data.type != mdata_t::MapType::town
+        && map_data.type != mdata_t::MapType::field
+        && map_data.type != mdata_t::MapType::shelter
+        && map_data.type != mdata_t::MapType::guild)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.ui.inv.cannot_use_cargo_items"));
@@ -3394,7 +3394,7 @@ void character_drops_item()
             {
                 continue;
             }
-            if (mdata_map_refresh_type == 0)
+            if (map_data.refresh_type == 0)
             {
                 if (inv[cnt].body_part != 0)
                 {
@@ -3415,12 +3415,12 @@ void character_drops_item()
             }
             if (the_item_db[inv[ci].id]->is_cargo)
             {
-                if (mdata_map_type != mdata_t::MapType::world_map
-                    && mdata_map_type != mdata_t::MapType::player_owned
-                    && mdata_map_type != mdata_t::MapType::town
-                    && mdata_map_type != mdata_t::MapType::field
-                    && mdata_map_type != mdata_t::MapType::shelter
-                    && mdata_map_type != mdata_t::MapType::guild)
+                if (map_data.type != mdata_t::MapType::world_map
+                    && map_data.type != mdata_t::MapType::player_owned
+                    && map_data.type != mdata_t::MapType::town
+                    && map_data.type != mdata_t::MapType::field
+                    && map_data.type != mdata_t::MapType::shelter
+                    && map_data.type != mdata_t::MapType::guild)
                 {
                     continue;
                 }
@@ -4432,7 +4432,7 @@ void damage_by_cursed_equipments()
             -5);
         return;
     }
-    if (mdata_map_type != mdata_t::MapType::world_map)
+    if (map_data.type != mdata_t::MapType::world_map)
     {
         if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
         {
@@ -4476,7 +4476,7 @@ void proc_pregnant()
             txt(i18n::s.get("core.locale.misc.pregnant.something_is_wrong"));
         }
     }
-    if (mdata_map_type != mdata_t::MapType::world_map)
+    if (map_data.type != mdata_t::MapType::world_map)
     {
         if (rnd(30) == 0)
         {
@@ -4533,7 +4533,7 @@ void proc_negative_equipments()
             }
             if (inv[ci].enchantments[cnt].id == 21)
             {
-                if (mdata_map_type != mdata_t::MapType::world_map)
+                if (map_data.type != mdata_t::MapType::world_map)
                 {
                     if (rnd(25)
                         < clamp(
@@ -4591,9 +4591,9 @@ void proc_negative_equipments()
             }
             if (inv[ci].enchantments[cnt].id == 47)
             {
-                if (mdata_map_type != mdata_t::MapType::world_map)
+                if (map_data.type != mdata_t::MapType::world_map)
                 {
-                    if (mdata_map_type != mdata_t::MapType::player_owned)
+                    if (map_data.type != mdata_t::MapType::player_owned)
                     {
                         if (rnd(50)
                             < clamp(
@@ -4770,7 +4770,7 @@ void monster_respawn()
     if (area_data[game_data.current_map].id == mdata_t::MapId::museum
         || area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
-        if (game_data.crowd_density < mdata_map_max_crowd_density / 2)
+        if (game_data.crowd_density < map_data.max_crowd_density / 2)
         {
             if (rnd(2) == 0)
             {
@@ -4779,11 +4779,11 @@ void monster_respawn()
             }
         }
     }
-    if (mdata_map_max_crowd_density == 0)
+    if (map_data.max_crowd_density == 0)
     {
         return;
     }
-    if (game_data.crowd_density < mdata_map_max_crowd_density / 4)
+    if (game_data.crowd_density < map_data.max_crowd_density / 4)
     {
         if (rnd(2) == 0)
         {
@@ -4791,7 +4791,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (game_data.crowd_density < mdata_map_max_crowd_density / 2)
+    if (game_data.crowd_density < map_data.max_crowd_density / 2)
     {
         if (rnd(4) == 0)
         {
@@ -4799,7 +4799,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (game_data.crowd_density < mdata_map_max_crowd_density)
+    if (game_data.crowd_density < map_data.max_crowd_density)
     {
         if (rnd(8) == 0)
         {
@@ -4818,11 +4818,11 @@ TurnResult exit_map()
     int fixstart = 0;
     game_data.left_minutes_of_executing_quest = 0;
     game_data.rogue_boss_encountered = 0;
-    if (mdata_map_type == mdata_t::MapType::player_owned)
+    if (map_data.type == mdata_t::MapType::player_owned)
     {
         maybe_show_ex_help(1);
     }
-    if (mdata_map_type == mdata_t::MapType::temporary)
+    if (map_data.type == mdata_t::MapType::temporary)
     {
         rq = game_data.executing_immediate_quest;
         quest_exit_map();
@@ -4885,7 +4885,7 @@ TurnResult exit_map()
             msgtemp += i18n::s.get("core.locale.misc.walk_down_stairs");
             f = 1;
             game_data.entrance_type = 1;
-            mdata_map_stair_down_pos =
+            map_data.stair_down_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
@@ -4903,7 +4903,7 @@ TurnResult exit_map()
             msgtemp += i18n::s.get("core.locale.misc.walk_up_stairs");
             f = 1;
             game_data.entrance_type = 2;
-            mdata_map_stair_up_pos =
+            map_data.stair_up_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
@@ -4918,7 +4918,7 @@ TurnResult exit_map()
         }
         if (f == 0)
         {
-            if (mdata_map_type == mdata_t::MapType::world_map)
+            if (map_data.type == mdata_t::MapType::world_map)
             {
                 game_data.pc_x_in_world_map = cdata[cc].position.x;
                 game_data.pc_y_in_world_map = cdata[cc].position.y;
@@ -4972,17 +4972,17 @@ TurnResult exit_map()
                         static_cast<int>(mdata_t::MapId::fields);
                 }
             }
-            if (mdata_map_type == mdata_t::MapType::town
-                || mdata_map_type == mdata_t::MapType::field
-                || mdata_map_type == mdata_t::MapType::player_owned
-                || mdata_map_type == mdata_t::MapType::shelter
-                || mdata_map_type == mdata_t::MapType::guild)
+            if (map_data.type == mdata_t::MapType::town
+                || map_data.type == mdata_t::MapType::field
+                || map_data.type == mdata_t::MapType::player_owned
+                || map_data.type == mdata_t::MapType::shelter
+                || map_data.type == mdata_t::MapType::guild)
             {
                 game_data.current_map = game_data.destination_outer_map;
             }
         }
-        if (mdata_t::is_nefia(mdata_map_type)
-            || mdata_map_type == static_cast<int>(mdata_t::MapType::shelter))
+        if (mdata_t::is_nefia(map_data.type)
+            || map_data.type == static_cast<int>(mdata_t::MapType::shelter))
         {
             if (game_data.current_dungeon_level
                 < area_data[game_data.current_map].danger_level)
@@ -5009,7 +5009,7 @@ TurnResult exit_map()
             }
         }
     }
-    if (mdata_map_type == mdata_t::MapType::temporary)
+    if (map_data.type == mdata_t::MapType::temporary)
     {
         game_data.current_map = game_data.previous_map2;
         game_data.current_dungeon_level = game_data.previous_dungeon_level;
@@ -5055,8 +5055,8 @@ TurnResult exit_map()
     }
     if (game_data.current_map != game_data.previous_map)
     {
-        if (mdata_map_type == mdata_t::MapType::town
-            || mdata_map_type == mdata_t::MapType::guild
+        if (map_data.type == mdata_t::MapType::town
+            || map_data.type == mdata_t::MapType::guild
             || game_data.previous_map == mdata_t::MapId::your_home
             || game_data.departure_date == 0)
         {
@@ -5071,10 +5071,10 @@ TurnResult exit_map()
             autosave =
                 1 * (game_data.current_map != mdata_t::MapId::show_house);
         }
-        if (mdata_map_type != mdata_t::MapType::world_map)
+        if (map_data.type != mdata_t::MapType::world_map)
         {
-            if (mdata_map_type != mdata_t::MapType::field
-                || mdata_map_type == mdata_t::MapType::player_owned)
+            if (map_data.type != mdata_t::MapType::field
+                || map_data.type == mdata_t::MapType::player_owned)
             {
                 if (fixtransfermap == 0)
                 {
@@ -5107,7 +5107,7 @@ TurnResult exit_map()
                 "core.locale.action.exit_map.entered",
                 mapname(game_data.current_map));
         }
-        else if (mdata_map_type == mdata_t::MapType::temporary)
+        else if (map_data.type == mdata_t::MapType::temporary)
         {
             msgtemp += i18n::s.get(
                 "core.locale.action.exit_map.returned_to",
@@ -5177,7 +5177,7 @@ TurnResult exit_map()
             }
         }
     }
-    if (mdata_map_refresh_type == 1)
+    if (map_data.refresh_type == 1)
     {
         // This map should be saved.
         save_map_local_data();
@@ -5278,11 +5278,11 @@ void map_proc_regen_and_update()
             .time_of_next_update_of_arena_random_seed =
             game_data.date.hours() + 24;
     }
-    if (game_data.date.hours() >= mdata_map_next_regenerate_date)
+    if (game_data.date.hours() >= map_data.next_regenerate_date)
     {
-        if (mdata_map_should_regenerate == 0)
+        if (map_data.should_regenerate == 0)
         {
-            if (mdata_map_next_regenerate_date != 0)
+            if (map_data.next_regenerate_date != 0)
             {
                 for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end;
                      ++cnt)
@@ -5317,8 +5317,8 @@ void map_proc_regen_and_update()
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
                     }
-                    if (mdata_map_type == mdata_t::MapType::town
-                        || mdata_map_type == mdata_t::MapType::guild)
+                    if (map_data.type == mdata_t::MapType::town
+                        || map_data.type == mdata_t::MapType::guild)
                     {
                         if (inv[cnt].own_state < 0)
                         {
@@ -5352,15 +5352,15 @@ void map_proc_regen_and_update()
                 }
             }
             p = rnd(map_data.height * map_data.width / 400 + 3);
-            if (mdata_map_type == mdata_t::MapType::world_map)
+            if (map_data.type == mdata_t::MapType::world_map)
             {
                 p = rnd(40);
             }
-            if (mdata_map_type == mdata_t::MapType::town)
+            if (map_data.type == mdata_t::MapType::town)
             {
                 p = rnd(rnd(rnd(12) + 1) + 1);
             }
-            if (mdata_map_type == mdata_t::MapType::guild)
+            if (map_data.type == mdata_t::MapType::guild)
             {
                 p = rnd(p + 1);
             }
@@ -5369,18 +5369,18 @@ void map_proc_regen_and_update()
                 map_randsite();
             }
         }
-        mdata_map_next_regenerate_date = game_data.date.hours() + 120;
+        map_data.next_regenerate_date = game_data.date.hours() + 120;
     }
-    if (game_data.date.hours() >= mdata_map_next_restock_date)
+    if (game_data.date.hours() >= map_data.next_restock_date)
     {
-        if (mdata_map_next_restock_date == 0)
+        if (map_data.next_restock_date == 0)
         {
             renewmulti = 1;
         }
         else
         {
             renewmulti =
-                (game_data.date.hours() - mdata_map_next_restock_date) / 24 + 1;
+                (game_data.date.hours() - map_data.next_restock_date) / 24 + 1;
         }
         if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
         {
@@ -5402,7 +5402,7 @@ void map_proc_regen_and_update()
                 }
             }
         }
-        if (mdata_map_should_regenerate == 0)
+        if (map_data.should_regenerate == 0)
         {
             for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
             {
@@ -5436,8 +5436,8 @@ void map_proc_regen_and_update()
                     }
                 }
             }
-            if (mdata_map_type == mdata_t::MapType::town
-                || mdata_map_type == mdata_t::MapType::guild
+            if (map_data.type == mdata_t::MapType::town
+                || map_data.type == mdata_t::MapType::guild
                 || game_data.current_map == mdata_t::MapId::your_home)
             {
                 for (auto&& cnt : cdata.others())
@@ -5489,7 +5489,7 @@ void map_proc_regen_and_update()
                 }
             }
         }
-        mdata_map_next_restock_date = game_data.date.hours() + 24;
+        map_data.next_restock_date = game_data.date.hours() + 24;
     }
 }
 
@@ -5498,24 +5498,24 @@ void map_proc_regen_and_update()
 void map_prepare_tileset_atlas()
 {
     gsel(6);
-    if (mdata_map_atlas_number != mtilefilecur)
+    if (map_data.atlas_number != mtilefilecur)
     {
         pos(0, 0);
         picload(
             filesystem::dir::graphic()
-                / (u8"map"s + mdata_map_atlas_number + u8".bmp"),
+                / (u8"map"s + map_data.atlas_number + u8".bmp"),
             1);
-        mtilefilecur = mdata_map_atlas_number;
+        mtilefilecur = map_data.atlas_number;
         initialize_map_chip();
     }
-    map_tileset(mdata_map_tileset);
+    map_tileset(map_data.tileset);
     gsel(2);
     gmode(0);
     pos(0, 0);
     // gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
 
     int shadow = 5;
-    if (mdata_map_indoors_flag == 2)
+    if (map_data.indoors_flag == 2)
     {
         if (game_data.date.hour >= 24
             || (game_data.date.hour >= 0 && game_data.date.hour < 4))
@@ -5563,17 +5563,17 @@ void map_prepare_tileset_atlas()
     gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
     set_color_mod(255, 255, 255, 6);
     gmode(4, 30);
-    if (mdata_map_atlas_number == 0)
+    if (map_data.atlas_number == 0)
     {
         pos(0, 192);
         gcopy(6, 0, 192, 1360, 48);
     }
-    if (mdata_map_atlas_number == 1)
+    if (map_data.atlas_number == 1)
     {
         pos(0, 1056);
         gcopy(6, 0, 1056, 1360, 48);
     }
-    if (mdata_map_atlas_number != 2)
+    if (map_data.atlas_number != 2)
     {
         pos(0, 336);
         gcopy(6, 0, 336, 1360, 48);
@@ -6835,11 +6835,11 @@ void map_proc_special_events()
             {
                 game_data.continuous_active_hours = 13;
             }
-            mdata_map_turn_cost = 1000000;
+            map_data.turn_cost = 1000000;
         }
-        else if (mdata_map_turn_cost == 1000000)
+        else if (map_data.turn_cost == 1000000)
         {
-            mdata_map_turn_cost = 10000;
+            map_data.turn_cost = 10000;
             for (auto&& cnt : cdata.all())
             {
                 cnt.turn_cost = 0;
@@ -7711,7 +7711,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     }
     if (cell_data.at(prm_1057, prm_1058).feats != 0)
     {
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             if (cell_data.at(prm_1057, prm_1058).feats / 1000 % 100 == 15)
             {
@@ -9250,11 +9250,11 @@ void initialize_map_adjust_spawns()
             }
         }
     }
-    if (mdata_map_type != mdata_t::MapType::player_owned)
+    if (map_data.type != mdata_t::MapType::player_owned)
     {
-        if (mdata_map_max_item_count != 0)
+        if (map_data.max_item_count != 0)
         {
-            mdata_map_max_item_count = 0;
+            map_data.max_item_count = 0;
         }
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
@@ -9262,7 +9262,7 @@ void initialize_map_adjust_spawns()
         area_data[game_data.current_map].danger_level = 0;
         area_data[game_data.current_map].deepest_level = 10;
         area_data[game_data.current_map].default_ai_calm = 1;
-        mdata_map_designated_spawns = 1;
+        map_data.designated_spawns = 1;
         event_add(17);
         calccosthire();
     }
@@ -12071,7 +12071,7 @@ int pick_up_item()
     {
         if (inv[ti].id == 255)
         {
-            if (mdata_map_play_campfire_sound == 1)
+            if (map_data.play_campfire_sound == 1)
             {
                 f = 0;
                 for (const auto& cnt : items(-1))
@@ -12088,7 +12088,7 @@ int pick_up_item()
                 }
                 if (f == 0)
                 {
-                    mdata_map_play_campfire_sound = 0;
+                    map_data.play_campfire_sound = 0;
                     play_music();
                 }
             }
@@ -12445,7 +12445,7 @@ TurnResult proc_movement_event()
             return TurnResult::turn_end;
         }
     }
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if (cc == 0)
         {
@@ -12476,7 +12476,7 @@ TurnResult proc_movement_event()
         }
     }
     sense_map_feats_on_move();
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if (cc == 0)
         {
@@ -12791,7 +12791,7 @@ void sense_map_feats_on_move()
         if (key_shift && game_data.player_cellaccess_check_flag == 0
             && cdata.player().confused == 0 && cdata.player().dimmed == 0)
         {
-            if (mdata_map_type != mdata_t::MapType::world_map)
+            if (map_data.type != mdata_t::MapType::world_map)
             {
                 game_data.player_cellaccess_check_flag = 1;
                 cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
@@ -12839,14 +12839,14 @@ void sense_map_feats_on_move()
                 if (keybd_wait <= Config::instance().walkwait
                             * Config::instance().startrun
                     || cdata.player().turn % 2 == 0
-                    || mdata_map_type == mdata_t::MapType::world_map)
+                    || map_data.type == mdata_t::MapType::world_map)
                 {
                     snd(83 + foot % 3);
                     foot += 1 + rnd(2);
                 }
             }
         }
-        else if (mdata_map_type == mdata_t::MapType::world_map)
+        else if (map_data.type == mdata_t::MapType::world_map)
         {
             addefmap(cdata[cc].position.x, cdata[cc].position.y, 2, 10, dirsub);
             snd(81 + foot % 2);
@@ -13426,11 +13426,11 @@ TurnResult try_to_open_locked_door()
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.open.door.succeed", cdata[cc]));
-            if (mdata_map_tileset == 8)
+            if (map_data.tileset == 8)
             {
                 snd(67);
             }
-            else if (mdata_map_tileset == 9)
+            else if (map_data.tileset == 9)
             {
                 snd(71);
             }
@@ -14497,9 +14497,9 @@ TurnResult do_plant()
 {
     screenupdate = -1;
     update_screen();
-    if (mdata_map_type == mdata_t::MapType::world_map
-        || mdata_map_type == mdata_t::MapType::town
-        || mdata_map_type == mdata_t::MapType::guild)
+    if (map_data.type == mdata_t::MapType::world_map
+        || map_data.type == mdata_t::MapType::town
+        || map_data.type == mdata_t::MapType::guild)
     {
         txt(i18n::s.get("core.locale.action.plant.cannot_plant_it_here"));
         update_screen();
@@ -15146,7 +15146,7 @@ void weather_changes()
     {
         calc_home_rank();
     }
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         game_data.pc_x_in_world_map = cdata.player().position.x;
         game_data.pc_y_in_world_map = cdata.player().position.y;
@@ -15293,7 +15293,7 @@ void weather_changes()
     map_prepare_tileset_atlas();
     adventurer_update();
     food_gets_rotten();
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if (rnd(3) == 0)
         {
@@ -15404,7 +15404,7 @@ void weather_changes()
     }
     if (mode == 0)
     {
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             if (rnd(40) == 0)
             {
@@ -15447,7 +15447,7 @@ void weather_changes()
 optional<TurnResult> check_angband()
 {
     if (game_data.angband_flag == -1
-        || mdata_map_type == mdata_t::MapType::world_map)
+        || map_data.type == mdata_t::MapType::world_map)
         return none;
 
     switch (game_data.angband_flag)

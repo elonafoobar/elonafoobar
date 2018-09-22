@@ -6,6 +6,7 @@
 #include "config.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "map.hpp"
 #include "menu.hpp"
 #include "random.hpp"
 #include "trait.hpp"
@@ -404,8 +405,8 @@ void refresh_speed(Character& cc)
     {
         cdata.player().speed_percentage_in_next_turn -= 10;
     }
-    if (mdata_map_type == mdata_t::MapType::world_map
-        || mdata_map_type == mdata_t::MapType::field)
+    if (map_data.type == mdata_t::MapType::world_map
+        || map_data.type == mdata_t::MapType::field)
     {
         if (game_data.cargo_weight > game_data.current_cart_limit)
         {

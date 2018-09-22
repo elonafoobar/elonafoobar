@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -234,7 +235,7 @@ void adventurer_update()
             }
         }
         if ((cdata[rc].current_map != game_data.current_map
-             || mdata_map_type == mdata_t::MapType::world_map)
+             || map_data.type == mdata_t::MapType::world_map)
             && rnd(60) == 0)
         {
             for (int cnt = 0; cnt < 10; ++cnt)

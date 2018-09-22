@@ -200,7 +200,7 @@ void initialize_home_adata()
 
 TurnResult build_new_building()
 {
-    if (mdata_map_type != mdata_t::MapType::world_map)
+    if (map_data.type != mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.building.can_only_use_in_world_map"));
         update_screen();
@@ -344,7 +344,7 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 TurnResult show_house_board()
 {
     txtnew();
-    if (mdata_map_type != mdata_t::MapType::player_owned)
+    if (map_data.type != mdata_t::MapType::player_owned)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"));
@@ -369,9 +369,9 @@ TurnResult show_house_board()
             }
         }
     }
-    if (mdata_map_max_item_count != 0)
+    if (map_data.max_item_count != 0)
     {
-        p(2) = mdata_map_max_item_count;
+        p(2) = map_data.max_item_count;
     }
     txt(i18n::s.get(
         "core.locale.building.house_board.item_count",
@@ -435,7 +435,7 @@ TurnResult show_house_board()
                 "core.locale.building.house_board.choices.assign_a_shopkeeper"),
             u8"null"s,
             ""s + 4);
-        if (mdata_map_max_item_count < 400)
+        if (map_data.max_item_count < 400)
         {
             ELONA_APPEND_PROMPT(
                 i18n::s.get(
@@ -924,10 +924,10 @@ void try_extend_shop()
     {
         snd(12);
         cdata.player().gold -= calcshopreform();
-        mdata_map_max_item_count = clamp(mdata_map_max_item_count + 10, 1, 400);
+        map_data.max_item_count = clamp(map_data.max_item_count + 10, 1, 400);
         txtef(2);
         txt(i18n::s.get(
-            "core.locale.building.shop.extend", mdata_map_max_item_count));
+            "core.locale.building.shop.extend", map_data.max_item_count));
     }
 }
 
@@ -1218,7 +1218,7 @@ void show_shop_log()
 
 void update_shop()
 {
-    mdata_map_max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
+    map_data.max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
@@ -1336,7 +1336,7 @@ void update_museum()
             ranktitle(3),
             rankn(10, 3)));
     }
-    mdata_map_max_crowd_density = (100 - game_data.ranks.at(3) / 100) / 2 + 1;
+    map_data.max_crowd_density = (100 - game_data.ranks.at(3) / 100) / 2 + 1;
 }
 
 

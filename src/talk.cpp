@@ -10,6 +10,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "map.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
 #include "random.hpp"
@@ -522,7 +523,7 @@ TalkResult talk_game_begin()
             return TalkResult::talk_end;
         }
     }
-    mdata_map_bgm = 67;
+    map_data.bgm = 67;
     play_music();
     return TalkResult::talk_unique;
 }

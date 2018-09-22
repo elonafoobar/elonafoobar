@@ -1105,7 +1105,7 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"mef_"s + mid + u8".s2");
         if (read)
         {
-            if (mdata_map_mefs_loaded_flag == 0)
+            if (map_data.mefs_loaded_flag == 0)
             {
                 for (int y = 0; y < map_data.height; ++y)
                 {
@@ -1114,7 +1114,7 @@ void fmode_1_2(bool read)
                         cell_data.at(x, y).mef_index_plus_one = 0;
                     }
                 }
-                mdata_map_mefs_loaded_flag = 1;
+                map_data.mefs_loaded_flag = 1;
             }
             else
             {
@@ -1171,7 +1171,11 @@ void fmode_5_6(bool read)
             {
                 mdata(j) = mdatatmp(j);
             }
-            map_data.unpack_from(mdata);
+            map_data.width = mdata(0);
+            map_data.height = mdata(1);
+            map_data.atlas_number = mdata(2);
+            map_data.next_regenerate_date = mdata(3);
+            map_data.stair_up_pos = mdata(4);
         }
         else
         {

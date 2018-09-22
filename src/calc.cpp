@@ -321,7 +321,7 @@ int decfame(int cc, int base)
 
 int calcshopreform()
 {
-    return mdata_map_max_item_count * 100 + 1000;
+    return map_data.max_item_count * 100 + 1000;
 }
 
 
@@ -1772,7 +1772,7 @@ int calc_exp_gain_meditation(const Character& chara)
 
 int calc_exp_gain_stealth()
 {
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if (rnd(20))
         {
@@ -1789,7 +1789,7 @@ int calc_exp_gain_weight_lifting(const Character& chara)
     {
         return 0;
     }
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if (rnd(20))
         {

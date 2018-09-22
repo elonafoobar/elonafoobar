@@ -178,7 +178,7 @@ void chara_vomit(Character& cc)
     }
 
     // Vomit.
-    if (mdata_map_type != mdata_t::MapType::world_map)
+    if (map_data.type != mdata_t::MapType::world_map)
     {
         auto p = 2;
         for (const auto& i : items(-1))

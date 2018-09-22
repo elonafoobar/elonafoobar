@@ -2,6 +2,7 @@
 #include "../area.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
+#include "../map.hpp"
 
 namespace elona
 {
@@ -43,7 +44,7 @@ static void _load_politics_list(bool is_town)
 
 bool UIMenuTownPolitics::init()
 {
-    bool is_town = mdata_map_type == mdata_t::MapType::town;
+    bool is_town = map_data.type == mdata_t::MapType::town;
     _load_politics_list(is_town);
 
     gsel(3);
@@ -90,7 +91,7 @@ static void _draw_window()
     pos(wx + 185, wy + 52);
     mes(i18n::s.get("core.locale.ui.politics.global"));
 
-    if (mdata_map_type == mdata_t::MapType::town)
+    if (map_data.type == mdata_t::MapType::town)
     {
         pos(wx + 285, wy + 52);
         mes(i18n::s.get(

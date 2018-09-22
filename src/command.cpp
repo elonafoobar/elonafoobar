@@ -399,7 +399,7 @@ TurnResult do_dig_command()
     }
     if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0
         || chipm(0, cell_data.at(x, y).chip_id_actual) == 3
-        || mdata_map_type == mdata_t::MapType::world_map)
+        || map_data.type == mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
@@ -1767,7 +1767,7 @@ TurnResult do_use_command()
     case 24:
         x = cdata[cc].position.x;
         y = cdata[cc].position.y;
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.action.use.mine.cannot_use_here"));
             update_screen();
@@ -1850,7 +1850,7 @@ TurnResult do_use_command()
         }
         goto label_2229_internal;
     case 8:
-        if (mdata_map_type != mdata_t::MapType::player_owned)
+        if (map_data.type != mdata_t::MapType::player_owned)
         {
             txt(i18n::s.get(
                 "core.locale.action.use.house_board.cannot_use_it_here"));
@@ -2151,7 +2151,7 @@ TurnResult do_use_command()
         {
             music = 97;
         }
-        mdata_map_bgm = music;
+        map_data.bgm = music;
 
         auto music_id = *the_music_db.get_id_from_legacy(music);
         assert(music_id);
@@ -2169,7 +2169,7 @@ TurnResult do_use_command()
     case 7:
         if (inv[ci].own_state != 3)
         {
-            if (mdata_map_refresh_type == 0
+            if (map_data.refresh_type == 0
                 || game_data.current_map == mdata_t::MapId::quest
                 || game_data.current_map == mdata_t::MapId::shelter_)
             {
@@ -2243,8 +2243,8 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 22:
         snd(118);
-        if (mdata_map_type != mdata_t::MapType::town
-            && mdata_map_type != mdata_t::MapType::guild)
+        if (map_data.type != mdata_t::MapType::town
+            && map_data.type != mdata_t::MapType::guild)
         {
             txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
             goto label_2229_internal;
@@ -2345,7 +2345,7 @@ TurnResult do_use_command()
         sound_play_environmental();
         goto label_2229_internal;
     case 28:
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.action.use.nuke.cannot_place_here"));
             update_screen();
@@ -2866,8 +2866,8 @@ TurnResult do_use_stairs_command(int val0)
     int stat = item_find(631, 3, -1);
     if (stat != -1)
     {
-        if (mdata_map_type == mdata_t::MapType::town
-            || mdata_map_type == mdata_t::MapType::guild)
+        if (map_data.type == mdata_t::MapType::town
+            || map_data.type == mdata_t::MapType::guild)
         {
             ci = stat;
             return step_into_gate();
@@ -2933,7 +2933,7 @@ TurnResult do_use_stairs_command(int val0)
     }
     if (movelevelbystairs == 0)
     {
-        if (mdata_map_type != mdata_t::MapType::world_map)
+        if (map_data.type != mdata_t::MapType::world_map)
         {
             if (val0 == 1)
             {
@@ -3094,7 +3094,7 @@ TurnResult do_use_stairs_command(int val0)
 
 static TurnResult _pre_proc_movement_event()
 {
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if (264 <= cell_data
                        .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
@@ -3123,7 +3123,7 @@ static TurnResult _bump_into_character()
     {
         if (cdata[tc].is_hung_on_sand_bag() == 0)
         {
-            if (mdata_map_type == mdata_t::MapType::world_map)
+            if (map_data.type == mdata_t::MapType::world_map)
             {
                 return _pre_proc_movement_event();
             }
@@ -3265,7 +3265,7 @@ TurnResult do_movement_command()
     {
         keybd_attacking = 0;
     }
-    if (mdata_map_type == mdata_t::MapType::world_map)
+    if (map_data.type == mdata_t::MapType::world_map)
     {
         if (dbg_freemove)
         {
@@ -3284,10 +3284,10 @@ TurnResult do_movement_command()
     {
         return _pre_proc_movement_event();
     }
-    if (mdata_map_type == mdata_t::MapType::shelter
+    if (map_data.type == mdata_t::MapType::shelter
         || (game_data.current_dungeon_level == 1
-            && mdata_map_type != mdata_t::MapType::world_map
-            && !mdata_t::is_nefia(mdata_map_type)))
+            && map_data.type != mdata_t::MapType::world_map
+            && !mdata_t::is_nefia(map_data.type)))
     {
         if (cdata[cc].next_position.x < 0
             || cdata[cc].next_position.x > map_data.width - 1
@@ -3295,7 +3295,7 @@ TurnResult do_movement_command()
             || cdata[cc].next_position.y > map_data.height - 1)
         {
             txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
-            if (mdata_map_type == mdata_t::MapType::temporary)
+            if (map_data.type == mdata_t::MapType::temporary)
             {
                 if (game_data.executing_immediate_quest_status != 3)
                 {
@@ -3531,7 +3531,7 @@ TurnResult do_get_command()
             refresh_burden_state();
             return TurnResult::turn_end;
         }
-        if (mdata_map_type == mdata_t::MapType::world_map && feat(1) == 15
+        if (map_data.type == mdata_t::MapType::world_map && feat(1) == 15
             && feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
@@ -3557,8 +3557,8 @@ TurnResult do_get_command()
 
     if (number == 0)
     {
-        if ((mdata_map_type == mdata_t::MapType::town
-             || mdata_map_type == mdata_t::MapType::guild)
+        if ((map_data.type == mdata_t::MapType::town
+             || map_data.type == mdata_t::MapType::guild)
             && chipm(
                    0,
                    cell_data
@@ -3668,7 +3668,7 @@ TurnResult do_short_cut_command()
     }
     if (efid >= 600)
     {
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -3690,7 +3690,7 @@ TurnResult do_short_cut_command()
     }
     if (efid >= 400)
     {
-        if (mdata_map_type == mdata_t::MapType::world_map)
+        if (map_data.type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
