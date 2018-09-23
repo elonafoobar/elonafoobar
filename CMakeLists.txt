@@ -203,6 +203,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_charamake_gender.cpp
   src/ui/ui_menu_charamake_race.cpp
   src/ui/ui_menu_chat_history.cpp
+  src/ui/ui_menu_config.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
   src/ui/ui_menu_dialog.cpp

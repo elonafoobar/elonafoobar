@@ -855,15 +855,17 @@ void Config::write()
         std::string scope = token;
         set(token);
 
-        // Skip the "config" section name.
+        // Skip the "config" section name in "core.<config>.some.option".
         assert(advance());
         assert(token == "config");
 
+        // Traverse the remaining namespaces ("some.option").
         while (advance())
         {
             set(token);
         }
 
+        // Set the value in the bottommost object ("some { option = 'value' }")
         current->set(key, value);
     }
 
