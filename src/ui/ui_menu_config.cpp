@@ -71,30 +71,34 @@ void UIMenuConfig::update()
     }
 }
 
-void UIMenuConfig::draw()
+static void _draw_window(const std::string& title, int width, int height)
 {
-    s(0) = _menu.title;
+    s(0) = title;
     s(1) = strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help");
     pagesize = 0;
     if (mode == 1)
     {
         display_window(
-            (windoww - _menu.width) / 2 + inf_screenx,
-            winposy(_menu.height, 1),
-            _menu.width,
-            _menu.height);
+            (windoww - width) / 2 + inf_screenx,
+            winposy(height, 1),
+            width,
+            height);
     }
     else
     {
         display_window(
-            (windoww - _menu.width) / 2 + inf_screenx,
-            winposy(_menu.height) - 12,
-            _menu.width,
-            _menu.height);
+            (windoww - width) / 2 + inf_screenx,
+            winposy(height) - 12,
+            width,
+            height);
     }
-    pagesize = listmax;
+}
+
+static void _draw_deco()
+{
     display_topic(
         i18n::s.get("core.locale.config.common.menu"), wx + 34, wy + 36);
+
     if (mode == 10)
     {
         p = 2;
@@ -103,12 +107,17 @@ void UIMenuConfig::draw()
     {
         p = 4;
     }
+
     x = ww / 5 * 3;
     y = wh - 80;
     pos(wx + ww / 3, wy + wh / 2);
     gmode(4, 50);
     gcopy_c(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
+}
+
+static void _draw_keys(bool is_root_menu)
+{
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -117,7 +126,7 @@ void UIMenuConfig::draw()
         {
             break;
         }
-        if (_submenu_index == 0)
+        if (is_root_menu)
         {
             key_list(cnt) = key_select(cnt);
             ++keyrange;
@@ -129,13 +138,25 @@ void UIMenuConfig::draw()
             ++keyrange;
         }
     }
+}
+
+static void _draw_arrows(int item_pos)
+{
+    pos(wx + 220, wy + 66 + item_pos * 19 - 5);
+    gcopy(3, 312, 336, 24, 24);
+    pos(wx + 358, wy + 66 + item_pos * 19 - 5);
+    gcopy(3, 336, 336, 24, 24);
+}
+
+static void _draw_items(ConfigMenu& menu, bool is_root_menu)
+{
     font(14 - en * 2);
     cs_listbk();
 
     int item_pos = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
-        auto item = _menu.items[cnt].get();
+        auto item = menu.items[cnt].get();
 
         p = pagesize * page + cnt;
         if (p >= listmax)
@@ -144,7 +165,7 @@ void UIMenuConfig::draw()
         }
         i = list(0, p);
         s = listn(0, p);
-        if (_submenu_index == 0)
+        if (is_root_menu)
         {
             x = 8;
         }
@@ -163,12 +184,9 @@ void UIMenuConfig::draw()
         //     }
         // }
         cs_list(cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1, 0);
-        if ((true || cnt <= 0) && _submenu_index != 0)
+        if ((true || cnt <= 0) && !is_root_menu)
         {
-            pos(wx + 220, wy + 66 + item_pos * 19 - 5);
-            gcopy(3, 312, 336, 24, 24);
-            pos(wx + 358, wy + 66 + item_pos * 19 - 5);
-            gcopy(3, 336, 336, 24, 24);
+            _draw_arrows(item_pos);
         }
         pos(wx + 250, wy + 66 + cnt * 19);
 
@@ -176,6 +194,17 @@ void UIMenuConfig::draw()
 
         item_pos++;
     }
+}
+
+void UIMenuConfig::draw()
+{
+    _draw_window(_menu.title, _menu.width, _menu.height);
+    _draw_deco();
+
+    pagesize = listmax;
+
+    _draw_keys(_submenu_index == 0);
+    _draw_items(_menu, _submenu_index == 0);
 
     _menu.draw();
 
