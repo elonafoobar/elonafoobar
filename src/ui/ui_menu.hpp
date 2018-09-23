@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../config.hpp"
+#include "../config/config.hpp"
 #include "../input.hpp"
 #include "../optional.hpp"
 #include "../ui.hpp"

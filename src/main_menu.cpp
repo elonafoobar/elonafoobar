@@ -1,7 +1,7 @@
 #include "main_menu.hpp"
 #include "audio.hpp"
 #include "character_making.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "ctrl_file.hpp"
 #include "i18n.hpp"
 #include "input.hpp"

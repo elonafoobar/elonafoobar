@@ -4,7 +4,7 @@
 #include <fstream>
 #include <memory>
 #include "cat.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"

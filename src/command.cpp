@@ -11,7 +11,7 @@
 #include "casino.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "db_item.hpp"

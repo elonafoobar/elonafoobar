@@ -11,7 +11,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "db_chara_chip.hpp"

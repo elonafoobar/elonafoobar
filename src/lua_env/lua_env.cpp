@@ -1,5 +1,5 @@
 #include "lua_env.hpp"
-#include "../config.hpp"
+#include "../config/config.hpp"
 
 namespace elona
 {

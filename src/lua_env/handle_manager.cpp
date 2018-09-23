@@ -2,7 +2,7 @@
 #include <cassert>
 #include <set>
 #include "../character.hpp"
-#include "../config.hpp"
+#include "../config/config.hpp"
 #include "../item.hpp"
 #include "../log.hpp"
 #include "lua_env.hpp"

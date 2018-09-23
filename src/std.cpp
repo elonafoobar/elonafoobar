@@ -12,7 +12,7 @@
 #include "snail/hsp.hpp"
 #include "snail/window.hpp"
 
-#include "config.hpp"
+#include "config/config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"

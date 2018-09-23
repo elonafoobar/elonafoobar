@@ -5,7 +5,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"

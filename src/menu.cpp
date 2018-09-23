@@ -7,7 +7,7 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "command.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "db_item.hpp"
 #include "defines.hpp"
 #include "draw.hpp"

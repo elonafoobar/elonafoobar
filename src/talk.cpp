@@ -2,7 +2,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "draw.hpp"
 #include "enums.hpp"
 #include "event.hpp"

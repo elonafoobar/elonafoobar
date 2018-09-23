@@ -4,7 +4,7 @@
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"

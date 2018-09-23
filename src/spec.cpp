@@ -1,11 +1,13 @@
+#include "spec.hpp"
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <vector>
-#include "config_def.hpp"
 #include "filesystem.hpp"
 #include "hcl.hpp"
 #include "optional.hpp"
+
+using namespace std::literals::string_literals;
 
 namespace elona
 {

@@ -1,5 +1,5 @@
 #include "audio.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "elona.hpp"

@@ -4,7 +4,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "db_item.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"

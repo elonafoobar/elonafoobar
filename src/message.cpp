@@ -3,7 +3,7 @@
 #include <sstream>
 #include "audio.hpp"
 #include "character.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"

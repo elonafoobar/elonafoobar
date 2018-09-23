@@ -6,7 +6,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "dmgheal.hpp"
 #include "enchantment.hpp"
 #include "fish.hpp"

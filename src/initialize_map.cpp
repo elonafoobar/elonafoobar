@@ -6,7 +6,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "elona.hpp"

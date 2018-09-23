@@ -1,6 +1,6 @@
 #include "testing.hpp"
 #include <sstream>
-#include "config.hpp"
+#include "config/config.hpp"
 #include "db_item.hpp"
 #include "db_music.hpp"
 #include "db_sound.hpp"

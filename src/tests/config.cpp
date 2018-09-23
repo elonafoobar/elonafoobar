@@ -1,7 +1,7 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../config.hpp"
-#include "../config_def.hpp"
+#include "../config/config.hpp"
+#include "../config/config_def.hpp"
 #include "../testing.hpp"
 #include "tests.hpp"
 

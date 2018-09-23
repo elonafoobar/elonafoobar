@@ -1,6 +1,6 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../config.hpp"
+#include "../config/config.hpp"
 #include "../enums.hpp"
 #include "../i18n.hpp"
 #include "../init.hpp"
