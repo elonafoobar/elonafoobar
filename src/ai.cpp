@@ -727,8 +727,7 @@ TurnResult ai_proc_misc_map_events()
 label_2692_internal:
     if (cc >= 16)
     {
-        if (map_data.type == mdata_t::MapType::town
-            || map_data.type == mdata_t::MapType::guild)
+        if (map_is_town_or_guild())
         {
             if (game_data.date.hour >= 22 || game_data.date.hour < 7)
             {
@@ -773,9 +772,7 @@ label_2692_internal:
                     }
                 }
             }
-            if (game_data.current_map == mdata_t::MapId::noyel
-                || game_data.current_map
-                    == mdata_t::MapId::mansion_of_younger_sister)
+            if (map_ai_makes_snowmen())
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {

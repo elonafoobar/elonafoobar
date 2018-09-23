@@ -1245,24 +1245,8 @@ TalkResult talk_prostitute_buy()
 
 TalkResult talk_caravan_master_hire()
 {
-    if (game_data.current_map == mdata_t::MapId::north_tyris_south_border)
-    {
-        p(0) = 45;
-        p(1) = 48;
-        p(2) = 0;
-    }
-    if (game_data.current_map == mdata_t::MapId::south_tyris_north_border)
-    {
-        p(0) = 43;
-        p(1) = 48;
-        p(2) = 0;
-    }
-    if (game_data.current_map == mdata_t::MapId::test_world_north_border)
-    {
-        p(0) = 43;
-        p(1) = 45;
-        p(2) = 0;
-    }
+    map_set_caravan_destinations();
+
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (p(cnt) == 0)

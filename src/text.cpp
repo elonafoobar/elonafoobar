@@ -265,21 +265,15 @@ std::string maplevel(int)
             }
         }
     }
-    if (area_data[game_data.current_map].type != mdata_t::MapType::town)
+    if (map_shows_floor_count_in_name())
     {
-        if (area_data[game_data.current_map].id == mdata_t::MapId::lesimas
-            || area_data[game_data.current_map].id
-                == mdata_t::MapId::random_dungeon
-            || area_data[game_data.current_map].id == mdata_t::MapId::quest
-            || mdata_t::is_nefia(map_data.type))
-        {
-            return ""s
-                + cnvrank(
-                       (game_data.current_dungeon_level
-                        - area_data[game_data.current_map].danger_level + 1))
-                + i18n::s.get("core.locale.map.nefia.level");
-        }
+        return ""s
+            + cnvrank(
+                   (game_data.current_dungeon_level
+                    - area_data[game_data.current_map].danger_level + 1))
+            + i18n::s.get("core.locale.map.nefia.level");
     }
+
     return "";
 }
 

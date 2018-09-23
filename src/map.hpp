@@ -208,6 +208,30 @@ extern CellData cell_data;
 extern MapData map_data;
 
 
+void map_get_trainer_skills();
+void map_set_chara_generation_filter();
 void map_reload(const std::string& map_filename);
+std::string map_get_custom_map_name(int);
+
+bool map_is_town_or_guild();
+bool map_should_reveal_fog();
+bool map_shows_floor_count_in_name();
+bool map_prevents_teleport();
+bool map_prevents_return();
+bool map_prevents_domination();
+bool map_prevents_monster_ball();
+bool map_prevents_building_shelter();
+bool map_prevents_random_events();
+void map_set_caravan_destinations();
+void map_calc_trade_goods_price();
+bool map_ai_makes_snowmen();
+bool map_can_use_bad_weather_in_study();
+int map_random_site_amount();
+
+void map_randsite(int = 0, int = 0);
+void map_proc_regen_and_update();
+void map_reload_noyel();
+
+void map_proc_special_events();
 
 } // namespace elona
