@@ -5,7 +5,7 @@
 #include "casino_card.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"

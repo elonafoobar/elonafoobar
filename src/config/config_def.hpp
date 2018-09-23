@@ -1,7 +1,7 @@
 #pragma once
-#include "defines.hpp"
-#include "hcl.hpp"
-#include "spec.hpp"
+#include "../defines.hpp"
+#include "../hcl.hpp"
+#include "../spec.hpp"
 
 #include <iostream>
 

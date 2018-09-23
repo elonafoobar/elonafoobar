@@ -1,6 +1,6 @@
 #include "area.hpp"
 #include "character.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"

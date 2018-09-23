@@ -1,7 +1,7 @@
 #include "input.hpp"
 #include "audio.hpp"
 #include "blending.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"

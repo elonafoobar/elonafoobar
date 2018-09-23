@@ -77,8 +77,6 @@ set(CORE_SOURCES
   src/character_status.cpp
   src/class.cpp
   src/command.cpp
-  src/config.cpp
-  src/config_def.cpp
   src/crafting.cpp
   src/ctrl_file.cpp
   src/ctrl_inventory.cpp
@@ -134,7 +132,6 @@ set(CORE_SOURCES
   src/random.cpp
   src/random_event.cpp
   src/set_item_info.cpp
-  src/set_option.cpp
   src/shop.cpp
   src/spec.cpp
   src/status_ailment.cpp
@@ -185,6 +182,11 @@ set(CORE_SOURCES
   src/lua_env/lua_class/lua_class_item.cpp
   src/lua_env/lua_class/lua_class_position.cpp
 
+  src/config/config.cpp
+  src/config/config_def.cpp
+  src/config/set_option.cpp
+  src/config/create_config_screen.cpp
+
   src/dialog/dialog.cpp
   src/dialog/dialog_data.cpp
   src/dialog/dialog_decoder.cpp
@@ -201,6 +203,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_charamake_gender.cpp
   src/ui/ui_menu_charamake_race.cpp
   src/ui/ui_menu_chat_history.cpp
+  src/ui/ui_menu_config.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
   src/ui/ui_menu_dialog.cpp

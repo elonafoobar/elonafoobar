@@ -4,14 +4,14 @@
 #include <functional>
 #include <stdexcept>
 #include <string>
-#include "elona.hpp"
-#include "hcl.hpp"
-#include "range.hpp"
-#include "snail/android.hpp"
-#include "snail/application.hpp"
-#include "snail/touch_input.hpp"
-#include "snail/window.hpp"
-#include "variables.hpp"
+#include "../elona.hpp"
+#include "../hcl.hpp"
+#include "../range.hpp"
+#include "../snail/android.hpp"
+#include "../snail/application.hpp"
+#include "../snail/touch_input.hpp"
+#include "../snail/window.hpp"
+#include "../variables.hpp"
 
 
 namespace
@@ -855,15 +855,17 @@ void Config::write()
         std::string scope = token;
         set(token);
 
-        // Skip the "config" section name.
+        // Skip the "config" section name in "core.<config>.some.option".
         assert(advance());
         assert(token == "config");
 
+        // Traverse the remaining namespaces ("some.option").
         while (advance())
         {
             set(token);
         }
 
+        // Set the value in the bottommost object ("some { option = 'value' }")
         current->set(key, value);
     }
 

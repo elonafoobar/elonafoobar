@@ -4,7 +4,7 @@
 #include <boost/math/special_functions/gamma.hpp>
 #include "area.hpp"
 #include "character.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "elona.hpp"
 #include "map.hpp"
 #include "snail/application.hpp"

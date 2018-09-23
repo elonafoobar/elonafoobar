@@ -1,6 +1,6 @@
 #include "network.hpp"
 #include "audio.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"

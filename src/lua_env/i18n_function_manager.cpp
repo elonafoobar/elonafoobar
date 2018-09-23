@@ -1,5 +1,5 @@
 #include "i18n_function_manager.hpp"
-#include "../config.hpp"
+#include "../config/config.hpp"
 #include "lua_env.hpp"
 
 namespace elona

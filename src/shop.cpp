@@ -2,7 +2,7 @@
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "ctrl_file.hpp"
 #include "db_item.hpp"
 #include "food.hpp"

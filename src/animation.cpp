@@ -2,7 +2,7 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
-#include "config.hpp"
+#include "config/config.hpp"
 #include "db_item.hpp"
 #include "draw.hpp"
 #include "element.hpp"

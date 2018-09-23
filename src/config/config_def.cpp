@@ -3,11 +3,11 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "defines.hpp"
-#include "filesystem.hpp"
-#include "hcl.hpp"
-#include "optional.hpp"
-#include "snail/application.hpp"
+#include "../defines.hpp"
+#include "../filesystem.hpp"
+#include "../hcl.hpp"
+#include "../optional.hpp"
+#include "../snail/application.hpp"
 
 namespace elona
 {
