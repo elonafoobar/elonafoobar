@@ -1,6 +1,6 @@
 #include "keybind.hpp"
 #include <unordered_map>
-#include "../config.hpp"
+#include "../config/config.hpp"
 #include "../enums.hpp"
 #include "../gdata.hpp"
 #include "../variables.hpp"

@@ -30,7 +30,7 @@
 #include "item.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
-#include "keybind.hpp"
+#include "keybind/keybind.hpp"
 #include "log.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"

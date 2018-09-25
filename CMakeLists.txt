@@ -112,7 +112,6 @@ set(CORE_SOURCES
   src/item_load_desc.cpp
   src/item_material.cpp
   src/itemgen.cpp
-  src/keybind.cpp
   src/lion.cpp
   src/log.cpp
   src/magic.cpp
@@ -192,6 +191,8 @@ set(CORE_SOURCES
   src/dialog/dialog_data.cpp
   src/dialog/dialog_decoder.cpp
 
+  src/keybind/keybind.cpp
+
   src/pic_loader/pic_loader.cpp
 
   src/ui/ui_menu_adventurers.cpp
@@ -215,6 +216,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_hire.cpp
   src/ui/ui_menu_item_desc.cpp
   src/ui/ui_menu_journal.cpp
+  src/ui/ui_menu_keybindings.cpp
   src/ui/ui_menu_materials.cpp
   src/ui/ui_menu_message_log.cpp
   src/ui/ui_menu_npc_tone.cpp
