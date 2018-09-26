@@ -1,6 +1,7 @@
 #include "ui_menu_keybindings.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
+#include "../keybind/keybind.hpp"
 
 namespace elona
 {
@@ -165,6 +166,94 @@ void UIMenuKeybindings::draw()
     _draw_list_entries();
 }
 
+static void _prompt_for_key()
+{
+    size_t width = 100;
+    size_t height = 100;
+    int font_size = 13 + sizefix - en * 2;
+
+    std::string line = "Please press a key.";
+    strlen_u(line) * 8 + 40;
+    height += font_size;
+
+    int x = promptx - (width / 2);
+    int y = prompty - (height / 2);
+
+    snd(26);
+
+    std::string mod_key_string = "";
+    optional<snail::Key> last_key = none;
+    snail::ModKey last_modifiers = snail::ModKey::none;
+
+    while (true)
+    {
+        gmode(6, 80);
+        window(x + 12, y + 12, width, height, true); // Shadow
+        gmode(2);
+
+        window(x + 8, y + 8, width, height, false);
+
+        font(font_size);
+        pos(x + 40, y + font_size + 36);
+        mes(line);
+
+        redraw();
+
+        await(Config::instance().wait1);
+
+        const auto& keys = snail::Input::instance().pressed_keys();
+        auto modifiers = snail::Input::instance().modifiers();
+
+        if (modifiers != last_modifiers)
+        {
+            mod_key_string = "";
+            if ((modifiers & snail::ModKey::ctrl) != snail::ModKey::none)
+            {
+                mod_key_string += "Ctrl+";
+            }
+            if ((modifiers & snail::ModKey::shift) != snail::ModKey::none)
+            {
+                mod_key_string += "Shift+";
+            }
+            if ((modifiers & snail::ModKey::alt) != snail::ModKey::none)
+            {
+                mod_key_string += "Alt+";
+            }
+            if ((modifiers & snail::ModKey::gui) != snail::ModKey::none)
+            {
+                mod_key_string += "Gui+";
+            }
+        }
+
+        last_modifiers = modifiers;
+
+        for (const auto& key : keys)
+        {
+            if (!is_modifier(key))
+            {
+                if (!keybind_can_bind_key(key))
+                {
+                    std::cerr << "Cannot bind key " << static_cast<int>(key)
+                              << std::endl;
+                }
+                else
+                {
+                    last_key = key;
+                }
+            }
+            break;
+        }
+
+        if (last_key)
+        {
+            break;
+        }
+    }
+
+    listn(0, cs) = Keybind{*last_key, modifiers}.to_string();
+    std::cerr << "Get " << listn(0, cs) << std::endl;
+}
+
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     const std::string& key)
 {
@@ -172,7 +261,7 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
 
     if (p != -1)
     {
-        snd(20);
+        _prompt_for_key();
         return none;
     }
     else if (key == key_pageup)

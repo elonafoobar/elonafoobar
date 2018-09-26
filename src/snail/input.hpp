@@ -258,7 +258,7 @@ enum class ModKey
     alt = 1 << 3
 };
 
-ENUMUTIL_DEFINE_BITWISE_OPERATORS(ModKey);
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(ModKey)
 
 inline bool is_modifier(Key k)
 {

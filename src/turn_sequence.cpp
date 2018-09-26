@@ -32,6 +32,7 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "ui.hpp"
+#include "ui/ui_menu_keybindings.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
 
@@ -1639,6 +1640,12 @@ label_2747:
                 return TurnResult::initialize_map;
             }
         }
+    }
+
+    if (getkey(snail::Key::f8))
+    {
+        ui::UIMenuKeybindings().show();
+        return TurnResult::pc_turn_user_error;
     }
 
     if (key == key_quicksave)

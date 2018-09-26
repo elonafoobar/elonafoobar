@@ -73,6 +73,13 @@ struct Action
     bool visible;
 };
 
+struct ControlConfig
+{
+    Keybind primary;
+    Keybind alternate;
+    snail::Key joystick;
+};
+
 class KeybindManager
 {
 public:
@@ -85,7 +92,7 @@ public:
     void clear_bindings_for_action(const std::string& action);
 
 private:
-    std::multimap<Keybind, std::string> keybinds;
+    std::unordered_map<std::string, Keybind> primary_;
 };
 
 class InputContext
@@ -161,6 +168,7 @@ private:
 
 void init_actions();
 InputContext make_input_context(const std::string& category);
+bool keybind_is_bindable_key(snail::Key key);
 
 
 } // namespace elona

@@ -10,7 +10,14 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
+namespace
+{
+
 std::unordered_map<std::string, Action> actions;
+
+#include "key_names.cpp"
+
+} // namespace
 
 void add_action(Action action)
 {
@@ -119,6 +126,37 @@ void init_actions()
     // clang-format on
 }
 
+
+
+std::string Keybind::to_string()
+{
+    const auto it = key_names.find(main);
+    if (it == key_names.end())
+    {
+        return "<unbindable key "s + static_cast<int>(main) + ">";
+    }
+
+    std::string mod_key_string = "";
+    if ((modifiers & snail::ModKey::ctrl) != snail::ModKey::none)
+    {
+        mod_key_string += "Ctrl+";
+    }
+    if ((modifiers & snail::ModKey::shift) != snail::ModKey::none)
+    {
+        mod_key_string += "Shift+";
+    }
+    if ((modifiers & snail::ModKey::alt) != snail::ModKey::none)
+    {
+        mod_key_string += "Alt+";
+    }
+    if ((modifiers & snail::ModKey::gui) != snail::ModKey::none)
+    {
+        mod_key_string += "Gui+";
+    }
+
+    return mod_key_string + *it;
+}
+
 bool InputContext::matches(
     const std::string& action_id,
     snail::Key key,
@@ -217,7 +255,7 @@ optional<std::string> InputContext::check_movement_action(
         }
     }
 
-    if ((modifiers & snail::ModKey::shift) == snail::ModKey::shift)
+    if ((modifiers & snail::ModKey::shift) != snail::ModKey::none)
     {
         std::cerr << "run" << std::endl;
         // Has to be modified globally, since scroll speed is determined by
@@ -236,7 +274,7 @@ optional<std::string> InputContext::check_movement_action(
     }
 
 
-    if ((modifiers & snail::ModKey::alt) != snail::ModKey::alt)
+    if ((modifiers & snail::ModKey::alt) != snail::ModKey::none)
     {
         if (input == StickKey::left)
         {
@@ -281,7 +319,8 @@ optional<std::string> InputContext::check_movement_action(
 
 bool InputContext::is_nonmovement_key(const snail::Key& k)
 {
-    return !is_modifier(k) && excluded_keys.find(k) == excluded_keys.end();
+    return keybind_is_bindable_key(k)
+        && excluded_keys.find(k) == excluded_keys.end();
 }
 
 optional<Keybind> InputContext::check_key()
@@ -343,7 +382,7 @@ std::string InputContext::delay_movement_action(
 {
     if (keybd_wait >= 100000)
     {
-        if ((modifiers & snail::ModKey::shift) != snail::ModKey::shift)
+        if ((modifiers & snail::ModKey::shift) == snail::ModKey::none)
         {
             keybd_wait = 1000;
         }
@@ -523,6 +562,11 @@ std::string InputContext::check_for_command()
 std::string InputContext::check_for_command_with_list(int& list_index)
 {
     return check_for_command();
+}
+
+bool keybind_is_bindable_key(snail::Key key)
+{
+    return key_names.find(key) != key_names.end();
 }
 
 } // namespace elona
