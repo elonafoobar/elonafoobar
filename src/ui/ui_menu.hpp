@@ -124,8 +124,8 @@ private:
 
     void _update_input()
     {
-        key_check();
-        cursor_check();
+        // key_check();
+        // cursor_check();
     }
 
     bool _reupdate = false;

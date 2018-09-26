@@ -1,8 +1,9 @@
 #include "keybind.hpp"
-#include <unordered_map>
+#include "../audio.hpp"
 #include "../config/config.hpp"
 #include "../enums.hpp"
 #include "../gdata.hpp"
+#include "../thirdparty/ordered_map/ordered_map.h"
 #include "../variables.hpp"
 
 using namespace std::literals::string_literals;
@@ -15,7 +16,7 @@ KeybindManager keybind_manager;
 namespace
 {
 
-std::unordered_map<std::string, Action> actions;
+tsl::ordered_map<std::string, Action> actions;
 
 #include "key_names.cpp"
 
@@ -56,8 +57,6 @@ void init_actions()
     add_action(Action{"shortcut_19", "shortcut", {{Key::key_9, ModKey::ctrl}, {Key::key_9, ModKey::shift}}});
     add_action(Action{"shortcut_20", "shortcut", {{Key::key_0, ModKey::ctrl}, {Key::key_0, ModKey::shift}}});
 
-    add_action(Action{"up",             "menu", {{Key::up,     ModKey::none}, {Key::keypad_8, ModKey::none}}});
-    add_action(Action{"down",           "menu", {{Key::down,   ModKey::none}, {Key::keypad_2, ModKey::none}}});
     add_action(Action{"next_page",      "menu", {{Key::left,   ModKey::none}, {Key::keypad_4, ModKey::none}, {Key::keypad_plus,  ModKey::none}}});
     add_action(Action{"previous_page",  "menu", {{Key::right,  ModKey::none}, {Key::keypad_6, ModKey::none}, {Key::keypad_minus, ModKey::none}}});
     add_action(Action{"next_menu",      "menu", {{Key::tab,    ModKey::none}}});
@@ -158,6 +157,19 @@ void init_actions()
 }
 
 
+KeybindManager::GroupedMapType KeybindManager::create_category_to_action_list()
+{
+    GroupedMapType result;
+
+    for (const auto& pair : actions)
+    {
+        const auto& action = pair.second;
+        result.emplace(action.category, action.id);
+    }
+
+    return result;
+}
+
 
 std::string Keybind::to_string() const
 {
@@ -173,19 +185,19 @@ std::string Keybind::to_string() const
     }
 
     std::string mod_key_string = "";
-    if ((modifiers & snail::ModKey::ctrl) != snail::ModKey::none)
+    if ((modifiers & snail::ModKey::ctrl) == snail::ModKey::ctrl)
     {
         mod_key_string += "Ctrl+";
     }
-    if ((modifiers & snail::ModKey::shift) != snail::ModKey::none)
+    if ((modifiers & snail::ModKey::shift) == snail::ModKey::shift)
     {
         mod_key_string += "Shift+";
     }
-    if ((modifiers & snail::ModKey::alt) != snail::ModKey::none)
+    if ((modifiers & snail::ModKey::alt) == snail::ModKey::alt)
     {
         mod_key_string += "Alt+";
     }
-    if ((modifiers & snail::ModKey::gui) != snail::ModKey::none)
+    if ((modifiers & snail::ModKey::gui) == snail::ModKey::gui)
     {
         mod_key_string += "Gui+";
     }
@@ -242,6 +254,12 @@ optional<std::string> InputContext::check_movement_action(
 
     for (const auto& key : keys)
     {
+        // TODO: is keywait still needed after input_context.reset()?
+        if (matches("escape", key, modifiers) && keywait == 0)
+        {
+            return "cancel"s;
+        }
+
         if (matches("north", key, modifiers))
         {
             input |= StickKey::up;
@@ -286,7 +304,7 @@ optional<std::string> InputContext::check_movement_action(
         }
     }
 
-    if ((modifiers & snail::ModKey::shift) != snail::ModKey::none)
+    if ((modifiers & snail::ModKey::shift) == snail::ModKey::shift)
     {
         std::cerr << "run" << std::endl;
         // Has to be modified globally, since scroll speed is determined by
@@ -304,7 +322,7 @@ optional<std::string> InputContext::check_movement_action(
     }
 
 
-    if ((modifiers & snail::ModKey::alt) != snail::ModKey::none)
+    if ((modifiers & snail::ModKey::alt) != snail::ModKey::alt)
     {
         if (input == StickKey::left)
         {
@@ -349,7 +367,7 @@ optional<std::string> InputContext::check_movement_action(
 
 bool InputContext::is_nonmovement_key(const snail::Key& k)
 {
-    return keybind_is_bindable_key(k)
+    return (keybind_is_bindable_key(k) || k == snail::Key::enter)
         && excluded_keys.find(k) == excluded_keys.end();
 }
 
@@ -408,18 +426,16 @@ void InputContext::add_action(const std::string& action)
 
 std::string InputContext::delay_movement_action(
     const std::string& action,
-    snail::ModKey modifiers)
+    snail::ModKey modifiers,
+    KeyWaitDelay delay_type)
 {
     if (keybd_wait >= 100000)
     {
-        if ((modifiers & snail::ModKey::shift) == snail::ModKey::none)
+        if ((modifiers & snail::ModKey::shift) != snail::ModKey::shift)
         {
             keybd_wait = 1000;
         }
     }
-
-    // TODO
-    KeyWaitDelay delay_type = KeyWaitDelay::walk_run;
 
     if (delay_type == KeyWaitDelay::none)
     {
@@ -448,7 +464,8 @@ std::string InputContext::delay_movement_action(
             }
             else
             {
-                std::cerr << "RUN" << std::endl;
+                std::cerr << "RUN1 " << Config::instance().startrun << " "
+                          << Config::instance().runwait << std::endl;
                 running = 1;
                 if (keybd_wait < 100000)
                 {
@@ -472,7 +489,8 @@ std::string InputContext::delay_movement_action(
         }
         else if (keybd_wait > Config::instance().startrun)
         {
-            std::cerr << "RUN" << std::endl;
+            std::cerr << "RUN2 " << Config::instance().startrun << " "
+                      << Config::instance().runwait << std::endl;
             if (Config::instance().runscroll == 0)
             {
                 if (keybd_wait % Config::instance().runwait != 0)
@@ -530,11 +548,9 @@ std::string InputContext::delay_normal_action(const std::string& action)
 
     bool delayed = _is_keypress_delayed(last_action_held_frames_, 1, 20);
 
-    if (last_action_ == action)
-    {
-        last_action_held_frames_++;
-    }
-    else
+    last_action_held_frames_++;
+
+    if (last_action_ != action)
     {
         std::cerr << "set action " << action << std::endl;
         last_action_ = action;
@@ -546,9 +562,9 @@ std::string InputContext::delay_normal_action(const std::string& action)
     }
 
     return action;
-}
+} // namespace elona
 
-std::string InputContext::check_for_command()
+std::string InputContext::check_for_command(KeyWaitDelay delay_type)
 {
     const auto& keys = snail::Input::instance().pressed_keys();
     auto modifiers = snail::Input::instance().modifiers();
@@ -558,7 +574,7 @@ std::string InputContext::check_for_command()
         last_action_ = ""s;
 
         // Movement keys have special key delay behavior, so handle them.
-        auto result = delay_movement_action(*action, modifiers);
+        auto result = delay_movement_action(*action, modifiers, delay_type);
         ++keybd_wait;
 
         return result;
@@ -591,7 +607,62 @@ std::string InputContext::check_for_command()
 
 std::string InputContext::check_for_command_with_list(int& list_index)
 {
-    return check_for_command();
+    auto command = check_for_command(KeyWaitDelay::always);
+    if (command == "north"s)
+    {
+        snd(5);
+        --cs;
+        if (cs < 0)
+        {
+            cs = keyrange - 1;
+            if (cs < 0)
+            {
+                cs = 0;
+            }
+        }
+    }
+    if (command == "south"s)
+    {
+        snd(5);
+        ++cs;
+        if (cs >= keyrange)
+        {
+            cs = 0;
+        }
+    }
+    if (command == "west"s)
+    {
+        command = "previous_page"s;
+    }
+    if (command == "east"s)
+    {
+        command = "next_page"s;
+    }
+    if (cs >= keyrange)
+    {
+        cs_bk = -1;
+        cs = keyrange - 1;
+        if (cs < 0)
+        {
+            cs = 0;
+        }
+    }
+    if (command == "enter"s)
+    {
+        list_index = cs;
+    }
+    else
+    {
+        list_index = -1;
+    }
+    return command;
+}
+
+void InputContext::reset()
+{
+    snail::Input::instance().clear_pressed_keys();
+    last_action_held_frames_ = 0;
+    last_action_ = ""s;
 }
 
 bool keybind_is_joystick_key(snail::Key key)

@@ -12,15 +12,30 @@ static void _load_keybindings()
 {
     listmax = 0;
 
-    for (const auto& pair : keybind_manager)
+    const auto grouped_keybinds =
+        keybind_manager.create_category_to_action_list();
+
+    decltype(grouped_keybinds.equal_range("")) range;
+
+    for (auto it = grouped_keybinds.begin(); it != grouped_keybinds.end();
+         it = range.second)
     {
-        const auto& action_id = pair.first;
-        const auto& keybind_config = pair.second;
-        list(0, listmax) = 999; // i % 7 == 0 ? -1 : 999;
-        listn(0, listmax) = action_id;
-        listn(1, listmax) = keybind_config.primary.to_string();
-        listn(2, listmax) = keybind_config.alternate.to_string();
+        range = grouped_keybinds.equal_range(it->first);
+
+        list(0, listmax) = -1;
+        listn(0, listmax) = u8"◆ "s + range.first->first;
         listmax++;
+
+        for (auto pair = range.first; pair != range.second; ++pair)
+        {
+            const auto& action_id = pair->second;
+            const auto& keybind_config = keybind_manager.binding(pair->second);
+            list(0, listmax) = 999; // i % 7 == 0 ? -1 : 999;
+            listn(0, listmax) = action_id;
+            listn(1, listmax) = keybind_config.primary.to_string();
+            listn(2, listmax) = keybind_config.alternate.to_string();
+            listmax++;
+        }
     }
 }
 
@@ -42,6 +57,10 @@ bool UIMenuKeybindings::init()
     _load_keybindings();
 
     windowshadow = 1;
+
+    input_context.add_actions_from_category("default");
+    input_context.add_actions_from_category("movement");
+    input_context.add_actions_from_category("menu");
 
     return true;
 }
@@ -226,9 +245,10 @@ static void _prompt_for_key()
     int font_size = 13 + sizefix - en * 2;
     bool finished = false;
 
-    std::string line = "Please press a key.";
+    std::string line =
+        "Please press a key.\nEnter to unbind, Escape to cancel.";
     width = strlen_u(line) * 8 + 40;
-    height += font_size;
+    height += font_size * 2;
 
     int x = promptx - (width / 2);
     int y = prompty - (height / 2);
@@ -288,27 +308,30 @@ static void _prompt_for_key()
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     const std::string& key)
 {
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
+    auto command = input_context.check_for_command_with_list(p(0));
 
-    if (p != -1)
+    // ELONA_GET_SELECTED_ITEM(p, cs = i);
+
+    if (p != -1 && list(0, p) >= 0)
     {
         _prompt_for_key();
+        input_context.reset();
         set_reupdate();
         return none;
     }
-    else if (key == key_pageup)
+    else if (command == "next_page"s)
     {
         ++page;
         snd(1);
         set_reupdate();
     }
-    else if (key == key_pagedown)
+    else if (command == "previous_page"s)
     {
         --page;
         snd(1);
         set_reupdate();
     }
-    if (key == key_cancel)
+    if (command == "cancel"s)
     {
         return UIMenuKeybindings::Result::finish();
     }

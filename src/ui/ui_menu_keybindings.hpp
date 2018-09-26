@@ -1,4 +1,5 @@
 #pragma once
+#include "../keybind/keybind.hpp"
 #include "ui_menu.hpp"
 
 namespace elona
@@ -19,6 +20,9 @@ protected:
     virtual void draw();
     virtual optional<UIMenuKeybindings::ResultType> on_key(
         const std::string& key);
+
+private:
+    InputContext input_context;
 };
 
 } // namespace ui

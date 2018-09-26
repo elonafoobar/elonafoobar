@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include "../enums.hpp"
 #include "../optional.hpp"
 #include "../snail/input.hpp"
 
@@ -33,6 +34,10 @@ namespace elona
 // - main game input
 // - ui menu
 // - input with number
+
+
+// TODO
+
 
 struct Keybind
 {
@@ -105,6 +110,7 @@ class KeybindManager
 {
 public:
     using MapType = std::unordered_map<std::string, KeybindConfig>;
+    using GroupedMapType = std::multimap<std::string, std::string>;
     using iterator = MapType::iterator;
     using const_iterator = MapType::const_iterator;
 
@@ -117,6 +123,8 @@ public:
     {
         return std::end(keybind_configs_);
     }
+
+    GroupedMapType create_category_to_action_list();
 
     KeybindConfig& binding(const std::string& action_id)
     {
@@ -155,9 +163,12 @@ public:
      * Queries and sets input by translating raw input into a game action
      * through a keybinding.
      *
+     * @param delay_type Type of delay to use when holding keys.
+     *
      * @return An action if one could be mapped from input, none otherwise.
      */
-    std::string check_for_command();
+    std::string check_for_command(
+        KeyWaitDelay delay_type = KeyWaitDelay::always);
 
     /**
      * Queries and translates input into an action, or sets list_index to a
@@ -169,6 +180,12 @@ public:
      * @return An action if one could be mapped from input, none otherwise.
      */
     std::string check_for_command_with_list(int& list_index);
+
+    /**
+     * Resets this context and the pressed input keys so keys that are held at
+     * this point will no longer be counted as pressed.
+     */
+    void reset();
 
 private:
     bool matches(
@@ -189,7 +206,8 @@ private:
 
     std::string delay_movement_action(
         const std::string& action,
-        snail::ModKey modifiers);
+        snail::ModKey modifiers,
+        KeyWaitDelay delay_type);
 
     std::string delay_normal_action(const std::string& action);
 
