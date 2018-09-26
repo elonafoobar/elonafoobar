@@ -216,7 +216,7 @@ void map_get_trainer_skills()
     }
     if (game_data.current_map == mdata_t::MapId::vernis)
     {
-        _trainer_skills_yowyn(dbmax);
+        _trainer_skills_vernis(dbmax);
     }
     if (game_data.current_map == mdata_t::MapId::palmia)
     {
