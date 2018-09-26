@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 #include "../optional.hpp"
@@ -35,14 +36,18 @@ namespace elona
 
 struct Keybind
 {
+    Keybind()
+        : main(snail::Key::none)
+        , modifiers(snail::ModKey::none)
+    {
+    }
+
     Keybind(snail::Key main, snail::ModKey modifiers)
         : main(main)
         , modifiers(modifiers)
     {
     }
 
-    // TODO: need serialization of keys to string
-    // <up>, <down>, <joy-1>, <joy-x-up>...
     snail::Key main;
     snail::ModKey modifiers;
 
@@ -50,6 +55,13 @@ struct Keybind
     {
         return main == other.main && modifiers == other.modifiers;
     }
+
+    bool empty() const
+    {
+        return main == snail::Key::none;
+    }
+
+    std::string to_string() const;
 };
 
 struct Action
@@ -73,26 +85,51 @@ struct Action
     bool visible;
 };
 
-struct ControlConfig
+struct KeybindConfig
 {
-    Keybind primary;
-    Keybind alternate;
-    snail::Key joystick;
+    Keybind primary{};
+    Keybind alternate{};
+    snail::Key joystick = snail::Key::none;
+
+    // This keybind should never be able to be unset.
+    Keybind permanent{};
+
+    bool matches(const Keybind& keybind) const
+    {
+        return primary == keybind || alternate == keybind
+            || joystick == keybind.main || permanent == keybind;
+    }
 };
 
 class KeybindManager
 {
 public:
-    optional<std::string> action_to_key(const std::string& action);
-    optional<std::string> key_to_action(const std::string& key);
-    optional<std::string> key_to_action(const Keybind& binding);
+    using MapType = std::unordered_map<std::string, KeybindConfig>;
+    using iterator = MapType::iterator;
+    using const_iterator = MapType::const_iterator;
 
-    void unbind(const Keybind& binding);
-    void bind(const Keybind& binding, const std::string& action);
-    void clear_bindings_for_action(const std::string& action);
+    const_iterator begin() const
+    {
+        return std::begin(keybind_configs_);
+    }
+
+    const_iterator end() const
+    {
+        return std::end(keybind_configs_);
+    }
+
+    KeybindConfig& binding(const std::string& action_id)
+    {
+        if (keybind_configs_.find(action_id) == keybind_configs_.end())
+        {
+            keybind_configs_[action_id] = KeybindConfig{};
+        }
+
+        return keybind_configs_.at(action_id);
+    }
 
 private:
-    std::unordered_map<std::string, Keybind> primary_;
+    MapType keybind_configs_;
 };
 
 class InputContext
@@ -156,10 +193,11 @@ private:
 
     std::string delay_normal_action(const std::string& action);
 
-    std::unordered_set<std::string> available_actions;
+    std::set<std::string> available_actions;
 
     // Keys which shouldn't be returned in get_key() because they have special
-    // key delay rules.
+    // key delay rules. It can differ depending on the current keybinding setup
+    // because movement keys can be rebound.
     std::unordered_set<snail::Key> excluded_keys;
 
     std::string last_action_;
@@ -169,6 +207,9 @@ private:
 void init_actions();
 InputContext make_input_context(const std::string& category);
 bool keybind_is_bindable_key(snail::Key key);
+bool keybind_is_joystick_key(snail::Key key);
+
+extern KeybindManager keybind_manager;
 
 
 } // namespace elona

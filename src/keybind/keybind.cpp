@@ -10,6 +10,8 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
+KeybindManager keybind_manager;
+
 namespace
 {
 
@@ -124,12 +126,46 @@ void init_actions()
     add_action(Action{"wizard_advance_time", "wizard", {{Key::f6,               ModKey::none}}});
     add_action(Action{"wizard_delete_map",   "wizard", {{Key::f7,               ModKey::none}}});
     // clang-format on
+
+    for (const auto& pair : actions)
+    {
+        const auto& action = pair.second;
+        for (const auto& keybind : action.default_keybinds)
+        {
+            auto& binding = keybind_manager.binding(action.id);
+            if (keybind_is_bindable_key(keybind.main))
+            {
+                if (binding.primary.empty())
+                {
+                    binding.primary = keybind;
+                }
+                else if (binding.alternate.empty())
+                {
+                    binding.alternate = keybind;
+                }
+                else
+                {
+                    assert(false);
+                }
+            }
+            else
+            {
+                std::cerr << "Permanent: " << keybind.to_string() << std::endl;
+                binding.permanent = keybind;
+            }
+        }
+    }
 }
 
 
 
-std::string Keybind::to_string()
+std::string Keybind::to_string() const
 {
+    if (empty())
+    {
+        return "";
+    }
+
     const auto it = key_names.find(main);
     if (it == key_names.end())
     {
@@ -154,7 +190,7 @@ std::string Keybind::to_string()
         mod_key_string += "Gui+";
     }
 
-    return mod_key_string + *it;
+    return mod_key_string + it->second;
 }
 
 bool InputContext::matches(
@@ -183,20 +219,15 @@ bool InputContext::matches(
 
 optional<std::string> InputContext::action_for_key(const Keybind& keybind)
 {
-    // TODO: add multimap<Keybind, action_id>
-    const auto it =
-        std::find_if(actions.begin(), actions.end(), [&keybind](const auto& a) {
-            for (const auto& k : a.second.default_keybinds)
-            {
-                if (k == keybind)
-                    return true;
-            }
-            return false;
-        });
-
-    if (it != actions.end())
+    // The set is sorted by insertion order, so entries from categories inserted
+    // earlier will receive priority.
+    for (const auto& action_id : available_actions)
     {
-        return it->second.id;
+        const auto& binding = keybind_manager.binding(action_id);
+        if (binding.matches(keybind))
+        {
+            return action_id;
+        }
     }
 
     return none;
@@ -264,8 +295,7 @@ optional<std::string> InputContext::check_movement_action(
         if (keywait == 0)
         {
             keywait = 1;
-            // if (const auto action = action_for(snail::Key::shift, modifiers))
-            // { return *action; }
+            return "cancel"s;
         }
     }
     else
@@ -562,6 +592,11 @@ std::string InputContext::check_for_command()
 std::string InputContext::check_for_command_with_list(int& list_index)
 {
     return check_for_command();
+}
+
+bool keybind_is_joystick_key(snail::Key key)
+{
+    return false;
 }
 
 bool keybind_is_bindable_key(snail::Key key)

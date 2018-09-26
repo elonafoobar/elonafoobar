@@ -8,11 +8,26 @@ namespace elona
 namespace ui
 {
 
+static void _load_keybindings()
+{
+    listmax = 0;
+
+    for (const auto& pair : keybind_manager)
+    {
+        const auto& action_id = pair.first;
+        const auto& keybind_config = pair.second;
+        list(0, listmax) = 999; // i % 7 == 0 ? -1 : 999;
+        listn(0, listmax) = action_id;
+        listn(1, listmax) = keybind_config.primary.to_string();
+        listn(2, listmax) = keybind_config.alternate.to_string();
+        listmax++;
+    }
+}
+
 bool UIMenuKeybindings::init()
 {
     page = 0;
     pagesize = 15;
-    listmax = 0;
     cs = 0;
 
     wx = (windoww - 700) / 2 + inf_screenx;
@@ -24,12 +39,7 @@ bool UIMenuKeybindings::init()
     picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
     gsel(0);
 
-    for (int i = 0; i < 100; i++)
-    {
-        list(0, listmax) = i % 7 == 0 ? -1 : 999;
-        listn(0, listmax) = "dood";
-        listmax++;
-    }
+    _load_keybindings();
 
     windowshadow = 1;
 
@@ -114,6 +124,12 @@ static void _draw_keys()
 static void _draw_keybind_entry(int cnt, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + 56 + x, wy + 66 + cnt * 19 - 1);
+
+    pos(wx + 192, wy + 66 + cnt * 19 + 2);
+    mes(listn(1, pagesize * page + cnt));
+
+    pos(wx + 330, wy + 66 + cnt * 19 + 2);
+    mes(listn(2, pagesize * page + cnt));
 }
 
 static void _draw_text_entry(int cnt, const std::string& text)
@@ -166,14 +182,52 @@ void UIMenuKeybindings::draw()
     _draw_list_entries();
 }
 
+static void
+_bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
+{
+    auto& binding = keybind_manager.binding(action_id);
+    std::cerr << "bef '" << binding.primary.to_string() << " '"
+              << binding.alternate.to_string() << std::endl;
+
+    if (keybind_is_joystick_key(key))
+    {
+        // Joystick buttons will not use modifier keys.
+        binding.joystick = key;
+    }
+    else if (binding.primary.empty())
+    {
+        binding.primary = Keybind{key, modifiers};
+        std::cerr << "set first primary " << binding.primary.to_string()
+                  << std::endl;
+    }
+    else if (binding.alternate.empty())
+    {
+        binding.alternate = Keybind{key, modifiers};
+        std::cerr << "set first alternate " << binding.alternate.to_string()
+                  << std::endl;
+    }
+    else
+    {
+        // Clear the secondary keybinding first.
+        binding.alternate = Keybind{snail::Key::none, snail::ModKey::none};
+        binding.primary = Keybind{key, modifiers};
+        std::cerr << "set second '" << binding.primary.to_string() << " '"
+                  << binding.alternate.to_string() << std::endl;
+    }
+
+    listn(1, pagesize * page + cs) = binding.primary.to_string();
+    listn(2, pagesize * page + cs) = binding.alternate.to_string();
+}
+
 static void _prompt_for_key()
 {
     size_t width = 100;
     size_t height = 100;
     int font_size = 13 + sizefix - en * 2;
+    bool finished = false;
 
     std::string line = "Please press a key.";
-    strlen_u(line) * 8 + 40;
+    width = strlen_u(line) * 8 + 40;
     height += font_size;
 
     int x = promptx - (width / 2);
@@ -181,11 +235,12 @@ static void _prompt_for_key()
 
     snd(26);
 
-    std::string mod_key_string = "";
     optional<snail::Key> last_key = none;
     snail::ModKey last_modifiers = snail::ModKey::none;
 
-    while (true)
+    snail::Input::instance().clear_pressed_keys();
+
+    while (!finished)
     {
         gmode(6, 80);
         window(x + 12, y + 12, width, height, true); // Shadow
@@ -204,54 +259,30 @@ static void _prompt_for_key()
         const auto& keys = snail::Input::instance().pressed_keys();
         auto modifiers = snail::Input::instance().modifiers();
 
-        if (modifiers != last_modifiers)
-        {
-            mod_key_string = "";
-            if ((modifiers & snail::ModKey::ctrl) != snail::ModKey::none)
-            {
-                mod_key_string += "Ctrl+";
-            }
-            if ((modifiers & snail::ModKey::shift) != snail::ModKey::none)
-            {
-                mod_key_string += "Shift+";
-            }
-            if ((modifiers & snail::ModKey::alt) != snail::ModKey::none)
-            {
-                mod_key_string += "Alt+";
-            }
-            if ((modifiers & snail::ModKey::gui) != snail::ModKey::none)
-            {
-                mod_key_string += "Gui+";
-            }
-        }
-
         last_modifiers = modifiers;
 
         for (const auto& key : keys)
         {
+            if (key == snail::Key::escape)
+            {
+                finished = true;
+            }
             if (!is_modifier(key))
             {
-                if (!keybind_can_bind_key(key))
-                {
-                    std::cerr << "Cannot bind key " << static_cast<int>(key)
-                              << std::endl;
-                }
-                else
+                if (keybind_is_bindable_key(key))
                 {
                     last_key = key;
+                    finished = true;
                 }
             }
-            break;
-        }
-
-        if (last_key)
-        {
-            break;
         }
     }
 
-    listn(0, cs) = Keybind{*last_key, modifiers}.to_string();
-    std::cerr << "Get " << listn(0, cs) << std::endl;
+    if (last_key)
+    {
+        _bind_key(listn(0, pagesize * page + cs), *last_key, last_modifiers);
+        std::cerr << "Get " << listn(0, pagesize * page + cs) << std::endl;
+    }
 }
 
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
@@ -262,6 +293,7 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     if (p != -1)
     {
         _prompt_for_key();
+        set_reupdate();
         return none;
     }
     else if (key == key_pageup)

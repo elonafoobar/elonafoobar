@@ -387,6 +387,19 @@ public:
         return ret;
     }
 
+    /**
+     * Reset the list of pressed keys.
+     *
+     * Used for preventing unwanted keypresses when entering new menus if a key
+     * is still held when the new menu is opened.
+     */
+
+    void clear_pressed_keys()
+    {
+        _pressed_key_identifiers.clear();
+        _modifiers = ModKey::none;
+    }
+
 
     void set_quick_action_repeat_start_wait(int wait) noexcept
     {
