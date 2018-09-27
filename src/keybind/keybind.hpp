@@ -8,6 +8,8 @@
 #include "../optional.hpp"
 #include "../snail/input.hpp"
 
+using namespace std::literals::string_literals;
+
 namespace elona
 {
 
@@ -34,9 +36,6 @@ namespace elona
 // - main game input
 // - ui menu
 // - input with number
-
-
-// TODO
 
 
 struct Keybind
@@ -126,11 +125,17 @@ public:
 
     GroupedMapType create_category_to_action_list();
 
+    void register_binding(const std::string& action_id)
+    {
+        keybind_configs_[action_id] = KeybindConfig{};
+    }
+
     KeybindConfig& binding(const std::string& action_id)
     {
         if (keybind_configs_.find(action_id) == keybind_configs_.end())
         {
-            keybind_configs_[action_id] = KeybindConfig{};
+            throw std::runtime_error(
+                "Binding for action "s + action_id + " not registered"s);
         }
 
         return keybind_configs_.at(action_id);
@@ -226,6 +231,18 @@ void init_actions();
 InputContext make_input_context(const std::string& category);
 bool keybind_is_bindable_key(snail::Key key);
 bool keybind_is_joystick_key(snail::Key key);
+bool keybind_action_has_category(
+    const std::string& action_id,
+    const std::string& category);
+
+/**
+ * For selection and shortcut actions, returns the integer index of the
+ * selection item/shortcut.
+ *
+ * Never to be used for other actions, since it assumes the action ID has the
+ * format <prefix>_<number>.
+ */
+int keybind_id_number(const std::string& action_id);
 
 extern KeybindManager keybind_manager;
 

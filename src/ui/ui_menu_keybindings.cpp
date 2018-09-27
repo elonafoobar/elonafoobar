@@ -60,6 +60,7 @@ bool UIMenuKeybindings::init()
 
     input_context.add_actions_from_category("default");
     input_context.add_actions_from_category("movement");
+    input_context.add_actions_from_category("selection");
     input_context.add_actions_from_category("menu");
 
     return true;
@@ -142,7 +143,7 @@ static void _draw_keys()
 
 static void _draw_keybind_entry(int cnt, const std::string& text)
 {
-    cs_list(cs == cnt, text, wx + 56 + x, wy + 66 + cnt * 19 - 1);
+    cs_list(cs == cnt, text, wx + 56, wy + 66 + cnt * 19 - 1);
 
     pos(wx + 192, wy + 66 + cnt * 19 + 2);
     mes(listn(1, pagesize * page + cnt));
@@ -183,8 +184,6 @@ static void _draw_list_entries()
             break;
         }
 
-        x = 0;
-
         int list_item = list(0, index);
         const std::string& text = listn(0, index);
 
@@ -205,8 +204,6 @@ static void
 _bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
 {
     auto& binding = keybind_manager.binding(action_id);
-    std::cerr << "bef '" << binding.primary.to_string() << " '"
-              << binding.alternate.to_string() << std::endl;
 
     if (keybind_is_joystick_key(key))
     {
@@ -216,23 +213,29 @@ _bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
     else if (binding.primary.empty())
     {
         binding.primary = Keybind{key, modifiers};
-        std::cerr << "set first primary " << binding.primary.to_string()
-                  << std::endl;
     }
     else if (binding.alternate.empty())
     {
         binding.alternate = Keybind{key, modifiers};
-        std::cerr << "set first alternate " << binding.alternate.to_string()
-                  << std::endl;
     }
     else
     {
         // Clear the secondary keybinding first.
         binding.alternate = Keybind{snail::Key::none, snail::ModKey::none};
         binding.primary = Keybind{key, modifiers};
-        std::cerr << "set second '" << binding.primary.to_string() << " '"
-                  << binding.alternate.to_string() << std::endl;
     }
+
+    listn(1, pagesize * page + cs) = binding.primary.to_string();
+    listn(2, pagesize * page + cs) = binding.alternate.to_string();
+}
+
+static void _unbind_key(const std::string& action_id)
+{
+    auto& binding = keybind_manager.binding(action_id);
+
+    binding.primary = Keybind{snail::Key::none, snail::ModKey::none};
+    binding.alternate = Keybind{snail::Key::none, snail::ModKey::none};
+    binding.joystick = snail::Key::none;
 
     listn(1, pagesize * page + cs) = binding.primary.to_string();
     listn(2, pagesize * page + cs) = binding.alternate.to_string();
@@ -255,6 +258,7 @@ static void _prompt_for_key()
 
     snd(26);
 
+    const std::string& action_id = listn(0, pagesize * page + cs);
     optional<snail::Key> last_key = none;
     snail::ModKey last_modifiers = snail::ModKey::none;
 
@@ -287,21 +291,20 @@ static void _prompt_for_key()
             {
                 finished = true;
             }
+            if (key == snail::Key::enter)
+            {
+                _unbind_key(action_id);
+                finished = true;
+            }
             if (!is_modifier(key))
             {
                 if (keybind_is_bindable_key(key))
                 {
-                    last_key = key;
+                    _bind_key(action_id, key, last_modifiers);
                     finished = true;
                 }
             }
         }
-    }
-
-    if (last_key)
-    {
-        _bind_key(listn(0, pagesize * page + cs), *last_key, last_modifiers);
-        std::cerr << "Get " << listn(0, pagesize * page + cs) << std::endl;
     }
 }
 
@@ -310,10 +313,9 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
 {
     auto command = input_context.check_for_command_with_list(p(0));
 
-    // ELONA_GET_SELECTED_ITEM(p, cs = i);
-
     if (p != -1 && list(0, p) >= 0)
     {
+        cs = p;
         _prompt_for_key();
         input_context.reset();
         set_reupdate();

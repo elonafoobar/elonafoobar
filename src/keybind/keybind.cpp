@@ -31,10 +31,37 @@ void init_actions()
 {
     using namespace snail;
 
+    // TODO
+    // categories.
+    // popup:              [default, selection]
+    // menu:               [default, selection, menu]
+    // menu_with_shortcut: [default, selection, menu, shortcut]
+    // game:               [default, shortcut, game, (wizard)]
+    //
+    // [game, wizard] and [selection, menu] are mutually exclusive. Every other
+    // group can conflict with one another.
+    //
+    // The only exception seems to be do_look_command(), where key_target is
+    // used in conjunction with actions from the menu category. So if "target"
+    // conflicts with an action in "menu", it wouldn't be detected as a
+    // conflict.
+    //
+    // Some of the keybindings have different functions depending on whether or
+    // not wizard mode is enabled, so the input context would have to be
+    // recreated if the wizard mode status changes.
+
     // clang-format off
     add_action(Action{"escape",     "default", {{Key::escape, ModKey::none}}});
     add_action(Action{"cancel",     "default", {{Key::shift,  ModKey::none}}});
-    add_action(Action{"enter",      "default", {{Key::enter,  ModKey::none}}});
+    add_action(Action{"enter",      "default", {{Key::enter,  ModKey::none}, {Key::keypad_enter, ModKey::none}}});
+    add_action(Action{"north",      "default", {{Key::up,        ModKey::none}, {Key::keypad_8, ModKey::none}}});
+    add_action(Action{"south",      "default", {{Key::down,      ModKey::none}, {Key::keypad_2, ModKey::none}}});
+    add_action(Action{"east",       "default", {{Key::left,      ModKey::none}, {Key::keypad_4, ModKey::none}}});
+    add_action(Action{"west",       "default", {{Key::right,     ModKey::none}, {Key::keypad_6, ModKey::none}}});
+    add_action(Action{"northwest",  "default", {{Key::pageup,    ModKey::none}, {Key::keypad_7, ModKey::none}}});
+    add_action(Action{"northeast",  "default", {{Key::home,      ModKey::none}, {Key::keypad_9, ModKey::none}}});
+    add_action(Action{"southwest",  "default", {{Key::pagedown,  ModKey::none}, {Key::keypad_1, ModKey::none}}});
+    add_action(Action{"southeast",  "default", {{Key::end,       ModKey::none}, {Key::keypad_3, ModKey::none}}});
 
     add_action(Action{"shortcut_1",  "shortcut", {{Key::key_1, ModKey::none}}});
     add_action(Action{"shortcut_2",  "shortcut", {{Key::key_2, ModKey::none}}});
@@ -57,21 +84,32 @@ void init_actions()
     add_action(Action{"shortcut_19", "shortcut", {{Key::key_9, ModKey::ctrl}, {Key::key_9, ModKey::shift}}});
     add_action(Action{"shortcut_20", "shortcut", {{Key::key_0, ModKey::ctrl}, {Key::key_0, ModKey::shift}}});
 
-    add_action(Action{"next_page",      "menu", {{Key::left,   ModKey::none}, {Key::keypad_4, ModKey::none}, {Key::keypad_plus,  ModKey::none}}});
-    add_action(Action{"previous_page",  "menu", {{Key::right,  ModKey::none}, {Key::keypad_6, ModKey::none}, {Key::keypad_minus, ModKey::none}}});
+    add_action(Action{"select_1",  "selection", {{Key::key_a, ModKey::none}}});
+    add_action(Action{"select_2",  "selection", {{Key::key_b, ModKey::none}}});
+    add_action(Action{"select_3",  "selection", {{Key::key_c, ModKey::none}}});
+    add_action(Action{"select_4",  "selection", {{Key::key_d, ModKey::none}}});
+    add_action(Action{"select_5",  "selection", {{Key::key_e, ModKey::none}}});
+    add_action(Action{"select_6",  "selection", {{Key::key_f, ModKey::none}}});
+    add_action(Action{"select_7",  "selection", {{Key::key_g, ModKey::none}}});
+    add_action(Action{"select_8",  "selection", {{Key::key_h, ModKey::none}}});
+    add_action(Action{"select_9",  "selection", {{Key::key_i, ModKey::none}}});
+    add_action(Action{"select_10", "selection", {{Key::key_j, ModKey::none}}});
+    add_action(Action{"select_11", "selection", {{Key::key_k, ModKey::none}}});
+    add_action(Action{"select_12", "selection", {{Key::key_l, ModKey::none}}});
+    add_action(Action{"select_13", "selection", {{Key::key_m, ModKey::none}}});
+    add_action(Action{"select_14", "selection", {{Key::key_n, ModKey::none}}});
+    add_action(Action{"select_15", "selection", {{Key::key_o, ModKey::none}}});
+    add_action(Action{"select_16", "selection", {{Key::key_p, ModKey::none}}});
+    add_action(Action{"select_17", "selection", {{Key::key_q, ModKey::none}}});
+    add_action(Action{"select_18", "selection", {{Key::key_r, ModKey::none}}});
+    add_action(Action{"select_19", "selection", {{Key::key_s, ModKey::none}}});
+
+    add_action(Action{"next_page",      "menu", {{Key::keypad_plus,  ModKey::none}}});
+    add_action(Action{"previous_page",  "menu", {{Key::keypad_minus, ModKey::none}}});
     add_action(Action{"next_menu",      "menu", {{Key::tab,    ModKey::none}}});
     add_action(Action{"previous_menu",  "menu", {{Key::tab,    ModKey::ctrl}}});
     add_action(Action{"switch_mode",    "menu", {{Key::key_z,      ModKey::none}}});
     add_action(Action{"switch_mode_2",  "menu", {{Key::key_x,      ModKey::none}}});
-
-    add_action(Action{"north",      "movement", {{Key::up,        ModKey::none}, {Key::keypad_8, ModKey::none}}});
-    add_action(Action{"south",      "movement", {{Key::down,      ModKey::none}, {Key::keypad_2, ModKey::none}}});
-    add_action(Action{"east",       "movement", {{Key::left,      ModKey::none}, {Key::keypad_4, ModKey::none}}});
-    add_action(Action{"west",       "movement", {{Key::right,     ModKey::none}, {Key::keypad_6, ModKey::none}}});
-    add_action(Action{"northwest",  "movement", {{Key::pageup,    ModKey::none}, {Key::keypad_7, ModKey::none}}});
-    add_action(Action{"northeast",  "movement", {{Key::home,      ModKey::none}, {Key::keypad_9, ModKey::none}}});
-    add_action(Action{"southwest",  "movement", {{Key::pagedown,  ModKey::none}, {Key::keypad_1, ModKey::none}}});
-    add_action(Action{"southeast",  "movement", {{Key::end,       ModKey::none}, {Key::keypad_3, ModKey::none}}});
 
     add_action(Action{"wait",             "game", {{Key::period,           ModKey::none}, {Key::keypad_5, ModKey::none}}});
     add_action(Action{"quick_menu",       "game", {{Key::key_z,                ModKey::none}}});
@@ -129,9 +167,11 @@ void init_actions()
     for (const auto& pair : actions)
     {
         const auto& action = pair.second;
+
+        keybind_manager.register_binding(action.id);
+        auto& binding = keybind_manager.binding(action.id);
         for (const auto& keybind : action.default_keybinds)
         {
-            auto& binding = keybind_manager.binding(action.id);
             if (keybind_is_bindable_key(keybind.main))
             {
                 if (binding.primary.empty())
@@ -396,7 +436,6 @@ InputContext make_input_context(const std::string& category)
 {
     InputContext result;
     result.add_actions_from_category("default");
-    result.add_actions_from_category("movement");
     if (game_data.wizard)
     {
         result.add_actions_from_category("wizard");
@@ -651,6 +690,10 @@ std::string InputContext::check_for_command_with_list(int& list_index)
     {
         list_index = cs;
     }
+    else if (keybind_action_has_category(command, "selection"s))
+    {
+        list_index = keybind_id_number(command);
+    }
     else
     {
         list_index = -1;
@@ -673,6 +716,34 @@ bool keybind_is_joystick_key(snail::Key key)
 bool keybind_is_bindable_key(snail::Key key)
 {
     return key_names.find(key) != key_names.end();
+}
+
+bool keybind_action_has_category(
+    const std::string& action_id,
+    const std::string& category)
+{
+    if (action_id == ""s)
+    {
+        return false;
+    }
+
+    return actions.at(action_id).category == category;
+}
+
+int keybind_id_number(const std::string& action_id)
+{
+    auto underscore_pos = action_id.find("_");
+    assert(underscore_pos != std::string::npos);
+
+    auto index_string = action_id.substr(underscore_pos + 1);
+
+    // Assumption is the ID will be at least 1.
+    // elona::stoi returns 0 on failure.
+    int result = elona::stoi(index_string);
+    assert(result >= 1);
+
+    // Adjust the result to be 0-indexed.
+    return result - 1;
 }
 
 } // namespace elona
