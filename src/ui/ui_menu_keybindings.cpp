@@ -8,6 +8,19 @@ namespace elona
 namespace ui
 {
 
+static std::string _action_category_to_name(ActionCategory category)
+{
+    switch (category)
+    {
+    case ActionCategory::default_: return "Default";
+    case ActionCategory::shortcut: return "Shortcut";
+    case ActionCategory::selection: return "Selection";
+    case ActionCategory::menu: return "Menu";
+    case ActionCategory::game: return "Game";
+    case ActionCategory::wizard: return "Wizard";
+    }
+}
+
 static void _load_keybindings()
 {
     listmax = 0;
@@ -15,7 +28,7 @@ static void _load_keybindings()
     const auto grouped_keybinds =
         keybind_manager.create_category_to_action_list();
 
-    decltype(grouped_keybinds.equal_range("")) range;
+    decltype(grouped_keybinds.equal_range(ActionCategory::default_)) range;
 
     for (auto it = grouped_keybinds.begin(); it != grouped_keybinds.end();
          it = range.second)
@@ -23,7 +36,8 @@ static void _load_keybindings()
         range = grouped_keybinds.equal_range(it->first);
 
         list(0, listmax) = -1;
-        listn(0, listmax) = u8"◆ "s + range.first->first;
+        listn(0, listmax) =
+            u8"◆ "s + _action_category_to_name(range.first->first);
         listmax++;
 
         for (auto pair = range.first; pair != range.second; ++pair)
@@ -58,10 +72,9 @@ bool UIMenuKeybindings::init()
 
     windowshadow = 1;
 
-    input_context.add_actions_from_category("default");
-    input_context.add_actions_from_category("movement");
-    input_context.add_actions_from_category("selection");
-    input_context.add_actions_from_category("menu");
+    input_context.add_actions_from_category(ActionCategory::default_);
+    input_context.add_actions_from_category(ActionCategory::selection);
+    input_context.add_actions_from_category(ActionCategory::menu);
 
     return true;
 }
@@ -259,7 +272,6 @@ static void _prompt_for_key()
     snd(26);
 
     const std::string& action_id = listn(0, pagesize * page + cs);
-    optional<snail::Key> last_key = none;
     snail::ModKey last_modifiers = snail::ModKey::none;
 
     snail::Input::instance().clear_pressed_keys();
@@ -311,6 +323,8 @@ static void _prompt_for_key()
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     const std::string& key)
 {
+    UNUSED(key);
+
     auto command = input_context.check_for_command_with_list(p(0));
 
     if (p != -1 && list(0, p) >= 0)

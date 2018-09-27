@@ -68,11 +68,21 @@ struct Keybind
     std::string to_string() const;
 };
 
+enum class ActionCategory
+{
+    default_,
+    shortcut,
+    selection,
+    menu,
+    game,
+    wizard
+};
+
 struct Action
 {
     Action(
         std::string id,
-        std::string category,
+        ActionCategory category,
         std::vector<Keybind> default_keybinds)
         : id(id)
         , description_key("")
@@ -84,7 +94,7 @@ struct Action
 
     std::string id;
     std::string description_key;
-    std::string category;
+    ActionCategory category;
     std::vector<Keybind> default_keybinds;
     bool visible;
 };
@@ -109,7 +119,7 @@ class KeybindManager
 {
 public:
     using MapType = std::unordered_map<std::string, KeybindConfig>;
-    using GroupedMapType = std::multimap<std::string, std::string>;
+    using GroupedMapType = std::multimap<ActionCategory, std::string>;
     using iterator = MapType::iterator;
     using const_iterator = MapType::const_iterator;
 
@@ -152,17 +162,13 @@ public:
 
     /**
      * Adds an action that can be activated in this input context.
-     *
-     * @param action
      */
     void add_action(const std::string& action);
 
     /**
      * Adds all actions that are a part of the given category.
-     *
-     * @param action
      */
-    void add_actions_from_category(const std::string& category);
+    void add_actions_from_category(ActionCategory category);
 
     /**
      * Queries and sets input by translating raw input into a game action
@@ -228,12 +234,12 @@ private:
 };
 
 void init_actions();
-InputContext make_input_context(const std::string& category);
+InputContext make_input_context(ActionCategory category);
 bool keybind_is_bindable_key(snail::Key key);
 bool keybind_is_joystick_key(snail::Key key);
 bool keybind_action_has_category(
     const std::string& action_id,
-    const std::string& category);
+    ActionCategory category);
 
 /**
  * For selection and shortcut actions, returns the integer index of the

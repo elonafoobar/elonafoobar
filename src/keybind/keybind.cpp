@@ -51,117 +51,117 @@ void init_actions()
     // recreated if the wizard mode status changes.
 
     // clang-format off
-    add_action(Action{"escape",     "default", {{Key::escape, ModKey::none}}});
-    add_action(Action{"cancel",     "default", {{Key::shift,  ModKey::none}}});
-    add_action(Action{"enter",      "default", {{Key::enter,  ModKey::none}, {Key::keypad_enter, ModKey::none}}});
-    add_action(Action{"north",      "default", {{Key::up,        ModKey::none}, {Key::keypad_8, ModKey::none}}});
-    add_action(Action{"south",      "default", {{Key::down,      ModKey::none}, {Key::keypad_2, ModKey::none}}});
-    add_action(Action{"east",       "default", {{Key::left,      ModKey::none}, {Key::keypad_4, ModKey::none}}});
-    add_action(Action{"west",       "default", {{Key::right,     ModKey::none}, {Key::keypad_6, ModKey::none}}});
-    add_action(Action{"northwest",  "default", {{Key::pageup,    ModKey::none}, {Key::keypad_7, ModKey::none}}});
-    add_action(Action{"northeast",  "default", {{Key::home,      ModKey::none}, {Key::keypad_9, ModKey::none}}});
-    add_action(Action{"southwest",  "default", {{Key::pagedown,  ModKey::none}, {Key::keypad_1, ModKey::none}}});
-    add_action(Action{"southeast",  "default", {{Key::end,       ModKey::none}, {Key::keypad_3, ModKey::none}}});
+    add_action(Action{"escape",               ActionCategory::default_,  {{Key::escape,          ModKey::none}}});
+    add_action(Action{"cancel",               ActionCategory::default_,  {{Key::shift,           ModKey::none}}});
+    add_action(Action{"enter",                ActionCategory::default_,  {{Key::enter,           ModKey::none}, {Key::keypad_enter, ModKey::none}}});
+    add_action(Action{"north",                ActionCategory::default_,  {{Key::up,              ModKey::none}, {Key::keypad_8,     ModKey::none}}});
+    add_action(Action{"south",                ActionCategory::default_,  {{Key::down,            ModKey::none}, {Key::keypad_2,     ModKey::none}}});
+    add_action(Action{"east",                 ActionCategory::default_,  {{Key::left,            ModKey::none}, {Key::keypad_4,     ModKey::none}}});
+    add_action(Action{"west",                 ActionCategory::default_,  {{Key::right,           ModKey::none}, {Key::keypad_6,     ModKey::none}}});
+    add_action(Action{"northwest",            ActionCategory::default_,  {{Key::pageup,          ModKey::none}, {Key::keypad_7,     ModKey::none}}});
+    add_action(Action{"northeast",            ActionCategory::default_,  {{Key::home,            ModKey::none}, {Key::keypad_9,     ModKey::none}}});
+    add_action(Action{"southwest",            ActionCategory::default_,  {{Key::pagedown,        ModKey::none}, {Key::keypad_1,     ModKey::none}}});
+    add_action(Action{"southeast",            ActionCategory::default_,  {{Key::end,             ModKey::none}, {Key::keypad_3,     ModKey::none}}});
 
-    add_action(Action{"shortcut_1",  "shortcut", {{Key::key_1, ModKey::none}}});
-    add_action(Action{"shortcut_2",  "shortcut", {{Key::key_2, ModKey::none}}});
-    add_action(Action{"shortcut_3",  "shortcut", {{Key::key_3, ModKey::none}}});
-    add_action(Action{"shortcut_4",  "shortcut", {{Key::key_4, ModKey::none}}});
-    add_action(Action{"shortcut_5",  "shortcut", {{Key::key_5, ModKey::none}}});
-    add_action(Action{"shortcut_6",  "shortcut", {{Key::key_6, ModKey::none}}});
-    add_action(Action{"shortcut_7",  "shortcut", {{Key::key_7, ModKey::none}}});
-    add_action(Action{"shortcut_8",  "shortcut", {{Key::key_8, ModKey::none}}});
-    add_action(Action{"shortcut_9",  "shortcut", {{Key::key_9, ModKey::none}}});
-    add_action(Action{"shortcut_10", "shortcut", {{Key::key_0, ModKey::none}}});
-    add_action(Action{"shortcut_11", "shortcut", {{Key::key_1, ModKey::ctrl}, {Key::key_1, ModKey::shift}}});
-    add_action(Action{"shortcut_12", "shortcut", {{Key::key_2, ModKey::ctrl}, {Key::key_2, ModKey::shift}}});
-    add_action(Action{"shortcut_13", "shortcut", {{Key::key_3, ModKey::ctrl}, {Key::key_3, ModKey::shift}}});
-    add_action(Action{"shortcut_14", "shortcut", {{Key::key_4, ModKey::ctrl}, {Key::key_4, ModKey::shift}}});
-    add_action(Action{"shortcut_15", "shortcut", {{Key::key_5, ModKey::ctrl}, {Key::key_5, ModKey::shift}}});
-    add_action(Action{"shortcut_16", "shortcut", {{Key::key_6, ModKey::ctrl}, {Key::key_6, ModKey::shift}}});
-    add_action(Action{"shortcut_17", "shortcut", {{Key::key_7, ModKey::ctrl}, {Key::key_7, ModKey::shift}}});
-    add_action(Action{"shortcut_18", "shortcut", {{Key::key_8, ModKey::ctrl}, {Key::key_8, ModKey::shift}}});
-    add_action(Action{"shortcut_19", "shortcut", {{Key::key_9, ModKey::ctrl}, {Key::key_9, ModKey::shift}}});
-    add_action(Action{"shortcut_20", "shortcut", {{Key::key_0, ModKey::ctrl}, {Key::key_0, ModKey::shift}}});
+    add_action(Action{"shortcut_1",           ActionCategory::shortcut,  {{Key::key_1,           ModKey::none}}});
+    add_action(Action{"shortcut_2",           ActionCategory::shortcut,  {{Key::key_2,           ModKey::none}}});
+    add_action(Action{"shortcut_3",           ActionCategory::shortcut,  {{Key::key_3,           ModKey::none}}});
+    add_action(Action{"shortcut_4",           ActionCategory::shortcut,  {{Key::key_4,           ModKey::none}}});
+    add_action(Action{"shortcut_5",           ActionCategory::shortcut,  {{Key::key_5,           ModKey::none}}});
+    add_action(Action{"shortcut_6",           ActionCategory::shortcut,  {{Key::key_6,           ModKey::none}}});
+    add_action(Action{"shortcut_7",           ActionCategory::shortcut,  {{Key::key_7,           ModKey::none}}});
+    add_action(Action{"shortcut_8",           ActionCategory::shortcut,  {{Key::key_8,           ModKey::none}}});
+    add_action(Action{"shortcut_9",           ActionCategory::shortcut,  {{Key::key_9,           ModKey::none}}});
+    add_action(Action{"shortcut_10",          ActionCategory::shortcut,  {{Key::key_0,           ModKey::none}}});
+    add_action(Action{"shortcut_11",          ActionCategory::shortcut,  {{Key::key_1,           ModKey::ctrl}, {Key::key_1, ModKey::shift}}});
+    add_action(Action{"shortcut_12",          ActionCategory::shortcut,  {{Key::key_2,           ModKey::ctrl}, {Key::key_2, ModKey::shift}}});
+    add_action(Action{"shortcut_13",          ActionCategory::shortcut,  {{Key::key_3,           ModKey::ctrl}, {Key::key_3, ModKey::shift}}});
+    add_action(Action{"shortcut_14",          ActionCategory::shortcut,  {{Key::key_4,           ModKey::ctrl}, {Key::key_4, ModKey::shift}}});
+    add_action(Action{"shortcut_15",          ActionCategory::shortcut,  {{Key::key_5,           ModKey::ctrl}, {Key::key_5, ModKey::shift}}});
+    add_action(Action{"shortcut_16",          ActionCategory::shortcut,  {{Key::key_6,           ModKey::ctrl}, {Key::key_6, ModKey::shift}}});
+    add_action(Action{"shortcut_17",          ActionCategory::shortcut,  {{Key::key_7,           ModKey::ctrl}, {Key::key_7, ModKey::shift}}});
+    add_action(Action{"shortcut_18",          ActionCategory::shortcut,  {{Key::key_8,           ModKey::ctrl}, {Key::key_8, ModKey::shift}}});
+    add_action(Action{"shortcut_19",          ActionCategory::shortcut,  {{Key::key_9,           ModKey::ctrl}, {Key::key_9, ModKey::shift}}});
+    add_action(Action{"shortcut_20",          ActionCategory::shortcut,  {{Key::key_0,           ModKey::ctrl}, {Key::key_0, ModKey::shift}}});
 
-    add_action(Action{"select_1",  "selection", {{Key::key_a, ModKey::none}}});
-    add_action(Action{"select_2",  "selection", {{Key::key_b, ModKey::none}}});
-    add_action(Action{"select_3",  "selection", {{Key::key_c, ModKey::none}}});
-    add_action(Action{"select_4",  "selection", {{Key::key_d, ModKey::none}}});
-    add_action(Action{"select_5",  "selection", {{Key::key_e, ModKey::none}}});
-    add_action(Action{"select_6",  "selection", {{Key::key_f, ModKey::none}}});
-    add_action(Action{"select_7",  "selection", {{Key::key_g, ModKey::none}}});
-    add_action(Action{"select_8",  "selection", {{Key::key_h, ModKey::none}}});
-    add_action(Action{"select_9",  "selection", {{Key::key_i, ModKey::none}}});
-    add_action(Action{"select_10", "selection", {{Key::key_j, ModKey::none}}});
-    add_action(Action{"select_11", "selection", {{Key::key_k, ModKey::none}}});
-    add_action(Action{"select_12", "selection", {{Key::key_l, ModKey::none}}});
-    add_action(Action{"select_13", "selection", {{Key::key_m, ModKey::none}}});
-    add_action(Action{"select_14", "selection", {{Key::key_n, ModKey::none}}});
-    add_action(Action{"select_15", "selection", {{Key::key_o, ModKey::none}}});
-    add_action(Action{"select_16", "selection", {{Key::key_p, ModKey::none}}});
-    add_action(Action{"select_17", "selection", {{Key::key_q, ModKey::none}}});
-    add_action(Action{"select_18", "selection", {{Key::key_r, ModKey::none}}});
-    add_action(Action{"select_19", "selection", {{Key::key_s, ModKey::none}}});
+    add_action(Action{"select_1",             ActionCategory::selection, {{Key::key_a,           ModKey::none}}});
+    add_action(Action{"select_2",             ActionCategory::selection, {{Key::key_b,           ModKey::none}}});
+    add_action(Action{"select_3",             ActionCategory::selection, {{Key::key_c,           ModKey::none}}});
+    add_action(Action{"select_4",             ActionCategory::selection, {{Key::key_d,           ModKey::none}}});
+    add_action(Action{"select_5",             ActionCategory::selection, {{Key::key_e,           ModKey::none}}});
+    add_action(Action{"select_6",             ActionCategory::selection, {{Key::key_f,           ModKey::none}}});
+    add_action(Action{"select_7",             ActionCategory::selection, {{Key::key_g,           ModKey::none}}});
+    add_action(Action{"select_8",             ActionCategory::selection, {{Key::key_h,           ModKey::none}}});
+    add_action(Action{"select_9",             ActionCategory::selection, {{Key::key_i,           ModKey::none}}});
+    add_action(Action{"select_10",            ActionCategory::selection, {{Key::key_j,           ModKey::none}}});
+    add_action(Action{"select_11",            ActionCategory::selection, {{Key::key_k,           ModKey::none}}});
+    add_action(Action{"select_12",            ActionCategory::selection, {{Key::key_l,           ModKey::none}}});
+    add_action(Action{"select_13",            ActionCategory::selection, {{Key::key_m,           ModKey::none}}});
+    add_action(Action{"select_14",            ActionCategory::selection, {{Key::key_n,           ModKey::none}}});
+    add_action(Action{"select_15",            ActionCategory::selection, {{Key::key_o,           ModKey::none}}});
+    add_action(Action{"select_16",            ActionCategory::selection, {{Key::key_p,           ModKey::none}}});
+    add_action(Action{"select_17",            ActionCategory::selection, {{Key::key_q,           ModKey::none}}});
+    add_action(Action{"select_18",            ActionCategory::selection, {{Key::key_r,           ModKey::none}}});
+    add_action(Action{"select_19",            ActionCategory::selection, {{Key::key_s,           ModKey::none}}});
 
-    add_action(Action{"next_page",      "menu", {{Key::keypad_plus,  ModKey::none}}});
-    add_action(Action{"previous_page",  "menu", {{Key::keypad_minus, ModKey::none}}});
-    add_action(Action{"next_menu",      "menu", {{Key::tab,    ModKey::none}}});
-    add_action(Action{"previous_menu",  "menu", {{Key::tab,    ModKey::ctrl}}});
-    add_action(Action{"switch_mode",    "menu", {{Key::key_z,      ModKey::none}}});
-    add_action(Action{"switch_mode_2",  "menu", {{Key::key_x,      ModKey::none}}});
+    add_action(Action{"next_page",            ActionCategory::menu,      {{Key::keypad_plus,     ModKey::none}}});
+    add_action(Action{"previous_page",        ActionCategory::menu,      {{Key::keypad_minus,    ModKey::none}}});
+    add_action(Action{"next_menu",            ActionCategory::menu,      {{Key::tab,             ModKey::none}}});
+    add_action(Action{"previous_menu",        ActionCategory::menu,      {{Key::tab,             ModKey::ctrl}}});
+    add_action(Action{"switch_mode",          ActionCategory::menu,      {{Key::key_z,           ModKey::none}}});
+    add_action(Action{"switch_mode_2",        ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
 
-    add_action(Action{"wait",             "game", {{Key::period,           ModKey::none}, {Key::keypad_5, ModKey::none}}});
-    add_action(Action{"quick_menu",       "game", {{Key::key_z,                ModKey::none}}});
-    add_action(Action{"zap",              "game", {{Key::key_z,                ModKey::shift}}});
-    add_action(Action{"inventory",        "game", {{Key::key_x,                ModKey::none}}});
-    add_action(Action{"quick_inventory",  "game", {{Key::key_x,                ModKey::shift}}});
-    add_action(Action{"get",              "game", {{Key::key_g,                ModKey::none}, {Key::keypad_0, ModKey::none}}});
-    add_action(Action{"drop",             "game", {{Key::key_d,                ModKey::none}}});
-    add_action(Action{"chara_info",       "game", {{Key::key_c,                ModKey::none}}});
-    add_action(Action{"eat",              "game", {{Key::key_e,                ModKey::none}}});
-    add_action(Action{"wear",             "game", {{Key::key_w,                ModKey::none}}});
-    add_action(Action{"cast",             "game", {{Key::key_v,                ModKey::none}}});
-    add_action(Action{"drink",            "game", {{Key::key_q,                ModKey::none}}});
-    add_action(Action{"read",             "game", {{Key::key_r,                ModKey::none}}});
-    add_action(Action{"fire",             "game", {{Key::key_f,                ModKey::none}}});
-    add_action(Action{"go_down",          "game", {{Key::greater,          ModKey::none}}});
-    add_action(Action{"go_up",            "game", {{Key::less,             ModKey::none}}});
-    add_action(Action{"save",             "game", {{Key::key_s,                ModKey::shift}}});
-    add_action(Action{"search",           "game", {{Key::key_s,                ModKey::none}}});
-    add_action(Action{"interact",         "game", {{Key::key_i,                ModKey::none}}});
-    add_action(Action{"skill",            "game", {{Key::key_a,                ModKey::none}}});
-    add_action(Action{"close",            "game", {{Key::key_c,                ModKey::shift}}});
-    add_action(Action{"rest",             "game", {{Key::key_r,                ModKey::shift}}});
-    add_action(Action{"target",           "game", {{Key::keypad_asterisk,  ModKey::none}}});
-    add_action(Action{"dig",              "game", {{Key::key_d,                ModKey::shift}}});
-    add_action(Action{"pray",             "game", {{Key::key_p,                ModKey::none}}});
-    add_action(Action{"offer",            "game", {{Key::key_o,                ModKey::shift}}});
-    add_action(Action{"journal",          "game", {{Key::key_j,                ModKey::none}}});
-    add_action(Action{"material",         "game", {{Key::key_m,                ModKey::none}}});
-    add_action(Action{"trait",            "game", {{Key::key_f,                ModKey::shift}}});
-    add_action(Action{"look",             "game", {{Key::key_l,                ModKey::none}}});
-    add_action(Action{"give",             "game", {{Key::key_g,                ModKey::shift}}});
-    add_action(Action{"throw",            "game", {{Key::key_t,                ModKey::shift}}});
-    add_action(Action{"ammo",             "game", {{Key::key_a,                ModKey::shift}}});
-    add_action(Action{"autodig",          "game", {{Key::key_h,                ModKey::shift}}});
-    add_action(Action{"quicksave",        "game", {{Key::f1,               ModKey::none}}});
-    add_action(Action{"quickload",        "game", {{Key::f2,               ModKey::none}}});
-    add_action(Action{"help",             "game", {{Key::question,         ModKey::none}}});
-    add_action(Action{"message_log",      "game", {{Key::slash,            ModKey::none}}});
-    add_action(Action{"chat_box",         "game", {{Key::tab,              ModKey::none}}});
-    add_action(Action{"tcg",               "game", {{Key::f3,               ModKey::none}}});
-    add_action(Action{"update_screen",     "game", {{Key::f9,               ModKey::none}}});
-    add_action(Action{"dump_player_info",  "game", {{Key::f11,              ModKey::none}}});
-    add_action(Action{"enable_voldemort",  "game", {{Key::f12,              ModKey::none}}});
-    add_action(Action{"reload_autopick",   "game", {{Key::backspace,        ModKey::shift}}});
-    add_action(Action{"auto_action",       "game", {{Key::enter,            ModKey::none}}});
+    add_action(Action{"wait",                 ActionCategory::game,      {{Key::period,          ModKey::none}, {Key::keypad_5, ModKey::none}}});
+    add_action(Action{"quick_menu",           ActionCategory::game,      {{Key::key_z,           ModKey::none}}});
+    add_action(Action{"zap",                  ActionCategory::game,      {{Key::key_z,           ModKey::shift}}});
+    add_action(Action{"inventory",            ActionCategory::game,      {{Key::key_x,           ModKey::none}}});
+    add_action(Action{"quick_inventory",      ActionCategory::game,      {{Key::key_x,           ModKey::shift}}});
+    add_action(Action{"get",                  ActionCategory::game,      {{Key::key_g,           ModKey::none}, {Key::keypad_0, ModKey::none}}});
+    add_action(Action{"drop",                 ActionCategory::game,      {{Key::key_d,           ModKey::none}}});
+    add_action(Action{"chara_info",           ActionCategory::game,      {{Key::key_c,           ModKey::none}}});
+    add_action(Action{"eat",                  ActionCategory::game,      {{Key::key_e,           ModKey::none}}});
+    add_action(Action{"wear",                 ActionCategory::game,      {{Key::key_w,           ModKey::none}}});
+    add_action(Action{"cast",                 ActionCategory::game,      {{Key::key_v,           ModKey::none}}});
+    add_action(Action{"drink",                ActionCategory::game,      {{Key::key_q,           ModKey::none}}});
+    add_action(Action{"read",                 ActionCategory::game,      {{Key::key_r,           ModKey::none}}});
+    add_action(Action{"fire",                 ActionCategory::game,      {{Key::key_f,           ModKey::none}}});
+    add_action(Action{"go_down",              ActionCategory::game,      {{Key::greater,         ModKey::none}}});
+    add_action(Action{"go_up",                ActionCategory::game,      {{Key::less,            ModKey::none}}});
+    add_action(Action{"save",                 ActionCategory::game,      {{Key::key_s,           ModKey::shift}}});
+    add_action(Action{"search",               ActionCategory::game,      {{Key::key_s,           ModKey::none}}});
+    add_action(Action{"interact",             ActionCategory::game,      {{Key::key_i,           ModKey::none}}});
+    add_action(Action{"skill",                ActionCategory::game,      {{Key::key_a,           ModKey::none}}});
+    add_action(Action{"close",                ActionCategory::game,      {{Key::key_c,           ModKey::shift}}});
+    add_action(Action{"rest",                 ActionCategory::game,      {{Key::key_r,           ModKey::shift}}});
+    add_action(Action{"target",               ActionCategory::game,      {{Key::keypad_asterisk, ModKey::none}}});
+    add_action(Action{"dig",                  ActionCategory::game,      {{Key::key_d,           ModKey::shift}}});
+    add_action(Action{"pray",                 ActionCategory::game,      {{Key::key_p,           ModKey::none}}});
+    add_action(Action{"offer",                ActionCategory::game,      {{Key::key_o,           ModKey::shift}}});
+    add_action(Action{"journal",              ActionCategory::game,      {{Key::key_j,           ModKey::none}}});
+    add_action(Action{"material",             ActionCategory::game,      {{Key::key_m,           ModKey::none}}});
+    add_action(Action{"trait",                ActionCategory::game,      {{Key::key_f,           ModKey::shift}}});
+    add_action(Action{"look",                 ActionCategory::game,      {{Key::key_l,           ModKey::none}}});
+    add_action(Action{"give",                 ActionCategory::game,      {{Key::key_g,           ModKey::shift}}});
+    add_action(Action{"throw",                ActionCategory::game,      {{Key::key_t,           ModKey::shift}}});
+    add_action(Action{"ammo",                 ActionCategory::game,      {{Key::key_a,           ModKey::shift}}});
+    add_action(Action{"autodig",              ActionCategory::game,      {{Key::key_h,           ModKey::shift}}});
+    add_action(Action{"quicksave",            ActionCategory::game,      {{Key::f1,              ModKey::none}}});
+    add_action(Action{"quickload",            ActionCategory::game,      {{Key::f2,              ModKey::none}}});
+    add_action(Action{"help",                 ActionCategory::game,      {{Key::question,        ModKey::none}}});
+    add_action(Action{"message_log",          ActionCategory::game,      {{Key::slash,           ModKey::none}}});
+    add_action(Action{"chat_box",             ActionCategory::game,      {{Key::tab,             ModKey::none}}});
+    add_action(Action{"tcg",                  ActionCategory::game,      {{Key::f3,              ModKey::none}}});
+    add_action(Action{"update_screen",        ActionCategory::game,      {{Key::f9,              ModKey::none}}});
+    add_action(Action{"dump_player_info",     ActionCategory::game,      {{Key::f11,             ModKey::none}}});
+    add_action(Action{"enable_voldemort",     ActionCategory::game,      {{Key::f12,             ModKey::none}}});
+    add_action(Action{"reload_autopick",      ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
+    add_action(Action{"auto_action",          ActionCategory::game,      {{Key::enter,           ModKey::none}}});
 
     // TODO: prioritize over other categories
-    add_action(Action{"wizard_mewmewmew",    "wizard", {{Key::f3,               ModKey::none}}});
-    add_action(Action{"wizard_wish",         "wizard", {{Key::f5,               ModKey::none}}});
-    add_action(Action{"wizard_advance_time", "wizard", {{Key::f6,               ModKey::none}}});
-    add_action(Action{"wizard_delete_map",   "wizard", {{Key::f7,               ModKey::none}}});
+    add_action(Action{"wizard_mewmewmew",     ActionCategory::wizard,    {{Key::f3,              ModKey::none}}});
+    add_action(Action{"wizard_wish",          ActionCategory::wizard,    {{Key::f5,              ModKey::none}}});
+    add_action(Action{"wizard_advance_time",  ActionCategory::wizard,    {{Key::f6,              ModKey::none}}});
+    add_action(Action{"wizard_delete_map",    ActionCategory::wizard,    {{Key::f7,              ModKey::none}}});
     // clang-format on
 
     for (const auto& pair : actions)
@@ -189,7 +189,6 @@ void init_actions()
             }
             else
             {
-                std::cerr << "Permanent: " << keybind.to_string() << std::endl;
                 binding.permanent = keybind;
             }
         }
@@ -346,7 +345,6 @@ optional<std::string> InputContext::check_movement_action(
 
     if ((modifiers & snail::ModKey::shift) == snail::ModKey::shift)
     {
-        std::cerr << "run" << std::endl;
         // Has to be modified globally, since scroll speed is determined by
         // keybd_wait. See @ref ui_scroll_screen()
         keybd_wait = 100000;
@@ -432,13 +430,13 @@ optional<Keybind> InputContext::check_key()
     return none;
 }
 
-InputContext make_input_context(const std::string& category)
+InputContext make_input_context(ActionCategory category)
 {
     InputContext result;
-    result.add_actions_from_category("default");
+    result.add_actions_from_category(ActionCategory::default_);
     if (game_data.wizard)
     {
-        result.add_actions_from_category("wizard");
+        result.add_actions_from_category(ActionCategory::wizard);
     }
     result.add_actions_from_category(category);
 
@@ -447,7 +445,7 @@ InputContext make_input_context(const std::string& category)
     return result;
 }
 
-void InputContext::add_actions_from_category(const std::string& category)
+void InputContext::add_actions_from_category(ActionCategory category)
 {
     for (const auto& pair : actions)
     {
@@ -495,7 +493,6 @@ std::string InputContext::delay_movement_action(
             if (keybd_wait
                 < Config::instance().walkwait * Config::instance().startrun)
             {
-                std::cerr << "WALK" << std::endl;
                 if (keybd_wait % Config::instance().walkwait != 0)
                 {
                     return ""s;
@@ -503,8 +500,6 @@ std::string InputContext::delay_movement_action(
             }
             else
             {
-                std::cerr << "RUN1 " << Config::instance().startrun << " "
-                          << Config::instance().runwait << std::endl;
                 running = 1;
                 if (keybd_wait < 100000)
                 {
@@ -528,8 +523,6 @@ std::string InputContext::delay_movement_action(
         }
         else if (keybd_wait > Config::instance().startrun)
         {
-            std::cerr << "RUN2 " << Config::instance().startrun << " "
-                      << Config::instance().runwait << std::endl;
             if (Config::instance().runscroll == 0)
             {
                 if (keybd_wait % Config::instance().runwait != 0)
@@ -591,7 +584,6 @@ std::string InputContext::delay_normal_action(const std::string& action)
 
     if (last_action_ != action)
     {
-        std::cerr << "set action " << action << std::endl;
         last_action_ = action;
     }
 
@@ -690,7 +682,7 @@ std::string InputContext::check_for_command_with_list(int& list_index)
     {
         list_index = cs;
     }
-    else if (keybind_action_has_category(command, "selection"s))
+    else if (keybind_action_has_category(command, ActionCategory::selection))
     {
         list_index = keybind_id_number(command);
     }
@@ -720,7 +712,7 @@ bool keybind_is_bindable_key(snail::Key key)
 
 bool keybind_action_has_category(
     const std::string& action_id,
-    const std::string& category)
+    ActionCategory category)
 {
     if (action_id == ""s)
     {
