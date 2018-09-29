@@ -19,12 +19,15 @@ static std::string _action_category_to_name(ActionCategory category)
     case ActionCategory::game: return "Game";
     case ActionCategory::wizard: return "Wizard";
     }
+
+    return "<unknown>";
 }
 
 static void _load_keybindings()
 {
     listmax = 0;
 
+    auto& keybind_manager = KeybindManager::instance();
     const auto grouped_keybinds =
         keybind_manager.create_category_to_action_list();
 
@@ -216,7 +219,15 @@ void UIMenuKeybindings::draw()
 static void
 _bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
 {
-    auto& binding = keybind_manager.binding(action_id);
+    auto keybind = Keybind{key, modifiers};
+    auto& binding = KeybindManager::instance().binding(action_id);
+
+    // TODO
+    if (KeybindManager::instance().find_conflicts(action_id, keybind).size()
+        > 0)
+    {
+        return;
+    }
 
     if (keybind_is_joystick_key(key))
     {
@@ -225,17 +236,17 @@ _bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
     }
     else if (binding.primary.empty())
     {
-        binding.primary = Keybind{key, modifiers};
+        binding.primary = keybind;
     }
     else if (binding.alternate.empty())
     {
-        binding.alternate = Keybind{key, modifiers};
+        binding.alternate = keybind;
     }
     else
     {
         // Clear the secondary keybinding first.
-        binding.alternate = Keybind{snail::Key::none, snail::ModKey::none};
-        binding.primary = Keybind{key, modifiers};
+        binding.alternate.clear();
+        binding.primary = keybind;
     }
 
     listn(1, pagesize * page + cs) = binding.primary.to_string();
@@ -244,12 +255,9 @@ _bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
 
 static void _unbind_key(const std::string& action_id)
 {
-    auto& binding = keybind_manager.binding(action_id);
+    KeybindManager::instance().clear_binding(action_id);
 
-    binding.primary = Keybind{snail::Key::none, snail::ModKey::none};
-    binding.alternate = Keybind{snail::Key::none, snail::ModKey::none};
-    binding.joystick = snail::Key::none;
-
+    const auto& binding = KeybindManager::instance().binding(action_id);
     listn(1, pagesize * page + cs) = binding.primary.to_string();
     listn(2, pagesize * page + cs) = binding.alternate.to_string();
 }

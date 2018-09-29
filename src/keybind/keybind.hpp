@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -7,6 +8,7 @@
 #include "../enums.hpp"
 #include "../optional.hpp"
 #include "../snail/input.hpp"
+#include "../thirdparty/ordered_map/ordered_map.h"
 
 using namespace std::literals::string_literals;
 
@@ -24,6 +26,7 @@ namespace elona
 // - ability to add new actions/default bindings
 // - inner macro support
 // - handling of shortcuts
+// - serialization to separate keybinds.hcl file per-mod
 
 // input context requirements
 // - "keys pressed this frame" support in snail
@@ -66,7 +69,23 @@ struct Keybind
     }
 
     std::string to_string() const;
+
+    static optional<Keybind> from_string(std::string str);
+
+    void clear()
+    {
+        main = snail::Key::none;
+        modifiers = snail::ModKey::none;
+    }
 };
+
+// clang-format off
+enum class InputContextType
+{
+    menu, // [default, shortcut, selection, menu]
+    game  // [default, shortcut, game, wizard]
+};
+// clang-format on
 
 enum class ActionCategory
 {
@@ -80,24 +99,26 @@ enum class ActionCategory
 
 struct Action
 {
-    Action(
-        std::string id,
-        ActionCategory category,
-        std::vector<Keybind> default_keybinds)
-        : id(id)
-        , description_key("")
+    Action(ActionCategory category, std::vector<Keybind> default_keybinds)
+        : description_key("")
         , category(category)
         , default_keybinds(default_keybinds)
         , visible(true)
     {
     }
 
-    std::string id;
     std::string description_key;
     ActionCategory category;
     std::vector<Keybind> default_keybinds;
     bool visible;
 };
+
+typedef tsl::ordered_map<std::string, Action> ActionMap;
+
+namespace keybind
+{
+extern ActionMap actions;
+}
 
 struct KeybindConfig
 {
@@ -118,41 +139,57 @@ struct KeybindConfig
 class KeybindManager
 {
 public:
-    using MapType = std::unordered_map<std::string, KeybindConfig>;
+    using MapType = tsl::ordered_map<std::string, KeybindConfig>;
     using GroupedMapType = std::multimap<ActionCategory, std::string>;
     using iterator = MapType::iterator;
     using const_iterator = MapType::const_iterator;
+    using size_type = MapType::size_type;
+
+    static KeybindManager& instance();
 
     const_iterator begin() const
     {
-        return std::begin(keybind_configs_);
+        return std::begin(_keybind_configs);
     }
 
     const_iterator end() const
     {
-        return std::end(keybind_configs_);
+        return std::end(_keybind_configs);
     }
 
     GroupedMapType create_category_to_action_list();
 
     void register_binding(const std::string& action_id)
     {
-        keybind_configs_[action_id] = KeybindConfig{};
+        _keybind_configs.emplace(action_id, KeybindConfig{});
     }
+
+    bool is_registered(const std::string& action_id)
+    {
+        return _keybind_configs.find(action_id) != _keybind_configs.end();
+    }
+
+    void clear_binding(const std::string& action_id);
+
+    void register_default_bindings(const ActionMap& actions);
+
+    std::vector<std::string> find_conflicts(
+        const std::string& action_id,
+        const Keybind& keybind);
 
     KeybindConfig& binding(const std::string& action_id)
     {
-        if (keybind_configs_.find(action_id) == keybind_configs_.end())
+        if (!is_registered(action_id))
         {
             throw std::runtime_error(
                 "Binding for action "s + action_id + " not registered"s);
         }
 
-        return keybind_configs_.at(action_id);
+        return _keybind_configs.at(action_id);
     }
 
 private:
-    MapType keybind_configs_;
+    MapType _keybind_configs;
 };
 
 class InputContext
@@ -222,7 +259,10 @@ private:
 
     std::string delay_normal_action(const std::string& action);
 
+    // In insertion order, to give precedence to certain categories.
     std::set<std::string> available_actions;
+
+    std::unordered_set<std::string> excluded_categories;
 
     // Keys which shouldn't be returned in get_key() because they have special
     // key delay rules. It can differ depending on the current keybinding setup
@@ -234,9 +274,17 @@ private:
 };
 
 void init_actions();
+
 InputContext make_input_context(ActionCategory category);
+
 bool keybind_is_bindable_key(snail::Key key);
 bool keybind_is_joystick_key(snail::Key key);
+
+optional<std::string> keybind_key_name(snail::Key key, bool shift = false);
+optional<snail::Key> keybind_key_code(
+    const std::string& name,
+    bool shift = false);
+
 bool keybind_action_has_category(
     const std::string& action_id,
     ActionCategory category);
@@ -249,8 +297,5 @@ bool keybind_action_has_category(
  * format <prefix>_<number>.
  */
 int keybind_id_number(const std::string& action_id);
-
-extern KeybindManager keybind_manager;
-
 
 } // namespace elona
