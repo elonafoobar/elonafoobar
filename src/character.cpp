@@ -2053,7 +2053,7 @@ void chara_add_quality_parens()
     else if (fixlv == Quality::godly)
     {
         cdatan(0, rc) =
-            i18n::s.get("core.locale.chara.name_with_title", cdata[rc]);
+            i18n::s.get("core.locale.chara.name_with_title", cdatan(0, rc));
         cdata[rc].level = cdata[rc].level * 10 / 6;
     }
 }
