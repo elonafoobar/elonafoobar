@@ -186,19 +186,17 @@ void UIMenuCharamakeAttributes::draw()
 }
 
 optional<UIMenuCharamakeAttributes::ResultType>
-UIMenuCharamakeAttributes::on_key(const std::string& key)
+UIMenuCharamakeAttributes::on_key(const std::string& action)
 {
-    ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
-
-    if (p != -1)
+    if (_index != -1)
     {
-        if (p == 0)
+        if (_index == 0)
         {
             snd(103);
             set_reupdate();
             return none;
         }
-        if (p == 1)
+        if (_index == 1)
         {
             return UIMenuCharamakeAttributes::Result::finish(_attributes);
         }
@@ -214,14 +212,14 @@ UIMenuCharamakeAttributes::on_key(const std::string& key)
         }
         snd(20);
     }
-    else if (key == key_mode2)
+    else if (action == "switch_mode_2")
     {
         _minimum = true;
         snd(103);
         set_reupdate();
         return none;
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuCharamakeAttributes::Result::cancel();
     }

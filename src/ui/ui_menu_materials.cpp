@@ -144,13 +144,13 @@ void UIMenuMaterials::draw()
 }
 
 optional<UIMenuMaterials::ResultType> UIMenuMaterials::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    int _p;
+    // int _p;
 
-    ELONA_GET_SELECTED_ITEM(_p, 0);
+    // ELONA_GET_SELECTED_ITEM(_p, 0);
 
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -159,7 +159,7 @@ optional<UIMenuMaterials::ResultType> UIMenuMaterials::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -168,7 +168,7 @@ optional<UIMenuMaterials::ResultType> UIMenuMaterials::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         update_screen();
         return UIMenuMaterials::Result::cancel();

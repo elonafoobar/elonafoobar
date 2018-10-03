@@ -70,15 +70,15 @@ void UIMenuAlias::draw()
     }
 }
 
-optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& key)
+optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& action)
 {
-    int _p;
+    // int _p;
 
-    ELONA_GET_SELECTED_INDEX_THIS_PAGE(_p);
+    // ELONA_GET_SELECTED_INDEX_THIS_PAGE(_p);
 
-    if (_p != -1)
+    if (_index != -1)
     {
-        if (key == key_select(0))
+        if (_index == 0)
         {
             snd(103);
             _set_reroll_aliases();
@@ -89,17 +89,17 @@ optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& key)
 
             if (_alias_type == 3)
             {
-                res.seed = _p;
+                res.seed = _index;
             }
             else
             {
-                res.alias = listn(0, _p);
+                res.alias = listn(0, _index);
             }
 
             return UIMenuAlias::Result::finish(res);
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         snd(26);
         return UIMenuAlias::Result::cancel();

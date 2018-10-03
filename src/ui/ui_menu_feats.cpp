@@ -417,16 +417,19 @@ static void _switch_target(bool is_forwards)
     cs = 0;
 }
 
-optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
+optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& action)
 {
-    int p_;
+    // ELONA_GET_SELECTED_INDEX(p_);
 
-    ELONA_GET_SELECTED_INDEX(p_);
-
-    if (p_ > 0 && _can_select_trait(p_, tc))
+    // if (_index != -1)
+    // {
+    //     p_ = pagesize * page + _index;
+    // }
+    auto index = get_selected_index();
+    if (index && *index > 0 && _can_select_trait(*index, tc))
     {
         bool show_text = _operation == Operation::normal;
-        if (_gain_trait(p_, show_text))
+        if (_gain_trait(*index, show_text))
         {
             if (_operation == Operation::character_making)
             {
@@ -445,7 +448,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
         set_reupdate();
         return none;
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -454,7 +457,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -463,13 +466,13 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == u8"z"s || key == u8"x"s)
+    else if (action == "switch_mode" || action == "switch_mode_2")
     {
-        bool is_forwards = key == u8"x";
+        bool is_forwards = action == "switch_mode_2";
         _switch_target(is_forwards);
         set_reupdate();
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         if (_operation == Operation::normal)
         {

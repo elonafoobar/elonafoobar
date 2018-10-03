@@ -276,13 +276,13 @@ void UIMenuQuestBoard::draw()
 }
 
 optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    int _p;
+    // int _p;
 
-    ELONA_GET_SELECTED_ITEM(_p, 0);
+    // ELONA_GET_SELECTED_ITEM(_p, 0);
 
-    if (_p != -1)
+    if (auto selected = get_selected_item())
     {
         txtnew();
         txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
@@ -292,9 +292,9 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
             set_reupdate();
             return none;
         }
-        return UIMenuQuestBoard::Result::finish(_p);
+        return UIMenuQuestBoard::Result::finish(*selected);
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -303,7 +303,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -312,7 +312,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuQuestBoard::Result::cancel();
     }

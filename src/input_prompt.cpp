@@ -159,10 +159,10 @@ void PromptWithNumber::_draw_window2()
     font(14 - en * 2);
 }
 
-void PromptWithNumber::_modify_result()
+void PromptWithNumber::_modify_result(const std::string& action)
 {
     _show_prompt_val = elona::stoi(inputlog(0));
-    if (key == key_west || key == key_pagedown)
+    if (action == "west" || action == "previous_page")
     {
         snd(5);
         --_number;
@@ -171,7 +171,7 @@ void PromptWithNumber::_modify_result()
             _number = _max;
         }
     }
-    if (key == key_east || key == key_pageup)
+    if (action == "east" || action == "next_page")
     {
         snd(5);
         ++_number;

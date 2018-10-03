@@ -258,22 +258,25 @@ static void _show_config_item_desc(const std::string& desc)
     }
 }
 
-optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(const std::string& key)
+optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
+    // ELONA_GET_SELECTED_ITEM(p, cs = i);
+    p = -1;
 
-    if (p != -1)
+    if (auto submenu = get_selected_item())
     {
+        cs = _index;
         if (_submenu_index == 0)
         {
             cs = 0;
             snd(20);
-            return UIMenuConfig::Result::finish(p + 1);
+            return UIMenuConfig::Result::finish(*submenu + 1);
         }
     }
-    else if (key == key_pageup || key == key_pagedown)
+    else if (action == "next_page" || action == "previous_page")
     {
-        if (key == key_pageup)
+        if (action == "next_page")
         {
             p = 1;
         }
@@ -296,7 +299,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(const std::string& key)
         // title screen.
         return UIMenuConfig::Result::finish(_submenu_index);
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         if (_submenu_index != 0)
         {

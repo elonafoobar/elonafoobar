@@ -330,18 +330,19 @@ void UIMenuGameHelp::update()
 
 void UIMenuGameHelp::draw()
 {
-    // Draws the elft part of the window continuously, ensuring key refreshing
+    // Draws the left part of the window continuously, ensuring key refreshing
     _draw_navigation_menu();
 }
 
 
 optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
-    const std::string& key)
+    const std::string& action)
 {
     // Key selection
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
-    if (p != -1)
+    // ELONA_GET_SELECTED_ITEM(p, cs = i);
+    if (_index != -1)
     {
+        cs = _index;
         snd(20);
         page_bk = page;
         cs_bk2 = cs;
@@ -349,7 +350,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     }
 
     // Page changes
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -358,7 +359,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
             set_reupdate();
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -369,7 +370,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     }
 
     // Closing menu
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         return UIMenuGameHelp::ResultType::finish();
     }

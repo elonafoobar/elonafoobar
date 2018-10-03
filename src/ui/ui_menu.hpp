@@ -53,7 +53,9 @@ public:
     virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual optional<ResultType> on_key(const std::string& key) = 0;
+    virtual optional<ResultType> on_key(
+        const std::string& action,
+        int index) = 0;
 
 protected:
     /**
@@ -71,6 +73,24 @@ protected:
     void set_reinit()
     {
         _reinit = true;
+    }
+
+    optional<int> get_selected_index()
+    {
+        if (_index == -1)
+        {
+            return none;
+        }
+        return pagesize * page + _index;
+    }
+
+    optional<int> get_selected_item()
+    {
+        if (_index != -1)
+        {
+            return list(0, pagesize * page + _index);
+        }
+        return none;
     }
 
 public:
@@ -91,9 +111,9 @@ public:
                 draw();
 
                 _redraw();
-                _update_input();
 
-                if (auto res = on_key(elona::key))
+                auto action = cursor_check_ex(_index);
+                if (auto res = on_key(action))
                 {
                     return *res;
                 }
@@ -115,17 +135,14 @@ public:
         }
     }
 
+protected:
+    int _index{};
+
 private:
     void _redraw()
     {
         redraw();
         await(Config::instance().wait1);
-    }
-
-    void _update_input()
-    {
-        // key_check();
-        // cursor_check();
     }
 
     bool _reupdate = false;

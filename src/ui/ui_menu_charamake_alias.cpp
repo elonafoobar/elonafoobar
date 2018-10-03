@@ -131,13 +131,13 @@ void UIMenuCharamakeAlias::draw()
 }
 
 optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
+    // ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
 
-    if (p != -1)
+    if (_index != -1)
     {
-        if (key == key_select(0))
+        if (_index == 0)
         {
             list(0, 0) = -1;
             snd(103);
@@ -151,7 +151,7 @@ optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
             return UIMenuCharamakeAlias::Result::finish(alias);
         }
     }
-    else if (key == key_mode2 && cs != -1)
+    else if (action == "switch_mode_2" && cs != -1)
     {
         if (_locked_aliases(cs) != 0)
         {
@@ -164,7 +164,7 @@ optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
         snd(20);
         _redraw_aliases = true;
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuCharamakeAlias::Result::cancel();
     }

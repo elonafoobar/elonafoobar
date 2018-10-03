@@ -76,6 +76,7 @@ void init_actions()
     actions.emplace("previous_menu",       Action{ActionCategory::menu,      {{Key::tab,             ModKey::ctrl}}});
     actions.emplace("switch_mode",         Action{ActionCategory::menu,      {{Key::key_z,           ModKey::none}}});
     actions.emplace("switch_mode_2",       Action{ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
+    actions.emplace("portrait",            Action{ActionCategory::menu,      {{Key::key_p,           ModKey::none}}});
 
     actions.emplace("wait",                Action{ActionCategory::game,      {{Key::period,          ModKey::none}, {Key::keypad_5, ModKey::none}}});
     actions.emplace("quick_menu",          Action{ActionCategory::game,      {{Key::key_z,           ModKey::none}}});

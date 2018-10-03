@@ -243,17 +243,20 @@ void UIMenuHire::draw()
     _draw_list_entries();
 }
 
-optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& key)
+optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& action)
 {
-    int _p;
+    // ELONA_GET_SELECTED_ITEM(_p, 0);
+    // p = -1;
 
-    ELONA_GET_SELECTED_ITEM(_p, 0);
-
-    if (_p != -1)
+    // if (_index != -1)
+    // {
+    //     p = list(0, pagesize * page + _index);
+    // }
+    if (auto selected = get_selected_item())
     {
-        return UIMenuHire::Result::finish(_p);
+        return UIMenuHire::Result::finish(*selected);
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -262,7 +265,7 @@ optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -271,7 +274,7 @@ optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuHire::Result::cancel();
     }

@@ -214,25 +214,30 @@ static void _assign_shortcut(int sc_, int spell_id)
     display_msg(inf_screeny + inf_tiles);
 }
 
-optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(const std::string& key)
+optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(
+    const std::string& action)
 {
     commark(1) = page * 1000 + cs;
-    ELONA_GET_SELECTED_ITEM(p, 0);
+    // ELONA_GET_SELECTED_ITEM(p, 0);
 
-    if (p != -1)
+    // if (_index != -1)
+    // {
+    //     p = list(0, pagesize * page + _index);
+    // }
+    if (auto selected = get_selected_item())
     {
         menucycle = 0;
         return UIMenuSpells::Result::finish(
-            UIMenuCompositeSkillsResult(UIMenuSpellsResult{p}));
+            UIMenuCompositeSkillsResult(UIMenuSpellsResult{*selected}));
     }
-    else if (key == u8"sc"s)
+    else if (auto sc = get_shortcut(action))
     {
         int selected_spell = list(0, pagesize * page + cs);
-        _assign_shortcut(sc, selected_spell);
+        _assign_shortcut(*sc, selected_spell);
         set_reupdate();
         return none;
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -241,7 +246,7 @@ optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -250,7 +255,7 @@ optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         update_screen();
         return UIMenuSpells::Result::finish();

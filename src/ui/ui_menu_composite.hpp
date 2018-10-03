@@ -91,12 +91,13 @@ protected:
         _menus[_selected].menu->draw();
     }
 
-    virtual optional<typename UIMenu<T>::Result> on_key(const std::string& key)
+    virtual optional<typename UIMenu<T>::Result> on_key(
+        const std::string& action)
     {
-        if (key == key_next || key == key_prev)
+        if (action == "next_menu" || action == "previous_menu")
         {
             size_t prev_menu = _selected;
-            if (key == key_next)
+            if (action == "next_menu")
             {
                 if (_selected >= _menus.size() - 1)
                 {
@@ -107,7 +108,7 @@ protected:
                     _selected++;
                 }
             }
-            if (key == key_prev)
+            if (action == "previous_menu")
             {
                 if (_selected <= 0)
                 {
@@ -124,7 +125,7 @@ protected:
                 UIMenu<T>::set_reupdate();
             }
         }
-        else if (auto result = _menus[_selected].menu->on_key(key))
+        else if (auto result = _menus[_selected].menu->on_key(action))
         {
             return result;
         }

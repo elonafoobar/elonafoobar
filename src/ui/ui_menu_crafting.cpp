@@ -324,17 +324,19 @@ void UIMenuCrafting::draw()
 }
 
 optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    int p_ = 0;
+    // ELONA_GET_SELECTED_ITEM(p_, 0);
+    p = -1;
 
-    ELONA_GET_SELECTED_ITEM(p_, 0);
-
-    if (p_ != -1)
+    // if (_index != -1)
+    // {
+    //     p = list(0, pagesize * page + _index);
+    // }
+    if (auto created_item_id = get_selected_item())
     {
-        int created_item_id = p_;
-        s = ioriginalnameref(created_item_id);
-        if (_can_produce_item(created_item_id) == -1)
+        s = ioriginalnameref(*created_item_id);
+        if (_can_produce_item(*created_item_id) == -1)
         {
             snd(27);
             txt(i18n::s.get(
@@ -349,9 +351,9 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
             set_reupdate();
             return none;
         }
-        return UIMenuCrafting::Result::finish(p_);
+        return UIMenuCrafting::Result::finish(*created_item_id);
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -360,7 +362,7 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -369,7 +371,7 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuCrafting::Result::cancel();
     }

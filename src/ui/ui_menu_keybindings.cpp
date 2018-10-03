@@ -331,33 +331,37 @@ static void _prompt_for_key()
 }
 
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    UNUSED(key);
+    // int p_ = -1;
 
-    auto command = input_context.check_for_command_with_list(p(0));
+    // if (_index != -1)
+    // {
+    //     p_ = list(0, pagesize * page + _index);
+    // }
 
-    if (p != -1 && list(0, p) >= 0)
+    auto selected = get_selected_index();
+    if (selected && list(0, *selected) >= 0)
     {
-        cs = p;
+        cs = *selected;
         _prompt_for_key();
         input_context.reset();
         set_reupdate();
         return none;
     }
-    else if (command == "next_page"s)
+    else if (action == "next_page"s)
     {
         ++page;
         snd(1);
         set_reupdate();
     }
-    else if (command == "previous_page"s)
+    else if (action == "previous_page"s)
     {
         --page;
         snd(1);
         set_reupdate();
     }
-    if (command == "cancel"s)
+    if (action == "cancel"s)
     {
         return UIMenuKeybindings::Result::finish();
     }
