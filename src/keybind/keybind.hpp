@@ -237,6 +237,7 @@ public:
 
     static InputContext create(InputContextType type);
     static InputContext instance();
+    static InputContext for_menu();
 
 private:
     /**

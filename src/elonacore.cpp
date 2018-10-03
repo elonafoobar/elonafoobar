@@ -1430,7 +1430,6 @@ int breath_list()
 }
 
 
-
 void cursor_check()
 {
     if (key == key_north)
@@ -6901,49 +6900,49 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
 
 
 
-int key_direction()
+int key_direction(const std::string& action)
 {
     kdx = 0;
     kdy = 0;
-    if (key == key_north)
+    if (action == "north")
     {
         --kdy;
         return 1;
     }
-    if (key == key_south)
+    if (action == "south")
     {
         ++kdy;
         return 1;
     }
-    if (key == key_west)
+    if (action == "west")
     {
         --kdx;
         return 1;
     }
-    if (key == key_east)
+    if (action == "east")
     {
         ++kdx;
         return 1;
     }
-    if (key == key_northwest)
+    if (action == "northwest")
     {
         --kdx;
         --kdy;
         return 1;
     }
-    if (key == key_northeast)
+    if (action == "northeast")
     {
         ++kdx;
         --kdy;
         return 1;
     }
-    if (key == key_southwest)
+    if (action == "southwest")
     {
         --kdx;
         ++kdy;
         return 1;
     }
-    if (key == key_southeast)
+    if (action == "southeast")
     {
         ++kdx;
         ++kdy;
@@ -7104,10 +7103,7 @@ label_1945_internal:
         cs_bk = cs;
     }
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
+    auto action = get_selected_item(p(0));
     if (p != -1)
     {
         if (p == -999)
@@ -7180,7 +7176,7 @@ label_1945_internal:
             }
         }
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -7189,7 +7185,7 @@ label_1945_internal:
             goto label_1944_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -7198,7 +7194,7 @@ label_1945_internal:
             goto label_1944_internal;
         }
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         update_screen();
         return 0;
@@ -7365,11 +7361,10 @@ int target_position()
         }
         txttargetnpc(tlocx, tlocy);
         redraw();
-        await(Config::instance().wait1);
-        key_check();
+        auto action = key_check();
         if (homemapmode == 1)
         {
-            if (key == key_enter)
+            if (action == "enter")
             {
                 select_house_board_tile();
                 wait_key_released();
@@ -7379,7 +7374,7 @@ int target_position()
                 stick(StickKey::mouse_left | StickKey::mouse_right);
             if (input == StickKey::mouse_left)
             {
-                key = key_enter;
+                action = "enter";
             }
             if (input == StickKey::mouse_right)
             {
@@ -7396,7 +7391,7 @@ int target_position()
             }
             tx = clamp(mousex - inf_screenx, 0, windoww) / 48;
             ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) / 48;
-            int stat = key_direction();
+            int stat = key_direction(action);
             if (stat == 1)
             {
                 cdata.player().position.x += kdx;
@@ -7423,7 +7418,7 @@ int target_position()
         }
         else
         {
-            int stat = key_direction();
+            int stat = key_direction(action);
             if (stat == 1)
             {
                 x = tlocx + kdx;
@@ -7459,7 +7454,7 @@ int target_position()
                     }
                 }
             }
-            if (key == key_pageup)
+            if (action == "next_page")
             {
                 ++p;
                 f = 1;
@@ -7468,7 +7463,7 @@ int target_position()
                     p = 0;
                 }
             }
-            if (key == key_pagedown)
+            if (action == "previous_page")
             {
                 --p;
                 f = 1;
@@ -7489,7 +7484,7 @@ int target_position()
                 tlocy = cdata[list(0, p)].position.y;
             }
         }
-        if (key == key_enter)
+        if (action == "enter")
         {
             if (findlocmode == 1)
             {
@@ -7528,7 +7523,7 @@ int target_position()
             tlocinity = 0;
             return cansee;
         }
-        if (key == key_cancel)
+        if (action == "cancel")
         {
             tlocinitx = 0;
             tlocinity = 0;
@@ -8825,7 +8820,7 @@ label_2128_internal:
     gmode(4, 200 - t / 2 % 20 * (t / 2 % 20));
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
-    if (key_alt == 0)
+    if (!getkey(snail::Key::alt))
     {
         draw_rotated("direction_arrow", x, y - 48, 0);
         draw_rotated("direction_arrow", x, y + 48, 180);
@@ -8841,24 +8836,19 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(Config::instance().wait1);
-    key_check(KeyWaitDelay::walk_run);
+    auto action = key_check(KeyWaitDelay::walk_run);
     x = cdata.player().position.x;
     y = cdata.player().position.y;
-    if (key == key_alter)
-    {
-        goto label_2128_internal;
-    }
-    if (key == key_wait || key == key_enter)
+    if (action == "wait" || action == "enter")
     {
         tlocx = x;
         tlocy = y;
         keyhalt = 1;
         return 1;
     }
-    if (key == key_north)
+    if (action == "north")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8867,9 +8857,9 @@ label_2128_internal:
             y -= 1;
         }
     }
-    if (key == key_south)
+    if (action == "south")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8878,9 +8868,9 @@ label_2128_internal:
             y += 1;
         }
     }
-    if (key == key_west)
+    if (action == "west")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8889,9 +8879,9 @@ label_2128_internal:
             x -= 1;
         }
     }
-    if (key == key_east)
+    if (action == "east")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8900,27 +8890,27 @@ label_2128_internal:
             x += 1;
         }
     }
-    if (key == key_northwest)
+    if (action == "northwest")
     {
         x -= 1;
         y -= 1;
     }
-    if (key == key_northeast)
+    if (action == "northeast")
     {
         x += 1;
         y -= 1;
     }
-    if (key == key_southwest)
+    if (action == "southwest")
     {
         x -= 1;
         y += 1;
     }
-    if (key == key_southeast)
+    if (action == "southeast")
     {
         x += 1;
         y += 1;
     }
-    if (key != ""s)
+    if (action != ""s)
     {
         if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
         {
@@ -14730,10 +14720,8 @@ void conquer_lesimas()
 
     while (1)
     {
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
-        if (key == key_cancel)
+        auto action = cursor_check_ex();
+        if (action == "cancel")
         {
             play_the_last_scene_again();
             return;

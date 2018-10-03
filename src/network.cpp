@@ -770,12 +770,12 @@ label_1402_internal:
         cs_bk = cs;
     }
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
+
+    auto action = get_selected_item(p(0), i);
+
     if (p != -1)
     {
+        cs = i;
         if (p == -999)
         {
             net_send(
@@ -803,7 +803,7 @@ label_1402_internal:
         rtval = show_prompt(promptx, prompty, 200);
         goto label_14001_internal;
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -812,7 +812,7 @@ label_1402_internal:
             goto label_1401_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -821,7 +821,7 @@ label_1402_internal:
             goto label_1401_internal;
         }
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         return -1;
     }

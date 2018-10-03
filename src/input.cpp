@@ -5,6 +5,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "keybind/keybind.hpp"
 #include "snail/android.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -438,556 +439,95 @@ bool is_keypress_delayed(int held_frames, int keywait, int initial_keywait)
     return true;
 }
 
-void key_check(KeyWaitDelay delay_type)
+static void _proc_android_vibrate()
 {
-    static int prevjoy_at_m19{};
-    bool delay_keypress = false;
-    bool delay_enter = false;
-    static int enter_held_frames{};
-    static int shortcut_held_frames{};
-
-    if (msgalert == 1)
+    if (Config::instance().get<bool>("core.config.android.vibrate"))
     {
-        if (Config::instance().alert > 1)
-        {
-            if (Config::instance().get<bool>("core.config.android.vibrate"))
-            {
-                int duration = Config::instance().get<int>(
-                    "core.config.android.vibrate_duration");
-                snail::android::vibrate(static_cast<long>(duration * 25));
-            }
-
-            for (int i = 0; i < Config::instance().alert; ++i)
-            {
-                await(Config::instance().wait1);
-            }
-            keylog = "";
-        }
-        msgalert = 0;
-    }
-
-    key = "";
-    if (keylog != ""s)
-    {
-        keylog = strmid(keylog, 0, 1);
-        if (keylog(0)[0] == '\n')
-        {
-            keylog = key_enter;
-        }
-        key = keylog;
-        keylog = "";
-    }
-
-    // Holding down a numpad key sometimes sets "key" to a
-    // non-numpad number key, and these get passed to the player
-    // as a mispress, so counteract that here.
-    if (key.size() == 1 && isdigit(static_cast<unsigned char>(key(0)[0])))
-    {
-        key = "";
-    }
-
-    if (getkey(snail::Key::ctrl))
-    {
-        key_ctrl = 1;
-    }
-    else
-    {
-        key_ctrl = 0;
-    }
-
-    if (getkey(snail::Key::keypad_0))
-        key = "0 ";
-    else if (getkey(snail::Key::keypad_1))
-        key = "1 ";
-    else if (getkey(snail::Key::keypad_2))
-        key = "2 ";
-    else if (getkey(snail::Key::keypad_3))
-        key = "3 ";
-    else if (getkey(snail::Key::keypad_4))
-        key = "4 ";
-    else if (getkey(snail::Key::keypad_5))
-        key = "5 ";
-    else if (getkey(snail::Key::keypad_6))
-        key = "6 ";
-    else if (getkey(snail::Key::keypad_7))
-        key = "7 ";
-    else if (getkey(snail::Key::keypad_8))
-        key = "8 ";
-    else if (getkey(snail::Key::keypad_9))
-        key = "9 ";
-
-    mousel = 0;
-    key_tab = 0;
-    key_escape = 0;
-    auto input =
-        stick(StickKey::left | StickKey::up | StickKey::right | StickKey::down);
-    if (input != StickKey::none)
-    {
-        if (input == StickKey::escape)
-        {
-            if (keywait == 0)
-            {
-                key = key_cancel;
-                key_escape = 1;
-            }
-        }
-        if (input == StickKey::tab)
-        {
-            key_tab = 1;
-            key = key_ctrl ? key_prev : key_next;
-        }
-    }
-    else
-    {
-        if (getkey(snail::Key::home))
-        {
-            input = StickKey::up | StickKey::left;
-        }
-        else if (getkey(snail::Key::pageup))
-        {
-            input = StickKey::up | StickKey::right;
-        }
-        else if (getkey(snail::Key::end))
-        {
-            input = StickKey::down | StickKey::left;
-        }
-        else if (getkey(snail::Key::pagedown))
-        {
-            input = StickKey::down | StickKey::right;
-        }
-
-        // Handle the case of the current key matching the movement
-        // keybindings set in the user's config.
-        else if (key == key_west)
-        {
-            input = StickKey::left;
-        }
-        else if (key == key_north)
-        {
-            input = StickKey::up;
-        }
-        else if (key == key_east)
-        {
-            input = StickKey::right;
-        }
-        else if (key == key_south)
-        {
-            input = StickKey::down;
-        }
-        else if (key == key_northwest)
-        {
-            input = StickKey::up | StickKey::left;
-        }
-        else if (key == key_northeast)
-        {
-            input = StickKey::up | StickKey::right;
-        }
-        else if (key == key_southwest)
-        {
-            input = StickKey::down | StickKey::left;
-        }
-        else if (key == key_southeast)
-        {
-            input = StickKey::down | StickKey::right;
-        }
-        else if (key == key_wait)
-        {
-            input = StickKey::none;
-            delay_keypress = true;
-        }
-    }
-    if (getkey(snail::Key::alt))
-    {
-        key_alt = 1;
-    }
-    else
-    {
-        key_alt = 0;
-    }
-    if (getkey(snail::Key::shift))
-    {
-        keybd_wait = 100000;
-        key_shift = 1;
-        if (keywait == 0)
-        {
-            key = key_cancel;
-            keywait = 1;
-        }
-    }
-    else
-    {
-        keywait = 0;
-        key_shift = 0;
-    }
-
-    if (key == key_enter
-        || snail::Input::instance().is_pressed(snail::Key::enter)
-        || snail::Input::instance().is_pressed(snail::Key::keypad_enter))
-    {
-        key = key_enter;
-        delay_enter = true;
-    }
-    else
-    {
-        enter_held_frames = 0;
-    }
-
-    if (Config::instance().joypad)
-    {
-        int j_at_m19 = 0;
-        DIGETJOYSTATE(j_at_m19, 0);
-        if (HMMBITCHECK(j_at_m19, 0))
-        {
-            input |= StickKey::up;
-        }
-        if (HMMBITCHECK(j_at_m19, 1))
-        {
-            input |= StickKey::down;
-        }
-        if (HMMBITCHECK(j_at_m19, 2))
-        {
-            input |= StickKey::left;
-        }
-        if (HMMBITCHECK(j_at_m19, 3))
-        {
-            input |= StickKey::right;
-        }
-        int a_at_m19 = 0;
-        for (int cnt = 0; cnt < 12; ++cnt)
-        {
-            if (HMMBITCHECK(j_at_m19, 4 + cnt))
-            {
-                a_at_m19 = 1;
-                if (jkey(cnt) == key_alter)
-                {
-                    key_alt = 1;
-                }
-                if (jkey(cnt) == key_cancel)
-                {
-                    key_shift = 1;
-                    if (input != StickKey::none)
-                    {
-                        keybd_wait = 100000;
-                    }
-                }
-                if (prevjoy_at_m19 != cnt)
-                {
-                    key = jkey(cnt);
-                    prevjoy_at_m19 = cnt;
-                    if (key == key_esc)
-                    {
-                        key = key_cancel;
-                        key_escape = 1;
-                    }
-                    if (delay_type == KeyWaitDelay::always)
-                    {
-                        int b_at_m19 = 0;
-                        if (key == key_fire)
-                        {
-                            key = key_northeast;
-                            b_at_m19 = 1;
-                        }
-                        if (key == key_target)
-                        {
-                            key = key_northwest;
-                            b_at_m19 = 1;
-                        }
-                        if (key == key_get)
-                        {
-                            key = key_northeast;
-                            b_at_m19 = 1;
-                        }
-                        if (key == key_alter)
-                        {
-                            key = key_northwest;
-                            b_at_m19 = 1;
-                        }
-                        if (b_at_m19 == 0 && key != key_enter
-                            && key != key_cancel && key != key_esc)
-                        {
-                            key = key_identify;
-                        }
-                    }
-                }
-            }
-        }
-        if (a_at_m19 == 0)
-        {
-            prevjoy_at_m19 = -1;
-        }
-        else if (delay_type == KeyWaitDelay::none)
-        {
-            return;
-        }
-    }
-    if (quickkeywait)
-    {
-        if (input != StickKey::none)
-        {
-            return;
-        }
-        else
-        {
-            quickkeywait = 0;
-        }
-    }
-    if (keybd_wait >= 100000)
-    {
-        if (key_shift == 0)
-        {
-            keybd_wait = 1000;
-        }
-    }
-    if (input == StickKey::left)
-    {
-        if (key_alt == 0)
-        {
-            key = key_west;
-            delay_keypress = true;
-        }
-    }
-    if (input == StickKey::up)
-    {
-        if (key_alt == 0)
-        {
-            key = key_north;
-            delay_keypress = true;
-        }
-    }
-    if (input == StickKey::right)
-    {
-        if (key_alt == 0)
-        {
-            key = key_east;
-            delay_keypress = true;
-        }
-    }
-    if (input == StickKey::down)
-    {
-        if (key_alt == 0)
-        {
-            key = key_south;
-            delay_keypress = true;
-        }
-    }
-    if (input == (StickKey::up | StickKey::left))
-    {
-        key = key_northwest;
-        delay_keypress = true;
-    }
-    if (input == (StickKey::up | StickKey::right))
-    {
-        key = key_northeast;
-        delay_keypress = true;
-    }
-    if (input == (StickKey::down | StickKey::left))
-    {
-        key = key_southwest;
-        delay_keypress = true;
-    }
-    if (input == (StickKey::down | StickKey::right))
-    {
-        key = key_southeast;
-        delay_keypress = true;
-    }
-    if (getkey(snail::Key::clear))
-    {
-        key = key_wait;
-        delay_keypress = true;
-    }
-
-    if (getkey(snail::Key::f1))
-    {
-        key = u8"F1";
-    }
-    else if (getkey(snail::Key::f2))
-    {
-        key = u8"F2";
-    }
-    else if (getkey(snail::Key::f3))
-    {
-        key = u8"F3";
-    }
-    else if (getkey(snail::Key::f4))
-    {
-        key = u8"F4";
-    }
-    else if (getkey(snail::Key::f5))
-    {
-        key = u8"F5";
-    }
-    else if (getkey(snail::Key::f6))
-    {
-        key = u8"F6";
-    }
-    else if (getkey(snail::Key::f7))
-    {
-        key = u8"F7";
-    }
-    else if (getkey(snail::Key::f8))
-    {
-        key = u8"F8";
-    }
-    else if (getkey(snail::Key::f9))
-    {
-        key = u8"F9";
-    }
-    else if (getkey(snail::Key::f10))
-    {
-        key = u8"F10";
-    }
-    else if (getkey(snail::Key::f11))
-    {
-        key = u8"F11";
-    }
-    else if (getkey(snail::Key::f12))
-    {
-        key = u8"F12";
-    }
-
-    if (delay_type == KeyWaitDelay::none)
-    {
-        return;
-    }
-    if (delay_keypress)
-    {
-        if (delay_type == KeyWaitDelay::walk_run)
-        {
-            if (keybd_attacking != 0)
-            {
-                if (keybd_wait % Config::instance().attackwait != 0)
-                {
-                    key = ""s;
-                }
-            }
-            else if (Config::instance().scroll == 0)
-            {
-                if (keybd_wait
-                    < Config::instance().walkwait * Config::instance().startrun)
-                {
-                    if (keybd_wait % Config::instance().walkwait != 0)
-                    {
-                        key = "";
-                    }
-                }
-                else
-                {
-                    running = 1;
-                    if (keybd_wait < 100000)
-                    {
-                        if (keybd_wait % Config::instance().runwait != 0)
-                        {
-                            key = ""s;
-                        }
-                    }
-                }
-            }
-            else if (input == StickKey::none)
-            {
-                if (keybd_wait < 20)
-                {
-                    if (keybd_wait != 0)
-                    {
-                        key = ""s;
-                    }
-                }
-            }
-            else if (keybd_wait > Config::instance().startrun)
-            {
-                if (Config::instance().runscroll == 0)
-                {
-                    if (keybd_wait % Config::instance().runwait != 0)
-                    {
-                        key = "";
-                    }
-                }
-                running = 1;
-            }
-        }
-        else if (
-            keybd_wait < Config::instance().select_fast_start
-                * Config::instance().select_wait)
-        {
-            if (keybd_wait % Config::instance().select_wait != 0)
-            {
-                key = "";
-            }
-        }
-        else if (keybd_wait < 1000)
-        {
-            if (keybd_wait % Config::instance().select_fast_wait != 0)
-            {
-                key = ""s;
-            }
-        }
-        ++keybd_wait;
-    }
-    else
-    {
-        keybd_wait = 0;
-        keybd_attacking = 0;
-        running = 0;
-    }
-
-    if (delay_enter)
-    {
-        if (is_keypress_delayed(enter_held_frames, 1, 20))
-        {
-            key = "";
-        }
-        enter_held_frames++;
-    }
-
-    bool shortcut{};
-    int shortcut_delay = Config::instance().keywait;
-    if (delay_type == KeyWaitDelay::walk_run)
-    {
-        shortcut_delay = 1;
-    }
-
-    for (int i = 0; i < 10; ++i)
-    {
-        const auto pressed = snail::Input::instance().is_pressed(
-            snail::Key(int(snail::Key::key_0) + i));
-        if (pressed)
-        {
-            key = u8"sc";
-            sc = i;
-            if (key_shift || key_ctrl)
-            {
-                sc += 10;
-            }
-            keylog = "";
-            shortcut = true;
-        }
-    }
-
-    if (shortcut)
-    {
-        if (is_keypress_delayed(shortcut_held_frames, shortcut_delay, 20))
-        {
-            key = "";
-        }
-        ++shortcut_held_frames;
-    }
-    else
-    {
-        shortcut_held_frames = 0;
-    }
-
-    if (!shortcut && keyhalt != 0)
-    {
-        if (key != ""s || keybd_wait != 0)
-        {
-            key = "";
-        }
-        else
-        {
-            keyhalt = 0;
-        }
+        int duration =
+            Config::instance().get<int>("core.config.android.vibrate_duration");
+        snail::android::vibrate(static_cast<long>(duration * 25));
     }
 }
 
+static void _handle_msgalert()
+{
+    if (Config::instance().alert > 1)
+    {
+        _proc_android_vibrate();
+
+        for (int i = 0; i < Config::instance().alert; ++i)
+        {
+            await(Config::instance().wait1);
+        }
+        keylog = "";
+    }
+}
+
+std::string key_check(KeyWaitDelay delay_type)
+{
+    if (msgalert == 1)
+    {
+        _handle_msgalert();
+        msgalert = 0;
+    }
+
+    await(Config::instance().wait1);
+    return InputContext::for_menu().check_for_command(delay_type);
+}
+
+std::string cursor_check_ex(int& index)
+{
+    if (msgalert == 1)
+    {
+        _handle_msgalert();
+        msgalert = 0;
+    }
+
+    await(Config::instance().wait1);
+    return InputContext::for_menu().check_for_command_with_list(index);
+}
+
+std::string cursor_check_ex()
+{
+    int index;
+    return cursor_check_ex(index);
+}
+
+std::string get_selected_item(int& p_, int& index)
+{
+    if (msgalert == 1)
+    {
+        _handle_msgalert();
+        msgalert = 0;
+    }
+
+    await(Config::instance().wait1);
+    auto command = InputContext::for_menu().check_for_command_with_list(index);
+
+    p_ = -1;
+    if (index != -1)
+    {
+        p_ = list(0, pagesize * page + index);
+    }
+
+    return command;
+}
+
+std::string get_selected_item(int& p_)
+{
+    int index{};
+    return get_selected_item(p_, index);
+}
+
+
+optional<int> get_shortcut(const std::string& action)
+{
+    if (keybind_action_has_category(action, ActionCategory::shortcut))
+    {
+        return keybind_id_number(action);
+    }
+    return none;
+}
 
 
 void wait_key_released()
@@ -999,8 +539,8 @@ void wait_key_released()
         if (input == StickKey::none)
         {
             await(Config::instance().wait1);
-            key_check();
-            if (key(0).empty())
+            auto action = key_check();
+            if (action == "")
             {
                 break;
             }
@@ -1018,17 +558,17 @@ void wait_key_pressed(bool only_enter_or_cancel)
     while (1)
     {
         await(Config::instance().wait1);
-        key_check();
+        auto action = key_check();
         if (only_enter_or_cancel)
         {
-            if (key == key_enter || key == key_cancel)
+            if (action == "enter" || action == "cancel")
             {
                 break;
             }
         }
         else
         {
-            if (!key(0).empty())
+            if (action != "")
             {
                 break;
             }

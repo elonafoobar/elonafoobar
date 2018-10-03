@@ -34,6 +34,7 @@ MenuResult ctrl_inventory()
     int showmoney = 0;
     int citrade = 0;
     int dropcontinue = 0;
+    std::string action;
 label_20591:
     if (invctrl == 22)
     {
@@ -1041,17 +1042,14 @@ label_2061_internal:
         }
     }
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
+    action = get_selected_item(p(0));
     invmark(invctrl) = page * 1000 + cs;
-    ELONA_GET_SELECTED_ITEM(p, 0);
     if (mode == 9)
     {
         if (listmax == 0)
         {
             p = -1;
-            key = key_cancel;
+            action = "cancel";
         }
     }
     if (p != -1)
@@ -2024,7 +2022,7 @@ label_2061_internal:
             goto label_20591;
         }
     }
-    if (key == key_identify)
+    if (action == "switch_mode_2")
     {
         if (listmax != 0)
         {
@@ -2033,7 +2031,7 @@ label_2061_internal:
             goto label_20591;
         }
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -2042,7 +2040,7 @@ label_2061_internal:
             goto label_2060_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -2053,7 +2051,7 @@ label_2061_internal:
     }
     if (menucycle == 1)
     {
-        if (key == key_next || key == key_prev)
+        if (action == "next_menu" || action == "previous_menu")
         {
             if (dropcontinue)
             {
@@ -2086,7 +2084,7 @@ label_2061_internal:
             }
             if (p != -1)
             {
-                if (key == key_next)
+                if (action == "next_menu")
                 {
                     ++p;
                     if (cycle(p, i) == -1)
@@ -2094,7 +2092,7 @@ label_2061_internal:
                         p = 0;
                     }
                 }
-                if (key == key_prev)
+                if (action == "previous_menu")
                 {
                     --p;
                     if (p < 0)
@@ -2113,7 +2111,7 @@ label_2061_internal:
             }
         }
     }
-    if (key == key_mode2)
+    if (action == "switch_mode_2")
     {
         if (invctrl == 1)
         {
@@ -2144,7 +2142,7 @@ label_2061_internal:
             }
         }
     }
-    if (key == key_mode)
+    if (action == "switch_mode")
     {
         if (showresist == 1)
         {
@@ -2157,7 +2155,7 @@ label_2061_internal:
         snd(1);
         goto label_2060_internal;
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
     label_2063_internal:
         savecycle();
@@ -2217,7 +2215,7 @@ label_2061_internal:
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
         || invctrl == 14 || invctrl == 15 || invctrl == 26)
     {
-        if (key == u8"sc"s)
+        if (auto shortcut = get_shortcut(action))
         {
             p = list(0, pagesize * page + cs);
             if (inv[p].weight < 0)
@@ -2228,9 +2226,9 @@ label_2061_internal:
             }
             snd(20);
             p = inv[list(0, pagesize * page + cs)].id + invctrl * 10000;
-            if (game_data.skill_shortcuts.at(sc) == p)
+            if (game_data.skill_shortcuts.at(*shortcut) == p)
             {
-                game_data.skill_shortcuts.at(sc) = 0;
+                game_data.skill_shortcuts.at(*shortcut) = 0;
                 goto label_2060_internal;
             }
             for (int cnt = 0; cnt < 20; ++cnt)
@@ -2240,8 +2238,8 @@ label_2061_internal:
                     game_data.skill_shortcuts.at(cnt) = 0;
                 }
             }
-            game_data.skill_shortcuts.at(sc) = p;
-            txt(i18n::s.get("core.locale.ui.assign_shortcut", sc));
+            game_data.skill_shortcuts.at(*shortcut) = p;
+            txt(i18n::s.get("core.locale.ui.assign_shortcut", *shortcut));
             goto label_2060_internal;
         }
     }

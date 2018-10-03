@@ -579,9 +579,8 @@ int talk_window_query()
         }
         cs_bk = cs;
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
+        int cursor{};
+        auto action = cursor_check_ex(cursor);
         const auto input = stick(StickKey::escape);
         if (input == StickKey::escape)
         {
@@ -595,7 +594,7 @@ int talk_window_query()
         p = -1;
         for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
         {
-            if (key == key_select(cnt))
+            if (cnt == cursor)
             {
                 p = list(0, cnt);
                 break;
@@ -606,7 +605,7 @@ int talk_window_query()
             talk_reset_variables();
             return p(0);
         }
-        if (key == key_cancel)
+        if (action == "cancel")
         {
             if (chatesc == 1)
             {

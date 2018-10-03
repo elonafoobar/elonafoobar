@@ -799,10 +799,8 @@ void show_home_value()
     while (1)
     {
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
-        if (key == key_cancel)
+        auto action = cursor_check_ex();
+        if (action == "cancel")
         {
             break;
         }

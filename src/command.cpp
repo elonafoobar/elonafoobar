@@ -1312,14 +1312,12 @@ label_1953_internal:
         render_hud();
         redraw();
     }
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
-    if (key == key_target)
+    if (action == "target")
     {
-        key = key_list(cs);
+        // TODO
+        action = "select_"s + (cs + 1);
     }
-    ELONA_GET_SELECTED_ITEM(p, 0);
+    auto action = get_selected_item(p(0));
     if (p != -1)
     {
         cdata.player().enemy_id = p;
@@ -1328,7 +1326,7 @@ label_1953_internal:
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -1337,7 +1335,7 @@ label_1953_internal:
             goto label_1952_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -1346,7 +1344,7 @@ label_1953_internal:
             goto label_1952_internal;
         }
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         update_screen();
         return TurnResult::pc_turn_user_error;

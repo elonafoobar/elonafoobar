@@ -870,7 +870,7 @@ void fltn(const std::string&);
 
 
 // Input translation
-int key_direction();
+int key_direction(const std::string& action);
 int imeget();
 void imeset(int = 0);
 void cursor_check();

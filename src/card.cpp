@@ -130,20 +130,8 @@ reset_page:
         }
 
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
-        p = -1;
-
-        for (int i = 0; i < keyrange; ++i)
-        {
-            if (key == key_select(i))
-            {
-                p = pagesize * page + i;
-                break;
-            }
-        }
-        if (key == key_pageup)
+        auto action = get_selected_item(p(0));
+        if (action == "next_page")
         {
             if (pagemax != 0)
             {
@@ -152,7 +140,7 @@ reset_page:
                 goto reset_page;
             }
         }
-        if (key == key_pagedown)
+        if (action == "previous_page")
         {
             if (pagemax != 0)
             {
@@ -162,7 +150,7 @@ reset_page:
             }
         }
         if (card(0, list(0, pagesize * page + cs))
-            && (p != -1 || key == key_identify))
+            && (p != -1 || action == "switch_mode_2"))
         {
             const int ci_save = ci;
             Item tmp;
@@ -182,7 +170,7 @@ reset_page:
             cs = cs_bk;
             goto reset_page;
         }
-        else if (key == key_cancel)
+        else if (action == "cancel")
         {
             break;
         }

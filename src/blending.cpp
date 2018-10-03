@@ -648,6 +648,7 @@ void window_recipe_(
 
 TurnResult blending_menu()
 {
+    std::string action;
     elona_vector1<int> blendchecklist;
     step = -1;
     rpid = 0;
@@ -844,10 +845,9 @@ label_1925_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
+
+    action = get_selected_item(p(0));
+
     if (p != -1)
     {
         rpid = p;
@@ -857,7 +857,7 @@ label_1925_internal:
         rpref(0) = rpid;
         goto label_1923;
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -866,7 +866,7 @@ label_1925_internal:
             goto label_1924_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -875,7 +875,7 @@ label_1925_internal:
             goto label_1924_internal;
         }
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         screenupdate = 0;
         update_screen();
@@ -970,11 +970,9 @@ label_1928_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
-    if (key == key_pageup)
+
+    action = get_selected_item(p(0));
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -983,7 +981,7 @@ label_1928_internal:
             goto label_1928_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -1009,7 +1007,7 @@ label_1928_internal:
         p = rpdiff(rpid, step, step - 1);
         goto label_1923;
     }
-    if (key == key_prev)
+    if (action == "previous_menu")
     {
         snd(1);
         --rppage;
@@ -1019,7 +1017,7 @@ label_1928_internal:
             rppage = rppage(1);
         }
     }
-    if (key == key_next)
+    if (action == "next_menu")
     {
         snd(1);
         ++rppage;
@@ -1029,7 +1027,7 @@ label_1928_internal:
             rppage = 0;
         }
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         --step;
         goto label_1923;

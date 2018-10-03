@@ -637,8 +637,9 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
 
 std::string InputContext::check_for_command_with_list(int& list_index)
 {
-    auto command = check_for_command(KeyWaitDelay::always);
-    if (command == "north"s)
+    auto action = check_for_command(KeyWaitDelay::always);
+
+    if (action == "north"s)
     {
         snd(5);
         --cs;
@@ -651,7 +652,7 @@ std::string InputContext::check_for_command_with_list(int& list_index)
             }
         }
     }
-    if (command == "south"s)
+    if (action == "south"s)
     {
         snd(5);
         ++cs;
@@ -660,13 +661,13 @@ std::string InputContext::check_for_command_with_list(int& list_index)
             cs = 0;
         }
     }
-    if (command == "west"s)
+    if (action == "west"s)
     {
-        command = "previous_page"s;
+        action = "previous_page"s;
     }
-    if (command == "east"s)
+    if (action == "east"s)
     {
-        command = "next_page"s;
+        action = "next_page"s;
     }
     if (cs >= keyrange)
     {
@@ -677,19 +678,19 @@ std::string InputContext::check_for_command_with_list(int& list_index)
             cs = 0;
         }
     }
-    if (command == "enter"s)
+    if (action == "enter"s)
     {
         list_index = cs;
     }
-    else if (keybind_action_has_category(command, ActionCategory::selection))
+    else if (keybind_action_has_category(action, ActionCategory::selection))
     {
-        list_index = keybind_id_number(command);
+        list_index = keybind_id_number(action);
     }
     else
     {
         list_index = -1;
     }
-    return command;
+    return action;
 }
 
 void InputContext::reset()
@@ -702,6 +703,12 @@ void InputContext::reset()
 InputContext InputContext::instance()
 {
     static InputContext the_input_context = create(InputContextType::game);
+    return the_input_context;
+}
+
+InputContext InputContext::for_menu()
+{
+    static InputContext the_input_context = create(InputContextType::menu);
     return the_input_context;
 }
 

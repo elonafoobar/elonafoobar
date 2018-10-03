@@ -1,5 +1,7 @@
 #pragma once
+#include <string>
 #include "enums.hpp"
+#include "optional.hpp"
 
 
 namespace elona
@@ -36,7 +38,12 @@ bool input_text_dialog(
 
 StickKey stick(StickKey allow_repeat_keys = StickKey::none);
 
-void key_check(KeyWaitDelay = KeyWaitDelay::always);
+std::string key_check(KeyWaitDelay = KeyWaitDelay::always);
+std::string cursor_check_ex();
+std::string cursor_check_ex(int& index);
+std::string get_selected_item(int& p_);
+std::string get_selected_item(int& p_, int& index);
+optional<int> get_shortcut(const std::string& action);
 void wait_key_released();
 void wait_key_pressed(bool only_enter_or_cancel = false);
 

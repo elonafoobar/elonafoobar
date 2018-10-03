@@ -145,6 +145,7 @@ set(CORE_SOURCES
   src/text.cpp
   src/trait.cpp
   src/turn_sequence.cpp
+  src/turn_sequence_pc_action.cpp
   src/ui.cpp
   src/variables.cpp
   src/wish.cpp

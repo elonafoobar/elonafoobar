@@ -5,6 +5,7 @@
 #include "ctrl_file.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "keybind/keybind.hpp"
 #include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
@@ -165,37 +166,38 @@ MainMenuResult main_title_menu()
         }
         cs_bk = cs;
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
-        if (key == u8"b"s)
+
+        int index{};
+        cursor_check_ex(index);
+
+        if (index == 1)
         {
             snd(20);
             geneuse = "";
             return MainMenuResult::main_menu_new_game;
         }
-        if (key == u8"a"s)
+        if (index == 0)
         {
             snd(20);
             return MainMenuResult::main_menu_continue;
         }
-        if (key == u8"c"s)
+        if (index == 2)
         {
             snd(20);
             return MainMenuResult::main_menu_incarnate;
         }
-        if (key == u8"d"s)
+        if (index == 3)
         {
             snd(20);
             exec(homepage, 16);
         }
-        if (key == u8"e"s)
+        if (index == 4)
         {
             snd(20);
             set_option();
             return MainMenuResult::main_title_menu;
         }
-        if (key == u8"f"s)
+        if (index == 5)
         {
             snd(20);
             return MainMenuResult::finish_elona;
@@ -410,9 +412,10 @@ MainMenuResult main_menu_continue()
             mes(u8"No save files found"s);
         }
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
+
+        int cursor{};
+        auto command = cursor_check_ex(cursor);
+
         p = -1;
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
@@ -421,7 +424,7 @@ MainMenuResult main_menu_continue()
             {
                 break;
             }
-            if (key == key_select(cnt))
+            if (cursor == cnt)
             {
                 p = list(0, index);
                 break;
@@ -481,7 +484,7 @@ MainMenuResult main_menu_continue()
                 }
             }
         }
-        if (key == key_pageup)
+        if (command == "next_page")
         {
             if (pagemax != 0)
             {
@@ -490,7 +493,7 @@ MainMenuResult main_menu_continue()
                 goto savegame_change_page;
             }
         }
-        if (key == key_pagedown)
+        if (command == "previous_page")
         {
             if (pagemax != 0)
             {
@@ -499,7 +502,7 @@ MainMenuResult main_menu_continue()
                 goto savegame_change_page;
             }
         }
-        if (key == key_cancel)
+        if (command == cancel)
         {
             return MainMenuResult::main_title_menu;
         }
@@ -587,13 +590,14 @@ MainMenuResult main_menu_incarnate()
             mes(u8"No gene files found"s);
         }
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
+
+        int cursor{};
+        auto command = cursor_check_ex(cursor);
+
         p = -1;
         for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
         {
-            if (key == key_select(cnt))
+            if (cnt == cursor)
             {
                 p = list(0, cnt);
                 break;
@@ -606,7 +610,7 @@ MainMenuResult main_menu_incarnate()
             playerid = listn(0, p);
             return MainMenuResult::main_menu_new_game;
         }
-        if (key == key_cancel)
+        if (command == "cancel")
         {
             return MainMenuResult::main_title_menu;
         }
