@@ -184,6 +184,11 @@ std::string Keybind::to_string() const
 
 static bool _has_prefix(const std::string& str, const std::string& prefix)
 {
+    if (prefix.size() > str.size())
+    {
+        return false;
+    }
+
     return std::mismatch(prefix.begin(), prefix.end(), str.begin()).first
         == prefix.end();
 }
