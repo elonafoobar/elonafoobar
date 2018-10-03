@@ -286,8 +286,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     {
         txtnew();
         txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
+        rtval = yes_or_no(promptx, prompty, 160);
         if (rtval != 0)
         {
             set_reupdate();

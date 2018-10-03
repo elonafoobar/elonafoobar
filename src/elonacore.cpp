@@ -34,6 +34,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "item.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
@@ -7165,8 +7166,7 @@ label_1945_internal:
                 }
                 txt(i18n::s.get(
                     "core.locale.misc.custom.do_you_want_to_delete", userfile));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     fs::remove_all(filesystem::path(u8"./user/"s + userfile));
@@ -7788,8 +7788,7 @@ int prompt_really_attack()
     s = txttargetlevel(cc, tc);
     txt(s);
     txt(i18n::s.get("core.locale.action.really_attack", cdata[tc]));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval == 0)
     {
         update_screen();
@@ -7958,14 +7957,13 @@ void try_to_return()
     if (stat == 1)
     {
         txt(i18n::s.get("core.locale.misc.return.forbidden"));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
-        if (rtval != 0)
+        if (yes_or_no(promptx, prompty, 160) == 0)
         {
             update_screen();
             return;
         }
     }
+    Prompt prompt;
     p = 0;
     p = 0;
     i = 7;
@@ -7973,7 +7971,7 @@ void try_to_return()
     {
         list(0, p) = i;
         list(1, p) = 1;
-        ELONA_APPEND_PROMPT(mapname(i), u8"null"s, ""s + promptmax);
+        prompt.append(mapname(i));
         ++p;
     }
     for (int cnt = 0; cnt < 500; ++cnt)
@@ -8011,14 +8009,12 @@ void try_to_return()
         {
             list(0, p) = i;
             list(1, p) = area_data[i].visited_deepest_level;
-            ELONA_APPEND_PROMPT(
-                mapname(i) + u8" "s
-                    + cnvrank(
-                          (area_data[i].visited_deepest_level
-                           - area_data[i].danger_level + 1))
-                    + i18n::s.get("core.locale.misc.dungeon_level"),
-                u8"null"s,
-                ""s + promptmax);
+            auto text = mapname(i) + u8" "s
+                + cnvrank(
+                            (area_data[i].visited_deepest_level
+                             - area_data[i].danger_level + 1))
+                + i18n::s.get("core.locale.misc.dungeon_level");
+            prompt.append(text);
             ++p;
         }
     }
@@ -8030,7 +8026,7 @@ void try_to_return()
     }
     txt(i18n::s.get("core.locale.misc.return.where_do_you_want_to_go"));
     display_msg(inf_screeny + inf_tiles);
-    rtval = show_prompt(promptx, prompty, 240);
+    rtval = prompt.query(promptx, prompty, 240);
     update_screen();
     if (rtval >= 0)
     {
@@ -8072,8 +8068,7 @@ TurnResult do_gatcha()
         tmat = 41;
     }
     txt(i18n::s.get("core.locale.action.gatcha.prompt", matname(tmat)));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval == 0)
     {
         if (mat(tmat) > 0)
@@ -8116,8 +8111,7 @@ int read_textbook()
         if (sdata.get(inv[ci].param1, 0).original_level == 0)
         {
             txt(i18n::s.get("core.locale.action.read.book.not_interested"));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval != 0)
             {
                 return 0;
@@ -9929,8 +9923,7 @@ int do_cast_magic_attempt()
         if (calcspellcostmp(efid, cc) > cdata[cc].mp)
         {
             txt(i18n::s.get("core.locale.action.cast.overcast_warning"));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -10954,8 +10947,7 @@ int pick_up_item()
         {
             txt(i18n::s.get(
                 "core.locale.action.pick_up.do_you_want_to_remove", inv[ci]));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval == 0)
             {
                 snd(58);
@@ -11818,8 +11810,7 @@ void proc_autopick()
             {
                 txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_pick_up")(
                     itemname(ci)));
-                ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     did_something = false;
@@ -11849,8 +11840,7 @@ void proc_autopick()
             {
                 txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_destroy")(
                     itemname(ci)));
-                ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     did_something = false;
@@ -11870,8 +11860,7 @@ void proc_autopick()
             {
                 txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_open")(
                     itemname(ci)));
-                ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     did_something = false;
@@ -12144,8 +12133,7 @@ int unlock_box(int difficulty)
         }
         txtnew();
         txt(i18n::s.get("core.locale.action.unlock.try_again"));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
+        rtval = yes_or_no(promptx, prompty, 160);
         if (rtval == 0)
         {
             unlock_box(difficulty);
@@ -14612,11 +14600,14 @@ void conquer_lesimas()
     txt(i18n::s.get("core.locale.win.conquer_lesimas"));
     update_screen();
     const auto win_words = txtsetwinword(3);
+
+    Prompt prompt(Prompt::Type::cannot_cancel);
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        ELONA_APPEND_PROMPT(win_words[cnt], key_select(cnt), ""s + promptmax);
+        prompt.append(win_words[cnt]);
     }
-    rtval = show_prompt(promptx, prompty, 310, PromptType::cannot_cancel);
+    rtval = prompt.query(promptx, prompty, 310);
+
     wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
@@ -14735,8 +14726,7 @@ void play_the_last_scene_again()
 {
     update_entire_screen();
     txt(i18n::s.get("core.locale.misc.win.watch_event_again"));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval == 0)
     {
         conquer_lesimas();
@@ -14858,15 +14848,12 @@ TurnResult pc_died()
     show_game_score_ranking();
     s = i18n::s.get("core.locale.misc.death.you_are_about_to_be_buried");
     draw_caption();
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.misc.death.crawl_up"),
-        u8"a"s,
-        ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.misc.death.lie_on_your_back"),
-        u8"b"s,
-        ""s + promptmax);
-    rtval = show_prompt(promptx, 100, 240);
+
+    Prompt prompt("core.locale.misc.death");
+    prompt.append("crawl_up", snail::Key::key_a);
+    prompt.append("lie_on_your_back", snail::Key::key_b);
+    rtval = prompt.query(promptx, 100, 240);
+
     if (rtval == 1)
     {
         show_game_score_ranking();

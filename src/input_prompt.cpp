@@ -8,7 +8,7 @@ namespace elona
 
 int _show_prompt_val{};
 
-int Prompt::query(int x, int y)
+int Prompt::query(int x, int y, int width)
 {
     snd(26);
 
@@ -101,7 +101,18 @@ void Prompt::_draw_entries()
     {
         pos(sx + 30, cnt * 20 + sy + 22);
         gcopy(3, cnt * 24 + 624, 30, 24, 24);
-        auto text = i18n::s.get(entry.locale_key);
+
+        auto text = entry.locale_key;
+        if (auto text_opt =
+                i18n::s.get_optional(_locale_key_root + "." + entry.locale_key))
+        {
+            text = *text_opt;
+        }
+        else if (auto text_opt = i18n::s.get_optional(entry.locale_key))
+        {
+            text = *text_opt;
+        }
+
         cs_list(cs == cnt, text, sx + 56, cnt * 20 + sy + 21);
         key_list(cnt) = u8"aaa";
         ++keyrange;

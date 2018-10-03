@@ -6,6 +6,7 @@
 #include "filesystem.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "macro.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -1726,6 +1727,8 @@ void tcgdeck()
         s_at_tcg(2) = i18n::s.get("core.locale.tcg.deck.color.silver");
         s_at_tcg(3) = i18n::s.get("core.locale.tcg.deck.color.red");
         s_at_tcg(4) = i18n::s.get("core.locale.tcg.deck.color.black");
+
+        Prompt prompt;
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) =
@@ -1750,7 +1753,7 @@ void tcgdeck()
                     s_at_tcg(cnt) += u8" [Use]"s;
                 }
             }
-            ELONA_APPEND_PROMPT(s_at_tcg(cnt), u8"null"s, ""s + promptmax);
+            prompt.append(s_at_tcg(cnt));
         }
         rtval = show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
         if (rtval == -1)
@@ -1763,15 +1766,11 @@ void tcgdeck()
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.deck.choices.edit"),
-                u8"null"s,
-                ""s + promptmax);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.deck.choices.set_as_main"),
-                u8"null"s,
-                ""s + promptmax);
-            rtval = show_prompt(400, basey_at_tcg + 230, 240);
+            prompt.append(i18n::s.get("core.locale.tcg.deck.choices.edit"));
+            prompt.append(
+                i18n::s.get("core.locale.tcg.deck.choices.set_as_main"));
+            rtval = prompt.query(400, basey_at_tcg + 230, 240);
+
             if (rtval == -1)
             {
                 continue;
@@ -2639,15 +2638,11 @@ label_1830_internal:
     {
         if (deckmode_at_tcg == 0)
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.menu.save_and_exit"),
-                u8"null"s,
-                ""s + promptmax);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.menu.just_exit"),
-                u8"null"s,
-                ""s + promptmax);
-            rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
+            Prompt prompt("core.locale.tcg.menu");
+            prompt.append("save_and_exit");
+            prompt.append("just_exit");
+            rtval = prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 240);
+
             if (rtval == 0)
             {
                 ctrl_file(
@@ -2964,10 +2959,9 @@ void tcg_prompt_action()
         }
         if (action == "tcg_surrender") // TODO
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.action.surrender"),
-                u8"null"s,
-                ""s + promptmax);
+            Prompt prompt;
+            prompt.append("core.locale.tcg.action.surrender");
+
             rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
             if (rtval == 0)
             {

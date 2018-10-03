@@ -22,6 +22,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
@@ -145,18 +146,14 @@ TurnResult do_interact_command()
     tc -= 1;
     txt(i18n::s.get("core.locale.action.interact.prompt", cdata[tc]));
     p = 0;
+
+    Prompt prompt("core.locale.action.interact.choices");
     if (tc != 0)
     {
         if (cdata.player().confused == 0)
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.action.interact.choices.talk"),
-                u8"null"s,
-                ""s + 0);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.action.interact.choices.attack"),
-                u8"null"s,
-                ""s + 1);
+            prompt.append("talk", 0);
+            prompt.append("attack", 1);
         }
         if (cdata[tc].is_escorted() == 0)
         {
@@ -164,69 +161,39 @@ TurnResult do_interact_command()
             {
                 if (tc < 16)
                 {
-                    ELONA_APPEND_PROMPT(
-                        i18n::s.get(
-                            "core.locale.action.interact.choices.inventory"),
-                        u8"null"s,
-                        ""s + 4);
+                    prompt.append("inventory", 4);
                 }
                 else
                 {
-                    ELONA_APPEND_PROMPT(
-                        i18n::s.get("core.locale.action.interact.choices.give"),
-                        u8"null"s,
-                        ""s + 2);
+                    prompt.append("give", 2);
                 }
                 if (cdata[tc].is_livestock() == 1)
                 {
-                    ELONA_APPEND_PROMPT(
-                        i18n::s.get(
-                            "core.locale.action.interact.choices.bring_out"),
-                        u8"null"s,
-                        ""s + 5);
+                    prompt.append("bring_out", 5);
                 }
                 if (tc < 16)
                 {
-                    ELONA_APPEND_PROMPT(
-                        i18n::s.get(
-                            "core.locale.action.interact.choices.appearance"),
-                        u8"null"s,
-                        ""s + 8);
+                    prompt.append("appearance", 8);
                 }
             }
         }
-        ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.action.interact.choices.teach_words"),
-            u8"null"s,
-            ""s + 7);
-        ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.action.interact.choices.change_tone"),
-            u8"null"s,
-            ""s + 10);
+        prompt.append("teach_words", 7);
+        prompt.append("change_tone", 10);
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
             if (cdata[tc].is_hung_on_sand_bag())
             {
-                ELONA_APPEND_PROMPT(
-                    i18n::s.get("core.locale.action.interact.choices.release"),
-                    u8"null"s,
-                    ""s + 9);
+                prompt.append("release", 9);
             }
         }
     }
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.action.interact.choices.name"),
-        u8"null"s,
-        ""s + 3);
+    prompt.append("name", 3);
     if (0 || game_data.wizard)
     {
-        ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.action.interact.choices.info"),
-            u8"null"s,
-            ""s + 6);
+        prompt.append("info", 6);
     }
     {
-        int stat = show_prompt(promptx, prompty, 200);
+        int stat = prompt.query(promptx, prompty, 200);
         if (stat == -1)
         {
             update_screen();
@@ -1711,6 +1678,8 @@ TurnResult do_use_command()
             txt(i18n::s.get("core.locale.action.use.living.it"));
             reftype = item_data->category;
             listmax = 0;
+
+            Prompt prompt;
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
@@ -1733,15 +1702,17 @@ TurnResult do_use_command()
                     list(1, listmax) = rtval(1);
                     get_enchantment_description(
                         list(0, listmax), list(1, listmax), 0);
-                    ELONA_APPEND_PROMPT(s, u8"null"s, ""s + promptmax);
+
+                    prompt.append(s);
+
                     ++listmax;
                 }
             }
             list(0, listmax) = -1;
             ++listmax;
             s = i18n::s.get("core.locale.action.use.living.bonus");
-            ELONA_APPEND_PROMPT(s, u8"null"s, ""s + promptmax);
-            rtval = show_prompt(promptx, prompty, 400);
+            prompt.append(s);
+            rtval = prompt.query(promptx, prompty, 400);
             txtnew();
             if (rtval == -1)
             {
@@ -1812,60 +1783,55 @@ TurnResult do_use_command()
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        txt(i18n::s.get("core.locale.action.use.chair.you_sit_on", inv[ci]));
-        ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.action.use.chair.choices.relax"),
-            u8"null"s,
-            ""s + 0);
-        if (inv[ci].param1 != 1)
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.action.use.chair.choices.my_chair"),
-                u8"null"s,
-                ""s + 1);
-        }
-        if (inv[ci].param1 != 2)
-        {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.action.use.chair.choices.guest_chair"),
-                u8"null"s,
-                ""s + 2);
-        }
-        if (inv[ci].param1 != 0)
-        {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.action.use.chair.choices.free_chair"),
-                u8"null"s,
-                ""s + 3);
-        }
-        {
-            int stat = show_prompt(promptx, prompty, 260);
-            if (stat == -1)
+            txt(i18n::s.get(
+                "core.locale.action.use.chair.you_sit_on", inv[ci]));
+
+            Prompt prompt("core.locale.action.use.chair.choices");
+            prompt.append("relax", 0);
+            if (inv[ci].param1 != 1)
             {
-                goto label_2229_internal;
+                prompt.append("my_chair", 1);
             }
-            rtval = stat;
+            if (inv[ci].param1 != 2)
+            {
+                prompt.append("guest_chair", 2);
+            }
+            if (inv[ci].param1 != 0)
+            {
+                prompt.append("free_chair", 3);
+            }
+            {
+                int stat = prompt.query(promptx, prompty, 260);
+                if (stat == -1)
+                {
+                    goto label_2229_internal;
+                }
+                rtval = stat;
+            }
         }
         if (rtval == 0)
         {
-            i18n::s.get("core.locale.action.use.chair.relax");
+            txt(i18n::s.get("core.locale.action.use.chair.relax"));
             goto label_2229_internal;
         }
         if (rtval == 1)
         {
-            i18n::s.get("core.locale.action.use.chair.my_chair", inv[ci]);
+            txt(i18n::s.get("core.locale.action.use.chair.my_chair", inv[ci]));
             inv[ci].param1 = 1;
             goto label_2229_internal;
         }
         if (rtval == 2)
         {
-            i18n::s.get("core.locale.action.use.chair.guest_chair", inv[ci]);
+            txt(i18n::s.get(
+                "core.locale.action.use.chair.guest_chair", inv[ci]));
             inv[ci].param1 = 2;
             goto label_2229_internal;
         }
         if (rtval == 3)
         {
-            i18n::s.get("core.locale.action.use.chair.free_chair", inv[ci]);
+            txt(i18n::s.get(
+                "core.locale.action.use.chair.free_chair", inv[ci]));
             inv[ci].param1 = 0;
             goto label_2229_internal;
         }
@@ -2219,8 +2185,7 @@ TurnResult do_use_command()
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use.shelter.during_quest"));
-                    ELONA_YES_NO_PROMPT();
-                    rtval = show_prompt(promptx, prompty, 160);
+                    rtval = yes_or_no(promptx, prompty, 160);
                     if (rtval != 0)
                     {
                         update_screen();
@@ -2375,8 +2340,7 @@ TurnResult do_use_command()
             if (game_data.quest_flags.red_blossom_in_palmia == 1)
             {
                 txt(i18n::s.get("core.locale.action.use.nuke.not_quest_goal"));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     update_screen();
@@ -2453,8 +2417,7 @@ TurnResult do_use_command()
     case 46:
         txtnew();
         txt(i18n::s.get("core.locale.action.use.rope.prompt"));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
+        rtval = yes_or_no(promptx, prompty, 160);
         if (rtval != 0)
         {
             return TurnResult::turn_end;
@@ -2556,8 +2519,7 @@ TurnResult do_use_command()
             "core.locale.action.use.gene_machine.prompt",
             cdata[tc],
             cdata[rc]));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
+        rtval = yes_or_no(promptx, prompty, 160);
         if (rtval != 0)
         {
             return TurnResult::turn_end;
@@ -2898,8 +2860,7 @@ TurnResult do_use_stairs_command(int val0)
         if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
         {
             txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.prompt"));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -3054,8 +3015,7 @@ TurnResult do_use_stairs_command(int val0)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_quest"));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     update_screen();
@@ -3320,8 +3280,7 @@ TurnResult do_movement_command()
                         "core.locale.action.move.leave.abandoning_quest"));
                 }
             }
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             update_screen();
             if (rtval == 0)
             {
@@ -3552,8 +3511,7 @@ TurnResult do_get_command()
             && feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -3739,19 +3697,13 @@ TurnResult do_exit_command()
     {
         txt(i18n::s.get("core.locale.action.exit.prompt"));
     }
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.action.exit.choices.exit"),
-        u8"a"s,
-        ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.action.exit.choices.cancel"),
-        u8"b"s,
-        ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.action.exit.choices.game_setting"),
-        u8"c"s,
-        ""s + promptmax);
-    rtval = show_prompt(promptx, prompty, 190);
+
+    Prompt prompt("core.locale.action.exit.choices");
+    prompt.append("exit", snail::Key::key_a);
+    prompt.append("cancel", snail::Key::key_b);
+    prompt.append("game_setting", snail::Key::key_c);
+    rtval = prompt.query(promptx, prompty, 190);
+
     if (rtval == 0)
     {
         if (game_data.current_map != mdata_t::MapId::show_house)

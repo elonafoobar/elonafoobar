@@ -44,6 +44,7 @@ std::string cursor_check_ex(int& index);
 std::string get_selected_item(int& p_);
 std::string get_selected_item(int& p_, int& index);
 optional<int> get_shortcut(const std::string& action);
+int yes_or_no(int x, int y, int width);
 void wait_key_released();
 void wait_key_pressed(bool only_enter_or_cancel = false);
 

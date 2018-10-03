@@ -1484,8 +1484,7 @@ TurnResult pc_turn(bool advance_time)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_game"));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     petarenawin = 2;

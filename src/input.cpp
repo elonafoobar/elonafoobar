@@ -5,6 +5,8 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "i18n.hpp"
+#include "input_prompt.hpp"
 #include "keybind/keybind.hpp"
 #include "snail/android.hpp"
 #include "ui.hpp"
@@ -527,6 +529,15 @@ optional<int> get_shortcut(const std::string& action)
         return keybind_id_number(action);
     }
     return none;
+}
+
+
+int yes_or_no(int x, int y, int width)
+{
+    Prompt result;
+    result.append(i18n::_("ui", "yes"), snail::Key::key_y, 0);
+    result.append(i18n::_("ui", "no"), snail::Key::key_n, 1);
+    return result.query(x, y, width);
 }
 
 

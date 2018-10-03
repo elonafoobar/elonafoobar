@@ -1281,8 +1281,7 @@ label_2061_internal:
                         itemname(ci, in),
                         (in * calcitemvalue(ci, 1))));
                 }
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     screenupdate = -1;
@@ -2166,8 +2165,7 @@ label_2061_internal:
                 if (listmax > 0)
                 {
                     txt(i18n::s.get("core.locale.ui.inv.take.really_leave"));
-                    ELONA_YES_NO_PROMPT();
-                    rtval = show_prompt(promptx, prompty, 160);
+                    rtval = yes_or_no(promptx, prompty, 160);
                     if (rtval != 0)
                     {
                         goto label_2060_internal;

@@ -4,6 +4,7 @@
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "macro.hpp"
 #include "random.hpp"
 #include "ui.hpp"
@@ -776,13 +777,13 @@ label_1402_internal:
     if (p != -1)
     {
         cs = i;
+        Prompt prompt("core.locale.network.alias");
         if (p == -999)
         {
             net_send(
                 ""s + cdatan(1, 0) + i18n::space_if_needed() + cdatan(0, 0), 1);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
-            rtval = show_prompt(promptx, prompty, 200);
+            prompt.append("ok", snail::Key::key_y);
+            rtval = prompt.query(promptx, prompty, 200);
             goto label_14001_internal;
         }
         if (game_data.next_voting_time > game_data.date.hours())
@@ -798,9 +799,8 @@ label_1402_internal:
         txt(i18n::s.get("core.locale.network.alias.you_vote"));
         net_send(""s + p, 2);
         modrank(6, 100, 5);
-        ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
-        rtval = show_prompt(promptx, prompty, 200);
+        prompt.append("ok", snail::Key::key_y);
+        rtval = prompt.query(promptx, prompty, 200);
         goto label_14001_internal;
     }
     if (action == "next_page")

@@ -207,8 +207,7 @@ void prompt_stop_continuous_action()
             u8"ui",
             u8"action",
             u8"_"s + static_cast<int>(cdata[cc].continuous_action.type))));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
 }
 
 

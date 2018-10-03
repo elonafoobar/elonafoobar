@@ -11,6 +11,7 @@
 #include "enums.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
@@ -666,18 +667,6 @@ label_1923:
             window_recipe(list2, -1, wx + ww, wy, 400, wh);
             txtnew();
             txt(i18n::s.get("core.locale.blending.prompt.how_many"));
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.blending.prompt.start"),
-                u8"a"s,
-                ""s + promptmax);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.blending.prompt.go_back"),
-                u8"b"s,
-                ""s + promptmax);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.blending.prompt.from_the_start"),
-                u8"c"s,
-                ""s + promptmax);
             p = 10;
             for (int cnt = 0; cnt < 10; ++cnt)
             {
@@ -695,8 +684,13 @@ label_1923:
                 }
             }
             rpmode = 1;
-            rtval =
-                show_prompt(promptx, prompty, 220, PromptType::with_number, p);
+
+            PromptWithNumber prompt(p(0), "core.locale.blending.prompt");
+            prompt.append("start", snail::Key::key_a);
+            prompt.append("go_back", snail::Key::key_b);
+            prompt.append("from_the_start", snail::Key::key_c);
+            rtval = prompt.query(promptx, prompty, 220);
+
             rpmode = 0;
             if (rtval == 0)
             {

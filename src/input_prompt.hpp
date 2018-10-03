@@ -2,14 +2,10 @@
 #include <string>
 #include <vector>
 #include "optional.hpp"
+#include "snail/input.hpp"
 
 namespace elona
 {
-
-namespace snail
-{
-enum class Key;
-}
 
 typedef std::string I18NKey;
 
@@ -39,28 +35,46 @@ private:
 
 public:
     Prompt(Type type = Type::can_cancel)
-        : _type(type)
+        : _locale_key_root(locale_key_root)
+        , _type(type)
     {
     }
 
-    void append(snail::Key key, const I18NKey& locale_key)
+    Prompt(I18NKey locale_key_root, Type type = Type::can_cancel)
+        : _locale_key_root(locale_key_root)
+        , _type(type)
+    {
+    }
+
+    void append(const I18NKey& locale_key, snail::Key key = snail::Key::none)
     {
         _entries.emplace_back(key, locale_key, _promptmax);
         _promptmax++;
     }
-    void append(snail::Key key, const I18NKey& locale_key, int value)
+    void append(const I18NKey& locale_key, int value)
+    {
+        append(snail::Key::none, locale_key, value);
+    }
+    void append(const I18NKey& locale_key, snail::Key key, int value)
+    {
+        _entries.emplace_back(key, locale_key, value);
+        _promptmax = std::max(_promptmax, value) + 1;
+    }
+    void append(const I18NKey& locale_key, snail::Key key, int value)
     {
         _entries.emplace_back(key, locale_key, value);
         _promptmax = std::max(_promptmax, value) + 1;
     }
 
-    int query(int x, int y);
+    int query(int x, int y, int width);
 
 protected:
     virtual void _draw_box(){};
     virtual void _draw_window(){};
     virtual void _draw_window2(){};
     virtual void _modify_result(const std::string&){};
+
+    I18NKey _locale_key_root;
 
 private:
     void _draw_keys_and_background();
@@ -75,8 +89,9 @@ private:
 class PromptWithNumber : public Prompt
 {
 public:
-    PromptWithNumber(int number)
+    PromptWithNumber(int number, I18NKey locale_key_root)
         : _number(number)
+        , _locale_key_root(locale_key_root)
     {
     }
 

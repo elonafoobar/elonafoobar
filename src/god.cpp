@@ -447,8 +447,7 @@ TurnResult do_pray()
     }
     txtnew();
     txt(i18n::s.get("core.locale.god.pray.prompt"));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval != 0)
     {
         update_screen();
@@ -513,8 +512,7 @@ TurnResult do_pray()
             if (f)
             {
                 txt(i18n::s.get("core.locale.god.pray.servant.prompt_decline"));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     ++game_data.god_rank;

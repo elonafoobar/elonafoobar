@@ -456,8 +456,7 @@ MainMenuResult main_menu_continue()
                             + u8" ?"s;
                     }
                     draw_caption();
-                    ELONA_YES_NO_PROMPT();
-                    rtval = show_prompt(promptx, prompty, 200);
+                    rtval = yes_or_no(promptx, prompty, 200);
                     if (rtval != 0)
                     {
                         return MainMenuResult::main_menu_continue;
@@ -473,8 +472,7 @@ MainMenuResult main_menu_continue()
                             + playerid + u8" ?"s;
                     }
                     draw_caption();
-                    ELONA_YES_NO_PROMPT();
-                    rtval = show_prompt(promptx, prompty, 200);
+                    rtval = yes_or_no(promptx, prompty, 200);
                     if (rtval == 0)
                     {
                         snd(20);

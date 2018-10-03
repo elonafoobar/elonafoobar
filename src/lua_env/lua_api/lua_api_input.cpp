@@ -1,6 +1,7 @@
 #include "lua_api_input.hpp"
 #include "../../i18n.hpp"
 #include "../../input.hpp"
+#include "../../input_prompt.hpp"
 
 namespace elona
 {
@@ -10,8 +11,7 @@ namespace lua
 bool Input::yes_no(const std::string& message)
 {
     txt(message + " ");
-    ELONA_YES_NO_PROMPT();
-    int rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     return rtval == 0;
 }
 
@@ -68,13 +68,13 @@ sol::optional<int> Input::prompt_choice(sol::variadic_args args)
         throw sol::error("Input.prompt_choice called with no arguments");
     }
 
+    Prompt prompt;
     for (size_t i = 0; i < args.size(); i++)
     {
-        ELONA_APPEND_PROMPT(
-            args[i].as<std::string>(), u8"null"s, std::to_string(i));
+        prompt.append(args[i].as<std::string>(), i);
     }
 
-    int rtval = show_prompt(promptx, prompty, 160);
+    int rtval = prompt.query(promptx, prompty, 160);
     if (rtval == -1)
     {
         return sol::nullopt;
