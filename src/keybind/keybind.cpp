@@ -699,6 +699,12 @@ void InputContext::reset()
     _last_action = ""s;
 }
 
+InputContext InputContext::instance()
+{
+    static InputContext the_input_context = create(InputContextType::game);
+    return the_input_context;
+}
+
 bool keybind_is_joystick_key(snail::Key key)
 {
     return false;

@@ -236,6 +236,7 @@ public:
     void reset();
 
     static InputContext create(InputContextType type);
+    static InputContext instance();
 
 private:
     /**
