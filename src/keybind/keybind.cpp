@@ -9,12 +9,6 @@ using namespace std::literals::string_literals;
 
 namespace elona
 {
-
-namespace keybind
-{
-ActionMap actions;
-} // namespace keybind
-
 // clang-format off
 static std::map<InputContextType, std::unordered_set<ActionCategory>> input_context_types =
 {
@@ -29,130 +23,6 @@ static std::map<InputContextType, std::unordered_set<ActionCategory>> input_cont
                               ActionCategory::wizard}}
 };
 // clang-format on
-
-void init_actions()
-{
-    using namespace snail;
-    using namespace keybind;
-
-    actions.clear();
-
-    // clang-format off
-    actions.emplace("escape",              Action{ActionCategory::default_,  {{Key::escape,          ModKey::none}}});
-    actions.emplace("cancel",              Action{ActionCategory::default_,  {{Key::shift,           ModKey::none}}});
-    actions.emplace("enter",               Action{ActionCategory::default_,  {{Key::enter,           ModKey::none}, {Key::keypad_enter, ModKey::none}}});
-    actions.emplace("north",               Action{ActionCategory::default_,  {{Key::up,              ModKey::none}, {Key::keypad_8,     ModKey::none}}});
-    actions.emplace("south",               Action{ActionCategory::default_,  {{Key::down,            ModKey::none}, {Key::keypad_2,     ModKey::none}}});
-    actions.emplace("east",                Action{ActionCategory::default_,  {{Key::left,            ModKey::none}, {Key::keypad_4,     ModKey::none}}});
-    actions.emplace("west",                Action{ActionCategory::default_,  {{Key::right,           ModKey::none}, {Key::keypad_6,     ModKey::none}}});
-    actions.emplace("northwest",           Action{ActionCategory::default_,  {{Key::pageup,          ModKey::none}, {Key::keypad_7,     ModKey::none}}});
-    actions.emplace("northeast",           Action{ActionCategory::default_,  {{Key::home,            ModKey::none}, {Key::keypad_9,     ModKey::none}}});
-    actions.emplace("southwest",           Action{ActionCategory::default_,  {{Key::pagedown,        ModKey::none}, {Key::keypad_1,     ModKey::none}}});
-    actions.emplace("southeast",           Action{ActionCategory::default_,  {{Key::end,             ModKey::none}, {Key::keypad_3,     ModKey::none}}});
-
-    actions.emplace("shortcut_1",          Action{ActionCategory::shortcut,  {{Key::key_1,           ModKey::none}}});
-    actions.emplace("shortcut_2",          Action{ActionCategory::shortcut,  {{Key::key_2,           ModKey::none}}});
-    actions.emplace("shortcut_3",          Action{ActionCategory::shortcut,  {{Key::key_3,           ModKey::none}}});
-    actions.emplace("shortcut_4",          Action{ActionCategory::shortcut,  {{Key::key_4,           ModKey::none}}});
-    actions.emplace("shortcut_5",          Action{ActionCategory::shortcut,  {{Key::key_5,           ModKey::none}}});
-    actions.emplace("shortcut_6",          Action{ActionCategory::shortcut,  {{Key::key_6,           ModKey::none}}});
-    actions.emplace("shortcut_7",          Action{ActionCategory::shortcut,  {{Key::key_7,           ModKey::none}}});
-    actions.emplace("shortcut_8",          Action{ActionCategory::shortcut,  {{Key::key_8,           ModKey::none}}});
-    actions.emplace("shortcut_9",          Action{ActionCategory::shortcut,  {{Key::key_9,           ModKey::none}}});
-    actions.emplace("shortcut_10",         Action{ActionCategory::shortcut,  {{Key::key_0,           ModKey::none}}});
-    actions.emplace("shortcut_11",         Action{ActionCategory::shortcut,  {{Key::key_1,           ModKey::ctrl}, {Key::key_1, ModKey::shift}}});
-    actions.emplace("shortcut_12",         Action{ActionCategory::shortcut,  {{Key::key_2,           ModKey::ctrl}, {Key::key_2, ModKey::shift}}});
-    actions.emplace("shortcut_13",         Action{ActionCategory::shortcut,  {{Key::key_3,           ModKey::ctrl}, {Key::key_3, ModKey::shift}}});
-    actions.emplace("shortcut_14",         Action{ActionCategory::shortcut,  {{Key::key_4,           ModKey::ctrl}, {Key::key_4, ModKey::shift}}});
-    actions.emplace("shortcut_15",         Action{ActionCategory::shortcut,  {{Key::key_5,           ModKey::ctrl}, {Key::key_5, ModKey::shift}}});
-    actions.emplace("shortcut_16",         Action{ActionCategory::shortcut,  {{Key::key_6,           ModKey::ctrl}, {Key::key_6, ModKey::shift}}});
-    actions.emplace("shortcut_17",         Action{ActionCategory::shortcut,  {{Key::key_7,           ModKey::ctrl}, {Key::key_7, ModKey::shift}}});
-    actions.emplace("shortcut_18",         Action{ActionCategory::shortcut,  {{Key::key_8,           ModKey::ctrl}, {Key::key_8, ModKey::shift}}});
-    actions.emplace("shortcut_19",         Action{ActionCategory::shortcut,  {{Key::key_9,           ModKey::ctrl}, {Key::key_9, ModKey::shift}}});
-    actions.emplace("shortcut_20",         Action{ActionCategory::shortcut,  {{Key::key_0,           ModKey::ctrl}, {Key::key_0, ModKey::shift}}});
-
-    actions.emplace("select_1",            Action{ActionCategory::selection, {{Key::key_a,           ModKey::none}}});
-    actions.emplace("select_2",            Action{ActionCategory::selection, {{Key::key_b,           ModKey::none}}});
-    actions.emplace("select_3",            Action{ActionCategory::selection, {{Key::key_c,           ModKey::none}}});
-    actions.emplace("select_4",            Action{ActionCategory::selection, {{Key::key_d,           ModKey::none}}});
-    actions.emplace("select_5",            Action{ActionCategory::selection, {{Key::key_e,           ModKey::none}}});
-    actions.emplace("select_6",            Action{ActionCategory::selection, {{Key::key_f,           ModKey::none}}});
-    actions.emplace("select_7",            Action{ActionCategory::selection, {{Key::key_g,           ModKey::none}}});
-    actions.emplace("select_8",            Action{ActionCategory::selection, {{Key::key_h,           ModKey::none}}});
-    actions.emplace("select_9",            Action{ActionCategory::selection, {{Key::key_i,           ModKey::none}}});
-    actions.emplace("select_10",           Action{ActionCategory::selection, {{Key::key_j,           ModKey::none}}});
-    actions.emplace("select_11",           Action{ActionCategory::selection, {{Key::key_k,           ModKey::none}}});
-    actions.emplace("select_12",           Action{ActionCategory::selection, {{Key::key_l,           ModKey::none}}});
-    actions.emplace("select_13",           Action{ActionCategory::selection, {{Key::key_m,           ModKey::none}}});
-    actions.emplace("select_14",           Action{ActionCategory::selection, {{Key::key_n,           ModKey::none}}});
-    actions.emplace("select_15",           Action{ActionCategory::selection, {{Key::key_o,           ModKey::none}}});
-    actions.emplace("select_16",           Action{ActionCategory::selection, {{Key::key_p,           ModKey::none}}});
-    actions.emplace("select_17",           Action{ActionCategory::selection, {{Key::key_q,           ModKey::none}}});
-    actions.emplace("select_18",           Action{ActionCategory::selection, {{Key::key_r,           ModKey::none}}});
-    actions.emplace("select_19",           Action{ActionCategory::selection, {{Key::key_s,           ModKey::none}}});
-
-    actions.emplace("next_page",           Action{ActionCategory::menu,      {{Key::keypad_plus,     ModKey::none}}});
-    actions.emplace("previous_page",       Action{ActionCategory::menu,      {{Key::keypad_minus,    ModKey::none}}});
-    actions.emplace("next_menu",           Action{ActionCategory::menu,      {{Key::tab,             ModKey::none}}});
-    actions.emplace("previous_menu",       Action{ActionCategory::menu,      {{Key::tab,             ModKey::ctrl}}});
-    actions.emplace("switch_mode",         Action{ActionCategory::menu,      {{Key::key_z,           ModKey::none}}});
-    actions.emplace("switch_mode_2",       Action{ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
-
-    actions.emplace("wait",                Action{ActionCategory::game,      {{Key::period,          ModKey::none}, {Key::keypad_5, ModKey::none}}});
-    actions.emplace("quick_menu",          Action{ActionCategory::game,      {{Key::key_z,           ModKey::none}}});
-    actions.emplace("zap",                 Action{ActionCategory::game,      {{Key::key_z,           ModKey::shift}}});
-    actions.emplace("inventory",           Action{ActionCategory::game,      {{Key::key_x,           ModKey::none}}});
-    actions.emplace("quick_inventory",     Action{ActionCategory::game,      {{Key::key_x,           ModKey::shift}}});
-    actions.emplace("get",                 Action{ActionCategory::game,      {{Key::key_g,           ModKey::none}, {Key::keypad_0, ModKey::none}}});
-    actions.emplace("drop",                Action{ActionCategory::game,      {{Key::key_d,           ModKey::none}}});
-    actions.emplace("chara_info",          Action{ActionCategory::game,      {{Key::key_c,           ModKey::none}}});
-    actions.emplace("eat",                 Action{ActionCategory::game,      {{Key::key_e,           ModKey::none}}});
-    actions.emplace("wear",                Action{ActionCategory::game,      {{Key::key_w,           ModKey::none}}});
-    actions.emplace("cast",                Action{ActionCategory::game,      {{Key::key_v,           ModKey::none}}});
-    actions.emplace("drink",               Action{ActionCategory::game,      {{Key::key_q,           ModKey::none}}});
-    actions.emplace("read",                Action{ActionCategory::game,      {{Key::key_r,           ModKey::none}}});
-    actions.emplace("fire",                Action{ActionCategory::game,      {{Key::key_f,           ModKey::none}}});
-    actions.emplace("go_down",             Action{ActionCategory::game,      {{Key::greater,         ModKey::none}}});
-    actions.emplace("go_up",               Action{ActionCategory::game,      {{Key::less,            ModKey::none}}});
-    actions.emplace("save",                Action{ActionCategory::game,      {{Key::key_s,           ModKey::shift}}});
-    actions.emplace("search",              Action{ActionCategory::game,      {{Key::key_s,           ModKey::none}}});
-    actions.emplace("interact",            Action{ActionCategory::game,      {{Key::key_i,           ModKey::none}}});
-    actions.emplace("skill",               Action{ActionCategory::game,      {{Key::key_a,           ModKey::none}}});
-    actions.emplace("close",               Action{ActionCategory::game,      {{Key::key_c,           ModKey::shift}}});
-    actions.emplace("rest",                Action{ActionCategory::game,      {{Key::key_r,           ModKey::shift}}});
-    actions.emplace("target",              Action{ActionCategory::game,      {{Key::keypad_asterisk, ModKey::none}}});
-    actions.emplace("dig",                 Action{ActionCategory::game,      {{Key::key_d,           ModKey::shift}}});
-    actions.emplace("pray",                Action{ActionCategory::game,      {{Key::key_p,           ModKey::none}}});
-    actions.emplace("offer",               Action{ActionCategory::game,      {{Key::key_o,           ModKey::shift}}});
-    actions.emplace("journal",             Action{ActionCategory::game,      {{Key::key_j,           ModKey::none}}});
-    actions.emplace("material",            Action{ActionCategory::game,      {{Key::key_m,           ModKey::none}}});
-    actions.emplace("trait",               Action{ActionCategory::game,      {{Key::key_f,           ModKey::shift}}});
-    actions.emplace("look",                Action{ActionCategory::game,      {{Key::key_l,           ModKey::none}}});
-    actions.emplace("give",                Action{ActionCategory::game,      {{Key::key_g,           ModKey::shift}}});
-    actions.emplace("throw",               Action{ActionCategory::game,      {{Key::key_t,           ModKey::shift}}});
-    actions.emplace("ammo",                Action{ActionCategory::game,      {{Key::key_a,           ModKey::shift}}});
-    actions.emplace("autodig",             Action{ActionCategory::game,      {{Key::key_h,           ModKey::shift}}});
-    actions.emplace("quicksave",           Action{ActionCategory::game,      {{Key::f1,              ModKey::none}}});
-    actions.emplace("quickload",           Action{ActionCategory::game,      {{Key::f2,              ModKey::none}}});
-    actions.emplace("help",                Action{ActionCategory::game,      {{Key::question,        ModKey::none}}});
-    actions.emplace("message_log",         Action{ActionCategory::game,      {{Key::slash,           ModKey::none}}});
-    actions.emplace("chat_box",            Action{ActionCategory::game,      {{Key::tab,             ModKey::none}}});
-    actions.emplace("tcg",                 Action{ActionCategory::game,      {{Key::f3,              ModKey::none}}});
-    actions.emplace("update_screen",       Action{ActionCategory::game,      {{Key::f9,              ModKey::none}}});
-    actions.emplace("dump_player_info",    Action{ActionCategory::game,      {{Key::f11,             ModKey::none}}});
-    actions.emplace("enable_voldemort",    Action{ActionCategory::game,      {{Key::f12,             ModKey::none}}});
-    actions.emplace("reload_autopick",     Action{ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
-    actions.emplace("auto_action",         Action{ActionCategory::game,      {{Key::enter,           ModKey::none}}});
-
-    // TODO: prioritize over other categories
-    actions.emplace("wizard_mewmewmew",    Action{ActionCategory::wizard,    {{Key::f3,              ModKey::none}}});
-    actions.emplace("wizard_wish",         Action{ActionCategory::wizard,    {{Key::f5,              ModKey::none}}});
-    actions.emplace("wizard_advance_time", Action{ActionCategory::wizard,    {{Key::f6,              ModKey::none}}});
-    actions.emplace("wizard_delete_map",   Action{ActionCategory::wizard,    {{Key::f7,              ModKey::none}}});
-    // clang-format on
-
-    KeybindManager::instance().register_default_bindings(actions);
-}
 
 
 KeybindManager& KeybindManager::instance()
@@ -364,12 +234,12 @@ optional<Keybind> Keybind::from_string(std::string str)
     return none;
 }
 
-bool InputContext::matches(
+bool InputContext::_matches(
     const std::string& action_id,
     snail::Key key,
     snail::ModKey modifiers)
 {
-    if (available_actions.find(action_id) == available_actions.end())
+    if (_available_actions.find(action_id) == _available_actions.end())
     {
         return false;
     }
@@ -393,14 +263,18 @@ bool InputContext::matches(
     return false;
 }
 
-optional<std::string> InputContext::action_for_key(const Keybind& keybind)
+optional<std::string> InputContext::_action_for_key(const Keybind& keybind)
 {
     // The set is sorted by insertion order, so entries from categories inserted
     // earlier will receive priority.
-    for (const auto& action_id : available_actions)
+    for (const auto& action_id : _available_actions)
     {
         const auto& binding = KeybindManager::instance().binding(action_id);
-        if (binding.matches(keybind))
+        bool excluded =
+            _excluded_categories.find(keybind::actions.at(action_id).category)
+            != _excluded_categories.end();
+
+        if (!excluded && binding.matches(keybind))
         {
             return action_id;
         }
@@ -409,7 +283,7 @@ optional<std::string> InputContext::action_for_key(const Keybind& keybind)
     return none;
 }
 
-optional<std::string> InputContext::check_movement_action(
+optional<std::string> InputContext::_check_movement_action(
     const std::set<snail::Key>& keys,
     snail::ModKey modifiers)
 {
@@ -419,44 +293,44 @@ optional<std::string> InputContext::check_movement_action(
     for (const auto& key : keys)
     {
         // TODO: is keywait still needed after input_context.reset()?
-        if (matches("escape", key, modifiers) && keywait == 0)
+        if (_matches("escape", key, modifiers) && keywait == 0)
         {
             return "cancel"s;
         }
 
-        if (matches("north", key, modifiers))
+        if (_matches("north", key, modifiers))
         {
             input |= StickKey::up;
         }
-        else if (matches("south", key, modifiers))
+        else if (_matches("south", key, modifiers))
         {
             input |= StickKey::down;
         }
-        else if (matches("east", key, modifiers))
+        else if (_matches("east", key, modifiers))
         {
             input |= StickKey::left;
         }
-        else if (matches("west", key, modifiers))
+        else if (_matches("west", key, modifiers))
         {
             input |= StickKey::right;
         }
-        else if (matches("northwest", key, modifiers))
+        else if (_matches("northwest", key, modifiers))
         {
             input = StickKey::up | StickKey::left;
         }
-        else if (matches("northeast", key, modifiers))
+        else if (_matches("northeast", key, modifiers))
         {
             input = StickKey::up | StickKey::right;
         }
-        else if (matches("southwest", key, modifiers))
+        else if (_matches("southwest", key, modifiers))
         {
             input = StickKey::down | StickKey::left;
         }
-        else if (matches("southeast", key, modifiers))
+        else if (_matches("southeast", key, modifiers))
         {
             input = StickKey::down | StickKey::right;
         }
-        else if (matches("wait", key, modifiers))
+        else if (_matches("wait", key, modifiers))
         {
             input = StickKey::none;
             wait = true;
@@ -528,13 +402,12 @@ optional<std::string> InputContext::check_movement_action(
     return none;
 }
 
-bool InputContext::is_nonmovement_key(const snail::Key& k)
+bool InputContext::_is_nonmovement_key(const snail::Key& k)
 {
-    return (keybind_is_bindable_key(k) || k == snail::Key::enter)
-        && excluded_keys.find(k) == excluded_keys.end();
+    return keybind_is_bindable_key(k) || k == snail::Key::enter;
 }
 
-optional<Keybind> InputContext::check_key()
+optional<Keybind> InputContext::_check_normal_action()
 {
     const auto& keys = snail::Input::instance().pressed_keys();
     auto modifiers = snail::Input::instance().modifiers();
@@ -544,7 +417,7 @@ optional<Keybind> InputContext::check_key()
     // movement keys.
     const auto it =
         std::find_if(keys.begin(), keys.end(), [this](const snail::Key& k) {
-            return is_nonmovement_key(k);
+            return _is_nonmovement_key(k);
         });
 
     if (it != keys.end())
@@ -555,22 +428,20 @@ optional<Keybind> InputContext::check_key()
     return none;
 }
 
-InputContext make_input_context(ActionCategory category)
+InputContext InputContext::create(InputContextType type)
 {
     InputContext result;
-    result.add_actions_from_category(ActionCategory::default_);
-    if (game_data.wizard)
-    {
-        result.add_actions_from_category(ActionCategory::wizard);
-    }
-    result.add_actions_from_category(category);
 
-    // TODO exclude movement keys
+    const auto& categories = input_context_types.at(type);
+    for (const auto& category : categories)
+    {
+        result._add_actions_from_category(category);
+    }
 
     return result;
 }
 
-void InputContext::add_actions_from_category(ActionCategory category)
+void InputContext::_add_actions_from_category(ActionCategory category)
 {
     for (const auto& pair : keybind::actions)
     {
@@ -579,17 +450,12 @@ void InputContext::add_actions_from_category(ActionCategory category)
 
         if (action.category == category)
         {
-            add_action(action_id);
+            _available_actions.insert(action_id);
         }
     }
 }
 
-void InputContext::add_action(const std::string& action)
-{
-    available_actions.insert(action);
-}
-
-std::string InputContext::delay_movement_action(
+std::string InputContext::_delay_movement_action(
     const std::string& action,
     snail::ModKey modifiers,
     KeyWaitDelay delay_type)
@@ -699,20 +565,20 @@ _is_keypress_delayed(int held_frames, int keywait, int initial_keywait)
     return true;
 }
 
-std::string InputContext::delay_normal_action(const std::string& action)
+std::string InputContext::_delay_normal_action(const std::string& action)
 {
-    if (action == "" || last_action_ != action)
+    if (action == "" || _last_action != action)
     {
-        last_action_held_frames_ = 0;
+        _last_action_held_frames = 0;
     }
 
-    bool delayed = _is_keypress_delayed(last_action_held_frames_, 1, 20);
+    bool delayed = _is_keypress_delayed(_last_action_held_frames, 1, 20);
 
-    last_action_held_frames_++;
+    _last_action_held_frames++;
 
-    if (last_action_ != action)
+    if (_last_action != action)
     {
-        last_action_ = action;
+        _last_action = action;
     }
 
     if (delayed)
@@ -728,12 +594,12 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
     const auto& keys = snail::Input::instance().pressed_keys();
     auto modifiers = snail::Input::instance().modifiers();
 
-    if (const auto action = check_movement_action(keys, modifiers))
+    if (const auto action = _check_movement_action(keys, modifiers))
     {
-        last_action_ = ""s;
+        _last_action = ""s;
 
         // Movement keys have special key delay behavior, so handle them.
-        auto result = delay_movement_action(*action, modifiers, delay_type);
+        auto result = _delay_movement_action(*action, modifiers, delay_type);
         ++keybd_wait;
 
         return result;
@@ -745,20 +611,20 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
         running = 0;
     }
 
-    if (const auto keybind = check_key())
+    if (const auto keybind = _check_normal_action())
     {
-        if (const auto action = action_for_key(*keybind))
+        if (const auto action = _action_for_key(*keybind))
         {
-            return delay_normal_action(*action);
+            return _delay_normal_action(*action);
         }
         else
         {
-            last_action_ = "";
+            _last_action = "";
         }
     }
     else
     {
-        last_action_ = "";
+        _last_action = "";
     }
 
     return ""s;
@@ -824,8 +690,8 @@ std::string InputContext::check_for_command_with_list(int& list_index)
 void InputContext::reset()
 {
     snail::Input::instance().clear_pressed_keys();
-    last_action_held_frames_ = 0;
-    last_action_ = ""s;
+    _last_action_held_frames = 0;
+    _last_action = ""s;
 }
 
 bool keybind_is_joystick_key(snail::Key key)

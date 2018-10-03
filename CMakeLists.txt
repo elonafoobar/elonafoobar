@@ -191,6 +191,7 @@ set(CORE_SOURCES
   src/dialog/dialog_data.cpp
   src/dialog/dialog_decoder.cpp
 
+  src/keybind/keybind_actions.cpp
   src/keybind/key_names.cpp
   src/keybind/keybind.cpp
   src/keybind/keybind_deserializer.cpp

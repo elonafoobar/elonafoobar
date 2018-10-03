@@ -47,8 +47,14 @@ static void _load_keybindings()
         {
             const auto& action_id = pair->second;
             const auto& keybind_config = keybind_manager.binding(pair->second);
+
+            // core.locale.keybind.chat_box
+            const auto mod_name = "core"s;
+            const auto localized_name =
+                i18n::s.get(mod_name + ".locale.keybind."s + action_id);
+
             list(0, listmax) = 999; // i % 7 == 0 ? -1 : 999;
-            listn(0, listmax) = action_id;
+            listn(0, listmax) = localized_name;
             listn(1, listmax) = keybind_config.primary.to_string();
             listn(2, listmax) = keybind_config.alternate.to_string();
             listmax++;
@@ -74,10 +80,6 @@ bool UIMenuKeybindings::init()
     _load_keybindings();
 
     windowshadow = 1;
-
-    input_context.add_actions_from_category(ActionCategory::default_);
-    input_context.add_actions_from_category(ActionCategory::selection);
-    input_context.add_actions_from_category(ActionCategory::menu);
 
     return true;
 }

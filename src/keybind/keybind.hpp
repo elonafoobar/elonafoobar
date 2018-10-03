@@ -197,15 +197,15 @@ class InputContext
 public:
     void clear();
 
-    /**
-     * Adds an action that can be activated in this input context.
-     */
-    void add_action(const std::string& action);
+    void enable_category(ActionCategory category)
+    {
+        _excluded_categories.insert(category);
+    }
 
-    /**
-     * Adds all actions that are a part of the given category.
-     */
-    void add_actions_from_category(ActionCategory category);
+    void disable_category(ActionCategory category)
+    {
+        _excluded_categories.erase(category);
+    }
 
     /**
      * Queries and sets input by translating raw input into a game action
@@ -235,47 +235,45 @@ public:
      */
     void reset();
 
+    static InputContext create(InputContextType type);
+
 private:
-    bool matches(
+    /**
+     * Adds all actions that are a part of the given category.
+     */
+    void _add_actions_from_category(ActionCategory category);
+
+    bool _matches(
         const std::string& action_id,
         snail::Key key,
         snail::ModKey modifiers);
 
-    // TODO move to keybind manager
-    optional<std::string> action_for_key(const Keybind& keybind);
+    optional<std::string> _action_for_key(const Keybind& keybind);
 
-    optional<std::string> check_movement_action(
+    optional<std::string> _check_movement_action(
         const std::set<snail::Key>& keys,
         snail::ModKey modifiers);
 
-    bool is_nonmovement_key(const snail::Key& k);
+    bool _is_nonmovement_key(const snail::Key& k);
 
-    optional<Keybind> check_key();
+    optional<Keybind> _check_normal_action();
 
-    std::string delay_movement_action(
+    std::string _delay_movement_action(
         const std::string& action,
         snail::ModKey modifiers,
         KeyWaitDelay delay_type);
 
-    std::string delay_normal_action(const std::string& action);
+    std::string _delay_normal_action(const std::string& action);
 
-    // In insertion order, to give precedence to certain categories.
-    std::set<std::string> available_actions;
+    std::set<std::string> _available_actions;
 
-    std::unordered_set<std::string> excluded_categories;
+    std::unordered_set<ActionCategory> _excluded_categories;
 
-    // Keys which shouldn't be returned in get_key() because they have special
-    // key delay rules. It can differ depending on the current keybinding setup
-    // because movement keys can be rebound.
-    std::unordered_set<snail::Key> excluded_keys;
-
-    std::string last_action_;
-    int last_action_held_frames_;
+    std::string _last_action;
+    int _last_action_held_frames;
 };
 
 void init_actions();
-
-InputContext make_input_context(ActionCategory category);
 
 bool keybind_is_bindable_key(snail::Key key);
 bool keybind_is_joystick_key(snail::Key key);
