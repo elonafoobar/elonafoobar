@@ -108,6 +108,7 @@ set(CORE_SOURCES
   src/initialize_map.cpp
   src/initialize_map_types.cpp
   src/input.cpp
+  src/input_prompt.cpp
   src/item.cpp
   src/item_load_desc.cpp
   src/item_material.cpp
