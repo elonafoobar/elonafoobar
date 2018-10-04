@@ -1,8 +1,25 @@
+#include "ability.hpp"
+#include "activity.hpp"
+#include "audio.hpp"
+#include "autopick.hpp"
 #include "command.hpp"
+#include "ctrl_file.hpp"
+#include "db_item.hpp"
+#include "debug.hpp"
 #include "enums.hpp"
 #include "gdata.hpp"
-#include "magic.hpp"
+#include "i18n.hpp"
+#include "input.hpp"
+#include "map_cell.hpp"
+#include "network.hpp"
+// #include "item.hpp"
+#include "map.hpp"
+#include "mdata.hpp"
+#include "menu.hpp"
 #include "optional.hpp"
+#include "ui.hpp"
+#include "variables.hpp"
+#include "wish.hpp"
 
 namespace elona
 {
@@ -192,11 +209,11 @@ optional<TurnResult> handle_pc_action(std::string& action)
                 action = "go_down";
             }
         }
-        if (command == "go_down" || command == "go_up")
+        if (action == "go_down" || action == "go_up")
         {
             p = -1;
         }
-        if (p == 0 && command == "enter")
+        if (p == 0 && action == "enter")
         {
             action = "search";
         }
@@ -269,9 +286,9 @@ optional<TurnResult> handle_pc_action(std::string& action)
         show_quick_menu();
         update_screen();
     }
-    if (keybind_action_has_category(command, ActionCategory::shortcut))
+    if (auto sc = get_shortcut(action))
     {
-        return do_short_cut_command();
+        return do_short_cut_command(*sc);
     }
     menucycle = 1;
     if (action == "quick_inventory")
@@ -567,7 +584,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             return none;
         }
     }
-    if (action == "save" || command == "escape")
+    if (action == "save" || action == "escape")
     {
         return do_exit_command();
     }

@@ -414,7 +414,7 @@ MainMenuResult main_menu_continue()
         redraw();
 
         int cursor{};
-        auto command = cursor_check_ex(cursor);
+        auto action = cursor_check_ex(cursor);
 
         p = -1;
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -482,7 +482,7 @@ MainMenuResult main_menu_continue()
                 }
             }
         }
-        if (command == "next_page")
+        if (action == "next_page")
         {
             if (pagemax != 0)
             {
@@ -491,7 +491,7 @@ MainMenuResult main_menu_continue()
                 goto savegame_change_page;
             }
         }
-        if (command == "previous_page")
+        if (action == "previous_page")
         {
             if (pagemax != 0)
             {
@@ -500,7 +500,7 @@ MainMenuResult main_menu_continue()
                 goto savegame_change_page;
             }
         }
-        if (command == cancel)
+        if (action == "cancel")
         {
             return MainMenuResult::main_title_menu;
         }

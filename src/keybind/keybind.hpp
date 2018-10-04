@@ -6,6 +6,7 @@
 #include <unordered_set>
 #include <vector>
 #include "../enums.hpp"
+#include "../lib/noncopyable.hpp"
 #include "../optional.hpp"
 #include "../snail/input.hpp"
 #include "../thirdparty/ordered_map/ordered_map.h"
@@ -136,7 +137,7 @@ struct KeybindConfig
     }
 };
 
-class KeybindManager
+class KeybindManager : public lib::noncopyable
 {
 public:
     using MapType = tsl::ordered_map<std::string, KeybindConfig>;

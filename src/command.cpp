@@ -1147,6 +1147,7 @@ TurnResult do_offer_command()
 
 TurnResult do_look_command()
 {
+    std::string action;
     page = 0;
     pagesize = 16;
     cs_bk = -1;
@@ -1284,7 +1285,7 @@ label_1953_internal:
         // TODO
         action = "select_"s + (cs + 1);
     }
-    auto action = get_selected_item(p(0));
+    action = get_selected_item(p(0));
     if (p != -1)
     {
         cdata.player().enemy_id = p;
@@ -3616,26 +3617,26 @@ TurnResult do_cast_command()
     return TurnResult::turn_end;
 }
 
-TurnResult do_short_cut_command()
+TurnResult do_short_cut_command(int sc_)
 {
     menucycle = 0;
-    if (game_data.skill_shortcuts.at(sc) == 0)
+    if (game_data.skill_shortcuts.at(sc_) == 0)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (game_data.skill_shortcuts.at(sc) >= 10000)
+    if (game_data.skill_shortcuts.at(sc_) >= 10000)
     {
-        invsc = game_data.skill_shortcuts.at(sc) % 10000;
-        invctrl(0) = game_data.skill_shortcuts.at(sc) / 10000;
+        invsc = game_data.skill_shortcuts.at(sc_) % 10000;
+        invctrl(0) = game_data.skill_shortcuts.at(sc_) / 10000;
         invctrl(1) = 0;
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    efid = game_data.skill_shortcuts.at(sc);
+    efid = game_data.skill_shortcuts.at(sc_);
     if (efid >= 300 && efid < 400)
     {
         return do_use_magic();

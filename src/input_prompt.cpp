@@ -1,7 +1,10 @@
 #include "input_prompt.hpp"
 #include "audio.hpp"
+#include "blending.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
+#include "ui.hpp"
 
 namespace elona
 {
@@ -16,7 +19,7 @@ int Prompt::query(int x, int y, int width)
     cs = 0;
     cs_bk = -1;
 
-    _draw_keys_and_background();
+    _draw_keys_and_background(x, y, width);
 
     _draw_box();
 
@@ -25,13 +28,13 @@ int Prompt::query(int x, int y, int width)
         gmode(2);
         _draw_window();
 
-        _draw_main_frame();
+        _draw_main_frame(width);
         _draw_entries();
 
         _draw_window2();
 
         redraw();
-        auto action = check_cursor_ex();
+        auto action = cursor_check_ex();
         int ret = -1;
 
         auto keys = snail::Input::instance().pressed_keys();
@@ -63,16 +66,17 @@ int Prompt::query(int x, int y, int width)
     }
 }
 
-void Prompt::_draw_keys_and_background()
+void Prompt::_draw_keys_and_background(int x, int y, int width)
 {
     gsel(3);
     gmode(0);
     font(15 - en * 2);
     for (const auto& entry : _entries)
     {
+        auto key = entry.key;
         if (entry.key == snail::Key::none)
         {
-            entry.key = snail::Key::key_a;
+            key = snail::Key::key_a;
         }
         draw("select_key", i * 24 + 624, 30);
         bmes("!", i * 24 + 629, 31, {250, 240, 230}, {50, 60, 80});
@@ -85,7 +89,7 @@ void Prompt::_draw_keys_and_background()
     keyhalt = 1;
 }
 
-void Prompt::_draw_main_frame()
+void Prompt::_draw_main_frame(int width)
 {
     window2(sx + 8, sy + 8, width - 16, promptmax * 20 + 42 - 16, 0, 0);
     pos(sx - 16, sy);
@@ -97,6 +101,7 @@ void Prompt::_draw_entries()
 {
     keyrange = 0;
     cs_listbk();
+    int cnt = 0;
     for (const auto& entry : _entries)
     {
         pos(sx + 30, cnt * 20 + sy + 22);
@@ -116,6 +121,7 @@ void Prompt::_draw_entries()
         cs_list(cs == cnt, text, sx + 56, cnt * 20 + sy + 21);
         key_list(cnt) = u8"aaa";
         ++keyrange;
+        ++cnt;
     }
     cs_bk = cs;
 }
@@ -175,7 +181,7 @@ void PromptWithNumber::_modify_result(const std::string& action)
     {
         snd(5);
         ++_number;
-        if (_number > max)
+        if (_number > _max)
         {
             _number = 1;
         }

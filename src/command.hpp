@@ -20,7 +20,7 @@ TurnResult do_pray_command();
 TurnResult do_movement_command();
 TurnResult do_close_command();
 TurnResult do_search_command();
-TurnResult do_short_cut_command();
+TurnResult do_short_cut_command(int sc_);
 
 // These are nested inside ctrl_inventory().
 TurnResult do_dip_command();

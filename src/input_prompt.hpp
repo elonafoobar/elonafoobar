@@ -35,7 +35,7 @@ private:
 
 public:
     Prompt(Type type = Type::can_cancel)
-        : _locale_key_root(locale_key_root)
+        : _locale_key_root("")
         , _type(type)
     {
     }
@@ -51,19 +51,14 @@ public:
         _entries.emplace_back(key, locale_key, _promptmax);
         _promptmax++;
     }
+    void append(const I18NKey& locale_key, snail::Key key, int value)
+    {
+        _entries.emplace_back(key, locale_key, value);
+        _promptmax = std::max(_promptmax, value) + 1;
+    }
     void append(const I18NKey& locale_key, int value)
     {
-        append(snail::Key::none, locale_key, value);
-    }
-    void append(const I18NKey& locale_key, snail::Key key, int value)
-    {
-        _entries.emplace_back(key, locale_key, value);
-        _promptmax = std::max(_promptmax, value) + 1;
-    }
-    void append(const I18NKey& locale_key, snail::Key key, int value)
-    {
-        _entries.emplace_back(key, locale_key, value);
-        _promptmax = std::max(_promptmax, value) + 1;
+        append(locale_key, snail::Key::none, value);
     }
 
     int query(int x, int y, int width);
@@ -77,8 +72,8 @@ protected:
     I18NKey _locale_key_root;
 
 private:
-    void _draw_keys_and_background();
-    void _draw_main_frame();
+    void _draw_keys_and_background(int x, int y, int width);
+    void _draw_main_frame(int width);
     void _draw_entries();
 
     Type _type;
@@ -90,9 +85,9 @@ class PromptWithNumber : public Prompt
 {
 public:
     PromptWithNumber(int number, I18NKey locale_key_root)
-        : _number(number)
-        , _locale_key_root(locale_key_root)
+        : Prompt(locale_key_root)
     {
+        _number = number;
     }
 
 protected:

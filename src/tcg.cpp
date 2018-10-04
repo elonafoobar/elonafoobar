@@ -1755,7 +1755,7 @@ void tcgdeck()
             }
             prompt.append(s_at_tcg(cnt));
         }
-        rtval = show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
+        rtval = prompt.query(basex_at_tcg + 400, basey_at_tcg + 230, 300);
         if (rtval == -1)
         {
             break;
@@ -2962,7 +2962,7 @@ void tcg_prompt_action()
             Prompt prompt;
             prompt.append("core.locale.tcg.action.surrender");
 
-            rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
+            rtval = prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 200);
             if (rtval == 0)
             {
                 cpdata_at_tcg(4, 0) = 0;

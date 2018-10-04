@@ -242,7 +242,7 @@ void UIMenuJournal::draw()
 }
 
 optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
-    const std::string& key)
+    const std::string& action)
 {
     if (action == "next_page")
     {

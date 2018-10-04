@@ -197,19 +197,18 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         mes(inputlog2);
         color(0, 0, 0);
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        if (key == key_enter)
+        auto action = key_check();
+        if (action == "enter")
         {
             f = 1;
             break;
         }
-        if (key == key_cancel)
+        if (action == "cancel")
         {
             f = -1;
             break;
         }
-        if (key == key_west)
+        if (action == "west")
         {
             snd(5);
             --number;
@@ -218,7 +217,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
                 number = max_number;
             }
         }
-        if (key == key_east)
+        if (action == "east")
         {
             snd(5);
             ++number;
@@ -227,17 +226,17 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
                 number = 1;
             }
         }
-        if (key == key_south)
+        if (action == "south")
         {
             snd(5);
             number = 1;
         }
-        if (key == key_north)
+        if (action == "north")
         {
             snd(5);
             number = max_number;
         }
-        if (key == key_northwest)
+        if (action == "northwest")
         {
             snd(5);
             number -= 100;
@@ -246,7 +245,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
                 number += max_number;
             }
         }
-        if (key == key_northeast)
+        if (action == "northeast")
         {
             snd(5);
             number += 100;
@@ -255,7 +254,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
                 number -= max_number;
             }
         }
-        if (key == key_southwest)
+        if (action == "southwest")
         {
             snd(5);
             number -= 10;
@@ -264,7 +263,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
                 number += max_number;
             }
         }
-        if (key == key_southeast)
+        if (action == "southeast")
         {
             snd(5);
             number += 10;

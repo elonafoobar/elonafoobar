@@ -53,9 +53,7 @@ public:
     virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual optional<ResultType> on_key(
-        const std::string& action,
-        int index) = 0;
+    virtual optional<ResultType> on_key(const std::string& action) = 0;
 
 protected:
     /**
