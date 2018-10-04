@@ -23,6 +23,57 @@ static std::string _action_category_to_name(ActionCategory category)
     return "<unknown>";
 }
 
+static std::string _get_localized_action_name(
+    const std::string& mod_name,
+    ActionCategory action_category,
+    const std::string& action_id)
+{
+    std::string localized_name;
+    int action_index{};
+
+    // core.locale.keybind.chat_box
+    switch (action_category)
+    {
+    case ActionCategory::shortcut:
+        action_index = keybind_id_number(action_id);
+        localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut")
+            + std::to_string(action_index);
+        break;
+    case ActionCategory::selection:
+        action_index = keybind_id_number(action_id);
+        localized_name = i18n::s.get(mod_name + ".locale.keybind.select")
+            + std::to_string(action_index);
+        break;
+    default:
+        localized_name =
+            i18n::s.get(mod_name + ".locale.keybind."s + action_id);
+        break;
+    }
+
+    return localized_name;
+}
+
+static void _push_category_name(ActionCategory action_category)
+{
+    list(0, listmax) = -1;
+    listn(0, listmax) = "";
+    listn(1, listmax) = u8"◆ "s + _action_category_to_name(action_category);
+    listmax++;
+}
+
+static void _push_keybind_entry(
+    const std::string& action_id,
+    const std::string& localized_name,
+    const KeybindConfig& keybind_config)
+{
+    list(0, listmax) = 999;
+    listn(0, listmax) = action_id;
+    listn(1, listmax) = localized_name;
+    listn(2, listmax) = keybind_config.primary.to_string();
+    listn(3, listmax) = keybind_config.alternate.to_string();
+    listmax++;
+}
+
 static void _load_keybindings()
 {
     listmax = 0;
@@ -38,26 +89,19 @@ static void _load_keybindings()
     {
         range = grouped_keybinds.equal_range(it->first);
 
-        list(0, listmax) = -1;
-        listn(0, listmax) =
-            u8"◆ "s + _action_category_to_name(range.first->first);
-        listmax++;
+        auto action_category = range.first->first;
+        _push_category_name(action_category);
 
         for (auto pair = range.first; pair != range.second; ++pair)
         {
             const auto& action_id = pair->second;
             const auto& keybind_config = keybind_manager.binding(pair->second);
 
-            // core.locale.keybind.chat_box
             const auto mod_name = "core"s;
-            const auto localized_name =
-                i18n::s.get(mod_name + ".locale.keybind."s + action_id);
+            std::string localized_name = _get_localized_action_name(
+                mod_name, action_category, action_id);
 
-            list(0, listmax) = 999; // i % 7 == 0 ? -1 : 999;
-            listn(0, listmax) = localized_name;
-            listn(1, listmax) = keybind_config.primary.to_string();
-            listn(2, listmax) = keybind_config.alternate.to_string();
-            listmax++;
+            _push_keybind_entry(action_id, localized_name, keybind_config);
         }
     }
 }
@@ -164,10 +208,10 @@ static void _draw_keybind_entry(int cnt, const std::string& text)
     cs_list(cs == cnt, text, wx + 56, wy + 66 + cnt * 19 - 1);
 
     pos(wx + 192, wy + 66 + cnt * 19 + 2);
-    mes(listn(1, pagesize * page + cnt));
+    mes(listn(2, pagesize * page + cnt));
 
     pos(wx + 330, wy + 66 + cnt * 19 + 2);
-    mes(listn(2, pagesize * page + cnt));
+    mes(listn(3, pagesize * page + cnt));
 }
 
 static void _draw_text_entry(int cnt, const std::string& text)
@@ -203,7 +247,7 @@ static void _draw_list_entries()
         }
 
         int list_item = list(0, index);
-        const std::string& text = listn(0, index);
+        const std::string& text = listn(1, index);
 
         _draw_single_list_entry(cnt, list_item, text);
     }
@@ -251,8 +295,8 @@ _bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
         binding.primary = keybind;
     }
 
-    listn(1, pagesize * page + cs) = binding.primary.to_string();
-    listn(2, pagesize * page + cs) = binding.alternate.to_string();
+    listn(2, pagesize * page + cs) = binding.primary.to_string();
+    listn(3, pagesize * page + cs) = binding.alternate.to_string();
 }
 
 static void _unbind_key(const std::string& action_id)
@@ -260,8 +304,8 @@ static void _unbind_key(const std::string& action_id)
     KeybindManager::instance().clear_binding(action_id);
 
     const auto& binding = KeybindManager::instance().binding(action_id);
-    listn(1, pagesize * page + cs) = binding.primary.to_string();
-    listn(2, pagesize * page + cs) = binding.alternate.to_string();
+    listn(2, pagesize * page + cs) = binding.primary.to_string();
+    listn(3, pagesize * page + cs) = binding.alternate.to_string();
 }
 
 static void _prompt_for_key()
