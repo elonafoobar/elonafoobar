@@ -897,6 +897,8 @@ int run()
     // Load data from scanned mods.
     initialize_lion_db();
 
+    init_actions();
+
     initialize_elona();
 
     Config::instance().write();
@@ -1066,8 +1068,6 @@ void initialize_game()
 
     init_fovlist();
     initialize_map();
-
-    init_actions();
 
     if (script_loaded)
     {

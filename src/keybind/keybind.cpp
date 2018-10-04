@@ -3,6 +3,7 @@
 #include "../config/config.hpp"
 #include "../enums.hpp"
 #include "../gdata.hpp"
+#include "../lib/profiler.hpp"
 #include "../variables.hpp"
 
 using namespace std::literals::string_literals;
@@ -128,6 +129,7 @@ std::vector<std::string> KeybindManager::find_conflicts(
             const auto& action_binding = binding(action_id);
             if (action_binding.primary == keybind
                 || action_binding.alternate == keybind
+                || action_binding.permanent == keybind
                 /* || (keybind.is_joystick() && keybind.joystick == keybind.main) */)
             {
                 conflicts.emplace_back(action_id);
@@ -257,6 +259,11 @@ bool InputContext::_matches(
     }
     if (binding.alternate.main == key
         && binding.alternate.modifiers == modifiers)
+    {
+        return true;
+    }
+    if (binding.permanent.main == key
+        && binding.permanent.modifiers == modifiers)
     {
         return true;
     }
@@ -700,16 +707,24 @@ void InputContext::reset()
     _last_action = ""s;
 }
 
-InputContext InputContext::instance()
+InputContext& InputContext::instance()
 {
-    static InputContext the_input_context = create(InputContextType::game);
-    return the_input_context;
+    static optional<InputContext> the_input_context;
+    if (!the_input_context)
+    {
+        the_input_context = create(InputContextType::game);
+    }
+    return *the_input_context;
 }
 
-InputContext InputContext::for_menu()
+InputContext& InputContext::for_menu()
 {
-    static InputContext the_input_context = create(InputContextType::menu);
-    return the_input_context;
+    static optional<InputContext> the_input_context;
+    if (!the_input_context)
+    {
+        the_input_context = create(InputContextType::menu);
+    }
+    return *the_input_context;
 }
 
 bool keybind_is_joystick_key(snail::Key key)

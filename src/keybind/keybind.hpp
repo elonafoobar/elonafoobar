@@ -237,8 +237,8 @@ public:
     void reset();
 
     static InputContext create(InputContextType type);
-    static InputContext instance();
-    static InputContext for_menu();
+    static InputContext& instance();
+    static InputContext& for_menu();
 
 private:
     /**
@@ -273,7 +273,7 @@ private:
     std::unordered_set<ActionCategory> _excluded_categories;
 
     std::string _last_action;
-    int _last_action_held_frames;
+    int _last_action_held_frames{};
 };
 
 void init_actions();

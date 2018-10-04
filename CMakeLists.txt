@@ -199,6 +199,8 @@ set(CORE_SOURCES
   src/keybind/keybind_deserializer.cpp
   src/keybind/keybind_serializer.cpp
 
+  src/lib/profiler.cpp
+
   src/pic_loader/pic_loader.cpp
 
   src/ui/ui_menu_adventurers.cpp
