@@ -10,18 +10,25 @@ using namespace std::literals::string_literals;
 
 namespace elona
 {
-// clang-format off
-static std::map<InputContextType, std::unordered_set<ActionCategory>> input_context_types =
-{
-    {InputContextType::menu, {ActionCategory::default_,
-                              ActionCategory::selection,
-                              ActionCategory::menu,
-                              ActionCategory::shortcut}},
 
-    {InputContextType::game, {ActionCategory::default_,
-                              ActionCategory::shortcut,
+// This map holds the action categories available in an input context.
+// Categories at the top will override categories further down. This is to
+// support the behavior of toggling wizard mode.
+// TODO: It still needs to support ignoring key conflicts for togglable
+// categories.
+
+// clang-format off
+static std::map<InputContextType, std::set<ActionCategory>> input_context_types =
+{
+    {InputContextType::menu, {ActionCategory::shortcut,
+                              ActionCategory::menu,
+                              ActionCategory::selection,
+                              ActionCategory::default_}},
+
+    {InputContextType::game, {ActionCategory::wizard,
                               ActionCategory::game,
-                              ActionCategory::wizard}}
+                              ActionCategory::shortcut,
+                              ActionCategory::default_}}
 };
 // clang-format on
 
@@ -81,15 +88,8 @@ void KeybindManager::register_default_bindings(const ActionMap& actions)
             }
         }
     }
-}
 
-void KeybindManager::clear_binding(const std::string& action_id)
-{
-    auto& the_binding = binding(action_id);
-
-    the_binding.primary.clear();
-    the_binding.alternate.clear();
-    the_binding.joystick = snail::Key::none;
+    keybind_regenerate_key_select();
 }
 
 std::vector<std::string> KeybindManager::find_conflicts(
@@ -129,7 +129,6 @@ std::vector<std::string> KeybindManager::find_conflicts(
             const auto& action_binding = binding(action_id);
             if (action_binding.primary == keybind
                 || action_binding.alternate == keybind
-                || action_binding.permanent == keybind
                 /* || (keybind.is_joystick() && keybind.joystick == keybind.main) */)
             {
                 conflicts.emplace_back(action_id);
@@ -184,45 +183,23 @@ std::string Keybind::to_string() const
     return mod_key_string + key_name;
 }
 
-static bool _has_prefix(const std::string& str, const std::string& prefix)
-{
-    if (prefix.size() > str.size())
-    {
-        return false;
-    }
-
-    return std::mismatch(prefix.begin(), prefix.end(), str.begin()).first
-        == prefix.end();
-}
-
-static bool _try_unshift_prefix(std::string& str, const std::string& prefix)
-{
-    if (!_has_prefix(str, prefix))
-    {
-        return false;
-    }
-
-    str.erase(0, prefix.size());
-    return true;
-}
-
 optional<Keybind> Keybind::from_string(std::string str)
 {
     snail::ModKey modifiers = snail::ModKey::none;
 
-    if (_try_unshift_prefix(str, "Ctrl+"))
+    if (strutil::try_remove_prefix(str, "Ctrl+"))
     {
         modifiers |= snail::ModKey::ctrl;
     }
-    if (_try_unshift_prefix(str, "Shift+"))
+    if (strutil::try_remove_prefix(str, "Shift+"))
     {
         modifiers |= snail::ModKey::shift;
     }
-    if (_try_unshift_prefix(str, "Alt+"))
+    if (strutil::try_remove_prefix(str, "Alt+"))
     {
         modifiers |= snail::ModKey::alt;
     }
-    if (_try_unshift_prefix(str, "Gui+"))
+    if (strutil::try_remove_prefix(str, "Gui+"))
     {
         modifiers |= snail::ModKey::gui;
     }
@@ -747,6 +724,27 @@ bool keybind_action_has_category(
     }
 
     return keybind::actions.at(action_id).category == category;
+}
+
+void keybind_regenerate_key_select()
+{
+    auto grouped_keybinds =
+        KeybindManager::instance().create_category_to_action_list();
+    auto range = grouped_keybinds.equal_range(ActionCategory::selection);
+
+    SDIM3(key_select, 2, 20);
+    int cnt = 0;
+    for (auto it = range.first; it != range.second; it++)
+    {
+        const auto& action_id = it->second;
+        const auto& binding = KeybindManager::instance().binding(action_id);
+
+        // NOTE: key_select is only set for the primarily bound key.
+        bool shift = (binding.primary.modifiers & snail::ModKey::shift)
+            == snail::ModKey::shift;
+        key_select(cnt) = keybind_key_short_name(binding.primary.main, shift);
+        cnt++;
+    }
 }
 
 int keybind_id_number(const std::string& action_id)

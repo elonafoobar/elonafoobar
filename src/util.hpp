@@ -99,6 +99,32 @@ inline std::string remove_str(
 
 
 
+inline bool has_prefix(const std::string& str, const std::string& prefix)
+{
+    if (prefix.size() > str.size())
+    {
+        return false;
+    }
+
+    return std::mismatch(prefix.begin(), prefix.end(), str.begin()).first
+        == prefix.end();
+}
+
+
+
+inline bool try_remove_prefix(std::string& str, const std::string& prefix)
+{
+    if (!has_prefix(str, prefix))
+    {
+        return false;
+    }
+
+    str.erase(0, prefix.size());
+    return true;
+}
+
+
+
 inline size_t byte_count(uint8_t c)
 {
     if (c <= 0x7F)

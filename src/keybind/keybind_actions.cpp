@@ -16,6 +16,12 @@ void init_actions()
 
     actions.clear();
 
+    // NOTE: In this table, don't use keys for which no physical keycode exists.
+    // For example, instead of {Key::question, ModKey::none}, use {Key::slash,
+    // ModKey::shift} as [Shift]+[/] = [?]. Key::question would never be picked
+    // up as a pressed key, it would always be interpreted as Key::slash +
+    // ModKey::Shift.
+
     // clang-format off
     actions.emplace("escape",              Action{ActionCategory::default_,  {{Key::escape,          ModKey::none}}});
     actions.emplace("cancel",              Action{ActionCategory::default_,  {{Key::shift,           ModKey::none}}});
@@ -92,8 +98,8 @@ void init_actions()
     actions.emplace("drink",               Action{ActionCategory::game,      {{Key::key_q,           ModKey::none}}});
     actions.emplace("read",                Action{ActionCategory::game,      {{Key::key_r,           ModKey::none}}});
     actions.emplace("fire",                Action{ActionCategory::game,      {{Key::key_f,           ModKey::none}}});
-    actions.emplace("go_down",             Action{ActionCategory::game,      {{Key::greater,         ModKey::none}}});
-    actions.emplace("go_up",               Action{ActionCategory::game,      {{Key::less,            ModKey::none}}});
+    actions.emplace("go_down",             Action{ActionCategory::game,      {{Key::period,          ModKey::shift}}});
+    actions.emplace("go_up",               Action{ActionCategory::game,      {{Key::comma,           ModKey::shift}}});
     actions.emplace("save",                Action{ActionCategory::game,      {{Key::key_s,           ModKey::shift}}});
     actions.emplace("search",              Action{ActionCategory::game,      {{Key::key_s,           ModKey::none}}});
     actions.emplace("interact",            Action{ActionCategory::game,      {{Key::key_i,           ModKey::none}}});
@@ -114,7 +120,7 @@ void init_actions()
     actions.emplace("autodig",             Action{ActionCategory::game,      {{Key::key_h,           ModKey::shift}}});
     actions.emplace("quicksave",           Action{ActionCategory::game,      {{Key::f1,              ModKey::none}}});
     actions.emplace("quickload",           Action{ActionCategory::game,      {{Key::f2,              ModKey::none}}});
-    actions.emplace("help",                Action{ActionCategory::game,      {{Key::question,        ModKey::none}}});
+    actions.emplace("help",                Action{ActionCategory::game,      {{Key::shift,           ModKey::shift}}});
     actions.emplace("message_log",         Action{ActionCategory::game,      {{Key::slash,           ModKey::none}}});
     actions.emplace("chat_box",            Action{ActionCategory::game,      {{Key::tab,             ModKey::none}}});
     actions.emplace("tcg",                 Action{ActionCategory::game,      {{Key::f3,              ModKey::none}}});

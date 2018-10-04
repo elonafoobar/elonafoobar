@@ -1,6 +1,7 @@
 #include <unordered_map>
 #include "../optional.hpp"
 #include "../snail/input.hpp"
+#include "../util.hpp"
 
 namespace elona
 {
@@ -188,6 +189,28 @@ optional<std::string> keybind_key_name(snail::Key key, bool shift)
     {
         return it->second.normal;
     }
+}
+
+std::string keybind_key_short_name(snail::Key key, bool shift)
+{
+    auto name_opt = keybind_key_name(key, shift);
+    if (!name_opt)
+    {
+        return "";
+    }
+
+    auto name = *name_opt;
+    strutil::try_remove_prefix(name, "Keypad ");
+
+    // TODO: Some keys can still overflow the key_select banner. For now, just
+    // return an empty string for those keys. Trimming them to one character
+    // isn't always useful. ("Enter" and "E" will both be trimmed to "E".)
+    if (name.size() > 1)
+    {
+        return "";
+    }
+
+    return name;
 }
 
 optional<snail::Key> keybind_key_code(const std::string& name, bool shift)

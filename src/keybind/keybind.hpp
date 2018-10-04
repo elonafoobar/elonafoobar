@@ -42,6 +42,9 @@ namespace elona
 // - input with number
 
 
+bool keybind_is_bindable_key(snail::Key key);
+bool keybind_is_joystick_key(snail::Key key);
+
 struct Keybind
 {
     Keybind()
@@ -135,6 +138,36 @@ struct KeybindConfig
         return primary == keybind || alternate == keybind
             || joystick == keybind.main || permanent == keybind;
     }
+
+    void clear()
+    {
+        primary.clear();
+        alternate.clear();
+        joystick = snail::Key::none;
+    }
+
+    void bind(Keybind keybind)
+    {
+        if (keybind_is_joystick_key(keybind.main))
+        {
+            // Joystick buttons will not use modifier keys.
+            joystick = keybind.main;
+        }
+        else if (primary.empty())
+        {
+            primary = keybind;
+        }
+        else if (alternate.empty())
+        {
+            alternate = keybind;
+        }
+        else
+        {
+            // Clear the secondary keybinding first.
+            alternate.clear();
+            primary = keybind;
+        }
+    }
 };
 
 class KeybindManager : public lib::noncopyable
@@ -169,8 +202,6 @@ public:
     {
         return _keybind_configs.find(action_id) != _keybind_configs.end();
     }
-
-    void clear_binding(const std::string& action_id);
 
     void register_default_bindings(const ActionMap& actions);
 
@@ -268,23 +299,22 @@ private:
 
     std::string _delay_normal_action(const std::string& action);
 
+
     std::set<std::string> _available_actions;
-
     std::unordered_set<ActionCategory> _excluded_categories;
-
     std::string _last_action;
     int _last_action_held_frames{};
 };
 
 void init_actions();
 
-bool keybind_is_bindable_key(snail::Key key);
-bool keybind_is_joystick_key(snail::Key key);
-
 optional<std::string> keybind_key_name(snail::Key key, bool shift = false);
+std::string keybind_key_short_name(snail::Key key, bool shift = false);
 optional<snail::Key> keybind_key_code(
     const std::string& name,
     bool shift = false);
+
+void keybind_regenerate_key_select();
 
 bool keybind_action_has_category(
     const std::string& action_id,

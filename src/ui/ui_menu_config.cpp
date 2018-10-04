@@ -5,6 +5,7 @@
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../network.hpp"
+#include "simple_prompt.hpp"
 
 namespace elona
 {
@@ -214,48 +215,32 @@ void UIMenuConfig::draw()
     }
 }
 
-static void _show_config_item_desc(const std::string& desc)
+class ConfigItemDescPrompt : public SimplePrompt<DummyResult>
 {
-    size_t width = 100;
-    size_t height = 100;
-    int font_size = 13 + sizefix - en * 2;
-    std::string line;
-    std::istringstream ss(desc);
-
-    while (std::getline(ss, line))
+public:
+    ConfigItemDescPrompt(std::string message)
+        : SimplePrompt(message)
     {
-        width = std::max(width, strlen_u(line) * 8 + 40);
-        height += font_size;
     }
 
-    int x = promptx - (width / 2);
-    int y = prompty - (height / 2);
-
-    snd(26);
-
-    gmode(6, 80);
-    window(x + 12, y + 12, width, height, true); // Shadow
-    gmode(2);
-
-    window(x + 8, y + 8, width, height, false);
-
-    font(font_size);
-    pos(x + 40, y + font_size + 36);
-    mes(desc);
-
-    redraw();
-
-    while (true)
+protected:
+    optional<DummyResult> update() override
     {
         await(Config::instance().wait1);
-        key_check();
+        auto action = key_check();
 
-        if (key != ""s)
+        if (action != ""s)
         {
-            key = ""s;
-            break;
+            return DummyResult{};
         }
+
+        return none;
     }
+};
+
+static void _show_config_item_desc(const std::string& desc)
+{
+    ConfigItemDescPrompt(desc).query();
 }
 
 optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(

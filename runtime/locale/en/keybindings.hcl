@@ -1,5 +1,10 @@
 locale {
     keybind {
+        window {
+            title = "Keybindings"
+            hint = "Enter [Bind Key] "
+        }
+
         escape = "Escape"
         cancel = "Cancel"
         enter = "Enter"

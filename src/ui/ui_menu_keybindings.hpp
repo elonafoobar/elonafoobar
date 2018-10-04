@@ -20,9 +20,6 @@ protected:
     virtual void draw();
     virtual optional<UIMenuKeybindings::ResultType> on_key(
         const std::string& key);
-
-private:
-    InputContext input_context;
 };
 
 } // namespace ui
