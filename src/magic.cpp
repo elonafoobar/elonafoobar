@@ -1269,7 +1269,7 @@ label_2181_internal:
     case 1101:
         if (is_in_fov(cdata[tc]))
         {
-            snd(107);
+            snd("core.atk_elec");
             if (is_cursed(efstatus))
             {
                 if (tc == 0)

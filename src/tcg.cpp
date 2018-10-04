@@ -2838,7 +2838,7 @@ void tcg_prompt_action()
                     40);
                 continue;
             }
-            snd(40);
+            snd("core.click1");
             cardhelp(s_at_tcg, 10);
             tcgdraw();
             tcg_update_selection();

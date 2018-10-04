@@ -166,12 +166,12 @@ label_1868_internal:
     await(Config::instance().wait1);
     key_check();
     cursor_check();
-    ELONA_GET_SELECTED_ITEM(rtval, snd(40));
+    ELONA_GET_SELECTED_ITEM(rtval, snd("core.click1"));
     if (chatesc != -1)
     {
         if (key == key_cancel)
         {
-            snd(40);
+            snd("core.click1");
             rtval = chatesc;
         }
     }

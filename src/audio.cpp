@@ -29,7 +29,7 @@ constexpr int temporary_channels_size = 6;
 
 std::vector<int> soundlist;
 
-int envwprev{};
+optional<std::string> envwprev = none;
 SharedId musicprev{};
 
 
@@ -408,32 +408,32 @@ void stop_music()
 
 void sound_play_environmental()
 {
-    int env{};
+    optional<std::string> env = none;
 
     if (game_data.weather == 3)
     {
-        env = 75;
+        env = "core.bg_rain";
     }
     if (game_data.weather == 4)
     {
-        env = 76;
+        env = "core.bg_thunder";
     }
     if (game_data.weather == 1)
     {
-        env = 77;
+        env = "core.bg_wind";
     }
     if (env != envwprev)
     {
         envwprev = env;
         if (Config::instance().sound)
         {
-            if (env == 0)
+            if (!env)
             {
                 DSSTOP(13);
             }
             else
             {
-                snd(env, true);
+                snd(*env, true);
             }
         }
     }
@@ -453,7 +453,7 @@ void sound_play_environmental()
     }
     if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
-        snd(78, true);
+        snd("core.bg_sea", true);
     }
     else
     {
@@ -461,7 +461,7 @@ void sound_play_environmental()
     }
     if (map_data.type == mdata_t::MapType::town)
     {
-        snd(79, true);
+        snd("core.bg_town", true);
     }
     else
     {
@@ -469,13 +469,40 @@ void sound_play_environmental()
     }
     if (map_data.play_campfire_sound == 1)
     {
-        snd(80, true);
+        snd("core.bg_fire", true);
     }
     else
     {
         DSSTOP(16);
     }
 }
+
+void sound_pick_up()
+{
+    static const std::vector<std::string> sounds = {
+        "core.get1", "core.get2", "core.drop1"};
+    snd(choice(sounds));
+}
+
+void sound_footstep(int foot)
+{
+    switch (foot % 2)
+    {
+    case 0: snd("core.foot1a"); break;
+    case 1: snd("core.foot1b"); break;
+    }
+}
+
+void sound_footstep2(int foot)
+{
+    switch (foot % 3)
+    {
+    case 0: snd("core.foot2a"); break;
+    case 1: snd("core.foot2b"); break;
+    case 2: snd("core.foot2c"); break;
+    }
+}
+
 
 void play_music(const char* music_id)
 {

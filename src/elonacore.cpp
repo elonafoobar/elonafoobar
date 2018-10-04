@@ -4690,7 +4690,7 @@ void lovemiracle(int prm_932)
         }
     }
     ci = cibk;
-    snd(107);
+    snd("core.atk_elec");
     animeload(15, prm_932);
 }
 
@@ -11156,7 +11156,7 @@ int pick_up_item()
         }
         if (invctrl == 22 || invctrl == 24)
         {
-            snd(14 + rnd(2));
+            sound_pick_up();
             msgkeep = 1;
             if (invctrl == 22)
             {
@@ -11184,7 +11184,7 @@ int pick_up_item()
             .item_appearances_memory =
             cell_data.at(inv[ci].position.x, inv[ci].position.y)
                 .item_appearances_actual;
-        snd(14 + rnd(2));
+        sound_pick_up();
         msgkeep = 1;
         txt(i18n::s.get(
             "core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
@@ -11417,7 +11417,7 @@ TurnResult do_bash()
                 snd("core.bash1");
                 txt(i18n::s.get(
                     "core.locale.action.bash.shatters_pot", cdata[cc]));
-                snd(45);
+                snd("core.crush1");
                 BreakingAnimation({x, y}).play();
             }
             return TurnResult::turn_end;
@@ -11867,7 +11867,7 @@ void proc_autopick()
                     break;
                 }
             }
-            snd(45);
+            snd("core.crush1");
             txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
             inv[ci].remove();
             cell_refresh(x, y);
@@ -11963,7 +11963,7 @@ void sense_map_feats_on_move()
                     || cdata.player().turn % 2 == 0
                     || map_data.type == mdata_t::MapType::world_map)
                 {
-                    snd(83 + foot % 3);
+                    sound_footstep2(foot);
                     foot += 1 + rnd(2);
                 }
             }
@@ -11971,7 +11971,7 @@ void sense_map_feats_on_move()
         else if (map_data.type == mdata_t::MapType::world_map)
         {
             addefmap(cdata[cc].position.x, cdata[cc].position.y, 2, 10, dirsub);
-            snd(81 + foot % 2);
+            sound_footstep(foot);
             ++foot;
         }
         if (cell_data.at(x, y).feats != 0)
@@ -14106,8 +14106,8 @@ label_2682_internal:
     }
     if (s == u8"{se}"s)
     {
-        sndload(filesystem::dir::sound() / s(1), 28);
-        snd(28);
+        SharedId sound_id(s(1));
+        snd(sound_id);
         goto label_2682_internal;
     }
     if (strutil::contains(s(0), u8"{actor_"))

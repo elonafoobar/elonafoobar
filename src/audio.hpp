@@ -62,6 +62,10 @@ void snd(I sound_id, bool loop = false, bool allow_duplicate = true)
     detail::snd_inner(**the_sound_db[sound_id], 0, 0, loop, allow_duplicate);
 }
 
+void sound_pick_up();
+void sound_footstep(int foot);
+void sound_footstep2(int foot);
+
 void sound_play_environmental();
 void stop_music();
 

@@ -676,7 +676,7 @@ void proc_event()
         {
             if (i == 14)
             {
-                snd(108);
+                snd("core.atk_fire");
             }
             if (i < 16)
             {
@@ -891,7 +891,7 @@ void proc_event()
                 }
                 else
                 {
-                    snd(45);
+                    snd("core.crush1");
                 }
                 await(Config::instance().animewait);
             }

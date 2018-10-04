@@ -1094,7 +1094,7 @@ void MeteorAnimation::do_play()
             {
                 if (cnt / 3 < am)
                 {
-                    snd(108);
+                    snd("core.atk_fire");
                 }
             }
         }
@@ -1174,7 +1174,7 @@ void RagnarokAnimation::do_play()
 
         if (t % 2 == 0 && t < 8 && t / 3 < TODO)
         {
-            snd(108);
+            snd("core.atk_fire");
         }
         if (!did_draw)
         {

@@ -1338,7 +1338,7 @@ void continuous_action_others()
         else
         {
             item_stack(0, ti, 1);
-            snd(14 + rnd(2));
+            sound_pick_up();
         }
         refresh_burden_state();
         chara_gain_skill_exp(
@@ -1595,7 +1595,7 @@ void spot_fishing()
                     await(Config::instance().animewait * 2);
                 }
             }
-            snd(14 + rnd(2));
+            sound_pick_up();
             fishanime = 0;
             cdata[cc].continuous_action.finish();
             get_fish();
@@ -1838,7 +1838,7 @@ void spot_mining_or_wall()
             }
             cell_data.at(refx, refy).chip_id_actual = tile_tunnel;
             spillfrag(refx, refy, 2);
-            snd(45);
+            snd("core.crush1");
             BreakingAnimation({refx, refy}).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (game_data.quest_flags.tutorial == 2

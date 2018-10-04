@@ -461,7 +461,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                                     {
                                         cell_data.at(x, y).chip_id_actual =
                                             tile_tunnel;
-                                        snd(45);
+                                        snd("core.crush1");
                                         BreakingAnimation({x, y}).play();
                                         spillfrag(x, y, 2);
                                         if (is_in_fov(cdata[cc]))

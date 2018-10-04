@@ -119,7 +119,7 @@ void mef_add(
 
 void mef_update()
 {
-    int sound = 0;
+    optional<std::string> sound = none;
     for (int cnt = 0; cnt < MEF_MAX; ++cnt)
     {
         if (mef(0, cnt) == 0)
@@ -151,7 +151,7 @@ void mef_update()
                                 cdata.player().position.y)
                             < 6)
                         {
-                            sound = 6;
+                            sound = "core.fire1";
                         }
                     }
                     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -190,9 +190,9 @@ void mef_update()
             }
         }
     }
-    if (sound != 0)
+    if (sound)
     {
-        snd(sound);
+        snd(*sound);
     }
 }
 

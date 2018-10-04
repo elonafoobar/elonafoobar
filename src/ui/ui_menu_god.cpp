@@ -169,10 +169,10 @@ optional<UIMenuGod::ResultType> UIMenuGod::on_key(const std::string& key)
 {
     int _rtval = -1;
 
-    ELONA_GET_SELECTED_ITEM(_rtval, snd(40));
+    ELONA_GET_SELECTED_ITEM(_rtval, snd("core.click1"));
     if (key == key_cancel)
     {
-        snd(40);
+        snd("core.click1");
         _rtval = _cancel_choice;
     }
     if (_rtval != -1)

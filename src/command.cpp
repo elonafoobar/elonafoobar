@@ -3584,7 +3584,7 @@ TurnResult do_get_command()
                        .chip_id_actual)
                 == 4)
         {
-            snd(83);
+            snd("core.foot2a");
             txt(i18n::s.get("core.locale.action.get.snow"));
             if (!action_sp(cdata.player(), 10))
             {
