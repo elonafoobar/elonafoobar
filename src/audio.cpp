@@ -479,7 +479,7 @@ void sound_play_environmental()
 
 void play_music(const char* music_id)
 {
-    SharedId id = SharedId("core.music:"s + std::string(music_id));
+    SharedId id = SharedId(std::string(music_id));
     play_music(id);
 }
 
