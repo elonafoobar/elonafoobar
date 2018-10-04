@@ -125,7 +125,7 @@ void _adventurer_hate_action()
             }
             txt(i18n::s.get(
                 "core.locale.talk.visitor.adventurer.hate.throws", cdata[tc]));
-            snd(91);
+            snd("core.throw2");
             ccbk = cc;
             cc = tc;
             ThrowingObjectAnimation({tlocx, tlocy}, cdata[cc].position, 223, 0)
@@ -142,7 +142,7 @@ void _adventurer_hate_action()
             flt();
             itemcreate(-1, 704, -1, -1, 0);
             txt(i18n::s.get("core.locale.food.vomits", cdata[tc]));
-            snd(104);
+            snd("core.vomit");
             await(Config::instance().animewait / 2);
             update_screen();
         }
@@ -301,7 +301,7 @@ TalkResult _talk_hv_adventurer_train()
         }
         return TalkResult::talk_end;
     }
-    snd(12);
+    snd("core.paygold1");
     if (chatval_ == 1)
     {
         _adventurer_learn_skill(skill_id);
@@ -370,7 +370,7 @@ void _adventurer_receive_coin()
             -1, p, cdata.player().position.x, cdata.player().position.y, 0);
         txt(i18n::s.get(
             "core.locale.talk.visitor.receive", inv[ci], cdata[tc]));
-        snd(14);
+        snd("core.get1");
     }
 }
 
@@ -412,7 +412,7 @@ void _adventurer_receive_souvenir()
         itemcreate(0, 729, -1, -1, 0);
         txt(i18n::s.get(
             "core.locale.talk.visitor.adventurer.souvenir.receive", inv[ci]));
-        snd(14);
+        snd("core.get1");
     }
 }
 
@@ -557,7 +557,7 @@ TalkResult _talk_hv_adventurer_conversation()
 
 void _adventurer_drink()
 {
-    snd(17);
+    snd("core.drink1");
     txt(i18n::s.get(
         "core.locale.talk.visitor.adventurer.drink.cheers", cdata[tc]));
     txtef(9);
@@ -695,7 +695,7 @@ int _trainer_calc_skills()
 void _trainer_do_training(int plat, int chatval_)
 {
     cdata.player().platinum_coin -= plat;
-    snd(61);
+    snd("core.ding3");
     txtef(2);
     txt(i18n::s.get(
         "core.locale.talk.visitor.trainer.potential_expands",
@@ -798,7 +798,7 @@ void _beggar_give()
     p = cdata.player().gold / 20 + 1;
     txt(i18n::s.get("core.locale.talk.visitor.beggar.spare", p(0), cdata[tc]));
     cdata.player().gold -= p;
-    snd(12);
+    snd("core.paygold1");
     earn_gold(cdata[tc], p);
     modify_karma(cdata.player(), 2);
 }

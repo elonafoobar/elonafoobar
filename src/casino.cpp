@@ -32,7 +32,7 @@ void casino_dealer()
     begintempinv();
     atxthrough = 0;
     atxpic = 0;
-    snd(39);
+    snd("core.pop3");
     mode = 9;
     atxbg = u8"bg13"s;
     atxbgbk = "";
@@ -185,7 +185,7 @@ label_1868_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_18671_internal;
         }
@@ -194,7 +194,7 @@ label_1868_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_18671_internal;
         }
@@ -380,7 +380,7 @@ void casino_acquire_items()
     atxid = 0;
     exittempinv();
     await(100);
-    snd(39);
+    snd("core.pop3");
     play_music();
 }
 
@@ -639,7 +639,7 @@ label_1876_internal:
                 atxpic(1) = matref(2, p);
                 atxpic(2) = 96;
                 atxpic(3) = 96;
-                snd(41);
+                snd("core.get3");
                 mat(p) += 1;
                 noteadd(
                     "@BL"
@@ -672,7 +672,7 @@ label_1876_internal:
             atxpic(2) = 96;
             atxpic(3) = 96;
             noteadd(u8"幽霊に脅かされた！ (行動回数-1)"s);
-            snd(70);
+            snd("core.trap1");
             atxap -= 1;
             atxthrough = 1;
             goto label_1875;
@@ -684,7 +684,7 @@ label_1876_internal:
             atxpic(2) = 96;
             atxpic(3) = 96;
             noteadd(u8"小石につまづいてころんでしまった！ (行動回数-1)"s);
-            snd(70);
+            snd("core.trap1");
             atxap -= 1;
             atxthrough = 1;
             goto label_1875;
@@ -738,7 +738,7 @@ label_1876_internal:
             atxpic(2) = 96;
             atxpic(3) = 96;
             noteadd(u8"痛っ！蚊に刺された。"s);
-            snd(2);
+            snd("core.atk1");
             damage_hp(cdata.player(), cdata.player().max_hp * 5 / 100, -10);
         }
         else
@@ -748,7 +748,7 @@ label_1876_internal:
             atxpic(2) = 96;
             atxpic(3) = 96;
             noteadd(u8"うっ！ヘビに噛まれた。"s);
-            snd(2);
+            snd("core.atk1");
             damage_hp(cdata.player(), cdata.player().max_hp * 10 / 100, -10);
         }
         atxthrough = 1;
@@ -763,7 +763,7 @@ label_1876_internal:
             atxpic(2) = 96;
             atxpic(3) = 96;
             noteadd(u8"痛っ！蚊に刺された。"s);
-            snd(2);
+            snd("core.atk1");
             damage_hp(cdata.player(), cdata.player().max_hp * 5 / 100, -10);
         }
         else
@@ -773,7 +773,7 @@ label_1876_internal:
             atxpic(2) = 96;
             atxpic(3) = 96;
             noteadd(u8"うっ！ヘビに噛まれた。"s);
-            snd(2);
+            snd("core.atk1");
             damage_hp(cdata.player(), cdata.player().max_hp * 10 / 100, -10);
         }
         atxthrough = 1;
@@ -809,7 +809,7 @@ label_1876_internal:
         atxpic(1) = matref(2, p);
         atxpic(2) = 96;
         atxpic(3) = 96;
-        snd(41);
+        snd("core.get3");
         mat(p) += 1;
         noteadd(
             "@BL"
@@ -878,7 +878,7 @@ bool casino_start()
         noteadd(i18n::s.get_enum("core.locale.casino.window.first", 0));
         noteadd(i18n::s.get_enum("core.locale.casino.window.first", 1));
         game_data.used_casino_once = 1;
-        snd(41);
+        snd("core.get3");
         mat(1) += 10;
         noteadd(
             "@BL"
@@ -1229,7 +1229,7 @@ bool casino_blackjack()
                 continue;
             }
         }
-        snd(41);
+        snd("core.get3");
         noteadd(
             "@GR"
             + i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
@@ -1240,7 +1240,7 @@ bool casino_blackjack()
             {
                 flt();
                 itemcreate(-1, 559, -1, -1, 0);
-                snd(41);
+                snd("core.get3");
                 noteadd(
                     "@GR"
                     + i18n::s.get(

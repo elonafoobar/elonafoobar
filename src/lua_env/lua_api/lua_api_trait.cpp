@@ -43,7 +43,7 @@ void Trait::set(int trait_id, int level)
     if (elona::trait(trait_id) < level
         && elona::trait(trait_id) < elona::traitref(2) && traitrefn(0) != "")
     {
-        snd(61);
+        snd("core.ding3");
         elona::txtef(2);
         elona::txt(traitrefn(0));
     }
@@ -51,7 +51,7 @@ void Trait::set(int trait_id, int level)
         elona::trait(trait_id) > level
         && elona::trait(trait_id) > elona::traitref(1) && traitrefn(1) != "")
     {
-        snd(61);
+        snd("core.ding3");
         elona::txtef(3);
         elona::txt(traitrefn(1));
     }
@@ -69,7 +69,7 @@ void Trait::modify(int trait_id, int delta)
     if (delta > 0 && elona::trait(trait_id) < elona::traitref(2)
         && traitrefn(0) != "")
     {
-        snd(61);
+        snd("core.ding3");
         elona::txtef(2);
         elona::txt(traitrefn(0));
     }
@@ -77,7 +77,7 @@ void Trait::modify(int trait_id, int delta)
         delta < 0 && elona::trait(trait_id) > elona::traitref(1)
         && traitrefn(1) != "")
     {
-        snd(61);
+        snd("core.ding3");
         elona::txtef(3);
         elona::txt(traitrefn(1));
     }

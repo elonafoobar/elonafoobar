@@ -115,7 +115,7 @@ TurnResult do_give_command()
         }
         update_screen();
         invctrl = 10;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -260,7 +260,7 @@ TurnResult do_interact_command()
     {
         update_screen();
         invctrl = 10;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -283,7 +283,7 @@ TurnResult do_interact_command()
     }
     if (p == 6)
     {
-        snd(26);
+        snd("core.pop2");
         cc = tc;
         menu_character_sheet_investigate();
         cc = 0;
@@ -324,7 +324,7 @@ TurnResult do_interact_command()
     }
     if (p == 9)
     {
-        snd(58);
+        snd("core.build1");
         cdata[tc].is_hung_on_sand_bag() = false;
         txt(i18n::s.get("core.locale.action.interact.release", cdata[tc]));
         flt();
@@ -468,7 +468,7 @@ static void _try_to_reveal_small_coin()
 {
     if (cdata[cc].position.x == x && cdata[cc].position.y == y)
     {
-        snd(24);
+        snd("core.ding2");
         txt(i18n::s.get("core.locale.action.search.small_coin.find"));
         cell_data.at(x, y).feats = 0;
         flt();
@@ -698,7 +698,7 @@ TurnResult do_throw_command()
     BreakingAnimation({x, y}).play();
     if (inv[ci].id == 685 || inv[ci].id == 699)
     {
-        snd(91);
+        snd("core.throw2");
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
@@ -769,11 +769,11 @@ TurnResult do_throw_command()
             {
                 if (inv[ci].id == 587)
                 {
-                    snd(86);
+                    snd("core.snow");
                 }
                 else
                 {
-                    snd(47);
+                    snd("core.crush2");
                 }
             }
             if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
@@ -914,7 +914,7 @@ TurnResult do_throw_command()
     if (is_in_fov({tlocx, tlocy}))
     {
         txt(i18n::s.get("core.locale.action.throw.shatters"));
-        snd(47);
+        snd("core.crush2");
     }
     if (inv[ci].id == 578)
     {
@@ -1004,7 +1004,7 @@ TurnResult do_change_ammo_command()
         txt(i18n::s.get("core.locale.action.ammo.is_not_capable", inv[ci]));
         return TurnResult::pc_turn_user_error;
     }
-    snd(90);
+    snd("core.ammo");
     ++cs;
     if (cs >= listmax)
     {
@@ -1059,7 +1059,7 @@ TurnResult do_offer_command()
         "core.locale.action.offer.execute",
         inv[ci],
         i18n::_(u8"god", cdata.player().god_id, u8"name")));
-    snd(121);
+    snd("core.offer2");
     const auto tcbk = tc(0);
     tc = 0;
     BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::offering)
@@ -1118,7 +1118,7 @@ TurnResult do_offer_command()
             cdata.player().praying_point += i * 30;
             animode = 100;
             MiracleAnimation().play();
-            snd(120);
+            snd("core.pray2");
             if (inv[ti].param1 != 0)
             {
                 txt(i18n::s.get("core.locale.action.offer.take_over.shadow"));
@@ -1323,7 +1323,7 @@ label_1953_internal:
     if (p != -1)
     {
         cdata.player().enemy_id = p;
-        snd(20);
+        snd("core.ok1");
         txt(i18n::s.get("core.locale.action.look.target", cdata[p(0)]));
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -1332,7 +1332,7 @@ label_1953_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_1952_internal;
         }
@@ -1341,7 +1341,7 @@ label_1953_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_1952_internal;
         }
@@ -1360,7 +1360,7 @@ TurnResult do_dip_command()
     {
         item_separate(ci);
         inv[cidip].modify_number(-1);
-        snd(13);
+        snd("core.equip1");
         txt(i18n::s.get(
             "core.locale.action.dip.result.bait_attachment",
             inv[ci],
@@ -1376,7 +1376,7 @@ TurnResult do_dip_command()
         }
         return TurnResult::turn_end;
     }
-    snd(17);
+    snd("core.drink1");
     if (the_item_db[inv[cidip].id]->category == 52000)
     {
         if (the_item_db[inv[ci].id]->subcategory == 60001)
@@ -1689,7 +1689,7 @@ TurnResult do_use_command()
         || inv[ci].function == 4)
     {
         prodtype = inv[ci].function;
-        snd(26);
+        snd("core.pop2");
         invctrl = 0;
         crafting_menu();
         return TurnResult::turn_end;
@@ -1804,7 +1804,7 @@ TurnResult do_use_command()
         inv[ci].modify_number(-1);
         cell_featset(x, y, 0, 14, 7, cc);
         txt(i18n::s.get("core.locale.action.use.mine.you_set_up"));
-        snd(58);
+        snd("core.build1");
         goto label_2229_internal;
     case 44:
         if (inv_getowner(ci) != -1)
@@ -1951,13 +1951,13 @@ TurnResult do_use_command()
             -1, 541, cdata.player().position.x, cdata.player().position.y, 0);
         if (is_in_fov(cdata[cc]))
         {
-            snd(86);
+            snd("core.snow");
             txt(i18n::s.get(
                 "core.locale.action.use.snow.make_snowman", cdata[cc]));
         }
         goto label_2229_internal;
     case 13:
-        snd(6);
+        snd("core.fire1");
         if (game_data.torch == 0)
         {
             game_data.torch = 1;
@@ -2145,7 +2145,7 @@ TurnResult do_use_command()
                     }
                     else
                     {
-                        snd(58);
+                        snd("core.build1");
                         cdata[tc].is_hung_on_sand_bag() = true;
                         txt(i18n::s.get(
                             "core.locale.action.use.sandbag.start", cdata[tc]));
@@ -2249,7 +2249,7 @@ TurnResult do_use_command()
             return TurnResult::pc_turn_user_error;
         }
         item_separate(ci);
-        snd(12);
+        snd("core.paygold1");
         cdata.player().gold -= moneybox(inv[ci].param2);
         inv[ci].param1 += moneybox(inv[ci].param2);
         inv[ci].weight += 100;
@@ -2263,7 +2263,7 @@ TurnResult do_use_command()
         txt(i18n::s.get("core.locale.action.use.summoning_crystal.use"));
         goto label_2229_internal;
     case 22:
-        snd(118);
+        snd("core.enc");
         if (map_data.type != mdata_t::MapType::town
             && map_data.type != mdata_t::MapType::guild)
         {
@@ -2284,14 +2284,14 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 49:
         txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
-        snd(58);
+        snd("core.build1");
         efid = 49;
         efp = 100;
         magic();
         goto label_2229_internal;
     case 21:
         txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
-        snd(58);
+        snd("core.build1");
         inv[ci].modify_number(-1);
         fixmaterial = inv[ci].material;
         efid = 21;
@@ -2308,7 +2308,7 @@ TurnResult do_use_command()
     case 26:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         game_data.diastrophism_flag = 1;
-        snd(64);
+        snd("core.pray1");
         txtef(5);
         txt(i18n::s.get("core.locale.action.use.statue.opatos"));
         goto label_2229_internal;
@@ -2322,14 +2322,14 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 43:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
-        snd(64);
+        snd("core.pray1");
         txtef(5);
         txt(i18n::s.get("core.locale.action.use.statue.ehekatl"));
         buff_add(cdata[tc], 19, 77, 2500);
         goto label_2229_internal;
     case 27:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
-        snd(64);
+        snd("core.pray1");
         txtef(5);
         if (game_data.weather == 1)
         {
@@ -2389,7 +2389,7 @@ TurnResult do_use_command()
         inv[ci].modify_number(-1);
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(i18n::s.get("core.locale.action.use.nuke.set_up"));
-        snd(58);
+        snd("core.build1");
         mef_add(
             cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
@@ -2436,7 +2436,7 @@ TurnResult do_use_command()
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        snd(64);
+        snd("core.pray1");
         game_data.next_level_minus_one_kumiromis_experience_becomes_available +=
             10;
         inv[ci].modify_number(-1);
@@ -2448,7 +2448,7 @@ TurnResult do_use_command()
             "core.locale.action.use.secret_experience.kumiromi.use.text"));
         goto label_2229_internal;
     case 42:
-        snd(38);
+        snd("core.curse1");
         txtef(8);
         txt(i18n::s.get("core.locale.action.use.secret_experience.lomias"));
         goto label_2229_internal;
@@ -2646,7 +2646,7 @@ TurnResult do_use_command()
         screenupdate = -1;
         update_screen();
         cc = rc;
-        snd(26);
+        snd("core.pop2");
         menu_character_sheet_investigate();
         cc = 0;
         goto label_2229_internal;
@@ -2690,7 +2690,7 @@ TurnResult do_open_command()
         invctrl(0) = 22;
         invctrl(1) = 0;
         invfile = inv[ci].param1;
-        snd(23);
+        snd("core.chest1");
         shop_sell_item();
         screenupdate = -1;
         update_screen();
@@ -2700,7 +2700,7 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -2709,7 +2709,7 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -2718,13 +2718,13 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 8;
-        snd(100);
+        snd("core.inv");
         ctrl_inventory();
         return TurnResult::turn_end;
     }
     if (inv[ci].id == 600)
     {
-        snd(22);
+        snd("core.locked1");
         txt(i18n::s.get("core.locale.action.open.shackle.text"));
         if (game_data.current_map == mdata_t::MapId::noyel)
         {
@@ -2822,7 +2822,7 @@ TurnResult do_open_command()
             invctrl(1) = 3;
         }
         mode = 6;
-        snd(100);
+        snd("core.inv");
         ctrl_inventory();
         invcontainer = 0;
         if (refweight == -1)
@@ -3035,7 +3035,7 @@ TurnResult do_use_stairs_command(int val0)
             {
                 txt(i18n::s.get("core.locale.action.use_stairs.unlock.normal"));
             }
-            snd(23);
+            snd("core.chest1");
             cell_featset(
                 cdata[cc].position.x,
                 cdata[cc].position.y,
@@ -3043,7 +3043,7 @@ TurnResult do_use_stairs_command(int val0)
                 11);
             return TurnResult::turn_end;
         }
-        snd(22);
+        snd("core.locked1");
         txt(i18n::s.get("core.locale.action.use_stairs.locked"));
         return TurnResult::turn_end;
     }
@@ -3107,7 +3107,7 @@ TurnResult do_use_stairs_command(int val0)
             }
         }
     }
-    snd(49);
+    snd("core.exitmap1");
     levelexitby = 4;
     return TurnResult::exit_map;
 }
@@ -3168,7 +3168,7 @@ static TurnResult _bump_into_character()
                         }
                         if (p != 0)
                         {
-                            snd(11);
+                            snd("core.getgold1");
                             cdata[cc].gold -= p;
                             earn_gold(cdata[tc], p);
                             txt(i18n::s.get(
@@ -3329,7 +3329,7 @@ TurnResult do_movement_command()
             {
                 game_data.player_x_on_map_leave = cdata.player().position.x;
                 game_data.player_y_on_map_leave = cdata.player().position.y;
-                snd(49);
+                snd("core.exitmap1");
                 --game_data.current_dungeon_level;
                 levelexitby = 4;
                 return TurnResult::exit_map;
@@ -3346,12 +3346,12 @@ TurnResult do_movement_command()
         keyhalt = 1;
         if (cellfeat == 23)
         {
-            snd(99);
+            snd("core.chat");
             return TurnResult::show_quest_board;
         }
         if (cellfeat == 31)
         {
-            snd(99);
+            snd("core.chat");
             voting_box();
             return TurnResult::turn_end;
         }
@@ -3568,7 +3568,7 @@ TurnResult do_get_command()
             removeworker(area);
             map_global_prepare();
             ctrl_file(FileOperation::temp_dir_delete_area);
-            snd(58);
+            snd("core.build1");
             txt(i18n::s.get("core.locale.action.get.building.remove"));
             return TurnResult::turn_end;
         }
@@ -3614,7 +3614,7 @@ TurnResult do_get_command()
     if (number > 1)
     {
         invctrl = 3;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -3622,7 +3622,7 @@ TurnResult do_get_command()
     if ((inv[ci].own_state > 0 && inv[ci].own_state < 3)
         || inv[ci].own_state == 5)
     {
-        snd(27);
+        snd("core.fail1");
         ++msgdup;
         if (inv[ci].own_state == 2)
         {
@@ -3758,7 +3758,7 @@ TurnResult do_exit_command()
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            snd(44);
+            snd("core.write1");
             save_game();
             txt(i18n::s.get("core.locale.action.exit.saved"));
             txt(i18n::s.get(
@@ -3770,7 +3770,7 @@ TurnResult do_exit_command()
     }
     if (rtval == 2)
     {
-        snd(20);
+        snd("core.ok1");
         set_option();
     }
     update_screen();

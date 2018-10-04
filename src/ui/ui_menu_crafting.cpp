@@ -336,7 +336,7 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
         s = ioriginalnameref(created_item_id);
         if (_can_produce_item(created_item_id) == -1)
         {
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get(
                 "core.locale.crafting.you_do_not_meet_requirements"));
             set_reupdate();
@@ -344,7 +344,7 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
         }
         if (!inv_getspace(0))
         {
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
             set_reupdate();
             return none;
@@ -355,7 +355,7 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -364,7 +364,7 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

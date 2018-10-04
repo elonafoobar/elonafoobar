@@ -22,7 +22,7 @@ void UIMenuTownChart::update()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    snd(99);
+    snd("core.chat");
     curmenu = 0;
     gsel(3);
     pos(960, 96);
@@ -134,7 +134,7 @@ optional<UIMenuTownChart::ResultType> UIMenuTownChart::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -143,7 +143,7 @@ optional<UIMenuTownChart::ResultType> UIMenuTownChart::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

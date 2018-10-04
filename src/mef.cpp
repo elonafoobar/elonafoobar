@@ -213,7 +213,7 @@ void mef_proc(int tc)
             {
                 if (is_in_fov(cdata[tc]))
                 {
-                    snd(46);
+                    snd("core.water2");
                     txt(i18n::s.get("core.locale.mef.melts", cdata[tc]));
                 }
                 if (mef(6, ef) == 0)
@@ -240,7 +240,7 @@ void mef_proc(int tc)
     {
         if (is_in_fov(cdata[tc]))
         {
-            snd(6);
+            snd("core.fire1");
             txt(i18n::s.get("core.locale.mef.is_burnt", cdata[tc]));
         }
         if (mef(6, ef) == 0)
@@ -263,7 +263,7 @@ void mef_proc(int tc)
         {
             if (is_in_fov(cdata[tc]))
             {
-                snd(46);
+                snd("core.water2");
                 txt(i18n::s.get("core.locale.mef.steps_in_pool", cdata[tc]));
             }
             wet(tc, 25);

@@ -105,7 +105,7 @@ void memcpy(
 
 void select_house_board_tile()
 {
-    snd(26);
+    snd("core.pop2");
 
     while (1)
     {
@@ -144,11 +144,11 @@ void select_house_board_tile()
             p = mousex / 24 + mousey / 24 * 33;
             if (p >= listmax)
             {
-                snd(27);
+                snd("core.fail1");
                 continue;
             }
             tile = list(0, p);
-            snd(20);
+            snd("core.ok1");
             house_board_update_screen();
             return;
         }
@@ -1108,7 +1108,7 @@ int cargocheck()
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.ui.inv.cannot_use_cargo_items"));
-        snd(27);
+        snd("core.fail1");
         return 0;
     }
     else
@@ -1435,7 +1435,7 @@ void cursor_check()
 {
     if (key == key_north)
     {
-        snd(5);
+        snd("core.cursor1");
         --cs;
         if (cs < 0)
         {
@@ -1448,7 +1448,7 @@ void cursor_check()
     }
     if (key == key_south)
     {
-        snd(5);
+        snd("core.cursor1");
         ++cs;
         if (cs >= keyrange)
         {
@@ -1943,21 +1943,21 @@ void animeload(int prm_807, int prm_808)
     r_at_m133 = 0;
     if (prm_807 == 8)
     {
-        snd(65);
+        snd("core.offer1");
     }
     if (prm_807 == 10)
     {
         i_at_m133(0) = 8;
         i_at_m133(1) = Config::instance().animewait * 2.5;
         r_at_m133 = 0.2;
-        snd(119);
+        snd("core.enc2");
     }
     if (prm_807 == 11)
     {
         i_at_m133(0) = 5;
         i_at_m133(1) = Config::instance().animewait * 3.5;
         r_at_m133 = 0;
-        snd(118);
+        snd("core.enc");
     }
     if (prm_807 == 14)
     {
@@ -2875,7 +2875,7 @@ void revive_character()
     cyinit = cdata.player().position.y;
     chara_place();
     cdata[rc].current_map = 0;
-    snd(64);
+    snd("core.pray1");
     txtef(5);
     txt(i18n::s.get("core.locale.misc.resurrect", cdatan(0, rc), cdata[rc]));
 }
@@ -6524,7 +6524,7 @@ void god_fail_to_take_over_penalty()
         efp = 250;
         tc = 0;
         magic();
-        snd(63);
+        snd("core.punish1");
     }
     if (rnd(2))
     {
@@ -6653,7 +6653,7 @@ void supply_income()
     }
     if (income != 0 || income(1) != 0)
     {
-        snd(24);
+        snd("core.ding2");
         txtef(5);
         if (income(1) == 0)
         {
@@ -6981,7 +6981,7 @@ label_19431_internal:
     {
         do_save_game();
     }
-    snd(26);
+    snd("core.pop2");
     listmax = 0;
     page = 0;
     pagesize = 16;
@@ -7112,7 +7112,7 @@ label_1945_internal:
     {
         if (p == -999)
         {
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get("core.locale.misc.custom.incompatible"));
             goto label_1944_internal;
         }
@@ -7184,7 +7184,7 @@ label_1945_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_1944_internal;
         }
@@ -7193,7 +7193,7 @@ label_1945_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_1944_internal;
         }
@@ -7386,12 +7386,12 @@ int target_position()
                 if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 2
                     || chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 1)
                 {
-                    snd(27);
+                    snd("core.fail1");
                     wait_key_released();
                     continue;
                 }
                 tile = cell_data.at(tlocx, tlocy).chip_id_actual;
-                snd(5);
+                snd("core.cursor1");
                 wait_key_released();
             }
             tx = clamp(mousex - inf_screenx, 0, windoww) / 48;
@@ -7484,7 +7484,7 @@ int target_position()
             i = list(0, p);
             if (f)
             {
-                snd(5);
+                snd("core.cursor1");
                 tlocx = cdata[list(0, p)].position.x;
                 tlocy = cdata[list(0, p)].position.y;
             }
@@ -7500,7 +7500,7 @@ int target_position()
                         "core.locale.action.which_direction.cannot_see"));
                     continue;
                 }
-                snd(20);
+                snd("core.ok1");
                 if (rc > 0)
                 {
                     cdata.player().enemy_id = rc;
@@ -7517,7 +7517,7 @@ int target_position()
             }
             else if (homemapmode == 0)
             {
-                snd(5);
+                snd("core.cursor1");
             }
             scposval = 0;
             if (tlocinitx == 0 && tlocinity == 0)
@@ -7633,7 +7633,7 @@ TurnResult try_interact_with_npc()
     menucycle = 1;
     invally = 1;
     invctrl = 10;
-    snd(100);
+    snd("core.inv");
     MenuResult mr = ctrl_inventory();
     assert(mr.turn_result != TurnResult::none);
     return mr.turn_result;
@@ -8083,7 +8083,7 @@ TurnResult do_gatcha()
     {
         if (mat(tmat) > 0)
         {
-            snd(56);
+            snd("core.gasha");
             matdelmain(tmat);
             if (inv[ci].id == 413)
             {
@@ -8749,7 +8749,7 @@ void load_save_data()
 
 void do_save_game()
 {
-    snd(44);
+    snd("core.write1");
     save_game();
     txtef(5);
     txt(i18n::s.get("core.locale.ui.save"));
@@ -8796,7 +8796,7 @@ void save_game()
 
 TurnResult do_enter_strange_gate()
 {
-    snd(49);
+    snd("core.exitmap1");
     game_data.previous_map2 = game_data.current_map;
     game_data.previous_dungeon_level = game_data.current_dungeon_level;
     game_data.previous_x = cdata.player().position.x;
@@ -8811,7 +8811,7 @@ TurnResult do_enter_strange_gate()
 
 int ask_direction()
 {
-    snd(26);
+    snd("core.pop2");
     gsel(4);
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx - 48;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny - 48;
@@ -9116,7 +9116,7 @@ label_21451_internal:
                     refx = movx;
                     refy = movy;
                     discover_trap();
-                    snd(70);
+                    snd("core.trap1");
                 }
                 efsource = 5;
                 if (is_in_fov(cdata[cc]))
@@ -9185,7 +9185,7 @@ label_21451_internal:
                         {
                             if (is_in_fov(cdata[cc]))
                             {
-                                snd(72);
+                                snd("core.teleport1");
                                 txt(i18n::s.get(
                                     "core.locale.magic.teleport.disappears",
                                     cdata[cc]));
@@ -9613,7 +9613,7 @@ void map_global_proc_travel_events()
         {
             if (cdata.player().has_anorexia() == 0)
             {
-                snd(18);
+                snd("core.eat1");
                 txt(i18n::s.get(
                     "core.locale.action.move.global.weather.snow.eat"));
                 cdata[cc].nutrition += 5000;
@@ -9848,7 +9848,7 @@ int read_normal_book()
     }
     if (inv[ci].id == 742)
     {
-        snd(59);
+        snd("core.book1");
         txt(i18n::s.get("core.locale.action.read.book.void_permit"));
         return 1;
     }
@@ -9866,7 +9866,7 @@ int read_normal_book()
     }
     if (inv[ci].id == 668)
     {
-        snd(59);
+        snd("core.book1");
         txt(i18n::s.get("core.locale.action.read.book.book_of_rachel"));
         return 1;
     }
@@ -10906,7 +10906,7 @@ int pick_up_item()
     {
         if (inv[ci].id == 54 || inv[ci].id == 55)
         {
-            snd(11);
+            snd("core.getgold1");
             ti = ci;
             in = inv[ci].number();
             inv[ci].remove();
@@ -10968,7 +10968,7 @@ int pick_up_item()
             rtval = show_prompt(promptx, prompty, 160);
             if (rtval == 0)
             {
-                snd(58);
+                snd("core.build1");
                 if (inv[ci].id == 555)
                 {
                     std::string midbk = mid;
@@ -11110,7 +11110,7 @@ int pick_up_item()
             txt(i18n::s.get(
                 "core.locale.action.pick_up.you_buy", itemname(ti, in)));
             sellgold = calcitemvalue(ti, 0) * in;
-            snd(12);
+            snd("core.paygold1");
             cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
             if (the_item_db[inv[ti].id]->category == 92000)
@@ -11145,7 +11145,7 @@ int pick_up_item()
                         game_data.guild.thieves_guild_quota));
                 }
             }
-            snd(11);
+            snd("core.getgold1");
             earn_gold(cdata.player(), sellgold);
             cdata[tc].gold -= sellgold;
             if (cdata[tc].gold < 0)
@@ -11315,7 +11315,7 @@ TurnResult do_bash()
         {
             ci = mapitemfind(x, y, 526);
             item_separate(ci);
-            snd(73);
+            snd("core.bash1");
             txt(i18n::s.get("core.locale.action.bash.tree.execute", inv[ci]));
             if (inv[ci].own_state == 5 || inv[ci].param1 <= 0)
             {
@@ -11361,7 +11361,7 @@ TurnResult do_bash()
             }
             if (cdata[tc].choked)
             {
-                snd(73);
+                snd("core.bash1");
                 txt(i18n::s.get(
                     "core.locale.action.bash.choked.execute",
                     cdata[cc],
@@ -11378,7 +11378,7 @@ TurnResult do_bash()
             }
             else
             {
-                snd(73);
+                snd("core.bash1");
                 txt(i18n::s.get(
                     "core.locale.action.bash.execute", cdata[cc], cdata[tc]));
                 hostileaction(cc, tc);
@@ -11386,7 +11386,7 @@ TurnResult do_bash()
         }
         else
         {
-            snd(73);
+            snd("core.bash1");
             txt(i18n::s.get(
                 "core.locale.action.bash.execute", cdata[cc], cdata[tc]));
             txt(i18n::s.get(
@@ -11414,7 +11414,7 @@ TurnResult do_bash()
             itemcreate(-1, 0, x, y, 0);
             if (is_in_fov(cdata[cc]))
             {
-                snd(73);
+                snd("core.bash1");
                 txt(i18n::s.get(
                     "core.locale.action.bash.shatters_pot", cdata[cc]));
                 snd(45);
@@ -11424,7 +11424,7 @@ TurnResult do_bash()
         }
         if (feat(1) == 21)
         {
-            snd(73);
+            snd("core.bash1");
             p = feat(2) * 3 + 30;
             if (game_data.current_map == mdata_t::MapId::jail)
             {
@@ -11496,7 +11496,7 @@ TurnResult do_bash()
         }
     }
     txt(i18n::s.get("core.locale.action.bash.air", cdata[cc]));
-    snd(4);
+    snd("core.miss");
     return TurnResult::turn_end;
 }
 
@@ -11947,7 +11947,7 @@ void sense_map_feats_on_move()
             }
             if (p == 3)
             {
-                snd(46);
+                snd("core.water2");
             }
             if (p == 4)
             {
@@ -12110,7 +12110,7 @@ int unlock_box(int difficulty)
     }
     ti = stat;
     txt(i18n::s.get("core.locale.action.unlock.use_lockpick"));
-    snd(22);
+    snd("core.locked1");
     {
         int stat = item_find(637, 3);
         if (stat != -1)
@@ -12172,7 +12172,7 @@ int unlock_box(int difficulty)
 
 void open_box()
 {
-    snd(23);
+    snd("core.chest1");
     txt(i18n::s.get("core.locale.action.open.text", inv[ci]));
     msg_halt();
     ri = ci;
@@ -12319,7 +12319,7 @@ void open_box()
         itemcreate(
             -1, 622, cdata.player().position.x, cdata.player().position.y, 1);
     }
-    snd(24);
+    snd("core.ding2");
     txt(i18n::s.get("core.locale.action.open.goods", inv[ri]));
     autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
     inv[ri].param1 = 0;
@@ -12337,10 +12337,10 @@ void open_box()
 
 void open_new_year_gift()
 {
-    snd(23);
+    snd("core.chest1");
     txt(i18n::s.get("core.locale.action.open.text", inv[ci]));
     msg_halt();
-    snd(24);
+    snd("core.ding2");
     randomize();
     ri = ci;
     cc = 0;
@@ -12550,15 +12550,15 @@ TurnResult try_to_open_locked_door()
             txt(i18n::s.get("core.locale.action.open.door.succeed", cdata[cc]));
             if (map_data.tileset == 8)
             {
-                snd(67);
+                snd("core.door2");
             }
             else if (map_data.tileset == 9)
             {
-                snd(71);
+                snd("core.card1");
             }
             else
             {
-                snd(48);
+                snd("core.door1");
             }
         }
     }
@@ -12567,7 +12567,7 @@ TurnResult try_to_open_locked_door()
         ++msgdup;
         if (is_in_fov(cdata[cc]))
         {
-            snd(22);
+            snd("core.locked1");
             txt(i18n::s.get("core.locale.action.open.door.fail", cdata[cc]));
         }
     }
@@ -13157,7 +13157,7 @@ label_22191_internal:
     {
         if (cc == 0)
         {
-            snd(4);
+            snd("core.miss");
         }
         if (sdata(attackskill, cc) > sdata(173, tc) || rnd(5) == 0)
         {
@@ -13229,7 +13229,7 @@ label_22191_internal:
                     if (inv[cw].param2 >= calcexpalive(inv[cw].param1))
                     {
                         txtef(2);
-                        snd(61);
+                        snd("core.ding3");
                         txt(i18n::s.get(
                             "core.locale.misc.living_weapon_taste_blood",
                             inv[cw]));
@@ -13657,7 +13657,7 @@ TurnResult do_plant()
         s = i18n::s.get("core.locale.action.plant.execute", inv[ci]);
     }
     txt(s);
-    snd(55);
+    snd("core.bush1");
     inv[ci].modify_number(-1);
     cell_featset(
         cdata[cc].position.x,
@@ -13785,7 +13785,7 @@ void harvest_plant(int val)
 void create_harvested_item()
 {
     chara_gain_skill_exp(cdata.player(), 180, 75);
-    snd(55);
+    snd("core.bush1");
     flt(sdata(180, 0) / 2 + 15, Quality::good);
     dbid = 0;
     if (feat(2) == 39)
@@ -13840,7 +13840,7 @@ void initialize_economy()
     bkdata(1) = game_data.current_dungeon_level;
     bkdata(2) = cdata.player().position.x;
     bkdata(3) = cdata.player().position.y;
-    snd(44);
+    snd("core.write1");
     save_game();
     mode = 11;
     cdata.player().position.x = 0;
@@ -13945,7 +13945,7 @@ int new_ally_joins()
     cdata[rc].is_hung_on_sand_bag() = false;
     cdata[rc].is_temporary() = false;
     cdata[rc].only_christmas() = false;
-    snd(64);
+    snd("core.pray1");
     txtef(5);
     txt(i18n::s.get("core.locale.action.ally_joins.success", cdata[rc]));
     return 1;
@@ -14479,7 +14479,7 @@ void weather_changes()
                 game_data.rank_deadlines.at(rank_id) = ranknorma(rank_id);
             }
         }
-        snd(74);
+        snd("core.night");
         event_add(10);
         game_data.play_days += game_data.date.hour / 24;
         game_data.date.day += game_data.date.hour / 24;
@@ -14617,7 +14617,7 @@ optional<TurnResult> check_angband()
 void conquer_lesimas()
 {
     std::string wincomment;
-    snd(51);
+    snd("core.complete1");
     stop_music();
     txt(i18n::s.get("core.locale.win.conquer_lesimas"));
     update_screen();
@@ -14763,7 +14763,7 @@ void play_the_last_scene_again()
 TurnResult pc_died()
 {
     cc = 0;
-    snd(50);
+    snd("core.dead1");
     screenupdate = -1;
     update_screen();
     if (game_data.executing_immediate_quest_type)

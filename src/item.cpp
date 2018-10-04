@@ -2257,7 +2257,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     }
     else
     {
-        snd(16);
+        snd("core.drop1");
         txt(i18n::s.get("core.locale.action.drop.execute", itemname(ti, num)));
     }
 
@@ -2271,7 +2271,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
             {
                 if (inv[ti].curse_state != CurseState::blessed)
                 {
-                    snd(64);
+                    snd("core.pray1");
                     inv[ti].curse_state = CurseState::blessed;
                     txtef(2);
                     txt(i18n::s.get(

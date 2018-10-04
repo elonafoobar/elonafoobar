@@ -192,7 +192,7 @@ bool UIMenuCharacterSheet::init()
     }
     if (_operation != CharacterSheetOperation::character_making)
     {
-        snd(94);
+        snd("core.chara");
     }
     window_animation(wx, wy, ww, wh, 9, 4);
 
@@ -1074,13 +1074,13 @@ static void _track_skill(int skill_id)
         }
     }
     game_data.tracked_skills.at(tracked_skill_index) = cc * 10000 + skill_id;
-    snd(20);
+    snd("core.ok1");
 }
 
 static void _apply_skill_bonus(int csskill_)
 {
     --cdata.player().skill_bonus;
-    snd(19);
+    snd("core.spend1");
     chara_gain_skill_exp(cdata[cc], csskill_, 400, 2, 1000);
     modify_potential(
         cdata[cc],
@@ -1133,7 +1133,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
     {
         if (key == key_enter)
         {
-            snd(103);
+            snd("core.dice");
             return UIMenuCharacterSheet::Result::cancel();
         }
         if (key == key_cancel)
@@ -1189,7 +1189,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
             }
             if (sdata.get(skill_id, 0).original_level == 0)
             {
-                snd(27);
+                snd("core.fail1");
                 set_reupdate();
                 return none;
             }
@@ -1203,13 +1203,13 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
     else if (key == key_pageup)
     {
         ++page;
-        snd(1);
+        snd("core.pop1");
         set_reupdate();
     }
     else if (key == key_pagedown)
     {
         --page;
-        snd(1);
+        snd("core.pop1");
         set_reupdate();
     }
     else if (key == key_cancel)

@@ -20,7 +20,7 @@ bool UIMenuFeats::init()
     tc = 0;
     cs_bk = -1;
     curmenu = 2;
-    snd(96);
+    snd("core.feat");
     ww = 700;
     wh = 400;
     wx = (windoww - ww) / 2 + inf_screenx;
@@ -372,7 +372,7 @@ static bool _gain_trait(int p_, bool show_text)
 
     --game_data.acquirable_feat_count;
     cs = -10000 + tid;
-    snd(61);
+    snd("core.ding3");
     ++trait(tid);
     chara_refresh(tc);
 
@@ -412,7 +412,7 @@ static void _switch_target(bool is_forwards)
         }
     }
     tc = new_index;
-    snd(1);
+    snd("core.pop1");
     page = 0;
     cs = 0;
 }
@@ -449,7 +449,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -458,7 +458,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

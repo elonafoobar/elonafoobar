@@ -120,7 +120,7 @@ void _loyter_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 5);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -253,7 +253,7 @@ void _miches_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 2);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -353,7 +353,7 @@ void _shena_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 2);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -566,7 +566,7 @@ void _lomias_tutorial_finish()
     chara_vanquish(chara_find(34));
     txt(i18n::s.get("core.locale.talk.unique.lomias.after.get_out.leave"));
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     for (int cnt = 0; cnt < 3; ++cnt)
     {
@@ -1141,7 +1141,7 @@ void _slan_receive_reward()
     flt();
     itemcreate(-1, 239, cdata[tc].position.x, cdata[tc].position.y, 0);
     inv[ci].param2 = 0;
-    snd(44);
+    snd("core.write1");
     txtef(2);
     txt(i18n::s.get("core.locale.talk.unique.slan.you_receive"));
     txt(i18n::s.get("core.locale.talk.unique.slan.dies", cdata[tc]));
@@ -1183,7 +1183,7 @@ TalkResult talk_unique_slan()
 
 void _erystia_receive_reward()
 {
-    snd(44);
+    snd("core.write1");
     txtef(2);
     txt(i18n::s.get("core.locale.talk.unique.erystia.all_stones.you_receive"));
     flt();
@@ -1195,7 +1195,7 @@ void _erystia_receive_reward()
 
 void _erystia_receive_key_17th_level()
 {
-    snd(44);
+    snd("core.write1");
     txtef(2);
     txt(i18n::s.get("core.locale.talk.unique.erystia.stones.you_receive"));
     game_data.quest_flags.main_quest = 110;
@@ -1203,7 +1203,7 @@ void _erystia_receive_key_17th_level()
 
 void _erystia_receive_key_4th_level()
 {
-    snd(44);
+    snd("core.write1");
     txtef(2);
     txt(
         i18n::s.get("core.locale.talk.unique.erystia.introduction.pledge_"
@@ -1678,7 +1678,7 @@ TalkResult talk_unique_garokk()
     if (chatval_ == 1)
     {
         invctrl = 1;
-        snd(26);
+        snd("core.pop2");
         crafting_menu();
         return TalkResult::talk_unique;
     }
@@ -1702,7 +1702,7 @@ void _miral_upgrade_cargo_limit()
     txt(i18n::s.get(
         "core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
         cnvweight(calccargoupdate())));
-    snd(58);
+    snd("core.build1");
     inv[ci].modify_number((-calccargoupdatecost()));
     game_data.current_cart_limit += calccargoupdate();
     refresh_burden_state();
@@ -1934,9 +1934,9 @@ void _paels_mom_receive_reward()
         -1, 54, cdata.player().position.x, cdata.player().position.y, 20000);
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 4);
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -1948,7 +1948,7 @@ void _paels_mom_give_potion()
     txt(
         i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_"
                     "life.give.you_hand_her"));
-    snd(13);
+    snd("core.equip1");
     modify_karma(cdata.player(), 20);
 }
 
@@ -2172,7 +2172,7 @@ void _raphael_receive_reward()
     itemcreate(
         -1, 54, cdata.player().position.x, cdata.player().position.y, 5000);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     quest_update_journal_msg();
     game_data.quest_flags.wife_collector = 1000;
 }
@@ -2180,7 +2180,7 @@ void _raphael_receive_reward()
 void _raphael_receive_wife_reward()
 {
     chara_vanquish(rc);
-    snd(51);
+    snd("core.complete1");
     flt();
     itemcreate(
         -1, 640, cdata.player().position.x, cdata.player().position.y, 2);
@@ -2335,7 +2335,7 @@ void _ainc_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 3);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     game_data.quest_flags.novice_knight = 1000;
@@ -2464,7 +2464,7 @@ void _rilian_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 2);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     game_data.quest_flags.puppys_cave = 1000;
@@ -2557,7 +2557,7 @@ void _tam_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 4);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -2654,7 +2654,7 @@ void _gilbert_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 3);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -2798,7 +2798,7 @@ void _arnord_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 3);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -2911,7 +2911,7 @@ void _mia_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 3);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     game_data.quest_flags.mias_dream = 1000;
@@ -3035,7 +3035,7 @@ void _renton_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 5);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     game_data.quest_flags.rare_books = 1000;
@@ -3185,7 +3185,7 @@ TalkResult talk_unique_renton()
 void _marks_receive_invitation()
 {
     cdata.player().gold -= 20000;
-    snd(12);
+    snd("core.paygold1");
     flt();
     itemcreate(-1, 24, cdata.player().position.x, cdata.player().position.y, 0);
     inv[ci].param1 = 13;
@@ -3272,7 +3272,7 @@ void _noel_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 6);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     game_data.quest_flags.red_blossom_in_palmia = 1000;
@@ -3282,7 +3282,7 @@ void _noel_buy_nuke()
 {
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     cdata.player().gold -= 12000;
-    snd(12);
+    snd("core.paygold1");
     flt();
     itemcreate(
         -1, 671, cdata.player().position.x, cdata.player().position.y, 0);
@@ -3443,7 +3443,7 @@ void _icolle_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 2);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     game_data.quest_flags.ambitious_scientist = 1000;
@@ -3552,7 +3552,7 @@ void _balzak_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 4);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
 }
@@ -3650,7 +3650,7 @@ void _lexus_join_mages_guild()
     game_data.guild.mages_guild_quota_recurring = 0;
     game_data.guild.thieves_guild_quota_recurring = 0;
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     quest_update_journal_msg();
     txtef(5);
     txt(i18n::s.get("core.locale.talk.unique.lexus.nonmember.joined"));
@@ -3698,7 +3698,7 @@ void _lexus_receive_reward()
         cdata.player().position.y,
         clamp(4 - game_data.ranks.at(8) / 2500, 1, 4));
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     modrank(8, 500, 8);
@@ -3879,7 +3879,7 @@ void _abyss_join_thieves_guild()
     game_data.guild.mages_guild_quota_recurring = 0;
     game_data.guild.thieves_guild_quota_recurring = 0;
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     quest_update_journal_msg();
     txtef(5);
     txt(i18n::s.get("core.locale.talk.unique.abyss.nonmember.joined"));
@@ -3921,7 +3921,7 @@ void _abyss_receive_reward()
         cdata.player().position.y,
         clamp(3 - game_data.ranks.at(8) / 3000, 1, 3));
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     modrank(8, 500, 8);
@@ -4116,7 +4116,7 @@ void _doria_join_fighters_guild()
     game_data.guild.mages_guild_quota_recurring = 0;
     game_data.guild.thieves_guild_quota_recurring = 0;
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     quest_update_journal_msg();
     txtef(5);
     txt(i18n::s.get("core.locale.talk.unique.doria.nonmember.joined"));
@@ -4177,7 +4177,7 @@ void _doria_receive_reward()
         cdata.player().position.y,
         clamp(4 - game_data.ranks.at(8) / 2500, 1, 4));
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     modrank(8, 500, 8);
@@ -4350,7 +4350,7 @@ void _conery_receive_reward()
     flt();
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, 4);
     txt(i18n::s.get("core.locale.quest.completed"));
-    snd(51);
+    snd("core.complete1");
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     quest_update_journal_msg();
     game_data.quest_flags.minotaur_king = 1000;
@@ -4428,7 +4428,7 @@ TalkResult talk_unique_conery()
 
 void _rogue_boss_surrender()
 {
-    snd(12);
+    snd("core.paygold1");
     cdata.player().gold -= cdata.player().gold / 5;
     for (const auto& cnt : items(0))
     {
@@ -4449,7 +4449,7 @@ void _rogue_boss_leave_map()
 {
     levelexitby = 4;
     chatteleport = 1;
-    snd(49);
+    snd("core.exitmap1");
 }
 
 TalkResult talk_unique_rogue_boss()
@@ -4618,7 +4618,7 @@ void _strange_scientist_turn_over()
         game_data.quest_flags.save_count_of_little_sister,
         game_data.quest_flags.kill_count_of_little_sister));
     chara_vanquish(chara_find_ally(319));
-    snd(51);
+    snd("core.complete1");
 }
 
 TalkResult talk_unique_strange_scientist()
@@ -4737,7 +4737,7 @@ void _kaneda_bike_give_drug()
     txt(
         i18n::s.get("core.locale.talk.unique.kaneda_bike.before_"
                     "drug.yes.you_hand_him"));
-    snd(13);
+    snd("core.equip1");
 }
 
 TalkResult talk_unique_kaneda_bike()

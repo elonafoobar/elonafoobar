@@ -25,7 +25,7 @@ static void _populate_book_list()
 
 bool UIMenuSpellWriter::init()
 {
-    snd(26);
+    snd("core.pop2");
     listmax = 0;
     page = 0;
     pagesize = 16;
@@ -180,13 +180,13 @@ optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
     {
         if (_book_is_unavailable(_p))
         {
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get("core.locale.ui.reserve.unavailable"));
             set_reupdate();
         }
         else
         {
-            snd(20);
+            snd("core.ok1");
             _toggle_book_reserve(_p);
             set_reupdate();
         }
@@ -195,7 +195,7 @@ optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -204,7 +204,7 @@ optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

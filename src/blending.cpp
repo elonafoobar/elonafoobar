@@ -861,7 +861,7 @@ label_1925_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_1924_internal;
         }
@@ -870,7 +870,7 @@ label_1925_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_1924_internal;
         }
@@ -978,7 +978,7 @@ label_1928_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_1928_internal;
         }
@@ -987,7 +987,7 @@ label_1928_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_1928_internal;
         }
@@ -997,13 +997,13 @@ label_1928_internal:
         ci = p;
         if (ibit(13, ci))
         {
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
             goto label_1928_internal;
         }
         rpref(10 + step * 2 + 0) = ci;
         rpref(10 + step * 2 + 1) = inv[ci].id;
-        snd(17);
+        snd("core.drink1");
         txt(i18n::s.get("core.locale.blending.steps.you_add", inv[ci]));
         ++step;
         p = rpdiff(rpid, step, step - 1);
@@ -1011,7 +1011,7 @@ label_1928_internal:
     }
     if (key == key_prev)
     {
-        snd(1);
+        snd("core.pop1");
         --rppage;
         cs_bk = -1;
         if (rppage < 0)
@@ -1021,7 +1021,7 @@ label_1928_internal:
     }
     if (key == key_next)
     {
-        snd(1);
+        snd("core.pop1");
         ++rppage;
         cs_bk = -1;
         if (rppage > rppage(1))
@@ -1641,7 +1641,7 @@ void blending_start_attempt()
             }
             txtef(2);
             txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
-            snd(17);
+            snd("core.drink1");
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
@@ -1694,20 +1694,20 @@ void blending_proc_on_success_events()
         txtef(2);
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
         txt(i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
-        snd(65);
+        snd("core.offer1");
         break;
     case 10001:
         inv[ci].color = inv[ti].color;
         txtef(2);
         txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]));
-        snd(17);
+        snd("core.drink1");
         break;
     case 10002:
         ibitmod(14, ci, 1);
         txtef(2);
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
         txt(i18n::s.get("core.locale.action.dip.result.poisoned_food"));
-        snd(65);
+        snd("core.offer1");
         break;
     case 10003:
         txtef(2);
@@ -1723,7 +1723,7 @@ void blending_proc_on_success_events()
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
-        snd(17);
+        snd("core.drink1");
         break;
     case 10004:
         txtef(2);
@@ -1732,7 +1732,7 @@ void blending_proc_on_success_events()
         ibitmod(1, ci, 1);
         txt(i18n::s.get(
             "core.locale.action.dip.result.gains_acidproof", inv[ci]));
-        snd(17);
+        snd("core.drink1");
         break;
     case 10005:
         txtef(2);
@@ -1747,7 +1747,7 @@ void blending_proc_on_success_events()
             inv[ci].count = rnd(10) + 15;
             inv[ci].param4 = inv[ti].param1;
         }
-        snd(13);
+        snd("core.equip1");
         break;
     case 10006:
         txtef(2);
@@ -1767,7 +1767,7 @@ void blending_proc_on_success_events()
                 "core.locale.action.dip.result.becomes_cursed", inv[ci]));
             inv[ci].curse_state = CurseState::cursed;
         }
-        snd(17);
+        snd("core.drink1");
         break;
     case 10007:
         txt(i18n::s.get(
@@ -1778,7 +1778,7 @@ void blending_proc_on_success_events()
                 "core.locale.action.dip.result.empty_bottle_shatters"));
             break;
         }
-        snd(17);
+        snd("core.drink1");
         if (inv[ci].id == 602)
         {
             txt(i18n::s.get(
@@ -1842,7 +1842,7 @@ void blending_proc_on_success_events()
         item_stack(0, ci, 1);
         item_stack(0, ci);
         ci = cibk;
-        snd(17);
+        snd("core.drink1");
         break;
     }
 

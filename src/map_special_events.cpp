@@ -176,7 +176,7 @@ static void _map_events_jail()
                 txt(i18n::s.get("core.locale.misc.map.jail.leave_here"));
                 txt(i18n::s.get("core.locale.misc.map.jail.unlocks_your_cell"));
                 cell_featset(29, 6, tile_dooropen, 20, 0, -1);
-                snd(48);
+                snd("core.door1");
             }
         }
     }
@@ -191,7 +191,7 @@ static void _map_events_shelter()
         {
             if (cdata.player().has_anorexia() == 0)
             {
-                snd(18);
+                snd("core.eat1");
                 txt(i18n::s.get(
                     "core.locale.misc.map.shelter.eat_stored_food"));
                 cdata[cc].nutrition += 5000;

@@ -79,7 +79,7 @@ void proc_event()
             break;
         }
         levelexitby = 4;
-        snd(49);
+        snd("core.exitmap1");
         chatteleport = 1;
         break;
     case 1:
@@ -252,7 +252,7 @@ void proc_event()
         break;
     case 5:
         play_music("core.mcVictory");
-        snd(51);
+        snd("core.complete1");
         flt(0, calcfixlv());
         flttypemajor = 54000;
         itemcreate(
@@ -278,7 +278,7 @@ void proc_event()
         inv[ci].param2 = 0;
         txtef(2);
         txt(i18n::s.get("core.locale.quest.completed"));
-        snd(51);
+        snd("core.complete1");
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
         game_data.executing_immediate_quest_fame_gained =
@@ -887,7 +887,7 @@ void proc_event()
                 update_screen();
                 if (rnd(7))
                 {
-                    snd(6);
+                    snd("core.fire1");
                 }
                 else
                 {

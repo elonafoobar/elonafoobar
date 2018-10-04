@@ -1010,11 +1010,11 @@ void MiracleAnimation::do_play()
                 {
                     if (animode == 0)
                     {
-                        snd(37);
+                        snd("core.bolt1");
                     }
                     if (animode >= 100)
                     {
-                        snd(33);
+                        snd("core.heal1");
                     }
                 }
             }

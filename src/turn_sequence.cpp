@@ -923,7 +923,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
                         "core.locale.magic.return.you_commit_a_crime"));
                     modify_karma(cdata.player(), -10);
                 }
-                snd(72);
+                snd("core.teleport1");
                 txt(i18n::s.get("core.locale.magic.return.door_opens"));
                 if (game_data.destination_map == 41)
                 {
@@ -1162,7 +1162,7 @@ void update_emoicon()
     {
         if (cc == 0)
         {
-            snd(60);
+            snd("core.ding1");
             msgalert = 1;
         }
         r2 = 0;
@@ -1404,7 +1404,7 @@ TurnResult pc_turn(bool advance_time)
                 quest_team_victorious();
                 msg_halt();
                 levelexitby = 4;
-                snd(49);
+                snd("core.exitmap1");
                 for (int cc = 0; cc < 16; ++cc)
                 {
                     if (arenaop == 0 && followerin(cc) == 1
@@ -1455,7 +1455,7 @@ TurnResult pc_turn(bool advance_time)
                 if (key == key_north || key == key_east)
                 {
                     f = 1;
-                    snd(5);
+                    snd("core.cursor1");
                     if (p > camera)
                     {
                         camera = p;
@@ -1466,7 +1466,7 @@ TurnResult pc_turn(bool advance_time)
                 if (key == key_south || key == key_west)
                 {
                     f = 1;
-                    snd(5);
+                    snd("core.cursor1");
                     if (p < camera)
                     {
                         camera = p;
@@ -1690,7 +1690,7 @@ label_2747:
         redraw();
         wait_key_pressed();
         update_entire_screen();
-        snd(20);
+        snd("core.ok1");
         goto label_2747;
     }
     if (getkey(snail::Key::f11))
@@ -1877,7 +1877,7 @@ label_2747:
     if (key == key_quickinv)
     {
         invctrl = lastctrl;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -1895,7 +1895,7 @@ label_2747:
         else
         {
             invctrl = 26;
-            snd(100);
+            snd("core.inv");
             MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
@@ -1904,7 +1904,7 @@ label_2747:
     if (key == key_inventory)
     {
         invctrl = 1;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -1922,7 +1922,7 @@ label_2747:
         else
         {
             invctrl = 2;
-            snd(100);
+            snd("core.inv");
             MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
@@ -1931,7 +1931,7 @@ label_2747:
     if (key == key_eat)
     {
         invctrl = 5;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -1939,7 +1939,7 @@ label_2747:
     if (key == key_read)
     {
         invctrl = 7;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -1947,7 +1947,7 @@ label_2747:
     if (key == key_drink)
     {
         invctrl = 8;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -1965,7 +1965,7 @@ label_2747:
         else
         {
             invctrl = 9;
-            snd(100);
+            snd("core.inv");
             MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
@@ -1974,7 +1974,7 @@ label_2747:
     if (key == key_use)
     {
         invctrl = 14;
-        snd(100);
+        snd("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -1992,7 +1992,7 @@ label_2747:
         else
         {
             invctrl = 15;
-            snd(100);
+            snd("core.inv");
             MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
@@ -2011,7 +2011,7 @@ label_2747:
         else
         {
             invctrl = 17;
-            snd(100);
+            snd("core.inv");
             return TurnResult::ctrl_inventory;
         }
     }
@@ -2083,7 +2083,7 @@ label_2747:
         else
         {
             invctrl = 19;
-            snd(100);
+            snd("core.inv");
             MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;

@@ -316,7 +316,7 @@ int damage_hp(
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim.index;
                 MiracleAnimation().play();
-                snd(120);
+                snd("core.pray2");
                 break;
             }
         }
@@ -614,7 +614,7 @@ int damage_hp(
                     {
                         if (!CHECKPLAY(32))
                         {
-                            snd(32);
+                            snd("core.Heart1");
 
                             if (Config::instance().get<bool>(
                                     "core.config.android.vibrate"))
@@ -1009,7 +1009,7 @@ int damage_hp(
                         txtef(2);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.fool"));
-                        snd(51);
+                        snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_fool = 1;
                     }
                     if (victim.id == 143)
@@ -1017,7 +1017,7 @@ int damage_hp(
                         txtef(2);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.king"));
-                        snd(51);
+                        snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_king = 1;
                     }
                     if (victim.id == 144)
@@ -1025,7 +1025,7 @@ int damage_hp(
                         txtef(2);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.sage"));
-                        snd(51);
+                        snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_sage = 1;
                     }
                     if (victim.id == 242)
@@ -1043,7 +1043,7 @@ int damage_hp(
                             game_data.quest_flags.pyramid_trial = 1000;
                             quest_update_journal_msg();
                             txt(i18n::s.get("core.locale.quest.completed"));
-                            snd(51);
+                            snd("core.complete1");
                         }
                     }
                     if (victim.id == 300)
@@ -1147,7 +1147,7 @@ int damage_hp(
         {
             if (rnd(5) == 0)
             {
-                snd(69);
+                snd("core.cheer");
             }
         }
         if (victim.is_death_master() == 1)

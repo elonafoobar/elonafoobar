@@ -86,7 +86,7 @@ MainMenuResult character_making_select_sex(bool advanced_to_next_menu)
 {
     if (advanced_to_next_menu)
     {
-        snd(102);
+        snd("core.spell");
     }
 
     auto result = ui::UIMenuCharamakeGender().show();
@@ -110,7 +110,7 @@ MainMenuResult character_making_select_class(bool advanced_to_next_menu)
 {
     if (advanced_to_next_menu)
     {
-        snd(20);
+        snd("core.ok1");
     }
 
     auto result = ui::UIMenuCharamakeClass(cmrace(1)).show();
@@ -136,7 +136,7 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
 {
     if (advanced_to_next_menu)
     {
-        snd(101);
+        snd("core.skill");
         DIM2(cmlock, 10);
         cmlock(8) = 2;
     }
@@ -302,7 +302,7 @@ static int _prompt_satisfied()
         u8"d"s,
         ""s + promptmax);
     int result = show_prompt(promptx, 240, 160);
-    snd(20);
+    snd("core.ok1");
 
     return result;
 }
@@ -329,7 +329,7 @@ MainMenuResult character_making_final_phase()
 
     while (true)
     {
-        snd(94);
+        snd("core.chara");
         while (true)
         {
             _draw_background_and_caption(
@@ -413,7 +413,7 @@ MainMenuResult character_making_final_phase()
         }
     }
 
-    snd(101);
+    snd("core.skill");
     cdatan(0, rc) = cmname;
     cdata.player().gold = 400 + rnd(200);
 

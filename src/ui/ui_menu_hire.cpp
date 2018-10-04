@@ -68,7 +68,7 @@ void UIMenuHire::_populate_list()
 
 bool UIMenuHire::init()
 {
-    snd(26);
+    snd("core.pop2");
     listmax = 0;
     page = 0;
     pagesize = 16;
@@ -257,7 +257,7 @@ optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -266,7 +266,7 @@ optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

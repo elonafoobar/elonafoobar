@@ -385,7 +385,7 @@ void god_proc_switching_penalty()
             efp = 10000;
             tc = 0;
             magic();
-            snd(63);
+            snd("core.punish1");
             mode = 0;
             await(Config::instance().animewait * 20);
         }
@@ -415,7 +415,7 @@ void switch_religion()
     {
         animode = 100;
         MiracleAnimation().play();
-        snd(51);
+        snd("core.complete1");
         txtef(5);
         txt(i18n::s.get(
             "core.locale.god.switch.follower",
@@ -466,7 +466,7 @@ TurnResult do_pray()
     }
     animode = 100;
     MiracleAnimation().play();
-    snd(120);
+    snd("core.pray2");
     efid = 1120;
     efp = 100;
     tc = 0;

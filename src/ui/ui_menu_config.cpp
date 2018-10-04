@@ -231,7 +231,7 @@ static void _show_config_item_desc(const std::string& desc)
     int x = promptx - (width / 2);
     int y = prompty - (height / 2);
 
-    snd(26);
+    snd("core.pop2");
 
     gmode(6, 80);
     window(x + 12, y + 12, width, height, true); // Shadow
@@ -267,7 +267,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(const std::string& key)
         if (_submenu_index == 0)
         {
             cs = 0;
-            snd(20);
+            snd("core.ok1");
             return UIMenuConfig::Result::finish(p + 1);
         }
     }
@@ -283,7 +283,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(const std::string& key)
         }
 
         _menu.items[cs].get()->change(p);
-        snd(20);
+        snd("core.ok1");
         set_reupdate();
         return none;
     }

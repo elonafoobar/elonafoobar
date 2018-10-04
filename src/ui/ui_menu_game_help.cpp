@@ -12,7 +12,7 @@ namespace ui
 bool UIMenuGameHelp::init()
 {
     // pre - notesel init
-    snd(26);
+    snd("core.pop2");
     listmax = 0;
     page = 0;
     pagesize = 18;
@@ -342,7 +342,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     ELONA_GET_SELECTED_ITEM(p, cs = i);
     if (p != -1)
     {
-        snd(20);
+        snd("core.ok1");
         page_bk = page;
         cs_bk2 = cs;
         set_reupdate();
@@ -353,7 +353,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -362,7 +362,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

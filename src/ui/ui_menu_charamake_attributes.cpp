@@ -194,7 +194,7 @@ UIMenuCharamakeAttributes::on_key(const std::string& key)
     {
         if (p == 0)
         {
-            snd(103);
+            snd("core.dice");
             set_reupdate();
             return none;
         }
@@ -212,12 +212,12 @@ UIMenuCharamakeAttributes::on_key(const std::string& key)
             _locked_attributes(p - 2) = 1;
             --_locked_attributes(8);
         }
-        snd(20);
+        snd("core.ok1");
     }
     else if (key == key_mode2)
     {
         _minimum = true;
-        snd(103);
+        snd("core.dice");
         set_reupdate();
         return none;
     }

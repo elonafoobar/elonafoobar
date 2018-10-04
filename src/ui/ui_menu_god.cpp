@@ -54,7 +54,7 @@ bool UIMenuGod::init()
     listn(0, listmax) = i18n::s.get("core.locale.god.desc.window.cancel");
     ++listmax;
 
-    snd(62);
+    snd("core.pop4");
     gsel(4);
     gmode(0);
     pos(0, 0);

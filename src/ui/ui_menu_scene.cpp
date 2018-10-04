@@ -42,7 +42,7 @@ static void _load_scenes()
 
 bool UIMenuScene::init()
 {
-    snd(59);
+    snd("core.book1");
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"book.bmp", 1);
@@ -200,7 +200,7 @@ optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(71);
+            snd("core.card1");
             ++page;
             set_reupdate();
         }
@@ -209,7 +209,7 @@ optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(71);
+            snd("core.card1");
             --page;
             set_reupdate();
         }

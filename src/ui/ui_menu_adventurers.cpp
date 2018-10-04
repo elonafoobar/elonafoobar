@@ -177,7 +177,7 @@ optional<UIMenuAdventurers::ResultType> UIMenuAdventurers::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -186,7 +186,7 @@ optional<UIMenuAdventurers::ResultType> UIMenuAdventurers::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

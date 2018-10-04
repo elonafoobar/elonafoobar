@@ -939,7 +939,7 @@ void dmgcard(int prm_1007, int prm_1008)
 {
     if (prm_1008 > 0)
     {
-        snd(2);
+        snd("core.atk1");
     }
     efllistadd(
         1, -prm_1008, card_at_tcg(2, prm_1007), card_at_tcg(3, prm_1007));
@@ -963,7 +963,7 @@ void dmgplayer(int prm_1009, int prm_1010)
 {
     if (prm_1010 > 0)
     {
-        snd(2);
+        snd("core.atk1");
     }
     efllistadd(1, -prm_1010, cpx_at_tcg(prm_1009), cpy_at_tcg(prm_1009));
     cpdata_at_tcg(4, prm_1009) -= prm_1010;
@@ -1192,7 +1192,7 @@ void getrandomcard(int prm_1018)
 
 void saccard(int prm_1019, int prm_1020)
 {
-    snd(96);
+    snd("core.feat");
     ++sac_at_tcg;
     if (prm_1020 == 0)
     {
@@ -1250,7 +1250,7 @@ void saccard(int prm_1019, int prm_1020)
 
 void opencard(int prm_1021)
 {
-    snd(71);
+    snd("core.card1");
     cdbitmod(1, prm_1021, 1);
     tcgdraw();
 }
@@ -1444,7 +1444,7 @@ int putcard(int prm_1024, int prm_1025)
     {
         if (prm_1025 == player_at_tcg)
         {
-            snd(27);
+            snd("core.fail1");
             cardhelp(i18n::s.get("core.locale.tcg.put.field_full"), 40);
         }
         return -1;
@@ -1453,7 +1453,7 @@ int putcard(int prm_1024, int prm_1025)
     {
         if (prm_1025 == player_at_tcg)
         {
-            snd(27);
+            snd("core.fail1");
             cardhelp(i18n::s.get("core.locale.tcg.put.not_enough_mana"), 40);
         }
         return -3;
@@ -1789,7 +1789,7 @@ void tcgdeck()
             }
         }
         decksizebk_at_tcg = game_data.tcg_decks.at(curdeck);
-        snd(95);
+        snd("core.wear");
         calcdecksize();
         deckmode_at_tcg(0) = 0;
         deckmode_at_tcg(1) = rtval_at_tcg;
@@ -2524,7 +2524,7 @@ label_1830_internal:
     if (key == key_next)
     {
         ++ccf_at_tcg;
-        snd(5);
+        snd("core.cursor1");
         if (ccf_at_tcg >= cfmax_at_tcg)
         {
             ccf_at_tcg = 0;
@@ -2534,7 +2534,7 @@ label_1830_internal:
     if (key == key_prev)
     {
         --ccf_at_tcg;
-        snd(5);
+        snd("core.cursor1");
         if (ccf_at_tcg < 0)
         {
             ccf_at_tcg = cfmax_at_tcg - 1;
@@ -2544,22 +2544,22 @@ label_1830_internal:
     if (key == key_west)
     {
         --dsc_at_tcg;
-        snd(5);
+        snd("core.cursor1");
     }
     if (key == key_east)
     {
         ++dsc_at_tcg;
-        snd(5);
+        snd("core.cursor1");
     }
     if (key == key_south)
     {
         dsc_at_tcg += 8;
-        snd(5);
+        snd("core.cursor1");
     }
     if (key == key_north)
     {
         dsc_at_tcg -= 8;
-        snd(5);
+        snd("core.cursor1");
     }
     tcg_update_page();
     if (key == key_enter)
@@ -2574,7 +2574,7 @@ label_1830_internal:
             {
                 if (card_at_tcg(10, dlist_at_tcg(0, dsc_at_tcg)) == 0)
                 {
-                    snd(27);
+                    snd("core.fail1");
                     cardhelp(
                         i18n::s.get("core.locale.tcg.card_not_available"), 40);
                     goto label_1830_internal;
@@ -2601,7 +2601,7 @@ label_1830_internal:
             {
                 if (act_at_tcg(1) == 0)
                 {
-                    snd(27);
+                    snd("core.fail1");
                     goto label_1833_internal;
                 }
             }
@@ -2611,7 +2611,7 @@ label_1830_internal:
                 if (act_at_tcg(0))
                 {
                     ++deck(card_at_tcg(18, cc_at_tcg));
-                    snd(71);
+                    snd("core.card1");
                     goto label_1831_internal;
                 }
             }
@@ -2620,7 +2620,7 @@ label_1830_internal:
                 if (act_at_tcg(1))
                 {
                     --deck(card_at_tcg(18, cc_at_tcg));
-                    snd(71);
+                    snd("core.card1");
                     goto label_1831_internal;
                 }
             }
@@ -2712,7 +2712,7 @@ void tcg_prompt_action()
         if (key == key_east)
         {
             ++cs_at_tcg;
-            snd(5);
+            snd("core.cursor1");
             if (cs_at_tcg == 0)
             {
                 if (clistmax_at_tcg(csline_at_tcg) == 0)
@@ -2725,7 +2725,7 @@ void tcg_prompt_action()
         if (key == key_west)
         {
             --cs_at_tcg;
-            snd(5);
+            snd("core.cursor1");
             if (cs_at_tcg == -1)
             {
                 if (csline_at_tcg != 0)
@@ -2745,13 +2745,13 @@ void tcg_prompt_action()
         if (key == key_north)
         {
             cslineup();
-            snd(5);
+            snd("core.cursor1");
             csfix();
         }
         if (key == key_south)
         {
             cslinedown();
-            snd(5);
+            snd("core.cursor1");
             csfix();
         }
         if (key == key_enter)
@@ -2832,7 +2832,7 @@ void tcg_prompt_action()
             }
             if (f_at_tcg == 0)
             {
-                snd(27);
+                snd("core.fail1");
                 cardhelp(
                     i18n::s.get("core.locale.tcg.action.no_action_available"),
                     40);

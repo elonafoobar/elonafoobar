@@ -421,7 +421,7 @@ void crafting_menu()
                 matuse += required_mat.amount;
             }
 
-            snd(58);
+            snd("core.build1");
             _craft_item(matid, *recipe);
 
             r2 = matuse;

@@ -20,7 +20,7 @@ bool UIMenuMessageLog::init()
     wh(0) = (inf_maxlog - 3) * inf_msgspace;
     wh(1) = 1;
     wh(2) = -1;
-    snd(93);
+    snd("core.log");
     show_title(i18n::s.get("core.locale.ui.message.hit_any_key"));
     window_animation_corner(wx, wy, ww, wh, 8, 4);
 

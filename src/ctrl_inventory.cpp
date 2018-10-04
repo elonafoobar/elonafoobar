@@ -1080,14 +1080,14 @@ label_2061_internal:
         {
             if (ibit(13, ci))
             {
-                snd(27);
+                snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
             if (!inv_getspace(-1))
             {
                 txt(i18n::s.get("core.locale.ui.inv.drop.cannot_anymore"));
-                snd(27);
+                snd("core.fail1");
                 goto label_2060_internal;
             }
             if (map_data.max_item_count != 0)
@@ -1098,7 +1098,7 @@ label_2061_internal:
                     {
                         txt(i18n::s.get(
                             "core.locale.ui.inv.drop.cannot_anymore"));
-                        snd(27);
+                        snd("core.fail1");
                         goto label_2060_internal;
                     }
                 }
@@ -1146,7 +1146,7 @@ label_2061_internal:
             {
                 if (ibit(13, ci))
                 {
-                    snd(27);
+                    snd("core.fail1");
                     txt(i18n::s.get(
                         "core.locale.ui.inv.common.set_as_no_drop"));
                     goto label_2060_internal;
@@ -1158,7 +1158,7 @@ label_2061_internal:
                 {
                     if (inv_sum(-1) >= invcontainer)
                     {
-                        snd(27);
+                        snd("core.fail1");
                         txt(i18n::s.get(
                             "core.locale.ui.inv.put.container.full"));
                         goto label_2060_internal;
@@ -1168,7 +1168,7 @@ label_2061_internal:
                 {
                     if (inv[ci].weight >= efp * 100)
                     {
-                        snd(27);
+                        snd("core.fail1");
                         txt(i18n::s.get(
                             "core.locale.ui.inv.put.container.too_heavy",
                             cnvweight(efp * 100)));
@@ -1176,7 +1176,7 @@ label_2061_internal:
                     }
                     if (inv[ci].weight <= 0)
                     {
-                        snd(27);
+                        snd("core.fail1");
                         txt(
                             i18n::s.get("core.locale.ui.inv.put.container."
                                         "cannot_hold_cargo"));
@@ -1215,7 +1215,7 @@ label_2061_internal:
             }
             if (inv[ci].own_state > 0 && inv[ci].own_state < 3)
             {
-                snd(27);
+                snd("core.fail1");
                 ++msgdup;
                 if (inv[ci].own_state == 2)
                 {
@@ -1358,7 +1358,7 @@ label_2061_internal:
         {
             if (ibit(13, ci))
             {
-                snd(27);
+                snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
@@ -1392,7 +1392,7 @@ label_2061_internal:
             chara_refresh(cc);
             screenupdate = -1;
             update_screen();
-            snd(13);
+            snd("core.equip1");
             txtnew();
             txt(i18n::s.get("core.locale.ui.inv.equip.you_equip", inv[ci]));
             game_data.player_is_changing_equipment = 1;
@@ -1445,7 +1445,7 @@ label_2061_internal:
         {
             if (ibit(13, ci))
             {
-                snd(27);
+                snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
@@ -1454,14 +1454,14 @@ label_2061_internal:
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.give.is_sleeping", cdata[tc]));
-                snd(27);
+                snd("core.fail1");
                 goto label_2060_internal;
             }
             if (ti == -1)
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.give.inventory_is_full", cdata[tc]));
-                snd(27);
+                snd("core.fail1");
                 goto label_2060_internal;
             }
             reftype = the_item_db[inv[ci].id]->category;
@@ -1508,7 +1508,7 @@ label_2061_internal:
             }
             if (f)
             {
-                snd(27);
+                snd("core.fail1");
                 txt(i18n::s.get_enum(
                     "core.locale.ui.inv.give.refuse_dialog", f - 1, cdata[tc]));
                 goto label_2060_internal;
@@ -1523,14 +1523,14 @@ label_2061_internal:
                 if (inv[ci].identification_state
                     <= IdentifyState::partly_identified)
                 {
-                    snd(27);
+                    snd("core.fail1");
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.too_creepy", cdata[tc]));
                     goto label_2060_internal;
                 }
                 if (is_cursed(inv[ci].curse_state))
                 {
-                    snd(27);
+                    snd("core.fail1");
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.cursed", cdata[tc]));
                     goto label_2060_internal;
@@ -1566,7 +1566,7 @@ label_2061_internal:
                     {
                         if (cdata[tc].drunk)
                         {
-                            snd(27);
+                            snd("core.fail1");
                             txt(i18n::s.get(
                                 "core.locale.ui.inv.give.no_more_drink",
                                 cdata[tc]));
@@ -1597,7 +1597,7 @@ label_2061_internal:
             }
             if (f)
             {
-                snd(13);
+                snd("core.equip1");
                 txt(i18n::s.get(
                     "core.locale.ui.inv.give.you_hand", inv[ci], cdata[tc]));
                 if (inv[ci].id == 477 || inv[ci].id == 473)
@@ -1615,7 +1615,7 @@ label_2061_internal:
                         "core.locale.ui.inv.give.love_potion.text",
                         cdata[tc],
                         inv[ci]));
-                    snd(47);
+                    snd("core.crush2");
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.love_potion.dialog",
@@ -1647,7 +1647,7 @@ label_2061_internal:
                 result.turn_result = TurnResult::turn_end;
                 return result;
             }
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get(
                 "core.locale.ui.inv.give.refuses", cdata[tc], inv[ci]));
             goto label_2060_internal;
@@ -1704,7 +1704,7 @@ label_2061_internal:
             savecycle();
             invctrl = 18;
             txtnew();
-            snd(26);
+            snd("core.pop2");
             goto label_20591;
         }
         if (invctrl == 18)
@@ -1718,7 +1718,7 @@ label_2061_internal:
         {
             if (ibit(13, ci))
             {
-                snd(27);
+                snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
@@ -1732,14 +1732,14 @@ label_2061_internal:
         {
             citrade = ci;
             invctrl = 21;
-            snd(26);
+            snd("core.pop2");
             goto label_20591;
         }
         if (invctrl == 21)
         {
             if (ibit(13, ci))
             {
-                snd(27);
+                snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
@@ -1749,7 +1749,7 @@ label_2061_internal:
                 cdata[tc].continuous_action.turn = 0;
                 cdata[tc].continuous_action.item = 0;
             }
-            snd(13);
+            snd("core.equip1");
             ibitmod(12, citrade, 0);
             txt(i18n::s.get(
                 "core.locale.ui.inv.trade.you_receive", inv[ci], inv[citrade]));
@@ -1787,7 +1787,7 @@ label_2061_internal:
             {
                 if (ibit(13, ci))
                 {
-                    snd(27);
+                    snd("core.fail1");
                     txt(i18n::s.get(
                         "core.locale.ui.inv.common.set_as_no_drop"));
                     goto label_2060_internal;
@@ -1802,7 +1802,7 @@ label_2061_internal:
         {
             if (invctrl(1) == 0)
             {
-                snd(100);
+                snd("core.inv");
                 if (game_data.current_map == mdata_t::MapId::lumiest)
                 {
                     game_data.guild.mages_guild_quota -=
@@ -1818,7 +1818,7 @@ label_2061_internal:
                         + u8" Guild Point)"s);
                     if (game_data.guild.mages_guild_quota == 0)
                     {
-                        snd(51);
+                        snd("core.complete1");
                         txtef(2);
                         txt(i18n::s.get(
                             "core.locale.ui.inv.put.guild.you_fulfill"));
@@ -1844,20 +1844,20 @@ label_2061_internal:
             {
                 if (cdata.player().gold < inv[ci].subname)
                 {
-                    snd(27);
+                    snd("core.fail1");
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.tax.not_enough_money"));
                     goto label_2060_internal;
                 }
                 if (game_data.left_bill <= 0)
                 {
-                    snd(27);
+                    snd("core.fail1");
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.tax.do_not_have_to"));
                     goto label_20591;
                 }
                 cdata.player().gold -= inv[ci].subname;
-                snd(12);
+                snd("core.paygold1");
                 txtef(2);
                 txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
                 inv[ci].modify_number(-1);
@@ -1868,7 +1868,7 @@ label_2061_internal:
             }
             if (invctrl(1) == 8)
             {
-                snd(71);
+                snd("core.card1");
                 inv[ci].modify_number(-1);
                 txt(i18n::s.get("core.locale.ui.inv.put.deck", inv[ci]));
                 ++card(0, inv[ci].subname);
@@ -1887,7 +1887,7 @@ label_2061_internal:
             }
             if (the_item_db[inv[ci].id]->category == 77000)
             {
-                snd(27);
+                snd("core.fail1");
                 txtef(4);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.take_ally.refuse_dialog", cdata[tc]));
@@ -1913,13 +1913,13 @@ label_2061_internal:
                     "core.locale.ui.inv.take_ally.swallows_ring",
                     cdata[tc],
                     inv[ci]));
-                snd(65);
+                snd("core.offer1");
                 chara_modify_impression(cdata[tc], -20);
                 cdata[tc].emotion_icon = 318;
                 inv[ci].modify_number(-1);
                 goto label_20591;
             }
-            snd(13);
+            snd("core.equip1");
             ibitmod(12, ci, 0);
             if (inv[ci].id == 54)
             {
@@ -1994,7 +1994,7 @@ label_2061_internal:
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.trade_medals.inventory_full"));
-                snd(27);
+                snd("core.fail1");
                 goto label_20591;
             }
             int stat = item_find(622, 3, 1);
@@ -2011,11 +2011,11 @@ label_2061_internal:
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.trade_medals.not_enough_medals"));
-                snd(27);
+                snd("core.fail1");
                 goto label_20591;
             }
             inv[i].modify_number(-calcmedalvalue(ci));
-            snd(12);
+            snd("core.paygold1");
             item_copy(ci, ti);
             txt(i18n::s.get(
                 "core.locale.ui.inv.trade_medals.you_receive", inv[ti]));
@@ -2037,7 +2037,7 @@ label_2061_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_2060_internal;
         }
@@ -2046,7 +2046,7 @@ label_2061_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_2060_internal;
         }
@@ -2105,7 +2105,7 @@ label_2061_internal:
                 if (invctrl != cycle(p, i))
                 {
                     invctrl = cycle(p, i);
-                    snd(100);
+                    snd("core.inv");
                     screenupdate = -1;
                     update_screen();
                     goto label_20591;
@@ -2137,7 +2137,7 @@ label_2061_internal:
             {
                 txt(i18n::s.get("core.locale.ui.inv.drop.multi"));
                 dropcontinue = 1;
-                snd(100);
+                snd("core.inv");
                 screenupdate = -1;
                 update_screen();
                 goto label_20591;
@@ -2154,7 +2154,7 @@ label_2061_internal:
         {
             showresist = 1;
         }
-        snd(1);
+        snd("core.pop1");
         goto label_2060_internal;
     }
     if (key == key_cancel)
@@ -2222,11 +2222,11 @@ label_2061_internal:
             p = list(0, pagesize * page + cs);
             if (inv[p].weight < 0)
             {
-                snd(27);
+                snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.shortcut.cargo"));
                 goto label_20591;
             }
-            snd(20);
+            snd("core.ok1");
             p = inv[list(0, pagesize * page + cs)].id + invctrl * 10000;
             if (game_data.skill_shortcuts.at(sc) == p)
             {

@@ -1415,7 +1415,7 @@ void render_autoturn_animation()
                     {
                         if (cnt == 2)
                         {
-                            snd(52);
+                            snd("core.dig1");
                         }
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2);
@@ -1427,7 +1427,7 @@ void render_autoturn_animation()
                         {
                             if (cnt == 0)
                             {
-                                snd(57);
+                                snd("core.water");
                             }
                         }
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
@@ -1438,7 +1438,7 @@ void render_autoturn_animation()
                     {
                         if (cnt == 4)
                         {
-                            snd(55);
+                            snd("core.bush1");
                         }
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2.75);
@@ -1448,7 +1448,7 @@ void render_autoturn_animation()
                     {
                         if (cnt == 2)
                         {
-                            snd(54);
+                            snd("core.dig2");
                         }
                         gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 3);

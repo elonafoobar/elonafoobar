@@ -87,7 +87,7 @@ bool UIMenuEquipment::init()
     // TODO refactor
     if (nowindowanime == 0)
     {
-        snd(95);
+        snd("core.wear");
     }
 
     window_animation(wx, wy, ww, wh, 9, 4);
@@ -289,7 +289,7 @@ static void _unequip_item()
     }
     unequip_item(cc);
     chara_refresh(cc);
-    snd(13);
+    snd("core.equip1");
     txtnew();
     txt(i18n::s.get("core.locale.ui.equip.you_unequip", inv[ci]));
     if (cdata[cc].body_parts[body - 100] / 10000 == 5)
@@ -305,7 +305,7 @@ static void _equip_item()
     nowindowanime = 1;
     menucycle = 0;
     invctrl = 6;
-    snd(100);
+    snd("core.inv");
     ctrl_inventory();
 }
 
@@ -372,14 +372,14 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     else if (key == key_mode)
     {
         _show_resistances = !_show_resistances;
-        snd(1);
+        snd("core.pop1");
         set_reupdate();
     }
     else if (key == key_pageup)
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -388,7 +388,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

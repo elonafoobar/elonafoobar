@@ -21,7 +21,7 @@ int TODO_show_prompt_val;
 int show_prompt(int x, int y, int width, PromptType type, int val4)
 {
     int val5{};
-    snd(26);
+    snd("core.pop2");
 
     int csprev = cs;
     cs = 0;
@@ -118,7 +118,7 @@ int show_prompt(int x, int y, int width, PromptType type, int val4)
             TODO_show_prompt_val = elona::stoi(inputlog(0));
             if (key == key_west || key == key_pagedown)
             {
-                snd(5);
+                snd("core.cursor1");
                 --val4;
                 if (val4 < 1)
                 {
@@ -127,7 +127,7 @@ int show_prompt(int x, int y, int width, PromptType type, int val4)
             }
             if (key == key_east || key == key_pageup)
             {
-                snd(5);
+                snd("core.cursor1");
                 ++val4;
                 if (val4 > val5)
                 {
@@ -157,7 +157,7 @@ int show_prompt(int x, int y, int width, PromptType type, int val4)
 
 void input_number_dialog(int x, int y, int max_number, int initial_number)
 {
-    snd(26);
+    snd("core.pop2");
     dx = 8 * 16 + 60;
     font(16 - en * 2);
 
@@ -208,7 +208,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         }
         if (key == key_west)
         {
-            snd(5);
+            snd("core.cursor1");
             --number;
             if (number < 1)
             {
@@ -217,7 +217,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         }
         if (key == key_east)
         {
-            snd(5);
+            snd("core.cursor1");
             ++number;
             if (number > max_number)
             {
@@ -226,17 +226,17 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         }
         if (key == key_south)
         {
-            snd(5);
+            snd("core.cursor1");
             number = 1;
         }
         if (key == key_north)
         {
-            snd(5);
+            snd("core.cursor1");
             number = max_number;
         }
         if (key == key_northwest)
         {
-            snd(5);
+            snd("core.cursor1");
             number -= 100;
             while (number < 1)
             {
@@ -245,7 +245,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         }
         if (key == key_northeast)
         {
-            snd(5);
+            snd("core.cursor1");
             number += 100;
             while (number > max_number)
             {
@@ -254,7 +254,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         }
         if (key == key_southwest)
         {
-            snd(5);
+            snd("core.cursor1");
             number -= 10;
             while (number < 1)
             {
@@ -263,7 +263,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         }
         if (key == key_southeast)
         {
-            snd(5);
+            snd("core.cursor1");
             number += 10;
             while (number > max_number)
             {
@@ -293,7 +293,7 @@ bool input_text_dialog(
 {
     bool canceled = false;
 
-    snd(26);
+    snd("core.pop2");
     dx = val2 * 16 + 60;
     font(16 - en * 2);
 

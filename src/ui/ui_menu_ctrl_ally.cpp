@@ -100,7 +100,7 @@ static void _init_pet_arena_selection()
 
 bool UIMenuCtrlAlly::init()
 {
-    snd(26);
+    snd("core.pop2");
     listmax = 0;
     page = 0;
     pagesize = 16;
@@ -521,7 +521,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
 {
     if (cdata[_p].level > sdata(151, 0) + 5)
     {
-        snd(27);
+        snd("core.fail1");
         txt(i18n::s.get(
             "core.locale.ui.ally_list.gene_engineer.skill_too_low"));
         set_reupdate();
@@ -549,12 +549,12 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
             txt(
                 i18n::s.get("core.locale.ui.ally_list.pet_arena.need_"
                             "at_least_one"));
-            snd(27);
+            snd("core.fail1");
             set_reupdate();
         }
         else
         {
-            snd(20);
+            snd("core.ok1");
             return UIMenuCtrlAlly::Result::finish(1);
         }
     }
@@ -562,27 +562,27 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
     {
         txt(i18n::s.get(
             "core.locale.ui.ally_list.pet_arena.is_dead", cdata[_p]));
-        snd(27);
+        snd("core.fail1");
         set_reupdate();
     }
     else if (followerin(_p) == 0)
     {
         if (i >= arenaop(1))
         {
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.too_many"));
             set_reupdate();
         }
         else
         {
             followerin(_p) = 1;
-            snd(20);
+            snd("core.ok1");
         }
     }
     else
     {
         followerin(_p) = 0;
-        snd(20);
+        snd("core.ok1");
     }
     return none;
 }
@@ -610,7 +610,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -619,7 +619,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(const std::string& key)
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

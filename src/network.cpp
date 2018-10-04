@@ -787,7 +787,7 @@ label_1402_internal:
         }
         if (game_data.next_voting_time > game_data.date.hours())
         {
-            snd(27);
+            snd("core.fail1");
             txt(i18n::s.get("core.locale.network.alias.need_to_wait"));
             goto label_1401_internal;
         }
@@ -807,7 +807,7 @@ label_1402_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_1401_internal;
         }
@@ -816,7 +816,7 @@ label_1402_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_1401_internal;
         }

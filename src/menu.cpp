@@ -183,7 +183,7 @@ void show_quick_menu()
 
     page = quickpage;
     listmax = 0;
-    snd(5);
+    snd("core.cursor1");
     cs = -1;
 label_2698:
     listmax = 0;
@@ -429,7 +429,7 @@ label_2699_internal:
     if (key == key_cancel)
     {
         cs = -1;
-        snd(5);
+        snd("core.cursor1");
         key = "";
         goto label_2700_internal;
         return;
@@ -438,7 +438,7 @@ label_2699_internal:
     {
         if (cs == -1)
         {
-            snd(5);
+            snd("core.cursor1");
             key = "";
             goto label_2700_internal;
             return;
@@ -464,7 +464,7 @@ label_2700_internal:
     if (cs == 0 || key == key_northeast)
     {
         cs = -1;
-        snd(5);
+        snd("core.cursor1");
         --page;
         screenupdate = -1;
         update_screen();
@@ -473,7 +473,7 @@ label_2700_internal:
     if (cs == 8 || key == key_northwest)
     {
         cs = -1;
-        snd(5);
+        snd("core.cursor1");
         ++page;
         screenupdate = -1;
         update_screen();
@@ -547,7 +547,7 @@ void show_ex_help()
     {
         return;
     }
-    snd(53);
+    snd("core.chime");
     while (1)
     {
         gmode(2);
@@ -1017,7 +1017,7 @@ int change_appearance()
     wh = 340;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
-    snd(97);
+    snd("core.port");
     window_animation(wx, wy, ww, wh, 9, 7);
     gsel(4);
     pos(0, 0);
@@ -1218,7 +1218,7 @@ label_2041_internal:
     {
         if (key == key_pageup || key == key_pagedown)
         {
-            snd(5);
+            snd("core.cursor1");
             if (page == 0)
             {
                 page = 1;
@@ -1233,7 +1233,7 @@ label_2041_internal:
     }
     if (key == key_pageup)
     {
-        snd(5);
+        snd("core.cursor1");
         if (rtval == 100)
         {
             if (cdata[cc].portrait < 31)
@@ -1266,7 +1266,7 @@ label_2041_internal:
     }
     if (key == key_pagedown)
     {
-        snd(5);
+        snd("core.cursor1");
         if (rtval == 100)
         {
             if (cdata[cc].portrait > -10)
@@ -1317,7 +1317,7 @@ label_2041_internal:
 int change_appearance_equipment()
 {
     create_pcpic(cc, true);
-    snd(26);
+    snd("core.pop2");
     page = 0;
     pagesize = 18;
     cs = 0;
@@ -1425,12 +1425,12 @@ int change_appearance_equipment()
                     pcc(20 + cs - 1, cc) = 0;
                 }
                 create_pcpic(cc, true);
-                snd(5);
+                snd("core.cursor1");
             }
         }
         if ((cs == 0 && key == key_enter) || key == key_cancel)
         {
-            snd(20);
+            snd("core.ok1");
             create_pcpic(cc, true);
             return 1;
         }
@@ -1679,7 +1679,7 @@ void screen_analyze_self()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    snd(26);
+    snd("core.pop2");
     buff = "";
     notesel(buff);
     chara_delete(56);
@@ -1746,7 +1746,7 @@ label_1966_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             goto label_1965_internal;
         }
@@ -1755,7 +1755,7 @@ label_1966_internal:
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             goto label_1965_internal;
         }
@@ -1776,7 +1776,7 @@ int change_npc_tone()
         return -1;
     }
 
-    snd(20);
+    snd("core.ok1");
     txt(i18n::s.get(
         "core.locale.action.interact.change_tone.is_somewhat_different",
         cdata[tc]));

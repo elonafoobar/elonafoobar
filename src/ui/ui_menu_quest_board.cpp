@@ -299,7 +299,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -308,7 +308,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }
