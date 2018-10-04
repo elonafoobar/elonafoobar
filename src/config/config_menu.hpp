@@ -1,5 +1,8 @@
 #pragma once
 #include "../i18n.hpp"
+#include "../macro.hpp"
+#include "../ui/ui_menu_config.hpp"
+#include "../ui/ui_menu_keybindings.hpp"
 #include "config.hpp"
 
 namespace elona
@@ -265,6 +268,12 @@ public:
     virtual void draw() const
     {
     }
+
+    virtual optional<int> query(int submenu)
+    {
+        auto result = ui::UIMenuConfig(*this, submenu).show();
+        return result.value;
+    }
 };
 
 class ConfigMenuSubmenu : public ConfigMenu
@@ -275,7 +284,7 @@ public:
     {
     }
 
-    void draw() const
+    void draw() const override
     {
         pos(wx + 40, wy + wh - 70);
         font(12 + sizefix - en * 2);
@@ -283,14 +292,30 @@ public:
     }
 };
 
-class ConfigMenuJoypad : public ConfigMenu
+class ConfigMenuKeybindings : public ConfigMenu
 {
 public:
-    void draw() const
+    ConfigMenuKeybindings()
+        : ConfigMenu("Keybindings", 100, 100)
+    {
+    }
+
+    void draw() const override
     {
         pos(wx + 40, wy + wh - 110);
         font(12 + sizefix - en * 2);
         mes(i18n::s.get("core.locale.config.common.assign_button"));
+    }
+
+    optional<int> query(int submenu) override
+    {
+        UNUSED(submenu);
+        auto result = ui::UIMenuKeybindings().show();
+        if (result.value)
+        {
+            return 0;
+        }
+        return none;
     }
 };
 

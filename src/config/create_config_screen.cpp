@@ -132,6 +132,10 @@ void ConfigScreenCreator::visit_toplevel()
     {
         visit_section(child);
     }
+
+    // Unconditionally add the keybindings menu, since it has special behavior
+    // for binding keys.
+    result_.emplace_back(std::make_unique<ConfigMenuKeybindings>());
 }
 
 void ConfigScreenCreator::visit_section(const SpecKey& current_key)
