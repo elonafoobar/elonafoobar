@@ -192,7 +192,7 @@ void mef_update()
     }
     if (sound)
     {
-        snd(*sound);
+        snd(SharedId(*sound));
     }
 }
 

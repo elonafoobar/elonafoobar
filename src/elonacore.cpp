@@ -10125,7 +10125,7 @@ int drink_potion()
         efstatus = inv[ci].curse_state;
         if (is_in_fov(cdata[tc]))
         {
-            snd_at(17, cdata[tc].position);
+            snd_at("core.drink1", cdata[tc].position);
             txt(i18n::s.get(
                 "core.locale.action.drink.potion", cdata[tc], inv[ci]));
         }
@@ -10172,7 +10172,7 @@ int drink_well()
         txt(i18n::s.get("core.locale.action.drink.well.is_dry", valn));
         return 1;
     }
-    snd_at(17, cdata[cc].position);
+    snd_at("core.drink1", cdata[cc].position);
     const auto valn = itemname(ci);
     txt(i18n::s.get("core.locale.action.drink.well.draw", cdata[cc], valn));
     tc = cc;
