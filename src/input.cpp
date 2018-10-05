@@ -513,12 +513,6 @@ optional<int> get_shortcut(const std::string& action)
 }
 
 
-void input_reset_context()
-{
-    InputContext::for_menu().reset();
-}
-
-
 int yes_or_no(int x, int y, int width)
 {
     Prompt result;

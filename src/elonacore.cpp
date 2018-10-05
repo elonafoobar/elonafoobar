@@ -11841,7 +11841,8 @@ void sense_map_feats_on_move()
         game_data.player_y_on_map_leave = -1;
         x = cdata.player().position.x;
         y = cdata.player().position.y;
-        if (key_shift && game_data.player_cellaccess_check_flag == 0
+        if (getkey(snail::Key::shift)
+            && game_data.player_cellaccess_check_flag == 0
             && cdata.player().confused == 0 && cdata.player().dimmed == 0)
         {
             if (map_data.type != mdata_t::MapType::world_map)

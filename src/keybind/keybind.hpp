@@ -295,7 +295,7 @@ private:
         snail::ModKey modifiers,
         KeyWaitDelay delay_type);
 
-    std::string _delay_normal_action(const std::string& action);
+    bool _delay_normal_action(const Keybind& keybind);
 
 
     std::set<std::string> _available_actions;

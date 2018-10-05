@@ -96,8 +96,6 @@ public:
     {
         while (true)
         {
-            input_reset_context();
-
             if (!init())
             {
                 return ResultType::cancel();
