@@ -246,7 +246,6 @@ void UIMenuHire::draw()
 optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& action)
 {
     // ELONA_GET_SELECTED_ITEM(_p, 0);
-    // p = -1;
 
     // if (_index != -1)
     // {

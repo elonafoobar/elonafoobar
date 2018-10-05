@@ -584,7 +584,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             return none;
         }
     }
-    if (action == "save" || action == "escape")
+    if (action == "save" || key_escape)
     {
         return do_exit_command();
     }

@@ -327,7 +327,6 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
     const std::string& action)
 {
     // ELONA_GET_SELECTED_ITEM(p_, 0);
-    p = -1;
 
     // if (_index != -1)
     // {

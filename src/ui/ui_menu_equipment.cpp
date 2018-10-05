@@ -338,7 +338,6 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     const std::string& action)
 {
     // ELONA_GET_SELECTED_ITEM(p, 0);
-    p = -1;
 
     // if (_index != -1)
     // {
@@ -361,7 +360,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
         }
         return none;
     }
-    else if (action == "switch_mode_2")
+    else if (action == "identify")
     {
         int body_ = list(0, pagesize * page + cs);
         if (cdata[cc].body_parts[body_ - 100] % 10000 != 0)

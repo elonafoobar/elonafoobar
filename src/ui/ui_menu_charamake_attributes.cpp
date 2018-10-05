@@ -200,14 +200,14 @@ UIMenuCharamakeAttributes::on_key(const std::string& action)
         {
             return UIMenuCharamakeAttributes::Result::finish(_attributes);
         }
-        if (_locked_attributes(p - 2) != 0)
+        if (_locked_attributes(_index - 2) != 0)
         {
             ++_locked_attributes(8);
-            _locked_attributes(p - 2) = 0;
+            _locked_attributes(_index - 2) = 0;
         }
         else if (_locked_attributes(8) > 0)
         {
-            _locked_attributes(p - 2) = 1;
+            _locked_attributes(_index - 2) = 1;
             --_locked_attributes(8);
         }
         snd(20);

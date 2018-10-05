@@ -81,7 +81,8 @@ void init_actions()
     actions.emplace("next_menu",           Action{ActionCategory::menu,      {{Key::tab,             ModKey::none}}});
     actions.emplace("previous_menu",       Action{ActionCategory::menu,      {{Key::tab,             ModKey::ctrl}}});
     actions.emplace("switch_mode",         Action{ActionCategory::menu,      {{Key::key_z,           ModKey::none}}});
-    actions.emplace("switch_mode_2",       Action{ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
+    actions.emplace("switch_mode_2",       Action{ActionCategory::menu,      {{Key::keypad_asterisk, ModKey::none}}});
+    actions.emplace("identify",            Action{ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
     actions.emplace("portrait",            Action{ActionCategory::menu,      {{Key::key_p,           ModKey::none}}});
 
     actions.emplace("wait",                Action{ActionCategory::game,      {{Key::period,          ModKey::none}, {Key::keypad_5, ModKey::none}}});
@@ -108,6 +109,10 @@ void init_actions()
     actions.emplace("rest",                Action{ActionCategory::game,      {{Key::key_r,           ModKey::shift}}});
     actions.emplace("target",              Action{ActionCategory::game,      {{Key::keypad_asterisk, ModKey::none}}});
     actions.emplace("dig",                 Action{ActionCategory::game,      {{Key::key_d,           ModKey::shift}}});
+    actions.emplace("use",                 Action{ActionCategory::game,      {{Key::key_t,           ModKey::none}}});
+    actions.emplace("bash",                Action{ActionCategory::game,      {{Key::key_b,           ModKey::none}}});
+    actions.emplace("open",                Action{ActionCategory::game,      {{Key::key_o,           ModKey::none}}});
+    actions.emplace("dip",                 Action{ActionCategory::game,      {{Key::key_b,           ModKey::shift}}});
     actions.emplace("pray",                Action{ActionCategory::game,      {{Key::key_p,           ModKey::none}}});
     actions.emplace("offer",               Action{ActionCategory::game,      {{Key::key_o,           ModKey::shift}}});
     actions.emplace("journal",             Action{ActionCategory::game,      {{Key::key_j,           ModKey::none}}});

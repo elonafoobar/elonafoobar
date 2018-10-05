@@ -4,6 +4,7 @@
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "keybind/keybind.hpp"
 #include "ui.hpp"
 
 namespace elona
@@ -19,6 +20,7 @@ int Prompt::query(int x, int y, int width)
     cs = 0;
     cs_bk = -1;
 
+    _replace_null_keys_from_key_select();
     _draw_keys_and_background(x, y, width);
 
     _draw_box();
@@ -47,10 +49,13 @@ int Prompt::query(int x, int y, int width)
                 break;
             }
         }
+        if (action == "enter")
+        {
+            ret = _entries.at(cs).value;
+        }
         _modify_result(action);
         if (ret != -1)
         {
-            promptmax = 0;
             cs = csprev;
             return ret;
         }
@@ -58,11 +63,23 @@ int Prompt::query(int x, int y, int width)
         {
             if (action == "cancel")
             {
-                promptmax = 0;
                 cs = csprev;
                 return -1;
             }
         }
+    }
+}
+
+void Prompt::_replace_null_keys_from_key_select()
+{
+    int cnt = 0;
+    for (auto& entry : _entries)
+    {
+        if (entry.key == snail::Key::none)
+        {
+            entry.key = keybind_selection_key_from_index(cnt);
+        }
+        cnt++;
     }
 }
 
@@ -71,27 +88,30 @@ void Prompt::_draw_keys_and_background(int x, int y, int width)
     gsel(3);
     gmode(0);
     font(15 - en * 2);
-    for (const auto& entry : _entries)
+
+    int cnt = 0;
+    for (auto& entry : _entries)
     {
-        auto key = entry.key;
-        if (entry.key == snail::Key::none)
-        {
-            key = snail::Key::key_a;
-        }
-        draw("select_key", i * 24 + 624, 30);
-        bmes("!", i * 24 + 629, 31, {250, 240, 230}, {50, 60, 80});
+        draw("select_key", cnt * 24 + 624, 30);
+        bmes(
+            keybind_key_short_name(entry.key, false),
+            cnt * 24 + 629,
+            31,
+            {250, 240, 230},
+            {50, 60, 80});
+        cnt++;
     }
 
     gsel(0);
     sx = x - width / 2;
-    sy = y - promptmax * 10;
-    boxf(sx + 12, sy + 12, width - 17, promptmax * 20 + 25, {60, 60, 60, 128});
+    sy = y - _promptmax * 10;
+    boxf(sx + 12, sy + 12, width - 17, _promptmax * 20 + 25, {60, 60, 60, 128});
     keyhalt = 1;
 }
 
 void Prompt::_draw_main_frame(int width)
 {
-    window2(sx + 8, sy + 8, width - 16, promptmax * 20 + 42 - 16, 0, 0);
+    window2(sx + 8, sy + 8, width - 16, _promptmax * 20 + 42 - 16, 0, 0);
     pos(sx - 16, sy);
     gcopy(3, 64, 288, 50, 32);
     font(14 - en * 2);

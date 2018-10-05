@@ -247,7 +247,6 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     const std::string& action)
 {
     // ELONA_GET_SELECTED_ITEM(p, cs = i);
-    p = -1;
 
     if (auto submenu = get_selected_item())
     {
@@ -261,21 +260,22 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     }
     else if (action == "next_page" || action == "previous_page")
     {
+        int delta{};
         if (action == "next_page")
         {
-            p = 1;
+            delta = 1;
         }
         else
         {
-            p = -1;
+            delta = -1;
         }
 
-        _menu.items[cs].get()->change(p);
+        _menu.items[cs].get()->change(delta);
         snd(20);
         set_reupdate();
         return none;
     }
-    else if (key == key_mode2)
+    else if (action == "switch_mode_2")
     {
         auto desc = _menu.items[cs].get()->get_desc();
         _show_config_item_desc(desc);

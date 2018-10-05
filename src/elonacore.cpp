@@ -1431,54 +1431,6 @@ int breath_list()
 }
 
 
-void cursor_check()
-{
-    if (key == key_north)
-    {
-        snd(5);
-        --cs;
-        if (cs < 0)
-        {
-            cs = keyrange - 1;
-            if (cs < 0)
-            {
-                cs = 0;
-            }
-        }
-    }
-    if (key == key_south)
-    {
-        snd(5);
-        ++cs;
-        if (cs >= keyrange)
-        {
-            cs = 0;
-        }
-    }
-    if (key == key_west)
-    {
-        key = key_pagedown;
-    }
-    if (key == key_east)
-    {
-        key = key_pageup;
-    }
-    if (cs >= keyrange)
-    {
-        cs_bk = -1;
-        cs = keyrange - 1;
-        if (cs < 0)
-        {
-            cs = 0;
-        }
-    }
-    if (key == key_enter)
-    {
-        key = key_list(cs);
-    }
-}
-
-
 
 void lenfix(std::string& prm_644, int prm_645)
 {

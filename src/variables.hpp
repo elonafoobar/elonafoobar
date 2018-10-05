@@ -516,7 +516,7 @@ ELONA_EXTERN(int invrange);
 ELONA_EXTERN(int invsc);
 ELONA_EXTERN(int invsubroutine);
 ELONA_EXTERN(int jp);
-ELONA_EXTERN(int key_escape);
+ELONA_EXTERN(bool key_escape);
 ELONA_EXTERN(int key_shift);
 ELONA_EXTERN(int key_tab);
 ELONA_EXTERN(int keybd_attacking);
@@ -567,7 +567,6 @@ ELONA_EXTERN(int pcattacker);
 ELONA_EXTERN(int petarenawin);
 ELONA_EXTERN(int potionspill);
 ELONA_EXTERN(int potionthrow);
-ELONA_EXTERN(int promptmax);
 ELONA_EXTERN(int promptx);
 ELONA_EXTERN(int prompty);
 ELONA_EXTERN(int prot);
@@ -873,7 +872,6 @@ void fltn(const std::string&);
 int key_direction(const std::string& action);
 int imeget();
 void imeset(int = 0);
-void cursor_check();
 
 
 //// Actions

@@ -227,8 +227,6 @@ private:
 class InputContext
 {
 public:
-    void clear();
-
     void enable_category(ActionCategory category)
     {
         _excluded_categories.insert(category);
@@ -327,6 +325,12 @@ bool keybind_action_has_category(
  * Never to be used for other actions, since it assumes the action ID has the
  * format <prefix>_<number>.
  */
-int keybind_id_number(const std::string& action_id);
+int keybind_index_number(const std::string& action_id);
+
+/**
+ * For selection actions, returns the key bound to the selection action of the
+ * given index.
+ */
+snail::Key keybind_selection_key_from_index(int index);
 
 } // namespace elona

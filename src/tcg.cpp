@@ -2952,7 +2952,7 @@ void tcg_prompt_action()
             }
             csfix();
         }
-        if (action == "cancel" || action == "escape")
+        if (action == "cancel" || key_escape)
         {
             tcg_clear_cursor();
             return;

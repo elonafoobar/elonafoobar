@@ -1422,11 +1422,11 @@ TurnResult pc_turn(bool advance_time)
             }
         label_2744_internal:
             cdata.player().direction = 0;
-            auto command = key_check();
+            auto action = key_check();
             f = 0;
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (command == "south" || command == "west")
+                if (action == "south" || action == "west")
                 {
                     p = 15 - cnt;
                 }
@@ -1452,35 +1452,35 @@ TurnResult pc_turn(bool advance_time)
                     camera = p;
                     break;
                 }
-                if (command == "north" || command == "east")
+                if (action == "north" || action == "east")
                 {
                     f = 1;
                     snd(5);
                     if (p > camera)
                     {
                         camera = p;
-                        command = "";
+                        action = "";
                         break;
                     }
                 }
-                if (command == "south" || command == "west")
+                if (action == "south" || action == "west")
                 {
                     f = 1;
                     snd(5);
                     if (p < camera)
                     {
                         camera = p;
-                        command = "";
+                        action = "";
                         break;
                     }
                 }
             }
             if (f == 1)
             {
-                command = ""s;
+                action = ""s;
             }
             update_screen();
-            if (command == "go_up" || command == "escape")
+            if (action == "go_up" || key_escape)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_game"));
@@ -1492,7 +1492,7 @@ TurnResult pc_turn(bool advance_time)
                 }
                 goto label_2744_internal;
             }
-            if (command != "cancel" && command != "")
+            if (action != "cancel" && action != "")
             {
                 return TurnResult::turn_end;
             }
@@ -1557,8 +1557,8 @@ label_2747:
         ui_render_from_screensync();
     }
 
-    // TODO
-    if (Config::instance().net && Config::instance().netwish && key == ""s)
+    if (Config::instance().net
+        && Config::instance().netwish /* && key == ""s */)
     {
         ++chatturn;
         if (chatturn % 250 == 1)
@@ -1605,7 +1605,8 @@ label_2747:
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
     await(Config::instance().wait1);
-    auto command = InputContext::instance().check_for_command();
+    auto command =
+        InputContext::instance().check_for_command(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
     if (command == ""s)

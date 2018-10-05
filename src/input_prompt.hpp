@@ -75,6 +75,7 @@ private:
     void _draw_keys_and_background(int x, int y, int width);
     void _draw_main_frame(int width);
     void _draw_entries();
+    void _replace_null_keys_from_key_select();
 
     Type _type;
     std::vector<Entry> _entries;

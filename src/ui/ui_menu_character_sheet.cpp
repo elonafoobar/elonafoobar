@@ -1158,16 +1158,15 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         }
     }
 
-    p = -1;
+    int skill_id = -1;
     if (_index != -1)
     {
-        p = list(0, pagesize * (page - 1) + _index);
+        skill_id = list(0, pagesize * (page - 1) + _index);
     }
-    if (p != -1)
+    if (skill_id != -1)
     {
         if (_operation != CharacterSheetOperation::investigate_ally)
         {
-            int skill_id = p;
             if (_operation == CharacterSheetOperation::train_skill
                 || _operation == CharacterSheetOperation::learn_skill)
             {

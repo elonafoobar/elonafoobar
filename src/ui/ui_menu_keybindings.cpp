@@ -36,12 +36,12 @@ static std::string _get_localized_action_name(
     switch (action_category)
     {
     case ActionCategory::shortcut:
-        action_index = keybind_id_number(action_id);
+        action_index = keybind_index_number(action_id);
         localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut")
             + std::to_string(action_index);
         break;
     case ActionCategory::selection:
-        action_index = keybind_id_number(action_id);
+        action_index = keybind_index_number(action_id);
         localized_name = i18n::s.get(mod_name + ".locale.keybind.select")
             + std::to_string(action_index);
         break;
@@ -288,13 +288,6 @@ public:
     }
 
 protected:
-    void init() override
-    {
-        SimplePrompt::init();
-
-        snail::Input::instance().clear_pressed_keys();
-    }
-
     optional<bool> update() override
     {
         await(Config::instance().wait1);
@@ -358,13 +351,6 @@ public:
     }
 
 protected:
-    void init() override
-    {
-        SimplePrompt::init();
-
-        snail::Input::instance().clear_pressed_keys();
-    }
-
     optional<KeyPromptResult> update() override
     {
         await(Config::instance().wait1);

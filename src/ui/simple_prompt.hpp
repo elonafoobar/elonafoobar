@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "../audio.hpp"
+#include "../input.hpp"
 #include "../variables.hpp"
 
 namespace elona
@@ -62,6 +63,8 @@ protected:
         font(_font_size);
         pos(_x + 40, _y + _font_size + 36);
         mes(_message);
+
+        snail::Input::instance().clear_pressed_keys();
     }
 
     virtual optional<T> update() = 0;

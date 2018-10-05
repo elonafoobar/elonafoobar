@@ -38,6 +38,7 @@ bool input_text_dialog(
 
 StickKey stick(StickKey allow_repeat_keys = StickKey::none);
 
+void input_reset_context();
 std::string key_check(KeyWaitDelay = KeyWaitDelay::always);
 std::string cursor_check_ex();
 std::string cursor_check_ex(int& index);

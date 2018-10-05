@@ -84,8 +84,6 @@ optional<UIMenuDialog::ResultType> UIMenuDialog::on_key(
         }
     }
 
-    p = -1;
-
     // for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     // {
     //     if (key == key_select(cnt))
