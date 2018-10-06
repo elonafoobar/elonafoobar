@@ -353,7 +353,6 @@ optional<std::string> InputContext::_check_movement_action(
     snail::ModKey modifiers)
 {
     StickKey input = StickKey::none;
-    bool wait = false;
 
     // Movement keys have to ignore Shift or Alt. They could be used with them
     // in a hardcoded manner for running or diagonal restriction.
@@ -415,11 +414,6 @@ optional<std::string> InputContext::_check_movement_action(
         {
             input = StickKey::down | StickKey::right;
         }
-        else if (_matches("wait", key, key_modifiers))
-        {
-            input = StickKey::none;
-            wait = true;
-        }
         else if (!is_modifier(key))
         {
             // Encountered non-movement key, prioritize it over movement.
@@ -480,10 +474,6 @@ optional<std::string> InputContext::_check_movement_action(
     if (input == (StickKey::down | StickKey::right))
     {
         return "southeast"s;
-    }
-    if (wait)
-    {
-        return "wait"s;
     }
 
     return none;
@@ -902,6 +892,98 @@ void keybind_regenerate_key_select()
     }
 
     draw_init_key_select_buffer();
+}
+
+static std::string _binding_name(
+    KeybindManager& keybind_manager,
+    const std::string& action_id)
+{
+    std::string result = "";
+    auto& binding = keybind_manager.binding(action_id);
+    if (!binding.primary.empty())
+    {
+        result = binding.primary.to_string();
+    }
+    else if (!binding.alternate.empty())
+    {
+        result = binding.primary.to_string();
+    }
+    else if (binding.joystick != snail::Key::none)
+    {
+        if (auto name_opt = keybind_key_name(binding.joystick))
+        {
+            result = *name_opt;
+        }
+    }
+
+    strutil::try_remove_prefix(result, "Keypad ");
+    return result;
+}
+
+// TODO: delete this.
+void keybind_regenerate_key_names()
+{
+    auto& km = KeybindManager::instance();
+
+    // clang-format off
+    key_north     = _binding_name(km, "north");
+    key_south     = _binding_name(km, "south");
+    key_west      = _binding_name(km, "west");
+    key_east      = _binding_name(km, "east");
+    key_northwest = _binding_name(km, "northwest");
+    key_northeast = _binding_name(km, "northeast");
+    key_southwest = _binding_name(km, "southwest");
+    key_southeast = _binding_name(km, "southeast");
+    key_wait      = _binding_name(km, "wait");
+    key_cancel    = _binding_name(km, "cancel");
+    key_pageup    = _binding_name(km, "next_page");
+    key_pagedown  = _binding_name(km, "previous_page");
+    key_mode      = _binding_name(km, "switch_mode");
+    key_mode2     = _binding_name(km, "switch_mode_2");
+    key_quick     = _binding_name(km, "quick_menu");
+    key_zap       = _binding_name(km, "zap");
+    key_inventory = _binding_name(km, "inventory");
+    key_quickinv  = _binding_name(km, "quick_inventory");
+    key_get       = _binding_name(km, "get");
+    key_drop      = _binding_name(km, "drop");
+    key_charainfo = _binding_name(km, "chara_info");
+    key_enter     = _binding_name(km, "enter");
+    key_eat       = _binding_name(km, "eat");
+    key_wear      = _binding_name(km, "wear");
+    key_cast      = _binding_name(km, "cast");
+    key_drink     = _binding_name(km, "drink");
+    key_read      = _binding_name(km, "read");
+    key_fire      = _binding_name(km, "fire");
+    key_godown    = _binding_name(km, "go_down");
+    key_goup      = _binding_name(km, "go_up");
+    key_save      = _binding_name(km, "save");
+    key_search    = _binding_name(km, "search");
+    key_interact  = _binding_name(km, "interact");
+    key_identify  = _binding_name(km, "identify");
+    key_skill     = _binding_name(km, "skill");
+    key_close     = _binding_name(km, "close");
+    key_rest      = _binding_name(km, "rest");
+    key_target    = _binding_name(km, "target");
+    key_dig       = _binding_name(km, "dig");
+    key_use       = _binding_name(km, "use");
+    key_bash      = _binding_name(km, "bash");
+    key_open      = _binding_name(km, "open");
+    key_dip       = _binding_name(km, "dip");
+    key_pray      = _binding_name(km, "pray");
+    key_offer     = _binding_name(km, "offer");
+    key_journal   = _binding_name(km, "journal");
+    key_material  = _binding_name(km, "material");
+    key_trait     = _binding_name(km, "trait");
+    key_look      = _binding_name(km, "look");
+    key_give      = _binding_name(km, "give");
+    key_throw     = _binding_name(km, "throw");
+    key_ammo      = _binding_name(km, "ammo");
+    key_autodig   = _binding_name(km, "autodig");
+    key_quicksave = _binding_name(km, "quicksave");
+    key_quickload = _binding_name(km, "quickload");
+    key_help      = _binding_name(km, "help");
+    key_msglog    = _binding_name(km, "message_log");
+    // clang-format on
 }
 
 int keybind_index_number(const std::string& action_id)

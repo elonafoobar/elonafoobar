@@ -54,7 +54,7 @@ END
         previous_menu = "Previous Menu"
         switch_mode = "Switch Mode"
         switch_mode_2 = "Switch Mode (2)"
-        identify = "Identify (Menu)"
+        identify = "Identify"
         portrait = "Portrait Menu"
 
         wait = "Wait"

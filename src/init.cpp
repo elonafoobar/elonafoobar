@@ -670,6 +670,7 @@ void initialize_elona()
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
     keybind_regenerate_key_select();
+    keybind_regenerate_key_names();
 
     gsel(0);
     gmode(2);

@@ -327,6 +327,7 @@ optional<snail::Key> keybind_key_code(
     bool shift = false);
 
 void keybind_regenerate_key_select();
+void keybind_regenerate_key_names();
 
 bool keybind_action_has_category(
     const std::string& action_id,

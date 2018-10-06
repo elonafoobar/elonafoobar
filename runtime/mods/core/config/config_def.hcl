@@ -164,18 +164,6 @@ config def {
         options = {
             autodisable_numlock = true
 
-            assign_z_key = {
-                type = "enum"
-                default = "quick_menu"
-                variants = ["quick_menu", "zap", "none"]
-            }
-
-            assign_x_key = {
-                type = "enum"
-                default = "quick_inv"
-                variants = ["quick_inv", "identify", "none"]
-            }
-
             walk_wait = {
                 default = 5
                 min = 1
@@ -419,81 +407,6 @@ DOC
                 max = 600
                 preload = true
             }
-        }
-    }
-
-    key = {
-        type = "section"
-        visible = false
-        options = {
-            north = "8 "
-            south = "2 "
-            west = "4 "
-            east = "6 "
-            northwest = "7 "
-            northeast = "9 "
-            southwest = "1 "
-            southeast = "3 "
-            wait = "5 "
-
-            cancel = "\\"
-            esc = "^"
-            alter = "["
-            pageup = "+"
-            pagedown = "-"
-            mode = "z"
-            mode2 = "*"
-
-            quick_menu = "z"
-            zap = "Z"
-            inventory = "X"
-            quick_inventory = "x" # quickinv
-            get = "g"
-            get2 = "0 "
-            drop = "d"
-            chara_info = "c" # charainfo
-            enter = " "
-            eat = "e"
-            wear = "w"
-            cast = "v"
-            drink = "q"
-            read = "r"
-            fire = "f"
-            go_down = ">" # goDown
-            go_up = "<" # goUp
-            save = "S"
-            search = "s"
-            interact = "i"
-            identify = "x"
-            skill = "a"
-            close = "C"
-            rest = "R"
-            target = "*"
-            dig = "D"
-            use = "t"
-            bash = "b"
-            open = "o"
-            dip = "B"
-            pray = "p"
-            offer = "O"
-            journal = "j"
-            material = "m"
-            trait = "F"
-            look = "l"
-            give = "G"
-            throw = "T"
-            ammo = "A"
-            autodig = "H"
-
-            quicksave = "F1"
-            quickload = "F2"
-            help = "?"
-            message_log = "/"
-
-            key_set = ["a", "b", "c", "d", "e",
-                "f", "g", "h", "i", "j",
-                "k", "l", "m", "n", "o",
-                "p", "q", "r", "s"]
         }
     }
 

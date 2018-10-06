@@ -308,24 +308,6 @@ It can fix issues related to holding Shift and a numpad movement key at the same
 This only has an effect on Windows.
 DOC
                 }
-                assign_z_key {
-                    name = "Assign z key"
-                    variants {
-                        quick_menu = "Quick menu"
-                        zap = "Zap"
-                        none = "Don't assign"
-                    }
-                    doc = "Change the assignment of the 'z' key."
-                }
-                assign_x_key {
-                    name = "Assign x key"
-                    variants {
-                        quick_inv = "Quick Inv"
-                        identify = "Identify"
-                        none = "Don't assign"
-                    }
-                    doc = "Change the assignment of the 'x' key."
-                }
                 walk_wait {
                     name = "Walk Speed"
                     doc = "Number of frames to wait between movement commands when walking."

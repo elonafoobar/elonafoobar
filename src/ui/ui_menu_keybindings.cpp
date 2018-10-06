@@ -528,6 +528,7 @@ static void _prompt_for_key(const std::string& action_id)
     }
 
     keybind_regenerate_key_select();
+    keybind_regenerate_key_names();
 
     // Prevent Shift from firing the cancel action.
     keywait = 1;

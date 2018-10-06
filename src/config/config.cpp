@@ -372,105 +372,6 @@ void load_config(const fs::path& hcl_file)
         bool,
         Config::instance().skiprandevents);
 
-    CONFIG_KEY("key.north"s, key_north);
-    CONFIG_KEY("key.south"s, key_south);
-    CONFIG_KEY("key.west"s, key_west);
-    CONFIG_KEY("key.east"s, key_east);
-    CONFIG_KEY("key.northwest"s, key_northwest);
-    CONFIG_KEY("key.northeast"s, key_northeast);
-    CONFIG_KEY("key.southwest"s, key_southwest);
-    CONFIG_KEY("key.southeast"s, key_southeast);
-    CONFIG_KEY("key.wait"s, key_wait);
-    CONFIG_KEY("key.cancel"s, key_cancel);
-    CONFIG_KEY("key.esc"s, key_esc);
-    CONFIG_KEY("key.alter"s, key_alter);
-    CONFIG_KEY("key.pageup"s, key_pageup);
-    CONFIG_KEY("key.pagedown"s, key_pagedown);
-    CONFIG_KEY("key.mode"s, key_mode);
-    CONFIG_KEY("key.mode2"s, key_mode2);
-    CONFIG_KEY("key.quick_menu"s, key_quick);
-    CONFIG_KEY("key.zap"s, key_zap);
-    CONFIG_KEY("key.inventory"s, key_inventory);
-    CONFIG_KEY("key.quick_inventory"s, key_quickinv);
-    CONFIG_KEY("key.get"s, key_get);
-    CONFIG_KEY("key.get2"s, key_get2);
-    CONFIG_KEY("key.drop"s, key_drop);
-    CONFIG_KEY("key.chara_info"s, key_charainfo);
-    CONFIG_KEY("key.enter"s, key_enter);
-    CONFIG_KEY("key.eat"s, key_eat);
-    CONFIG_KEY("key.wear"s, key_wear);
-    CONFIG_KEY("key.cast"s, key_cast);
-    CONFIG_KEY("key.drink"s, key_drink);
-    CONFIG_KEY("key.read"s, key_read);
-    CONFIG_KEY("key.fire"s, key_fire);
-    CONFIG_KEY("key.go_down"s, key_godown);
-    CONFIG_KEY("key.go_up"s, key_goup);
-    CONFIG_KEY("key.save"s, key_save);
-    CONFIG_KEY("key.search"s, key_search);
-    CONFIG_KEY("key.interact"s, key_interact);
-    CONFIG_KEY("key.identify"s, key_identify);
-    CONFIG_KEY("key.skill"s, key_skill);
-    CONFIG_KEY("key.close"s, key_close);
-    CONFIG_KEY("key.rest"s, key_rest);
-    CONFIG_KEY("key.target"s, key_target);
-    CONFIG_KEY("key.dig"s, key_dig);
-    CONFIG_KEY("key.use"s, key_use);
-    CONFIG_KEY("key.bash"s, key_bash);
-    CONFIG_KEY("key.open"s, key_open);
-    CONFIG_KEY("key.dip"s, key_dip);
-    CONFIG_KEY("key.pray"s, key_pray);
-    CONFIG_KEY("key.offer"s, key_offer);
-    CONFIG_KEY("key.journal"s, key_journal);
-    CONFIG_KEY("key.material"s, key_material);
-    CONFIG_KEY("key.trait"s, key_trait);
-    CONFIG_KEY("key.look"s, key_look);
-    CONFIG_KEY("key.give"s, key_give);
-    CONFIG_KEY("key.throw"s, key_throw);
-    CONFIG_KEY("key.ammo"s, key_ammo);
-    CONFIG_KEY("key.autodig"s, key_autodig);
-    CONFIG_KEY("key.quicksave"s, key_quicksave);
-    CONFIG_KEY("key.quickload"s, key_quickload);
-    CONFIG_KEY("key.help"s, key_help);
-    CONFIG_KEY("key.message_log"s, key_msglog);
-
-    conf.bind_setter<hcl::List>("core.config.key.key_set", [&](auto values) {
-        for_each_with_index(
-            std::begin(values),
-            std::end(values),
-            [&](auto index, hcl::Value value) {
-                std::string s = value.as<std::string>();
-                key_select(index) = s;
-            });
-    });
-
-    conf.bind_setter<std::string>(
-        "core.config.input.assign_z_key", [&](auto value) {
-            if (value == "quick_menu")
-            {
-                key_quick = u8"z"s;
-                key_zap = u8"Z"s;
-            }
-            else if (value == "zap")
-            {
-                key_zap = u8"z"s;
-                key_quick = u8"Z"s;
-            }
-        });
-
-    conf.bind_setter<std::string>(
-        "core.config.input.assign_x_key", [&](auto value) {
-            if (value == "quick_inv")
-            {
-                key_quickinv = u8"x"s;
-                key_inventory = u8"X"s;
-            }
-            else if (value == "identify")
-            {
-                key_inventory = u8"x"s;
-                key_quickinv = u8"X"s;
-            }
-        });
-
     conf.bind_setter<std::string>(
         "core.config.screen.orientation",
         &convert_and_set_requested_orientation);
@@ -491,14 +392,6 @@ void load_config(const fs::path& hcl_file)
 
     key_prev = key_northwest;
     key_next = key_northeast;
-
-    // Keys set in assign_<...>_key may have been overwritten by other
-    // config values in the "key" section. To account for this, run
-    // the setters for assign_<...>_key again. This will do nothing if
-    // either option is "none", so the keys can stil be set to
-    // something else.
-    conf.run_setter("core.config.input.assign_x_key");
-    conf.run_setter("core.config.input.assign_z_key");
 
     if (Config::instance().runwait < 1)
     {
@@ -525,21 +418,6 @@ void load_config(const fs::path& hcl_file)
     else
     {
         en = 1;
-    }
-    if (key_mode == ""s)
-    {
-        key_mode = u8"z"s;
-        conf.set("core.config.key.mode", key_mode);
-    }
-    if (key_mode2 == ""s)
-    {
-        key_mode2 = u8"*"s;
-        conf.set("core.config.key.mode2", key_mode2);
-    }
-    if (key_ammo == ""s)
-    {
-        key_ammo = u8"A"s;
-        conf.set("core.config.key.ammo", key_ammo);
     }
 }
 
@@ -707,23 +585,20 @@ void Config::visit(
 {
     if (value.is<hcl::Object>())
     {
-        if (!def.is<spec::SectionDef>(current_key))
+        if (def.is<spec::SectionDef>(current_key))
         {
-            throw ConfigLoadingError(
-                hcl_file + ": No such config section \"" + current_key + "\".");
+            visit_object(
+                value.as<hcl::Object>(), current_key, hcl_file, preload);
         }
-        visit_object(value.as<hcl::Object>(), current_key, hcl_file, preload);
     }
     else
     {
-        if (!def.exists(current_key))
+        if (def.exists(current_key))
         {
-            throw ConfigLoadingError(
-                hcl_file + ": No such config value \"" + current_key + "\".");
-        }
-        if (preload == def.get_metadata(current_key).preload)
-        {
-            set(current_key, value);
+            if (preload == def.get_metadata(current_key).preload)
+            {
+                set(current_key, value);
+            }
         }
     }
 }

@@ -130,6 +130,23 @@ void UIMenuCharamakeAlias::draw()
     _redraw_aliases = false;
 }
 
+void UIMenuCharamakeAlias::_lock_alias(int cs_)
+{
+    if (cs_ > 0)
+    {
+        if (_locked_aliases(cs_) != 0)
+        {
+            _locked_aliases(cs_) = 0;
+        }
+        else
+        {
+            _locked_aliases(cs_) = 1;
+        }
+        snd(20);
+        _redraw_aliases = true;
+    }
+}
+
 optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
     const std::string& action)
 {
@@ -151,18 +168,9 @@ optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
             return UIMenuCharamakeAlias::Result::finish(alias);
         }
     }
-    else if (action == "switch_mode_2" && cs != -1)
+    else if (action == "switch_mode_2")
     {
-        if (_locked_aliases(cs) != 0)
-        {
-            _locked_aliases(cs) = 0;
-        }
-        else
-        {
-            _locked_aliases(cs) = 1;
-        }
-        snd(20);
-        _redraw_aliases = true;
+        _lock_alias(cs);
     }
     else if (action == "cancel")
     {
