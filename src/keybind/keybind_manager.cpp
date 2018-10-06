@@ -212,7 +212,6 @@ void keybind_regenerate_key_names()
     key_quick     = _binding_name(km, "quick_menu");
     key_zap       = _binding_name(km, "zap");
     key_inventory = _binding_name(km, "inventory");
-    key_quickinv  = _binding_name(km, "quick_inventory");
     key_get       = _binding_name(km, "get");
     key_drop      = _binding_name(km, "drop");
     key_charainfo = _binding_name(km, "chara_info");

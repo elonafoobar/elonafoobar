@@ -1282,7 +1282,7 @@ label_1953_internal:
     }
     if (action == "target")
     {
-        // TODO
+        // TODO will not be detected since input is in "menu" mode
         action = "select_"s + (cs + 1);
     }
     action = get_selected_item(p(0));

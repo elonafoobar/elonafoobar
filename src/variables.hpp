@@ -311,7 +311,6 @@ ELONA_EXTERN(std::string key_look);
 ELONA_EXTERN(std::string key_give);
 ELONA_EXTERN(std::string key_prev);
 ELONA_EXTERN(std::string key_next);
-ELONA_EXTERN(std::string key_quickinv);
 ELONA_EXTERN(std::string key_throw);
 ELONA_EXTERN(int key_alt);
 ELONA_EXTERN(int key_ctrl);
