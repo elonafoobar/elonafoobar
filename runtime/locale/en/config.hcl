@@ -576,6 +576,11 @@ DOC
                     doc = "Controls the time between repeats of a held quick action."
                 }
             }
+
+            keybindings {
+                name = "Keybindings"
+                doc = "Configure game keybindings."
+            }
         }
     }
 }

@@ -113,7 +113,7 @@ static void add_config_item_section(
 void ConfigScreenCreator::add_keybindings_section()
 {
     result_.back()->items.emplace_back(std::make_unique<ConfigMenuItemBase>(
-        "core.config.keybindings", "core.locale.config.keybindings"));
+        "core.config.keybindings", "core.locale.config.menu.keybindings"));
 }
 
 void ConfigScreenCreator::add_keybindings_menu()

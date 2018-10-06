@@ -102,8 +102,6 @@ void KeybindManager::register_default_bindings(const ActionMap& actions)
             }
         }
     }
-
-    keybind_regenerate_key_select();
 }
 
 std::vector<std::string> KeybindManager::find_conflicts(
@@ -807,6 +805,9 @@ bool keybind_action_has_category(
     return keybind::actions.at(action_id).category == category;
 }
 
+
+void draw_init_key_select_buffer();
+
 void keybind_regenerate_key_select()
 {
     auto grouped_keybinds =
@@ -820,13 +821,22 @@ void keybind_regenerate_key_select()
         const auto& action_id = it->second;
         const auto& binding = KeybindManager::instance().binding(action_id);
 
-        // NOTE: key_select only represents the primarily bound key.
-        bool shift = (binding.primary.modifiers & snail::ModKey::shift)
-            == snail::ModKey::shift;
-        key_select(cnt) = keybind_key_short_name(binding.primary.main, shift);
+        auto keybind = binding.primary;
+        if (keybind.main == snail::Key::none)
+        {
+            keybind = binding.alternate;
+        }
+
+        bool shift =
+            (keybind.modifiers & snail::ModKey::shift) == snail::ModKey::shift;
+        auto key = keybind.main;
+
+        key_select(cnt) = keybind_key_short_name(key, shift);
         std::cerr << "SET " << cnt << " " << key_select(cnt) << std::endl;
         cnt++;
     }
+
+    draw_init_key_select_buffer();
 }
 
 int keybind_index_number(const std::string& action_id)

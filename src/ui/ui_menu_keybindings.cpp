@@ -19,15 +19,21 @@ static std::string _action_category_to_name(ActionCategory category)
 {
     switch (category)
     {
-    case ActionCategory::default_: return "Default";
-    case ActionCategory::shortcut: return "Shortcut";
-    case ActionCategory::selection: return "Selection";
-    case ActionCategory::menu: return "Menu";
-    case ActionCategory::game: return "Game";
-    case ActionCategory::wizard: return "Wizard";
+    case ActionCategory::default_:
+        return i18n::s.get("core.locale.keybind.category.default");
+    case ActionCategory::shortcut:
+        return i18n::s.get("core.locale.keybind.category.shortcut");
+    case ActionCategory::selection:
+        return i18n::s.get("core.locale.keybind.category.selection");
+    case ActionCategory::menu:
+        return i18n::s.get("core.locale.keybind.category.menu");
+    case ActionCategory::game:
+        return i18n::s.get("core.locale.keybind.category.game");
+    case ActionCategory::wizard:
+        return i18n::s.get("core.locale.keybind.category.wizard");
     }
 
-    return "<unknown>";
+    return "<unknown category>";
 }
 
 static std::string _get_localized_action_name(
@@ -64,7 +70,7 @@ static void _push_category_name(ActionCategory action_category)
 {
     list(0, listmax) = -1;
     listn(0, listmax) = "";
-    listn(1, listmax) = u8"◆ "s + _action_category_to_name(action_category);
+    listn(1, listmax) = _action_category_to_name(action_category);
     listmax++;
 }
 
@@ -181,19 +187,30 @@ void UIMenuKeybindings::update()
 
 static void _draw_window()
 {
-    s(0) = i18n::s.get("core.locale.item.desc.window.title");
-    s(1) =
-        i18n::s.get("core.locale.keybind.window.hint") + strhint2 + strhint3b;
+    s(0) = i18n::s.get("core.locale.config.menu.keybindings.name");
+    s(1) = i18n::s.get("core.locale.keybind.menu.hint") + strhint2 + strhint3b;
 
     display_window(wx, wy, ww, wh);
 }
 
 static void _draw_topics()
 {
-    display_topic("Name", wx + _x_align_action_name - 28, wy + 36);
-    display_topic("Primary", wx + _x_align_binding_primary - 10, wy + 36);
-    display_topic("Alternate", wx + _x_align_binding_alternate - 10, wy + 36);
-    display_topic("Joystick", wx + _x_align_binding_joystick - 10, wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.name"),
+        wx + _x_align_action_name - 28,
+        wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.primary"),
+        wx + _x_align_binding_primary - 10,
+        wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.alternate"),
+        wx + _x_align_binding_alternate - 10,
+        wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.joystick"),
+        wx + _x_align_binding_joystick - 10,
+        wy + 36);
 }
 
 static void _draw_keys()
@@ -367,12 +384,12 @@ private:
 
     void _print_conflicts(std::ostream& out)
     {
-        out << "The following keybindings are in conflict:\n";
+        out << i18n::s.get("core.locale.keybind.menu.conflict.text") << "\n";
         for (const auto& action_id : _action_ids_in_conflict)
         {
             _print_conflict(out, action_id);
         }
-        out << "Press Enter to unbind them, Escape to cancel.";
+        out << i18n::s.get("core.locale.keybind.menu.conflict.prompt");
     }
 
     void _print_conflict(std::ostream& out, const std::string& action_id)
@@ -417,9 +434,9 @@ class KeyPrompt : public SimplePrompt<KeyPromptResult>
 {
 public:
     KeyPrompt()
-        : SimplePrompt(
-              "Please press a key.\nEnter to unbind, Escape to cancel.")
+        : SimplePrompt()
     {
+        _message = i18n::s.get("core.locale.keybind.menu.prompt");
     }
 
 protected:
@@ -512,7 +529,7 @@ static void _prompt_for_key(const std::string& action_id)
 
     keybind_regenerate_key_select();
 
-    // Prevent Shift from firing cancel action.
+    // Prevent Shift from firing the cancel action.
     keywait = 1;
     keyhalt = 1;
 }

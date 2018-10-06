@@ -1,8 +1,33 @@
 locale {
     keybind {
-        window {
-            title = "Keybindings"
+        menu {
             hint = "Enter [Bind Key] "
+
+            topics {
+                name = "Name"
+                primary = "Primary"
+                alternate = "Alternate"
+                joystick = "Joystick"
+            }
+
+            conflict {
+                text = "The following keybindings are conflicting:"
+                prompt = "Press Enter to unbind them, Escape to cancel."
+            }
+
+            prompt = <<END
+Please press a key.
+Enter to unbind, Escape to cancel.
+END
+        }
+
+        category {
+            default = "Default"
+            shortcut = "Shortcut"
+            selection = "Selection"
+            menu = "Menu"
+            game = "Game"
+            wizard = "Wizard"
         }
 
         escape = "Escape"

@@ -300,13 +300,6 @@ public:
     {
     }
 
-    void draw() const override
-    {
-        pos(wx + 40, wy + wh - 110);
-        font(12 + sizefix - en * 2);
-        mes(i18n::s.get("core.locale.config.common.assign_button"));
-    }
-
     optional<int> query(int submenu) override
     {
         UNUSED(submenu);
