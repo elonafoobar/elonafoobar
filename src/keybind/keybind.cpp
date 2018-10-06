@@ -426,10 +426,8 @@ optional<std::string> InputContext::_check_movement_action(
         // Has to be modified globally, since scroll speed is determined by
         // keybd_wait. See @ref ui_scroll_screen()
         keybd_wait = 100000;
-        std::cerr << "shift " << keywait << " " << std::endl;
         if (keywait == 0)
         {
-            std::cerr << "just pressed " << std::endl;
             keywait = 1;
             return "cancel"s;
         }
@@ -538,7 +536,6 @@ std::string InputContext::_delay_movement_action(
     snail::ModKey modifiers,
     KeyWaitDelay delay_type)
 {
-    std::cerr << "KEYBDWAIT: " << keybd_wait << std::endl;
     if (keybd_wait >= 100000)
     {
         if ((modifiers & snail::ModKey::shift) != snail::ModKey::shift)
@@ -566,7 +563,6 @@ std::string InputContext::_delay_movement_action(
             if (keybd_wait
                 < Config::instance().walkwait * Config::instance().startrun)
             {
-                std::cerr << "WALK" << std::endl;
                 if (keybd_wait % Config::instance().walkwait != 0)
                 {
                     return ""s;
@@ -574,7 +570,6 @@ std::string InputContext::_delay_movement_action(
             }
             else
             {
-                std::cerr << "RUN" << std::endl;
                 running = 1;
                 if (keybd_wait < 100000)
                 {
@@ -588,7 +583,6 @@ std::string InputContext::_delay_movement_action(
         // else if (input == StickKey::none)
         else if (action == "wait"s)
         {
-            std::cerr << "NONEWAIT" << std::endl;
             if (keybd_wait < 20)
             {
                 if (keybd_wait != 0)
@@ -599,7 +593,6 @@ std::string InputContext::_delay_movement_action(
         }
         else if (keybd_wait > Config::instance().startrun)
         {
-            std::cerr << "STARTRUN" << std::endl;
             if (Config::instance().runscroll == 0)
             {
                 if (keybd_wait % Config::instance().runwait != 0)
@@ -614,7 +607,6 @@ std::string InputContext::_delay_movement_action(
         keybd_wait
         < Config::instance().select_fast_start * Config::instance().select_wait)
     {
-        std::cerr << "SELECTWAIT" << std::endl;
         if (keybd_wait % Config::instance().select_wait != 0)
         {
             return ""s;
@@ -622,7 +614,6 @@ std::string InputContext::_delay_movement_action(
     }
     else if (keybd_wait < 1000)
     {
-        std::cerr << "SELECTFASTWAIT" << std::endl;
         if (keybd_wait % Config::instance().select_fast_wait != 0)
         {
             return ""s;
@@ -668,11 +659,8 @@ bool InputContext::_delay_normal_action(const Keybind& keybind)
 
     if (delayed)
     {
-        std::cerr << "DEL " << std::endl;
         return true;
     }
-    std::cerr << "PLAY " << last_held_key_frames << " " << keybind.to_string()
-              << std::endl;
 
     return false;
 } // namespace elona
@@ -701,7 +689,6 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
     {
         if (auto n = keybind_key_name(key))
         {
-            std::cerr << "K " << *n << std::endl;
         }
     }
 
@@ -887,7 +874,6 @@ void keybind_regenerate_key_select()
         auto key = keybind.main;
 
         key_select(cnt) = keybind_key_short_name(key, shift);
-        std::cerr << "SET " << cnt << " " << key_select(cnt) << std::endl;
         cnt++;
     }
 
