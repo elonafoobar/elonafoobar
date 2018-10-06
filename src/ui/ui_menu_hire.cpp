@@ -245,12 +245,6 @@ void UIMenuHire::draw()
 
 optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(_p, 0);
-
-    // if (_index != -1)
-    // {
-    //     p = list(0, pagesize * page + _index);
-    // }
     if (auto selected = get_selected_item())
     {
         return UIMenuHire::Result::finish(*selected);

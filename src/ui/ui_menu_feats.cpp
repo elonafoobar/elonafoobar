@@ -419,12 +419,6 @@ static void _switch_target(bool is_forwards)
 
 optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& action)
 {
-    // ELONA_GET_SELECTED_INDEX(p_);
-
-    // if (_index != -1)
-    // {
-    //     p_ = pagesize * page + _index;
-    // }
     auto index = get_selected_index();
     if (index && *index > 0 && _can_select_trait(*index, tc))
     {

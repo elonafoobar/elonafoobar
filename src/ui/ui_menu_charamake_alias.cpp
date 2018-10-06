@@ -150,8 +150,6 @@ void UIMenuCharamakeAlias::_lock_alias(int cs_)
 optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
-
     if (auto selected = get_selected_index_this_page())
     {
         if (*selected == 0)

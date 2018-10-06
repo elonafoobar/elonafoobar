@@ -188,9 +188,6 @@ static void _do_play_scene(int scene_id)
 
 optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& action)
 {
-    // int p_ = 0;
-    // ELONA_GET_SELECTED_ITEM(p_, 0);
-
     if (auto selected = get_selected_item())
     {
         _do_play_scene(*selected);

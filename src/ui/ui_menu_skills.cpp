@@ -218,7 +218,6 @@ optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(
     const std::string& action)
 {
     commark(0) = page * 1000 + cs;
-    // ELONA_GET_SELECTED_ITEM(p, 0);
 
     if (auto selected = get_selected_item())
     {

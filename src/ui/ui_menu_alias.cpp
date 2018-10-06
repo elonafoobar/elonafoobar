@@ -72,10 +72,6 @@ void UIMenuAlias::draw()
 
 optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& action)
 {
-    // int _p;
-
-    // ELONA_GET_SELECTED_INDEX_THIS_PAGE(_p);
-
     if (auto selected = get_selected_index_this_page())
     {
         if (*selected == 0)

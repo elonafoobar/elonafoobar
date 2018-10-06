@@ -20,7 +20,7 @@ void initialize_keybind_actions(ActionMap& actions)
     // For example, instead of {Key::question, ModKey::none}, use {Key::slash,
     // ModKey::shift} as [Shift]+[/] = [?]. Key::question would never be picked
     // up as a pressed key, it would always be interpreted as Key::slash +
-    // ModKey::Shift.
+    // ModKey::shift.
 
     // clang-format off
     actions.emplace("escape",              Action{ActionCategory::default_,  {{Key::escape,          ModKey::none}}});

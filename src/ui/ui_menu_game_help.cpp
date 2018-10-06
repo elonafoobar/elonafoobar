@@ -334,7 +334,6 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     const std::string& action)
 {
     // Key selection
-    // ELONA_GET_SELECTED_ITEM(p, cs = i);
     if (auto selected = get_selected_index_this_page())
     {
         cs = *selected;

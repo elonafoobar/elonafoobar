@@ -326,12 +326,6 @@ void UIMenuCrafting::draw()
 optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(p_, 0);
-
-    // if (_index != -1)
-    // {
-    //     p = list(0, pagesize * page + _index);
-    // }
     if (auto created_item_id = get_selected_item())
     {
         s = ioriginalnameref(*created_item_id);

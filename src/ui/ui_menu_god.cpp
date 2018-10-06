@@ -169,7 +169,6 @@ optional<UIMenuGod::ResultType> UIMenuGod::on_key(const std::string& action)
 {
     int _rtval = -1;
 
-    // ELONA_GET_SELECTED_ITEM(_rtval, snd(40));
     if (auto selected = get_selected_item())
     {
         snd(40);

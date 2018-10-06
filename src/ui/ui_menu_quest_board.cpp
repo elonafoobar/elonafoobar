@@ -278,10 +278,6 @@ void UIMenuQuestBoard::draw()
 optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     const std::string& action)
 {
-    // int _p;
-
-    // ELONA_GET_SELECTED_ITEM(_p, 0);
-
     if (auto selected = get_selected_item())
     {
         txtnew();

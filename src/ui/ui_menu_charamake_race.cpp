@@ -160,8 +160,6 @@ void UIMenuCharamakeRace::draw()
 optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_INDEX(p);
-
     if (auto race_index = get_selected_index())
     {
         const std::string& race_id = listn(1, *race_index);

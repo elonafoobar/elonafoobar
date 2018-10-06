@@ -251,8 +251,6 @@ static void _show_config_item_desc(const std::string& desc)
 optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(p, cs = i);
-
     if (auto submenu = get_selected_item())
     {
         cs = _index;

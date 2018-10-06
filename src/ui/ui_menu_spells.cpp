@@ -218,12 +218,7 @@ optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(
     const std::string& action)
 {
     commark(1) = page * 1000 + cs;
-    // ELONA_GET_SELECTED_ITEM(p, 0);
 
-    // if (_index != -1)
-    // {
-    //     p = list(0, pagesize * page + _index);
-    // }
     if (auto selected = get_selected_item())
     {
         menucycle = 0;

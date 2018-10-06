@@ -337,12 +337,6 @@ static void _show_item_desc(int body_)
 optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(p, 0);
-
-    // if (_index != -1)
-    // {
-    //     p = list(0, pagesize * page + _index);
-    // }
     if (auto id = get_selected_item())
     {
         _cs_prev = cs;

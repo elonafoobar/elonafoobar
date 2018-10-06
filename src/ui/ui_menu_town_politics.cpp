@@ -174,8 +174,6 @@ void UIMenuTownPolitics::draw()
 optional<UIMenuTownPolitics::ResultType> UIMenuTownPolitics::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(p, 0);
-
     if (action == "next_page")
     {
         if (pagemax != 0)

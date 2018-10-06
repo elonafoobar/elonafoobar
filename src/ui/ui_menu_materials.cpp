@@ -146,10 +146,6 @@ void UIMenuMaterials::draw()
 optional<UIMenuMaterials::ResultType> UIMenuMaterials::on_key(
     const std::string& action)
 {
-    // int _p;
-
-    // ELONA_GET_SELECTED_ITEM(_p, 0);
-
     if (action == "next_page")
     {
         if (pagemax != 0)

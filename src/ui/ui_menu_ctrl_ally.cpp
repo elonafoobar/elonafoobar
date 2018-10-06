@@ -590,12 +590,6 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
 optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(p, 0);
-
-    // if (_index != -1)
-    // {
-    //     p = list(0, pagesize * page + _index);
-    // }
     if (auto id = get_selected_item())
     {
         if (_operation == ControlAllyOperation::gene_engineer)

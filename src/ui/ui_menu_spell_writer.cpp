@@ -172,13 +172,6 @@ static void _toggle_book_reserve(int _p)
 optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(_p, 0);
-
-    // if (_index != -1)
-    // {
-    //     _p = list(0, pagesize * page + _index);
-    // }
-
     if (auto selected = get_selected_item())
     {
         if (_book_is_unavailable(*selected))

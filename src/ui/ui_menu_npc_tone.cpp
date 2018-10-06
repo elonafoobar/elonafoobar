@@ -125,14 +125,6 @@ void UIMenuNPCTone::draw()
 optional<UIMenuNPCTone::ResultType> UIMenuNPCTone::on_key(
     const std::string& action)
 {
-    // ELONA_GET_SELECTED_ITEM(p, cs = i);
-
-    // if (_index != -1)
-    // {
-    //     cs = _index;
-    //     p = list(0, pagesize * page + _index);
-    // }
-
     if (auto selected = get_selected_item())
     {
         cs = _index;
