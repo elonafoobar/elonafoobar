@@ -569,6 +569,8 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     }
     else if (action == "cancel"s)
     {
+        KeybindManager::instance().save();
+
         // Return to the root config menu (index 0).
         return UIMenuKeybindings::Result::finish(0);
     }

@@ -299,7 +299,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
         }
         else
         {
-            Config::instance().write();
+            Config::instance().save();
             if (mode == 0)
             {
                 if (Config::instance().net)

@@ -66,7 +66,7 @@ protected:
         pos(_x + 40, _y + _font_size + 36);
         mes(_message);
 
-        snail::Input::instance().clear_pressed_keys();
+        snail::Input::instance().clear_pressed_keys_and_modifiers();
         redraw();
     }
 

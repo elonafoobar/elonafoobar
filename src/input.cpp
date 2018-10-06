@@ -419,6 +419,8 @@ bool input_text_dialog(
     inputlog = strutil::remove_line_ending(inputlog);
     onkey_0();
 
+    keyhalt = 1;
+
     return canceled;
 }
 

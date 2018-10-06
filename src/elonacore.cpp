@@ -8752,6 +8752,8 @@ TurnResult do_enter_strange_gate()
 
 int ask_direction()
 {
+    keywait = 1;
+    snail::Input::instance().clear_pressed_keys();
     snd(26);
     gsel(4);
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx - 48;

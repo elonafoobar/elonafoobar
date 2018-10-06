@@ -9,7 +9,7 @@ ActionMap actions;
 } // namespace keybind
 
 
-void init_actions()
+void initialize_keybind_actions(ActionMap& actions)
 {
     using namespace snail;
     using namespace keybind;
@@ -125,7 +125,7 @@ void init_actions()
     actions.emplace("autodig",             Action{ActionCategory::game,      {{Key::key_h,           ModKey::shift}}});
     actions.emplace("quicksave",           Action{ActionCategory::game,      {{Key::f1,              ModKey::none}}});
     actions.emplace("quickload",           Action{ActionCategory::game,      {{Key::f2,              ModKey::none}}});
-    actions.emplace("help",                Action{ActionCategory::game,      {{Key::shift,           ModKey::shift}}});
+    actions.emplace("help",                Action{ActionCategory::game,      {{Key::slash,           ModKey::shift}}});
     actions.emplace("message_log",         Action{ActionCategory::game,      {{Key::slash,           ModKey::none}}});
     actions.emplace("chat_box",            Action{ActionCategory::game,      {{Key::tab,             ModKey::none}}});
     actions.emplace("tcg",                 Action{ActionCategory::game,      {{Key::f3,              ModKey::none}}});
@@ -140,8 +140,6 @@ void init_actions()
     actions.emplace("wizard_advance_time", Action{ActionCategory::wizard,    {{Key::f6,              ModKey::none}}});
     actions.emplace("wizard_delete_map",   Action{ActionCategory::wizard,    {{Key::f7,              ModKey::none}}});
     // clang-format on
-
-    KeybindManager::instance().register_default_bindings(actions);
 }
 
 } // namespace elona

@@ -29,59 +29,62 @@ void KeybindDeserializer::visit_object(const hcl::Object& object)
     }
 }
 
+optional<Keybind> KeybindDeserializer::_deserialize_keybind(
+    const hcl::Value& object,
+    const std::string& id)
+{
+    const hcl::Value* val = object.find(id);
+    if (val && val->is<std::string>())
+    {
+        if (auto keybind = Keybind::from_string(val->as<std::string>()))
+        {
+            return keybind;
+        }
+    }
+
+    return none;
+}
+
+optional<snail::Key> KeybindDeserializer::_deserialize_key(
+    const hcl::Value& object,
+    const std::string& id)
+{
+    const hcl::Value* val = object.find(id);
+    if (val && val->is<std::string>())
+    {
+        if (auto key = keybind_key_code(val->as<std::string>()))
+        {
+            return key;
+        }
+    }
+
+    return none;
+}
+
 void KeybindDeserializer::visit_keybinding(
     const std::string& action_id,
     const hcl::Value& object)
 {
-    KeybindConfig binding;
-
     if (!_keybind_manager.is_registered(action_id))
     {
         return;
     }
 
-    bool valid = false;
+    auto& binding = _keybind_manager.binding(action_id);
 
+    if (auto keybind = _deserialize_keybind(object, "primary"))
     {
-        const hcl::Value* primary = object.find("primary");
-        if (primary && primary->is<std::string>())
-        {
-            if (auto keybind = Keybind::from_string(primary->as<std::string>()))
-            {
-                binding.primary = *keybind;
-                valid = true;
-            }
-        }
+        binding.primary = *keybind;
     }
 
+    if (auto keybind = _deserialize_keybind(object, "alternate"))
     {
-        const hcl::Value* alternate = object.find("alternate");
-        if (alternate && alternate->is<std::string>())
-        {
-            if (auto keybind =
-                    Keybind::from_string(alternate->as<std::string>()))
-            {
-                binding.alternate = *keybind;
-                valid = true;
-            }
-        }
+        binding.alternate = *keybind;
     }
 
+    if (auto key = _deserialize_key(object, "joystick"))
     {
-        const hcl::Value* joystick = object.find("joystick");
-        if (joystick && joystick->is<std::string>())
-        {
-            if (auto key = keybind_key_code(joystick->as<std::string>()))
-            {
-                binding.joystick = *key;
-                valid = true;
-            }
-        }
-    }
-
-    if (valid)
-    {
-        _keybind_manager.binding(action_id) = binding;
+        binding.joystick = *key;
     }
 }
 

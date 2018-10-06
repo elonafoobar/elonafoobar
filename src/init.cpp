@@ -891,11 +891,11 @@ int run()
     // Load data from scanned mods.
     initialize_lion_db();
 
-    init_actions();
+    initialize_keybindings();
 
     initialize_elona();
 
-    Config::instance().write();
+    Config::instance().save();
 
     start_elona();
 

@@ -24,6 +24,29 @@
 namespace elona
 {
 
+static bool _proc_autodig()
+{
+    int x = cdata.player().next_position.x;
+    int y = cdata.player().next_position.y;
+    if (foobar_data.is_autodig_enabled)
+    {
+        if (0 <= x && x < map_data.width && 0 <= y && y < map_data.height
+            && (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+            && chipm(0, cell_data.at(x, y).chip_id_actual) != 3
+            && map_data.type != mdata_t::MapType::world_map)
+        {
+            refx = x;
+            refy = y;
+            tlocx = x;
+            tlocy = y;
+            screenupdate = -1;
+            update_screen();
+            return true;
+        }
+    }
+    return false;
+}
+
 optional<TurnResult> handle_pc_action(std::string& action)
 {
     if (game_data.wizard)
@@ -68,6 +91,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         key = "";
         save_game();
         txt(i18n::s.get("core.locale.action.quicksave"));
+        return none;
     }
     if (action == "quickload")
     {
@@ -730,25 +754,11 @@ optional<TurnResult> handle_pc_action(std::string& action)
     cdata.player().direction = game_data.player_next_move_direction;
     if (p == 1)
     {
-        // Autodig
-        int x = cdata.player().next_position.x;
-        int y = cdata.player().next_position.y;
-        if (foobar_data.is_autodig_enabled)
+        if (_proc_autodig())
         {
-            if (0 <= x && x < map_data.width && 0 <= y && y < map_data.height
-                && (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
-                && chipm(0, cell_data.at(x, y).chip_id_actual) != 3
-                && map_data.type != mdata_t::MapType::world_map)
-            {
-                refx = x;
-                refy = y;
-                tlocx = x;
-                tlocy = y;
-                screenupdate = -1;
-                update_screen();
-                return do_dig_after_sp_check();
-            }
+            return do_dig_after_sp_check();
         }
+
         return do_movement_command();
     }
     if (action == "go_down")

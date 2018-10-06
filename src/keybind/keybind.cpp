@@ -5,6 +5,8 @@
 #include "../gdata.hpp"
 #include "../lib/profiler.hpp"
 #include "../variables.hpp"
+#include "keybind_deserializer.hpp"
+#include "keybind_serializer.hpp"
 
 using namespace std::literals::string_literals;
 
@@ -67,38 +69,102 @@ KeybindManager::GroupedMapType KeybindManager::create_category_to_action_list()
     return result;
 }
 
-void KeybindManager::register_default_bindings(const ActionMap& actions)
+void initialize_keybindings()
+{
+    auto& keybind_manager = KeybindManager::instance();
+    initialize_keybind_actions(keybind::actions);
+    keybind_manager.load();
+}
+
+void KeybindManager::save()
+{
+    auto path = filesystem::dir::exe() / u8"keybindings.hcl";
+    std::ofstream file{path.native(), std::ios::binary};
+    if (!file)
+    {
+        throw std::runtime_error{
+            u8"Failed to open: "s
+            + filesystem::make_preferred_path_in_utf8(path)};
+    }
+
+    KeybindSerializer(*this).save(file);
+}
+
+void KeybindManager::load()
+{
+    clear();
+    initialize_known_actions(keybind::actions);
+    load_permanent_bindings(keybind::actions);
+
+    auto path = filesystem::dir::exe() / u8"keybindings.hcl";
+    std::ifstream file{path.native(), std::ios::binary};
+
+    if (file)
+    {
+        KeybindDeserializer(*this).load(file);
+    }
+    else
+    {
+        load_default_bindings(keybind::actions);
+        save();
+    }
+}
+
+
+void KeybindManager::initialize_known_actions(const ActionMap& actions)
+{
+    for (const auto& pair : actions)
+    {
+        const auto& action_id = pair.first;
+
+        register_binding(action_id);
+    }
+}
+
+void KeybindManager::load_permanent_bindings(const ActionMap& actions)
 {
     for (const auto& pair : actions)
     {
         const auto& action_id = pair.first;
         const auto& action = pair.second;
 
-        register_binding(action_id);
+        auto& the_binding = binding(action_id);
+        for (const auto& keybind : action.default_keybinds)
+        {
+            if (!keybind_is_bindable_key(keybind.main))
+            {
+                // Permanently bind keys that shouldn't be unbound (escape,
+                // enter, and directional keys)
+                the_binding.permanent = keybind;
+            }
+        }
+    }
+}
+
+void KeybindManager::load_default_bindings(const ActionMap& actions)
+{
+    for (const auto& pair : actions)
+    {
+        const auto& action_id = pair.first;
+        const auto& action = pair.second;
 
         auto& the_binding = binding(action_id);
         for (const auto& keybind : action.default_keybinds)
         {
             if (keybind_is_bindable_key(keybind.main))
             {
-                // if (the_binding.primary.empty())
-                // {
-                //     the_binding.primary = keybind;
-                // }
-                // else if (the_binding.alternate.empty())
-                // {
-                //     the_binding.alternate = keybind;
-                // }
-                // else
-                // {
-                //     assert(false);
-                // }
-            }
-            else
-            {
-                // Permanently bind keys that shouldn't be unbound (escape,
-                // enter, and directional keys)
-                the_binding.permanent = keybind;
+                if (the_binding.primary.empty())
+                {
+                    the_binding.primary = keybind;
+                }
+                else if (the_binding.alternate.empty())
+                {
+                    the_binding.alternate = keybind;
+                }
+                else
+                {
+                    assert(false);
+                }
             }
         }
     }
@@ -151,7 +217,6 @@ std::vector<std::string> KeybindManager::find_conflicts(
 
     return conflicts;
 }
-
 
 std::string Keybind::to_string() const
 {
@@ -752,7 +817,7 @@ std::string InputContext::check_for_command_with_list(int& list_index)
 
 void InputContext::reset()
 {
-    snail::Input::instance().clear_pressed_keys();
+    snail::Input::instance().clear_pressed_keys_and_modifiers();
     key_escape = false;
     last_held_key = snail::Key::none;
     last_held_key_frames = 0;

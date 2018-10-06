@@ -775,7 +775,7 @@ bool Config::verify_types(
     return false;
 }
 
-void Config::write()
+void Config::save()
 {
     std::ofstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
                        std::ios::binary};
