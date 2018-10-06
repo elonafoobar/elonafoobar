@@ -302,8 +302,11 @@ void UIMenuKeybindings::draw()
 class KeyConflictPrompt : public SimplePrompt<bool>
 {
 public:
-    KeyConflictPrompt(std::vector<std::string> action_ids_in_conflict)
+    KeyConflictPrompt(
+        Keybind keybind,
+        std::vector<std::string> action_ids_in_conflict)
         : SimplePrompt()
+        , _keybind(keybind)
         , _action_ids_in_conflict(action_ids_in_conflict)
     {
         std::stringstream ss;
@@ -330,7 +333,7 @@ protected:
             {
                 for (const auto& action_id : _action_ids_in_conflict)
                 {
-                    KeybindManager::instance().binding(action_id).clear();
+                    _clear_conflicting_binding(action_id);
                 }
 
                 // Refresh the bound key names by regenerating the keybind list.
@@ -344,6 +347,24 @@ protected:
     }
 
 private:
+    void _clear_conflicting_binding(const std::string& action_id)
+    {
+        auto& binding = KeybindManager::instance().binding(action_id);
+
+        if (binding.primary == _keybind)
+        {
+            binding.primary.clear();
+        }
+        if (binding.alternate == _keybind)
+        {
+            binding.alternate.clear();
+        }
+        if (binding.joystick == _keybind.main)
+        {
+            binding.joystick = snail::Key::none;
+        }
+    }
+
     void _print_conflicts(std::ostream& out)
     {
         out << "The following keybindings are in conflict:\n";
@@ -364,6 +385,7 @@ private:
     }
 
 
+    Keybind _keybind;
     std::vector<std::string> _action_ids_in_conflict;
 };
 
@@ -440,9 +462,10 @@ private:
 /// Returns true if conflict was resolved, such that action can be bound
 /// without any conflicts.
 static bool _handle_conflicts(
+    const Keybind& keybind,
     const std::vector<std::string>& action_ids_in_conflict)
 {
-    return KeyConflictPrompt(action_ids_in_conflict).query();
+    return KeyConflictPrompt(keybind, action_ids_in_conflict).query();
 }
 
 static void _bind_key(const std::string& action_id, Keybind keybind)
@@ -451,7 +474,7 @@ static void _bind_key(const std::string& action_id, Keybind keybind)
         KeybindManager::instance().find_conflicts(action_id, keybind);
     if (conflicts.size() > 0)
     {
-        if (!_handle_conflicts(conflicts))
+        if (!_handle_conflicts(keybind, conflicts))
         {
             return;
         }
