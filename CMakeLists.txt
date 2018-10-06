@@ -191,6 +191,12 @@ set(CORE_SOURCES
   src/dialog/dialog_data.cpp
   src/dialog/dialog_decoder.cpp
 
+  src/keybind/keybind_actions.cpp
+  src/keybind/key_names.cpp
+  src/keybind/keybind.cpp
+  src/keybind/keybind_deserializer.cpp
+  src/keybind/keybind_serializer.cpp
+
   src/pic_loader/pic_loader.cpp
 
   src/ui/ui_menu_adventurers.cpp
@@ -214,6 +220,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_hire.cpp
   src/ui/ui_menu_item_desc.cpp
   src/ui/ui_menu_journal.cpp
+  src/ui/ui_menu_keybindings.cpp
   src/ui/ui_menu_materials.cpp
   src/ui/ui_menu_message_log.cpp
   src/ui/ui_menu_npc_tone.cpp
@@ -345,6 +352,10 @@ else()
       src/tests/i18n.cpp
       src/tests/i18n_builtins.cpp
       src/tests/i18n_regressions.cpp
+      src/tests/keybind_deserializer.cpp
+      src/tests/keybind_key_names.cpp
+      src/tests/keybind_manager.cpp
+      src/tests/keybind_serializer.cpp
       src/tests/serialization.cpp
       ${CORE_SOURCES}
       )

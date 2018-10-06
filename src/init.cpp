@@ -30,6 +30,7 @@
 #include "item.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
+#include "keybind/keybind.hpp"
 #include "log.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
@@ -1065,6 +1066,8 @@ void initialize_game()
 
     init_fovlist();
     initialize_map();
+
+    init_actions();
 
     if (script_loaded)
     {
