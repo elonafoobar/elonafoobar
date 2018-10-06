@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../keybind/keybind.hpp"
 #include "../keybind/keybind_deserializer.hpp"
+#include "../keybind/keybind_manager.hpp"
 
 using namespace elona;
 using namespace elona::snail;
@@ -43,7 +44,7 @@ TEST_CASE(
     keybind::actions.emplace("dupe", Action{ActionCategory::game, {}});
 
     KeybindManager manager;
-    manager.register_default_bindings(keybind::actions);
+    manager.load_default_bindings(keybind::actions);
     load(manager, R"(keybindings {
     core {
         foo = 42
@@ -71,7 +72,7 @@ TEST_CASE(
     keybind::actions.clear();
 
     KeybindManager manager;
-    manager.register_default_bindings(keybind::actions);
+    manager.load_default_bindings(keybind::actions);
     load(manager, R"(keybindings {
     core {
         test1 {
@@ -94,7 +95,7 @@ TEST_CASE(
     keybind::actions.emplace("test2", Action{ActionCategory::game, {}});
 
     KeybindManager manager;
-    manager.register_default_bindings(keybind::actions);
+    manager.load_default_bindings(keybind::actions);
     load(manager, R"(keybindings {
     core {
         foo = 42

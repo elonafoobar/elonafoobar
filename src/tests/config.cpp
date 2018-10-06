@@ -77,11 +77,6 @@ TEST_CASE("Test loading blank config", "[Config: Loading]")
     REQUIRE_FALSE(load_fails(R"(config def {})", R"(config core {})"));
 }
 
-TEST_CASE("Test loading config with unknown value", "[Config: Loading]")
-{
-    REQUIRE(load_fails(R"(config def {})", R"(config core {foo = "bar"})"));
-}
-
 TEST_CASE("Test loading config with differing type", "[Config: Loading]")
 {
     REQUIRE(load_fails(

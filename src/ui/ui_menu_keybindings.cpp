@@ -2,6 +2,7 @@
 #include "../audio.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
+#include "../keybind/keybind_manager.hpp"
 #include "simple_prompt.hpp"
 
 namespace elona
@@ -77,13 +78,13 @@ static void _push_category_name(ActionCategory action_category)
 static void _push_keybind_entry(
     const std::string& action_id,
     const std::string& localized_name,
-    const KeybindConfig& keybind_config)
+    const KeybindManager::Binding& binding)
 {
     list(0, listmax) = 999;
     listn(0, listmax) = action_id;
     listn(1, listmax) = localized_name;
-    listn(2, listmax) = keybind_config.primary.to_string();
-    listn(3, listmax) = keybind_config.alternate.to_string();
+    listn(2, listmax) = binding.primary.to_string();
+    listn(3, listmax) = binding.alternate.to_string();
     listmax++;
 }
 

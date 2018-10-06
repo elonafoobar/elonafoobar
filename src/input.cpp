@@ -7,6 +7,7 @@
 #include "enums.hpp"
 #include "i18n.hpp"
 #include "input_prompt.hpp"
+#include "keybind/input_context.hpp"
 #include "keybind/keybind.hpp"
 #include "snail/android.hpp"
 #include "ui.hpp"

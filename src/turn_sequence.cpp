@@ -22,6 +22,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "keybind/input_context.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "map.hpp"

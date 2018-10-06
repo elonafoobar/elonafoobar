@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../hcl.hpp"
 #include "keybind.hpp"
+#include "keybind_manager.hpp"
 
 namespace elona
 {

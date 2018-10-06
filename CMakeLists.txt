@@ -193,10 +193,12 @@ set(CORE_SOURCES
   src/dialog/dialog_data.cpp
   src/dialog/dialog_decoder.cpp
 
-  src/keybind/keybind_actions.cpp
+  src/keybind/input_context.cpp
   src/keybind/key_names.cpp
   src/keybind/keybind.cpp
+  src/keybind/keybind_actions.cpp
   src/keybind/keybind_deserializer.cpp
+  src/keybind/keybind_manager.cpp
   src/keybind/keybind_serializer.cpp
 
   src/lib/profiler.cpp
