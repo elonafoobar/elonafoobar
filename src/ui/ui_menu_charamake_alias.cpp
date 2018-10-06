@@ -134,14 +134,10 @@ optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
     const std::string& action)
 {
     // ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
-    if (action != "")
-    {
-        std::cerr << action << std::endl;
-    }
 
-    if (_index != -1)
+    if (auto selected = get_selected_index_this_page())
     {
-        if (_index == 0)
+        if (*selected == 0)
         {
             list(0, 0) = -1;
             snd(103);
@@ -151,7 +147,7 @@ optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
         }
         else
         {
-            std::string alias = listn(0, _index);
+            std::string alias = listn(0, *selected);
             return UIMenuCharamakeAlias::Result::finish(alias);
         }
     }

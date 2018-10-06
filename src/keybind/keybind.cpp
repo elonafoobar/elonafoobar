@@ -32,7 +32,7 @@ int last_held_key_frames = 0;
 // categories.
 
 // clang-format off
-static std::map<InputContextType, std::set<ActionCategory>> input_context_types =
+static std::map<InputContextType, std::vector<ActionCategory>> input_context_types =
 {
     {InputContextType::menu, {ActionCategory::shortcut,
                               ActionCategory::menu,
@@ -81,18 +81,18 @@ void KeybindManager::register_default_bindings(const ActionMap& actions)
         {
             if (keybind_is_bindable_key(keybind.main))
             {
-                if (the_binding.primary.empty())
-                {
-                    the_binding.primary = keybind;
-                }
-                else if (the_binding.alternate.empty())
-                {
-                    the_binding.alternate = keybind;
-                }
-                else
-                {
-                    assert(false);
-                }
+                // if (the_binding.primary.empty())
+                // {
+                //     the_binding.primary = keybind;
+                // }
+                // else if (the_binding.alternate.empty())
+                // {
+                //     the_binding.alternate = keybind;
+                // }
+                // else
+                // {
+                //     assert(false);
+                // }
             }
             else
             {
@@ -120,7 +120,8 @@ std::vector<std::string> KeybindManager::find_conflicts(
     {
         const auto& categories = pair.second;
         bool is_in_context =
-            categories.find(action_category) != categories.end();
+            std::find(categories.begin(), categories.end(), action_category)
+            != categories.end();
 
         // If the action can be returned from input in this category, the
         // keybinding for it cannot confict with other actions in other
@@ -268,9 +269,7 @@ bool InputContext::_matches(
 
 optional<std::string> InputContext::_action_for_key(const Keybind& keybind)
 {
-    // The set is sorted by insertion order, so entries from categories inserted
-    // earlier will receive priority.
-    for (const auto& action_id : _available_actions)
+    for (const auto& action_id : _available_actions_sorted)
     {
         const auto& binding = KeybindManager::instance().binding(action_id);
         bool excluded =
@@ -293,9 +292,8 @@ optional<std::string> InputContext::_check_movement_action(
     StickKey input = StickKey::none;
     bool wait = false;
 
-    // Movement keys have to ignore modifier keys. Shift or Alt could be used
-    // for them in a hardcoded manner, and the bindings still have to be matched
-    // regardless.
+    // Movement keys have to ignore Shift or Alt. They could be used with them
+    // in a hardcoded manner for running or diagonal restriction.
     // TODO: At least make this clear to players somehow.
     snail::ModKey key_modifiers =
         modifiers & ~(snail::ModKey::shift | snail::ModKey::alt);
@@ -371,10 +369,10 @@ optional<std::string> InputContext::_check_movement_action(
         // Has to be modified globally, since scroll speed is determined by
         // keybd_wait. See @ref ui_scroll_screen()
         keybd_wait = 100000;
-        std::cerr << "RUN" << std::endl;
+        std::cerr << "shift " << keywait << " " << std::endl;
         if (keywait == 0)
         {
-            std::cerr << "RUNCANCEL" << std::endl;
+            std::cerr << "just pressed " << std::endl;
             keywait = 1;
             return "cancel"s;
         }
@@ -477,6 +475,7 @@ void InputContext::_add_actions_from_category(ActionCategory category)
         if (action.category == category)
         {
             _available_actions.insert(action_id);
+            _available_actions_sorted.push_back(action_id);
         }
     }
 }
@@ -616,8 +615,11 @@ bool InputContext::_delay_normal_action(const Keybind& keybind)
 
     if (delayed)
     {
+        std::cerr << "DEL " << std::endl;
         return true;
     }
+    std::cerr << "PLAY " << last_held_key_frames << " " << keybind.to_string()
+              << std::endl;
 
     return false;
 } // namespace elona
@@ -625,12 +627,29 @@ bool InputContext::_delay_normal_action(const Keybind& keybind)
 std::string InputContext::check_for_command(KeyWaitDelay delay_type)
 {
     key_escape = false;
+
     const auto& keys = snail::Input::instance().pressed_keys();
     auto modifiers = snail::Input::instance().modifiers();
 
+    if (/* !shortcut && */ keyhalt != 0)
+    {
+        if (keys.size() > 0)
+        {
+            keybd_wait = 0;
+            return "";
+        }
+        else
+        {
+            keyhalt = 0;
+        }
+    }
+
     for (const auto& key : keys)
     {
-        std::cerr << "K " << static_cast<int>(key) << std::endl;
+        if (auto n = keybind_key_name(key))
+        {
+            std::cerr << "K " << *n << std::endl;
+        }
     }
 
     if (const auto action = _check_movement_action(keys, modifiers))
@@ -735,7 +754,6 @@ std::string InputContext::check_for_command_with_list(int& list_index)
 
 void InputContext::reset()
 {
-    std::cerr << "RESET" << std::endl;
     snail::Input::instance().clear_pressed_keys();
     key_escape = false;
     last_held_key = snail::Key::none;
@@ -806,6 +824,7 @@ void keybind_regenerate_key_select()
         bool shift = (binding.primary.modifiers & snail::ModKey::shift)
             == snail::ModKey::shift;
         key_select(cnt) = keybind_key_short_name(binding.primary.main, shift);
+        std::cerr << "SET " << cnt << " " << key_select(cnt) << std::endl;
         cnt++;
     }
 }
@@ -828,7 +847,7 @@ int keybind_index_number(const std::string& action_id)
 
 snail::Key keybind_selection_key_from_index(int index)
 {
-    std::string id = "select_" + std::to_string(index);
+    std::string id = "select_" + std::to_string(index + 1);
     if (keybind::actions.find(id) == keybind::actions.end())
     {
         return snail::Key::none;

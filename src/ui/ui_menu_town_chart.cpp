@@ -124,7 +124,7 @@ void UIMenuTownChart::draw()
 optional<UIMenuTownChart::ResultType> UIMenuTownChart::on_key(
     const std::string& action)
 {
-    if (_index != -1)
+    if (get_selected_index_this_page())
     {
         return UIMenuTownChart::Result::finish();
     }

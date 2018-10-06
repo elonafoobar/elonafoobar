@@ -1159,9 +1159,9 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
     }
 
     int skill_id = -1;
-    if (_index != -1)
+    if (auto selected = get_selected_index_this_page())
     {
-        skill_id = list(0, pagesize * (page - 1) + _index);
+        skill_id = list(0, pagesize * (page - 1) + *selected);
     }
     if (skill_id != -1)
     {

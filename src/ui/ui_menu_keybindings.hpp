@@ -7,7 +7,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuKeybindings : public UIMenu<DummyResult>
+class UIMenuKeybindings : public UIMenu<int>
 {
 public:
     UIMenuKeybindings()

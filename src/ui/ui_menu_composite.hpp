@@ -5,7 +5,6 @@
 #include "../i18n.hpp"
 #include "ui_menu.hpp"
 
-
 namespace elona
 {
 namespace ui
@@ -94,6 +93,10 @@ protected:
     virtual optional<typename UIMenu<T>::Result> on_key(
         const std::string& action)
     {
+        // Update index of selected list item in the contained menu, otherwise
+        // it will never be set.
+        _menus[_selected].menu->_index = UIMenu<T>::_index;
+
         if (action == "next_menu" || action == "previous_menu")
         {
             size_t prev_menu = _selected;

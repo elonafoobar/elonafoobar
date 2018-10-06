@@ -311,11 +311,7 @@ public:
     {
         UNUSED(submenu);
         auto result = ui::UIMenuKeybindings().show();
-        if (result.value)
-        {
-            return 0;
-        }
-        return none;
+        return result.value;
     }
 };
 

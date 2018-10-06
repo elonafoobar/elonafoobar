@@ -54,7 +54,7 @@ public:
     void append(const I18NKey& locale_key, snail::Key key, int value)
     {
         _entries.emplace_back(key, locale_key, value);
-        _promptmax = std::max(_promptmax, value) + 1;
+        _promptmax++;
     }
     void append(const I18NKey& locale_key, int value)
     {

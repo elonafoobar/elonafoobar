@@ -188,26 +188,26 @@ void UIMenuCharamakeAttributes::draw()
 optional<UIMenuCharamakeAttributes::ResultType>
 UIMenuCharamakeAttributes::on_key(const std::string& action)
 {
-    if (_index != -1)
+    if (auto selected = get_selected_index_this_page())
     {
-        if (_index == 0)
+        if (*selected == 0)
         {
             snd(103);
             set_reupdate();
             return none;
         }
-        if (_index == 1)
+        if (*selected == 1)
         {
             return UIMenuCharamakeAttributes::Result::finish(_attributes);
         }
-        if (_locked_attributes(_index - 2) != 0)
+        if (_locked_attributes(*selected - 2) != 0)
         {
             ++_locked_attributes(8);
-            _locked_attributes(_index - 2) = 0;
+            _locked_attributes(*selected - 2) = 0;
         }
         else if (_locked_attributes(8) > 0)
         {
-            _locked_attributes(_index - 2) = 1;
+            _locked_attributes(*selected - 2) = 1;
             --_locked_attributes(8);
         }
         snd(20);

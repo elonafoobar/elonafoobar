@@ -92,9 +92,9 @@ optional<UIMenuDialog::ResultType> UIMenuDialog::on_key(
     //         break;
     //     }
     // }
-    if (_index != -1)
+    if (auto selected = get_selected_index_this_page())
     {
-        return UIMenuDialog::Result::finish(static_cast<size_t>(_index));
+        return UIMenuDialog::Result::finish(static_cast<size_t>(*selected));
     }
 
     if (action == "cancel")

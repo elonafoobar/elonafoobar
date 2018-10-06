@@ -73,18 +73,27 @@ protected:
         _reinit = true;
     }
 
+    optional<int> get_selected_index_this_page()
+    {
+        if (_index != -1 && _index < keyrange)
+        {
+            return _index;
+        }
+        return none;
+    }
+
     optional<int> get_selected_index()
     {
-        if (_index == -1)
+        if (_index != -1 && _index < keyrange)
         {
-            return none;
+            return pagesize * page + _index;
         }
-        return pagesize * page + _index;
+        return none;
     }
 
     optional<int> get_selected_item()
     {
-        if (_index != -1)
+        if (_index != -1 && _index < keyrange)
         {
             return list(0, pagesize * page + _index);
         }
@@ -140,7 +149,6 @@ private:
     void _redraw()
     {
         redraw();
-        await(Config::instance().wait1);
     }
 
     bool _reupdate = false;

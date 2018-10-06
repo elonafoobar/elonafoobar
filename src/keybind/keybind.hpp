@@ -229,12 +229,12 @@ class InputContext
 public:
     void enable_category(ActionCategory category)
     {
-        _excluded_categories.insert(category);
+        _excluded_categories.erase(category);
     }
 
     void disable_category(ActionCategory category)
     {
-        _excluded_categories.erase(category);
+        _excluded_categories.insert(category);
     }
 
     /**
@@ -299,6 +299,7 @@ private:
 
 
     std::set<std::string> _available_actions;
+    std::vector<std::string> _available_actions_sorted;
     std::unordered_set<ActionCategory> _excluded_categories;
     std::string _last_action;
     int _last_action_held_frames{};

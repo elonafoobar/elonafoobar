@@ -9,6 +9,12 @@ namespace elona
 namespace ui
 {
 
+static const constexpr int _x_align_action_name = 56;
+static const constexpr int _x_align_binding_primary = 222;
+static const constexpr int _x_align_binding_alternate = 360;
+static const constexpr int _x_align_binding_joystick = 498;
+
+
 static std::string _action_category_to_name(ActionCategory category)
 {
     switch (category)
@@ -107,8 +113,35 @@ static void _load_keybindings()
     }
 }
 
+static void _draw_background()
+{
+    int bg_variant_buffer = mode == 10 ? 2 : 4;
+    load_background_variants(bg_variant_buffer);
+    gsel(0);
+
+    if (mode == 0)
+    {
+        screenupdate = -1;
+        update_screen();
+    }
+    if (mode == 10)
+    {
+        gsel(4);
+        gmode(0);
+        pos(0, 0);
+        picload(filesystem::dir::graphic() / u8"title.bmp", 1);
+        gcopy(4, 0, 0, 800, 600, windoww, windowh);
+        gsel(0);
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
+    }
+}
+
 bool UIMenuKeybindings::init()
 {
+    listmax = 0;
     page = 0;
     pagesize = 15;
     cs = 0;
@@ -117,6 +150,8 @@ bool UIMenuKeybindings::init()
     wy = winposy(400) - 10;
     ww = 700;
     wh = 400;
+
+    _draw_background();
 
     gsel(7);
     picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
@@ -155,10 +190,10 @@ static void _draw_window()
 
 static void _draw_topics()
 {
-    display_topic("Name", wx + 28, wy + 36);
-    display_topic("Primary", wx + 182, wy + 36);
-    display_topic("Alternate", wx + 320, wy + 36);
-    display_topic("Joystick", wx + 458, wy + 36);
+    display_topic("Name", wx + _x_align_action_name - 28, wy + 36);
+    display_topic("Primary", wx + _x_align_binding_primary - 10, wy + 36);
+    display_topic("Alternate", wx + _x_align_binding_alternate - 10, wy + 36);
+    display_topic("Joystick", wx + _x_align_binding_joystick - 10, wy + 36);
 }
 
 static void _draw_keys()
@@ -207,12 +242,12 @@ static void _draw_keys()
 
 static void _draw_keybind_entry(int cnt, const std::string& text)
 {
-    cs_list(cs == cnt, text, wx + 56, wy + 66 + cnt * 19 - 1);
+    cs_list(cs == cnt, text, wx + _x_align_action_name, wy + 66 + cnt * 19 - 1);
 
-    pos(wx + 192, wy + 66 + cnt * 19 + 2);
+    pos(wx + _x_align_binding_primary, wy + 66 + cnt * 19 + 2);
     mes(listn(2, pagesize * page + cnt));
 
-    pos(wx + 330, wy + 66 + cnt * 19 + 2);
+    pos(wx + _x_align_binding_alternate, wy + 66 + cnt * 19 + 2);
     mes(listn(3, pagesize * page + cnt));
 }
 
@@ -274,16 +309,7 @@ public:
         std::stringstream ss;
 
         // TODO: localize
-        ss << "The following keybindings are in conflict:\n";
-        for (const auto& action_id : _action_ids_in_conflict)
-        {
-            const auto category = keybind::actions.at(action_id).category;
-            const auto mod_name = "core";
-            ss << "  "
-               << _get_localized_action_name(mod_name, action_id, category)
-               << "\n";
-        }
-        ss << "Press Enter to unbind them, Escape to cancel.";
+        _print_conflicts(ss);
         _message = ss.str();
     }
 
@@ -306,6 +332,10 @@ protected:
                 {
                     KeybindManager::instance().binding(action_id).clear();
                 }
+
+                // Refresh the bound key names by regenerating the keybind list.
+                _load_keybindings();
+
                 return true;
             }
         }
@@ -314,6 +344,26 @@ protected:
     }
 
 private:
+    void _print_conflicts(std::ostream& out)
+    {
+        out << "The following keybindings are in conflict:\n";
+        for (const auto& action_id : _action_ids_in_conflict)
+        {
+            _print_conflict(out, action_id);
+        }
+        out << "Press Enter to unbind them, Escape to cancel.";
+    }
+
+    void _print_conflict(std::ostream& out, const std::string& action_id)
+    {
+        const auto category = keybind::actions.at(action_id).category;
+        const auto mod_name = "core";
+        out << "  " << _action_category_to_name(category) << ": "
+            << _get_localized_action_name(mod_name, action_id, category)
+            << "\n";
+    }
+
+
     std::vector<std::string> _action_ids_in_conflict;
 };
 
@@ -425,7 +475,9 @@ static void _unbind_key(const std::string& action_id)
 
 static void _prompt_for_key(const std::string& action_id)
 {
+    assert(action_id != "");
     auto result = KeyPrompt().query();
+
     switch (result.type)
     {
     case KeyPromptResult::Type::bind:
@@ -436,6 +488,10 @@ static void _prompt_for_key(const std::string& action_id)
     }
 
     keybind_regenerate_key_select();
+
+    // Prevent Shift from firing cancel action.
+    keywait = 1;
+    keyhalt = 1;
 }
 
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
@@ -451,8 +507,8 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     auto selected = get_selected_index();
     if (selected && list(0, *selected) >= 0)
     {
-        cs = *selected;
-        const auto& action_id = listn(0, pagesize * page + cs);
+        cs = _index;
+        const auto& action_id = listn(0, *selected);
 
         _prompt_for_key(action_id);
 
@@ -473,7 +529,8 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     }
     else if (action == "cancel"s)
     {
-        return UIMenuKeybindings::Result::finish();
+        // Return to the root config menu (index 0).
+        return UIMenuKeybindings::Result::finish(0);
     }
 
     return none;

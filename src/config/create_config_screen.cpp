@@ -110,6 +110,19 @@ static void add_config_item_section(
 
 
 
+void ConfigScreenCreator::add_keybindings_section()
+{
+    result_.back()->items.emplace_back(std::make_unique<ConfigMenuItemBase>(
+        "core.config.keybindings", "core.locale.config.keybindings"));
+}
+
+void ConfigScreenCreator::add_keybindings_menu()
+{
+    // Bypasses the config_def mechanism for config menu generation. The
+    // keybindings menu will be unconditionally added.
+    result_.emplace_back(std::make_unique<ConfigMenuKeybindings>());
+}
+
 void ConfigScreenCreator::visit_toplevel()
 {
     SpecKey key = "core.config";
@@ -127,15 +140,20 @@ void ConfigScreenCreator::visit_toplevel()
             key, locale_key, section_name, config_.get_def(), result_);
     }
 
+    // Unconditionally add the keybindings section, since it has special
+    // behavior for binding keys. It is not created like the other menu
+    // sections, because it has no section definition in the config definition.
+    add_keybindings_section();
+
     // Add all sections and their config items.
     for (const auto& child : config_.get_def().get_children(key))
     {
         visit_section(child);
     }
 
-    // Unconditionally add the keybindings menu, since it has special behavior
-    // for binding keys.
-    result_.emplace_back(std::make_unique<ConfigMenuKeybindings>());
+    // Add the corresponding menu for the keybindings section defined on the
+    // root menu.
+    add_keybindings_menu();
 }
 
 void ConfigScreenCreator::visit_section(const SpecKey& current_key)

@@ -135,7 +135,6 @@ void init_actions()
     actions.emplace("reload_autopick",     Action{ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
     actions.emplace("auto_action",         Action{ActionCategory::game,      {{Key::enter,           ModKey::none}}});
 
-    // TODO: prioritize over other categories
     actions.emplace("wizard_mewmewmew",    Action{ActionCategory::wizard,    {{Key::f3,              ModKey::none}}});
     actions.emplace("wizard_wish",         Action{ActionCategory::wizard,    {{Key::f5,              ModKey::none}}});
     actions.emplace("wizard_advance_time", Action{ActionCategory::wizard,    {{Key::f6,              ModKey::none}}});

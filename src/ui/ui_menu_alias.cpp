@@ -76,9 +76,9 @@ optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& action)
 
     // ELONA_GET_SELECTED_INDEX_THIS_PAGE(_p);
 
-    if (_index != -1)
+    if (auto selected = get_selected_index_this_page())
     {
-        if (_index == 0)
+        if (*selected == 0)
         {
             snd(103);
             _set_reroll_aliases();
@@ -89,11 +89,11 @@ optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& action)
 
             if (_alias_type == 3)
             {
-                res.seed = _index;
+                res.seed = *selected;
             }
             else
             {
-                res.alias = listn(0, _index);
+                res.alias = listn(0, *selected);
             }
 
             return UIMenuAlias::Result::finish(res);

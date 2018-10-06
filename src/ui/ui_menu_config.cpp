@@ -12,16 +12,8 @@ namespace elona
 namespace ui
 {
 
-bool UIMenuConfig::init()
+static void _draw_background()
 {
-    listmax = 0;
-    page = 0;
-    pagesize = 18;
-    cc = 0;
-    cs_bk = -1;
-    page_bk = 0;
-    cs_bk2 = 0;
-
     int bg_variant_buffer = mode == 10 ? 2 : 4;
     load_background_variants(bg_variant_buffer);
     gsel(0);
@@ -44,6 +36,19 @@ bool UIMenuConfig::init()
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
     }
+}
+
+bool UIMenuConfig::init()
+{
+    listmax = 0;
+    page = 0;
+    pagesize = 18;
+    cc = 0;
+    cs_bk = -1;
+    page_bk = 0;
+    cs_bk2 = 0;
+
+    _draw_background();
 
     for (const auto& menu_item : _menu.items)
     {

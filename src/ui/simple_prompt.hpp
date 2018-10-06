@@ -39,6 +39,8 @@ public:
 protected:
     virtual void init()
     {
+        _width = 100;
+        _height = 100;
         _font_size = 13 + sizefix - en * 2;
 
         std::string line;
@@ -65,6 +67,7 @@ protected:
         mes(_message);
 
         snail::Input::instance().clear_pressed_keys();
+        redraw();
     }
 
     virtual optional<T> update() = 0;

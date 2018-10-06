@@ -25,12 +25,6 @@ MainMenuResult main_title_menu()
     cs = 0;
     cs_bk = -1;
     keyrange = 6;
-    key_list(0) = u8"a"s;
-    key_list(1) = u8"b"s;
-    key_list(2) = u8"c"s;
-    key_list(3) = u8"d"s;
-    key_list(4) = u8"e"s;
-    key_list(5) = u8"f"s;
     pagesize = 0;
     load_background_variants(2);
     gsel(4);
@@ -149,7 +143,7 @@ MainMenuResult main_title_menu()
         {
             x = wx + 40;
             y = cnt * 35 + wy + 50;
-            display_customkey(key_list(cnt), x, y);
+            display_customkey(key_select(cnt), x, y);
             if (jp)
             {
                 font(11 - en * 2);

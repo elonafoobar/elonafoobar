@@ -29,6 +29,7 @@ locale {
         previous_menu = "Previous Menu"
         switch_mode = "Switch Mode"
         switch_mode_2 = "Switch Mode (2)"
+        identify = "Identify (Menu)"
         portrait = "Portrait Menu"
 
         wait = "Wait"
@@ -55,6 +56,10 @@ locale {
         rest = "Rest"
         target = "Target"
         dig = "Dig"
+        use = "Use"
+        bash = "Bash"
+        open = "Open"
+        dip = "Dip"
         pray = "Pray"
         offer = "Offer"
         journal = "Journal"

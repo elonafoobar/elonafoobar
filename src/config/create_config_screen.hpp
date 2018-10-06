@@ -30,6 +30,9 @@ private:
     void visit_section(const SpecKey& current_key);
     void visit_toplevel();
 
+    void add_keybindings_section();
+    void add_keybindings_menu();
+
     Config& config_;
     ConfigScreen result_;
 };
