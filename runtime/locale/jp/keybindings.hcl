@@ -27,10 +27,10 @@ END
             selection = "◆ 選択"
             menu = "◆ メニュー"
             game = "◆ ゲーム"
-            wizard = "◆ ウイザード"
+            wizard = "◆ ウィザード"
         }
 
-        escape = "拡張"
+        escape = "戻る"
         cancel = "キャンセル"
         enter = "決定"
         north = "北"
@@ -102,14 +102,14 @@ END
         chat_box = "チャット"
         tcg = "カードゲーム"
         update_screen = "スクリーン更新"
-        dump_player_info = "プレイヤー情報輸出"
+        dump_player_info = "プレイヤー情報出力"
         enable_voldemort = "Voldemortモード"
-        reload_autopick = "Autopickの更新"
+        reload_autopick = "Autopickの再読み込み"
         auto_action = "自動行動"
 
         wizard_mewmewmew = "うみみゃぁ！"
         wizard_wish = "願う"
-        wizard_advance_time = "時間の前進"
+        wizard_advance_time = "時間を進める"
         wizard_delete_map = "マップの削除"
     }
 }
