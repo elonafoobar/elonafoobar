@@ -2,25 +2,90 @@
 #include "../audio.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
+#include "../keybind/keybind_manager.hpp"
+#include "simple_prompt.hpp"
 
 namespace elona
 {
 namespace ui
 {
 
+static const constexpr int _x_align_action_name = 56;
+static const constexpr int _x_align_binding_primary = 222;
+static const constexpr int _x_align_binding_alternate = 360;
+static const constexpr int _x_align_binding_joystick = 498;
+
+
 static std::string _action_category_to_name(ActionCategory category)
 {
     switch (category)
     {
-    case ActionCategory::default_: return "Default";
-    case ActionCategory::shortcut: return "Shortcut";
-    case ActionCategory::selection: return "Selection";
-    case ActionCategory::menu: return "Menu";
-    case ActionCategory::game: return "Game";
-    case ActionCategory::wizard: return "Wizard";
+    case ActionCategory::default_:
+        return i18n::s.get("core.locale.keybind.category.default");
+    case ActionCategory::shortcut:
+        return i18n::s.get("core.locale.keybind.category.shortcut");
+    case ActionCategory::selection:
+        return i18n::s.get("core.locale.keybind.category.selection");
+    case ActionCategory::menu:
+        return i18n::s.get("core.locale.keybind.category.menu");
+    case ActionCategory::game:
+        return i18n::s.get("core.locale.keybind.category.game");
+    case ActionCategory::wizard:
+        return i18n::s.get("core.locale.keybind.category.wizard");
     }
 
-    return "<unknown>";
+    return "<unknown category>";
+}
+
+static std::string _get_localized_action_name(
+    const std::string& mod_name,
+    const std::string& action_id,
+    ActionCategory action_category)
+{
+    std::string localized_name;
+    int action_index{};
+
+    // core.locale.keybind.chat_box
+    switch (action_category)
+    {
+    case ActionCategory::shortcut:
+        action_index = keybind_index_number(action_id);
+        localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut")
+            + std::to_string(action_index);
+        break;
+    case ActionCategory::selection:
+        action_index = keybind_index_number(action_id);
+        localized_name = i18n::s.get(mod_name + ".locale.keybind.select")
+            + std::to_string(action_index);
+        break;
+    default:
+        localized_name =
+            i18n::s.get(mod_name + ".locale.keybind."s + action_id);
+        break;
+    }
+
+    return localized_name;
+}
+
+static void _push_category_name(ActionCategory action_category)
+{
+    list(0, listmax) = -1;
+    listn(0, listmax) = "";
+    listn(1, listmax) = _action_category_to_name(action_category);
+    listmax++;
+}
+
+static void _push_keybind_entry(
+    const std::string& action_id,
+    const std::string& localized_name,
+    const KeybindManager::Binding& binding)
+{
+    list(0, listmax) = 999;
+    listn(0, listmax) = action_id;
+    listn(1, listmax) = localized_name;
+    listn(2, listmax) = binding.primary.to_string();
+    listn(3, listmax) = binding.alternate.to_string();
+    listmax++;
 }
 
 static void _load_keybindings()
@@ -38,32 +103,52 @@ static void _load_keybindings()
     {
         range = grouped_keybinds.equal_range(it->first);
 
-        list(0, listmax) = -1;
-        listn(0, listmax) =
-            u8"◆ "s + _action_category_to_name(range.first->first);
-        listmax++;
+        auto action_category = range.first->first;
+        _push_category_name(action_category);
 
         for (auto pair = range.first; pair != range.second; ++pair)
         {
             const auto& action_id = pair->second;
             const auto& keybind_config = keybind_manager.binding(pair->second);
 
-            // core.locale.keybind.chat_box
             const auto mod_name = "core"s;
-            const auto localized_name =
-                i18n::s.get(mod_name + ".locale.keybind."s + action_id);
+            std::string localized_name = _get_localized_action_name(
+                mod_name, action_id, action_category);
 
-            list(0, listmax) = 999; // i % 7 == 0 ? -1 : 999;
-            listn(0, listmax) = localized_name;
-            listn(1, listmax) = keybind_config.primary.to_string();
-            listn(2, listmax) = keybind_config.alternate.to_string();
-            listmax++;
+            _push_keybind_entry(action_id, localized_name, keybind_config);
         }
+    }
+}
+
+static void _draw_background()
+{
+    int bg_variant_buffer = mode == 10 ? 2 : 4;
+    load_background_variants(bg_variant_buffer);
+    gsel(0);
+
+    if (mode == 0)
+    {
+        screenupdate = -1;
+        update_screen();
+    }
+    if (mode == 10)
+    {
+        gsel(4);
+        gmode(0);
+        pos(0, 0);
+        picload(filesystem::dir::graphic() / u8"title.bmp", 1);
+        gcopy(4, 0, 0, 800, 600, windoww, windowh);
+        gsel(0);
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
     }
 }
 
 bool UIMenuKeybindings::init()
 {
+    listmax = 0;
     page = 0;
     pagesize = 15;
     cs = 0;
@@ -72,6 +157,8 @@ bool UIMenuKeybindings::init()
     wy = winposy(400) - 10;
     ww = 700;
     wh = 400;
+
+    _draw_background();
 
     gsel(7);
     picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
@@ -101,18 +188,30 @@ void UIMenuKeybindings::update()
 
 static void _draw_window()
 {
-    s(0) = "Keybindings";
-    s(1) = "dood";
+    s(0) = i18n::s.get("core.locale.config.menu.keybindings.name");
+    s(1) = i18n::s.get("core.locale.keybind.menu.hint") + strhint2 + strhint3b;
 
     display_window(wx, wy, ww, wh);
 }
 
 static void _draw_topics()
 {
-    display_topic("Name", wx + 28, wy + 36);
-    display_topic("Primary", wx + 182, wy + 36);
-    display_topic("Alternate", wx + 320, wy + 36);
-    display_topic("Joystick", wx + 458, wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.name"),
+        wx + _x_align_action_name - 28,
+        wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.primary"),
+        wx + _x_align_binding_primary - 10,
+        wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.alternate"),
+        wx + _x_align_binding_alternate - 10,
+        wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.keybind.menu.topics.joystick"),
+        wx + _x_align_binding_joystick - 10,
+        wy + 36);
 }
 
 static void _draw_keys()
@@ -161,13 +260,13 @@ static void _draw_keys()
 
 static void _draw_keybind_entry(int cnt, const std::string& text)
 {
-    cs_list(cs == cnt, text, wx + 56, wy + 66 + cnt * 19 - 1);
+    cs_list(cs == cnt, text, wx + _x_align_action_name, wy + 66 + cnt * 19 - 1);
 
-    pos(wx + 192, wy + 66 + cnt * 19 + 2);
-    mes(listn(1, pagesize * page + cnt));
-
-    pos(wx + 330, wy + 66 + cnt * 19 + 2);
+    pos(wx + _x_align_binding_primary, wy + 66 + cnt * 19 + 2);
     mes(listn(2, pagesize * page + cnt));
+
+    pos(wx + _x_align_binding_alternate, wy + 66 + cnt * 19 + 2);
+    mes(listn(3, pagesize * page + cnt));
 }
 
 static void _draw_text_entry(int cnt, const std::string& text)
@@ -203,7 +302,7 @@ static void _draw_list_entries()
         }
 
         int list_item = list(0, index);
-        const std::string& text = listn(0, index);
+        const std::string& text = listn(1, index);
 
         _draw_single_list_entry(cnt, list_item, text);
     }
@@ -218,148 +317,264 @@ void UIMenuKeybindings::draw()
     _draw_list_entries();
 }
 
-static void
-_bind_key(const std::string& action_id, snail::Key key, snail::ModKey modifiers)
+class KeyConflictPrompt : public SimplePrompt<bool>
 {
-    auto keybind = Keybind{key, modifiers};
-    auto& binding = KeybindManager::instance().binding(action_id);
-
-    // TODO
-    if (KeybindManager::instance().find_conflicts(action_id, keybind).size()
-        > 0)
+public:
+    KeyConflictPrompt(
+        Keybind keybind,
+        std::vector<std::string> action_ids_in_conflict)
+        : SimplePrompt()
+        , _keybind(keybind)
+        , _action_ids_in_conflict(action_ids_in_conflict)
     {
-        return;
+        std::stringstream ss;
+
+        // TODO: localize
+        _print_conflicts(ss);
+        _message = ss.str();
     }
 
-    if (keybind_is_joystick_key(key))
+protected:
+    optional<bool> update() override
     {
-        // Joystick buttons will not use modifier keys.
-        binding.joystick = key;
-    }
-    else if (binding.primary.empty())
-    {
-        binding.primary = keybind;
-    }
-    else if (binding.alternate.empty())
-    {
-        binding.alternate = keybind;
-    }
-    else
-    {
-        // Clear the secondary keybinding first.
-        binding.alternate.clear();
-        binding.primary = keybind;
-    }
-
-    listn(1, pagesize * page + cs) = binding.primary.to_string();
-    listn(2, pagesize * page + cs) = binding.alternate.to_string();
-}
-
-static void _unbind_key(const std::string& action_id)
-{
-    KeybindManager::instance().clear_binding(action_id);
-
-    const auto& binding = KeybindManager::instance().binding(action_id);
-    listn(1, pagesize * page + cs) = binding.primary.to_string();
-    listn(2, pagesize * page + cs) = binding.alternate.to_string();
-}
-
-static void _prompt_for_key()
-{
-    size_t width = 100;
-    size_t height = 100;
-    int font_size = 13 + sizefix - en * 2;
-    bool finished = false;
-
-    std::string line =
-        "Please press a key.\nEnter to unbind, Escape to cancel.";
-    width = strlen_u(line) * 8 + 40;
-    height += font_size * 2;
-
-    int x = promptx - (width / 2);
-    int y = prompty - (height / 2);
-
-    snd(26);
-
-    const std::string& action_id = listn(0, pagesize * page + cs);
-    snail::ModKey last_modifiers = snail::ModKey::none;
-
-    snail::Input::instance().clear_pressed_keys();
-
-    while (!finished)
-    {
-        gmode(6, 80);
-        window(x + 12, y + 12, width, height, true); // Shadow
-        gmode(2);
-
-        window(x + 8, y + 8, width, height, false);
-
-        font(font_size);
-        pos(x + 40, y + font_size + 36);
-        mes(line);
-
-        redraw();
-
         await(Config::instance().wait1);
 
         const auto& keys = snail::Input::instance().pressed_keys();
-        auto modifiers = snail::Input::instance().modifiers();
-
-        last_modifiers = modifiers;
 
         for (const auto& key : keys)
         {
             if (key == snail::Key::escape)
             {
-                finished = true;
+                return false;
             }
             if (key == snail::Key::enter)
             {
-                _unbind_key(action_id);
-                finished = true;
+                for (const auto& action_id : _action_ids_in_conflict)
+                {
+                    _clear_conflicting_binding(action_id);
+                }
+
+                // Refresh the bound key names by regenerating the keybind list.
+                _load_keybindings();
+
+                return true;
+            }
+        }
+
+        return none;
+    }
+
+private:
+    void _clear_conflicting_binding(const std::string& action_id)
+    {
+        auto& binding = KeybindManager::instance().binding(action_id);
+
+        if (binding.primary == _keybind)
+        {
+            binding.primary.clear();
+        }
+        if (binding.alternate == _keybind)
+        {
+            binding.alternate.clear();
+        }
+        if (binding.joystick == _keybind.main)
+        {
+            binding.joystick = snail::Key::none;
+        }
+    }
+
+    void _print_conflicts(std::ostream& out)
+    {
+        out << i18n::s.get("core.locale.keybind.menu.conflict.text") << "\n";
+        for (const auto& action_id : _action_ids_in_conflict)
+        {
+            _print_conflict(out, action_id);
+        }
+        out << i18n::s.get("core.locale.keybind.menu.conflict.prompt");
+    }
+
+    void _print_conflict(std::ostream& out, const std::string& action_id)
+    {
+        const auto category = keybind::actions.at(action_id).category;
+        const auto mod_name = "core";
+        out << "  " << _action_category_to_name(category) << ": "
+            << _get_localized_action_name(mod_name, action_id, category)
+            << "\n";
+    }
+
+
+    Keybind _keybind;
+    std::vector<std::string> _action_ids_in_conflict;
+};
+
+struct KeyPromptResult
+{
+    enum class Type
+    {
+        bind,
+        unbind,
+        cancel
+    };
+
+    KeyPromptResult(Type type)
+        : type(type)
+    {
+    }
+
+    KeyPromptResult(Type type, Keybind keybind)
+        : type(type)
+        , keybind(keybind)
+    {
+    }
+
+    Type type;
+    Keybind keybind{};
+};
+
+class KeyPrompt : public SimplePrompt<KeyPromptResult>
+{
+public:
+    KeyPrompt()
+        : SimplePrompt()
+    {
+        _message = i18n::s.get("core.locale.keybind.menu.prompt");
+    }
+
+protected:
+    optional<KeyPromptResult> update() override
+    {
+        await(Config::instance().wait1);
+
+        const auto& keys = snail::Input::instance().pressed_keys();
+        auto modifiers = snail::Input::instance().modifiers();
+
+        _last_modifiers = modifiers;
+
+        for (const auto& key : keys)
+        {
+            if (key == snail::Key::escape)
+            {
+                return KeyPromptResult{KeyPromptResult::Type::cancel};
+            }
+            if (key == snail::Key::enter)
+            {
+                return KeyPromptResult{KeyPromptResult::Type::unbind};
             }
             if (!is_modifier(key))
             {
                 if (keybind_is_bindable_key(key))
                 {
-                    _bind_key(action_id, key, last_modifiers);
-                    finished = true;
+                    return KeyPromptResult{KeyPromptResult::Type::bind,
+                                           Keybind{key, _last_modifiers}};
                 }
             }
         }
+
+        return none;
     }
+
+private:
+    snail::ModKey _last_modifiers = snail::ModKey::none;
+};
+
+/// Returns true if conflict was resolved, such that action can be bound
+/// without any conflicts.
+static bool _handle_conflicts(
+    const Keybind& keybind,
+    const std::vector<std::string>& action_ids_in_conflict)
+{
+    return KeyConflictPrompt(keybind, action_ids_in_conflict).query();
+}
+
+static void _bind_key(const std::string& action_id, Keybind keybind)
+{
+    auto conflicts =
+        KeybindManager::instance().find_conflicts(action_id, keybind);
+    if (conflicts.size() > 0)
+    {
+        if (!_handle_conflicts(keybind, conflicts))
+        {
+            return;
+        }
+    }
+
+    auto& binding = KeybindManager::instance().binding(action_id);
+    binding.bind(keybind);
+
+    listn(2, pagesize * page + cs) = binding.primary.to_string();
+    listn(3, pagesize * page + cs) = binding.alternate.to_string();
+}
+
+static void _unbind_key(const std::string& action_id)
+{
+    auto& binding = KeybindManager::instance().binding(action_id);
+    binding.clear();
+
+    listn(2, pagesize * page + cs) = binding.primary.to_string();
+    listn(3, pagesize * page + cs) = binding.alternate.to_string();
+}
+
+static void _prompt_for_key(const std::string& action_id)
+{
+    assert(action_id != "");
+    auto result = KeyPrompt().query();
+
+    switch (result.type)
+    {
+    case KeyPromptResult::Type::bind:
+        _bind_key(action_id, result.keybind);
+        break;
+    case KeyPromptResult::Type::unbind: _unbind_key(action_id); break;
+    default: break;
+    }
+
+    keybind_regenerate_key_select();
+    keybind_regenerate_key_names();
+
+    // Prevent Shift from firing the cancel action.
+    keywait = 1;
+    keyhalt = 1;
 }
 
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    UNUSED(key);
+    // int p_ = -1;
 
-    auto command = input_context.check_for_command_with_list(p(0));
+    // if (_index != -1)
+    // {
+    //     p_ = list(0, pagesize * page + _index);
+    // }
 
-    if (p != -1 && list(0, p) >= 0)
+    auto selected = get_selected_index();
+    if (selected && list(0, *selected) >= 0)
     {
-        cs = p;
-        _prompt_for_key();
-        input_context.reset();
+        cs = _index;
+        const auto& action_id = listn(0, *selected);
+
+        _prompt_for_key(action_id);
+
         set_reupdate();
         return none;
     }
-    else if (command == "next_page"s)
+    else if (action == "next_page"s)
     {
         ++page;
         snd(1);
         set_reupdate();
     }
-    else if (command == "previous_page"s)
+    else if (action == "previous_page"s)
     {
         --page;
         snd(1);
         set_reupdate();
     }
-    if (command == "cancel"s)
+    else if (action == "cancel"s)
     {
-        return UIMenuKeybindings::Result::finish();
+        KeybindManager::instance().save();
+
+        // Return to the root config menu (index 0).
+        return UIMenuKeybindings::Result::finish(0);
     }
 
     return none;

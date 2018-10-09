@@ -203,15 +203,15 @@ label_2698:
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.help");
-        listn(1, listmax) = key_help;
+        listn(1, listmax) = "help";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.log");
-        listn(1, listmax) = key_msglog;
+        listn(1, listmax) = "message_log";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.chara");
-        listn(1, listmax) = key_charainfo;
+        listn(1, listmax) = "chara_info";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = "";
@@ -219,7 +219,7 @@ label_2698:
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.journal");
-        listn(1, listmax) = key_journal;
+        listn(1, listmax) = "journal";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = "";
@@ -242,15 +242,15 @@ label_2698:
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.wear");
-        listn(1, listmax) = key_wear;
+        listn(1, listmax) = "wear";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.rest");
-        listn(1, listmax) = key_rest;
+        listn(1, listmax) = "rest";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.spell");
-        listn(1, listmax) = key_cast;
+        listn(1, listmax) = "cast";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = "";
@@ -258,15 +258,15 @@ label_2698:
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.skill");
-        listn(1, listmax) = key_skill;
+        listn(1, listmax) = "skill";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.fire");
-        listn(1, listmax) = key_fire;
+        listn(1, listmax) = "fire";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.dig");
-        listn(1, listmax) = key_dig;
+        listn(1, listmax) = "dig";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = "";
@@ -281,15 +281,15 @@ label_2698:
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.pray");
-        listn(1, listmax) = key_pray;
+        listn(1, listmax) = "pray";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.ammo");
-        listn(1, listmax) = key_ammo;
+        listn(1, listmax) = "ammo";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.interact");
-        listn(1, listmax) = key_interact;
+        listn(1, listmax) = "interact";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = "";
@@ -297,7 +297,7 @@ label_2698:
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.bash");
-        listn(1, listmax) = key_bash;
+        listn(1, listmax) = "bash";
         ++listmax;
         list(0, listmax) = listmax;
         listn(0, listmax) = "";
@@ -386,82 +386,83 @@ label_2699_internal:
     }
     ++t;
     redraw();
-    await(Config::instance().wait1);
-    key_check(KeyWaitDelay::none);
-    if (key == key_north)
+
+    auto action = key_check(KeyWaitDelay::none);
+
+    if (action == "north")
     {
-        key = listn(1, 3);
+        action = listn(1, 3);
         cs = 3;
     }
-    if (key == key_south)
+    if (action == "south")
     {
-        key = listn(1, 5);
+        action = listn(1, 5);
         cs = 5;
     }
-    if (key == key_west)
+    if (action == "west")
     {
         cs = 0;
     }
-    if (key == key_east)
+    if (action == "east")
     {
         cs = 8;
     }
-    if (key == key_northwest)
+    if (action == "northwest")
     {
-        key = listn(1, 1);
+        action = listn(1, 1);
         cs = 1;
     }
-    if (key == key_northeast)
+    if (action == "northeast")
     {
-        key = listn(1, 6);
+        action = listn(1, 6);
         cs = 6;
     }
-    if (key == key_southwest)
+    if (action == "southwest")
     {
-        key = listn(1, 2);
+        action = listn(1, 2);
         cs = 2;
     }
-    if (key == key_southeast)
+    if (action == "southeast")
     {
-        key = listn(1, 7);
+        action = listn(1, 7);
         cs = 7;
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         cs = -1;
         snd(5);
-        key = "";
+        action = "";
         goto label_2700_internal;
         return;
     }
-    if (key != ""s)
+    if (action != "")
     {
         if (cs == -1)
         {
             snd(5);
-            key = "";
+            action = "";
             goto label_2700_internal;
             return;
         }
-        if (key == key_enter)
+        if (action == "enter")
         {
-            key = listn(1, cs);
+            action = listn(1, cs);
             goto label_2700_internal;
             return;
         }
     }
-    if (key == ""s || cs == 1 || cs == 6 || cs == 2 || cs == 7)
+    if (action == "" || cs == 1 || cs == 6 || cs == 2 || cs == 7)
     {
         if (cs != -1)
         {
-            key = listn(1, cs);
+            action = listn(1, cs);
             goto label_2700_internal;
             return;
         }
     }
     goto label_2699_internal;
 label_2700_internal:
-    if (cs == 0 || key == key_northeast)
+    if (cs == 0 || action == "northwest")
     {
         cs = -1;
         snd(5);
@@ -470,7 +471,7 @@ label_2700_internal:
         update_screen();
         goto label_2698;
     }
-    if (cs == 8 || key == key_northwest)
+    if (cs == 8 || action == "northwest")
     {
         cs = -1;
         snd(5);
@@ -1193,30 +1194,28 @@ label_2041_internal:
         cs_bk = cs;
     }
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
+    auto action = cursor_check_ex();
     set_pcc_info(cs);
     p = 0;
     if (rtval == -2)
     {
-        if (key == key_enter)
+        if (action == "enter")
         {
             create_pcpic(cc, true);
             return 1;
         }
-        if (key == key_pageup || key == key_pagedown)
+        if (action == "next_page" || action == "previous_page")
         {
-            key = ""s;
+            action = ""s;
         }
     }
-    else if (key == key_enter)
+    else if (action == "enter")
     {
-        key = key_pageup;
+        action = "next_page";
     }
     if (rtval == -1)
     {
-        if (key == key_pageup || key == key_pagedown)
+        if (action == "next_page" || action == "previous_page")
         {
             snd(5);
             if (page == 0)
@@ -1231,7 +1230,7 @@ label_2041_internal:
             goto label_2040_internal;
         }
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         snd(5);
         if (rtval == 100)
@@ -1264,7 +1263,7 @@ label_2041_internal:
             p = 1;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         snd(5);
         if (rtval == 100)
@@ -1299,7 +1298,7 @@ label_2041_internal:
         }
     }
     create_pcpic(cc, false);
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         create_pcpic(cc, true);
         return 0;
@@ -1405,16 +1404,14 @@ int change_appearance_equipment()
             cs_bk = cs;
         }
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
+        auto action = cursor_check_ex();
         if (cs != 0)
         {
-            if (key == key_enter)
+            if (action == "enter")
             {
-                key = key_pageup;
+                action = "next_page";
             }
-            if (key == key_pageup || key == key_pagedown)
+            if (action == "next_page" || action == "previous_page")
             {
                 if (pcc(20 + cs - 1, cc) == 0)
                 {
@@ -1428,7 +1425,7 @@ int change_appearance_equipment()
                 snd(5);
             }
         }
-        if ((cs == 0 && key == key_enter) || key == key_cancel)
+        if ((cs == 0 && action == "entry") || action == "cancel")
         {
             snd(20);
             create_pcpic(cc, true);
@@ -1738,11 +1735,9 @@ label_1965_internal:
     redraw();
 label_1966_internal:
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
+    auto action = get_selected_item(p(0));
     p = -1;
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -1751,7 +1746,7 @@ label_1966_internal:
             goto label_1965_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -1760,7 +1755,7 @@ label_1966_internal:
             goto label_1965_internal;
         }
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         return;
     }

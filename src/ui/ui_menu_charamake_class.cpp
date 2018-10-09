@@ -153,17 +153,14 @@ void UIMenuCharamakeClass::draw()
 }
 
 optional<UIMenuCharamakeClass::ResultType> UIMenuCharamakeClass::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_INDEX(p);
-
-    if (p != -1)
+    if (auto class_id = get_selected_index())
     {
-        int class_id = p;
-        std::string klass = listn(1, class_id);
+        std::string klass = listn(1, *class_id);
         return UIMenuCharamakeClass::Result::finish(klass);
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         return UIMenuCharamakeClass::Result::cancel();
     }

@@ -170,15 +170,11 @@ static void _toggle_book_reserve(int _p)
 }
 
 optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    int _p;
-
-    ELONA_GET_SELECTED_ITEM(_p, 0);
-
-    if (_p != -1)
+    if (auto selected = get_selected_item())
     {
-        if (_book_is_unavailable(_p))
+        if (_book_is_unavailable(*selected))
         {
             snd(27);
             txt(i18n::s.get("core.locale.ui.reserve.unavailable"));
@@ -187,11 +183,11 @@ optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
         else
         {
             snd(20);
-            _toggle_book_reserve(_p);
+            _toggle_book_reserve(*selected);
             set_reupdate();
         }
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -200,7 +196,7 @@ optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -209,7 +205,7 @@ optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuSpellWriter::Result::finish();
     }

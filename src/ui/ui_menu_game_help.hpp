@@ -21,7 +21,7 @@ protected:
     void _update_key_list();
     void _update_regular_pages();
     void _draw_navigation_menu();
-    void _draw_background_vignette(int id);
+    void _draw_background_vignette(int id, int type);
 
 private:
     int _book_id;

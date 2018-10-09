@@ -7,6 +7,7 @@
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main_menu.hpp"
@@ -281,27 +282,14 @@ static int _prompt_satisfied()
     s = i18n::s.get(
         "core.locale.chara_making.final_screen.are_you_satisfied.prompt");
     draw_caption();
-    ELONA_APPEND_PROMPT(
-        i18n::s.get(
-            "core.locale.chara_making.final_screen.are_you_satisfied.yes"),
-        u8"a"s,
-        ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        i18n::s.get(
-            "core.locale.chara_making.final_screen.are_you_satisfied.no"),
-        u8"b"s,
-        ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.chara_making.final_screen.are_you_"
-                    "satisfied.restart"),
-        u8"c"s,
-        ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.chara_making.final_screen.are_you_"
-                    "satisfied.go_back"),
-        u8"d"s,
-        ""s + promptmax);
-    int result = show_prompt(promptx, 240, 160);
+
+    Prompt prompt("core.locale.chara_making.final_screen.are_you_satisfied");
+    prompt.append("yes", snail::Key::key_a);
+    prompt.append("no", snail::Key::key_b);
+    prompt.append("restart", snail::Key::key_c);
+    prompt.append("go_back", snail::Key::key_d);
+    int result = prompt.query(promptx, 240, 160);
+
     snd(20);
 
     return result;

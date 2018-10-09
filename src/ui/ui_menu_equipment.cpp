@@ -335,15 +335,13 @@ static void _show_item_desc(int body_)
 }
 
 optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_ITEM(p, 0);
-
-    if (p != -1)
+    if (auto id = get_selected_item())
     {
         _cs_prev = cs;
 
-        bool equipped = _on_list_entry_select(p);
+        bool equipped = _on_list_entry_select(*id);
 
         if (equipped)
         {
@@ -356,7 +354,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
         }
         return none;
     }
-    else if (key == key_identify)
+    else if (action == "identify")
     {
         int body_ = list(0, pagesize * page + cs);
         if (cdata[cc].body_parts[body_ - 100] % 10000 != 0)
@@ -369,13 +367,13 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
             return none;
         }
     }
-    else if (key == key_mode)
+    else if (action == "switch_mode")
     {
         _show_resistances = !_show_resistances;
         snd(1);
         set_reupdate();
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -384,7 +382,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -393,7 +391,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         menucycle = 0;
         create_pcpic(cc, true);
@@ -403,7 +401,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     }
 
     return none;
-}
+} // namespace ui
 
 } // namespace ui
 } // namespace elona

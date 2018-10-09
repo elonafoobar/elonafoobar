@@ -9,12 +9,18 @@ ActionMap actions;
 } // namespace keybind
 
 
-void init_actions()
+void initialize_keybind_actions(ActionMap& actions)
 {
     using namespace snail;
     using namespace keybind;
 
     actions.clear();
+
+    // NOTE: In this table, don't use keys for which no physical keycode exists.
+    // For example, instead of {Key::question, ModKey::none}, use {Key::slash,
+    // ModKey::shift} as [Shift]+[/] = [?]. Key::question would never be picked
+    // up as a pressed key, it would always be interpreted as Key::slash +
+    // ModKey::shift.
 
     // clang-format off
     actions.emplace("escape",              Action{ActionCategory::default_,  {{Key::escape,          ModKey::none}}});
@@ -75,7 +81,9 @@ void init_actions()
     actions.emplace("next_menu",           Action{ActionCategory::menu,      {{Key::tab,             ModKey::none}}});
     actions.emplace("previous_menu",       Action{ActionCategory::menu,      {{Key::tab,             ModKey::ctrl}}});
     actions.emplace("switch_mode",         Action{ActionCategory::menu,      {{Key::key_z,           ModKey::none}}});
-    actions.emplace("switch_mode_2",       Action{ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
+    actions.emplace("switch_mode_2",       Action{ActionCategory::menu,      {{Key::keypad_asterisk, ModKey::none}}});
+    actions.emplace("identify",            Action{ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
+    actions.emplace("portrait",            Action{ActionCategory::menu,      {{Key::key_p,           ModKey::none}}});
 
     actions.emplace("wait",                Action{ActionCategory::game,      {{Key::period,          ModKey::none}, {Key::keypad_5, ModKey::none}}});
     actions.emplace("quick_menu",          Action{ActionCategory::game,      {{Key::key_z,           ModKey::none}}});
@@ -91,8 +99,8 @@ void init_actions()
     actions.emplace("drink",               Action{ActionCategory::game,      {{Key::key_q,           ModKey::none}}});
     actions.emplace("read",                Action{ActionCategory::game,      {{Key::key_r,           ModKey::none}}});
     actions.emplace("fire",                Action{ActionCategory::game,      {{Key::key_f,           ModKey::none}}});
-    actions.emplace("go_down",             Action{ActionCategory::game,      {{Key::greater,         ModKey::none}}});
-    actions.emplace("go_up",               Action{ActionCategory::game,      {{Key::less,            ModKey::none}}});
+    actions.emplace("go_down",             Action{ActionCategory::game,      {{Key::period,          ModKey::shift}}});
+    actions.emplace("go_up",               Action{ActionCategory::game,      {{Key::comma,           ModKey::shift}}});
     actions.emplace("save",                Action{ActionCategory::game,      {{Key::key_s,           ModKey::shift}}});
     actions.emplace("search",              Action{ActionCategory::game,      {{Key::key_s,           ModKey::none}}});
     actions.emplace("interact",            Action{ActionCategory::game,      {{Key::key_i,           ModKey::none}}});
@@ -101,6 +109,10 @@ void init_actions()
     actions.emplace("rest",                Action{ActionCategory::game,      {{Key::key_r,           ModKey::shift}}});
     actions.emplace("target",              Action{ActionCategory::game,      {{Key::keypad_asterisk, ModKey::none}}});
     actions.emplace("dig",                 Action{ActionCategory::game,      {{Key::key_d,           ModKey::shift}}});
+    actions.emplace("use",                 Action{ActionCategory::game,      {{Key::key_t,           ModKey::none}}});
+    actions.emplace("bash",                Action{ActionCategory::game,      {{Key::key_b,           ModKey::none}}});
+    actions.emplace("open",                Action{ActionCategory::game,      {{Key::key_o,           ModKey::none}}});
+    actions.emplace("dip",                 Action{ActionCategory::game,      {{Key::key_b,           ModKey::shift}}});
     actions.emplace("pray",                Action{ActionCategory::game,      {{Key::key_p,           ModKey::none}}});
     actions.emplace("offer",               Action{ActionCategory::game,      {{Key::key_o,           ModKey::shift}}});
     actions.emplace("journal",             Action{ActionCategory::game,      {{Key::key_j,           ModKey::none}}});
@@ -113,7 +125,7 @@ void init_actions()
     actions.emplace("autodig",             Action{ActionCategory::game,      {{Key::key_h,           ModKey::shift}}});
     actions.emplace("quicksave",           Action{ActionCategory::game,      {{Key::f1,              ModKey::none}}});
     actions.emplace("quickload",           Action{ActionCategory::game,      {{Key::f2,              ModKey::none}}});
-    actions.emplace("help",                Action{ActionCategory::game,      {{Key::question,        ModKey::none}}});
+    actions.emplace("help",                Action{ActionCategory::game,      {{Key::slash,           ModKey::shift}}});
     actions.emplace("message_log",         Action{ActionCategory::game,      {{Key::slash,           ModKey::none}}});
     actions.emplace("chat_box",            Action{ActionCategory::game,      {{Key::tab,             ModKey::none}}});
     actions.emplace("tcg",                 Action{ActionCategory::game,      {{Key::f3,              ModKey::none}}});
@@ -123,14 +135,11 @@ void init_actions()
     actions.emplace("reload_autopick",     Action{ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
     actions.emplace("auto_action",         Action{ActionCategory::game,      {{Key::enter,           ModKey::none}}});
 
-    // TODO: prioritize over other categories
     actions.emplace("wizard_mewmewmew",    Action{ActionCategory::wizard,    {{Key::f3,              ModKey::none}}});
     actions.emplace("wizard_wish",         Action{ActionCategory::wizard,    {{Key::f5,              ModKey::none}}});
     actions.emplace("wizard_advance_time", Action{ActionCategory::wizard,    {{Key::f6,              ModKey::none}}});
     actions.emplace("wizard_delete_map",   Action{ActionCategory::wizard,    {{Key::f7,              ModKey::none}}});
     // clang-format on
-
-    KeybindManager::instance().register_default_bindings(actions);
 }
 
 } // namespace elona

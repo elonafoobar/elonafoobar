@@ -2218,6 +2218,10 @@ static inline std::string join(const std::vector<std::string>& elements, const c
     }
 }
 static inline bool hasPrefix(const std::string & s, const std::string & prefix) {
+        if (prefix.size() > s.size())
+        {
+            return false;
+        }
 	return std::mismatch(prefix.begin(), prefix.end(), s.begin()).first == prefix.end();
 }
 

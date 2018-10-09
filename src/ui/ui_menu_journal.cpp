@@ -242,9 +242,9 @@ void UIMenuJournal::draw()
 }
 
 optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -253,7 +253,7 @@ optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -262,7 +262,7 @@ optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel || key == key_enter)
+    else if (action == "cancel" || action == "enter")
     {
         menucycle = 0;
         update_screen();

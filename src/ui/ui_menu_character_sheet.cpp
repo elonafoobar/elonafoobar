@@ -1089,11 +1089,11 @@ static void _apply_skill_bonus(int csskill_)
 }
 
 optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
-    const std::string& key)
+    const std::string& action)
 {
     if (page == 0)
     {
-        if (key == u8"p"s)
+        if (action == "portrait")
         {
             if (cc < 16)
             {
@@ -1107,7 +1107,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
                 return none;
             }
         }
-        else if (key == key_north)
+        else if (action == "north")
         {
             --_cs_buff;
             if (_cs_buff < 0)
@@ -1117,7 +1117,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
             set_reupdate();
             return none;
         }
-        else if (key == key_south)
+        else if (action == "south")
         {
             ++_cs_buff;
             if (_cs_buff >= _cs_buffmax)
@@ -1131,12 +1131,12 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
 
     if (_operation == CharacterSheetOperation::character_making)
     {
-        if (key == key_enter)
+        if (action == "enter")
         {
             snd(103);
             return UIMenuCharacterSheet::Result::cancel();
         }
-        if (key == key_cancel)
+        if (action == "cancel")
         {
             return UIMenuCharacterSheet::Result::finish(
                 UIMenuCompositeCharacterResult{false});
@@ -1146,7 +1146,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
     else
     {
         // [TRACKING] Stores which skill id is to be tracked
-        if (key == key_mode2 && page > 0)
+        if (action == "switch_mode_2" && page > 0)
         {
             int index = pagesize * (page - 1) + cs;
             int skill_id = list(0, index);
@@ -1158,20 +1158,15 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         }
     }
 
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+    int skill_id = -1;
+    if (auto selected = get_selected_index_this_page())
     {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * (page - 1) + cnt);
-            break;
-        }
+        skill_id = list(0, pagesize * (page - 1) + *selected);
     }
-    if (p != -1)
+    if (skill_id != -1)
     {
         if (_operation != CharacterSheetOperation::investigate_ally)
         {
-            int skill_id = p;
             if (_operation == CharacterSheetOperation::train_skill
                 || _operation == CharacterSheetOperation::learn_skill)
             {
@@ -1200,19 +1195,19 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         ++page;
         snd(1);
         set_reupdate();
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         --page;
         snd(1);
         set_reupdate();
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         menucycle = 0;
         if (_operation == CharacterSheetOperation::normal)

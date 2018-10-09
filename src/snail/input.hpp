@@ -394,10 +394,15 @@ public:
      * is still held when the new menu is opened.
      */
 
-    void clear_pressed_keys()
+    void clear_pressed_keys_and_modifiers()
     {
         _pressed_key_identifiers.clear();
         _modifiers = ModKey::none;
+    }
+
+    void clear_pressed_keys()
+    {
+        _pressed_key_identifiers.clear();
     }
 
 

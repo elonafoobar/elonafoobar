@@ -22,6 +22,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "keybind/input_context.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "map.hpp"
@@ -1421,13 +1422,12 @@ TurnResult pc_turn(bool advance_time)
                 return TurnResult::exit_map;
             }
         label_2744_internal:
-            await(Config::instance().wait1);
             cdata.player().direction = 0;
-            key_check();
+            auto action = key_check();
             f = 0;
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (key == key_south || key == key_west)
+                if (action == "south" || action == "west")
                 {
                     p = 15 - cnt;
                 }
@@ -1453,40 +1453,39 @@ TurnResult pc_turn(bool advance_time)
                     camera = p;
                     break;
                 }
-                if (key == key_north || key == key_east)
+                if (action == "north" || action == "east")
                 {
                     f = 1;
                     snd(5);
                     if (p > camera)
                     {
                         camera = p;
-                        key = "";
+                        action = "";
                         break;
                     }
                 }
-                if (key == key_south || key == key_west)
+                if (action == "south" || action == "west")
                 {
                     f = 1;
                     snd(5);
                     if (p < camera)
                     {
                         camera = p;
-                        key = "";
+                        action = "";
                         break;
                     }
                 }
             }
             if (f == 1)
             {
-                key = ""s;
+                action = ""s;
             }
             update_screen();
-            if (key == key_goup || key_escape == 1)
+            if (action == "go_up" || key_escape)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_game"));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     petarenawin = 2;
@@ -1494,7 +1493,7 @@ TurnResult pc_turn(bool advance_time)
                 }
                 goto label_2744_internal;
             }
-            if (key != key_cancel && key != ""s)
+            if (action != "cancel" && action != "")
             {
                 return TurnResult::turn_end;
             }
@@ -1529,6 +1528,15 @@ TurnResult pc_turn(bool advance_time)
     }
 
 label_2747:
+    if (game_data.wizard)
+    {
+        InputContext::instance().enable_category(ActionCategory::wizard);
+    }
+    else
+    {
+        InputContext::instance().disable_category(ActionCategory::wizard);
+    }
+
     if (firstturn == 1)
     {
         if (game_data.catches_god_signal)
@@ -1550,7 +1558,8 @@ label_2747:
         ui_render_from_screensync();
     }
 
-    if (Config::instance().net && Config::instance().netwish && key == ""s)
+    if (Config::instance().net
+        && Config::instance().netwish /* && key == ""s */)
     {
         ++chatturn;
         if (chatturn % 250 == 1)
@@ -1597,776 +1606,26 @@ label_2747:
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
     await(Config::instance().wait1);
-    key_check(KeyWaitDelay::walk_run);
+    auto command =
+        InputContext::instance().check_for_command(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
+
+    if (command == ""s)
+    {
+        goto label_2747;
+    }
 
     if (ginfo(2) != 0)
     {
         goto label_2747;
     }
 
-    if (game_data.wizard)
+    if (auto turn_result = handle_pc_action(command))
     {
-        if (getkey(snail::Key::f3))
-        {
-            efid = 657;
-            magic();
-            return TurnResult::turn_end;
-        }
-        if (getkey(snail::Key::f5))
-        {
-            what_do_you_wish_for();
-            return TurnResult::turn_end;
-        }
-        if (getkey(snail::Key::f6))
-        {
-            dbg_skipevent = 1;
-            ++game_data.date.hour;
-            weather_changes();
-            dbg_skipevent = 0;
-            mode = 0;
-            return TurnResult::turn_end;
-        }
-        if (getkey(snail::Key::f7))
-        {
-            if (map_data.type != mdata_t::MapType::town)
-            {
-                dbg_revealmap = 1;
-                ++game_data.current_dungeon_level;
-                txt(u8"lv:"s + game_data.current_dungeon_level);
-                ctrl_file(FileOperation::map_delete);
-                mode = 2;
-                levelexitby = 4;
-                return TurnResult::initialize_map;
-            }
-        }
-    }
-
-    if (getkey(snail::Key::f8))
-    {
-        ui::UIMenuKeybindings().show();
-        return TurnResult::pc_turn_user_error;
-    }
-
-    if (key == key_quicksave)
-    {
-        key = "";
-        save_game();
-        txt(i18n::s.get("core.locale.action.quicksave"));
-    }
-    if (key == key_quickload)
-    {
-        key = "";
-        msg_newline();
-        msgtemp = u8"  "s;
-        firstturn = 1;
-        load_save_data();
-        mode = 3;
-        return TurnResult::initialize_map;
-    }
-
-    if (getkey(snail::Key::f3))
-    {
-        tcgmain();
-        map_prepare_tileset_atlas();
-        update_entire_screen();
-        return TurnResult::turn_end;
-    }
-    if (getkey(snail::Key::f9))
-    {
-        gmode(2);
-        sxfix = 0;
-        syfix = 0;
-        update_scrolling_info();
-        update_slight();
-        ui_render_non_hud();
-        p = windoww / 192;
-        for (int i = 0; i < p + 1; ++i)
-        {
-            if (i == p)
-            {
-                sx = windoww % 192;
-            }
-            else
-            {
-                sx = 192;
-            }
-            pos(i * 192, inf_msgy);
-            gcopy(3, 496, 528, sx, 5);
-        }
-        redraw();
-        wait_key_pressed();
-        update_entire_screen();
-        snd(20);
-        goto label_2747;
-    }
-    if (getkey(snail::Key::f11))
-    {
-        dump_player_info();
-        await(500);
-        goto label_2747;
-    }
-    if (getkey(snail::Key::f12))
-    {
-        debug::voldemort = true;
-        if (debug::voldemort)
-        {
-            game_data.wizard = 1;
-            for (int i = 400; i < 467; ++i)
-            {
-                if (i != 426 && i != 427)
-                {
-                    chara_gain_skill(cdata.player(), i, 100, 10000);
-                }
-            }
-            goto label_2747;
-        }
-        return do_debug_console();
-    }
-
-    if (key_shift
-        && snail::Input::instance().is_pressed(
-               snail::Key::backspace, Config::instance().wait1))
-    {
-        Autopick::instance().load(playerid);
-        txt(i18n::s.get("core.locale.action.autopick.reloaded_autopick_file"));
-        goto label_2747;
-    }
-
-    if (key == ""s)
-    {
-        goto label_2747;
-    }
-    if (key == key_enter)
-    {
-        key = key_search;
-        cell_featread(cdata[cc].position.x, cdata[cc].position.y);
-        if (feat(1) == 11 || map_data.type == mdata_t::MapType::world_map)
-        {
-            key = key_godown;
-        }
-        if (feat(1) == 10)
-        {
-            key = key_goup;
-        }
-        if (feat(1) >= 24 && feat(1) <= 28)
-        {
-            key = key_search;
-        }
-        p = 0;
-        for (const auto& ci : items(-1))
-        {
-            if (inv[ci].number() == 0)
-                continue;
-            if (inv[ci].position != cdata[cc].position)
-                continue;
-            if (the_item_db[inv[ci].id]->category == 72000)
-            {
-                p = 1;
-            }
-            if (the_item_db[inv[ci].id]->subcategory == 60001)
-            {
-                p = 2;
-            }
-            if (the_item_db[inv[ci].id]->category == 60002)
-            {
-                p(0) = 3;
-                p(1) = ci;
-            }
-            if (inv[ci].function != 0 || the_item_db[inv[ci].id]->is_usable)
-            {
-                p = 4;
-            }
-            if (the_item_db[inv[ci].id]->is_readable)
-            {
-                p = 5;
-            }
-            if (inv[ci].id == 631)
-            {
-                key = key_godown;
-            }
-            if (inv[ci].id == 750
-                && game_data.current_map == mdata_t::MapId::your_home)
-            {
-                key = key_goup;
-            }
-            if (inv[ci].id == 751
-                && game_data.current_map == mdata_t::MapId::your_home)
-            {
-                key = key_godown;
-            }
-            if (inv[ci].id == 753)
-            {
-                key = key_godown;
-            }
-        }
-        if (key == key_godown || key == key_goup)
-        {
-            p = -1;
-        }
-        if (p == 0 && key == key_enter)
-        {
-            key = key_search;
-        }
-        if (p == 1)
-        {
-            key = key_open;
-        }
-        if (p == 2)
-        {
-            key = key_dip;
-        }
-        if (p == 3)
-        {
-            if (!cdata.player().god_id.empty())
-            {
-                key = key_offer;
-            }
-            else
-            {
-                key = key_pray;
-            }
-        }
-        if (p == 4)
-        {
-            key = key_use;
-        }
-        if (p == 5)
-        {
-            key = key_read;
-        }
-    }
-
-    if (mousel == 1)
-    {
-        ematan(p, windoww / 2 - mousex, (windowh - inf_verh) / 2 - mousey);
-        p = p * 360 / 255;
-        if (p >= 338)
-        {
-            p = p - 360;
-        }
-        s(0) = key_south;
-        s(1) = key_southwest;
-        s(2) = key_west;
-        s(3) = key_northwest;
-        s(4) = key_north;
-        s(5) = key_northeast;
-        s(6) = key_east;
-        s(7) = key_southeast;
-        for (int cnt = 0; cnt < 8; ++cnt)
-        {
-            if (p <= cnt * 45 + 23 && p > cnt * 45 - 23)
-            {
-                key = s(cnt);
-            }
-        }
-        await(100);
-    }
-
-    if (key != ""s)
-    {
-        const auto angband_result = check_angband();
-        if (angband_result)
-        {
-            return *angband_result;
-        }
-    }
-    if (key == key_quick)
-    {
-        show_quick_menu();
-        update_screen();
-    }
-    if (key == u8"sc"s)
-    {
-        return do_short_cut_command();
-    }
-    menucycle = 1;
-    if (key == key_quickinv)
-    {
-        invctrl = lastctrl;
-        snd(100);
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    if (key == key_throw)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            invctrl = 26;
-            snd(100);
-            MenuResult mr = ctrl_inventory();
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
-        }
-    }
-    if (key == key_inventory)
-    {
-        invctrl = 1;
-        snd(100);
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    if (key == key_drop)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            invctrl = 2;
-            snd(100);
-            MenuResult mr = ctrl_inventory();
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
-        }
-    }
-    if (key == key_eat)
-    {
-        invctrl = 5;
-        snd(100);
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    if (key == key_read)
-    {
-        invctrl = 7;
-        snd(100);
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    if (key == key_drink)
-    {
-        invctrl = 8;
-        snd(100);
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    if (key == key_zap)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            invctrl = 9;
-            snd(100);
-            MenuResult mr = ctrl_inventory();
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
-        }
-    }
-    if (key == key_use)
-    {
-        invctrl = 14;
-        snd(100);
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    if (key == key_open)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            invctrl = 15;
-            snd(100);
-            MenuResult mr = ctrl_inventory();
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
-        }
-    }
-    if (key == key_dip)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            invctrl = 17;
-            snd(100);
-            return TurnResult::ctrl_inventory;
-        }
-    }
-    if (key == key_charainfo)
-    {
-        return TurnResult::menu_character_sheet;
-    }
-    if (key == key_material)
-    {
-        return TurnResult::menu_materials;
-    }
-    if (key == key_trait)
-    {
-        return TurnResult::menu_feats;
-    }
-    if (key == key_wear)
-    {
-        return TurnResult::menu_equipment;
-    }
-    if (key == key_cast)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return TurnResult::show_spell_list;
-        }
-    }
-    if (key == key_skill)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return TurnResult::show_skill_list;
-        }
-    }
-    if (key == key_msglog)
-    {
-        return TurnResult::show_message_log;
-    }
-    if (key == key_journal)
-    {
-        return TurnResult::show_journal;
-    }
-    menucycle = 0;
-    if (key == key_offer)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            invctrl = 19;
-            snd(100);
-            MenuResult mr = ctrl_inventory();
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
-        }
-    }
-    if (key == key_help)
-    {
-        show_game_help();
-        update_screen();
-        goto label_2747;
-    }
-    if (key == key_rest)
-    {
-        return do_rest_command();
-    }
-    if (key == key_interact)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return do_interact_command();
-        }
-    }
-    if (key == key_target)
-    {
-        findlocmode = 1;
-        target_position();
-        findlocmode = 0;
-        goto label_2747;
-    }
-    if (key == key_fire)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return do_fire_command();
-        }
-    }
-    if (key == key_give)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return do_give_command();
-        }
-    }
-    if (key == key_get || key == key_get2)
-    {
-        return do_get_command();
-    }
-    if (key == key_look)
-    {
-        if (map_data.type != mdata_t::MapType::world_map)
-        {
-            return do_look_command();
-        }
-        else
-        {
-            target_position();
-            goto label_2747;
-        }
-    }
-    if (key == key_save || key_escape == 1)
-    {
-        return do_exit_command();
-    }
-    if (key == key_dig)
-    {
-        return do_dig_command();
-    }
-
-    if (key == key_autodig)
-    {
-        foobar_data.is_autodig_enabled = !foobar_data.is_autodig_enabled;
-        txt(i18n::_(
-            u8"ui",
-            u8"autodig",
-            foobar_data.is_autodig_enabled ? u8"enabled" : u8"disabled"));
-        goto label_2747;
-    }
-
-    if (key == key_bash)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return do_bash_command();
-        }
-    }
-    if (key == key_search)
-    {
-        return do_search_command();
-    }
-    if (key == key_close)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return do_close_command();
-        }
-    }
-    if (key == key_pray)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            txtnew();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
-            redraw();
-            goto label_2747;
-        }
-        else
-        {
-            return do_pray_command();
-        }
-    }
-    if (key == key_ammo)
-    {
-        return do_change_ammo_command();
-    }
-    if (key_tab)
-    {
-        show_chat_dialog();
-        update_screen();
-        goto label_2747;
-    }
-    p = 0;
-    if (key == key_north)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x;
-        cdata.player().next_position.y = cdata.player().position.y - 1;
-        game_data.player_next_move_direction = 3;
-        dirsub = 0;
-    }
-    if (key == key_south)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x;
-        cdata.player().next_position.y = cdata.player().position.y + 1;
-        game_data.player_next_move_direction = 0;
-        dirsub = 4;
-    }
-    if (key == key_west)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x - 1;
-        cdata.player().next_position.y = cdata.player().position.y;
-        game_data.player_next_move_direction = 1;
-        dirsub = 6;
-    }
-    if (key == key_east)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x + 1;
-        cdata.player().next_position.y = cdata.player().position.y;
-        game_data.player_next_move_direction = 2;
-        dirsub = 2;
-    }
-    if (key == key_northwest)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x - 1;
-        cdata.player().next_position.y = cdata.player().position.y - 1;
-        game_data.player_next_move_direction = 3;
-        dirsub = 7;
-    }
-    if (key == key_northeast)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x + 1;
-        cdata.player().next_position.y = cdata.player().position.y - 1;
-        game_data.player_next_move_direction = 3;
-        dirsub = 1;
-    }
-    if (key == key_southwest)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x - 1;
-        cdata.player().next_position.y = cdata.player().position.y + 1;
-        game_data.player_next_move_direction = 0;
-        dirsub = 5;
-    }
-    if (key == key_southeast)
-    {
-        p = 1;
-        cdata.player().next_position.x = cdata.player().position.x + 1;
-        cdata.player().next_position.y = cdata.player().position.y + 1;
-        game_data.player_next_move_direction = 0;
-        dirsub = 3;
-    }
-    cdata.player().direction = game_data.player_next_move_direction;
-    if (p == 1)
-    {
-        // Autodig
-        int x = cdata.player().next_position.x;
-        int y = cdata.player().next_position.y;
-        if (foobar_data.is_autodig_enabled)
-        {
-            if (0 <= x && x < map_data.width && 0 <= y && y < map_data.height
-                && (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
-                && chipm(0, cell_data.at(x, y).chip_id_actual) != 3
-                && map_data.type != mdata_t::MapType::world_map)
-            {
-                refx = x;
-                refy = y;
-                tlocx = x;
-                tlocy = y;
-                screenupdate = -1;
-                update_screen();
-                return do_dig_after_sp_check();
-            }
-        }
-        return do_movement_command();
-    }
-    if (key == key_godown)
-    {
-        return do_use_stairs_command(1);
-    }
-    if (key == key_goup)
-    {
-        return do_use_stairs_command(2);
-    }
-    if (key == key_wait)
-    {
-        return TurnResult::turn_end;
-    }
-    if (key == key_enter)
-    {
-        update_screen();
-        goto label_2747;
-    }
-    if (key != ""s && key != key_cancel && key != key_alter)
-    {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.hit_key_for_help"));
-        update_screen();
+        return *turn_result;
     }
 
     goto label_2747;
 }
-
 
 } // namespace elona

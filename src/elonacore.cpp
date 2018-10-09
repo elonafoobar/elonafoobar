@@ -34,6 +34,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "item.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
@@ -1427,55 +1428,6 @@ int breath_list()
         }
     }
     return 1;
-}
-
-
-
-void cursor_check()
-{
-    if (key == key_north)
-    {
-        snd(5);
-        --cs;
-        if (cs < 0)
-        {
-            cs = keyrange - 1;
-            if (cs < 0)
-            {
-                cs = 0;
-            }
-        }
-    }
-    if (key == key_south)
-    {
-        snd(5);
-        ++cs;
-        if (cs >= keyrange)
-        {
-            cs = 0;
-        }
-    }
-    if (key == key_west)
-    {
-        key = key_pagedown;
-    }
-    if (key == key_east)
-    {
-        key = key_pageup;
-    }
-    if (cs >= keyrange)
-    {
-        cs_bk = -1;
-        cs = keyrange - 1;
-        if (cs < 0)
-        {
-            cs = 0;
-        }
-    }
-    if (key == key_enter)
-    {
-        key = key_list(cs);
-    }
 }
 
 
@@ -6901,49 +6853,49 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
 
 
 
-int key_direction()
+int key_direction(const std::string& action)
 {
     kdx = 0;
     kdy = 0;
-    if (key == key_north)
+    if (action == "north")
     {
         --kdy;
         return 1;
     }
-    if (key == key_south)
+    if (action == "south")
     {
         ++kdy;
         return 1;
     }
-    if (key == key_west)
+    if (action == "west")
     {
         --kdx;
         return 1;
     }
-    if (key == key_east)
+    if (action == "east")
     {
         ++kdx;
         return 1;
     }
-    if (key == key_northwest)
+    if (action == "northwest")
     {
         --kdx;
         --kdy;
         return 1;
     }
-    if (key == key_northeast)
+    if (action == "northeast")
     {
         ++kdx;
         --kdy;
         return 1;
     }
-    if (key == key_southwest)
+    if (action == "southwest")
     {
         --kdx;
         ++kdy;
         return 1;
     }
-    if (key == key_southeast)
+    if (action == "southeast")
     {
         ++kdx;
         ++kdy;
@@ -7104,10 +7056,7 @@ label_1945_internal:
         cs_bk = cs;
     }
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
+    auto action = get_selected_item(p(0));
     if (p != -1)
     {
         if (p == -999)
@@ -7169,8 +7118,7 @@ label_1945_internal:
                 }
                 txt(i18n::s.get(
                     "core.locale.misc.custom.do_you_want_to_delete", userfile));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     fs::remove_all(filesystem::path(u8"./user/"s + userfile));
@@ -7180,7 +7128,7 @@ label_1945_internal:
             }
         }
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -7189,7 +7137,7 @@ label_1945_internal:
             goto label_1944_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -7198,7 +7146,7 @@ label_1945_internal:
             goto label_1944_internal;
         }
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         update_screen();
         return 0;
@@ -7365,11 +7313,10 @@ int target_position()
         }
         txttargetnpc(tlocx, tlocy);
         redraw();
-        await(Config::instance().wait1);
-        key_check();
+        auto action = key_check();
         if (homemapmode == 1)
         {
-            if (key == key_enter)
+            if (action == "enter")
             {
                 select_house_board_tile();
                 wait_key_released();
@@ -7379,7 +7326,7 @@ int target_position()
                 stick(StickKey::mouse_left | StickKey::mouse_right);
             if (input == StickKey::mouse_left)
             {
-                key = key_enter;
+                action = "enter";
             }
             if (input == StickKey::mouse_right)
             {
@@ -7396,7 +7343,7 @@ int target_position()
             }
             tx = clamp(mousex - inf_screenx, 0, windoww) / 48;
             ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) / 48;
-            int stat = key_direction();
+            int stat = key_direction(action);
             if (stat == 1)
             {
                 cdata.player().position.x += kdx;
@@ -7423,7 +7370,7 @@ int target_position()
         }
         else
         {
-            int stat = key_direction();
+            int stat = key_direction(action);
             if (stat == 1)
             {
                 x = tlocx + kdx;
@@ -7459,7 +7406,7 @@ int target_position()
                     }
                 }
             }
-            if (key == key_pageup)
+            if (action == "next_page")
             {
                 ++p;
                 f = 1;
@@ -7468,7 +7415,7 @@ int target_position()
                     p = 0;
                 }
             }
-            if (key == key_pagedown)
+            if (action == "previous_page")
             {
                 --p;
                 f = 1;
@@ -7489,7 +7436,7 @@ int target_position()
                 tlocy = cdata[list(0, p)].position.y;
             }
         }
-        if (key == key_enter)
+        if (action == "enter")
         {
             if (findlocmode == 1)
             {
@@ -7528,7 +7475,7 @@ int target_position()
             tlocinity = 0;
             return cansee;
         }
-        if (key == key_cancel)
+        if (action == "cancel")
         {
             tlocinitx = 0;
             tlocinity = 0;
@@ -7793,8 +7740,7 @@ int prompt_really_attack()
     s = txttargetlevel(cc, tc);
     txt(s);
     txt(i18n::s.get("core.locale.action.really_attack", cdata[tc]));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval == 0)
     {
         update_screen();
@@ -7963,14 +7909,13 @@ void try_to_return()
     if (stat == 1)
     {
         txt(i18n::s.get("core.locale.misc.return.forbidden"));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
-        if (rtval != 0)
+        if (yes_or_no(promptx, prompty, 160) == 0)
         {
             update_screen();
             return;
         }
     }
+    Prompt prompt;
     p = 0;
     p = 0;
     i = 7;
@@ -7978,7 +7923,7 @@ void try_to_return()
     {
         list(0, p) = i;
         list(1, p) = 1;
-        ELONA_APPEND_PROMPT(mapname(i), u8"null"s, ""s + promptmax);
+        prompt.append(mapname(i));
         ++p;
     }
     for (int cnt = 0; cnt < 500; ++cnt)
@@ -8016,14 +7961,12 @@ void try_to_return()
         {
             list(0, p) = i;
             list(1, p) = area_data[i].visited_deepest_level;
-            ELONA_APPEND_PROMPT(
-                mapname(i) + u8" "s
-                    + cnvrank(
-                          (area_data[i].visited_deepest_level
-                           - area_data[i].danger_level + 1))
-                    + i18n::s.get("core.locale.misc.dungeon_level"),
-                u8"null"s,
-                ""s + promptmax);
+            auto text = mapname(i) + u8" "s
+                + cnvrank(
+                            (area_data[i].visited_deepest_level
+                             - area_data[i].danger_level + 1))
+                + i18n::s.get("core.locale.misc.dungeon_level");
+            prompt.append(text);
             ++p;
         }
     }
@@ -8035,7 +7978,7 @@ void try_to_return()
     }
     txt(i18n::s.get("core.locale.misc.return.where_do_you_want_to_go"));
     display_msg(inf_screeny + inf_tiles);
-    rtval = show_prompt(promptx, prompty, 240);
+    rtval = prompt.query(promptx, prompty, 240);
     update_screen();
     if (rtval >= 0)
     {
@@ -8077,8 +8020,7 @@ TurnResult do_gatcha()
         tmat = 41;
     }
     txt(i18n::s.get("core.locale.action.gatcha.prompt", matname(tmat)));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval == 0)
     {
         if (mat(tmat) > 0)
@@ -8121,8 +8063,7 @@ int read_textbook()
         if (sdata.get(inv[ci].param1, 0).original_level == 0)
         {
             txt(i18n::s.get("core.locale.action.read.book.not_interested"));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval != 0)
             {
                 return 0;
@@ -8811,6 +8752,8 @@ TurnResult do_enter_strange_gate()
 
 int ask_direction()
 {
+    keywait = 1;
+    snail::Input::instance().clear_pressed_keys();
     snd(26);
     gsel(4);
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx - 48;
@@ -8825,7 +8768,7 @@ label_2128_internal:
     gmode(4, 200 - t / 2 % 20 * (t / 2 % 20));
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
-    if (key_alt == 0)
+    if (!getkey(snail::Key::alt))
     {
         draw_rotated("direction_arrow", x, y - 48, 0);
         draw_rotated("direction_arrow", x, y + 48, 180);
@@ -8841,24 +8784,19 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(Config::instance().wait1);
-    key_check(KeyWaitDelay::walk_run);
+    auto action = key_check(KeyWaitDelay::walk_run);
     x = cdata.player().position.x;
     y = cdata.player().position.y;
-    if (key == key_alter)
-    {
-        goto label_2128_internal;
-    }
-    if (key == key_wait || key == key_enter)
+    if (action == "wait" || action == "enter")
     {
         tlocx = x;
         tlocy = y;
         keyhalt = 1;
         return 1;
     }
-    if (key == key_north)
+    if (action == "north")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8867,9 +8805,9 @@ label_2128_internal:
             y -= 1;
         }
     }
-    if (key == key_south)
+    if (action == "south")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8878,9 +8816,9 @@ label_2128_internal:
             y += 1;
         }
     }
-    if (key == key_west)
+    if (action == "west")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8889,9 +8827,9 @@ label_2128_internal:
             x -= 1;
         }
     }
-    if (key == key_east)
+    if (action == "east")
     {
-        if (key_alt)
+        if (getkey(snail::Key::alt))
         {
             goto label_2128_internal;
         }
@@ -8900,27 +8838,27 @@ label_2128_internal:
             x += 1;
         }
     }
-    if (key == key_northwest)
+    if (action == "northwest")
     {
         x -= 1;
         y -= 1;
     }
-    if (key == key_northeast)
+    if (action == "northeast")
     {
         x += 1;
         y -= 1;
     }
-    if (key == key_southwest)
+    if (action == "southwest")
     {
         x -= 1;
         y += 1;
     }
-    if (key == key_southeast)
+    if (action == "southeast")
     {
         x += 1;
         y += 1;
     }
-    if (key != ""s)
+    if (action != ""s)
     {
         if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
         {
@@ -9939,8 +9877,7 @@ int do_cast_magic_attempt()
         if (calcspellcostmp(efid, cc) > cdata[cc].mp)
         {
             txt(i18n::s.get("core.locale.action.cast.overcast_warning"));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -10964,8 +10901,7 @@ int pick_up_item()
         {
             txt(i18n::s.get(
                 "core.locale.action.pick_up.do_you_want_to_remove", inv[ci]));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
+            rtval = yes_or_no(promptx, prompty, 160);
             if (rtval == 0)
             {
                 snd(58);
@@ -11828,8 +11764,7 @@ void proc_autopick()
             {
                 txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_pick_up")(
                     itemname(ci)));
-                ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     did_something = false;
@@ -11859,8 +11794,7 @@ void proc_autopick()
             {
                 txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_destroy")(
                     itemname(ci)));
-                ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     did_something = false;
@@ -11880,8 +11814,7 @@ void proc_autopick()
             {
                 txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_open")(
                     itemname(ci)));
-                ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     did_something = false;
@@ -11910,7 +11843,8 @@ void sense_map_feats_on_move()
         game_data.player_y_on_map_leave = -1;
         x = cdata.player().position.x;
         y = cdata.player().position.y;
-        if (key_shift && game_data.player_cellaccess_check_flag == 0
+        if (getkey(snail::Key::shift)
+            && game_data.player_cellaccess_check_flag == 0
             && cdata.player().confused == 0 && cdata.player().dimmed == 0)
         {
             if (map_data.type != mdata_t::MapType::world_map)
@@ -12154,8 +12088,7 @@ int unlock_box(int difficulty)
         }
         txtnew();
         txt(i18n::s.get("core.locale.action.unlock.try_again"));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
+        rtval = yes_or_no(promptx, prompty, 160);
         if (rtval == 0)
         {
             unlock_box(difficulty);
@@ -14622,11 +14555,14 @@ void conquer_lesimas()
     txt(i18n::s.get("core.locale.win.conquer_lesimas"));
     update_screen();
     const auto win_words = txtsetwinword(3);
+
+    Prompt prompt(Prompt::Type::cannot_cancel);
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        ELONA_APPEND_PROMPT(win_words[cnt], key_select(cnt), ""s + promptmax);
+        prompt.append(win_words[cnt]);
     }
-    rtval = show_prompt(promptx, prompty, 310, PromptType::cannot_cancel);
+    rtval = prompt.query(promptx, prompty, 310);
+
     wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
@@ -14730,10 +14666,8 @@ void conquer_lesimas()
 
     while (1)
     {
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
-        if (key == key_cancel)
+        auto action = cursor_check_ex();
+        if (action == "cancel")
         {
             play_the_last_scene_again();
             return;
@@ -14747,8 +14681,7 @@ void play_the_last_scene_again()
 {
     update_entire_screen();
     txt(i18n::s.get("core.locale.misc.win.watch_event_again"));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval == 0)
     {
         conquer_lesimas();
@@ -14870,15 +14803,12 @@ TurnResult pc_died()
     show_game_score_ranking();
     s = i18n::s.get("core.locale.misc.death.you_are_about_to_be_buried");
     draw_caption();
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.misc.death.crawl_up"),
-        u8"a"s,
-        ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.misc.death.lie_on_your_back"),
-        u8"b"s,
-        ""s + promptmax);
-    rtval = show_prompt(promptx, 100, 240);
+
+    Prompt prompt("core.locale.misc.death");
+    prompt.append("crawl_up", snail::Key::key_a);
+    prompt.append("lie_on_your_back", snail::Key::key_b);
+    rtval = prompt.query(promptx, 100, 240);
+
     if (rtval == 1)
     {
         show_game_score_ranking();

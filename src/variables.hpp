@@ -306,15 +306,12 @@ ELONA_EXTERN(std::string key_offer);
 ELONA_EXTERN(std::string key_journal);
 ELONA_EXTERN(std::string key_material);
 ELONA_EXTERN(std::string key_quick);
-ELONA_EXTERN(std::string key_get2);
 ELONA_EXTERN(std::string key_trait);
 ELONA_EXTERN(std::string key_look);
 ELONA_EXTERN(std::string key_give);
 ELONA_EXTERN(std::string key_prev);
 ELONA_EXTERN(std::string key_next);
-ELONA_EXTERN(std::string key_quickinv);
 ELONA_EXTERN(std::string key_throw);
-ELONA_EXTERN(std::string key_esc);
 ELONA_EXTERN(int key_alt);
 ELONA_EXTERN(int key_ctrl);
 ELONA_EXTERN(std::string key_mode);
@@ -516,7 +513,7 @@ ELONA_EXTERN(int invrange);
 ELONA_EXTERN(int invsc);
 ELONA_EXTERN(int invsubroutine);
 ELONA_EXTERN(int jp);
-ELONA_EXTERN(int key_escape);
+ELONA_EXTERN(bool key_escape);
 ELONA_EXTERN(int key_shift);
 ELONA_EXTERN(int key_tab);
 ELONA_EXTERN(int keybd_attacking);
@@ -567,7 +564,6 @@ ELONA_EXTERN(int pcattacker);
 ELONA_EXTERN(int petarenawin);
 ELONA_EXTERN(int potionspill);
 ELONA_EXTERN(int potionthrow);
-ELONA_EXTERN(int promptmax);
 ELONA_EXTERN(int promptx);
 ELONA_EXTERN(int prompty);
 ELONA_EXTERN(int prot);
@@ -661,7 +657,6 @@ ELONA_EXTERN(std::string defload);
 ELONA_EXTERN(std::string fmapfile);
 ELONA_EXTERN(std::string geneuse);
 ELONA_EXTERN(std::string homepage);
-ELONA_EXTERN(std::string key_alter);
 ELONA_EXTERN(std::string mid);
 ELONA_EXTERN(std::string note_buff);
 ELONA_EXTERN(std::string playerid);
@@ -870,10 +865,9 @@ void fltn(const std::string&);
 
 
 // Input translation
-int key_direction();
+int key_direction(const std::string& action);
 int imeget();
 void imeset(int = 0);
-void cursor_check();
 
 
 //// Actions

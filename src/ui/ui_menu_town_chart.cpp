@@ -122,15 +122,13 @@ void UIMenuTownChart::draw()
 }
 
 optional<UIMenuTownChart::ResultType> UIMenuTownChart::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_ITEM(p, 0);
-
-    if (p != -1)
+    if (get_selected_index_this_page())
     {
         return UIMenuTownChart::Result::finish();
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -139,7 +137,7 @@ optional<UIMenuTownChart::ResultType> UIMenuTownChart::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -148,7 +146,7 @@ optional<UIMenuTownChart::ResultType> UIMenuTownChart::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         update_screen();
         return UIMenuTownChart::Result::cancel();

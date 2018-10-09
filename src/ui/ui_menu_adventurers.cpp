@@ -169,11 +169,9 @@ void UIMenuAdventurers::draw()
 }
 
 optional<UIMenuAdventurers::ResultType> UIMenuAdventurers::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_ITEM(p, 0);
-
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -182,7 +180,7 @@ optional<UIMenuAdventurers::ResultType> UIMenuAdventurers::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -191,7 +189,7 @@ optional<UIMenuAdventurers::ResultType> UIMenuAdventurers::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuAdventurers::Result::finish();
     }

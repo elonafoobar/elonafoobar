@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "../keybind/keybind.hpp"
+#include "../keybind/keybind_manager.hpp"
 #include "../keybind/keybind_serializer.hpp"
 
 using namespace elona;
@@ -58,7 +59,7 @@ TEST_CASE(
         Action{ActionCategory::menu, {{Key::key_b, ModKey::shift}}});
 
     KeybindManager manager;
-    manager.register_default_bindings(keybind::actions);
+    manager.load_default_bindings(keybind::actions);
 
     KeybindSerializer serializer(manager);
     std::ostringstream ss;

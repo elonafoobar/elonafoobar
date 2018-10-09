@@ -1,6 +1,7 @@
 #include <unordered_map>
 #include "../optional.hpp"
 #include "../snail/input.hpp"
+#include "../util.hpp"
 
 namespace elona
 {
@@ -117,26 +118,6 @@ static std::unordered_map<snail::Key, KeyName> key_names = {
     {Key::semicolon,        {";", ":"}},
     {Key::slash,            {"/", "?"}},
 
-    {Key::rightbracket,     {"}"}},
-    {Key::leftbracket,      {"{"}},
-    {Key::ampersand,        {"&"}},
-    {Key::asterisk,         {"*"}},
-    {Key::at,               {"@"}},
-    {Key::caret,            {"^"}},
-    {Key::colon,            {":"}},
-    {Key::dollar,           {"$"}},
-    {Key::exclaim,          {"!"}},
-    {Key::greater,          {">"}},
-    {Key::hash,             {"#"}},
-    {Key::leftparen,        {"("}},
-    {Key::less,             {"<"}},
-    {Key::percent,          {"%"}},
-    {Key::plus,             {"+"}},
-    {Key::question,         {"?"}},
-    {Key::quotedbl,         {"\""}},
-    {Key::rightparen,       {")"}},
-    {Key::underscore,       {"_"}},
-
     {Key::keypad_0,         {"Keypad 0"}},
     {Key::keypad_1,         {"Keypad 1"}},
     {Key::keypad_2,         {"Keypad 2"}},
@@ -188,6 +169,28 @@ optional<std::string> keybind_key_name(snail::Key key, bool shift)
     {
         return it->second.normal;
     }
+}
+
+std::string keybind_key_short_name(snail::Key key, bool shift)
+{
+    auto name_opt = keybind_key_name(key, shift);
+    if (!name_opt)
+    {
+        return "";
+    }
+
+    auto name = *name_opt;
+    strutil::try_remove_prefix(name, "Keypad ");
+
+    // TODO: Some keys can still overflow the key_select banner. For now, just
+    // return an empty string for those keys. Trimming them to one character
+    // isn't always useful. ("Enter" and "E" will both be trimmed to "E".)
+    if (name.size() > 1)
+    {
+        return "";
+    }
+
+    return name;
 }
 
 optional<snail::Key> keybind_key_code(const std::string& name, bool shift)

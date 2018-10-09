@@ -1,6 +1,7 @@
 #include "../thirdparty/catch2/catch.hpp"
 
 #include "../keybind/keybind.hpp"
+#include "../keybind/keybind_manager.hpp"
 
 using namespace elona;
 using namespace elona::snail;
@@ -18,7 +19,7 @@ KeybindManager make_manager()
     // clang-format on
 
     KeybindManager manager;
-    manager.register_default_bindings(keybind::actions);
+    manager.load_default_bindings(keybind::actions);
 
     return manager;
 }

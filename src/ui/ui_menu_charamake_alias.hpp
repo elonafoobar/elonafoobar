@@ -24,6 +24,7 @@ protected:
 
 private:
     void _reroll_aliases();
+    void _lock_alias(int cs_);
 
     optional<std::string> _previous_alias;
     elona_vector1<int> _locked_aliases;

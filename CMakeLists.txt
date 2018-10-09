@@ -108,6 +108,7 @@ set(CORE_SOURCES
   src/initialize_map.cpp
   src/initialize_map_types.cpp
   src/input.cpp
+  src/input_prompt.cpp
   src/item.cpp
   src/item_load_desc.cpp
   src/item_material.cpp
@@ -145,6 +146,7 @@ set(CORE_SOURCES
   src/text.cpp
   src/trait.cpp
   src/turn_sequence.cpp
+  src/turn_sequence_pc_actions.cpp
   src/ui.cpp
   src/variables.cpp
   src/wish.cpp
@@ -191,11 +193,15 @@ set(CORE_SOURCES
   src/dialog/dialog_data.cpp
   src/dialog/dialog_decoder.cpp
 
-  src/keybind/keybind_actions.cpp
+  src/keybind/input_context.cpp
   src/keybind/key_names.cpp
   src/keybind/keybind.cpp
+  src/keybind/keybind_actions.cpp
   src/keybind/keybind_deserializer.cpp
+  src/keybind/keybind_manager.cpp
   src/keybind/keybind_serializer.cpp
+
+  src/lib/profiler.cpp
 
   src/pic_loader/pic_loader.cpp
 
