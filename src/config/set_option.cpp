@@ -26,11 +26,11 @@ void set_option()
     while (true)
     {
         auto& menu_def = ConfigScreen[submenu];
-        auto result = ui::UIMenuConfig(*menu_def, submenu).show();
+        auto result = menu_def->query(submenu);
 
-        if (result.value)
+        if (result)
         {
-            submenu = *result.value;
+            submenu = *result;
         }
         else
         {

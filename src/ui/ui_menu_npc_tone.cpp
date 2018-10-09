@@ -123,23 +123,22 @@ void UIMenuNPCTone::draw()
 }
 
 optional<UIMenuNPCTone::ResultType> UIMenuNPCTone::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
-
-    if (p != -1)
+    if (auto selected = get_selected_item())
     {
-        if (p == _default_tone_index)
+        cs = _index;
+        if (*selected == _default_tone_index)
         {
             return UIMenuNPCTone::ResultType::finish();
         }
         else
         {
-            std::string chosen = listn(0, p);
+            std::string chosen = listn(0, *selected);
             return UIMenuNPCTone::ResultType::finish(chosen);
         }
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -148,7 +147,7 @@ optional<UIMenuNPCTone::ResultType> UIMenuNPCTone::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -157,7 +156,7 @@ optional<UIMenuNPCTone::ResultType> UIMenuNPCTone::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuNPCTone::ResultType::cancel();
     }

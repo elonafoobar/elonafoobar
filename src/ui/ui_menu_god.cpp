@@ -165,12 +165,17 @@ void UIMenuGod::draw()
     _draw_choices();
 }
 
-optional<UIMenuGod::ResultType> UIMenuGod::on_key(const std::string& key)
+optional<UIMenuGod::ResultType> UIMenuGod::on_key(const std::string& action)
 {
     int _rtval = -1;
 
-    ELONA_GET_SELECTED_ITEM(_rtval, snd("core.click1"));
-    if (key == key_cancel)
+    if (auto selected = get_selected_item())
+    {
+        snd("core.click1");
+        _rtval = *selected;
+    }
+
+    if (action == "cancel")
     {
         snd("core.click1");
         _rtval = _cancel_choice;

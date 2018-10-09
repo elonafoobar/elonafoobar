@@ -30,7 +30,7 @@ public:
     void init(const fs::path&);
     void init(const ConfigDef);
     void load(std::istream&, const std::string&, bool);
-    void write();
+    void save();
 
     void clear()
     {

@@ -99,9 +99,9 @@ void UIMenuBook::draw()
     }
 }
 
-optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& key)
+optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& action)
 {
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -110,7 +110,7 @@ optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -119,7 +119,7 @@ optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_cancel || key == key_enter)
+    else if (action == "cancel" || action == "enter")
     {
         update_screen();
         return UIMenuBook::ResultType::finish();

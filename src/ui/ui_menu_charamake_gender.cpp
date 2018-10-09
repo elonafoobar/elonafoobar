@@ -79,17 +79,17 @@ void UIMenuCharamakeGender::draw()
 }
 
 optional<UIMenuCharamakeGender::ResultType> UIMenuCharamakeGender::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    if (key == key_select(0))
+    if (_index == 0)
     {
         return UIMenuCharamakeGender::Result::finish(0);
     }
-    else if (key == key_select(1))
+    else if (_index == 1)
     {
         return UIMenuCharamakeGender::Result::finish(1);
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuCharamakeGender::Result::cancel();
     }

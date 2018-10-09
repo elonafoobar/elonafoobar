@@ -2776,8 +2776,7 @@ label_2181_internal:
             if (stat == 1)
             {
                 txt(i18n::s.get("core.locale.magic.escape.during_quest"));
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
+                rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     break;

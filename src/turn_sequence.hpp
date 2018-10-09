@@ -1,6 +1,7 @@
 #pragma once
 
 #include "enums.hpp"
+#include "optional.hpp"
 
 
 
@@ -18,6 +19,7 @@ void update_emoicon();
 TurnResult turn_end();
 TurnResult pc_turn(bool advance_time = true);
 
+optional<TurnResult> handle_pc_action(std::string& action);
 
 
 } // namespace elona

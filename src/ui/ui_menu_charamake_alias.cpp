@@ -130,14 +130,29 @@ void UIMenuCharamakeAlias::draw()
     _redraw_aliases = false;
 }
 
-optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
-    const std::string& key)
+void UIMenuCharamakeAlias::_lock_alias(int cs_)
 {
-    ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
-
-    if (p != -1)
+    if (cs_ > 0)
     {
-        if (key == key_select(0))
+        if (_locked_aliases(cs_) != 0)
+        {
+            _locked_aliases(cs_) = 0;
+        }
+        else
+        {
+            _locked_aliases(cs_) = 1;
+        }
+        snd("core.ok1");
+        _redraw_aliases = true;
+    }
+}
+
+optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
+    const std::string& action)
+{
+    if (auto selected = get_selected_index_this_page())
+    {
+        if (*selected == 0)
         {
             list(0, 0) = -1;
             snd("core.dice");
@@ -147,24 +162,15 @@ optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
         }
         else
         {
-            std::string alias = listn(0, p);
+            std::string alias = listn(0, *selected);
             return UIMenuCharamakeAlias::Result::finish(alias);
         }
     }
-    else if (key == key_mode2 && cs != -1)
+    else if (action == "switch_mode_2")
     {
-        if (_locked_aliases(cs) != 0)
-        {
-            _locked_aliases(cs) = 0;
-        }
-        else
-        {
-            _locked_aliases(cs) = 1;
-        }
-        snd("core.ok1");
-        _redraw_aliases = true;
+        _lock_alias(cs);
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuCharamakeAlias::Result::cancel();
     }

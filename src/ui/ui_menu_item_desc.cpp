@@ -145,9 +145,9 @@ void UIMenuItemDesc::draw()
 }
 
 optional<UIMenuItemDesc::ResultType> UIMenuItemDesc::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -156,7 +156,7 @@ optional<UIMenuItemDesc::ResultType> UIMenuItemDesc::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -165,7 +165,7 @@ optional<UIMenuItemDesc::ResultType> UIMenuItemDesc::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel || key == key_enter)
+    else if (action == "cancel" || action == "enter")
     {
         return UIMenuItemDesc::ResultType::finish();
     }

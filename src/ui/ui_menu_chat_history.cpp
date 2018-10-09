@@ -109,9 +109,9 @@ void UIMenuChatHistory::draw()
 }
 
 optional<UIMenuChatHistory::ResultType> UIMenuChatHistory::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    if (key != ""s)
+    if (action != ""s)
     {
         update_screen();
         return UIMenuChatHistory::Result::finish();

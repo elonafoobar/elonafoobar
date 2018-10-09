@@ -387,6 +387,7 @@ void Input::_handle_event(const ::SDL_KeyboardEvent& event)
     if (event.state == SDL_PRESSED)
     {
         the_key._press();
+        _pressed_key_identifiers.insert(k);
     }
     else
     {
@@ -410,24 +411,27 @@ void Input::_handle_event(const ::SDL_KeyboardEvent& event)
                 toggle_soft_keyboard();
             }
         }
+        _pressed_key_identifiers.erase(k);
     }
 
-    using KeyTuple = std::tuple<Key, Key, Key>[];
+    using KeyTuple = std::tuple<Key, Key, Key, ModKey>[];
     for (const auto& tuple : KeyTuple{
-             {Key::alt, Key::alt_l, Key::alt_r},
-             {Key::ctrl, Key::ctrl_l, Key::ctrl_r},
-             {Key::gui, Key::gui_l, Key::gui_r},
-             {Key::shift, Key::shift_l, Key::shift_r},
+             {Key::alt, Key::alt_l, Key::alt_r, ModKey::alt},
+             {Key::ctrl, Key::ctrl_l, Key::ctrl_r, ModKey::ctrl},
+             {Key::gui, Key::gui_l, Key::gui_r, ModKey::gui},
+             {Key::shift, Key::shift_l, Key::shift_r, ModKey::shift},
          })
     {
         if (_keys[static_cast<size_t>(std::get<1>(tuple))].is_pressed()
             || _keys[static_cast<int>(std::get<2>(tuple))].is_pressed())
         {
             _keys[static_cast<size_t>(std::get<0>(tuple))]._press();
+            _modifiers |= std::get<3>(tuple);
         }
         else
         {
             _keys[static_cast<size_t>(std::get<0>(tuple))]._release();
+            _modifiers &= ~std::get<3>(tuple);
         }
     }
 }

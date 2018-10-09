@@ -30,6 +30,7 @@
 #include "item.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
+#include "keybind/keybind.hpp"
 #include "log.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
@@ -668,14 +669,9 @@ void initialize_elona()
     SDIM3(musicfile, 30, 97);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
-    gsel(3);
-    gmode(0);
-    font(15 - en * 2);
-    for (int i = 0; i < 18; ++i)
-    {
-        draw("select_key", i * 24 + 72, 30);
-        bmes(key_select(i), i * 24 + 77, 31, {250, 240, 230}, {50, 60, 80});
-    }
+    keybind_regenerate_key_select();
+    keybind_regenerate_key_names();
+
     gsel(0);
     gmode(2);
     text_set();
@@ -896,9 +892,11 @@ int run()
     // Load data from scanned mods.
     initialize_lion_db();
 
+    initialize_keybindings();
+
     initialize_elona();
 
-    Config::instance().write();
+    Config::instance().save();
 
     start_elona();
 

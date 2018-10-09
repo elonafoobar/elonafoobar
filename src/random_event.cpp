@@ -687,13 +687,10 @@ int show_random_event_window(
             cs_bk = cs;
         }
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
-        ELONA_GET_SELECTED_ITEM(rtval, snd("core.click1"));
+        auto action = get_selected_item(rtval);
         if (chatesc != -1)
         {
-            if (key == key_cancel)
+            if (action == "cancel")
             {
                 snd("core.click1");
                 rtval = chatesc;
@@ -701,6 +698,7 @@ int show_random_event_window(
         }
         if (rtval != -1)
         {
+            snd("core.click1");
             key = "";
             return rtval;
         }

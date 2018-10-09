@@ -14,7 +14,7 @@ class ConfigTable;
 } // namespace lua
 
 class DialogData;
-class DialogNode;
+struct DialogNode;
 
 class DialogDecoder
 {

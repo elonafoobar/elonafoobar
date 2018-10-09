@@ -5,22 +5,15 @@
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../network.hpp"
+#include "simple_prompt.hpp"
 
 namespace elona
 {
 namespace ui
 {
 
-bool UIMenuConfig::init()
+static void _draw_background()
 {
-    listmax = 0;
-    page = 0;
-    pagesize = 18;
-    cc = 0;
-    cs_bk = -1;
-    page_bk = 0;
-    cs_bk2 = 0;
-
     int bg_variant_buffer = mode == 10 ? 2 : 4;
     load_background_variants(bg_variant_buffer);
     gsel(0);
@@ -43,6 +36,19 @@ bool UIMenuConfig::init()
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
     }
+}
+
+bool UIMenuConfig::init()
+{
+    listmax = 0;
+    page = 0;
+    pagesize = 18;
+    cc = 0;
+    cs_bk = -1;
+    page_bk = 0;
+    cs_bk2 = 0;
+
+    _draw_background();
 
     for (const auto& menu_item : _menu.items)
     {
@@ -214,80 +220,65 @@ void UIMenuConfig::draw()
     }
 }
 
-static void _show_config_item_desc(const std::string& desc)
+class ConfigItemDescPrompt : public SimplePrompt<DummyResult>
 {
-    size_t width = 100;
-    size_t height = 100;
-    int font_size = 13 + sizefix - en * 2;
-    std::string line;
-    std::istringstream ss(desc);
-
-    while (std::getline(ss, line))
+public:
+    ConfigItemDescPrompt(std::string message)
+        : SimplePrompt(message)
     {
-        width = std::max(width, strlen_u(line) * 8 + 40);
-        height += font_size;
     }
 
-    int x = promptx - (width / 2);
-    int y = prompty - (height / 2);
-
-    snd("core.pop2");
-
-    gmode(6, 80);
-    window(x + 12, y + 12, width, height, true); // Shadow
-    gmode(2);
-
-    window(x + 8, y + 8, width, height, false);
-
-    font(font_size);
-    pos(x + 40, y + font_size + 36);
-    mes(desc);
-
-    redraw();
-
-    while (true)
+protected:
+    optional<DummyResult> update() override
     {
         await(Config::instance().wait1);
-        key_check();
+        auto action = key_check();
 
-        if (key != ""s)
+        if (action != ""s)
         {
-            key = ""s;
-            break;
+            return DummyResult{};
         }
+
+        return none;
     }
+};
+
+static void _show_config_item_desc(const std::string& desc)
+{
+    ConfigItemDescPrompt(desc).query();
 }
 
-optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(const std::string& key)
+optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
-
-    if (p != -1)
+    if (auto submenu = get_selected_item())
     {
+        cs = _index;
         if (_submenu_index == 0)
         {
             cs = 0;
             snd("core.ok1");
-            return UIMenuConfig::Result::finish(p + 1);
+            return UIMenuConfig::Result::finish(*submenu + 1);
         }
     }
-    else if (key == key_pageup || key == key_pagedown)
+    else if (action == "next_page" || action == "previous_page")
     {
-        if (key == key_pageup)
+        int delta{};
+        if (action == "next_page")
         {
-            p = 1;
+            delta = 1;
         }
         else
         {
-            p = -1;
+            delta = -1;
         }
 
-        _menu.items[cs].get()->change(p);
+        _menu.items[cs].get()->change(delta);
         snd("core.ok1");
         set_reupdate();
         return none;
     }
-    else if (key == key_mode2)
+    else if (action == "switch_mode_2")
     {
         auto desc = _menu.items[cs].get()->get_desc();
         _show_config_item_desc(desc);
@@ -296,7 +287,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(const std::string& key)
         // title screen.
         return UIMenuConfig::Result::finish(_submenu_index);
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         if (_submenu_index != 0)
         {
@@ -306,7 +297,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(const std::string& key)
         }
         else
         {
-            Config::instance().write();
+            Config::instance().save();
             if (mode == 0)
             {
                 if (Config::instance().net)

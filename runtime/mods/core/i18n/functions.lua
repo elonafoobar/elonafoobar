@@ -276,14 +276,23 @@ function i18n.all.you()
 end
 
 function i18n.all.name(chara)
+   if not chara then
+      return "<nil character>"
+   end
    return chara.name
 end
 
 function i18n.all.basename(chara)
+   if not chara then
+      return "<nil character>"
+   end
    return chara.basename
 end
 
 function i18n.all.itemname(item, number, needs_article)
+   if not item then
+      return "<nil item>"
+   end
    if number == nil then
       number = item.number
    end
@@ -295,6 +304,9 @@ function i18n.all.itemname(item, number, needs_article)
 end
 
 function i18n.all.itembasename(item)
+   if not item then
+      return "<nil item>"
+   end
    return item.basename
 end
 

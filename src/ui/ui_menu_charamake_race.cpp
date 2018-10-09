@@ -158,20 +158,17 @@ void UIMenuCharamakeRace::draw()
 }
 
 optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_INDEX(p);
-
-    if (p != -1)
+    if (auto race_index = get_selected_index())
     {
-        int race_index = p;
-        const std::string& race_id = listn(1, race_index);
-        const std::string& race_name = listn(0, race_index);
+        const std::string& race_id = listn(1, *race_index);
+        const std::string& race_name = listn(0, *race_index);
 
         return UIMenuCharamakeRace::Result::finish(
             UIMenuCharamakeRaceResult{race_id, race_name});
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -180,7 +177,7 @@ optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -189,7 +186,7 @@ optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuCharamakeRace::Result::cancel();
     }

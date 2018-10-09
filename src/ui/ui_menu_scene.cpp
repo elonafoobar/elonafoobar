@@ -186,17 +186,14 @@ static void _do_play_scene(int scene_id)
     txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
 }
 
-optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& key)
+optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& action)
 {
-    int p_ = 0;
-    ELONA_GET_SELECTED_ITEM(p_, 0);
-
-    if (p_ != -1)
+    if (auto selected = get_selected_item())
     {
-        _do_play_scene(p_);
+        _do_play_scene(*selected);
         return UIMenuScene::Result::finish();
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -205,7 +202,7 @@ optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -214,7 +211,7 @@ optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_cancel || key == key_enter)
+    else if (action == "cancel" || action == "enter")
     {
         play_music();
         update_screen();

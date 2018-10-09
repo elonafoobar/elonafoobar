@@ -72,7 +72,8 @@ void UIMenuDialog::draw()
     cs_bk = cs;
 }
 
-optional<UIMenuDialog::ResultType> UIMenuDialog::on_key(const std::string& key)
+optional<UIMenuDialog::ResultType> UIMenuDialog::on_key(
+    const std::string& action)
 {
     StickKey a = stick(StickKey::escape);
     if (a == StickKey::escape)
@@ -83,22 +84,20 @@ optional<UIMenuDialog::ResultType> UIMenuDialog::on_key(const std::string& key)
         }
     }
 
-    p = -1;
-
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+    // for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+    // {
+    //     if (key == key_select(cnt))
+    //     {
+    //         p = cnt;
+    //         break;
+    //     }
+    // }
+    if (auto selected = get_selected_index_this_page())
     {
-        if (key == key_select(cnt))
-        {
-            p = cnt;
-            break;
-        }
-    }
-    if (p != -1)
-    {
-        return UIMenuDialog::Result::finish(static_cast<size_t>(p(0)));
+        return UIMenuDialog::Result::finish(static_cast<size_t>(*selected));
     }
 
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         if (_is_cancelable)
         {

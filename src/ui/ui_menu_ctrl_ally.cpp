@@ -587,26 +587,25 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
     return none;
 }
 
-optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(const std::string& key)
+optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(
+    const std::string& action)
 {
-    ELONA_GET_SELECTED_ITEM(p, 0);
-
-    if (p != -1)
+    if (auto id = get_selected_item())
     {
         if (_operation == ControlAllyOperation::gene_engineer)
         {
-            return _select_gene_engineer(p);
+            return _select_gene_engineer(*id);
         }
         else if (_operation == ControlAllyOperation::pet_arena)
         {
-            return _select_pet_arena(p);
+            return _select_pet_arena(*id);
         }
         else
         {
-            return UIMenuCtrlAlly::Result::finish(p(0));
+            return UIMenuCtrlAlly::Result::finish(_index);
         }
     }
-    else if (key == key_pageup)
+    else if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -615,7 +614,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -624,7 +623,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(const std::string& key)
             set_reupdate();
         }
     }
-    else if (key == key_cancel)
+    else if (action == "cancel")
     {
         return UIMenuCtrlAlly::Result::cancel();
     }

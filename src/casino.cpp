@@ -163,13 +163,10 @@ label_1868_internal:
         cs_bk = cs;
     }
     redraw();
-    await(Config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(rtval, snd("core.click1"));
+    auto action = get_selected_item(rtval);
     if (chatesc != -1)
     {
-        if (key == key_cancel)
+        if (action == "cancel")
         {
             snd("core.click1");
             rtval = chatesc;
@@ -177,11 +174,12 @@ label_1868_internal:
     }
     if (rtval != -1)
     {
+        snd("core.click1");
         casino_fade_in_choices();
         atxpic = 0;
         return;
     }
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -190,7 +188,7 @@ label_1868_internal:
             goto label_18671_internal;
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {

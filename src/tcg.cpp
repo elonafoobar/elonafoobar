@@ -6,6 +6,7 @@
 #include "filesystem.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "macro.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -1726,6 +1727,8 @@ void tcgdeck()
         s_at_tcg(2) = i18n::s.get("core.locale.tcg.deck.color.silver");
         s_at_tcg(3) = i18n::s.get("core.locale.tcg.deck.color.red");
         s_at_tcg(4) = i18n::s.get("core.locale.tcg.deck.color.black");
+
+        Prompt prompt;
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) =
@@ -1750,9 +1753,9 @@ void tcgdeck()
                     s_at_tcg(cnt) += u8" [Use]"s;
                 }
             }
-            ELONA_APPEND_PROMPT(s_at_tcg(cnt), u8"null"s, ""s + promptmax);
+            prompt.append(s_at_tcg(cnt));
         }
-        rtval = show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
+        rtval = prompt.query(basex_at_tcg + 400, basey_at_tcg + 230, 300);
         if (rtval == -1)
         {
             break;
@@ -1763,15 +1766,11 @@ void tcgdeck()
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.deck.choices.edit"),
-                u8"null"s,
-                ""s + promptmax);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.deck.choices.set_as_main"),
-                u8"null"s,
-                ""s + promptmax);
-            rtval = show_prompt(400, basey_at_tcg + 230, 240);
+            prompt.append(i18n::s.get("core.locale.tcg.deck.choices.edit"));
+            prompt.append(
+                i18n::s.get("core.locale.tcg.deck.choices.set_as_main"));
+            rtval = prompt.query(400, basey_at_tcg + 230, 240);
+
             if (rtval == -1)
             {
                 continue;
@@ -2520,8 +2519,8 @@ label_1830_internal:
     tcg_draw_selection();
     redraw();
     await(30);
-    key_check();
-    if (key == key_next)
+    auto action = key_check();
+    if (action == "next_menu")
     {
         ++ccf_at_tcg;
         snd("core.cursor1");
@@ -2531,7 +2530,7 @@ label_1830_internal:
         }
         goto label_1829_internal;
     }
-    if (key == key_prev)
+    if (action == "previous_menu")
     {
         --ccf_at_tcg;
         snd("core.cursor1");
@@ -2541,28 +2540,28 @@ label_1830_internal:
         }
         goto label_1829_internal;
     }
-    if (key == key_west)
+    if (action == "west")
     {
         --dsc_at_tcg;
         snd("core.cursor1");
     }
-    if (key == key_east)
+    if (action == "east")
     {
         ++dsc_at_tcg;
         snd("core.cursor1");
     }
-    if (key == key_south)
+    if (action == "south")
     {
         dsc_at_tcg += 8;
         snd("core.cursor1");
     }
-    if (key == key_north)
+    if (action == "north")
     {
         dsc_at_tcg -= 8;
         snd("core.cursor1");
     }
     tcg_update_page();
-    if (key == key_enter)
+    if (action == "enter")
     {
         if (dlistmax_at_tcg == 0)
         {
@@ -2635,19 +2634,15 @@ label_1830_internal:
         tcg_draw_background();
         return;
     }
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         if (deckmode_at_tcg == 0)
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.menu.save_and_exit"),
-                u8"null"s,
-                ""s + promptmax);
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.menu.just_exit"),
-                u8"null"s,
-                ""s + promptmax);
-            rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
+            Prompt prompt("core.locale.tcg.menu");
+            prompt.append("save_and_exit");
+            prompt.append("just_exit");
+            rtval = prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 240);
+
             if (rtval == 0)
             {
                 ctrl_file(
@@ -2708,8 +2703,8 @@ void tcg_prompt_action()
         tcgdraw();
         cursor_at_tcg = 1;
         await(15);
-        key_check();
-        if (key == key_east)
+        auto action = key_check();
+        if (action == "east")
         {
             ++cs_at_tcg;
             snd("core.cursor1");
@@ -2722,7 +2717,7 @@ void tcg_prompt_action()
             }
             csfix();
         }
-        if (key == key_west)
+        if (action == "west")
         {
             --cs_at_tcg;
             snd("core.cursor1");
@@ -2742,19 +2737,19 @@ void tcg_prompt_action()
             }
             csfix();
         }
-        if (key == key_north)
+        if (action == "north")
         {
             cslineup();
             snd("core.cursor1");
             csfix();
         }
-        if (key == key_south)
+        if (action == "south")
         {
             cslinedown();
             snd("core.cursor1");
             csfix();
         }
-        if (key == key_enter)
+        if (action == "enter")
         {
             if (cs_at_tcg == -1)
             {
@@ -2957,18 +2952,17 @@ void tcg_prompt_action()
             }
             csfix();
         }
-        if (key == key_cancel || key_escape)
+        if (action == "cancel" || key_escape)
         {
             tcg_clear_cursor();
             return;
         }
-        if (key == u8"s"s)
+        if (action == "tcg_surrender") // TODO
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.tcg.action.surrender"),
-                u8"null"s,
-                ""s + promptmax);
-            rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
+            Prompt prompt;
+            prompt.append("core.locale.tcg.action.surrender");
+
+            rtval = prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 200);
             if (rtval == 0)
             {
                 cpdata_at_tcg(4, 0) = 0;
@@ -3051,26 +3045,26 @@ void tcg_update_selection()
             gcopy(7, cnt * 48, 264, 36, 36);
         }
         await(15);
-        key_check();
-        if (key == key_north)
+        auto action = key_check();
+        if (action == "north")
         {
             f_at_tcg = 0;
             tcg_card_selected();
             return;
         }
-        if (key == key_south)
+        if (action == "south")
         {
             f_at_tcg = 1;
             tcg_card_selected();
             return;
         }
-        if (key == key_enter)
+        if (action == "enter")
         {
             f_at_tcg = 2;
             tcg_card_selected();
             return;
         }
-        if (key != ""s)
+        if (action != ""s)
         {
             f_at_tcg = -1;
             tcg_card_selected();

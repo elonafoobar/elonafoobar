@@ -11,6 +11,7 @@
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/lua_env.hpp"
@@ -229,8 +230,7 @@ TurnResult build_new_building()
         return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get("core.locale.building.really_build_it_here"));
-    ELONA_YES_NO_PROMPT();
-    rtval = show_prompt(promptx, prompty, 160);
+    rtval = yes_or_no(promptx, prompty, 160);
     if (rtval != 0)
     {
         update_screen();
@@ -428,61 +428,42 @@ TurnResult show_house_board()
     txtnew();
     txt(i18n::s.get("core.locale.building.house_board.what_do"));
     p = 0;
+
+    Prompt prompt("core.locale.building.house_board.choices");
+
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
-        ELONA_APPEND_PROMPT(
-            i18n::s.get(
-                "core.locale.building.house_board.choices.assign_a_shopkeeper"),
-            u8"null"s,
-            ""s + 4);
+        prompt.append("assign_a_shopkeeper", 4);
         if (map_data.max_item_count < 400)
         {
-            ELONA_APPEND_PROMPT(
+            prompt.append(
                 i18n::s.get(
                     "core.locale.building.house_board.choices.extend",
                     calcshopreform()),
-                u8"null"s,
-                ""s + 5);
+                5);
         }
     }
+
     if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
     {
-        ELONA_APPEND_PROMPT(
-            i18n::s.get(
-                "core.locale.building.house_board.choices.assign_a_breeder"),
-            u8"null"s,
-            ""s + 4);
+        prompt.append("assign_a_breeder", 4);
     }
-    ELONA_APPEND_PROMPT(
-        i18n::s.get("core.locale.building.house_board.choices.design"),
-        u8"null"s,
-        ""s + 0);
+
+    prompt.append("design", 0);
+
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.building.house_board.choices.home_rank"),
-            u8"null"s,
-            ""s + 2);
-        ELONA_APPEND_PROMPT(
-            i18n::s.get(
-                "core.locale.building.house_board.choices.allies_in_your_home"),
-            u8"null"s,
-            ""s + 4);
+        prompt.append("home_rank", 2);
+        prompt.append("allies_in_your_home", 4);
         if (game_data.current_dungeon_level == 1)
         {
-            ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.building.house_board.choices.recruit_"
-                            "a_servant"),
-                u8"null"s,
-                ""s + 6);
+            prompt.append("recruit_a_servant", 6);
         }
-        ELONA_APPEND_PROMPT(
-            i18n::s.get(
-                "core.locale.building.house_board.choices.move_a_stayer"),
-            u8"null"s,
-            ""s + 3);
+        prompt.append("move_a_stayer", 3);
     }
-    int stat = show_prompt(promptx, prompty, 240);
+
+    int stat = prompt.query(promptx, prompty, 240);
+
     if (stat == -1)
     {
         update_screen();
@@ -799,10 +780,8 @@ void show_home_value()
     while (1)
     {
         redraw();
-        await(Config::instance().wait1);
-        key_check();
-        cursor_check();
-        if (key == key_cancel)
+        auto action = cursor_check_ex();
+        if (action == "cancel")
         {
             break;
         }

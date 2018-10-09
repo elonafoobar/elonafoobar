@@ -266,14 +266,14 @@ void UIMenuGameHelp::_draw_navigation_menu()
     }
 }
 
-void UIMenuGameHelp::_draw_background_vignette(int id)
+void UIMenuGameHelp::_draw_background_vignette(int id, int type)
 {
     cmbg = id;
     x = ww / 5 * 2;
     y = wh - 80;
     pos(wx + ww / 4, wy + wh / 2);
     gmode(4, 50);
-    gcopy_c(p, cmbg % 4 * 180, cmbg / 4 % 2 * 300, 180, 300, x, y);
+    gcopy_c(type, cmbg % 4 * 180, cmbg / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
 }
 
@@ -301,12 +301,7 @@ void UIMenuGameHelp::update()
     }
     display_topic(i18n::s.get("core.locale.ui.manual.topic"), wx + 34, wy + 36);
 
-    if (mode == 1)
-        p = 2;
-    else
-        p = 4;
-
-    _draw_background_vignette(page % 5);
+    _draw_background_vignette(page % 5, mode == 1 ? 2 : 4);
     keyrange = 0;
 
     // Moves and refresh cursor
@@ -330,18 +325,18 @@ void UIMenuGameHelp::update()
 
 void UIMenuGameHelp::draw()
 {
-    // Draws the elft part of the window continuously, ensuring key refreshing
+    // Draws the left part of the window continuously, ensuring key refreshing
     _draw_navigation_menu();
 }
 
 
 optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
-    const std::string& key)
+    const std::string& action)
 {
     // Key selection
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
-    if (p != -1)
+    if (auto selected = get_selected_index_this_page())
     {
+        cs = *selected;
         snd("core.ok1");
         page_bk = page;
         cs_bk2 = cs;
@@ -349,7 +344,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     }
 
     // Page changes
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -358,7 +353,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
             set_reupdate();
         }
     }
-    if (key == key_pagedown)
+    if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -369,7 +364,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     }
 
     // Closing menu
-    if (key == key_cancel)
+    if (action == "cancel")
     {
         return UIMenuGameHelp::ResultType::finish();
     }

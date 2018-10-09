@@ -162,9 +162,9 @@ void UIMenuTownEconomy::draw()
 }
 
 optional<UIMenuTownEconomy::ResultType> UIMenuTownEconomy::on_key(
-    const std::string& key)
+    const std::string& action)
 {
-    if (key == key_pageup)
+    if (action == "next_page")
     {
         if (pagemax != 0)
         {
@@ -173,7 +173,7 @@ optional<UIMenuTownEconomy::ResultType> UIMenuTownEconomy::on_key(
             set_reupdate();
         }
     }
-    else if (key == key_pagedown)
+    else if (action == "previous_page")
     {
         if (pagemax != 0)
         {
@@ -182,7 +182,7 @@ optional<UIMenuTownEconomy::ResultType> UIMenuTownEconomy::on_key(
             set_reupdate();
         }
     }
-    else if (key != ""s)
+    else if (action != ""s)
     {
         update_screen();
         return UIMenuTownEconomy::Result::cancel();
