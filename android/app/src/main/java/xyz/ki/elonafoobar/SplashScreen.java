@@ -123,22 +123,6 @@ public class SplashScreen extends Activity {
         }
     }
 
-    private boolean verifyArchiveFile(File file) throws Exception
-    {
-        Path path = file.toPath();
-        ZipInputStream zip = new ZipInputStream(Files.newInputStream(
-                path, StandardOpenOption.READ));
-        ZipEntry entry = null;
-
-        while((entry = zip.getNextEntry()) != null) {
-            if (entry.getName().startsWith(ELONA_FOLDER_NAME)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private String extractArchiveFile(Uri uri)
     {
         File externalFilesDir = getExternalFilesDir(null);
@@ -147,15 +131,11 @@ public class SplashScreen extends Activity {
         try
         {
             AssetUtils.copyUriData(uri, zipFile, SplashScreen.this);
-            if (verifyArchiveFile(zipFile)) {
-                new ExtractZipTask(zipFile,
-                                   externalFilesDir,
-                                   ELONA_FOLDER_NAME,
-                                   SplashScreen.this)
-                    .execute();
-            } else {
-                return getString(R.string.dirNotFound, ELONA_FOLDER_NAME, zipFile.toString());
-            }
+            new ExtractZipTask(zipFile,
+                               externalFilesDir,
+                               ELONA_FOLDER_NAME,
+                               SplashScreen.this)
+                .execute();
         }
         catch (Exception e)
         {
@@ -187,17 +167,14 @@ public class SplashScreen extends Activity {
             if (zipUri == null) {
                 fail(getString(R.string.archiveNotFound));
             } else {
-                String errorMessage = extractArchiveFile(zipUri);
-                if (errorMessage != null) {
-                    fail(errorMessage);
-                } else {
-                    // BUG: Installer's dialog will be overlapped while
-                    // zip extraction task's dialog is still up. For now,
-                    // specify whether or not to display the installer's
-                    // dialog in InstallProgramTask.
-                    new InstallProgramTask(isGameInstalled(), false, SplashScreen.this)
-                        .execute();
-                }
+                extractArchiveFile(zipUri);
+
+                // BUG: Installer's dialog will be overlapped while
+                // zip extraction task's dialog is still up. For now,
+                // specify whether or not to display the installer's
+                // dialog in InstallProgramTask.
+                new InstallProgramTask(isGameInstalled(), false, SplashScreen.this)
+                    .execute();
             }
         }
     }
@@ -255,7 +232,6 @@ public class SplashScreen extends Activity {
 
     private class InstallProgramTask extends AsyncTask<Void, Integer, Boolean> {
         private final List<FolderInfo> folders = Arrays.asList(
-            new FolderInfo[] {
                 new FolderInfo("data"),
                 new FolderInfo("graphic"),
                 new FolderInfo("map"),
@@ -264,9 +240,7 @@ public class SplashScreen extends Activity {
                 new FolderInfo("runtime", ".", false),
                 new FolderInfo("sound"),
                 new FolderInfo("tmp"),
-                new FolderInfo("user", true)
-            }
-        );
+                new FolderInfo("user", true));
 
         private boolean alreadyInstalled;
         private boolean showDialog;
@@ -339,8 +313,7 @@ public class SplashScreen extends Activity {
         }
 
         private void clearExistingData(AssetManager assetManager,
-                                       String externalFilesDir) throws Exception
-        {
+                                       String externalFilesDir) {
             // Clear out the old data if it exists (but preserve
             // custom folders + files)
             for (FolderInfo folder : folders) {
@@ -407,7 +380,7 @@ public class SplashScreen extends Activity {
                                         String fromAssetPath,
                                         File toPath) throws Exception {
             try {
-                String[] files = assetManager.list(fromAssetPath.toString());
+                String[] files = assetManager.list(fromAssetPath);
                 toPath.mkdirs();
                 boolean success = true;
                 for (String filename : files) {
