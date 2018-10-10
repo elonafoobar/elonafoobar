@@ -146,10 +146,12 @@ optional<std::string> InputContext::_check_movement_action(
         }
         else if (_matches("northwest", key, key_modifiers))
         {
+            _menu_cycle_key_pressed = true;
             input = StickKey::up | StickKey::left;
         }
         else if (_matches("northeast", key, key_modifiers))
         {
+            _menu_cycle_key_pressed = true;
             input = StickKey::up | StickKey::right;
         }
         else if (_matches("southwest", key, key_modifiers))
@@ -413,6 +415,7 @@ bool InputContext::_delay_normal_action(const Keybind& keybind)
 
 std::string InputContext::check_for_command(KeyWaitDelay delay_type)
 {
+    _menu_cycle_key_pressed = false;
     key_escape = false;
 
     const auto& keys = snail::Input::instance().pressed_keys();
@@ -428,13 +431,6 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
         else
         {
             keyhalt = 0;
-        }
-    }
-
-    for (const auto& key : keys)
-    {
-        if (auto n = keybind_key_name(key))
-        {
         }
     }
 
@@ -513,6 +509,14 @@ std::string InputContext::check_for_command_with_list(int& list_index)
     if (action == "east"s)
     {
         action = "next_page"s;
+    }
+    if (action == "northwest"s && _menu_cycle_key_pressed)
+    {
+        action = "previous_menu"s;
+    }
+    if (action == "northeast"s && _menu_cycle_key_pressed)
+    {
+        action = "next_menu"s;
     }
     if (cs >= keyrange)
     {

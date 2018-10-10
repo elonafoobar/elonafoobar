@@ -83,6 +83,11 @@ private:
     std::unordered_set<ActionCategory> _excluded_categories;
     std::string _last_action;
     int _last_action_held_frames{};
+    // Needed to distinguish combining arrow keys to create "northwest" or
+    // "northeast" actions and pressing a key bound to "northwest" or
+    // "northeast" to cycle between multiple menus, e.g. in the inventory menu.
+    // Using the arrow keys together should not cause the menu to cycle.
+    bool _menu_cycle_key_pressed{};
 };
 
 } // namespace elona
