@@ -65,24 +65,25 @@ void TouchInput::initialize_quick_actions()
         }
     }
 
-    using Tuple =
-        std::tuple<std::string, optional<snail::Key>, int, int, bool>[];
+    using Tuple = std::tuple<std::string, snail::Key, int, int, bool>[];
     for (const auto& tuple : Tuple{
              {"OK", snail::Key::enter, 1, 1, true},
-             {"Back", snail::Key::shift, 2, 1, true},
-             {"z", none, 1, 2, true},
-             {"x", none, 2, 2, true},
-             {"g", none, 1, 3, true},
-             {"d", none, 2, 3, true},
-             {"f", none, 2, 4, true},
+             // Modifier status is only updated when shift_l or shift_r is
+             // pressed specifically.
+             {"Back", snail::Key::shift_l, 2, 1, true},
+             {"z", snail::Key::key_z, 1, 2, true},
+             {"x", snail::Key::key_x, 2, 2, true},
+             {"g", snail::Key::key_g, 1, 3, true},
+             {"d", snail::Key::key_d, 2, 3, true},
+             {"f", snail::Key::key_f, 2, 4, true},
              {"Esc", snail::Key::escape, 1, 4, true},
-             {"v", none, 1, 4, false},
-             {"/", none, 2, 4, false},
-             {"*", none, 3, 4, false},
+             {"v", snail::Key::key_v, 1, 4, false},
+             {"/", snail::Key::slash, 2, 4, false},
+             {"*", snail::Key::keypad_asterisk, 3, 4, false},
          })
     {
         std::string text = std::get<0>(tuple);
-        optional<snail::Key> key = std::get<1>(tuple);
+        snail::Key key = std::get<1>(tuple);
         int w;
         if (std::get<4>(tuple))
         {

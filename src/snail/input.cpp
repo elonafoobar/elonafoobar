@@ -326,50 +326,46 @@ void Input::restore_numlock()
 
 void Input::_update()
 {
-    // Check for touched Android quick actions that send keypresses.
-    if (_last_quick_action_key)
-    {
-        _quick_action_key_repeat++;
-
-        if (_quick_action_key_repeat == 0
-            || (_quick_action_key_repeat > _quick_action_repeat_start_wait
-                && _quick_action_key_repeat % _quick_action_repeat_wait))
-        {
-            _keys[static_cast<size_t>(*_last_quick_action_key)]._press();
-        }
-    }
-
+    size_t index = 0;
     for (auto&& key : _keys)
     {
         if (key.was_released_immediately() && key.repeat() == 0)
         {
             key._release();
+            _pressed_key_identifiers.erase(static_cast<Key>(index));
         }
         if (key.is_pressed())
         {
             key._increase_repeat();
         }
-    }
-
-    // Check for touched Android quick actions that send text inputs
-    // instead of key presses.
-    if (_last_quick_action_text)
-    {
-        // Keywait has to be emulated here because SDL_TextInputEvent
-        // would usually be spaced apart for the specified text input
-        // delay at the OS level, but there is no such mechanism for
-        // on-screen quick actions.
-        _quick_action_text_repeat++;
-
-        if (_quick_action_text_repeat == 0
-            || (_quick_action_text_repeat > _quick_action_repeat_start_wait
-                && _quick_action_text_repeat % _quick_action_repeat_wait))
-        {
-            _text = *_last_quick_action_text;
-        }
+        index++;
     }
 }
 
+
+void Input::_update_modifier_keys()
+{
+    using KeyTuple = std::tuple<Key, Key, Key, ModKey>[];
+    for (const auto& tuple : KeyTuple{
+             {Key::alt, Key::alt_l, Key::alt_r, ModKey::alt},
+             {Key::ctrl, Key::ctrl_l, Key::ctrl_r, ModKey::ctrl},
+             {Key::gui, Key::gui_l, Key::gui_r, ModKey::gui},
+             {Key::shift, Key::shift_l, Key::shift_r, ModKey::shift},
+         })
+    {
+        if (_keys[static_cast<size_t>(std::get<1>(tuple))].is_pressed()
+            || _keys[static_cast<int>(std::get<2>(tuple))].is_pressed())
+        {
+            _keys[static_cast<size_t>(std::get<0>(tuple))]._press();
+            _modifiers |= std::get<3>(tuple);
+        }
+        else
+        {
+            _keys[static_cast<size_t>(std::get<0>(tuple))]._release();
+            _modifiers &= ~std::get<3>(tuple);
+        }
+    }
+}
 
 
 void Input::_handle_event(const ::SDL_KeyboardEvent& event)
@@ -414,26 +410,7 @@ void Input::_handle_event(const ::SDL_KeyboardEvent& event)
         _pressed_key_identifiers.erase(k);
     }
 
-    using KeyTuple = std::tuple<Key, Key, Key, ModKey>[];
-    for (const auto& tuple : KeyTuple{
-             {Key::alt, Key::alt_l, Key::alt_r, ModKey::alt},
-             {Key::ctrl, Key::ctrl_l, Key::ctrl_r, ModKey::ctrl},
-             {Key::gui, Key::gui_l, Key::gui_r, ModKey::gui},
-             {Key::shift, Key::shift_l, Key::shift_r, ModKey::shift},
-         })
-    {
-        if (_keys[static_cast<size_t>(std::get<1>(tuple))].is_pressed()
-            || _keys[static_cast<int>(std::get<2>(tuple))].is_pressed())
-        {
-            _keys[static_cast<size_t>(std::get<0>(tuple))]._press();
-            _modifiers |= std::get<3>(tuple);
-        }
-        else
-        {
-            _keys[static_cast<size_t>(std::get<0>(tuple))]._release();
-            _modifiers &= ~std::get<3>(tuple);
-        }
-    }
+    _update_modifier_keys();
 }
 
 
@@ -460,52 +437,31 @@ void Input::_handle_event(const ::SDL_TextEditingEvent& event)
 
 void Input::_handle_event(const ::SDL_TouchFingerEvent& event)
 {
-    bool release_key = false;
-    bool stop_text = false;
-
     TouchInput::instance().on_touch_event(event);
 
     auto action = TouchInput::instance().last_touched_quick_action();
 
     if (action)
     {
-        if (action->key)
+        if (_last_quick_action_key && *_last_quick_action_key != action->key)
         {
-            // Keypress action
-            if (_last_quick_action_key
-                && *_last_quick_action_key != action->key)
-            {
-                _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
-            }
-
-            _keys[static_cast<size_t>(*action->key)]._press();
-
-            _last_quick_action_key = action->key;
-            stop_text = true;
+            _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
+            _pressed_key_identifiers.erase(*_last_quick_action_key);
         }
-        else
-        {
-            _last_quick_action_text = action->text;
-            release_key = true;
-        }
-    }
-    else
-    {
-        stop_text = true;
-        release_key = true;
-    }
 
-    if (release_key && _last_quick_action_key)
+        _keys[static_cast<size_t>(action->key)]._press();
+        _pressed_key_identifiers.insert(action->key);
+
+        _last_quick_action_key = action->key;
+    }
+    else if (_last_quick_action_key)
     {
         _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
+        _pressed_key_identifiers.erase(*_last_quick_action_key);
         _last_quick_action_key = none;
-        _quick_action_key_repeat = -1;
     }
-    if (stop_text)
-    {
-        _last_quick_action_text = none;
-        _quick_action_text_repeat = -1;
-    }
+
+    _update_modifier_keys();
 }
 
 
