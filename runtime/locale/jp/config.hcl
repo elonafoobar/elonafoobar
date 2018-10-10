@@ -425,14 +425,6 @@
                 quick_action_size {
                     name = "ボタンのサイズ"
                 }
-
-                quick_action_repeat_start_wait {
-                    name = "ボタンウェイト(開始)"
-                }
-
-                quick_action_repeat_wait {
-                    name = "ボタンウェイト"
-                }
             }
 
             keybindings {
