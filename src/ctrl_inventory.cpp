@@ -2021,7 +2021,7 @@ label_2061_internal:
             goto label_20591;
         }
     }
-    if (action == "switch_mode_2")
+    if (action == "identify")
     {
         if (listmax != 0)
         {
