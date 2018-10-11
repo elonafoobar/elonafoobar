@@ -340,6 +340,8 @@ config def {
                 default = "shrinked"
                 variants = ["shrinked", "fullscale"]
             }
+
+            show_fps = false
         }
     }
 

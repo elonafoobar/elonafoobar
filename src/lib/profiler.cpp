@@ -1,8 +1,6 @@
 #include "profiler.hpp"
 #include <iostream>
 
-namespace elona
-{
 namespace lib
 {
 
@@ -43,4 +41,3 @@ void Profiler::dump(std::ostream& out)
 }
 
 } // namespace lib
-} // namespace elona

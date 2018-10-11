@@ -507,6 +507,11 @@ DOC
                         fullscale = "Full-scale"
                     }
                 }
+
+                show_fps {
+                    name = "Show FPS"
+                    yes_no = core.locale.config.common.yes_no.show_dont_show
+                }
             }
 
             android {
