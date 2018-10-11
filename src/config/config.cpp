@@ -341,22 +341,9 @@ void load_config(const fs::path& hcl_file)
         "core.config.screen.orientation",
         &convert_and_set_requested_orientation);
 
-    conf.bind_setter<int>(
-        "core.config.android.quick_action_repeat_start_wait", [](auto value) {
-            snail::Input::instance().set_quick_action_repeat_start_wait(value);
-        });
-
-    conf.bind_setter<int>(
-        "core.config.android.quick_action_repeat_wait", [](auto value) {
-            snail::Input::instance().set_quick_action_repeat_wait(value);
-        });
-
     std::ifstream ifs{
         filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);
-
-    key_prev = key_northwest;
-    key_next = key_northeast;
 
     if (Config::instance().runwait < 1)
     {

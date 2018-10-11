@@ -406,17 +406,6 @@ public:
     }
 
 
-    void set_quick_action_repeat_start_wait(int wait) noexcept
-    {
-        _quick_action_repeat_start_wait = wait;
-    }
-
-    void set_quick_action_repeat_wait(int wait) noexcept
-    {
-        _quick_action_repeat_wait = wait;
-    }
-
-
     virtual ~Input() override = default;
 
 
@@ -430,6 +419,7 @@ public:
     void _handle_event(const ::SDL_TouchFingerEvent& event);
     void _handle_event(const ::SDL_MouseButtonEvent& event);
 
+    void _update_modifier_keys();
 
 private:
     std::array<KeyState, static_cast<size_t>(Key::_size)> _keys;
@@ -439,15 +429,8 @@ private:
     bool _is_ime_active{};
     bool _needs_restore_numlock{};
 
-    // Members for handling text input of on-screen quick action
-    // buttons on Android. They need to be here since quick actions
-    // can modify inputted text.
+    // For Android
     optional<snail::Key> _last_quick_action_key = none;
-    optional<std::string> _last_quick_action_text = none;
-    int _quick_action_key_repeat = -1;
-    int _quick_action_text_repeat = -1;
-    int _quick_action_repeat_start_wait = 10;
-    int _quick_action_repeat_wait = 2;
 
     Mouse _mouse;
 

@@ -173,11 +173,11 @@ static std::string _binding_name(
     {
         result = binding.primary.to_string();
     }
-    else if (!binding.alternate.empty())
+    if (result == "" && !binding.alternate.empty())
     {
         result = binding.primary.to_string();
     }
-    else if (binding.joystick != snail::Key::none)
+    if (result == "" && binding.joystick != snail::Key::none)
     {
         if (auto name_opt = keybind_key_name(binding.joystick))
         {
@@ -203,6 +203,8 @@ void keybind_regenerate_key_names()
     key_northeast = _binding_name(km, "northeast");
     key_southwest = _binding_name(km, "southwest");
     key_southeast = _binding_name(km, "southeast");
+    key_prev      = key_northwest;
+    key_next      = key_northeast;
     key_wait      = _binding_name(km, "wait");
     key_cancel    = _binding_name(km, "cancel");
     key_pageup    = _binding_name(km, "next_page");

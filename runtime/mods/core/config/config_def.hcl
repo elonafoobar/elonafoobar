@@ -439,18 +439,6 @@ DOC
                 min = 20
                 max = 40
             }
-
-            quick_action_repeat_start_wait = {
-                default = 10
-                min = 1
-                max = 20
-            }
-
-            quick_action_repeat_wait = {
-                default = 2
-                min = 1
-                max = 20
-            }
         }
     }
 

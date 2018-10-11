@@ -50,6 +50,10 @@ protected:
     using ResultType = UIMenu<T>::Result;
 
 public:
+    virtual ~UIMenu()
+    {
+    }
+
     virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;

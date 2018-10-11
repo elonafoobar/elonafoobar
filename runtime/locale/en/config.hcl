@@ -547,16 +547,6 @@ DOC
                     name = "Quick Action Size"
                     doc = "Controls size of touch actions."
                 }
-
-                quick_action_repeat_start_wait {
-                    name = "Quick Action Repeat Wait"
-                    doc = "Controls the held time before a quick action begins to repeat."
-                }
-
-                quick_action_repeat_wait {
-                    name = "Quick Action Wait"
-                    doc = "Controls the time between repeats of a held quick action."
-                }
             }
 
             keybindings {

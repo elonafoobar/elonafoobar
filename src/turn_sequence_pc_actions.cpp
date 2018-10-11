@@ -307,7 +307,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action == "quick_menu")
     {
-        show_quick_menu();
+        action = show_quick_menu();
         update_screen();
     }
     if (auto sc = get_shortcut(action))
