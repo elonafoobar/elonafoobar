@@ -125,6 +125,7 @@ set(CORE_SOURCES
   src/mapgen.cpp
   src/mef.cpp
   src/menu.cpp
+  src/menu_quick_menu.cpp
   src/message.cpp
   src/network.cpp
   src/proc_event.cpp

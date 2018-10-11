@@ -44,7 +44,7 @@ enum class CharacterSheetOperation
 
 void text_set();
 int cnvjkey(const std::string&);
-void show_quick_menu();
+std::string show_quick_menu();
 bool maybe_show_ex_help(int id, bool should_update_screen = false);
 void show_ex_help();
 void show_game_help();
