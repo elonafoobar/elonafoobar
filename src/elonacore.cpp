@@ -13991,7 +13991,7 @@ label_2682_internal:
     if (s == u8"{fade}"s)
     {
         gsel(4);
-        boxf();
+        boxf(0, 0, windoww, windowh, {0, 0, 0, 255});
         gsel(0);
         animation_fade_in();
         goto label_2682_internal;
@@ -14151,7 +14151,7 @@ label_2684_internal:
 void scene_fade_to_black()
 {
     gsel(4);
-    boxf();
+    boxf(0, 0, windoww, windowh, {0, 0, 0, 255});
     gsel(0);
     animation_fade_in();
     scenemode = 0;
