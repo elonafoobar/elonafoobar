@@ -17,7 +17,14 @@ private:
             : index(index)
             , action_id(action_id)
         {
-            text = i18n::s.get(locale_key);
+            if (locale_key == "")
+            {
+                text = "";
+            }
+            else
+            {
+                text = i18n::s.get(locale_key);
+            }
         }
 
         int index;
@@ -58,8 +65,6 @@ std::string show_quick_menu()
 {
     int tx, ty;
 
-    listmax = 0;
-
     if (defines::is_android)
     {
         tx = (windoww / 2) - 100;
@@ -70,6 +75,10 @@ std::string show_quick_menu()
         tx = 50;
         ty = windowh - 255;
     }
+
+    listmax = 0;
+    snd("core.cursor1");
+    cs = -1;
 
     return QuickMenu(tx, ty, quickpage).query();
 }
@@ -82,6 +91,7 @@ std::string QuickMenu::query()
     {
         if (_reupdate)
         {
+            snail::Input::instance().clear_pressed_keys_and_modifiers();
             _update();
             _reupdate = false;
         }
@@ -168,9 +178,9 @@ void QuickMenu::_add_pagination_to_entries()
 
     // Rightmost entry for switching menus.
     p = _page + 1;
-    if (p == 3)
+    if (p > 3)
     {
-        p = 2;
+        p = 3;
     }
     _entries.at(8).text = s(p);
 }
@@ -228,6 +238,7 @@ void QuickMenu::_draw()
         {
             draw("quickmenu_action", entry.x + _pos_x, entry.y + _pos_y);
         }
+
         gmode(4, (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
 
         if (cs == cnt)
@@ -326,6 +337,10 @@ optional<std::string> QuickMenu::_on_action(std::string& action)
         }
     }
 
+    if (!try_update)
+    {
+        return none;
+    }
     if (try_update)
     {
         if (cs == 0 || action == "northwest")
@@ -356,6 +371,13 @@ optional<std::string> QuickMenu::_on_action(std::string& action)
     cs = 0;
     update_screen();
     quickkeywait = 1;
+
+    // If canceling by using escape, don't make the escape menu pop up
+    // immediately upon exiting.
+    if (key_escape)
+    {
+        key_escape = 0;
+    }
 
     return action;
 }
