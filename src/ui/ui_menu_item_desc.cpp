@@ -12,7 +12,7 @@ namespace ui
 
 bool UIMenuItemDesc::init()
 {
-    snd(26);
+    snd("core.pop2");
     page_save();
     page = 0;
     pagesize = 15;
@@ -151,7 +151,7 @@ optional<UIMenuItemDesc::ResultType> UIMenuItemDesc::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -160,7 +160,7 @@ optional<UIMenuItemDesc::ResultType> UIMenuItemDesc::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

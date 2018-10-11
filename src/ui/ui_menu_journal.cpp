@@ -150,7 +150,7 @@ bool UIMenuJournal::init()
     show_title(strhint2 + strhint3);
     wx = (windoww - 736) / 2 + inf_screenx;
     wy = winposy(448);
-    snd(59);
+    snd("core.book1");
     window_animation(wx, wy, 736, 448, 9, 4);
 
     return true;
@@ -248,7 +248,7 @@ optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
     {
         if (pagemax != 0)
         {
-            snd(71);
+            snd("core.card1");
             ++page;
             set_reupdate();
         }
@@ -257,7 +257,7 @@ optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
     {
         if (pagemax != 0)
         {
-            snd(71);
+            snd("core.card1");
             --page;
             set_reupdate();
         }

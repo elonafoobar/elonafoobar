@@ -560,13 +560,13 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     else if (action == "next_page"s)
     {
         ++page;
-        snd(1);
+        snd("core.pop1");
         set_reupdate();
     }
     else if (action == "previous_page"s)
     {
         --page;
-        snd(1);
+        snd("core.pop1");
         set_reupdate();
     }
     else if (action == "cancel"s)

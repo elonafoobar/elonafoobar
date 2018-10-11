@@ -45,7 +45,7 @@ bool UIMenuSkills::init()
     cs = commark(0) % 1000;
     page = commark(0) / 1000;
     curmenu = 1;
-    snd(101);
+    snd("core.skill");
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 1);
@@ -196,7 +196,7 @@ void UIMenuSkills::draw()
 
 static void _assign_shortcut(int sc_, int skill_id)
 {
-    snd(20);
+    snd("core.ok1");
     if (game_data.skill_shortcuts.at(sc_) == skill_id)
     {
         game_data.skill_shortcuts.at(sc_) = 0;
@@ -238,7 +238,7 @@ optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -247,7 +247,7 @@ optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

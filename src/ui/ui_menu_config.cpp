@@ -257,7 +257,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
         if (_submenu_index == 0)
         {
             cs = 0;
-            snd(20);
+            snd("core.ok1");
             return UIMenuConfig::Result::finish(*submenu + 1);
         }
     }
@@ -274,7 +274,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
         }
 
         _menu.items[cs].get()->change(delta);
-        snd(20);
+        snd("core.ok1");
         set_reupdate();
         return none;
     }

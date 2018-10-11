@@ -325,7 +325,7 @@ void run_random_event(RandomEvent event)
         event_bg = u8"bg_re3";
         break;
     case 4:
-        snd(116);
+        snd("core.curse2");
         efid = 1118;
         efp = 100;
         tc = 0;
@@ -334,7 +334,7 @@ void run_random_event(RandomEvent event)
         event_bg = u8"bg_re5";
         break;
     case 22:
-        snd(116);
+        snd("core.curse2");
         efid = 454;
         efp = 100;
         tc = 0;
@@ -585,7 +585,7 @@ int show_random_event_window(
     if (Config::instance().skiprandevents && choices.size() == 1)
     {
         // Skip this event.
-        snd(62);
+        snd("core.pop4");
         txt(text);
         txt(i18n::s.get("core.locale.event.popup.skip", choices[0]));
         return -1;
@@ -626,7 +626,7 @@ int show_random_event_window(
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
-    snd(62);
+    snd("core.pop4");
     dx = tx + 36;
     talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
     notesel(buff);
@@ -692,13 +692,13 @@ int show_random_event_window(
         {
             if (action == "cancel")
             {
-                snd(40);
+                snd("core.click1");
                 rtval = chatesc;
             }
         }
         if (rtval != -1)
         {
-            snd(40);
+            snd("core.click1");
             key = "";
             return rtval;
         }

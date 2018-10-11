@@ -166,34 +166,34 @@ MainMenuResult main_title_menu()
 
         if (index == 1)
         {
-            snd(20);
+            snd("core.ok1");
             geneuse = "";
             return MainMenuResult::main_menu_new_game;
         }
         if (index == 0)
         {
-            snd(20);
+            snd("core.ok1");
             return MainMenuResult::main_menu_continue;
         }
         if (index == 2)
         {
-            snd(20);
+            snd("core.ok1");
             return MainMenuResult::main_menu_incarnate;
         }
         if (index == 3)
         {
-            snd(20);
+            snd("core.ok1");
             exec(homepage, 16);
         }
         if (index == 4)
         {
-            snd(20);
+            snd("core.ok1");
             set_option();
             return MainMenuResult::main_title_menu;
         }
         if (index == 5)
         {
-            snd(20);
+            snd("core.ok1");
             return MainMenuResult::finish_elona;
         }
     }
@@ -427,7 +427,7 @@ MainMenuResult main_menu_continue()
         if (p != -1)
         {
             playerid = listn(0, p);
-            snd(20);
+            snd("core.ok1");
             mode = 3;
             return MainMenuResult::initialize_game;
         }
@@ -469,7 +469,7 @@ MainMenuResult main_menu_continue()
                     rtval = yes_or_no(promptx, prompty, 200);
                     if (rtval == 0)
                     {
-                        snd(20);
+                        snd("core.ok1");
                         ctrl_file(FileOperation::save_game_delete);
                     }
                     return MainMenuResult::main_menu_continue;
@@ -480,7 +480,7 @@ MainMenuResult main_menu_continue()
         {
             if (pagemax != 0)
             {
-                snd(1);
+                snd("core.pop1");
                 ++page;
                 goto savegame_change_page;
             }
@@ -489,7 +489,7 @@ MainMenuResult main_menu_continue()
         {
             if (pagemax != 0)
             {
-                snd(1);
+                snd("core.pop1");
                 --page;
                 goto savegame_change_page;
             }
@@ -597,7 +597,7 @@ MainMenuResult main_menu_incarnate()
         }
         if (p != -1)
         {
-            snd(20);
+            snd("core.ok1");
             geneuse = listn(0, p);
             playerid = listn(0, p);
             return MainMenuResult::main_menu_new_game;

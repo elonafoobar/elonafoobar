@@ -192,7 +192,7 @@ UIMenuCharamakeAttributes::on_key(const std::string& action)
     {
         if (*selected == 0)
         {
-            snd(103);
+            snd("core.dice");
             set_reupdate();
             return none;
         }
@@ -210,12 +210,12 @@ UIMenuCharamakeAttributes::on_key(const std::string& action)
             _locked_attributes(*selected - 2) = 1;
             --_locked_attributes(8);
         }
-        snd(20);
+        snd("core.ok1");
     }
     else if (action == "switch_mode_2")
     {
         _minimum = true;
-        snd(103);
+        snd("core.dice");
         set_reupdate();
         return none;
     }

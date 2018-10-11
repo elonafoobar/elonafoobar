@@ -14,7 +14,7 @@ int _show_prompt_val{};
 
 int Prompt::query(int x, int y, int width)
 {
-    snd(26);
+    snd("core.pop2");
 
     int csprev = cs;
     cs = 0;
@@ -190,7 +190,7 @@ void PromptWithNumber::_modify_result(const std::string& action)
     _show_prompt_val = elona::stoi(inputlog(0));
     if (action == "west" || action == "previous_page")
     {
-        snd(5);
+        snd("core.cursor1");
         --_number;
         if (_number < 1)
         {
@@ -199,7 +199,7 @@ void PromptWithNumber::_modify_result(const std::string& action)
     }
     if (action == "east" || action == "next_page")
     {
-        snd(5);
+        snd("core.cursor1");
         ++_number;
         if (_number > _max)
         {

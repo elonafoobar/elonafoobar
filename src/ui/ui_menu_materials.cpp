@@ -31,7 +31,7 @@ bool UIMenuMaterials::init()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
-    snd(92);
+    snd("core.scroll");
     wx = (windoww - 600) / 2 + inf_screenx;
     wy = winposy(430);
     ww = 600;
@@ -150,7 +150,7 @@ optional<UIMenuMaterials::ResultType> UIMenuMaterials::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -159,7 +159,7 @@ optional<UIMenuMaterials::ResultType> UIMenuMaterials::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

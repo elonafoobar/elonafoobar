@@ -29,7 +29,7 @@ bool UIMenuChatHistory::init()
     picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     windowshadow = 1;
-    snd(92);
+    snd("core.scroll");
     ww = clamp(windoww - 90, windoww - 90, 720);
     wh = 440;
     wx = (windoww - ww) / 2 + inf_screenx;

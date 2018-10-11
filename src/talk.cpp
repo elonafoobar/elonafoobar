@@ -54,7 +54,7 @@ void talk_to_npc()
     set_npc_religion();
     if (scenemode == 0)
     {
-        snd(99);
+        snd("core.chat");
         map_proc_regen_and_update();
     }
     cs = 0;
@@ -231,7 +231,7 @@ static void _give_potion_of_cure_corruption(int stat)
 {
     inv[stat].modify_number(-1);
     txt(i18n::s.get("core.locale.talk.unique.pael.give.you_give"));
-    snd(13);
+    snd("core.equip1");
 }
 
 bool talk_give_potion_of_cure_corruption()
@@ -338,7 +338,7 @@ TalkResult talk_game_begin()
             i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg."
                         "something_is_killed"));
         txt(i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg.ugh"));
-        snd(8);
+        snd("core.kill1");
         spillblood(28, 6, 10);
         flt();
         itemcreate(-1, 705, 28, 6, 0);
@@ -620,7 +620,7 @@ int talk_window_query()
 
 void talk_reset_variables()
 {
-    snd(10);
+    snd("core.more1");
     cs = 0;
     listmax = 0;
 }

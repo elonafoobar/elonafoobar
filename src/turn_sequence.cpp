@@ -925,7 +925,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
                         "core.locale.magic.return.you_commit_a_crime"));
                     modify_karma(cdata.player(), -10);
                 }
-                snd(72);
+                snd("core.teleport1");
                 txt(i18n::s.get("core.locale.magic.return.door_opens"));
                 if (game_data.destination_map == 41)
                 {
@@ -1164,7 +1164,7 @@ void update_emoicon()
     {
         if (cc == 0)
         {
-            snd(60);
+            snd("core.ding1");
             msgalert = 1;
         }
         r2 = 0;
@@ -1406,7 +1406,7 @@ TurnResult pc_turn(bool advance_time)
                 quest_team_victorious();
                 msg_halt();
                 levelexitby = 4;
-                snd(49);
+                snd("core.exitmap1");
                 for (int cc = 0; cc < 16; ++cc)
                 {
                     if (arenaop == 0 && followerin(cc) == 1
@@ -1456,7 +1456,7 @@ TurnResult pc_turn(bool advance_time)
                 if (action == "north" || action == "east")
                 {
                     f = 1;
-                    snd(5);
+                    snd("core.cursor1");
                     if (p > camera)
                     {
                         camera = p;
@@ -1467,7 +1467,7 @@ TurnResult pc_turn(bool advance_time)
                 if (action == "south" || action == "west")
                 {
                     f = 1;
-                    snd(5);
+                    snd("core.cursor1");
                     if (p < camera)
                     {
                         camera = p;

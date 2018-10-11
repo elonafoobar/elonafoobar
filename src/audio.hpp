@@ -3,6 +3,7 @@
 #include "db_music.hpp"
 #include "db_sound.hpp"
 #include "filesystem.hpp"
+#include "log.hpp"
 #include "optional.hpp"
 #include "position.hpp"
 #include "shared_id.hpp"
@@ -11,18 +12,6 @@
 
 namespace elona
 {
-
-namespace detail
-{
-
-void snd_inner(
-    const SoundData& sound,
-    short angle = 0,
-    unsigned char dist = 0,
-    bool loop = false,
-    bool allow_duplicate = true);
-
-} // namespace detail
 
 int DSINIT();
 void DSLOADFNAME(const fs::path& filepath, int id);
@@ -41,26 +30,25 @@ void initialize_sound_file();
 
 std::pair<short, unsigned char> sound_calculate_position(const Position& p);
 
-template <typename I>
 void snd_at(
-    I sound_id,
+    SharedId sound_id,
     const Position& p,
     bool loop = false,
-    bool allow_duplicate = true)
-{
-    short angle;
-    unsigned char dist;
-    std::tie(angle, dist) = sound_calculate_position(p);
+    bool allow_duplicate = true);
+void snd_at(
+    const char* sound_id,
+    const Position& p,
+    bool loop = false,
+    bool allow_duplicate = true);
 
-    detail::snd_inner(
-        **the_sound_db[sound_id], angle, dist, loop, allow_duplicate);
-}
+void snd(SharedId sound_id, bool loop = false, bool allow_duplicate = true);
+void snd(const char* sound_id, bool loop = false, bool allow_duplicate = true);
 
-template <typename I>
-void snd(I sound_id, bool loop = false, bool allow_duplicate = true)
-{
-    detail::snd_inner(**the_sound_db[sound_id], 0, 0, loop, allow_duplicate);
-}
+optional<SharedId> sound_id_for_element(int element_id);
+void sound_kill(const Position& position);
+void sound_pick_up();
+void sound_footstep(int foot);
+void sound_footstep2(int foot);
 
 void sound_play_environmental();
 void stop_music();

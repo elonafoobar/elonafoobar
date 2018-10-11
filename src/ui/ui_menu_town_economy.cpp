@@ -54,7 +54,7 @@ bool UIMenuTownEconomy::init()
     picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     windowshadow = 1;
-    snd(92);
+    snd("core.scroll");
     _city = 1;
     ww = 540;
     wh = 440;
@@ -168,7 +168,7 @@ optional<UIMenuTownEconomy::ResultType> UIMenuTownEconomy::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -177,7 +177,7 @@ optional<UIMenuTownEconomy::ResultType> UIMenuTownEconomy::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

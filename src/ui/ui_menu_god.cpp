@@ -54,7 +54,7 @@ bool UIMenuGod::init()
     listn(0, listmax) = i18n::s.get("core.locale.god.desc.window.cancel");
     ++listmax;
 
-    snd(62);
+    snd("core.pop4");
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -171,13 +171,13 @@ optional<UIMenuGod::ResultType> UIMenuGod::on_key(const std::string& action)
 
     if (auto selected = get_selected_item())
     {
-        snd(40);
+        snd("core.click1");
         _rtval = *selected;
     }
 
     if (action == "cancel")
     {
-        snd(40);
+        snd("core.click1");
         _rtval = _cancel_choice;
     }
     if (_rtval != -1)

@@ -135,7 +135,7 @@ void cure_anorexia(Character& cc)
     if (is_in_fov(cc) || cc.index < 16)
     {
         txt(i18n::s.get("core.locale.food.anorexia.recovers_from", cc));
-        snd(65);
+        snd("core.offer1");
     }
 }
 
@@ -147,7 +147,7 @@ void chara_vomit(Character& cc)
 
     if (is_in_fov(cc))
     {
-        snd(104);
+        snd("core.vomit");
         txt(i18n::s.get("core.locale.food.vomits", cc));
     }
 
@@ -222,7 +222,7 @@ void chara_vomit(Character& cc)
                 if (is_in_fov(cc))
                 {
                     txt(i18n::s.get("core.locale.food.anorexia.develops", cc));
-                    snd(65);
+                    snd("core.offer1");
                 }
             }
         }
@@ -325,7 +325,7 @@ void get_hungry(Character& cc)
 
 void cook()
 {
-    snd(25);
+    snd("core.cook1");
     item_separate(ci);
     s = itemname(ci);
     p = rnd(sdata(184, cc) + 6) + rnd((inv[cooktool].param1 / 50 + 1));

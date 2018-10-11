@@ -744,7 +744,7 @@ bool process_wish()
         inputlog = to_lower(inputlog);
     }
 
-    snd(24);
+    snd("core.ding2");
 
     if (grant_special_wishing(inputlog))
     {

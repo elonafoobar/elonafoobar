@@ -121,7 +121,7 @@ void anime_halt()
         redraw();
     }
     wait_key_pressed(true);
-    snd(20);
+    snd("core.ok1");
     for (int cnt = 0; cnt < 7; ++cnt)
     {
         await(Config::instance().wait1 / 3);

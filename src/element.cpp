@@ -69,129 +69,23 @@ std::string elename(int ele)
 
 
 
-int eleinfo(int prm_754, int prm_755)
+int element_color_id(int element_id)
 {
-    if (prm_754 == 50)
+    switch (element_id)
     {
-        if (prm_755 == 0)
-        {
-            return 3;
-        }
-        else
-        {
-            return 108;
-        }
+    case 50: return 3;
+    case 51: return 12;
+    case 52: return 5;
+    case 59: return 8;
+    case 53: return 4;
+    case 58: return 9;
+    case 57: return 11;
+    case 54: return 10;
+    case 55: return 2;
+    case 56: return 7;
+    case 63: return 2;
     }
-    if (prm_754 == 51)
-    {
-        if (prm_755 == 0)
-        {
-            return 12;
-        }
-        else
-        {
-            return 106;
-        }
-    }
-    if (prm_754 == 52)
-    {
-        if (prm_755 == 0)
-        {
-            return 5;
-        }
-        else
-        {
-            return 107;
-        }
-    }
-    if (prm_754 == 59)
-    {
-        if (prm_755 == 0)
-        {
-            return 8;
-        }
-        else
-        {
-            return 114;
-        }
-    }
-    if (prm_754 == 53)
-    {
-        if (prm_755 == 0)
-        {
-            return 4;
-        }
-        else
-        {
-            return 115;
-        }
-    }
-    if (prm_754 == 58)
-    {
-        if (prm_755 == 0)
-        {
-            return 9;
-        }
-        else
-        {
-            return 111;
-        }
-    }
-    if (prm_754 == 57)
-    {
-        if (prm_755 == 0)
-        {
-            return 11;
-        }
-        else
-        {
-            return 112;
-        }
-    }
-    if (prm_754 == 54)
-    {
-        if (prm_755 == 0)
-        {
-            return 10;
-        }
-        else
-        {
-            return 113;
-        }
-    }
-    if (prm_754 == 55)
-    {
-        if (prm_755 == 0)
-        {
-            return 2;
-        }
-        else
-        {
-            return 110;
-        }
-    }
-    if (prm_754 == 56)
-    {
-        if (prm_755 == 0)
-        {
-            return 7;
-        }
-        else
-        {
-            return 109;
-        }
-    }
-    if (prm_754 == 63)
-    {
-        if (prm_755 == 0)
-        {
-            return 2;
-        }
-        else
-        {
-            return 110;
-        }
-    }
+
     return 0;
 }
 
@@ -228,7 +122,7 @@ void resistmod(int cc, int element, int delta)
 
     sdata.get(element, cc).original_level =
         clamp(sdata.get(element, cc).original_level + delta, 50, 200);
-    snd(107);
+    snd("core.atk_elec");
     animeload(15, cc);
 
     chara_refresh(cc);

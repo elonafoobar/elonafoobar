@@ -374,7 +374,7 @@ int opencard2(int prm_428, int prm_429)
             return prm_428;
         }
     }
-    snd(71);
+    snd("core.card1");
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (prm_429 == 0)

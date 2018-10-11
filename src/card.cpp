@@ -135,7 +135,7 @@ reset_page:
         {
             if (pagemax != 0)
             {
-                snd(1);
+                snd("core.pop1");
                 ++page;
                 goto reset_page;
             }
@@ -144,7 +144,7 @@ reset_page:
         {
             if (pagemax != 0)
             {
-                snd(1);
+                snd("core.pop1");
                 --page;
                 goto reset_page;
             }

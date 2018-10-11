@@ -10,7 +10,7 @@ namespace ui
 
 bool UIMenuBook::init()
 {
-    snd(59);
+    snd("core.book1");
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"book.bmp", 1);
@@ -105,7 +105,7 @@ optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& action)
     {
         if (pagemax != 0)
         {
-            snd(71);
+            snd("core.card1");
             ++page;
             set_reupdate();
         }
@@ -114,7 +114,7 @@ optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& action)
     {
         if (pagemax != 0)
         {
-            snd(71);
+            snd("core.card1");
             --page;
             set_reupdate();
         }

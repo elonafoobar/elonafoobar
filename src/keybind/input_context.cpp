@@ -486,7 +486,7 @@ std::string InputContext::check_for_command_with_list(int& list_index)
 
     if (action == "north"s)
     {
-        snd(5);
+        snd("core.cursor1");
         --cs;
         if (cs < 0)
         {
@@ -499,7 +499,7 @@ std::string InputContext::check_for_command_with_list(int& list_index)
     }
     if (action == "south"s)
     {
-        snd(5);
+        snd("core.cursor1");
         ++cs;
         if (cs >= keyrange)
         {

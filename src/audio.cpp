@@ -29,7 +29,7 @@ constexpr int temporary_channels_size = 6;
 
 std::vector<int> soundlist;
 
-int envwprev{};
+optional<std::string> envwprev = none;
 SharedId musicprev{};
 
 
@@ -158,14 +158,22 @@ void play_music_inner(const SharedId& music_id, int musicloop)
 {
     if (musicprev != music_id)
     {
-        musicprev = music_id;
-        stop_music();
         auto music = the_music_db[music_id];
-        assert(music);
-        if (!fs::exists(music->file))
+        if (!music)
         {
+            ELONA_LOG("Cannot load music " << music_id.get());
             return;
         }
+        if (!fs::exists(music->file))
+        {
+            ELONA_LOG(
+                "Cannot load file " << music->file.string() << " for music "
+                                    << music_id.get());
+            return;
+        }
+
+        musicprev = music_id;
+        stop_music();
 
         // Since we're using SDL mixer, this should load any file
         // format that mixer was compiled to support.
@@ -174,14 +182,6 @@ void play_music_inner(const SharedId& music_id, int musicloop)
     }
 }
 
-} // namespace
-
-
-namespace elona
-{
-
-namespace detail
-{
 
 void snd_inner(
     const SoundData& sound,
@@ -255,8 +255,11 @@ void snd_inner(
     DSPLAY(channel, loop);
 }
 
-} // namespace detail
+} // namespace
 
+
+namespace elona
+{
 
 int DSINIT()
 {
@@ -408,32 +411,32 @@ void stop_music()
 
 void sound_play_environmental()
 {
-    int env{};
+    optional<std::string> env = none;
 
     if (game_data.weather == 3)
     {
-        env = 75;
+        env = "core.bg_rain";
     }
     if (game_data.weather == 4)
     {
-        env = 76;
+        env = "core.bg_thunder";
     }
     if (game_data.weather == 1)
     {
-        env = 77;
+        env = "core.bg_wind";
     }
     if (env != envwprev)
     {
         envwprev = env;
         if (Config::instance().sound)
         {
-            if (env == 0)
+            if (!env)
             {
                 DSSTOP(13);
             }
             else
             {
-                snd(env, true);
+                snd(SharedId(*env), true);
             }
         }
     }
@@ -453,7 +456,7 @@ void sound_play_environmental()
     }
     if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
-        snd(78, true);
+        snd("core.bg_sea", true);
     }
     else
     {
@@ -461,7 +464,7 @@ void sound_play_environmental()
     }
     if (map_data.type == mdata_t::MapType::town)
     {
-        snd(79, true);
+        snd("core.bg_town", true);
     }
     else
     {
@@ -469,7 +472,7 @@ void sound_play_environmental()
     }
     if (map_data.play_campfire_sound == 1)
     {
-        snd(80, true);
+        snd("core.bg_fire", true);
     }
     else
     {
@@ -477,9 +480,117 @@ void sound_play_environmental()
     }
 }
 
+optional<SharedId> sound_id_for_element(int element_id)
+{
+    std::string result = "";
+
+    switch (element_id)
+    {
+    case 50: result = "core.atk_fire"; break;
+    case 51: result = "core.atk_ice"; break;
+    case 52: result = "core.atk_elec"; break;
+    case 59: result = "core.atk_chaos"; break;
+    case 53: result = "core.atk_dark"; break;
+    case 58: result = "core.atk_nerve"; break;
+    case 57: result = "core.atk_sound"; break;
+    case 54: result = "core.atk_mind"; break;
+    case 55: result = "core.atk_poison"; break;
+    case 56: result = "core.atk_hell"; break;
+    case 63: result = "core.atk_poison"; break;
+    }
+
+    if (result == "")
+    {
+        return none;
+    }
+
+    return SharedId(result);
+}
+
+void sound_kill(const Position& position)
+{
+    static const std::vector<std::string> sounds = {
+        "core.kill1", "core.kill2", "core.more1"};
+    snd_at(SharedId(choice(sounds)), position, false, false);
+}
+
+void sound_pick_up()
+{
+    static const std::vector<std::string> sounds = {
+        "core.get1", "core.get2", "core.drop1"};
+    snd(SharedId(choice(sounds)));
+}
+
+void sound_footstep(int foot)
+{
+    switch (foot % 2)
+    {
+    case 0: snd("core.foot1a"); break;
+    case 1: snd("core.foot1b"); break;
+    }
+}
+
+void sound_footstep2(int foot)
+{
+    switch (foot % 3)
+    {
+    case 0: snd("core.foot2a"); break;
+    case 1: snd("core.foot2b"); break;
+    case 2: snd("core.foot2c"); break;
+    }
+}
+
+void snd_at(
+    SharedId sound_id,
+    const Position& p,
+    bool loop,
+    bool allow_duplicate)
+{
+    short angle;
+    unsigned char dist;
+    std::tie(angle, dist) = sound_calculate_position(p);
+
+    auto sound = the_sound_db[sound_id];
+
+    if (!sound)
+    {
+        ELONA_LOG("Cannot load sound " << sound_id);
+        return;
+    }
+
+    snd_inner(**sound, angle, dist, loop, allow_duplicate);
+}
+
+void snd_at(
+    const char* sound_id,
+    const Position& p,
+    bool loop,
+    bool allow_duplicate)
+{
+    snd_at(SharedId(sound_id), p, loop, allow_duplicate);
+}
+
+void snd(SharedId sound_id, bool loop, bool allow_duplicate)
+{
+    auto sound = the_sound_db[sound_id];
+
+    if (!sound)
+    {
+        ELONA_LOG("Cannot load sound " << sound_id);
+        return;
+    }
+
+    snd_inner(**sound, 0, 0, loop, allow_duplicate);
+}
+
+void snd(const char* sound_id, bool loop, bool allow_duplicate)
+{
+    snd(SharedId(sound_id), loop, allow_duplicate);
+}
+
 void play_music(const char* music_id)
 {
-    SharedId id = SharedId("core.music:"s + std::string(music_id));
+    SharedId id = SharedId(std::string(music_id));
     play_music(id);
 }
 

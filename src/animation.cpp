@@ -220,7 +220,7 @@ void FailureToCastAnimation::do_play()
     if (!is_in_fov(caster_pos))
         return;
 
-    snd_at(66, caster_pos);
+    snd_at("core.fizzle", caster_pos);
 
     do_animation(
         rendering_base_position_center(caster_pos),
@@ -250,13 +250,13 @@ void BrightAuraAnimation::do_play()
     {
     case Type::debuff:
         prepare_item_image(8, 0);
-        snd_at(38, target_pos);
+        snd_at("core.curse1", target_pos);
         break;
     case Type::offering: prepare_item_image(9, 0); break;
     case Type::healing:
     case Type::healing_rain:
         prepare_item_image(7, 0);
-        snd_at(33, target_pos);
+        snd_at("core.heal1", target_pos);
         break;
     }
 
@@ -324,7 +324,7 @@ void BrightAuraAnimation::do_play()
 void BreathAnimation::do_play()
 {
     // Play sound.
-    snd_at(35, attacker_pos);
+    snd_at("core.breath1", attacker_pos);
 
     // Prepare image.
     gsel(7);
@@ -362,7 +362,7 @@ void BreathAnimation::do_play()
             {
                 pos(sx, sy);
                 gmode(2);
-                set_color_modulator(eleinfo(element, 0), 7);
+                set_color_modulator(element_color_id(element), 7);
                 grotate(
                     7,
                     i * 48,
@@ -384,9 +384,9 @@ void BreathAnimation::do_play()
     }
 
     // Play sound
-    if (const auto se = eleinfo(element, 1))
+    if (const auto se = sound_id_for_element(element))
     {
-        snd_at(se, attacker_pos, false, false);
+        snd_at(*se, attacker_pos, false, false);
     }
 }
 
@@ -395,14 +395,14 @@ void BreathAnimation::do_play()
 void BallAnimation::do_play()
 {
     int anicol{};
-    int anisound{};
+    optional<SharedId> anisound{};
     if (type == Type::ball)
     {
-        anicol = eleinfo(element, 0);
-        anisound = eleinfo(element, 1);
+        anicol = element_color_id(element);
+        anisound = sound_id_for_element(element);
     }
 
-    snd_at(34, position);
+    snd_at("core.ball1", position);
 
     // Load image.
     gsel(7);
@@ -489,7 +489,7 @@ void BallAnimation::do_play()
     // Play sound.
     if (anisound)
     {
-        snd_at(anisound, position, false, false);
+        snd_at(*anisound, position, false, false);
     }
 }
 
@@ -500,7 +500,7 @@ void BoltAnimation::do_play()
     elona_vector1<int> ax;
     elona_vector1<int> ay;
 
-    snd_at(37, attacker_pos);
+    snd_at("core.bolt1", attacker_pos);
 
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime6.bmp");
@@ -569,7 +569,7 @@ void BoltAnimation::do_play()
             {
                 pos(ax(u), ay(u));
                 gmode(2);
-                set_color_modulator(eleinfo(element, 0), 7);
+                set_color_modulator(element_color_id(element), 7);
                 grotate(
                     7,
                     ap(u) * 48,
@@ -591,9 +591,9 @@ void BoltAnimation::do_play()
         }
     }
 
-    if (const auto sound = eleinfo(element, 1))
+    if (const auto sound = sound_id_for_element(element))
     {
-        snd_at(sound, attacker_pos, false, false);
+        snd_at(*sound, attacker_pos, false, false);
     }
 }
 
@@ -652,49 +652,49 @@ void RangedAttackAnimation::do_play()
         return;
 
     int anicol{};
-    int anisound{};
+    optional<SharedId> anisound = none;
     if (type == Type::magic_arrow)
     {
-        anicol = eleinfo(ele, 0);
-        anisound = eleinfo(ele, 1);
+        anicol = element_color_id(ele);
+        anisound = sound_id_for_element(ele);
     }
     prepare_item_image(6, anicol);
     if (type == Type::distant_attack)
     {
         prepare_item_image(23, 0);
-        snd_at(29, attacker_pos);
+        snd_at("core.bow1", attacker_pos);
     }
     if (type == Type::bow)
     {
         prepare_item_image(1, anicol);
-        snd_at(29, attacker_pos);
+        snd_at("core.bow1", attacker_pos);
     }
     if (type == Type::crossbow)
     {
         prepare_item_image(2, anicol);
-        snd_at(29, attacker_pos);
+        snd_at("core.bow1", attacker_pos);
     }
     if (type == Type::firearm)
     {
         if (fired_item_subcategory == 24021)
         {
             prepare_item_image(13, anicol);
-            snd_at(42, attacker_pos);
+            snd_at("core.laser1", attacker_pos);
         }
         if (fired_item_subcategory == 24020)
         {
             prepare_item_image(2, anicol);
-            snd_at(30, attacker_pos);
+            snd_at("core.gun1", attacker_pos);
         }
     }
     if (type == Type::throwing)
     {
         prepare_item_image(fired_item_image, fired_item_color);
-        snd_at(31, attacker_pos);
+        snd_at("core.throw1", attacker_pos);
     }
     if (type == Type::magic_arrow)
     {
-        snd_at(36, attacker_pos);
+        snd_at("core.arrow1", attacker_pos);
     }
 
     int ax = (attacker_pos.x - scx) * inf_tiles;
@@ -734,7 +734,7 @@ void RangedAttackAnimation::do_play()
 
     if (anisound)
     {
-        snd_at(anisound, target_pos, false, false);
+        snd_at(*anisound, target_pos, false, false);
     }
 }
 
@@ -742,7 +742,7 @@ void RangedAttackAnimation::do_play()
 
 void SwarmAnimation::do_play()
 {
-    snd_at(2, target_pos);
+    snd_at("core.atk1", target_pos);
 
     do_animation(
         rendering_base_position_center(target_pos),
@@ -865,7 +865,7 @@ void MeleeAttackAnimation::do_play()
 
 void GeneEngineeringAnimation::do_play()
 {
-    snd_at(107, position);
+    snd_at("core.atk_elec", position);
     if (!is_in_fov(position))
         return;
 
@@ -1010,11 +1010,11 @@ void MiracleAnimation::do_play()
                 {
                     if (animode == 0)
                     {
-                        snd(37);
+                        snd("core.bolt1");
                     }
                     if (animode >= 100)
                     {
-                        snd(33);
+                        snd("core.heal1");
                     }
                 }
             }
@@ -1094,7 +1094,7 @@ void MeteorAnimation::do_play()
             {
                 if (cnt / 3 < am)
                 {
-                    snd(108);
+                    snd("core.atk_fire");
                 }
             }
         }
@@ -1174,7 +1174,7 @@ void RagnarokAnimation::do_play()
 
         if (t % 2 == 0 && t < 8 && t / 3 < TODO)
         {
-            snd(108);
+            snd("core.atk_fire");
         }
         if (!did_draw)
         {

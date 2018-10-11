@@ -32,7 +32,7 @@ TEST_CASE("test registering item", "[Lua: Registry]")
     item_db_ex db;
     db.initialize(table, lua);
 
-    auto data = db["core.item:item.putitoro"];
+    auto data = db["item.putitoro"];
 
     REQUIRE(data);
     REQUIRE(data->id == 792);

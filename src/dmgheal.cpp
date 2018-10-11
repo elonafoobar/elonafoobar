@@ -167,11 +167,11 @@ int damage_hp(
     {
         if (critical)
         {
-            snd_at(3, victim.position);
+            snd_at("core.atk2", victim.position);
         }
         else
         {
-            snd_at(2, victim.position);
+            snd_at("core.atk1", victim.position);
         }
     }
     if (victim.wet > 0)
@@ -237,7 +237,7 @@ int damage_hp(
 
     if (is_in_fov(victim))
     {
-        const auto color_id = eleinfo(ele, 0);
+        const auto color_id = element_color_id(ele);
         const auto r = static_cast<uint8_t>(255 - c_col(0, color_id));
         const auto g = static_cast<uint8_t>(255 - c_col(1, color_id));
         const auto b = static_cast<uint8_t>(255 - c_col(2, color_id));
@@ -316,7 +316,7 @@ int damage_hp(
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim.index;
                 MiracleAnimation().play();
-                snd(120);
+                snd("core.pray2");
                 break;
             }
         }
@@ -614,7 +614,7 @@ int damage_hp(
                     {
                         if (!CHECKPLAY(32))
                         {
-                            snd(32);
+                            snd("core.Heart1");
 
                             if (Config::instance().get<bool>(
                                     "core.config.android.vibrate"))
@@ -752,10 +752,9 @@ int damage_hp(
 
     if (victim.hp < 0)
     {
-        int se = eleinfo(element, 1);
-        if (se)
+        if (auto se = sound_id_for_element(element))
         {
-            snd_at(se, victim.position, false, false);
+            snd_at(*se, victim.position, false, false);
         }
         txtef(3);
         if (attacker)
@@ -944,14 +943,14 @@ int damage_hp(
             {
                 x = victim.position.x;
                 y = victim.position.y;
-                snd_at(45, victim.position, false, false);
+                snd_at("core.crush1", victim.position, false, false);
                 animeblood(victim.index, 1, element);
             }
             spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
-            snd_at(8 + rnd(2), victim.position, false, false);
+            sound_kill(victim.position);
             animeblood(victim.index, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
@@ -1009,7 +1008,7 @@ int damage_hp(
                         txtef(2);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.fool"));
-                        snd(51);
+                        snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_fool = 1;
                     }
                     if (victim.id == 143)
@@ -1017,7 +1016,7 @@ int damage_hp(
                         txtef(2);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.king"));
-                        snd(51);
+                        snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_king = 1;
                     }
                     if (victim.id == 144)
@@ -1025,7 +1024,7 @@ int damage_hp(
                         txtef(2);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.sage"));
-                        snd(51);
+                        snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_sage = 1;
                     }
                     if (victim.id == 242)
@@ -1043,7 +1042,7 @@ int damage_hp(
                             game_data.quest_flags.pyramid_trial = 1000;
                             quest_update_journal_msg();
                             txt(i18n::s.get("core.locale.quest.completed"));
-                            snd(51);
+                            snd("core.complete1");
                         }
                     }
                     if (victim.id == 300)
@@ -1147,7 +1146,7 @@ int damage_hp(
         {
             if (rnd(5) == 0)
             {
-                snd(69);
+                snd("core.cheer");
             }
         }
         if (victim.is_death_master() == 1)

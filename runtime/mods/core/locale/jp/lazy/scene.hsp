@@ -640,7 +640,7 @@
 なんだと、貴様…
 
 {wait}
-{se}	"door1.wav"
+{se}	"core.door1"
 {wait}
 
 {chat_2}
@@ -653,7 +653,7 @@
 何も。ただ、彼の話を聞いただけよ。それより、早くここを出たほうがいい。何か悪い予感がするの。
 
 {wait}
-{se}	"door1.wav"
+{se}	"core.door1"
 {mc}	"core.mcPinch2"
 
 {chat_5}

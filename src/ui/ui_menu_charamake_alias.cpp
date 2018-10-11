@@ -142,7 +142,7 @@ void UIMenuCharamakeAlias::_lock_alias(int cs_)
         {
             _locked_aliases(cs_) = 1;
         }
-        snd(20);
+        snd("core.ok1");
         _redraw_aliases = true;
     }
 }
@@ -155,7 +155,7 @@ optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
         if (*selected == 0)
         {
             list(0, 0) = -1;
-            snd(103);
+            snd("core.dice");
             cs_bk = -1;
             set_reupdate();
             return none;

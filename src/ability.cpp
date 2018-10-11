@@ -274,7 +274,7 @@ void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
         {
             if (cc.index == 0 || cc.index < 16)
             {
-                snd(61);
+                snd("core.ding3");
                 txtef(2);
             }
             txt(txtskillchange(id, cc.index, true));
@@ -403,7 +403,7 @@ void chara_gain_skill_exp(
         {
             if (cc.index == 0 || cc.index < 16)
             {
-                snd(61);
+                snd("core.ding3");
                 txtef(2);
                 msgalert = 1;
             }

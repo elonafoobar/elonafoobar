@@ -76,7 +76,7 @@ optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& action)
     {
         if (*selected == 0)
         {
-            snd(103);
+            snd("core.dice");
             _set_reroll_aliases();
         }
         else
@@ -97,7 +97,7 @@ optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& action)
     }
     else if (action == "cancel")
     {
-        snd(26);
+        snd("core.pop2");
         return UIMenuAlias::Result::cancel();
     }
 

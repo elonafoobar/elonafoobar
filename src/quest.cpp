@@ -616,7 +616,7 @@ void quest_refresh_list()
 
 void quest_update_journal_msg()
 {
-    snd(44);
+    snd("core.write1");
     txtef(2);
     txt(i18n::s.get("core.locale.quest.journal_updated"));
 }
@@ -1281,7 +1281,7 @@ void quest_team_victorious()
             cdata[cnt].hp = cdata[cnt].max_hp / 2;
         }
     }
-    snd(69);
+    snd("core.cheer");
     if (petarenawin == 1)
     {
         txtef(2);
@@ -1330,7 +1330,7 @@ void quest_all_targets_killed()
     game_data.executing_immediate_quest_status = 3;
     if (game_data.executing_immediate_quest_type == 1)
     {
-        snd(69);
+        snd("core.cheer");
         txtef(2);
         txt(i18n::s.get("core.locale.quest.arena.you_are_victorious"));
         txtef(2);
@@ -1376,7 +1376,7 @@ void quest_all_targets_killed()
 
 void quest_complete()
 {
-    snd(51);
+    snd("core.complete1");
     p = quest_data[rq].reward_gold;
     if (quest_data[rq].id == 1006)
     {

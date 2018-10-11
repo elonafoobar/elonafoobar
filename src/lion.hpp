@@ -177,7 +177,7 @@ private:
         for (const auto& pair : data_for_mod)
         {
             sol::table data = pair.second.as<sol::table>();
-            std::string id_string = data["_full_id"];
+            std::string id_string = data["_id"];
             IdType id(id_string);
 
             initialize_single(id, data, lua);

@@ -58,7 +58,7 @@ bool UIMenuTownPolitics::init()
     picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     windowshadow = 1;
-    snd(92);
+    snd("core.scroll");
     ww = 480;
     wh = 400;
     wx = (windoww - ww) / 2 + inf_screenx;
@@ -178,7 +178,7 @@ optional<UIMenuTownPolitics::ResultType> UIMenuTownPolitics::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             ++page;
             set_reupdate();
         }
@@ -187,7 +187,7 @@ optional<UIMenuTownPolitics::ResultType> UIMenuTownPolitics::on_key(
     {
         if (pagemax != 0)
         {
-            snd(1);
+            snd("core.pop1");
             --page;
             set_reupdate();
         }

@@ -54,7 +54,7 @@ protected:
         _x = promptx - (_width / 2);
         _y = prompty - (_height / 2);
 
-        snd(26);
+        snd("core.pop2");
 
         gmode(6, 80);
         window(_x + 12, _y + 12, _width, _height, true); // Shadow

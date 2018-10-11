@@ -251,11 +251,11 @@ TurnResult build_new_building()
         game_data.destination_dungeon_level = 1;
         game_data.pc_x_in_world_map = area_data[7].position.x;
         game_data.pc_y_in_world_map = area_data[7].position.y;
-        snd(58);
+        snd("core.build1");
         txtef(2);
         txt(i18n::s.get("core.locale.building.built_new_house"));
         msg_halt();
-        snd(49);
+        snd("core.exitmap1");
         return TurnResult::exit_map;
     }
     ctrl_file(FileOperation::temp_dir_delete_area);
@@ -311,7 +311,7 @@ TurnResult build_new_building()
         area_data[p].default_ai_calm = 1;
     }
     s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
-    snd(58);
+    snd("core.build1");
     txtef(5);
     txt(i18n::s.get("core.locale.building.built_new", s(0)));
     map_global_prepare();
@@ -601,14 +601,14 @@ void prompt_hiring()
         }
         else
         {
-            snd(12);
+            snd("core.paygold1");
             cdata.player().gold -= calchirecost(tc) * 20;
             await(Config::instance().animewait * 10);
             cdata[tc].set_state(Character::State::alive);
             txtef(2);
             txt(i18n::s.get(
                 "core.locale.building.home.hire.you_hire", cdata[tc]));
-            snd(64);
+            snd("core.pray1");
         }
     }
     for (auto&& cnt : cdata.all())
@@ -705,7 +705,7 @@ void show_home_value()
 {
     load_background_variants(4);
     gsel(0);
-    snd(26);
+    snd("core.pop2");
     pagesize = 0;
     keyrange = 0;
     key_list = key_cancel;
@@ -811,7 +811,7 @@ void prompt_move_ally()
         }
         tchome = stat;
         tc = stat;
-        snd(20);
+        snd("core.ok1");
     label_1718_internal:
         txtnew();
         txt(i18n::s.get("core.locale.building.home.move.where", cdata[stat]));
@@ -839,7 +839,7 @@ void prompt_move_ally()
         cdata[tc].continuous_action.finish();
         txtnew();
         txt(i18n::s.get("core.locale.building.home.move.is_moved", cdata[tc]));
-        snd(43);
+        snd("core.foot");
     }
 }
 
@@ -850,7 +850,7 @@ void prompt_ally_staying()
         if (stat != -1)
         {
             int c = stat;
-            snd(20);
+            snd("core.ok1");
             txtnew();
             if (getworker(game_data.current_map, c) == c)
             {
@@ -901,7 +901,7 @@ void try_extend_shop()
     }
     else
     {
-        snd(12);
+        snd("core.paygold1");
         cdata.player().gold -= calcshopreform();
         map_data.max_item_count = clamp(map_data.max_item_count + 10, 1, 400);
         txtef(2);
@@ -1173,7 +1173,7 @@ void show_shop_log()
                 s += i18n::s.get(
                     "core.locale.building.shop.log.and_items", income(1));
             }
-            snd(24);
+            snd("core.ding2");
             txtef(5);
             txt(shop_mark
                 + i18n::s.get(

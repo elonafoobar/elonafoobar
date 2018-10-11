@@ -30,7 +30,7 @@ enum class Element
 
 int randomele();
 std::string elename(int ele);
-int eleinfo(int prm_754, int prm_755);
+int element_color_id(int element_id);
 void resistmod(int cc, int element, int delta);
 void txteledmg(int type, int attacker, int target, int element);
 

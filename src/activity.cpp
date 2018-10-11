@@ -556,7 +556,7 @@ void continuous_action_perform()
                 cdata[cc].tip_gold += gold;
                 if (is_in_fov(cdata[cc]))
                 {
-                    snd(11);
+                    snd("core.getgold1");
                 }
             }
         }
@@ -817,7 +817,7 @@ void continuous_action_eating()
         cdata[cc].continuous_action.item = ci;
         if (is_in_fov(cdata[cc]))
         {
-            snd(18);
+            snd("core.eat1");
             if (inv[ci].own_state == 1 && cc < 16)
             {
                 txt(i18n::s.get(
@@ -1330,14 +1330,14 @@ void continuous_action_others()
         txt(i18n::s.get("core.locale.activity.steal.succeed", inv[ti]));
         if (inv[ci].id == 54)
         {
-            snd(11);
+            snd("core.getgold1");
             earn_gold(cdata.player(), in);
             inv[ti].remove();
         }
         else
         {
             item_stack(0, ti, 1);
-            snd(14 + rnd(2));
+            sound_pick_up();
         }
         refresh_burden_state();
         chara_gain_skill_exp(
@@ -1358,7 +1358,7 @@ void continuous_action_others()
     }
     if (game_data.continuous_action_about_to_start == 101)
     {
-        snd(58);
+        snd("core.build1");
         txt(i18n::s.get("core.locale.activity.construct.finish", inv[ci]));
         item_build_shelter(inv[ci]);
     }
@@ -1373,7 +1373,7 @@ void continuous_action_others()
         game_data.destination_map = 30;
         game_data.destination_dungeon_level = inv[ci].count;
         levelexitby = 2;
-        snd(49);
+        snd("core.exitmap1");
     }
     if (game_data.continuous_action_about_to_start == 103)
     {
@@ -1464,7 +1464,7 @@ void spot_fishing()
     if (!cdata[cc].continuous_action)
     {
         txt(i18n::s.get("core.locale.activity.fishing.start"));
-        snd(87);
+        snd("core.fish_cast");
         if (rowactre == 0)
         {
             cdata[cc].continuous_action.item = ci;
@@ -1523,7 +1523,7 @@ void spot_fishing()
         if (fishstat == 2)
         {
             fishanime = 2;
-            snd(46);
+            snd("core.water2");
             cdata.player().emotion_icon = 220;
             if (Config::instance().animewait != 0)
             {
@@ -1555,7 +1555,7 @@ void spot_fishing()
                 {
                     if (cnt % 7 == 0)
                     {
-                        snd(89);
+                        snd("core.fish_fight");
                     }
                     fishanime(1) = cnt;
                     ++scrturn;
@@ -1578,7 +1578,7 @@ void spot_fishing()
         if (fishstat == 4)
         {
             fishanime = 4;
-            snd(88);
+            snd("core.fish_get");
             if (Config::instance().animewait != 0)
             {
                 for (int cnt = 0; cnt < 21; ++cnt)
@@ -1594,7 +1594,7 @@ void spot_fishing()
                     await(Config::instance().animewait * 2);
                 }
             }
-            snd(14 + rnd(2));
+            sound_pick_up();
             fishanime = 0;
             cdata[cc].continuous_action.finish();
             get_fish();
@@ -1682,13 +1682,13 @@ void spot_digging()
                     {
                         if (inv[cnt].param2 == cdata.player().position.y)
                         {
-                            snd(23);
+                            snd("core.chest1");
                             txtef(5);
                             txt(
                                 i18n::s.get("core.locale.activity.dig_spot."
                                             "something_is_there"));
                             msg_halt();
-                            snd(24);
+                            snd("core.ding2");
                             flt();
                             itemcreate(
                                 -1,
@@ -1837,7 +1837,7 @@ void spot_mining_or_wall()
             }
             cell_data.at(refx, refy).chip_id_actual = tile_tunnel;
             spillfrag(refx, refy, 2);
-            snd(45);
+            snd("core.crush1");
             BreakingAnimation({refx, refy}).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (game_data.quest_flags.tutorial == 2
@@ -2043,7 +2043,7 @@ void matgetmain(int material_id, int amount, int spot_type)
         amount = 1;
     }
     mat(material_id) += amount;
-    snd(21);
+    snd("core.alert1");
 
     std::string verb;
     switch (spot_type)

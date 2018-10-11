@@ -70,9 +70,9 @@ TalkResult talk_inn_eat()
             "core.locale.talk.npc.innkeeper.eat.not_hungry", cdata[tc]);
         return TalkResult::talk_npc;
     }
-    snd(12);
+    snd("core.paygold1");
     cdata.player().gold -= calcmealvalue();
-    snd(18);
+    snd("core.eat1");
     cdata.player().nutrition = 15000;
     buff = i18n::s.get(
         "core.locale.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
@@ -169,7 +169,7 @@ TalkResult talk_wizard_identify(int chatval_)
         }
         cdata.player().gold -= calcidentifyvalue(chatval_ - 14);
     }
-    snd(12);
+    snd("core.paygold1");
     return TalkResult::talk_npc;
 }
 
@@ -188,7 +188,7 @@ TalkResult talk_healer_restore_attributes()
         buff = i18n::_(u8"ui", u8"no_gold");
         return TalkResult::talk_npc;
     }
-    snd(12);
+    snd("core.paygold1");
     cdata.player().gold -= calcrestorecost();
     tcbk = tc;
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -614,7 +614,7 @@ TalkResult talk_bartender_call_ally()
         int chatval_ = talk_window_query();
         if (chatval_ == 1)
         {
-            snd(12);
+            snd("core.paygold1");
             cdata.player().gold -= calcresurrectvalue(rc);
             buff = i18n::s.get(
                 "core.locale.talk.npc.bartender.call_ally.brings_back",
@@ -720,7 +720,7 @@ TalkResult talk_slave_buy(int chatval_)
         txt(i18n::s.get(
             "core.locale.talk.npc.slave_trader.buy.you_buy",
             cnven(cdatan(0, 56))));
-        snd(12);
+        snd("core.paygold1");
         cdata.player().gold -= calcslavevalue(56);
         rc = 56;
         new_ally_joins();
@@ -759,7 +759,7 @@ TalkResult talk_slave_sell()
             txt(i18n::s.get(
                 "core.locale.talk.npc.slave_trader.sell.you_sell_off",
                 cnven(cdatan(0, rc))));
-            snd(11);
+            snd("core.getgold1");
             earn_gold(cdata.player(), calcslavevalue(rc) * 2 / 3);
             if (cdata[rc].state() == Character::State::alive)
             {
@@ -850,7 +850,7 @@ TalkResult talk_innkeeper_shelter()
     game_data.destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
-    snd(49);
+    snd("core.exitmap1");
     return TalkResult::talk_end;
 }
 
@@ -922,7 +922,7 @@ TalkResult talk_sister_buy_indulgence()
     int chatval_ = talk_window_query();
     if (chatval_ == 1)
     {
-        snd(12);
+        snd("core.paygold1");
         cdata.player().gold -= calcguiltvalue();
         modify_karma(cdata.player(), (cdata.player().karma - -30) * -1 + 1);
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
@@ -960,10 +960,10 @@ TalkResult talk_informer_investigate_ally()
         int chatval_ = talk_window_query();
         if (chatval_ == 1)
         {
-            snd(12);
+            snd("core.paygold1");
             cdata.player().gold -= 10000;
             cc = rc;
-            snd(26);
+            snd("core.pop2");
             menu_character_sheet_investigate();
             cc = 0;
             talk_start();
@@ -1020,13 +1020,13 @@ TalkResult talk_adventurer_hire()
     int chatval_ = talk_window_query();
     if (chatval_ == 1)
     {
-        snd(12);
+        snd("core.paygold1");
         cdata.player().gold -= calchireadv(tc);
         cdata[tc].relationship = 10;
         cdata[tc].is_contracting() = true;
         cdata[tc].period_of_contract = game_data.date.hours() + 168;
         ++cdata[tc].hire_count;
-        snd(64);
+        snd("core.pray1");
         txtef(5);
         txt(i18n::s.get(
             "core.locale.talk.npc.adventurer.hire.you_hired", cdata[tc]));
@@ -1095,7 +1095,7 @@ TalkResult talk_moyer_sell_paels_mom()
     {
         txt(i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.you_sell"));
         modify_karma(cdata.player(), -20);
-        snd(11);
+        snd("core.getgold1");
         earn_gold(cdata.player(), 50000);
         game_data.quest_flags.pael_and_her_mom = 1002;
         rc = chara_find(222);
@@ -1146,7 +1146,7 @@ TalkResult talk_shop_reload_ammo()
     int chatval_ = talk_window_query();
     if (chatval_ == 1)
     {
-        snd(12);
+        snd("core.paygold1");
         cdata.player().gold -= calccostreload(0);
         p = calccostreload(0, true);
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
@@ -1226,7 +1226,7 @@ TalkResult talk_prostitute_buy()
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return TalkResult::talk_npc;
     }
-    snd(12);
+    snd("core.paygold1");
     cdata[cc].gold -= sexvalue;
     earn_gold(cdata[tc], sexvalue);
     listmax = 0;
@@ -1497,7 +1497,7 @@ TalkResult talk_trainer(bool is_training)
     int chatval_ = talk_window_query();
     if (chatval_ == 1)
     {
-        snd(12);
+        snd("core.paygold1");
         if (is_training)
         {
             cdata.player().platinum_coin -= calctraincost(selected_skill, cc);
@@ -1556,7 +1556,7 @@ TalkResult talk_invest()
     int chatval_ = talk_window_query();
     if (chatval_ == 1)
     {
-        snd(12);
+        snd("core.paygold1");
         cdata.player().gold -= calcinvestvalue();
         gain_investing_experience(0);
         cdata[tc].shop_rank += rnd(2) + 2;
@@ -1739,7 +1739,7 @@ TalkResult talk_quest_giver()
                 0);
             txt(i18n::s.get(
                 "core.locale.common.you_put_in_your_backpack", inv[ci]));
-            snd(100);
+            snd("core.inv");
             refresh_burden_state();
             buff = i18n::s.get(
                 "core.locale.talk.npc.quest_giver.about.here_is_package",
@@ -2405,7 +2405,7 @@ TalkResult talk_npc()
     {
         levelexitby = 4;
         chatteleport = 1;
-        snd(49);
+        snd("core.exitmap1");
     }
 
     return TalkResult::talk_end;

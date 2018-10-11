@@ -332,7 +332,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 if (cdata[cc].gold >= cdata[cc].level * 500)
                 {
                     cdata[cc].gold -= cdata[cc].level * 500;
-                    snd(61);
+                    snd("core.ding3");
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.ai.ally.visits_trainer", cdata[cc]));
@@ -461,7 +461,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                                     {
                                         cell_data.at(x, y).chip_id_actual =
                                             tile_tunnel;
-                                        snd(45);
+                                        snd("core.crush1");
                                         BreakingAnimation({x, y}).play();
                                         spillfrag(x, y, 2);
                                         if (is_in_fov(cdata[cc]))
@@ -856,7 +856,7 @@ label_2692_internal:
                                         0);
                                     if (stat == 1)
                                     {
-                                        snd(86);
+                                        snd("core.snow");
                                         txt(i18n::s.get(
                                             "core.locale.ai.makes_snowman",
                                             cdata[cc],
