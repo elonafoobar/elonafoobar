@@ -466,6 +466,7 @@ else()
   set(GENERAL_OPTIONS)
   set(DEBUG_OPTIONS)
   set(RELEASE_OPTIONS)
+  set(LINKER_OPTIONS)
   set(EXTRA_DEFINES)
   set(DISABLED_WARNINGS)
 
@@ -552,12 +553,13 @@ else()
     endif()
 
     if (LINKER)
-      list(APPEND GENERAL_OPTIONS
+      list(APPEND LINKER_OPTIONS
         "fuse-ld=${LINKER}")
       message(STATUS "Using linker: ${LINKER}")
     else()
       message(STATUS "Using system linker.")
     endif()
+
 
     foreach(opt ${DISABLED_WARNINGS})
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-${opt}")
@@ -573,6 +575,10 @@ else()
 
     foreach(opt ${RELEASE_OPTIONS})
       set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -${opt}")
+    endforeach()
+
+    foreach(opt ${LINKER_OPTIONS})
+      set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -${opt}")
     endforeach()
   endif()
 
