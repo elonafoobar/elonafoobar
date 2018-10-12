@@ -484,8 +484,11 @@ else()
     list(APPEND RELEASE_OPTIONS
       "MT")
     list(APPEND DISABLED_WARNINGS
-      "4459" # declaration of 'identifier' hides global declaration
+      "4244" # 'conversion' conversion from 'type1' to 'type2', possible loss of data
+      "4267" # 'var' : conversion from 'size_t' to 'type', possible loss of data
       "4456" # declaration of 'identifier' hides previous local declaration
+      "4459" # declaration of 'identifier' hides global declaration
+      "4996" # Call to 'std::equal' with parameters that may be unsafe
       )
     list(APPEND EXTRA_DEFINES
       "BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE")
