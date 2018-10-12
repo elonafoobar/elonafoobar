@@ -1552,7 +1552,7 @@ label_2747:
         return TurnResult::turn_end;
     }
     ++t;
-    if (t % Config::instance().scrsync == 1)
+    if (Config::instance().scrsync > 0 && t % Config::instance().scrsync == 0)
     {
         ++scrturn;
         ui_render_from_screensync();
