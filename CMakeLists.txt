@@ -14,6 +14,13 @@ option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
 option(ANDROID_GENERATE_PROPERTIES "Generate android/app/gradle.properties" OFF)
 
 
+# Platform detection
+set(LINUX FALSE)
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+  set(LINUX TRUE)
+endif()
+
+
 # Versioning
 
 # Get commit hash from Git
@@ -477,8 +484,9 @@ else()
     list(APPEND RELEASE_OPTIONS
       "MT")
     list(APPEND DISABLED_WARNINGS
-      "4459"
-      "4456")
+      "4459" # declaration of 'identifier' hides global declaration
+      "4456" # declaration of 'identifier' hides previous local declaration
+      )
     list(APPEND EXTRA_DEFINES
       "BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE")
 
@@ -510,11 +518,43 @@ else()
     list(APPEND EXTRA_DEFINES
       "DEBUG")
     if(WITH_TESTS STREQUAL "BENCH")
-      list(APPEND GENERAL_OPTIONS "g")
+      list(APPEND GENERAL_OPTIONS "g1")
     endif()
     list(APPEND DISABLED_WARNINGS
       "deprecated-declarations")
 
+    # Speed up linking on Linux by using split DWARF
+    if (LINUX)
+      list(APPEND GENERAL_OPTIONS
+        "gsplit-dwarf")
+    endif ()
+
+    # Use gold linker or lld if available
+    set(LINKER)
+
+    option(USE_GOLD_LINKER "Link with GNU gold" ON)
+    if (USE_GOLD_LINKER)
+      execute_process(COMMAND ${CMAKE_CXX_COMPILER} -fuse-ld=gold -Wl,--version ERROR_QUIET OUTPUT_VARIABLE LD_VERSION)
+      if(LD_VERSION MATCHES "GNU gold")
+        set(LINKER "gold")
+      endif()
+    endif()
+
+    option(USE_LLD_LINKER "Link with lld" ON)
+    if (USE_LLD_LINKER)
+      execute_process(COMMAND ${CMAKE_CXX_COMPILER} -fuse-ld=lld -Wl,--version ERROR_QUIET OUTPUT_VARIABLE LD_VERSION)
+      if(LD_VERSION MATCHES "LLD")
+        set(LINKER "lld")
+      endif()
+    endif()
+
+    if (LINKER)
+      list(APPEND GENERAL_OPTIONS
+        "fuse-ld=${LINKER}")
+      message(STATUS "Using linker: ${LINKER}")
+    else()
+      message(STATUS "Using system linker.")
+    endif()
 
     foreach(opt ${DISABLED_WARNINGS})
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-${opt}")
@@ -534,7 +574,7 @@ else()
   endif()
 
   foreach(opt ${EXTRA_DEFINES})
-    add_definition("-D${opt}")
+    add_definitions("-D${opt}")
   endforeach()
 
   # My libraries
