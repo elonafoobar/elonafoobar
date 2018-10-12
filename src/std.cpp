@@ -16,6 +16,7 @@
 #include "defines.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "lib/fps_counter.hpp"
 #include "log.hpp"
 #include "macro.hpp"
 #include "util.hpp"
@@ -736,8 +737,62 @@ void pos(int x, int y)
 }
 
 
+
+static std::string _make_fps_string()
+{
+    std::ostringstream ss;
+    double ms = lib::g_fps_counter.ms();
+    double fps = lib::g_fps_counter.fps();
+    ss << std::setprecision(2) << std::fixed << std::right << std::setfill(' ')
+       << "fps: " << std::setw(8) << fps << " ms: " << std::setw(8) << ms;
+    return ss.str();
+}
+
+static void _draw_fps()
+{
+    static std::string fps_str;
+
+    if (!snail::Application::instance().get_renderer().has_font())
+    {
+        return;
+    }
+
+    if (lib::g_fps_counter.want_report())
+    {
+        fps_str = _make_fps_string();
+    }
+
+    // Global font/color is modified, so it has to be restored directly after.
+    const auto colorbk_r = ginfo(16);
+    const auto colorbk_g = ginfo(17);
+    const auto colorbk_b = ginfo(18);
+    const auto& fontbk = snail::Application::instance().get_renderer().font();
+    const auto fontbk_size = fontbk.size();
+    const auto fontbk_style = fontbk.style();
+
+    // Since this particular implementation tracks FPS across every possible
+    // place where things get redrawn, a background rectangle is needed to
+    // prevent drawing over already-drawn text if the background is not
+    // cleared between each redraw.
+    boxf(4, 4, strlen_u(fps_str) * 7 + 2, 14 - en * 2 + 2, {0, 0, 0, 255});
+    font(13 - en * 2);
+    color(255, 255, 255);
+    pos(5, 5);
+    mes(fps_str);
+
+    font(fontbk_size, fontbk_style);
+    color(colorbk_r, colorbk_g, colorbk_b);
+
+    lib::g_fps_counter.count();
+}
+
 void redraw()
 {
+    if (Config::instance().get<bool>("core.config.foobar.show_fps"))
+    {
+        _draw_fps();
+    }
+
     snail::hsp::redraw();
 }
 

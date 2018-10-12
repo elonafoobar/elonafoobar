@@ -149,7 +149,7 @@ config def {
 
             screen_refresh = {
                 default = 3
-                min = 1
+                min = 0
                 max = 15
 
                 platform_default {
@@ -340,6 +340,8 @@ config def {
                 default = "shrinked"
                 variants = ["shrinked", "fullscale"]
             }
+
+            show_fps = false
         }
     }
 

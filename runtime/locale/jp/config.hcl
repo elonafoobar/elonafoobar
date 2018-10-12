@@ -397,6 +397,10 @@
                         fullscale = "原寸"
                     }
                 }
+
+                show_fps {
+                    name = "FPSを表示"
+                }
             }
 
             android {

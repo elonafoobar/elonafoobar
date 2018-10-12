@@ -6,6 +6,7 @@
 #include <string>
 #include "../elona.hpp"
 #include "../hcl.hpp"
+#include "../lib/fps_counter.hpp"
 #include "../range.hpp"
 #include "../snail/android.hpp"
 #include "../snail/application.hpp"
@@ -340,6 +341,10 @@ void load_config(const fs::path& hcl_file)
     conf.bind_setter<std::string>(
         "core.config.screen.orientation",
         &convert_and_set_requested_orientation);
+
+    conf.bind_setter<bool>("core.config.foobar.show_fps", [](bool) {
+        lib::g_fps_counter.clear();
+    });
 
     std::ifstream ifs{
         filesystem::make_preferred_path_in_utf8(hcl_file.native())};

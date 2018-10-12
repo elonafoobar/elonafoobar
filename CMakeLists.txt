@@ -209,6 +209,7 @@ set(CORE_SOURCES
   src/keybind/keybind_manager.cpp
   src/keybind/keybind_serializer.cpp
 
+  src/lib/fps_counter.cpp
   src/lib/profiler.cpp
 
   src/pic_loader/pic_loader.cpp

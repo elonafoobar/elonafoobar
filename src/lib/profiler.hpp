@@ -5,8 +5,6 @@
 #include <string>
 #include <boost/circular_buffer.hpp>
 
-namespace elona
-{
 namespace lib
 {
 using namespace std::chrono;
@@ -120,8 +118,7 @@ public:
     }
 };
 
-#define PROFILE(name) elona::lib::ScopedProfiler __profile(name)
-#define PROFILE_EVENT(name) elona::lib::g_profiler.sample(name)
+#define PROFILE(name) lib::ScopedProfiler __profile(name)
+#define PROFILE_EVENT(name) lib::g_profiler.sample(name)
 
 } // namespace lib
-} // namespace elona
