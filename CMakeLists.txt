@@ -456,44 +456,86 @@ else()
   # Compiler options
   target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
+  set(GENERAL_OPTIONS)
+  set(DEBUG_OPTIONS)
+  set(RELEASE_OPTIONS)
+  set(EXTRA_DEFINES)
+  set(DISABLED_WARNINGS)
+
   if(MSVC)
-    add_definitions("-D_UNICODE")
-    set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
-  else()
+    list(APPEND EXTRA_DEFINES "_UNICODE")
+    list(APPEND GENERAL_OPTIONS
+      "W4"
+      "source-charset:utf-8"
+      "MT"
+      "EHsc")
+    list(APPEND DEBUG_OPTIONS
+      "MP8"
+      "MTd"
+      "ZI"
+      "Od")
+    list(APPEND RELEASE_OPTIONS
+      "MT")
+    list(APPEND DISABLED_WARNINGS
+      "4459"
+      "4456")
+    list(APPEND EXTRA_DEFINES
+      "BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE")
+
+
+    foreach(opt ${DISABLED_WARNINGS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd${opt}")
+    endforeach()
+
+    foreach(opt ${GENERAL_OPTIONS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /${opt}")
+    endforeach()
+
+    foreach(opt ${DEBUG_OPTIONS})
+      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /${opt}")
+    endforeach()
+
+    foreach(opt ${RELEASE_OPTIONS})
+      foreach(flag_var CMAKE_CXX_FLAGS_RELEASE CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+        set(${flag_var} "${${flag_var}} /${opt}")
+      endforeach()
+    endforeach()
+  else() # GCC or Clang
+    list(APPEND GENERAL_OPTIONS
+      "Wall"
+      "Wextra")
+    list(APPEND DEBUG_OPTIONS
+      "g"
+      "O0")
+    list(APPEND EXTRA_DEFINES
+      "DEBUG")
     if(WITH_TESTS STREQUAL "BENCH")
-      set(CMAKE_CXX_FLAGS "-Wall -Wextra -g3")
-    else()
-      set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+      list(APPEND GENERAL_OPTIONS "g")
     endif()
+    list(APPEND DISABLED_WARNINGS
+      "deprecated-declarations")
+
+
+    foreach(opt ${DISABLED_WARNINGS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-${opt}")
+    endforeach()
+
+    foreach(opt ${GENERAL_OPTIONS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -${opt}")
+    endforeach()
+
+    foreach(opt ${DEBUG_OPTIONS})
+      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -${opt}")
+    endforeach()
+
+    foreach(opt ${RELEASE_OPTIONS})
+      set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -${opt}")
+    endforeach()
   endif()
 
-  # Compiler options(debug build)
-  if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG "/MP8 /MTd /ZI /Od")
-  else()
-    set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
-  endif()
-
-  if(MSVC)
-    set(CMAKE_CXX_FLAGS_RELEASE "/MT")
-  endif()
-
-  if(WITH_TESTS STREQUAL "BENCH")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-  endif()
-
-  # Warning suppressions
-  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    # Force GCC to output warnings about undefined symbols
-    string(APPEND CMAKE_CXX_FLAGS " -Wl,--no-undefined")
-    # Disable deprecated declarations, because it causes warnings with boost_locale's use of auto_ptr
-    string(APPEND CMAKE_CXX_FLAGS " -Wno-deprecated-declarations")
-  elseif(MSVC)
-    # Disable warnings about hiding of global/local declarations
-    string(APPEND CMAKE_CXX_FLAGS " /wd4459 /wd4456")
-    # Disable warnings about Boost versions.
-    add_definitions(-DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE)
-  endif()
+  foreach(opt ${EXTRA_DEFINES})
+    add_definition("-D${opt}")
+  endforeach()
 
   # My libraries
   add_subdirectory(src/snail)
