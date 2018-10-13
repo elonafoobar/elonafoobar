@@ -59,11 +59,14 @@ ItemChipData ItemChipDB::convert(
         width = inf_tiles * animation;
     }
 
-    return ItemChipData{
-        id,
-        Extent{x, y, width, height, frame_width},
-        ItemChip{SharedId(id_), offset_y, stack_height, shadow, animation},
-        filepath};
+    return ItemChipData{id,
+                        Extent{x, y, width, height, frame_width},
+                        ItemChip{SharedId("core.item_chip:"s + id_),
+                                 offset_y,
+                                 stack_height,
+                                 shadow,
+                                 animation},
+                        filepath};
 }
 
 } // namespace elona

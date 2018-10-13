@@ -1,12 +1,12 @@
 #pragma once
 #include <cassert>
 #include <climits>
-#include <unordered_map>
 #include "../filesystem.hpp"
 #include "../lib/noncopyable.hpp"
 #include "../optional.hpp"
 #include "../shared_id.hpp"
 #include "../snail/image.hpp"
+#include "../thirdparty/ordered_map/ordered_map.h"
 #include "extent.hpp"
 
 
@@ -231,7 +231,7 @@ public:
 
 
     using IdType = SharedId;
-    using MapType = std::unordered_map<IdType, Extent>;
+    using MapType = tsl::ordered_map<IdType, Extent>;
 
     void clear_storage_and_buffers();
 
