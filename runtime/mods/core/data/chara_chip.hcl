@@ -6,7 +6,7 @@ chara_chip _0 {
     }
 }
 
-chara_chip user {
+chara_chip human_male {
     id = 1
     source {
         x = 48
@@ -14,7 +14,7 @@ chara_chip user {
     }
 }
 
-chara_chip _2 {
+chara_chip human_female {
     id = 2
     source {
         x = 96
@@ -22,7 +22,7 @@ chara_chip _2 {
     }
 }
 
-chara_chip _3 {
+chara_chip elea_male {
     id = 3
     source {
         x = 144
@@ -30,7 +30,7 @@ chara_chip _3 {
     }
 }
 
-chara_chip little_girl {
+chara_chip elea_female {
     id = 4
     source {
         x = 192
@@ -38,7 +38,7 @@ chara_chip little_girl {
     }
 }
 
-chara_chip _5 {
+chara_chip eulderna_male {
     id = 5
     source {
         x = 240
@@ -46,7 +46,7 @@ chara_chip _5 {
     }
 }
 
-chara_chip _6 {
+chara_chip eulderna_female {
     id = 6
     source {
         x = 288
@@ -70,7 +70,7 @@ chara_chip miches {
     }
 }
 
-chara_chip _9 {
+chara_chip juere_male {
     id = 9
     source {
         x = 432
@@ -78,7 +78,7 @@ chara_chip _9 {
     }
 }
 
-chara_chip trainer_female {
+chara_chip juere_female {
     id = 10
     source {
         x = 480
@@ -526,7 +526,7 @@ chara_chip _65 {
     }
 }
 
-chara_chip _66 {
+chara_chip dwarf {
     id = 66
     source {
         x = 0
@@ -1318,7 +1318,7 @@ chara_chip _164 {
     }
 }
 
-chara_chip _165 {
+chara_chip org {
     id = 165
     source {
         x = 0
@@ -1334,7 +1334,7 @@ chara_chip master_thief {
     }
 }
 
-chara_chip _167 {
+chara_chip zombie {
     id = 167
     source {
         x = 96
@@ -1342,7 +1342,7 @@ chara_chip _167 {
     }
 }
 
-chara_chip _168 {
+chara_chip race_slime {
     id = 168
     source {
         x = 144
@@ -1350,7 +1350,7 @@ chara_chip _168 {
     }
 }
 
-chara_chip _169 {
+chara_chip rabbit {
     id = 169
     source {
         x = 192
@@ -1358,7 +1358,7 @@ chara_chip _169 {
     }
 }
 
-chara_chip _170 {
+chara_chip sheep {
     id = 170
     source {
         x = 240
@@ -1366,7 +1366,7 @@ chara_chip _170 {
     }
 }
 
-chara_chip _171 {
+chara_chip kobold {
     id = 171
     source {
         x = 288
@@ -1374,7 +1374,7 @@ chara_chip _171 {
     }
 }
 
-chara_chip _172 {
+chara_chip frog {
     id = 172
     source {
         x = 336
@@ -1382,7 +1382,7 @@ chara_chip _172 {
     }
 }
 
-chara_chip _173 {
+chara_chip centipede {
     id = 173
     source {
         x = 384
@@ -1390,7 +1390,7 @@ chara_chip _173 {
     }
 }
 
-chara_chip _174 {
+chara_chip snail {
     id = 174
     source {
         x = 432
@@ -1398,7 +1398,7 @@ chara_chip _174 {
     }
 }
 
-chara_chip _175 {
+chara_chip mandrake {
     id = 175
     source {
         x = 480
@@ -1406,7 +1406,7 @@ chara_chip _175 {
     }
 }
 
-chara_chip _176 {
+chara_chip beetle {
     id = 176
     offset_y = 8
     source {
@@ -1415,7 +1415,7 @@ chara_chip _176 {
     }
 }
 
-chara_chip _177 {
+chara_chip mushroom {
     id = 177
     source {
         x = 576
@@ -1591,7 +1591,7 @@ chara_chip iron_maiden {
     }
 }
 
-chara_chip noel {
+chara_chip catgod {
     id = 199
     source {
         x = 48
@@ -1599,7 +1599,7 @@ chara_chip noel {
     }
 }
 
-chara_chip _200 {
+chara_chip bat {
     id = 200
     source {
         x = 96
@@ -1607,7 +1607,7 @@ chara_chip _200 {
     }
 }
 
-chara_chip _201 {
+chara_chip ent {
     id = 201
     tall = true
     offset_y = 16
@@ -1617,7 +1617,7 @@ chara_chip _201 {
     }
 }
 
-chara_chip _202 {
+chara_chip lich {
     id = 202
     source {
         x = 192
@@ -1625,7 +1625,7 @@ chara_chip _202 {
     }
 }
 
-chara_chip _203 {
+chara_chip hound {
     id = 203
     source {
         x = 240
@@ -1641,7 +1641,7 @@ chara_chip giant_squirrel {
     }
 }
 
-chara_chip _205 {
+chara_chip ghost {
     id = 205
     source {
         x = 336
@@ -1649,7 +1649,7 @@ chara_chip _205 {
     }
 }
 
-chara_chip _206 {
+chara_chip spirit {
     id = 206
     source {
         x = 384
@@ -1657,7 +1657,7 @@ chara_chip _206 {
     }
 }
 
-chara_chip _207 {
+chara_chip eye {
     id = 207
     source {
         x = 432
@@ -1681,7 +1681,7 @@ chara_chip puppet {
     }
 }
 
-chara_chip _210 {
+chara_chip wasp {
     id = 210
     source {
         x = 576
@@ -1697,7 +1697,7 @@ chara_chip black_cat {
     }
 }
 
-chara_chip _212 {
+chara_chip imp {
     id = 212
     source {
         x = 672
@@ -1705,7 +1705,7 @@ chara_chip _212 {
     }
 }
 
-chara_chip _213 {
+chara_chip hand {
     id = 213
     source {
         x = 720
@@ -1729,7 +1729,7 @@ chara_chip chaos_flower {
     }
 }
 
-chara_chip _216 {
+chara_chip snake {
     id = 216
     source {
         x = 864
@@ -1761,7 +1761,7 @@ chara_chip tuwen {
     }
 }
 
-chara_chip _220 {
+chara_chip goblin {
     id = 220
     source {
         x = 1056
@@ -1777,7 +1777,7 @@ chara_chip baptist {
     }
 }
 
-chara_chip _222 {
+chara_chip bear {
     id = 222
     source {
         x = 1152
@@ -1785,7 +1785,7 @@ chara_chip _222 {
     }
 }
 
-chara_chip _223 {
+chara_chip armor {
     id = 223
     source {
         x = 1200
@@ -1793,7 +1793,7 @@ chara_chip _223 {
     }
 }
 
-chara_chip _224 {
+chara_chip medusa {
     id = 224
     source {
         x = 1248
@@ -1801,7 +1801,7 @@ chara_chip _224 {
     }
 }
 
-chara_chip _225 {
+chara_chip cupid {
     id = 225
     offset_y = 29
     source {
@@ -1810,7 +1810,7 @@ chara_chip _225 {
     }
 }
 
-chara_chip _226 {
+chara_chip phantom {
     id = 226
     source {
         x = 1344
@@ -1818,7 +1818,7 @@ chara_chip _226 {
     }
 }
 
-chara_chip _227 {
+chara_chip harpy {
     id = 227
     source {
         x = 1392
@@ -1826,7 +1826,7 @@ chara_chip _227 {
     }
 }
 
-chara_chip _228 {
+chara_chip dragon {
     id = 228
     offset_y = 8
     tall = true
@@ -1836,7 +1836,7 @@ chara_chip _228 {
     }
 }
 
-chara_chip _229 {
+chara_chip cerberus {
     id = 229
     source {
         x = 1488
@@ -1844,7 +1844,7 @@ chara_chip _229 {
     }
 }
 
-chara_chip _230 {
+chara_chip spider {
     id = 230
     offset_y = 12
     source {
@@ -1853,7 +1853,7 @@ chara_chip _230 {
     }
 }
 
-chara_chip _231 {
+chara_chip golem {
     id = 231
     offset_y = 16
     tall = true
@@ -1863,7 +1863,7 @@ chara_chip _231 {
     }
 }
 
-chara_chip _232 {
+chara_chip giant {
     id = 232
     tall = true
     offset_y = 16
@@ -1873,7 +1873,7 @@ chara_chip _232 {
     }
 }
 
-chara_chip _233 {
+chara_chip drake {
     id = 233
     tall = true
     offset_y = 8
@@ -1891,7 +1891,7 @@ chara_chip _234 {
     }
 }
 
-chara_chip _235 {
+chara_chip wyvern {
     id = 235
     tall = true
     offset_y = 16
@@ -1909,7 +1909,7 @@ chara_chip black_angel {
     }
 }
 
-chara_chip _237 {
+chara_chip crab {
     id = 237
     source {
         x = 288
@@ -1941,7 +1941,7 @@ chara_chip cultist_of_fire {
     }
 }
 
-chara_chip _241 {
+chara_chip skeleton {
     id = 241
     source {
         x = 480
@@ -1965,7 +1965,7 @@ chara_chip missionary_of_darkness {
     }
 }
 
-chara_chip _244 {
+chara_chip piece {
     id = 244
     source {
         x = 624
@@ -2029,7 +2029,7 @@ chara_chip rock_thrower {
     }
 }
 
-chara_chip _252 {
+chara_chip metal {
     id = 252
     source {
         x = 1008
@@ -2037,7 +2037,7 @@ chara_chip _252 {
     }
 }
 
-chara_chip _253 {
+chara_chip cat {
     id = 253
     source {
         x = 1056
@@ -2045,7 +2045,7 @@ chara_chip _253 {
     }
 }
 
-chara_chip _254 {
+chara_chip dog {
     id = 254
     source {
         x = 1104
@@ -2053,7 +2053,7 @@ chara_chip _254 {
     }
 }
 
-chara_chip _255 {
+chara_chip rat {
     id = 255
     source {
         x = 1152
@@ -2061,7 +2061,7 @@ chara_chip _255 {
     }
 }
 
-chara_chip _256 {
+chara_chip shell {
     id = 256
     offset_y = 16
     source {
@@ -2110,7 +2110,7 @@ chara_chip _261 {
     }
 }
 
-chara_chip _262 {
+chara_chip horse {
     id = 262
     source {
         x = 1488
@@ -2174,7 +2174,7 @@ chara_chip exile {
     }
 }
 
-chara_chip blade {
+chara_chip machine {
     id = 270
     source {
         x = 288
@@ -2265,7 +2265,7 @@ chara_chip shade {
     }
 }
 
-chara_chip _281 {
+chara_chip quickling {
     id = 281
     source {
         x = 816
@@ -2821,7 +2821,7 @@ chara_chip frisia {
     }
 }
 
-chara_chip utima {
+chara_chip machinegod {
     id = 349
     tall = true
     offset_y = 8
@@ -2831,7 +2831,7 @@ chara_chip utima {
     }
 }
 
-chara_chip master_of_pet_arena {
+chara_chip undeadgod {
     id = 350
     source {
         x = 960
@@ -2865,7 +2865,7 @@ chara_chip miral {
     }
 }
 
-chara_chip _354 {
+chara_chip catsister {
     id = 354
     source {
         x = 1152
@@ -3057,7 +3057,7 @@ chara_chip juere_swordman {
     }
 }
 
-chara_chip _378 {
+chara_chip yeek {
     id = 378
     source {
         x = 720
@@ -3121,7 +3121,7 @@ chara_chip kamikaze_samurai {
     }
 }
 
-chara_chip bomb_rock {
+chara_chip rock {
     id = 386
     source {
         x = 1104
@@ -3145,7 +3145,7 @@ chara_chip mia {
     }
 }
 
-chara_chip _389 {
+chara_chip dinosaur {
     id = 389
     tall = true
     offset_y = 16
@@ -3155,7 +3155,7 @@ chara_chip _389 {
     }
 }
 
-chara_chip _390 {
+chara_chip fairy {
     id = 390
     source {
         x = 1296
@@ -3163,7 +3163,7 @@ chara_chip _390 {
     }
 }
 
-chara_chip _391 {
+chara_chip troll {
     id = 391
     tall = true
     offset_y = 16
@@ -3215,7 +3215,7 @@ chara_chip scorpion {
     }
 }
 
-chara_chip _397 {
+chara_chip lizardman {
     id = 397
     source {
         x = 48
@@ -3223,7 +3223,7 @@ chara_chip _397 {
     }
 }
 
-chara_chip _398 {
+chara_chip minotaur {
     id = 398
     tall = true
     offset_y = 16
@@ -3831,7 +3831,7 @@ chara_chip kaneda_bike {
     }
 }
 
-chara_chip cub {
+chara_chip bike {
     id = 471
     source {
         x = 432
