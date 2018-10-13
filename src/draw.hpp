@@ -17,7 +17,9 @@ struct Item;
 
 struct ItemChip
 {
-    SharedId key;
+    // NOTE: fully qualified to avoid ID collisions in pic_loader
+    SharedId key; // core.item_chip:core.putitoro
+
     int offset_y;
     int stack_height;
     int shadow;
@@ -31,7 +33,9 @@ extern std::vector<ItemChip> item_chips;
 
 struct CharaChip
 {
-    SharedId key;
+    // NOTE: fully qualified to avoid ID collisions in pic_loader
+    SharedId key; // core.chara_chip:core.putit
+
     int offset_y;
 };
 

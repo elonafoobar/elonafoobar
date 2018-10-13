@@ -154,7 +154,7 @@ PicLoader::BufferInfo& PicLoader::add_buffer(PageType type, int w, int h)
 
     buffer(new_buffer_index, w, h);
 
-    return buffers.at(buffer_info_index);
+    return buffers.back();
 }
 
 } // namespace elona
