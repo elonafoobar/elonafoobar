@@ -44,6 +44,7 @@ ItemData ItemDB::convert(const std::string& id_, const lua::ConfigTable& data)
     DATA_OPT_OR(originalnameref2, std::string, "");
     DATA_OPT_OR(has_random_name, bool, false);
     DATA_ENUM(color, ColorIndex, ColorIndexTable, ColorIndex::none);
+
     DATA_REQ(locale_key_prefix, std::string);
 
     DATA_OPT(on_use_callback, std::string);

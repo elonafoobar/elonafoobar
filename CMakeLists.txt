@@ -114,7 +114,6 @@ set(CORE_SOURCES
   src/item_load_desc.cpp
   src/item_material.cpp
   src/itemgen.cpp
-  src/lion.cpp
   src/log.cpp
   src/magic.cpp
   src/main_menu.cpp
@@ -385,7 +384,6 @@ else()
       src/bench/ai.cpp
       src/bench/generate.cpp
       src/bench/i18n.cpp
-      src/bench/lion.cpp
       src/bench/lua_callbacks.cpp
       src/bench/magic.cpp
       src/bench/util.cpp

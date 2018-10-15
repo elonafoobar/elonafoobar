@@ -1,0 +1,7 @@
+require("data/chara")
+require("data/item")
+require("data/chara_chip")
+require("data/item_chip")
+require("data/music")
+require("data/sound")
+require("data/dialog")

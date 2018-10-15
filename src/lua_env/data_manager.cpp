@@ -29,6 +29,8 @@ void DataManager::init_from_mods()
 
         if (mod->path)
         {
+            _lua->get_state()->set("_MOD_NAME", mod->name);
+
             const auto data_script = *mod->path / "data.lua";
             if (fs::exists(data_script))
             {
@@ -45,6 +47,8 @@ void DataManager::init_from_mods()
             }
         }
     }
+
+    _lua->get_state()->set("_MOD_NAME", sol::lua_nil);
 
     sol::table metatable = _data.storage.create_with(
         sol::meta_function::new_index,

@@ -81,6 +81,24 @@ files['src/tests/lua/support'] = {std = "+minctest"}
 stds.elona = {
     --Set the read only variables
     read_globals = {
+        -- @data@: Data definition table.
+        data = {
+            fields = {
+                raw = {
+                    other_fields = true,
+                    read_only = true
+                },
+                by_legacy = {
+                    other_fields = true,
+                    read_only = true
+                },
+                types = {
+                    other_fields = true,
+                    read_only = true
+                },
+                "add", "add_multi", "define_type"
+            },
+        },
         -- @Elona@: The core Elona API.
         Elona = {
            fields = {
@@ -322,3 +340,7 @@ stds.minctest = {
 -- 614 Trailing whitespace in a comment.
 -- 621 Inconsistent indentation (SPACE followed by TAB).
 -- 631 Line is too long.
+
+-- Local Variables:
+-- mode: lua
+-- End:

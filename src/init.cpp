@@ -368,10 +368,16 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
-void initialize_lua_data()
+void initialize_lua()
 {
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
+
     auto& data_manager = lua::lua->get_data_manager();
+    data_manager.clear();
     data_manager.init_from_mods();
+
+    lua::lua->get_api_manager().lock();
+
     data::initialize(data_manager.get());
 }
 
@@ -806,12 +812,6 @@ static void initialize_screen()
         config_get_fullscreen_mode());
 }
 
-static void initialize_mods()
-{
-    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
-    lua::lua->get_api_manager().lock();
-}
-
 int run()
 {
     const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
@@ -831,11 +831,9 @@ int run()
     init_assets();
 
     // Scan all mods and load mod script code.
-    initialize_mods();
+    initialize_lua();
     // Load translations from scanned mods.
     initialize_i18n();
-
-    initialize_lua_data();
 
     if (Config::instance().font_filename.empty())
     {
