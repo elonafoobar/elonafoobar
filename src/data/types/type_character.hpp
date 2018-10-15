@@ -2,9 +2,9 @@
 
 #include <unordered_map>
 #include <vector>
-#include "enums.hpp"
-#include "lion.hpp"
-#include "optional.hpp"
+#include "../../enums.hpp"
+#include "../../optional.hpp"
+#include "../lua_lazy_cache.hpp"
 
 
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(name, n) \
@@ -132,9 +132,8 @@ struct CharacterData
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };
 
-ELONA_LION_DEFINE_DB(character_db_ex, CharacterData, int, u8"chara")
+ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, int, "core.chara")
 
-extern character_db_ex the_character_db;
-
+extern CharacterDB the_character_db;
 
 } // namespace elona

@@ -1,7 +1,8 @@
 #pragma once
 #include "../optional.hpp"
+#include "../shared_id.hpp"
 #include "../thirdparty/sol2/sol.hpp"
-#include "export_manager.hpp"
+#include "lua_enums.hpp"
 
 namespace elona
 {
@@ -26,9 +27,15 @@ public:
     {
     }
 
+    ConfigTable(sol::table storage, SharedId id)
+        : storage(storage)
+        , id(id.get())
+    {
+    }
+
 public:
     template <typename T>
-    optional<T> get_optional(const std::string& name)
+    elona::optional<T> optional(const std::string& name) const
     {
         if (storage[name] == sol::lua_nil)
         {
@@ -46,9 +53,18 @@ public:
     }
 
     template <typename T>
-    T get_required(const std::string& name)
+    T optional_or(const std::string& name, T default_) const
     {
-        optional<T> it = get_optional<T>(name);
+        if (auto it = optional<T>(name))
+            return *it;
+
+        return default_;
+    }
+
+    template <typename T>
+    T required(const std::string& name) const
+    {
+        elona::optional<T> it = optional<T>(name);
 
         if (!it)
         {
@@ -59,24 +75,41 @@ public:
         return *it;
     }
 
-    optional<std::string> get_optional_callback(
-        const std::string& name,
-        lua::ExportManager& export_manager)
+    template <typename T>
+    T required(const char* name) const
     {
-        optional<std::string> callback_name = get_optional<std::string>(name);
+        return required<T>(std::string(name));
+    }
 
-        if (!callback_name)
+    template <typename T>
+    T enum_or(const char* name, const lua::EnumMap<T>& map, T default_value)
+        const
+    {
+        auto value_ = optional<std::string>(name);
+        if (value_)
         {
-            return none;
+            return map.get_from_string(*value_, default_value);
         }
-
-        if (!export_manager.has_function(*callback_name))
+        else
         {
-            throw std::runtime_error(
-                id + " (" + name + "): Unknown Lua callback " + *callback_name);
+            return default_value;
         }
+    }
 
-        return *callback_name;
+    template <typename T>
+    std::vector<T> vector(const char* name) const
+    {
+        std::vector<T> result;
+
+        if (auto it = optional<sol::table>(name))
+        {
+            for (const auto& kvp : *it)
+            {
+                T v = kvp.second.as<T>();
+                result.push_back(v);
+            }
+        }
+        return result;
     }
 
 private:

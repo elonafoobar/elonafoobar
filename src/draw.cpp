@@ -2,9 +2,9 @@
 #include <cmath>
 #include "character.hpp"
 #include "config/config.hpp"
-#include "db_chara_chip.hpp"
-#include "db_item.hpp"
-#include "db_item_chip.hpp"
+#include "data/types/type_chara_chip.hpp"
+#include "data/types/type_item.hpp"
+#include "data/types/type_item_chip.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "hcl.hpp"

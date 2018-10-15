@@ -1,20 +1,19 @@
-#include "db_chara_chip.hpp"
-#include "macro.hpp"
-#include "variables.hpp"
+#include "type_chara_chip.hpp"
+#include "../../variables.hpp"
 
 namespace elona
 {
 
+const constexpr char* data::LuaLazyCacheTraits<CharaChipDB>::type_id;
+
+
 CharaChipData CharaChipDB::convert(
     const std::string& id_,
-    const sol::table& data,
-    lua::LuaEnv& lua)
+    const lua::ConfigTable& data)
 {
-    UNUSED(lua);
-    ELONA_LION_DB_FIELD_REQUIRED(_mod, std::string);
-    ELONA_LION_DB_FIELD_REQUIRED(id, int);
-    ELONA_LION_DB_FIELD(tall, bool, false);
-    ELONA_LION_DB_FIELD(offset_y, int, 16);
+    auto legacy_id = data.required<int>("id");
+    DATA_OPT_OR(tall, bool, false);
+    DATA_OPT_OR(offset_y, int, 16);
 
     int width = inf_tiles;
     int height = inf_tiles;
@@ -22,7 +21,7 @@ CharaChipData CharaChipDB::convert(
     int y = 0;
     optional<fs::path> filepath = none;
 
-    sol::object source = data["source"];
+    auto source = data.required<sol::object>("source");
     if (source.is<sol::table>())
     {
         sol::table source_from_atlas = source;
@@ -32,7 +31,7 @@ CharaChipData CharaChipDB::convert(
     else
     {
         std::string filepath_str = source.as<std::string>();
-        filepath = filesystem::dir::for_mod(_mod) / filepath_str;
+        filepath = filesystem::resolve_path_for_mod(filepath_str);
         if (!fs::exists(*filepath))
         {
             throw std::runtime_error(
@@ -46,7 +45,7 @@ CharaChipData CharaChipDB::convert(
         offset_y += inf_tiles;
     }
 
-    return CharaChipData{id,
+    return CharaChipData{legacy_id,
                          Extent{x, y, width, height},
                          CharaChip{SharedId(id_), offset_y},
                          filepath};

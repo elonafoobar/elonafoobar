@@ -5,7 +5,7 @@
 #include "character_status.hpp"
 #include "command.hpp"
 #include "config/config.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"

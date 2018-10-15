@@ -171,5 +171,33 @@ std::string to_forward_slashes(const fs::path& path)
 }
 
 
+fs::path resolve_path_for_mod(const std::string& mod_local_path)
+{
+    std::regex mod_name_regex("^__([a-zA-Z0-9_]+)__/(.*)");
+    std::smatch match;
+    std::string mod_name, rest;
+
+    if (std::regex_search(mod_local_path, match, mod_name_regex)
+        && match.size() == 2)
+    {
+        mod_name = match.str(1);
+        rest = match.str(2);
+    }
+    else
+    {
+        throw std::runtime_error("Invalid filepath syntax: " + mod_local_path);
+    }
+
+    if (mod_name == "BUILTIN")
+    {
+        return dir::exe() / rest;
+    }
+    else
+    {
+        return dir::for_mod(mod_name) / rest;
+    }
+}
+
+
 } // namespace filesystem
 } // namespace elona

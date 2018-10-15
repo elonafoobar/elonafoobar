@@ -7,7 +7,7 @@
 #include "character.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"

@@ -4,7 +4,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "crafting.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "i18n.hpp"

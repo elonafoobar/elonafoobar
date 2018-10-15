@@ -1,9 +1,9 @@
 #include "testing.hpp"
 #include <sstream>
 #include "config/config.hpp"
-#include "db_item.hpp"
-#include "db_music.hpp"
-#include "db_sound.hpp"
+#include "data/types/type_item.hpp"
+#include "data/types/type_music.hpp"
+#include "data/types/type_sound.hpp"
 #include "draw.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
@@ -134,8 +134,8 @@ void pre_init()
     configure_lua();
     initialize_i18n();
 
-    lua::lua->get_registry_manager().clear();
-    initialize_lion_db();
+    lua::lua->get_data_manager().clear();
+    initialize_lua_data();
 
     initialize_elona();
 

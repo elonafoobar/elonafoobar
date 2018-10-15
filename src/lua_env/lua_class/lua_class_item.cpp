@@ -1,5 +1,6 @@
 #include "lua_class_item.hpp"
 #include "../../item.hpp"
+#include "../../lua_env/enums/enums.hpp"
 
 namespace elona
 {

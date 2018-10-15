@@ -14,7 +14,7 @@
 #include "config/config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
@@ -2141,7 +2141,7 @@ TurnResult do_use_command()
         }
         map_data.bgm = music;
 
-        auto music_id = *the_music_db.get_id_from_legacy(music);
+        auto music_id = the_music_db.get_id_from_legacy(music);
         assert(music_id);
         if (!music_id)
         {

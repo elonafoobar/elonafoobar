@@ -34,7 +34,7 @@ LuaEnv::LuaEnv()
     event_mgr = std::make_unique<EventManager>(this);
     mod_mgr = std::make_unique<ModManager>(this);
     handle_mgr = std::make_unique<HandleManager>(this);
-    registry_mgr = std::make_unique<RegistryManager>(this);
+    data_mgr = std::make_unique<DataManager>(this);
     export_mgr = std::make_unique<ExportManager>(this);
     i18n_function_mgr = std::make_unique<I18NFunctionManager>(this);
 }
@@ -59,6 +59,7 @@ void LuaEnv::clear()
 
     event_mgr->clear();
     mod_mgr->clear_mod_stores();
+    data_mgr->clear();
     lua_->collect_garbage();
 }
 

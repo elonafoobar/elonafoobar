@@ -1,6 +1,6 @@
 #pragma once
-#include "filesystem.hpp"
-#include "lion.hpp"
+#include "../../filesystem.hpp"
+#include "../lua_lazy_cache.hpp"
 
 namespace elona
 {
@@ -11,7 +11,7 @@ struct MusicData
     fs::path file;
 };
 
-ELONA_LION_DEFINE_DB(MusicDB, MusicData, int, u8"music")
+ELONA_DEFINE_LUA_DB(MusicDB, MusicData, int, "core.music")
 
 extern MusicDB the_music_db;
 

@@ -1,0 +1,6 @@
+#include "types/type_chara_chip.cpp"
+#include "types/type_character.cpp"
+#include "types/type_item.cpp"
+#include "types/type_item_chip.cpp"
+#include "types/type_music.cpp"
+#include "types/type_sound.cpp"

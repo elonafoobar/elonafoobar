@@ -2,16 +2,16 @@
 
 #include <array>
 #include <unordered_map>
-#include "enums.hpp"
-#include "i18n.hpp"
-#include "lion.hpp"
-#include "optional.hpp"
+#include "../../enums.hpp"
+#include "../../optional.hpp"
+#include "../lua_lazy_cache.hpp"
 
 
 
 namespace elona
 {
 
+typedef std::string I18NKey;
 
 struct ItemData
 {
@@ -50,9 +50,9 @@ struct ItemData
     optional<std::string> on_use_callback;
 };
 
-ELONA_LION_DEFINE_DB(item_db_ex, ItemData, int, u8"item")
+ELONA_DEFINE_LUA_DB(ItemDB, ItemData, int, "core.item")
 
-extern item_db_ex the_item_db;
+extern ItemDB the_item_db;
 
 
 } // namespace elona

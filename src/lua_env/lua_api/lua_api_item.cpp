@@ -1,5 +1,5 @@
 #include "lua_api_item.hpp"
-#include "../../db_item.hpp"
+#include "../../data/types/type_item.hpp"
 #include "../../enchantment.hpp"
 #include "../../item.hpp"
 #include "../../itemgen.hpp"

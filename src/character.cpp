@@ -8,7 +8,7 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "ctrl_file.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "equipment.hpp"
 #include "fov.hpp"

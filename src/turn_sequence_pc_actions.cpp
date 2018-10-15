@@ -4,7 +4,7 @@
 #include "autopick.hpp"
 #include "command.hpp"
 #include "ctrl_file.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "enums.hpp"
 #include "gdata.hpp"

@@ -1,12 +1,12 @@
 #pragma once
 #include "../thirdparty/sol2/sol.hpp"
 #include "api_manager.hpp"
+#include "data_manager.hpp"
 #include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "i18n_function_manager.hpp"
 #include "mod_manager.hpp"
-#include "registry_manager.hpp"
 
 namespace elona
 {
@@ -14,12 +14,12 @@ namespace lua
 {
 
 class APIManager;
+class DataManager;
 class EventManager;
 class ExportManager;
-class ModManager;
 class HandleManager;
-class RegistryManager;
 class I18NFunctionManager;
+class ModManager;
 
 /***
  * Main singleton encapsulating various Lua subsystems. Delegates
@@ -72,9 +72,9 @@ public:
         return *mod_mgr;
     }
 
-    RegistryManager& get_registry_manager()
+    DataManager& get_data_manager()
     {
-        return *registry_mgr;
+        return *data_mgr;
     }
 
     /***
@@ -107,7 +107,7 @@ private:
     std::unique_ptr<EventManager> event_mgr;
     std::unique_ptr<ExportManager> export_mgr;
     std::unique_ptr<HandleManager> handle_mgr;
-    std::unique_ptr<RegistryManager> registry_mgr;
+    std::unique_ptr<DataManager> data_mgr;
     std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
 };
 

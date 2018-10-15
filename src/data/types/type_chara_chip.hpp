@@ -1,7 +1,7 @@
 #pragma once
-#include "draw.hpp"
-#include "lion.hpp"
-#include "pic_loader/extent.hpp"
+#include "../../draw.hpp"
+#include "../../pic_loader/extent.hpp"
+#include "../lua_lazy_cache.hpp"
 
 namespace elona
 {
@@ -15,6 +15,6 @@ struct CharaChipData
 };
 
 // Used only as an intermediary between registry and initialize_chara_chips().
-ELONA_LION_DEFINE_DB(CharaChipDB, CharaChipData, int, u8"chara_chip")
+ELONA_DEFINE_LUA_DB(CharaChipDB, CharaChipData, int, "core.chara_chip")
 
 } // namespace elona

@@ -24,7 +24,7 @@ BENCHMARK(Database, BenchInitializeLion, 3, 1)
 {
     lua::lua.reset(new lua::LuaEnv());
     lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
-    initialize_lion_db();
+    initialize_lua_data();
 }
 
 BENCHMARK(Database, BenchInitializeCat, 3, 1)

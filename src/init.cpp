@@ -14,9 +14,7 @@
 #include "config/config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
-#include "db_chara_chip.hpp"
-#include "db_item.hpp"
-#include "db_item_chip.hpp"
+#include "data/init.hpp"
 #include "defines.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -370,55 +368,11 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
-static std::vector<lua::RegistryManager::Location>
-collect_mod_datafile_locations()
+void initialize_lua_data()
 {
-    std::vector<lua::RegistryManager::Location> locations;
-
-    for (const auto& pair : lua::lua->get_mod_manager())
-    {
-        const auto& mod = pair.second;
-        if (mod->path)
-        {
-            const auto path = *mod->path / "data.hcl";
-            if (fs::exists(path))
-            {
-                locations.emplace_back(path, mod->name);
-            }
-        }
-    }
-
-    return locations;
-}
-
-void initialize_lion_db()
-{
-    // Register base game data types. Without these, it wouldn't be
-    // possible to run the game, so they're baked in.
-    lua::lua->get_registry_manager().register_native_datatype(
-        "chara", [](auto table) { the_character_db.initialize(table); });
-    lua::lua->get_registry_manager().register_native_datatype(
-        "item", [](auto table) { the_item_db.initialize(table); });
-    lua::lua->get_registry_manager().register_native_datatype(
-        "sound", [](auto table) { the_sound_db.initialize(table); });
-    lua::lua->get_registry_manager().register_native_datatype(
-        "music", [](auto table) { the_music_db.initialize(table); });
-
-    lua::lua->get_registry_manager().register_native_datatype(
-        "chara_chip", [](auto table) {
-            CharaChipDB db;
-            db.initialize(table);
-            initialize_chara_chips(db);
-        });
-    lua::lua->get_registry_manager().register_native_datatype(
-        "item_chip", [](auto table) {
-            ItemChipDB db;
-            db.initialize(table);
-            initialize_item_chips(db);
-        });
-
-    auto locations = collect_mod_datafile_locations();
-    lua::lua->get_registry_manager().load_mod_data(locations);
+    auto& data_manager = lua::lua->get_data_manager();
+    data_manager.init_from_mods();
+    data::initialize(data_manager.get());
 }
 
 static void _initialize_jkey()
@@ -881,6 +835,8 @@ int run()
     // Load translations from scanned mods.
     initialize_i18n();
 
+    initialize_lua_data();
+
     if (Config::instance().font_filename.empty())
     {
         // If no font is specified in `config.hcl`, use a pre-defined font
@@ -888,9 +844,6 @@ int run()
         Config::instance().font_filename =
             i18n::s.get("core.locale.meta.default_font");
     }
-
-    // Load data from scanned mods.
-    initialize_lion_db();
 
     initialize_keybindings();
 

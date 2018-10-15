@@ -1,4 +1,4 @@
-#include "lua_enums.hpp"
+#include "enums.hpp"
 
 namespace elona
 {

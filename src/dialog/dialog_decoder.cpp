@@ -49,14 +49,13 @@ optional<DialogData> DialogDecoder::decode(
 {
     try
     {
-        sol::table dialog_table =
-            *lua.get_registry_manager().get_table("core", "dialog");
-
         std::string mod_name, data_id;
         std::tie(mod_name, data_id) = parse_id("core", "dialog", id);
 
-        lua::ConfigTable dialog_table_data(
-            dialog_table[mod_name][data_id].get<sol::table>());
+        sol::table dialog_table = *lua.get_data_manager().get().raw(
+            "core.dialog", mod_name + "." + data_id);
+
+        lua::ConfigTable dialog_table_data(dialog_table);
 
         return DialogDecoderLogic(lua.get_export_manager())
             .decode(dialog_table_data);
@@ -74,7 +73,7 @@ void DialogDecoderLogic::parse_text(
     const std::string& full_id,
     DialogNode& the_dialog_node)
 {
-    if (auto node_text_opt = node_data.get_optional<sol::object>("text"))
+    if (auto node_text_opt = node_data.optional<sol::object>("text"))
     {
         sol::object node_text = *node_text_opt;
         if (node_text.is<std::string>())
@@ -121,8 +120,8 @@ void DialogDecoderLogic::parse_choice_table(
     {
         lua::ConfigTable choice_data(pair.second.as<sol::table>(), full_id);
 
-        auto text_key = choice_data.get_required<std::string>("text");
-        auto next_node = choice_data.get_required<std::string>("node");
+        auto text_key = choice_data.required<std::string>("text");
+        auto next_node = choice_data.required<std::string>("node");
 
         if (next_node == "End")
         {
@@ -140,7 +139,7 @@ void DialogDecoderLogic::parse_choices(
     const std::string& full_id,
     DialogNode& the_dialog_node)
 {
-    if (auto node_choices_opt = node_data.get_optional<sol::object>("choices"))
+    if (auto node_choices_opt = node_data.optional<sol::object>("choices"))
     {
         sol::object node_choices = *node_choices_opt;
 
@@ -180,19 +179,19 @@ void DialogDecoderLogic::parse_node_behavior(
     the_dialog_node.behavior = std::make_shared<DialogNodeBehavior>();
 
     int behaviors = 0;
-    if (auto cb = node_data.get_optional_callback("generator", export_manager))
+    if (auto cb = node_data.optional<std::string>("generator"))
     {
         the_dialog_node.behavior =
             std::make_shared<DialogNodeBehaviorGenerator>(*cb);
         behaviors++;
     }
-    if (auto cb = node_data.get_optional_callback("redirector", export_manager))
+    if (auto cb = node_data.optional<std::string>("redirector"))
     {
         the_dialog_node.behavior =
             std::make_shared<DialogNodeBehaviorRedirector>(*cb);
         behaviors++;
     }
-    if (auto node_id = node_data.get_optional<std::string>("inherit_choices"))
+    if (auto node_id = node_data.optional<std::string>("inherit_choices"))
     {
         the_dialog_node.behavior =
             std::make_shared<DialogNodeBehaviorInheritChoices>(*node_id);
@@ -210,12 +209,12 @@ void DialogDecoderLogic::parse_run_before_after(
     lua::ConfigTable& node_data,
     DialogNode& the_dialog_node)
 {
-    if (auto cb = node_data.get_optional_callback("run_before", export_manager))
+    if (auto cb = node_data.optional<std::string>("run_before"))
     {
         the_dialog_node.callback_before = *cb;
     }
 
-    if (auto cb = node_data.get_optional_callback("run_after", export_manager))
+    if (auto cb = node_data.optional<std::string>("run_after"))
     {
         the_dialog_node.callback_after = *cb;
     }
@@ -237,9 +236,9 @@ DialogNode DialogDecoderLogic::parse_node(
 DialogData DialogDecoderLogic::decode(lua::ConfigTable& table)
 {
     DialogData::map_type nodes;
-    std::string full_id = table.get_required<std::string>("_full_id");
+    std::string full_id = table.required<std::string>("_full_id");
 
-    sol::object nodes_table = table.get_required<sol::object>("nodes");
+    sol::object nodes_table = table.required<sol::object>("nodes");
     if (nodes_table == sol::lua_nil)
     {
         throw std::runtime_error(full_id + ": missing \"nodes\" field");

@@ -63,6 +63,7 @@ fs::path u8path(const std::string&);
 std::string make_preferred_path_in_utf8(const fs::path& path);
 std::string to_utf8_path(const fs::path& path);
 std::string to_forward_slashes(const fs::path& path);
+fs::path resolve_path_for_mod(const std::string& mod_local_path);
 
 
 

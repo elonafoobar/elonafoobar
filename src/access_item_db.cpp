@@ -1,6 +1,5 @@
 #include <unordered_map>
 #include "character.hpp"
-#include "db_item.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
@@ -9,6 +8,7 @@
 #include "random.hpp"
 #include "variables.hpp"
 
+#include "data/types/type_item.hpp"
 
 
 namespace elona

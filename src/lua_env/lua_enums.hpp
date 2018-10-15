@@ -1,12 +1,8 @@
 #pragma once
 #include <string>
 #include <unordered_map>
-#include "../element.hpp"
-#include "../enums.hpp"
 #include "../log.hpp"
-#include "../map_cell.hpp"
 #include "../optional.hpp"
-#include "../status_ailment.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 
 namespace elona
@@ -29,7 +25,7 @@ public:
     }
 
 public:
-    EnumString convert_to_string(T val)
+    EnumString convert_to_string(T val) const
     {
         for (const auto& pair : storage)
         {
@@ -43,7 +39,7 @@ public:
         return "<invalid enum>";
     }
 
-    T get_from_string(const std::string& key, T default_val)
+    T get_from_string(const std::string& key, T default_val) const
     {
         auto it = storage.find(key);
         if (it == storage.end())
@@ -57,7 +53,7 @@ public:
         return it->second;
     }
 
-    T ensure_from_string(const std::string& key)
+    T ensure_from_string(const std::string& key) const
     {
         auto it = storage.find(key);
         if (it == storage.end())
@@ -93,22 +89,6 @@ private:
     std::string name;
     MapType storage;
 };
-
-namespace LuaEnums
-{
-extern EnumMap<DamageSource> DamageSourceTable;
-extern EnumMap<ColorIndex> ColorIndexTable;
-extern EnumMap<CurseState> CurseStateTable;
-extern EnumMap<IdentifyState> IdentifyStateTable;
-extern EnumMap<StatusAilment> StatusAilmentTable;
-extern EnumMap<Element> ElementTable;
-extern EnumMap<TileKind> TileKindTable;
-extern EnumMap<int> GenderTable;
-extern EnumMap<int> RelationTable;
-extern EnumMap<int> CharaFlagTable;
-
-void bind(sol::table&);
-} // namespace LuaEnums
 
 } // namespace lua
 } // namespace elona

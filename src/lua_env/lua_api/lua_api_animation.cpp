@@ -1,5 +1,6 @@
 #include "lua_api_animation.hpp"
 #include "../../animation.hpp"
+#include "../../lua_env/enums/enums.hpp"
 
 namespace elona
 {

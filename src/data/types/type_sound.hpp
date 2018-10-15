@@ -1,5 +1,5 @@
 #pragma once
-#include "lion.hpp"
+#include "../lua_lazy_cache.hpp"
 
 namespace elona
 {
@@ -10,7 +10,7 @@ struct SoundData
     fs::path file;
 };
 
-ELONA_LION_DEFINE_DB(SoundDB, SoundData, int, "sound")
+ELONA_DEFINE_LUA_DB(SoundDB, SoundData, int, "core.sound")
 
 extern SoundDB the_sound_db;
 
