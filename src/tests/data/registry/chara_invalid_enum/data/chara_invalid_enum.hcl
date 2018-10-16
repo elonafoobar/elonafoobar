@@ -1,3 +1,0 @@
-chara putit {
-    color = Whatever
-}

@@ -126,6 +126,15 @@ public:
     }
 
 
+    optional<std::string> error(const IdType& id)
+    {
+        auto it = _errors.find(id);
+        if (it == _errors.end())
+            return none;
+
+        return *it;
+    }
+
     optional<SharedId> get_id_from_legacy(const LegacyIdType& legacy_id)
     {
         if (!Traits::need_legacy_id)
@@ -211,6 +220,8 @@ private:
                 + id.get() + ": " + e.what();
             ELONA_LOG(message);
             std::cerr << message << std::endl;
+
+            _errors.emplace(id, e.what());
         }
 
         return _storage[id];

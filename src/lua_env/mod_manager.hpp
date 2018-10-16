@@ -146,7 +146,7 @@ public:
      *
      * For testing use only.
      */
-    void load_mods(const fs::path&, const fs::path&);
+    void load_mods(const fs::path&, const std::vector<fs::path>);
 
     /***
      * Instantiates a new mod by running the given Lua code.

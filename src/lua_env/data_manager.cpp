@@ -60,6 +60,7 @@ void DataManager::init_from_mods()
 
     _lua->get_state()->set("_MOD_NAME", sol::lua_nil);
 
+    // Prevent modifications to the 'data' table.
     sol::table metatable = _data.storage.create_with(
         sol::meta_function::new_index,
         sol::detail::fail_on_newindex,
