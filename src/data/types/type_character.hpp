@@ -132,7 +132,7 @@ struct CharacterData
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };
 
-ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, int, "core.chara")
+ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, true, "core.chara")
 
 extern CharacterDB the_character_db;
 

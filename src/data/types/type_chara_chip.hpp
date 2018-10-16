@@ -15,6 +15,6 @@ struct CharaChipData
 };
 
 // Used only as an intermediary between registry and initialize_chara_chips().
-ELONA_DEFINE_LUA_DB(CharaChipDB, CharaChipData, int, "core.chara_chip")
+ELONA_DEFINE_LUA_DB(CharaChipDB, CharaChipData, true, "core.chara_chip")
 
 } // namespace elona

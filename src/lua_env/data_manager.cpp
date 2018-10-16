@@ -25,10 +25,20 @@ void DataManager::init_from_mods()
     for (const auto& pair : _lua->get_mod_manager())
     {
         const auto& mod = pair.second;
-        mod->env.set("data", _data.storage);
+
+        // Bypass the metatable on the mod's environment preventing creation of
+        // new global variables.
+        mod->env.raw_set("data", _data.storage);
 
         if (mod->path)
         {
+            // The name of the mod for which the current data script is being
+            // ran is present in the mod's environment table. However, it is not
+            // present in the chunk where the 'data' table originates from, as
+            // it was ran outside of an environment on creation. To determine
+            // which mod is adding new types/data in the data chunk, it has to
+            // be set globally for each mod temporarily during the data loading
+            // process.
             _lua->get_state()->set("_MOD_NAME", mod->name);
 
             const auto data_script = *mod->path / "data.lua";

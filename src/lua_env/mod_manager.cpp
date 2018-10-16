@@ -337,14 +337,13 @@ void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 
     // Globals have to be set on the metatable, not the mod's
     // environment itself.
-    // setup_mod_globals(mod, env_metatable);
-    setup_mod_globals(mod, mod.env);
+    setup_mod_globals(mod, env_metatable);
 
     // Prevent writing of new globals.
     env_metatable[sol::meta_function::new_index] = deny;
     env_metatable[sol::meta_function::index] = env_metatable;
 
-    // mod.env[sol::metatable_key] = env_metatable;
+    mod.env[sol::metatable_key] = env_metatable;
 }
 
 

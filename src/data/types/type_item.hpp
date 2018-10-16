@@ -50,7 +50,7 @@ struct ItemData
     optional<std::string> on_use_callback;
 };
 
-ELONA_DEFINE_LUA_DB(ItemDB, ItemData, int, "core.item")
+ELONA_DEFINE_LUA_DB(ItemDB, ItemData, true, "core.item")
 
 extern ItemDB the_item_db;
 

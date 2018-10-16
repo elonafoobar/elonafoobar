@@ -3,6 +3,7 @@
 #include <vector>
 #include "../filesystem.hpp"
 #include "../lib/noncopyable.hpp"
+#include "../log.hpp"
 #include "../lua_env/config_table.hpp"
 #include "../lua_env/data_table.hpp"
 #include "../optional.hpp"
@@ -28,7 +29,7 @@ class LuaLazyCache : public lib::noncopyable
 public:
     using Traits = LuaLazyCacheTraits<T>;
     using IdType = SharedId;
-    using LegacyIdType = typename Traits::LegacyIdType;
+    using LegacyIdType = int;
     using DataType = typename Traits::DataType;
     using MapType = std::unordered_map<IdType, DataType>;
     using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
@@ -127,6 +128,11 @@ public:
 
     optional<SharedId> get_id_from_legacy(const LegacyIdType& legacy_id)
     {
+        if (!Traits::need_legacy_id)
+        {
+            return none;
+        }
+
         const auto itr = _by_legacy_id.find(legacy_id);
         if (itr != std::end(_by_legacy_id))
             return itr->second;
@@ -201,7 +207,10 @@ private:
         }
         catch (const std::exception& e)
         {
-            _errors.emplace(id, e.what());
+            std::string message = "Error initializing "s + Traits::type_id + ":"
+                + id.get() + ": " + e.what();
+            ELONA_LOG(message);
+            std::cerr << message << std::endl;
         }
 
         return _storage[id];
@@ -224,7 +233,7 @@ protected:
     struct LuaLazyCacheTraits<ClassName> \
     { \
         using DataType = DataTypeName; \
-        using LegacyIdType = legacy_id; \
+        static const constexpr bool need_legacy_id = legacy_id; \
         static const constexpr char* type_id = name; \
     }; \
     } \

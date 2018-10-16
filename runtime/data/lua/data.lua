@@ -1,19 +1,20 @@
 local data = {}
 data.raw = {}
+data.by_legacy = {}
 data.types = {}
 
 function data:define_type(name, validate)
-   local full_name = _ENV["_MOD_NAME"] .. "." .. name
+   local instance_id = _ENV["_MOD_NAME"] .. "." .. name
 
-   if self.types[full_name] then
-      error("duplicate type definition of " .. full_name)
+   if self.types[instance_id] then
+      error("duplicate type definition of " .. instance_id)
    end
 
    if not validate then
       validate = function() return true end
    end
 
-   self.types[full_name] = validate
+   self.types[instance_id] = validate
 end
 
 function data:add_multi(data_type, array)
@@ -40,11 +41,12 @@ function data:add(array)
          error("missing name or type")
       end
 
-      local full_name = _ENV["_MOD_NAME"] .. "." .. name
+      local instance_id = _ENV["_MOD_NAME"] .. "." .. name
 
       if not self.types[data_type] then
          error("unknown type " .. data_type)
       end
+
 
       local dt = self.raw[data_type]
 
@@ -53,7 +55,18 @@ function data:add(array)
          self.raw[data_type] = dt
       end
 
-      dt[full_name] = v
+      dt[instance_id] = v
+
+      if v.id and type(v.id) == "number" then
+         local by_legacy = self.by_legacy[data_type]
+
+         if not by_legacy then
+            by_legacy = {}
+            self.by_legacy[data_type] = by_legacy
+         end
+
+         by_legacy[v.id] = instance_id
+      end
    end
 end
 

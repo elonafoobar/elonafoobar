@@ -15,6 +15,6 @@ struct ItemChipData
     optional<fs::path> filepath;
 };
 
-ELONA_DEFINE_LUA_DB(ItemChipDB, ItemChipData, int, "core.item_chip")
+ELONA_DEFINE_LUA_DB(ItemChipDB, ItemChipData, true, "core.item_chip")
 
 } // namespace elona

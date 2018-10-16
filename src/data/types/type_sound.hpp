@@ -10,7 +10,7 @@ struct SoundData
     fs::path file;
 };
 
-ELONA_DEFINE_LUA_DB(SoundDB, SoundData, int, "core.sound")
+ELONA_DEFINE_LUA_DB(SoundDB, SoundData, true, "core.sound")
 
 extern SoundDB the_sound_db;
 
