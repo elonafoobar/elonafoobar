@@ -11,7 +11,7 @@ data:add_multi(
          }
       },
       {
-         name = "user",
+         name = "human_male",
          id = 1,
          source = {
             x = 48,
@@ -19,7 +19,7 @@ data:add_multi(
          }
       },
       {
-         name = "_2",
+         name = "human_female",
          id = 2,
          source = {
             x = 96,
@@ -27,7 +27,7 @@ data:add_multi(
          }
       },
       {
-         name = "_3",
+         name = "elea_male",
          id = 3,
          source = {
             x = 144,
@@ -35,7 +35,7 @@ data:add_multi(
          }
       },
       {
-         name = "little_girl",
+         name = "elea_female",
          id = 4,
          source = {
             x = 192,
@@ -43,7 +43,7 @@ data:add_multi(
          }
       },
       {
-         name = "_5",
+         name = "eulderna_male",
          id = 5,
          source = {
             x = 240,
@@ -51,7 +51,7 @@ data:add_multi(
          }
       },
       {
-         name = "_6",
+         name = "eulderna_female",
          id = 6,
          source = {
             x = 288,
@@ -75,7 +75,7 @@ data:add_multi(
          }
       },
       {
-         name = "_9",
+         name = "juere_male",
          id = 9,
          source = {
             x = 432,
@@ -83,7 +83,7 @@ data:add_multi(
          }
       },
       {
-         name = "trainer_female",
+         name = "juere_female",
          id = 10,
          source = {
             x = 480,
@@ -531,7 +531,7 @@ data:add_multi(
          }
       },
       {
-         name = "_66",
+         name = "dwarf",
          id = 66,
          source = {
             x = 0,
@@ -1323,7 +1323,7 @@ data:add_multi(
          }
       },
       {
-         name = "_165",
+         name = "orc",
          id = 165,
          source = {
             x = 0,
@@ -1339,7 +1339,7 @@ data:add_multi(
          }
       },
       {
-         name = "_167",
+         name = "zombie",
          id = 167,
          source = {
             x = 96,
@@ -1347,7 +1347,7 @@ data:add_multi(
          }
       },
       {
-         name = "_168",
+         name = "race_slime",
          id = 168,
          source = {
             x = 144,
@@ -1355,7 +1355,7 @@ data:add_multi(
          }
       },
       {
-         name = "_169",
+         name = "rabbit",
          id = 169,
          source = {
             x = 192,
@@ -1363,7 +1363,7 @@ data:add_multi(
          }
       },
       {
-         name = "_170",
+         name = "sheep",
          id = 170,
          source = {
             x = 240,
@@ -1371,7 +1371,7 @@ data:add_multi(
          }
       },
       {
-         name = "_171",
+         name = "kobold",
          id = 171,
          source = {
             x = 288,
@@ -1379,7 +1379,7 @@ data:add_multi(
          }
       },
       {
-         name = "_172",
+         name = "frog",
          id = 172,
          source = {
             x = 336,
@@ -1387,7 +1387,7 @@ data:add_multi(
          }
       },
       {
-         name = "_173",
+         name = "centipede",
          id = 173,
          source = {
             x = 384,
@@ -1395,7 +1395,7 @@ data:add_multi(
          }
       },
       {
-         name = "_174",
+         name = "snail",
          id = 174,
          source = {
             x = 432,
@@ -1403,7 +1403,7 @@ data:add_multi(
          }
       },
       {
-         name = "_175",
+         name = "mandrake",
          id = 175,
          source = {
             x = 480,
@@ -1411,7 +1411,7 @@ data:add_multi(
          }
       },
       {
-         name = "_176",
+         name = "beetle",
          id = 176,
          offset_y = 8,
          source = {
@@ -1420,7 +1420,7 @@ data:add_multi(
          }
       },
       {
-         name = "_177",
+         name = "mushroom",
          id = 177,
          source = {
             x = 576,
@@ -1596,7 +1596,7 @@ data:add_multi(
          }
       },
       {
-         name = "noel",
+         name = "catgod",
          id = 199,
          source = {
             x = 48,
@@ -1604,7 +1604,7 @@ data:add_multi(
          }
       },
       {
-         name = "_200",
+         name = "bat",
          id = 200,
          source = {
             x = 96,
@@ -1612,7 +1612,7 @@ data:add_multi(
          }
       },
       {
-         name = "_201",
+         name = "ent",
          id = 201,
          tall = true,
          offset_y = 16,
@@ -1622,7 +1622,7 @@ data:add_multi(
          }
       },
       {
-         name = "_202",
+         name = "lich",
          id = 202,
          source = {
             x = 192,
@@ -1630,7 +1630,7 @@ data:add_multi(
          }
       },
       {
-         name = "_203",
+         name = "hound",
          id = 203,
          source = {
             x = 240,
@@ -1646,7 +1646,7 @@ data:add_multi(
          }
       },
       {
-         name = "_205",
+         name = "ghost",
          id = 205,
          source = {
             x = 336,
@@ -1654,7 +1654,7 @@ data:add_multi(
          }
       },
       {
-         name = "_206",
+         name = "spirit",
          id = 206,
          source = {
             x = 384,
@@ -1662,7 +1662,7 @@ data:add_multi(
          }
       },
       {
-         name = "_207",
+         name = "eye",
          id = 207,
          source = {
             x = 432,
@@ -1686,7 +1686,7 @@ data:add_multi(
          }
       },
       {
-         name = "_210",
+         name = "wasp",
          id = 210,
          source = {
             x = 576,
@@ -1702,7 +1702,7 @@ data:add_multi(
          }
       },
       {
-         name = "_212",
+         name = "imp",
          id = 212,
          source = {
             x = 672,
@@ -1710,7 +1710,7 @@ data:add_multi(
          }
       },
       {
-         name = "_213",
+         name = "hand",
          id = 213,
          source = {
             x = 720,
@@ -1734,7 +1734,7 @@ data:add_multi(
          }
       },
       {
-         name = "_216",
+         name = "snake",
          id = 216,
          source = {
             x = 864,
@@ -1766,7 +1766,7 @@ data:add_multi(
          }
       },
       {
-         name = "_220",
+         name = "goblin",
          id = 220,
          source = {
             x = 1056,
@@ -1782,7 +1782,7 @@ data:add_multi(
          }
       },
       {
-         name = "_222",
+         name = "bear",
          id = 222,
          source = {
             x = 1152,
@@ -1790,7 +1790,7 @@ data:add_multi(
          }
       },
       {
-         name = "_223",
+         name = "armor",
          id = 223,
          source = {
             x = 1200,
@@ -1798,7 +1798,7 @@ data:add_multi(
          }
       },
       {
-         name = "_224",
+         name = "medusa",
          id = 224,
          source = {
             x = 1248,
@@ -1806,7 +1806,7 @@ data:add_multi(
          }
       },
       {
-         name = "_225",
+         name = "cupid",
          id = 225,
          offset_y = 29,
          source = {
@@ -1815,7 +1815,7 @@ data:add_multi(
          }
       },
       {
-         name = "_226",
+         name = "phantom",
          id = 226,
          source = {
             x = 1344,
@@ -1823,7 +1823,7 @@ data:add_multi(
          }
       },
       {
-         name = "_227",
+         name = "harpy",
          id = 227,
          source = {
             x = 1392,
@@ -1831,7 +1831,7 @@ data:add_multi(
          }
       },
       {
-         name = "_228",
+         name = "dragon",
          id = 228,
          offset_y = 8,
          tall = true,
@@ -1841,7 +1841,7 @@ data:add_multi(
          }
       },
       {
-         name = "_229",
+         name = "cerberus",
          id = 229,
          source = {
             x = 1488,
@@ -1849,7 +1849,7 @@ data:add_multi(
          }
       },
       {
-         name = "_230",
+         name = "spider",
          id = 230,
          offset_y = 12,
          source = {
@@ -1858,7 +1858,7 @@ data:add_multi(
          }
       },
       {
-         name = "_231",
+         name = "golem",
          id = 231,
          offset_y = 16,
          tall = true,
@@ -1878,7 +1878,7 @@ data:add_multi(
          }
       },
       {
-         name = "_233",
+         name = "drake",
          id = 233,
          tall = true,
          offset_y = 8,
@@ -1896,7 +1896,7 @@ data:add_multi(
          }
       },
       {
-         name = "_235",
+         name = "wyvern",
          id = 235,
          tall = true,
          offset_y = 16,
@@ -1914,7 +1914,7 @@ data:add_multi(
          }
       },
       {
-         name = "_237",
+         name = "crab",
          id = 237,
          source = {
             x = 288,
@@ -1946,7 +1946,7 @@ data:add_multi(
          }
       },
       {
-         name = "_241",
+         name = "skeleton",
          id = 241,
          source = {
             x = 480,
@@ -1970,7 +1970,7 @@ data:add_multi(
          }
       },
       {
-         name = "_244",
+         name = "piece",
          id = 244,
          source = {
             x = 624,
@@ -2034,7 +2034,7 @@ data:add_multi(
          }
       },
       {
-         name = "_252",
+         name = "metal",
          id = 252,
          source = {
             x = 1008,
@@ -2042,7 +2042,7 @@ data:add_multi(
          }
       },
       {
-         name = "_253",
+         name = "cat",
          id = 253,
          source = {
             x = 1056,
@@ -2050,7 +2050,7 @@ data:add_multi(
          }
       },
       {
-         name = "_254",
+         name = "dog",
          id = 254,
          source = {
             x = 1104,
@@ -2058,7 +2058,7 @@ data:add_multi(
          }
       },
       {
-         name = "_255",
+         name = "catsister",
          id = 255,
          source = {
             x = 1152,
@@ -2066,7 +2066,7 @@ data:add_multi(
          }
       },
       {
-         name = "_256",
+         name = "shell",
          id = 256,
          offset_y = 16,
          source = {
@@ -2115,7 +2115,7 @@ data:add_multi(
          }
       },
       {
-         name = "_262",
+         name = "horse",
          id = 262,
          source = {
             x = 1488,
@@ -2179,7 +2179,7 @@ data:add_multi(
          }
       },
       {
-         name = "blade",
+         name = "machine",
          id = 270,
          source = {
             x = 288,
@@ -2270,7 +2270,7 @@ data:add_multi(
          }
       },
       {
-         name = "_281",
+         name = "quickling",
          id = 281,
          source = {
             x = 816,
@@ -2826,7 +2826,7 @@ data:add_multi(
          }
       },
       {
-         name = "utima",
+         name = "machinegod",
          id = 349,
          tall = true,
          offset_y = 8,
@@ -2836,7 +2836,7 @@ data:add_multi(
          }
       },
       {
-         name = "master_of_pet_arena",
+         name = "undeadgod",
          id = 350,
          source = {
             x = 960,
@@ -3062,7 +3062,7 @@ data:add_multi(
          }
       },
       {
-         name = "_378",
+         name = "yeek",
          id = 378,
          source = {
             x = 720,
@@ -3126,7 +3126,7 @@ data:add_multi(
          }
       },
       {
-         name = "bomb_rock",
+         name = "rock",
          id = 386,
          source = {
             x = 1104,
@@ -3150,7 +3150,7 @@ data:add_multi(
          }
       },
       {
-         name = "_389",
+         name = "dinosaur",
          id = 389,
          tall = true,
          offset_y = 16,
@@ -3160,7 +3160,7 @@ data:add_multi(
          }
       },
       {
-         name = "_390",
+         name = "fairy",
          id = 390,
          source = {
             x = 1296,
@@ -3168,7 +3168,7 @@ data:add_multi(
          }
       },
       {
-         name = "_391",
+         name = "troll",
          id = 391,
          tall = true,
          offset_y = 16,
@@ -3220,7 +3220,7 @@ data:add_multi(
          }
       },
       {
-         name = "_397",
+         name = "lizardman",
          id = 397,
          source = {
             x = 48,
@@ -3228,7 +3228,7 @@ data:add_multi(
          }
       },
       {
-         name = "_398",
+         name = "minotaur",
          id = 398,
          tall = true,
          offset_y = 16,
@@ -3836,7 +3836,7 @@ data:add_multi(
          }
       },
       {
-         name = "cub",
+         name = "bike",
          id = 471,
          source = {
             x = 432,
