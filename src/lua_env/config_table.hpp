@@ -34,8 +34,8 @@ public:
     }
 
 public:
-    template <typename T>
-    elona::optional<T> optional(const std::string& name) const
+    template <typename T, typename N>
+    elona::optional<T> optional(const N& name) const
     {
         if (storage[name] == sol::lua_nil)
         {
@@ -52,8 +52,8 @@ public:
         return *it;
     }
 
-    template <typename T>
-    T optional_or(const std::string& name, T default_) const
+    template <typename T, typename N>
+    T optional_or(const N& name, T default_) const
     {
         if (auto it = optional<T>(name))
             return *it;
@@ -61,8 +61,8 @@ public:
         return default_;
     }
 
-    template <typename T>
-    T required(const std::string& name) const
+    template <typename T, typename N>
+    T required(const N& name) const
     {
         elona::optional<T> it = optional<T>(name);
 
@@ -75,15 +75,8 @@ public:
         return *it;
     }
 
-    template <typename T>
-    T required(const char* name) const
-    {
-        return required<T>(std::string(name));
-    }
-
-    template <typename T>
-    T enum_or(const char* name, const lua::EnumMap<T>& map, T default_value)
-        const
+    template <typename T, typename N>
+    T enum_or(const N& name, const lua::EnumMap<T>& map, T default_value) const
     {
         auto value_ = optional<std::string>(name);
         if (value_)
@@ -96,8 +89,8 @@ public:
         }
     }
 
-    template <typename T>
-    std::vector<T> vector(const char* name) const
+    template <typename T, typename N>
+    std::vector<T> vector(const N& name) const
     {
         std::vector<T> result;
 
@@ -105,7 +98,7 @@ public:
         {
             for (const auto& kvp : *it)
             {
-                T v = kvp.second.as<T>();
+                T v = kvp.second.template as<T>();
                 result.push_back(v);
             }
         }

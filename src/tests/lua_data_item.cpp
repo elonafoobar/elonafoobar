@@ -25,7 +25,7 @@ TEST_CASE("test registering item", "[Lua: Registry]")
     elona::lua::LuaEnv lua;
     auto table = load(lua, "item");
 
-    item_db_ex db;
+    ItemDB db;
     db.initialize(lua.get_data_manager().get());
 
     auto data = db["item.putitoro"];

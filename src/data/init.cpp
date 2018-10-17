@@ -26,6 +26,8 @@ void initialize_iterable_dbs(lua::DataTable& data)
 // TODO: Make some way to load textures lazily during runtime.
 void initialize_chip_dbs(lua::DataTable& data)
 {
+    draw_clear_loaded_chips();
+
     {
         ItemChipDB the_item_chip_db;
         the_item_chip_db.initialize(data);

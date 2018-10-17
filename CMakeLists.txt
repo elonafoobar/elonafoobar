@@ -357,9 +357,9 @@ else()
       src/tests/lua_exports.cpp
       src/tests/lua_handles.cpp
       src/tests/lua_mods.cpp
-      src/tests/lua_registry.cpp
-      src/tests/lua_registry_character.cpp
-      src/tests/lua_registry_item.cpp
+      src/tests/lua_data.cpp
+      src/tests/lua_data_character.cpp
+      src/tests/lua_data_item.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
       src/tests/item.cpp

@@ -38,8 +38,9 @@ static void copy_image_cropped(
 } // namespace
 
 
-void PicLoader::clear_storage_and_buffers()
+void PicLoader::clear()
 {
+    std::cerr << "clearpic" << std::endl;
     for (const auto& buffer : buffers)
     {
         elona::buffer(buffer.buffer_id, 1, 1);

@@ -25,12 +25,12 @@ TEST_CASE("test reading invalid enum", "[Lua: Registry]")
     elona::lua::LuaEnv lua;
     auto table = load(lua, "chara_invalid_enum");
 
-    character_db_ex db;
-    db.initialize(lua.data_manager().get());
+    CharacterDB db;
+    db.initialize(lua.get_data_manager().get());
 
     auto it = db["chara_invalid_enum.putit"];
     REQUIRE_NONE(it);
-    REQUIRE(*db.error("chara_invalid_enum.putit") == "dood");
+    REQUIRE(*db.error(SharedId("chara_invalid_enum.putit")) == "dood");
 }
 
 TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
@@ -49,8 +49,8 @@ TEST_CASE("test registering character", "[Lua: Registry]")
     elona::lua::LuaEnv lua;
     auto table = load(lua, "chara");
 
-    character_db_ex db;
-    db.initialize(lua.data_manager().get());
+    CharacterDB db;
+    db.initialize(lua.get_data_manager().get());
 
     auto data = db["chara.spiral_putit"];
 
@@ -91,8 +91,8 @@ TEST_CASE("test registering character with all defaults", "[Lua: Registry]")
     elona::lua::LuaEnv lua;
     auto table = load(lua, "chara_defaults");
 
-    character_db_ex db;
-    db.initialize(lua.data_manager().get());
+    CharacterDB db;
+    db.initialize(lua.get_data_manager().get());
 
     auto data = db["chara_defaults.nothing"];
 
@@ -131,8 +131,8 @@ TEST_CASE("test usage of legacy ID", "[Lua: Registry]")
     elona::lua::LuaEnv lua;
     auto table = load(lua, "chara");
 
-    character_db_ex db;
-    db.initialize(lua.data_manager().get());
+    CharacterDB db;
+    db.initialize(lua.get_data_manager().get());
 
     auto data = db[9999];
 
@@ -145,8 +145,8 @@ TEST_CASE("test character flags", "[Lua: Registry]")
     elona::lua::LuaEnv lua;
     auto table = load(lua, "chara_defaults");
 
-    character_db_ex db;
-    db.initialize(lua.data_manager().get());
+    CharacterDB db;
+    db.initialize(lua.get_data_manager().get());
 
     auto data = db["chara_defaults.nothing"];
 

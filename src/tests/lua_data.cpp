@@ -12,7 +12,7 @@ TEST_CASE("test reading invalid HCL file", "[Lua: Registry]")
 
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(), base_path / "invalid");
+        filesystem::dir::mods(), {base_path / "invalid"});
 
     REQUIRE_THROWS(lua.get_data_manager().init_from_mods());
 }
@@ -23,23 +23,24 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Registry]")
 
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(), base_path / "putit");
+        filesystem::dir::mods(), {base_path / "putit"});
 
-    REQUIRE_NOTHROW(lua.get_data_manager.init_from_mods());
+    REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 
-    const auto& table = lua.get_data_manager().get();
+    auto& table = lua.get_data_manager().get();
 
     auto normal = table.raw("putit.putit", "putit.normal");
-    REQUIRE(normal.required<std::string>("display_name") == "putit");
-    REQUIRE(normal.required<int>("id") == 3);
+    REQUIRE_SOME(normal);
+    REQUIRE((*normal)["display_name"].get<std::string>() == "");
+    REQUIRE((*normal)["id"].get<int>() == 3);
 
     auto red = table.raw("putit.putit", "putit.red");
-    REQUIRE(red.required<std::string>("display_name") == "red putit");
-    REQUIRE(red.required<int>("id") == 4);
+    REQUIRE_SOME(red);
+    REQUIRE((*red)["display_name"].get<std::string>() == "red putit");
+    REQUIRE((*red)["id"].get<int>() == 4);
 }
 
-TEST_CASE("test loading datatype originating from other mod", "[Lua:
-Registry]")
+TEST_CASE("test loading datatype originating from other mod", "[Lua: Registry]")
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
@@ -49,11 +50,12 @@ Registry]")
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 
-    const auto& table = lua.get_data_manager().get();
+    auto& table = lua.get_data_manager().get();
 
     auto green = table.raw("putit.putit", "putit_b.green");
-    REQUIRE(green.required<std::string>("display_name") == "green putit");
-    REQUIRE(green.required<int>("id") == 5);
+    REQUIRE_SOME(green);
+    REQUIRE((*green)["display_name"].get<std::string>() == "green putit");
+    REQUIRE((*green)["id"].get<int>() == 5);
 }
 
 TEST_CASE(

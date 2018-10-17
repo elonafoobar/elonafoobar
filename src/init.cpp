@@ -376,8 +376,6 @@ void initialize_lua()
     data_manager.clear();
     data_manager.init_from_mods();
 
-    lua::lua->get_api_manager().lock();
-
     data::initialize(data_manager.get());
 }
 
@@ -834,6 +832,8 @@ int run()
     initialize_lua();
     // Load translations from scanned mods.
     initialize_i18n();
+
+    lua::lua->get_api_manager().lock();
 
     if (Config::instance().font_filename.empty())
     {

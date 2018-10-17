@@ -922,6 +922,12 @@ void initialize_chara_chips(const CharaChipDB& db)
 }
 
 
+void draw_clear_loaded_chips()
+{
+    loader.clear();
+}
+
+
 void initialize_all_chips()
 {
     initialize_mef();

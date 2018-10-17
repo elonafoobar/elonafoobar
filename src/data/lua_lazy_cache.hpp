@@ -132,7 +132,7 @@ public:
         if (it == _errors.end())
             return none;
 
-        return *it;
+        return it->second;
     }
 
     optional<SharedId> get_id_from_legacy(const LegacyIdType& legacy_id)
