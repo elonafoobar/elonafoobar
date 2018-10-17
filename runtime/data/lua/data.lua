@@ -43,10 +43,10 @@ function data:add(array)
 
       local instance_id = _ENV["_MOD_NAME"] .. "." .. name
 
+
       if not self.types[data_type] then
          error("unknown type " .. data_type)
       end
-
 
       local dt = self.raw[data_type]
 
@@ -55,7 +55,12 @@ function data:add(array)
          self.raw[data_type] = dt
       end
 
+      if dt[instance_id] then
+         error("duplicate definition of " .. data_type .. ":" .. instance_id)
+      end
+
       dt[instance_id] = v
+
 
       if v.id and type(v.id) == "number" then
          local by_legacy = self.by_legacy[data_type]

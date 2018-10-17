@@ -222,6 +222,7 @@ private:
             std::cerr << message << std::endl;
 
             _errors.emplace(id, e.what());
+            return none;
         }
 
         return _storage[id];

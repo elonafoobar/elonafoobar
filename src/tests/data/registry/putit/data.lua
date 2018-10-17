@@ -6,9 +6,7 @@ data:add_multi(
          name = "normal",
          id = 3,
          display_name = "putit"
-      }
-   },
-   {
+      },
       {
          name = "red",
          id = 4,

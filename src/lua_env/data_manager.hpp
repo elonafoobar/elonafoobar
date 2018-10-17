@@ -10,6 +10,8 @@ namespace elona
 namespace lua
 {
 
+class ModInfo;
+
 /***
  * Stores arbitrary data as Lua tables in a naive object database
  * manner. Intended for immutable definitions of things like
@@ -35,6 +37,8 @@ public:
     }
 
 private:
+    void _init_from_mod(ModInfo& mod);
+
     DataTable _data;
     LuaEnv* _lua;
 };

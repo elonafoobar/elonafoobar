@@ -20,7 +20,7 @@ static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)
     return lua.get_data_manager().get();
 }
 
-TEST_CASE("test registering item", "[Lua: Registry]")
+TEST_CASE("test registering item", "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
     auto table = load(lua, "item");

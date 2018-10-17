@@ -19,7 +19,7 @@ static std::unordered_map<int, int> _convert_resistances(
     {
         for (const auto& kvp : *it)
         {
-            int k = std::stoi(kvp.first.as<std::string>().substr(1));
+            int k = kvp.first.as<int>();
             int v = kvp.second.as<int>();
             resistances.emplace(k, v);
         }

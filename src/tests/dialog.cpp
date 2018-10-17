@@ -199,76 +199,6 @@ nodes = {
 }
 
 TEST_CASE(
-    "Loading a dialog node with unknown Lua callback should fail "
-    "(before/after)",
-    "[Dialog]")
-{
-    lua::LuaEnv lua;
-
-    REQUIRE_NONE(load(
-        R"(
-nodes = {
-    _start = {
-        text = "bar",
-        run_before = "baz",
-        choices = "End"
-    }
-}
-)",
-        lua));
-
-    REQUIRE_NONE(load(
-        R"(
-nodes = {
-    _start = {
-        text = "bar",
-        run_after = "baz",
-        choices = "End"
-    }
-}
-)",
-        lua));
-}
-
-TEST_CASE(
-    "Loading a dialog node with unknown Lua callback should fail (generator)",
-    "[Dialog]")
-{
-    lua::LuaEnv lua;
-
-    REQUIRE_NONE(load(
-        R"(
-nodes = {
-    _start = {
-        text = "bar",
-        generator = "baz",
-        choices = "End"
-    }
-}
-)",
-        lua));
-}
-
-TEST_CASE(
-    "Loading a dialog node with unknown Lua callback should fail (redirector)",
-    "[Dialog]")
-{
-    lua::LuaEnv lua;
-
-    REQUIRE_NONE(load(
-        R"(
-nodes = {
-    _start = {
-        text = "bar",
-        redirector = "baz",
-        choices = "End"
-    }
-}
-)",
-        lua));
-}
-
-TEST_CASE(
     "Loading a dialog node with more than one extra behavior should fail",
     "[Dialog]")
 {
@@ -391,7 +321,7 @@ TEST_CASE(
         R"(
 nodes = {
     _start = {
-        text = {"foo", "bar"}
+        text = {"foo", "bar"},
         choices = "End"
     }
 }
@@ -433,7 +363,7 @@ nodes = {
         choices = "End"
     },
     b = {
-        text = "baz"
+        text = "baz",
         choices = "End"
     }
 }
@@ -551,7 +481,7 @@ nodes = {
         generator = "exports:test.my_callback"
     },
     a = {
-        text = "baz"
+        text = "baz",
         choices = "core.dialog:test._start"
     },
     b = {
@@ -640,7 +570,7 @@ nodes = {
         redirector = "exports:test.my_callback"
     },
     a = {
-        text = "foo"
+        text = "foo",
         choices = "End"
     }
 }
@@ -714,7 +644,7 @@ nodes = {
         redirector = "exports:test.my_callback"
     },
     b = {
-        text = "foo"
+        text = "foo",
         choices = "End"
     }
 }

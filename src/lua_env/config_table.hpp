@@ -81,7 +81,9 @@ public:
         auto value_ = optional<std::string>(name);
         if (value_)
         {
-            return map.get_from_string(*value_, default_value);
+            // If the enum field is at least declared, fail loudly if it is not
+            // found in the enum mapping.
+            return map.ensure_from_string(*value_);
         }
         else
         {
