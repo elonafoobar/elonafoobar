@@ -46,10 +46,11 @@ CharaChipData CharaChipDB::convert(
         offset_y += inf_tiles;
     }
 
-    return CharaChipData{id,
-                         Extent{x, y, width, height},
-                         CharaChip{SharedId(id_), offset_y},
-                         filepath};
+    return CharaChipData{
+        id,
+        Extent{x, y, width, height},
+        CharaChip{SharedId("core.chara_chip:"s + id_), offset_y},
+        filepath};
 }
 
 } // namespace elona

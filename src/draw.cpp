@@ -869,8 +869,7 @@ void initialize_item_chips(const ItemChipDB& db)
         if (chip_data.filepath)
         {
             // Chip is from an external file.
-            loader.load(
-                *chip_data.filepath, key, PicLoader::PageType::character);
+            loader.load(*chip_data.filepath, key, PicLoader::PageType::item);
         }
         else
         {
