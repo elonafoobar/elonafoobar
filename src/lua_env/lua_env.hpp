@@ -6,6 +6,7 @@
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "i18n_function_manager.hpp"
+#include "lua_console.hpp"
 #include "mod_manager.hpp"
 
 namespace elona
@@ -20,6 +21,7 @@ class ExportManager;
 class HandleManager;
 class I18NFunctionManager;
 class ModManager;
+class LuaConsole;
 
 /***
  * Main singleton encapsulating various Lua subsystems. Delegates
@@ -77,6 +79,11 @@ public:
         return *data_mgr;
     }
 
+    LuaConsole& get_console()
+    {
+        return *lua_console;
+    }
+
     /***
      * Clears and reset the Lua state to directly after loading the
      * core mod.
@@ -109,6 +116,7 @@ private:
     std::unique_ptr<HandleManager> handle_mgr;
     std::unique_ptr<DataManager> data_mgr;
     std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
+    std::unique_ptr<LuaConsole> lua_console;
 };
 
 extern std::unique_ptr<LuaEnv> lua;

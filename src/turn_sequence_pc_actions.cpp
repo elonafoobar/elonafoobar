@@ -51,6 +51,16 @@ optional<TurnResult> handle_pc_action(std::string& action)
 {
     if (game_data.wizard)
     {
+        if (action == "wizard_open_console")
+        {
+            lua::lua->get_console().grab_input();
+            return none;
+        }
+        if (action == "wizard_toggle_console")
+        {
+            lua::lua->get_console().toggle();
+            return none;
+        }
         if (action == "wizard_mewmewmew")
         {
             efid = 657;

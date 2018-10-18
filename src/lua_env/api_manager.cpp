@@ -137,7 +137,7 @@ sol::table APIManager::get_master_api_table()
     return api_env["Elona"];
 }
 
-sol::table APIManager::get_api_table()
+sol::table APIManager::get_core_api_table()
 {
     return api_env["Elona"]["core"];
 }

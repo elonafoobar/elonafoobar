@@ -1160,7 +1160,6 @@ std::string zentohan(const std::string&);
 std::string cnven(const std::string&);
 std::string fixtxt(const std::string&, int = 0);
 std::string sncnv(const std::string&);
-void rm_crlf(std::string&);
 void cutname(std::string&, int = 0);
 void lenfix(std::string&, int = 0);
 void fix_input_chat(std::string&);

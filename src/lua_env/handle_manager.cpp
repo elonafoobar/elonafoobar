@@ -27,7 +27,7 @@ HandleManager::HandleManager(LuaEnv* lua_)
 
 void HandleManager::bind(LuaEnv& lua)
 {
-    sol::table core = lua.get_api_manager().get_api_table();
+    sol::table core = lua.get_api_manager().get_core_api_table();
     sol::table Chara = core["Chara"];
     sol::table Item = core["Item"];
 

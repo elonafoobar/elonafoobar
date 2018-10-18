@@ -86,7 +86,7 @@ public:
      * environment. This is so other internal C++ mechanisms can add
      * their own API methods to it.
      */
-    sol::table get_api_table();
+    sol::table get_core_api_table();
 
 private:
     /***
