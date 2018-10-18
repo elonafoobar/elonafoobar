@@ -74,6 +74,14 @@ void LuaConsole::init_environment()
             filesystem::dir::data() / "lua"s / "inspect.lua"));
     _console_mod->env.raw_set("inspect", inspect);
 
+    // Add ability to reload user/console.lua.
+    _console_mod->env.raw_set("reload", [this]() {
+        if (run_userscript())
+        {
+            print("Reloaded console environment.");
+        }
+    });
+
     run_userscript();
 }
 
@@ -91,7 +99,8 @@ void LuaConsole::set_constants(
     _max_lines = static_cast<size_t>(_height / _char_height);
 }
 
-void LuaConsole::run_userscript()
+/// Returns true on success.
+bool LuaConsole::run_userscript()
 {
     auto result = _lua->get_state()->safe_script_file(
         filesystem::make_preferred_path_in_utf8(
@@ -102,7 +111,10 @@ void LuaConsole::run_userscript()
     {
         sol::error err = result;
         print("Error running console script: "s + err.what());
+        return false;
     }
+
+    return true;
 }
 
 void LuaConsole::print_single_line(const std::string& line)

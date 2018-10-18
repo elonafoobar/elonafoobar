@@ -36,7 +36,7 @@ public:
 private:
     void set_constants(int char_width, int char_height, int width, int height);
 
-    void run_userscript();
+    bool run_userscript();
 
     static bool is_incomplete_lua_line(const sol::error& error);
     void print_single_line(const std::string& line);
