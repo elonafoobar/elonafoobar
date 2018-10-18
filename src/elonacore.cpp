@@ -8834,47 +8834,6 @@ label_2128_internal:
 
 
 
-TurnResult do_debug_console()
-{
-    notesel(dbm);
-    buff = "";
-    if (dbm == ""s)
-    {
-        noteadd(latest_version.long_string());
-        noteadd(u8"Debug Console    Type \"?\" for help. Hit ESC to exit."s);
-        noteadd(""s);
-    }
-    font(14 - en * 2);
-    pos(0, 24);
-    mesbox(dbm, true);
-    pos(0, 0);
-    mesbox(buff, true);
-    while (1)
-    {
-        await(Config::instance().wait1);
-        const auto input = stick();
-        if (input == StickKey::escape)
-        {
-            return do_exit_debug_console();
-        }
-    }
-}
-
-
-
-TurnResult do_exit_debug_console()
-{
-    if (dbg_exitshowroom == 1)
-    {
-        dbg_exitshowroom = 0;
-        levelexitby = 4;
-        return TurnResult::exit_map;
-    }
-    return TurnResult::pc_turn_user_error;
-}
-
-
-
 int efstatusfix(int doomed, int cursed, int none, int blessed)
 {
     switch (efstatus)

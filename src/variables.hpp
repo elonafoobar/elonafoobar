@@ -1257,11 +1257,6 @@ void weather_changes();
 void god_fail_to_take_over_penalty();
 
 
-//// debug console
-TurnResult do_debug_console();
-TurnResult do_exit_debug_console();
-
-
 //// ether disease
 void lost_body_part(int);
 

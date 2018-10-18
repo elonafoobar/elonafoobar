@@ -168,9 +168,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
                     chara_gain_skill(cdata.player(), i, 100, 10000);
                 }
             }
-            return none;
         }
-        return do_debug_console();
+        return none;
     }
 
     if (action == "reload_autopick")
