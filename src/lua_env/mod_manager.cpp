@@ -49,7 +49,7 @@ void ModManager::load_mods(const fs::path& mod_dir)
 
 void ModManager::load_mods(
     const fs::path& mod_dir,
-    const fs::path& additional_mod_path)
+    const std::vector<fs::path> additional_mod_paths)
 {
     if (stage != ModLoadingStage::not_started)
     {
@@ -57,7 +57,10 @@ void ModManager::load_mods(
     }
 
     scan_all_mods(mod_dir);
-    scan_mod(additional_mod_path);
+    for (const auto& path : additional_mod_paths)
+    {
+        scan_mod(path);
+    }
     load_lua_support_libraries();
     load_scanned_mods();
 }

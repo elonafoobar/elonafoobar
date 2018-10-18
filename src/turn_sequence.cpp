@@ -12,7 +12,7 @@
 #include "command.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"

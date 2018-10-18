@@ -1,4 +1,5 @@
 #include "lua_api_map.hpp"
+#include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"
 #include "../../map_cell.hpp"
 

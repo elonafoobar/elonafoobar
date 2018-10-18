@@ -3,7 +3,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "element.hpp"
 #include "elona.hpp"

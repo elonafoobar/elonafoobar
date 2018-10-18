@@ -9,7 +9,7 @@
 #include "building.hpp"
 #include "character.hpp"
 #include "crafting.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
 #include "food.hpp"

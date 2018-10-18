@@ -56,7 +56,7 @@ SharedId get_default_music()
     }
     if (map_data.bgm != 0)
     {
-        music_id = **the_music_db.get_id_from_legacy(map_data.bgm);
+        music_id = the_music_db.get_id_from_legacy(map_data.bgm)->get();
     }
     if (mdata_t::is_nefia(area_data[game_data.current_map].type))
     {

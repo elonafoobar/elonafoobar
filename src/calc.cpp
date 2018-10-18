@@ -3,7 +3,7 @@
 #include "area.hpp"
 #include "buff.hpp"
 #include "character.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
 #include "fov.hpp"

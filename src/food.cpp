@@ -6,7 +6,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"

@@ -1,7 +1,8 @@
 #pragma once
 #include "../optional.hpp"
+#include "../shared_id.hpp"
 #include "../thirdparty/sol2/sol.hpp"
-#include "export_manager.hpp"
+#include "lua_enums.hpp"
 
 namespace elona
 {
@@ -26,9 +27,15 @@ public:
     {
     }
 
+    ConfigTable(sol::table storage, SharedId id)
+        : storage(storage)
+        , id(id.get())
+    {
+    }
+
 public:
-    template <typename T>
-    optional<T> get_optional(const std::string& name)
+    template <typename T, typename N>
+    elona::optional<T> optional(const N& name) const
     {
         if (storage[name] == sol::lua_nil)
         {
@@ -45,10 +52,19 @@ public:
         return *it;
     }
 
-    template <typename T>
-    T get_required(const std::string& name)
+    template <typename T, typename N>
+    T optional_or(const N& name, T default_) const
     {
-        optional<T> it = get_optional<T>(name);
+        if (auto it = optional<T>(name))
+            return *it;
+
+        return default_;
+    }
+
+    template <typename T, typename N>
+    T required(const N& name) const
+    {
+        elona::optional<T> it = optional<T>(name);
 
         if (!it)
         {
@@ -59,24 +75,36 @@ public:
         return *it;
     }
 
-    optional<std::string> get_optional_callback(
-        const std::string& name,
-        lua::ExportManager& export_manager)
+    template <typename T, typename N>
+    T enum_or(const N& name, const lua::EnumMap<T>& map, T default_value) const
     {
-        optional<std::string> callback_name = get_optional<std::string>(name);
-
-        if (!callback_name)
+        auto value_ = optional<std::string>(name);
+        if (value_)
         {
-            return none;
+            // If the enum field is at least declared, fail loudly if it is not
+            // found in the enum mapping.
+            return map.ensure_from_string(*value_);
         }
-
-        if (!export_manager.has_function(*callback_name))
+        else
         {
-            throw std::runtime_error(
-                id + " (" + name + "): Unknown Lua callback " + *callback_name);
+            return default_value;
         }
+    }
 
-        return *callback_name;
+    template <typename T, typename N>
+    std::vector<T> vector(const N& name) const
+    {
+        std::vector<T> result;
+
+        if (auto it = optional<sol::table>(name))
+        {
+            for (const auto& kvp : *it)
+            {
+                T v = kvp.second.template as<T>();
+                result.push_back(v);
+            }
+        }
+        return result;
     }
 
 private:

@@ -233,7 +233,7 @@ public:
     using IdType = SharedId;
     using MapType = tsl::ordered_map<IdType, Extent>;
 
-    void clear_storage_and_buffers();
+    void clear();
 
     /***
      * Loads a single sprite into a buffer of the provided type into

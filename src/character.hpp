@@ -4,9 +4,8 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
-#include "db_character.hpp"
+#include "data/types/type_character.hpp"
 #include "god.hpp"
-#include "lion.hpp"
 #include "lua_env/exported_function.hpp"
 #include "position.hpp"
 #include "range.hpp"

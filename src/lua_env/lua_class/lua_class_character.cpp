@@ -6,6 +6,7 @@
 #include "../../element.hpp"
 #include "../../enums.hpp"
 #include "../../food.hpp"
+#include "../../lua_env/enums/enums.hpp"
 
 namespace elona
 {

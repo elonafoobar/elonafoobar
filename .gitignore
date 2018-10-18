@@ -25,6 +25,7 @@ GPATH
 GRTAGS
 GTAGS
 .luacheckcache
+docs/
 
 # Android-related
 *.iml

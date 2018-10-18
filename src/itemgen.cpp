@@ -3,7 +3,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "item.hpp"

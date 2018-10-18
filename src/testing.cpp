@@ -1,9 +1,9 @@
 #include "testing.hpp"
 #include <sstream>
 #include "config/config.hpp"
-#include "db_item.hpp"
-#include "db_music.hpp"
-#include "db_sound.hpp"
+#include "data/types/type_item.hpp"
+#include "data/types/type_music.hpp"
+#include "data/types/type_sound.hpp"
 #include "draw.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
@@ -66,7 +66,7 @@ void load_translations(const std::string& hcl)
 void configure_lua()
 {
     lua::lua.reset(new lua::LuaEnv());
-    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
+    initialize_lua();
 
     sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
     Testing.set_function("start_in_debug_map", start_in_debug_map);
@@ -133,9 +133,6 @@ void pre_init()
     initialize_cat_db();
     configure_lua();
     initialize_i18n();
-
-    lua::lua->get_registry_manager().clear();
-    initialize_lion_db();
 
     initialize_elona();
 

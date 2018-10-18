@@ -2,9 +2,9 @@
 #include <cmath>
 #include "character.hpp"
 #include "config/config.hpp"
-#include "db_chara_chip.hpp"
-#include "db_item.hpp"
-#include "db_item_chip.hpp"
+#include "data/types/type_chara_chip.hpp"
+#include "data/types/type_item.hpp"
+#include "data/types/type_item_chip.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "hcl.hpp"
@@ -918,6 +918,12 @@ void initialize_chara_chips(const CharaChipDB& db)
         filesystem::dir::graphic() / u8"character.bmp",
         predefined_extents,
         PicLoader::PageType::character);
+}
+
+
+void draw_clear_loaded_chips()
+{
+    loader.clear();
 }
 
 

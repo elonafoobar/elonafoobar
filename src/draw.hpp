@@ -81,6 +81,7 @@ void initialize_map_chip();
 void initialize_chara_chips(const CharaChipDB&);
 void initialize_item_chips(const ItemChipDB&);
 void initialize_all_chips();
+void draw_clear_loaded_chips();
 void draw_init_key_select_buffer();
 
 

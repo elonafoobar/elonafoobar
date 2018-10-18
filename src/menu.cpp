@@ -8,7 +8,7 @@
 #include "class.hpp"
 #include "command.hpp"
 #include "config/config.hpp"
-#include "db_item.hpp"
+#include "data/types/type_item.hpp"
 #include "defines.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"

@@ -38,7 +38,7 @@ static void copy_image_cropped(
 } // namespace
 
 
-void PicLoader::clear_storage_and_buffers()
+void PicLoader::clear()
 {
     for (const auto& buffer : buffers)
     {

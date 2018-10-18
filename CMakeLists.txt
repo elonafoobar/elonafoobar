@@ -87,12 +87,6 @@ set(CORE_SOURCES
   src/crafting.cpp
   src/ctrl_file.cpp
   src/ctrl_inventory.cpp
-  src/db_character.cpp
-  src/db_chara_chip.cpp
-  src/db_item.cpp
-  src/db_item_chip.cpp
-  src/db_music.cpp
-  src/db_sound.cpp
   src/debug.cpp
   src/dmgheal.cpp
   src/draw.cpp
@@ -120,7 +114,6 @@ set(CORE_SOURCES
   src/item_load_desc.cpp
   src/item_material.cpp
   src/itemgen.cpp
-  src/lion.cpp
   src/log.cpp
   src/magic.cpp
   src/main_menu.cpp
@@ -159,15 +152,20 @@ set(CORE_SOURCES
   src/variables.cpp
   src/wish.cpp
 
+  src/data/init.cpp
+  src/data/types.cpp
+  src/data/util.cpp
+
   src/lua_env/api_manager.cpp
+  src/lua_env/data_manager.cpp
   src/lua_env/event_manager.cpp
   src/lua_env/export_manager.cpp
   src/lua_env/handle_manager.cpp
   src/lua_env/i18n_function_manager.cpp
-  src/lua_env/lua_enums.cpp
   src/lua_env/lua_env.cpp
   src/lua_env/mod_manager.cpp
-  src/lua_env/registry_manager.cpp
+
+  src/lua_env/enums/enums.cpp
 
   src/lua_env/lua_api/lua_api_animation.cpp
   src/lua_env/lua_api/lua_api_chara.cpp
@@ -351,6 +349,7 @@ else()
       src/tests/config.cpp
       src/tests/config_def.cpp
       src/tests/dialog.cpp
+      src/tests/filesystem.cpp
       src/tests/spec.cpp
       src/tests/lua_api.cpp
       src/tests/lua_callbacks.cpp
@@ -358,9 +357,9 @@ else()
       src/tests/lua_exports.cpp
       src/tests/lua_handles.cpp
       src/tests/lua_mods.cpp
-      src/tests/lua_registry.cpp
-      src/tests/lua_registry_character.cpp
-      src/tests/lua_registry_item.cpp
+      src/tests/lua_data.cpp
+      src/tests/lua_data_character.cpp
+      src/tests/lua_data_item.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
       src/tests/item.cpp
@@ -385,7 +384,6 @@ else()
       src/bench/ai.cpp
       src/bench/generate.cpp
       src/bench/i18n.cpp
-      src/bench/lion.cpp
       src/bench/lua_callbacks.cpp
       src/bench/magic.cpp
       src/bench/util.cpp

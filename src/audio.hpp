@@ -1,7 +1,7 @@
 #pragma once
 
-#include "db_music.hpp"
-#include "db_sound.hpp"
+#include "data/types/type_music.hpp"
+#include "data/types/type_sound.hpp"
 #include "filesystem.hpp"
 #include "log.hpp"
 #include "optional.hpp"
