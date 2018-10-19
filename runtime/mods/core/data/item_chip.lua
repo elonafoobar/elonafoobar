@@ -265,274 +265,10 @@ data:add_multi(
          }
       },
       {
-         name = "_32",
-         id = 32,
-         source = {
-            x = 1536,
-            y = 0,
-         }
-      },
-      {
          name = "worthless_fake_gold_bar",
          id = 33,
          source = {
             x = 0,
-            y = 48,
-         }
-      },
-      {
-         name = "_34",
-         id = 34,
-         source = {
-            x = 48,
-            y = 48,
-         }
-      },
-      {
-         name = "_35",
-         id = 35,
-         source = {
-            x = 96,
-            y = 48,
-         }
-      },
-      {
-         name = "_36",
-         id = 36,
-         source = {
-            x = 144,
-            y = 48,
-         }
-      },
-      {
-         name = "_37",
-         id = 37,
-         source = {
-            x = 192,
-            y = 48,
-         }
-      },
-      {
-         name = "_38",
-         id = 38,
-         source = {
-            x = 240,
-            y = 48,
-         }
-      },
-      {
-         name = "_39",
-         id = 39,
-         source = {
-            x = 288,
-            y = 48,
-         }
-      },
-      {
-         name = "_40",
-         id = 40,
-         source = {
-            x = 336,
-            y = 48,
-         }
-      },
-      {
-         name = "_41",
-         id = 41,
-         source = {
-            x = 384,
-            y = 48,
-         }
-      },
-      {
-         name = "_42",
-         id = 42,
-         source = {
-            x = 432,
-            y = 48,
-         }
-      },
-      {
-         name = "_43",
-         id = 43,
-         source = {
-            x = 480,
-            y = 48,
-         }
-      },
-      {
-         name = "_44",
-         id = 44,
-         source = {
-            x = 528,
-            y = 48,
-         }
-      },
-      {
-         name = "_45",
-         id = 45,
-         source = {
-            x = 576,
-            y = 48,
-         }
-      },
-      {
-         name = "_46",
-         id = 46,
-         source = {
-            x = 624,
-            y = 48,
-         }
-      },
-      {
-         name = "_47",
-         id = 47,
-         source = {
-            x = 672,
-            y = 48,
-         }
-      },
-      {
-         name = "_48",
-         id = 48,
-         source = {
-            x = 720,
-            y = 48,
-         }
-      },
-      {
-         name = "_49",
-         id = 49,
-         source = {
-            x = 768,
-            y = 48,
-         }
-      },
-      {
-         name = "_50",
-         id = 50,
-         source = {
-            x = 816,
-            y = 48,
-         }
-      },
-      {
-         name = "_51",
-         id = 51,
-         source = {
-            x = 864,
-            y = 48,
-         }
-      },
-      {
-         name = "_52",
-         id = 52,
-         source = {
-            x = 912,
-            y = 48,
-         }
-      },
-      {
-         name = "_53",
-         id = 53,
-         source = {
-            x = 960,
-            y = 48,
-         }
-      },
-      {
-         name = "_54",
-         id = 54,
-         source = {
-            x = 1008,
-            y = 48,
-         }
-      },
-      {
-         name = "_55",
-         id = 55,
-         source = {
-            x = 1056,
-            y = 48,
-         }
-      },
-      {
-         name = "_56",
-         id = 56,
-         source = {
-            x = 1104,
-            y = 48,
-         }
-      },
-      {
-         name = "_57",
-         id = 57,
-         source = {
-            x = 1152,
-            y = 48,
-         }
-      },
-      {
-         name = "_58",
-         id = 58,
-         source = {
-            x = 1200,
-            y = 48,
-         }
-      },
-      {
-         name = "_59",
-         id = 59,
-         source = {
-            x = 1248,
-            y = 48,
-         }
-      },
-      {
-         name = "_60",
-         id = 60,
-         source = {
-            x = 1296,
-            y = 48,
-         }
-      },
-      {
-         name = "_61",
-         id = 61,
-         source = {
-            x = 1344,
-            y = 48,
-         }
-      },
-      {
-         name = "_62",
-         id = 62,
-         source = {
-            x = 1392,
-            y = 48,
-         }
-      },
-      {
-         name = "_63",
-         id = 63,
-         source = {
-            x = 1440,
-            y = 48,
-         }
-      },
-      {
-         name = "_64",
-         id = 64,
-         source = {
-            x = 1488,
-            y = 48,
-         }
-      },
-      {
-         name = "_65",
-         id = 65,
-         source = {
-            x = 1536,
             y = 48,
          }
       },
@@ -3020,22 +2756,6 @@ data:add_multi(
          }
       },
       {
-         name = "_361",
-         id = 361,
-         source = {
-            x = 1488,
-            y = 480,
-         }
-      },
-      {
-         name = "_362",
-         id = 362,
-         source = {
-            x = 1536,
-            y = 480,
-         }
-      },
-      {
          name = "_363",
          id = 363,
          source = {
@@ -3326,14 +3046,6 @@ data:add_multi(
          }
       },
       {
-         name = "_397",
-         id = 397,
-         source = {
-            x = 48,
-            y = 576,
-         }
-      },
-      {
          name = "decorative_amulet",
          id = 398,
          source = {
@@ -3482,14 +3194,6 @@ data:add_multi(
          id = 416,
          source = {
             x = 960,
-            y = 576,
-         }
-      },
-      {
-         name = "_417",
-         id = 417,
-         source = {
-            x = 1008,
             y = 576,
          }
       },
@@ -3658,14 +3362,6 @@ data:add_multi(
          id = 438,
          source = {
             x = 432,
-            y = 624,
-         }
-      },
-      {
-         name = "_439",
-         id = 439,
-         source = {
-            x = 480,
             y = 624,
          }
       },
@@ -4406,14 +4102,6 @@ data:add_multi(
          }
       },
       {
-         name = "_529",
-         id = 529,
-         source = {
-            x = 48,
-            y = 768,
-         }
-      },
-      {
          name = "_530",
          id = 530,
          source = {
@@ -4632,62 +4320,6 @@ data:add_multi(
          }
       },
       {
-         name = "_556",
-         id = 556,
-         source = {
-            x = 1344,
-            y = 768,
-         }
-      },
-      {
-         name = "_557",
-         id = 557,
-         source = {
-            x = 1392,
-            y = 768,
-         }
-      },
-      {
-         name = "_558",
-         id = 558,
-         source = {
-            x = 1440,
-            y = 768,
-         }
-      },
-      {
-         name = "_559",
-         id = 559,
-         source = {
-            x = 1488,
-            y = 768,
-         }
-      },
-      {
-         name = "_560",
-         id = 560,
-         source = {
-            x = 1536,
-            y = 768,
-         }
-      },
-      {
-         name = "_561",
-         id = 561,
-         source = {
-            x = 0,
-            y = 816,
-         }
-      },
-      {
-         name = "_562",
-         id = 562,
-         source = {
-            x = 48,
-            y = 816,
-         }
-      },
-      {
          name = "sand_bag",
          id = 563,
          offset_y = 15,
@@ -4698,19 +4330,11 @@ data:add_multi(
          }
       },
       {
-         name = "_564",
+         name = "figurine_tall",
          id = 564,
          tall = true,
          source = {
             x = 144,
-            y = 816,
-         }
-      },
-      {
-         name = "_565",
-         id = 565,
-         source = {
-            x = 192,
             y = 816,
          }
       },
@@ -4725,7 +4349,7 @@ data:add_multi(
          }
       },
       {
-         name = "_567",
+         name = "moon_gate_b",
          id = 567,
          offset_y = 12,
          tall = true,
@@ -5005,270 +4629,6 @@ data:add_multi(
          source = {
             x = 1536,
             y = 816,
-         }
-      },
-      {
-         name = "_594",
-         id = 594,
-         source = {
-            x = 0,
-            y = 864,
-         }
-      },
-      {
-         name = "_595",
-         id = 595,
-         source = {
-            x = 48,
-            y = 864,
-         }
-      },
-      {
-         name = "_596",
-         id = 596,
-         source = {
-            x = 96,
-            y = 864,
-         }
-      },
-      {
-         name = "_597",
-         id = 597,
-         source = {
-            x = 144,
-            y = 864,
-         }
-      },
-      {
-         name = "_598",
-         id = 598,
-         source = {
-            x = 192,
-            y = 864,
-         }
-      },
-      {
-         name = "_599",
-         id = 599,
-         source = {
-            x = 240,
-            y = 864,
-         }
-      },
-      {
-         name = "_600",
-         id = 600,
-         source = {
-            x = 288,
-            y = 864,
-         }
-      },
-      {
-         name = "_601",
-         id = 601,
-         source = {
-            x = 336,
-            y = 864,
-         }
-      },
-      {
-         name = "_602",
-         id = 602,
-         source = {
-            x = 384,
-            y = 864,
-         }
-      },
-      {
-         name = "_603",
-         id = 603,
-         source = {
-            x = 432,
-            y = 864,
-         }
-      },
-      {
-         name = "_604",
-         id = 604,
-         source = {
-            x = 480,
-            y = 864,
-         }
-      },
-      {
-         name = "_605",
-         id = 605,
-         source = {
-            x = 528,
-            y = 864,
-         }
-      },
-      {
-         name = "_606",
-         id = 606,
-         source = {
-            x = 576,
-            y = 864,
-         }
-      },
-      {
-         name = "_607",
-         id = 607,
-         source = {
-            x = 624,
-            y = 864,
-         }
-      },
-      {
-         name = "_608",
-         id = 608,
-         source = {
-            x = 672,
-            y = 864,
-         }
-      },
-      {
-         name = "_609",
-         id = 609,
-         source = {
-            x = 720,
-            y = 864,
-         }
-      },
-      {
-         name = "_610",
-         id = 610,
-         source = {
-            x = 768,
-            y = 864,
-         }
-      },
-      {
-         name = "_611",
-         id = 611,
-         source = {
-            x = 816,
-            y = 864,
-         }
-      },
-      {
-         name = "_612",
-         id = 612,
-         source = {
-            x = 864,
-            y = 864,
-         }
-      },
-      {
-         name = "_613",
-         id = 613,
-         source = {
-            x = 912,
-            y = 864,
-         }
-      },
-      {
-         name = "_614",
-         id = 614,
-         source = {
-            x = 960,
-            y = 864,
-         }
-      },
-      {
-         name = "_615",
-         id = 615,
-         source = {
-            x = 1008,
-            y = 864,
-         }
-      },
-      {
-         name = "_616",
-         id = 616,
-         source = {
-            x = 1056,
-            y = 864,
-         }
-      },
-      {
-         name = "_617",
-         id = 617,
-         source = {
-            x = 1104,
-            y = 864,
-         }
-      },
-      {
-         name = "_618",
-         id = 618,
-         source = {
-            x = 1152,
-            y = 864,
-         }
-      },
-      {
-         name = "_619",
-         id = 619,
-         source = {
-            x = 1200,
-            y = 864,
-         }
-      },
-      {
-         name = "_620",
-         id = 620,
-         source = {
-            x = 1248,
-            y = 864,
-         }
-      },
-      {
-         name = "_621",
-         id = 621,
-         source = {
-            x = 1296,
-            y = 864,
-         }
-      },
-      {
-         name = "_622",
-         id = 622,
-         source = {
-            x = 1344,
-            y = 864,
-         }
-      },
-      {
-         name = "_623",
-         id = 623,
-         source = {
-            x = 1392,
-            y = 864,
-         }
-      },
-      {
-         name = "_624",
-         id = 624,
-         source = {
-            x = 1440,
-            y = 864,
-         }
-      },
-      {
-         name = "_625",
-         id = 625,
-         source = {
-            x = 1488,
-            y = 864,
-         }
-      },
-      {
-         name = "_626",
-         id = 626,
-         source = {
-            x = 1536,
-            y = 864,
          }
       },
       {
@@ -5554,19 +4914,11 @@ data:add_multi(
          }
       },
       {
-         name = "_660",
+         name = "_work_buffer",
          id = 660,
          tall = true,
          source = {
             x = 0,
-            y = 960,
-         }
-      },
-      {
-         name = "_661",
-         id = 661,
-         source = {
-            x = 48,
             y = 960,
          }
       },
@@ -5863,22 +5215,6 @@ data:add_multi(
          source = {
             x = 1536,
             y = 960,
-         }
-      },
-      {
-         name = "_693",
-         id = 693,
-         source = {
-            x = 0,
-            y = 1008,
-         }
-      },
-      {
-         name = "_694",
-         id = 694,
-         source = {
-            x = 48,
-            y = 1008,
          }
       },
       {
