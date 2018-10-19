@@ -40,18 +40,16 @@ static std::string _version_string()
 
 void LuaConsole::init_constants()
 {
-    if (Config::instance().is_test)
+    auto size =
+        snail::Application::instance().get_renderer().calculate_text_size("a");
+
+    if (size.width == 0)
     {
-        set_constants(10, 14, windoww, static_cast<int>(0.35 * windowh));
+        size.width = 10;
+        size.height = 14;
     }
-    else
-    {
-        auto size =
-            snail::Application::instance().get_renderer().calculate_text_size(
-                "a");
-        set_constants(
-            size.width, size.height, windoww, static_cast<int>(0.35 * windowh));
-    }
+    set_constants(
+        size.width, size.height, windoww, static_cast<int>(0.35 * windowh));
 
     print(u8"Elona_foobar debug console");
     print(_version_string());
