@@ -110,7 +110,10 @@ public:
                 const Skyline& skyline = skylines[i];
                 y = std::max(y, skyline.y);
 
-                if (x >= width || y >= height)
+                bool contained =
+                    x >= 0 && y >= 0 && x + w < width && y + h < height;
+
+                if (!contained)
                 {
                     return none;
                 }
@@ -120,8 +123,8 @@ public:
                     return Extent{x, y, w, h};
                 }
 
-                assert(remain > skyline.width);
                 remain -= skyline.width;
+                assert(remain > 0);
             }
 
             return none;
