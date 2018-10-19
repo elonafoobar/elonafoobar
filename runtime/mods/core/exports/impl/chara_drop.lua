@@ -34,6 +34,7 @@ function chara_drop.run_drop(chara, drop_data)
 end
 
 function chara_drop.drop(chara, drops)
+   print(drops)
    for _, drop_id in ipairs(drops) do
       local drop_data = data.raw["core.chara_drop"][drop_id]
       if drop_data then
@@ -44,7 +45,10 @@ end
 
 function chara_drop.drop_from_chara(chara)
    local drops = data.raw["core.chara"][chara.new_id].drops
-   chara_drop.drop(chara, drops)
+
+   if drops then
+      chara_drop.drop(chara, drops)
+   end
 end
 
 return chara_drop

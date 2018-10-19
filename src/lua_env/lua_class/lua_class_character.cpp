@@ -212,6 +212,10 @@ void LuaCharacter::bind(sol::state& lua)
         sol::readonly(&Character::index),
         "id",
         sol::readonly(&Character::id),
+        "new_id",
+        sol::property([](Character& c) {
+            return the_character_db.get_id_from_legacy(c.id)->get();
+        }),
         "position",
         &Character::position,
         "name",
