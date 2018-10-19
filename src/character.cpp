@@ -14,6 +14,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -1416,11 +1417,9 @@ void chara_refresh(int cc)
     refresh_speed(cdata[cc]);
     cdata[cc].needs_refreshing_status() = false;
 
-    auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
-    if (handle != sol::lua_nil)
+    if (auto handle = lua::handle_opt(cdata[cc]))
     {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::character_refreshed>(handle);
+        lua::run_event<lua::EventKind::character_refreshed>(*handle);
     }
 }
 
@@ -1789,9 +1788,7 @@ int chara_copy(const Character& source)
 
 void chara_killed(Character& chara)
 {
-    auto handle = lua::lua->get_handle_manager().get_handle(chara);
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::character_killed>(handle);
+    lua::run_event<lua::EventKind::character_killed>(lua::handle(chara));
 
     if (chara.state() == Character::State::empty)
     {

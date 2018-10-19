@@ -220,6 +220,8 @@ void LuaCharacter::bind(sol::state& lua)
         sol::property([](Character& c) { return elona::cdatan(0, c.index); }),
         "experience",
         &Character::experience,
+        "fame",
+        &Character::fame,
         "talk_type",
         &Character::talk_type,
         "sex",

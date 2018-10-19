@@ -18,6 +18,7 @@ extern EnumMap<IdentifyState> IdentifyStateTable;
 extern EnumMap<StatusAilment> StatusAilmentTable;
 extern EnumMap<Element> ElementTable;
 extern EnumMap<TileKind> TileKindTable;
+extern EnumMap<Quality> QualityTable;
 extern EnumMap<int> GenderTable;
 extern EnumMap<int> RelationTable;
 extern EnumMap<int> CharaFlagTable;

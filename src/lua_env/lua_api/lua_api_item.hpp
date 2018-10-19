@@ -23,6 +23,9 @@ create_from_id(const Position&, const std::string&, int);
 sol::optional<LuaItemHandle>
 create_from_id_xy(int, int, const std::string&, int);
 
+sol::optional<LuaItemHandle> roll(const Position&, sol::table args);
+sol::optional<LuaItemHandle> roll_xy(int, int, sol::table args);
+
 
 void bind(sol::table&);
 } // namespace Item

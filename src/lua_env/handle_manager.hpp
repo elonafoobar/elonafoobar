@@ -107,8 +107,6 @@ public:
             return sol::lua_nil;
         }
 
-        // NOTE: currently indexes by the object's integer ID, but
-        // this may be phased out in the future.
         sol::object handle =
             handle_env["Handle"]["get_handle"](obj, T::lua_type());
         if (!handle.is<sol::table>())

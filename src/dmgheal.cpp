@@ -17,6 +17,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -743,12 +744,8 @@ int damage_hp(
         }
     }
 
-    {
-        auto handle = lua::lua->get_handle_manager().get_handle(victim);
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::character_damaged>(
-                handle, dmg_at_m141);
-    }
+    lua::run_event<lua::EventKind::character_damaged>(
+        lua::handle(victim), dmg_at_m141);
 
     if (victim.hp < 0)
     {

@@ -29,6 +29,8 @@ sol::optional<LuaCharacterHandle> create_from_id(
 sol::optional<LuaCharacterHandle>
 create_from_id_xy(int, int, const std::string&);
 
+int kill_count(const std::string&);
+
 
 void bind(sol::table&);
 }; // namespace Chara

@@ -18,6 +18,11 @@ int Map::height()
     return map_data.height;
 }
 
+int Map::id()
+{
+    return game_data.current_map;
+}
+
 bool Map::is_overworld()
 {
     return elona::map_data.atlas_number == 0;
@@ -118,6 +123,7 @@ void Map::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, Map, width);
     LUA_API_BIND_FUNCTION(api_table, Map, height);
+    LUA_API_BIND_FUNCTION(api_table, Map, id);
     LUA_API_BIND_FUNCTION(api_table, Map, is_overworld);
     api_table.set_function("valid", sol::overload(Map::valid, Map::valid_xy));
     api_table.set_function(

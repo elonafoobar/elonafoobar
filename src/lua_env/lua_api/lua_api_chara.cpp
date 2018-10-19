@@ -1,6 +1,7 @@
 #include "lua_api_chara.hpp"
 #include "../../character.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../../lua_env/interface.hpp"
 
 namespace elona
 {
@@ -50,9 +51,7 @@ sol::optional<LuaCharacterHandle> Chara::player()
     }
     else
     {
-        LuaCharacterHandle handle =
-            lua::lua->get_handle_manager().get_handle(elona::cdata.player());
-        return handle;
+        return lua::handle(elona::cdata.player());
     }
 }
 
@@ -68,9 +67,7 @@ sol::optional<LuaCharacterHandle> Chara::create_xy(int x, int y, int id)
     elona::flt();
     if (elona::chara_create(-1, id, x, y) != 0)
     {
-        LuaCharacterHandle handle =
-            lua::lua->get_handle_manager().get_handle(elona::cdata[elona::rc]);
-        return handle;
+        return lua::handle(elona::cdata[elona::rc]);
     }
     else
     {
@@ -96,6 +93,16 @@ Chara::create_from_id_xy(int x, int y, const std::string& id)
     return Chara::create_xy(x, y, data->id);
 }
 
+int Chara::kill_count(const std::string& id)
+{
+    auto data = the_character_db[id];
+    if (!data)
+    {
+        return 0;
+    }
+    return npcmemory(0, data->id);
+}
+
 void Chara::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, Chara, is_alive);
@@ -111,6 +118,7 @@ void Chara::bind(sol::table& api_table)
             Chara::create_xy,
             Chara::create_from_id,
             Chara::create_from_id_xy));
+    LUA_API_BIND_FUNCTION(api_table, Chara, kill_count);
 }
 
 } // namespace lua

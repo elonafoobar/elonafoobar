@@ -25,6 +25,7 @@
 #include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -1576,14 +1577,11 @@ TurnResult do_use_command()
 
     if (item_data->on_use_callback)
     {
-        auto item_handle = lua::lua->get_handle_manager().get_handle(inv[ci]);
-        auto user_handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
-
-        assert(item_handle != sol::lua_nil);
-        assert(user_handle != sol::lua_nil);
-
-        bool success = lua::lua->get_export_manager().call_with_result(
-            *item_data->on_use_callback, false, item_handle, user_handle);
+        bool success = lua::call_with_result(
+            *item_data->on_use_callback,
+            false,
+            lua::handle(inv[ci]),
+            lua::handle(cdata[cc]));
 
         if (success)
         {

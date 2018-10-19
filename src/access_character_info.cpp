@@ -6,6 +6,7 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -366,9 +367,7 @@ int access_character_info()
 
     if (dbmode == 12 && data->corpse_eating_callback)
     {
-        auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
-        lua::lua->get_export_manager().call(
-            *data->corpse_eating_callback, handle);
+        lua::call(*data->corpse_eating_callback, lua::handle(cdata[cc]));
         return -1;
     }
 
