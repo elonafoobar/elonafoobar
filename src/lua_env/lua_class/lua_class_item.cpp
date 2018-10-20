@@ -21,7 +21,9 @@ void LuaItem::bind(sol::state& lua)
         "position",
         &Item::position,
         "number",
-        sol::property([](Item& i) { return i.number(); }),
+        sol::property(
+            [](Item& i) { return i.number(); },
+            [](Item& i, int number) { i.set_number(number); }),
         "id",
         &Item::id,
         "count",
@@ -32,10 +34,16 @@ void LuaItem::bind(sol::state& lua)
         sol::property([](Item& i) { return elona::ioriginalnameref(i.id); }),
         "subname",
         &Item::subname,
+        "image",
+        &Item::image,
         "param1",
         &Item::param1,
         "param2",
         &Item::param2,
+        "param3",
+        &Item::param3,
+        "param4",
+        &Item::param4,
 
         "curse_state",
         sol::property(

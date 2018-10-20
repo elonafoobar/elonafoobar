@@ -682,6 +682,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsQuickTempered" },
+         drops = { "core.the_leopard_warrior" },
       },
       {
          name = "silvia",
@@ -708,6 +709,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         drops = { "core.the_leopard_warrior" },
       },
       {
          name = "dungeon_cleaner",
@@ -793,6 +795,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         drops = { "core.lomias" },
       },
       {
          name = "slan",
@@ -1397,6 +1400,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         drops = { "core.rabbit" },
       },
       {
          name = "snail",
@@ -3124,6 +3128,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         drops = { "core.zombie" },
       },
       {
          name = "bat",
@@ -3354,6 +3359,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
          flags = { "IsDeathMaster" },
+         drops = { "core.executioner" },
       },
       {
          name = "messenger_of_death",
@@ -3381,6 +3387,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
          flags = { "IsDeathMaster" },
+         drops = { "core.executioner" },
       },
       {
          name = "hound",
@@ -4165,6 +4172,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsFloating" },
          corpse_eating_callback = "exports:core.eating_effect.imp",
+         drops = { "core.imp" },
       },
       {
          name = "nether_imp",
@@ -4190,6 +4198,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsFloating" },
          corpse_eating_callback = "exports:core.eating_effect.imp",
+         drops = { "core.imp" },
       },
       {
          name = "chaos_imp",
@@ -4215,6 +4224,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsFloating" },
          corpse_eating_callback = "exports:core.eating_effect.imp",
+         drops = { "core.imp" },
       },
       {
          name = "hand_of_the_dead",
@@ -4508,6 +4518,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         drops = { "core.mummy" },
       },
       {
          name = "mummy",
@@ -4588,6 +4599,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsDeathMaster" },
          corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         drops = { "core.tuwen" }
       },
       {
          name = "ancient_coffin",
@@ -5021,6 +5033,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsFloating" },
          corpse_eating_callback = "exports:core.eating_effect.cupid_of_love",
+         drops = { "core.cupid_of_love" },
       },
       {
          name = "lesser_phantom",
@@ -6018,6 +6031,7 @@ data:add_multi(
          category = 0,
          rarity = 25000,
          coefficient = 400,
+         drops = { "core.rogue", "core.rogue_boss" },
       },
       {
          name = "rogue_warrior",
@@ -6044,6 +6058,7 @@ data:add_multi(
          category = 0,
          rarity = 25000,
          coefficient = 400,
+         drops = { "core.rogue" },
       },
       {
          name = "rogue_archer",
@@ -6069,6 +6084,7 @@ data:add_multi(
          category = 0,
          rarity = 25000,
          coefficient = 400,
+         drops = { "core.rogue" },
       },
       {
          name = "rogue_wizard",
@@ -6095,6 +6111,7 @@ data:add_multi(
          category = 0,
          rarity = 25000,
          coefficient = 400,
+         drops = { "core.rogue" },
       },
       {
          name = "yerles_machine_infantry",
@@ -6588,6 +6605,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          corpse_eating_callback = "exports:core.eating_effect.calm",
+         drops = { "core.hermit_crab" },
       },
       {
          name = "public_performer",
@@ -6637,6 +6655,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         drops = { "core.god_boss" },
       },
       {
          name = "younger_sister",
@@ -6772,6 +6791,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         drops = { "core.god_boss" },
       },
       {
          name = "azzrssil",
@@ -6801,6 +6821,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          corpse_eating_callback = "exports:core.eating_effect.insanity",
+         drops = { "core.god_boss" },
       },
       {
          name = "master_of_pet_arena",
@@ -7206,6 +7227,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsImmuneToFear", "IsImmuneToMine", "CuresMpFrequently" },
          corpse_eating_callback = "exports:core.eating_effect.iron",
+         drops = { "core.mine_dog" },
       },
       {
          name = "iron_maiden",
@@ -7257,6 +7279,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
          corpse_eating_callback = "exports:core.eating_effect.deformed_eye",
+         drops = { "core.deformed_eye" },
       },
       {
          name = "impure_eye",
@@ -7283,6 +7306,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
          corpse_eating_callback = "exports:core.eating_effect.deformed_eye",
+         drops = { "core.deformed_eye" },
       },
       {
          name = "wisp",
@@ -7693,6 +7717,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         drops = { "core.gwen" },
       },
       {
          name = "pael",
@@ -8162,6 +8187,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
          flags = { "IsFloating", "DropsGold" },
+         drops = { "core.fairy" },
       },
       {
          name = "black_cat",
@@ -8962,6 +8988,7 @@ data:add_multi(
          coefficient = 0,
          flags = { "IsUnsuitableForMount", "IsMetal", "IsImmuneToElementalDamage", "IsFloating" },
          corpse_eating_callback = "exports:core.eating_effect.iron",
+         drops = { "core.silver_bell" },
       },
       {
          name = "gold_bell",
@@ -8988,6 +9015,7 @@ data:add_multi(
          coefficient = 0,
          flags = { "IsUnsuitableForMount", "IsMetal", "IsImmuneToElementalDamage", "IsFloating" },
          corpse_eating_callback = "exports:core.eating_effect.iron",
+         drops = { "core.gold_bell" },
       },
       {
          name = "alien",

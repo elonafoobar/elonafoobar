@@ -37,19 +37,45 @@ std::string Item::itemname(LuaItemHandle handle, int number, bool needs_article)
     return elona::itemname(item_ref.index, number, needs_article ? 0 : 1);
 }
 
-sol::optional<LuaItemHandle>
-Item::create(const Position& position, int id, int number)
+sol::optional<LuaItemHandle> Item::create_with_args(
+    const Position& position,
+    const std::string& id,
+    int number,
+    sol::table args)
 {
-    return Item::create_xy(position.x, position.y, id, number);
+    return Item::create_with_args_xy(position.x, position.y, id, number, args);
 }
 
-sol::optional<LuaItemHandle> Item::create_xy(int x, int y, int id, int number)
+sol::optional<LuaItemHandle> Item::create_with_args_xy(
+    int x,
+    int y,
+    const std::string& id,
+    int number,
+    sol::table args)
 {
-    elona::flt();
-    if (elona::itemcreate(-1, id, x, y, number) != 0)
+    if (auto it = args.get<sol::optional<bool>>("nostack"))
+    {
+        nostack = *it ? 1 : 0;
+    }
+
+    if (auto it = args.get<sol::optional<int>>("mode"))
+    {
+        mode = *it;
+    }
+
+    // Clears flttypemajor and flttypeminor.
+    flt();
+
+    auto data = the_item_db[id];
+    if (!data)
+    {
+        throw sol::error("No such item " + id);
+    }
+
+    if (itemcreate(-1, data->id, x, y, number) != 0)
     {
         LuaItemHandle handle = lua::lua->get_handle_manager().get_handle(
-            elona::inv[elona::ci]); // TODO deglobalize ci
+            inv[ci]); // TODO deglobalize ci
         return handle;
     }
     else
@@ -58,23 +84,22 @@ sol::optional<LuaItemHandle> Item::create_xy(int x, int y, int id, int number)
     }
 }
 
-sol::optional<LuaItemHandle> Item::create_from_id(
-    const Position& position,
-    const std::string& id,
-    int number)
+sol::optional<LuaItemHandle>
+Item::create(const Position& position, const std::string& id, int number)
 {
-    return Item::create_from_id_xy(position.x, position.y, id, number);
+    return Item::create_with_args_xy(
+        position.x,
+        position.y,
+        id,
+        number,
+        lua::lua->get_state()->create_table());
 }
 
 sol::optional<LuaItemHandle>
-Item::create_from_id_xy(int x, int y, const std::string& id, int number)
+Item::create_xy(int x, int y, const std::string& id, int number)
 {
-    auto data = the_item_db[id];
-    if (!data)
-    {
-        throw sol::error("No such item " + id);
-    }
-    return Item::create_xy(x, y, data->id, number);
+    return Item::create_with_args_xy(
+        x, y, id, number, lua::lua->get_state()->create_table());
 }
 
 sol::optional<LuaItemHandle> Item::roll(
@@ -87,25 +112,34 @@ sol::optional<LuaItemHandle> Item::roll(
 sol::optional<LuaItemHandle> Item::roll_xy(int x, int y, sol::table args)
 {
     int objlv = 0;
-    Quality quality = Quality::none;
+    Quality fixlv = Quality::none;
 
+    // Exact objlv
     if (auto it = args.get<sol::optional<int>>("objlv"))
     {
         objlv = *it;
     }
 
+    // Random objlv
     if (auto it = args.get<sol::optional<int>>("level"))
     {
         objlv = calcobjlv(*it);
     }
 
+    // Exact fixlv
+    if (auto it = args.get<sol::optional<std::string>>("fixlv"))
+    {
+        fixlv = LuaEnums::QualityTable.ensure_from_string(*it);
+    }
+
+    // Random fixlv
     if (auto it = args.get<sol::optional<std::string>>("quality"))
     {
-        quality = LuaEnums::QualityTable.ensure_from_string(*it);
+        fixlv = calcfixlv(LuaEnums::QualityTable.ensure_from_string(*it));
     }
 
     // Clears flttypemajor and flttypeminor.
-    flt(objlv, quality);
+    flt(objlv, fixlv);
 
     if (auto it = args.get<sol::optional<int>>("flttypemajor"))
     {
@@ -117,10 +151,10 @@ sol::optional<LuaItemHandle> Item::roll_xy(int x, int y, sol::table args)
         flttypeminor = *it;
     }
 
-    if (elona::itemcreate(-1, 0, x, y, 0) != 0)
+    if (itemcreate(-1, 0, x, y, 0) != 0)
     {
         LuaItemHandle handle =
-            lua::lua->get_handle_manager().get_handle(elona::inv[elona::ci]);
+            lua::lua->get_handle_manager().get_handle(inv[ci]);
         return handle;
     }
     else
@@ -140,8 +174,8 @@ void Item::bind(sol::table& api_table)
         sol::overload(
             Item::create,
             Item::create_xy,
-            Item::create_from_id,
-            Item::create_from_id_xy));
+            Item::create_with_args,
+            Item::create_with_args_xy));
     api_table.set_function("roll", sol::overload(Item::roll, Item::roll_xy));
 }
 

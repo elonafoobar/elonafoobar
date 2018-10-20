@@ -5,7 +5,7 @@ local chara_drop = {}
 
 function chara_drop.create(chara, drop)
    if drop.on_create then
-      chara_drop.on_create({chara = chara})
+      drop.on_create({chara = chara})
    elseif drop.id then
       Item.create(chara.position, drop.id, 0)
    else
@@ -34,7 +34,6 @@ function chara_drop.run_drop(chara, drop_data)
 end
 
 function chara_drop.drop(chara, drops)
-   print(drops)
    for _, drop_id in ipairs(drops) do
       local drop_data = data.raw["core.chara_drop"][drop_id]
       if drop_data then
