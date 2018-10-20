@@ -4,7 +4,7 @@
 * It is made of C++.
 * It is derived from Elona v1.22.
 * It is alpha version yet.
-* It ~~has~~will have the highest extensibity with Lua. [####+]
+* It ~~has~~will have the highest extensibility with Lua. [####+]
 * It ~~achieves~~will achieve truly internationalization. [####+]
 * It works on multi-platform. [####+]
 
