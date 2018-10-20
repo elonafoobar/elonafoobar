@@ -370,12 +370,17 @@ void initialize_cat_db()
 
 void initialize_lua()
 {
+    // Scan mods under "mods/" folder.
     lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
+
+    // Initialize "console" mod.
+    lua::lua->get_console().init_environment();
 
     auto& data_manager = lua::lua->get_data_manager();
     data_manager.clear();
     data_manager.init_from_mods();
 
+    // Set "data" table on all loaded mod environments.
     data::initialize(data_manager.get());
 }
 
@@ -792,6 +797,9 @@ void initialize_elona()
     {
         snail::Input::instance().disable_numlock();
     }
+
+    // Calculate console text size (requires font to be loaded)
+    lua::lua->get_console().init_constants();
 }
 
 static void initialize_screen()

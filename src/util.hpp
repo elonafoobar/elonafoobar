@@ -224,6 +224,61 @@ inline std::string remove_line_ending(const std::string& str)
 }
 
 
+inline size_t utf8_cut_index(
+    const std::string& utf8_string,
+    int max_length_charwise)
+{
+    if (max_length_charwise == 0)
+    {
+        return 0;
+    }
+
+    int current_char = 0;
+    size_t current_byte = 0;
+    bool multibyte = false;
+    while (current_char < max_length_charwise
+           && current_byte < utf8_string.size())
+    {
+        if (static_cast<unsigned char>(utf8_string[current_byte]) > 0x7F)
+        {
+            current_byte++;
+            current_char++;
+            while (
+                (static_cast<unsigned char>(utf8_string[current_byte] & 0xC0))
+                == 0x80)
+            {
+                // Fullwidth characters count as length 2.
+                if (!multibyte)
+                {
+                    current_char++;
+                    multibyte = true;
+                }
+                if (current_char > max_length_charwise)
+                {
+                    current_byte--;
+                    break;
+                }
+
+                current_byte++;
+                if (current_byte > utf8_string.size())
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            current_char++;
+            current_byte++;
+        }
+
+        multibyte = false;
+    }
+
+    return current_byte;
+}
+
+
 
 } // namespace strutil
 

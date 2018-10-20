@@ -51,6 +51,16 @@ optional<TurnResult> handle_pc_action(std::string& action)
 {
     if (game_data.wizard)
     {
+        if (action == "wizard_open_console")
+        {
+            lua::lua->get_console().grab_input();
+            return none;
+        }
+        if (action == "wizard_toggle_console")
+        {
+            lua::lua->get_console().toggle();
+            return none;
+        }
         if (action == "wizard_mewmewmew")
         {
             efid = 657;
@@ -158,9 +168,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
                     chara_gain_skill(cdata.player(), i, 100, 10000);
                 }
             }
-            return none;
         }
-        return do_debug_console();
+        return none;
     }
 
     if (action == "reload_autopick")

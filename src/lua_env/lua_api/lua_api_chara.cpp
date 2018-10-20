@@ -88,8 +88,7 @@ sol::optional<LuaCharacterHandle> Chara::create_from_id(
 sol::optional<LuaCharacterHandle>
 Chara::create_from_id_xy(int x, int y, const std::string& id)
 {
-    auto full_id = "core.chara:" + id;
-    auto data = the_character_db[full_id];
+    auto data = the_character_db[id];
     if (!data)
     {
         throw sol::error("No such character " + id);

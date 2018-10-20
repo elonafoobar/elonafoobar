@@ -71,6 +71,7 @@ exclude_files = {
 
 files['**/runtime/mods'] = {std = STD_ELONA}
 files['**/runtime/mods/core'] = {std = "+core"}
+files['**/runtime/user/console.lua'] = {std = "+core+console"}
 files['src/tests/lua/*.lua'] = {std = "+tests"}
 files['src/tests/lua/classes/*.lua'] = {std = "+tests"}
 files['src/tests/lua/support'] = {std = "+minctest"}
@@ -252,6 +253,18 @@ stds.core = {
     }
 }
 
+--(( console ))--
+stds.console = {
+    read_globals = {
+       "_LAST_RESULT"
+    }
+}
+
+for k, v in pairs(stds.elona.read_globals.Elona.fields) do
+   if type(v) == "table" then
+      stds.console.read_globals[k] = v
+   end
+end
 
 --(( stdlib extensions ))--
 stds.stdlib = {

@@ -162,6 +162,7 @@ set(CORE_SOURCES
   src/lua_env/export_manager.cpp
   src/lua_env/handle_manager.cpp
   src/lua_env/i18n_function_manager.cpp
+  src/lua_env/lua_console.cpp
   src/lua_env/lua_env.cpp
   src/lua_env/mod_manager.cpp
 
@@ -662,6 +663,7 @@ copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/mods/ "${RUNTIME_DIR}/mods/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/original/ "${RUNTIME_DIR}/original/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/user/ "${RUNTIME_DIR}/user/")
 copy_file(${CMAKE_SOURCE_DIR}/runtime/__init__.lua "${RUNTIME_DIR}")
 copy_file(${CMAKE_SOURCE_DIR}/runtime/assets.hcl "${RUNTIME_DIR}")
 

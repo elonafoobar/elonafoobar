@@ -1323,6 +1323,9 @@ void render_hud()
 
     // Damage popups
     show_damage_popups();
+
+    // Lua console, if active
+    lua::lua->get_console().draw();
 }
 
 

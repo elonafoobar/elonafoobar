@@ -1142,55 +1142,8 @@ int winposy(int prm_539, int prm_540)
 
 void cutname(std::string& utf8_string, int max_length_charwise)
 {
-    if (max_length_charwise == 0)
-    {
-        utf8_string = std::string();
-        return;
-    }
-
-    int current_char = 0;
-    size_t current_byte = 0;
-    bool multibyte = false;
-    while (current_char < max_length_charwise
-           && current_byte < utf8_string.size())
-    {
-        if (static_cast<unsigned char>(utf8_string[current_byte]) > 0x7F)
-        {
-            current_byte++;
-            current_char++;
-            while (
-                (static_cast<unsigned char>(utf8_string[current_byte] & 0xC0))
-                == 0x80)
-            {
-                // Fullwidth characters count as length 2.
-                if (!multibyte)
-                {
-                    current_char++;
-                    multibyte = true;
-                }
-                if (current_char > max_length_charwise)
-                {
-                    current_byte--;
-                    break;
-                }
-
-                current_byte++;
-                if (current_byte > utf8_string.size())
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            current_char++;
-            current_byte++;
-        }
-
-        multibyte = false;
-    }
-
-    utf8_string = utf8_string.substr(0, current_byte);
+    utf8_string = utf8_string.substr(
+        0, strutil::utf8_cut_index(utf8_string, max_length_charwise));
 }
 
 
@@ -8877,47 +8830,6 @@ label_2128_internal:
         return 1;
     }
     goto label_2128_internal;
-}
-
-
-
-TurnResult do_debug_console()
-{
-    notesel(dbm);
-    buff = "";
-    if (dbm == ""s)
-    {
-        noteadd(latest_version.long_string());
-        noteadd(u8"Debug Console    Type \"?\" for help. Hit ESC to exit."s);
-        noteadd(""s);
-    }
-    font(14 - en * 2);
-    pos(0, 24);
-    mesbox(dbm, true);
-    pos(0, 0);
-    mesbox(buff, true);
-    while (1)
-    {
-        await(Config::instance().wait1);
-        const auto input = stick();
-        if (input == StickKey::escape)
-        {
-            return do_exit_debug_console();
-        }
-    }
-}
-
-
-
-TurnResult do_exit_debug_console()
-{
-    if (dbg_exitshowroom == 1)
-    {
-        dbg_exitshowroom = 0;
-        levelexitby = 4;
-        return TurnResult::exit_map;
-    }
-    return TurnResult::pc_turn_user_error;
 }
 
 

@@ -168,6 +168,19 @@ public:
     void run_in_mod(const std::string& name, const std::string& script);
 
     /***
+     * Creates a new mod, optionally setting its global environment to be read
+     * only.
+     *
+     * Will throw if the mod already exists.
+     *
+     * @return a pointer to the created mod.
+     */
+    ModInfo* create_mod(
+        const std::string& name,
+        optional<fs::path> mod_dir,
+        bool readonly);
+
+    /***
      * Retrieves a pointer to an instantiated mod.
      *
      * Will throw if the mod doesn't exist.
@@ -274,7 +287,7 @@ private:
     /***
      * The loading stage the environment is currently in. Used for
      * tracking the lifecycle of mod loading and ensuring the loading
-     * functions are ran in the correct order.
+     * functions are run in the correct order.
      */
     ModLoadingStage stage = ModLoadingStage::not_started;
 

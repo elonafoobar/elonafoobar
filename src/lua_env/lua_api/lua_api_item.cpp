@@ -67,8 +67,7 @@ sol::optional<LuaItemHandle> Item::create_from_id(
 sol::optional<LuaCharacterHandle>
 Item::create_from_id_xy(int x, int y, const std::string& id, int number)
 {
-    auto full_id = "core.item:" + id;
-    auto data = the_item_db[full_id];
+    auto data = the_item_db[id];
     if (!data)
     {
         throw sol::error("No such item " + id);

@@ -37,6 +37,7 @@ LuaEnv::LuaEnv()
     data_mgr = std::make_unique<DataManager>(this);
     export_mgr = std::make_unique<ExportManager>(this);
     i18n_function_mgr = std::make_unique<I18NFunctionManager>(this);
+    lua_console = std::make_unique<LuaConsole>(this);
 }
 
 void LuaEnv::clear()

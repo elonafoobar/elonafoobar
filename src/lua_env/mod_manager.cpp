@@ -138,14 +138,13 @@ void ModManager::scan_mod(const fs::path& mod_dir)
             "Mod name \"" + mod_name
             + "\" must contain alphanumeric characters only.");
     }
-    if (mod_name == "script")
+    if (mod_name == "script" || mod_name == "console")
     {
-        throw std::runtime_error("\"script\" is a reserved mod name.");
+        throw std::runtime_error(
+            "\"" + mod_name + "\" is a reserved mod name.");
     }
 
-    std::unique_ptr<ModInfo> info =
-        std::make_unique<ModInfo>(mod_name, mod_dir, lua_->get_state());
-    this->mods.emplace(mod_name, std::move(info));
+    create_mod(mod_name, mod_dir, false);
 }
 
 void ModManager::scan_all_mods(const fs::path& mods_dir)
@@ -223,9 +222,7 @@ void ModManager::run_startup_script(const std::string& name)
         throw std::runtime_error("Startup script was already run.");
     }
 
-    std::unique_ptr<ModInfo> script_mod =
-        std::make_unique<ModInfo>("script", none, lua_->get_state());
-    setup_and_lock_mod_globals(*script_mod);
+    ModInfo* script_mod = create_mod("script", none, true);
 
     lua_->get_state()->safe_script_file(
         filesystem::make_preferred_path_in_utf8(
@@ -236,8 +233,6 @@ void ModManager::run_startup_script(const std::string& name)
     txtef(8);
     txt(i18n::s.get("core.locale.mod.loaded_script", name));
     txtnew();
-
-    this->mods.emplace("script", std::move(script_mod));
 }
 
 void ModManager::clear_mod_stores()
@@ -349,6 +344,28 @@ void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
     mod.env[sol::metatable_key] = env_metatable;
 }
 
+ModInfo* ModManager::create_mod(
+    const std::string& name,
+    optional<fs::path> mod_dir,
+    bool readonly)
+{
+    std::unique_ptr<ModInfo> info =
+        std::make_unique<ModInfo>(name, mod_dir, lua_->get_state());
+
+    if (readonly)
+    {
+        setup_and_lock_mod_globals(*info);
+    }
+    else
+    {
+        // Set the globals directly on the environment table for testing use.
+        setup_mod_globals(*info, info->env);
+    }
+
+    mods[name] = std::move(info);
+    return mods[name].get();
+}
+
 
 // For testing use
 void ModManager::load_mod_from_script(
@@ -367,21 +384,10 @@ void ModManager::load_mod_from_script(
                 "Mod "s + name + " was already initialized."s);
     }
 
-    std::unique_ptr<ModInfo> info =
-        std::make_unique<ModInfo>(name, none, lua_->get_state());
-
-    if (readonly)
-    {
-        setup_and_lock_mod_globals(*info);
-    }
-    else
-    {
-        // Set the globals directly on the environment table for testing use.
-        setup_mod_globals(*info, info->env);
-    }
+    ModInfo* mod = create_mod(name, none, readonly);
 
     // Run the provided script string.
-    auto result = lua_->get_state()->safe_script(script, info->env);
+    auto result = lua_->get_state()->safe_script(script, mod->env);
 
     // Add the API table returned by the mod's initialization script,
     // if one was returned.
@@ -400,8 +406,6 @@ void ModManager::load_mod_from_script(
         report_error(err);
         throw std::runtime_error("Failed initializing mod "s + name);
     }
-
-    this->mods[name] = std::move(info);
 }
 
 void ModManager::run_in_mod(const std::string& name, const std::string& script)

@@ -1160,7 +1160,6 @@ std::string zentohan(const std::string&);
 std::string cnven(const std::string&);
 std::string fixtxt(const std::string&, int = 0);
 std::string sncnv(const std::string&);
-void rm_crlf(std::string&);
 void cutname(std::string&, int = 0);
 void lenfix(std::string&, int = 0);
 void fix_input_chat(std::string&);
@@ -1256,11 +1255,6 @@ void weather_changes();
 
 //// Religion
 void god_fail_to_take_over_penalty();
-
-
-//// debug console
-TurnResult do_debug_console();
-TurnResult do_exit_debug_console();
 
 
 //// ether disease

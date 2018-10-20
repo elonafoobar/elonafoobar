@@ -18,7 +18,7 @@ EventManager::EventManager(LuaEnv* lua)
 
 void EventManager::bind_api(LuaEnv& lua)
 {
-    sol::table core = lua.get_api_manager().get_api_table();
+    sol::table core = lua.get_api_manager().get_core_api_table();
     sol::table Event = core.create_named("Event");
 
     Event.set_function(
@@ -114,7 +114,7 @@ void EventManager::init_events()
 {
     unsigned event_count = static_cast<unsigned>(EventKind::COUNT);
     sol::function error_handler =
-        lua->get_api_manager().get_api_table()["Debug"]["report_error"];
+        lua->get_api_manager().get_core_api_table()["Debug"]["report_error"];
     for (unsigned i = 0; i < event_count; i++)
     {
         EventKind event_kind = static_cast<EventKind>(i);
