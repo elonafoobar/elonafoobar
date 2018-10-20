@@ -315,7 +315,7 @@ inline std::string run_i18n_function(
         auto text = result.get<sol::optional<std::string>>();
         if (!text)
         {
-            return "<invalid type>";
+            return "<nil>";
         }
         else
         {

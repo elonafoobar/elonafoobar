@@ -42,6 +42,10 @@ function i18n.en.capitalize(str)
 end
 
 function i18n.en.he(chara, ignore_sight)
+   if not chara then
+      return "it"
+   end
+
    if ignore_sight then
       if chara.sex == "Male" then
          return "he"
@@ -64,6 +68,10 @@ function i18n.en.he(chara, ignore_sight)
 end
 
 function i18n.en.his(chara, ignore_sight)
+   if not chara then
+      return "its"
+   end
+
    if ignore_sight then
       if chara.index == 0 then
          return "your"
@@ -88,6 +96,10 @@ function i18n.en.his(chara, ignore_sight)
 end
 
 function i18n.en.him(chara, ignore_sight)
+   if not chara then
+      return "it"
+   end
+
    if ignore_sight then
       if chara.sex == "Male" then
          return "him"
@@ -110,6 +122,10 @@ function i18n.en.him(chara, ignore_sight)
 end
 
 function i18n.en.is(object)
+   if not object then
+      return "is"
+   end
+
    if object == true then
       return "are"
    elseif object == false then
@@ -132,6 +148,10 @@ function i18n.en.is(object)
 end
 
 function i18n.en.s(object, need_e)
+   if not object then
+      return need_e and "es" or "s"
+   end
+
    if object == true then
       if need_e then
          return "es"
@@ -168,6 +188,10 @@ function i18n.en.s(object, need_e)
 end
 
 function i18n.en.does(object)
+   if not object then
+      return "does"
+   end
+
    if object.lua_type == "LuaItem" then
       if object.number == 1 then
          return "do"
@@ -184,6 +208,10 @@ function i18n.en.does(object)
 end
 
 function i18n.en.have(chara)
+   if not chara then
+      return "has"
+   end
+
    if chara.index == 0 then
       return "have"
    else
@@ -192,6 +220,10 @@ function i18n.en.have(chara)
 end
 
 function i18n.en.himself(chara)
+   if not chara then
+      return "itself"
+   end
+
    if chara.index < 0 or chara.index >= 245 then
       return "itself"
    elseif not FOV.you_see(chara) then
@@ -206,6 +238,10 @@ function i18n.en.himself(chara)
 end
 
 function i18n.en.his_owned(chara)
+   if not chara then
+      return "'s"
+   end
+
    if chara.index == 0 then
       return "r"
    else
@@ -229,6 +265,10 @@ function i18n.jp.ordinal(n)
 end
 
 function i18n.jp.he(chara)
+   if not chara then
+      return "彼"
+   end
+
    if chara.sex == "Male" then
       return "彼"
    else
@@ -237,6 +277,10 @@ function i18n.jp.he(chara)
 end
 
 function i18n.jp.his(chara)
+   if not chara then
+      return "彼の"
+   end
+
    if chara.index == 0 then
       return "あなたの"
    elseif chara.sex == "Male" then
@@ -247,6 +291,10 @@ function i18n.jp.his(chara)
 end
 
 function i18n.jp.him(chara)
+   if not chara then
+      return "彼"
+   end
+
    if chara.sex == "Male" then
       return "彼"
    else
@@ -255,6 +303,10 @@ function i18n.jp.him(chara)
 end
 
 function i18n.jp.kare_wa(chara)
+   if not chara then
+      return "それは"
+   end
+
    if chara.index == 0 then
       return ""
    elseif not FOV.you_see(chara) then
@@ -272,26 +324,26 @@ end
 i18n.all = {}
 
 function i18n.all.you()
-   return Chara.player().name
+   return I18N.get("core.locale.chara.you")
 end
 
 function i18n.all.name(chara)
-   if not chara then
-      return "<nil character>"
+   if not chara or not chara.name then
+      return I18N.get("core.locale.chara.something")
    end
    return chara.name
 end
 
 function i18n.all.basename(chara)
-   if not chara then
-      return "<nil character>"
+   if not chara or not chara.name then
+      return I18N.get("core.locale.chara.something")
    end
    return chara.basename
 end
 
 function i18n.all.itemname(item, number, needs_article)
    if not item then
-      return "<nil item>"
+      return I18N.get("core.locale.chara.something")
    end
    if number == nil then
       number = item.number
@@ -305,7 +357,7 @@ end
 
 function i18n.all.itembasename(item)
    if not item then
-      return "<nil item>"
+      return I18N.get("core.locale.chara.something")
    end
    return item.basename
 end
