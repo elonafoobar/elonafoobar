@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_map.hpp"
 #include "elona.hpp"
 #include "equipment.hpp"
 #include "i18n.hpp"
@@ -269,77 +270,111 @@ bool map_is_town_or_guild()
 
 bool map_should_reveal_fog()
 {
-    return game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::arena || dbg_revealmap
-        || map_data.type == mdata_t::MapType::town
+    bool result = false;
+
+    if (game_data.current_map == mdata_t::MapId::quest)
+    {
+        return game_data.executing_immediate_quest_type == 1009;
+    }
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->reveals_fog;
+    }
+
+    return result || dbg_revealmap || map_data.type == mdata_t::MapType::town
         || map_data.type == mdata_t::MapType::world_map
         || map_data.type == mdata_t::MapType::player_owned
-        || map_data.type == mdata_t::MapType::guild
-        || game_data.current_map == mdata_t::MapId::shelter_
-        || game_data.current_map == mdata_t::MapId::embassy
-        || game_data.current_map == mdata_t::MapId::miral_and_garoks_workshop
-        || game_data.current_map == mdata_t::MapId::show_house
-        || (game_data.current_map == mdata_t::MapId::quest
-            && game_data.executing_immediate_quest_type == 1009);
+        || map_data.type == mdata_t::MapType::guild;
 }
 
 
 bool map_shows_floor_count_in_name()
 {
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->shows_floor_count_in_name;
+    }
+
     return area_data[game_data.current_map].type != mdata_t::MapType::town
-        && (area_data[game_data.current_map].id == mdata_t::MapId::lesimas
+        && (result
             || area_data[game_data.current_map].id
                 == mdata_t::MapId::random_dungeon
-            || area_data[game_data.current_map].id == mdata_t::MapId::quest
             || mdata_t::is_nefia(map_data.type));
 }
 
 
 bool map_prevents_teleport()
 {
-    return game_data.current_map == mdata_t::MapId::pet_arena
-        || map_data.type == mdata_t::MapType::world_map
-        || game_data.current_map == mdata_t::MapId::pyramid
-        || game_data.current_map == mdata_t::MapId::jail;
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->prevents_teleport;
+    }
+
+    return result || map_data.type == mdata_t::MapType::world_map;
 }
 
 
 bool map_prevents_return()
 {
-    return map_data.type == mdata_t::MapType::temporary
-        || game_data.current_map == mdata_t::MapId::shelter_
-        || game_data.current_map == mdata_t::MapId::jail;
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->prevents_return;
+    }
+
+    return result || map_data.type == mdata_t::MapType::temporary;
 }
 
 
 bool map_prevents_domination()
 {
-    return game_data.current_map == mdata_t::MapId::arena
-        || game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::the_void;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->prevents_domination;
+    }
+
+    return false;
 }
 
 
 bool map_prevents_monster_ball()
 {
-    return game_data.current_map == mdata_t::MapId::arena
-        || game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::show_house;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->prevents_monster_ball;
+    }
+
+    return false;
 }
 
 
 bool map_prevents_building_shelter()
 {
-    return map_data.refresh_type == 0
-        || game_data.current_map == mdata_t::MapId::quest
-        || game_data.current_map == mdata_t::MapId::shelter_;
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->prevents_building_shelter;
+    }
+
+    return result || map_data.refresh_type == 0;
 }
 
 
 bool map_prevents_random_events()
 {
-    return game_data.current_map == mdata_t::MapId::shelter_
-        || game_data.current_map != mdata_t::MapId::jail;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->prevents_random_events;
+    }
+
+    return false;
 }
 
 
@@ -472,10 +507,14 @@ void map_calc_trade_goods_price()
 }
 
 
-bool map_ai_makes_snowmen()
+bool map_villagers_make_snowmen()
 {
-    return game_data.current_map == mdata_t::MapId::noyel
-        || game_data.current_map == mdata_t::MapId::mansion_of_younger_sister;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->villagers_make_snowmen;
+    }
+
+    return false;
 }
 
 

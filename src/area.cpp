@@ -118,9 +118,25 @@ void AreaData::unpack_from(elona_vector2<int>& legacy_adata)
 
 
 
+Area& AreaData::current()
+{
+    assert(game_data.current_map != 0);
+
+    return area_data[game_data.current_map];
+}
+
+
+
+optional_ref<MapDefData> AreaData::current_mapdef()
+{
+    return the_mapdef_db[current().id];
+}
+
+
+
 bool Area::can_return_to()
 {
-    return the_map_db[id]->can_return_to;
+    return the_mapdef_db[id]->can_return_to;
 }
 
 
@@ -138,7 +154,7 @@ bool Area::is_museum_or_shop()
 
 void initialize_adata()
 {
-    for (const auto& map : the_map_db)
+    for (const auto& map : the_mapdef_db)
     {
         int map_id = map.id;
         auto& area = area_data[map_id];
@@ -152,6 +168,7 @@ void initialize_adata()
         area.is_indoor = map.is_indoor;
         area.is_generated_every_time = map.is_generated_every_time;
         area.default_ai_calm = map.default_ai_calm;
+        area.quest_town_id = map.quest_town_id;
 
         // Only set position/tiles of Your Home if it has not been upgraded. All
         // other maps all have fixed positions/tiles.

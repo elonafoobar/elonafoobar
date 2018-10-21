@@ -224,7 +224,7 @@ bool map_prevents_building_shelter();
 bool map_prevents_random_events();
 void map_set_caravan_destinations();
 void map_calc_trade_goods_price();
-bool map_ai_makes_snowmen();
+bool map_villagers_make_snowmen();
 bool map_can_use_bad_weather_in_study();
 int map_random_site_amount();
 

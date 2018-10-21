@@ -6,7 +6,7 @@
 namespace elona
 {
 
-struct MapData
+struct MapDefData
 {
     int id;
     int appearance{};
@@ -22,12 +22,23 @@ struct MapData
     bool is_indoor{};
     bool is_generated_every_time{};
     int default_ai_calm{};
+    int quest_town_id{};
+
     bool can_return_to{};
     bool is_home{};
+    bool reveals_fog{};
+    bool shows_floor_count_in_name{};
+    bool prevents_teleport{};
+    bool prevents_return{};
+    bool prevents_domination{};
+    bool prevents_monster_ball{};
+    bool prevents_building_shelter{};
+    bool prevents_random_events{};
+    bool villagers_make_snowmen{};
 };
 
-ELONA_DEFINE_LUA_DB(MapDB, MapData, true, "core.map")
+ELONA_DEFINE_LUA_DB(MapDefDB, MapDefData, true, "core.map")
 
-extern MapDB the_map_db;
+extern MapDefDB the_mapdef_db;
 
 } // namespace elona

@@ -4,11 +4,11 @@
 namespace elona
 {
 
-MapDB the_map_db;
-const constexpr char* data::LuaLazyCacheTraits<MapDB>::type_id;
+MapDefDB the_mapdef_db;
+const constexpr char* data::LuaLazyCacheTraits<MapDefDB>::type_id;
 
 
-MapData MapDB::convert(const lua::ConfigTable& data, const std::string&)
+MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
 {
     auto legacy_id = data.required<int>("id");
     DATA_REQ(appearance, int);
@@ -25,28 +25,50 @@ MapData MapDB::convert(const lua::ConfigTable& data, const std::string&)
     DATA_REQ(is_indoor, bool);
     DATA_REQ(is_generated_every_time, bool);
     DATA_REQ(default_ai_calm, int);
+    DATA_OPT_OR(quest_town_id, int, 0);
+
     DATA_OPT_OR(can_return_to, bool, false);
     DATA_OPT_OR(is_home, bool, false);
+    DATA_OPT_OR(reveals_fog, bool, false);
+    DATA_OPT_OR(shows_floor_count_in_name, bool, false);
+    DATA_OPT_OR(prevents_teleport, bool, false);
+    DATA_OPT_OR(prevents_return, bool, false);
+    DATA_OPT_OR(prevents_domination, bool, false);
+    DATA_OPT_OR(prevents_monster_ball, bool, false);
+    DATA_OPT_OR(prevents_building_shelter, bool, false);
+    DATA_OPT_OR(prevents_random_events, bool, false);
+    DATA_OPT_OR(villagers_make_snowmen, bool, false);
 
     Position outer_map_position_{outer_map_position.get<int>("x"),
                                  outer_map_position.get<int>("y")};
 
-    return MapData{legacy_id,
-                   appearance,
-                   map_type,
-                   outer_map,
-                   outer_map_position_,
-                   entrance_type,
-                   tile_set,
-                   tile_type,
-                   base_turn_cost,
-                   danger_level,
-                   deepest_level,
-                   is_indoor,
-                   is_generated_every_time,
-                   default_ai_calm,
-                   can_return_to,
-                   is_home};
+    return MapDefData{legacy_id,
+                      appearance,
+                      map_type,
+                      outer_map,
+                      outer_map_position_,
+                      entrance_type,
+                      tile_set,
+                      tile_type,
+                      base_turn_cost,
+                      danger_level,
+                      deepest_level,
+                      is_indoor,
+                      is_generated_every_time,
+                      default_ai_calm,
+                      quest_town_id,
+
+                      can_return_to,
+                      is_home,
+                      reveals_fog,
+                      shows_floor_count_in_name,
+                      prevents_teleport,
+                      prevents_return,
+                      prevents_domination,
+                      prevents_monster_ball,
+                      prevents_building_shelter,
+                      prevents_random_events,
+                      villagers_make_snowmen};
 }
 
 } // namespace elona

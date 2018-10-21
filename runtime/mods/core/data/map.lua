@@ -211,6 +211,8 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          quest_town_id = 6,
+
+         villagers_make_snowmen = true,
       },
       {
          name = "lumiest",
@@ -267,16 +269,17 @@ data:add_multi(
          outer_map = 4,
 
          -- Special case due to Your Home being able to change
-         -- position, so its current position shouldn't be overwritten
-         -- when areas are updated.
+         -- position/appearance, so those properties shouldn't be
+         -- overwritten when all areas are refreshed.
          is_home = true,
       },
       {
          name = "show_house",
          id = 35,
          map_type = "Temporary",
-         entrance_type = "South",
          outer_map = 4,
+         outer_map_position = { x = 35, y = 27 },
+         entrance_type = "South",
          base_turn_cost = 10000,
          danger_level = 1,
          deepest_level = 1,
@@ -284,9 +287,11 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 1,
          appearance = 158,
-         outer_map_position = { x = 35, y = 27 },
          tile_set = "Normal",
          tile_type = 3,
+
+         reveals_fog = true,
+         prevents_monster_ball = true,
       },
       {
          name = "arena",
@@ -304,6 +309,10 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = true,
          default_ai_calm = 0,
+
+         reveals_fog = true,
+         prevents_domination = true,
+         prevents_monster_ball = true,
       },
       {
          name = "pet_arena",
@@ -321,6 +330,11 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = true,
          default_ai_calm = 0,
+
+         reveals_fog = true,
+         prevents_teleport = true,
+         prevents_domination = true,
+         prevents_monster_ball = true,
       },
       {
          name = "quest",
@@ -338,6 +352,9 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = true,
          default_ai_calm = 0,
+
+         shows_floor_count_in_name = true,
+         prevents_building_shelter = true,
       },
       {
          name = "lesimas",
@@ -357,6 +374,7 @@ data:add_multi(
          default_ai_calm = 0,
 
          can_return_to = true,
+         shows_floor_count_in_name = true,
       },
       {
          name = "the_void",
@@ -376,6 +394,7 @@ data:add_multi(
          default_ai_calm = 0,
 
          can_return_to = true,
+         prevents_domination = true,
       },
       {
          name = "tower_of_fire",
@@ -529,6 +548,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         prevents_teleport = true,
       },
       {
          name = "lumiest_graveyard",
@@ -580,6 +601,10 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = true,
          default_ai_calm = 0,
+
+         prevents_teleport = true,
+         prevents_return = true,
+         prevents_random_events = true,
       },
       {
          name = "cyber_dome",
@@ -633,6 +658,8 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          outer_map = 4,
+
+         reveals_fog = true,
       },
       {
          name = "mansion_of_younger_sister",
@@ -652,6 +679,7 @@ data:add_multi(
          default_ai_calm = 1,
 
          can_return_to = true,
+         villagers_make_snowmen = true,
       },
       {
          name = "embassy",
@@ -669,6 +697,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         reveals_fog = true,
       },
       {
          name = "north_tyris_south_border",
@@ -754,6 +784,11 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         reveals_fog = true,
+         prevents_return = true,
+         prevents_building_shelter = true,
+         prevents_random_events = true,
       },
       {
          name = "test_site",
