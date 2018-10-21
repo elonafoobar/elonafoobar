@@ -1188,4 +1188,139 @@ void map_reload_noyel()
 }
 
 
+
+static void _create_nefia(int index, int x, int y)
+{
+    area = index;
+    ctrl_file(FileOperation::temp_dir_delete_area);
+
+    auto& area = area_data[index];
+
+    area.type = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
+    area.id = static_cast<int>(mdata_t::MapId::random_dungeon);
+    area.appearance = 133;
+    area.position.x = x;
+    area.position.y = y;
+    area.entrance = 1;
+    area.tile_set = 1;
+    area.tile_type = 1;
+    area.turn_cost_base = 10000;
+    area.is_indoor = true;
+    area.outer_map = game_data.destination_outer_map;
+    if (rnd(3))
+    {
+        area.danger_level = rnd(cdata.player().level + 5) + 1;
+    }
+    else
+    {
+        area.danger_level = rnd(50) + 1;
+        if (rnd(5) == 0)
+        {
+            area.danger_level *= rnd(3) + 1;
+        }
+    }
+    area.deepest_level = area.danger_level + rnd(4) + 2;
+    area.is_generated_every_time = false;
+    area.default_ai_calm = 0;
+    area.has_been_conquered = 0;
+    area.dungeon_prefix = rnd(mapnamerd.i_size());
+    cell_data.at(x, y).feats = 1;
+    if (area.type == mdata_t::MapType::dungeon)
+    {
+        area.appearance = 133;
+        area.tile_type = 0;
+    }
+    if (area.type == mdata_t::MapType::dungeon_tower)
+    {
+        area.appearance = 137;
+        area.tile_type = 100;
+    }
+    if (area.type == mdata_t::MapType::dungeon_forest)
+    {
+        area.appearance = 135;
+        area.tile_type = 300;
+    }
+    if (area.type == mdata_t::MapType::dungeon_castle)
+    {
+        area.appearance = 140;
+        area.tile_type = 200;
+    }
+}
+
+
+
+int map_global_place_random_nefias()
+{
+    for (int cnt = 450; cnt < 500; ++cnt)
+    {
+        int x, y;
+
+        if (area_data[cnt].id != mdata_t::MapId::none)
+        {
+            continue;
+        }
+        f = -1;
+        for (int cnt = 0; cnt < 1000; ++cnt)
+        {
+            x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
+            y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
+            if (x <= 5 || y <= 5 || x >= map_data.width - 6
+                || y >= map_data.height - 6)
+            {
+                continue;
+            }
+            if (33 <= cell_data.at(x, y).chip_id_actual
+                && cell_data.at(x, y).chip_id_actual < 66)
+            {
+                continue;
+            }
+            if (cell_data.at(x, y).chip_id_actual > 19)
+            {
+                continue;
+            }
+            if (cell_data.at(x, y).feats % 1000 != 0)
+            {
+                continue;
+            }
+            p = 1;
+            for (int cnt = 0; cnt < 500; ++cnt)
+            {
+                if (area_data[cnt].id == mdata_t::MapId::none)
+                {
+                    continue;
+                }
+                if (x >= area_data[cnt].position.x - 2
+                    && x <= area_data[cnt].position.x + 2)
+                {
+                    if (y >= area_data[cnt].position.y - 2
+                        && y <= area_data[cnt].position.y + 2)
+                    {
+                        p = 0;
+                        break;
+                    }
+                }
+            }
+            if (p == 0)
+            {
+                continue;
+            }
+            f = 1;
+            break;
+        }
+        if (f == -1)
+        {
+            p = -1;
+            break;
+        }
+        p = cnt;
+
+        _create_nefia(p(0), x, y);
+
+        break;
+    }
+    return p;
+}
+
+
+
 } // namespace elona

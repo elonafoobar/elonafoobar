@@ -210,7 +210,7 @@ private:
         {
             auto config = lua::ConfigTable(*instance, id);
             DataType converted =
-                static_cast<T&>(*this).convert(id.get(), config);
+                static_cast<T&>(*this).convert(config, id.get());
 
             _storage.emplace(id, converted);
         }
@@ -253,7 +253,7 @@ protected:
     { \
     public: \
         ClassName() = default; \
-        DataTypeName convert(const std::string&, const lua::ConfigTable&); \
+        DataTypeName convert(const lua::ConfigTable&, const std::string&); \
     };
 
 #define DATA_REQ(name, type) type name = data.required<type>(#name);

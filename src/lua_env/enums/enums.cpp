@@ -122,6 +122,40 @@ EnumMap<TileKind> TileKindTable{"TileKind",
                                     {"Fog", TileKind::fog},
                                 }};
 
+EnumMap<mdata_t::MapType> MapTypeTable{
+    "MapType",
+    {
+        {"WorldMap", mdata_t::MapType::world_map},
+        {"Guild", mdata_t::MapType::guild},
+        {"Town", mdata_t::MapType::town},
+        {"Field", mdata_t::MapType::field},
+        {"PlayerOwned", mdata_t::MapType::player_owned},
+        {"Shelter", mdata_t::MapType::shelter},
+        {"Temporary", mdata_t::MapType::temporary},
+        {"Dungeon", mdata_t::MapType::dungeon},
+        {"DungeonTower", mdata_t::MapType::dungeon_tower},
+        {"DungeonForest", mdata_t::MapType::dungeon_forest},
+        {"DungeonCastle", mdata_t::MapType::dungeon_castle},
+    }};
+
+EnumMap<int> MapEntranceTypeTable{"MapEntranceType",
+                                  {
+                                      {"StairUp", 1},
+                                      {"StairDown", 2},
+                                      {"Custom", 3},
+                                      {"Center", 4},
+                                      {"Random", 5},
+                                      {"WorldMapPos", 6},
+                                      {"Specified", 7},
+                                      {"South", 8},
+                                  }};
+
+EnumMap<int> MapTilesetTable{"MapTileset",
+                             {
+                                 {"Normal", 1},
+                                 {"WorldMap", 2},
+                             }};
+
 
 // TODO: convert the following to enum class.
 EnumMap<int> GenderTable{"Gender",
@@ -221,6 +255,8 @@ void LuaEnums::bind(sol::table& core)
     StatusAilmentTable.bind(Enums);
     ElementTable.bind(Enums);
     TileKindTable.bind(Enums);
+    MapTypeTable.bind(Enums);
+    MapEntranceTypeTable.bind(Enums);
     GenderTable.bind(Enums);
     RelationTable.bind(Enums);
     CharaFlagTable.bind(Enums);

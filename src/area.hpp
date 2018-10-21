@@ -108,4 +108,7 @@ private:
 extern AreaData area_data;
 
 
+void initialize_adata();
+
+
 } // namespace elona

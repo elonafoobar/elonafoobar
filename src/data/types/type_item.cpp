@@ -10,7 +10,7 @@ ItemDB the_item_db;
 const constexpr char* data::LuaLazyCacheTraits<ItemDB>::type_id;
 
 
-ItemData ItemDB::convert(const std::string& id_, const lua::ConfigTable& data)
+ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string&)
 {
     auto legacy_id = data.required<int>("id");
     DATA_OPT_OR(image, int, 0);

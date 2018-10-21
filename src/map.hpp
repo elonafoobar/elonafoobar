@@ -234,4 +234,6 @@ void map_reload_noyel();
 
 void map_proc_special_events();
 
+int map_global_place_random_nefias();
+
 } // namespace elona
