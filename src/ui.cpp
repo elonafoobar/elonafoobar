@@ -616,7 +616,7 @@ void render_skill_trackers()
 
             bmes(
                 ""s + sdata.get(skill, chara).potential + u8"%"s,
-                112,
+                128,
                 inf_clocky + 107 + y * 16,
                 col);
         }
