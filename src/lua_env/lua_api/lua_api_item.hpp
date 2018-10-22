@@ -26,6 +26,12 @@ sol::optional<LuaItemHandle> create_xy(int, int, const std::string&, int);
 sol::optional<LuaItemHandle> roll(const Position&, sol::table args);
 sol::optional<LuaItemHandle> roll_xy(int, int, sol::table args);
 
+int memory(int, LuaItemHandle);
+
+sol::optional<LuaItemHandle> stack(int, LuaItemHandle);
+
+int trade_rate(LuaItemHandle);
+
 
 void bind(sol::table&);
 } // namespace Item

@@ -10,6 +10,8 @@ namespace World
 {
 int time();
 
+bool belongs_to_guild(const std::string&);
+
 
 void bind(sol::table&);
 } // namespace World

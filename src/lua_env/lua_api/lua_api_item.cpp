@@ -5,6 +5,7 @@
 #include "../../item.hpp"
 #include "../../itemgen.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../interface.hpp"
 
 namespace elona
 {
@@ -163,6 +164,55 @@ sol::optional<LuaItemHandle> Item::roll_xy(int x, int y, sol::table args)
     }
 }
 
+int Item::memory(int type, LuaItemHandle handle)
+{
+    if (type < 0 || type > 2)
+    {
+        return 0;
+    }
+
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    return elona::itemmemory(type, item_ref.id);
+}
+
+sol::optional<LuaItemHandle> Item::stack(int inventory_id, LuaItemHandle handle)
+{
+    if (inventory_id < -1 || inventory_id > ELONA_MAX_CHARACTERS)
+    {
+        return sol::nullopt;
+    }
+
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+
+    int tibk = elona::ti;
+    item_stack(inventory_id, item_ref.index);
+    auto& item = elona::inv[elona::ti];
+    elona::ti = tibk;
+
+    if (item.number() == 0)
+    {
+        return sol::nullopt;
+    }
+
+    return lua::handle(item);
+}
+
+int trade_rate(LuaItemHandle handle)
+{
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+
+    // Item must be in the cargo category.
+    if (item_ref.category != 92000)
+    {
+        return 0;
+    }
+
+    return elona::trate(item_ref.param1);
+}
+
 void Item::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, Item, count);
@@ -177,6 +227,11 @@ void Item::bind(sol::table& api_table)
             Item::create_with_args,
             Item::create_with_args_xy));
     api_table.set_function("roll", sol::overload(Item::roll, Item::roll_xy));
+    LUA_API_BIND_FUNCTION(api_table, Item, remove);
+    LUA_API_BIND_FUNCTION(api_table, Item, has_enchantment);
+    LUA_API_BIND_FUNCTION(api_table, Item, itemname);
+    LUA_API_BIND_FUNCTION(api_table, Item, memory);
+    LUA_API_BIND_FUNCTION(api_table, Item, trade_rate);
 }
 
 } // namespace lua
