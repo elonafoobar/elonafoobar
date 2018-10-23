@@ -9,7 +9,7 @@ module "Enums"
 
 --- The identification state of an item.
 -- @enum IdentifyState
--- @usage local item = Item.create(10, 10, 792, 3)
+-- @usage local item = Item.create(10, 10, "core.putitoro", 3)
 --item.identify_state = Enums.IdentifyState.Completely
 -- @tfield Enums.IdentifyState Unidentified
 -- @tfield Enums.IdentifyState Partly
@@ -19,7 +19,7 @@ IdentifyState = {}
 
 --- The curse state of an item.
 -- @enum CurseState
--- @usage local item = Item.create(10, 10, 792, 3)
+-- @usage local item = Item.create(10, 10, "core.putitoro", 3)
 --item.curse_state = Enums.CurseState.Blessed
 -- @tfield Enums.CurseState Doomed
 -- @tfield Enums.CurseState Cursed

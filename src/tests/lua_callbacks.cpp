@@ -294,9 +294,9 @@ TEST_CASE(
         "test_map_local_chara", R"(
 local Chara = Elona.require("Chara")
 
-Store.global.chara = Chara.create(24, 24, 3)
+Store.global.chara = Chara.create(24, 24, "core.putit")
 Store.global.player = Chara.player()
-Store.global.ally = Chara.create(24, 24, 3)
+Store.global.ally = Chara.create(24, 24, "core.putit")
 Store.global.ally:recruit_as_ally()
 )"));
 

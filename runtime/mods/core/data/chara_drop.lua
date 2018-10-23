@@ -32,40 +32,29 @@ local function make_lootrich(count)
 end
 
 
-local function assert_type(it, field, ty)
-   assert(it[field])
-   assert(type(it[field]) == ty)
-end
+--[[
+Items that characters drop can be specified here.
 
-local function assert_type_opt(it, field, ty)
-   if it[field] then
-      assert(type(it[field]) == ty)
-   end
-end
+Fields:
+  drops:
+    array of droppable items.
+  on_generate:
+    a function for programatically generating the "drops" table. It
+    is called with these arguments.
+      chara: character that was killed.
 
-local function validator(it)
-   assert_type(it, "drops", "table")
-   assert_type_opt(it, "on_generate", "function")
+Each item of "drops" can have these properties.
+  one_in: chance item is created.
+  id: string ID of item to create.
+  level: approximate level of item, which is calculated with calcobjlv().
+  quality: approximate quality of item, which is calculated with calcfixlv().
+  flttypemajor: filter category.
+  flttypeminor: filter category.
+  on_create: a function called with these arguments.
+    chara: character that was killed.
+--]]
 
-   for k, v in ipairs(it.drops) do
-      assert(type(v) == "table")
-      assert_type_opt(v, "one_in", "number")
-
-      -- Creation callback
-      assert_type_opt(v, "on_create", "function")
-
-      -- Specific string ID
-      assert_type_opt(v, "id", "string")
-
-      -- Generation from flt()
-      assert_type_opt(v, "level", "number")
-      assert_type_opt(v, "flttypemajor", "number")
-      assert_type_opt(v, "flttypeminor", "number")
-      assert_type_opt(v, "quality", "string")
-   end
-end
-
-data:define_type("chara_drop", validator)
+data:define_type("chara_drop")
 data:add_multi(
    "core.chara_drop",
    {

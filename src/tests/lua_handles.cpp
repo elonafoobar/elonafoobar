@@ -82,7 +82,7 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
         elona::lua::lua->get_state()->set("item", handle);
 
         REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item:set_number(3))"));
+            elona::lua::lua->get_state()->safe_script(R"(item.number = 3)"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(item.position.x = 4)"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
@@ -222,7 +222,7 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
     {
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test_invalid_chara", R"(
 local Chara = Elona.require("Chara")
-local chara = Chara.create(0, 0, 3)
+local chara = Chara.create(0, 0, "core.putit")
 idx = chara.index
 Store.global.charas = {[0]=chara}
 )"));
@@ -237,7 +237,7 @@ Store.global.charas = {[0]=chara}
     {
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test_invalid_item", R"(
 local Item = Elona.require("Item")
-local item = Item.create(0, 0, 792, 3)
+local item = Item.create(0, 0, "core.putitoro", 3)
 idx = item.index
 Store.global.items = {[0]=items}
 )"));
