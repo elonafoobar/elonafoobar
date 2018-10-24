@@ -24,13 +24,6 @@ bool Item::has_enchantment(const LuaItemHandle handle, int id)
     return elona::encfindspec(item_ref.index, id);
 }
 
-void Item::remove(LuaItemHandle handle)
-{
-    auto& item_ref =
-        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
-    item_ref.remove();
-}
-
 std::string Item::itemname(LuaItemHandle handle, int number, bool needs_article)
 {
     auto& item_ref =
@@ -38,22 +31,52 @@ std::string Item::itemname(LuaItemHandle handle, int number, bool needs_article)
     return elona::itemname(item_ref.index, number, needs_article ? 0 : 1);
 }
 
-sol::optional<LuaItemHandle> Item::create_with_args(
+sol::optional<LuaItemHandle> Item::create_with_id(
     const Position& position,
-    const std::string& id,
-    int number,
-    sol::table args)
+    const std::string& id)
 {
-    return Item::create_with_args_xy(position.x, position.y, id, number, args);
+    return Item::create_with_id_xy(position.x, position.y, id);
 }
 
-sol::optional<LuaItemHandle> Item::create_with_args_xy(
-    int x,
-    int y,
+sol::optional<LuaItemHandle>
+Item::create_with_id_xy(int x, int y, const std::string& id)
+{
+    return Item::create_xy(
+        x, y, lua::lua->get_state()->create_table_with("id", id));
+}
+
+sol::optional<LuaItemHandle> Item::create_with_number(
+    const Position& position,
     const std::string& id,
-    int number,
+    int number)
+{
+    return Item::create_with_number_xy(position.x, position.y, id, number);
+}
+
+sol::optional<LuaItemHandle>
+Item::create_with_number_xy(int x, int y, const std::string& id, int number)
+{
+    return Item::create_xy(
+        x,
+        y,
+        lua::lua->get_state()->create_table_with("id", id, "number", number));
+}
+
+sol::optional<LuaItemHandle> Item::create(
+    const Position& position,
     sol::table args)
 {
+    return Item::create_xy(position.x, position.y, args);
+}
+
+sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
+{
+    int id = 0;
+    int slot = -1;
+    int number = 0;
+    int objlv = 0;
+    Quality fixlv = Quality::none;
+
     if (auto it = args.get<sol::optional<bool>>("nostack"))
     {
         nostack = *it ? 1 : 0;
@@ -64,56 +87,15 @@ sol::optional<LuaItemHandle> Item::create_with_args_xy(
         mode = *it;
     }
 
-    // Clears flttypemajor and flttypeminor.
-    flt();
-
-    auto data = the_item_db[id];
-    if (!data)
+    if (auto it = args.get<sol::optional<int>>("number"))
     {
-        throw sol::error("No such item " + id);
+        number = *it;
     }
 
-    if (itemcreate(-1, data->id, x, y, number) != 0)
+    if (auto it = args.get<sol::optional<int>>("slot"))
     {
-        LuaItemHandle handle = lua::lua->get_handle_manager().get_handle(
-            inv[ci]); // TODO deglobalize ci
-        return handle;
+        slot = *it;
     }
-    else
-    {
-        return sol::nullopt;
-    }
-}
-
-sol::optional<LuaItemHandle>
-Item::create(const Position& position, const std::string& id, int number)
-{
-    return Item::create_with_args_xy(
-        position.x,
-        position.y,
-        id,
-        number,
-        lua::lua->get_state()->create_table());
-}
-
-sol::optional<LuaItemHandle>
-Item::create_xy(int x, int y, const std::string& id, int number)
-{
-    return Item::create_with_args_xy(
-        x, y, id, number, lua::lua->get_state()->create_table());
-}
-
-sol::optional<LuaItemHandle> Item::roll(
-    const Position& position,
-    sol::table args)
-{
-    return Item::roll_xy(position.x, position.y, args);
-}
-
-sol::optional<LuaItemHandle> Item::roll_xy(int x, int y, sol::table args)
-{
-    int objlv = 0;
-    Quality fixlv = Quality::none;
 
     // Exact objlv
     if (auto it = args.get<sol::optional<int>>("objlv"))
@@ -152,7 +134,17 @@ sol::optional<LuaItemHandle> Item::roll_xy(int x, int y, sol::table args)
         flttypeminor = *it;
     }
 
-    if (itemcreate(-1, 0, x, y, 0) != 0)
+    if (auto it = args.get<sol::optional<std::string>>("id"))
+    {
+        auto data = the_item_db[*it];
+        if (!data)
+        {
+            throw sol::error("No such item " + *it);
+        }
+        id = data->id;
+    }
+
+    if (itemcreate(slot, id, x, y, number) != 0)
     {
         LuaItemHandle handle =
             lua::lua->get_handle_manager().get_handle(inv[ci]);
@@ -199,13 +191,13 @@ sol::optional<LuaItemHandle> Item::stack(int inventory_id, LuaItemHandle handle)
     return lua::handle(item);
 }
 
-int trade_rate(LuaItemHandle handle)
+int Item::trade_rate(LuaItemHandle handle)
 {
     auto& item_ref =
         lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
 
     // Item must be in the cargo category.
-    if (item_ref.category != 92000)
+    if (the_item_db[item_ref.id]->category != 92000)
     {
         return 0;
     }
@@ -217,20 +209,18 @@ void Item::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, Item, count);
     LUA_API_BIND_FUNCTION(api_table, Item, has_enchantment);
-    LUA_API_BIND_FUNCTION(api_table, Item, remove);
     LUA_API_BIND_FUNCTION(api_table, Item, itemname);
     api_table.set_function(
         "create",
         sol::overload(
             Item::create,
             Item::create_xy,
-            Item::create_with_args,
-            Item::create_with_args_xy));
-    api_table.set_function("roll", sol::overload(Item::roll, Item::roll_xy));
-    LUA_API_BIND_FUNCTION(api_table, Item, remove);
-    LUA_API_BIND_FUNCTION(api_table, Item, has_enchantment);
-    LUA_API_BIND_FUNCTION(api_table, Item, itemname);
+            Item::create_with_id,
+            Item::create_with_id_xy,
+            Item::create_with_number,
+            Item::create_with_number_xy));
     LUA_API_BIND_FUNCTION(api_table, Item, memory);
+    LUA_API_BIND_FUNCTION(api_table, Item, stack);
     LUA_API_BIND_FUNCTION(api_table, Item, trade_rate);
 }
 

@@ -347,6 +347,7 @@ data:add_multi(
          rules = {
             { fltn = "spshop" },
          },
+         item_count = function(args) return args.item_count / 2 end,
          item_price = function(args)
             local price = Math.clamp(args.item.value, 1, 1000000) * 50
             if args.item.new_id == "core.gift" then

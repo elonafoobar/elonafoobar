@@ -1,4 +1,5 @@
 #include "lua_class_item.hpp"
+#include "../../data/types/type_item.hpp"
 #include "../../item.hpp"
 #include "../../lua_env/enums/enums.hpp"
 
@@ -36,6 +37,10 @@ void LuaItem::bind(sol::state& lua)
         &Item::param4,
 
         // Properties
+        "new_id",
+        sol::property([](Item& i) {
+            return the_item_db.get_id_from_legacy(i.id)->get();
+        }),
         "name",
         sol::property([](Item& i) { return elona::itemname(i.index); }),
         "basename",
@@ -67,6 +72,9 @@ void LuaItem::bind(sol::state& lua)
 
     auto key = Item::lua_type();
     lua.set_usertype(key, LuaItem);
+
+    // Methods
+    lua[key]["remove"] = &Item::remove;
 }
 
 } // namespace lua

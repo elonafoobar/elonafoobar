@@ -15,15 +15,15 @@ bool World::belongs_to_guild(const std::string& guild_name)
 {
     if (guild_name == "mages")
     {
-        return game_data.belongs_to_mages_guild == 1;
+        return game_data.guild.belongs_to_mages_guild == 1;
     }
     else if (guild_name == "fighters")
     {
-        return game_data.belongs_to_fighters_guild == 1;
+        return game_data.guild.belongs_to_fighters_guild == 1;
     }
     else if (guild_name == "thieves")
     {
-        return game_data.belongs_to_thieves_guild == 1;
+        return game_data.guild.belongs_to_thieves_guild == 1;
     }
 
     return false;

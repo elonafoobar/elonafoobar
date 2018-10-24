@@ -6,7 +6,7 @@ local Rand = Elona.require("Rand")
 
 local shop_inventory = {}
 
-local function default_item_count(args)
+local function default_item_number(args)
    return Math.min(80, 20 + args.shopkeeper.shop_rank / 2)
 end
 
@@ -23,31 +23,15 @@ function shop_inventory.test_rule_predicate(rule, index, shopkeeper)
    if rule.predicate then
       return rule.predicate({index = index, shopkeeper = shopkeeper}) == true
    end
-end
 
-function shop_inventory.apply_flttype(flttype)
-   local filter_set = data.raw["core.filter_set"][flttype]
-   if filter_set then
-      return Rand.choice(filter_set.set)
-   end
-   return flttype
+   return true
 end
 
 function shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
-   if rule.id then
-      ret.id = rule.id
-   end
-   if rule.fixlv then
-      ret.fixlv = rule.fixlv
-   end
-   if rule.fltn then
-      ret.fltn = rule.fltn
-   end
-   if rule.flttypemajor then
-      ret.flttypemajor = shop_inventory.apply_flttype(rule.flttypemajor)
-   end
-   if rule.flttypeminor then
-      ret.flttypeminor = shop_inventory.apply_flttype(rule.flttypeminor)
+   for k, v in pairs(rule) do
+      if k ~= "choices" and k ~= "on_generate" then
+         ret[k] = v
+      end
    end
 
    if rule.choices then
@@ -83,8 +67,13 @@ function shop_inventory.apply_rules(index, shopkeeper, inv)
    return ret
 end
 
-local function filter_contains(exp, filter)
-   return string.match("/" .. exp .. "/", filter)
+local function has_tag(find, tags)
+   for _, v in ipairs(tags) do
+      if v == find then
+         return true
+      end
+   end
+   return false
 end
 
 -- If all of the properties of an item match that of an exclusion, the item is
@@ -111,13 +100,13 @@ local function is_cursed(item)
 end
 
 function shop_inventory.should_remove(item, inv)
-   local filter = data.raw["core.item"][item.new_id].filter
+   local tags = data.raw["core.item"][item.new_id].tags
 
-   if filter_contains("neg", filter) then
+   if has_tag("neg", tags) then
       return true
    end
 
-   if filter_contains("noshop", filter) and inv._id ~= "core.souvenir_vendor" then
+   if has_tag("noshop", tags) and inv._id ~= "core.souvenir_vendor" then
       return true
    end
 
@@ -138,7 +127,7 @@ end
 
 -- Map of item category -> function returning sold item amount based
 -- on rarity
-shop_inventory.item_count_factors = {
+shop_inventory.item_number_factors = {
    [57000] = function() return 1 end,
    [92000] = rarity_num(200),
    [90000] = rarity_num(100),
@@ -149,25 +138,26 @@ shop_inventory.item_count_factors = {
    [59000] = rarity_num(500),
 }
 
-function shop_inventory.calc_sold_item_count(item_def)
+function shop_inventory.calc_sold_item_number(item)
+   local item_def = data.raw["core.item"][item.new_id]
    local category = item_def.category
    local rarity = item_def.rarity / 1000
-   local count = 1
+   local number = 1
 
-   local f = shop_inventory.item_count_factors[category]
+   local f = shop_inventory.item_number_factors[category]
    if f then
-      count = f(rarity)
+      number = f(rarity)
    end
 
    if item_def._id == "core.small_gamble_chest" then
-      count = Rand.rnd(8)
+      number = Rand.rnd(8)
    end
 
-   if count < 1 then
-      count = 1
+   if number < 1 then
+      number = 1
    end
 
-   return count
+   return number
 end
 
 -- Parameters for adjusting the amount of available cargo based on the
@@ -185,7 +175,7 @@ shop_inventory.cargo_amount_rates = {
 -- cargo's value.
 function shop_inventory.calc_cargo_amount(item)
    local rate = Item.trade_rate(item)
-   local result = item.number
+   local amount = item.number
 
    for _, v in ipairs(shop_inventory.cargo_amount_rates) do
       local apply
@@ -197,25 +187,23 @@ function shop_inventory.calc_cargo_amount(item)
       end
 
       if apply then
-         result = v.amount(result)
+         amount = v.amount(amount)
          if v.discard_chance and Rand.one_in(v.discard_chance) then
             return nil
          end
       end
    end
 
-   return result * (100 + Skill.level(156, Chara.player()) * 10) / 100 + 1
+   return amount * (100 + Skill.level(156, Chara.player()) * 10) / 100 + 1
 end
 
 function shop_inventory.do_generate(shopkeeper, inv)
-   local item_count
-   if inv.item_count then
-      item_count = inv.item_count({shopkeeper = shopkeeper})
-   else
-      item_count = default_item_count({shopkeeper = shopkeeper})
+   local item_number = default_item_number({shopkeeper = shopkeeper})
+   if inv.item_number then
+      item_number = inv.item_number({shopkeeper = shopkeeper, item_number = item_number})
    end
 
-   for index = 0, item_count do
+   for index = 0, item_number do
       local args = shop_inventory.apply_rules(index, shopkeeper, inv)
 
       if not args then
@@ -223,7 +211,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
       end
 
       args.nostack = true
-      local item = Item.roll(-1, -1, args)
+      local item = Item.create(-1, -1, args)
       if not item then
          -- Shop inventory is full.
          break
@@ -236,12 +224,12 @@ function shop_inventory.do_generate(shopkeeper, inv)
          goto continue
       end
 
-      if shop_inventory.should_remove(item) then
+      if shop_inventory.should_remove(item, inv) then
          item:remove()
          goto continue
       end
 
-      item.number = Rand.rnd(shop_inventory.calc_sold_item_count(item))
+      item.number = Rand.rnd(shop_inventory.calc_sold_item_number(item)) + 1
 
       if inv._id == "core.trader" then
          local number = shop_inventory.calc_cargo_amount(item)
@@ -251,6 +239,10 @@ function shop_inventory.do_generate(shopkeeper, inv)
          else
             item.number = number
          end
+      end
+
+      if not item:is_valid() then
+         goto continue
       end
 
       if item.curse_state == "Blessed" then

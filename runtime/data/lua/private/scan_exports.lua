@@ -9,14 +9,13 @@ end
 local function scan_recursive(exports, current_key)
    local results = {}
    for k, v in pairs(exports) do
-      if type(k) ~= "string" then
-         error("Export function names must be strings.")
-      end
-      local next_key = current_key .. "." .. k
-      if type(v) == "table" then
-         results = join_tables(results, scan_recursive(v, next_key))
-      elseif type(v) == "function" then
-         results[next_key] = v
+      if type(k) == "string" then
+         local next_key = current_key .. "." .. k
+         if type(v) == "function" then
+            results[next_key] = v
+         elseif type(v) == "table" then
+            results = join_tables(results, scan_recursive(v, next_key))
+         end
       end
    end
    return results

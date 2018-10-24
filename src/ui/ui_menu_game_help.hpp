@@ -22,9 +22,6 @@ protected:
     void _update_regular_pages();
     void _draw_navigation_menu();
     void _draw_background_vignette(int id, int type);
-
-private:
-    int _book_id;
 };
 } // namespace ui
 } // namespace elona
