@@ -51,7 +51,7 @@ function damage_hp(amount, source) end
 -- @tparam num amount the amount to damage
 -- @tparam LuaCharacter source the character acting as the source of the damage
 -- @usage local chara = Chara.player()
--- local other = Chara.create(0, 0, 3)
+-- local other = Chara.create(0, 0, "core.putit")
 --chara:damage_hp(100, other)
 function damage_hp(amount, source) end
 

@@ -7,7 +7,7 @@ local Skill = Elona.require("Skill")
 lrun("test LuaCharacter:damage_hp", function()
         Testing.start_in_debug_map()
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
 
         putit:damage_hp(1)
         lequal(putit.hp, putit.max_hp - 1)
@@ -19,12 +19,12 @@ lrun("test LuaCharacter:recruit_as_ally", function()
         local player = Chara.player()
         lequal(player:recruit_as_ally(), false)
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
         putit:damage_hp(putit.max_hp + 1)
         -- Caller is expected to use Chara.is_alive() to check validity
         -- lequal(putit:recruit_as_ally(), false)
 
-        putit = Chara.create(0, 0, 3)
+        putit = Chara.create(0, 0, "core.putit")
         lequal(putit:recruit_as_ally(), true)
         lequal(putit:recruit_as_ally(), false)
 end)
@@ -43,7 +43,7 @@ end)
 lrun("test LuaCharacter:gain_skill_exp", function()
         Testing.start_in_debug_map()
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
         lequal(Skill.level(10, putit), 4)
 
         putit:gain_skill_exp(10, 10000)
@@ -54,7 +54,7 @@ end)
 lrun("test LuaCharacter:modify_resistance", function()
         Testing.start_in_debug_map()
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
         lequal(Skill.resistance(Enums.Element.Fire, putit), 100)
         lequal(Skill.resistance(Enums.Element.Cold, putit), 100)
 

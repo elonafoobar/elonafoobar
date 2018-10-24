@@ -382,6 +382,9 @@ void initialize_lua()
 
     // Set "data" table on all loaded mod environments.
     data::initialize(data_manager.get());
+
+    // Run user/console.lua.
+    lua::lua->get_console().run_userscript();
 }
 
 static void _initialize_jkey()

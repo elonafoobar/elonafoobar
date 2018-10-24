@@ -6,7 +6,7 @@ local Enums = Elona.require("Enums")
 lrun("test Chara.is_alive", function()
         Testing.start_in_debug_map()
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
         lequal(Chara.is_alive(putit), true)
 
         putit:damage_hp(putit.max_hp + 1)
@@ -18,7 +18,7 @@ lrun("test Chara.is_player", function()
 
         lequal(Chara.is_player(Chara.player()), true)
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
         lequal(Chara.is_player(putit), false)
 end)
 
@@ -27,7 +27,7 @@ lrun("test Chara.is_ally", function()
 
         lequal(Chara.is_ally(Chara.player()), false)
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
         lequal(Chara.is_ally(putit), false)
 
         lequal(putit:recruit_as_ally(), true)
@@ -38,22 +38,22 @@ end)
 lrun("test Chara.flag", function()
         Testing.start_in_debug_map()
 
-        local putit = Chara.create(0, 0, 3)
+        local putit = Chara.create(0, 0, "core.putit")
         lequal(Chara.flag(putit, Enums.CharaFlag.Explodes), false)
 
-        local kamikaze_yeek = Chara.create(0, 1, 237)
+        local kamikaze_yeek = Chara.create(0, 1, "core.kamikaze_yeek")
         lequal(Chara.flag(kamikaze_yeek, Enums.CharaFlag.Explodes), true)
 end)
 
 lrun("test Chara.count", function()
         Testing.start_in_debug_map()
 
-        Chara.create(0, 0, 3)
-        Chara.create(0, 1, 3)
+        Chara.create(0, 0, "core.putit")
+        Chara.create(0, 1, "core.putit")
 
         lequal(Chara.count(), 2)
 
-        Chara.create(0, 2, 3)
+        Chara.create(0, 2, "core.putit")
 
         lequal(Chara.count(), 3)
 end)
@@ -68,7 +68,7 @@ end)
 lrun("test Chara.create", function()
         Testing.start_in_debug_map()
 
-        local putit = Chara.create(4, 8, 3)
+        local putit = Chara.create(4, 8, "core.putit")
         lok(putit ~= nil, "Character was nil.")
         lequal(putit.position.x, 4)
         lequal(putit.position.y, 8)
@@ -85,12 +85,12 @@ end
 lrun("test Chara.iter", function()
         Testing.start_in_debug_map()
 
-        Chara.create(0, 0, 3)
-        Chara.create(0, 1, 3)
+        Chara.create(0, 0, "core.putit")
+        Chara.create(0, 1, "core.putit")
 
         local count = tally()
 
-        Chara.create(0, 2, 3)
+        Chara.create(0, 2, "core.putit")
 
         lequal(tally(), count + 1)
 end)

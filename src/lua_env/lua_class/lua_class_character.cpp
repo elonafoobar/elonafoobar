@@ -159,39 +159,21 @@ void LuaCharacter::eat_rotten_food(Character& self)
 
 void LuaCharacter::bind(sol::state& lua)
 {
+    // new_usertype generates a massive amount of code and refuses to compile
+    // after a certain point, due to there being so many fields. However,
+    // variables/properties have to be set on the usertype at initialization,
+    // because __index is overridden all at once, so at some point something
+    // will have to change...
+
     sol::usertype<Character> LuaCharacter(
         "lua_type",
         &Character::lua_type,
 
-        "damage_hp",
-        sol::overload(
-            &LuaCharacter::damage_hp,
-            &LuaCharacter::damage_hp_source,
-            &LuaCharacter::damage_hp_chara),
-        "apply_ailment",
-        &LuaCharacter::apply_ailment,
-        "recruit_as_ally",
-        &LuaCharacter::recruit_as_ally,
-        "set_flag",
-        &LuaCharacter::set_flag,
-        "gain_skill",
-        sol::overload(
-            &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock),
-        "gain_skill_exp",
-        &LuaCharacter::gain_skill_exp,
-        "modify_resistance",
-        &LuaCharacter::modify_resistance,
-        "modify_sanity",
-        &LuaCharacter::modify_sanity,
-        "modify_karma",
-        &LuaCharacter::modify_karma,
-        "modify_corruption",
-        &LuaCharacter::modify_corruption,
-        "make_pregnant",
-        &LuaCharacter::make_pregnant,
-        "eat_rotten_food",
-        &LuaCharacter::eat_rotten_food,
-
+        // Variables
+        "index",
+        sol::readonly(&Character::index),
+        "id",
+        sol::readonly(&Character::id),
         "hp",
         sol::readonly(&Character::hp),
         "max_hp",
@@ -204,24 +186,29 @@ void LuaCharacter::bind(sol::state& lua)
         sol::readonly(&Character::sp),
         "max_sp",
         sol::readonly(&Character::max_sp),
+        "position",
+        &Character::position,
         "shop_rank",
         &Character::shop_rank,
         "character_role",
         &Character::character_role,
-        "index",
-        sol::readonly(&Character::index),
-        "id",
-        sol::readonly(&Character::id),
-        "position",
-        &Character::position,
+        "experience",
+        &Character::experience,
+        "fame",
+        &Character::fame,
+        "talk_type",
+        &Character::talk_type,
+
+        // Properties
+        "new_id",
+        sol::property([](Character& c) {
+            return the_character_db.get_id_from_legacy(c.id)->get();
+        }),
         "name",
         sol::property([](Character& c) { return elona::name(c.index); }),
         "basename",
         sol::property([](Character& c) { return elona::cdatan(0, c.index); }),
-        "experience",
-        &Character::experience,
-        "talk_type",
-        &Character::talk_type,
+
         "sex",
         sol::property(
             [](Character& c) {
@@ -231,7 +218,26 @@ void LuaCharacter::bind(sol::state& lua)
                 c.sex = LuaEnums::GenderTable.ensure_from_string(s);
             }));
 
-    lua.set_usertype(Character::lua_type(), LuaCharacter);
+    auto key = Character::lua_type();
+    lua.set_usertype(key, LuaCharacter);
+
+    // Methods
+    lua[key]["damage_hp"] = sol::overload(
+        &LuaCharacter::damage_hp,
+        &LuaCharacter::damage_hp_source,
+        &LuaCharacter::damage_hp_chara),
+    lua[key]["apply_ailment"] = &LuaCharacter::apply_ailment;
+    lua[key]["recruit_as_ally"] = &LuaCharacter::recruit_as_ally;
+    lua[key]["set_flag"] = &LuaCharacter::set_flag;
+    lua[key]["gain_skill"] = sol::overload(
+        &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock);
+    lua[key]["gain_skill_exp"] = &LuaCharacter::gain_skill_exp;
+    lua[key]["modify_resistance"] = &LuaCharacter::modify_resistance;
+    lua[key]["modify_sanity"] = &LuaCharacter::modify_sanity;
+    lua[key]["modify_karma"] = &LuaCharacter::modify_karma;
+    lua[key]["modify_corruption"] = &LuaCharacter::modify_corruption;
+    lua[key]["make_pregnant"] = &LuaCharacter::make_pregnant;
+    lua[key]["eat_rotten_food"] = &LuaCharacter::eat_rotten_food;
 }
 
 } // namespace lua

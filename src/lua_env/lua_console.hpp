@@ -29,14 +29,14 @@ public:
         _enabled = !_enabled;
     }
 
+    bool run_userscript();
+
     void draw();
     void print(const std::string&);
     void grab_input();
 
 private:
     void set_constants(int char_width, int char_height, int width, int height);
-
-    bool run_userscript();
 
     static bool is_incomplete_lua_line(const sol::error& error);
     void print_single_line(const std::string& line);
