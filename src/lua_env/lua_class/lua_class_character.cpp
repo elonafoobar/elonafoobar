@@ -190,7 +190,7 @@ void LuaCharacter::bind(sol::state& lua)
         &Character::position,
         "shop_rank",
         &Character::shop_rank,
-        "character_role",
+        "role",
         &Character::character_role,
         "experience",
         &Character::experience,
@@ -216,6 +216,15 @@ void LuaCharacter::bind(sol::state& lua)
             },
             [](Character& c, const EnumString& s) {
                 c.sex = LuaEnums::GenderTable.ensure_from_string(s);
+            }),
+        "relationship",
+        sol::property(
+            [](Character& c) {
+                return LuaEnums::RelationTable.convert_to_string(
+                    c.relationship);
+            },
+            [](Character& c, const EnumString& s) {
+                c.relationship = LuaEnums::RelationTable.ensure_from_string(s);
             }));
 
     auto key = Character::lua_type();

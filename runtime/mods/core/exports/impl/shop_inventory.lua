@@ -4,6 +4,8 @@ local Chara = Elona.require("Chara")
 local Skill = Elona.require("Skill")
 local Rand = Elona.require("Rand")
 
+local Debug = Elona.require("Debug")
+
 local shop_inventory = {}
 
 local function default_item_number(args)
@@ -21,6 +23,7 @@ function shop_inventory.test_rule_predicate(rule, index, shopkeeper)
       return not Rand.one_in(rule.all_but_one_in)
    end
    if rule.predicate then
+      print("pred" .. tostring(rule.predicate({index = index, shopkeeper = shopkeeper})))
       return rule.predicate({index = index, shopkeeper = shopkeeper}) == true
    end
 
@@ -51,6 +54,7 @@ function shop_inventory.apply_rules(index, shopkeeper, inv)
    local ret = {level = shopkeeper.shop_rank, quality = "Bad"}
 
    if not inv.rules then
+      print("NONE")
       return ret
    end
 
@@ -59,6 +63,7 @@ function shop_inventory.apply_rules(index, shopkeeper, inv)
          ret = shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
 
          if ret.id == "Stop" then
+            print("----STOP")
             return nil
          end
       end
@@ -68,11 +73,16 @@ function shop_inventory.apply_rules(index, shopkeeper, inv)
 end
 
 local function has_tag(find, tags)
+   if not tags then
+      return false
+   end
+
    for _, v in ipairs(tags) do
       if v == find then
          return true
       end
    end
+
    return false
 end
 
@@ -203,12 +213,15 @@ function shop_inventory.do_generate(shopkeeper, inv)
       item_number = inv.item_number({shopkeeper = shopkeeper, item_number = item_number})
    end
 
-   for index = 0, item_number do
+   for index = 0, item_number - 1 do
       local args = shop_inventory.apply_rules(index, shopkeeper, inv)
 
       if not args then
+         print("NOARGS")
          goto continue
       end
+
+      print(Debug.inspect.inspect(args))
 
       args.nostack = true
       local item = Item.create(-1, -1, args)
@@ -219,6 +232,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
 
       if inv.on_generate_item then
          inv.on_generate_item({item = item, index = index, shopkeeper = shopkeeper})
+         print("SKIP")
 
          -- Skip the remaining adjustments of item number/price.
          goto continue
@@ -257,13 +271,15 @@ function shop_inventory.do_generate(shopkeeper, inv)
 
       ::continue::
    end
+   print(item_number)
 end
 
 function shop_inventory.generate(shopkeeper)
-   -- Obtain shop inventory data by using the character_role as its
-   -- legacy ID index. If it does not exist, a default set of items
-   -- will be generated as a fallback.
-   local id = data.by_legacy["core.shop_inventory"][shopkeeper.character_role]
+   -- Obtain shop inventory data by using the shopkeeper's
+   -- character_role as its legacy ID index. If it does not exist, a
+   -- default set of items will be generated as a fallback.
+   print("=================")
+   local id = data.by_legacy["core.shop_inventory"][shopkeeper.role]
    local inv = {}
    if id then
       inv = data.raw["core.shop_inventory"][id]

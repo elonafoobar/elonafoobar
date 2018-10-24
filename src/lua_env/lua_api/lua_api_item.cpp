@@ -21,7 +21,7 @@ bool Item::has_enchantment(const LuaItemHandle handle, int id)
 {
     auto& item_ref =
         lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
-    return elona::encfindspec(item_ref.index, id);
+    return encfindspec(item_ref.index, id);
 }
 
 std::string Item::itemname(LuaItemHandle handle, int number, bool needs_article)
@@ -134,6 +134,11 @@ sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
         flttypeminor = *it;
     }
 
+    if (auto it = args.get<sol::optional<std::string>>("fltn"))
+    {
+        fltn(*it);
+    }
+
     if (auto it = args.get<sol::optional<std::string>>("id"))
     {
         auto data = the_item_db[*it];
@@ -165,7 +170,7 @@ int Item::memory(int type, LuaItemHandle handle)
 
     auto& item_ref =
         lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
-    return elona::itemmemory(type, item_ref.id);
+    return itemmemory(type, item_ref.id);
 }
 
 sol::optional<LuaItemHandle> Item::stack(int inventory_id, LuaItemHandle handle)
@@ -178,10 +183,10 @@ sol::optional<LuaItemHandle> Item::stack(int inventory_id, LuaItemHandle handle)
     auto& item_ref =
         lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
 
-    int tibk = elona::ti;
+    int tibk = ti;
     item_stack(inventory_id, item_ref.index);
-    auto& item = elona::inv[elona::ti];
-    elona::ti = tibk;
+    auto& item = inv[ti];
+    ti = tibk;
 
     if (item.number() == 0)
     {
@@ -202,7 +207,7 @@ int Item::trade_rate(LuaItemHandle handle)
         return 0;
     }
 
-    return elona::trate(item_ref.param1);
+    return trate(item_ref.param1);
 }
 
 void Item::bind(sol::table& api_table)

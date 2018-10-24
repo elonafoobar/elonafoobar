@@ -27,6 +27,8 @@ void LuaItem::bind(sol::state& lua)
         &Item::subname,
         "image",
         &Item::image,
+        "value",
+        &Item::value,
         "param1",
         &Item::param1,
         "param2",
