@@ -4820,14 +4820,6 @@ data:add_multi(
          }
       },
       {
-         name = "double_bed",
-         id = 649,
-         source = {
-            x = 1056,
-            y = 912,
-         }
-      },
-      {
          name = "eastern_lamp",
          id = 650,
          offset_y = 22,
