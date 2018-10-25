@@ -3,10 +3,12 @@ local Item = Elona.require("Item")
 local Math = Elona.require("Math")
 local World = Elona.require("World")
 
-local function make_choices_list(list, id)
+-- Generates a list to be used with "choices" which will set the
+-- provided field to one of the choices in "list".
+local function make_choices_list(list, field_name)
    for i, v in ipairs(list) do
       list[i] = { index = i - 1 }
-      list[i][id] = v
+      list[i][field_name] = v
    end
    return list
 end
@@ -433,18 +435,20 @@ data:add_multi(
       },
       {
          -- NOTE: Has these special-case behaviors.
-         --  + Normal generation of sold item number/curse state is
-         --    replaced with on_generate_item below. (the presences of
-         --    on_generate_item causes all the generation behavior
-         --    done after the item is created with Item.create to be
-         --    skipped.)
-         --  + Value is ignored and ctrl_inventory() (currently) uses
-         --    a hardcoded value for the number of medals to sell at.
+         --  + Normal generation behavior of sold item number/curse
+         --    state is replaced with on_generate_item below. (the
+         --    presence of on_generate_item causes all the generation
+         --    behavior done after the item is created with
+         --    Item.create to be skipped.)
+         --  + Item base value is ignored and ctrl_inventory()
+         --    (currently) uses a hardcoded value for the number of
+         --    medals to sell at.
          --  + Items with Special quality or the precious flag set are
          --    permitted to be sold through a special inventory
          --    routine type in ctrl_inventory() which can only be
          --    triggered through Miral's dialog. In normal shops,
-         --    items with those properties are not displayed.
+         --    items with those properties are not displayed even if
+         --    they are generated successfully.
          name = "miral",
          id = 1016,
          rules = medal_items,

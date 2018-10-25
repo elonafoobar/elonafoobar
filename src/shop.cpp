@@ -91,69 +91,6 @@ void shop_refresh()
     }
 }
 
-void calc_number_of_items_sold_at_shop()
-{
-    p = the_item_db[inv[ci].id]->category;
-    i = the_item_db[inv[ci].id]->rarity / 1000;
-    rtval = 1;
-    for (int cnt = 0; cnt < 1; ++cnt)
-    {
-        if (i <= 100)
-        {
-            break;
-        }
-        if (p == 57000)
-        {
-            rtval = 1;
-            break;
-        }
-        if (p == 92000)
-        {
-            rtval = i / 200;
-            break;
-        }
-        if (p >= 90000)
-        {
-            rtval = i / 100;
-            break;
-        }
-        if (p == 52000)
-        {
-            rtval = i / 100;
-            break;
-        }
-        if (p == 53000)
-        {
-            rtval = i / 100;
-            break;
-        }
-        if (p == 60000)
-        {
-            rtval = i / 200;
-            break;
-        }
-        if (p == 64000)
-        {
-            rtval = i / 80;
-            break;
-        }
-        if (p == 59000)
-        {
-            rtval = i / 500;
-            break;
-        }
-    }
-    if (dbid == 734)
-    {
-        rtval = rnd(8);
-    }
-    if (rtval < 1)
-    {
-        rtval = 1;
-        return;
-    }
-}
-
 void shop_sell_item()
 {
     mode = 6;

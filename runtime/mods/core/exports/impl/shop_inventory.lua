@@ -31,6 +31,8 @@ function shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
    for k, v in pairs(rule) do
       -- Apply "choices" and "on_generate" after the other properties
       -- have been copied.
+      -- NOTE: The predicate fields get copied too, but are ignored by
+      -- Item.create().
       if k ~= "choices" and k ~= "on_generate" then
          ret[k] = v
       end
@@ -133,7 +135,7 @@ function shop_inventory.should_remove(item, inv)
 end
 
 -- Higher factor means fewer items.
-local function rarity_num(factor)
+local function number_from_rarity(factor)
    return function(args) return (args.item_def.rarity / 1000) / factor end
 end
 
@@ -141,13 +143,13 @@ end
 -- Gets passed the item's definition and the item instance.
 shop_inventory.item_number_factors = {
    [57000] = function() return 1 end,
-   [92000] = rarity_num(200),
-   [90000] = rarity_num(100),
-   [52000] = rarity_num(100),
-   [53000] = rarity_num(100),
-   [60000] = rarity_num(200),
-   [64000] = rarity_num(80),
-   [59000] = rarity_num(500),
+   [92000] = number_from_rarity(200),
+   [90000] = number_from_rarity(100),
+   [52000] = number_from_rarity(100),
+   [53000] = number_from_rarity(100),
+   [60000] = number_from_rarity(200),
+   [64000] = number_from_rarity(80),
+   [59000] = number_from_rarity(500),
 
    ["core.small_gamble_chest"] = function() return Rand.rnd(8) end
 }
@@ -225,7 +227,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
 
    for index = 0, items_to_create - 1 do
       -- Go through each generation rule the shop defines and get back
-      -- a table of arguments to Item.create().
+      -- a table of options for Item.create().
       local args = shop_inventory.apply_rules(index, shopkeeper, inv)
 
       if not args then
