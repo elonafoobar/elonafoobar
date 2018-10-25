@@ -150,8 +150,8 @@ static void _draw_keys()
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        int index = pagesize * page + cnt;
+        if (index >= listmax)
         {
             break;
         }
@@ -238,7 +238,7 @@ static void _draw_recipe(int item_id, bool draw_desc)
     _draw_recipe_required_materials(*recipe);
 }
 
-static void _draw_single_list_entry(int cnt, int item_id)
+static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
 {
     std::string item_name = ioriginalnameref(item_id);
     std::string item_make =
@@ -246,11 +246,7 @@ static void _draw_single_list_entry(int cnt, int item_id)
 
     font(14 - en * 2);
 
-    int color_mode = 0;
-    if (elona::stoi(listn(0, p)) == -1)
-    {
-        color_mode = 3;
-    }
+    int color_mode = can_craft ? 0 : 3;
     cs_list(
         cs == cnt,
         cnven(item_name),
@@ -279,6 +275,7 @@ static bool _draw_list_entries(bool draw_desc)
         }
 
         int item_id = list(0, entry_index);
+        bool can_craft = elona::stoi(listn(0, entry_index)) != -1;
 
         if (cs == cnt)
         {
@@ -286,7 +283,7 @@ static bool _draw_list_entries(bool draw_desc)
             should_redraw = true;
         }
 
-        _draw_single_list_entry(cnt, item_id);
+        _draw_single_list_entry(cnt, item_id, can_craft);
     }
 
     return should_redraw;
