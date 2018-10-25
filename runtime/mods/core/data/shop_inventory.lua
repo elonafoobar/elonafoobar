@@ -264,13 +264,6 @@ data:add_multi(
          end
       },
       {
-         name = "general_store",
-         id = 1008,
-         rules = {
-            { quality = "Bad" }
-         }
-      },
-      {
          name = "wandering_merchant",
          id = 1010,
          rules = merchant_rules,
@@ -293,6 +286,15 @@ data:add_multi(
       {
          name = "innkeeper",
          id = 1005,
+         rules = {
+            { flttypemajor = 91000 },
+            { one_in = 4, flttypeminor = 52002 },
+            { one_in = 20, id = "core.small_gamble_chest" },
+         }
+      },
+      {
+         name = "general_store",
+         id = 1008,
          rules = {
             { flttypemajor = 56000 },
             { one_in = 3, choices = filter_set_wear },
