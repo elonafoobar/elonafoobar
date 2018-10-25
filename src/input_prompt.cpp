@@ -125,7 +125,7 @@ void Prompt::_draw_entries()
     for (const auto& entry : _entries)
     {
         pos(sx + 30, cnt * 20 + sy + 22);
-        gcopy(3, cnt * 24 + 624, 30, 24, 24);
+        gcopy(3, cnt * 24 + 624, 30, 24, 18);
 
         auto text = entry.locale_key;
         if (auto text_opt =
