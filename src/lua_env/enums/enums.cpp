@@ -124,7 +124,7 @@ EnumMap<TileKind> TileKindTable{"TileKind",
 
 EnumMap<Quality> QualityTable{"Quality",
                               {
-                                  {"none", Quality::none},
+                                  {"None", Quality::none},
                                   {"Bad", Quality::bad},
                                   {"Good", Quality::good},
                                   {"Great", Quality::great},

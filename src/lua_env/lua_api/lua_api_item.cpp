@@ -74,8 +74,8 @@ sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
     int id = 0;
     int slot = -1;
     int number = 0;
-    int objlv = 0;
-    Quality fixlv = Quality::none;
+    objlv = 0;
+    fixlv = Quality::none;
 
     if (auto it = args.get<sol::optional<bool>>("nostack"))
     {
@@ -97,22 +97,10 @@ sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
         slot = *it;
     }
 
-    // Exact objlv
-    if (auto it = args.get<sol::optional<int>>("objlv"))
-    {
-        objlv = *it;
-    }
-
     // Random objlv
     if (auto it = args.get<sol::optional<int>>("level"))
     {
         objlv = calcobjlv(*it);
-    }
-
-    // Exact fixlv
-    if (auto it = args.get<sol::optional<std::string>>("fixlv"))
-    {
-        fixlv = LuaEnums::QualityTable.ensure_from_string(*it);
     }
 
     // Random fixlv
@@ -123,6 +111,18 @@ sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
 
     // Clears flttypemajor and flttypeminor.
     flt(objlv, fixlv);
+
+    // Exact objlv
+    if (auto it = args.get<sol::optional<int>>("objlv"))
+    {
+        objlv = *it;
+    }
+
+    // Exact fixlv
+    if (auto it = args.get<sol::optional<std::string>>("fixlv"))
+    {
+        fixlv = LuaEnums::QualityTable.ensure_from_string(*it);
+    }
 
     if (auto it = args.get<sol::optional<int>>("flttypemajor"))
     {
