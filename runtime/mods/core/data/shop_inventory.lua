@@ -179,7 +179,7 @@ data:add_multi(
                end
             }
          },
-         item_price = function(args)
+         item_base_value = function(args)
             return args.item.value * 3 / 2
          end
       },
@@ -197,7 +197,7 @@ data:add_multi(
             { one_in = 3, fixlv = "Great" },
             { one_in = 10, fixlv = "Miracle" },
          },
-         item_price = function(args)
+         item_base_value = function(args)
             return args.item.value * 2
          end
       },
@@ -253,7 +253,7 @@ data:add_multi(
          item_number = function(args)
             return 6 + args.shopkeeper.shop_rank / 10
          end,
-         item_price = function(args)
+         item_base_value = function(args)
             if World.belongs_to_guild("thieves") then
                return args.item.value * 2
             else
@@ -273,7 +273,7 @@ data:add_multi(
          id = 1010,
          rules = merchant_rules,
          item_number = merchant_item_number,
-         item_price = function(args)
+         item_base_value = function(args)
             return args.item.value * 2
          end,
          is_temporary = true -- Uses shop ID 1.
@@ -283,7 +283,7 @@ data:add_multi(
          id = 2003, -- NOTE: the only shop ID for which (id / 1000) != 1.
          rules = merchant_rules,
          item_number = merchant_item_number,
-         item_price = function(args)
+         item_base_value = function(args)
             return args.item.value * 4 / 5
          end,
          is_temporary = true -- Uses shop ID 1.
@@ -329,7 +329,7 @@ data:add_multi(
       },
       {
          -- NOTE: Has these special-case behaviors.
-         --  + Extra filtering for cargo items in ctrl_inventory()
+         --  + Extra filtering for cargo items when buying/selling
          --    through the "shoptrade" flag.
          --  + You can always sell cargo to traders regardless of how
          --    much money the trader has on hand.
@@ -378,7 +378,7 @@ data:add_multi(
             { fltn = "spshop" },
          },
          item_number = function(args) return args.item_number / 2 end,
-         item_price = function(args)
+         item_base_value = function(args)
             local price = Math.clamp(args.item.value, 1, 1000000) * 50
             if args.item.new_id == "core.gift" then
                price = price * 10

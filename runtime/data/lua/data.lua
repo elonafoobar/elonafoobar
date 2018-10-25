@@ -59,8 +59,12 @@ function data:add(array)
          error("duplicate definition of " .. data_type .. ":" .. instance_id)
       end
 
-      dt[instance_id] = v
+      if v._id then
+         error(data_type .. ":" .. instance_id .. ": _id is a reserved field")
+      end
 
+      dt[instance_id] = v
+      v._id = instance_id
 
       if v.id and type(v.id) == "number" then
          local by_legacy = self.by_legacy[data_type]

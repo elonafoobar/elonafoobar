@@ -117,7 +117,7 @@ function shop_inventory.should_remove(item, inv)
       return true
    end
 
-   if has_tag("noshop", tags) and inv._id ~= "core.souvenir_vendor" then
+   if has_tag("noshop", tags) and not inv.ignores_noshop then
       return true
    end
 
@@ -132,12 +132,13 @@ function shop_inventory.should_remove(item, inv)
    return false
 end
 
+-- Higher factor means fewer items.
 local function rarity_num(factor)
-   return function(rarity) return rarity / factor end
+   return function(args) return (args.item_def.rarity / 1000) / factor end
 end
 
--- Map of item category -> function returning sold item amount based
--- on rarity. Higher means fewer items.
+-- Map of item category/id -> function returning sold item amount.
+-- Gets passed the item's definition and the item instance.
 shop_inventory.item_number_factors = {
    [57000] = function() return 1 end,
    [92000] = rarity_num(200),
@@ -147,21 +148,23 @@ shop_inventory.item_number_factors = {
    [60000] = rarity_num(200),
    [64000] = rarity_num(80),
    [59000] = rarity_num(500),
+
+   ["core.small_gamble_chest"] = function() return Rand.rnd(8) end
 }
 
 function shop_inventory.calc_max_item_number(item)
    local item_def = data.raw["core.item"][item.new_id]
    local category = item_def.category
-   local rarity = item_def.rarity / 1000
    local number = 1
 
    local f = shop_inventory.item_number_factors[category]
    if f then
-      number = f(rarity)
+      number = f({item_def = item_def, item = item})
    end
 
-   if item_def._id == "core.small_gamble_chest" then
-      number = Rand.rnd(8)
+   f = shop_inventory.item_number_factors[item.new_id]
+   if f then
+      number = f({item_def = item_def, item = item})
    end
 
    if number < 1 then
@@ -275,8 +278,8 @@ function shop_inventory.do_generate(shopkeeper, inv)
       end
 
       -- Shops can adjust the price of items through a formula.
-      if inv.item_price then
-         item.value = inv.item_price({item = item, shopkeeper = shopkeeper})
+      if inv.item_base_value then
+         item.value = inv.item_base_value({item = item, shopkeeper = shopkeeper})
       end
 
       Item.stack(-1, item) -- invalidates "item".
