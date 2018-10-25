@@ -22495,7 +22495,7 @@ data:add_multi(
       {
          name = "double_bed",
          id = 654,
-         image = 649,
+         image = 261,
          value = 7500,
          weight = 16000,
          dice_x = 0,
@@ -24769,7 +24769,7 @@ data:add_multi(
       {
          name = "happy_bed",
          id = 720,
-         image = 649,
+         image = 261,
          value = 25000,
          weight = 31000,
          dice_x = 0,
