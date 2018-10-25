@@ -79,8 +79,6 @@ void LuaConsole::init_environment()
             print("Reloaded console environment.");
         }
     });
-
-    run_userscript();
 }
 
 void LuaConsole::set_constants(
@@ -259,7 +257,7 @@ bool LuaConsole::interpret_lua(const std::string& input)
         return pfr;
     };
 
-    // First try prepending "return" to the statement, ignoring errors.
+    // First, try prepending "return" to the statement, ignoring errors.
     auto result = lua::lua->get_state()->safe_script(
         u8"return " + input, _console_mod->env, sol::script_pass_on_error);
 
@@ -286,7 +284,7 @@ bool LuaConsole::interpret_lua(const std::string& input)
 
             if (as_string.valid())
             {
-                print(result.get<std::string>());
+                print(as_string.get<std::string>());
             }
             else
             {

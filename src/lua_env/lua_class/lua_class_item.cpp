@@ -13,30 +13,38 @@ void LuaItem::bind(sol::state& lua)
         "lua_type",
         &Item::lua_type,
 
-        "set_number",
-        &Item::set_number,
-
+        // Variables
         "index",
         sol::readonly(&Item::index),
-        "position",
-        &Item::position,
-        "number",
-        sol::property([](Item& i) { return i.number(); }),
         "id",
         &Item::id,
+        "position",
+        &Item::position,
         "count",
         &Item::count,
-        "name",
-        sol::property([](Item& i) { return elona::itemname(i.index); }),
-        "basename",
-        sol::property([](Item& i) { return elona::ioriginalnameref(i.id); }),
         "subname",
         &Item::subname,
+        "image",
+        &Item::image,
         "param1",
         &Item::param1,
         "param2",
         &Item::param2,
+        "param3",
+        &Item::param3,
+        "param4",
+        &Item::param4,
 
+        // Properties
+        "name",
+        sol::property([](Item& i) { return elona::itemname(i.index); }),
+        "basename",
+        sol::property([](Item& i) { return elona::ioriginalnameref(i.id); }),
+
+        "number",
+        sol::property(
+            [](Item& i) { return i.number(); },
+            [](Item& i, int number) { i.set_number(number); }),
         "curse_state",
         sol::property(
             [](Item& i) {
@@ -57,7 +65,8 @@ void LuaItem::bind(sol::state& lua)
                     LuaEnums::IdentifyStateTable.ensure_from_string(s);
             }));
 
-    lua.set_usertype(Item::lua_type(), LuaItem);
+    auto key = Item::lua_type();
+    lua.set_usertype(key, LuaItem);
 }
 
 } // namespace lua

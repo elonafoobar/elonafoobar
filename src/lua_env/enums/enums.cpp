@@ -122,6 +122,17 @@ EnumMap<TileKind> TileKindTable{"TileKind",
                                     {"Fog", TileKind::fog},
                                 }};
 
+EnumMap<Quality> QualityTable{"Quality",
+                              {
+                                  {"none", Quality::none},
+                                  {"Bad", Quality::bad},
+                                  {"Good", Quality::good},
+                                  {"Great", Quality::great},
+                                  {"Miracle", Quality::miracle},
+                                  {"Godly", Quality::godly},
+                                  {"Special", Quality::special},
+                              }};
+
 EnumMap<mdata_t::MapType> MapTypeTable{
     "MapType",
     {
@@ -155,7 +166,6 @@ EnumMap<int> MapTilesetTable{"MapTileset",
                                  {"Normal", 1},
                                  {"WorldMap", 2},
                              }};
-
 
 // TODO: convert the following to enum class.
 EnumMap<int> GenderTable{"Gender",
@@ -257,9 +267,11 @@ void LuaEnums::bind(sol::table& core)
     TileKindTable.bind(Enums);
     MapTypeTable.bind(Enums);
     MapEntranceTypeTable.bind(Enums);
+    MapTilesetTable.bind(Enums);
     GenderTable.bind(Enums);
     RelationTable.bind(Enums);
     CharaFlagTable.bind(Enums);
+    QualityTable.bind(Enums);
 }
 
 } // namespace lua

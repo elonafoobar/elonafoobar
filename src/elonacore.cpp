@@ -39,6 +39,7 @@
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main.hpp"
@@ -3250,7 +3251,6 @@ void initialize_set_of_random_generation()
 
 void character_drops_item()
 {
-    int lootrich = 0;
     if (rc == 0)
     {
         if (game_data.executing_immediate_quest_type != 0)
@@ -3929,249 +3929,11 @@ void character_drops_item()
             }
         }
     }
-    lootrich = -1;
-    if (cdata[rc].id == 183)
-    {
-        lootrich = 8;
-    }
-    if (cdata[rc].id == 184)
-    {
-        lootrich = 4;
-    }
-    if (cdata[rc].id == 185)
-    {
-        lootrich = 2;
-    }
-    if (lootrich != -1)
-    {
-        for (int cnt = 0, cnt_end = (lootrich); cnt < cnt_end; ++cnt)
-        {
-            flt(calcobjlv(cdata[rc].level));
-            flttypeminor = 77001;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-        if (rnd(3) == 0)
-        {
-            flt();
-            itemcreate(-1, 284, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    drop(0) = -1;
-    drop(1) = -1;
-    drop(2) = -1;
-    drop(3) = -1;
-    drop(4) = -1;
-    drop(5) = -1;
-    drop(6) = -1;
-    drop(7) = -1;
-    drop(8) = -1;
-    drop(9) = -1;
-    drop(10) = -1;
-    if (cdata[rc].id == 140)
-    {
-        drop(0) = 355;
-        drop(1) = -1;
-    }
-    if (cdata[rc].id == 175 || cdata[rc].id == 177 || cdata[rc].id == 178)
-    {
-        if (npcmemory(0, cdata[rc].id) == 1)
-        {
-            drop(0) = 290;
-            drop(1) = 421;
-            drop(2) = -1;
-        }
-        else
-        {
-            drop(0) = 421;
-            drop(1) = 421;
-            drop(2) = -1;
-        }
-    }
-    if (game_data.current_map == mdata_t::MapId::pyramid)
-    {
-        if (cdata[rc].id == 257)
-        {
-            drop(0) = 665;
-            drop(1) = 55;
-            drop(2) = 55;
-            drop(3) = 55;
-            drop(4) = 55;
-            drop(5) = 621;
-            drop(6) = -1;
-        }
-    }
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (drop(cnt) == -1)
-        {
-            break;
-        }
-        flt();
-        itemcreate(
-            -1, drop(cnt), cdata[rc].position.x, cdata[rc].position.y, 0);
-    }
-    if (cdata[rc].id == 5)
-    {
-        if (rnd(200) == 0)
-        {
-            flt();
-            itemcreate(-1, 702, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 21)
-    {
-        if (rnd(100) == 0)
-        {
-            flt();
-            itemcreate(-1, 706, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 34)
-    {
-        if (rnd(4) == 0)
-        {
-            flt();
-            itemcreate(-1, 717, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 99 || cdata[rc].id == 100 || cdata[rc].id == 101)
-    {
-        if (rnd(300) == 0)
-        {
-            flt();
-            itemcreate(-1, 708, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 117)
-    {
-        if (rnd(140) == 0)
-        {
-            flt();
-            itemcreate(-1, 720, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 168)
-    {
-        if (rnd(100) == 0)
-        {
-            flt();
-            itemcreate(-1, 740, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id >= 302 && cdata[rc].id <= 305)
-    {
-        if (rnd(90) == 0)
-        {
-            flt();
-            itemcreate(-1, 771, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 307 || cdata[rc].id == 308)
-    {
-        if (rnd(150) == 0)
-        {
-            flt();
-            itemcreate(-1, 709, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 189 || cdata[rc].id == 190)
-    {
-        if (rnd(150) == 0)
-        {
-            flt();
-            itemcreate(-1, 711, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 213)
-    {
-        if (rnd(50) == 0)
-        {
-            flt();
-            int stat = itemcreate(
-                -1, 672, cdata[rc].position.x, cdata[rc].position.y, 0);
-            if (stat != 0)
-            {
-                inv[ci].param1 = 169;
-            }
-        }
-    }
-    if (cdata[rc].id == 250)
-    {
-        if (rnd(200) == 0)
-        {
-            flt();
-            itemcreate(-1, 715, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 341)
-    {
-        if (rnd(3) == 0)
-        {
-            flt();
-            itemcreate(-1, 635, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 85 || cdata[rc].id == 86 || cdata[rc].id == 87)
-    {
-        if (rnd(600) == 0)
-        {
-            flt();
-            itemcreate(-1, 737, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 302)
-    {
-        for (int cnt = 0, cnt_end = (2 + rnd(4)); cnt < cnt_end; ++cnt)
-        {
-            flt(cdata[rc].level, Quality::good);
-            flttypemajor = 92000;
-            nostack = 1;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
-            if (inv[ci].value < 800)
-            {
-                inv[ci].set_number(rnd(5) + 1);
-            }
-        }
-    }
-    if (cdata[rc].id == 328)
-    {
-        flt();
-        itemcreate(
-            -1, 55, cdata[rc].position.x, cdata[rc].position.y, 1 + rnd(3));
-        if (rnd(2))
-        {
-            flt();
-            itemcreate(-1, 622, cdata[rc].position.x, cdata[rc].position.y, 0);
-        }
-    }
-    if (cdata[rc].id == 329)
-    {
-        flt();
-        itemcreate(
-            -1,
-            54,
-            cdata[rc].position.x,
-            cdata[rc].position.y,
-            2500 + rnd((cdata.player().fame + 1000)));
-    }
-    if (cdata[rc].id == 351 || cdata[rc].id == 352)
-    {
-        for (int cnt = 0; cnt < 12; ++cnt)
-        {
-            flt();
-            nostack = 1;
-            int stat = itemcreate(
-                -1, 772, cdata[rc].position.x, cdata[rc].position.y, 0);
-            if (rnd(2))
-            {
-                if (stat != 0)
-                {
-                    inv[ci].param3 = -1;
-                    inv[ci].image = 336;
-                }
-            }
-        }
-    }
+
+    // ../runtime/mods/core/exports/impl/chara_drop.lua
+    lua::call(
+        "exports:core.impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
+
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     if (cdata[rc].character_role == 13)
     {
@@ -10513,10 +10275,10 @@ TurnResult do_bash()
 
 TurnResult proc_movement_event()
 {
-    auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
-    if (handle != sol::lua_nil)
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::character_moved>(handle);
+    if (auto handle = lua::handle_opt(cdata[cc]))
+    {
+        lua::run_event<lua::EventKind::character_moved>(*handle);
+    }
 
     if (cdata[cc].is_ridden())
     {

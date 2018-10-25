@@ -9,6 +9,6 @@ module "Iter"
 -- @tparam num sx ending x position
 -- @tparam num sy ending y position
 -- @usage for pos in Iter.rectangle_iter(10, 10, 20, 20) do
---     Item.create(pos.x, pos.y, 792, 1)
+--     Item.create(pos.x, pos.y, "core.putitoro", 1)
 -- end
 function rectangle_iter(x, y, sx, sy) end

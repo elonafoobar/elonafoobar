@@ -17,6 +17,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -93,6 +94,63 @@ void dmgheal_death_by_backpack(Character& chara)
         ndeathcause = i18n::s.get_enum_property(
             "core.locale.death_by.other", "death_cause", 6, heaviest_item_name);
     }
+}
+
+
+
+/**
+ * Modifies certain statuses on death for a character, like time to revive.
+ * However, the new state of the character will not be set. It must be set only
+ * after the character reference is no longer needed, because setting it to
+ * empty will cause the corresponding Lua handle to be deleted, meaning it will
+ * be unusable for running Lua-related behavior. One example of this is running
+ * the Lua behavior to drop items on death. For it to work, the character's Lua
+ * handle still has to be valid, as it is passed to the item drop code in Lua.
+ *
+ * After the death-related behavior is finished running, the state can be set
+ * such that the Lua handle is cleared.
+ *
+ * @return the state to set the character to at the end of damage_hp().
+ */
+Character::State dmgheal_set_death_status(Character& victim)
+{
+    Character::State new_state = victim.state();
+
+    if (victim.character_role == 0)
+    {
+        new_state = Character::State::empty;
+    }
+    else if (victim.character_role == 13)
+    {
+        new_state = Character::State::adventurer_dead;
+        victim.time_to_revive = game_data.date.hours() + 24 + rnd(12);
+    }
+    else
+    {
+        new_state = Character::State::villager_dead;
+        victim.time_to_revive = game_data.date.hours() + 48;
+    }
+
+    if (victim.index != 0)
+    {
+        if (victim.index < 16)
+        {
+            new_state = Character::State::pet_dead;
+            chara_modify_impression(victim, -10);
+            victim.current_map = 0;
+            if (victim.is_escorted() == 1)
+            {
+                event_add(15, victim.id);
+                new_state = Character::State::empty;
+            }
+            if (victim.is_escorted_in_sub_quest() == 1)
+            {
+                new_state = Character::State::empty;
+            }
+        }
+    }
+
+    return new_state;
 }
 
 
@@ -743,12 +801,8 @@ int damage_hp(
         }
     }
 
-    {
-        auto handle = lua::lua->get_handle_manager().get_handle(victim);
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::character_damaged>(
-                handle, dmg_at_m141);
-    }
+    lua::run_event<lua::EventKind::character_damaged>(
+        lua::handle(victim), dmg_at_m141);
 
     if (victim.hp < 0)
     {
@@ -905,38 +959,13 @@ int damage_hp(
         {
             cell_removechara(victim.position.x, victim.position.y);
         }
-        if (victim.character_role == 0)
-        {
-            victim.set_state(Character::State::empty);
-        }
-        else if (victim.character_role == 13)
-        {
-            victim.set_state(Character::State::adventurer_dead);
-            victim.time_to_revive = game_data.date.hours() + 24 + rnd(12);
-        }
-        else
-        {
-            victim.set_state(Character::State::villager_dead);
-            victim.time_to_revive = game_data.date.hours() + 48;
-        }
-        if (victim.index != 0)
-        {
-            if (victim.index < 16)
-            {
-                victim.set_state(Character::State::pet_dead);
-                chara_modify_impression(victim, -10);
-                victim.current_map = 0;
-                if (victim.is_escorted() == 1)
-                {
-                    event_add(15, victim.id);
-                    victim.set_state(Character::State::empty);
-                }
-                if (victim.is_escorted_in_sub_quest() == 1)
-                {
-                    victim.set_state(Character::State::empty);
-                }
-            }
-        }
+
+        // Save the state to transition the character to until all death-related
+        // behavior that needs the character to still be valid has finished
+        // running. When the state is set, the Lua handle for the character
+        // might be cleared.
+        Character::State deferred_state = dmgheal_set_death_status(victim);
+
         if (victim.breaks_into_debris())
         {
             if (is_in_fov(victim))
@@ -1155,7 +1184,10 @@ int damage_hp(
             for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
                  ++chara_index)
             {
-                if (cdata[chara_index].state() != Character::State::alive)
+                // The victim just died, so the state will not be "alive" when
+                // set below.
+                if (chara_index == victim.index
+                    || cdata[chara_index].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1186,6 +1218,10 @@ int damage_hp(
         }
 
         end_dmghp(victim);
+
+        // Set the character's state, deferred from earlier. If it is "empty",
+        // the corresponding Lua reference will be cleared.
+        victim.set_state(deferred_state);
 
         return 0;
     }

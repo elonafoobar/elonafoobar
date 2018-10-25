@@ -14,6 +14,8 @@ int width();
 
 int height();
 
+int id();
+
 bool is_overworld();
 
 bool valid(const Position&);
