@@ -25,7 +25,7 @@ create_with_number_xy(int, int, const std::string&, int);
 sol::optional<LuaItemHandle> create(const Position&, sol::table);
 sol::optional<LuaItemHandle> create_xy(int, int, sol::table);
 
-int memory(int, LuaItemHandle);
+int memory(int, const std::string&);
 
 sol::optional<LuaItemHandle> stack(int, LuaItemHandle);
 

@@ -161,16 +161,20 @@ sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
     }
 }
 
-int Item::memory(int type, LuaItemHandle handle)
+int Item::memory(int type, const std::string& id)
 {
     if (type < 0 || type > 2)
     {
         return 0;
     }
 
-    auto& item_ref =
-        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
-    return itemmemory(type, item_ref.id);
+    auto data = the_item_db[id];
+    if (!data)
+    {
+        return 0;
+    }
+
+    return itemmemory(type, data->id);
 }
 
 sol::optional<LuaItemHandle> Item::stack(int inventory_id, LuaItemHandle handle)

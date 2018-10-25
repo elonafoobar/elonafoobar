@@ -115,7 +115,8 @@ Available properties:
   fltn: used with fltn().
   choices: an array of properties. one out of the set of properties
            provided will be applied.
-  on_generate: a function that will have a table of arguments passed to it.
+  on_generate: a function that will have a table with these fields
+               passed to it.
     index: index of the item being generated.
     shopkeeper: character who is the shopkeeper.
 ]]
@@ -157,13 +158,21 @@ data:add_multi(
                on_generate = function()
                   local reserved = {}
                   for item_id, _ in pairs(data.raw["core.item"]) do
-                     if Item.memory(item_id, 2) > 1 then
+                     if Item.memory(2, item_id) > 1 then
                         reserved[#reserved+1] = item_id
                      end
                   end
 
                   if #reserved == 0 then
-                     return
+                     -- NOTE: this used to return out of shop_refresh,
+                     -- skipping the update of time_to_restore.
+                     -- However, it would be strange to have no books
+                     -- reserved, then reserve one and suddenly see
+                     -- them available by talking to the shopkeeper
+                     -- again immediately, so now the behavior is to
+                     -- update time_to_restore anyway if no books are
+                     -- reserved at the time of refresh.
+                     return { id = "Stop" }
                   end
 
                   return { id = Rand.choice(reserved) }
@@ -266,7 +275,8 @@ data:add_multi(
          item_number = merchant_item_number,
          item_price = function(args)
             return args.item.value * 2
-         end
+         end,
+         is_temporary = true -- Uses shop ID 1.
       },
       {
          name = "visiting_merchant",
@@ -275,7 +285,8 @@ data:add_multi(
          item_number = merchant_item_number,
          item_price = function(args)
             return args.item.value * 4 / 5
-         end
+         end,
+         is_temporary = true -- Uses shop ID 1.
       },
       {
          name = "innkeeper",
@@ -317,6 +328,13 @@ data:add_multi(
          }
       },
       {
+         -- NOTE: Has these special-case behaviors.
+         --  + Extra filtering for cargo items in ctrl_inventory()
+         --    through the "shoptrade" flag.
+         --  + You can always sell cargo to traders regardless of how
+         --    much money the trader has on hand.
+         --  + On shop refresh, updates the buying rates of each cargo
+         --    type based on the current map.
          name = "trader",
          id = 1009,
          rules = {
@@ -414,6 +432,19 @@ data:add_multi(
          }
       },
       {
+         -- NOTE: Has these special-case behaviors.
+         --  + Normal generation of sold item number/curse state is
+         --    replaced with on_generate_item below. (the presences of
+         --    on_generate_item causes all the generation behavior
+         --    done after the item is created with Item.create to be
+         --    skipped.)
+         --  + Value is ignored and ctrl_inventory() (currently) uses
+         --    a hardcoded value for the number of medals to sell at.
+         --  + Items with Special quality or the precious flag set are
+         --    permitted to be sold through a special inventory
+         --    routine type in ctrl_inventory() which can only be
+         --    triggered through Miral's dialog. In normal shops,
+         --    items with those properties are not displayed.
          name = "miral",
          id = 1016,
          rules = medal_items,

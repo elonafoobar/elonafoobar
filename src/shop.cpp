@@ -28,10 +28,18 @@ void shop_refresh_on_talk()
     }
     mode = 6;
     ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
+
+    bool is_temporary = false;
+
+    auto shop_inv = lua::data("core.shop_inventory", cdata[tc].character_role);
+    if (shop_inv)
+    {
+        is_temporary = shop_inv->optional_or<bool>("is_temporary", false);
+    }
+
     if (cdata[tc].shop_store_id == 0)
     {
-        if (cdata[tc].character_role == 1010
-            || cdata[tc].character_role == 2003)
+        if (is_temporary)
         {
             cdata[tc].shop_store_id = 1;
         }

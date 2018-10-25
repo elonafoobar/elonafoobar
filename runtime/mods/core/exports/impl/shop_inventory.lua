@@ -4,11 +4,9 @@ local Chara = Elona.require("Chara")
 local Skill = Elona.require("Skill")
 local Rand = Elona.require("Rand")
 
-local Debug = Elona.require("Debug")
-
 local shop_inventory = {}
 
-local function default_item_number(args)
+function shop_inventory.default_item_number(args)
    return Math.min(80, 20 + args.shopkeeper.shop_rank / 2)
 end
 
@@ -23,7 +21,6 @@ function shop_inventory.test_rule_predicate(rule, index, shopkeeper)
       return not Rand.one_in(rule.all_but_one_in)
    end
    if rule.predicate then
-      print("pred" .. tostring(rule.predicate({index = index, shopkeeper = shopkeeper})))
       return rule.predicate({index = index, shopkeeper = shopkeeper}) == true
    end
 
@@ -32,19 +29,24 @@ end
 
 function shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
    for k, v in pairs(rule) do
+      -- Apply "choices" and "on_generate" after the other properties
+      -- have been copied.
       if k ~= "choices" and k ~= "on_generate" then
          ret[k] = v
       end
    end
 
    if rule.choices then
-      local selected = Rand.choice(rule.choices)
-      ret = shop_inventory.apply_rule_properties(selected, ret)
+      local chosen_rule = Rand.choice(rule.choices)
+      ret = shop_inventory.apply_rule_properties(chosen_rule, ret)
    end
 
    if rule.on_generate then
-      local props = rule.on_generate({index = index, shopkeeper = shopkeeper})
-      ret = shop_inventory.apply_rule_properties(props, ret)
+      local generated_rule = rule.on_generate({index = index, shopkeeper = shopkeeper})
+
+      -- NOTE: This could potentially recurse somewhat deeply if the
+      -- generated rule also contains an on_generate field.
+      ret = shop_inventory.apply_rule_properties(generated_rule, ret)
    end
 
    return ret
@@ -54,7 +56,6 @@ function shop_inventory.apply_rules(index, shopkeeper, inv)
    local ret = {level = shopkeeper.shop_rank, quality = "Bad"}
 
    if not inv.rules then
-      print("NONE")
       return ret
    end
 
@@ -63,7 +64,7 @@ function shop_inventory.apply_rules(index, shopkeeper, inv)
          ret = shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
 
          if ret.id == "Stop" then
-            print("----STOP")
+            -- Don't generate an item this cycle.
             return nil
          end
       end
@@ -136,7 +137,7 @@ local function rarity_num(factor)
 end
 
 -- Map of item category -> function returning sold item amount based
--- on rarity
+-- on rarity. Higher means fewer items.
 shop_inventory.item_number_factors = {
    [57000] = function() return 1 end,
    [92000] = rarity_num(200),
@@ -148,7 +149,7 @@ shop_inventory.item_number_factors = {
    [59000] = rarity_num(500),
 }
 
-function shop_inventory.calc_sold_item_number(item)
+function shop_inventory.calc_max_item_number(item)
    local item_def = data.raw["core.item"][item.new_id]
    local category = item_def.category
    local rarity = item_def.rarity / 1000
@@ -181,6 +182,10 @@ shop_inventory.cargo_amount_rates = {
    { threshold = 100, type = "gt", amount = function(n) return n / 2 + 1     end, remove_chance = 3 },
 }
 
+function shop_inventory.cargo_amount_modifier(amount)
+   return amount * (100 + Skill.level(156, Chara.player()) * 10) / 100 + 1
+end
+
 -- Calculate adjusted amount of cargo items to be sold based on the
 -- cargo's value.
 function shop_inventory.calc_cargo_amount(item)
@@ -204,47 +209,52 @@ function shop_inventory.calc_cargo_amount(item)
       end
    end
 
-   return amount * (100 + Skill.level(156, Chara.player()) * 10) / 100 + 1
+   return shop_inventory.cargo_amount_modifier(amount)
 end
 
 function shop_inventory.do_generate(shopkeeper, inv)
-   local item_number = default_item_number({shopkeeper = shopkeeper})
+   -- Determine how many items to create. Shops can also adjust the
+   -- amount with a formula.
+   local items_to_create = shop_inventory.default_item_number({shopkeeper = shopkeeper})
    if inv.item_number then
-      item_number = inv.item_number({shopkeeper = shopkeeper, item_number = item_number})
+      items_to_create = inv.item_number({shopkeeper = shopkeeper, item_number = items_to_create})
    end
 
-   for index = 0, item_number - 1 do
+   for index = 0, items_to_create - 1 do
+      -- Go through each generation rule the shop defines and get back
+      -- a table of arguments to Item.create().
       local args = shop_inventory.apply_rules(index, shopkeeper, inv)
 
       if not args then
-         print("NOARGS")
          goto continue
       end
 
-      print(Debug.inspect.inspect(args))
-
       args.nostack = true
-      local item = Item.create(-1, -1, args)
+      local item = Item.create(1, -1, args)
       if not item then
-         -- Shop inventory is full.
+         -- Shop inventory is full, don't generate anything else.
          break
       end
 
+      -- If the shop defines special handling of item state on
+      -- generation, use it and skip the remaining adjustments to the
+      -- item that happen afterward.
       if inv.on_generate_item then
          inv.on_generate_item({item = item, index = index, shopkeeper = shopkeeper})
-         print("SKIP")
-
-         -- Skip the remaining adjustments of item number/price.
          goto continue
       end
 
+      -- Exclude items like cursed items, seeds or water.
       if shop_inventory.should_remove(item, inv) then
          item:remove()
          goto continue
       end
 
-      item.number = Rand.rnd(shop_inventory.calc_sold_item_number(item)) + 1
+      -- Calculate the number of items sold (always above 0).
+      item.number = Rand.rnd(shop_inventory.calc_max_item_number(item)) + 1
 
+      -- Cargo traders have special behavior for calculating the sold
+      -- item number.
       if inv._id == "core.trader" then
          local number = shop_inventory.calc_cargo_amount(item)
          if number == nil then
@@ -259,10 +269,12 @@ function shop_inventory.do_generate(shopkeeper, inv)
          goto continue
       end
 
+      -- Blessed items are never generated in multiple (per cycle).
       if item.curse_state == "Blessed" then
          item.number = 1
       end
 
+      -- Shops can adjust the price of items through a formula.
       if inv.item_price then
          item.value = inv.item_price({item = item, shopkeeper = shopkeeper})
       end
@@ -271,14 +283,12 @@ function shop_inventory.do_generate(shopkeeper, inv)
 
       ::continue::
    end
-   print(item_number)
 end
 
 function shop_inventory.generate(shopkeeper)
    -- Obtain shop inventory data by using the shopkeeper's
    -- character_role as its legacy ID index. If it does not exist, a
    -- default set of items will be generated as a fallback.
-   print("=================")
    local id = data.by_legacy["core.shop_inventory"][shopkeeper.role]
    local inv = {}
    if id then
