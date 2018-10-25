@@ -109,7 +109,7 @@ Rule predicates:
       shopkeeper: character who is the shopkeeper.
 
 Available properties:
-  id: string id of the item. If it equals "Stop", skip generation
+  id: string id of the item. If it equals "Skip", skip generation
       of an item this cycle.
   flttypeminor: number.
   flttypemajor: number.
@@ -174,7 +174,7 @@ data:add_multi(
                      -- again immediately, so now the behavior is to
                      -- update time_to_restore anyway if no books are
                      -- reserved at the time of refresh.
-                     return { id = "Stop" }
+                     return { id = "Skip" }
                   end
 
                   return { id = Rand.choice(reserved) }
@@ -225,7 +225,7 @@ data:add_multi(
          name = "bakery",
          id = 1003,
          rules = {
-            { all_but_one_in = 3, id = "Stop" },
+            { all_but_one_in = 3, id = "Skip" },
             {
                choices = {
                   {flttypeminor = 57001},
@@ -239,7 +239,7 @@ data:add_multi(
          name = "food_vendor",
          id = 1002,
          rules = {
-            { all_but_one_in = 3, id = "Stop" },
+            { all_but_one_in = 3, id = "Skip" },
             { flttypemajor = 57000 },
             { one_in = 5, flttypemajor = 91000 },
          }
@@ -368,7 +368,7 @@ data:add_multi(
          name = "sales_person_c",
          id = 1013,
          rules = {
-            { all_but_one_in = 3, id = "Stop" },
+            { all_but_one_in = 3, id = "Skip" },
             { flttypemajor = 55000 },
             { one_in = 3, choices = deed_items },
             { one_in = 5, id = "core.deed_of_heirship" },
@@ -422,7 +422,7 @@ data:add_multi(
             { index = 4, id = "core.freezer" },
             { index = 5, id = "core.playback_disc" },
             { index = 6, id = "core.house_board" },
-            { predicate = function(args) return args.index > 10 and not Rand.one_in(3) end, id = "Stop" },
+            { predicate = function(args) return args.index > 10 and not Rand.one_in(3) end, id = "Skip" },
             { index = 19, id = "core.red_treasure_machine" },
             { index = 20, id = "core.blue_treasure_machine" },
             { index = 21, id = "core.tax_masters_tax_box" },

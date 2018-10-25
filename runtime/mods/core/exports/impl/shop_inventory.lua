@@ -65,7 +65,7 @@ function shop_inventory.apply_rules(index, shopkeeper, inv)
       if shop_inventory.test_rule_predicate(rule, index, shopkeeper) then
          ret = shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
 
-         if ret.id == "Stop" then
+         if ret.id == "Skip" then
             -- Don't generate an item this cycle.
             return nil
          end
