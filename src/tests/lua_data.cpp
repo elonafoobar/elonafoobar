@@ -61,11 +61,14 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
 // }
 
 TEST_CASE(
-    "test verification that API tables only have string keys",
+    "test verification that Exports table only have string keys",
     "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
-    REQUIRE_THROWS(lua.get_mod_manager().load_mods(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mods(
         filesystem::dir::mods(),
         {testing::get_test_data_path() / "mods" / "test_export_keys"}));
+
+    REQUIRE_NONE(lua.get_export_manager().get_exported_function(
+        "exports:test_export_keys.0"));
 }
