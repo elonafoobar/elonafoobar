@@ -528,7 +528,6 @@ else()
     list(APPEND DISABLED_WARNINGS
       "deprecated-declarations")
     list(APPEND WARNINGS_AS_ERRORS
-      "catch-value"
       "return-type")
 
     # Speed up linking on Linux by using split DWARF
