@@ -467,6 +467,15 @@ void initialize_elona()
     pos(456, 144);
     picload(filesystem::dir::graphic() / u8"interface_ex4.png", 1);
 
+    pos(528, 216);
+    picload(filesystem::dir::graphic() / u8"interface_ex5.png", 1);
+    pos(672, 216);
+    picload(filesystem::dir::graphic() / u8"interface_ex6.png", 1);
+    pos(864, 533);
+    picload(filesystem::dir::graphic() / u8"interface_ex7.png", 1);
+    pos(864, 565);
+    picload(filesystem::dir::graphic() / u8"interface_ex8.png", 1);
+
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
