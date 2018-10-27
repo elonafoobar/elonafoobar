@@ -4,8 +4,11 @@
 #include "random.hpp"
 #include "variables.hpp"
 
-namespace elona
+
+
+namespace
 {
+
 
 int dx_at_cardcontrol = 0;
 int dy_at_cardcontrol = 0;
@@ -19,6 +22,93 @@ int piley_at_cardcontrol = 0;
 elona_vector2<int> cardplayer_at_cardcontrol;
 elona_vector1<int> i_at_cardcontrol;
 elona_vector1<int> p_at_cardcontrol;
+
+
+
+enum class Suit
+{
+    spades,
+    hearts,
+    diamonds,
+    clubs,
+    joker,
+};
+
+
+void showcard2(int prm_425, bool show_rank = true)
+{
+    const auto rank = card_at_cardcontrol(0, prm_425);
+    const auto suit = static_cast<Suit>(card_at_cardcontrol(1, prm_425));
+    const auto is_closed = card_at_cardcontrol(2, prm_425) == 1;
+    const auto x = card_at_cardcontrol(3, prm_425);
+    const auto y = card_at_cardcontrol(4, prm_425);
+
+    gmode(2);
+    if (is_closed)
+    {
+        // Card's back.
+        pos(x, y);
+        gcopy(3, 736, 216, 64, 96);
+    }
+    else
+    {
+        // Card's face.
+        pos(x, y);
+        gcopy(3, 672, 216, 64, 96);
+
+        if (show_rank)
+        {
+            gmode(4, 220);
+            snail::Color rank_color{0, 0, 0};
+            optional_ref<Extent> rect;
+            switch (suit)
+            {
+            case Suit::spades:
+                rect = draw_get_rect_chara(168); // slime
+                rank_color = {140, 140, 255, 255};
+                break;
+            case Suit::hearts:
+                rect = draw_get_rect_chara(211); // black cat
+                rank_color = {255, 140, 140, 255};
+                break;
+            case Suit::diamonds:
+                rect = draw_get_rect_chara(241); // skeleton
+                rank_color = {240, 240, 240, 255};
+                break;
+            case Suit::clubs:
+                rect = draw_get_rect_chara(223); // armor
+                rank_color = {140, 255, 140, 255};
+                break;
+            case Suit::joker:
+                rect = draw_get_rect_chara(413); // ehekatl
+                rank_color = {250, 250, 105, 255};
+                break;
+            }
+            pos(x + 32 - rect->width / 2, y + 88 - rect->height);
+            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+
+            gmode(4, 220);
+            pos(x + 8, y + 16);
+            gcopy(3, 864 + static_cast<int>(suit) * 24, 533, 24, 32);
+            pos(x + 32, y + 16);
+            gcopy(3, 864 + (rank - 1) * 24, 565, 24, 32);
+            gmode(2);
+        }
+        else
+        {
+            font(12 - en * 2);
+        }
+    }
+}
+
+
+} // namespace
+
+
+
+namespace elona
+{
+
 
 void cardplayerinit(int prm_417, int prm_418)
 {
@@ -73,159 +163,7 @@ void initcard(int prm_422, int prm_423, int)
     }
 }
 
-void showcard2(int prm_425, int prm_426)
-{
-    elona_vector1<int> col_at_cardcontrol;
-    std::string s_at_cardcontrol;
-    int tx_at_cardcontrol = 0;
-    font(43 - en * 2, snail::Font::Style::bold);
-    gmode(2);
-    pos(card_at_cardcontrol(3, prm_425), card_at_cardcontrol(4, prm_425));
-    if (card_at_cardcontrol(2, prm_425) == 1)
-    {
-        gcopy(3, 736, 216, 64, 96);
-    }
-    else
-    {
-        gcopy(3, 672, 216, 64, 96);
-        if (prm_426 == 0)
-        {
-            gmode(4, 220);
-            if (card_at_cardcontrol(1, prm_425) == 0)
-            {
-                pos(card_at_cardcontrol(3, prm_425) + 32,
-                    card_at_cardcontrol(4, prm_425) + 36);
-                gmode(4, 220);
-                auto rect = draw_get_rect_chara(168); // slime
-                gcopy_c(
-                    rect->buffer,
-                    rect->x,
-                    rect->y,
-                    rect->width,
-                    rect->height,
-                    64,
-                    104);
-                col_at_cardcontrol(0) = 140;
-                col_at_cardcontrol(1) = 140;
-                col_at_cardcontrol(2) = 255;
-            }
-            if (card_at_cardcontrol(1, prm_425) == 1)
-            {
-                pos(card_at_cardcontrol(3, prm_425) + 32,
-                    card_at_cardcontrol(4, prm_425) + 40);
-                gmode(4, 220);
-                auto rect = draw_get_rect_chara(211); // black cat
-                gcopy_c(
-                    rect->buffer,
-                    rect->x,
-                    rect->y,
-                    rect->width,
-                    rect->height,
-                    64,
-                    104);
-                col_at_cardcontrol(0) = 255;
-                col_at_cardcontrol(1) = 140;
-                col_at_cardcontrol(2) = 140;
-            }
-            if (card_at_cardcontrol(1, prm_425) == 2)
-            {
-                pos(card_at_cardcontrol(3, prm_425) + 32,
-                    card_at_cardcontrol(4, prm_425) + 50);
-                gmode(4, 220);
-                auto rect = draw_get_rect_chara(241); // skeleton
-                gcopy_c(
-                    rect->buffer,
-                    rect->x,
-                    rect->y,
-                    rect->width,
-                    rect->height,
-                    64,
-                    84);
-                col_at_cardcontrol(0) = 240;
-                col_at_cardcontrol(1) = 240;
-                col_at_cardcontrol(2) = 240;
-            }
-            if (card_at_cardcontrol(1, prm_425) == 3)
-            {
-                pos(card_at_cardcontrol(3, prm_425) + 28,
-                    card_at_cardcontrol(4, prm_425) + 48);
-                gmode(4, 220);
-                auto rect = draw_get_rect_chara(223); // armor
-                gcopy_c(
-                    rect->buffer,
-                    rect->x,
-                    rect->y,
-                    rect->width,
-                    rect->height,
-                    64,
-                    80);
-                col_at_cardcontrol(0) = 140;
-                col_at_cardcontrol(1) = 255;
-                col_at_cardcontrol(2) = 140;
-            }
-            if (card_at_cardcontrol(1, prm_425) == 4)
-            {
-                pos(card_at_cardcontrol(3, prm_425) + 28,
-                    card_at_cardcontrol(4, prm_425) + 44);
-                gmode(4, 220);
-                auto rect = draw_get_rect_chara(258); // public performer
-                gcopy_c(
-                    rect->buffer,
-                    rect->x,
-                    rect->y,
-                    rect->width,
-                    rect->height,
-                    72,
-                    86);
-                col_at_cardcontrol(0) = 250;
-                col_at_cardcontrol(1) = 250;
-                col_at_cardcontrol(2) = 105;
-            }
-            gmode(2);
-            s_at_cardcontrol = std::to_string(card_at_cardcontrol(0, prm_425));
-            tx_at_cardcontrol = 2;
-            if (card_at_cardcontrol(0, prm_425) == 1)
-            {
-                s_at_cardcontrol = u8"A"s;
-                tx_at_cardcontrol = 3;
-            }
-            if (card_at_cardcontrol(0, prm_425) == 11)
-            {
-                s_at_cardcontrol = u8"J"s;
-                tx_at_cardcontrol = 13;
-            }
-            if (card_at_cardcontrol(0, prm_425) == 12)
-            {
-                s_at_cardcontrol = u8"Q"s;
-                tx_at_cardcontrol = 14;
-            }
-            if (card_at_cardcontrol(0, prm_425) == 13)
-            {
-                s_at_cardcontrol = u8"K"s;
-                tx_at_cardcontrol = 14;
-            }
-            if (card_at_cardcontrol(1, prm_425) == 4)
-            {
-                s_at_cardcontrol = u8"Jo"s;
-                tx_at_cardcontrol = -12;
-            }
-            bmes(
-                s_at_cardcontrol,
-                card_at_cardcontrol(3, prm_425) + 18
-                    - (card_at_cardcontrol(0, prm_425) >= 10) * 12
-                    + tx_at_cardcontrol,
-                card_at_cardcontrol(4, prm_425) + 28,
-                {static_cast<uint8_t>(col_at_cardcontrol(0)),
-                 static_cast<uint8_t>(col_at_cardcontrol(1)),
-                 static_cast<uint8_t>(col_at_cardcontrol(2))},
-                {10, 10, 10});
-        }
-        else
-        {
-            font(12 - en * 2);
-        }
-    }
-}
+
 
 void showcardpile()
 {
@@ -402,7 +340,7 @@ int opencard2(int prm_428, int prm_429)
         redraw();
     }
     card_at_cardcontrol(2, prm_428) = 0;
-    showcard2(prm_428, prm_429);
+    showcard2(prm_428, !prm_429);
     redraw();
     return prm_428;
 }
@@ -536,5 +474,6 @@ int pileremain()
     }
     return p_at_cardcontrol;
 }
+
 
 } // namespace elona
