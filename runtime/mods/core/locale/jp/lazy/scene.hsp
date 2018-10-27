@@ -275,7 +275,7 @@
 陛下…わかりました。しかし明日また参ります。陛下の決断が最後の希望です。
 
 {fade}
-{mc} "core.mcSoraochi"
+{mc}	"core.mcSoraochi"
 {fadein}
 
 
@@ -1013,7 +1013,7 @@
 
 {fade}
 {pic}	"bg5"
-{mc} "core.mcSoraochi"
+{mc}	"core.mcSoraochi"
 {fadein}
 
 {txt}

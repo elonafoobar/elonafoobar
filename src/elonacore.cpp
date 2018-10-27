@@ -13569,7 +13569,7 @@ void do_play_scene()
     {
         game_data.played_scene = sceneid;
     }
-    if (Config::instance().story == 0 || (en == 1 && sceneid != 0))
+    if (!Config::instance().story)
     {
         return;
     }

@@ -56,7 +56,9 @@ MainMenuResult main_title_menu()
         pos(20, 56);
         mes(u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s);
         pos(20, 76);
-        mes(u8"omake/oo translator: Doorknob");
+        mes(u8"Omake/OO translator: Doorknob");
+        pos(20, 96);
+        mes(u8"Cutscenes translator: AnnaBannana");
         color(0, 0, 0);
     }
     if (jp)
