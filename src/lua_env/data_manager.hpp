@@ -10,7 +10,7 @@ namespace elona
 namespace lua
 {
 
-class ModInfo;
+struct ModInfo;
 
 /***
  * Stores arbitrary data as Lua tables in a naive object database
