@@ -1108,48 +1108,6 @@ void text_replace_tags_in_quest_text();
 
 //// Text
 
-// Japanese sentence parts
-std::string _aru(int = 0);
-std::string _da(int = 0);
-std::string _dana(int = 0);
-std::string _daro(int = 0);
-std::string _dozo(int = 0);
-std::string _ga(int = 0);
-std::string _ka(int = 0);
-std::string _kana(int = 0);
-std::string _kimi(int = 0);
-std::string _kure(int = 0);
-std::string _na(int = 0);
-std::string _nda(int = 0);
-std::string _noka(int = 0);
-std::string _ore(int = 0);
-std::string _rob(int = 0);
-std::string _ru(int = 0);
-std::string _s(int, bool = false);
-std::string _s2(int = 0);
-std::string _ta(int = 0);
-std::string _tanomu(int = 0);
-std::string _thanks(int = 0);
-std::string _u(int = 0);
-std::string _yo(int = 0);
-std::string _yoro(int = 0);
-
-// Japanese constructs
-std::string aln(int = 0);
-std::string npcn(int = 0);
-
-// English sentence parts
-std::string does(int = 0);
-std::string have(int = 0);
-std::string he(int = 0, int = 0);
-std::string him(int = 0, int = 0);
-std::string his(int = 0, int = 0);
-std::string is(int = 0);
-std::string is2(int = 0);
-std::string your(int);
-std::string yourself(int = 0);
-
-
 // Text manipulation
 std::string zentohan(const std::string&);
 std::string cnven(const std::string&);
@@ -1289,7 +1247,6 @@ void txtcontinue();
 void txtef(ColorIndex);
 void txtef(int = 0);
 void txtnew();
-void stxt(int, const std::string&);
 void msg_clear();
 void msg_halt();
 void msg_newline();

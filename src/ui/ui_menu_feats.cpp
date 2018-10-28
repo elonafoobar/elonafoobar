@@ -39,12 +39,17 @@ static void _change_tense_of_trait_desc(int cnt, int tc_)
 {
     if (jp)
     {
-        listn(0, cnt) = strutil::replace(listn(0, cnt), u8"あなた", he(tc_, 1));
+        listn(0, cnt) = strutil::replace(
+            listn(0, cnt), u8"あなた", cdata[tc_].sex == 0 ? u8"彼" : u8"彼女");
     }
-    if (en)
+    else
     {
-        listn(0, cnt) = strutil::replace(listn(0, cnt), u8" your", his(tc_, 1));
-        listn(0, cnt) = strutil::replace(listn(0, cnt), u8" you", him(tc_, 1));
+        listn(0, cnt) = strutil::replace(
+            listn(0, cnt),
+            u8" your",
+            cdata[tc_].sex == 0 ? u8" his" : u8" her");
+        listn(0, cnt) = strutil::replace(
+            listn(0, cnt), u8" you", cdata[tc_].sex == 0 ? u8" him" : u8" her");
     }
 }
 
@@ -54,7 +59,11 @@ static void _add_trait_desc(int tc_, const std::string& trait_desc)
     list(1, listmax) = trait_desc_value;
     listn(0, listmax) = i18n::s.get(
         "core.locale.trait.window.his_equipment",
-        cnven(his(tc_, 1)),
+        cnven(
+            (jp) ? ((tc_ == 0) ? u8"あなたの"
+                               : (cdata[tc_].sex == 0 ? u8"彼の" : u8"彼女の"))
+                 : ((tc_ == 0) ? "your"
+                               : (cdata[tc_].sex == 0 ? u8"his" : u8"her"))),
         trait_desc);
     ++listmax;
 }

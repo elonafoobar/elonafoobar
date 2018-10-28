@@ -295,10 +295,11 @@ int magic()
                 ccbk = cc;
                 if (efid == 644)
                 {
-                    stxt(
-                        cc,
-                        i18n::s.get(
+                    if (is_in_fov(cdata[cc]))
+                    {
+                        txt(i18n::s.get(
                             "core.locale.magic.explosion.begins", cdata[cc]));
+                    }
                 }
             label_2177_internal:
                 cdata[cc].will_explode_soon() = false;
@@ -506,11 +507,12 @@ int magic()
                             bonus = damage->damage_bonus;
                             ele = damage->element;
                             elep = damage->element_power;
-                            stxt(
-                                cc,
-                                i18n::s.get(
+                            if (is_in_fov(cdata[cc]))
+                            {
+                                txt(i18n::s.get(
                                     "core.locale.magic.explosion.chain",
                                     cdata[cc]));
+                            }
                             goto label_2177_internal;
                         }
                     }

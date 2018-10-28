@@ -14,17 +14,21 @@
 #include "variables.hpp"
 
 
+
 namespace elona
 {
 size_t message_width{};
-int tcontinue_at_txtfunc = 0;
 bool fix_text_color;
 int p_at_txtfunc = 0;
 } // namespace elona
 
 
+
 namespace
 {
+
+bool will_continue_sentence = 0;
+
 
 
 void msg_write(std::string& message)
@@ -82,7 +86,6 @@ void clear_log_panel()
     gsel(0);
 }
 
-
 } // namespace
 
 
@@ -90,11 +93,9 @@ void clear_log_panel()
 namespace elona
 {
 
-
-
 void txtcontinue()
 {
-    tcontinue_at_txtfunc = 1;
+    will_continue_sentence = true;
 }
 
 
@@ -375,7 +376,11 @@ void txt_conv()
     }
     else
     {
-        if (tcontinue_at_txtfunc == 0)
+        if (will_continue_sentence)
+        {
+            will_continue_sentence = false;
+        }
+        else
         {
             if (strutil::contains(msgtemp(0), u8"\""))
             {
@@ -387,10 +392,6 @@ void txt_conv()
                 }
             }
             msgtemp(0)[0] = std::toupper(msgtemp(0)[0]);
-        }
-        else
-        {
-            tcontinue_at_txtfunc = 0;
         }
         msgtemp(0) += u8" ";
         while (1)
@@ -452,329 +453,5 @@ std::string name(int cc)
     }
     return cdatan(0, cc);
 }
-
-
-
-std::string aln(int cc)
-{
-    if (cc == 0)
-    {
-        return "";
-    }
-    if (is_in_fov(cdata[cc]) == 0)
-    {
-        return u8"それは";
-    }
-    return cdatan(0, cc) + u8"は";
-}
-
-
-
-std::string npcn(int cc)
-{
-    if (cc == 0)
-    {
-        return "";
-    }
-    if (is_in_fov(cdata[cc]) == 0)
-    {
-        return u8"それは";
-    }
-    return cdatan(0, cc) + u8"は";
-}
-
-
-
-std::string _s(int cc, bool need_e)
-{
-    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
-    {
-        if (need_e)
-        {
-            return u8"es"s;
-        }
-        else
-        {
-            return u8"s"s;
-        }
-    }
-    if (cc == 0)
-    {
-        return "";
-    }
-    if (need_e)
-    {
-        return u8"es"s;
-    }
-    else
-    {
-        return u8"s"s;
-    }
-}
-
-
-
-std::string _s2(int n)
-{
-    if (n > 1)
-    {
-        return "";
-    }
-    else
-    {
-        return u8"s"s;
-    }
-}
-
-
-
-std::string is2(int n)
-{
-    if (n > 1)
-    {
-        return u8"are"s;
-    }
-    else
-    {
-        return u8"is"s;
-    }
-}
-
-
-
-std::string is(int cc)
-{
-    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
-    {
-        return u8"is"s;
-    }
-    if (cc == 0)
-    {
-        return u8"are"s;
-    }
-    return u8"is"s;
-}
-
-
-
-std::string have(int cc)
-{
-    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
-    {
-        return u8"has"s;
-    }
-    if (cc == 0)
-    {
-        return u8"have"s;
-    }
-    return u8"has"s;
-}
-
-
-
-std::string does(int n)
-{
-    if (n == 1)
-    {
-        return u8"do"s;
-    }
-    else
-    {
-        return u8"does"s;
-    }
-}
-
-
-
-std::string he(int cc, int prm_321)
-{
-    if (prm_321)
-    {
-        if (jp)
-        {
-            if (cdata[cc].sex == 0)
-            {
-                return u8"彼"s;
-            }
-            else
-            {
-                return u8"彼女"s;
-            }
-        }
-        if (cdata[cc].sex == 0)
-        {
-            return u8"he"s;
-        }
-        else
-        {
-            return u8"she"s;
-        }
-    }
-    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
-    {
-        return u8"it"s;
-    }
-    if (is_in_fov(cdata[cc]) == 0)
-    {
-        return u8"it"s;
-    }
-    if (cc == 0)
-    {
-        return u8"you"s;
-    }
-    if (cdata[cc].sex == 0)
-    {
-        return u8"he"s;
-    }
-    return u8"she"s;
-}
-
-
-
-std::string his(int cc, int prm_323)
-{
-    if (prm_323)
-    {
-        if (jp)
-        {
-            if (cc == 0)
-            {
-                return u8"あなたの"s;
-            }
-            else if (cdata[cc].sex == 0)
-            {
-                return u8"彼の"s;
-            }
-            else
-            {
-                return u8"彼女の"s;
-            }
-        }
-        if (cc == 0)
-        {
-            return u8"your"s;
-        }
-        else if (cdata[cc].sex == 0)
-        {
-            return u8"his"s;
-        }
-        else
-        {
-            return u8"her"s;
-        }
-    }
-    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
-    {
-        return u8"its"s;
-    }
-    if (is_in_fov(cdata[cc]) == 0)
-    {
-        return u8"its"s;
-    }
-    if (cc == 0)
-    {
-        return u8"your"s;
-    }
-    if (cdata[cc].sex == 0)
-    {
-        return u8"his"s;
-    }
-    return u8"her"s;
-}
-
-
-
-std::string him(int cc, int prm_325)
-{
-    if (prm_325)
-    {
-        if (jp)
-        {
-            if (cdata[cc].sex == 0)
-            {
-                return u8"彼"s;
-            }
-            else
-            {
-                return u8"彼女"s;
-            }
-        }
-        if (cdata[cc].sex == 0)
-        {
-            return u8"him"s;
-        }
-        else
-        {
-            return u8"her"s;
-        }
-    }
-    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
-    {
-        return u8"it"s;
-    }
-    if (is_in_fov(cdata[cc]) == 0)
-    {
-        return u8"it"s;
-    }
-    if (cc == 0)
-    {
-        return u8"yourself"s;
-    }
-    if (cdata[cc].sex == 0)
-    {
-        return u8"him"s;
-    }
-    return u8"her"s;
-}
-
-
-
-std::string your(int x)
-{
-    if (x < 0 || x >= ELONA_MAX_CHARACTERS)
-    {
-        return u8"'s"s;
-    }
-    if (x == 0)
-    {
-        return u8"r"s;
-    }
-    return u8"'s"s;
-}
-
-
-
-std::string yourself(int x)
-{
-    if (x < 0 || x >= ELONA_MAX_CHARACTERS)
-    {
-        return u8"itself"s;
-    }
-    if (is_in_fov(cdata[x]) == 0)
-    {
-        return u8"itself"s;
-    }
-    if (x == 0)
-    {
-        return u8"yourself"s;
-    }
-    if (cdata[x].sex == 0)
-    {
-        return u8"himself"s;
-    }
-    return u8"herself"s;
-}
-
-
-
-void stxt(int cc, const std::string& str)
-{
-    if (cc == 0 || (is_in_fov(cdata[cc]) && cdata.player().blind == 0))
-    {
-        txt(str);
-    }
-}
-
-
 
 } // namespace elona
