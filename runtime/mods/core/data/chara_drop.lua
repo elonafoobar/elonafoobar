@@ -15,10 +15,10 @@ end
 
 local function lootrich(chara, count)
    for _=0,count do
-      Item.roll(chara.position, {level = chara.level, flttypeminor = 77001});
+      Item.create(chara.position, {level = chara.level, flttypeminor = 77001});
    end
    if Rand.one_in(3) then
-      Item.create(chara.position, "core.wallet", 0)
+      Item.create(chara.position, "core.wallet")
    end
 end
 
@@ -140,7 +140,7 @@ data:add_multi(
          drops = {{
                one_in = 50,
                on_create = function(args)
-                  local item = Item.create(args.chara.position, "core.secret_treasure", 0)
+                  local item = Item.create(args.chara.position, "core.secret_treasure")
                   if item then
                      item.param1 = 169
                   end
@@ -164,7 +164,7 @@ data:add_multi(
          drops = {{
                on_create = function(args)
                   for _=0, 2 + Rand.rnd(4) do
-                     local item = Item.roll(args.chara.position,
+                     local item = Item.create(args.chara.position,
                                             {
                                                level = args.chara.level,
                                                flttypemajor = 92000,
@@ -185,7 +185,7 @@ data:add_multi(
                on_create = function(args)
                   Item.create(args.chara.position, "core.platinum_coin", 1 + Rand.rnd(3))
                   if Rand.coinflip() then
-                     Item.create(args.chara.position, "core.small_medal", 0)
+                     Item.create(args.chara.position, "core.small_medal")
                   end
                end
          }}
@@ -203,7 +203,13 @@ data:add_multi(
          drops = {{
                on_create = function(args)
                   for _=0,12 do
-                     local item = Item.create(args.chara.position, "core.tomato", 1, { nostack = true })
+                     local item = Item.create(args.chara.position,
+                                              {
+                                                 id = "core.tomato",
+                                                 number = 1,
+                                                 nostack = true
+                                              }
+                     )
                      if item and Rand.coinflip() then
                         item.param3 = -1
                         item.image = 336

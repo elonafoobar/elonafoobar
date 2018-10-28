@@ -3095,13 +3095,6 @@ void initialize_set_of_random_generation()
     fsetcollect(1) = 60000;
     fsetcollect(2) = 57000;
     fsetcollect(3) = 77000;
-    isetdeed(0) = 344;
-    isetdeed(1) = 521;
-    isetdeed(2) = 522;
-    isetdeed(3) = 542;
-    isetdeed(4) = 543;
-    isetdeed(5) = 555;
-    isetdeed(6) = 572;
     isetfruit(0) = 180;
     isetfruit(1) = 181;
     isetfruit(2) = 196;

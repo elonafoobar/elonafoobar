@@ -7,7 +7,7 @@ function chara_drop.create(chara, drop)
    if drop.on_create then
       drop.on_create({chara = chara})
    elseif drop.id then
-      Item.create(chara.position, drop.id, 0)
+      Item.create(chara.position, drop.id)
    else
       local args = {
          level = drop.level,
@@ -15,7 +15,7 @@ function chara_drop.create(chara, drop)
          flttypeminor = drop.flttypeminor,
          quality = drop.quality
       }
-      Item.roll(chara.position, args)
+      Item.create(chara.position, args)
    end
 end
 

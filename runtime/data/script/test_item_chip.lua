@@ -1,12 +1,7 @@
 local Event = Elona.require("Event")
-local Enums = Elona.require("Enums")
 local Item = Elona.require("Item")
 local Chara = Elona.require("Chara")
 local Rand = Elona.require("Rand")
-
-local shopkeeper = 1
-local red_putit = 4
-local whom_dwell = 28
 
 local short_pic = 378
 local tall_pic = 429
@@ -17,12 +12,12 @@ local function setup()
    -- Carpentry, for testing crafting menu
    Chara.player():gain_skill(174, 9999)
 
-   local shop = Chara.create(23, 23, shopkeeper)
-   shop.character_role = 1001
+   local shop = Chara.create(23, 23, "core.shopkeeper")
+   shop.role = 1001
    shop.shop_rank = 12
 
    -- Let's Ragnarok!
-   Chara.create(25, 23, whom_dwell)
+   Chara.create(25, 23, "core.whom_dwell_in_the_vanity")
 
    for i=0,5 do
       for j=0,10 do
@@ -46,7 +41,7 @@ local function setup()
             end
 
             if Rand.one_in(6) then
-               Chara.create(x, y, red_putit)
+               Chara.create(x, y, "core.red_putit")
             end
          end
       end

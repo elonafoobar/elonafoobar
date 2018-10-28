@@ -111,9 +111,6 @@ ELONA_EXTERN(int rdtry);
 ELONA_EXTERN(int enc);
 ELONA_EXTERN(int enc2);
 
-// shop.cpp
-ELONA_EXTERN(elona_vector1<int> isetdeed);
-
 // talk.cpp
 ELONA_EXTERN(elona_vector2<std::string> actor);
 
