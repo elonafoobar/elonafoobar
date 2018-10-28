@@ -17,9 +17,7 @@ bool UIMenuMessageLog::init()
     wx = inf_msgx - 2;
     wy = inf_msgy - (inf_maxlog - 3) * inf_msgspace - 1;
     ww = windoww - inf_msgx + 6;
-    wh(0) = (inf_maxlog - 3) * inf_msgspace;
-    wh(1) = 1;
-    wh(2) = -1;
+    wh = (inf_maxlog - 3) * inf_msgspace;
     snd("core.log");
     show_title(i18n::s.get("core.locale.ui.message.hit_any_key"));
     window_animation_corner(wx, wy, ww, wh, 8, 4);
