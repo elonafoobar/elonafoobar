@@ -44,8 +44,15 @@ function data:add(array)
       local instance_id = _ENV["_MOD_NAME"] .. "." .. name
 
 
-      if not self.types[data_type] then
+      local validator = self.types[data_type]
+
+      if not validator then
          error("unknown type " .. data_type)
+      end
+
+      local ok, err = pcall(validator, v)
+      if not ok then
+         error(data_type .. ":" .. instance_id .. " validation error: " .. err)
       end
 
       local dt = self.raw[data_type]

@@ -470,6 +470,7 @@ else()
   set(LINKER_OPTIONS)
   set(EXTRA_DEFINES)
   set(DISABLED_WARNINGS)
+  set(WARNINGS_AS_ERRORS)
 
   if(MSVC)
     list(APPEND EXTRA_DEFINES "_UNICODE")
@@ -527,6 +528,8 @@ else()
     endif()
     list(APPEND DISABLED_WARNINGS
       "deprecated-declarations")
+    list(APPEND WARNINGS_AS_ERRORS
+      "return-type")
 
     # Speed up linking on Linux by using split DWARF
     if (LINUX)
@@ -564,6 +567,10 @@ else()
 
     foreach(opt ${DISABLED_WARNINGS})
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-${opt}")
+    endforeach()
+
+    foreach(opt ${WARNINGS_AS_ERRORS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=${opt}")
     endforeach()
 
     foreach(opt ${GENERAL_OPTIONS})

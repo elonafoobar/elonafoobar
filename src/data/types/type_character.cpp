@@ -51,8 +51,8 @@ static std::vector<int> _convert_chara_flags(
 
 
 CharacterData CharacterDB::convert(
-    const std::string& id_,
-    const lua::ConfigTable& data)
+    const lua::ConfigTable& data,
+    const std::string&)
 {
     auto legacy_id = data.required<int>("id");
     DATA_OPT_OR(ai_act_sub_freq, int, 0);

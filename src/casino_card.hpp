@@ -5,7 +5,6 @@ namespace elona
 
 void initcard(int = 0, int = 0, int = 0);
 void showcard();
-void showcard2(int = 0, int = 0);
 void showcardholder();
 void showcardpile();
 int opencard2(int = 0, int = 0);

@@ -1,5 +1,6 @@
 #pragma once
 #include "../optional.hpp"
+#include "../position.hpp"
 #include "../shared_id.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 #include "lua_enums.hpp"

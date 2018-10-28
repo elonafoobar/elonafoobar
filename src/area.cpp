@@ -1,6 +1,9 @@
 #include "area.hpp"
+#include "ctrl_file.hpp"
+#include "data/types/type_map.hpp"
 #include "elona.hpp"
 #include "position.hpp"
+#include "variables.hpp"
 
 
 
@@ -115,11 +118,25 @@ void AreaData::unpack_from(elona_vector2<int>& legacy_adata)
 
 
 
+Area& AreaData::current()
+{
+    assert(game_data.current_map != 0);
+
+    return area_data[game_data.current_map];
+}
+
+
+
+optional_ref<MapDefData> AreaData::current_mapdef()
+{
+    return the_mapdef_db[current().id];
+}
+
+
+
 bool Area::can_return_to()
 {
-    return id == mdata_t::MapId::lesimas || id == mdata_t::MapId::larna
-        || id == mdata_t::MapId::mansion_of_younger_sister
-        || id == mdata_t::MapId::the_void;
+    return the_mapdef_db[id]->can_return_to;
 }
 
 
@@ -133,6 +150,40 @@ bool Area::is_museum_or_shop()
 {
     return id == mdata_t::MapId::museum || id == mdata_t::MapId::shop;
 }
+
+
+void initialize_adata()
+{
+    for (const auto& map : the_mapdef_db)
+    {
+        int map_id = map.id;
+        auto& area = area_data[map_id];
+
+        area.id = map_id;
+        area.type = static_cast<int>(map.map_type);
+        area.entrance = map.entrance_type;
+        area.turn_cost_base = map.base_turn_cost;
+        area.danger_level = map.danger_level;
+        area.deepest_level = map.deepest_level;
+        area.is_indoor = map.is_indoor;
+        area.is_generated_every_time = map.is_generated_every_time;
+        area.default_ai_calm = map.default_ai_calm;
+        area.quest_town_id = map.quest_town_id;
+
+        // Only set position/tiles of Your Home if it has not been upgraded. All
+        // other maps all have fixed positions/tiles.
+        bool is_fixed_in_place = !map.is_home || game_data.home_scale == 0;
+        if (is_fixed_in_place)
+        {
+            area.position = map.outer_map_position;
+            area.appearance = map.appearance;
+            area.tile_set = map.tile_set;
+            area.tile_type = map.tile_type;
+            area.outer_map = map.outer_map;
+        }
+    }
+}
+
 
 
 } // namespace elona

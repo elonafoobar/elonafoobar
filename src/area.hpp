@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "optional.hpp"
 #include "position.hpp"
 
 
@@ -11,6 +12,8 @@ namespace elona
 
 template <typename T>
 struct elona_vector2;
+
+struct MapDefData;
 
 
 
@@ -100,12 +103,21 @@ struct AreaData
     void unpack_from(elona_vector2<int>& legacy_adata);
 
 
+    Area& current();
+
+
+    optional_ref<MapDefData> current_mapdef();
+
+
 private:
     std::vector<Area> areas;
 };
 
 
 extern AreaData area_data;
+
+
+void initialize_adata();
 
 
 } // namespace elona

@@ -21,6 +21,9 @@ void initialize_iterable_dbs(lua::DataTable& data)
 
     the_item_db.initialize(data);
     the_item_db.load_all();
+
+    the_mapdef_db.initialize(data);
+    the_mapdef_db.load_all();
 }
 
 // TODO: Make some way to load textures lazily during runtime.

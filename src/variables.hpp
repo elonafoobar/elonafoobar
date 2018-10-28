@@ -765,7 +765,7 @@ void initialize_pc_character();
 int initialize_world_map();
 void initialize_rankn();
 void initialize_post_data();
-void initialize_building_daga();
+void initialize_building_data();
 void initialize_nefia_names();
 void initialize_picfood();
 void initialize_cloud_data();
@@ -1009,7 +1009,6 @@ int map_placeupstairs(int = 0, int = 0);
 int map_trap(int = 0, int = 0, int = 0, int = 0);
 int map_web(int = 0, int = 0, int = 0);
 int mapitemfind(int = 0, int = 0, int = 0);
-int place_random_nefias();
 
 // Map drawing
 void cell_draw();
@@ -1033,7 +1032,6 @@ void map_global_proc_diastrophism();
 void map_global_prepare();
 void map_global_place_entrances();
 void map_clear_material_spots_and_light();
-void initialize_adata();
 
 // Map lifecycle
 TurnResult exit_map();
