@@ -772,7 +772,7 @@ label_2692_internal:
                     }
                 }
             }
-            if (map_ai_makes_snowmen())
+            if (map_villagers_make_snowmen())
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {

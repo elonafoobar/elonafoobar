@@ -7,7 +7,7 @@ SoundDB the_sound_db;
 const constexpr char* data::LuaLazyCacheTraits<SoundDB>::type_id;
 
 
-SoundData SoundDB::convert(const std::string& id_, const lua::ConfigTable& data)
+SoundData SoundDB::convert(const lua::ConfigTable& data, const std::string& id_)
 {
     auto legacy_id = data.required<int>("id");
     DATA_REQ(file, std::string);

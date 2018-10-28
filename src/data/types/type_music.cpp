@@ -7,7 +7,7 @@ MusicDB the_music_db;
 const constexpr char* data::LuaLazyCacheTraits<MusicDB>::type_id;
 
 
-MusicData MusicDB::convert(const std::string& id_, const lua::ConfigTable& data)
+MusicData MusicDB::convert(const lua::ConfigTable& data, const std::string& id_)
 {
     auto legacy_id = data.required<int>("id");
     DATA_REQ(file, std::string);

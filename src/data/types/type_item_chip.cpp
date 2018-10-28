@@ -8,8 +8,8 @@ const constexpr char* data::LuaLazyCacheTraits<ItemChipDB>::type_id;
 
 
 ItemChipData ItemChipDB::convert(
-    const std::string& id_,
-    const lua::ConfigTable& data)
+    const lua::ConfigTable& data,
+    const std::string& id_)
 
 {
     DATA_REQ(id, int);

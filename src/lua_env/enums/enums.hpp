@@ -2,6 +2,7 @@
 #include "../../element.hpp"
 #include "../../enums.hpp"
 #include "../../map_cell.hpp"
+#include "../../mdata.hpp"
 #include "../../status_ailment.hpp"
 #include "../lua_enums.hpp"
 
@@ -19,6 +20,9 @@ extern EnumMap<StatusAilment> StatusAilmentTable;
 extern EnumMap<Element> ElementTable;
 extern EnumMap<TileKind> TileKindTable;
 extern EnumMap<Quality> QualityTable;
+extern EnumMap<mdata_t::MapType> MapTypeTable;
+extern EnumMap<int> MapEntranceTypeTable;
+extern EnumMap<int> MapTilesetTable;
 extern EnumMap<int> GenderTable;
 extern EnumMap<int> RelationTable;
 extern EnumMap<int> CharaFlagTable;

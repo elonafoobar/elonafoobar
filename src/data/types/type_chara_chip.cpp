@@ -8,8 +8,8 @@ const constexpr char* data::LuaLazyCacheTraits<CharaChipDB>::type_id;
 
 
 CharaChipData CharaChipDB::convert(
-    const std::string& id_,
-    const lua::ConfigTable& data)
+    const lua::ConfigTable& data,
+    const std::string& id_)
 {
     auto legacy_id = data.required<int>("id");
     DATA_OPT_OR(tall, bool, false);

@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_map.hpp"
 #include "elona.hpp"
 #include "equipment.hpp"
 #include "i18n.hpp"
@@ -269,77 +270,111 @@ bool map_is_town_or_guild()
 
 bool map_should_reveal_fog()
 {
-    return game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::arena || dbg_revealmap
-        || map_data.type == mdata_t::MapType::town
+    bool result = false;
+
+    if (game_data.current_map == mdata_t::MapId::quest)
+    {
+        return game_data.executing_immediate_quest_type == 1009;
+    }
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->reveals_fog;
+    }
+
+    return result || dbg_revealmap || map_data.type == mdata_t::MapType::town
         || map_data.type == mdata_t::MapType::world_map
         || map_data.type == mdata_t::MapType::player_owned
-        || map_data.type == mdata_t::MapType::guild
-        || game_data.current_map == mdata_t::MapId::shelter_
-        || game_data.current_map == mdata_t::MapId::embassy
-        || game_data.current_map == mdata_t::MapId::miral_and_garoks_workshop
-        || game_data.current_map == mdata_t::MapId::show_house
-        || (game_data.current_map == mdata_t::MapId::quest
-            && game_data.executing_immediate_quest_type == 1009);
+        || map_data.type == mdata_t::MapType::guild;
 }
 
 
 bool map_shows_floor_count_in_name()
 {
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->shows_floor_count_in_name;
+    }
+
     return area_data[game_data.current_map].type != mdata_t::MapType::town
-        && (area_data[game_data.current_map].id == mdata_t::MapId::lesimas
+        && (result
             || area_data[game_data.current_map].id
                 == mdata_t::MapId::random_dungeon
-            || area_data[game_data.current_map].id == mdata_t::MapId::quest
             || mdata_t::is_nefia(map_data.type));
 }
 
 
 bool map_prevents_teleport()
 {
-    return game_data.current_map == mdata_t::MapId::pet_arena
-        || map_data.type == mdata_t::MapType::world_map
-        || game_data.current_map == mdata_t::MapId::pyramid
-        || game_data.current_map == mdata_t::MapId::jail;
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->prevents_teleport;
+    }
+
+    return result || map_data.type == mdata_t::MapType::world_map;
 }
 
 
 bool map_prevents_return()
 {
-    return map_data.type == mdata_t::MapType::temporary
-        || game_data.current_map == mdata_t::MapId::shelter_
-        || game_data.current_map == mdata_t::MapId::jail;
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->prevents_return;
+    }
+
+    return result || map_data.type == mdata_t::MapType::temporary;
 }
 
 
 bool map_prevents_domination()
 {
-    return game_data.current_map == mdata_t::MapId::arena
-        || game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::the_void;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->prevents_domination;
+    }
+
+    return false;
 }
 
 
 bool map_prevents_monster_ball()
 {
-    return game_data.current_map == mdata_t::MapId::arena
-        || game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::show_house;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->prevents_monster_ball;
+    }
+
+    return false;
 }
 
 
 bool map_prevents_building_shelter()
 {
-    return map_data.refresh_type == 0
-        || game_data.current_map == mdata_t::MapId::quest
-        || game_data.current_map == mdata_t::MapId::shelter_;
+    bool result = false;
+
+    if (auto map = area_data.current_mapdef())
+    {
+        result |= map->prevents_building_shelter;
+    }
+
+    return result || map_data.refresh_type == 0;
 }
 
 
 bool map_prevents_random_events()
 {
-    return game_data.current_map == mdata_t::MapId::shelter_
-        || game_data.current_map != mdata_t::MapId::jail;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->prevents_random_events;
+    }
+
+    return false;
 }
 
 
@@ -472,10 +507,14 @@ void map_calc_trade_goods_price()
 }
 
 
-bool map_ai_makes_snowmen()
+bool map_villagers_make_snowmen()
 {
-    return game_data.current_map == mdata_t::MapId::noyel
-        || game_data.current_map == mdata_t::MapId::mansion_of_younger_sister;
+    if (auto map = area_data.current_mapdef())
+    {
+        return map->villagers_make_snowmen;
+    }
+
+    return false;
 }
 
 
@@ -1186,6 +1225,141 @@ void map_reload_noyel()
         }
     }
 }
+
+
+
+static void _create_nefia(int index, int x, int y)
+{
+    area = index;
+    ctrl_file(FileOperation::temp_dir_delete_area);
+
+    auto& area = area_data[index];
+
+    area.type = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
+    area.id = static_cast<int>(mdata_t::MapId::random_dungeon);
+    area.appearance = 133;
+    area.position.x = x;
+    area.position.y = y;
+    area.entrance = 1;
+    area.tile_set = 1;
+    area.tile_type = 1;
+    area.turn_cost_base = 10000;
+    area.is_indoor = true;
+    area.outer_map = game_data.destination_outer_map;
+    if (rnd(3))
+    {
+        area.danger_level = rnd(cdata.player().level + 5) + 1;
+    }
+    else
+    {
+        area.danger_level = rnd(50) + 1;
+        if (rnd(5) == 0)
+        {
+            area.danger_level *= rnd(3) + 1;
+        }
+    }
+    area.deepest_level = area.danger_level + rnd(4) + 2;
+    area.is_generated_every_time = false;
+    area.default_ai_calm = 0;
+    area.has_been_conquered = 0;
+    area.dungeon_prefix = rnd(mapnamerd.i_size());
+    cell_data.at(x, y).feats = 1;
+    if (area.type == mdata_t::MapType::dungeon)
+    {
+        area.appearance = 133;
+        area.tile_type = 0;
+    }
+    if (area.type == mdata_t::MapType::dungeon_tower)
+    {
+        area.appearance = 137;
+        area.tile_type = 100;
+    }
+    if (area.type == mdata_t::MapType::dungeon_forest)
+    {
+        area.appearance = 135;
+        area.tile_type = 300;
+    }
+    if (area.type == mdata_t::MapType::dungeon_castle)
+    {
+        area.appearance = 140;
+        area.tile_type = 200;
+    }
+}
+
+
+
+int map_global_place_random_nefias()
+{
+    for (int cnt = 450; cnt < 500; ++cnt)
+    {
+        int x, y;
+
+        if (area_data[cnt].id != mdata_t::MapId::none)
+        {
+            continue;
+        }
+        f = -1;
+        for (int cnt = 0; cnt < 1000; ++cnt)
+        {
+            x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
+            y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
+            if (x <= 5 || y <= 5 || x >= map_data.width - 6
+                || y >= map_data.height - 6)
+            {
+                continue;
+            }
+            if (33 <= cell_data.at(x, y).chip_id_actual
+                && cell_data.at(x, y).chip_id_actual < 66)
+            {
+                continue;
+            }
+            if (cell_data.at(x, y).chip_id_actual > 19)
+            {
+                continue;
+            }
+            if (cell_data.at(x, y).feats % 1000 != 0)
+            {
+                continue;
+            }
+            p = 1;
+            for (int cnt = 0; cnt < 500; ++cnt)
+            {
+                if (area_data[cnt].id == mdata_t::MapId::none)
+                {
+                    continue;
+                }
+                if (x >= area_data[cnt].position.x - 2
+                    && x <= area_data[cnt].position.x + 2)
+                {
+                    if (y >= area_data[cnt].position.y - 2
+                        && y <= area_data[cnt].position.y + 2)
+                    {
+                        p = 0;
+                        break;
+                    }
+                }
+            }
+            if (p == 0)
+            {
+                continue;
+            }
+            f = 1;
+            break;
+        }
+        if (f == -1)
+        {
+            p = -1;
+            break;
+        }
+        p = cnt;
+
+        _create_nefia(p(0), x, y);
+
+        break;
+    }
+    return p;
+}
+
 
 
 } // namespace elona
