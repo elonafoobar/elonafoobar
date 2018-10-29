@@ -164,6 +164,46 @@ void select_house_board_tile()
 
 
 
+void weather_changes_by_location(bool output_immediately = true)
+{
+    if (game_data.weather == 2)
+    {
+        if (game_data.pc_x_in_world_map < 65
+            && game_data.pc_y_in_world_map > 10)
+        {
+            game_data.weather = 3;
+            sound_play_environmental();
+            game_data.hours_until_weather_changes += 3;
+            if (output_immediately)
+            {
+                txt(i18n::s.get("core.locale.action.weather.changes"));
+            }
+            else
+            {
+                msgtemp += i18n::s.get("core.locale.action.weather.changes");
+            }
+        }
+    }
+    if (game_data.weather == 4 || game_data.weather == 3)
+    {
+        if (game_data.pc_x_in_world_map > 65
+            || game_data.pc_y_in_world_map < 10)
+        {
+            game_data.weather = 2;
+            sound_play_environmental();
+            game_data.hours_until_weather_changes += 3;
+            if (output_immediately)
+            {
+                txt(i18n::s.get("core.locale.action.weather.changes"));
+            }
+            else
+            {
+                msgtemp += i18n::s.get("core.locale.action.weather.changes");
+            }
+        }
+    }
+}
+
 } // namespace
 
 
@@ -4654,7 +4694,7 @@ TurnResult exit_map()
                     area_data[game_data.current_map].position.x;
                 game_data.pc_y_in_world_map =
                     area_data[game_data.current_map].position.y;
-                weather_changes_by_location();
+                weather_changes_by_location(false);
             }
         }
         if (game_data.current_map == mdata_t::MapId::jail)
@@ -4720,7 +4760,7 @@ TurnResult exit_map()
         {
             msgtemp += i18n::s.get(
                 "core.locale.action.exit_map.delivered_to_your_home");
-            weather_changes_by_location();
+            weather_changes_by_location(false);
         }
         else if (
             area_data[game_data.previous_map].type
@@ -12985,34 +13025,6 @@ void scene_fade_to_black()
     scenemode = 0;
     msgtemp = msgtempprev;
     msgtempprev = "";
-}
-
-
-
-void weather_changes_by_location()
-{
-    if (game_data.weather == 2)
-    {
-        if (game_data.pc_x_in_world_map < 65
-            && game_data.pc_y_in_world_map > 10)
-        {
-            game_data.weather = 3;
-            sound_play_environmental();
-            game_data.hours_until_weather_changes += 3;
-            txt(i18n::s.get("core.locale.action.weather.changes"));
-        }
-    }
-    if (game_data.weather == 4 || game_data.weather == 3)
-    {
-        if (game_data.pc_x_in_world_map > 65
-            || game_data.pc_y_in_world_map < 10)
-        {
-            game_data.weather = 2;
-            sound_play_environmental();
-            game_data.hours_until_weather_changes += 3;
-            txt(i18n::s.get("core.locale.action.weather.changes"));
-        }
-    }
 }
 
 

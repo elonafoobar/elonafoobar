@@ -1202,7 +1202,6 @@ void monster_respawn();
 
 
 //// weather
-void weather_changes_by_location();
 void weather_changes();
 
 
