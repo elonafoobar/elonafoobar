@@ -1,5 +1,6 @@
 #pragma once
 #include "../enums.hpp"
+#include "../message.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 #include "../variables.hpp"
 

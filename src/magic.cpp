@@ -26,6 +26,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "status_ailment.hpp"
@@ -1673,8 +1674,8 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            ++msgdup;
-            txt(i18n::s.get("core.locale.magic.fish.not_good_place"));
+            txt(i18n::s.get("core.locale.magic.fish.not_good_place"),
+                message::only_once);
             update_screen();
             return 0;
         }

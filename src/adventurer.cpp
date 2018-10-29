@@ -10,6 +10,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 

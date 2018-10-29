@@ -18,6 +18,7 @@
 #include "item.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "network.hpp"
 #include "quest.hpp"
 #include "random.hpp"

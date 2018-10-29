@@ -1,5 +1,6 @@
 #include "lua_api_gui.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../../message.hpp"
 
 namespace elona
 {

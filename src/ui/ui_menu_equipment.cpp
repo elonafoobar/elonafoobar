@@ -3,6 +3,7 @@
 #include "../equipment.hpp"
 #include "../item.hpp"
 #include "../menu.hpp"
+#include "../message.hpp"
 
 namespace elona
 {

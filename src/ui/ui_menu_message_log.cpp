@@ -1,6 +1,7 @@
 #include "ui_menu_message_log.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
+#include "../message_logger.hpp"
 
 
 
@@ -38,25 +39,31 @@ void _draw_window()
 
 
 
-void _draw_single_message(int cnt)
+int message_width{};
+int offset{};
+void _draw_single_message(size_t cnt)
 {
-    auto p = msgline - cnt - 3;
-    if (p < 0)
+    const auto n = message_log.lines.size();
+    if (n == 0)
     {
-        p += inf_maxlog;
+        return;
     }
-    else if (p >= inf_maxlog)
-    {
-        p -= inf_maxlog;
-    }
-
-    if (p < 0)
+    if (n + offset < cnt + 4)
     {
         return;
     }
 
-    pos(inf_msgx, inf_msgy - cnt * inf_msgspace);
-    gcopy(8, 0, p * inf_msgspace, windoww - inf_msgx, inf_msgspace);
+    message_width = 0;
+    font(inf_mesfont - en * 2);
+    for (const auto& msgs : message_log.lines.at(n - cnt - 4 + offset).spans)
+    {
+        pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
+            inf_msgy - cnt * inf_msgspace);
+        color(msgs.color.r, msgs.color.g, msgs.color.b);
+        mes(msgs.content);
+
+        message_width += strlen_u(msgs.content);
+    }
 }
 
 
@@ -124,6 +131,16 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
 {
     if (action == "north")
     {
+        offset -= 1;
+        return none;
+    }
+    else if (action == "south")
+    {
+        offset += 1;
+        if (offset > 0)
+        {
+            offset = 0;
+        }
         return none;
     }
     else if (action != ""s)

@@ -17,6 +17,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"

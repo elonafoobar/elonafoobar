@@ -29,6 +29,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "network.hpp"
 #include "quest.hpp"
 #include "random.hpp"
@@ -845,7 +846,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
     update_emoicon();
     if (ct == 0)
     {
-        tnew = 1;
+        tnew = true;
         pcnoise = 0;
         refresh_speed(cdata.player());
         p = cdata.player().turn % 10;

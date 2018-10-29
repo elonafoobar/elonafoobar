@@ -8,6 +8,7 @@
 #include "i18n.hpp"
 #include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
+#include "message.hpp"
 #include "race.hpp"
 #include "random.hpp"
 #include "variables.hpp"

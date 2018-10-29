@@ -2,6 +2,7 @@
 #include <string>
 #include "../enums.hpp"
 #include "../filesystem.hpp"
+#include "../message.hpp"
 #include "../variables.hpp"
 #include "exported_function.hpp"
 #include "lua_env.hpp"

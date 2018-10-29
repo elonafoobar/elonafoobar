@@ -27,10 +27,6 @@ namespace elona
 int run();
 
 
-template <typename...>
-constexpr bool false_v = false;
-
-
 
 template <typename T>
 void allocate_and_clear_vector(std::vector<T>& v, size_t size)

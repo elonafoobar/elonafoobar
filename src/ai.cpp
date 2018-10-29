@@ -13,6 +13,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"

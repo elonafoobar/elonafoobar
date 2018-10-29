@@ -31,6 +31,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "network.hpp"
 #include "quest.hpp"
 #include "random.hpp"
@@ -572,8 +573,7 @@ static void _dig_material_spot()
 
 TurnResult do_search_command()
 {
-    ++msgdup;
-    txt(i18n::s.get("core.locale.action.search.execute"));
+    txt(i18n::s.get("core.locale.action.search.execute"), message::only_once);
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
         _search_for_crystal();
@@ -1155,8 +1155,8 @@ TurnResult do_look_command()
     build_target_list();
     if (listmax == 0)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.look.find_nothing"));
+        txt(i18n::s.get("core.locale.action.look.find_nothing"),
+            message::only_once);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3228,8 +3228,8 @@ TurnResult do_movement_command()
     cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
     if (cdata.player().inventory_weight_type >= 4)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.move.carry_too_much"));
+        txt(i18n::s.get("core.locale.action.move.carry_too_much"),
+            message::only_once);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3320,8 +3320,8 @@ TurnResult do_movement_command()
     }
     if (cdata.player().confused != 0)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.move.confused"));
+        txt(i18n::s.get("core.locale.action.move.confused"),
+            message::only_once);
         update_screen();
     }
     return TurnResult::pc_turn_user_error;
@@ -3428,22 +3428,22 @@ TurnResult do_fire_command()
         int stat = can_do_ranged_attack();
         if (stat == -1)
         {
-            ++msgdup;
-            txt(i18n::s.get("core.locale.action.ranged.equip.need_weapon"));
+            txt(i18n::s.get("core.locale.action.ranged.equip.need_weapon"),
+                message::only_once);
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (stat == -2)
         {
-            ++msgdup;
-            txt(i18n::s.get("core.locale.action.ranged.equip.need_ammo"));
+            txt(i18n::s.get("core.locale.action.ranged.equip.need_ammo"),
+                message::only_once);
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (stat == -3)
         {
-            ++msgdup;
-            txt(i18n::s.get("core.locale.action.ranged.equip.wrong_ammo"));
+            txt(i18n::s.get("core.locale.action.ranged.equip.wrong_ammo"),
+                message::only_once);
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -3559,8 +3559,7 @@ TurnResult do_get_command()
             }
             return TurnResult::turn_end;
         }
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.get.air"));
+        txt(i18n::s.get("core.locale.action.get.air"), message::only_once);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3578,14 +3577,15 @@ TurnResult do_get_command()
         || inv[ci].own_state == 5)
     {
         snd("core.fail1");
-        ++msgdup;
         if (inv[ci].own_state == 2)
         {
-            txt(i18n::s.get("core.locale.action.get.cannot_carry"));
+            txt(i18n::s.get("core.locale.action.get.cannot_carry"),
+                message::only_once);
         }
         if (inv[ci].own_state == 1 || inv[ci].own_state == 5)
         {
-            txt(i18n::s.get("core.locale.action.get.not_owned"));
+            txt(i18n::s.get("core.locale.action.get.not_owned"),
+                message::only_once);
         }
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -3620,8 +3620,8 @@ TurnResult do_short_cut_command(int sc_)
     menucycle = 0;
     if (game_data.skill_shortcuts.at(sc_) == 0)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
+        txt(i18n::s.get("core.locale.action.shortcut.unassigned"),
+            message::only_once);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3673,9 +3673,9 @@ TurnResult do_short_cut_command(int sc_)
         }
         if (spell(efid - 400) <= 0)
         {
-            ++msgdup;
             txt(i18n::s.get(
-                "core.locale.action.shortcut.cannot_use_spell_anymore"));
+                    "core.locale.action.shortcut.cannot_use_spell_anymore"),
+                message::only_once);
             update_screen();
             return TurnResult::pc_turn_user_error;
         }

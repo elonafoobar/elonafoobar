@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 

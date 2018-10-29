@@ -19,6 +19,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "race.hpp"
 #include "random.hpp"
 #include "ui.hpp"
@@ -346,8 +347,8 @@ TurnResult show_house_board()
     txtnew();
     if (map_data.type != mdata_t::MapType::player_owned)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"));
+        txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"),
+            message::only_once);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }

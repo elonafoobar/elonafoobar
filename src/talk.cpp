@@ -12,6 +12,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"

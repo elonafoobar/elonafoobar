@@ -22,6 +22,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
+#include "message.hpp"
 #include "optional.hpp"
 #include "quest.hpp"
 #include "random.hpp"

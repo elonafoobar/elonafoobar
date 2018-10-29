@@ -498,7 +498,6 @@ void initialize_elona()
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
     SDIM2(keylog, 20);
-    SDIM3(msg, 120, inf_maxlog);
     SDIM2(msgtemp, 1000);
     SDIM3(randn1, 30, 20);
     DIM2(rtval, 10);
@@ -652,9 +651,6 @@ void initialize_elona()
     text_set();
     ctrl_file(FileOperation::temp_dir_delete);
     tc = 0;
-    tcol_at_txtfunc(0) = 255;
-    tcol_at_txtfunc(1) = 255;
-    tcol_at_txtfunc(2) = 255;
     invctrl(0) = 0;
     invctrl(1) = 0;
     pos(-40, -40);

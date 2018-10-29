@@ -3,6 +3,7 @@
 #include "../audio.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
+#include "../message.hpp"
 
 namespace elona
 {

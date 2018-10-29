@@ -7,6 +7,7 @@
 #include "../lua_env/lua_env.hpp"
 #include "../testing.hpp"
 #include "../variables.hpp"
+#include "message.hpp"
 #include "util.hpp"
 
 class LuaCallbacksWanderFixture : public ::hayai::Fixture

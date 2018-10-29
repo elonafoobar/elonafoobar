@@ -1,6 +1,5 @@
 #include "food.hpp"
 #include "ability.hpp"
-
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -17,6 +16,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"

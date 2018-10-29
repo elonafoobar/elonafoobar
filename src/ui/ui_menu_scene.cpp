@@ -1,6 +1,7 @@
 #include "ui_menu_scene.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
+#include "../message.hpp"
 
 
 

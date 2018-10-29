@@ -1069,18 +1069,29 @@ int talk_conv_jp(std::string& text, int max_line_length)
             line_length += strutil::byte_count(rest[line_length]);
             if (int(line_length) > max_line_length)
             {
-                // m = strmid(rest, line_length, 2);
-                // if (false
-                //         || m == u8"。"s
-                //         || m == u8"、"s
-                //         || m == u8"」"s
-                //         || m == u8"』"s
-                //         || m == u8"！"s
-                //         || m == u8"？"s
-                //         || m == u8"…"s)
-                // {
-                //     line_length += 2;
-                // }
+                if (rest.size() > line_length)
+                {
+                    const auto m = rest.substr(line_length);
+                    for (const auto& period_like : {
+                             u8"。",
+                             u8"、",
+                             u8"」",
+                             u8"』",
+                             u8"！",
+                             u8"？",
+                             u8"…",
+                             u8"♪",
+                             u8"♪1",
+                         })
+                    {
+                        if (strutil::starts_with(m, period_like))
+                        {
+                            line_length += std::strlen(period_like);
+                            break;
+                        }
+                    }
+                }
+
                 text += rest.substr(0, line_length) + '\n';
                 ++n;
                 if (rest.size() > line_length)

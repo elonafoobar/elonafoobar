@@ -8,6 +8,7 @@
 #include "i18n.hpp"
 #include "map.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "trait.hpp"
 #include "variables.hpp"

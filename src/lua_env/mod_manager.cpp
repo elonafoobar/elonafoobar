@@ -7,6 +7,7 @@
 #include "../filesystem.hpp"
 #include "../i18n.hpp"
 #include "../log.hpp"
+#include "../message.hpp"
 #include "../variables.hpp"
 #include "event_manager.hpp"
 

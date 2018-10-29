@@ -48,6 +48,7 @@
 #include "mapgen.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "network.hpp"
 #include "putit.hpp"
 #include "quest.hpp"
@@ -70,6 +71,7 @@ namespace
 {
 
 std::string atbuff;
+
 
 
 std::string lang(const std::string& a, const std::string& b)
@@ -1148,8 +1150,8 @@ int cargocheck()
         && map_data.type != mdata_t::MapType::shelter
         && map_data.type != mdata_t::MapType::guild)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.ui.inv.cannot_use_cargo_items"));
+        txt(i18n::s.get("core.locale.ui.inv.cannot_use_cargo_items"),
+            message::only_once);
         snd("core.fail1");
         return 0;
     }
@@ -9600,9 +9602,9 @@ int prompt_magic_location()
         {
             if (cc == 0)
             {
-                ++msgdup;
                 txt(i18n::s.get(
-                    "core.locale.action.which_direction.out_of_range"));
+                        "core.locale.action.which_direction.out_of_range"),
+                    message::only_once);
                 update_screen();
             }
             return 0;
@@ -11365,11 +11367,11 @@ TurnResult try_to_open_locked_door()
     }
     else
     {
-        ++msgdup;
         if (is_in_fov(cdata[cc]))
         {
             snd("core.locked1");
-            txt(i18n::s.get("core.locale.action.open.door.fail", cdata[cc]));
+            txt(i18n::s.get("core.locale.action.open.door.fail", cdata[cc]),
+                message::only_once);
         }
     }
     if (cc == 0)
@@ -11609,8 +11611,8 @@ label_22191_internal:
     }
     if (cdata[cc].fear != 0)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.damage.is_frightened", cdata[cc]));
+        txt(i18n::s.get("core.locale.damage.is_frightened", cdata[cc]),
+            message::only_once);
         return;
     }
     if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
@@ -12768,7 +12770,7 @@ void do_play_scene()
         return;
     }
     scene_cut = 0;
-    msgtempprev = msgtemp;
+    // msgtempprev = msgtemp;
     scenemode = 1;
     SDIM4(actor, 20, 3, 10);
     std::string file = u8"void"s;
@@ -13006,9 +13008,7 @@ label_2684_internal:
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    x_at_txtfunc = windoww - 120;
-    y_at_txtfunc = windowh - 60;
-    anime_halt();
+    anime_halt(windoww - 120, windowh - 60);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
     goto label_2681;
@@ -13023,8 +13023,8 @@ void scene_fade_to_black()
     gsel(0);
     animation_fade_in();
     scenemode = 0;
-    msgtemp = msgtempprev;
-    msgtempprev = "";
+    // msgtemp = msgtempprev;
+    // msgtempprev = "";
 }
 
 

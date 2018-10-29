@@ -5,6 +5,7 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 

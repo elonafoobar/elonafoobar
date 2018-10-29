@@ -17,6 +17,7 @@
 #include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "quest.hpp"
 #include "shop.hpp"
 #include "ui.hpp"
@@ -579,8 +580,8 @@ label_20591:
         int stat = item_find(60002, 2);
         if (stat == -1)
         {
-            ++msgdup;
-            txt(i18n::s.get("core.locale.ui.inv.offer.no_altar"));
+            txt(i18n::s.get("core.locale.ui.inv.offer.no_altar"),
+                message::only_once);
             f = 1;
         }
     }
@@ -1214,14 +1215,15 @@ label_2061_internal:
             if (inv[ci].own_state > 0 && inv[ci].own_state < 3)
             {
                 snd("core.fail1");
-                ++msgdup;
                 if (inv[ci].own_state == 2)
                 {
-                    txt(i18n::s.get("core.locale.action.get.cannot_carry"));
+                    txt(i18n::s.get("core.locale.action.get.cannot_carry"),
+                        message::only_once);
                 }
                 if (inv[ci].own_state == 1)
                 {
-                    txt(i18n::s.get("core.locale.action.get.not_owned"));
+                    txt(i18n::s.get("core.locale.action.get.not_owned"),
+                        message::only_once);
                 }
                 update_screen();
                 result.turn_result = TurnResult::pc_turn_user_error;

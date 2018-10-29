@@ -9,6 +9,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "message.hpp"
 #include "quest.hpp"
 #include "variables.hpp"
 

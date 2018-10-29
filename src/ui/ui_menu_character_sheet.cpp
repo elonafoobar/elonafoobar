@@ -9,6 +9,7 @@
 #include "../enchantment.hpp"
 #include "../map.hpp"
 #include "../menu.hpp"
+#include "../message.hpp"
 
 namespace elona
 {

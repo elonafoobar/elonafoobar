@@ -12,6 +12,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "mef.hpp"
+#include "message.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "talk.hpp"

@@ -14,6 +14,7 @@
 #include "itemgen.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "network.hpp"
 #include "optional.hpp"
 #include "random.hpp"
@@ -88,6 +89,35 @@ private:
 
     std::vector<Candidate> candidates;
 };
+
+
+
+class LogCopyObserver : public LogObserver
+{
+public:
+    virtual ~LogCopyObserver() = default;
+
+
+
+    virtual void update(const std::string& log) override
+    {
+        _log_copy += log;
+    }
+
+
+
+    const std::string& get_copy() const
+    {
+        return _log_copy;
+    }
+
+
+private:
+    std::string _log_copy;
+};
+
+std::unique_ptr<LogCopyObserver> log_copy_observer;
+
 
 
 std::string fix_wish(const std::string& text)
@@ -167,7 +197,9 @@ void wish_end()
               cdatan(1, 0),
               cdatan(0, 0),
               i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
-              cnven(txtcopy)));
+              cnven(log_copy_observer->get_copy())));
+
+    log_copy_observer.reset();
 
     wishfilter = 1;
 }
@@ -721,7 +753,6 @@ bool process_wish()
 {
     using namespace strutil;
 
-    txtcopy = "";
     txtef(5);
     txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"));
 
@@ -732,7 +763,9 @@ bool process_wish()
 
     msgtemp = "";
     autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
-    tcopy = 1;
+
+    log_copy_observer = std::make_unique<LogCopyObserver>();
+    subscribe_log(log_copy_observer.get());
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")
     {
@@ -811,7 +844,9 @@ void what_do_you_wish_for()
 {
     const auto did_wish_something = process_wish();
     if (did_wish_something)
+    {
         wish_end();
+    }
 }
 
 

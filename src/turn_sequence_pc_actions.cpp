@@ -10,12 +10,12 @@
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
-#include "map_cell.hpp"
-#include "network.hpp"
-// #include "item.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "mdata.hpp"
 #include "menu.hpp"
+#include "message.hpp"
+#include "network.hpp"
 #include "optional.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -789,8 +789,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action != ""s && action != "cancel" /* && key != key_alter */)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.hit_key_for_help"));
+        txt(i18n::s.get("core.locale.action.hit_key_for_help"),
+            message::only_once);
         update_screen();
     }
 

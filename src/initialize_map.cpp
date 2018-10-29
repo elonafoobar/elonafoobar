@@ -20,6 +20,7 @@
 #include "map_cell.hpp"
 #include "mapgen.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "ui.hpp"

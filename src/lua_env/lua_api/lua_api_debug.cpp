@@ -2,6 +2,7 @@
 #include <sstream>
 #include "../../enums.hpp"
 #include "../../log.hpp"
+#include "../../message.hpp"
 
 namespace elona
 {

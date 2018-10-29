@@ -6,6 +6,7 @@
 #include "character_status.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "range.hpp"
 #include "variables.hpp"

@@ -17,6 +17,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "message.hpp"
 #include "optional.hpp"
 #include "status_ailment.hpp"
 #include "ui.hpp"

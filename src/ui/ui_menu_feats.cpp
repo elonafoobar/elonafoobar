@@ -1,6 +1,7 @@
 #include "ui_menu_feats.hpp"
 #include "../enchantment.hpp"
 #include "../menu.hpp"
+#include "../message.hpp"
 #include "../snail/color.hpp"
 #include "../trait.hpp"
 
