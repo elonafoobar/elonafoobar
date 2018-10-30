@@ -319,8 +319,6 @@ ELONA_EXTERN(elona_vector1<std::string> key_list);
 ELONA_EXTERN(elona_vector1<std::string> key_select);
 ELONA_EXTERN(elona_vector1<std::string> keylog);
 ELONA_EXTERN(elona_vector1<std::string> mdatan);
-ELONA_EXTERN(elona_vector1<std::string> msgtemp);
-ELONA_EXTERN(elona_vector1<std::string> msgtempprev);
 ELONA_EXTERN(elona_vector1<std::string> musicfile);
 ELONA_EXTERN(elona_vector1<std::string> newsbuff);
 ELONA_EXTERN(elona_vector1<std::string> playerheader);

@@ -182,7 +182,7 @@ void weather_changes_by_location(bool output_immediately = true)
             }
             else
             {
-                msgtemp += i18n::s.get("core.locale.action.weather.changes");
+                msg_append(i18n::s.get("core.locale.action.weather.changes"));
             }
         }
     }
@@ -200,7 +200,7 @@ void weather_changes_by_location(bool output_immediately = true)
             }
             else
             {
-                msgtemp += i18n::s.get("core.locale.action.weather.changes");
+                msg_append(i18n::s.get("core.locale.action.weather.changes"));
             }
         }
     }
@@ -3269,10 +3269,11 @@ void initialize_set_of_random_generation()
     notedel(0);
     SDIM3(booktitle, noteinfo(), 25);
     p = 0;
+    elona_vector1<std::string> tmp;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
-        noteget(msgtemp, cnt);
-        csvsort(s, msgtemp, 44);
+        noteget(tmp, cnt);
+        csvsort(s, tmp, 44);
         booktitle(elona::stoi(s(0))) = lang(s(1), s(2));
         if (elona::stoi(s(3)) == 1)
         {
@@ -4493,8 +4494,7 @@ TurnResult exit_map()
         rq = game_data.executing_immediate_quest;
         quest_exit_map();
     }
-    msg_newline();
-    msgtemp = u8"  "s;
+    msg_append_begin("  ");
     if (game_data.current_map == mdata_t::MapId::show_house
         || game_data.current_map == mdata_t::MapId::arena
         || game_data.current_map == mdata_t::MapId::pet_arena)
@@ -4548,7 +4548,7 @@ TurnResult exit_map()
         f = 0;
         if (feat(1) == 11)
         {
-            msgtemp += i18n::s.get("core.locale.misc.walk_down_stairs");
+            msg_append(i18n::s.get("core.locale.misc.walk_down_stairs"));
             f = 1;
             game_data.entrance_type = 1;
             map_data.stair_down_pos =
@@ -4566,7 +4566,7 @@ TurnResult exit_map()
         }
         if (feat(1) == 10)
         {
-            msgtemp += i18n::s.get("core.locale.misc.walk_up_stairs");
+            msg_append(i18n::s.get("core.locale.misc.walk_up_stairs"));
             f = 1;
             game_data.entrance_type = 2;
             map_data.stair_up_pos =
@@ -4662,15 +4662,15 @@ TurnResult exit_map()
             {
                 if (game_data.current_dungeon_level == 1)
                 {
-                    msgtemp += i18n::s.get(
+                    msg_append(i18n::s.get(
                         "core.locale.action.exit_map.surface.returned_to",
-                        mapname(game_data.current_map));
+                        mapname(game_data.current_map)));
                 }
                 else
                 {
-                    msgtemp += i18n::s.get(
+                    msg_append(i18n::s.get(
                         "core.locale.action.exit_map.surface.left",
-                        mapname(game_data.current_map));
+                        mapname(game_data.current_map)));
                 }
             }
         }
@@ -4717,7 +4717,7 @@ TurnResult exit_map()
     }
     if (rdtry > 1)
     {
-        msgtemp += u8"(再生成"s + rdtry + u8"回)"s;
+        msg_append(u8"(再生成"s + rdtry + u8"回)"s);
     }
     if (game_data.current_map != game_data.previous_map)
     {
@@ -4760,29 +4760,29 @@ TurnResult exit_map()
         }
         if (event_find(6))
         {
-            msgtemp += i18n::s.get(
-                "core.locale.action.exit_map.delivered_to_your_home");
+            msg_append(i18n::s.get(
+                "core.locale.action.exit_map.delivered_to_your_home"));
             weather_changes_by_location(false);
         }
         else if (
             area_data[game_data.previous_map].type
             == mdata_t::MapType::world_map)
         {
-            msgtemp += i18n::s.get(
+            msg_append(i18n::s.get(
                 "core.locale.action.exit_map.entered",
-                mapname(game_data.current_map));
+                mapname(game_data.current_map)));
         }
         else if (map_data.type == mdata_t::MapType::temporary)
         {
-            msgtemp += i18n::s.get(
+            msg_append(i18n::s.get(
                 "core.locale.action.exit_map.returned_to",
-                mapname(game_data.current_map));
+                mapname(game_data.current_map)));
         }
         else
         {
-            msgtemp += i18n::s.get(
+            msg_append(i18n::s.get(
                 "core.locale.action.exit_map.left",
-                mapname(game_data.previous_map));
+                mapname(game_data.previous_map)));
         }
         if (game_data.cargo_weight > game_data.current_cart_limit)
         {
@@ -4791,8 +4791,8 @@ TurnResult exit_map()
                 || area_data[game_data.current_map].type
                     == mdata_t::MapType::field)
             {
-                msgtemp += i18n::s.get(
-                    "core.locale.action.exit_map.burdened_by_cargo");
+                msg_append(i18n::s.get(
+                    "core.locale.action.exit_map.burdened_by_cargo"));
             }
         }
     }
@@ -4805,7 +4805,8 @@ TurnResult exit_map()
             game_data.current_dungeon_level =
                 area_data[game_data.current_map].deepest_level - 1;
             game_data.entrance_type = 1;
-            msgtemp += i18n::s.get("core.locale.action.exit_map.mountain_pass");
+            msg_append(
+                i18n::s.get("core.locale.action.exit_map.mountain_pass"));
         }
     }
     if (game_data.current_map == mdata_t::MapId::mountain_pass)
@@ -4816,7 +4817,7 @@ TurnResult exit_map()
             game_data.current_map = static_cast<int>(mdata_t::MapId::larna);
             game_data.current_dungeon_level = 1;
             game_data.entrance_type = 2;
-            msgtemp += i18n::s.get("core.locale.action.exit_map.larna");
+            msg_append(i18n::s.get("core.locale.action.exit_map.larna"));
         }
     }
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -5083,7 +5084,7 @@ void map_global_proc_diastrophism()
         || game_data.reset_world_map_in_diastrophism_flag)
     {
         game_data.diastrophism_flag = 0;
-        msgtemp += i18n::s.get("core.locale.action.move.global.diastrophism");
+        msg_append(i18n::s.get("core.locale.action.move.global.diastrophism"));
         for (int cnt = 450; cnt < 500; ++cnt)
         {
             if (area_data[cnt].id == mdata_t::MapId::random_dungeon)
@@ -12725,7 +12726,6 @@ void initialize_economy()
     mapsubroutine = 1;
     initialize_map();
     initeco = 0;
-    msgtemp = "";
 }
 
 
@@ -12770,7 +12770,6 @@ void do_play_scene()
         return;
     }
     scene_cut = 0;
-    // msgtempprev = msgtemp;
     scenemode = 1;
     SDIM4(actor, 20, 3, 10);
     std::string file = u8"void"s;
@@ -13023,8 +13022,6 @@ void scene_fade_to_black()
     gsel(0);
     animation_fade_in();
     scenemode = 0;
-    // msgtemp = msgtempprev;
-    // msgtempprev = "";
 }
 
 

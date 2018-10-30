@@ -498,7 +498,6 @@ void initialize_elona()
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
     SDIM2(keylog, 20);
-    SDIM2(msgtemp, 1000);
     SDIM3(randn1, 30, 20);
     DIM2(rtval, 10);
     DIM3(list, 3, 500);
@@ -506,7 +505,6 @@ void initialize_elona()
     DIM2(invctrl, 2);
     SDIM4(promptl, 50, 3, 20);
     SDIM3(description, 1000, 3);
-    SDIM1(msgtempprev);
     DIM3(mef, 9, MEF_MAX);
     DIM3(adata, 40, 500);
     area_data.clear();
@@ -981,7 +979,8 @@ void initialize_game()
 
     mtilefilecur = -1;
     firstturn = 1;
-    msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
+    msg_append_begin(
+        "  Lafrontier presents Elona ver 1.22. Welcome traveler! ");
     if (Config::instance().net)
     {
         initialize_server_info();

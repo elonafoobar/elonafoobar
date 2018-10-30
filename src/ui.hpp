@@ -43,7 +43,6 @@ void update_minimap();
 void ui_render_from_screensync();
 void render_hud();
 void load_continuous_action_animation();
-void render_autoturn_animation();
 void draw_caption();
 void update_scrolling_info();
 void update_slight();

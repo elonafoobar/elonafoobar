@@ -9,14 +9,6 @@
 namespace elona
 {
 
-template <typename T>
-struct elona_vector1;
-
-extern elona_vector1<std::string> msgtemp;
-extern elona_vector1<std::string> msgtempprev;
-
-
-
 namespace detail
 {
 
@@ -100,15 +92,17 @@ extern std::vector<LogObserver*> observers;
 
 enum class ColorIndex;
 
-void txt_conv();
 void txtcontinue();
 void txtef(ColorIndex);
 void txtef(int = 0);
 void txtnew();
 void msg_clear();
 void msg_halt();
-void msg_newline();
 void anime_halt(int x, int y);
+
+void msg_append_begin(const std::string&);
+void msg_append(const std::string&);
+void msg_append_end();
 
 
 

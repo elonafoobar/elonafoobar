@@ -761,7 +761,6 @@ bool process_wish()
 
     txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
 
-    msgtemp = "";
     autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
 
     log_copy_observer = std::make_unique<LogCopyObserver>();

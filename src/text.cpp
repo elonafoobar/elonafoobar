@@ -2,6 +2,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
+#include "fov.hpp"
 #include "i18n.hpp"
 #include "map.hpp"
 #include "random.hpp"
@@ -2546,5 +2547,36 @@ void text_replace_tags_in_quest_text()
 }
 
 
+
+std::string name(int cc)
+{
+    if (cc == 0)
+    {
+        return i18n::s.get("core.locale.chara.you");
+    }
+    if (is_in_fov(cdata[cc]) == 0)
+    {
+        return i18n::s.get("core.locale.chara.something");
+    }
+    if (cdata.player().blind != 0
+        || (cdata[cc].is_invisible() == 1
+            && cdata.player().can_see_invisible() == 0 && cdata[cc].wet == 0))
+    {
+        return i18n::s.get("core.locale.chara.something");
+    }
+    if (en)
+    {
+        const char first = cdatan(0, cc)[0];
+        if (first == '\"' || first == '<')
+        {
+            return cdatan(0, cc);
+        }
+        if (cdata[cc].has_own_name() == 0)
+        {
+            return u8"the "s + cdatan(0, cc);
+        }
+    }
+    return cdatan(0, cc);
+}
 
 } // namespace elona

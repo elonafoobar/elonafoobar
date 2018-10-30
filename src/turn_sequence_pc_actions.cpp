@@ -106,8 +106,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     if (action == "quickload")
     {
         key = "";
-        msg_newline();
-        msgtemp = u8"  "s;
+        msg_clear();
         firstturn = 1;
         load_save_data();
         mode = 3;
