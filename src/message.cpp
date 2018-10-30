@@ -315,10 +315,10 @@ void txt_conv()
     {
         msg_newline();
         tnew = false;
-        if (Config::instance().msgtrans)
+        if (Config::instance().message_transparency)
         {
             int p_at_txtfunc = (windoww - inf_msgx) / 192;
-            gmode(4, Config::instance().msgtrans * 20);
+            gmode(4, Config::instance().message_transparency * 20);
             for (int i = 0; i < p_at_txtfunc + 1; ++i)
             {
                 int x_at_txtfunc;
@@ -334,7 +334,7 @@ void txt_conv()
                 gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
             }
         }
-        if (Config::instance().msgaddtime)
+        if (Config::instance().message_add_timestamps)
         {
             std::stringstream ss;
             ss << "[" << std::setw(2) << std::setfill('0')

@@ -69,8 +69,8 @@ public:
     bool allow_enhanced_skill;
     int enhanced_skill_lowerbound;
     int enhanced_skill_upperbound;
-    bool msgaddtime;
-    int msgtrans;
+    bool message_add_timestamps;
+    int message_transparency;
     std::string music;
     bool net;
     bool netchat;
