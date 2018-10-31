@@ -106,6 +106,7 @@ contents in this repository. Note that images, sounds and fonts are not included
 * hayai: see src/thirdparty/hayai/LICENSE.
 * sol2: see src/thirdparty/sol2/LICENSE.
 * ordered_map: see src/thirdparty/ordered_map/LICENSE.
+* boostrandom: see src/thirdparty/LICENSE_1_0.txt.
 * cmake/FindXXX.cmake: see cmake/LICENSE.
 
 ## Lua libraries
