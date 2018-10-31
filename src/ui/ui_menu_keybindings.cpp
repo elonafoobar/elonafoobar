@@ -49,7 +49,11 @@ static std::string _get_localized_action_name(
     {
     case ActionCategory::shortcut:
     {
-        const auto action_index_plus_1 = keybind_index_number(action_id) + 1;
+        auto action_index_plus_1 = keybind_index_number(action_id) + 1;
+        if (action_index_plus_1 == 10 || action_index_plus_1 == 20)
+        {
+            action_index_plus_1 -= 10;
+        }
         localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut")
             + std::to_string(action_index_plus_1);
         break;
