@@ -14,6 +14,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "keybind/keybind.hpp"
 #include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
@@ -1000,7 +1001,8 @@ label_2061_internal:
             if (game_data.skill_shortcuts.at(cnt)
                 == inv[p].id + invctrl * 10000)
             {
-                s += u8"{"s + cnt + u8"}"s;
+                s +=
+                    u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
             }
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
@@ -2237,7 +2239,9 @@ label_2061_internal:
                 }
             }
             game_data.skill_shortcuts.at(*shortcut) = p;
-            txt(i18n::s.get("core.locale.ui.assign_shortcut", *shortcut));
+            txt(i18n::s.get(
+                "core.locale.ui.assign_shortcut",
+                get_bound_shortcut_key_name_by_action_id(action)));
             goto label_2060_internal;
         }
     }

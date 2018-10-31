@@ -7,6 +7,29 @@
 
 using namespace std::literals::string_literals;
 
+
+
+namespace
+{
+
+/// Returns whether the key is one of the number keys on top of the keyboard or
+/// one of the numpad keys.
+bool is_number_key(snail::Key k)
+{
+    const auto k_ = static_cast<int>(k);
+    constexpr auto key_0_ = static_cast<int>(snail::Key::key_0);
+    constexpr auto key_9_ = static_cast<int>(snail::Key::key_9);
+    constexpr auto numpad_0_ = static_cast<int>(snail::Key::keypad_0);
+    constexpr auto numpad_9_ = static_cast<int>(snail::Key::keypad_9);
+
+    return (key_0_ <= k_ && k_ <= key_9_)
+        || (numpad_0_ <= k_ && k_ <= numpad_9_);
+}
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -188,6 +211,33 @@ snail::Key keybind_selection_key_from_index(int index)
     auto key = KeybindManager::instance().binding(id).primary.main;
 
     return key;
+}
+
+
+
+std::string get_bound_shortcut_key_name_by_action_id(
+    const std::string& action_id)
+{
+    const auto& keybind = KeybindManager::instance().binding(action_id).primary;
+
+    if (is_number_key(keybind.main)
+        && (keybind.modifiers & (snail::ModKey::ctrl | snail::ModKey::shift))
+            != snail::ModKey::none)
+    {
+        return "1" + *keybind_key_name(keybind.main);
+    }
+    else
+    {
+        return keybind.to_string();
+    }
+}
+
+
+
+std::string get_bound_shortcut_key_name_by_index(int index)
+{
+    return get_bound_shortcut_key_name_by_action_id(
+        "shortcut_" + std::to_string(index + 1));
 }
 
 } // namespace elona
