@@ -512,6 +512,11 @@ DOC
                     name = "Show FPS"
                     yes_no = core.locale.config.common.yes_no.show_dont_show
                 }
+
+                skip_confirm_at_shop {
+                    name = "Skip confirm at shop"
+                    doc = "Skip confirm to buy or sell items at town shops."
+                }
             }
 
             android {

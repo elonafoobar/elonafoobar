@@ -1267,26 +1267,29 @@ label_2061_internal:
             }
             if (mode == 6 && invctrl != 22 && invctrl != 24)
             {
-                if (invctrl == 11)
+                if (!Config::instance().skip_confirm_at_shop)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.ui.inv.buy.prompt",
-                        itemname(ci, in),
-                        (in * calcitemvalue(ci, 0))));
-                }
-                if (invctrl == 12)
-                {
-                    txt(i18n::s.get(
-                        "core.locale.ui.inv.sell.prompt",
-                        itemname(ci, in),
-                        (in * calcitemvalue(ci, 1))));
-                }
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
-                {
-                    screenupdate = -1;
-                    update_screen();
-                    goto label_20591;
+                    if (invctrl == 11)
+                    {
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.buy.prompt",
+                            itemname(ci, in),
+                            (in * calcitemvalue(ci, 0))));
+                    }
+                    if (invctrl == 12)
+                    {
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.sell.prompt",
+                            itemname(ci, in),
+                            (in * calcitemvalue(ci, 1))));
+                    }
+                    rtval = yes_or_no(promptx, prompty, 160);
+                    if (rtval != 0)
+                    {
+                        screenupdate = -1;
+                        update_screen();
+                        goto label_20591;
+                    }
                 }
                 if (invctrl == 11)
                 {
