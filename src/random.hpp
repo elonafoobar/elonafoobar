@@ -7,6 +7,11 @@
 #include <vector>
 #include "optional.hpp"
 
+// DO NOT use `std::uniform_int_distribution` because its algorithm is
+// implementation-defined. Always use this
+// `boostrandom::uniform_int_distribution`.
+#include "thirdparty/boostrandom/uniform_int_distribution.hpp"
+
 
 
 namespace elona
@@ -38,8 +43,8 @@ template <
         nullptr>
 inline Integer rnd(Integer max)
 {
-    return std::uniform_int_distribution<Integer>{
-        Integer{0}, std::max(Integer{0}, max - 1)}(detail::engine);
+    using Dist = boostrandom::uniform_int_distribution<Integer>;
+    return Dist{Integer{0}, std::max(Integer{0}, max - 1)}(detail::engine);
 }
 
 
