@@ -3095,7 +3095,7 @@ static TurnResult _bump_into_character()
             && !Config::instance().attack_neutral_npcs)
         || (cdata[tc].relationship == 0
             && (area_data[game_data.current_map].is_museum_or_shop()
-                || key_shift)))
+                || is_modifier_pressed(snail::ModKey::shift))))
     {
         if (cdata[tc].is_hung_on_sand_bag() == 0)
         {

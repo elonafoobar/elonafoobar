@@ -390,6 +390,12 @@ int yes_or_no(int x, int y, int width)
 }
 
 
+bool is_modifier_pressed(snail::ModKey modifier)
+{
+    return (snail::Input::instance().modifiers() & modifier) == modifier;
+}
+
+
 void wait_key_released()
 {
     while (1)
