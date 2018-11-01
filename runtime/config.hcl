@@ -181,6 +181,9 @@ config {
 
             # Show damage popups.
             damage_popup = true
+
+            # Skip confirm to buy or sell items at town shop.
+            skip_confirm_at_shop = false
         }
     }
 }

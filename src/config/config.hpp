@@ -87,6 +87,7 @@ public:
     int select_fast_wait;
     bool serverlist;
     bool shadow;
+    bool skip_confirm_at_shop;
     bool skiprandevents;
     bool sound;
     int startrun;

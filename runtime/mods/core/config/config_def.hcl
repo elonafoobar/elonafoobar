@@ -342,6 +342,8 @@ config def {
             }
 
             show_fps = false
+
+            skip_confirm_at_shop = false
         }
     }
 

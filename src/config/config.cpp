@@ -309,6 +309,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("foobar.enhanced_skill_tracking_upperbound"s, int, Config::instance().enhanced_skill_upperbound);
     CONFIG_OPTION("foobar.startup_script"s, std::string, Config::instance().startup_script);
     CONFIG_OPTION("foobar.pcc_graphic_scale"s, std::string, Config::instance().pcc_graphic_scale);
+    CONFIG_OPTION("foobar.skip_confirm_at_shop"s, bool, Config::instance().skip_confirm_at_shop);
     CONFIG_OPTION("game.attack_neutral_npcs"s, bool, Config::instance().attack_neutral_npcs);
     CONFIG_OPTION("game.extra_help"s, bool, Config::instance().extrahelp);
     CONFIG_OPTION("game.hide_autoidentify"s, bool, Config::instance().hideautoidentify);

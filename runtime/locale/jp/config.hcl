@@ -401,6 +401,11 @@
                 show_fps {
                     name = "FPSを表示"
                 }
+
+                skip_confirm_at_shop {
+                    name = "売買確認を省略"
+                    doc = "街の店において、売り買いの確認を省略します。"
+                }
             }
 
             android {
