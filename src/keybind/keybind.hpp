@@ -115,6 +115,31 @@ std::unordered_set<ActionCategory> keybind_conflicting_action_categories(
 void keybind_regenerate_key_select();
 void keybind_regenerate_key_names();
 
+
+/**
+ * Get the text representation of the bound shortcut key's name(s) by action
+ * ID. `action_id` must be one of the shortcuts.
+ * If the key is number key and has modifier Shift or Ctrl, returns the digit
+ * plus 10. Otherwise, returns the key name itself. Even if the shortcut has an
+ * alternate binding, returns only the primary one. E.g., if the bound key is...
+ * - "1" => "1"
+ * - "2" => "2"
+ * - "Ctrl+1" or "Shift+1" => "11"
+ * - "v" => "v"
+ * - "V" => "V"
+ */
+std::string get_bound_shortcut_key_name_by_action_id(
+    const std::string& action_id);
+
+/**
+ * Get the text representation of the bound shortcut key's name(s) by
+ * shortcut's index. The index is the same as that stored in `GameData` or
+ * other save data. See also `get_bound_shortcut_key_name_by_action_id` for the
+ * detailed format of th return value.
+ */
+std::string get_bound_shortcut_key_name_by_index(int index);
+
+
 /**
  * For selection and shortcut actions, returns the integer index of the
  * selection item/shortcut.

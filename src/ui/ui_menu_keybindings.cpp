@@ -43,21 +43,28 @@ static std::string _get_localized_action_name(
     ActionCategory action_category)
 {
     std::string localized_name;
-    int action_index{};
 
     // core.locale.keybind.chat_box
     switch (action_category)
     {
     case ActionCategory::shortcut:
-        action_index = keybind_index_number(action_id);
+    {
+        auto action_index_plus_1 = keybind_index_number(action_id) + 1;
+        if (action_index_plus_1 == 10 || action_index_plus_1 == 20)
+        {
+            action_index_plus_1 -= 10;
+        }
         localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut")
-            + std::to_string(action_index);
+            + std::to_string(action_index_plus_1);
         break;
+    }
     case ActionCategory::selection:
-        action_index = keybind_index_number(action_id);
+    {
+        const auto action_index_plus_1 = keybind_index_number(action_id) + 1;
         localized_name = i18n::s.get(mod_name + ".locale.keybind.select")
-            + std::to_string(action_index);
+            + std::to_string(action_index_plus_1);
         break;
+    }
     default:
         localized_name =
             i18n::s.get(mod_name + ".locale.keybind."s + action_id);

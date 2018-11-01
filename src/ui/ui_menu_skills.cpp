@@ -2,6 +2,7 @@
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
+#include "../keybind/keybind.hpp"
 #include "../menu.hpp"
 
 namespace elona
@@ -134,7 +135,8 @@ static void _draw_skill_name(int cnt, int skill_id)
     {
         if (game_data.skill_shortcuts.at(cnt) == skill_id)
         {
-            skill_shortcut = u8"{"s + cnt + u8"}"s;
+            skill_shortcut =
+                u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
         }
     }
     cs_list(
@@ -210,7 +212,9 @@ static void _assign_shortcut(int sc_, int skill_id)
         }
     }
     game_data.skill_shortcuts.at(sc_) = skill_id;
-    txt(i18n::s.get("core.locale.ui.assign_shortcut", sc_));
+    txt(i18n::s.get(
+        "core.locale.ui.assign_shortcut",
+        get_bound_shortcut_key_name_by_index(sc_)));
     display_msg(inf_screeny + inf_tiles);
 }
 
