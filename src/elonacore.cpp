@@ -10554,7 +10554,7 @@ void proc_autopick()
 {
     if (!Config::instance().use_autopick)
         return;
-    if (key_ctrl)
+    if (is_modifier_pressed(snail::ModKey::ctrl))
         return;
     if (area_data[game_data.current_map].type == mdata_t::MapType::player_owned
         && area_data[game_data.current_map].id != mdata_t::MapId::shelter_
