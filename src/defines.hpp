@@ -18,6 +18,12 @@
 #endif
 
 
+// Compiler
+#if BOOST_COMP_CLANG
+#define ELONA_COMPILER_CLANG
+#endif
+
+
 // Endianness
 #if BOOST_ENDIAN_BIG_BYTE
 #define ELONA_BIG_ENDIAN
