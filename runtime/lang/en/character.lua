@@ -374,7 +374,7 @@ character['321'] = {
   text_103 = {"\"Foooooo!\"", "\"Fooooo\"", "\"Foooooo!\""},
 }
 character['242'] = {
-  name = "yeek",
+  name = "<Rodlob> the boss of yeeks",
 }
 character['239'] = {
   name = "citizen",

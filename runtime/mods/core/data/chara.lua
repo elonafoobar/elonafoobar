@@ -2277,9 +2277,8 @@ data:add_multi(
          coefficient = 200,
          flags = { "Explodes" },
       },
-      -- called "yeek" in "EN", but 『ルードルボ』 in "JP"
       {
-         name = "rudorbo",
+         name = "rodlob",
          id = 242,
          item_type = 3,
          tags = { "yeek" },
