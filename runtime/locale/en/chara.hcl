@@ -42,7 +42,7 @@ locale {
 
         job {
             general_vendor = "${trim_job(_1)}the general vendor"
-            innkeeper = "${trim_job(_1)}the Innkeeper"
+            innkeeper = "${trim_job(_1)}the innkeeper"
             trader = "${trim_job(_1)}the trader"
             goods_vendor = "${trim_job(_1)}the goods vendor"
             baker = "${trim_job(_1)}the baker"
