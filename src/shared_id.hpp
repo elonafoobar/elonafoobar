@@ -1,15 +1,23 @@
 #pragma once
+
 #include <string>
 
-// Assumes that a compiler just ignores unknown pragmas.
-// Supresses "unused variable" warning due to Boost.Flyweight library.
-// This warning is reported only by Clang.
+#include "defines.hpp"
+
+// Supresses "unused variable" warning due to Boost.Flyweight library in Clang
+// compiler.
+#ifdef ELONA_COMPILER_CLANG
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+
 #include <boost/flyweight.hpp>
 #include <boost/flyweight/no_locking.hpp>
 #include <boost/flyweight/no_tracking.hpp>
+
+#ifdef ELONA_COMPILER_CLANG
 #pragma clang diagnostic pop
+#endif
 
 
 
