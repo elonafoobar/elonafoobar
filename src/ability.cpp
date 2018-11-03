@@ -226,7 +226,7 @@ void gain_special_action()
         if (spact(29) == 0)
         {
             spact(29) = 1;
-            txtef(5);
+            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
                 "core.locale.skill.gained",
                 i18n::_(u8"ability", std::to_string(629), u8"name")));
@@ -234,7 +234,7 @@ void gain_special_action()
         if (spact(30) == 0)
         {
             spact(30) = 1;
-            txtef(5);
+            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
                 "core.locale.skill.gained",
                 i18n::_(u8"ability", std::to_string(630), u8"name")));
@@ -245,7 +245,7 @@ void gain_special_action()
         if (spact(31) == 0)
         {
             spact(31) = 1;
-            txtef(5);
+            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
                 "core.locale.skill.gained",
                 i18n::_(u8"ability", std::to_string(631), u8"name")));
@@ -276,7 +276,7 @@ void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
             if (cc.index == 0 || cc.index < 16)
             {
                 snd("core.ding3");
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
             }
             txt(txtskillchange(id, cc.index, true));
         }
@@ -307,7 +307,7 @@ void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
             {
                 if (lv_delta != 0)
                 {
-                    txtef(3);
+                    Message::instance().txtef(ColorIndex::red);
                     txt(txtskillchange(id, cc.index, false));
                 }
             }
@@ -405,7 +405,7 @@ void chara_gain_skill_exp(
             if (cc.index == 0 || cc.index < 16)
             {
                 snd("core.ding3");
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
                 msgalert = 1;
             }
             txt(txtskillchange(id, cc.index, true));
@@ -438,7 +438,7 @@ void chara_gain_skill_exp(
                 if (lv_delta != 0)
                 {
                     msgalert = 1;
-                    txtef(3);
+                    Message::instance().txtef(ColorIndex::red);
                     txt(txtskillchange(id, cc.index, false));
                 }
             }

@@ -19,11 +19,11 @@ void Debug::report_error(const std::string& message)
     std::istringstream sstream(message);
     std::string line;
 
-    txtef(ColorIndex::red);
+    Message::instance().txtef(ColorIndex::red);
     txt("Script error: ");
     while (getline(sstream, line, '\n'))
     {
-        txtef(ColorIndex::red);
+        Message::instance().txtef(ColorIndex::red);
         txt(line + "  ");
     }
 

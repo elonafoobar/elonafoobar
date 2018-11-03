@@ -48,13 +48,13 @@ void proc_event()
             {
                 game_data.executing_immediate_quest_status = 3;
                 quest_data.immediate().progress = 3;
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get("core.locale.quest.party.complete"));
                 msg_halt();
             }
             else
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get("core.locale.quest.party.fail"));
             }
             break;
@@ -64,18 +64,18 @@ void proc_event()
             {
                 game_data.executing_immediate_quest_status = 3;
                 quest_data.immediate().progress = 3;
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get("core.locale.quest.collect.complete"));
                 msg_halt();
             }
             else
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get("core.locale.quest.collect.fail"));
             }
             break;
         case 1008:
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get("core.locale.quest.conquer.fail"));
             break;
         }
@@ -100,11 +100,11 @@ void proc_event()
             319,
             evdata1(evnum - (evnum != 0) * 1),
             evdata2(evnum - (evnum != 0) * 1));
-        txtef(4);
+        Message::instance().txtef(ColorIndex::blue);
         txt(i18n::s.get("core.locale.event.little_sister_slips"));
         break;
     case 28:
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get("core.locale.event.ehekatl"));
         msg_halt();
         RagnarokAnimation().play();
@@ -217,7 +217,7 @@ void proc_event()
         cdata[rc].original_relationship = -3;
         tc = rc;
         area_data[game_data.current_map].has_been_conquered = tc;
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
         txt(i18n::s.get(
             "core.locale.event.guarded_by_lord",
             mapname(game_data.current_map),
@@ -245,7 +245,7 @@ void proc_event()
         area_data[game_data.current_map].has_been_conquered = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         txt(i18n::s.get("core.locale.event.reached_deepest_level"));
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
         txt(i18n::s.get(
             "core.locale.event.guarded_by_lord",
             mapname(game_data.current_map),
@@ -277,14 +277,14 @@ void proc_event()
         itemcreate(
             -1, 239, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param2 = 0;
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd("core.complete1");
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
         game_data.executing_immediate_quest_fame_gained =
             calcfame(0, game_data.current_dungeon_level * 30 + 200);
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.quest.gain_fame",
             game_data.executing_immediate_quest_fame_gained));
@@ -368,7 +368,7 @@ void proc_event()
         {
             if (cdata[tc].state() == Character::State::alive)
             {
-                txtef(4);
+                Message::instance().txtef(ColorIndex::blue);
                 txt(i18n::s.get("core.locale.event.pael"));
                 cdata[tc].relationship = -3;
                 cdata[tc].hate = 1000;
@@ -384,7 +384,7 @@ void proc_event()
         break;
     case 10: quest_check_all_for_failed(); break;
     case 19:
-        txtef(6);
+        Message::instance().txtef(ColorIndex::yellow);
         txt(""s + usermsg);
         break;
     case 25:
@@ -628,7 +628,7 @@ void proc_event()
         }
         for (int j = 0; j < clamp(i(0), 0, 3); ++j)
         {
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get("core.locale.event.okaeri"));
         }
         if (game_data.number_of_waiting_guests != 0)
@@ -653,7 +653,7 @@ void proc_event()
     case 21:
         if (map_data.type == mdata_t::MapType::world_map)
             break;
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
         txt(i18n::s.get("core.locale.event.bomb"));
         msg_halt();
         gsel(7);
@@ -901,7 +901,7 @@ void proc_event()
     case 22:
         if (evdata1(evnum - (evnum != 0) * 1) != 0)
             break;
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
         txt(i18n::s.get("core.locale.event.alarm"));
         for (auto&& cc : cdata.others())
         {

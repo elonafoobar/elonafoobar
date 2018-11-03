@@ -253,7 +253,7 @@ TurnResult build_new_building()
         game_data.pc_x_in_world_map = area_data[7].position.x;
         game_data.pc_y_in_world_map = area_data[7].position.y;
         snd("core.build1");
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.building.built_new_house"));
         msg_halt();
         snd("core.exitmap1");
@@ -313,7 +313,7 @@ TurnResult build_new_building()
     }
     s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
     snd("core.build1");
-    txtef(5);
+    Message::instance().txtef(ColorIndex::orange);
     txt(i18n::s.get("core.locale.building.built_new", s(0)));
     map_global_prepare();
     inv[ci].modify_number(-1);
@@ -344,11 +344,11 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 
 TurnResult show_house_board()
 {
-    txtnew();
+    Message::instance().linebreak();
     if (map_data.type != mdata_t::MapType::player_owned)
     {
         txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"),
-            message::only_once);
+            Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -426,7 +426,7 @@ TurnResult show_house_board()
             p(0),
             game_data.home_scale + 2));
     }
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.building.house_board.what_do"));
     p = 0;
 
@@ -490,7 +490,7 @@ TurnResult show_house_board()
 
 void prompt_hiring()
 {
-    txtnew();
+    Message::instance().linebreak();
     p = 0;
     for (auto&& cnt : cdata.others())
     {
@@ -589,13 +589,13 @@ void prompt_hiring()
         }
     }
     randomize();
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.building.home.hire.who"));
     int stat = show_hire_menu(HireOperation::hire);
     if (stat != -1)
     {
         tc = stat;
-        txtnew();
+        Message::instance().linebreak();
         if (cdata.player().gold < calchirecost(tc) * 20)
         {
             txt(i18n::s.get("core.locale.building.not_enough_money"));
@@ -606,7 +606,7 @@ void prompt_hiring()
             cdata.player().gold -= calchirecost(tc) * 20;
             await(Config::instance().animewait * 10);
             cdata[tc].set_state(Character::State::alive);
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
                 "core.locale.building.home.hire.you_hire", cdata[tc]));
             snd("core.pray1");
@@ -656,7 +656,7 @@ void start_home_map_mode()
 
     prepare_house_board_tiles();
 
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.building.home.design.help"));
 
     tlocinitx = cdata.player().position.x;
@@ -795,7 +795,7 @@ void prompt_move_ally()
     while (true)
     {
 
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.building.home.move.who"));
         int stat = show_hire_menu(HireOperation::move);
         if (stat == -1)
@@ -804,8 +804,8 @@ void prompt_move_ally()
         }
         if (cdata[stat].relationship <= -3)
         {
-            txtnew();
-            txtef(9);
+            Message::instance().linebreak();
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get(
                 "core.locale.building.home.move.dont_touch_me", cdata[stat]));
             break;
@@ -814,7 +814,7 @@ void prompt_move_ally()
         tc = stat;
         snd("core.ok1");
     label_1718_internal:
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.building.home.move.where", cdata[stat]));
         {
             int stat = target_position();
@@ -838,7 +838,7 @@ void prompt_move_ally()
         cdata[tc].position.y = tlocy;
         cdata[tc].initial_position.y = tlocy;
         cdata[tc].continuous_action.finish();
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.building.home.move.is_moved", cdata[tc]));
         snd("core.foot");
     }
@@ -852,7 +852,7 @@ void prompt_ally_staying()
         {
             int c = stat;
             snd("core.ok1");
-            txtnew();
+            Message::instance().linebreak();
             if (getworker(game_data.current_map, c) == c)
             {
                 if (game_data.current_map == mdata_t::MapId::your_home)
@@ -895,7 +895,7 @@ void prompt_ally_staying()
 
 void try_extend_shop()
 {
-    txtnew();
+    Message::instance().linebreak();
     if (cdata.player().gold < calcshopreform())
     {
         txt(i18n::s.get("core.locale.building.not_enough_money"));
@@ -905,7 +905,7 @@ void try_extend_shop()
         snd("core.paygold1");
         cdata.player().gold -= calcshopreform();
         map_data.max_item_count = clamp(map_data.max_item_count + 10, 1, 400);
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.building.shop.extend", map_data.max_item_count));
     }
@@ -1175,7 +1175,7 @@ void show_shop_log()
                     "core.locale.building.shop.log.and_items", income(1));
             }
             snd("core.ding2");
-            txtef(5);
+            Message::instance().txtef(ColorIndex::orange);
             txt(shop_mark
                 + i18n::s.get(
                       "core.locale.building.shop.log.sold_items",
@@ -1302,13 +1302,13 @@ void update_museum()
     {
         if (rankorg > rankcur)
         {
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
         }
         else
         {
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
         }
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get(
             "core.locale.building.museum.rank_change",
             cnvrank(rankorg / 100),
@@ -1386,13 +1386,13 @@ void calc_home_rank()
     {
         if (rankorg > rankcur)
         {
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
         }
         else
         {
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
         }
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get(
             "core.locale.building.home.rank.change",
             game_data.total_deco_value / 100,

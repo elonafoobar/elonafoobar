@@ -324,7 +324,7 @@ static void _proc_three_years_later()
             cdata.player().position.y = area_data[11].position.y;
             game_data.player_next_move_direction = 1;
             game_data.player_x_on_map_leave = -1;
-            msg_append_begin(
+            Message::instance().msg_append_begin(
                 "  " + i18n::s.get("core.locale.scenario.three_years_later"));
         }
     }
@@ -889,7 +889,7 @@ static void _proc_no_dungeon_master()
     {
         if (area_data[game_data.current_map].has_been_conquered == -1)
         {
-            msg_append(i18n::s.get(
+            Message::instance().msg_append(i18n::s.get(
                 "core.locale.map.no_dungeon_master",
                 mapname(game_data.current_map)));
         }
@@ -1336,7 +1336,7 @@ init_map_after_refresh:
         {
             screenupdate = -1;
             update_entire_screen();
-            msg_append_end();
+            Message::instance().msg_append_end();
             screenupdate = -1;
             update_screen();
             if (evnum == 0)
@@ -1362,7 +1362,7 @@ init_map_after_refresh:
     mode = 0;
     screenupdate = -1;
     update_entire_screen();
-    msg_append_end();
+    Message::instance().msg_append_end();
 
     // Check more main quest flags and run map-specific behaviors.
     _proc_map_hooks_2();

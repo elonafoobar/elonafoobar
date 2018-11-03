@@ -63,7 +63,7 @@ optional<DialogData> DialogDecoder::decode(
     }
     catch (const std::exception& e)
     {
-        txtef(ColorIndex::red);
+        Message::instance().txtef(ColorIndex::red);
         txt(id + ": Dialog decoding error: " + e.what());
         return none;
     }

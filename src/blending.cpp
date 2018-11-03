@@ -45,7 +45,7 @@ label_19341_internal:
     }
     if (!cdata[cc].continuous_action)
     {
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get(
             "core.locale.blending.started", cdata[cc], rpname(rpid)));
         cdata[cc].continuous_action.type = ContinuousAction::Type::blend;
@@ -56,7 +56,7 @@ label_19341_internal:
     {
         if (rnd(30) == 0)
         {
-            txtef(4);
+            Message::instance().txtef(ColorIndex::blue);
             txt(i18n::s.get("core.locale.blending.sounds"));
         }
         return;
@@ -72,7 +72,7 @@ label_19341_internal:
             render_hud();
             if (cnt % 5 == 0)
             {
-                txtef(4);
+                Message::instance().txtef(ColorIndex::blue);
                 txt(i18n::s.get("core.locale.blending.sounds"));
             }
             redraw();
@@ -666,7 +666,7 @@ label_1923:
         {
             rppage = 0;
             window_recipe(list2, -1, wx + ww, wy, 400, wh);
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.blending.prompt.how_many"));
             p = 10;
             for (int cnt = 0; cnt < 10; ++cnt)
@@ -738,9 +738,9 @@ label_1923:
         }
         sort_list_by_column1();
         windowshadow(1) = 1;
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.blending.recipe.warning"));
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.blending.recipe.which"));
         goto label_1924_internal;
     }
@@ -879,7 +879,7 @@ label_1925_internal:
     goto label_1925_internal;
 label_1927_internal:
     windowshadow(1) = 1;
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get(
         "core.locale.blending.steps.add_ingredient", rpmatname(step)));
 label_1928_internal:
@@ -1160,14 +1160,14 @@ int rpdiff(int, int prm_1042, int prm_1043)
                 {
                     if (f2_at_m180 < 0)
                     {
-                        txtef(2);
+                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
                             "core.locale.blending.success_rate.goes_up"));
                         break;
                     }
                     if (f2_at_m180 > 0)
                     {
-                        txtef(3);
+                        Message::instance().txtef(ColorIndex::red);
                         txt(i18n::s.get(
                             "core.locale.blending.success_rate.goes_down"));
                         break;
@@ -1597,7 +1597,7 @@ void blending_start_attempt()
     if (rpdiff(rpid, -1, -1) < rnd(100))
     {
         rpresult = 0;
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
         txt(i18n::s.get("core.locale.blending.failed"));
     }
     else
@@ -1632,7 +1632,7 @@ void blending_start_attempt()
                         1);
                 }
             }
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
             snd("core.drink1");
         }
@@ -1684,26 +1684,26 @@ void blending_proc_on_success_events()
     {
     case 10000:
         ibitmod(6, ci, 1);
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
         txt(i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
         snd("core.offer1");
         break;
     case 10001:
         inv[ci].color = inv[ti].color;
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]));
         snd("core.drink1");
         break;
     case 10002:
         ibitmod(14, ci, 1);
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
         txt(i18n::s.get("core.locale.action.dip.result.poisoned_food"));
         snd("core.offer1");
         break;
     case 10003:
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         if (inv[ci].id == 567)
@@ -1719,7 +1719,7 @@ void blending_proc_on_success_events()
         snd("core.drink1");
         break;
     case 10004:
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         ibitmod(1, ci, 1);
@@ -1728,7 +1728,7 @@ void blending_proc_on_success_events()
         snd("core.drink1");
         break;
     case 10005:
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.action.dip.result.bait_attachment", inv[ci], inv[ti]));
         if (inv[ci].param4 == inv[ti].param1)
@@ -1743,19 +1743,19 @@ void blending_proc_on_success_events()
         snd("core.equip1");
         break;
     case 10006:
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.action.dip.result.blessed_item", inv[ci], inv[ti]));
         if (inv[ti].curse_state == CurseState::blessed)
         {
-            txtef(5);
+            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
                 "core.locale.action.dip.result.becomes_blessed", inv[ci]));
             inv[ci].curse_state = CurseState::blessed;
         }
         if (is_cursed(inv[ti].curse_state))
         {
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
                 "core.locale.action.dip.result.becomes_cursed", inv[ci]));
             inv[ci].curse_state = CurseState::cursed;
@@ -1783,7 +1783,7 @@ void blending_proc_on_success_events()
             txt(i18n::s.get("core.locale.action.dip.result.well_dry", inv[ci]));
             break;
         }
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.action.dip.result.well_refilled", inv[ci]));
         if (inv[ti].id == 587)
@@ -1830,7 +1830,7 @@ void blending_proc_on_success_events()
             itemcreate(0, 0, -1, -1, 0);
         }
         txt(i18n::s.get("core.locale.action.dip.result.natural_potion"));
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.action.dip.you_get", inv[ci]));
         item_stack(0, ci, 1);
         item_stack(0, ci);

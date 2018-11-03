@@ -82,7 +82,7 @@ static void _map_events_tower_of_fire()
         if (r < 6)
         {
             dmg = (6 - r) * (6 - r) * 2;
-            txtef(3);
+            Message::instance().txtef(ColorIndex::red);
             txt(i18n::s.get("core.locale.action.exit_map.it_is_hot"));
             damage_hp(cdata[cc], dmg, -9);
         }
@@ -137,7 +137,7 @@ static void _map_events_port_kapul()
         {
             quest_update_journal_msg();
             game_data.quest_flags.kamikaze_attack = 3;
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get("core.locale.misc.quest.kamikaze_attack.message"));
             txt(i18n::s.get(
                 "core.locale.misc.quest.kamikaze_attack.stairs_appear"));
@@ -222,17 +222,17 @@ static void _map_events_museum()
     {
         if (rnd(25) == 0)
         {
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get("core.locale.misc.map.museum.chats"));
         }
         if (rnd(25) == 0)
         {
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get("core.locale.misc.map.museum.chats2"));
         }
         if (rnd(15) == 0)
         {
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (en)
@@ -287,7 +287,7 @@ static void _map_events_shop()
     {
         if (rnd(25) == 0)
         {
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get("core.locale.misc.map.shop.chats"));
         }
         return;

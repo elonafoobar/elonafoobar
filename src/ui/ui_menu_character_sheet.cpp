@@ -209,7 +209,7 @@ bool UIMenuCharacterSheet::init()
     }
     if (_operation == CharacterSheetOperation::train_skill)
     {
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.ui.chara_sheet.train_which_skill"));
     }
     _returned_from_portrait = false;

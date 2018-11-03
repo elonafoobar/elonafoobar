@@ -234,9 +234,9 @@ void ModManager::run_startup_script(const std::string& name)
     script_mod->env.raw_set("data", lua_->get_data_manager().get().storage);
 
     ELONA_LOG("Loaded startup script " << name);
-    txtef(8);
+    Message::instance().txtef(ColorIndex::purple);
     txt(i18n::s.get("core.locale.mod.loaded_script", name));
-    txtnew();
+    Message::instance().linebreak();
 }
 
 void ModManager::clear_mod_stores()

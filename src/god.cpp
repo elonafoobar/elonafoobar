@@ -47,7 +47,7 @@ void txtgod(const GodId& id, int type)
     default: assert(0);
     }
 
-    txtef(5);
+    Message::instance().txtef(ColorIndex::orange);
     if (type == 6)
     {
     }
@@ -376,7 +376,7 @@ void god_proc_switching_penalty()
         if (!cdata.player().god_id.empty())
         {
             mode = 9;
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
                 "core.locale.god.enraged",
                 i18n::_(u8"god", cdata.player().god_id, u8"name")));
@@ -409,7 +409,7 @@ void switch_religion()
     spact(25) = 0;
     if (cdata.player().god_id.empty())
     {
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get("core.locale.god.switch.unbeliever"));
     }
     else
@@ -417,7 +417,7 @@ void switch_religion()
         animode = 100;
         MiracleAnimation().play();
         snd("core.complete1");
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
             "core.locale.god.switch.follower",
             i18n::_(u8"god", cdata.player().god_id, u8"name")));
@@ -446,7 +446,7 @@ TurnResult do_pray()
         txt(i18n::s.get("core.locale.god.pray.do_not_believe"));
         return TurnResult::turn_end;
     }
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.god.pray.prompt"));
     rtval = yes_or_no(promptx, prompty, 160);
     if (rtval != 0)
@@ -522,7 +522,7 @@ TurnResult do_pray()
             }
             flt();
             dbid = 0;
-            txtef(4);
+            Message::instance().txtef(ColorIndex::blue);
             if (cdata.player().god_id == core_god::mani)
             {
                 dbid = 262;

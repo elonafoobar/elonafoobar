@@ -979,7 +979,7 @@ void initialize_game()
 
     mtilefilecur = -1;
     firstturn = 1;
-    msg_append_begin(
+    Message::instance().msg_append_begin(
         "  Lafrontier presents Elona ver 1.22. Welcome traveler! ");
     if (Config::instance().net)
     {

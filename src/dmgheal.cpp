@@ -369,7 +369,7 @@ int damage_hp(
                     continue;
                 }
                 cdata[cnt].is_lay_hand_available() = false;
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
@@ -412,7 +412,7 @@ int damage_hp(
         }
         if (game_data.proc_damage_events_flag == 2)
         {
-            txtcontinue();
+            Message::instance().continue_sentence();
             if (damage_level == -1)
             {
                 txt(i18n::s.get(
@@ -422,7 +422,7 @@ int damage_hp(
             }
             if (damage_level == 0)
             {
-                txtef(5);
+                Message::instance().txtef(ColorIndex::orange);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.slightly",
                     victim,
@@ -430,7 +430,7 @@ int damage_hp(
             }
             if (damage_level == 1)
             {
-                txtef(11);
+                Message::instance().txtef(ColorIndex::gold);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.moderately",
                     victim,
@@ -438,7 +438,7 @@ int damage_hp(
             }
             if (damage_level == 2)
             {
-                txtef(10);
+                Message::instance().txtef(ColorIndex::light_red);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.severely",
                     victim,
@@ -446,7 +446,7 @@ int damage_hp(
             }
             if (damage_level >= 3)
             {
-                txtef(3);
+                Message::instance().txtef(ColorIndex::red);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.critically",
                     victim,
@@ -459,7 +459,7 @@ int damage_hp(
         {
             if (is_in_fov(victim))
             {
-                txtef(11);
+                Message::instance().txtef(ColorIndex::gold);
                 txt(i18n::s.get(
                     "core.locale.damage.reactions.screams", victim));
             }
@@ -468,7 +468,7 @@ int damage_hp(
         {
             if (is_in_fov(victim))
             {
-                txtef(10);
+                Message::instance().txtef(ColorIndex::light_red);
                 txt(i18n::s.get(
                     "core.locale.damage.reactions.writhes_in_pain", victim));
             }
@@ -477,7 +477,7 @@ int damage_hp(
         {
             if (is_in_fov(victim))
             {
-                txtef(3);
+                Message::instance().txtef(ColorIndex::red);
                 txt(i18n::s.get(
                     "core.locale.damage.reactions.is_severely_hurt", victim));
             }
@@ -490,7 +490,7 @@ int damage_hp(
             }
             if (is_in_fov(victim))
             {
-                txtef(4);
+                Message::instance().txtef(ColorIndex::blue);
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
             }
         }
@@ -525,7 +525,7 @@ int damage_hp(
                             victim.fear = rnd(20) + 5;
                             if (is_in_fov(victim))
                             {
-                                txtef(4);
+                                Message::instance().txtef(ColorIndex::blue);
                                 txt(i18n::s.get(
                                     "core.locale.damage.runs_away_in_terror",
                                     victim));
@@ -690,7 +690,7 @@ int damage_hp(
             if (rnd(3) == 0)
             {
                 victim.will_explode_soon() = true;
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 txt(i18n::s.get("core.locale.damage.explode_click"));
             }
         }
@@ -743,7 +743,7 @@ int damage_hp(
                     {
                         if (is_in_fov(victim))
                         {
-                            txtef(4);
+                            Message::instance().txtef(ColorIndex::blue);
                             txt(i18n::s.get(
                                 "core.locale.damage.is_engulfed_in_fury",
                                 victim));
@@ -811,7 +811,7 @@ int damage_hp(
         {
             snd_at(*se, victim.position, false, false);
         }
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
         if (attacker)
         {
             if (element)
@@ -819,7 +819,7 @@ int damage_hp(
                 if (victim.index >= 16
                     && game_data.proc_damage_events_flag == 2)
                 {
-                    txtcontinue();
+                    Message::instance().continue_sentence();
                     txteledmg(1, attacker_is_player, victim.index, element);
                 }
                 else
@@ -835,7 +835,7 @@ int damage_hp(
                     if (victim.index >= 16
                         && game_data.proc_damage_events_flag == 2)
                     {
-                        txtcontinue();
+                        Message::instance().continue_sentence();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.transformed_into_meat."
                             "active",
@@ -856,7 +856,7 @@ int damage_hp(
                     if (victim.index >= 16
                         && game_data.proc_damage_events_flag == 2)
                     {
-                        txtcontinue();
+                        Message::instance().continue_sentence();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.destroyed.active",
                             victim,
@@ -875,7 +875,7 @@ int damage_hp(
                     if (victim.index >= 16
                         && game_data.proc_damage_events_flag == 2)
                     {
-                        txtcontinue();
+                        Message::instance().continue_sentence();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.minced.active",
                             victim,
@@ -894,7 +894,7 @@ int damage_hp(
                     if (victim.index >= 16
                         && game_data.proc_damage_events_flag == 2)
                     {
-                        txtcontinue();
+                        Message::instance().continue_sentence();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.killed.active",
                             victim,
@@ -1035,7 +1035,7 @@ int damage_hp(
                     }
                     if (victim.id == 141)
                     {
-                        txtef(2);
+                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.fool"));
                         snd("core.complete1");
@@ -1043,7 +1043,7 @@ int damage_hp(
                     }
                     if (victim.id == 143)
                     {
-                        txtef(2);
+                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.king"));
                         snd("core.complete1");
@@ -1051,7 +1051,7 @@ int damage_hp(
                     }
                     if (victim.id == 144)
                     {
-                        txtef(2);
+                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
                             "core.locale.scenario.obtain_stone.sage"));
                         snd("core.complete1");
@@ -1090,7 +1090,7 @@ int damage_hp(
                     if (victim.id == 319)
                     {
                         ++game_data.quest_flags.kill_count_of_little_sister;
-                        txtef(3);
+                        Message::instance().txtef(ColorIndex::red);
                         txt(i18n::s.get(
                             "core.locale.talk.unique.strange_scientist.saved_"
                             "count",

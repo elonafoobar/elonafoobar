@@ -333,8 +333,8 @@ TalkResult talk_game_begin()
         }
         update_screen();
         await(3000);
-        txtnew();
-        txtef(3);
+        Message::instance().linebreak();
+        Message::instance().txtef(ColorIndex::red);
         txt(
             i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg."
                         "something_is_killed"));
@@ -444,7 +444,7 @@ TalkResult talk_game_begin()
     }
     else
     {
-        txtnew();
+        Message::instance().linebreak();
     }
     txt(i18n::s.get(
         "core.locale.talk.unique.lomias.begin.regain_consciousness"));

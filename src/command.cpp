@@ -272,7 +272,7 @@ TurnResult do_interact_command()
         else
         {
             cdatan(4, tc) = inputlog;
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(""s + cdatan(4, tc));
         }
         update_screen();
@@ -573,7 +573,8 @@ static void _dig_material_spot()
 
 TurnResult do_search_command()
 {
-    txt(i18n::s.get("core.locale.action.search.execute"), message::only_once);
+    txt(i18n::s.get("core.locale.action.search.execute"),
+        Message::only_once{true});
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
         _search_for_crystal();
@@ -698,7 +699,7 @@ TurnResult do_throw_command()
                                     "weak_enough"));
                     return TurnResult::turn_end;
                 }
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get(
                     "core.locale.action.throw.monster_ball.capture",
                     cdata[tc]));
@@ -760,7 +761,7 @@ TurnResult do_throw_command()
                     {
                         if (tc != 0)
                         {
-                            txtef(9);
+                            Message::instance().txtef(ColorIndex::cyan);
                             txt(i18n::s.get(
                                 "core.locale.action.throw.snow.dialog"));
                         }
@@ -771,14 +772,14 @@ TurnResult do_throw_command()
                 {
                     if (is_in_fov(cdata[tc]))
                     {
-                        txtef(4);
+                        Message::instance().txtef(ColorIndex::blue);
                         txt(i18n::s.get("core.locale.action.throw.tomato"));
                     }
                     if (inv[ci].param3 == -1)
                     {
                         if (is_in_fov(cdata[tc]))
                         {
-                            txtef(4);
+                            Message::instance().txtef(ColorIndex::blue);
                             txt(i18n::s.get(
                                 "core.locale.damage.is_engulfed_in_fury",
                                 cdata[tc]));
@@ -848,7 +849,7 @@ TurnResult do_throw_command()
             {
                 if (is_in_fov({tlocx, tlocy}))
                 {
-                    txtef(4);
+                    Message::instance().txtef(ColorIndex::blue);
                     txt(i18n::s.get("core.locale.action.throw.tomato"));
                 }
                 return TurnResult::turn_end;
@@ -982,7 +983,7 @@ TurnResult do_change_ammo_command()
     {
         inv[ci].count = list(0, cs);
     }
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.action.ammo.current") + ":");
     for (int cnt = 0, cnt_end = (listmax + 1); cnt < cnt_end; ++cnt)
     {
@@ -1003,7 +1004,7 @@ TurnResult do_change_ammo_command()
         if (inv[ci].count == cnt - 1)
         {
             s = u8"["s + s + u8"]"s;
-            txtef(4);
+            Message::instance().txtef(ColorIndex::blue);
         }
         else
         {
@@ -1091,7 +1092,7 @@ TurnResult do_offer_command()
             {
                 txt(i18n::s.get("core.locale.action.offer.take_over.shadow"));
             }
-            txtef(5);
+            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
                 "core.locale.action.offer.take_over.succeed",
                 i18n::_(u8"god", cdata.player().god_id, u8"name"),
@@ -1110,7 +1111,7 @@ TurnResult do_offer_command()
     }
     else
     {
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (i >= 15)
@@ -1156,7 +1157,7 @@ TurnResult do_look_command()
     if (listmax == 0)
     {
         txt(i18n::s.get("core.locale.action.look.find_nothing"),
-            message::only_once);
+            Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -1545,7 +1546,7 @@ TurnResult do_dip_command()
         inv[cidip].modify_number(-1);
         if (inv[cidip].curse_state == CurseState::blessed)
         {
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
                 "core.locale.action.dip.result.becomes_blessed", inv[ci]));
             inv[ci].curse_state = CurseState::blessed;
@@ -1554,7 +1555,7 @@ TurnResult do_dip_command()
         }
         if (is_cursed(inv[cidip].curse_state))
         {
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
                 "core.locale.action.dip.result.becomes_cursed", inv[ci]));
             inv[ci].curse_state = CurseState::cursed;
@@ -1666,7 +1667,7 @@ TurnResult do_use_command()
         }
         else
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get(
                 "core.locale.action.use.living.ready_to_grow", inv[ci]));
             randomize(inv[ci].subname);
@@ -1712,7 +1713,7 @@ TurnResult do_use_command()
             s = i18n::s.get("core.locale.action.use.living.bonus");
             prompt.append(s);
             rtval = prompt.query(promptx, prompty, 400);
-            txtnew();
+            Message::instance().linebreak();
             if (rtval == -1)
             {
                 txt(i18n::s.get(
@@ -1728,7 +1729,7 @@ TurnResult do_use_command()
                 {
                     enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
                 }
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get(
                     "core.locale.action.use.living.pleased", inv[ci]));
                 randomize(inv[ci].subname);
@@ -1988,7 +1989,7 @@ TurnResult do_use_command()
                         "core.locale.action.use.stethoscope.other.start.female."
                         "text",
                         cdata[tc]));
-                    txtef(4);
+                    Message::instance().txtef(ColorIndex::blue);
                     txt(i18n::s.get(
                         "core.locale.action.use.stethoscope.other.start.female."
                         "dialog",
@@ -2038,7 +2039,7 @@ TurnResult do_use_command()
                         txt(i18n::s.get(
                             "core.locale.action.use.leash.other.start.text",
                             cdata[tc]));
-                        txtef(9);
+                        Message::instance().txtef(ColorIndex::cyan);
                         txt(i18n::s.get(
                             "core.locale.action.use.leash.other.start.dialog",
                             cdata[tc]));
@@ -2049,7 +2050,7 @@ TurnResult do_use_command()
                         txt(i18n::s.get(
                             "core.locale.action.use.leash.other.stop.text",
                             cdata[tc]));
-                        txtef(9);
+                        Message::instance().txtef(ColorIndex::cyan);
                         txt(i18n::s.get(
                             "core.locale.action.use.leash.other.stop.dialog",
                             cdata[tc]));
@@ -2271,12 +2272,12 @@ TurnResult do_use_command()
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         game_data.diastrophism_flag = 1;
         snd("core.pray1");
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get("core.locale.action.use.statue.opatos"));
         goto label_2229_internal;
     case 34:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get("core.locale.action.use.statue.jure"));
         efid = 637;
         efp = 5000;
@@ -2285,14 +2286,14 @@ TurnResult do_use_command()
     case 43:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         snd("core.pray1");
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get("core.locale.action.use.statue.ehekatl"));
         buff_add(cdata[tc], 19, 77, 2500);
         goto label_2229_internal;
     case 27:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         snd("core.pray1");
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         if (game_data.weather == 1)
         {
             txt(i18n::s.get(
@@ -2404,17 +2405,17 @@ TurnResult do_use_command()
         ++game_data.acquirable_feat_count;
         txt(i18n::s.get(
             "core.locale.action.use.secret_experience.kumiromi.use.dialog"));
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
             "core.locale.action.use.secret_experience.kumiromi.use.text"));
         goto label_2229_internal;
     case 42:
         snd("core.curse1");
-        txtef(8);
+        Message::instance().txtef(ColorIndex::purple);
         txt(i18n::s.get("core.locale.action.use.secret_experience.lomias"));
         goto label_2229_internal;
     case 46:
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.action.use.rope.prompt"));
         rtval = yes_or_no(promptx, prompty, 160);
         if (rtval != 0)
@@ -2475,7 +2476,7 @@ TurnResult do_use_command()
         animeload(8, 0);
         goto label_2229_internal;
     case 32:
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.action.use.gene_machine.choose_original"));
         rc = 0;
         {
@@ -2486,7 +2487,7 @@ TurnResult do_use_command()
             }
             rc = stat;
         }
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.action.use.gene_machine.choose_subject"));
         {
             int chara;
@@ -2513,7 +2514,7 @@ TurnResult do_use_command()
             tc = chara;
         }
         update_screen();
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get(
             "core.locale.action.use.gene_machine.prompt",
             cdata[tc],
@@ -2523,8 +2524,8 @@ TurnResult do_use_command()
         {
             return TurnResult::turn_end;
         }
-        txtnew();
-        txtef(5);
+        Message::instance().linebreak();
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
             "core.locale.action.use.gene_machine.has_inherited",
             cdata[rc],
@@ -2535,7 +2536,7 @@ TurnResult do_use_command()
             if (stat != -1)
             {
                 cdata[rc].body_parts[stat - 100] = rtval * 10000;
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get(
                     "core.locale.action.use.gene_machine.gains.body_part",
                     cdata[rc],
@@ -2554,7 +2555,7 @@ TurnResult do_use_command()
                         break;
                     }
                     chara_gain_skill(cdata[rc], rtval(cnt), 1);
-                    txtef(2);
+                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
                         "core.locale.action.use.gene_machine.gains.ability",
                         cdata[rc],
@@ -2573,7 +2574,7 @@ TurnResult do_use_command()
                 r2 = 1;
                 gain_level(cdata[rc]);
             }
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
                 "core.locale.action.use.gene_machine.gains.level",
                 cdata[rc],
@@ -2611,25 +2612,25 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 35:
         txt(i18n::s.get("core.locale.action.use.iron_maiden.use"));
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"));
         txt(i18n::s.get(
             "core.locale.action.use.iron_maiden.someone_activates"));
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
         damage_hp(cdata.player(), 9999, -18);
         goto label_2229_internal;
     case 36:
         txt(i18n::s.get("core.locale.action.use.guillotine.use"));
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"));
         txt(i18n::s.get("core.locale.action.use.guillotine.someone_activates"));
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
         damage_hp(cdata.player(), 9999, -19);
         goto label_2229_internal;
     case 39:
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get("core.locale.action.use.whistle.use"));
         make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
         goto label_2229_internal;
@@ -2697,7 +2698,7 @@ TurnResult do_open_command()
                         tc = chara_find(203);
                         if (tc != 0)
                         {
-                            txtef(9);
+                            Message::instance().txtef(ColorIndex::cyan);
                             txt(i18n::s.get(
                                 "core.locale.action.open.shackle.dialog"));
                             cdata[game_data.fire_giant].enemy_id = tc;
@@ -3200,7 +3201,7 @@ TurnResult do_movement_command()
     {
         if (rnd(5) == 0)
         {
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get("core.locale.action.move.drunk"));
             f = 1;
         }
@@ -3229,7 +3230,7 @@ TurnResult do_movement_command()
     if (cdata.player().inventory_weight_type >= 4)
     {
         txt(i18n::s.get("core.locale.action.move.carry_too_much"),
-            message::only_once);
+            Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3321,7 +3322,7 @@ TurnResult do_movement_command()
     if (cdata.player().confused != 0)
     {
         txt(i18n::s.get("core.locale.action.move.confused"),
-            message::only_once);
+            Message::only_once{true});
         update_screen();
     }
     return TurnResult::pc_turn_user_error;
@@ -3429,21 +3430,21 @@ TurnResult do_fire_command()
         if (stat == -1)
         {
             txt(i18n::s.get("core.locale.action.ranged.equip.need_weapon"),
-                message::only_once);
+                Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (stat == -2)
         {
             txt(i18n::s.get("core.locale.action.ranged.equip.need_ammo"),
-                message::only_once);
+                Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (stat == -3)
         {
             txt(i18n::s.get("core.locale.action.ranged.equip.wrong_ammo"),
-                message::only_once);
+                Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -3559,7 +3560,8 @@ TurnResult do_get_command()
             }
             return TurnResult::turn_end;
         }
-        txt(i18n::s.get("core.locale.action.get.air"), message::only_once);
+        txt(i18n::s.get("core.locale.action.get.air"),
+            Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3580,12 +3582,12 @@ TurnResult do_get_command()
         if (inv[ci].own_state == 2)
         {
             txt(i18n::s.get("core.locale.action.get.cannot_carry"),
-                message::only_once);
+                Message::only_once{true});
         }
         if (inv[ci].own_state == 1 || inv[ci].own_state == 5)
         {
             txt(i18n::s.get("core.locale.action.get.not_owned"),
-                message::only_once);
+                Message::only_once{true});
         }
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -3621,7 +3623,7 @@ TurnResult do_short_cut_command(int sc_)
     if (game_data.skill_shortcuts.at(sc_) == 0)
     {
         txt(i18n::s.get("core.locale.action.shortcut.unassigned"),
-            message::only_once);
+            Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3643,7 +3645,7 @@ TurnResult do_short_cut_command(int sc_)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -3665,7 +3667,7 @@ TurnResult do_short_cut_command(int sc_)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -3675,7 +3677,7 @@ TurnResult do_short_cut_command(int sc_)
         {
             txt(i18n::s.get(
                     "core.locale.action.shortcut.cannot_use_spell_anymore"),
-                message::only_once);
+                Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -3686,10 +3688,10 @@ TurnResult do_short_cut_command(int sc_)
 
 TurnResult do_exit_command()
 {
-    txtnew();
+    Message::instance().linebreak();
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
         txt(i18n::s.get("core.locale.action.exit.cannot_save_in_usermap"));
     }
     else

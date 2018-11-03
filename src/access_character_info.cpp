@@ -131,7 +131,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「"
                             + i18n::_(
                                   u8"ui", u8"onii", u8"_"s + cdata.player().sex)
@@ -167,7 +167,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「おかえり、"
                             + i18n::_(
                                   u8"ui", u8"onii", u8"_"s + cdata.player().sex)
@@ -190,7 +190,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「"
                             + i18n::_(
                                   u8"ui", u8"onii", u8"_"s + cdata.player().sex)
@@ -226,7 +226,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「おかえり、"
                             + i18n::_(
                                   u8"ui", u8"onii", u8"_"s + cdata.player().sex)
@@ -249,7 +249,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「"
                             + i18n::_(
                                   u8"ui", u8"onii", u8"_"s + cdata.player().sex)
@@ -285,7 +285,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「おかえりにゃ、"
                             + i18n::_(
                                   u8"ui", u8"onii", u8"_"s + cdata.player().sex)
@@ -306,7 +306,7 @@ int access_character_info()
         {
             if (dbmode == 100)
             {
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 if (jp)
                 {
                     txt(u8"「"
@@ -326,7 +326,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「ダメぇ！」",
                         u8"「"
                             + i18n::_(
@@ -341,7 +341,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(u8"「おかえりなさいませ、"
                             + i18n::_(
                                   u8"ui",
@@ -358,7 +358,7 @@ int access_character_info()
                 u8"character", std::to_string(dbid), u8"text_"s + dbmode);
             if (!text.empty())
             {
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 txt(text);
             }
         }

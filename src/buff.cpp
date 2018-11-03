@@ -225,7 +225,7 @@ void buff_delete(Character& cc, int slot)
 {
     if (cc.index == 0)
     {
-        txtef(8);
+        Message::instance().txtef(ColorIndex::purple);
         txt(i18n::s.get(
             "core.locale.magic.buff.ends",
             i18n::s.get_enum_property(

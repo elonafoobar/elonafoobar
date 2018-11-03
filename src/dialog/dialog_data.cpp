@@ -14,7 +14,7 @@ static void _dialog_error(const std::string& node_id, const std::string& text)
 {
     std::string message = "Dialog error (" + node_id + "): " + text;
 
-    txtef(ColorIndex::red);
+    Message::instance().txtef(ColorIndex::red);
     txt(message);
     std::cerr << message << std::endl;
 }

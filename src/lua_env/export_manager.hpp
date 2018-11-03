@@ -76,7 +76,7 @@ public:
         {
             std::string message =
                 "Script callback error (" + name + "): " + e.what();
-            txtef(ColorIndex::red);
+            Message::instance().txtef(ColorIndex::red);
             txt(message);
             std::cerr << message << std::endl;
         }
@@ -99,7 +99,7 @@ public:
                 "Script callback error (" + name + "): no such exported function was "
                   "found";
 
-            txtef(ColorIndex::red);
+            Message::instance().txtef(ColorIndex::red);
             txt(message);
             std::cerr << message << std::endl;
             return default_value;

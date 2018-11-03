@@ -273,7 +273,7 @@ void quest_check()
             }
             else
             {
-                txtef(4);
+                Message::instance().txtef(ColorIndex::blue);
                 txt(i18n::s.get("core.locale.quest.hunt.remaining", p_at_m119));
             }
         }
@@ -618,7 +618,7 @@ void quest_refresh_list()
 void quest_update_journal_msg()
 {
     snd("core.write1");
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get("core.locale.quest.journal_updated"));
 }
 
@@ -1087,7 +1087,7 @@ void quest_enter_map()
 {
     if (game_data.executing_immediate_quest_type == 1009)
     {
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get(
             "core.locale.map.quest.on_enter.party",
             game_data.left_minutes_of_executing_quest,
@@ -1100,7 +1100,7 @@ void quest_enter_map()
             quest_data.immediate().extra_info_1 = 15000;
             quest_data.immediate().reward_gold = 400;
         }
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get(
             "core.locale.map.quest.on_enter.harvest",
             cnvweight(quest_data.immediate().extra_info_1),
@@ -1108,7 +1108,7 @@ void quest_enter_map()
     }
     if (game_data.executing_immediate_quest_type == 1008)
     {
-        txtef(9);
+        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get(
             "core.locale.map.quest.on_enter.conquer",
             chara_refstr(quest_data.immediate().extra_info_1, 2),
@@ -1192,14 +1192,14 @@ void quest_failed(int val0)
         {
             --quest_data[quest_data[rq].target_chara_index]
                   .delivery_has_package_flag;
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
                 "core.locale.quest.deliver.you_commit_a_serious_crime"));
             modify_karma(cdata.player(), -20);
         }
         if (quest_data[rq].id == 1007)
         {
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get("core.locale.quest.escort.you_failed_to_protect"));
             for (int cnt = 0; cnt < 16; ++cnt)
             {
@@ -1246,7 +1246,7 @@ void quest_failed(int val0)
                                         cdata[tc].position.y);
                                     p = -9;
                                 }
-                                txtef(9);
+                                Message::instance().txtef(ColorIndex::cyan);
                                 txt(s);
                                 damage_hp(cdata[tc], 999999, p);
                             }
@@ -1263,7 +1263,7 @@ void quest_failed(int val0)
     }
     int stat = decfame(0, 40);
     p = stat;
-    txtef(3);
+    Message::instance().txtef(ColorIndex::red);
     txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
 }
 
@@ -1285,9 +1285,9 @@ void quest_team_victorious()
     snd("core.cheer");
     if (petarenawin == 1)
     {
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.quest.arena.your_team_is_victorious"));
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.quest.gain_fame",
             game_data.executing_immediate_quest_fame_gained));
@@ -1308,7 +1308,7 @@ void quest_team_victorious()
     }
     else
     {
-        txtef(8);
+        Message::instance().txtef(ColorIndex::purple);
         txt(i18n::s.get("core.locale.quest.arena.your_team_is_defeated"));
         area_data[game_data.previous_map2].winning_streak_in_pet_arena = 0;
         modrank(1, -100);
@@ -1316,7 +1316,7 @@ void quest_team_victorious()
         p = stat;
         if (arenaop == 0)
         {
-            txtef(3);
+            Message::instance().txtef(ColorIndex::red);
             txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
         }
     }
@@ -1332,9 +1332,9 @@ void quest_all_targets_killed()
     if (game_data.executing_immediate_quest_type == 1)
     {
         snd("core.cheer");
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.quest.arena.you_are_victorious"));
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
             "core.locale.quest.gain_fame",
             game_data.executing_immediate_quest_fame_gained));
@@ -1358,19 +1358,19 @@ void quest_all_targets_killed()
         || game_data.executing_immediate_quest_type == 1010)
     {
         quest_data.immediate().progress = 3;
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
     if (game_data.executing_immediate_quest_type == 1007)
     {
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
     if (game_data.executing_immediate_quest_type == 1008)
     {
         game_data.left_minutes_of_executing_quest = 0;
         quest_data.immediate().progress = 3;
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get("core.locale.quest.conquer.complete"));
     }
 }
@@ -1484,9 +1484,9 @@ void quest_complete()
     modify_karma(cdata.player(), 1);
     game_data.executing_immediate_quest_fame_gained =
         calcfame(0, quest_data[rq].difficulty * 3 + 10);
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)));
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get(
         "core.locale.quest.gain_fame",
         game_data.executing_immediate_quest_fame_gained));

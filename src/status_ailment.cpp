@@ -68,7 +68,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].blind = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.blinded.apply", cdata[cc]));
             }
@@ -95,7 +95,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].confused = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.confused.apply", cdata[cc]));
             }
@@ -120,7 +120,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].paralyzed = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.paralyzed.apply", cdata[cc]));
             }
@@ -145,7 +145,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].poisoned = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.poisoned.apply", cdata[cc]));
             }
@@ -170,7 +170,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].sleep = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.sleep.apply", cdata[cc]));
             }
@@ -218,7 +218,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].dimmed = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.dimmed.apply", cdata[cc]));
             }
@@ -242,7 +242,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].bleeding = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.bleeding.apply", cdata[cc]));
             }
@@ -280,7 +280,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].insane = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.insane.apply", cdata[cc]));
             }
@@ -300,7 +300,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             cdata[cc].sick = turn;
             if (is_in_fov(cdata[cc]))
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.status_ailment.sick.apply", cdata[cc]));
             }

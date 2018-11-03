@@ -139,7 +139,7 @@ int magic()
                         }
                         if (is_in_fov(cdata[tc]))
                         {
-                            txtef(2);
+                            Message::instance().txtef(ColorIndex::green);
                             txt(i18n::s.get(
                                 "core.locale.magic.slow", cdata[tc]));
                         }
@@ -152,7 +152,7 @@ int magic()
                         cdata[tc].birth_year -= rnd(3) + 1;
                         if (is_in_fov(cdata[tc]))
                         {
-                            txtef(8);
+                            Message::instance().txtef(ColorIndex::purple);
                             txt(i18n::s.get(
                                 "core.locale.magic.speed", cdata[tc]));
                         }
@@ -692,7 +692,7 @@ int magic()
                     cdata[tc].nutrition -= 800;
                     if (is_in_fov(cdata[tc]))
                     {
-                        txtef(8);
+                        Message::instance().txtef(ColorIndex::purple);
                         txt(i18n::s.get("core.locale.magic.hunger", cdata[tc]));
                     }
                     get_hungry(cdata[tc]);
@@ -716,7 +716,7 @@ int magic()
                         }
                         if (is_in_fov(cdata[tc]))
                         {
-                            txtef(8);
+                            Message::instance().txtef(ColorIndex::purple);
                             txt(i18n::s.get(
                                 "core.locale.magic.weaken", cdata[tc]));
                         }
@@ -1104,7 +1104,7 @@ label_2181_internal:
     switch (efid)
     {
     case 636:
-        txtef(8);
+        Message::instance().txtef(ColorIndex::purple);
         txt(i18n::s.get("core.locale.magic.insanity", cdata[cc], cdata[tc]));
         damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
         break;
@@ -1281,7 +1281,7 @@ label_2181_internal:
                 }
                 else
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get("core.locale.magic.milk.cursed.other"));
                 }
             }
@@ -1291,7 +1291,7 @@ label_2181_internal:
             }
             else
             {
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 txt(i18n::s.get("core.locale.magic.milk.other"));
             }
         }
@@ -1316,12 +1316,12 @@ label_2181_internal:
         {
             if (is_cursed(efstatus))
             {
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 txt(i18n::s.get("core.locale.magic.alcohol.cursed"));
             }
             else
             {
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 txt(i18n::s.get("core.locale.magic.alcohol.normal"));
             }
         }
@@ -1394,7 +1394,7 @@ label_2181_internal:
         {
             if (is_in_fov(cdata[tc]))
             {
-                txtef(3);
+                Message::instance().txtef(ColorIndex::red);
                 txt(i18n::s.get("core.locale.magic.salt.snail", cdata[tc]));
             }
             if (cdata[tc].hp > 10)
@@ -1408,7 +1408,7 @@ label_2181_internal:
         }
         else if (is_in_fov(cdata[tc]))
         {
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get("core.locale.magic.salt.apply"));
         }
         break;
@@ -1490,7 +1490,7 @@ label_2181_internal:
                 txt(i18n::s.get(
                     "core.locale.magic.mount.dismount",
                     cdata[game_data.mount]));
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 txt(name(game_data.mount)
                     + i18n::s.get("core.locale.magic.mount.dismount_dialog"));
                 ride_end();
@@ -1532,7 +1532,7 @@ label_2181_internal:
         else
         {
             ride_begin(tc);
-            txtef(9);
+            Message::instance().txtef(ColorIndex::cyan);
             txt(name(game_data.mount)
                 + i18n::s.get("core.locale.magic.mount.mount.dialog"));
         }
@@ -1675,7 +1675,7 @@ label_2181_internal:
         if (f == 0)
         {
             txt(i18n::s.get("core.locale.magic.fish.not_good_place"),
-                message::only_once);
+                Message::only_once{true});
             update_screen();
             return 0;
         }
@@ -1777,7 +1777,7 @@ label_2181_internal:
         animeload(11, tc);
         break;
     case 1120:
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get("core.locale.magic.prayer", cdata[tc]));
         heal_completely();
         BrightAuraAnimation(
@@ -1906,12 +1906,12 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.mutation.apply"));
                 if (p > 0)
                 {
-                    txtef(2);
+                    Message::instance().txtef(ColorIndex::green);
                     txt(traitrefn(0));
                 }
                 else
                 {
-                    txtef(3);
+                    Message::instance().txtef(ColorIndex::red);
                     txt(traitrefn(1));
                 }
                 animeload(8, 0);
@@ -1972,12 +1972,12 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.cure_mutation"));
                 if (p > 0)
                 {
-                    txtef(2);
+                    Message::instance().txtef(ColorIndex::green);
                     txt(traitrefn(0));
                 }
                 else
                 {
-                    txtef(3);
+                    Message::instance().txtef(ColorIndex::red);
                     txt(traitrefn(1));
                 }
                 f = 1;
@@ -2050,7 +2050,7 @@ label_2181_internal:
         cyinit = cdata[cc].position.y;
         chara_place();
         cdata[rc].current_map = 0;
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
             "core.locale.magic.resurrection.apply",
             cnven(cdatan(0, rc)),
@@ -2235,7 +2235,7 @@ label_2181_internal:
                                 "core.locale.magic.gain_knowledge.furthermore");
                         }
                         chara_gain_skill(cdata.player(), p, 1, 200);
-                        txtef(2);
+                        Message::instance().txtef(ColorIndex::green);
                         txt(s
                             + i18n::s.get(
                                   "core.locale.magic.gain_knowledge.gain",
@@ -2256,7 +2256,7 @@ label_2181_internal:
                         spell(p) = 0;
                         txt(i18n::s.get(
                             "core.locale.magic.common.it_is_cursed"));
-                        txtef(3);
+                        Message::instance().txtef(ColorIndex::red);
                         txt(i18n::s.get(
                             "core.locale.magic.gain_knowledge.lose",
                             i18n::_(
@@ -2301,7 +2301,7 @@ label_2181_internal:
             --cdata[tc].level;
             cdata[tc].experience = 0;
             update_required_experience(cdata[tc]);
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get("core.locale.magic.descent", cdata[tc]));
         }
         if (is_cursed(efstatus))
@@ -2343,7 +2343,7 @@ label_2181_internal:
                     if (is_in_fov(cdata[tc]))
                     {
                         snd("core.ding2");
-                        txtef(2);
+                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
                             "core.locale.magic.gain_skill",
                             cdata[tc],
@@ -2399,7 +2399,7 @@ label_2181_internal:
         }
         else
         {
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
                 "core.locale.magic.faith.apply",
                 i18n::_(u8"god", cdata.player().god_id, u8"name")));
@@ -2454,7 +2454,7 @@ label_2181_internal:
                         if (is_in_fov(cdata[tc]))
                         {
                             snd("core.ding2");
-                            txtef(2);
+                            Message::instance().txtef(ColorIndex::green);
                             txt(s
                                 + i18n::s.get(
                                       "core.locale.magic.gain_skill_potential."
@@ -2469,7 +2469,7 @@ label_2181_internal:
                     else if (is_in_fov(cdata[tc]))
                     {
                         snd("core.curse3");
-                        txtef(3);
+                        Message::instance().txtef(ColorIndex::red);
                         txt(i18n::s.get(
                             "core.locale.magic.gain_skill_potential.decreases",
                             cdata[tc],
@@ -2498,7 +2498,7 @@ label_2181_internal:
         if (efstatus == CurseState::blessed)
         {
             modify_potential(cdata[tc], 18, 15);
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get("core.locale.magic.troll_blood.blessed"));
         }
         chara_refresh(tc);
@@ -2648,7 +2648,7 @@ label_2181_internal:
         if (is_in_fov(cdata[tc]))
         {
             snd("core.atksword");
-            txtef(3);
+            Message::instance().txtef(ColorIndex::red);
             txt(i18n::s.get("core.locale.magic.vorpal.sound"));
             if (tc >= 16)
             {
@@ -3381,7 +3381,7 @@ label_2181_internal:
         snd("core.ding2");
         p = rnd((efp + 1)) / 100 + 1;
         game_data.rights_to_succeed_to += p;
-        txtef(5);
+        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get("core.locale.magic.deed_of_inheritance.claim", p(0)));
         txt(i18n::s.get(
             "core.locale.magic.deed_of_inheritance.can_now_inherit",
@@ -3831,7 +3831,7 @@ label_2181_internal:
         }
         break;
     case 631:
-        txtef(4);
+        Message::instance().txtef(ColorIndex::blue);
         txt(i18n::s.get("core.locale.magic.swarm"));
         for (auto&& cnt : cdata.all())
         {
@@ -3913,7 +3913,7 @@ label_2181_internal:
         }
         break;
     case 657:
-        txtef(4);
+        Message::instance().txtef(ColorIndex::blue);
         txt(i18n::s.get("core.locale.magic.mewmewmew"));
         animode = 0;
         MiracleAnimation().play();
@@ -3936,7 +3936,7 @@ label_2181_internal:
         }
         break;
     case 465:
-        txtef(4);
+        Message::instance().txtef(ColorIndex::blue);
         txt(i18n::s.get("core.locale.magic.meteor"));
         MeteorAnimation().play();
         for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
@@ -4003,7 +4003,7 @@ label_2181_internal:
             }
             if (is_in_fov(cdata[tc]))
             {
-                txtef(4);
+                Message::instance().txtef(ColorIndex::blue);
                 txt(i18n::s.get(
                     "core.locale.magic.cheer.is_excited", cdata[tc]));
             }
@@ -4021,13 +4021,13 @@ label_2181_internal:
         snd("core.pray1");
         if (!is_cursed(efstatus))
         {
-            txtef(2);
+            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get("core.locale.magic.cure_corruption.apply"));
             modify_ether_disease_stage(efp * -10);
         }
         else
         {
-            txtef(8);
+            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get("core.locale.magic.cure_corruption.cursed"));
             modify_ether_disease_stage(200);
         }
@@ -4037,7 +4037,7 @@ label_2181_internal:
         {
             break;
         }
-        txtef(8);
+        Message::instance().txtef(ColorIndex::purple);
         txt(i18n::s.get("core.locale.magic.eye_of_ether", cdata[cc]));
         modify_ether_disease_stage(100);
         break;
@@ -4049,7 +4049,7 @@ label_2181_internal:
             {
                 txt(i18n::s.get(
                     "core.locale.magic.insult.apply", cdata[cc], cdata[tc]));
-                txtef(9);
+                Message::instance().txtef(ColorIndex::cyan);
                 if (jp)
                 {
                     if (cdata[cc].sex == 0)

@@ -111,7 +111,7 @@ void addnews2(const std::string& prm_401, int prm_402)
     n_at_m36 = prm_401;
     if (prm_402)
     {
-        txtef(13);
+        Message::instance().txtef(ColorIndex::light_brown);
         txt(u8"[News] "s + n_at_m36);
     }
     talk_conv(n_at_m36, 38 - en * 5);

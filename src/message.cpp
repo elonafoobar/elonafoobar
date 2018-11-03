@@ -12,300 +12,9 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "map.hpp"
-#include "message_logger.hpp"
+#include "message_log.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-
-
-
-namespace
-{
-
-bool will_continue_sentence{};
-bool fix_text_color{};
-size_t message_width{};
-std::vector<std::string> msg{500 /* TODO inf_maxlog */};
-bool show_only_once{};
-snail::Color text_color{255, 255, 255};
-std::string msgtemp;
-std::string msgtempprev;
-
-
-
-void msg_write(std::string& message)
-{
-    constexpr const auto musical_note = u8"♪";
-
-    for (auto pos = strutil::find_widthwise(message, musical_note);
-         pos.first != std::string::npos;
-         pos = strutil::find_widthwise(message, musical_note))
-    {
-        auto bytewise_pos = pos.first;
-        auto widthwise_pos = pos.second;
-
-        const auto symbol_type = elona::stoi(
-            message.substr(bytewise_pos + std::strlen(musical_note), 1));
-        if (jp && symbol_type == 0)
-        {
-            break;
-        }
-        message = message.substr(0, bytewise_pos) + u8"  "
-            + message.substr(
-                  bytewise_pos + std::strlen(musical_note)
-                  + (symbol_type != 0));
-        elona::pos(
-            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7
-                + en * 3,
-            (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
-        gmode(2);
-        gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
-    }
-
-    color(text_color.r, text_color.g, text_color.b);
-    pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
-        (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
-    font(inf_mesfont - en * 2);
-    gmode(0, 255);
-    mes(message);
-    color(0, 0, 0);
-
-    if (message_log.lines.empty())
-    {
-        message_log.lines.emplace_back();
-    }
-    message_log.lines.back().spans.emplace_back(message, text_color);
-}
-
-
-
-void msg_newline()
-{
-    message_log.lines.emplace_back();
-
-    message_width = 0;
-    ++msgline;
-    if (msgline >= inf_maxlog)
-    {
-        msgline -= inf_maxlog;
-    }
-    msg[msgline % inf_maxlog] = "";
-
-    gmode(0);
-    pos(inf_msgx, inf_msgy + 5);
-    gcopy(
-        0,
-        inf_msgx,
-        inf_msgy + 5 + inf_msgspace,
-        windoww - inf_msgx,
-        inf_msgspace * 3 + en * 3);
-
-    int p_at_txtfunc = (windoww - inf_msgx) / 192;
-    for (int cnt = 0, cnt_end = (p_at_txtfunc + 1); cnt < cnt_end; ++cnt)
-    {
-        int x_at_txtfunc;
-        if (cnt == p_at_txtfunc)
-        {
-            x_at_txtfunc = (windoww - inf_msgx) % 192;
-        }
-        else
-        {
-            x_at_txtfunc = 192;
-        }
-        pos(cnt * 192 + inf_msgx, inf_msgy + 5 + inf_msgspace * 3 + en * 2);
-        gcopy(
-            3,
-            496,
-            536 + msgline % 4 * inf_msgspace,
-            x_at_txtfunc,
-            inf_msgspace);
-    }
-
-    gmode(2);
-    msgtempprev.clear();
-}
-
-
-
-void txt_conv()
-{
-    if (msgtemp.empty())
-    {
-        return;
-    }
-
-    for (auto&& observer : detail::observers)
-    {
-        if (observer)
-        {
-            observer->update(msgtemp);
-        }
-    }
-
-    if (tnew && !msg[msgline % inf_maxlog].empty())
-    {
-        msg_newline();
-        tnew = false;
-        if (Config::instance().message_transparency)
-        {
-            int p_at_txtfunc = (windoww - inf_msgx) / 192;
-            gmode(4, Config::instance().message_transparency * 20);
-            for (int i = 0; i < p_at_txtfunc + 1; ++i)
-            {
-                int x_at_txtfunc;
-                if (i == p_at_txtfunc)
-                {
-                    x_at_txtfunc = (windoww - inf_msgx) % 192;
-                }
-                else
-                {
-                    x_at_txtfunc = 192;
-                }
-                pos(i * 192 + inf_msgx, inf_msgy + 5);
-                gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
-            }
-        }
-        if (Config::instance().message_add_timestamps)
-        {
-            std::stringstream ss;
-            ss << "[" << std::setw(2) << std::setfill('0')
-               << game_data.date.minute << "] ";
-            msgtemp = ss.str() + msgtemp;
-        }
-        else
-        {
-            message_width = 2;
-        }
-    }
-
-    if (show_only_once)
-    {
-        if (msgtempprev == msgtemp)
-        {
-            return;
-        }
-        msgtempprev = msgtemp;
-        show_only_once = false;
-    }
-
-    if (jp)
-    {
-        if (msgtemp.find(u8"「") != std::string::npos)
-        {
-            if (!fix_text_color)
-            {
-                text_color = {210, 250, 160, 255};
-            }
-        }
-
-        size_t width{};
-        while (1)
-        {
-            width = strlen_u(msgtemp);
-            if (message_width + 4 > inf_maxmsglen && !msgtemp.empty())
-            {
-                msg_newline();
-            }
-            if (message_width + width > inf_maxmsglen)
-            {
-                size_t len{};
-                size_t wdt{};
-                while (1)
-                {
-                    const auto byte = strutil::byte_count(msgtemp[len]);
-                    wdt += byte == 1 ? 1 : 2;
-                    len += byte;
-                    if (wdt + message_width > inf_maxmsglen)
-                    {
-                        if (wdt > 1 && strmid(msgtemp, wdt - 2, 3) == u8"♪1")
-                        {
-                            ++wdt;
-                            break;
-                        }
-                        if (wdt + message_width > inf_maxmsglen + 2)
-                        {
-                            break;
-                        }
-                        if (!strutil::starts_with(msgtemp, u8"。", len)
-                            && !strutil::starts_with(msgtemp, u8"、", len)
-                            && !strutil::starts_with(msgtemp, u8"」", len)
-                            && !strutil::starts_with(msgtemp, u8"』", len)
-                            && !strutil::starts_with(msgtemp, u8"！", len)
-                            && !strutil::starts_with(msgtemp, u8"？", len)
-                            && !strutil::starts_with(msgtemp, u8"…", len)
-                            && !strutil::starts_with(msgtemp, u8"♪", len)
-                            && !strutil::starts_with(msgtemp, u8"♪1", len))
-                        {
-                            break;
-                        }
-                    }
-                }
-                if (len >= msgtemp.size())
-                {
-                    len = msgtemp.size();
-                }
-                auto m = msgtemp.substr(0, len);
-                msg[msgline % inf_maxlog] += m;
-                msg_write(m);
-                msgtemp = msgtemp.substr(len);
-                if (msgtemp.empty() || msgtemp == u8" ")
-                {
-                    break;
-                }
-                msg_newline();
-                continue;
-            }
-            break;
-        }
-        msg[msgline % inf_maxlog] += msgtemp;
-        msg_write(msgtemp);
-        message_width += width;
-    }
-    else
-    {
-        if (will_continue_sentence)
-        {
-            will_continue_sentence = false;
-        }
-        else
-        {
-            if (strutil::contains(msgtemp, u8"\""))
-            {
-                if (!fix_text_color)
-                {
-                    text_color = {210, 250, 160, 255};
-                }
-            }
-            msgtemp[0] = std::toupper(msgtemp[0]);
-        }
-        msgtemp += u8" ";
-        while (1)
-        {
-            int p_at_txtfunc = instr(msgtemp, 0, u8" ") + 1;
-            if (p_at_txtfunc == 0)
-            {
-                break;
-            }
-            if (message_width + p_at_txtfunc > inf_maxmsglen)
-            {
-                msg_newline();
-                continue;
-            }
-            auto mst = strmid(msgtemp, 0, p_at_txtfunc);
-            msg[msgline % inf_maxlog] += mst;
-            msg_write(mst);
-            message_width += p_at_txtfunc;
-            msgtemp =
-                strmid(msgtemp, p_at_txtfunc, msgtemp.size() - p_at_txtfunc);
-        }
-        msg[msgline % inf_maxlog] += msgtemp;
-        msg_write(msgtemp);
-        message_width += msgtemp.size();
-    }
-
-    fix_text_color = false;
-}
-
-} // namespace
 
 
 
@@ -316,22 +25,6 @@ namespace detail
 {
 
 std::vector<LogObserver*> observers;
-
-
-
-void set_only_once()
-{
-    show_only_once = true;
-}
-
-
-
-void txt_internal(std::vector<std::string> args)
-{
-    msgtemp = choice(args);
-    txt_conv();
-    text_color = {255, 255, 255, 255};
-}
 
 } // namespace detail
 
@@ -367,35 +60,6 @@ void unsubscribe_log(LogObserver* observer)
     }
 
     detail::observers.erase(itr);
-}
-
-
-
-void msg_append_begin(const std::string& first)
-{
-    msg_newline();
-    msgtemp = first;
-}
-
-
-
-void msg_append(const std::string& msg)
-{
-    msgtemp += msg;
-}
-
-
-
-void msg_append_end()
-{
-    txt_conv();
-}
-
-
-
-void txtcontinue()
-{
-    will_continue_sentence = true;
 }
 
 
@@ -460,43 +124,343 @@ void help_halt()
 
 
 
-void txtef(ColorIndex color)
+void Message::msg_append_begin(const std::string& first)
 {
-    txtef(static_cast<int>(color) % 21);
+    _msg_newline();
+    msgtemp = first;
 }
 
 
 
-void txtef(int color)
+void Message::msg_append(const std::string& msg)
 {
-    text_color = {static_cast<uint8_t>(255 - c_col(0, color)),
-                  static_cast<uint8_t>(255 - c_col(1, color)),
-                  static_cast<uint8_t>(255 - c_col(2, color)),
-                  255};
-
-    fix_text_color = color == 5;
+    msgtemp += msg;
 }
 
 
 
-void txtnew()
+void Message::msg_append_end()
 {
-    if (!tnew && strlen_u(msg[msgline % inf_maxlog]) > 4)
+    _txt_conv();
+}
+
+
+
+void Message::linebreak()
+{
+    if (!_new_turn && strlen_u(msg[msgline % inf_maxlog]) > 4)
     {
-        msg_newline();
+        _msg_newline();
         message_width = 2;
     }
 }
 
 
 
-void msg_clear()
+void Message::clear()
 {
     msgtemp.clear();
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        msg_newline();
+        _msg_newline();
     }
+}
+
+
+
+void Message::_msg_write(std::string& message)
+{
+    constexpr const auto musical_note = u8"♪";
+
+    for (auto pos = strutil::find_widthwise(message, musical_note);
+         pos.first != std::string::npos;
+         pos = strutil::find_widthwise(message, musical_note))
+    {
+        auto bytewise_pos = pos.first;
+        auto widthwise_pos = pos.second;
+
+        const auto symbol_type = elona::stoi(
+            message.substr(bytewise_pos + std::strlen(musical_note), 1));
+        if (jp && symbol_type == 0)
+        {
+            break;
+        }
+        message = message.substr(0, bytewise_pos) + u8"  "
+            + message.substr(
+                  bytewise_pos + std::strlen(musical_note)
+                  + (symbol_type != 0));
+        elona::pos(
+            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7
+                + en * 3,
+            (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
+        gmode(2);
+        gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
+    }
+
+    color(text_color.r, text_color.g, text_color.b);
+    pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
+        (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
+    font(inf_mesfont - en * 2);
+    gmode(0, 255);
+    mes(message);
+    color(0, 0, 0);
+
+    if (message_log.lines.empty())
+    {
+        message_log.lines.emplace_back();
+    }
+    message_log.lines.back().spans.emplace_back(message, text_color);
+}
+
+
+
+void Message::_msg_newline()
+{
+    message_log.lines.emplace_back();
+
+    message_width = 0;
+    ++msgline;
+    if (msgline >= inf_maxlog)
+    {
+        msgline -= inf_maxlog;
+    }
+    msg[msgline % inf_maxlog] = "";
+
+    gmode(0);
+    pos(inf_msgx, inf_msgy + 5);
+    gcopy(
+        0,
+        inf_msgx,
+        inf_msgy + 5 + inf_msgspace,
+        windoww - inf_msgx,
+        inf_msgspace * 3 + en * 3);
+
+    int p_at_txtfunc = (windoww - inf_msgx) / 192;
+    for (int cnt = 0, cnt_end = (p_at_txtfunc + 1); cnt < cnt_end; ++cnt)
+    {
+        int x_at_txtfunc;
+        if (cnt == p_at_txtfunc)
+        {
+            x_at_txtfunc = (windoww - inf_msgx) % 192;
+        }
+        else
+        {
+            x_at_txtfunc = 192;
+        }
+        pos(cnt * 192 + inf_msgx, inf_msgy + 5 + inf_msgspace * 3 + en * 2);
+        gcopy(
+            3,
+            496,
+            536 + msgline % 4 * inf_msgspace,
+            x_at_txtfunc,
+            inf_msgspace);
+    }
+
+    gmode(2);
+    msgtempprev.clear();
+}
+
+
+
+void Message::_txt_conv()
+{
+    if (msgtemp.empty())
+    {
+        return;
+    }
+
+    for (auto&& observer : detail::observers)
+    {
+        if (observer)
+        {
+            observer->update(msgtemp);
+        }
+    }
+
+    if (_new_turn && !msg[msgline % inf_maxlog].empty())
+    {
+        _msg_newline();
+        _new_turn = false;
+        if (Config::instance().message_transparency)
+        {
+            int p_at_txtfunc = (windoww - inf_msgx) / 192;
+            gmode(4, Config::instance().message_transparency * 20);
+            for (int i = 0; i < p_at_txtfunc + 1; ++i)
+            {
+                int x_at_txtfunc;
+                if (i == p_at_txtfunc)
+                {
+                    x_at_txtfunc = (windoww - inf_msgx) % 192;
+                }
+                else
+                {
+                    x_at_txtfunc = 192;
+                }
+                pos(i * 192 + inf_msgx, inf_msgy + 5);
+                gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
+            }
+        }
+        if (Config::instance().message_add_timestamps)
+        {
+            std::stringstream ss;
+            ss << "[" << std::setw(2) << std::setfill('0')
+               << game_data.date.minute << "] ";
+            msgtemp = ss.str() + msgtemp;
+        }
+        else
+        {
+            message_width = 2;
+        }
+    }
+
+    if (show_only_once)
+    {
+        if (msgtempprev == msgtemp)
+        {
+            return;
+        }
+        msgtempprev = msgtemp;
+        show_only_once = false;
+    }
+
+    if (jp)
+    {
+        if (msgtemp.find(u8"「") != std::string::npos)
+        {
+            if (!fix_text_color)
+            {
+                text_color = {210, 250, 160, 255};
+            }
+        }
+
+        size_t width{};
+        while (1)
+        {
+            width = strlen_u(msgtemp);
+            if (message_width + 4 > inf_maxmsglen && !msgtemp.empty())
+            {
+                _msg_newline();
+            }
+            if (message_width + width > inf_maxmsglen)
+            {
+                size_t len{};
+                size_t wdt{};
+                while (1)
+                {
+                    const auto byte = strutil::byte_count(msgtemp[len]);
+                    wdt += byte == 1 ? 1 : 2;
+                    len += byte;
+                    if (wdt + message_width > inf_maxmsglen)
+                    {
+                        if (wdt > 1 && strmid(msgtemp, wdt - 2, 3) == u8"♪1")
+                        {
+                            ++wdt;
+                            break;
+                        }
+                        if (wdt + message_width > inf_maxmsglen + 2)
+                        {
+                            break;
+                        }
+                        if (!strutil::starts_with(msgtemp, u8"。", len)
+                            && !strutil::starts_with(msgtemp, u8"、", len)
+                            && !strutil::starts_with(msgtemp, u8"」", len)
+                            && !strutil::starts_with(msgtemp, u8"』", len)
+                            && !strutil::starts_with(msgtemp, u8"！", len)
+                            && !strutil::starts_with(msgtemp, u8"？", len)
+                            && !strutil::starts_with(msgtemp, u8"…", len)
+                            && !strutil::starts_with(msgtemp, u8"♪", len)
+                            && !strutil::starts_with(msgtemp, u8"♪1", len))
+                        {
+                            break;
+                        }
+                    }
+                }
+                if (len >= msgtemp.size())
+                {
+                    len = msgtemp.size();
+                }
+                auto m = msgtemp.substr(0, len);
+                msg[msgline % inf_maxlog] += m;
+                _msg_write(m);
+                msgtemp = msgtemp.substr(len);
+                if (msgtemp.empty() || msgtemp == u8" ")
+                {
+                    break;
+                }
+                _msg_newline();
+                continue;
+            }
+            break;
+        }
+        msg[msgline % inf_maxlog] += msgtemp;
+        _msg_write(msgtemp);
+        message_width += width;
+    }
+    else
+    {
+        if (_continue_sentence)
+        {
+            _continue_sentence = false;
+        }
+        else
+        {
+            if (strutil::contains(msgtemp, u8"\""))
+            {
+                if (!fix_text_color)
+                {
+                    text_color = {210, 250, 160, 255};
+                }
+            }
+            msgtemp[0] = std::toupper(msgtemp[0]);
+        }
+        msgtemp += u8" ";
+        while (1)
+        {
+            int p_at_txtfunc = instr(msgtemp, 0, u8" ") + 1;
+            if (p_at_txtfunc == 0)
+            {
+                break;
+            }
+            if (message_width + p_at_txtfunc > inf_maxmsglen)
+            {
+                _msg_newline();
+                continue;
+            }
+            auto mst = strmid(msgtemp, 0, p_at_txtfunc);
+            msg[msgline % inf_maxlog] += mst;
+            _msg_write(mst);
+            message_width += p_at_txtfunc;
+            msgtemp =
+                strmid(msgtemp, p_at_txtfunc, msgtemp.size() - p_at_txtfunc);
+        }
+        msg[msgline % inf_maxlog] += msgtemp;
+        _msg_write(msgtemp);
+        message_width += msgtemp.size();
+    }
+
+    fix_text_color = false;
+}
+
+
+
+void Message::_txt_internal(std::vector<std::string> args)
+{
+    msgtemp = choice(args);
+    _txt_conv();
+    text_color = {255, 255, 255, 255};
+}
+
+
+
+void Message::txtef(ColorIndex color)
+{
+    const auto color_int =
+        static_cast<int>(static_cast<ColorIndex>(color)) % 21;
+    text_color = {static_cast<uint8_t>(255 - c_col(0, color_int)),
+                  static_cast<uint8_t>(255 - c_col(1, color_int)),
+                  static_cast<uint8_t>(255 - c_col(2, color_int)),
+                  255};
+    fix_text_color = color_int == 5;
 }
 
 } // namespace elona

@@ -320,7 +320,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 }
                 if (sell != 0)
                 {
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
                         "core.locale.ai.ally.sells_items",
                         cdata[cc],
@@ -334,7 +334,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 {
                     cdata[cc].gold -= cdata[cc].level * 500;
                     snd("core.ding3");
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
                         "core.locale.ai.ally.visits_trainer", cdata[cc]));
                     for (int cnt = 0; cnt < 4; ++cnt)
@@ -698,7 +698,7 @@ TurnResult ai_proc_misc_map_events()
                     }
                     if (rnd(4) == 0)
                     {
-                        txtef(4);
+                        Message::instance().txtef(ColorIndex::blue);
                         txt(u8" *ﾋﾟﾛﾘ〜ﾋﾟﾛﾘ〜* "s);
                         goto label_2692_internal;
                     }
@@ -803,7 +803,8 @@ label_2692_internal:
                                                         .position.x;
                                             tlocy = cdata[game_data.fire_giant]
                                                         .position.y;
-                                            txtef(9);
+                                            Message::instance().txtef(
+                                                ColorIndex::cyan);
                                             txt(i18n::s.get(
                                                 "core.locale.ai.fire_giant"));
                                             return do_throw_command();
@@ -874,7 +875,7 @@ label_2692_internal:
                                 {
                                     tlocx = cdata.player().position.x;
                                     tlocy = cdata.player().position.y;
-                                    txtef(9);
+                                    Message::instance().txtef(ColorIndex::cyan);
                                     txt(i18n::s.get("core.locale.ai.snowball"));
                                     return do_throw_command();
                                 }
@@ -972,7 +973,7 @@ label_2692_internal:
                         {
                             if (is_in_fov(cdata[cc]))
                             {
-                                txtef(9);
+                                Message::instance().txtef(ColorIndex::cyan);
                                 txt(i18n::s.get("core.locale.ai.snail"));
                             }
                             return do_throw_command();

@@ -21,12 +21,12 @@ void GUI::txt_txtef(const std::string& message, const EnumString& color_name)
 void GUI::txtef(const EnumString& color_name)
 {
     ColorIndex color = LuaEnums::ColorIndexTable.ensure_from_string(color_name);
-    elona::txtef(color);
+    elona::Message::instance().txtef(color);
 }
 
 void GUI::txtnew()
 {
-    elona::txtnew();
+    elona::Message::instance().linebreak();
 }
 
 void GUI::bind(sol::table& api_table)

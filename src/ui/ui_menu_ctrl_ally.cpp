@@ -160,11 +160,11 @@ static void _update_pet_arena()
     }
     if (i < arenaop(1))
     {
-        txtef(3);
+        Message::instance().txtef(ColorIndex::red);
     }
     else
     {
-        txtef(4);
+        Message::instance().txtef(ColorIndex::blue);
     }
     txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.prompt") + ": " + i
         + u8" / "s + arenaop(1));
@@ -233,7 +233,7 @@ void UIMenuCtrlAlly::update()
     else if (page > pagemax)
     {
         page = 0;
-        txtnew();
+        Message::instance().linebreak();
     }
 
     switch (_operation)

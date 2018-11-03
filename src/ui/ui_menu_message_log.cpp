@@ -1,7 +1,7 @@
 #include "ui_menu_message_log.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
-#include "../message_logger.hpp"
+#include "../message_log.hpp"
 
 
 
@@ -48,7 +48,7 @@ void _draw_single_message(size_t cnt)
     {
         return;
     }
-    if (n + offset < cnt + 4)
+    if (static_cast<int>(n) + offset < static_cast<int>(cnt) + 4)
     {
         return;
     }
@@ -132,6 +132,10 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
     if (action == "north")
     {
         offset -= 1;
+        if (offset < 4 - static_cast<int>(message_log.lines.size()))
+        {
+            offset = 4 - static_cast<int>(message_log.lines.size());
+        }
         return none;
     }
     else if (action == "south")

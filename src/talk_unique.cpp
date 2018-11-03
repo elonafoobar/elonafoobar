@@ -596,7 +596,7 @@ void _lomias_create_equipment()
 
 void _lomias_release_putits()
 {
-    txtef(9);
+    Message::instance().txtef(ColorIndex::cyan);
     txt(
         i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.done."
                     "lomias_releases"));
@@ -1143,7 +1143,7 @@ void _slan_receive_reward()
     itemcreate(-1, 239, cdata[tc].position.x, cdata[tc].position.y, 0);
     inv[ci].param2 = 0;
     snd("core.write1");
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get("core.locale.talk.unique.slan.you_receive"));
     txt(i18n::s.get("core.locale.talk.unique.slan.dies", cdata[tc]));
     chara_vanquish(tc);
@@ -1185,7 +1185,7 @@ TalkResult talk_unique_slan()
 void _erystia_receive_reward()
 {
     snd("core.write1");
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get("core.locale.talk.unique.erystia.all_stones.you_receive"));
     flt();
     itemcreate(
@@ -1197,7 +1197,7 @@ void _erystia_receive_reward()
 void _erystia_receive_key_17th_level()
 {
     snd("core.write1");
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get("core.locale.talk.unique.erystia.stones.you_receive"));
     game_data.quest_flags.main_quest = 110;
 }
@@ -1205,7 +1205,7 @@ void _erystia_receive_key_17th_level()
 void _erystia_receive_key_4th_level()
 {
     snd("core.write1");
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(
         i18n::s.get("core.locale.talk.unique.erystia.introduction.pledge_"
                     "strength.you_receive"));
@@ -1699,7 +1699,7 @@ void _miral_trade_small_medals()
 
 void _miral_upgrade_cargo_limit()
 {
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get(
         "core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
         cnvweight(calccargoupdate())));
@@ -3163,7 +3163,7 @@ TalkResult talk_unique_renton()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            txtef(5);
+            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
                 "core.locale.talk.unique.renton.quest.brought_all.ehekatl"));
             txt(i18n::s.get("core.locale.quest.completed"));
@@ -3653,7 +3653,7 @@ void _lexus_join_mages_guild()
     txt(i18n::s.get("core.locale.quest.completed"));
     snd("core.complete1");
     quest_update_journal_msg();
-    txtef(5);
+    Message::instance().txtef(ColorIndex::orange);
     txt(i18n::s.get("core.locale.talk.unique.lexus.nonmember.joined"));
 }
 
@@ -3882,7 +3882,7 @@ void _abyss_join_thieves_guild()
     txt(i18n::s.get("core.locale.quest.completed"));
     snd("core.complete1");
     quest_update_journal_msg();
-    txtef(5);
+    Message::instance().txtef(ColorIndex::orange);
     txt(i18n::s.get("core.locale.talk.unique.abyss.nonmember.joined"));
 }
 
@@ -4119,7 +4119,7 @@ void _doria_join_fighters_guild()
     txt(i18n::s.get("core.locale.quest.completed"));
     snd("core.complete1");
     quest_update_journal_msg();
-    txtef(5);
+    Message::instance().txtef(ColorIndex::orange);
     txt(i18n::s.get("core.locale.talk.unique.doria.nonmember.joined"));
 }
 
@@ -4613,7 +4613,7 @@ void _strange_scientist_turn_over()
     txt(i18n::s.get(
         "core.locale.talk.unique.strange_scientist.turn_over.text"));
     ++game_data.quest_flags.save_count_of_little_sister;
-    txtef(2);
+    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get(
         "core.locale.talk.unique.strange_scientist.saved_count",
         game_data.quest_flags.save_count_of_little_sister,

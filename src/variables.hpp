@@ -617,7 +617,6 @@ ELONA_EXTERN(int time_begin);
 ELONA_EXTERN(int time_warn);
 ELONA_EXTERN(int tlocx);
 ELONA_EXTERN(int tlocy);
-ELONA_EXTERN(bool tnew);
 ELONA_EXTERN(int tx);
 ELONA_EXTERN(int txt3rd);
 ELONA_EXTERN(int ty);

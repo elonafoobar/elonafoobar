@@ -581,7 +581,7 @@ label_20591:
         if (stat == -1)
         {
             txt(i18n::s.get("core.locale.ui.inv.offer.no_altar"),
-                message::only_once);
+                Message::only_once{true});
             f = 1;
         }
     }
@@ -659,7 +659,7 @@ label_20591:
 
         if (s(invctrl) != ""s)
         {
-            txtnew();
+            Message::instance().linebreak();
         }
         if (invsc == 0)
         {
@@ -731,7 +731,7 @@ label_2060_internal:
             }
             else
             {
-                txtnew();
+                Message::instance().linebreak();
                 txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             }
             invsc = 0;
@@ -744,7 +744,7 @@ label_2060_internal:
         {
             if (invctrl == 9 || invctrl == 15 || invctrl == 26)
             {
-                txtnew();
+                Message::instance().linebreak();
                 txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
                 update_screen();
                 result.turn_result = TurnResult::pc_turn_user_error;
@@ -1218,12 +1218,12 @@ label_2061_internal:
                 if (inv[ci].own_state == 2)
                 {
                     txt(i18n::s.get("core.locale.action.get.cannot_carry"),
-                        message::only_once);
+                        Message::only_once{true});
                 }
                 if (inv[ci].own_state == 1)
                 {
                     txt(i18n::s.get("core.locale.action.get.not_owned"),
-                        message::only_once);
+                        Message::only_once{true});
                 }
                 update_screen();
                 result.turn_result = TurnResult::pc_turn_user_error;
@@ -1392,7 +1392,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             snd("core.equip1");
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.ui.inv.equip.you_equip", inv[ci]));
             game_data.player_is_changing_equipment = 1;
             switch (inv[ci].curse_state)
@@ -1601,7 +1601,7 @@ label_2061_internal:
                     "core.locale.ui.inv.give.you_hand", inv[ci], cdata[tc]));
                 if (inv[ci].id == 477 || inv[ci].id == 473)
                 {
-                    txtef(2);
+                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.engagement", cdata[tc]));
                     chara_modify_impression(cdata[tc], 15);
@@ -1609,13 +1609,13 @@ label_2061_internal:
                 }
                 if (inv[ci].id == 620)
                 {
-                    txtef(8);
+                    Message::instance().txtef(ColorIndex::purple);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.love_potion.text",
                         cdata[tc],
                         inv[ci]));
                     snd("core.crush2");
-                    txtef(9);
+                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.love_potion.dialog",
                         cdata[tc]));
@@ -1702,7 +1702,7 @@ label_2061_internal:
             cidip = ci;
             savecycle();
             invctrl = 18;
-            txtnew();
+            Message::instance().linebreak();
             snd("core.pop2");
             goto label_20591;
         }
@@ -1810,7 +1810,7 @@ label_2061_internal:
                     {
                         game_data.guild.mages_guild_quota = 0;
                     }
-                    txtef(2);
+                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
                             "core.locale.ui.inv.put.guild.you_deliver", inv[ci])
                         + u8"("s + (inv[ci].param1 + 1) * inv[ci].number()
@@ -1818,7 +1818,7 @@ label_2061_internal:
                     if (game_data.guild.mages_guild_quota == 0)
                     {
                         snd("core.complete1");
-                        txtef(2);
+                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
                             "core.locale.ui.inv.put.guild.you_fulfill"));
                     }
@@ -1827,7 +1827,7 @@ label_2061_internal:
                 {
                     quest_data.immediate().extra_info_2 +=
                         inv[ci].weight * inv[ci].number();
-                    txtef(2);
+                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.harvest",
                         inv[ci],
@@ -1857,7 +1857,7 @@ label_2061_internal:
                 }
                 cdata.player().gold -= inv[ci].subname;
                 snd("core.paygold1");
-                txtef(2);
+                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
                 inv[ci].modify_number(-1);
                 --game_data.left_bill;
@@ -1887,7 +1887,7 @@ label_2061_internal:
             if (the_item_db[inv[ci].id]->category == 77000)
             {
                 snd("core.fail1");
-                txtef(4);
+                Message::instance().txtef(ColorIndex::blue);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.take_ally.refuse_dialog", cdata[tc]));
                 goto label_2060_internal;
@@ -1907,7 +1907,7 @@ label_2061_internal:
             }
             if (inv[ci].id == 477 || inv[ci].id == 473)
             {
-                txtef(8);
+                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.take_ally.swallows_ring",
                     cdata[tc],
@@ -1987,7 +1987,7 @@ label_2061_internal:
         }
         if (invctrl == 28)
         {
-            txtnew();
+            Message::instance().linebreak();
             ti = inv_getfreeid(0);
             if (ti == -1)
             {

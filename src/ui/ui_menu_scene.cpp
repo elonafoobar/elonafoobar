@@ -183,7 +183,7 @@ static void _do_play_scene(int scene_id)
     do_play_scene();
     screenupdate = -1;
     update_entire_screen();
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
 }
 

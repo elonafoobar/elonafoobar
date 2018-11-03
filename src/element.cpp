@@ -96,7 +96,7 @@ void resistmod(int cc, int element, int delta)
 {
     if (delta >= 50)
     {
-        txtef(2);
+        Message::instance().txtef(ColorIndex::green);
         if (auto text = i18n::s.get_enum_optional(
                 "core.locale.element.resist.gain", element, cdata[cc]))
         {
@@ -109,7 +109,7 @@ void resistmod(int cc, int element, int delta)
     }
     else if (delta <= 50 * -1)
     {
-        txtef(8);
+        Message::instance().txtef(ColorIndex::purple);
         if (auto text = i18n::s.get_enum_optional(
                 "core.locale.element.resist.lose", element, cdata[cc]))
         {
