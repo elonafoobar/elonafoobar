@@ -272,8 +272,7 @@ TurnResult do_interact_command()
         else
         {
             cdatan(4, tc) = inputlog;
-            Message::instance().txtef(ColorIndex::cyan);
-            txt(""s + cdatan(4, tc));
+            txt(""s + cdatan(4, tc), Message::color{ColorIndex::cyan});
         }
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -699,10 +698,10 @@ TurnResult do_throw_command()
                                     "weak_enough"));
                     return TurnResult::turn_end;
                 }
-                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get(
-                    "core.locale.action.throw.monster_ball.capture",
-                    cdata[tc]));
+                        "core.locale.action.throw.monster_ball.capture",
+                        cdata[tc]),
+                    Message::color{ColorIndex::green});
                 animeload(8, tc);
                 inv[ci].subname = cdata[tc].id;
                 inv[ci].param3 = cdata[tc].level;
@@ -761,9 +760,9 @@ TurnResult do_throw_command()
                     {
                         if (tc != 0)
                         {
-                            Message::instance().txtef(ColorIndex::cyan);
                             txt(i18n::s.get(
-                                "core.locale.action.throw.snow.dialog"));
+                                    "core.locale.action.throw.snow.dialog"),
+                                Message::color{ColorIndex::cyan});
                         }
                     }
                     return TurnResult::turn_end;
@@ -772,17 +771,17 @@ TurnResult do_throw_command()
                 {
                     if (is_in_fov(cdata[tc]))
                     {
-                        Message::instance().txtef(ColorIndex::blue);
-                        txt(i18n::s.get("core.locale.action.throw.tomato"));
+                        txt(i18n::s.get("core.locale.action.throw.tomato"),
+                            Message::color{ColorIndex::blue});
                     }
                     if (inv[ci].param3 == -1)
                     {
                         if (is_in_fov(cdata[tc]))
                         {
-                            Message::instance().txtef(ColorIndex::blue);
                             txt(i18n::s.get(
-                                "core.locale.damage.is_engulfed_in_fury",
-                                cdata[tc]));
+                                    "core.locale.damage.is_engulfed_in_fury",
+                                    cdata[tc]),
+                                Message::color{ColorIndex::blue});
                         }
                         cdata[tc].furious += rnd(10) + 5;
                     }
@@ -849,8 +848,8 @@ TurnResult do_throw_command()
             {
                 if (is_in_fov({tlocx, tlocy}))
                 {
-                    Message::instance().txtef(ColorIndex::blue);
-                    txt(i18n::s.get("core.locale.action.throw.tomato"));
+                    txt(i18n::s.get("core.locale.action.throw.tomato"),
+                        Message::color{ColorIndex::blue});
                 }
                 return TurnResult::turn_end;
             }
@@ -1092,11 +1091,11 @@ TurnResult do_offer_command()
             {
                 txt(i18n::s.get("core.locale.action.offer.take_over.shadow"));
             }
-            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
-                "core.locale.action.offer.take_over.succeed",
-                i18n::_(u8"god", cdata.player().god_id, u8"name"),
-                inv[ti]));
+                    "core.locale.action.offer.take_over.succeed",
+                    i18n::_(u8"god", cdata.player().god_id, u8"name"),
+                    inv[ti]),
+                Message::color{ColorIndex::orange});
             txtgod(cdata.player().god_id, 2);
             inv[ti].param1 = core_god::godid2int(cdata.player().god_id);
         }
@@ -1111,34 +1110,26 @@ TurnResult do_offer_command()
     }
     else
     {
-        Message::instance().txtef(ColorIndex::green);
-        for (int cnt = 0; cnt < 1; ++cnt)
+        if (i >= 15)
         {
-            if (i >= 15)
-            {
-                txt(i18n::s.get(
-                    "core.locale.action.offer.result.best", inv[ci]));
-                txtgod(cdata.player().god_id, 4);
-                break;
-            }
-            if (i >= 10)
-            {
-                txt(i18n::s.get(
-                    "core.locale.action.offer.result.good", inv[ci]));
-                break;
-            }
-            if (i >= 5)
-            {
-                txt(i18n::s.get(
-                    "core.locale.action.offer.result.okay", inv[ci]));
-                break;
-            }
-            if (i >= 1)
-            {
-                txt(i18n::s.get(
-                    "core.locale.action.offer.result.poor", inv[ci]));
-                break;
-            }
+            txt(i18n::s.get("core.locale.action.offer.result.best", inv[ci]),
+                Message::color{ColorIndex::green});
+            txtgod(cdata.player().god_id, 4);
+        }
+        else if (i >= 10)
+        {
+            txt(i18n::s.get("core.locale.action.offer.result.good", inv[ci]),
+                Message::color{ColorIndex::green});
+        }
+        else if (i >= 5)
+        {
+            txt(i18n::s.get("core.locale.action.offer.result.okay", inv[ci]),
+                Message::color{ColorIndex::green});
+        }
+        else if (i >= 1)
+        {
+            txt(i18n::s.get("core.locale.action.offer.result.poor", inv[ci]),
+                Message::color{ColorIndex::green});
         }
         modpiety(i);
         cdata.player().praying_point += i * 7;
@@ -1546,18 +1537,18 @@ TurnResult do_dip_command()
         inv[cidip].modify_number(-1);
         if (inv[cidip].curse_state == CurseState::blessed)
         {
-            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
-                "core.locale.action.dip.result.becomes_blessed", inv[ci]));
+                    "core.locale.action.dip.result.becomes_blessed", inv[ci]),
+                Message::color{ColorIndex::green});
             inv[ci].curse_state = CurseState::blessed;
             chara_refresh(cc);
             return TurnResult::turn_end;
         }
         if (is_cursed(inv[cidip].curse_state))
         {
-            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
-                "core.locale.action.dip.result.becomes_cursed", inv[ci]));
+                    "core.locale.action.dip.result.becomes_cursed", inv[ci]),
+                Message::color{ColorIndex::purple});
             inv[ci].curse_state = CurseState::cursed;
             chara_refresh(cc);
             return TurnResult::turn_end;
@@ -1729,9 +1720,9 @@ TurnResult do_use_command()
                 {
                     enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
                 }
-                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get(
-                    "core.locale.action.use.living.pleased", inv[ci]));
+                        "core.locale.action.use.living.pleased", inv[ci]),
+                    Message::color{ColorIndex::green});
                 randomize(inv[ci].subname);
                 if (inv[ci].param1 >= 4 + rnd(12))
                 {
@@ -1989,11 +1980,12 @@ TurnResult do_use_command()
                         "core.locale.action.use.stethoscope.other.start.female."
                         "text",
                         cdata[tc]));
-                    Message::instance().txtef(ColorIndex::blue);
                     txt(i18n::s.get(
-                        "core.locale.action.use.stethoscope.other.start.female."
-                        "dialog",
-                        cdata[tc]));
+                            "core.locale.action.use.stethoscope.other.start."
+                            "female."
+                            "dialog",
+                            cdata[tc]),
+                        Message::color{ColorIndex::blue});
                 }
                 cdata[tc].has_been_used_stethoscope() = true;
                 return TurnResult::turn_end;
@@ -2039,10 +2031,11 @@ TurnResult do_use_command()
                         txt(i18n::s.get(
                             "core.locale.action.use.leash.other.start.text",
                             cdata[tc]));
-                        Message::instance().txtef(ColorIndex::cyan);
                         txt(i18n::s.get(
-                            "core.locale.action.use.leash.other.start.dialog",
-                            cdata[tc]));
+                                "core.locale.action.use.leash.other.start."
+                                "dialog",
+                                cdata[tc]),
+                            Message::color{ColorIndex::cyan});
                     }
                     else
                     {
@@ -2050,10 +2043,11 @@ TurnResult do_use_command()
                         txt(i18n::s.get(
                             "core.locale.action.use.leash.other.stop.text",
                             cdata[tc]));
-                        Message::instance().txtef(ColorIndex::cyan);
                         txt(i18n::s.get(
-                            "core.locale.action.use.leash.other.stop.dialog",
-                            cdata[tc]));
+                                "core.locale.action.use.leash.other.stop."
+                                "dialog",
+                                cdata[tc]),
+                            Message::color{ColorIndex::cyan});
                     }
                     animeload(8, tc);
                     f = 1;
@@ -2272,13 +2266,13 @@ TurnResult do_use_command()
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         game_data.diastrophism_flag = 1;
         snd("core.pray1");
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.action.use.statue.opatos"));
+        txt(i18n::s.get("core.locale.action.use.statue.opatos"),
+            Message::color{ColorIndex::orange});
         goto label_2229_internal;
     case 34:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.action.use.statue.jure"));
+        txt(i18n::s.get("core.locale.action.use.statue.jure"),
+            Message::color{ColorIndex::orange});
         efid = 637;
         efp = 5000;
         magic();
@@ -2286,18 +2280,18 @@ TurnResult do_use_command()
     case 43:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         snd("core.pray1");
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.action.use.statue.ehekatl"));
+        txt(i18n::s.get("core.locale.action.use.statue.ehekatl"),
+            Message::color{ColorIndex::orange});
         buff_add(cdata[tc], 19, 77, 2500);
         goto label_2229_internal;
     case 27:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         snd("core.pray1");
-        Message::instance().txtef(ColorIndex::orange);
         if (game_data.weather == 1)
         {
             txt(i18n::s.get(
-                "core.locale.action.use.statue.lulwy.during_etherwind"));
+                    "core.locale.action.use.statue.lulwy.during_etherwind"),
+                Message::color{ColorIndex::orange});
             goto label_2229_internal;
         }
         p = game_data.weather;
@@ -2324,7 +2318,8 @@ TurnResult do_use_command()
                 break;
             }
         }
-        txt(i18n::s.get("core.locale.action.use.statue.lulwy.normal"));
+        txt(i18n::s.get("core.locale.action.use.statue.lulwy.normal"),
+            Message::color{ColorIndex::orange});
         txt(i18n::s.get("core.locale.action.weather.changes"));
         sound_play_environmental();
         goto label_2229_internal;
@@ -2405,14 +2400,14 @@ TurnResult do_use_command()
         ++game_data.acquirable_feat_count;
         txt(i18n::s.get(
             "core.locale.action.use.secret_experience.kumiromi.use.dialog"));
-        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
-            "core.locale.action.use.secret_experience.kumiromi.use.text"));
+                "core.locale.action.use.secret_experience.kumiromi.use.text"),
+            Message::color{ColorIndex::orange});
         goto label_2229_internal;
     case 42:
         snd("core.curse1");
-        Message::instance().txtef(ColorIndex::purple);
-        txt(i18n::s.get("core.locale.action.use.secret_experience.lomias"));
+        txt(i18n::s.get("core.locale.action.use.secret_experience.lomias"),
+            Message::color{ColorIndex::purple});
         goto label_2229_internal;
     case 46:
         Message::instance().linebreak();
@@ -2525,22 +2520,22 @@ TurnResult do_use_command()
             return TurnResult::turn_end;
         }
         Message::instance().linebreak();
-        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
-            "core.locale.action.use.gene_machine.has_inherited",
-            cdata[rc],
-            cdata[tc]));
+                "core.locale.action.use.gene_machine.has_inherited",
+                cdata[rc],
+                cdata[tc]),
+            Message::color{ColorIndex::orange});
         GeneEngineeringAnimation(cdata[rc].position).play();
         {
             int stat = transplant_body_parts();
             if (stat != -1)
             {
                 cdata[rc].body_parts[stat - 100] = rtval * 10000;
-                Message::instance().txtef(ColorIndex::green);
                 txt(i18n::s.get(
-                    "core.locale.action.use.gene_machine.gains.body_part",
-                    cdata[rc],
-                    i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)));
+                        "core.locale.action.use.gene_machine.gains.body_part",
+                        cdata[rc],
+                        i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)),
+                    Message::color{ColorIndex::green});
                 refresh_speed_correction_value(cdata[rc]);
             }
         }
@@ -2555,14 +2550,14 @@ TurnResult do_use_command()
                         break;
                     }
                     chara_gain_skill(cdata[rc], rtval(cnt), 1);
-                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
-                        "core.locale.action.use.gene_machine.gains.ability",
-                        cdata[rc],
-                        i18n::_(
-                            u8"ability",
-                            std::to_string(rtval(cnt)),
-                            u8"name")));
+                            "core.locale.action.use.gene_machine.gains.ability",
+                            cdata[rc],
+                            i18n::_(
+                                u8"ability",
+                                std::to_string(rtval(cnt)),
+                                u8"name")),
+                        Message::color{ColorIndex::green});
                 }
             }
         }
@@ -2574,11 +2569,11 @@ TurnResult do_use_command()
                 r2 = 1;
                 gain_level(cdata[rc]);
             }
-            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
-                "core.locale.action.use.gene_machine.gains.level",
-                cdata[rc],
-                cdata[rc].level));
+                    "core.locale.action.use.gene_machine.gains.level",
+                    cdata[rc],
+                    cdata[rc].level),
+                Message::color{ColorIndex::green});
             listmax = 0;
             for (int cnt = 10; cnt < 18; ++cnt)
             {
@@ -2612,26 +2607,26 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 35:
         txt(i18n::s.get("core.locale.action.use.iron_maiden.use"));
-        Message::instance().txtef(ColorIndex::cyan);
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"),
+            Message::color{ColorIndex::cyan});
         txt(i18n::s.get(
             "core.locale.action.use.iron_maiden.someone_activates"));
-        Message::instance().txtef(ColorIndex::cyan);
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"),
+            Message::color{ColorIndex::cyan});
         damage_hp(cdata.player(), 9999, -18);
         goto label_2229_internal;
     case 36:
         txt(i18n::s.get("core.locale.action.use.guillotine.use"));
-        Message::instance().txtef(ColorIndex::cyan);
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"),
+            Message::color{ColorIndex::cyan});
         txt(i18n::s.get("core.locale.action.use.guillotine.someone_activates"));
-        Message::instance().txtef(ColorIndex::cyan);
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"),
+            Message::color{ColorIndex::cyan});
         damage_hp(cdata.player(), 9999, -19);
         goto label_2229_internal;
     case 39:
-        Message::instance().txtef(ColorIndex::cyan);
-        txt(i18n::s.get("core.locale.action.use.whistle.use"));
+        txt(i18n::s.get("core.locale.action.use.whistle.use"),
+            Message::color{ColorIndex::cyan});
         make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
         goto label_2229_internal;
     case 37: show_card_collection(); goto label_2229_internal;
@@ -2698,9 +2693,9 @@ TurnResult do_open_command()
                         tc = chara_find(203);
                         if (tc != 0)
                         {
-                            Message::instance().txtef(ColorIndex::cyan);
                             txt(i18n::s.get(
-                                "core.locale.action.open.shackle.dialog"));
+                                    "core.locale.action.open.shackle.dialog"),
+                                Message::color{ColorIndex::cyan});
                             cdata[game_data.fire_giant].enemy_id = tc;
                             cdata[game_data.fire_giant].hate = 1000;
                         }
@@ -3201,8 +3196,8 @@ TurnResult do_movement_command()
     {
         if (rnd(5) == 0)
         {
-            Message::instance().txtef(ColorIndex::cyan);
-            txt(i18n::s.get("core.locale.action.move.drunk"));
+            txt(i18n::s.get("core.locale.action.move.drunk"),
+                Message::color{ColorIndex::cyan});
             f = 1;
         }
     }
@@ -3691,8 +3686,8 @@ TurnResult do_exit_command()
     Message::instance().linebreak();
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
-        Message::instance().txtef(ColorIndex::red);
-        txt(i18n::s.get("core.locale.action.exit.cannot_save_in_usermap"));
+        txt(i18n::s.get("core.locale.action.exit.cannot_save_in_usermap"),
+            Message::color{ColorIndex::red});
     }
     else
     {

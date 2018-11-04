@@ -273,8 +273,8 @@ void quest_check()
             }
             else
             {
-                Message::instance().txtef(ColorIndex::blue);
-                txt(i18n::s.get("core.locale.quest.hunt.remaining", p_at_m119));
+                txt(i18n::s.get("core.locale.quest.hunt.remaining", p_at_m119),
+                    Message::color{ColorIndex::blue});
             }
         }
         if (game_data.executing_immediate_quest_type == 1008)
@@ -618,8 +618,8 @@ void quest_refresh_list()
 void quest_update_journal_msg()
 {
     snd("core.write1");
-    Message::instance().txtef(ColorIndex::green);
-    txt(i18n::s.get("core.locale.quest.journal_updated"));
+    txt(i18n::s.get("core.locale.quest.journal_updated"),
+        Message::color{ColorIndex::green});
 }
 
 int quest_generate()
@@ -1087,11 +1087,11 @@ void quest_enter_map()
 {
     if (game_data.executing_immediate_quest_type == 1009)
     {
-        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get(
-            "core.locale.map.quest.on_enter.party",
-            game_data.left_minutes_of_executing_quest,
-            quest_data.immediate().extra_info_1));
+                "core.locale.map.quest.on_enter.party",
+                game_data.left_minutes_of_executing_quest,
+                quest_data.immediate().extra_info_1),
+            Message::color{ColorIndex::cyan});
     }
     if (game_data.executing_immediate_quest_type == 1006)
     {
@@ -1100,19 +1100,19 @@ void quest_enter_map()
             quest_data.immediate().extra_info_1 = 15000;
             quest_data.immediate().reward_gold = 400;
         }
-        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get(
-            "core.locale.map.quest.on_enter.harvest",
-            cnvweight(quest_data.immediate().extra_info_1),
-            game_data.left_minutes_of_executing_quest));
+                "core.locale.map.quest.on_enter.harvest",
+                cnvweight(quest_data.immediate().extra_info_1),
+                game_data.left_minutes_of_executing_quest),
+            Message::color{ColorIndex::cyan});
     }
     if (game_data.executing_immediate_quest_type == 1008)
     {
-        Message::instance().txtef(ColorIndex::cyan);
         txt(i18n::s.get(
-            "core.locale.map.quest.on_enter.conquer",
-            chara_refstr(quest_data.immediate().extra_info_1, 2),
-            game_data.left_minutes_of_executing_quest));
+                "core.locale.map.quest.on_enter.conquer",
+                chara_refstr(quest_data.immediate().extra_info_1, 2),
+                game_data.left_minutes_of_executing_quest),
+            Message::color{ColorIndex::cyan});
     }
 }
 
@@ -1192,15 +1192,15 @@ void quest_failed(int val0)
         {
             --quest_data[quest_data[rq].target_chara_index]
                   .delivery_has_package_flag;
-            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
-                "core.locale.quest.deliver.you_commit_a_serious_crime"));
+                    "core.locale.quest.deliver.you_commit_a_serious_crime"),
+                Message::color{ColorIndex::purple});
             modify_karma(cdata.player(), -20);
         }
         if (quest_data[rq].id == 1007)
         {
-            Message::instance().txtef(ColorIndex::purple);
-            txt(i18n::s.get("core.locale.quest.escort.you_failed_to_protect"));
+            txt(i18n::s.get("core.locale.quest.escort.you_failed_to_protect"),
+                Message::color{ColorIndex::purple});
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (cnt != 0)
@@ -1246,8 +1246,7 @@ void quest_failed(int val0)
                                         cdata[tc].position.y);
                                     p = -9;
                                 }
-                                Message::instance().txtef(ColorIndex::cyan);
-                                txt(s);
+                                txt(s, Message::color{ColorIndex::cyan});
                                 damage_hp(cdata[tc], 999999, p);
                             }
                             cdata[tc].set_state(Character::State::empty);
@@ -1263,8 +1262,8 @@ void quest_failed(int val0)
     }
     int stat = decfame(0, 40);
     p = stat;
-    Message::instance().txtef(ColorIndex::red);
-    txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
+    txt(i18n::s.get("core.locale.quest.lose_fame", p(0)),
+        Message::color{ColorIndex::red});
 }
 
 
@@ -1285,12 +1284,12 @@ void quest_team_victorious()
     snd("core.cheer");
     if (petarenawin == 1)
     {
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.quest.arena.your_team_is_victorious"));
-        Message::instance().txtef(ColorIndex::green);
+        txt(i18n::s.get("core.locale.quest.arena.your_team_is_victorious"),
+            Message::color{ColorIndex::green});
         txt(i18n::s.get(
-            "core.locale.quest.gain_fame",
-            game_data.executing_immediate_quest_fame_gained));
+                "core.locale.quest.gain_fame",
+                game_data.executing_immediate_quest_fame_gained),
+            Message::color{ColorIndex::green});
         cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
         modrank(1, 100, 2);
         ++area_data[game_data.previous_map2].winning_streak_in_pet_arena;
@@ -1308,16 +1307,16 @@ void quest_team_victorious()
     }
     else
     {
-        Message::instance().txtef(ColorIndex::purple);
-        txt(i18n::s.get("core.locale.quest.arena.your_team_is_defeated"));
+        txt(i18n::s.get("core.locale.quest.arena.your_team_is_defeated"),
+            Message::color{ColorIndex::purple});
         area_data[game_data.previous_map2].winning_streak_in_pet_arena = 0;
         modrank(1, -100);
         int stat = decfame(0, 60);
         p = stat;
         if (arenaop == 0)
         {
-            Message::instance().txtef(ColorIndex::red);
-            txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
+            txt(i18n::s.get("core.locale.quest.lose_fame", p(0)),
+                Message::color{ColorIndex::red});
         }
     }
 }
@@ -1332,12 +1331,12 @@ void quest_all_targets_killed()
     if (game_data.executing_immediate_quest_type == 1)
     {
         snd("core.cheer");
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.quest.arena.you_are_victorious"));
-        Message::instance().txtef(ColorIndex::green);
+        txt(i18n::s.get("core.locale.quest.arena.you_are_victorious"),
+            Message::color{ColorIndex::green});
         txt(i18n::s.get(
-            "core.locale.quest.gain_fame",
-            game_data.executing_immediate_quest_fame_gained));
+                "core.locale.quest.gain_fame",
+                game_data.executing_immediate_quest_fame_gained),
+            Message::color{ColorIndex::green});
         modrank(0, 100, 2);
         cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
         txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
@@ -1358,20 +1357,20 @@ void quest_all_targets_killed()
         || game_data.executing_immediate_quest_type == 1010)
     {
         quest_data.immediate().progress = 3;
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.quest.hunt.complete"));
+        txt(i18n::s.get("core.locale.quest.hunt.complete"),
+            Message::color{ColorIndex::green});
     }
     if (game_data.executing_immediate_quest_type == 1007)
     {
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.quest.hunt.complete"));
+        txt(i18n::s.get("core.locale.quest.hunt.complete"),
+            Message::color{ColorIndex::green});
     }
     if (game_data.executing_immediate_quest_type == 1008)
     {
         game_data.left_minutes_of_executing_quest = 0;
         quest_data.immediate().progress = 3;
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.quest.conquer.complete"));
+        txt(i18n::s.get("core.locale.quest.conquer.complete"),
+            Message::color{ColorIndex::green});
     }
 }
 
@@ -1484,12 +1483,12 @@ void quest_complete()
     modify_karma(cdata.player(), 1);
     game_data.executing_immediate_quest_fame_gained =
         calcfame(0, quest_data[rq].difficulty * 3 + 10);
-    Message::instance().txtef(ColorIndex::green);
-    txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)));
-    Message::instance().txtef(ColorIndex::green);
+    txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)),
+        Message::color{ColorIndex::green});
     txt(i18n::s.get(
-        "core.locale.quest.gain_fame",
-        game_data.executing_immediate_quest_fame_gained));
+            "core.locale.quest.gain_fame",
+            game_data.executing_immediate_quest_fame_gained),
+        Message::color{ColorIndex::green});
     cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     if (quest_data[rq].id == 1002)

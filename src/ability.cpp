@@ -226,18 +226,18 @@ void gain_special_action()
         if (spact(29) == 0)
         {
             spact(29) = 1;
-            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
-                "core.locale.skill.gained",
-                i18n::_(u8"ability", std::to_string(629), u8"name")));
+                    "core.locale.skill.gained",
+                    i18n::_(u8"ability", std::to_string(629), u8"name")),
+                Message::color{ColorIndex::orange});
         }
         if (spact(30) == 0)
         {
             spact(30) = 1;
-            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
-                "core.locale.skill.gained",
-                i18n::_(u8"ability", std::to_string(630), u8"name")));
+                    "core.locale.skill.gained",
+                    i18n::_(u8"ability", std::to_string(630), u8"name")),
+                Message::color{ColorIndex::orange});
         }
     }
     if (sdata.get(152, 0).original_level > 15)
@@ -245,10 +245,10 @@ void gain_special_action()
         if (spact(31) == 0)
         {
             spact(31) = 1;
-            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
-                "core.locale.skill.gained",
-                i18n::_(u8"ability", std::to_string(631), u8"name")));
+                    "core.locale.skill.gained",
+                    i18n::_(u8"ability", std::to_string(631), u8"name")),
+                Message::color{ColorIndex::orange});
         }
     }
 }
@@ -307,8 +307,8 @@ void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
             {
                 if (lv_delta != 0)
                 {
-                    Message::instance().txtef(ColorIndex::red);
-                    txt(txtskillchange(id, cc.index, false));
+                    txt(txtskillchange(id, cc.index, false),
+                        Message::color{ColorIndex::red});
                 }
             }
         }
@@ -438,8 +438,8 @@ void chara_gain_skill_exp(
                 if (lv_delta != 0)
                 {
                     msgalert = 1;
-                    Message::instance().txtef(ColorIndex::red);
-                    txt(txtskillchange(id, cc.index, false));
+                    txt(txtskillchange(id, cc.index, false),
+                        Message::color{ColorIndex::red});
                 }
             }
         }

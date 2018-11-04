@@ -1623,8 +1623,8 @@ void item_acid(const Character& owner, int ci)
 
     if (ibit(1, ci) == 0)
     {
-        Message::instance().txtef(ColorIndex::purple);
-        txt(i18n::s.get("core.locale.item.acid.damaged", owner, inv[ci]));
+        txt(i18n::s.get("core.locale.item.acid.damaged", owner, inv[ci]),
+            Message::color{ColorIndex::purple});
         --inv[ci].enhancement;
     }
     else
@@ -1701,23 +1701,23 @@ bool item_fire(int owner, int ci)
             {
                 if (is_in_fov(inv[ci_].position))
                 {
-                    Message::instance().txtef(ColorIndex::gold);
                     txt(i18n::s.get(
-                        "core.locale.item.item_on_the_ground_get_"
-                        "broiled",
-                        inv[ci_]));
+                            "core.locale.item.item_on_the_ground_get_"
+                            "broiled",
+                            inv[ci_]),
+                        Message::color{ColorIndex::gold});
                 }
             }
             else
             {
                 if (is_in_fov(cdata[owner]))
                 {
-                    Message::instance().txtef(ColorIndex::gold);
                     txt(i18n::s.get(
-                        "core.locale.item.item_on_the_ground_get_"
-                        "broiled",
-                        inv[ci_],
-                        cdata[owner]));
+                            "core.locale.item.item_on_the_ground_get_"
+                            "broiled",
+                            inv[ci_],
+                            cdata[owner]),
+                        Message::color{ColorIndex::gold});
                 }
             }
             make_dish(ci_, rnd(5) + 1);
@@ -1790,12 +1790,13 @@ bool item_fire(int owner, int ci)
             {
                 if (is_in_fov(cdata[owner]))
                 {
-                    Message::instance().txtef(ColorIndex::purple);
                     txt(i18n::s.get(
-                        "core.locale.item.item_someone_equips_turns_to_dust",
-                        itemname(inv[ci_].index, p_),
-                        p_,
-                        cdata[owner]));
+                            "core.locale.item.item_someone_equips_turns_to_"
+                            "dust",
+                            itemname(inv[ci_].index, p_),
+                            p_,
+                            cdata[owner]),
+                        Message::color{ColorIndex::purple});
                 }
                 cdata[owner].body_parts[inv[ci_].body_part - 100] =
                     cdata[owner].body_parts[inv[ci_].body_part - 100] / 10000
@@ -1805,21 +1806,21 @@ bool item_fire(int owner, int ci)
             }
             else if (is_in_fov(cdata[owner]))
             {
-                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
-                    "core.locale.item.someones_item_turns_to_dust",
-                    itemname(inv[ci_].index, p_, 1),
-                    p_,
-                    cdata[owner]));
+                        "core.locale.item.someones_item_turns_to_dust",
+                        itemname(inv[ci_].index, p_, 1),
+                        p_,
+                        cdata[owner]),
+                    Message::color{ColorIndex::purple});
             }
         }
         else if (is_in_fov(inv[ci_].position))
         {
-            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
-                "core.locale.item.item_on_the_ground_turns_to_dust",
-                itemname(inv[ci_].index, p_),
-                p_));
+                    "core.locale.item.item_on_the_ground_turns_to_dust",
+                    itemname(inv[ci_].index, p_),
+                    p_),
+                Message::color{ColorIndex::purple});
         }
         inv[ci_].modify_number(-p_);
         cell_refresh(inv[ci_].position.x, inv[ci_].position.y);
@@ -1971,21 +1972,21 @@ bool item_cold(int owner, int ci)
         {
             if (is_in_fov(cdata[owner]))
             {
-                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
-                    "core.locale.item.someones_item_breaks_to_pieces",
-                    itemname(inv[ci_].index, p_, 1),
-                    p_,
-                    cdata[owner]));
+                        "core.locale.item.someones_item_breaks_to_pieces",
+                        itemname(inv[ci_].index, p_, 1),
+                        p_,
+                        cdata[owner]),
+                    Message::color{ColorIndex::purple});
             }
         }
         else if (is_in_fov(inv[ci_].position))
         {
-            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
-                "core.locale.item.item_on_the_ground_breaks_to_pieces",
-                itemname(inv[ci_].index, p_),
-                p_));
+                    "core.locale.item.item_on_the_ground_breaks_to_pieces",
+                    itemname(inv[ci_].index, p_),
+                    p_),
+                Message::color{ColorIndex::purple});
         }
         inv[ci_].modify_number(-p_);
         broken = true;
@@ -2274,9 +2275,8 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
                 {
                     snd("core.pray1");
                     inv[ti].curse_state = CurseState::blessed;
-                    Message::instance().txtef(ColorIndex::green);
-                    txt(i18n::s.get(
-                        "core.locale.action.drop.water_is_blessed"));
+                    txt(i18n::s.get("core.locale.action.drop.water_is_blessed"),
+                        Message::color{ColorIndex::green});
                 }
             }
         }

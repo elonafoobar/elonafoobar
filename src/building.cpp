@@ -253,8 +253,8 @@ TurnResult build_new_building()
         game_data.pc_x_in_world_map = area_data[7].position.x;
         game_data.pc_y_in_world_map = area_data[7].position.y;
         snd("core.build1");
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.building.built_new_house"));
+        txt(i18n::s.get("core.locale.building.built_new_house"),
+            Message::color{ColorIndex::green});
         msg_halt();
         snd("core.exitmap1");
         return TurnResult::exit_map;
@@ -313,8 +313,8 @@ TurnResult build_new_building()
     }
     s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
     snd("core.build1");
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.building.built_new", s(0)));
+    txt(i18n::s.get("core.locale.building.built_new", s(0)),
+        Message::color{ColorIndex::orange});
     map_global_prepare();
     inv[ci].modify_number(-1);
     return TurnResult::turn_end;
@@ -606,9 +606,9 @@ void prompt_hiring()
             cdata.player().gold -= calchirecost(tc) * 20;
             await(Config::instance().animewait * 10);
             cdata[tc].set_state(Character::State::alive);
-            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
-                "core.locale.building.home.hire.you_hire", cdata[tc]));
+                    "core.locale.building.home.hire.you_hire", cdata[tc]),
+                Message::color{ColorIndex::green});
             snd("core.pray1");
         }
     }
@@ -805,9 +805,10 @@ void prompt_move_ally()
         if (cdata[stat].relationship <= -3)
         {
             Message::instance().linebreak();
-            Message::instance().txtef(ColorIndex::cyan);
             txt(i18n::s.get(
-                "core.locale.building.home.move.dont_touch_me", cdata[stat]));
+                    "core.locale.building.home.move.dont_touch_me",
+                    cdata[stat]),
+                Message::color{ColorIndex::cyan});
             break;
         }
         tchome = stat;
@@ -905,9 +906,9 @@ void try_extend_shop()
         snd("core.paygold1");
         cdata.player().gold -= calcshopreform();
         map_data.max_item_count = clamp(map_data.max_item_count + 10, 1, 400);
-        Message::instance().txtef(ColorIndex::green);
         txt(i18n::s.get(
-            "core.locale.building.shop.extend", map_data.max_item_count));
+                "core.locale.building.shop.extend", map_data.max_item_count),
+            Message::color{ColorIndex::green});
     }
 }
 
@@ -1175,14 +1176,14 @@ void show_shop_log()
                     "core.locale.building.shop.log.and_items", income(1));
             }
             snd("core.ding2");
-            Message::instance().txtef(ColorIndex::orange);
             txt(shop_mark
-                + i18n::s.get(
-                      "core.locale.building.shop.log.sold_items",
-                      customer,
-                      cdata[worker],
-                      sold,
-                      s(0)));
+                    + i18n::s.get(
+                          "core.locale.building.shop.log.sold_items",
+                          customer,
+                          cdata[worker],
+                          sold,
+                          s(0)),
+                Message::color{ColorIndex::orange});
         }
         chara_gain_skill_exp(
             cdata[worker], 156, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));

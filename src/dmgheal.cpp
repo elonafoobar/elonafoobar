@@ -369,8 +369,8 @@ int damage_hp(
                     continue;
                 }
                 cdata[cnt].is_lay_hand_available() = false;
-                Message::instance().txtef(ColorIndex::cyan);
-                txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
+                txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]),
+                    Message::color{ColorIndex::cyan});
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim.index;
@@ -422,35 +422,35 @@ int damage_hp(
             }
             if (damage_level == 0)
             {
-                Message::instance().txtef(ColorIndex::orange);
                 txt(i18n::s.get(
-                    "core.locale.damage.levels.slightly",
-                    victim,
-                    attacker_is_player));
+                        "core.locale.damage.levels.slightly",
+                        victim,
+                        attacker_is_player),
+                    Message::color{ColorIndex::orange});
             }
             if (damage_level == 1)
             {
-                Message::instance().txtef(ColorIndex::gold);
                 txt(i18n::s.get(
-                    "core.locale.damage.levels.moderately",
-                    victim,
-                    attacker_is_player));
+                        "core.locale.damage.levels.moderately",
+                        victim,
+                        attacker_is_player),
+                    Message::color{ColorIndex::gold});
             }
             if (damage_level == 2)
             {
-                Message::instance().txtef(ColorIndex::light_red);
                 txt(i18n::s.get(
-                    "core.locale.damage.levels.severely",
-                    victim,
-                    attacker_is_player));
+                        "core.locale.damage.levels.severely",
+                        victim,
+                        attacker_is_player),
+                    Message::color{ColorIndex::light_red});
             }
             if (damage_level >= 3)
             {
-                Message::instance().txtef(ColorIndex::red);
                 txt(i18n::s.get(
-                    "core.locale.damage.levels.critically",
-                    victim,
-                    attacker_is_player));
+                        "core.locale.damage.levels.critically",
+                        victim,
+                        attacker_is_player),
+                    Message::color{ColorIndex::red});
             }
             rowact_check(victim.index);
             goto label_1369_internal;
@@ -459,27 +459,27 @@ int damage_hp(
         {
             if (is_in_fov(victim))
             {
-                Message::instance().txtef(ColorIndex::gold);
-                txt(i18n::s.get(
-                    "core.locale.damage.reactions.screams", victim));
+                txt(i18n::s.get("core.locale.damage.reactions.screams", victim),
+                    Message::color{ColorIndex::gold});
             }
         }
         if (damage_level == 2)
         {
             if (is_in_fov(victim))
             {
-                Message::instance().txtef(ColorIndex::light_red);
                 txt(i18n::s.get(
-                    "core.locale.damage.reactions.writhes_in_pain", victim));
+                        "core.locale.damage.reactions.writhes_in_pain", victim),
+                    Message::color{ColorIndex::light_red});
             }
         }
         if (damage_level >= 3)
         {
             if (is_in_fov(victim))
             {
-                Message::instance().txtef(ColorIndex::red);
                 txt(i18n::s.get(
-                    "core.locale.damage.reactions.is_severely_hurt", victim));
+                        "core.locale.damage.reactions.is_severely_hurt",
+                        victim),
+                    Message::color{ColorIndex::red});
             }
         }
         if (dmg_at_m141 < 0)
@@ -490,8 +490,8 @@ int damage_hp(
             }
             if (is_in_fov(victim))
             {
-                Message::instance().txtef(ColorIndex::blue);
-                txt(i18n::s.get("core.locale.damage.is_healed", victim));
+                txt(i18n::s.get("core.locale.damage.is_healed", victim),
+                    Message::color{ColorIndex::blue});
             }
         }
     label_1369_internal:
@@ -525,10 +525,11 @@ int damage_hp(
                             victim.fear = rnd(20) + 5;
                             if (is_in_fov(victim))
                             {
-                                Message::instance().txtef(ColorIndex::blue);
                                 txt(i18n::s.get(
-                                    "core.locale.damage.runs_away_in_terror",
-                                    victim));
+                                        "core.locale.damage.runs_away_in_"
+                                        "terror",
+                                        victim),
+                                    Message::color{ColorIndex::blue});
                             }
                         }
                     }
@@ -690,8 +691,8 @@ int damage_hp(
             if (rnd(3) == 0)
             {
                 victim.will_explode_soon() = true;
-                Message::instance().txtef(ColorIndex::cyan);
-                txt(i18n::s.get("core.locale.damage.explode_click"));
+                txt(i18n::s.get("core.locale.damage.explode_click"),
+                    Message::color{ColorIndex::cyan});
             }
         }
         if (victim.splits())
@@ -743,10 +744,10 @@ int damage_hp(
                     {
                         if (is_in_fov(victim))
                         {
-                            Message::instance().txtef(ColorIndex::blue);
                             txt(i18n::s.get(
-                                "core.locale.damage.is_engulfed_in_fury",
-                                victim));
+                                    "core.locale.damage.is_engulfed_in_fury",
+                                    victim),
+                                Message::color{ColorIndex::blue});
                         }
                         victim.furious += rnd(30) + 15;
                     }
@@ -1035,25 +1036,25 @@ int damage_hp(
                     }
                     if (victim.id == 141)
                     {
-                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
-                            "core.locale.scenario.obtain_stone.fool"));
+                                "core.locale.scenario.obtain_stone.fool"),
+                            Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_fool = 1;
                     }
                     if (victim.id == 143)
                     {
-                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
-                            "core.locale.scenario.obtain_stone.king"));
+                                "core.locale.scenario.obtain_stone.king"),
+                            Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_king = 1;
                     }
                     if (victim.id == 144)
                     {
-                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
-                            "core.locale.scenario.obtain_stone.sage"));
+                                "core.locale.scenario.obtain_stone.sage"),
+                            Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_sage = 1;
                     }
@@ -1090,12 +1091,15 @@ int damage_hp(
                     if (victim.id == 319)
                     {
                         ++game_data.quest_flags.kill_count_of_little_sister;
-                        Message::instance().txtef(ColorIndex::red);
                         txt(i18n::s.get(
-                            "core.locale.talk.unique.strange_scientist.saved_"
-                            "count",
-                            game_data.quest_flags.save_count_of_little_sister,
-                            game_data.quest_flags.kill_count_of_little_sister));
+                                "core.locale.talk.unique.strange_scientist."
+                                "saved_"
+                                "count",
+                                game_data.quest_flags
+                                    .save_count_of_little_sister,
+                                game_data.quest_flags
+                                    .kill_count_of_little_sister),
+                            Message::color{ColorIndex::red});
                     }
                     if (game_data.current_dungeon_level
                             == area_data[game_data.current_map].deepest_level

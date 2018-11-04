@@ -47,11 +47,7 @@ void txtgod(const GodId& id, int type)
     default: assert(0);
     }
 
-    Message::instance().txtef(ColorIndex::orange);
-    if (type == 6)
-    {
-    }
-    txt(message);
+    txt(message, Message::color{ColorIndex::orange});
 }
 
 
@@ -376,10 +372,10 @@ void god_proc_switching_penalty()
         if (!cdata.player().god_id.empty())
         {
             mode = 9;
-            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
-                "core.locale.god.enraged",
-                i18n::_(u8"god", cdata.player().god_id, u8"name")));
+                    "core.locale.god.enraged",
+                    i18n::_(u8"god", cdata.player().god_id, u8"name")),
+                Message::color{ColorIndex::purple});
             txtgod(cdata.player().god_id, 1);
             redraw();
             efid = 622;
@@ -409,18 +405,18 @@ void switch_religion()
     spact(25) = 0;
     if (cdata.player().god_id.empty())
     {
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.god.switch.unbeliever"));
+        txt(i18n::s.get("core.locale.god.switch.unbeliever"),
+            Message::color{ColorIndex::orange});
     }
     else
     {
         animode = 100;
         MiracleAnimation().play();
         snd("core.complete1");
-        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
-            "core.locale.god.switch.follower",
-            i18n::_(u8"god", cdata.player().god_id, u8"name")));
+                "core.locale.god.switch.follower",
+                i18n::_(u8"god", cdata.player().god_id, u8"name")),
+            Message::color{ColorIndex::orange});
         if (cdata.player().god_id == core_god::itzpalt)
         {
             spact(24) = 1;
@@ -522,41 +518,47 @@ TurnResult do_pray()
             }
             flt();
             dbid = 0;
-            Message::instance().txtef(ColorIndex::blue);
             if (cdata.player().god_id == core_god::mani)
             {
                 dbid = 262;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.mani"));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.mani"),
+                    Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::lulwy)
             {
                 dbid = 263;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.lulwy"));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.lulwy"),
+                    Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::itzpalt)
             {
                 dbid = 264;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.itzpalt"));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.itzpalt"),
+                    Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::ehekatl)
             {
                 dbid = 260;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.ehekatl"));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.ehekatl"),
+                    Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::opatos)
             {
                 dbid = 265;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.opatos"));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.opatos"),
+                    Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::jure)
             {
                 dbid = 266;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.jure"));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.jure"),
+                    Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::kumiromi)
             {
                 dbid = 261;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.kumiromi"));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.kumiromi"),
+                    Message::color{ColorIndex::blue});
             }
             novoidlv = 1;
             chara_create(56, dbid, -3, 0);

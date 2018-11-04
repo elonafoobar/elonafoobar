@@ -1601,24 +1601,24 @@ label_2061_internal:
                     "core.locale.ui.inv.give.you_hand", inv[ci], cdata[tc]));
                 if (inv[ci].id == 477 || inv[ci].id == 473)
                 {
-                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
-                        "core.locale.ui.inv.give.engagement", cdata[tc]));
+                            "core.locale.ui.inv.give.engagement", cdata[tc]),
+                        Message::color{ColorIndex::green});
                     chara_modify_impression(cdata[tc], 15);
                     cdata[tc].emotion_icon = 317;
                 }
                 if (inv[ci].id == 620)
                 {
-                    Message::instance().txtef(ColorIndex::purple);
                     txt(i18n::s.get(
-                        "core.locale.ui.inv.give.love_potion.text",
-                        cdata[tc],
-                        inv[ci]));
+                            "core.locale.ui.inv.give.love_potion.text",
+                            cdata[tc],
+                            inv[ci]),
+                        Message::color{ColorIndex::purple});
                     snd("core.crush2");
-                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
-                        "core.locale.ui.inv.give.love_potion.dialog",
-                        cdata[tc]));
+                            "core.locale.ui.inv.give.love_potion.dialog",
+                            cdata[tc]),
+                        Message::color{ColorIndex::cyan});
                     chara_modify_impression(cdata[tc], -20);
                     cdata[tc].emotion_icon = 318;
                     inv[ci].modify_number(-1);
@@ -1810,30 +1810,30 @@ label_2061_internal:
                     {
                         game_data.guild.mages_guild_quota = 0;
                     }
-                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
                             "core.locale.ui.inv.put.guild.you_deliver", inv[ci])
-                        + u8"("s + (inv[ci].param1 + 1) * inv[ci].number()
-                        + u8" Guild Point)"s);
+                            + u8"("s + (inv[ci].param1 + 1) * inv[ci].number()
+                            + u8" Guild Point)"s,
+                        Message::color{ColorIndex::green});
                     if (game_data.guild.mages_guild_quota == 0)
                     {
                         snd("core.complete1");
-                        Message::instance().txtef(ColorIndex::green);
                         txt(i18n::s.get(
-                            "core.locale.ui.inv.put.guild.you_fulfill"));
+                                "core.locale.ui.inv.put.guild.you_fulfill"),
+                            Message::color{ColorIndex::green});
                     }
                 }
                 else
                 {
                     quest_data.immediate().extra_info_2 +=
                         inv[ci].weight * inv[ci].number();
-                    Message::instance().txtef(ColorIndex::green);
                     txt(i18n::s.get(
-                        "core.locale.ui.inv.put.harvest",
-                        inv[ci],
-                        cnvweight(inv[ci].weight * inv[ci].number()),
-                        cnvweight(quest_data.immediate().extra_info_2),
-                        cnvweight(quest_data.immediate().extra_info_1)));
+                            "core.locale.ui.inv.put.harvest",
+                            inv[ci],
+                            cnvweight(inv[ci].weight * inv[ci].number()),
+                            cnvweight(quest_data.immediate().extra_info_2),
+                            cnvweight(quest_data.immediate().extra_info_1)),
+                        Message::color{ColorIndex::green});
                 }
                 inv[ci].remove();
                 refresh_burden_state();
@@ -1857,8 +1857,8 @@ label_2061_internal:
                 }
                 cdata.player().gold -= inv[ci].subname;
                 snd("core.paygold1");
-                Message::instance().txtef(ColorIndex::green);
-                txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
+                txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]),
+                    Message::color{ColorIndex::green});
                 inv[ci].modify_number(-1);
                 --game_data.left_bill;
                 screenupdate = -1;
@@ -1887,9 +1887,10 @@ label_2061_internal:
             if (the_item_db[inv[ci].id]->category == 77000)
             {
                 snd("core.fail1");
-                Message::instance().txtef(ColorIndex::blue);
                 txt(i18n::s.get(
-                    "core.locale.ui.inv.take_ally.refuse_dialog", cdata[tc]));
+                        "core.locale.ui.inv.take_ally.refuse_dialog",
+                        cdata[tc]),
+                    Message::color{ColorIndex::blue});
                 goto label_2060_internal;
             }
             if (inv[ci].body_part != 0)
@@ -1907,11 +1908,11 @@ label_2061_internal:
             }
             if (inv[ci].id == 477 || inv[ci].id == 473)
             {
-                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
-                    "core.locale.ui.inv.take_ally.swallows_ring",
-                    cdata[tc],
-                    inv[ci]));
+                        "core.locale.ui.inv.take_ally.swallows_ring",
+                        cdata[tc],
+                        inv[ci]),
+                    Message::color{ColorIndex::purple});
                 snd("core.offer1");
                 chara_modify_impression(cdata[tc], -20);
                 cdata[tc].emotion_icon = 318;

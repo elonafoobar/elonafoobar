@@ -1028,9 +1028,9 @@ TalkResult talk_adventurer_hire()
         cdata[tc].period_of_contract = game_data.date.hours() + 168;
         ++cdata[tc].hire_count;
         snd("core.pray1");
-        Message::instance().txtef(ColorIndex::orange);
         txt(i18n::s.get(
-            "core.locale.talk.npc.adventurer.hire.you_hired", cdata[tc]));
+                "core.locale.talk.npc.adventurer.hire.you_hired", cdata[tc]),
+            Message::color{ColorIndex::orange});
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
     }
     else

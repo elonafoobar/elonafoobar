@@ -1591,8 +1591,7 @@ int chara_custom_talk(int cc, int talk_type)
                 }
                 else
                 {
-                    Message::instance().txtef(ColorIndex::cyan);
-                    txt(line);
+                    txt(line, Message::color{ColorIndex::cyan});
                 }
             }
         }
@@ -1667,21 +1666,21 @@ void chara_modify_impression(Character& cc, int delta)
     int level2 = chara_impression_level(cc.impression);
     if (level1 > level2)
     {
-        Message::instance().txtef(ColorIndex::purple);
         txt(i18n::s.get(
-            "core.locale.chara.impression.lose",
-            cc,
-            i18n::_(u8"ui", u8"impression", u8"_"s + level2)));
+                "core.locale.chara.impression.lose",
+                cc,
+                i18n::_(u8"ui", u8"impression", u8"_"s + level2)),
+            Message::color{ColorIndex::purple});
     }
     else if (level2 > level1)
     {
         if (cc.relationship != -3)
         {
-            Message::instance().txtef(ColorIndex::green);
             txt(i18n::s.get(
-                "core.locale.chara.impression.gain",
-                cc,
-                i18n::_(u8"ui", u8"impression", u8"_"s + level2)));
+                    "core.locale.chara.impression.gain",
+                    cc,
+                    i18n::_(u8"ui", u8"impression", u8"_"s + level2)),
+                Message::color{ColorIndex::green});
         }
     }
 }

@@ -596,10 +596,9 @@ void _lomias_create_equipment()
 
 void _lomias_release_putits()
 {
-    Message::instance().txtef(ColorIndex::cyan);
-    txt(
-        i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.done."
-                    "lomias_releases"));
+    txt(i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.done."
+                    "lomias_releases"),
+        Message::color{ColorIndex::cyan});
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         flt();
@@ -1143,8 +1142,8 @@ void _slan_receive_reward()
     itemcreate(-1, 239, cdata[tc].position.x, cdata[tc].position.y, 0);
     inv[ci].param2 = 0;
     snd("core.write1");
-    Message::instance().txtef(ColorIndex::green);
-    txt(i18n::s.get("core.locale.talk.unique.slan.you_receive"));
+    txt(i18n::s.get("core.locale.talk.unique.slan.you_receive"),
+        Message::color{ColorIndex::green});
     txt(i18n::s.get("core.locale.talk.unique.slan.dies", cdata[tc]));
     chara_vanquish(tc);
 }
@@ -1185,8 +1184,8 @@ TalkResult talk_unique_slan()
 void _erystia_receive_reward()
 {
     snd("core.write1");
-    Message::instance().txtef(ColorIndex::green);
-    txt(i18n::s.get("core.locale.talk.unique.erystia.all_stones.you_receive"));
+    txt(i18n::s.get("core.locale.talk.unique.erystia.all_stones.you_receive"),
+        Message::color{ColorIndex::green});
     flt();
     itemcreate(
         -1, 360, cdata.player().position.x, cdata.player().position.y, 0);
@@ -1197,18 +1196,17 @@ void _erystia_receive_reward()
 void _erystia_receive_key_17th_level()
 {
     snd("core.write1");
-    Message::instance().txtef(ColorIndex::green);
-    txt(i18n::s.get("core.locale.talk.unique.erystia.stones.you_receive"));
+    txt(i18n::s.get("core.locale.talk.unique.erystia.stones.you_receive"),
+        Message::color{ColorIndex::green});
     game_data.quest_flags.main_quest = 110;
 }
 
 void _erystia_receive_key_4th_level()
 {
     snd("core.write1");
-    Message::instance().txtef(ColorIndex::green);
-    txt(
-        i18n::s.get("core.locale.talk.unique.erystia.introduction.pledge_"
-                    "strength.you_receive"));
+    txt(i18n::s.get("core.locale.talk.unique.erystia.introduction.pledge_"
+                    "strength.you_receive"),
+        Message::color{ColorIndex::green});
     game_data.quest_flags.main_quest = 60;
 }
 
@@ -3163,9 +3161,9 @@ TalkResult talk_unique_renton()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            Message::instance().txtef(ColorIndex::orange);
             txt(i18n::s.get(
-                "core.locale.talk.unique.renton.quest.brought_all.ehekatl"));
+                    "core.locale.talk.unique.renton.quest.brought_all.ehekatl"),
+                Message::color{ColorIndex::orange});
             txt(i18n::s.get("core.locale.quest.completed"));
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -3653,8 +3651,8 @@ void _lexus_join_mages_guild()
     txt(i18n::s.get("core.locale.quest.completed"));
     snd("core.complete1");
     quest_update_journal_msg();
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.talk.unique.lexus.nonmember.joined"));
+    txt(i18n::s.get("core.locale.talk.unique.lexus.nonmember.joined"),
+        Message::color{ColorIndex::orange});
 }
 
 void _lexus_start_trial()
@@ -3882,8 +3880,8 @@ void _abyss_join_thieves_guild()
     txt(i18n::s.get("core.locale.quest.completed"));
     snd("core.complete1");
     quest_update_journal_msg();
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.talk.unique.abyss.nonmember.joined"));
+    txt(i18n::s.get("core.locale.talk.unique.abyss.nonmember.joined"),
+        Message::color{ColorIndex::orange});
 }
 
 void _abyss_move_self()
@@ -4119,8 +4117,8 @@ void _doria_join_fighters_guild()
     txt(i18n::s.get("core.locale.quest.completed"));
     snd("core.complete1");
     quest_update_journal_msg();
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.talk.unique.doria.nonmember.joined"));
+    txt(i18n::s.get("core.locale.talk.unique.doria.nonmember.joined"),
+        Message::color{ColorIndex::orange});
 }
 
 void _doria_move_self()
@@ -4613,11 +4611,11 @@ void _strange_scientist_turn_over()
     txt(i18n::s.get(
         "core.locale.talk.unique.strange_scientist.turn_over.text"));
     ++game_data.quest_flags.save_count_of_little_sister;
-    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get(
-        "core.locale.talk.unique.strange_scientist.saved_count",
-        game_data.quest_flags.save_count_of_little_sister,
-        game_data.quest_flags.kill_count_of_little_sister));
+            "core.locale.talk.unique.strange_scientist.saved_count",
+            game_data.quest_flags.save_count_of_little_sister,
+            game_data.quest_flags.kill_count_of_little_sister),
+        Message::color{ColorIndex::green});
     chara_vanquish(chara_find_ally(319));
     snd("core.complete1");
 }

@@ -19,12 +19,10 @@ void Debug::report_error(const std::string& message)
     std::istringstream sstream(message);
     std::string line;
 
-    Message::instance().txtef(ColorIndex::red);
-    txt("Script error: ");
+    txt("Script error: ", Message::color{ColorIndex::red});
     while (getline(sstream, line, '\n'))
     {
-        Message::instance().txtef(ColorIndex::red);
-        txt(line + "  ");
+        txt(line + "  ", Message::color{ColorIndex::red});
     }
 
     ELONA_LOG("Script error: " << message);

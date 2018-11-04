@@ -320,12 +320,12 @@ TurnResult proc_npc_movement_event(bool retreat)
                 }
                 if (sell != 0)
                 {
-                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
-                        "core.locale.ai.ally.sells_items",
-                        cdata[cc],
-                        sell(0),
-                        sell(1)));
+                            "core.locale.ai.ally.sells_items",
+                            cdata[cc],
+                            sell(0),
+                            sell(1)),
+                        Message::color{ColorIndex::cyan});
                 }
             }
             if (rnd(100) == 0)
@@ -334,9 +334,9 @@ TurnResult proc_npc_movement_event(bool retreat)
                 {
                     cdata[cc].gold -= cdata[cc].level * 500;
                     snd("core.ding3");
-                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
-                        "core.locale.ai.ally.visits_trainer", cdata[cc]));
+                            "core.locale.ai.ally.visits_trainer", cdata[cc]),
+                        Message::color{ColorIndex::cyan});
                     for (int cnt = 0; cnt < 4; ++cnt)
                     {
                         while (1)
@@ -698,8 +698,8 @@ TurnResult ai_proc_misc_map_events()
                     }
                     if (rnd(4) == 0)
                     {
-                        Message::instance().txtef(ColorIndex::blue);
-                        txt(u8" *ﾋﾟﾛﾘ〜ﾋﾟﾛﾘ〜* "s);
+                        txt(u8" *ﾋﾟﾛﾘ〜ﾋﾟﾛﾘ〜* "s,
+                            Message::color{ColorIndex::blue});
                         goto label_2692_internal;
                     }
                     txt(u8"「マイアヒー♪」"s,
@@ -803,10 +803,10 @@ label_2692_internal:
                                                         .position.x;
                                             tlocy = cdata[game_data.fire_giant]
                                                         .position.y;
-                                            Message::instance().txtef(
-                                                ColorIndex::cyan);
-                                            txt(i18n::s.get(
-                                                "core.locale.ai.fire_giant"));
+                                            txt(i18n::s.get("core.locale.ai."
+                                                            "fire_giant"),
+                                                Message::color{
+                                                    ColorIndex::cyan});
                                             return do_throw_command();
                                         }
                                     }
@@ -875,8 +875,8 @@ label_2692_internal:
                                 {
                                     tlocx = cdata.player().position.x;
                                     tlocy = cdata.player().position.y;
-                                    Message::instance().txtef(ColorIndex::cyan);
-                                    txt(i18n::s.get("core.locale.ai.snowball"));
+                                    txt(i18n::s.get("core.locale.ai.snowball"),
+                                        Message::color{ColorIndex::cyan});
                                     return do_throw_command();
                                 }
                             }
@@ -973,8 +973,8 @@ label_2692_internal:
                         {
                             if (is_in_fov(cdata[cc]))
                             {
-                                Message::instance().txtef(ColorIndex::cyan);
-                                txt(i18n::s.get("core.locale.ai.snail"));
+                                txt(i18n::s.get("core.locale.ai.snail"),
+                                    Message::color{ColorIndex::cyan});
                             }
                             return do_throw_command();
                         }

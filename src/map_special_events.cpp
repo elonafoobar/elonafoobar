@@ -82,8 +82,8 @@ static void _map_events_tower_of_fire()
         if (r < 6)
         {
             dmg = (6 - r) * (6 - r) * 2;
-            Message::instance().txtef(ColorIndex::red);
-            txt(i18n::s.get("core.locale.action.exit_map.it_is_hot"));
+            txt(i18n::s.get("core.locale.action.exit_map.it_is_hot"),
+                Message::color{ColorIndex::red});
             damage_hp(cdata[cc], dmg, -9);
         }
     }
@@ -137,8 +137,8 @@ static void _map_events_port_kapul()
         {
             quest_update_journal_msg();
             game_data.quest_flags.kamikaze_attack = 3;
-            Message::instance().txtef(ColorIndex::cyan);
-            txt(i18n::s.get("core.locale.misc.quest.kamikaze_attack.message"));
+            txt(i18n::s.get("core.locale.misc.quest.kamikaze_attack.message"),
+                Message::color{ColorIndex::cyan});
             txt(i18n::s.get(
                 "core.locale.misc.quest.kamikaze_attack.stairs_appear"));
             cell_featset(18, 9, tile_downstairs, 11, 1);
@@ -222,59 +222,58 @@ static void _map_events_museum()
     {
         if (rnd(25) == 0)
         {
-            Message::instance().txtef(ColorIndex::cyan);
-            txt(i18n::s.get("core.locale.misc.map.museum.chats"));
+            txt(i18n::s.get("core.locale.misc.map.museum.chats"),
+                Message::color{ColorIndex::cyan});
         }
         if (rnd(25) == 0)
         {
-            Message::instance().txtef(ColorIndex::cyan);
-            txt(i18n::s.get("core.locale.misc.map.museum.chats2"));
+            txt(i18n::s.get("core.locale.misc.map.museum.chats2"),
+                Message::color{ColorIndex::cyan});
         }
         if (rnd(15) == 0)
         {
-            Message::instance().txtef(ColorIndex::cyan);
-            for (int cnt = 0; cnt < 1; ++cnt)
+            if (en)
             {
-                if (en)
-                {
-                    break;
-                }
-                if (game_data.ranks.at(3) > 8000)
-                {
-                    txt(u8"「退屈ぅー」"s,
-                        u8"「あまり見るものがないな」"s,
-                        u8"「こんなので見物料とるの？」"s,
-                        u8"館内は少し寂しい…"s);
-                    break;
-                }
-                if (game_data.ranks.at(3) > 5000)
-                {
-                    txt(u8"「いいんじゃない〜」"s,
-                        u8"「まあ、普通の博物館だ」"s,
-                        u8"「恋人を連れてくればよかったかも」"s,
-                        u8"まあまあの客足だ。"s);
-                    break;
-                }
-                if (game_data.ranks.at(3) > 2500)
-                {
-                    txt(u8"「この雰囲気好きだなぁ」"s,
-                        u8"「もう一度来ようよ」"s,
-                        u8"「時間が経つのを忘れるね！」"s,
-                        u8"館内はなかなか賑わっている。"s);
-                    break;
-                }
-                if (game_data.ranks.at(3) > 500)
-                {
-                    txt(u8"「来て良かった♪」"s,
-                        u8"「よくこんなに集めたなあ」"s,
-                        u8"「むぅ…興味深い」"s,
-                        u8"客足が全く絶えない盛況ぶりだ。"s);
-                    break;
-                }
+            }
+            else if (game_data.ranks.at(3) > 8000)
+            {
+                txt(u8"「退屈ぅー」"s,
+                    u8"「あまり見るものがないな」"s,
+                    u8"「こんなので見物料とるの？」"s,
+                    u8"館内は少し寂しい…"s,
+                    Message::color{ColorIndex::cyan});
+            }
+            else if (game_data.ranks.at(3) > 5000)
+            {
+                txt(u8"「いいんじゃない〜」"s,
+                    u8"「まあ、普通の博物館だ」"s,
+                    u8"「恋人を連れてくればよかったかも」"s,
+                    u8"まあまあの客足だ。"s,
+                    Message::color{ColorIndex::cyan});
+            }
+            else if (game_data.ranks.at(3) > 2500)
+            {
+                txt(u8"「この雰囲気好きだなぁ」"s,
+                    u8"「もう一度来ようよ」"s,
+                    u8"「時間が経つのを忘れるね！」"s,
+                    u8"館内はなかなか賑わっている。"s,
+                    Message::color{ColorIndex::cyan});
+            }
+            else if (game_data.ranks.at(3) > 500)
+            {
+                txt(u8"「来て良かった♪」"s,
+                    u8"「よくこんなに集めたなあ」"s,
+                    u8"「むぅ…興味深い」"s,
+                    u8"客足が全く絶えない盛況ぶりだ。"s,
+                    Message::color{ColorIndex::cyan});
+            }
+            else
+            {
                 txt(u8"「素晴らしいコレクションだ！」"s,
                     u8"「感動した」"s,
                     u8"「帰りたくないわ♪」"s,
-                    u8"来客は食い入るように展示物を眺めている。"s);
+                    u8"来客は食い入るように展示物を眺めている。"s,
+                    Message::color{ColorIndex::cyan});
             }
         }
         return;
@@ -287,8 +286,8 @@ static void _map_events_shop()
     {
         if (rnd(25) == 0)
         {
-            Message::instance().txtef(ColorIndex::cyan);
-            txt(i18n::s.get("core.locale.misc.map.shop.chats"));
+            txt(i18n::s.get("core.locale.misc.map.shop.chats"),
+                Message::color{ColorIndex::cyan});
         }
         return;
     }

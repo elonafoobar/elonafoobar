@@ -759,8 +759,8 @@ int calcattackdmg(int prm_894)
             pierce = 100;
             if (is_in_fov(cdata[cc]))
             {
-                Message::instance().txtef(ColorIndex::orange);
-                txt(i18n::s.get("core.locale.damage.vorpal.melee"));
+                txt(i18n::s.get("core.locale.damage.vorpal.melee"),
+                    Message::color{ColorIndex::orange});
             }
         }
     }
@@ -771,8 +771,8 @@ int calcattackdmg(int prm_894)
             pierce = 60;
             if (is_in_fov(cdata[cc]))
             {
-                Message::instance().txtef(ColorIndex::orange);
-                txt(i18n::s.get("core.locale.damage.vorpal.ranged"));
+                txt(i18n::s.get("core.locale.damage.vorpal.ranged"),
+                    Message::color{ColorIndex::orange});
             }
         }
         if (ammoprocbk == 0)
@@ -1520,13 +1520,13 @@ void calcpartyscore()
     }
     if (score > quest_data.immediate().extra_info_2)
     {
-        Message::instance().txtef(ColorIndex::blue);
-        txt(u8"(+"s + (score - quest_data.immediate().extra_info_2) + u8") "s);
+        txt(u8"(+"s + (score - quest_data.immediate().extra_info_2) + u8") "s,
+            Message::color{ColorIndex::blue});
     }
     if (score < quest_data.immediate().extra_info_2)
     {
-        Message::instance().txtef(ColorIndex::red);
-        txt(u8"("s + (score - quest_data.immediate().extra_info_2) + u8") "s);
+        txt(u8"("s + (score - quest_data.immediate().extra_info_2) + u8") "s,
+            Message::color{ColorIndex::red});
     }
     quest_data.immediate().extra_info_2 = score;
 }

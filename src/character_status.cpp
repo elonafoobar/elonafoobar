@@ -90,8 +90,8 @@ void modify_ether_disease_stage(int delta)
     {
         if (original_amount == 0)
         {
-            Message::instance().txtef(ColorIndex::purple);
-            txt(i18n::s.get("core.locale.chara.corruption.symptom"));
+            txt(i18n::s.get("core.locale.chara.corruption.symptom"),
+                Message::color{ColorIndex::purple});
             maybe_show_ex_help(15);
         }
         if (original_amount + mod_amount >= 20)
@@ -124,10 +124,9 @@ void modify_ether_disease_stage(int delta)
                 --trait(tid);
                 i_at_m134 = original_amount + cnt2_at_m134;
                 game_data.ether_disease_history.at(i_at_m134) = tid;
-                Message::instance().txtef(ColorIndex::purple);
-                txt(i18n::s.get("core.locale.chara.corruption.add"));
-                Message::instance().txtef(ColorIndex::red);
-                txt(traitrefn(1));
+                txt(i18n::s.get("core.locale.chara.corruption.add"),
+                    Message::color{ColorIndex::purple});
+                txt(traitrefn(1), Message::color{ColorIndex::red});
                 if (tid == 203)
                 {
                     body = 9;
@@ -188,10 +187,9 @@ void modify_ether_disease_stage(int delta)
                     continue;
                 }
                 ++trait(tid);
-                Message::instance().txtef(ColorIndex::green);
-                txt(i18n::s.get("core.locale.chara.corruption.remove"));
-                Message::instance().txtef(ColorIndex::green);
-                txt(traitrefn(0));
+                txt(i18n::s.get("core.locale.chara.corruption.remove"),
+                    Message::color{ColorIndex::green});
+                txt(traitrefn(0), Message::color{ColorIndex::green});
                 break;
             }
         }
@@ -237,18 +235,18 @@ void modify_karma(Character& cc, int delta)
     {
         if (cc.karma < -30 && cc.karma + delta >= -30)
         {
-            Message::instance().txtef(ColorIndex::green);
-            txt(i18n::s.get(
-                "core.locale.chara_status.karma.you_are_no_longer_criminal"));
+            txt(i18n::s.get("core.locale.chara_status.karma.you_are_no_longer_"
+                            "criminal"),
+                Message::color{ColorIndex::green});
         }
     }
     else if (delta < 0)
     {
         if (cc.karma >= -30 && cc.karma + delta < -30)
         {
-            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
-                "core.locale.chara_status.karma.you_are_criminal_now"));
+                    "core.locale.chara_status.karma.you_are_criminal_now"),
+                Message::color{ColorIndex::purple});
             go_hostile();
         }
     }
@@ -494,15 +492,16 @@ void gain_level(Character& cc)
     {
         if (r2 == 0)
         {
-            Message::instance().txtef(ColorIndex::green);
             if (cc.index == 0)
             {
                 txt(i18n::s.get(
-                    "core.locale.chara.gain_level.self", cc, cc.level));
+                        "core.locale.chara.gain_level.self", cc, cc.level),
+                    Message::color{ColorIndex::green});
             }
             else
             {
-                txt(i18n::s.get("core.locale.chara.gain_level.other", cc));
+                txt(i18n::s.get("core.locale.chara.gain_level.other", cc),
+                    Message::color{ColorIndex::green});
             }
         }
     }

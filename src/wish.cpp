@@ -445,8 +445,8 @@ bool grant_special_wishing(const std::string& wish)
     else if (match_special_wish(
                  wish, "gold", {"money", "gold", "wealth", "fortune"}))
     {
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.wish.wish_gold"));
+        txt(i18n::s.get("core.locale.wish.wish_gold"),
+            Message::color{ColorIndex::orange});
         flt();
         itemcreate(
             -1,
@@ -460,8 +460,8 @@ bool grant_special_wishing(const std::string& wish)
                  "small_medal",
                  {"small medal", "small coin", "medal", "coin"}))
     {
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.wish.wish_small_medal"));
+        txt(i18n::s.get("core.locale.wish.wish_small_medal"),
+            Message::color{ColorIndex::orange});
         flt();
         itemcreate(
             -1,
@@ -472,8 +472,8 @@ bool grant_special_wishing(const std::string& wish)
     }
     else if (match_special_wish(wish, "platinum", {"platinum", "platina"}))
     {
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.wish.wish_platinum"));
+        txt(i18n::s.get("core.locale.wish.wish_platinum"),
+            Message::color{ColorIndex::orange});
         flt();
         itemcreate(
             -1, 55, cdata.player().position.x, cdata.player().position.y, 5);
@@ -482,8 +482,7 @@ bool grant_special_wishing(const std::string& wish)
     {
         if (match_special_wish(wish, "fame", {"fame"}))
         {
-            Message::instance().txtef(ColorIndex::orange);
-            txt(u8"fame +1,000,000");
+            txt(u8"fame +1,000,000", Message::color{ColorIndex::orange});
             cdata.player().fame += 1'000'000;
         }
         else
@@ -720,15 +719,16 @@ bool wish_for_skill(const std::string& input)
         const auto name = i18n::_(u8"ability", std::to_string(id), u8"name");
         if (!name.empty())
         {
-            Message::instance().txtef(ColorIndex::orange);
             if (sdata.get(id, 0).original_level == 0)
             {
-                txt(i18n::s.get("core.locale.wish.you_learn_skill", name));
+                txt(i18n::s.get("core.locale.wish.you_learn_skill", name),
+                    Message::color{ColorIndex::orange});
                 chara_gain_skill(cdata.player(), id, 1);
             }
             else
             {
-                txt(i18n::s.get("core.locale.wish.your_skill_improves", name));
+                txt(i18n::s.get("core.locale.wish.your_skill_improves", name),
+                    Message::color{ColorIndex::orange});
                 chara_gain_fixed_skill_exp(cdata.player(), id, 1000);
                 modify_potential(cdata.player(), id, 25);
             }
@@ -753,8 +753,8 @@ bool process_wish()
 {
     using namespace strutil;
 
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"));
+    txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"),
+        Message::color{ColorIndex::orange});
 
     input_text_dialog(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);

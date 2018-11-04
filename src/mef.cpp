@@ -179,8 +179,8 @@ void mef_update()
         }
         if (mef(0, cnt) == 7)
         {
-            Message::instance().txtef(ColorIndex::red);
-            txt(i18n::s.get("core.locale.mef.bomb_counter", mef(4, cnt)));
+            txt(i18n::s.get("core.locale.mef.bomb_counter", mef(4, cnt)),
+                Message::color{ColorIndex::red});
         }
         if (mef(4, cnt) != -1)
         {

@@ -1263,8 +1263,8 @@ void modrank(int rank_id, int amount, int prm_554)
     }
     else if (i_at_m75 > 0)
     {
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.misc.ranking.closer_to_next_rank"));
+        txt(i18n::s.get("core.locale.misc.ranking.closer_to_next_rank"),
+            Message::color{ColorIndex::green});
     }
 }
 
@@ -1693,10 +1693,10 @@ void make_sound(
                         {
                             if (is_in_fov(cdata[cnt]))
                             {
-                                Message::instance().txtef(ColorIndex::cyan);
                                 txt(i18n::s.get(
-                                    "core.locale.misc.sound.get_anger",
-                                    cdata[cnt]));
+                                        "core.locale.misc.sound.get_anger",
+                                        cdata[cnt]),
+                                    Message::color{ColorIndex::cyan});
                                 txt(
                                     i18n::s.get("core.locale.misc.sound.can_no_"
                                                 "longer_stand"));
@@ -1724,9 +1724,10 @@ void hostileaction(int prm_787, int prm_788)
     }
     if (cdata[prm_788].relationship == 10)
     {
-        Message::instance().txtef(ColorIndex::purple);
         txt(i18n::s.get(
-            "core.locale.misc.hostile_action.glares_at_you", cdata[prm_788]));
+                "core.locale.misc.hostile_action.glares_at_you",
+                cdata[prm_788]),
+            Message::color{ColorIndex::purple});
     }
     else
     {
@@ -1738,29 +1739,29 @@ void hostileaction(int prm_787, int prm_788)
         {
             if (game_data.released_fire_giant == 0)
             {
-                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
-                    "core.locale.misc.hostile_action.glares_at_you",
-                    cdata[prm_788]));
+                        "core.locale.misc.hostile_action.glares_at_you",
+                        cdata[prm_788]),
+                    Message::color{ColorIndex::purple});
                 return;
             }
         }
         if (cdata[prm_788].relationship > -2)
         {
-            Message::instance().txtef(ColorIndex::purple);
             txt(i18n::s.get(
-                "core.locale.misc.hostile_action.glares_at_you",
-                cdata[prm_788]));
+                    "core.locale.misc.hostile_action.glares_at_you",
+                    cdata[prm_788]),
+                Message::color{ColorIndex::purple});
             cdata[prm_788].relationship = -2;
         }
         else
         {
             if (cdata[prm_788].relationship != -3)
             {
-                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
-                    "core.locale.misc.hostile_action.gets_furious",
-                    cdata[prm_788]));
+                        "core.locale.misc.hostile_action.gets_furious",
+                        cdata[prm_788]),
+                    Message::color{ColorIndex::purple});
             }
             cdata[prm_788].relationship = -3;
             cdata[prm_788].hate = 80;
@@ -1772,8 +1773,8 @@ void hostileaction(int prm_787, int prm_788)
     {
         if (rnd(50) == 0)
         {
-            Message::instance().txtef(ColorIndex::red);
-            txt(i18n::s.get("core.locale.misc.hostile_action.get_excited"));
+            txt(i18n::s.get("core.locale.misc.hostile_action.get_excited"),
+                Message::color{ColorIndex::red});
             for (auto&& cnt : cdata.all())
             {
                 if (cnt.is_livestock() == 1)
@@ -2668,9 +2669,9 @@ void proc_turn_end(int cc)
         {
             if (rnd(3) == 0)
             {
-                Message::instance().txtef(ColorIndex::cyan);
                 txt(i18n::s.get(
-                    "core.locale.misc.status_ailment.insane", cdata[cc]));
+                        "core.locale.misc.status_ailment.insane", cdata[cc]),
+                    Message::color{ColorIndex::cyan});
             }
         }
         if (rnd(5) == 0)
@@ -2826,8 +2827,8 @@ void revive_character()
     chara_place();
     cdata[rc].current_map = 0;
     snd("core.pray1");
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.misc.resurrect", cdatan(0, rc), cdata[rc]));
+    txt(i18n::s.get("core.locale.misc.resurrect", cdatan(0, rc), cdata[rc]),
+        Message::color{ColorIndex::orange});
 }
 
 
@@ -3538,11 +3539,11 @@ void character_drops_item()
                     {
                         if (rnd(3))
                         {
-                            Message::instance().txtef(ColorIndex::cyan);
                             txt(i18n::s.get(
-                                "core.locale.misc.black_cat_licks",
-                                cdata[catitem],
-                                inv[ci]));
+                                    "core.locale.misc.black_cat_licks",
+                                    cdata[catitem],
+                                    inv[ci]),
+                                Message::color{ColorIndex::cyan});
                             ibitmod(8, ci, 1);
                             reftype = the_item_db[inv[ci].id]->category;
                             enchantment_add(
@@ -4124,9 +4125,9 @@ void damage_by_cursed_equipments()
             cdata[cc].gold -= p;
             if (is_in_fov(cdata[cc]))
             {
-                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
-                    "core.locale.misc.curse.gold_stolen", cdata[cc]));
+                        "core.locale.misc.curse.gold_stolen", cdata[cc]),
+                    Message::color{ColorIndex::purple});
             }
             return;
         }
@@ -4224,9 +4225,10 @@ void proc_negative_equipments()
                 {
                     if (is_in_fov(cdata[cc]))
                     {
-                        Message::instance().txtef(ColorIndex::purple);
                         txt(i18n::s.get(
-                            "core.locale.misc.curse.blood_sucked", cdata[cc]));
+                                "core.locale.misc.curse.blood_sucked",
+                                cdata[cc]),
+                            Message::color{ColorIndex::purple});
                     }
                     cdata[cc].bleeding +=
                         std::abs(inv[ci].enchantments[cnt].power) / 25 + 3;
@@ -4239,10 +4241,10 @@ void proc_negative_equipments()
                 {
                     if (is_in_fov(cdata[cc]))
                     {
-                        Message::instance().txtef(ColorIndex::purple);
                         txt(i18n::s.get(
-                            "core.locale.misc.curse.experience_reduced",
-                            cdata[cc]));
+                                "core.locale.misc.curse.experience_reduced",
+                                cdata[cc]),
+                            Message::color{ColorIndex::purple});
                     }
                     cdata[cc].experience -= cdata[cc].required_experience
                             / (300
@@ -4274,10 +4276,9 @@ void proc_negative_equipments()
                         {
                             if (is_in_fov(cdata[cc]))
                             {
-                                Message::instance().txtef(ColorIndex::purple);
-                                txt(
-                                    i18n::s.get("core.locale.misc.curse."
-                                                "creature_summoned"));
+                                txt(i18n::s.get("core.locale.misc.curse."
+                                                "creature_summoned"),
+                                    Message::color{ColorIndex::purple});
                             }
                             for (int cnt = 0, cnt_end = (1 + rnd(3));
                                  cnt < cnt_end;
@@ -4368,8 +4369,8 @@ void lovemiracle(int prm_932)
         return;
     }
     cibk = ci;
-    Message::instance().txtef(ColorIndex::cyan);
-    txt(i18n::s.get("core.locale.misc.love_miracle.uh"));
+    txt(i18n::s.get("core.locale.misc.love_miracle.uh"),
+        Message::color{ColorIndex::cyan});
     flt();
     if (rnd(2))
     {
@@ -4413,8 +4414,8 @@ void get_pregnant()
     }
     if (cdata[tc].is_pregnant() == 0)
     {
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.misc.pregnant.gets_pregnant", cdata[tc]));
+        txt(i18n::s.get("core.locale.misc.pregnant.gets_pregnant", cdata[tc]),
+            Message::color{ColorIndex::orange});
         animeload(8, tc);
         cdata[tc].is_pregnant() = true;
     }
@@ -5524,18 +5525,19 @@ void supply_income()
     if (income != 0 || income(1) != 0)
     {
         snd("core.ding2");
-        Message::instance().txtef(ColorIndex::orange);
         if (income(1) == 0)
         {
             txt(i18n::s.get(
-                "core.locale.misc.income.sent_to_your_house", income(0)));
+                    "core.locale.misc.income.sent_to_your_house", income(0)),
+                Message::color{ColorIndex::orange});
         }
         else
         {
             txt(i18n::s.get(
-                "core.locale.misc.income.sent_to_your_house2",
-                income(0),
-                income(1)));
+                    "core.locale.misc.income.sent_to_your_house2",
+                    income(0),
+                    income(1)),
+                Message::color{ColorIndex::orange});
         }
         autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
     }
@@ -5570,7 +5572,6 @@ void supply_income()
             {
                 if (game_data.left_bill <= 4)
                 {
-                    Message::instance().txtef(ColorIndex::red);
                     if (game_data.left_bill > 3)
                     {
                         s(0) = i18n::s.get("core.locale.misc.tax.warning");
@@ -5583,21 +5584,23 @@ void supply_income()
                         s(1) = "";
                     }
                     txt(s
-                        + i18n::s.get(
-                              "core.locale.misc.tax.left_bills",
-                              game_data.left_bill - 1)
-                        + s(1));
+                            + i18n::s.get(
+                                  "core.locale.misc.tax.left_bills",
+                                  game_data.left_bill - 1)
+                            + s(1),
+                        Message::color{ColorIndex::red});
                 }
             }
             if (game_data.left_bill > 4)
             {
-                Message::instance().txtef(ColorIndex::red);
                 txt(i18n::s.get(
-                    "core.locale.misc.tax.accused", game_data.left_bill - 1));
+                        "core.locale.misc.tax.accused",
+                        game_data.left_bill - 1),
+                    Message::color{ColorIndex::red});
                 int stat = decfame(0, 50);
                 p = stat;
-                Message::instance().txtef(ColorIndex::red);
-                txt(i18n::s.get("core.locale.misc.tax.lose_fame", p(0)));
+                txt(i18n::s.get("core.locale.misc.tax.lose_fame", p(0)),
+                    Message::color{ColorIndex::red});
                 modify_karma(cdata.player(), -30 * 2);
             }
         }
@@ -7610,8 +7613,7 @@ void do_save_game()
 {
     snd("core.write1");
     save_game();
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.ui.save"));
+    txt(i18n::s.get("core.locale.ui.save"), Message::color{ColorIndex::orange});
 }
 
 
@@ -7623,8 +7625,8 @@ void save_game()
     int save_f = 0;
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
-        Message::instance().txtef(ColorIndex::red);
-        txt(i18n::s.get("core.locale.misc.save.cannot_save_in_user_map"));
+        txt(i18n::s.get("core.locale.misc.save.cannot_save_in_user_map"),
+            Message::color{ColorIndex::red});
         update_screen();
         return;
     }
@@ -8064,9 +8066,9 @@ label_21451_internal:
                 }
                 if (feat(2) == 7)
                 {
-                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
-                        "core.locale.action.move.trap.activate.mine"));
+                            "core.locale.action.move.trap.activate.mine"),
+                        Message::color{ColorIndex::cyan});
                     BallAnimation(
                         {movx, movy}, 0, BallAnimation::Type::ball, ele)
                         .play();
@@ -8219,8 +8221,8 @@ void sleep_start()
     mode = 0;
     wake_up();
     cdata[cc].nutrition -= 1500 / (trait(158) + 1);
-    Message::instance().txtef(ColorIndex::green);
-    txt(i18n::s.get("core.locale.activity.sleep.slept_for", timeslept));
+    txt(i18n::s.get("core.locale.activity.sleep.slept_for", timeslept),
+        Message::color{ColorIndex::green});
     f = 0;
     if (cdata.player().continuous_action.item == -1)
     {
@@ -8272,8 +8274,8 @@ void sleep_start()
                 }
             }
         }
-        Message::instance().txtef(ColorIndex::green);
-        txt(i18n::s.get("core.locale.activity.sleep.wake_up.good", grown));
+        txt(i18n::s.get("core.locale.activity.sleep.wake_up.good", grown),
+            Message::color{ColorIndex::green});
     }
     msg_halt();
     play_music();
@@ -8410,17 +8412,17 @@ void map_global_proc_travel_events()
                 if (cdata.player().is_floating() == 0
                     || cdata.player().gravity > 0)
                 {
-                    Message::instance().txtef(ColorIndex::cyan);
-                    txt(i18n::s.get(
-                        "core.locale.action.move.global.weather.snow.sound"));
+                    txt(i18n::s.get("core.locale.action.move.global.weather."
+                                    "snow.sound"),
+                        Message::color{ColorIndex::cyan});
                     cdata[cc].continuous_action.turn += 10;
                 }
             }
             if (rnd(1000) == 0)
             {
-                Message::instance().txtef(ColorIndex::purple);
                 txt(i18n::s.get(
-                    "core.locale.action.move.global.weather.snow.message"));
+                        "core.locale.action.move.global.weather.snow.message"),
+                    Message::color{ColorIndex::purple});
                 cdata[cc].continuous_action.turn += 50;
             }
         }
@@ -8446,10 +8448,10 @@ void map_global_proc_travel_events()
                 if (cdata.player().is_floating() == 0
                     || cdata.player().gravity > 0)
                 {
-                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
-                        "core.locale.action.move.global.weather.heavy_rain."
-                        "sound"));
+                            "core.locale.action.move.global.weather.heavy_rain."
+                            "sound"),
+                        Message::color{ColorIndex::cyan});
                     cdata[cc].continuous_action.turn += 5;
                 }
             }
@@ -8457,10 +8459,10 @@ void map_global_proc_travel_events()
             {
                 if (rnd(500) == 0)
                 {
-                    Message::instance().txtef(ColorIndex::purple);
                     txt(i18n::s.get(
-                        "core.locale.action.move.global.weather.heavy_rain."
-                        "message"));
+                            "core.locale.action.move.global.weather.heavy_rain."
+                            "message"),
+                        Message::color{ColorIndex::purple});
                     cdata.player().confused = 10;
                 }
             }
@@ -9001,10 +9003,10 @@ int drink_well()
                 txt(i18n::s.get(
                     "core.locale.action.drink.well.effect.falls.text",
                     cdata[cc]));
-                Message::instance().txtef(ColorIndex::cyan);
                 txt(i18n::s.get(
-                    "core.locale.action.drink.well.effect.falls.dialog",
-                    cdata[cc]));
+                        "core.locale.action.drink.well.effect.falls.dialog",
+                        cdata[cc]),
+                    Message::color{ColorIndex::cyan});
                 if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                 {
                     txt(i18n::s.get(
@@ -9135,9 +9137,9 @@ int drink_well()
         {
             if (rnd(game_data.wish_count + 1))
             {
-                Message::instance().txtef(ColorIndex::orange);
-                txt(i18n::s.get(
-                    "core.locale.action.drink.well.effect.wish_too_frequent"));
+                txt(i18n::s.get("core.locale.action.drink.well.effect.wish_too_"
+                                "frequent"),
+                    Message::color{ColorIndex::orange});
                 break;
             }
             ++game_data.wish_count;
@@ -10284,10 +10286,10 @@ TurnResult do_bash()
                         chara_refresh(cc);
                         if (is_in_fov(cdata[cc]))
                         {
-                            Message::instance().txtef(ColorIndex::purple);
                             txt(i18n::s.get(
-                                "core.locale.action.bash.door.hurt",
-                                cdata[cc]));
+                                    "core.locale.action.bash.door.hurt",
+                                    cdata[cc]),
+                                Message::color{ColorIndex::purple});
                         }
                     }
                 }
@@ -10790,8 +10792,8 @@ void sense_map_feats_on_move()
             cell_featread(x, y);
             if (feat(1) == 32)
             {
-                Message::instance().txtef(ColorIndex::orange);
-                txt(i18n::s.get("core.locale.action.move.twinkle"));
+                txt(i18n::s.get("core.locale.action.move.twinkle"),
+                    Message::color{ColorIndex::orange});
             }
             if (feat(1) == 15)
             {
@@ -11210,8 +11212,8 @@ void open_new_year_gift()
         {
             if (is_in_fov(cdata[cc]))
             {
-                Message::instance().txtef(ColorIndex::orange);
-                txt(i18n::s.get("core.locale.action.open.new_year_gift.ring"));
+                txt(i18n::s.get("core.locale.action.open.new_year_gift.ring"),
+                    Message::color{ColorIndex::orange});
             }
             flt();
             int stat = chara_create(
@@ -11260,8 +11262,8 @@ void open_new_year_gift()
     {
         if (is_in_fov(cdata[cc]))
         {
-            Message::instance().txtef(ColorIndex::orange);
-            txt(i18n::s.get("core.locale.action.open.new_year_gift.ring"));
+            txt(i18n::s.get("core.locale.action.open.new_year_gift.ring"),
+                Message::color{ColorIndex::orange});
         }
         for (int cnt = 0, cnt_end = (2 + rnd(3)); cnt < cnt_end; ++cnt)
         {
@@ -11657,8 +11659,8 @@ label_22191_internal:
         {
             if (cc == 0)
             {
-                Message::instance().txtef(ColorIndex::red);
-                txt(i18n::s.get("core.locale.damage.critical_hit"));
+                txt(i18n::s.get("core.locale.damage.critical_hit"),
+                    Message::color{ColorIndex::red});
             }
         }
         dmg = calcattackdmg();
@@ -11709,11 +11711,11 @@ label_22191_internal:
                 {
                     if (rnd(5) == 0)
                     {
-                        Message::instance().txtef(ColorIndex::cyan);
                         txt(i18n::s.get(
-                            "core.locale.damage.wields_proudly",
-                            cdata[cc],
-                            s(1)));
+                                "core.locale.damage.wields_proudly",
+                                cdata[cc],
+                                s(1)),
+                            Message::color{ColorIndex::cyan});
                     }
                 }
                 i = 1;
@@ -11898,10 +11900,10 @@ label_22191_internal:
                     {
                         if (is_in_fov(cdata[cc]))
                         {
-                            Message::instance().txtef(ColorIndex::purple);
                             txt(i18n::s.get(
-                                "core.locale.damage.reactive_attack.thorns",
-                                cdata[cc]));
+                                    "core.locale.damage.reactive_attack.thorns",
+                                    cdata[cc]),
+                                Message::color{ColorIndex::purple});
                         }
                         damage_hp(
                             cdata[cc],
@@ -11915,11 +11917,11 @@ label_22191_internal:
                     {
                         if (is_in_fov(cdata[cc]))
                         {
-                            Message::instance().txtef(ColorIndex::purple);
                             txt(i18n::s.get(
-                                "core.locale.damage.reactive_attack.ether_"
-                                "thorns",
-                                cdata[cc]));
+                                    "core.locale.damage.reactive_attack.ether_"
+                                    "thorns",
+                                    cdata[cc]),
+                                Message::color{ColorIndex::purple});
                         }
                         damage_hp(
                             cdata[cc],
@@ -11949,9 +11951,9 @@ label_22191_internal:
                     {
                         if (is_in_fov(cdata[tc]))
                         {
-                            Message::instance().txtef(ColorIndex::purple);
                             txt(i18n::s.get(
-                                "core.locale.damage.reactive_attack.acids"));
+                                    "core.locale.damage.reactive_attack.acids"),
+                                Message::color{ColorIndex::purple});
                         }
                         efid = 455;
                         efp = cdata[tc].damage_reaction_info / 1000;
@@ -12038,11 +12040,11 @@ label_22191_internal:
                     inv[cw].param2 += rnd(cdata[tc].level / inv[cw].param1 + 1);
                     if (inv[cw].param2 >= calcexpalive(inv[cw].param1))
                     {
-                        Message::instance().txtef(ColorIndex::green);
                         snd("core.ding3");
                         txt(i18n::s.get(
-                            "core.locale.misc.living_weapon_taste_blood",
-                            inv[cw]));
+                                "core.locale.misc.living_weapon_taste_blood",
+                                inv[cw]),
+                            Message::color{ColorIndex::green});
                     }
                 }
             }
@@ -12112,9 +12114,9 @@ void proc_weapon_enchantments()
             {
                 if (rnd(25) == 0)
                 {
-                    Message::instance().txtef(ColorIndex::cyan);
                     txt(i18n::s.get(
-                        "core.locale.action.time_stop.begins", cdata[cc]));
+                            "core.locale.action.time_stop.begins", cdata[cc]),
+                        Message::color{ColorIndex::cyan});
                     game_data.left_turns_of_timestop =
                         inv[cw].enchantments[cnt].power / 100 + 1 + 1;
                 }
@@ -12212,8 +12214,8 @@ void proc_weapon_enchantments()
     }
     if (ammoproc == 4)
     {
-        Message::instance().txtef(ColorIndex::cyan);
-        txt(i18n::s.get("core.locale.action.time_stop.begins", cdata[cc]));
+        txt(i18n::s.get("core.locale.action.time_stop.begins", cdata[cc]),
+            Message::color{ColorIndex::cyan});
         game_data.left_turns_of_timestop = 4;
     }
     if (ammoproc == 3)
@@ -12586,8 +12588,8 @@ void harvest_plant(int val)
         feat(1),
         feat(2),
         feat(3));
-    Message::instance().txtef(ColorIndex::green);
-    txt(i18n::s.get("core.locale.action.plant.new_plant_grows"));
+    txt(i18n::s.get("core.locale.action.plant.new_plant_grows"),
+        Message::color{ColorIndex::green});
 }
 
 
@@ -12755,8 +12757,8 @@ int new_ally_joins()
     cdata[rc].is_temporary() = false;
     cdata[rc].only_christmas() = false;
     snd("core.pray1");
-    Message::instance().txtef(ColorIndex::orange);
-    txt(i18n::s.get("core.locale.action.ally_joins.success", cdata[rc]));
+    txt(i18n::s.get("core.locale.action.ally_joins.success", cdata[rc]),
+        Message::color{ColorIndex::orange});
     return 1;
 }
 
@@ -13064,10 +13066,9 @@ void weather_changes()
                         if (rnd(15) < game_data.date.day + 5)
                         {
                             game_data.weather = 1;
-                            Message::instance().txtef(ColorIndex::red);
-                            txt(
-                                i18n::s.get("core.locale.action.weather.ether_"
-                                            "wind.starts"));
+                            txt(i18n::s.get("core.locale.action.weather.ether_"
+                                            "wind.starts"),
+                                Message::color{ColorIndex::red});
                             game_data.last_etherwind_month =
                                 game_data.date.month;
                             game_data.hours_until_weather_changes =
@@ -13214,8 +13215,8 @@ void weather_changes()
     }
     if (game_data.date.hour == 6)
     {
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.action.day_breaks"));
+        txt(i18n::s.get("core.locale.action.day_breaks"),
+            Message::color{ColorIndex::orange});
     }
     if (game_data.continuous_active_hours >= 15)
     {
@@ -13234,8 +13235,8 @@ void weather_changes()
                 ++game_data.number_of_waiting_guests;
             }
         }
-        Message::instance().txtef(ColorIndex::orange);
-        txt(i18n::s.get("core.locale.action.new_day"));
+        txt(i18n::s.get("core.locale.action.new_day"),
+            Message::color{ColorIndex::orange});
         update_shop_and_report();
         for (int rank_id = 0; rank_id < 9; ++rank_id)
         {

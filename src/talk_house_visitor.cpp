@@ -561,8 +561,8 @@ void _adventurer_drink()
     snd("core.drink1");
     txt(i18n::s.get(
         "core.locale.talk.visitor.adventurer.drink.cheers", cdata[tc]));
-    Message::instance().txtef(ColorIndex::cyan);
-    txt(i18n::s.get("core.locale.magic.alcohol.normal"));
+    txt(i18n::s.get("core.locale.magic.alcohol.normal"),
+        Message::color{ColorIndex::cyan});
     dmgcon(tc, StatusAilment::drunk, 1000);
     dmgcon(cc, StatusAilment::drunk, 1000);
     chara_modify_impression(cdata[tc], 15);
@@ -697,11 +697,11 @@ void _trainer_do_training(int plat, int chatval_)
 {
     cdata.player().platinum_coin -= plat;
     snd("core.ding3");
-    Message::instance().txtef(ColorIndex::green);
     txt(i18n::s.get(
-        "core.locale.talk.visitor.trainer.potential_expands",
-        cdata.player(),
-        i18n::_(u8"ability", std::to_string(chatval_), u8"name")));
+            "core.locale.talk.visitor.trainer.potential_expands",
+            cdata.player(),
+            i18n::_(u8"ability", std::to_string(chatval_), u8"name")),
+        Message::color{ColorIndex::green});
     modify_potential(cdata.player(), chatval_, 10);
 }
 
