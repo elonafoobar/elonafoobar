@@ -85,7 +85,7 @@ character['37'] = {
 }
 character['23'] = {
   name = "<Orphe> the chaos child",
-  text_100 = {"You hear childish laughter, only it's oddly distorted in some eldritch manner", "You have been looking for someone like this…"},
+  text_100 = {"You hear childish laughter, only it's oddly distorted in some eldritch manner.", "You have been looking for someone like this…"},
 }
 character['26'] = {
   name = "<Mad scientist>",
@@ -95,14 +95,14 @@ character['27'] = {
 }
 character['28'] = {
   name = "<Whom dwell in the vanity>",
-  text_100 = {"You have been struck by a terrible feeling of powerlessness. ", "The air around here is heavy and sorrowful. But you somehow feel not all is lost.", "\"Elishe...why did it have to be you...\""},
+  text_100 = {"You have been struck by a terrible feeling of powerlessness.", "The air around here is heavy and sorrowful. But you somehow feel not all is lost.", "\"Elishe...why did it have to be you...\""},
   text_101 = {"You are like a rabbit fascinated by a snake.", "Someone mutters. \"Worthless.\"", "You sense death."},
   text_102 = {"\"Finally...I come to you...Elishe...\""},
   text_103 = {"\"I live again...in vain.\""},
 }
 character['29'] = {
   name = "<Loyter> the crimson of Zanan",
-  text_100 = {"Loyter grumbles incessantly. \"How he sounds so miserable...\"", "You hear someone muttering sulfurously somewhere", "Loyter mutters to himself. \"Why are you still attached to him...\""},
+  text_100 = {"Loyter grumbles incessantly. \"How he sounds so miserable...\"", "You hear someone muttering sulfurously somewhere.", "Loyter mutters to himself. \"Why are you still attached to him...\""},
   text_101 = {"\"Oh what a jerk.\"", "\"Die like a maggot you are.\""},
   text_102 = {"\"You are shit.\""},
   text_103 = {"\"Huh? Done already?\""},
@@ -112,24 +112,24 @@ character['140'] = {
 }
 character['30'] = {
   name = "<Miches> the apprentice",
-  text_100 = {"You hear childish laughter nearby", "\"You know your face is funny looking. Were you born that way?\"", "\"How are your travels? I'd love to go but I'm stuck here...\"", "\"I'm so bored. Maybe we can play a game of Putits & Yeeks later.\""},
+  text_100 = {"You hear childish laughter nearby.", "\"You know your face is funny looking. Were you born that way?\"", "\"How are your travels? I'd love to go but I'm stuck here...\"", "\"I'm so bored. Maybe we can play a game of Putits & Yeeks later.\""},
   text_101 = {"\"You molester!\"", "\"Stop it!\""},
   text_102 = {"\"N-Nooo...\""},
   text_103 = {"\"You are so weak.\""},
 }
 character['31'] = {
   name = "<Shena> the draw",
-  text_100 = {"\"Come on in! The ale is flowing well tonight!\"", "\"Hey! Keep yer stinking hands of the serving ladies!\"", "The rowdy crowd is making a fair bit of noise tonight", "You hear the sound of tankerds striking in a toast "},
+  text_100 = {"\"Come on in! The ale is flowing well tonight!\"", "\"Hey! Keep yer stinking hands of the serving ladies!\"", "The rowdy crowd is making a fair bit of noise tonight.", "You hear the sound of tankerds striking in a toast."},
   text_101 = {"\"You are drinking too much!\"", "\"Stop it before I get angry.\""},
   text_102 = {"\"Why me?\""},
   text_103 = {"\"Ahhh! Are you alright, sir?\""},
 }
 character['351'] = {
   name = "<The leopard warrior>",
-  text_100 = {"\"Aural...it seems I know that name\"", "\"Lady Silvia, you are my only princess\""},
+  text_100 = {"\"Aural...it seems I know that name.\"", "\"Lady Silvia, you are my only princess.\""},
   text_101 = {"\"If Jarn wishes, then let it be done.\"", "\"Grrrrrr!\"", "\"Doal!\""},
   text_102 = {"\"Me...meow....\""},
-  text_103 = {"\"Let Janus decide your fate\""},
+  text_103 = {"\"Let Janus decide your fate.\""},
 }
 character['352'] = {
   name = "<Silvia> The princess",
@@ -140,7 +140,7 @@ character['352'] = {
 }
 character['32'] = {
   name = "<Dungeon cleaner>",
-  text_100 = {"*bzzzz*whirrrrrrr*click*", "Something is buffing the floor at an inhuman speed"},
+  text_100 = {"*bzzzz*whirrrrrrr*click*", "Something is buffing the floor at an inhuman speed."},
   text_101 = {"\"Target acquired!\"", "\"Resistance is futile!\""},
   text_102 = {"\"Pwned!\""},
   text_103 = {"\"WTF\""},
@@ -165,7 +165,7 @@ character['139'] = {
 }
 character['146'] = {
   name = "<Karam> the lonely wolf of Karune",
-  text_100 = {"\"Curse my weakness! This shouldn't have happened.\"", "\"This place will be the end of me I fear.\"", "You hear a low moan of pain somewhere"},
+  text_100 = {"\"Curse my weakness! This shouldn't have happened.\"", "\"This place will be the end of me I fear.\"", "You hear a low moan of pain somewhere."},
 }
 character['142'] = {
   name = "<Erystia> the scholar of history",
@@ -420,7 +420,7 @@ character['72'] = {
 }
 character['79'] = {
   name = "<Stersha> the queen of Palmia",
-  text_100 = {"The quiet majesty of the room makes you feel small and grubby", "You note just how alert and well armed the guards are", "Somewhere, a harpsichord is playing a tune befitting nobility"},
+  text_100 = {"The quiet majesty of the room makes you feel small and grubby.", "You note just how alert and well armed the guards are.", "Somewhere, a harpsichord is playing a tune befitting nobility."},
 }
 character['80'] = {
   name = "<Xabi> the king of Palmia",
@@ -848,7 +848,7 @@ character['234'] = {
 }
 character['231'] = {
   name = "<Gilbert> the colonel",
-  text_100 = {"\"Help the helpless! Crush the vileness\"", "\"Atten-TION! Salute!\"", "\"For the Kingdom, we shall never fall!\"", "\"Who's house? Mah House!\""},
+  text_100 = {"\"Help the helpless! Crush the vileness!\"", "\"Atten-TION! Salute!\"", "\"For the Kingdom, we shall never fall!\"", "\"Who's house? Mah House!\""},
 }
 character['232'] = {
   name = "yerles self-propelled gun",
@@ -898,7 +898,7 @@ character['165'] = {
 }
 character['225'] = {
   name = "<Poppy> the little dog",
-  text_100 = {"You hear the high pitched yips of a young dog", "A plaintive howl is heard in the distance", "Rowf!"},
+  text_100 = {"You hear the high pitched yips of a young dog.", "A plaintive howl is heard in the distance.", "Rowf!"},
 }
 character['226'] = {
   name = "<Rilian> the dog lover",
@@ -952,7 +952,7 @@ character['179'] = {
 }
 character['208'] = {
   name = "<Garok> the legendary smith",
-  text_100 = {"You hear the rhythmic clang of a hammer on steel", "You hear the whoosh of a bellows being pumped", "You hear the perfect ring of steel-on-steel. It makes your blood race", "\"And just what shall you be, oh noble ingot? A dagger perhaps, an axe blade by chance? Let us find out...\"", "\"Ah! A good shipment of steel today. Oh, what to make, decisions, decisions...\"", "\"With this, I have created half a legend. Your wielder will make the other half with you.\"", "\"Let's just sit you on the shelf oh noble blade, for soon your brothers shall join you.\""},
+  text_100 = {"You hear the rhythmic clang of a hammer on steel.", "You hear the whoosh of a bellows being pumped.", "You hear the perfect ring of steel-on-steel. It makes your blood race.", "\"And just what shall you be, oh noble ingot? A dagger perhaps, an axe blade by chance? Let us find out...\"", "\"Ah! A good shipment of steel today. Oh, what to make, decisions, decisions...\"", "\"With this, I have created half a legend. Your wielder will make the other half with you.\"", "\"Let's just sit you on the shelf oh noble blade, for soon your brothers shall join you.\""},
 }
 character['209'] = {
   name = "<Miral> the legendary smith",
@@ -960,11 +960,11 @@ character['209'] = {
 }
 character['180'] = {
   name = "twintail",
-  text_100 = {"All around you is the sensation of being in a sacred place", "You have seldom felt such an air of peace", "All around is very quiet, yet you aren't the least bit lonely", "In your mind you hear the strange echoes of a voice in prayer"},
+  text_100 = {"All around you is the sensation of being in a sacred place.", "You have seldom felt such an air of peace.", "All around is very quiet, yet you aren't the least bit lonely.", "In your mind you hear the strange echoes of a voice in prayer."},
 }
 character['181'] = {
   name = "silver wolf",
-  text_100 = {"All around you is the sensation of being in a sacred place", "You have seldom felt such an air of peace", "All around is very quiet, yet you aren't the least bit lonely", "In your mind you hear the strange echoes of a voice in prayer"},
+  text_100 = {"All around you is the sensation of being in a sacred place.", "You have seldom felt such an air of peace.", "All around is very quiet, yet you aren't the least bit lonely.", "In your mind you hear the strange echoes of a voice in prayer."},
 }
 character['182'] = {
   name = "nurse",
@@ -1028,7 +1028,7 @@ character['193'] = {
 }
 character['195'] = {
   name = "chicken",
-  text_100 = {"You hear something scratching for worms", "\"*Bwwwuuuuu-buk-buk-buk-buKAWK*\"", "You hear poultry in the distance"},
+  text_100 = {"You hear something scratching for worms.", "\"*Bwwwuuuuu-buk-buk-buk-buKAWK*\"", "You hear poultry in the distance."},
 }
 character['196'] = {
   name = "pumpkin",
@@ -1050,7 +1050,7 @@ character['200'] = {
 }
 character['202'] = {
   name = "<Ebon> the fire giant",
-  text_100 = {"You hear a bonfire in the distance, only it sounds like it's breathing"},
+  text_100 = {"You hear a bonfire in the distance, only it sounds like it's breathing."},
 }
 character['203'] = {
   name = "<Moyer> the crooked",
@@ -1058,7 +1058,7 @@ character['203'] = {
 }
 character['205'] = {
   name = "maid",
-  text_100 = {"", "\"Oh Master, I don't do THOSE sorts of things♪...\"", "The maid looks good enough to touch"},
+  text_100 = {"", "\"Oh Master, I don't do THOSE sorts of things♪...\"", "The maid looks good enough to touch."},
 }
 character['207'] = {
   name = "<Ebon> the fire giant",
@@ -1085,7 +1085,7 @@ character['223'] = {
 }
 character['224'] = {
   name = "<Ainc> the novice knight",
-  text_100 = {"\"Let's roll!\"", "\"I may be new to this whole knight gig, but I won't be for long!\"", "\"Are my spurs polished enough you think? I'd just die if a senior thought they were sub-par.\"", "You hear someone adjusting their armor for the umpteenth time"},
+  text_100 = {"\"Let's roll!\"", "\"I may be new to this whole knight gig, but I won't be for long!\"", "\"Are my spurs polished enough you think? I'd just die if a senior thought they were sub-par.\"", "You hear someone adjusting their armor for the umpteenth time."},
 }
 character['243'] = {
   name = "<Arnord> the injured soldier",
@@ -1097,7 +1097,7 @@ character['247'] = {
 }
 character['252'] = {
   name = "<Renton> the suffering wizard",
-  text_100 = {"\"I mean there's nothing in my soul but pain and misery. Oh and agony too, can't leave that out.\"", "\"My body will keep moving, like a machine, but without the oils of love, my heart will not stop squeaking\"", "You hear the shuffling step of a man who's world is nothing but pain and misery. With just an aftertaste of agony, for good measure", "\"Will the kiss of Death bring an end to the cloying, double-plus-ungood that is my life?\""},
+  text_100 = {"\"I mean there's nothing in my soul but pain and misery. Oh and agony too, can't leave that out.\"", "\"My body will keep moving, like a machine, but without the oils of love, my heart will not stop squeaking.\"", "You hear the shuffling step of a man who's world is nothing but pain and misery. With just an aftertaste of agony, for good measure.", "\"Will the kiss of Death bring an end to the cloying, double-plus-ungood that is my life?\""},
 }
 character['253'] = {
   name = "<Marks> the great thief",
@@ -1105,7 +1105,7 @@ character['253'] = {
 }
 character['259'] = {
   name = "<Noel> the bomber",
-  text_100 = {"You hear a someone making ticking sounds, followed by a pantomimed 'Ka-BOOOOM', followed by manical laughter", "\"He says to me, he says to me, 'Baby I'm TIRED of workin' for the MAN!' I says, I says, WHY DON'T YOU BLOW HIM TO BITS?\"", "\"You got STYLE, baby. But if you're going to be a real villain, you gotta get a gimmick.' And so I go I says YEAH, baby. A gimmick, that's it. High explosives.\""},
+  text_100 = {"You hear a someone making ticking sounds, followed by a pantomimed 'Ka-BOOOOM', followed by manical laughter.", "\"He says to me, he says to me, 'Baby I'm TIRED of workin' for the MAN!' I says, I says, WHY DON'T YOU BLOW HIM TO BITS?\"", "\"You got STYLE, baby. But if you're going to be a real villain, you gotta get a gimmick.' And so I go I says YEAH, baby. A gimmick, that's it. High explosives.\""},
 }
 character['301'] = {
   name = "<Conery> Palmian major general",
@@ -1121,7 +1121,7 @@ character['215'] = {
 }
 character['217'] = {
   name = "master thief",
-  text_100 = {"\"Like taking candy from a baby in armor.\"", "You hear someone humming the *Money* tune while cracking their knuckles", "\"Another satisfying finance adjustment.\""},
+  text_100 = {"\"Like taking candy from a baby in armor.\"", "You hear someone humming the *Money* tune while cracking their knuckles.", "\"Another satisfying finance adjustment.\""},
 }
 character['216'] = {
   name = "great race of Yith",
@@ -1143,7 +1143,7 @@ character['260'] = {
 }
 character['261'] = {
   name = "cute fairy",
-  text_100 = {"You hear the fluttering of gossamer wings", "You hear tittering laughter like tiny crystal bells", "You smell what reminds you of sugarplums…"},
+  text_100 = {"You hear the fluttering of gossamer wings.", "You hear tittering laughter like tiny crystal bells.", "You smell what reminds you of sugarplums…"},
 }
 character['262'] = {
   name = "android",
@@ -1163,23 +1163,23 @@ character['266'] = {
 }
 character['267'] = {
   name = "lame horse",
-  text_100 = {"You hear faltering hoofbeats in the distance"},
+  text_100 = {"You hear faltering hoofbeats in the distance."},
 }
 character['276'] = {
   name = "wild horse",
-  text_100 = {"You hear hoofbeats, but they are wild and free"},
+  text_100 = {"You hear hoofbeats, but they are wild and free."},
 }
 character['275'] = {
   name = "Noyel horse",
-  text_100 = {"You hear hoofbeats, a trot that almost belongs on a parade"},
+  text_100 = {"You hear hoofbeats, a trot that almost belongs on a parade."},
 }
 character['268'] = {
   name = "Yowyn horse",
-  text_100 = {"You hear the crisp hoofbeats of a horse trained for war"},
+  text_100 = {"You hear the crisp hoofbeats of a horse trained for war."},
 }
 character['277'] = {
   name = "wild horse",
-  text_100 = {"You hear hoofbeats. You hope it's not zebras"},
+  text_100 = {"You hear hoofbeats. You hope it's not zebras."},
 }
 character['278'] = {
   name = "mutant",
@@ -1194,7 +1194,7 @@ character['280'] = {
 }
 character['288'] = {
   name = "<Revlus> the mage guildmaster",
-  text_100 = {"\"Magic is not for the faint of heart, nor dull of mind.\"", "You hear chants for spells you can't even begin to imagine the purpose of", "A pulse of arcane and raw eldritch energies nearly knocks you off your feet"},
+  text_100 = {"\"Magic is not for the faint of heart, nor dull of mind.\"", "You hear chants for spells you can't even begin to imagine the purpose of.", "A pulse of arcane and raw eldritch energies nearly knocks you off your feet."},
 }
 character['290'] = {
   name = "<Lexus> the guild watchman",
@@ -1220,11 +1220,11 @@ character['317'] = {
 }
 character['318'] = {
   name = "<Big daddy>",
-  text_100 = {"You feel the ground tremble with the steps of a large, angry, Protector", "Little Sister: \"Look Mr. Bubbles, the angels.\"", "Little Sister: \"Look Mr. Bubbles, the angels are dancing in the sky!\"", "You hear the tread of something you do NOT want to anger. Ever."},
+  text_100 = {"You feel the ground tremble with the steps of a large, angry, Protector.", "Little Sister: \"Look Mr. Bubbles, the angels.\"", "Little Sister: \"Look Mr. Bubbles, the angels are dancing in the sky!\"", "You hear the tread of something you do NOT want to anger. Ever."},
 }
 character['319'] = {
   name = "<Little sister>",
-  text_100 = {"\"Mr. Bubbles, please stand up… Please!\"", "You hear the sound of a frightened little girl somewhere", "\"Angel, angel, until we find the right one we don't dare die…\""},
+  text_100 = {"\"Mr. Bubbles, please stand up… Please!\"", "You hear the sound of a frightened little girl somewhere.", "\"Angel, angel, until we find the right one we don't dare die…\""},
 }
 character['322'] = {
   name = "<Strange scientist>",
