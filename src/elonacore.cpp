@@ -3936,117 +3936,6 @@ void character_drops_item()
 
 
 
-void food_gets_rotten()
-{
-    i = game_data.date.hours();
-    for (int cnt = 0; cnt < 246; ++cnt)
-    {
-        if (cnt == ELONA_MAX_CHARACTERS)
-        {
-            p = -1;
-        }
-        else
-        {
-            p = cnt;
-            if (cdata[p].state() == Character::State::empty)
-            {
-                continue;
-            }
-        }
-        for (const auto& cnt : items(p))
-        {
-            if (inv[cnt].number() == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].material == 35)
-            {
-                if (inv[cnt].param3 > 0)
-                {
-                    if (inv[cnt].param3 <= i)
-                    {
-                        if (inv[cnt].own_state <= 0)
-                        {
-                            if (p == -1)
-                            {
-                                if (inv[cnt].id == 204)
-                                {
-                                    if (chipm(
-                                            0,
-                                            cell_data
-                                                .at(inv[cnt].position.x,
-                                                    inv[cnt].position.y)
-                                                .chip_id_actual)
-                                        == 1)
-                                    {
-                                        if (game_data.weather != 0)
-                                        {
-                                            continue;
-                                        }
-                                        txt(i18n::s.get(
-                                            "core.locale.misc.corpse_is_dried_"
-                                            "up",
-                                            inv[cnt]));
-                                        inv[cnt].param3 =
-                                            game_data.date.hours() + 2160;
-                                        inv[cnt].image = 337;
-                                        inv[cnt].id = 571;
-                                        inv[cnt].param1 = 0;
-                                        inv[cnt].param2 = 5;
-                                        cell_refresh(
-                                            inv[cnt].position.x,
-                                            inv[cnt].position.y);
-                                        continue;
-                                    }
-                                }
-                            }
-                            if (p != -1)
-                            {
-                                if (p < 16)
-                                {
-                                    txt(i18n::s.get(
-                                        "core.locale.misc.get_rotten",
-                                        inv[cnt]));
-                                }
-                            }
-                            inv[cnt].param3 = -1;
-                            inv[cnt].image = 336;
-                            if (p == -1)
-                            {
-                                cell_refresh(
-                                    inv[cnt].position.x, inv[cnt].position.y);
-                            }
-                            if (p == 0)
-                            {
-                                if (cdata.player().god_id == core_god::kumiromi)
-                                {
-                                    i = the_item_db[inv[cnt].id]->subcategory;
-                                    if (rnd(3) == 0)
-                                    {
-                                        txt(i18n::s.get(
-                                            "core.locale.misc.extract_seed",
-                                            inv[cnt]));
-                                        p = rnd(inv[cnt].number()) + 1;
-                                        inv[cnt].modify_number(
-                                            (-inv[cnt].number()));
-                                        flt(calcobjlv(cdata.player().level));
-                                        flttypeminor = 58500;
-                                        itemcreate(0, 0, -1, -1, p);
-                                        p = 0;
-                                        i = game_data.date.hours();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-
 void damage_by_cursed_equipments()
 {
     if (rnd(4) == 0)
@@ -13173,7 +13062,7 @@ void weather_changes()
     }
     map_prepare_tileset_atlas();
     adventurer_update();
-    food_gets_rotten();
+    foods_get_rotten();
     if (map_data.type == mdata_t::MapType::world_map)
     {
         if (rnd(3) == 0)

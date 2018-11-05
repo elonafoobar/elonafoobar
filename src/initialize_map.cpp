@@ -11,6 +11,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "event.hpp"
+#include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
@@ -1076,7 +1077,7 @@ static void _proc_map_hooks_2()
     }
     if (map_data.refresh_type == 1)
     {
-        food_gets_rotten();
+        foods_get_rotten();
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {

@@ -1052,7 +1052,6 @@ void initialize_home_mdata();
 
 //// weather_changes
 void supply_income();
-void food_gets_rotten();
 
 
 //// list/listn
