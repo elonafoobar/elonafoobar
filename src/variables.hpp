@@ -28,7 +28,6 @@ ELONA_EXTERN(std::string atxbgbk);
 ELONA_EXTERN(elona_vector1<std::string> atxinfon);
 ELONA_EXTERN(elona_vector1<int> atxid);
 ELONA_EXTERN(int atxlv);
-ELONA_EXTERN(int nojoker);
 ELONA_EXTERN(elona_vector1<int> fsetwear);
 ELONA_EXTERN(elona_vector1<int> fsetitem);
 ELONA_EXTERN(int txtadvscreenupdate);
@@ -59,7 +58,6 @@ ELONA_EXTERN(std::string username);
 ELONA_EXTERN(int autoturn);
 ELONA_EXTERN(int firstautoturn);
 ELONA_EXTERN(int racount);
-ELONA_EXTERN(elona_vector1<int> randcolor);
 ELONA_EXTERN(elona_vector1<std::string> matdesc);
 ELONA_EXTERN(int attackvar);
 ELONA_EXTERN(int dump_return);
@@ -107,7 +105,6 @@ ELONA_EXTERN(int rdtry);
 
 // food.cpp
 ELONA_EXTERN(int enc);
-ELONA_EXTERN(int enc2);
 
 // talk.cpp
 ELONA_EXTERN(elona_vector2<std::string> actor);
@@ -131,7 +128,6 @@ ELONA_EXTERN(elona_vector1<int> moneybox);
 ELONA_EXTERN(elona_vector1<int> isetthrowpotionminor);
 ELONA_EXTERN(elona_vector1<int> isetthrowpotionmajor);
 ELONA_EXTERN(elona_vector1<int> isetthrowpotiongreater);
-ELONA_EXTERN(int npccostmp);
 
 // command.cpp
 ELONA_EXTERN(int usermapid);
@@ -152,7 +148,6 @@ ELONA_EXTERN(int rtdmg);
 ELONA_EXTERN(elona_vector1<std::string> tname);
 
 // turn_sequence.cpp
-ELONA_EXTERN(int pcnoise);
 ELONA_EXTERN(int chatturn);
 ELONA_EXTERN(int tgloc);
 ELONA_EXTERN(std::string chatnew);
@@ -172,7 +167,6 @@ ELONA_EXTERN(elona_vector1<int> fsetperform);
 // initialize_map.cpp
 ELONA_EXTERN(int noaggrorefresh);
 
-ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> arenaop);
 ELONA_EXTERN(elona_vector1<int> commark);
 ELONA_EXTERN(elona_vector1<int> cyclemax);
@@ -663,7 +657,6 @@ int calcincome(int = 0);
 int calcmagiccontrol(int = 0, int = 0);
 int calcstartcard(int = 0);
 int randskill();
-
 
 //// TCG
 void actionproc();

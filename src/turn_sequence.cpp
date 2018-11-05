@@ -379,7 +379,6 @@ TurnResult npc_turn()
                 efid = cdata[cc].ai_heal;
                 if (efid >= 400 && efid < 467)
                 {
-                    npccostmp = 1;
                     int stat = do_cast_magic();
                     if (stat == 1)
                     {
@@ -847,7 +846,6 @@ TurnResult pass_one_turn(bool label_2738_flg)
     if (ct == 0)
     {
         Message::instance().new_turn();
-        pcnoise = 0;
         refresh_speed(cdata.player());
         p = cdata.player().turn % 10;
         if (p == 1)

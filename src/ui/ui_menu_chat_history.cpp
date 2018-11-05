@@ -20,7 +20,7 @@ static void _load_chat_history()
 
 bool UIMenuChatHistory::init()
 {
-    curmenu = 2;
+
     key_list(0) = key_enter;
     keyrange = 0;
     pagesize = 0;

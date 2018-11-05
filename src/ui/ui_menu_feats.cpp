@@ -20,7 +20,7 @@ bool UIMenuFeats::init()
     cs = 0;
     tc = 0;
     cs_bk = -1;
-    curmenu = 2;
+
     snd("core.feat");
     ww = 700;
     wh = 400;

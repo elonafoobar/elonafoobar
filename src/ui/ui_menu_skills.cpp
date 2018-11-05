@@ -46,7 +46,7 @@ bool UIMenuSkills::init()
     cs_bk = -1;
     cs = commark(0) % 1000;
     page = commark(0) / 1000;
-    curmenu = 1;
+
     snd("core.skill");
     gsel(3);
     pos(960, 96);

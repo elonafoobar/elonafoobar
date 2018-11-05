@@ -79,7 +79,7 @@ bool UIMenuEquipment::init()
         cs = _cs_prev;
         _cs_prev = 0;
     }
-    curmenu = 1;
+
     ww = 690;
     wh = 380;
     wx = (windoww - 690) / 2 + inf_screenx;

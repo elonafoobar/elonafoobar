@@ -2341,13 +2341,6 @@ int try_to_perceive_npc(int cc)
             }
         }
     }
-    if (pcnoise != 0)
-    {
-        if (rnd(150) < pcnoise)
-        {
-            return 1;
-        }
-    }
     return 0;
 }
 
@@ -8215,31 +8208,30 @@ int do_cast_magic_attempt()
             }
         }
     }
-    if (cc == 0 || (cc != 0 && npccostmp == 1))
+
+    if (cc == 0)
     {
-        if (cc == 0)
+        spell(efid - 400) -= calcspellcoststock(efid, cc);
+        if (spell(efid - 400) < 0)
         {
-            spell(efid - 400) -= calcspellcoststock(efid, cc);
-            if (spell(efid - 400) < 0)
-            {
-                spell(efid - 400) = 0;
-            }
-        }
-        mp = calcspellcostmp(efid, cc);
-        if (cc == 0)
-        {
-            if (cdata.player().god_id == core_god::ehekatl)
-            {
-                mp = rnd(mp * 140 / 100 + 1) + 1;
-            }
-        }
-        damage_mp(cdata[cc], mp);
-        if (cdata[cc].state() != Character::State::alive)
-        {
-            efsource = 0;
-            return 1;
+            spell(efid - 400) = 0;
         }
     }
+    mp = calcspellcostmp(efid, cc);
+    if (cc == 0)
+    {
+        if (cdata.player().god_id == core_god::ehekatl)
+        {
+            mp = rnd(mp * 140 / 100 + 1) + 1;
+        }
+    }
+    damage_mp(cdata[cc], mp);
+    if (cdata[cc].state() != Character::State::alive)
+    {
+        efsource = 0;
+        return 1;
+    }
+
     if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
     {
         if (is_in_fov(cdata[cc]))

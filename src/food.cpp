@@ -1387,7 +1387,7 @@ void apply_general_eating_effect(int cieat)
                 continue;
             }
         }
-        enc2 = enc / 10000;
+        const auto enc2 = enc / 10000;
         if (enc2 != 0)
         {
             enc = enc % 10000;

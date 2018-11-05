@@ -19,7 +19,7 @@ static void _load_politics_list(bool is_town)
     pagesize = 13;
     cs = 0;
     cs_bk = -1;
-    curmenu = 2;
+
     list(0, listmax) = 1;
     listn(0, listmax) = i18n::s.get(
         "core.locale.ui.politics.name", mapname(game_data.politics_map_id));
