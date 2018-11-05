@@ -13468,7 +13468,7 @@ void conquer_lesimas()
     s = i18n::s.get(
         "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0));
     draw_caption();
-    s(0) = i18n::s.get("core.locale.win.window.win");
+    s(0) = i18n::s.get("core.locale.win.window.title");
     s(1) = ""s + strhint3;
     windowshadow = 1;
     ww = 680;
@@ -13524,7 +13524,7 @@ void conquer_lesimas()
 void play_the_last_scene_again()
 {
     update_entire_screen();
-    txt(i18n::s.get("core.locale.misc.win.watch_event_again"));
+    txt(i18n::s.get("core.locale.win.watch_event_again"));
     rtval = yes_or_no(promptx, prompty, 160);
     if (rtval == 0)
     {

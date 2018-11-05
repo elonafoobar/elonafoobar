@@ -81,7 +81,7 @@ locale {
             _52 = "decreases physical damage you take."
             _53 = "sometimes nullifies damage you take."
             _54 = "deals cut damage to the attacker."
-            _55 = "diminishs bleeding."
+            _55 = "diminishes bleeding."
             _56 = "catches signals from God."
             _57 = "inflicts massive damage to dragons."
             _58 = "inflicts massive damage to undeads."

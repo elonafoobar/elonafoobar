@@ -88,7 +88,7 @@ locale {
         _244 = "kamikaze samurai"
         _245 = "bomb rock"
         _321 = "hard gay"
-        _242 = "yeek"
+        _242 = "<Rodlob> the boss of yeeks"
         _239 = "citizen"
         _14 = "centipede"
         _15 = "mushroom"

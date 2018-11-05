@@ -54,7 +54,7 @@ END
         previous_menu = "Previous Menu"
         switch_mode = "Switch Mode"
         switch_mode_2 = "Switch Mode (2)"
-        identify = "Identify"
+        identify = "See Details"
         portrait = "Portrait Menu"
 
         wait = "Wait"
@@ -107,6 +107,8 @@ END
         reload_autopick = "Reload Autopick"
         auto_action = "Auto Action"
 
+        wizard_toggle_console = "Toggle Console"
+        wizard_open_console = "Open Console"
         wizard_mewmewmew = "Mewmewmew!"
         wizard_wish = "Wish"
         wizard_advance_time = "Advance Time"

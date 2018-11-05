@@ -2200,7 +2200,7 @@ int initialize_quest_map_crop()
                 + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
         }
     }
-    mdatan(0) = u8"街周辺の畑"s;
+    mdatan(0) = i18n::s.get("core.locale.map.quest.field");
     map_randomtile(9, 10);
     map_randomtile(10, 10);
     map_randomtile(0, 30);

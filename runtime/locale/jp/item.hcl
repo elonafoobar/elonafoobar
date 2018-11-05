@@ -72,13 +72,13 @@ locale {
 
         item_on_the_ground_get_broiled = "地面の${itemname(_1)}はこんがりと焼き上がった。"
         someones_item_get_broiled = "${name(_2)}の${itemname(_1)}はこんがりと焼き上がった。"
-        fireproof_blanket_protects_item = "${itemname(_1, 1)}が{name(_2)}の持ち物を炎から守った。"
+        fireproof_blanket_protects_item = "${itemname(_1, 1)}が${name(_2)}の持ち物を炎から守った。"
         fireproof_blanket_turns_to_dust = "${itemname(_1, 1)}は灰と化した。"
         item_someone_equips_turns_to_dust = "${name(_3)}の装備している${_1}は灰と化した。"
         someones_item_turns_to_dust = "${name(_3)}の${_1}は灰と化した。"
         item_on_the_ground_turns_to_dust = "地面の${_1}は灰と化した。"
 
-        coldproof_blanket_protects_item = "${itemname(_1, 1)}が{name(_2)}の持ち物を冷気から守った。"
+        coldproof_blanket_protects_item = "${itemname(_1, 1)}が${name(_2)}の持ち物を冷気から守った。"
         coldproof_blanket_is_broken_to_pieces = "${itemname(_1, 1)}は粉々に砕けた。"
         someones_item_breaks_to_pieces = "${name(_3)}の${_1}は粉々に砕けた。"
         item_on_the_ground_breaks_to_pieces = "地面の${_1}は粉々に砕けた。"
