@@ -1184,7 +1184,6 @@ TurnResult turn_end()
     proc_turn_end(cc);
     if (cc == 0)
     {
-        chatturn = 10;
         if (game_data.character_and_status_for_gene != 0)
         {
             if (game_data.character_and_status_for_gene < 10000)
@@ -1555,35 +1554,6 @@ label_2747:
     {
         ++scrturn;
         ui_render_from_screensync();
-    }
-
-    if (Config::instance().net
-        && Config::instance().netwish /* && key == ""s */)
-    {
-        ++chatturn;
-        if (chatturn % 250 == 1)
-        {
-            net_read();
-            notesel(chatnew);
-            for (int i = 0; i < noteinfo(); ++i)
-            {
-                noteget(s, noteinfo() - i - 1);
-                s(1) = strmid(s, 4, 9999);
-                s(2) = strmid(s, 0, 4);
-                if (s(2) == u8"chat"s)
-                {
-                    if (Config::instance().netchat)
-                    {
-                        continue;
-                    }
-                }
-                if (en)
-                {
-                    s(1) = strutil::replace(s(1), u8"&quot;", u8"\"");
-                }
-                txt(""s + s(1), Message::color{ColorIndex::yellow});
-            }
-        }
     }
 
     if (timeGetTime() / 1000 - time_warn > 3600)

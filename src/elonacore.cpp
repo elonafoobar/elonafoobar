@@ -13087,10 +13087,6 @@ TurnResult pc_died()
               ndeathcause,
               mdatan(0),
               last_words);
-    if (game_data.wizard == 0)
-    {
-        net_send(s);
-    }
     screenupdate = -1;
     update_entire_screen();
     levelexitby = 3;

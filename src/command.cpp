@@ -3289,7 +3289,7 @@ TurnResult do_movement_command()
         if (cellfeat == 31)
         {
             snd("core.chat");
-            voting_box();
+            // Voting box is not supported now.
             return TurnResult::turn_end;
         }
         if (cellfeat == 33)

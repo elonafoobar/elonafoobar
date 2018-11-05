@@ -148,7 +148,6 @@ ELONA_EXTERN(int rtdmg);
 ELONA_EXTERN(elona_vector1<std::string> tname);
 
 // turn_sequence.cpp
-ELONA_EXTERN(int chatturn);
 ELONA_EXTERN(int tgloc);
 ELONA_EXTERN(std::string chatnew);
 ELONA_EXTERN(int dbg_skipevent);
@@ -459,7 +458,6 @@ ELONA_EXTERN(int foot);
 ELONA_EXTERN(int ghelp);
 ELONA_EXTERN(int gold);
 ELONA_EXTERN(int grown);
-ELONA_EXTERN(int header);
 ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
 ELONA_EXTERN(int hour_played);
