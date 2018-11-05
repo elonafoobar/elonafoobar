@@ -2,6 +2,7 @@
 #include <string>
 #include "../enums.hpp"
 #include "../filesystem.hpp"
+#include "../message.hpp"
 #include "../variables.hpp"
 #include "exported_function.hpp"
 #include "lua_env.hpp"
@@ -75,8 +76,7 @@ public:
         {
             std::string message =
                 "Script callback error (" + name + "): " + e.what();
-            txtef(ColorIndex::red);
-            txt(message);
+            txt(message, Message::color{ColorIndex::red});
             std::cerr << message << std::endl;
         }
     }
@@ -98,8 +98,7 @@ public:
                 "Script callback error (" + name + "): no such exported function was "
                   "found";
 
-            txtef(ColorIndex::red);
-            txt(message);
+            txt(message, Message::color{ColorIndex::red});
             std::cerr << message << std::endl;
             return default_value;
         }

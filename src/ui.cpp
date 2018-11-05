@@ -939,6 +939,126 @@ void render_status_ailments()
 
 
 
+void render_autoturn_animation()
+{
+    if (racount == 0 && Config::instance().animewait != 0)
+    {
+        load_continuous_action_animation();
+    }
+
+    if (firstautoturn
+        || (cdata.player().continuous_action.type
+                == ContinuousAction::Type::fish
+            && rowactre == 0 && fishanime == 0))
+    {
+        ui_render_non_hud();
+        render_hud();
+    }
+
+    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
+    {
+        if (rowactre == 0 && Config::instance().animewait != 0)
+        {
+            render_fishing_animation();
+        }
+    }
+
+    sx = windoww - 156;
+    sy = inf_ver - 30;
+    int w = 148;
+    int h = 25;
+
+    window2(sx, sy, w, h, 0, 5);
+    font(13 - en * 2, snail::Font::Style::bold);
+    bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
+    gmode(2);
+    draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
+
+    if (cdata.player().continuous_action.type
+            == ContinuousAction::Type::dig_ground
+        || cdata.player().continuous_action.type
+            == ContinuousAction::Type::dig_wall
+        || cdata.player().continuous_action.type
+            == ContinuousAction::Type::search_material
+        || (cdata.player().continuous_action.type
+                == ContinuousAction::Type::fish
+            && rowactre != 0))
+    {
+        if (Config::instance().animewait != 0)
+        {
+            window2(sx, sy - 104, 148, 101, 0, 5);
+            if (racount % 15 == 0)
+            {
+                for (int cnt = 0; cnt < 10; ++cnt)
+                {
+                    gmode(0);
+                    pos(sx + 2, sy - 102);
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::dig_wall)
+                    {
+                        if (cnt == 2)
+                        {
+                            snd("core.dig1");
+                        }
+                        gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
+                        await(Config::instance().animewait * 2);
+                    }
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::fish)
+                    {
+                        if (racount == 0)
+                        {
+                            if (cnt == 0)
+                            {
+                                snd("core.water");
+                            }
+                        }
+                        gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
+                        await(Config::instance().animewait * 2.5);
+                    }
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::search_material)
+                    {
+                        if (cnt == 4)
+                        {
+                            snd("core.bush1");
+                        }
+                        gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
+                        await(Config::instance().animewait * 2.75);
+                    }
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::dig_ground)
+                    {
+                        if (cnt == 2)
+                        {
+                            snd("core.dig2");
+                        }
+                        gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
+                        await(Config::instance().animewait * 3);
+                    }
+                    redraw();
+                }
+            }
+            else
+            {
+                gcopy(9, 0, 0, 144, 96);
+            }
+        }
+        ++racount;
+        redraw();
+    }
+
+    if (firstautoturn == 1)
+    {
+        redraw();
+        firstautoturn = 0;
+    }
+
+    gmode(2);
+}
+
+
+
 } // namespace
 
 
@@ -1357,122 +1477,6 @@ void load_continuous_action_animation()
         picload(filesystem::dir::graphic() / u8"anime4.bmp");
     }
     gsel(0);
-}
-
-
-
-void render_autoturn_animation()
-{
-    if (racount == 0 && Config::instance().animewait != 0)
-    {
-        load_continuous_action_animation();
-    }
-    if (msgtemp != ""s
-        || (cdata.player().continuous_action.type
-                == ContinuousAction::Type::fish
-            && rowactre == 0 && fishanime == 0))
-    {
-        ui_render_non_hud();
-        msgtemp = "";
-        render_hud();
-    }
-    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
-    {
-        if (rowactre == 0 && Config::instance().animewait != 0)
-        {
-            render_fishing_animation();
-        }
-    }
-    sx = windoww - 156;
-    sy = inf_ver - 30;
-    int w = 148;
-    int h = 25;
-
-    window2(sx, sy, w, h, 0, 5);
-    font(13 - en * 2, snail::Font::Style::bold);
-    bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
-    gmode(2);
-    draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
-
-    if (cdata.player().continuous_action.type
-            == ContinuousAction::Type::dig_ground
-        || cdata.player().continuous_action.type
-            == ContinuousAction::Type::dig_wall
-        || cdata.player().continuous_action.type
-            == ContinuousAction::Type::search_material
-        || (cdata.player().continuous_action.type
-                == ContinuousAction::Type::fish
-            && rowactre != 0))
-    {
-        if (Config::instance().animewait != 0)
-        {
-            window2(sx, sy - 104, 148, 101, 0, 5);
-            if (racount % 15 == 0)
-            {
-                for (int cnt = 0; cnt < 10; ++cnt)
-                {
-                    gmode(0);
-                    pos(sx + 2, sy - 102);
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::dig_wall)
-                    {
-                        if (cnt == 2)
-                        {
-                            snd("core.dig1");
-                        }
-                        gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 2);
-                    }
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::fish)
-                    {
-                        if (racount == 0)
-                        {
-                            if (cnt == 0)
-                            {
-                                snd("core.water");
-                            }
-                        }
-                        gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 2.5);
-                    }
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::search_material)
-                    {
-                        if (cnt == 4)
-                        {
-                            snd("core.bush1");
-                        }
-                        gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 2.75);
-                    }
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::dig_ground)
-                    {
-                        if (cnt == 2)
-                        {
-                            snd("core.dig2");
-                        }
-                        gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 3);
-                    }
-                    redraw();
-                }
-            }
-            else
-            {
-                gcopy(9, 0, 0, 144, 96);
-            }
-        }
-        ++racount;
-        redraw();
-    }
-    if (firstautoturn == 1)
-    {
-        redraw();
-        firstautoturn = 0;
-    }
-    gmode(2);
 }
 
 

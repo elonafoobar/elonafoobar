@@ -2,6 +2,7 @@
 #include <sstream>
 #include "../../enums.hpp"
 #include "../../log.hpp"
+#include "../../message.hpp"
 
 namespace elona
 {
@@ -18,12 +19,10 @@ void Debug::report_error(const std::string& message)
     std::istringstream sstream(message);
     std::string line;
 
-    txtef(ColorIndex::red);
-    txt("Script error: ");
+    txt("Script error: ", Message::color{ColorIndex::red});
     while (getline(sstream, line, '\n'))
     {
-        txtef(ColorIndex::red);
-        txt(line + "  ");
+        txt(line + "  ", Message::color{ColorIndex::red});
     }
 
     ELONA_LOG("Script error: " << message);

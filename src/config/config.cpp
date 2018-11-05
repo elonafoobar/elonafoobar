@@ -324,8 +324,8 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("input.select_wait"s, int, Config::instance().select_wait);
     CONFIG_OPTION("input.select_fast_start_wait"s, int, Config::instance().select_fast_start);
     CONFIG_OPTION("input.select_fast_wait"s, int, Config::instance().select_fast_wait);
-    CONFIG_OPTION("message.add_timestamps"s, bool, Config::instance().msgaddtime);
-    CONFIG_OPTION("message.transparency"s, int, Config::instance().msgtrans);
+    CONFIG_OPTION("message.add_timestamps"s, bool, Config::instance().message_add_timestamps);
+    CONFIG_OPTION("message.transparency"s, int, Config::instance().message_transparency);
     CONFIG_OPTION("net.chat"s, bool, Config::instance().netchat);
     CONFIG_OPTION("net.enabled"s, bool, Config::instance().net);
     CONFIG_OPTION("net.server_list"s, bool, Config::instance().serverlist);

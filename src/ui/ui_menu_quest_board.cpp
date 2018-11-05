@@ -2,6 +2,7 @@
 #include "../audio.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../message.hpp"
 #include "../quest.hpp"
 #include "../snail/color.hpp"
 
@@ -280,7 +281,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
 {
     if (auto selected = get_selected_item())
     {
-        txtnew();
+        Message::instance().linebreak();
         txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
         rtval = yes_or_no(promptx, prompty, 160);
         if (rtval != 0)

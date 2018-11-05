@@ -29,6 +29,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "network.hpp"
 #include "quest.hpp"
 #include "random.hpp"
@@ -93,10 +94,11 @@ TurnResult npc_turn()
                                 if (rnd(4) == 0)
                                 {
                                     cdata[cc].is_leashed() = false;
-                                    txtef(9);
                                     txt(i18n::s.get(
-                                        "core.locale.action.npc.leash.untangle",
-                                        cdata[cc]));
+                                            "core.locale.action.npc.leash."
+                                            "untangle",
+                                            cdata[cc]),
+                                        Message::color{ColorIndex::cyan});
                                 }
                             }
                             tc = 0;
@@ -194,8 +196,8 @@ TurnResult npc_turn()
             {
                 if (rnd(40) == 0)
                 {
-                    txtef(4);
-                    txt(i18n::s.get("core.locale.action.npc.arena"));
+                    txt(i18n::s.get("core.locale.action.npc.arena"),
+                        Message::color{ColorIndex::blue});
                 }
                 return ai_proc_misc_map_events();
             }
@@ -312,8 +314,7 @@ TurnResult npc_turn()
         {
             if (rnd(30) == 0)
             {
-                txtef(9);
-                txt(""s + cdatan(4, cc));
+                txt(""s + cdatan(4, cc), Message::color{ColorIndex::cyan});
             }
         }
     }
@@ -785,10 +786,10 @@ TurnResult turn_begin()
             if (game_data.executing_immediate_quest_time_left_display_period
                 > game_data.left_minutes_of_executing_quest / 10)
             {
-                txtef(9);
                 txt(i18n::s.get(
-                    "core.locale.quest.minutes_left",
-                    (game_data.left_minutes_of_executing_quest + 1)));
+                        "core.locale.quest.minutes_left",
+                        (game_data.left_minutes_of_executing_quest + 1)),
+                    Message::color{ColorIndex::cyan});
                 game_data.executing_immediate_quest_time_left_display_period =
                     game_data.left_minutes_of_executing_quest / 10;
             }
@@ -845,7 +846,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
     update_emoicon();
     if (ct == 0)
     {
-        tnew = 1;
+        Message::instance().new_turn();
         pcnoise = 0;
         refresh_speed(cdata.player());
         p = cdata.player().turn % 10;
@@ -1064,11 +1065,11 @@ TurnResult pass_one_turn(bool label_2738_flg)
                     tc = cnt.index;
                     if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                     {
-                        txtef(9);
                         txt(i18n::s.get(
-                            "core.locale.action.npc.drunk.gets_the_worse",
-                            cdata[cc],
-                            cdata[tc]));
+                                "core.locale.action.npc.drunk.gets_the_worse",
+                                cdata[cc],
+                                cdata[tc]),
+                            Message::color{ColorIndex::cyan});
                         txt(i18n::s.get("core.locale.action.npc.drunk.dialog"));
                     }
                     if (rnd(4) == 0)
@@ -1077,10 +1078,11 @@ TurnResult pass_one_turn(bool label_2738_flg)
                         {
                             if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                             {
-                                txtef(9);
                                 txt(i18n::s.get(
-                                    "core.locale.action.npc.drunk.annoyed.text",
-                                    cdata[tc]));
+                                        "core.locale.action.npc.drunk.annoyed."
+                                        "text",
+                                        cdata[tc]),
+                                    Message::color{ColorIndex::cyan});
                                 txt(
                                     i18n::s.get("core.locale.action.npc.drunk."
                                                 "annoyed.dialog"));
@@ -1230,8 +1232,8 @@ TurnResult turn_end()
         if (cdata[cc].state() != Character::State::alive
             || game_data.left_turns_of_timestop == 0)
         {
-            txtef(9);
-            txt(i18n::s.get("core.locale.action.time_stop.ends"));
+            txt(i18n::s.get("core.locale.action.time_stop.ends"),
+                Message::color{ColorIndex::cyan});
         }
         else
         {
@@ -1240,8 +1242,7 @@ TurnResult turn_end()
                 update_screen();
                 await(Config::instance().animewait * 10);
             }
-            txtef(9);
-            txt(u8" *tick* "s);
+            txt(u8" *tick* "s, Message::color{ColorIndex::cyan});
             return TurnResult::pass_one_turn_freeze_time;
         }
     }
@@ -1582,8 +1583,7 @@ label_2747:
                 {
                     s(1) = strutil::replace(s(1), u8"&quot;", u8"\"");
                 }
-                txtef(6);
-                txt(""s + s(1));
+                txt(""s + s(1), Message::color{ColorIndex::yellow});
             }
         }
     }
@@ -1595,8 +1595,7 @@ label_2747:
         ++hour_played;
         s = i18n::s.get("core.locale.action.playtime_report", hour_played);
         s += cheer_up_message(hour_played);
-        txtef(5);
-        txt(s);
+        txt(s, Message::color{ColorIndex::orange});
     }
 
     // Provide the opportunity for the game to quicksave if app focus

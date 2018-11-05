@@ -10,12 +10,12 @@
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
-#include "map_cell.hpp"
-#include "network.hpp"
-// #include "item.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "mdata.hpp"
 #include "menu.hpp"
+#include "message.hpp"
+#include "network.hpp"
 #include "optional.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -106,8 +106,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     if (action == "quickload")
     {
         key = "";
-        msg_newline();
-        msgtemp = u8"  "s;
+        Message::instance().clear();
         firstturn = 1;
         load_save_data();
         mode = 3;
@@ -336,7 +335,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -363,7 +362,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -406,7 +405,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -433,7 +432,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -452,7 +451,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -485,7 +484,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -500,7 +499,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -524,7 +523,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -553,7 +552,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -575,7 +574,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -590,7 +589,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -640,7 +639,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -659,7 +658,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -674,7 +673,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txtnew();
+            Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
@@ -789,8 +788,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action != ""s && action != "cancel" /* && key != key_alter */)
     {
-        ++msgdup;
-        txt(i18n::s.get("core.locale.action.hit_key_for_help"));
+        txt(i18n::s.get("core.locale.action.hit_key_for_help"),
+            Message::only_once{true});
         update_screen();
     }
 

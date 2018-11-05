@@ -12,6 +12,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"
@@ -332,11 +333,10 @@ TalkResult talk_game_begin()
         }
         update_screen();
         await(3000);
-        txtnew();
-        txtef(3);
-        txt(
-            i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg."
-                        "something_is_killed"));
+        Message::instance().linebreak();
+        txt(i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg."
+                        "something_is_killed"),
+            Message::color{ColorIndex::red});
         txt(i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg.ugh"));
         snd("core.kill1");
         spillblood(28, 6, 10);
@@ -443,7 +443,7 @@ TalkResult talk_game_begin()
     }
     else
     {
-        txtnew();
+        Message::instance().linebreak();
     }
     txt(i18n::s.get(
         "core.locale.talk.unique.lomias.begin.regain_consciousness"));

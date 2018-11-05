@@ -16,6 +16,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
+#include "message.hpp"
 #include "optional.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

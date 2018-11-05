@@ -1,6 +1,7 @@
 #include "dialog_data.hpp"
 #include "../lua_env/config_table.hpp"
 #include "../lua_env/lua_env.hpp"
+#include "../message.hpp"
 #include "../talk.hpp"
 #include "../ui/ui_menu_dialog.hpp"
 #include "../variables.hpp"
@@ -13,8 +14,7 @@ static void _dialog_error(const std::string& node_id, const std::string& text)
 {
     std::string message = "Dialog error (" + node_id + "): " + text;
 
-    txtef(ColorIndex::red);
-    txt(message);
+    txt(message, Message::color{ColorIndex::red});
     std::cerr << message << std::endl;
 }
 

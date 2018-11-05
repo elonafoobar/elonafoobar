@@ -4,6 +4,7 @@
 #include "../crafting.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../message.hpp"
 
 namespace elona
 {

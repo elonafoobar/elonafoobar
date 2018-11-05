@@ -14,6 +14,7 @@
 #include "itemgen.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "network.hpp"
 #include "optional.hpp"
 #include "random.hpp"
@@ -88,6 +89,35 @@ private:
 
     std::vector<Candidate> candidates;
 };
+
+
+
+class LogCopyObserver : public LogObserver
+{
+public:
+    virtual ~LogCopyObserver() = default;
+
+
+
+    virtual void update(const std::string& log) override
+    {
+        _log_copy += log;
+    }
+
+
+
+    const std::string& get_copy() const
+    {
+        return _log_copy;
+    }
+
+
+private:
+    std::string _log_copy;
+};
+
+std::unique_ptr<LogCopyObserver> log_copy_observer;
+
 
 
 std::string fix_wish(const std::string& text)
@@ -167,7 +197,9 @@ void wish_end()
               cdatan(1, 0),
               cdatan(0, 0),
               i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
-              cnven(txtcopy)));
+              cnven(log_copy_observer->get_copy())));
+
+    log_copy_observer.reset();
 
     wishfilter = 1;
 }
@@ -413,8 +445,8 @@ bool grant_special_wishing(const std::string& wish)
     else if (match_special_wish(
                  wish, "gold", {"money", "gold", "wealth", "fortune"}))
     {
-        txtef(5);
-        txt(i18n::s.get("core.locale.wish.wish_gold"));
+        txt(i18n::s.get("core.locale.wish.wish_gold"),
+            Message::color{ColorIndex::orange});
         flt();
         itemcreate(
             -1,
@@ -428,8 +460,8 @@ bool grant_special_wishing(const std::string& wish)
                  "small_medal",
                  {"small medal", "small coin", "medal", "coin"}))
     {
-        txtef(5);
-        txt(i18n::s.get("core.locale.wish.wish_small_medal"));
+        txt(i18n::s.get("core.locale.wish.wish_small_medal"),
+            Message::color{ColorIndex::orange});
         flt();
         itemcreate(
             -1,
@@ -440,8 +472,8 @@ bool grant_special_wishing(const std::string& wish)
     }
     else if (match_special_wish(wish, "platinum", {"platinum", "platina"}))
     {
-        txtef(5);
-        txt(i18n::s.get("core.locale.wish.wish_platinum"));
+        txt(i18n::s.get("core.locale.wish.wish_platinum"),
+            Message::color{ColorIndex::orange});
         flt();
         itemcreate(
             -1, 55, cdata.player().position.x, cdata.player().position.y, 5);
@@ -450,8 +482,7 @@ bool grant_special_wishing(const std::string& wish)
     {
         if (match_special_wish(wish, "fame", {"fame"}))
         {
-            txtef(5);
-            txt(u8"fame +1,000,000");
+            txt(u8"fame +1,000,000", Message::color{ColorIndex::orange});
             cdata.player().fame += 1'000'000;
         }
         else
@@ -688,15 +719,16 @@ bool wish_for_skill(const std::string& input)
         const auto name = i18n::_(u8"ability", std::to_string(id), u8"name");
         if (!name.empty())
         {
-            txtef(5);
             if (sdata.get(id, 0).original_level == 0)
             {
-                txt(i18n::s.get("core.locale.wish.you_learn_skill", name));
+                txt(i18n::s.get("core.locale.wish.you_learn_skill", name),
+                    Message::color{ColorIndex::orange});
                 chara_gain_skill(cdata.player(), id, 1);
             }
             else
             {
-                txt(i18n::s.get("core.locale.wish.your_skill_improves", name));
+                txt(i18n::s.get("core.locale.wish.your_skill_improves", name),
+                    Message::color{ColorIndex::orange});
                 chara_gain_fixed_skill_exp(cdata.player(), id, 1000);
                 modify_potential(cdata.player(), id, 25);
             }
@@ -721,18 +753,18 @@ bool process_wish()
 {
     using namespace strutil;
 
-    txtcopy = "";
-    txtef(5);
-    txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"));
+    txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"),
+        Message::color{ColorIndex::orange});
 
     input_text_dialog(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
 
     txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
 
-    msgtemp = "";
     autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
-    tcopy = 1;
+
+    log_copy_observer = std::make_unique<LogCopyObserver>();
+    subscribe_log(log_copy_observer.get());
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")
     {
@@ -811,7 +843,9 @@ void what_do_you_wish_for()
 {
     const auto did_wish_something = process_wish();
     if (did_wish_something)
+    {
         wish_end();
+    }
 }
 
 

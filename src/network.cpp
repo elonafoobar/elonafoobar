@@ -6,6 +6,7 @@
 #include "input.hpp"
 #include "input_prompt.hpp"
 #include "macro.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

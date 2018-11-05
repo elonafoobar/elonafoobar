@@ -1,5 +1,6 @@
 #include "lua_api_trait.hpp"
 #include "../../audio.hpp"
+#include "../../message.hpp"
 #include "../../trait.hpp"
 
 namespace elona
@@ -44,16 +45,14 @@ void Trait::set(int trait_id, int level)
         && elona::trait(trait_id) < elona::traitref(2) && traitrefn(0) != "")
     {
         snd("core.ding3");
-        elona::txtef(2);
-        elona::txt(traitrefn(0));
+        elona::txt(traitrefn(0), elona::Message::color{ColorIndex::green});
     }
     else if (
         elona::trait(trait_id) > level
         && elona::trait(trait_id) > elona::traitref(1) && traitrefn(1) != "")
     {
         snd("core.ding3");
-        elona::txtef(3);
-        elona::txt(traitrefn(1));
+        elona::txt(traitrefn(1), elona::Message::color{ColorIndex::red});
     }
     elona::trait(trait_id) =
         clamp(level, elona::traitref(1), elona::traitref(2));
@@ -70,16 +69,14 @@ void Trait::modify(int trait_id, int delta)
         && traitrefn(0) != "")
     {
         snd("core.ding3");
-        elona::txtef(2);
-        elona::txt(traitrefn(0));
+        elona::txt(traitrefn(0), elona::Message::color{ColorIndex::green});
     }
     else if (
         delta < 0 && elona::trait(trait_id) > elona::traitref(1)
         && traitrefn(1) != "")
     {
         snd("core.ding3");
-        elona::txtef(3);
-        elona::txt(traitrefn(1));
+        elona::txt(traitrefn(1), elona::Message::color{ColorIndex::red});
     }
     elona::trait(trait_id) = clamp(
         elona::trait(trait_id) + delta, elona::traitref(1), elona::traitref(2));

@@ -1,6 +1,7 @@
 #include "ui_menu_scene.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
+#include "../message.hpp"
 
 
 
@@ -182,7 +183,7 @@ static void _do_play_scene(int scene_id)
     do_play_scene();
     screenupdate = -1;
     update_entire_screen();
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
 }
 

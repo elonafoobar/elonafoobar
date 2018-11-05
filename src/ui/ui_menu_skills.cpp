@@ -4,6 +4,7 @@
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
+#include "../message.hpp"
 
 namespace elona
 {

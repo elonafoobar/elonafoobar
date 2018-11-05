@@ -15,6 +15,7 @@
 #include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

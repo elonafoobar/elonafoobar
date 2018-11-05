@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -178,8 +179,8 @@ void mef_update()
         }
         if (mef(0, cnt) == 7)
         {
-            txtef(3);
-            txt(i18n::s.get("core.locale.mef.bomb_counter", mef(4, cnt)));
+            txt(i18n::s.get("core.locale.mef.bomb_counter", mef(4, cnt)),
+                Message::color{ColorIndex::red});
         }
         if (mef(4, cnt) != -1)
         {

@@ -6,6 +6,7 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -224,11 +225,11 @@ void buff_delete(Character& cc, int slot)
 {
     if (cc.index == 0)
     {
-        txtef(8);
         txt(i18n::s.get(
-            "core.locale.magic.buff.ends",
-            i18n::s.get_enum_property(
-                "core.locale.buff", "name", cc.buffs[slot].id)));
+                "core.locale.magic.buff.ends",
+                i18n::s.get_enum_property(
+                    "core.locale.buff", "name", cc.buffs[slot].id)),
+            Message::color{ColorIndex::purple});
     }
     if (is_in_fov(cc))
     {

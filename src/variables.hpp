@@ -222,7 +222,6 @@ ELONA_EXTERN(elona_vector1<int> spell);
 ELONA_EXTERN(elona_vector1<int> sx);
 ELONA_EXTERN(elona_vector1<int> sy);
 ELONA_EXTERN(elona_vector1<int> tc);
-ELONA_EXTERN(elona_vector1<int> tcol_at_txtfunc);
 ELONA_EXTERN(elona_vector1<int> tile);
 ELONA_EXTERN(elona_vector1<int> tile_default);
 ELONA_EXTERN(elona_vector1<int> tile_fog);
@@ -232,7 +231,6 @@ ELONA_EXTERN(elona_vector1<int> tile_wall);
 ELONA_EXTERN(elona_vector1<int> trait);
 ELONA_EXTERN(elona_vector1<int> traitref);
 ELONA_EXTERN(elona_vector1<int> trate);
-ELONA_EXTERN(elona_vector1<int> wh);
 ELONA_EXTERN(elona_vector1<int> windowshadow);
 ELONA_EXTERN(elona_vector1<int> x);
 ELONA_EXTERN(elona_vector1<int> y);
@@ -319,9 +317,6 @@ ELONA_EXTERN(elona_vector1<std::string> key_list);
 ELONA_EXTERN(elona_vector1<std::string> key_select);
 ELONA_EXTERN(elona_vector1<std::string> keylog);
 ELONA_EXTERN(elona_vector1<std::string> mdatan);
-ELONA_EXTERN(elona_vector1<std::string> msg);
-ELONA_EXTERN(elona_vector1<std::string> msgtemp);
-ELONA_EXTERN(elona_vector1<std::string> msgtempprev);
 ELONA_EXTERN(elona_vector1<std::string> musicfile);
 ELONA_EXTERN(elona_vector1<std::string> newsbuff);
 ELONA_EXTERN(elona_vector1<std::string> playerheader);
@@ -533,7 +528,6 @@ ELONA_EXTERN(int minlevel);
 ELONA_EXTERN(int mode);
 ELONA_EXTERN(int mousel);
 ELONA_EXTERN(int msgalert);
-ELONA_EXTERN(int msgdup);
 ELONA_EXTERN(int msgkeep);
 ELONA_EXTERN(int msgline);
 ELONA_EXTERN(int msync);
@@ -609,7 +603,6 @@ ELONA_EXTERN(int syfix);
 ELONA_EXTERN(int t);
 ELONA_EXTERN(int tail);
 ELONA_EXTERN(int tcbk);
-ELONA_EXTERN(int tcopy);
 ELONA_EXTERN(int tg);
 ELONA_EXTERN(int ti);
 ELONA_EXTERN(int tile_doorclosed);
@@ -620,7 +613,6 @@ ELONA_EXTERN(int time_begin);
 ELONA_EXTERN(int time_warn);
 ELONA_EXTERN(int tlocx);
 ELONA_EXTERN(int tlocy);
-ELONA_EXTERN(int tnew);
 ELONA_EXTERN(int tx);
 ELONA_EXTERN(int txt3rd);
 ELONA_EXTERN(int ty);
@@ -633,15 +625,14 @@ ELONA_EXTERN(int windoww);
 ELONA_EXTERN(int windowx);
 ELONA_EXTERN(int windowy);
 ELONA_EXTERN(int worker);
+ELONA_EXTERN(int wh);
 ELONA_EXTERN(int ww);
 ELONA_EXTERN(int wx);
 ELONA_EXTERN(int wy);
 ELONA_EXTERN(int x1);
 ELONA_EXTERN(int x2);
-ELONA_EXTERN(int x_at_txtfunc);
 ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
-ELONA_EXTERN(int y_at_txtfunc);
 ELONA_EXTERN(std::string cardrefrace);
 ELONA_EXTERN(std::string classname);
 ELONA_EXTERN(std::string cmaka);
@@ -663,7 +654,6 @@ ELONA_EXTERN(std::string strhint4);
 ELONA_EXTERN(std::string strhint5);
 ELONA_EXTERN(std::string strhint5b);
 ELONA_EXTERN(std::string strhint7);
-ELONA_EXTERN(std::string txtcopy);
 ELONA_EXTERN(std::string userfile);
 ELONA_EXTERN(std::string usermsg);
 
@@ -1012,7 +1002,6 @@ void map_prepare_tileset_atlas();
 void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 
 // Map animation
-void anime_halt();
 void animeblood(int = 0, int = 0, int = 0);
 void animeload(int = 0, int = 0);
 void spillblood(int = 0, int = 0, int = 0);
@@ -1103,48 +1092,6 @@ void text_replace_tags_in_quest_text();
 
 
 //// Text
-
-// Japanese sentence parts
-std::string _aru(int = 0);
-std::string _da(int = 0);
-std::string _dana(int = 0);
-std::string _daro(int = 0);
-std::string _dozo(int = 0);
-std::string _ga(int = 0);
-std::string _ka(int = 0);
-std::string _kana(int = 0);
-std::string _kimi(int = 0);
-std::string _kure(int = 0);
-std::string _na(int = 0);
-std::string _nda(int = 0);
-std::string _noka(int = 0);
-std::string _ore(int = 0);
-std::string _rob(int = 0);
-std::string _ru(int = 0);
-std::string _s(int, bool = false);
-std::string _s2(int = 0);
-std::string _ta(int = 0);
-std::string _tanomu(int = 0);
-std::string _thanks(int = 0);
-std::string _u(int = 0);
-std::string _yo(int = 0);
-std::string _yoro(int = 0);
-
-// Japanese constructs
-std::string aln(int = 0);
-std::string npcn(int = 0);
-
-// English sentence parts
-std::string does(int = 0);
-std::string have(int = 0);
-std::string he(int = 0, int = 0);
-std::string him(int = 0, int = 0);
-std::string his(int = 0, int = 0);
-std::string is(int = 0);
-std::string is2(int = 0);
-std::string your(int);
-std::string yourself(int = 0);
-
 
 // Text manipulation
 std::string zentohan(const std::string&);
@@ -1240,7 +1187,6 @@ void monster_respawn();
 
 
 //// weather
-void weather_changes_by_location();
 void weather_changes();
 
 
@@ -1277,52 +1223,5 @@ void modrank(int = 0, int = 0, int = 0);
 //// item_show_description
 void page_load();
 void page_save();
-
-
-//// Message
-void txt_conv();
-void txtcontinue();
-void txtef(ColorIndex);
-void txtef(int = 0);
-void txtnew();
-void stxt(int, const std::string&);
-void msg_clear();
-void msg_halt();
-void msg_newline();
-
-template <typename T>
-void txt()
-{
-    static_assert(false_v<T>, u8"Need one argument at least.");
-}
-
-
-
-inline std::string txt_tostr(const std::string& s)
-{
-    return s;
-}
-
-
-
-inline std::string txt_tostr(elona_vector1<std::string>& v)
-{
-    return v(0);
-}
-
-
-
-template <typename... Args>
-void txt(Args&&... args)
-{
-    std::vector<std::string> text{txt_tostr(args)...};
-    msgtemp = text[rnd(text.size())];
-    txt_conv();
-    tcol_at_txtfunc(0) = 255;
-    tcol_at_txtfunc(1) = 255;
-    tcol_at_txtfunc(2) = 255;
-}
-
-
 
 } // namespace elona

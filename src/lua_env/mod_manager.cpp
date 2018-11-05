@@ -7,6 +7,7 @@
 #include "../filesystem.hpp"
 #include "../i18n.hpp"
 #include "../log.hpp"
+#include "../message.hpp"
 #include "../variables.hpp"
 #include "event_manager.hpp"
 
@@ -233,9 +234,9 @@ void ModManager::run_startup_script(const std::string& name)
     script_mod->env.raw_set("data", lua_->get_data_manager().get().storage);
 
     ELONA_LOG("Loaded startup script " << name);
-    txtef(8);
-    txt(i18n::s.get("core.locale.mod.loaded_script", name));
-    txtnew();
+    txt(i18n::s.get("core.locale.mod.loaded_script", name),
+        Message::color{ColorIndex::purple});
+    Message::instance().linebreak();
 }
 
 void ModManager::clear_mod_stores()

@@ -2,6 +2,7 @@
 #include "../../i18n.hpp"
 #include "../../input.hpp"
 #include "../../input_prompt.hpp"
+#include "../../message.hpp"
 
 namespace elona
 {

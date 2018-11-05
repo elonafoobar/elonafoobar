@@ -3,6 +3,7 @@
 #include "../equipment.hpp"
 #include "../item.hpp"
 #include "../menu.hpp"
+#include "../message.hpp"
 
 namespace elona
 {
@@ -290,7 +291,7 @@ static void _unequip_item()
     unequip_item(cc);
     chara_refresh(cc);
     snd("core.equip1");
-    txtnew();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.locale.ui.equip.you_unequip", inv[ci]));
     if (cdata[cc].body_parts[body - 100] / 10000 == 5)
     {

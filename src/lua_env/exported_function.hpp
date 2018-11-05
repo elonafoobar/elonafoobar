@@ -1,5 +1,6 @@
 #pragma once
 #include "../enums.hpp"
+#include "../message.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 #include "../variables.hpp"
 
@@ -43,8 +44,7 @@ struct ExportedFunction
         {
             std::string message = id + ": Script callback error: " + err.what();
 
-            txtef(ColorIndex::red);
-            txt(message);
+            txt(message, Message::color{ColorIndex::red});
             std::cerr << message << std::endl;
         }
     }
@@ -58,8 +58,7 @@ struct ExportedFunction
             sol::error err = result;
             std::string message = id + ": Script callback error: " + err.what();
 
-            txtef(ColorIndex::red);
-            txt(message);
+            txt(message, Message::color{ColorIndex::red});
             std::cerr << message << std::endl;
             return default_value;
         }
@@ -77,8 +76,7 @@ struct ExportedFunction
                 std::string message =
                     id + ": Script callback error: incorrect type returned";
 
-                txtef(ColorIndex::red);
-                txt(message);
+                txt(message, Message::color{ColorIndex::red});
                 std::cerr << message << std::endl;
                 return default_value;
             }
@@ -87,8 +85,7 @@ struct ExportedFunction
         {
             std::string message = id + ": Script callback error: " + e.what();
 
-            txtef(ColorIndex::red);
-            txt(message);
+            txt(message, Message::color{ColorIndex::red});
             std::cerr << message << std::endl;
             return default_value;
         }

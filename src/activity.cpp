@@ -17,6 +17,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "message.hpp"
 #include "optional.hpp"
 #include "status_ailment.hpp"
 #include "ui.hpp"
@@ -243,12 +244,12 @@ void continuous_action_perform()
             {
                 if (rnd(10) == 0)
                 {
-                    txtef(4);
                     txt(i18n::s.get(
-                        "core.locale.activity.perform.sound.random"));
+                            "core.locale.activity.perform.sound.random"),
+                        Message::color{ColorIndex::blue});
                 }
-                txtef(4);
-                txt(i18n::s.get("core.locale.activity.perform.sound.cha"));
+                txt(i18n::s.get("core.locale.activity.perform.sound.cha"),
+                    Message::color{ColorIndex::blue});
             }
         }
         if (cdata[cc].continuous_action.turn % 20 == 0)
@@ -325,10 +326,9 @@ void continuous_action_perform()
                 {
                     if (is_in_fov(cdata[cc]))
                     {
-                        txtef(9);
-                        txt(
-                            i18n::s.get("core.locale.activity.perform.dialog."
-                                        "disinterest"));
+                        txt(i18n::s.get("core.locale.activity.perform.dialog."
+                                        "disinterest"),
+                            Message::color{ColorIndex::cyan});
                     }
                     cdata[tc].interest = 0;
                     continue;
@@ -340,9 +340,9 @@ void continuous_action_perform()
                         cdata[cc].quality_of_performance -= cdata[tc].level / 2;
                         if (is_in_fov(cdata[cc]))
                         {
-                            txtef(9);
-                            txt(i18n::s.get(
-                                "core.locale.activity.perform.dialog.angry"));
+                            txt(i18n::s.get("core.locale.activity.perform."
+                                            "dialog.angry"),
+                                Message::color{ColorIndex::cyan});
                             txt(i18n::s.get(
                                 "core.locale.activity.perform.throws_rock",
                                 cdata[tc]));
@@ -428,11 +428,12 @@ void continuous_action_perform()
                     {
                         if (is_in_fov(cdata[cc]))
                         {
-                            txtef(9);
                             txt(i18n::s.get(
-                                "core.locale.activity.perform.dialog.interest",
-                                cdata[tc],
-                                cdata[cc]));
+                                    "core.locale.activity.perform.dialog."
+                                    "interest",
+                                    cdata[tc],
+                                    cdata[cc]),
+                                Message::color{ColorIndex::cyan});
                         }
                         cdata[cc].quality_of_performance += cdata[tc].level + 5;
                         if (cc == 0)
@@ -690,8 +691,8 @@ void continuous_action_sex()
             {
                 if (is_in_fov(cdata[cc]))
                 {
-                    txtef(9);
-                    txt(i18n::s.get("core.locale.activity.sex.dialog"));
+                    txt(i18n::s.get("core.locale.activity.sex.dialog"),
+                        Message::color{ColorIndex::cyan});
                 }
             }
         }
@@ -743,10 +744,9 @@ void continuous_action_sex()
 
     if (is_in_fov(cdata[cc]))
     {
-        txtef(9);
         dialog_head =
             i18n::s.get("core.locale.activity.sex.after_dialog", cdata[tc]);
-        txtef(20);
+        Message::instance().txtef(ColorIndex::yellow_green);
     }
     if (tc != 0)
     {
@@ -885,8 +885,8 @@ void continuous_action_eating_finish()
             {
                 if (inv[ci].param3 < 0)
                 {
-                    txtef(9);
-                    txt(i18n::s.get("core.locale.food.passed_rotten"));
+                    txt(i18n::s.get("core.locale.food.passed_rotten"),
+                        Message::color{ColorIndex::cyan});
                     damage_hp(cdata[cc], 999, -12);
                     if (cdata[cc].state() != Character::State::alive)
                     {
@@ -910,8 +910,8 @@ void continuous_action_eating_finish()
     {
         if (is_in_fov(cdata[cc]))
         {
-            txtef(8);
-            txt(i18n::s.get("core.locale.food.mochi.chokes", cdata[cc]));
+            txt(i18n::s.get("core.locale.food.mochi.chokes", cdata[cc]),
+                Message::color{ColorIndex::purple});
             txt(i18n::s.get("core.locale.food.mochi.dialog"));
         }
         ++cdata[cc].choked;
@@ -1042,8 +1042,8 @@ void continuous_action_others()
             }
             if (rnd(4) == 0)
             {
-                txtef(9);
-                txt(i18n::s.get("core.locale.activity.harvest.sound"));
+                txt(i18n::s.get("core.locale.activity.harvest.sound"),
+                    Message::color{ColorIndex::cyan});
             }
         }
         if (game_data.continuous_action_about_to_start == 104)
@@ -1660,8 +1660,8 @@ void spot_digging()
     {
         if (cdata[cc].turn % 5 == 0)
         {
-            txtef(4);
-            txt(i18n::s.get("core.locale.activity.dig_spot.sound"));
+            txt(i18n::s.get("core.locale.activity.dig_spot.sound"),
+                Message::color{ColorIndex::blue});
         }
         return;
     }
@@ -1683,10 +1683,9 @@ void spot_digging()
                         if (inv[cnt].param2 == cdata.player().position.y)
                         {
                             snd("core.chest1");
-                            txtef(5);
-                            txt(
-                                i18n::s.get("core.locale.activity.dig_spot."
-                                            "something_is_there"));
+                            txt(i18n::s.get("core.locale.activity.dig_spot."
+                                            "something_is_there"),
+                                Message::color{ColorIndex::orange});
                             msg_halt();
                             snd("core.ding2");
                             flt();
@@ -1871,8 +1870,8 @@ void spot_mining_or_wall()
         }
         else if (cdata[cc].turn % 5 == 0)
         {
-            txtef(4);
-            txt(i18n::s.get("core.locale.activity.dig_spot.sound"));
+            txt(i18n::s.get("core.locale.activity.dig_spot.sound"),
+                Message::color{ColorIndex::blue});
         }
         return;
     }
@@ -2068,13 +2067,13 @@ void matgetmain(int material_id, int amount, int spot_type)
         break;
     }
 
-    txtef(4);
     txt(i18n::s.get(
             "core.locale.activity.material.get",
             verb,
             amount,
             matname(material_id))
-        + u8"("s + mat(material_id) + u8") "s);
+            + u8"("s + mat(material_id) + u8") "s,
+        Message::color{ColorIndex::blue});
 }
 
 
@@ -2089,9 +2088,9 @@ void matdelmain(int material_id, int amount)
     mat(material_id) -= amount;
     txt(i18n::s.get(
         "core.locale.activity.material.lose", matname(material_id), amount));
-    txtef(4);
     txt(i18n::s.get(
-        "core.locale.activity.material.lose_total", mat(material_id)));
+            "core.locale.activity.material.lose_total", mat(material_id)),
+        Message::color{ColorIndex::blue});
 }
 
 

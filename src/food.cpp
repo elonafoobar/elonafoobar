@@ -1,6 +1,5 @@
 #include "food.hpp"
 #include "ability.hpp"
-
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -17,6 +16,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "message.hpp"
 #include "random.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
@@ -34,30 +34,35 @@ elona_vector2<int> fdlist;
 
 void show_eating_message()
 {
-    txtef(2);
     if (cdata[cc].nutrition >= 12000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.bloated"));
+        txt(i18n::s.get("core.locale.food.eating_message.bloated"),
+            Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 10000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.satisfied"));
+        txt(i18n::s.get("core.locale.food.eating_message.satisfied"),
+            Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 5000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.normal"));
+        txt(i18n::s.get("core.locale.food.eating_message.normal"),
+            Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 2000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.hungry"));
+        txt(i18n::s.get("core.locale.food.eating_message.hungry"),
+            Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 1000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.very_hungry"));
+        txt(i18n::s.get("core.locale.food.eating_message.very_hungry"),
+            Message::color{ColorIndex::green});
     }
     else
     {
-        txt(i18n::s.get("core.locale.food.eating_message.starving"));
+        txt(i18n::s.get("core.locale.food.eating_message.starving"),
+            Message::color{ColorIndex::green});
     }
 }
 
@@ -740,8 +745,8 @@ void apply_general_eating_effect(int cieat)
         nutrition = 2500;
         if (cc == 0)
         {
-            txtef(2);
-            txt(i18n::s.get("core.locale.food.effect.herb.curaria"));
+            txt(i18n::s.get("core.locale.food.effect.herb.curaria"),
+                Message::color{ColorIndex::green});
         }
     }
     if (inv[ci].id == 422)
@@ -800,8 +805,8 @@ void apply_general_eating_effect(int cieat)
         modify_potential(cdata[cc], 11, 2);
         if (cc == 0)
         {
-            txtef(2);
-            txt(i18n::s.get("core.locale.food.effect.herb.morgia"));
+            txt(i18n::s.get("core.locale.food.effect.herb.morgia"),
+                Message::color{ColorIndex::green});
         }
     }
     if (inv[ci].id == 423)
@@ -860,8 +865,8 @@ void apply_general_eating_effect(int cieat)
         modify_potential(cdata[cc], 15, 2);
         if (cc == 0)
         {
-            txtef(2);
-            txt(i18n::s.get("core.locale.food.effect.herb.mareilon"));
+            txt(i18n::s.get("core.locale.food.effect.herb.mareilon"),
+                Message::color{ColorIndex::green});
         }
     }
     if (inv[ci].id == 424)
@@ -920,8 +925,8 @@ void apply_general_eating_effect(int cieat)
         nutrition = 500;
         if (cc == 0)
         {
-            txtef(2);
-            txt(i18n::s.get("core.locale.food.effect.herb.spenseweed"));
+            txt(i18n::s.get("core.locale.food.effect.herb.spenseweed"),
+                Message::color{ColorIndex::green});
         }
     }
     if (inv[ci].id == 426)
@@ -980,8 +985,8 @@ void apply_general_eating_effect(int cieat)
         modify_potential(cdata[cc], 14, 2);
         if (cc == 0)
         {
-            txtef(2);
-            txt(i18n::s.get("core.locale.food.effect.herb.alraunia"));
+            txt(i18n::s.get("core.locale.food.effect.herb.alraunia"),
+                Message::color{ColorIndex::green});
         }
     }
     if (inv[ci].id == 427)
@@ -1072,8 +1077,8 @@ void apply_general_eating_effect(int cieat)
                         if (rnd(5) == 0)
                         {
                             trait_get_info(0, 41);
-                            txtef(2);
-                            txt(traitrefn(0));
+                            txt(traitrefn(0),
+                                Message::color{ColorIndex::green});
                             trait(41) = 1;
                         }
                     }
@@ -1147,9 +1152,9 @@ void apply_general_eating_effect(int cieat)
             flt(calcobjlv(cdata[cc].level));
             flttypeminor = 58500;
             itemcreate(-1, 0, cdata[cc].position.x, cdata[cc].position.y, 0);
-            txtef(9);
             txt(i18n::s.get(
-                "core.locale.food.effect.bomb_fish", cdata[cc], inv[ci]));
+                    "core.locale.food.effect.bomb_fish", cdata[cc], inv[ci]),
+                Message::color{ColorIndex::cyan});
             ci = cibk;
         }
     }
@@ -1157,9 +1162,8 @@ void apply_general_eating_effect(int cieat)
     {
         if (inv[ci].subname == 319)
         {
-            txtef(2);
-            txt(i18n::s.get(
-                "core.locale.food.effect.little_sister", cdata[cc]));
+            txt(i18n::s.get("core.locale.food.effect.little_sister", cdata[cc]),
+                Message::color{ColorIndex::green});
             if (rnd(sdata.get(2, cc).original_level
                         * sdata.get(2, cc).original_level
                     + 1)
@@ -1219,8 +1223,7 @@ void apply_general_eating_effect(int cieat)
             {
                 read_talk_file(u8"%COOKIE1");
             }
-            txtef(5);
-            txt(""s + buff);
+            txt(""s + buff, Message::color{ColorIndex::orange});
         }
     }
     if (inv[ci].id == 667)
@@ -1258,8 +1261,8 @@ void apply_general_eating_effect(int cieat)
         }
         else
         {
-            txtef(9);
-            txt(i18n::s.get("core.locale.food.effect.spiked.other", cdata[cc]));
+            txt(i18n::s.get("core.locale.food.effect.spiked.other", cdata[cc]),
+                Message::color{ColorIndex::cyan});
             cdata[cc].emotion_icon = 317;
             chara_modify_impression(cdata[cc], 30);
             modify_karma(cdata.player(), -10);
@@ -1296,9 +1299,9 @@ void apply_general_eating_effect(int cieat)
         {
             if (game_data.left_turns_of_timestop == 0)
             {
-                txtef(9);
                 txt(i18n::s.get(
-                    "core.locale.action.time_stop.begins", cdata[cc]));
+                        "core.locale.action.time_stop.begins", cdata[cc]),
+                    Message::color{ColorIndex::cyan});
                 game_data.left_turns_of_timestop =
                     inv[ci].enchantments[cnt].power / 100 + 1 + 1;
                 continue;

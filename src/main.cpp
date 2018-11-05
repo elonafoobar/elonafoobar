@@ -36,6 +36,9 @@ int main(int argc, char** argv)
 
     ELONA_LOG(latest_version.long_string());
 
+#if DEBUG
+    return run();
+#else
     try
     {
         return run();
@@ -44,6 +47,7 @@ int main(int argc, char** argv)
     {
         report_error(e.what());
     }
+#endif
 
     return 0;
 }
