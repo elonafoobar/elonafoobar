@@ -122,7 +122,7 @@ int chara_create_internal()
     novoidlv = 0;
     if (dbid == 343)
     {
-        create_cnpc();
+        // Vanila-copatible CNPC is not supported now.
     }
     else
     {

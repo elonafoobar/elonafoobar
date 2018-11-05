@@ -55,8 +55,6 @@ ELONA_EXTERN(int inf_msgh);
 ELONA_EXTERN(int inf_ver);
 
 // ui.cpp/menu.cpp
-ELONA_EXTERN(int curmenu);
-ELONA_EXTERN(elona_vector1<std::string> headtemp);
 ELONA_EXTERN(std::string username);
 ELONA_EXTERN(int autoturn);
 ELONA_EXTERN(int firstautoturn);
@@ -769,11 +767,6 @@ int relationbetween(int, int);
 //// Character generation
 void get_random_npc_id();
 
-// CNPC
-void create_cnpc();
-void create_new_cnpc();
-void fixaiact(int = 0);
-
 
 //// Character manipulation
 void refresh_burden_state();
@@ -828,13 +821,6 @@ int roll_max(int, int, int);
 int roundmargin(int = 0, int = 0);
 
 
-// Network/showroom
-int query_for_showroom_to_visit();
-int findunid(const std::string&);
-int getunid(int = 0);
-void setunid(int = 0, int = 0);
-
-
 // Player-owned building
 int getworker(int = 0, int = 0);
 void removeworker(int = 0);
@@ -849,8 +835,6 @@ void fltn(const std::string&);
 
 // Input translation
 int key_direction(const std::string& action);
-int imeget();
-void imeset(int = 0);
 
 
 //// Actions

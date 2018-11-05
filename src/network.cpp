@@ -600,13 +600,8 @@ void show_chat_dialog()
             return;
         }
     }
-    if (jp)
-    {
-        imeset(1);
-    }
     inputlog = "";
     input_text_dialog(80, windowh - inf_verh - 70, 38);
-    imeset(0);
     if (inputlog == ""s)
     {
         return;
@@ -828,7 +823,5 @@ label_1402_internal:
     }
     goto label_1402_internal;
 }
-
-
 
 } // namespace elona

@@ -187,14 +187,7 @@ bool input_text_dialog(
         window2(x, y, dx, 36, 0, 2);
         draw("label_input", x + dx / 2 - 60, y - 32);
 
-        if (imeget() != 0)
-        {
-            draw("ime_status_japanese", x + 8, y + 4);
-        }
-        else
-        {
-            draw("ime_status_english", x + 8, y + 4);
-        }
+        draw("ime_status_english", x + 8, y + 4);
         apledit(p(2), 2, 0);
         if (p(2) > val2 * (1 + en) - 2)
         {

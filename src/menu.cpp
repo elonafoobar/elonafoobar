@@ -309,16 +309,7 @@ TurnResult show_chat_history()
     return TurnResult::pc_turn_user_error;
 }
 
-void load_showroom_user_info()
-{
-    notesel(headtemp);
-    noteget(s, 1);
-    username = ""s + s;
-    noteget(s, 5);
-    usermsg = ""s + s;
-    noteget(s, 6);
-    userrelation = elona::stoi(s(0));
-}
+
 
 int cnvjkey(const std::string& prm_1092)
 {
