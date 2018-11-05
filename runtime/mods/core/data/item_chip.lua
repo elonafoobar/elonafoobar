@@ -3385,7 +3385,6 @@ data:add_multi(
          name = "chain_mail",
          id = 442,
          shadow = 100,
-         stack_height = 24,
          offset_y = 8,
          source = {
             x = 624,
