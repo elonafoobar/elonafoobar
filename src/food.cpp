@@ -22,6 +22,86 @@
 #include "trait.hpp"
 #include "variables.hpp"
 
+
+
+namespace
+{
+
+void _food_gets_rotten(int chara_idx, int food_idx)
+{
+    auto& food = inv[food_idx];
+
+    if (food.material != 35)
+    {
+        return;
+    }
+    if (food.param3 <= 0)
+    {
+        return; // Has already been rotten.
+    }
+    if (food.param3 > game_data.date.hours())
+    {
+        return; // The expiration date has not come yet.
+    }
+    if (food.own_state > 0)
+    {
+        return; // On the field.
+    }
+
+    // Is it corpse(s) on a dryrock?
+    if (chara_idx == -1 && food.id == 204
+        && chipm(
+               0, cell_data.at(food.position.x, food.position.y).chip_id_actual)
+            == 1)
+    {
+        if (game_data.weather != 0)
+        {
+            return;
+        }
+        txt(i18n::s.get(
+            "core.locale.misc.corpse_is_dried_"
+            "up",
+            food));
+        food.param3 = game_data.date.hours() + 2160;
+        food.image = 337;
+        food.id = 571;
+        food.param1 = 0;
+        food.param2 = 5;
+        cell_refresh(food.position.x, food.position.y);
+        return;
+    }
+
+    if (0 <= chara_idx && chara_idx < 16)
+    {
+        txt(i18n::s.get("core.locale.misc.get_rotten", food));
+    }
+
+    food.param3 = -1;
+    food.image = 336;
+
+    if (chara_idx == -1)
+    {
+        cell_refresh(food.position.x, food.position.y);
+    }
+
+    if (chara_idx == 0 && cdata.player().god_id == core_god::kumiromi)
+    {
+        if (rnd(3) == 0)
+        {
+            txt(i18n::s.get("core.locale.misc.extract_seed", food));
+            const auto seed_num = rnd(food.number()) + 1;
+            food.modify_number(-food.number());
+            flt(calcobjlv(cdata.player().level));
+            flttypeminor = 58500;
+            itemcreate(0, 0, -1, -1, seed_num);
+        }
+    }
+}
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -1402,6 +1482,33 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
             type,
             "_" + std::to_string(rank),
             ingredient);
+    }
+}
+
+
+
+void foods_get_rotten()
+{
+    for (int j = 0; j < ELONA_MAX_CHARACTERS + 1; ++j)
+    {
+        int chara = j;
+        if (j == ELONA_MAX_CHARACTERS)
+        {
+            chara = -1; // On the ground.
+        }
+        else if (cdata[chara].state() == Character::State::empty)
+        {
+            continue;
+        }
+
+        for (const auto& i : items(chara))
+        {
+            if (inv[i].number() == 0)
+            {
+                continue;
+            }
+            _food_gets_rotten(chara, i);
+        }
     }
 }
 

@@ -32,6 +32,8 @@ void apply_general_eating_effect(int);
 
 std::string foodname(int, const std::string&, int = 0, int = 0);
 
+void foods_get_rotten();
+
 
 
 } // namespace elona
