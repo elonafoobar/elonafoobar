@@ -258,7 +258,8 @@ struct MessageBox
                     backspace_held_frames++;
                 }
                 else if (
-                    input.is_pressed(Key::key_v) && input.is_pressed(Key::ctrl))
+                    input.was_pressed_just_now(Key::key_v)
+                    && input.is_pressed(Key::ctrl))
                 {
                     // Paste.
                     std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
