@@ -177,8 +177,6 @@ namespace elona
 namespace snail
 {
 
-
-
 void Mouse::_handle_event(const ::SDL_MouseButtonEvent& event)
 {
     _x = event.x;
@@ -307,6 +305,9 @@ void Input::disable_numlock()
             VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         _needs_restore_numlock = true;
     }
+#else
+    // Suppress "unused private member" warning on other platforms.
+    static_cast<void>(_needs_restore_numlock);
 #endif
 }
 
@@ -370,14 +371,20 @@ void Input::_update_modifier_keys()
 
 void Input::_handle_event(const ::SDL_KeyboardEvent& event)
 {
+#ifndef __APPLE__
+    // Work around; Maybe the order of events related to IME differs on each
+    // OS. On macOS, IME status should not be changed here.
     if (_is_ime_active)
     {
         _is_ime_active = false;
     }
+#endif
 
     const auto k = sdlkey2key(event.keysym.sym);
     if (k == Key::none)
+    {
         return;
+    }
 
     auto& the_key = _keys[static_cast<size_t>(k)];
     if (event.state == SDL_PRESSED)
@@ -420,8 +427,8 @@ void Input::_handle_event(const ::SDL_TextInputEvent& event)
 
     if (_is_ime_active) // event.text is IME-translated.
     {
-        _keys[static_cast<size_t>(snail::Key::enter)]._release();
-        _keys[static_cast<size_t>(snail::Key::keypad_enter)]._release();
+        _keys[static_cast<size_t>(Key::enter)]._release();
+        _keys[static_cast<size_t>(Key::keypad_enter)]._release();
         _is_ime_active = false;
     }
 }
@@ -470,8 +477,6 @@ void Input::_handle_event(const ::SDL_MouseButtonEvent& event)
 {
     _mouse._handle_event(event);
 }
-
-
 
 } // namespace snail
 } // namespace elona
