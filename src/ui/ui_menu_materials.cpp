@@ -26,7 +26,7 @@ bool UIMenuMaterials::init()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    curmenu = 3;
+
     gsel(7);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");

@@ -20,6 +20,25 @@
 namespace
 {
 
+std::vector<int> furniture_random_colors = {
+    0,
+    4,
+    2,
+    5,
+    6,
+};
+
+
+
+std::vector<int> item_random_colors = {
+    0,
+    2,
+    4,
+    5,
+    6,
+    3,
+};
+
 
 
 std::vector<int> calc_effective_range(int id)
@@ -1562,14 +1581,16 @@ int generate_color(ColorIndex index, int id)
     int color = static_cast<int>(index);
     if (index == ColorIndex::random_furniture)
     {
-        color = choice(randcolor);
+        color = choice(furniture_random_colors);
     }
     if (index == ColorIndex::random_seeded)
     {
         // The choice can't be completely random - it has to be the
         // same as all other items of this type. So, base it off the
         // random seed of the current save data.
-        color = _randcolor((id + game_data.random_seed) % 6);
+        const auto index =
+            (id + game_data.random_seed) % item_random_colors.size();
+        color = item_random_colors.at(index);
     }
     if (index == ColorIndex::random_any)
     {
@@ -1580,6 +1601,8 @@ int generate_color(ColorIndex index, int id)
     // used for random generation.
     return color % 21;
 }
+
+
 
 int calc_potential_on_gain(int potential)
 {

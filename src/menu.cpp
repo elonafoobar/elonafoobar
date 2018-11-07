@@ -150,17 +150,6 @@ void text_set()
         _melee(1, 7) = u8"attack"s;
         _melee(2, 7) = u8"spore"s;
     }
-    randcolor(0) = 0;
-    randcolor(1) = 4;
-    randcolor(2) = 2;
-    randcolor(3) = 5;
-    randcolor(4) = 6;
-    _randcolor(0) = 0;
-    _randcolor(1) = 2;
-    _randcolor(2) = 4;
-    _randcolor(3) = 5;
-    _randcolor(4) = 6;
-    _randcolor(5) = 3;
     homepage = i18n::s.get("core.locale.system.lafrontier_homepage");
 }
 
@@ -309,16 +298,7 @@ TurnResult show_chat_history()
     return TurnResult::pc_turn_user_error;
 }
 
-void load_showroom_user_info()
-{
-    notesel(headtemp);
-    noteget(s, 1);
-    username = ""s + s;
-    noteget(s, 5);
-    usermsg = ""s + s;
-    noteget(s, 6);
-    userrelation = elona::stoi(s(0));
-}
+
 
 int cnvjkey(const std::string& prm_1092)
 {

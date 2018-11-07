@@ -94,7 +94,7 @@ namespace ui
 
 bool UIMenuMessageLog::init()
 {
-    curmenu = 0;
+
     windowshadow = 1;
     key_list(0) = key_enter;
     keyrange = 0;

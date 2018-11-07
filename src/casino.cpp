@@ -981,7 +981,6 @@ bool casino_blackjack()
         }
         if (cardround == 0)
         {
-            nojoker = 1;
             initcard(60, 160);
             cardplayerinit(2, 5);
             cardplayeradd(0, 220, 124);

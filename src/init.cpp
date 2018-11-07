@@ -981,10 +981,6 @@ void initialize_game()
     firstturn = 1;
     Message::instance().msg_append_begin(
         "  Lafrontier presents Elona ver 1.22. Welcome traveler! ");
-    if (Config::instance().net)
-    {
-        initialize_server_info();
-    }
     if (mode == 5)
     {
         initialize_world();

@@ -206,7 +206,6 @@ TurnResult ai_proc_basic()
                     return TurnResult::turn_end;
                 }
             }
-            npccostmp = 1;
             int stat = do_cast_magic();
             if (stat == 1)
             {

@@ -1129,8 +1129,7 @@ static void _update_aggro_and_crowd_density()
         cnt.turn_cost = 0;
         if (cnt.id == 343) // cnpc
         {
-            getunid(cnt.index);
-            chara_refresh(cnt.index);
+            // Vanilla-compatible CNPC is not supported now.
         }
         if (noaggrorefresh == 0)
         {

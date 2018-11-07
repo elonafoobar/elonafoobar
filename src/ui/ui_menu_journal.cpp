@@ -12,7 +12,7 @@ namespace ui
 
 bool UIMenuJournal::init()
 {
-    curmenu = 1;
+
     page = 99;
     pagesize = 40;
     cs = 0;

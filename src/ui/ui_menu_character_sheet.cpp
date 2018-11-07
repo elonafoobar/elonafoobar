@@ -166,7 +166,7 @@ bool UIMenuCharacterSheet::init()
     {
         cc = 0;
     }
-    curmenu = 0;
+
     if (_operation == CharacterSheetOperation::train_skill
         || _operation == CharacterSheetOperation::learn_skill)
     {

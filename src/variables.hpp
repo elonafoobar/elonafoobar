@@ -28,7 +28,6 @@ ELONA_EXTERN(std::string atxbgbk);
 ELONA_EXTERN(elona_vector1<std::string> atxinfon);
 ELONA_EXTERN(elona_vector1<int> atxid);
 ELONA_EXTERN(int atxlv);
-ELONA_EXTERN(int nojoker);
 ELONA_EXTERN(elona_vector1<int> fsetwear);
 ELONA_EXTERN(elona_vector1<int> fsetitem);
 ELONA_EXTERN(int txtadvscreenupdate);
@@ -55,13 +54,10 @@ ELONA_EXTERN(int inf_msgh);
 ELONA_EXTERN(int inf_ver);
 
 // ui.cpp/menu.cpp
-ELONA_EXTERN(int curmenu);
-ELONA_EXTERN(elona_vector1<std::string> headtemp);
 ELONA_EXTERN(std::string username);
 ELONA_EXTERN(int autoturn);
 ELONA_EXTERN(int firstautoturn);
 ELONA_EXTERN(int racount);
-ELONA_EXTERN(elona_vector1<int> randcolor);
 ELONA_EXTERN(elona_vector1<std::string> matdesc);
 ELONA_EXTERN(int attackvar);
 ELONA_EXTERN(int dump_return);
@@ -109,7 +105,6 @@ ELONA_EXTERN(int rdtry);
 
 // food.cpp
 ELONA_EXTERN(int enc);
-ELONA_EXTERN(int enc2);
 
 // talk.cpp
 ELONA_EXTERN(elona_vector2<std::string> actor);
@@ -133,7 +128,6 @@ ELONA_EXTERN(elona_vector1<int> moneybox);
 ELONA_EXTERN(elona_vector1<int> isetthrowpotionminor);
 ELONA_EXTERN(elona_vector1<int> isetthrowpotionmajor);
 ELONA_EXTERN(elona_vector1<int> isetthrowpotiongreater);
-ELONA_EXTERN(int npccostmp);
 
 // command.cpp
 ELONA_EXTERN(int usermapid);
@@ -154,8 +148,6 @@ ELONA_EXTERN(int rtdmg);
 ELONA_EXTERN(elona_vector1<std::string> tname);
 
 // turn_sequence.cpp
-ELONA_EXTERN(int pcnoise);
-ELONA_EXTERN(int chatturn);
 ELONA_EXTERN(int tgloc);
 ELONA_EXTERN(std::string chatnew);
 ELONA_EXTERN(int dbg_skipevent);
@@ -174,7 +166,6 @@ ELONA_EXTERN(elona_vector1<int> fsetperform);
 // initialize_map.cpp
 ELONA_EXTERN(int noaggrorefresh);
 
-ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> arenaop);
 ELONA_EXTERN(elona_vector1<int> commark);
 ELONA_EXTERN(elona_vector1<int> cyclemax);
@@ -467,7 +458,6 @@ ELONA_EXTERN(int foot);
 ELONA_EXTERN(int ghelp);
 ELONA_EXTERN(int gold);
 ELONA_EXTERN(int grown);
-ELONA_EXTERN(int header);
 ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
 ELONA_EXTERN(int hour_played);
@@ -666,7 +656,6 @@ int calcmagiccontrol(int = 0, int = 0);
 int calcstartcard(int = 0);
 int randskill();
 
-
 //// TCG
 void actionproc();
 void tcgdeck();
@@ -769,11 +758,6 @@ int relationbetween(int, int);
 //// Character generation
 void get_random_npc_id();
 
-// CNPC
-void create_cnpc();
-void create_new_cnpc();
-void fixaiact(int = 0);
-
 
 //// Character manipulation
 void refresh_burden_state();
@@ -828,13 +812,6 @@ int roll_max(int, int, int);
 int roundmargin(int = 0, int = 0);
 
 
-// Network/showroom
-int query_for_showroom_to_visit();
-int findunid(const std::string&);
-int getunid(int = 0);
-void setunid(int = 0, int = 0);
-
-
 // Player-owned building
 int getworker(int = 0, int = 0);
 void removeworker(int = 0);
@@ -849,8 +826,6 @@ void fltn(const std::string&);
 
 // Input translation
 int key_direction(const std::string& action);
-int imeget();
-void imeset(int = 0);
 
 
 //// Actions

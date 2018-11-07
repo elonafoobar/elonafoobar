@@ -37,7 +37,7 @@ bool UIMenuSpells::init()
     cs_bk = -1;
     cs = commark(1) % 1000;
     page = commark(1) / 1000;
-    curmenu = 0;
+
     snd("core.spell");
     gsel(3);
     pos(960, 96);

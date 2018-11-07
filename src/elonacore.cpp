@@ -81,32 +81,6 @@ std::string lang(const std::string& a, const std::string& b)
 
 
 
-void memcpy(
-    elona_vector2<int>& src,
-    int src_i,
-    int src_j,
-    elona_vector2<int>& dst,
-    int dst_i,
-    int dst_j,
-    size_t size)
-{
-    const auto len = src.i_size();
-    const auto len2 = src.j_size();
-    auto count = size;
-    for (size_t i = 0; i < len2; ++i)
-    {
-        for (size_t j = 0; j < len; ++j)
-        {
-            src(src_j + j, src_i + i) = dst(dst_j + j, dst_i + i);
-            count -= sizeof(int);
-            if (count == 0)
-                return;
-        }
-    }
-}
-
-
-
 void select_house_board_tile()
 {
     snd("core.pop2");
@@ -712,54 +686,6 @@ int iequiploc(int ci)
 
 
 
-void setunid(int prm_282, int prm_283)
-{
-    cdata[prm_282].cnpc_id = prm_283;
-    cdata[prm_282].image = 825 + prm_283;
-    cdata[prm_282].image += 0;
-}
-
-
-
-int getunid(int prm_284)
-{
-    f_at_m14 = 0;
-    for (int cnt = 0, cnt_end = (usernpcmax); cnt < cnt_end; ++cnt)
-    {
-        if (cdatan(5, prm_284) == userdatan(0, cnt))
-        {
-            setunid(prm_284, cnt);
-            f_at_m14 = 1;
-            break;
-        }
-    }
-    if (f_at_m14 == 0)
-    {
-        cdata[prm_284].image = 1;
-        cdata[prm_284].cnpc_id = usernpcmax;
-        cdatan(0, prm_284) = i18n::s.get("core.locale.chara.garbage");
-    }
-    return f_at_m14;
-}
-
-
-
-int findunid(const std::string& prm_285)
-{
-    f_at_m14 = 0;
-    for (int cnt = 0, cnt_end = (usernpcmax); cnt < cnt_end; ++cnt)
-    {
-        if (prm_285 == userdatan(0, cnt))
-        {
-            f_at_m14 = 1 + cnt;
-            break;
-        }
-    }
-    return f_at_m14;
-}
-
-
-
 int roundmargin(int x, int y)
 {
     if (x > y)
@@ -1113,28 +1039,6 @@ int fltsetdungeon()
         return choice(fsetwear);
     }
     return choice(fsetitem);
-}
-
-
-
-void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
-{
-    std::string word_at_m67;
-    int p_at_m67 = 0;
-    int i_at_m67 = 0;
-    word_at_m67 = prm_533;
-    p_at_m67 = 0;
-    i_at_m67 = word_at_m67.size();
-    for (int cnt = 0; cnt < 40; ++cnt)
-    {
-        prm_532(cnt) = "";
-        getstr(prm_532(cnt), word_at_m67, clamp(p_at_m67, 0, i_at_m67), 44);
-        if (strsize > i_at_m67)
-        {
-            break;
-        }
-        p_at_m67 += strsize;
-    }
 }
 
 
@@ -1523,26 +1427,6 @@ void cnv_filestr(std::string& str)
 
 
 
-void imeset(int prm_709)
-{
-    himc_at_ime_control = ImmGetContext(hwnd);
-    ImmSetOpenStatus(himc_at_ime_control, prm_709);
-    ImmReleaseContext(hwnd, himc_at_ime_control);
-}
-
-
-
-int imeget()
-{
-    int imesw_at_ime_control = 0;
-    himc_at_ime_control = ImmGetContext(hwnd);
-    imesw_at_ime_control = ImmGetOpenStatus(himc_at_ime_control);
-    ImmReleaseContext(hwnd, himc_at_ime_control);
-    return imesw_at_ime_control;
-}
-
-
-
 std::string fixtxt(const std::string& prm_724, int prm_725)
 {
     std::string m_at_m104;
@@ -1576,33 +1460,6 @@ int direction(int x1, int y1, int x2, int y2)
     else
     {
         return y1 > y2 ? 3 : 0;
-    }
-}
-
-
-
-void fixaiact(int prm_753)
-{
-    // FIXME: DRY
-    for (auto&& action : cdata[prm_753].normal_actions)
-    {
-        if (action == 464 || action == 441 || action == 660 || action == 657)
-        {
-            action = -1;
-        }
-    }
-    for (auto&& action : cdata[prm_753].special_actions)
-    {
-        if (action == 464 || action == 441 || action == 660 || action == 657)
-        {
-            action = -1;
-        }
-    }
-    int i_at_m112 = cdata[prm_753].ai_heal;
-    if (i_at_m112 == 464 || i_at_m112 == 441 || i_at_m112 == 660
-        || i_at_m112 == 657)
-    {
-        cdata[prm_753].ai_heal = 0;
     }
 }
 
@@ -2482,13 +2339,6 @@ int try_to_perceive_npc(int cc)
             {
                 return 1;
             }
-        }
-    }
-    if (pcnoise != 0)
-    {
-        if (rnd(150) < pcnoise)
-        {
-            return 1;
         }
     }
     return 0;
@@ -5736,236 +5586,6 @@ TurnResult step_into_gate()
 
 
 
-int query_for_showroom_to_visit()
-{
-label_19431_internal:
-    if (1 && game_data.wizard == 0)
-    {
-        do_save_game();
-    }
-    snd("core.pop2");
-    listmax = 0;
-    page = 0;
-    pagesize = 16;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    SDIM2(headtemp, 1024);
-    const auto pattern =
-        comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::user(),
-             filesystem::DirEntryRange::Type::file,
-             pattern))
-    {
-        const auto path = entry.path();
-        if (path == filesystem::path(u8"temp.enum")
-            || path == filesystem::path(u8"temp.ept"))
-            continue;
-        bload(path, headtemp, 1024);
-        notesel(headtemp);
-        noteget(s, 0);
-        noteget(s(1), 1);
-        noteget(s(2), 4);
-        list(0, listmax) = listmax;
-        list(1, listmax) = 0;
-        list(2, listmax) = elona::stoi(s(2));
-        listn(0, listmax) = u8"("s
-            + filesystem::make_preferred_path_in_utf8(path.filename()) + u8") "s
-            + s + u8" "s + s(1);
-        listn(1, listmax) = filesystem::to_utf8_path(path.filename());
-        ++listmax;
-        noteunsel();
-    }
-    if (Config::instance().net != 0)
-    {
-        if (comctrl == 1)
-        {
-            net_dllist(u8".ept"s, 1);
-        }
-        if (comctrl == 2)
-        {
-            net_dllist(u8".eum"s, 1);
-        }
-    }
-    if (comctrl == 0 || comctrl == 2)
-    {
-        txt(i18n::s.get("core.locale.misc.custom.show_room.which_show_room"));
-    }
-    if (comctrl == 1)
-    {
-        txt(i18n::s.get("core.locale.misc.custom.pet_team.which_team"));
-    }
-    windowshadow = 1;
-label_1944_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_1945_internal:
-    if (comctrl == 0 || comctrl == 2)
-    {
-        s = i18n::s.get("core.locale.misc.custom.show_room.list");
-    }
-    if (comctrl == 1)
-    {
-        s = i18n::s.get("core.locale.misc.custom.pet_team.list");
-    }
-    s(1) =
-        i18n::s.get("core.locale.misc.custom.key_hint") + strhint2 + strhint3;
-    display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
-    if (comctrl == 0 || comctrl == 2)
-    {
-        s = i18n::s.get("core.locale.misc.custom.show_room.name");
-    }
-    if (comctrl == 1)
-    {
-        s = i18n::s.get("core.locale.misc.custom.pet_team.name");
-    }
-    display_topic(s, wx + 28, wy + 36);
-    display_topic(u8"Ver"s, wx + 534, wy + 36);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
-    }
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        s = listn(0, p);
-        cutname(s, 64);
-        cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
-        pos(wx + 570, wy + 66 + cnt * 19);
-        mes(""s + (list(2, p) % 1000 + 1) + u8".0"s);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    auto action = get_selected_item(p(0));
-    if (p != -1)
-    {
-        if (p == -999)
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.locale.misc.custom.incompatible"));
-            goto label_1944_internal;
-        }
-        if (listn(1, p) == u8"net"s)
-        {
-            if (comctrl == 1)
-            {
-                s = u8".ept"s;
-            }
-            else
-            {
-                s = u8".eum"s;
-            }
-            int stat = net_dl(""s + list(1, p) + s, u8"temp"s + s);
-            usermapid = list(1, p);
-            if (stat == 0)
-            {
-                txt(i18n::s.get(
-                    "core.locale.misc.custom.fail_to_retrieve_file"));
-                goto label_1944_internal;
-            }
-            userfile = u8"temp"s + s;
-        }
-        else
-        {
-            userfile = listn(1, p);
-        }
-        bload(filesystem::dir::user() / userfile, headtemp, 1024);
-        notesel(headtemp);
-        noteget(s, 5);
-        noteget(s(1), 6);
-        if (comctrl == 0 || comctrl == 2)
-        {
-            username = ""s + s;
-            userrelation = elona::stoi(s(1));
-        }
-        if (comctrl == 1)
-        {
-            rtval(0) = elona::stoi(s(0));
-            rtval(1) = elona::stoi(s(1));
-        }
-        return 1;
-    }
-    if (ginfo(2) == 0)
-    {
-        if (noteinfo() != 0)
-        {
-            if (getkey(snail::Key::backspace))
-            {
-                userfile = listn(1, cs + pagesize * page);
-                if (!fs::exists(filesystem::path(u8"./user/"s + userfile)))
-                {
-                    goto label_1944_internal;
-                }
-                txt(i18n::s.get(
-                    "core.locale.misc.custom.do_you_want_to_delete", userfile));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval == 0)
-                {
-                    fs::remove_all(filesystem::path(u8"./user/"s + userfile));
-                    goto label_19431_internal;
-                }
-                goto label_1944_internal;
-            }
-        }
-    }
-    if (action == "next_page")
-    {
-        if (pagemax != 0)
-        {
-            snd("core.pop1");
-            ++page;
-            goto label_1944_internal;
-        }
-    }
-    if (action == "previous_page")
-    {
-        if (pagemax != 0)
-        {
-            snd("core.pop1");
-            --page;
-            goto label_1944_internal;
-        }
-    }
-    if (action == "cancel")
-    {
-        update_screen();
-        return 0;
-    }
-    goto label_1945_internal;
-}
-
-
-
 int target_position()
 {
     if (tlocinitx != 0 || tlocinity != 0)
@@ -7287,97 +6907,6 @@ std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
 
 
 
-void create_cnpc()
-{
-    elona_vector1<std::string> unres;
-    if (initunid)
-    {
-        cdata[rc].cnpc_id = initunid - 1;
-        initunid = 0;
-    }
-    cun = cdata[rc].cnpc_id;
-    cdata[rc].id = 343;
-    if (initlv != 0)
-    {
-        cdata[rc].level = initlv;
-    }
-    else
-    {
-        cdata[rc].level = clamp(userdata(2, cun), 1, 100);
-    }
-    cdata[rc].portrait = -1;
-    creaturepack = 0;
-    cdata[rc].ai_act_sub_freq = unaiactsubfreq(cun);
-
-    cdata[rc].normal_actions.clear();
-    for (int cnt = 0; cnt < 5; ++cnt)
-    {
-        int action = userdata(15 + cnt, cun);
-        if (action == 0)
-            break;
-        cdata[rc].normal_actions.push_back(action);
-    }
-    cdata[rc].special_actions.clear();
-    for (int cnt = 0; cnt < 5; ++cnt)
-    {
-        int action = userdata(20 + cnt, cun);
-        if (action == 0)
-            break;
-        cdata[rc].special_actions.push_back(action);
-    }
-
-    if (userdatan(5, cun) != ""s)
-    {
-        SDIM3(unres, 6, 32);
-        csvstr2(unres, userdatan(5, cun));
-        for (int cnt = 0;; ++cnt)
-        {
-            if (cnt > 15 || unres(cnt) == ""s)
-            {
-                break;
-            }
-            sdata(elona::stoi(unres(cnt * 2)), rc) +=
-                elona::stoi(unres((cnt * 2 + 1))) * 50;
-        }
-    }
-    cdata[rc].can_talk = 1;
-    cdatan(0, rc) = userdatan(1, cun);
-    cdatan(5, rc) = userdatan(0, cun);
-    cdata[rc].relationship = clamp(userdata(4, cun), -3, 10);
-    cdata[rc].ai_calm = clamp(userdata(7, cun), 1, 4);
-    cdata[rc].ai_move = clamp(userdata(8, cun), 0, 100);
-    cdata[rc].ai_dist = clamp(userdata(9, cun), 1, 100);
-    if (userdata(11, cun))
-    {
-        cdata[rc].element_of_unarmed_attack =
-            clamp(userdata(11, cun), 5000000, 6400000);
-    }
-    cdata[rc].ai_heal = userdata(10, cun);
-    access_race_info(3, userdatan(2, cun));
-    access_class_info(3, userdatan(3, cun));
-    cdata[rc].sex = userdata(3, cun);
-    if (userdata(3, cun) != 0)
-    {
-        if (userdata(3, cun) != 1)
-        {
-            cdata[rc].sex = rnd(2);
-        }
-    }
-    if (userdata(5, cun))
-    {
-        fixlv = static_cast<Quality>(clamp(
-            userdata(5, cun),
-            static_cast<int>(Quality::none),
-            static_cast<int>(Quality::special)));
-    }
-    cspecialeq = 0;
-    cdata[rc].original_relationship = cdata[rc].relationship;
-    fixaiact(rc);
-    setunid(rc, cun);
-}
-
-
-
 void update_save_data(const fs::path& save_dir, int serial_id)
 {
     switch (serial_id)
@@ -8679,31 +8208,30 @@ int do_cast_magic_attempt()
             }
         }
     }
-    if (cc == 0 || (cc != 0 && npccostmp == 1))
+
+    if (cc == 0)
     {
-        if (cc == 0)
+        spell(efid - 400) -= calcspellcoststock(efid, cc);
+        if (spell(efid - 400) < 0)
         {
-            spell(efid - 400) -= calcspellcoststock(efid, cc);
-            if (spell(efid - 400) < 0)
-            {
-                spell(efid - 400) = 0;
-            }
-        }
-        mp = calcspellcostmp(efid, cc);
-        if (cc == 0)
-        {
-            if (cdata.player().god_id == core_god::ehekatl)
-            {
-                mp = rnd(mp * 140 / 100 + 1) + 1;
-            }
-        }
-        damage_mp(cdata[cc], mp);
-        if (cdata[cc].state() != Character::State::alive)
-        {
-            efsource = 0;
-            return 1;
+            spell(efid - 400) = 0;
         }
     }
+    mp = calcspellcostmp(efid, cc);
+    if (cc == 0)
+    {
+        if (cdata.player().god_id == core_god::ehekatl)
+        {
+            mp = rnd(mp * 140 / 100 + 1) + 1;
+        }
+    }
+    damage_mp(cdata[cc], mp);
+    if (cdata[cc].state() != Character::State::alive)
+    {
+        efsource = 0;
+        return 1;
+    }
+
     if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
     {
         if (is_in_fov(cdata[cc]))
@@ -13559,10 +13087,6 @@ TurnResult pc_died()
               ndeathcause,
               mdatan(0),
               last_words);
-    if (game_data.wizard == 0)
-    {
-        net_send(s);
-    }
     screenupdate = -1;
     update_entire_screen();
     levelexitby = 3;

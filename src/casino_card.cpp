@@ -132,11 +132,7 @@ void initcard(int prm_422, int prm_423, int)
     pilex_at_cardcontrol = prm_422;
     piley_at_cardcontrol = prm_423;
     DIM3(card_at_cardcontrol, 6, 53);
-    cardmax_at_cardcontrol = 53;
-    if (nojoker == 1)
-    {
-        cardmax_at_cardcontrol = 52;
-    }
+    cardmax_at_cardcontrol = 52;
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
     {
         card_at_cardcontrol(0, cnt) = cnt % 13 + 1;

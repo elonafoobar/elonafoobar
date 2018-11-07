@@ -188,16 +188,18 @@ std::string remove_extra_str(const std::string& text)
 void wish_end()
 {
     if (game_data.wizard || wishfilter)
+    {
         return;
+    }
 
-    net_send(
-        "wish"
-        + i18n::s.get(
-              "core.locale.wish.sent_message",
-              cdatan(1, 0),
-              cdatan(0, 0),
-              i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
-              cnven(log_copy_observer->get_copy())));
+    // net_send(
+    //     "wish"
+    //     + i18n::s.get(
+    //           "core.locale.wish.sent_message",
+    //           cdatan(1, 0),
+    //           cdatan(0, 0),
+    //           i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
+    //           cnven(log_copy_observer->get_copy())));
 
     log_copy_observer.reset();
 

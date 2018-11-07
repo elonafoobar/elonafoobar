@@ -50,7 +50,6 @@ void show_ex_help();
 void show_game_help();
 TurnResult show_chat_history();
 TurnResult show_message_log();
-void load_showroom_user_info();
 void set_option();
 TurnResult play_scene();
 

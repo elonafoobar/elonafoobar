@@ -23,7 +23,7 @@ void UIMenuTownChart::update()
     cc = 0;
     cs_bk = -1;
     snd("core.chat");
-    curmenu = 0;
+
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);

@@ -38,7 +38,7 @@ static void _show_economy_info(
 
 bool UIMenuTownEconomy::init()
 {
-    curmenu = 1;
+
     key_list(0) = key_enter;
     keyrange = 0;
     pagesize = 1;

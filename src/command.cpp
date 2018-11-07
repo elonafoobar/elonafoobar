@@ -2230,14 +2230,7 @@ TurnResult do_use_command()
         inv[ci].modify_number(-1);
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(i18n::s.get("core.locale.action.use.rune.use"));
-        comctrl = 2;
-        {
-            int stat = query_for_showroom_to_visit();
-            if (stat == 1)
-            {
-                return do_enter_strange_gate();
-            }
-        }
+        // Showroom is not supported now.
         goto label_2229_internal;
     case 49:
         txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
@@ -3048,16 +3041,8 @@ TurnResult do_use_stairs_command(int val0)
     {
         if (feat(2) + feat(3) * 100 == 35)
         {
-            comctrl = 0;
-            int stat = query_for_showroom_to_visit();
-            if (stat == 1)
-            {
-                return do_enter_strange_gate();
-            }
-            else
-            {
-                return TurnResult::pc_turn_user_error;
-            }
+            // Showroom is not supported now.
+            return TurnResult::pc_turn_user_error;
         }
     }
     snd("core.exitmap1");
@@ -3304,7 +3289,7 @@ TurnResult do_movement_command()
         if (cellfeat == 31)
         {
             snd("core.chat");
-            voting_box();
+            // Voting box is not supported now.
             return TurnResult::turn_end;
         }
         if (cellfeat == 33)

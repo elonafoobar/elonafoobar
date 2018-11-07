@@ -298,13 +298,6 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
         else
         {
             Config::instance().save();
-            if (mode == 0)
-            {
-                if (Config::instance().net)
-                {
-                    initialize_server_info();
-                }
-            }
             return UIMenuConfig::Result::finish();
         }
     }
