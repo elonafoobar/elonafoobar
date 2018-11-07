@@ -81,8 +81,6 @@ private:
     std::set<std::string> _available_actions;
     std::vector<std::string> _available_actions_sorted;
     std::unordered_set<ActionCategory> _excluded_categories;
-    std::string _last_action;
-    int _last_action_held_frames{};
     // Needed to distinguish combining arrow keys to create "northwest" or
     // "northeast" actions and pressing a key bound to "northwest" or
     // "northeast" to cycle between multiple menus, e.g. in the inventory menu.

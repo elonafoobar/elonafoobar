@@ -462,11 +462,6 @@ static Rect calculate_android_window_pos_landscape(
 
 Rect Application::calculate_android_window_pos()
 {
-    int x, y, width, height;
-
-    x = 0;
-    y = 0;
-
     if (_orientation == Orientation::portrait)
     {
         return calculate_android_window_pos_portrait(
@@ -477,8 +472,6 @@ Rect Application::calculate_android_window_pos()
         return calculate_android_window_pos_landscape(
             _width, _height, _physical_width, _physical_height);
     }
-
-    return {x, y, width, height};
 }
 
 
