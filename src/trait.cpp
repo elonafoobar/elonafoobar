@@ -8,39 +8,11 @@
 #include "range.hpp"
 #include "variables.hpp"
 
-using namespace elona;
-
-
-namespace elona
-{
-
-
-TraitDB the_trait_db;
-
-
-void TraitDB::define(lua_State* L)
-{
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw std::runtime_error(u8"Error: fail to load trait data");
-
-    ELONA_CAT_DB_FIELD_INTEGER(type, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(min, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(max, 0);
-
-    storage.emplace(
-        std::stoi(id), // TODO
-        TraitData{
-            std::stoi(id),
-            TraitData::Type(type),
-            min,
-            max,
-        });
-}
 
 
 namespace
 {
+
 void trait_format_other_parameterized(
     const I18NKey& i18n_prefix,
     int tid,
@@ -143,6 +115,8 @@ void trait_format_other_parameterized(
     }
 }
 
+
+
 void trait_format_other_parameterless(
     const I18NKey& i18n_prefix,
     int tid,
@@ -177,11 +151,14 @@ void trait_format_other_parameterless(
     }
 }
 
+
+
 bool trait_is_obtainable(const I18NKey& i18n_prefix, int tid)
 {
     return trait(tid) >= 0
         && i18n::s.get_enum_property_opt(i18n_prefix + ".levels", "name", 0);
 }
+
 
 
 void trait_format_other(const I18NKey& i18n_prefix, int tid, int min, int max)
@@ -207,6 +184,8 @@ void trait_format_other(const I18NKey& i18n_prefix, int tid, int min, int max)
     }
 }
 
+
+
 void trait_format_obtainable(const I18NKey& i18n_prefix, int max)
 {
     traitrefn(2) = i18n::s.get(i18n_prefix + ".desc");
@@ -219,6 +198,8 @@ void trait_format_obtainable(const I18NKey& i18n_prefix, int max)
             i18n::s.get_enum_property(i18n_prefix + ".levels", "desc", cnt);
     }
 }
+
+
 
 void trait_format(int tid, int min, int max)
 {
@@ -261,8 +242,13 @@ bool is_acquirable(int id)
     }
 }
 
-
 } // namespace
+
+
+
+namespace elona
+{
+
 
 
 int trait_get_info(int traitmode, int tid)
@@ -275,7 +261,7 @@ int trait_get_info(int traitmode, int tid)
 
     if (traitmode == 0)
     {
-        traitref(0) = int(data->type);
+        traitref(0) = data->trait_type;
         traitref(1) = data->min;
         traitref(2) = data->max;
 
@@ -951,6 +937,5 @@ void trait_load_desc()
         }
     }
 }
-
 
 } // namespace elona

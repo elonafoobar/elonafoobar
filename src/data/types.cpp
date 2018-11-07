@@ -5,3 +5,4 @@
 #include "types/type_map.cpp"
 #include "types/type_music.cpp"
 #include "types/type_sound.cpp"
+#include "types/type_trait.cpp"

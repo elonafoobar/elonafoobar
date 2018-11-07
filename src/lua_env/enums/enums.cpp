@@ -252,6 +252,16 @@ EnumMap<int> CharaFlagTable{
         {"OnlyChristmas", 991},
     }};
 
+
+
+EnumMap<int> TraitTypeTable{"TraitType",
+                            {
+                                {"Feat", 0},
+                                {"Mutation", 1},
+                                {"Nature", 2},
+                                {"EtherDisease", 3},
+                            }};
+
 } // namespace LuaEnums
 
 void LuaEnums::bind(sol::table& core)
@@ -272,6 +282,7 @@ void LuaEnums::bind(sol::table& core)
     RelationTable.bind(Enums);
     CharaFlagTable.bind(Enums);
     QualityTable.bind(Enums);
+    TraitTypeTable.bind(Enums);
 }
 
 } // namespace lua

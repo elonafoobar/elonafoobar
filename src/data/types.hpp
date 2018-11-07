@@ -6,3 +6,4 @@
 #include "types/type_map.hpp"
 #include "types/type_music.hpp"
 #include "types/type_sound.hpp"
+#include "types/type_trait.hpp"

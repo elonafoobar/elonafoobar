@@ -26,6 +26,7 @@ extern EnumMap<int> MapTilesetTable;
 extern EnumMap<int> GenderTable;
 extern EnumMap<int> RelationTable;
 extern EnumMap<int> CharaFlagTable;
+extern EnumMap<int> TraitTypeTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

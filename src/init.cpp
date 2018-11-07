@@ -365,7 +365,6 @@ void initialize_cat_db()
     the_fish_db.initialize();
     the_item_material_db.initialize();
     the_race_db.initialize();
-    the_trait_db.initialize();
 }
 
 void initialize_lua()
