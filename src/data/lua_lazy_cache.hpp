@@ -261,5 +261,8 @@ protected:
     type name = data.optional_or<type>(#name, def);
 #define DATA_OPT(name, type) optional<type> name = data.optional<type>(#name);
 #define DATA_VEC(name, type) std::vector<type> name = data.vector<type>(#name);
+#define DATA_TABLE(name, keytype, valuetype) \
+    std::unordered_map<keytype, valuetype> name = \
+        data.unordered_map<keytype, valuetype>(#name);
 #define DATA_ENUM(name, type, table, def) \
     type name = data.enum_or<type>(#name, lua::LuaEnums::table, def);

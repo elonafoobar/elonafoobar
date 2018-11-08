@@ -3,9 +3,9 @@
 using namespace elona;
 
 
+
 namespace
 {
-
 
 std::vector<std::vector<int>> leather_table = {
     {
@@ -15,7 +15,6 @@ std::vector<std::vector<int>> leather_table = {
         27,
         17,
     },
-
     {
         2,
         4,
@@ -23,7 +22,6 @@ std::vector<std::vector<int>> leather_table = {
         32,
         28,
     },
-
     {
         16,
         5,
@@ -31,7 +29,6 @@ std::vector<std::vector<int>> leather_table = {
         14,
         15,
     },
-
     {
         18,
         20,
@@ -42,6 +39,7 @@ std::vector<std::vector<int>> leather_table = {
 };
 
 
+
 std::vector<std::vector<int>> metal_table = {
     {
         12,
@@ -50,7 +48,6 @@ std::vector<std::vector<int>> metal_table = {
         30,
         29,
     },
-
     {
         34,
         25,
@@ -58,7 +55,6 @@ std::vector<std::vector<int>> metal_table = {
         11,
         13,
     },
-
     {
         21,
         5,
@@ -66,7 +62,6 @@ std::vector<std::vector<int>> metal_table = {
         23,
         15,
     },
-
     {
         33,
         20,
@@ -76,7 +71,6 @@ std::vector<std::vector<int>> metal_table = {
     },
 };
 
-
 } // namespace
 
 
@@ -84,85 +78,16 @@ std::vector<std::vector<int>> metal_table = {
 namespace elona
 {
 
-
-ItemMaterialDB the_item_material_db;
-
-
-void ItemMaterialDB::define(lua_State* L)
+int item_material_lookup_leather(int x, int y)
 {
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw std::runtime_error(u8"Error: fail to load item material data");
-
-    ELONA_CAT_DB_FIELD_INTEGER(weight, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(value, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(hit_bonus, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(damage_bonus, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(dv, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(pv, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(dice_y, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(color, 0);
-
-    ELONA_CAT_DB_FIELD_BOOLEAN(fireproof, false);
-    ELONA_CAT_DB_FIELD_BOOLEAN(acidproof, false);
-
-    std::vector<Enchantment> enchantments;
-    lua_getfield(L, -1, u8"enchantments");
-    if (!lua_isnil(L, -1))
-    {
-        lua_pushnil(L);
-        while (lua_next(L, -2))
-        {
-            int k = std::stoi(luaL_checkstring(L, -2) + 1);
-            int v = luaL_checkinteger(L, -1);
-            enchantments.emplace_back(Enchantment{k, v});
-            lua_pop(L, 1);
-        }
-    }
-    lua_pop(L, 1);
-
-    storage.emplace(
-        std::stoi(id), // TODO
-        ItemMaterialData{
-            std::stoi(id),
-            weight,
-            value,
-            hit_bonus,
-            damage_bonus,
-            dv,
-            pv,
-            dice_y,
-            color,
-            enchantments,
-            fireproof,
-            acidproof,
-        });
+    return leather_table.at(x).at(y);
 }
 
 
 
-int ItemMaterialDB::lookup_leather(int x, int y)
+int item_material_lookup_metal(int x, int y)
 {
-    return leather_table[x][y];
+    return metal_table.at(x).at(y);
 }
-
-
-
-int ItemMaterialDB::lookup_metal(int x, int y)
-{
-    return metal_table[x][y];
-}
-
-
-std::vector<int> ItemMaterialDB::get_material_ids()
-{
-    std::vector<int> ret;
-    range::transform(storage, std::back_inserter(ret), [](const auto& pair) {
-        return pair.first;
-    });
-    return ret;
-}
-
-
 
 } // namespace elona

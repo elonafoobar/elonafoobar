@@ -33,6 +33,9 @@ void _initialize_iterable_dbs(lua::DataTable& data)
 
     the_ability_db.initialize(data);
     the_ability_db.load_all();
+
+    the_item_material_db.initialize(data);
+    the_item_material_db.load_all();
 }
 
 

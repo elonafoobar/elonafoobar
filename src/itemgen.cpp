@@ -645,22 +645,22 @@ void determine_item_material()
     {
         if (rnd(10) != 0)
         {
-            inv[ci].material = the_item_material_db.lookup_metal(p, mtlv);
+            inv[ci].material = item_material_lookup_metal(p, mtlv);
         }
         else
         {
-            inv[ci].material = the_item_material_db.lookup_leather(p, mtlv);
+            inv[ci].material = item_material_lookup_leather(p, mtlv);
         }
     }
     if (inv[ci].material == 1001)
     {
         if (rnd(10) != 0)
         {
-            inv[ci].material = the_item_material_db.lookup_leather(p, mtlv);
+            inv[ci].material = item_material_lookup_leather(p, mtlv);
         }
         else
         {
-            inv[ci].material = the_item_material_db.lookup_metal(p, mtlv);
+            inv[ci].material = item_material_lookup_metal(p, mtlv);
         }
     }
     if (rnd(25) == 0)
@@ -677,7 +677,7 @@ void change_item_material()
     fixlv = inv[ci].quality;
     for (auto e : the_item_material_db[p]->enchantments)
     {
-        enchantment_remove(ci, e.id, e.power);
+        enchantment_remove(ci, e.first, e.second);
     }
 
     const auto original_value = calculate_original_value(inv[ci]);
@@ -773,7 +773,7 @@ void set_material_specific_attributes()
     p = inv[ci].material;
     for (auto e : the_item_material_db[p]->enchantments)
     {
-        enchantment_add(ci, e.id, e.power, 0, 1);
+        enchantment_add(ci, e.first, e.second, 0, 1);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {

@@ -6,6 +6,7 @@
 #include "types/type_god.hpp"
 #include "types/type_item.hpp"
 #include "types/type_item_chip.hpp"
+#include "types/type_item_material.hpp"
 #include "types/type_map.hpp"
 #include "types/type_music.hpp"
 #include "types/type_sound.hpp"

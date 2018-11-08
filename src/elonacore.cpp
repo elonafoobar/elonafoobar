@@ -35,7 +35,6 @@
 #include "input.hpp"
 #include "input_prompt.hpp"
 #include "item.hpp"
-#include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
 #include "lua_env/interface.hpp"

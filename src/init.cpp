@@ -26,7 +26,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_material.hpp"
 #include "itemgen.hpp"
 #include "keybind/keybind.hpp"
 #include "log.hpp"
@@ -361,7 +360,6 @@ void initialize_cat_db()
 
     the_buff_db.initialize();
     the_class_db.initialize();
-    the_item_material_db.initialize();
     the_race_db.initialize();
 }
 
