@@ -75,20 +75,20 @@ void AbilityDB::define(lua_State* L)
         throw std::runtime_error(u8"Error: fail to load ability data");
 
     ELONA_CAT_DB_FIELD_INTEGER(related_basic_attribute, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(sdataref1, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(ability_type, 0);
     ELONA_CAT_DB_FIELD_INTEGER(cost, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(sdataref3, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(sdataref4, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(range, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(difficulty, 0);
 
     storage.emplace(
         std::stoi(id), // TODO
         AbilityData{
             std::stoi(id),
             related_basic_attribute,
-            sdataref1,
+            ability_type,
             cost,
-            sdataref3,
-            sdataref4,
+            range,
+            difficulty,
         });
 }
 

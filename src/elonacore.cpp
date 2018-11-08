@@ -1254,8 +1254,7 @@ int breath_list()
     breathw = 1;
     dx = cdata[cc].position.x;
     dy = cdata[cc].position.y;
-    for (int cnt = 0,
-             cnt_end = cnt + (the_ability_db[efid]->sdataref3 % 1000 + 1);
+    for (int cnt = 0, cnt_end = cnt + (the_ability_db[efid]->range % 1000 + 1);
          cnt < cnt_end;
          ++cnt)
     {
@@ -7935,7 +7934,7 @@ int decode_book()
         }
         else
         {
-            p = the_ability_db[efid]->sdataref4;
+            p = the_ability_db[efid]->difficulty;
         }
         cdata[cc].continuous_action.turn = p / (2 + sdata(150, 0)) + 1;
         cdata[cc].continuous_action.item = ci;
@@ -7964,7 +7963,7 @@ int decode_book()
         }
         else
         {
-            r2 = the_ability_db[efid]->sdataref4;
+            r2 = the_ability_db[efid]->difficulty;
             r3 = efid;
         }
         if (inv[ci].curse_state == CurseState::blessed)
@@ -8192,7 +8191,7 @@ int do_cast_magic_attempt()
     }
     if (cc != 0)
     {
-        if (the_ability_db[efid]->sdataref1 == 7)
+        if (the_ability_db[efid]->ability_type == 7)
         {
             if (cdata[cc].relationship == 10
                 || game_data.current_map == mdata_t::MapId::pet_arena)
@@ -8303,7 +8302,7 @@ int do_cast_magic_attempt()
     }
     rapidmagic = 0;
     if (cdata[cc].can_cast_rapid_magic()
-        && the_ability_db[efid]->sdataref1 == 2)
+        && the_ability_db[efid]->ability_type == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
     }
@@ -8679,7 +8678,7 @@ int do_zap()
     }
     if (efid >= 400 && efid < 467)
     {
-        if ((stat == 0 && the_ability_db[efid]->sdataref3 / 1000 * 1000 == 2000)
+        if ((stat == 0 && the_ability_db[efid]->range / 1000 * 1000 == 2000)
             || noeffect == 1)
         {
             if (is_in_fov(cdata[cc]))
@@ -8713,7 +8712,7 @@ int do_zap()
         {
             f = 1;
         }
-        if (rnd((the_ability_db[efid]->sdataref4 + 1)) / 2 <= skill)
+        if (rnd((the_ability_db[efid]->difficulty + 1)) / 2 <= skill)
         {
             f = 1;
         }
@@ -8789,8 +8788,8 @@ int do_magic_attempt()
             return 0;
         }
     }
-    if (the_ability_db[efid]->sdataref3 / 1000 * 1000 != 3000
-        && the_ability_db[efid]->sdataref3 / 1000 * 1000 != 10000)
+    if (the_ability_db[efid]->range / 1000 * 1000 != 3000
+        && the_ability_db[efid]->range / 1000 * 1000 != 10000)
     {
         if (cdata[cc].confused != 0 || cdata[cc].blind != 0)
         {
@@ -8855,7 +8854,7 @@ int prompt_magic_location()
         tc = cc;
         return 1;
     }
-    tg = the_ability_db[efid]->sdataref3 / 1000 * 1000;
+    tg = the_ability_db[efid]->range / 1000 * 1000;
     if (efsource == 1)
     {
         if (tg == 3000)
@@ -8863,7 +8862,7 @@ int prompt_magic_location()
             tg = 8000;
         }
     }
-    if (the_ability_db[efid]->sdataref1 == 7)
+    if (the_ability_db[efid]->ability_type == 7)
     {
         if (cc == 0)
         {
@@ -8898,7 +8897,7 @@ int prompt_magic_location()
                     cdata[tc].position.y,
                     cdata[cc].position.x,
                     cdata[cc].position.y)
-                > the_ability_db[efid]->sdataref3 % 1000 + 1)
+                > the_ability_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
@@ -8970,14 +8969,14 @@ int prompt_magic_location()
     {
         if (cc != 0)
         {
-            if (the_ability_db[efid]->sdataref1 == 3)
+            if (the_ability_db[efid]->ability_type == 3)
             {
                 if (dist(
                         cdata[tc].position.x,
                         cdata[tc].position.y,
                         cdata[cc].position.x,
                         cdata[cc].position.y)
-                    > the_ability_db[efid]->sdataref3 % 1000 + 1)
+                    > the_ability_db[efid]->range % 1000 + 1)
                 {
                     return 0;
                 }
@@ -9023,7 +9022,7 @@ int prompt_magic_location()
                 cdata[tc].position.y,
                 cdata[cc].position.x,
                 cdata[cc].position.y)
-            > the_ability_db[efid]->sdataref3 % 1000 + 1)
+            > the_ability_db[efid]->range % 1000 + 1)
         {
             if (cc == 0)
             {
