@@ -231,7 +231,7 @@ config def {
     font = {
         type = "section"
         options = {
-            file = "Kochi Gothic.ttf"
+            file = "GenShinGothic/GenShinGothic-Monospace-Regular.ttf"
 
             vertical_offset = {
                 default = -1
