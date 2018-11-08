@@ -1,8 +1,7 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
-#include "cat.hpp"
+#include "data/types/type_god.hpp"
 #include "enums.hpp"
 
 
@@ -62,45 +61,8 @@ inline int godid2int(const GodId& id)
         return 0;
 }
 
-
-
 } // namespace core_god
 
-
-struct GodData
-{
-    GodId id;
-};
-
-
-class GodDB;
-
-
-namespace cat
-{
-
-template <>
-struct CatDBTraits<GodDB>
-{
-    using IdType = GodId;
-    using DataType = GodData;
-    static constexpr const char* filename = u8"god.lua";
-    static constexpr const char* table_name = u8"god";
-};
-
-} // namespace cat
-
-
-class GodDB : public cat::CatDB<GodDB>
-{
-public:
-    GodDB() = default;
-
-    void define(lua_State* L);
-};
-
-
-extern GodDB the_god_db;
 
 
 void txtgod(const GodId& id, int type);

@@ -20,10 +20,6 @@
 namespace elona
 {
 
-
-GodDB the_god_db;
-
-
 void txtgod(const GodId& id, int type)
 {
     if (id.empty())
@@ -684,7 +680,5 @@ TurnResult do_pray()
     }
     return TurnResult::turn_end;
 }
-
-
 
 } // namespace elona

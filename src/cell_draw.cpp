@@ -6,6 +6,7 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "item.hpp"
+#include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
