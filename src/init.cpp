@@ -359,7 +359,6 @@ void initialize_cat_db()
     cat::global.register_function(u8"cbitmod", cat_cbitmod);
 
     the_buff_db.initialize();
-    the_class_db.initialize();
 }
 
 void initialize_lua()

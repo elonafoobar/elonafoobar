@@ -15,14 +15,14 @@ static void _load_class_list()
 {
 
     listmax = 0;
-    for (const auto& class_ : the_class_db.get_available_classes(false))
+    for (const auto& class_ : class_get_available(false))
     {
         listn(1, listmax) = class_.get().id;
         ++listmax;
     }
     if (Config::instance().extraclass)
     {
-        for (const auto& class_ : the_class_db.get_available_classes(true))
+        for (const auto& class_ : class_get_available(true))
         {
             listn(1, listmax) = class_.get().id;
             ++listmax;

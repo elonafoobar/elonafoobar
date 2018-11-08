@@ -1,6 +1,5 @@
 #include "class.hpp"
 #include "ability.hpp"
-#include "cat.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "variables.hpp"
@@ -9,8 +8,6 @@
 namespace elona
 {
 
-
-ClassDB the_class_db;
 int cequipment = 0;
 
 
@@ -52,63 +49,24 @@ int access_class_info(int dbmode, const std::string& dbidn)
 }
 
 
-void ClassDB::define(lua_State* L)
-{
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw std::runtime_error(u8"Error: fail to load class data");
 
-    ELONA_CAT_DB_FIELD_INTEGER(ordering, 0);
-    ELONA_CAT_DB_FIELD_BOOLEAN(is_extra, true);
-    ELONA_CAT_DB_FIELD_INTEGER(item_type, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(equipment_type, 0);
-
-    std::unordered_map<int, int> skills;
-    lua_getfield(L, -1, u8"skills");
-    if (!lua_isnil(L, -1))
-    {
-        lua_pushnil(L);
-        while (lua_next(L, -2))
-        {
-            int k = std::stoi(luaL_checkstring(L, -2) + 1);
-            int v = luaL_checkinteger(L, -1);
-            skills.emplace(k, v);
-            lua_pop(L, 1);
-        }
-    }
-    lua_pop(L, 1);
-
-    storage.emplace(
-        id,
-        ClassData{
-            id,
-            ordering,
-            is_extra,
-            item_type,
-            equipment_type,
-            skills,
-        });
-}
-
-
-
-std::vector<std::reference_wrapper<const ClassData>>
-ClassDB::get_available_classes(bool is_extra_class) const
+std::vector<std::reference_wrapper<const ClassData>> class_get_available(
+    bool is_extra_class)
 {
     std::vector<std::reference_wrapper<const ClassData>> ret;
-    for (const auto& pair : storage)
+
+    for (const auto& class_ : the_class_db)
     {
-        if (pair.second.is_extra == is_extra_class)
+        if (class_.is_extra == is_extra_class)
         {
-            ret.emplace_back(pair.second);
+            ret.emplace_back(class_);
         }
     }
     range::sort(ret, [](const auto& a, const auto& b) {
         return a.get().ordering < b.get().ordering;
     });
+
     return ret;
 }
-
-
 
 } // namespace elona
