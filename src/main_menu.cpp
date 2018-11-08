@@ -119,27 +119,11 @@ MainMenuResult main_title_menu()
         {
             snail::Input::instance().disable_numlock();
         }
-        tx += (rnd(10) + 2) * p(1);
-        ty += (rnd(10) + 2) * p(2);
-        if (rnd(10) == 0)
-        {
-            tx = rnd(800);
-            ty = rnd(600);
-            p(1) = rnd(9) - 4;
-            p(2) = rnd(9) - 4;
-        }
-        f = 0;
-        if (tx > 40 && tx < 500 && ty > 100 && ty < 450)
-        {
-            f = 1;
-        }
-        if (f == 0)
-        {
-            if (rnd(10) == 0)
-            {
-                f = 2;
-            }
-        }
+
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
         cs_listbk();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
