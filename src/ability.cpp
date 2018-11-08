@@ -18,8 +18,6 @@ using namespace elona;
 namespace
 {
 
-
-
 int increase_potential(int potential, int level_delta)
 {
     for (int i = 0; i < level_delta; ++i)
@@ -54,8 +52,6 @@ void set_ability(
     sdata.get(id, cc.index).potential = potential;
 }
 
-
-
 } // namespace
 
 
@@ -63,34 +59,8 @@ void set_ability(
 namespace elona
 {
 
-
-AbilityDB the_ability_db;
 SkillData sdata;
 
-
-void AbilityDB::define(lua_State* L)
-{
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw std::runtime_error(u8"Error: fail to load ability data");
-
-    ELONA_CAT_DB_FIELD_INTEGER(related_basic_attribute, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(ability_type, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(cost, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(range, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(difficulty, 0);
-
-    storage.emplace(
-        std::stoi(id), // TODO
-        AbilityData{
-            std::stoi(id),
-            related_basic_attribute,
-            ability_type,
-            cost,
-            range,
-            difficulty,
-        });
-}
 
 
 SkillData::SkillData()

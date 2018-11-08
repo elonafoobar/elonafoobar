@@ -1,59 +1,13 @@
 #pragma once
 
 #include <cassert>
-#include <memory>
-#include <unordered_map>
 #include <vector>
-#include "cat.hpp"
+#include "data/types/type_ability.hpp"
+
 
 
 namespace elona
 {
-
-
-
-struct AbilityData
-{
-    int id;
-    int related_basic_attribute;
-    int sdataref1;
-    int cost;
-    int sdataref3;
-    int sdataref4;
-};
-
-
-class AbilityDB;
-
-
-namespace cat
-{
-
-template <>
-struct CatDBTraits<AbilityDB>
-{
-    using IdType = int;
-    using DataType = AbilityData;
-    static constexpr const char* filename = u8"ability.lua";
-    static constexpr const char* table_name = u8"ability";
-};
-
-} // namespace cat
-
-
-
-class AbilityDB : public cat::CatDB<AbilityDB>
-{
-public:
-    AbilityDB() = default;
-
-    void define(lua_State* L);
-};
-
-
-extern AbilityDB the_ability_db;
-
-
 
 struct Ability
 {
@@ -145,6 +99,5 @@ void gain_fishing_experience(int cc);
 void gain_memorization_experience(int cc);
 void gain_crafting_experience(int skill, int mat_amount);
 void gain_disarm_trap_experience();
-
 
 } // namespace elona

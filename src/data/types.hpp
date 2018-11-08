@@ -1,4 +1,5 @@
 #pragma once
+#include "types/type_ability.hpp"
 #include "types/type_chara_chip.hpp"
 #include "types/type_character.hpp"
 #include "types/type_fish.hpp"

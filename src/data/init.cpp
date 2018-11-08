@@ -30,6 +30,9 @@ void _initialize_iterable_dbs(lua::DataTable& data)
 
     the_fish_db.initialize(data);
     the_fish_db.load_all();
+
+    the_ability_db.initialize(data);
+    the_ability_db.load_all();
 }
 
 
