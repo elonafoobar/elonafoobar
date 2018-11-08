@@ -1390,7 +1390,7 @@ label_2181_internal:
         get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 1142:
-        if (cdatan(2, tc) == u8"snail"s)
+        if (cdatan(2, tc) == u8"core.snail"s)
         {
             if (is_in_fov(cdata[tc]))
             {

@@ -610,50 +610,50 @@ void clear_trait_data()
 
 void gain_race_feat()
 {
-    if (cdatan(2, 0) == u8"dwarf"s)
+    if (cdatan(2, 0) == u8"core.dwarf"s)
     {
         trait(152) = 2;
         trait(155) = 1;
     }
-    if (cdatan(2, 0) == u8"elea"s)
+    if (cdatan(2, 0) == u8"core.elea"s)
     {
         trait(168) = 1;
         trait(156) = 1;
     }
-    if (cdatan(2, 0) == u8"eulderna"s)
+    if (cdatan(2, 0) == u8"core.eulderna"s)
     {
         trait(153) = 1;
     }
-    if (cdatan(2, 0) == u8"lich"s)
+    if (cdatan(2, 0) == u8"core.lich"s)
     {
         trait(151) = 1;
         trait(155) = 2;
         trait(152) = 1;
     }
-    if (cdatan(2, 0) == u8"golem"s)
+    if (cdatan(2, 0) == u8"core.golem"s)
     {
         trait(157) = 1;
         trait(152) = 2;
     }
-    if (cdatan(2, 0) == u8"yerles"s)
+    if (cdatan(2, 0) == u8"core.yerles"s)
     {
         trait(154) = 1;
     }
-    if (cdatan(2, 0) == u8"juere"s)
+    if (cdatan(2, 0) == u8"core.juere"s)
     {
         trait(158) = 1;
         trait(159) = 1;
     }
-    if (cdatan(2, 0) == u8"goblin"s)
+    if (cdatan(2, 0) == u8"core.goblin"s)
     {
         trait(155) = 1;
         trait(159) = 1;
     }
-    if (cdatan(2, 0) == u8"mutant"s)
+    if (cdatan(2, 0) == u8"core.mutant"s)
     {
         trait(0) = 1;
     }
-    if (cdatan(2, 0) == u8"fairy"s)
+    if (cdatan(2, 0) == u8"core.fairy"s)
     {
         trait(160) = 1;
         trait(161) = 1;
@@ -6523,9 +6523,13 @@ void dump_player_info()
         + calcage(0) + u8"歳"s + u8"  "s + cdata.player().height + u8"cm"s
         + u8" "s + cdata.player().weight + u8"kg"s);
     noteadd(""s);
+    auto race_id_without_prefix = cdatan(2, 0);
+    strutil::try_remove_prefix(race_id_without_prefix, "core.");
     noteadd(
         fixtxt(
-            u8"種族       : "s + i18n::_(u8"race", cdatan(2, 0), u8"name"), 30)
+            u8"種族       : "s
+                + i18n::_(u8"race", race_id_without_prefix, u8"name"),
+            30)
         + fixtxt(
               (u8"信仰      : "s
                + i18n::_(u8"god", cdata.player().god_id, u8"name")),
@@ -6702,12 +6706,15 @@ void dump_player_info()
             continue;
         }
         access_class_info(2, cdatan(3, cnt));
+        auto race_id_without_prefix = cdatan(2, cnt);
+        strutil::try_remove_prefix(race_id_without_prefix, "core.");
         noteadd(
             cdatan(0, cnt) + u8" "s
-            + i18n::_(u8"race", cdatan(2, cnt), u8"name") + u8"の"s + classname
-            + u8" "s + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[cnt].sex)
-            + u8" "s + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height
-            + u8"cm"s + u8" "s + cdata[cnt].weight + u8"kg"s);
+            + i18n::_(u8"race", race_id_without_prefix, u8"name") + u8"の"s
+            + classname + u8" "s
+            + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[cnt].sex) + u8" "s
+            + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height + u8"cm"s
+            + u8" "s + cdata[cnt].weight + u8"kg"s);
         s = u8"レベル "s + cdata[cnt].level + u8" "s;
         if (cdata[cnt].is_married() == 1)
         {
@@ -6931,8 +6938,67 @@ void update_save_data(const fs::path& save_dir, int serial_id)
             putit::BinaryOArchive ar{out};
             ar.save(is_autodig_enabled);
         }
+        break;
     }
-    break;
+    case 1:
+    {
+        for (const auto& entry : filesystem::dir_entries(
+                 save_dir,
+                 filesystem::DirEntryRange::Type::file,
+                 std::regex{u8R"(cdatan.*\.s[12])"}))
+        {
+            std::vector<std::string> lines;
+            range::copy(
+                fileutil::read_by_line(entry.path()),
+                std::back_inserter(lines));
+
+            // Read cdatan.
+            std::vector<std::vector<std::string>> cdatan_;
+            size_t idx{};
+            for (const auto& line : lines)
+            {
+                const auto i = idx / 10;
+                const auto j = idx % 10;
+                if (j == 0)
+                {
+                    cdatan_.emplace_back(10);
+                }
+                cdatan_.at(i).at(j) = line;
+                ++idx;
+            }
+
+            // Prepend "core." prefix to the old race ID.
+            for (auto&& chara : cdatan_)
+            {
+                const auto old_race_id = chara.at(2);
+                if (!old_race_id.empty()
+                    && !strutil::starts_with(old_race_id, "core."))
+                {
+                    ELONA_LOG(
+                        "[Save data] Prepend \"core\" prefix to "
+                        << chara.at(0) << ": " << old_race_id);
+                    chara.at(2) = "core." + old_race_id;
+                }
+            }
+
+            std::ofstream out{entry.path().native(), std::ios::binary};
+            if (!out)
+            {
+                throw std::runtime_error(
+                    u8"Error: fail to write "
+                    + filesystem::make_preferred_path_in_utf8(entry.path()));
+            }
+
+            for (const auto& chara : cdatan_)
+            {
+                for (const auto& line : chara)
+                {
+                    out << line << std::endl;
+                }
+            }
+        }
+        break;
+    }
     default: break;
     }
 }
@@ -6949,6 +7015,9 @@ void update_save_data(const fs::path& save_dir)
          serial_id != latest_version.serial_id;
          ++serial_id)
     {
+        ELONA_LOG(
+            "[Save data] Update save data from #" << serial_id << " to #"
+                                                  << (serial_id + 1) << ".");
         update_save_data(save_dir, serial_id);
     }
     version = latest_version;

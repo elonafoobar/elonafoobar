@@ -300,7 +300,7 @@ bool mef_proc_from_movement(int cc)
     }
     if (mef(0, i) == 1)
     {
-        if (cdatan(2, cc) != u8"spider"s)
+        if (cdatan(2, cc) != u8"core.spider"s)
         {
             if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
                 || cdata[cc].weight > 100)

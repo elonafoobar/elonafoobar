@@ -336,7 +336,7 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
     }
     else if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
     {
-        _s = u8"   "s + cbreeder(chara.index);
+        _s = u8"   "s + chara_breed_power(chara);
     }
 
     return _s;

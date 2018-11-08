@@ -31,9 +31,9 @@ std::vector<std::reference_wrapper<const RaceData>> race_get_available(
 
 
 
-int access_race_info(int dbmode, const std::string& dbidn)
+int access_race_info(int dbmode, const std::string& race_id)
 {
-    auto data = the_race_db[dbidn];
+    auto data = the_race_db[race_id];
     if (!data)
         return 0;
 
@@ -41,14 +41,19 @@ int access_race_info(int dbmode, const std::string& dbidn)
     {
     case 3: break;
     case 11:
-        buff = i18n::_(u8"race", dbidn, u8"description");
+    {
+        // TODO: work around; remove "core." prefix from fully-qualified ID.
+        auto race_id_without_prefix = race_id;
+        strutil::try_remove_prefix(race_id_without_prefix, "core.");
+        buff = i18n::_(u8"race", race_id_without_prefix, u8"description");
         ref1 = data->male_image;
         ref2 = data->female_image;
         return 0;
+    }
     default: assert(0);
     }
 
-    cdatan(2, rc) = dbidn;
+    cdatan(2, rc) = race_id;
     cdata[rc].melee_attack_type = data->melee_attack_type;
     cdata[rc].special_attack_type = data->special_attack_type;
     cdata[rc].dv_correction_value = data->dv_multiplier;

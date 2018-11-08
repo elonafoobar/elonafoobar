@@ -19,6 +19,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "quest.hpp"
+#include "race.hpp"
 #include "random.hpp"
 #include "range.hpp"
 #include "trait.hpp"
@@ -2029,6 +2030,15 @@ int chara_armor_class(const Character& cc)
     {
         return 171;
     }
+}
+
+
+
+int chara_breed_power(const Character& chara)
+{
+    const auto breed_power_base =
+        the_race_db[cdatan(2, chara.index)]->breed_power;
+    return breed_power_base * 100 / (100 + chara.level * 5);
 }
 
 
