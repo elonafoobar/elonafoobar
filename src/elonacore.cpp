@@ -29,7 +29,6 @@
 #include "equipment.hpp"
 #include "event.hpp"
 #include "filesystem.hpp"
-#include "fish.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"

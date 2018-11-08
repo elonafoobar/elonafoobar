@@ -362,7 +362,6 @@ void initialize_cat_db()
     the_ability_db.initialize();
     the_buff_db.initialize();
     the_class_db.initialize();
-    the_fish_db.initialize();
     the_item_material_db.initialize();
     the_race_db.initialize();
 }

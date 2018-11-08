@@ -1,46 +1,49 @@
 #include "fish.hpp"
-#include <string>
-#include "cat.hpp"
-
-using namespace elona;
+#include "character.hpp"
+#include "i18n.hpp"
+#include "item.hpp"
+#include "itemgen.hpp"
+#include "message.hpp"
+#include "variables.hpp"
 
 
 
 namespace elona
 {
 
-
-FishDB the_fish_db;
-
-
-void FishDB::define(lua_State* L)
+void fish_get(int legacy_fish_id)
 {
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw std::runtime_error(u8"Error: fail to load fish data");
-
-    ELONA_CAT_DB_FIELD_BOOLEAN(no_generate, false);
-    ELONA_CAT_DB_FIELD_INTEGER(rank, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(rarity, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(difficulty, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(weight, 1);
-    ELONA_CAT_DB_FIELD_INTEGER(value, 1);
-    ELONA_CAT_DB_FIELD_INTEGER(item_id, 618);
-
-    storage.emplace(
-        std::stoi(id), // TODO
-        FishData{
-            std::stoi(id),
-            no_generate,
-            rank,
-            rarity,
-            difficulty,
-            weight,
-            value,
-            item_id,
-        });
+    flt();
+    itemcreate(0, the_fish_db[legacy_fish_id]->item_id, -1, -1, 0);
+    inv[ci].subname = legacy_fish_id;
+    inv[ci].value = the_fish_db[legacy_fish_id]->value;
+    inv[ci].weight = the_fish_db[legacy_fish_id]->weight;
+    txt(i18n::s.get("core.locale.activity.fishing.get", inv[ci]));
+    item_stack(0, ci, 1);
 }
 
 
+
+int fish_select_at_random()
+{
+    const auto bait = inv[cdata.player().continuous_action.item].param4;
+    WeightedRandomSampler<int> sampler;
+    for (const auto& fish : the_fish_db)
+    {
+        if (fish.no_generate)
+        {
+            continue;
+        }
+        const auto bait_rank =
+            clamp(bait + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
+        if (fish.rank != bait_rank)
+        {
+            continue;
+        }
+        sampler.add(fish.id, fish.rarity);
+    }
+
+    return sampler.get().get_value_or(1);
+}
 
 } // namespace elona

@@ -21,8 +21,6 @@ void continuous_action_eating();
 void continuous_action_eating_finish();
 void continuous_action_others();
 
-void select_random_fish();
-void get_fish();
 int search_material_spot();
 void spot_fishing();
 void spot_material();
