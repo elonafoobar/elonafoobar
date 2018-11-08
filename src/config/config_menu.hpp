@@ -46,6 +46,7 @@ public:
 };
 
 
+
 class ConfigMenuItemYesNo : public ConfigMenuItemBase
 {
 public:
@@ -88,6 +89,7 @@ public:
 };
 
 
+
 class ConfigMenuItemInfo : public ConfigMenuItemBase
 {
 public:
@@ -109,6 +111,7 @@ public:
         return info;
     }
 };
+
 
 
 class ConfigMenuItemInteger : public ConfigMenuItemBase
@@ -147,6 +150,7 @@ public:
 
     virtual ~ConfigMenuItemInteger() noexcept = default;
 };
+
 
 
 class ConfigMenuItemChoice : public ConfigMenuItemBase
@@ -250,6 +254,8 @@ public:
     virtual ~ConfigMenuItemChoice() noexcept = default;
 };
 
+
+
 class ConfigMenu
 {
 public:
@@ -265,6 +271,8 @@ public:
     {
     }
 
+    virtual ~ConfigMenu() = default;
+
     virtual void draw() const
     {
     }
@@ -276,6 +284,8 @@ public:
     }
 };
 
+
+
 class ConfigMenuSubmenu : public ConfigMenu
 {
 public:
@@ -283,6 +293,8 @@ public:
         : ConfigMenu(title, width, height)
     {
     }
+
+    virtual ~ConfigMenuSubmenu() = default;
 
     void draw() const override
     {
@@ -292,6 +304,8 @@ public:
     }
 };
 
+
+
 class ConfigMenuKeybindings : public ConfigMenu
 {
 public:
@@ -299,6 +313,8 @@ public:
         : ConfigMenu("Keybindings", 100, 100)
     {
     }
+
+    virtual ~ConfigMenuKeybindings() = default;
 
     optional<int> query(int submenu) override
     {

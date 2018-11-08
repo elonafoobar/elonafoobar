@@ -80,14 +80,14 @@ static bool _should_show_entry(int item_id, int _prodtype)
     return true;
 }
 
-static void _populate_recipe_list(int _invctrl)
+static void _populate_recipe_list(int _invctrl, int _prodtype)
 {
     if (_invctrl == 0)
     {
         for (int item_id = 0, cnt_end = (maxitemid); item_id < cnt_end;
              ++item_id)
         {
-            if (_should_show_entry(item_id, prodtype))
+            if (_should_show_entry(item_id, _prodtype))
             {
                 listn(0, listmax) = ""s + _can_produce_item(item_id);
                 list(0, listmax) = item_id;
@@ -119,7 +119,7 @@ bool UIMenuCrafting::init()
     page_load();
     windowshadow = 1;
 
-    _populate_recipe_list(_invctrl);
+    _populate_recipe_list(_invctrl, _prodtype);
 
     return true;
 }

@@ -121,6 +121,8 @@ optional<Keybind> Keybind::from_string(std::string str)
 
 bool keybind_is_joystick_key(snail::Key key)
 {
+    // Currently joystick controller is not supported.
+    (void)key;
     return false;
 }
 

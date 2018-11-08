@@ -216,6 +216,7 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
     reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    (void)handle_mgr;
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
 
     SECTION("Characters")
@@ -314,6 +315,7 @@ TEST_CASE(
     reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    (void)handle_mgr;
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
 
     {
