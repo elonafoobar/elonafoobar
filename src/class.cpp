@@ -12,33 +12,37 @@ int cequipment = 0;
 
 
 
-int access_class_info(int dbmode, const std::string& dbidn)
+int access_class_info(int dbmode, const std::string& class_id)
 {
-    if (dbidn.empty())
+    if (class_id.empty())
     {
         classname = u8"なし";
         cequipment = 0;
         return 0;
     }
 
-    const auto data = the_class_db[dbidn];
+    const auto data = the_class_db[class_id];
     if (!data)
         return 0;
 
+    auto class_id_without_prefix = class_id;
+    strutil::try_remove_prefix(class_id_without_prefix, "core.");
     switch (dbmode)
     {
-    case 2: classname = i18n::_(u8"class", dbidn, u8"name"); return 0;
+    case 2:
+        classname = i18n::_(u8"class", class_id_without_prefix, u8"name");
+        return 0;
     case 9: return data->is_extra;
     case 11:
-        classname = i18n::_(u8"class", dbidn, u8"name");
-        buff = i18n::_(u8"class", dbidn, u8"description");
+        classname = i18n::_(u8"class", class_id_without_prefix, u8"name");
+        buff = i18n::_(u8"class", class_id_without_prefix, u8"description");
         return 0;
     case 16: return data->item_type;
     case 3: break;
     default: assert(0);
     }
 
-    cdatan(3, rc) = dbidn;
+    cdatan(3, rc) = class_id;
     cequipment = data->equipment_type;
     for (const auto& pair : data->skills)
     {

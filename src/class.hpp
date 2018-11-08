@@ -11,6 +11,6 @@ namespace elona
 extern int cequipment;
 std::vector<std::reference_wrapper<const ClassData>> class_get_available(
     bool is_extra_class);
-int access_class_info(int dbmode, const std::string& dbidn);
+int access_class_info(int dbmode, const std::string& class_id);
 
 } // namespace elona
