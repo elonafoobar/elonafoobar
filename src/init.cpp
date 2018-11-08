@@ -360,7 +360,6 @@ void initialize_cat_db()
 
     the_buff_db.initialize();
     the_class_db.initialize();
-    the_race_db.initialize();
 }
 
 void initialize_lua()

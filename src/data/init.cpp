@@ -36,6 +36,9 @@ void _initialize_iterable_dbs(lua::DataTable& data)
 
     the_item_material_db.initialize(data);
     the_item_material_db.load_all();
+
+    the_race_db.initialize(data);
+    the_race_db.load_all();
 }
 
 

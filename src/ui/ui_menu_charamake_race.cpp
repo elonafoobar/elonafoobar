@@ -14,7 +14,7 @@ namespace ui
 static void _load_race_list()
 {
     listmax = 0;
-    for (const auto& race : the_race_db.get_available_races(false))
+    for (const auto& race : race_get_available(false))
     {
         listn(1, listmax) = race.get().id;
         list(0, listmax) = 0;
@@ -22,7 +22,7 @@ static void _load_race_list()
     }
     if (Config::instance().extrarace)
     {
-        for (const auto& race : the_race_db.get_available_races(true))
+        for (const auto& race : race_get_available(true))
         {
             listn(1, listmax) = race.get().id;
             list(0, listmax) = 1;
