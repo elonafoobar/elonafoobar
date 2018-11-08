@@ -101,7 +101,6 @@ set(CORE_SOURCES
   src/fov.cpp
   src/gdata.cpp
   src/get_card_info.cpp
-  src/get_random_item_id.cpp
   src/get_random_npc_id.cpp
   src/god.cpp
   src/i18n.cpp
