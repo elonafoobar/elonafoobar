@@ -376,6 +376,16 @@ DOC
 Size adjustment for certain pieces of text.
 DOC
                 }
+                quality {
+                    name = "Rendering Quality"
+                    doc = <<DOC
+Text rendering quality. High is beautiful, but slow. Low is cheap, but fast.
+DOC
+                    variants {
+                        low = "Low"
+                        high = "High"
+                    }
+                }
             }
 
             message {

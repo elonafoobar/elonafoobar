@@ -39,7 +39,7 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 }
 
 
-static void write_default_config(const fs::path& location)
+void write_default_config(const fs::path& location)
 {
     std::ofstream out{location.native(), std::ios::binary};
     hcl::Object object;
@@ -53,7 +53,7 @@ static void write_default_config(const fs::path& location)
  * Initializes the list of available display modes. To be called after
  * the application has been initialized by calling title().
  */
-static void inject_display_modes(Config& conf)
+void inject_display_modes(Config& conf)
 {
     const auto display_modes =
         snail::Application::instance().get_display_modes();
@@ -108,7 +108,7 @@ static void inject_display_modes(Config& conf)
 /***
  * Initializes the list of save files that can be chosen at startup.
  */
-static void inject_save_files(Config& conf)
+void inject_save_files(Config& conf)
 {
     std::vector<std::string> saves;
     saves.push_back("");
@@ -133,7 +133,7 @@ static void inject_save_files(Config& conf)
  *
  * TODO: Support mods which add their own languages.
  */
-static void inject_languages(Config& conf)
+void inject_languages(Config& conf)
 {
     std::vector<std::string> locales;
     bool has_jp = false;
@@ -170,7 +170,9 @@ static void inject_languages(Config& conf)
         "core.config.language.language", locales, spec::unknown_enum_variant);
 }
 
-static std::map<std::string, snail::android::Orientation> orientations = {
+
+
+std::map<std::string, snail::android::Orientation> orientations = {
     {"sensor_landscape", snail::android::Orientation::sensor_landscape},
     {"sensor_portait", snail::android::Orientation::sensor_portrait},
     {"sensor", snail::android::Orientation::sensor},
@@ -179,7 +181,9 @@ static std::map<std::string, snail::android::Orientation> orientations = {
     {"reverse_landscape", snail::android::Orientation::reverse_landscape},
     {"reverse_portrait", snail::android::Orientation::reverse_portrait}};
 
-static void convert_and_set_requested_orientation(std::string variant)
+
+
+void convert_and_set_requested_orientation(std::string variant)
 {
     auto it = orientations.find(variant);
     if (it == orientations.end())
@@ -188,19 +192,46 @@ static void convert_and_set_requested_orientation(std::string variant)
     snail::android::set_requested_orientation(it->second);
 }
 
-static void set_touch_quick_action_transparency(int factor)
+
+
+void convert_and_set_requested_font_quality(std::string variant)
+{
+    if (variant == "low")
+    {
+        snail::Application::instance()
+            .get_renderer()
+            .disable_blended_text_rendering();
+    }
+    else
+    {
+        if (variant != "high")
+        {
+            // Unknown font quality; fallback to the default value, "high".
+            ELONA_LOG(
+                "[Config] Warning: Unsupported font quality: " << variant);
+        }
+        snail::Application::instance()
+            .get_renderer()
+            .enable_blended_text_rendering();
+    }
+}
+
+
+
+void set_touch_quick_action_transparency(int factor)
 {
     float amount = (float)factor * 0.05f;
     snail::TouchInput::instance().set_quick_action_transparency(amount);
 }
 
-static void set_touch_quick_action_size(int factor)
+
+
+void set_touch_quick_action_size(int factor)
 {
     float size = (float)factor * 0.025f;
     snail::TouchInput::instance().set_base_quick_action_size(size);
     snail::TouchInput::instance().initialize_quick_actions();
 }
-
 
 } // namespace
 
@@ -346,6 +377,9 @@ void load_config(const fs::path& hcl_file)
     conf.bind_setter<bool>("core.config.foobar.show_fps", [](bool) {
         lib::g_fps_counter.clear();
     });
+
+    conf.bind_setter<std::string>(
+        "core.config.font.quality", &convert_and_set_requested_font_quality);
 
     std::ifstream ifs{
         filesystem::make_preferred_path_in_utf8(hcl_file.native())};

@@ -83,6 +83,9 @@ config {
 
             vertical_offset = -1 # fontVfix1
             size_adjustment = 1 # fontSfix1
+
+            # Font quality. "low" or "high" is available.
+            quality = "high"
         }
 
         game {

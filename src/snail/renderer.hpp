@@ -92,6 +92,18 @@ public:
     }
 
 
+    void enable_blended_text_rendering()
+    {
+        _blended_text_rendering = true;
+    }
+
+
+    void disable_blended_text_rendering()
+    {
+        _blended_text_rendering = false;
+    }
+
+
     BlendMode blend_mode() const noexcept
     {
         return _blend_mode;
@@ -210,6 +222,7 @@ private:
     TextBaseline _text_baseline = TextBaseline::top;
     Font _font;
     BlendMode _blend_mode = BlendMode::blend;
+    bool _blended_text_rendering;
 };
 
 

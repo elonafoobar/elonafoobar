@@ -243,6 +243,11 @@ config def {
                 min = -5
                 max = 5
             }
+            quality = {
+                type = "enum"
+                default = "high"
+                variants = ["low", "high"]
+            }
         }
     }
 
