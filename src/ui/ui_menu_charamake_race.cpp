@@ -14,7 +14,7 @@ namespace ui
 static void _load_race_list()
 {
     listmax = 0;
-    for (const auto& race : the_race_db.get_available_races(false))
+    for (const auto& race : race_get_available(false))
     {
         listn(1, listmax) = race.get().id;
         list(0, listmax) = 0;
@@ -22,7 +22,7 @@ static void _load_race_list()
     }
     if (Config::instance().extrarace)
     {
-        for (const auto& race : the_race_db.get_available_races(true))
+        for (const auto& race : race_get_available(true))
         {
             listn(1, listmax) = race.get().id;
             list(0, listmax) = 1;
@@ -31,7 +31,10 @@ static void _load_race_list()
     }
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
-        listn(0, cnt) = i18n::_(u8"race", listn(1, cnt), u8"name");
+        // TODO: work around; remove "core." prefix;
+        auto race_id_without_prefix = listn(1, cnt);
+        strutil::try_remove_prefix(race_id_without_prefix, "core.");
+        listn(0, cnt) = i18n::_(u8"race", race_id_without_prefix, u8"name");
         if (list(0, cnt) == 1)
         {
             listn(0, cnt) = u8"(extra)"s + listn(0, cnt);

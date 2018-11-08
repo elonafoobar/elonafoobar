@@ -731,10 +731,6 @@ int create_card(int = 0, int = 0);
 int putcard(int = 0, int = 0);
 
 
-//// Ranch
-int cbreeder(int = 0);
-
-
 //// Init
 void initialize_pc_character();
 int initialize_world_map();

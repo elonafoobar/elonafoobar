@@ -1,0 +1,39 @@
+#pragma once
+#include "../lua_lazy_cache.hpp"
+
+
+
+namespace elona
+{
+
+struct RaceData
+{
+    std::string id;
+    bool is_extra;
+    int ordering;
+    int male_image;
+    int female_image;
+    int breed_power;
+    int min_age;
+    int max_age;
+    int height;
+    int male_ratio;
+    bool is_made_of_rock;
+    int melee_attack_type;
+    int special_attack_type;
+    int dv_multiplier;
+    int pv_multiplier;
+    std::vector<int> body_parts;
+    std::unordered_map<int, int> skills;
+    std::unordered_map<int, int> resistances;
+};
+
+
+
+ELONA_DEFINE_LUA_DB(RaceDB, RaceData, false, "core.race")
+
+
+
+extern RaceDB the_race_db;
+
+} // namespace elona

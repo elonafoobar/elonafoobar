@@ -666,7 +666,7 @@ TurnResult ai_proc_misc_map_events()
     {
         if (is_in_fov(cdata[cc]))
         {
-            if (cdatan(2, cc) == u8"cat"s)
+            if (cdatan(2, cc) == u8"core.cat"s)
             {
                 if (cdata[cc].drunk < 5)
                 {
@@ -962,7 +962,7 @@ label_2692_internal:
                     cdata[cc].position.y);
                 if (distance < 8)
                 {
-                    if (cdatan(2, 0) == u8"snail"s)
+                    if (cdatan(2, 0) == u8"core.snail"s)
                     {
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;

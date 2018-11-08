@@ -20,7 +20,6 @@
 #include "map_cell.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "race.hpp"
 #include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -1407,18 +1406,6 @@ void calc_home_rank()
 
 
 
-int cbreeder(int prm_984)
-{
-    std::string s_at_m173;
-    int p_at_m173 = 0;
-    s_at_m173 = chara_refstr(cdata[prm_984].id, 8);
-    p_at_m173 = the_race_db[cdatan(2, prm_984)]->breed_power;
-    p_at_m173 = p_at_m173 * 100 / (100 + cdata[prm_984].level * 5);
-    return p_at_m173;
-}
-
-
-
 void update_ranch()
 {
     worker = getworker(game_data.current_map);
@@ -1442,7 +1429,8 @@ void update_ranch()
             goto label_1734_internal;
         }
         if (rnd(5000)
-            > cbreeder(worker) * 100 / (100 + livestock * 20) - livestock * 2)
+            > chara_breed_power(cdata[worker]) * 100 / (100 + livestock * 20)
+                - livestock * 2)
         {
             if (livestock != 0 || rnd(30) != 0)
             {
@@ -1533,7 +1521,7 @@ void update_ranch()
                 {
                     f = 1;
                 }
-                if (cdatan(2, cnt.index) == u8"chicken"s)
+                if (cdatan(2, cnt.index) == u8"core.chicken"s)
                 {
                     if (rnd(20) == 0)
                     {
@@ -1560,7 +1548,7 @@ void update_ranch()
                 {
                     f = 1;
                 }
-                if (cdatan(2, cnt.index) == u8"sheep"s)
+                if (cdatan(2, cnt.index) == u8"core.sheep"s)
                 {
                     if (rnd(20) == 0)
                     {

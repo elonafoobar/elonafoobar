@@ -868,11 +868,11 @@ void proc_event()
                 flt(100, calcfixlv(Quality::good));
                 if (rnd(4))
                 {
-                    fltnrace = u8"dragon"s;
+                    fltnrace = u8"core.dragon"s;
                 }
                 else
                 {
-                    fltnrace = u8"giant"s;
+                    fltnrace = u8"core.giant"s;
                 }
                 int stat = chara_create(-1, 0, x, y);
                 if (stat != 0)

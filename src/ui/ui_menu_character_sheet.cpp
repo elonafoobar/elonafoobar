@@ -500,7 +500,9 @@ static void _draw_first_page_text_name()
 {
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
-    s(2) = cnven(i18n::_(u8"race", cdatan(2, cc), u8"name"));
+    auto race_id_without_prefix = cdatan(2, cc);
+    strutil::try_remove_prefix(race_id_without_prefix, "core.");
+    s(2) = cnven(i18n::_(u8"race", race_id_without_prefix, u8"name"));
     access_class_info(2, cdatan(3, cc));
     s(4) = cnven(classname);
     if (cdata[cc].sex == 0)

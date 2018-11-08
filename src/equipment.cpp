@@ -360,7 +360,7 @@ void supply_initial_equipments()
     int fixeq = 0;
     int probeq = 0;
     int eqtwowield = 0;
-    if (cdatan(2, rc) == u8"mutant"s)
+    if (cdatan(2, rc) == u8"core.mutant"s)
     {
         for (int cnt = 0, cnt_end = cnt + clamp(cdata[rc].level / 3, 0, 12);
              cnt < cnt_end;

@@ -576,6 +576,7 @@ int chara_impression_level(int = 0);
 void chara_modify_impression(Character& cc, int delta);
 void chara_set_item_which_will_be_used(Character& cc);
 int chara_armor_class(const Character& cc);
+int chara_breed_power(const Character&);
 
 void initialize_character_filters();
 void chara_add_quality_parens();

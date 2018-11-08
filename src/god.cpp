@@ -480,7 +480,7 @@ TurnResult do_pray()
             {
                 if (cdata[cnt].state() != Character::State::empty)
                 {
-                    if (cdatan(2, cnt) == u8"servant"s)
+                    if (cdatan(2, cnt) == u8"core.servant"s)
                     {
                         ++p;
                         if (p >= 2)

@@ -12,109 +12,15 @@
 namespace elona
 {
 
-
-RaceDB the_race_db;
-
-
-void RaceDB::define(lua_State* L)
-{
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw std::runtime_error(u8"Error: fail to load race data");
-
-    ELONA_CAT_DB_FIELD_BOOLEAN(is_extra, true);
-    ELONA_CAT_DB_FIELD_INTEGER(ordering, 30000);
-    ELONA_CAT_DB_FIELD_INTEGER(male_image, 174);
-    ELONA_CAT_DB_FIELD_INTEGER(female_image, 174);
-    ELONA_CAT_DB_FIELD_INTEGER(breed_power, 500);
-    ELONA_CAT_DB_FIELD_INTEGER(min_age, 1);
-    ELONA_CAT_DB_FIELD_INTEGER(max_age, 1);
-    ELONA_CAT_DB_FIELD_INTEGER(height, 2);
-    ELONA_CAT_DB_FIELD_INTEGER(male_ratio, 50);
-    ELONA_CAT_DB_FIELD_BOOLEAN(is_made_of_rock, false);
-    ELONA_CAT_DB_FIELD_INTEGER(melee_attack_type, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(special_attack_type, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(dv_correction, 100);
-    ELONA_CAT_DB_FIELD_INTEGER(pv_correction, 100);
-
-    std::vector<int> body_parts;
-    lua_getfield(L, -1, u8"body_parts");
-    if (!lua_isnil(L, -1))
-    {
-        lua_pushnil(L);
-        while (lua_next(L, -2))
-        {
-            int v = luaL_checkinteger(L, -1);
-            body_parts.push_back(v);
-            lua_pop(L, 1);
-        }
-    }
-    lua_pop(L, 1);
-
-    std::unordered_map<int, int> skills;
-    lua_getfield(L, -1, u8"skills");
-    if (!lua_isnil(L, -1))
-    {
-        lua_pushnil(L);
-        while (lua_next(L, -2))
-        {
-            int k = std::stoi(luaL_checkstring(L, -2) + 1);
-            int v = luaL_checkinteger(L, -1);
-            skills.emplace(k, v);
-            lua_pop(L, 1);
-        }
-    }
-    lua_pop(L, 1);
-
-    std::unordered_map<int, int> resistances;
-    lua_getfield(L, -1, u8"resistances");
-    if (!lua_isnil(L, -1))
-    {
-        lua_pushnil(L);
-        while (lua_next(L, -2))
-        {
-            int k = std::stoi(luaL_checkstring(L, -2) + 1);
-            int v = luaL_checkinteger(L, -1);
-            resistances.emplace(k, v);
-            lua_pop(L, 1);
-        }
-    }
-    lua_pop(L, 1);
-
-    storage.emplace(
-        id,
-        RaceData{
-            id,
-            is_extra,
-            ordering,
-            male_image,
-            female_image,
-            breed_power,
-            min_age,
-            max_age,
-            height,
-            male_ratio,
-            is_made_of_rock,
-            melee_attack_type,
-            special_attack_type,
-            dv_correction,
-            pv_correction,
-            body_parts,
-            skills,
-            resistances,
-        });
-}
-
-
-std::vector<std::reference_wrapper<const RaceData>> RaceDB::get_available_races(
-    bool is_extra_race) const
+std::vector<std::reference_wrapper<const RaceData>> race_get_available(
+    bool is_extra_race)
 {
     std::vector<std::reference_wrapper<const RaceData>> ret;
-    for (const auto& pair : storage)
+    for (const auto& race : the_race_db)
     {
-        if (pair.second.is_extra == is_extra_race)
+        if (race.is_extra == is_extra_race)
         {
-            ret.emplace_back(pair.second);
+            ret.emplace_back(race);
         }
     }
     range::sort(ret, [](const auto& a, const auto& b) {
@@ -125,9 +31,9 @@ std::vector<std::reference_wrapper<const RaceData>> RaceDB::get_available_races(
 
 
 
-int access_race_info(int dbmode, const std::string& dbidn)
+int access_race_info(int dbmode, const std::string& race_id)
 {
-    auto data = the_race_db[dbidn];
+    auto data = the_race_db[race_id];
     if (!data)
         return 0;
 
@@ -135,18 +41,23 @@ int access_race_info(int dbmode, const std::string& dbidn)
     {
     case 3: break;
     case 11:
-        buff = i18n::_(u8"race", dbidn, u8"description");
+    {
+        // TODO: work around; remove "core." prefix from fully-qualified ID.
+        auto race_id_without_prefix = race_id;
+        strutil::try_remove_prefix(race_id_without_prefix, "core.");
+        buff = i18n::_(u8"race", race_id_without_prefix, u8"description");
         ref1 = data->male_image;
         ref2 = data->female_image;
         return 0;
+    }
     default: assert(0);
     }
 
-    cdatan(2, rc) = dbidn;
+    cdatan(2, rc) = race_id;
     cdata[rc].melee_attack_type = data->melee_attack_type;
     cdata[rc].special_attack_type = data->special_attack_type;
-    cdata[rc].dv_correction_value = data->dv_correction;
-    cdata[rc].pv_correction_value = data->pv_correction;
+    cdata[rc].dv_correction_value = data->dv_multiplier;
+    cdata[rc].pv_correction_value = data->pv_multiplier;
 
     cdata[rc].birth_year = game_data.date.year
         - (rnd(data->max_age - data->min_age + 1) + data->min_age);
@@ -204,7 +115,5 @@ int access_race_info(int dbmode, const std::string& dbidn)
 
     return 0;
 }
-
-
 
 } // namespace elona
