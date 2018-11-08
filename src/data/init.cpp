@@ -1,12 +1,12 @@
 #include <string>
 #include <vector>
-#include "../filesystem.hpp"
 #include "types.hpp"
 
-namespace elona
-{
+using namespace elona;
 
-namespace data
+
+
+namespace
 {
 
 // Certain lua data caches cannot currently use lazy loading, because they are
@@ -14,7 +14,7 @@ namespace data
 // entries would have to be loaded into the cache.
 // TODO: Determine the iterator type of sol::table, so it can be wrapped in the
 // Data cache.
-void initialize_iterable_dbs(lua::DataTable& data)
+void _initialize_iterable_dbs(lua::DataTable& data)
 {
     the_character_db.initialize(data);
     the_character_db.load_all();
@@ -24,10 +24,24 @@ void initialize_iterable_dbs(lua::DataTable& data)
 
     the_mapdef_db.initialize(data);
     the_mapdef_db.load_all();
+
+    the_trait_db.initialize(data);
+    the_trait_db.load_all();
+
+    the_fish_db.initialize(data);
+    the_fish_db.load_all();
+
+    the_ability_db.initialize(data);
+    the_ability_db.load_all();
+
+    the_item_material_db.initialize(data);
+    the_item_material_db.load_all();
 }
 
+
+
 // TODO: Make some way to load textures lazily during runtime.
-void initialize_chip_dbs(lua::DataTable& data)
+void _initialize_chip_dbs(lua::DataTable& data)
 {
     draw_clear_loaded_chips();
 
@@ -46,19 +60,29 @@ void initialize_chip_dbs(lua::DataTable& data)
     }
 }
 
-void initialize_lazy_dbs(lua::DataTable& data)
+
+
+void _initialize_lazy_dbs(lua::DataTable& data)
 {
     the_music_db.initialize(data);
     the_sound_db.initialize(data);
 }
 
+} // namespace
+
+
+
+namespace elona
+{
+namespace data
+{
+
 void initialize(lua::DataTable& data)
 {
-    initialize_iterable_dbs(data);
-    initialize_chip_dbs(data);
-    initialize_lazy_dbs(data);
+    _initialize_iterable_dbs(data);
+    _initialize_chip_dbs(data);
+    _initialize_lazy_dbs(data);
 }
 
 } // namespace data
-
 } // namespace elona

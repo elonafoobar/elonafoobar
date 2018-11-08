@@ -69,16 +69,16 @@ int magic()
         if (efid < 661)
         {
             f = 0;
-            if (the_ability_db[efid]->sdataref1 / 1000 == 1)
+            if (the_ability_db[efid]->ability_type / 1000 == 1)
             {
                 f = 1;
-                p = the_ability_db[efid]->sdataref1 % 1000;
+                p = the_ability_db[efid]->ability_type % 1000;
                 if (the_buff_db[p]->type == BuffData::Type::hex)
                 {
                     efbad = 1;
                 }
             }
-            if (the_ability_db[efid]->sdataref1 == 7)
+            if (the_ability_db[efid]->ability_type == 7)
             {
                 efbad = 1;
             }
@@ -192,7 +192,7 @@ int magic()
                 dice2 = dice2 * 4 / 5 + 1;
                 bonus = bonus * 4 / 5 + 1;
             }
-            switch (the_ability_db[efid]->sdataref1)
+            switch (the_ability_db[efid]->ability_type)
             {
             case 10:
                 RangedAttackAnimation(
@@ -212,7 +212,7 @@ int magic()
                 }
             }
                 {
-                    int distance = the_ability_db[efid]->sdataref3 % 1000 + 1;
+                    int distance = the_ability_db[efid]->range % 1000 + 1;
                     BoltAnimation(
                         cdata[cc].position, {tlocx, tlocy}, ele, distance)
                         .play();
@@ -231,7 +231,7 @@ int magic()
                         continue;
                     }
                     if (dist(dx, dy, cdata[cc].position.x, cdata[cc].position.y)
-                        > the_ability_db[efid]->sdataref3 % 1000 + 1)
+                        > the_ability_db[efid]->range % 1000 + 1)
                     {
                         break;
                     }
@@ -304,7 +304,7 @@ int magic()
                 }
             label_2177_internal:
                 cdata[cc].will_explode_soon() = false;
-                range_ = the_ability_db[efid]->sdataref3 % 1000 + 1;
+                range_ = the_ability_db[efid]->range % 1000 + 1;
                 if (debug::voldemort && cc == 0)
                 {
                     range_ *= 2;
@@ -3856,7 +3856,7 @@ label_2181_internal:
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                > the_ability_db[631]->sdataref3 % 1000 + 1)
+                > the_ability_db[631]->range % 1000 + 1)
             {
                 continue;
             }
@@ -3993,7 +3993,7 @@ label_2181_internal:
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                > the_ability_db[656]->sdataref3 % 1000 + 1)
+                > the_ability_db[656]->range % 1000 + 1)
             {
                 continue;
             }

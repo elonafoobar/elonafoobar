@@ -23,13 +23,13 @@ int randomele()
     p_at_m45 = rnd(11) + 50;
     if (p_at_m45 != 1)
     {
-        for (int cnt = 0, cnt_end = (the_ability_db[p_at_m45]->sdataref4);
+        for (int cnt = 0, cnt_end = (the_ability_db[p_at_m45]->difficulty);
              cnt < cnt_end;
              ++cnt)
         {
             i_at_m45 = rnd(11) + 50;
-            if (the_ability_db[i_at_m45]->sdataref4
-                < the_ability_db[p_at_m45]->sdataref4)
+            if (the_ability_db[i_at_m45]->difficulty
+                < the_ability_db[p_at_m45]->difficulty)
             {
                 if (rnd(2) == 0)
                 {

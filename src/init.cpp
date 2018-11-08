@@ -26,7 +26,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_material.hpp"
 #include "itemgen.hpp"
 #include "keybind/keybind.hpp"
 #include "log.hpp"
@@ -359,13 +358,9 @@ void initialize_cat_db()
     cat::global.register_function(u8"sdata", cat_sdata);
     cat::global.register_function(u8"cbitmod", cat_cbitmod);
 
-    the_ability_db.initialize();
     the_buff_db.initialize();
     the_class_db.initialize();
-    the_fish_db.initialize();
-    the_item_material_db.initialize();
     the_race_db.initialize();
-    the_trait_db.initialize();
 }
 
 void initialize_lua()

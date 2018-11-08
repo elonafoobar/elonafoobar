@@ -367,9 +367,9 @@ TurnResult show_skill_list()
 void draw_spell_power_entry(int skill_id)
 {
     s = "";
-    if (the_ability_db[skill_id]->sdataref1 / 1000 == 1)
+    if (the_ability_db[skill_id]->ability_type / 1000 == 1)
     {
-        p = the_ability_db[skill_id]->sdataref1 % 1000;
+        p = the_ability_db[skill_id]->ability_type % 1000;
         const auto duration =
             calc_buff_duration(p, calcspellpower(skill_id, cc));
         const auto description =

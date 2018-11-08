@@ -23,6 +23,8 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+
+
 namespace elona
 {
 int digx = 0;
@@ -1402,60 +1404,6 @@ void continuous_action_others()
 }
 
 
-void select_random_fish()
-{
-    if (rowactre != 0)
-    {
-        return;
-    }
-    ci = cdata.player().continuous_action.item;
-    int dbmax = 0;
-    int dbsum = 0;
-    for (const auto fish : the_fish_db)
-    {
-        if (fish.no_generate)
-        {
-            continue;
-        }
-        i = clamp(inv[ci].param4 + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
-        if (fish.rank != i)
-        {
-            continue;
-        }
-        dblist(0, dbmax) = fish.id;
-        dblist(1, dbmax) = fish.rarity + dbsum;
-        dbsum += fish.rarity;
-        ++dbmax;
-    }
-    fish = 1;
-    if (dbsum != 0)
-    {
-        const auto dbtmp = rnd(dbsum);
-        for (int cnt = 0, cnt_end = (dbmax); cnt < cnt_end; ++cnt)
-        {
-            if (dblist(1, cnt) > dbtmp)
-            {
-                fish = dblist(0, cnt);
-                break;
-            }
-        }
-    }
-}
-
-
-
-void get_fish()
-{
-    flt();
-    itemcreate(0, the_fish_db[fish]->item_id, -1, -1, 0);
-    inv[ci].subname = fish;
-    inv[ci].value = the_fish_db[fish]->value;
-    inv[ci].weight = the_fish_db[fish]->weight;
-    txt(i18n::s.get("core.locale.activity.fishing.get", inv[ci]));
-    item_stack(0, ci, 1);
-}
-
-
 
 void spot_fishing()
 {
@@ -1489,7 +1437,7 @@ void spot_fishing()
         if (rnd(5) == 0)
         {
             fishstat = 1;
-            select_random_fish();
+            fish = fish_select_at_random();
         }
         if (fishstat == 1)
         {
@@ -1597,7 +1545,7 @@ void spot_fishing()
             sound_pick_up();
             fishanime = 0;
             cdata[cc].continuous_action.finish();
-            get_fish();
+            fish_get(fish);
             gain_fishing_experience(0);
             cdata.player().emotion_icon = 306;
         }

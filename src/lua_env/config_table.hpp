@@ -108,6 +108,27 @@ public:
         return result;
     }
 
+
+
+    template <typename KeyType, typename ValueType, typename N>
+    std::unordered_map<KeyType, ValueType> unordered_map(const N& name) const
+    {
+        std::unordered_map<KeyType, ValueType> result;
+
+        if (auto it = optional<sol::table>(name))
+        {
+            for (const auto& kvp : *it)
+            {
+                result.emplace(
+                    kvp.first.template as<KeyType>(),
+                    kvp.second.template as<ValueType>());
+            }
+        }
+        return result;
+    }
+
+
+
 private:
     sol::table storage;
     std::string id;

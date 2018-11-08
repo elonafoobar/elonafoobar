@@ -1419,7 +1419,7 @@ int calcspellfail(int id, int cc)
     }
 
     int percentage = 90 + sdata(id, cc)
-        - the_ability_db[id]->sdataref4 * penalty / (5 + sdata(172, cc) * 4);
+        - the_ability_db[id]->difficulty * penalty / (5 + sdata(172, cc) * 4);
     if (armor_skill == 169)
     {
         if (percentage > 80)
@@ -1826,7 +1826,7 @@ int calc_exp_gain_weight_lifting(const Character& chara)
 
 int calc_exp_gain_memorization(int spell_id)
 {
-    return 10 + the_ability_db[spell_id]->sdataref4 / 5;
+    return 10 + the_ability_db[spell_id]->difficulty / 5;
 }
 
 int calc_exp_gain_crafting(int mat_amount)
