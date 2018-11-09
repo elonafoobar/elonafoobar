@@ -56,7 +56,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         pos(x + dx - 51, y + 4);
         gcopy(3, 336, 336, 24, 24);
         const std::string inputlog2 = inputlog + u8"(" + max_number + u8")";
-        pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
+        pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + vfix + 11);
         color(255, 255, 255);
         mes(inputlog2);
         color(0, 0, 0);
@@ -264,7 +264,7 @@ bool input_text_dialog(
         draw("input_caret", x + 34 + p(4) * 8, y + 5);
         gmode(2);
         color(255, 255, 255);
-        pos(x + 36, y + 9);
+        pos(x + 36, y + vfix + 9);
         mes(s);
         color(0, 0, 0);
 

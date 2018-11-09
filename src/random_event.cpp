@@ -654,11 +654,11 @@ int show_random_event_window(
         bmes(
             i18n::s.get("core.locale.event.popup.title", title),
             wx + 40,
-            wy + 16,
+            wy + vfix + 16,
             {245, 235, 225},
             {30, 20, 10});
         color(30, 30, 30);
-        pos(wx + 24, wy + ty + 20);
+        pos(wx + 24, wy + ty + vfix + 20);
         mes(buff);
         color(0, 0, 0);
         keyrange = 0;

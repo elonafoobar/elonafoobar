@@ -199,7 +199,7 @@ void Message::_msg_write(std::string& message)
 
     elona::color(text_color.r, text_color.g, text_color.b);
     pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
-        (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
+        (inf_msgline - 1) * inf_msgspace + inf_msgy + vfix + 5);
     font(inf_mesfont - en * 2);
     gmode(0, 255);
     mes(message);

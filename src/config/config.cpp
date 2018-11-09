@@ -404,8 +404,6 @@ void load_config(const fs::path& hcl_file)
     if (Config::instance().language == "jp")
     {
         jp = 1;
-        vfix = 0;
-        sizefix = 0;
     }
     else
     {
