@@ -231,7 +231,7 @@ config def {
     font = {
         type = "section"
         options = {
-            file = "Kochi Gothic.ttf"
+            file = "GenShinGothic/GenShinGothic-Monospace-Regular.ttf"
 
             vertical_offset = {
                 default = -1
@@ -242,6 +242,11 @@ config def {
                 default = 1
                 min = -5
                 max = 5
+            }
+            quality = {
+                type = "enum"
+                default = "high"
+                variants = ["low", "high"]
             }
         }
     }

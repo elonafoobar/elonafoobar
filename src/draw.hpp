@@ -83,6 +83,7 @@ void initialize_item_chips(const ItemChipDB&);
 void initialize_all_chips();
 void draw_clear_loaded_chips();
 void draw_init_key_select_buffer();
+void draw_select_key(const std::string& key, int x, int y);
 
 
 void bmes(

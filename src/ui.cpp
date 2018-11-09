@@ -654,7 +654,7 @@ int render_one_status_ailment(
     color(text_color.r, text_color.g, text_color.b);
     pos(x, y);
     gcopy(3, 0, 416, 50 + en * 30, 15);
-    pos(x + 6, y + 1);
+    pos(x + 6, y + vfix + 1);
     mes(get_text(value));
     color(0, 0, 0);
 
@@ -970,7 +970,7 @@ void render_autoturn_animation()
 
     window2(sx, sy, w, h, 0, 5);
     font(13 - en * 2, snail::Font::Style::bold);
-    bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
+    bmes(u8"AUTO TURN"s, sx + 43, sy + vfix + 6, {235, 235, 235});
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
 
@@ -1513,7 +1513,7 @@ void draw_caption()
         pos(cnt * 128 + msgx, msgy + 22);
         gcopy(3, 672, 477, ap, 2);
     }
-    pos(msgx + 18, msgy + 4);
+    pos(msgx + 18, msgy + vfix + 4);
     mes(s);
     gmode(2);
 }
@@ -2202,7 +2202,7 @@ void display_topic(const std::string& topic, int x, int y)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     draw("topic_icon", x, y + 7);
-    pos(x + 26, y + 8);
+    pos(x + 26, y + vfix + 8);
     mes(topic);
     line(x + 22, y + 21, x + strlen_u(topic) * 7 + 36, y + 21);
 }
@@ -2212,11 +2212,7 @@ void display_topic(const std::string& topic, int x, int y)
 void display_customkey(const std::string& key, int x, int y)
 {
     gsel(3);
-    gmode(0);
-    font(15 - en * 2);
-    draw("select_key", 624, 30);
-    bmes(key, 629, 31, {250, 240, 230}, {50, 60, 80});
-    gmode(2);
+    draw_select_key(key, 624, 30);
     gsel(0);
     pos(x, y);
     gcopy(3, 624, 30, 24, 18);
@@ -2439,7 +2435,7 @@ void cs_list(
         break;
     }
 
-    pos(x + 4 + x_offset, y + 3);
+    pos(x + 4 + x_offset, y + vfix + 3);
     mes(text);
     color(0, 0, 0);
 }
@@ -2789,9 +2785,7 @@ void show_title(const std::string& title)
     gmode(2);
     draw("tip_icon", x, y + (mode != 1));
     font(12 + sizefix - en * 2);
-    bmes(title, x + 32, y + 1 + jp, {250, 250, 250});
+    bmes(title, x + 32, y + 1 + vfix + jp, {250, 250, 250});
 }
-
-
 
 } // namespace elona

@@ -15,6 +15,7 @@
 #include "pic_loader/extent.hpp"
 #include "pic_loader/pic_loader.hpp"
 #include "random.hpp"
+#include "snail/application.hpp"
 #include "variables.hpp"
 
 
@@ -941,15 +942,32 @@ void draw_init_key_select_buffer()
 {
     int buffer_bk = ginfo(3);
     gsel(3);
-    gmode(0);
-    font(15 - en * 2);
     for (int i = 0; i < 18; ++i)
     {
-        draw("select_key", i * 24 + 72, 30);
-        bmes(key_select(i), i * 24 + 77, 31, {250, 240, 230}, {50, 60, 80});
+        draw_select_key(key_select(i), i * 24 + 72, 30);
     }
     gsel(buffer_bk);
 }
+
+
+
+void draw_select_key(const std::string& key, int x, int y)
+{
+    gmode(0);
+    font(13);
+    draw("select_key", x, y);
+    const auto& image_info = get_image_info("select_key");
+    const auto glyph_size =
+        snail::Application::instance().get_renderer().calculate_text_size(key);
+    bmes(
+        key,
+        x + (image_info.width - glyph_size.width) / 2 - 2,
+        y + (image_info.height - glyph_size.height) / 2,
+        {250, 240, 230},
+        {50, 60, 80});
+    gmode(2);
+}
+
 
 
 void bmes(

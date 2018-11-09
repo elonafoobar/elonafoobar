@@ -300,6 +300,17 @@
                 size_adjustment {
                     name = "サイズの調整"
                 }
+                quality {
+                    name = "描写の品質"
+                    doc = <<DOC
+テキスト描写の品質です。「高品質」は綺麗に表示されますが遅くなります。
+「低品質」は文字の描写がやや汚くなりますが動作は速くなります。
+DOC
+                    variants {
+                        low = "低品質"
+                        high = "高品質"
+                    }
+                }
             }
 
             message {

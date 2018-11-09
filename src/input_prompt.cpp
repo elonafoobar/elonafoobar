@@ -86,19 +86,12 @@ void Prompt::_replace_null_keys_from_key_select()
 void Prompt::_draw_keys_and_background(int x, int y, int width)
 {
     gsel(3);
-    gmode(0);
-    font(15 - en * 2);
 
     int cnt = 0;
     for (auto& entry : _entries)
     {
-        draw("select_key", cnt * 24 + 624, 30);
-        bmes(
-            keybind_key_short_name(entry.key, false),
-            cnt * 24 + 629,
-            31,
-            {250, 240, 230},
-            {50, 60, 80});
+        draw_select_key(
+            keybind_key_short_name(entry.key, false), cnt * 24 + 624, 30);
         cnt++;
     }
 

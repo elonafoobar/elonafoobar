@@ -848,6 +848,11 @@ int run()
         // depending on each language.
         Config::instance().font_filename =
             i18n::s.get("core.locale.meta.default_font");
+        if (jp)
+        {
+            // TODO: work around
+            Config::instance().set("core.config.font.vertical_offset", -3);
+        }
     }
 
     initialize_keybindings();
