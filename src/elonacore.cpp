@@ -543,17 +543,17 @@ void initialize_pc_character()
         itemcreate(0, 68, -1, -1, 0);
         inv[ci].set_number(3);
     }
-    if (cdatan(3, 0) == u8"pianist"s)
+    if (cdatan(3, 0) == u8"core.pianist"s)
     {
         flt();
         itemcreate(0, 88, -1, -1, 0);
     }
-    if (cdatan(3, 0) == u8"farmer"s)
+    if (cdatan(3, 0) == u8"core.farmer"s)
     {
         flt();
         itemcreate(0, 256, -1, -1, 0);
     }
-    if (cdatan(3, 0) == u8"wizard"s || cdatan(3, 0) == u8"warmage"s)
+    if (cdatan(3, 0) == u8"core.wizard"s || cdatan(3, 0) == u8"core.warmage"s)
     {
         flt();
         itemcreate(0, 116, -1, -1, 0);
@@ -561,7 +561,7 @@ void initialize_pc_character()
         itemcreate(0, 257, -1, -1, 0);
         inv[ci].set_number(3);
     }
-    if (cdatan(3, 0) == u8"priest"s)
+    if (cdatan(3, 0) == u8"core.priest"s)
     {
         flt();
         itemcreate(0, 249, -1, -1, 0);
@@ -6942,6 +6942,7 @@ void update_save_data(const fs::path& save_dir, int serial_id)
     }
     case 1:
     {
+        // Prepend "core." prefix to old race ID.
         for (const auto& entry : filesystem::dir_entries(
                  save_dir,
                  filesystem::DirEntryRange::Type::file,
@@ -6978,6 +6979,66 @@ void update_save_data(const fs::path& save_dir, int serial_id)
                         "[Save data] Prepend \"core\" prefix to "
                         << chara.at(0) << ": " << old_race_id);
                     chara.at(2) = "core." + old_race_id;
+                }
+            }
+
+            std::ofstream out{entry.path().native(), std::ios::binary};
+            if (!out)
+            {
+                throw std::runtime_error(
+                    u8"Error: fail to write "
+                    + filesystem::make_preferred_path_in_utf8(entry.path()));
+            }
+
+            for (const auto& chara : cdatan_)
+            {
+                for (const auto& line : chara)
+                {
+                    out << line << std::endl;
+                }
+            }
+        }
+        break;
+    }
+    case 2:
+    {
+        // Prepend "core." prefix to old class ID.
+        for (const auto& entry : filesystem::dir_entries(
+                 save_dir,
+                 filesystem::DirEntryRange::Type::file,
+                 std::regex{u8R"(cdatan.*\.s[12])"}))
+        {
+            std::vector<std::string> lines;
+            range::copy(
+                fileutil::read_by_line(entry.path()),
+                std::back_inserter(lines));
+
+            // Read cdatan.
+            std::vector<std::vector<std::string>> cdatan_;
+            size_t idx{};
+            for (const auto& line : lines)
+            {
+                const auto i = idx / 10;
+                const auto j = idx % 10;
+                if (j == 0)
+                {
+                    cdatan_.emplace_back(10);
+                }
+                cdatan_.at(i).at(j) = line;
+                ++idx;
+            }
+
+            // Prepend "core." prefix to the old class ID.
+            for (auto&& chara : cdatan_)
+            {
+                const auto old_class_id = chara.at(3);
+                if (!old_class_id.empty()
+                    && !strutil::starts_with(old_class_id, "core."))
+                {
+                    ELONA_LOG(
+                        "[Save data] Prepend \"core\" prefix to "
+                        << chara.at(0) << ": " << old_class_id);
+                    chara.at(3) = "core." + old_class_id;
                 }
             }
 
