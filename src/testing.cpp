@@ -63,6 +63,15 @@ void load_translations(const std::string& hcl)
     i18n::s.load(ss, "test.hcl", "test");
 }
 
+// Similar to load_translations, but does not reset all i18n resources.
+void reinit_core_and_load_translations(const std::string& hcl)
+{
+    initialize_i18n();
+
+    std::stringstream ss(hcl);
+    i18n::s.load(ss, "test.hcl", "test");
+}
+
 void configure_lua()
 {
     lua::lua.reset(new lua::LuaEnv());
@@ -72,6 +81,8 @@ void configure_lua()
     Testing.set_function("start_in_debug_map", start_in_debug_map);
     Testing.set_function("reset_state", reset_state);
     Testing.set_function("load_translations", load_translations);
+    Testing.set_function(
+        "reinit_core_and_load_translations", reinit_core_and_load_translations);
 }
 
 void start_in_map(int map, int level)
