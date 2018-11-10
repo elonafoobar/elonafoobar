@@ -584,10 +584,12 @@ void window_recipe_(
                 color(0, 120, 0);
             }
             pos(dx_at_m184 + cnt % 2 * 140, dy_at_m184 + cnt / 2 * 17);
-            mes(i18n::_(
-                    u8"ability",
-                    std::to_string(rpdata(10 + cnt * 2, rpid)),
-                    u8"name")
+            mes(i18n::s.get_m(
+                    "locale.ability",
+                    the_ability_db
+                        .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
+                        ->get(),
+                    "name")
                 + u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s
                 + sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s);
             color(0, 0, 0);

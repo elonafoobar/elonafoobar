@@ -42,10 +42,8 @@ int access_race_info(int dbmode, const std::string& race_id)
     case 3: break;
     case 11:
     {
-        // TODO: work around; remove "core." prefix from fully-qualified ID.
-        auto race_id_without_prefix = race_id;
-        strutil::try_remove_prefix(race_id_without_prefix, "core.");
-        buff = i18n::_(u8"race", race_id_without_prefix, u8"description");
+        buff = i18n::s.get_m_optional("locale.race", race_id, "description")
+                   .get_value_or("");
         ref1 = data->male_image;
         ref2 = data->female_image;
         return 0;

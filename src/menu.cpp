@@ -422,7 +422,12 @@ void draw_spell_power_entry(int skill_id)
         }
         s += u8" "s;
     }
-    s += i18n::_(u8"ability", std::to_string(skill_id), u8"description");
+    s += i18n::s
+             .get_m_optional(
+                 "locale.ability",
+                 the_ability_db.get_id_from_legacy(skill_id)->get(),
+                 "description")
+             .get_value_or("");
 }
 
 MenuResult _show_character_sheet_menu(size_t menu_index)
@@ -1279,9 +1284,11 @@ void show_city_chart()
         .show();
 }
 
+
+
 void begin_to_believe_god(int god_id)
 {
-    bool already_believing = !cdata.player().god_id.empty();
+    bool already_believing = cdata.player().god_id != core_god::eyth;
 
     auto result = ui::UIMenuGod(god_id, already_believing).show();
 
@@ -1291,6 +1298,7 @@ void begin_to_believe_god(int god_id)
         god_proc_switching_penalty();
     }
 }
+
 
 
 void house_board_update_screen()
@@ -1345,10 +1353,9 @@ void screen_analyze_self()
         sdata(cnt, rc) = 1;
     }
     apply_god_blessing(56);
-    if (!cdata.player().god_id.empty())
+    if (cdata.player().god_id != core_god::eyth)
     {
-        buff += u8"<title1>◆ "s
-            + i18n::_(u8"god", cdata.player().god_id, u8"name")
+        buff += u8"<title1>◆ "s + god_name(cdata.player().god_id)
             + u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {

@@ -9,7 +9,7 @@ local Item = Elona.require("Item")
 lrun("test I18N.get", function()
         Testing.start_in_debug_map()
 
-        Testing.load_translations([[
+        Testing.reinit_core_and_load_translations([[
 locale {
   foo = "bar"
   baz = "You passed in ${_1} and ${_2}."

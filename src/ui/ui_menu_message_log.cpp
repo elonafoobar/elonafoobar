@@ -58,7 +58,7 @@ void _draw_single_message(size_t cnt)
     for (const auto& msgs : message_log.lines.at(n - cnt - 4 + offset).spans)
     {
         pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
-            inf_msgy - cnt * inf_msgspace);
+            inf_msgy - cnt * inf_msgspace + vfix);
         color(msgs.color.r, msgs.color.g, msgs.color.b);
         mes(msgs.content);
 

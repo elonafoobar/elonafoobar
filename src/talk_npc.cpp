@@ -1464,7 +1464,10 @@ TalkResult talk_trainer(bool is_training)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.trainer.cost.training",
-            i18n::_(u8"ability", std::to_string(selected_skill), u8"name"),
+            i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(selected_skill)->get(),
+                "name"),
             calctraincost(selected_skill, cc),
             cdata[tc]);
         if (cdata.player().platinum_coin >= calctraincost(selected_skill, cc))
@@ -1479,7 +1482,10 @@ TalkResult talk_trainer(bool is_training)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.trainer.cost.learning",
-            i18n::_(u8"ability", std::to_string(selected_skill), u8"name"),
+            i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(selected_skill)->get(),
+                "name"),
             calclearncost(selected_skill, cc),
             cdata[tc]);
         if (cdata.player().platinum_coin >= calclearncost(selected_skill, cc))

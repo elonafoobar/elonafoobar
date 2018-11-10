@@ -689,7 +689,10 @@ bool wish_for_skill(const std::string& input)
             continue;
         }
 
-        auto name = i18n::_(u8"ability", std::to_string(id), u8"name");
+        auto name = i18n::s.get_m(
+            "locale.ability",
+            the_ability_db.get_id_from_legacy(id)->get(),
+            "name");
         int similarity = 0;
         if (name == wish)
         {
@@ -718,7 +721,10 @@ bool wish_for_skill(const std::string& input)
     if (!selector.empty())
     {
         const auto id = selector.get_force();
-        const auto name = i18n::_(u8"ability", std::to_string(id), u8"name");
+        const auto name = i18n::s.get_m(
+            "locale.ability",
+            the_ability_db.get_id_from_legacy(id)->get(),
+            "name");
         if (!name.empty())
         {
             if (sdata.get(id, 0).original_level == 0)

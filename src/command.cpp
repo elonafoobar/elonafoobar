@@ -1016,7 +1016,7 @@ TurnResult do_change_ammo_command()
 
 TurnResult do_offer_command()
 {
-    if (cdata.player().god_id.empty())
+    if (cdata.player().god_id == core_god::eyth)
     {
         txt(i18n::s.get("core.locale.action.offer.do_not_believe"));
         return TurnResult::turn_end;
@@ -1026,7 +1026,7 @@ TurnResult do_offer_command()
     txt(i18n::s.get(
         "core.locale.action.offer.execute",
         inv[ci],
-        i18n::_(u8"god", cdata.player().god_id, u8"name")));
+        god_name(cdata.player().god_id)));
     snd("core.offer2");
     const auto tcbk = tc(0);
     tc = 0;
@@ -1062,15 +1062,14 @@ TurnResult do_offer_command()
             f = 1;
             txt(i18n::s.get(
                 "core.locale.action.offer.claim",
-                i18n::_(u8"god", cdata.player().god_id, u8"name")));
+                god_name(cdata.player().god_id)));
         }
         else
         {
             txt(i18n::s.get(
                 "core.locale.action.offer.take_over.attempt",
-                i18n::_(u8"god", cdata.player().god_id, u8"name"),
-                i18n::_(
-                    u8"god", core_god::int2godid(inv[ti].param1), u8"name")));
+                god_name(cdata.player().god_id),
+                god_name(inv[ti].param1)));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -1093,7 +1092,7 @@ TurnResult do_offer_command()
             }
             txt(i18n::s.get(
                     "core.locale.action.offer.take_over.succeed",
-                    i18n::_(u8"god", cdata.player().god_id, u8"name"),
+                    god_name(cdata.player().god_id),
                     inv[ti]),
                 Message::color{ColorIndex::orange});
             txtgod(cdata.player().god_id, 2);
@@ -1103,7 +1102,7 @@ TurnResult do_offer_command()
         {
             txt(i18n::s.get(
                 "core.locale.action.offer.take_over.fail",
-                i18n::_(u8"god", core_god::int2godid(inv[ti].param1))));
+                god_name(inv[ti].param1)));
             txtgod(core_god::int2godid(inv[ti].param1), 3);
             god_fail_to_take_over_penalty();
         }
@@ -2546,10 +2545,11 @@ TurnResult do_use_command()
                     txt(i18n::s.get(
                             "core.locale.action.use.gene_machine.gains.ability",
                             cdata[rc],
-                            i18n::_(
-                                u8"ability",
-                                std::to_string(rtval(cnt)),
-                                u8"name")),
+                            i18n::s.get_m(
+                                "locale.ability",
+                                the_ability_db.get_id_from_legacy(rtval(cnt))
+                                    ->get(),
+                                "name")),
                         Message::color{ColorIndex::green});
                 }
             }

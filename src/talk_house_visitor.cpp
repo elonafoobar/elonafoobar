@@ -249,7 +249,10 @@ TalkResult _talk_hv_adventurer_train()
         buff = i18n::s.get(
             "core.locale.talk.visitor.adventurer.train.learn."
             "dialog",
-            i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
+            i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(skill_id)->get(),
+                "name"),
             std::to_string(calclearncost(skill_id, cc, true))
                 + i18n::_(u8"ui", u8"platinum"),
             cdata[tc]);
@@ -267,7 +270,10 @@ TalkResult _talk_hv_adventurer_train()
         buff = i18n::s.get(
             "core.locale.talk.visitor.adventurer.train.train."
             "dialog",
-            i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
+            i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(skill_id)->get(),
+                "name"),
             std::to_string(calclearncost(skill_id, cc, true))
                 + i18n::_(u8"ui", u8"platinum"),
             cdata[tc]);
@@ -481,7 +487,10 @@ TalkResult _talk_hv_adventurer_favorite_skill()
     listmax = 0;
     buff = i18n::s.get(
         "core.locale.talk.visitor.adventurer.favorite_skill.dialog",
-        i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
+        i18n::s.get_m(
+            "locale.ability",
+            the_ability_db.get_id_from_legacy(skill_id)->get(),
+            "name"),
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
@@ -505,7 +514,10 @@ TalkResult _talk_hv_adventurer_favorite_stat()
     listmax = 0;
     buff = i18n::s.get(
         "core.locale.talk.visitor.adventurer.favorite_stat.dialog",
-        i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
+        i18n::s.get_m(
+            "locale.ability",
+            the_ability_db.get_id_from_legacy(skill_id)->get(),
+            "name"),
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
@@ -700,7 +712,10 @@ void _trainer_do_training(int plat, int chatval_)
     txt(i18n::s.get(
             "core.locale.talk.visitor.trainer.potential_expands",
             cdata.player(),
-            i18n::_(u8"ability", std::to_string(chatval_), u8"name")),
+            i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(chatval_)->get(),
+                "name")),
         Message::color{ColorIndex::green});
     modify_potential(cdata.player(), chatval_, 10);
 }
@@ -748,7 +763,10 @@ TalkResult _talk_hv_trainer()
             list(0, listmax) = p(cnt);
             listn(0, listmax) = i18n::s.get(
                 "core.locale.talk.visitor.trainer.choices.improve",
-                i18n::_(u8"ability", std::to_string(p(cnt)), u8"name"));
+                i18n::s.get_m(
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(p(cnt))->get(),
+                    "name"));
             ++listmax;
         }
     }

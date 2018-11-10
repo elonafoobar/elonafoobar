@@ -18,7 +18,6 @@
 namespace elona
 {
 
-
 int access_character_info()
 {
     const auto data = the_character_db[dbid];
@@ -31,7 +30,10 @@ int access_character_info()
         switch (dbspec)
         {
         case 2:
-            refstr = i18n::_(u8"character", std::to_string(dbid), u8"name");
+            refstr = i18n::s.get_m(
+                "locale.chara",
+                the_character_db.get_id_from_legacy(dbid)->get(),
+                "name");
             return 0;
         case 3: return data->item_type;
         case 8: refstr = data->filter; return 0;
@@ -54,7 +56,10 @@ int access_character_info()
         cdata[rc].special_actions = data->special_actions;
         creaturepack = data->creaturepack;
         cdata[rc].can_talk = data->can_talk;
-        cdatan(0, rc) = i18n::_(u8"character", std::to_string(dbid), u8"name");
+        cdatan(0, rc) = i18n::s.get_m(
+            "locale.chara",
+            the_character_db.get_id_from_legacy(dbid)->get(),
+            "name");
         if (data->has_random_name)
         {
             cdatan(0, rc) = i18n::s.get(
@@ -354,11 +359,13 @@ int access_character_info()
             }
         }
         {
-            const auto text = i18n::_(
-                u8"character", std::to_string(dbid), u8"text_"s + dbmode);
-            if (!text.empty())
+            const auto chara_id =
+                the_character_db.get_id_from_legacy(dbid)->get();
+            const auto dialog_id = "text_" + std::to_string(dbmode);
+            if (const auto text =
+                    i18n::s.get_m_optional("locale.chara", chara_id, dialog_id))
             {
-                txt(text, Message::color{ColorIndex::cyan});
+                txt(*text, Message::color{ColorIndex::cyan});
             }
         }
         break;
@@ -632,7 +639,5 @@ int access_character_info()
     default: return 0;
     }
 }
-
-
 
 } // namespace elona

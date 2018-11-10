@@ -142,7 +142,10 @@ static void _draw_skill_name(int cnt, int skill_id)
     }
     cs_list(
         cs == cnt,
-        i18n::_(u8"ability", std::to_string(skill_id), u8"name")
+        i18n::s.get_m(
+            "locale.ability",
+            the_ability_db.get_id_from_legacy(skill_id)->get(),
+            "name")
             + skill_shortcut,
         wx + 84,
         wy + 66 + cnt * 19 - 1);

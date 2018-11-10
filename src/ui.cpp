@@ -588,7 +588,11 @@ void render_skill_trackers()
         }
         bmes(
             strutil::take_by_width(
-                i18n::_(u8"ability", std::to_string(skill), u8"name"), 6),
+                i18n::s.get_m(
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(skill)->get(),
+                    "name"),
+                6),
             16,
             inf_clocky + 107 + y * 16);
         bmes(

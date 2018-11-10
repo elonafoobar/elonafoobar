@@ -137,7 +137,10 @@ static void _draw_spell_name(int cnt, int spell_id)
     }
     cs_list(
         cs == cnt,
-        i18n::_(u8"ability", std::to_string(spell_id), u8"name")
+        i18n::s.get_m(
+            "locale.ability",
+            the_ability_db.get_id_from_legacy(spell_id)->get(),
+            "name")
             + spell_shortcut,
         wx + 84,
         wy + 66 + cnt * 19 - 1);
