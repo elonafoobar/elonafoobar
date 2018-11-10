@@ -600,10 +600,11 @@ int magic()
                             txt(i18n::s.get(
                                 "core.locale.magic.special_attack.self",
                                 cdata[cc],
-                                i18n::_(
-                                    u8"ability",
-                                    std::to_string(efid),
-                                    u8"name"),
+                                i18n::s.get_m(
+                                    "locale.ability",
+                                    the_ability_db.get_id_from_legacy(efid)
+                                        ->get(),
+                                    "name"),
                                 i18n::_(
                                     u8"ui",
                                     u8"cast_style",
@@ -1007,7 +1008,10 @@ int magic()
                 {
                     valn = i18n::s.get(
                         "core.locale.magic.breath.named",
-                        i18n::_(u8"ability", std::to_string(ele), u8"name"));
+                        i18n::s.get_m(
+                            "locale.ability",
+                            the_ability_db.get_id_from_legacy(ele)->get(),
+                            "name"));
                 }
                 else
                 {
@@ -2235,10 +2239,11 @@ label_2181_internal:
                         txt(s
                                 + i18n::s.get(
                                       "core.locale.magic.gain_knowledge.gain",
-                                      i18n::_(
-                                          u8"ability",
-                                          std::to_string(p),
-                                          u8"name")),
+                                      i18n::s.get_m(
+                                          "locale.ability",
+                                          the_ability_db.get_id_from_legacy(p)
+                                              ->get(),
+                                          "name")),
                             Message::color{ColorIndex::green});
                         snd("core.ding2");
                         f = 1;
@@ -2255,10 +2260,11 @@ label_2181_internal:
                             "core.locale.magic.common.it_is_cursed"));
                         txt(i18n::s.get(
                                 "core.locale.magic.gain_knowledge.lose",
-                                i18n::_(
-                                    u8"ability",
-                                    std::to_string(p + 400),
-                                    u8"name")),
+                                i18n::s.get_m(
+                                    "locale.ability",
+                                    the_ability_db.get_id_from_legacy(p + 400)
+                                        ->get(),
+                                    "name")),
                             Message::color{ColorIndex::red});
                         snd("core.curse3");
                         animeload(14, 0);
@@ -2343,8 +2349,10 @@ label_2181_internal:
                         txt(i18n::s.get(
                                 "core.locale.magic.gain_skill",
                                 cdata[tc],
-                                i18n::_(
-                                    u8"ability", std::to_string(p), u8"name")),
+                                i18n::s.get_m(
+                                    "locale.ability",
+                                    the_ability_db.get_id_from_legacy(p)->get(),
+                                    "name")),
                             Message::color{ColorIndex::green});
                     }
                     break;
@@ -2399,7 +2407,7 @@ label_2181_internal:
         {
             txt(i18n::s.get(
                     "core.locale.magic.faith.apply",
-                    i18n::_(u8"god", cdata.player().god_id, u8"name")),
+                    i18n::s.get_m("locale.god", cdata.player().god_id, "name")),
                 Message::color{ColorIndex::green});
             if (efstatus == CurseState::blessed)
             {
@@ -2458,10 +2466,12 @@ label_2181_internal:
                                           "potential."
                                           "increases",
                                           cdata[tc],
-                                          i18n::_(
-                                              u8"ability",
-                                              std::to_string(p),
-                                              u8"name")),
+                                          i18n::s.get_m(
+                                              "locale.ability",
+                                              the_ability_db
+                                                  .get_id_from_legacy(p)
+                                                  ->get(),
+                                              "name")),
                                 Message::color{ColorIndex::green});
                         }
                     }
@@ -2472,8 +2482,10 @@ label_2181_internal:
                                 "core.locale.magic.gain_skill_potential."
                                 "decreases",
                                 cdata[tc],
-                                i18n::_(
-                                    u8"ability", std::to_string(p), u8"name")),
+                                i18n::s.get_m(
+                                    "locale.ability",
+                                    the_ability_db.get_id_from_legacy(p)->get(),
+                                    "name")),
                             Message::color{ColorIndex::red});
                     }
                     break;
@@ -2523,7 +2535,10 @@ label_2181_internal:
         else
         {
             i = rnd(8) + 10;
-            const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
+            const auto valn = i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(i)->get(),
+                "name");
             if (efstatus == CurseState::none)
             {
                 txt(i18n::s.get(

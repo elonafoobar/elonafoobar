@@ -1,5 +1,6 @@
 #include "area.hpp"
 #include "character.hpp"
+#include "data/types/type_ability.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "fov.hpp"
@@ -396,14 +397,20 @@ std::string txtskillchange(int id, int cc, bool increase)
             return i18n::s.get(
                 "core.locale.skill.default.increase",
                 cdata[cc],
-                i18n::_(u8"ability", std::to_string(id), u8"name"));
+                i18n::s.get_m(
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(id)->get(),
+                    "name"));
         }
         else
         {
             return i18n::s.get(
                 "core.locale.skill.default.decrease",
                 cdata[cc],
-                i18n::_(u8"ability", std::to_string(id), u8"name"));
+                i18n::s.get_m(
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(id)->get(),
+                    "name"));
         }
     }
 }

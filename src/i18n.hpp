@@ -794,6 +794,40 @@ public:
     }
 
 
+    // TODO: rename
+    // Typical usage:
+    // i18n::s.get_m("locale.class", "modname.classname", "name")
+    // // The above call is equivalent to:
+    // i18n::s.get("modname.locale.class.classname.name")
+    std::string get_m(
+        const I18NKey& data_type_key,
+        const I18NKey& data_key,
+        const I18NKey& property_name)
+    {
+        const auto pair = strutil::split_on_string(data_key, ".");
+        const auto key = pair.first + "." + data_type_key + "." + pair.second
+            + "." + property_name;
+        return get(key);
+    }
+
+
+    // TODO: rename
+    // Typical usage:
+    // i18n::s.get_m_optional("locale.class", "modname.classname", "name")
+    // // The above call is equivalent to:
+    // i18n::s.get_optional("modname.locale.class.classname.name")
+    optional<std::string> get_m_optional(
+        const I18NKey& data_type_key,
+        const I18NKey& data_key,
+        const I18NKey& property_name)
+    {
+        const auto pair = strutil::split_on_string(data_key, ".");
+        const auto key = pair.first + "." + data_type_key + "." + pair.second
+            + "." + property_name;
+        return get_optional(key);
+    }
+
+
     const fs::path& get_locale_dir(const std::string& mod_name)
     {
         return locale_dir_table[mod_name];

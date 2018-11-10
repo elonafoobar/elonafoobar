@@ -557,8 +557,11 @@ label_1876_internal:
             ++listmax;
             list(0, listmax) = 2;
             listn(0, listmax) = u8"採取する("s
-                + i18n::_(u8"ability", std::to_string(180), u8"name") + u8": "s
-                + sdata(180, 0) + u8")"s;
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(180)->get(),
+                      "name")
+                + u8": "s + sdata(180, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -574,8 +577,11 @@ label_1876_internal:
             ++listmax;
             list(0, listmax) = 2;
             listn(0, listmax) = u8"掘る("s
-                + i18n::_(u8"ability", std::to_string(163), u8"name") + u8": "s
-                + sdata(163, 0) + u8")"s;
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(163)->get(),
+                      "name")
+                + u8": "s + sdata(163, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -591,8 +597,11 @@ label_1876_internal:
             ++listmax;
             list(0, listmax) = 2;
             listn(0, listmax) = u8"釣る("s
-                + i18n::_(u8"ability", std::to_string(185), u8"name") + u8": "s
-                + sdata(185, 0) + u8")"s;
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(185)->get(),
+                      "name")
+                + u8": "s + sdata(185, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -608,8 +617,11 @@ label_1876_internal:
             ++listmax;
             list(0, listmax) = 2;
             listn(0, listmax) = u8"解剖する("s
-                + i18n::_(u8"ability", std::to_string(161), u8"name") + u8": "s
-                + sdata(161, 0) + u8")"s;
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(161)->get(),
+                      "name")
+                + u8": "s + sdata(161, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -787,8 +799,11 @@ label_1876_internal:
         noteadd(u8"宝箱がある。"s);
         list(0, listmax) = 1;
         listn(0, listmax) = u8"錠を解体する("s
-            + i18n::_(u8"ability", std::to_string(158), u8"name") + u8": "s
-            + sdata(158, 0) + u8")"s;
+            + i18n::s.get_m(
+                  "locale.ability",
+                  the_ability_db.get_id_from_legacy(158)->get(),
+                  "name")
+            + u8": "s + sdata(158, 0) + u8")"s;
         ++listmax;
         list(0, listmax) = 3;
         listn(0, listmax) = u8"叩き割る(筋力: "s + sdata(10, 0) + u8")"s;

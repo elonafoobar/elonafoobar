@@ -1,5 +1,6 @@
 #include "calc.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_item_material.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -107,8 +108,11 @@ static void _load_item_stat_text(int ci, int& p)
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get(
             "core.locale.item.desc.it_is_made_of",
-            i18n::_(
-                u8"item_material", std::to_string(inv[ci].material), u8"name"));
+            i18n::s.get_m(
+                "locale.item_material",
+                the_item_material_db.get_id_from_legacy(inv[ci].material)
+                    ->get(),
+                "name"));
         ++p;
     }
     if (inv[ci].material == 8)

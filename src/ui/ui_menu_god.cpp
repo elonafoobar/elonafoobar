@@ -22,14 +22,15 @@ static std::string _get_choice_name(bool already_believing, int god_id)
         {
             return i18n::s.get(
                 "core.locale.god.desc.window.convert",
-                i18n::_(u8"god", core_god::int2godid(god_id), u8"name"));
+                i18n::s.get_m(
+                    "locale.god", core_god::int2godid(god_id), "name"));
         }
     }
     else
     {
         return i18n::s.get(
             "core.locale.god.desc.window.believe",
-            i18n::_(u8"god", core_god::int2godid(god_id), u8"name"));
+            i18n::s.get_m("locale.god", core_god::int2godid(god_id), "name"));
     }
 }
 
@@ -126,7 +127,7 @@ static void _draw_title(int god_id)
     bmes(
         i18n::s.get(
             "core.locale.god.desc.window.title",
-            i18n::_(u8"god", core_god::int2godid(god_id), u8"name")),
+            i18n::s.get_m("locale.god", core_god::int2godid(god_id), "name")),
         wx + 20,
         wy + 20);
 }

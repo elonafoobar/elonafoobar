@@ -9,7 +9,9 @@
 #include "building.hpp"
 #include "character.hpp"
 #include "crafting.hpp"
+#include "data/types/type_fish.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_item_material.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
 #include "food.hpp"
@@ -743,16 +745,20 @@ void itemname_additional_info()
         {
             s_ += lang(
                 u8"《"s
-                    + i18n::_(
-                          u8"ability",
-                          std::to_string(inv[prm_518].param1),
-                          u8"name")
+                    + i18n::s.get_m(
+                          "locale.ability",
+                          the_ability_db
+                              .get_id_from_legacy(inv[prm_518].param1)
+                              ->get(),
+                          "name")
                     + u8"》という題名の"s,
                 u8" titled <Art of "s
-                    + i18n::_(
-                          u8"ability",
-                          std::to_string(inv[prm_518].param1),
-                          u8"name")
+                    + i18n::s.get_m(
+                          "locale.ability",
+                          the_ability_db
+                              .get_id_from_legacy(inv[prm_518].param1)
+                              ->get(),
+                          "name")
                     + u8">"s);
         }
         else if (inv[prm_518].id == 668)
@@ -772,14 +778,16 @@ void itemname_additional_info()
         if (inv[prm_518].param1 != 0)
         {
             s_ += lang(
-                i18n::_(
-                    u8"god", core_god::int2godid(inv[prm_518].param1), u8"name")
+                i18n::s.get(
+                    "locale.god",
+                    core_god::int2godid(inv[prm_518].param1),
+                    "name")
                     + u8"の"s,
                 u8" <"s
-                    + i18n::_(
-                          u8"god",
+                    + i18n::s.get_m(
+                          "locale.god",
                           core_god::int2godid(inv[prm_518].param1),
-                          u8"name")
+                          "name")
                     + u8">"s);
         }
     }
@@ -795,10 +803,12 @@ void itemname_additional_info()
                     s_ = s_
                         + foodname(
                               inv[prm_518].param1 / 1000,
-                              i18n::_(
-                                  u8"fish",
-                                  std::to_string(inv[prm_518].subname),
-                                  u8"name"),
+                              i18n::s.get_m(
+                                  "locale.fish",
+                                  the_fish_db
+                                      .get_id_from_legacy(inv[prm_518].subname)
+                                      ->get(),
+                                  "name"),
                               inv[prm_518].param2,
                               inv[prm_518].subname);
                 }
@@ -830,8 +840,10 @@ void itemname_additional_info()
                 s_ += u8"/bugged/"s;
                 return;
             }
-            s_ += i18n::_(
-                u8"fish", std::to_string(inv[prm_518].subname), u8"name");
+            s_ += i18n::s.get_m(
+                "locale.fish",
+                the_fish_db.get_id_from_legacy(inv[prm_518].subname)->get(),
+                "name");
         }
         else if (
             a_ == 57000 || a_ == 62000 || inv[prm_518].id == 503
@@ -1127,10 +1139,12 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     if (inv[prm_518].id == 630)
     {
         s_ += ""s
-            + i18n::_(
-                  u8"item_material",
-                  std::to_string(inv[prm_518].material),
-                  u8"name")
+            + i18n::s.get_m(
+                  "locale.item_material",
+                  the_item_material_db
+                      .get_id_from_legacy(inv[prm_518].material)
+                      ->get(),
+                  "name")
             + lang(u8"製の"s, u8" "s);
     }
     if (jp)
@@ -1142,19 +1156,23 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         if (jp)
         {
             s_ += ""s
-                + i18n::_(
-                      u8"item_material",
-                      std::to_string(inv[prm_518].material),
-                      u8"name")
+                + i18n::s.get_m(
+                      "locale.item_material",
+                      the_item_material_db
+                          .get_id_from_legacy(inv[prm_518].material)
+                          ->get(),
+                      "name")
                 + u8"細工の"s;
         }
         else
         {
             s_ += ""s
-                + i18n::_(
-                      u8"item_material",
-                      std::to_string(inv[prm_518].material),
-                      u8"name")
+                + i18n::s.get_m(
+                      "locale.item_material",
+                      the_item_material_db
+                          .get_id_from_legacy(inv[prm_518].material)
+                          ->get(),
+                      "name")
                 + u8"work "s;
         }
     }
@@ -1201,18 +1219,22 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             {
                 if (inv[prm_518].quality >= Quality::miracle)
                 {
-                    s_ += i18n::_(
-                              u8"item_material",
-                              std::to_string(inv[prm_518].material),
-                              u8"alias")
+                    s_ += i18n::s.get_m(
+                              "locale.item_material",
+                              the_item_material_db
+                                  .get_id_from_legacy(inv[prm_518].material)
+                                  ->get(),
+                              "alias")
                         + i18n::space_if_needed();
                 }
                 else
                 {
-                    s_ += i18n::_(
-                              u8"item_material",
-                              std::to_string(inv[prm_518].material),
-                              u8"name")
+                    s_ += i18n::s.get_m(
+                              "locale.item_material",
+                              the_item_material_db
+                                  .get_id_from_legacy(inv[prm_518].material)
+                                  ->get(),
+                              "name")
                         + i18n::space_if_needed();
                     if (jp)
                     {
@@ -1415,19 +1437,23 @@ label_0313_internal:
         if (jp)
         {
             s_ += u8"["s
-                + i18n::_(
-                      u8"item_material",
-                      std::to_string(inv[prm_518].material),
-                      u8"name")
+                + i18n::s.get_m(
+                      "locale.item_material",
+                      the_item_material_db
+                          .get_id_from_legacy(inv[prm_518].material)
+                          ->get(),
+                      "name")
                 + u8"製]"s;
         }
         else
         {
             s_ += u8"["s
-                + cnven(i18n::_(
-                      u8"item_material",
-                      std::to_string(inv[prm_518].material),
-                      u8"name"))
+                + cnven(i18n::s.get_m(
+                      "locale.item_material",
+                      the_item_material_db
+                          .get_id_from_legacy(inv[prm_518].material)
+                          ->get(),
+                      "name"))
                 + u8"]"s;
         }
         if (inv[prm_518].curse_state == CurseState::cursed)

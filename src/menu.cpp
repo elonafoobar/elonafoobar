@@ -422,7 +422,12 @@ void draw_spell_power_entry(int skill_id)
         }
         s += u8" "s;
     }
-    s += i18n::_(u8"ability", std::to_string(skill_id), u8"description");
+    s += i18n::s
+             .get_m_optional(
+                 "locale.ability",
+                 the_ability_db.get_id_from_legacy(skill_id)->get(),
+                 "description")
+             .get_value_or("");
 }
 
 MenuResult _show_character_sheet_menu(size_t menu_index)
@@ -1348,7 +1353,7 @@ void screen_analyze_self()
     if (!cdata.player().god_id.empty())
     {
         buff += u8"<title1>◆ "s
-            + i18n::_(u8"god", cdata.player().god_id, u8"name")
+            + i18n::s.get_m("locale.god", cdata.player().god_id, "name")
             + u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {

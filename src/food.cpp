@@ -1405,16 +1405,20 @@ void apply_general_eating_effect(int cieat)
                         txt(i18n::s.get(
                             "core.locale.food.effect.ability.develops",
                             cdata[cc],
-                            i18n::_(
-                                u8"ability", std::to_string(enc), u8"name")));
+                            i18n::s.get_m(
+                                "locale.ability",
+                                the_ability_db.get_id_from_legacy(enc)->get(),
+                                "name")));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.locale.food.effect.ability.deteriorates",
                             cdata[cc],
-                            i18n::_(
-                                u8"ability", std::to_string(enc), u8"name")));
+                            i18n::s.get_m(
+                                "locale.ability",
+                                the_ability_db.get_id_from_legacy(enc)->get(),
+                                "name")));
                     }
                 }
                 continue;

@@ -2081,19 +2081,26 @@ std::string cnveqweight(int cc)
 
 void cnvbonus(int prm_895, int prm_896)
 {
+    // TODO: i18n
     if (prm_895 >= 50 && prm_895 < 61)
     {
         if (prm_896 > 0)
         {
             buff += u8"　　"s
-                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(prm_895)->get(),
+                      "name")
                 + u8"耐性に <green>クラス"s + prm_896 / 50 + u8"<col>("s
                 + prm_896 + u8") のボーナス\n"s;
         }
         if (prm_896 < 0)
         {
             buff += u8"　　"s
-                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(prm_895)->get(),
+                      "name")
                 + u8"耐性に <red>クラス"s + prm_896 / 50 + u8"<col>("s + prm_896
                 + u8") のマイナス修正\n"s;
         }
@@ -2103,13 +2110,19 @@ void cnvbonus(int prm_895, int prm_896)
         if (prm_896 > 0)
         {
             buff += u8"　　"s
-                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(prm_895)->get(),
+                      "name")
                 + u8"に <green>+"s + prm_896 + u8"<col> のボーナス\n"s;
         }
         if (prm_896 < 0)
         {
             buff += u8"　　"s
-                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(prm_895)->get(),
+                      "name")
                 + u8"に <red>"s + prm_896 + u8"<col> のマイナス修正\n"s;
         }
     }
@@ -6506,6 +6519,7 @@ int read_textbook()
 
 void dump_player_info()
 {
+    // TODO: i18n
     cc = 0;
     access_class_info(2, cdatan(3, 0));
     buff = "";
@@ -6523,16 +6537,14 @@ void dump_player_info()
         + calcage(0) + u8"歳"s + u8"  "s + cdata.player().height + u8"cm"s
         + u8" "s + cdata.player().weight + u8"kg"s);
     noteadd(""s);
-    auto race_id_without_prefix = cdatan(2, 0);
-    strutil::try_remove_prefix(race_id_without_prefix, "core.");
     noteadd(
         fixtxt(
             u8"種族       : "s
-                + i18n::_(u8"race", race_id_without_prefix, u8"name"),
+                + i18n::s.get_m("locale.race", cdatan(2, 0), "name"),
             30)
         + fixtxt(
               (u8"信仰      : "s
-               + i18n::_(u8"god", cdata.player().god_id, u8"name")),
+               + i18n::s.get_m("locale.god", cdata.player().god_id, "name")),
               32));
     noteadd(
         fixtxt(u8"職業       : "s + classname, 30)
@@ -6706,11 +6718,9 @@ void dump_player_info()
             continue;
         }
         access_class_info(2, cdatan(3, cnt));
-        auto race_id_without_prefix = cdatan(2, cnt);
-        strutil::try_remove_prefix(race_id_without_prefix, "core.");
         noteadd(
             cdatan(0, cnt) + u8" "s
-            + i18n::_(u8"race", race_id_without_prefix, u8"name") + u8"の"s
+            + i18n::s.get_m("locale.race", cdatan(2, cnt), "name") + u8"の"s
             + classname + u8" "s
             + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[cnt].sex) + u8" "s
             + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height + u8"cm"s
@@ -8381,7 +8391,10 @@ int do_cast_magic_attempt()
             txt(i18n::s.get(
                 "core.locale.action.cast.self",
                 cdata[cc],
-                i18n::_(u8"ability", std::to_string(efid), u8"name"),
+                i18n::s.get_m(
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(efid)->get(),
+                    "name"),
                 i18n::_(
                     u8"ui",
                     u8"cast_style",

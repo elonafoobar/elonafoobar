@@ -198,7 +198,10 @@ void gain_special_action()
             spact(29) = 1;
             txt(i18n::s.get(
                     "core.locale.skill.gained",
-                    i18n::_(u8"ability", std::to_string(629), u8"name")),
+                    i18n::s.get_m(
+                        "locale.ability",
+                        the_ability_db.get_id_from_legacy(629)->get(),
+                        "name")),
                 Message::color{ColorIndex::orange});
         }
         if (spact(30) == 0)
@@ -206,7 +209,10 @@ void gain_special_action()
             spact(30) = 1;
             txt(i18n::s.get(
                     "core.locale.skill.gained",
-                    i18n::_(u8"ability", std::to_string(630), u8"name")),
+                    i18n::s.get_m(
+                        "locale.ability",
+                        the_ability_db.get_id_from_legacy(630)->get(),
+                        "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -217,7 +223,10 @@ void gain_special_action()
             spact(31) = 1;
             txt(i18n::s.get(
                     "core.locale.skill.gained",
-                    i18n::_(u8"ability", std::to_string(631), u8"name")),
+                    i18n::s.get_m(
+                        "locale.ability",
+                        the_ability_db.get_id_from_legacy(631)->get(),
+                        "name")),
                 Message::color{ColorIndex::orange});
         }
     }

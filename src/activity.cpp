@@ -989,10 +989,11 @@ void continuous_action_others()
             {
                 txt(i18n::s.get(
                     "core.locale.activity.study.start.studying",
-                    i18n::_(
-                        u8"ability",
-                        std::to_string(inv[ci].param1),
-                        u8"name")));
+                    i18n::s.get_m(
+                        "locale.ability",
+                        the_ability_db.get_id_from_legacy(inv[ci].param1)
+                            ->get(),
+                        "name")));
             }
             else
             {
@@ -1392,8 +1393,10 @@ void continuous_action_others()
         {
             txt(i18n::s.get(
                 "core.locale.activity.study.finish.studying",
-                i18n::_(
-                    u8"ability", std::to_string(inv[ci].param1), u8"name")));
+                i18n::s.get_m(
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(inv[ci].param1)->get(),
+                    "name")));
         }
         else
         {

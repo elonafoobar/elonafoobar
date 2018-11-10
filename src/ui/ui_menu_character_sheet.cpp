@@ -485,7 +485,7 @@ static void _draw_first_page_text_level()
     s(0) = ""s + cdata[cc].level;
     s(1) = ""s + cdata[cc].experience;
     s(2) = ""s + cdata[cc].required_experience;
-    s(3) = i18n::_(u8"god", cdata[cc].god_id, u8"name");
+    s(3) = i18n::s.get_m("locale.god", cdata[cc].god_id, "name");
     s(4) = guildname();
     for (int cnt = 0; cnt < 5; ++cnt)
     {
@@ -500,9 +500,7 @@ static void _draw_first_page_text_name()
 {
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
-    auto race_id_without_prefix = cdatan(2, cc);
-    strutil::try_remove_prefix(race_id_without_prefix, "core.");
-    s(2) = cnven(i18n::_(u8"race", race_id_without_prefix, u8"name"));
+    s(2) = cnven(i18n::s.get_m("locale.race", cdatan(2, cc), "name"));
     access_class_info(2, cdatan(3, cc));
     s(4) = cnven(classname);
     if (cdata[cc].sex == 0)
@@ -883,8 +881,10 @@ static bool _is_resistance(int skill)
 
 static void _draw_skill_name(int cnt, int skill_id)
 {
-    std::string skill_name =
-        i18n::_(u8"ability", std::to_string(skill_id), u8"name");
+    std::string skill_name = i18n::s.get_m(
+        "locale.ability",
+        the_ability_db.get_id_from_legacy(skill_id)->get(),
+        "name");
 
     if (_is_resistance(skill_id))
     {
@@ -936,7 +936,12 @@ static void _draw_skill_power(int cnt, int skill_id)
 static void _draw_skill_desc(int cnt, int skill_id)
 {
     pos(wx + 330, wy + 66 + cnt * 19 + 2);
-    mes(i18n::_(u8"ability", std::to_string(skill_id), u8"description"));
+    mes(i18n::s
+            .get_m_optional(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(skill_id)->get(),
+                "description")
+            .get_value_or(""));
 }
 
 static void _draw_skill_train_cost(int cnt, int skill_id, bool is_training)

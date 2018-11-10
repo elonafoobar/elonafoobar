@@ -396,14 +396,19 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             }
             else
             {
-                ally_info +=
-                    ""s + i18n::_(u8"ability", std::to_string(rtval), u8"name");
+                ally_info += ""s
+                    + i18n::s.get_m(
+                          "locale.ability",
+                          the_ability_db.get_id_from_legacy(rtval)->get(),
+                          "name");
                 if (rtval(1) != -1)
                 {
-                    ally_info +=
-                        u8", "s
-                        + i18n::_(
-                              u8"ability", std::to_string(rtval(1)), u8"name");
+                    ally_info += u8", "s
+                        + i18n::s.get_m(
+                              "locale.ability",
+                              the_ability_db.get_id_from_legacy(rtval(1))
+                                  ->get(),
+                              "name");
                 }
             }
         }

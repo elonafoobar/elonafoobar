@@ -515,7 +515,10 @@ void draw_race_or_class_info()
             gcopy_c(1, (cnt2 * 3 + cnt) * inf_tiles, 672, inf_tiles, inf_tiles);
             pos(cnt * 150 + tx + 32, ty);
             mes(strmid(
-                    i18n::_(u8"ability", std::to_string(r), u8"name"),
+                    i18n::s.get_m(
+                        "locale.ability",
+                        the_ability_db.get_id_from_legacy(r)->get(),
+                        "name"),
                     0,
                     jp ? 6 : 3)
                 + u8": "s + s(p));
@@ -543,7 +546,10 @@ void draw_race_or_class_info()
             {
                 s += u8","s;
             }
-            s += i18n::_(u8"ability", std::to_string(cnt), u8"name");
+            s += i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(cnt)->get(),
+                "name");
             ++r;
         }
     }
@@ -560,7 +566,10 @@ void draw_race_or_class_info()
     {
         if (sdata.get(cnt, 0).original_level != 0)
         {
-            s = i18n::_(u8"ability", std::to_string(cnt), u8"name");
+            s = i18n::s.get_m(
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(cnt)->get(),
+                "name");
             if (jp)
             {
                 lenfix(s, 12);
@@ -577,7 +586,12 @@ void draw_race_or_class_info()
                 672,
                 inf_tiles,
                 inf_tiles);
-            s(1) = i18n::_(u8"ability", std::to_string(cnt), u8"description");
+            s(1) = i18n::s
+                       .get_m_optional(
+                           "locale.ability",
+                           the_ability_db.get_id_from_legacy(cnt)->get(),
+                           "description")
+                       .get_value_or("");
             if (en)
             {
                 if (strlen_u(s(1)) > 45)

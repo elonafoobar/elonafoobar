@@ -25,17 +25,16 @@ int access_class_info(int dbmode, const std::string& class_id)
     if (!data)
         return 0;
 
-    auto class_id_without_prefix = class_id;
-    strutil::try_remove_prefix(class_id_without_prefix, "core.");
     switch (dbmode)
     {
     case 2:
-        classname = i18n::_(u8"class", class_id_without_prefix, u8"name");
+        classname = i18n::s.get_m("locale.class", class_id, "name");
         return 0;
     case 9: return data->is_extra;
     case 11:
-        classname = i18n::_(u8"class", class_id_without_prefix, u8"name");
-        buff = i18n::_(u8"class", class_id_without_prefix, u8"description");
+        classname = i18n::s.get_m("locale.class", class_id, "name");
+        buff = i18n::s.get_m_optional("locale.class", class_id, "description")
+                   .get_value_or("");
         return 0;
     case 16: return data->item_type;
     case 3: break;

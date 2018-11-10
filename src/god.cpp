@@ -28,18 +28,56 @@ void txtgod(const GodId& id, int type)
     std::string message;
     switch (type)
     {
-    case 12: message = i18n::_(u8"god", id, u8"random"); break;
-    case 9: message = i18n::_(u8"god", id, u8"kill"); break;
-    case 10: message = i18n::_(u8"god", id, u8"night"); break;
-    case 11: message = i18n::_(u8"god", id, u8"welcome"); break;
-    case 5: message = i18n::_(u8"god", id, u8"believe"); break;
-    case 1: message = i18n::_(u8"god", id, u8"betray"); break;
-    case 2: message = i18n::_(u8"god", id, u8"take_over"); break;
-    case 3: message = i18n::_(u8"god", id, u8"fail_to_take_over"); break;
-    case 4: message = i18n::_(u8"god", id, u8"offer"); break;
-    case 6: message = i18n::_(u8"god", id, u8"receive_gift"); break;
-    case 7: message = i18n::_(u8"god", id, u8"ready_to_receive_gift"); break;
-    case 8: message = i18n::_(u8"god", id, u8"ready_to_receive_gift2"); break;
+    case 12:
+        message =
+            i18n::s.get_m_optional("locale.god", id, "random").get_value_or("");
+        break;
+    case 9:
+        message =
+            i18n::s.get_m_optional("locale.god", id, "kill").get_value_or("");
+        break;
+    case 10:
+        message =
+            i18n::s.get_m_optional("locale.god", id, "night").get_value_or("");
+        break;
+    case 11:
+        message = i18n::s.get_m_optional("locale.god", id, "welcome")
+                      .get_value_or("");
+        break;
+    case 5:
+        message = i18n::s.get_m_optional("locale.god", id, "believe")
+                      .get_value_or("");
+        break;
+    case 1:
+        message =
+            i18n::s.get_m_optional("locale.god", id, "betray").get_value_or("");
+        break;
+    case 2:
+        message = i18n::s.get_m_optional("locale.god", id, "take_over")
+                      .get_value_or("");
+        break;
+    case 3:
+        message = i18n::s.get_m_optional("locale.god", id, "fail_to_take_over")
+                      .get_value_or("");
+        break;
+    case 4:
+        message =
+            i18n::s.get_m_optional("locale.god", id, "offer").get_value_or("");
+        break;
+    case 6:
+        message = i18n::s.get_m_optional("locale.god", id, "receive_gift")
+                      .get_value_or("");
+        break;
+    case 7:
+        message =
+            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift")
+                .get_value_or("");
+        break;
+    case 8:
+        message =
+            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift2")
+                .get_value_or("");
+        break;
     default: assert(0);
     }
 
@@ -370,7 +408,7 @@ void god_proc_switching_penalty()
             mode = 9;
             txt(i18n::s.get(
                     "core.locale.god.enraged",
-                    i18n::_(u8"god", cdata.player().god_id, u8"name")),
+                    i18n::s.get_m("locale.god", cdata.player().god_id, "name")),
                 Message::color{ColorIndex::purple});
             txtgod(cdata.player().god_id, 1);
             redraw();
@@ -411,7 +449,7 @@ void switch_religion()
         snd("core.complete1");
         txt(i18n::s.get(
                 "core.locale.god.switch.follower",
-                i18n::_(u8"god", cdata.player().god_id, u8"name")),
+                i18n::s.get_m("locale.god", cdata.player().god_id, "name")),
             Message::color{ColorIndex::orange});
         if (cdata.player().god_id == core_god::itzpalt)
         {
@@ -448,12 +486,12 @@ TurnResult do_pray()
     }
     txt(i18n::s.get(
         "core.locale.god.pray.you_pray_to",
-        i18n::_(u8"god", cdata.player().god_id, u8"name")));
+        i18n::s.get_m("locale.god", cdata.player().god_id, "name")));
     if (cdata.player().piety_point < 200 || cdata.player().praying_point < 1000)
     {
         i18n::s.get(
             "core.locale.god.pray.indifferent",
-            i18n::_(u8"god", cdata.player().god_id, u8"name"));
+            i18n::s.get_m("locale.god", cdata.player().god_id, "name"));
         return TurnResult::turn_end;
     }
     animode = 100;

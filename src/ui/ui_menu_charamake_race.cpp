@@ -31,10 +31,7 @@ static void _load_race_list()
     }
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
-        // TODO: work around; remove "core." prefix;
-        auto race_id_without_prefix = listn(1, cnt);
-        strutil::try_remove_prefix(race_id_without_prefix, "core.");
-        listn(0, cnt) = i18n::_(u8"race", race_id_without_prefix, u8"name");
+        listn(0, cnt) = i18n::s.get_m("locale.race", listn(1, cnt), "name");
         if (list(0, cnt) == 1)
         {
             listn(0, cnt) = u8"(extra)"s + listn(0, cnt);

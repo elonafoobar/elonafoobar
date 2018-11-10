@@ -104,7 +104,10 @@ reset_page:
             display_key(x, y, i);
             cs_list(
                 cs == i,
-                i18n::_(u8"character", std::to_string(list(0, p)), u8"name"),
+                i18n::s.get_m(
+                    "locale.chara",
+                    the_character_db.get_id_from_legacy(list(0, p))->get(),
+                    "name"),
                 x + 30,
                 y,
                 0,
