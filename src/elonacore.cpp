@@ -7515,6 +7515,162 @@ void update_save_data(const fs::path& save_dir, int serial_id)
         }
         break;
     }
+    case 4:
+    {
+        // Replace double bed and happy bed's image.
+        for (const auto& entry : filesystem::dir_entries(
+                 save_dir,
+                 filesystem::DirEntryRange::Type::file,
+                 std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
+        {
+            // Open file.
+            std::ifstream fin{entry.path().native(), std::ios::binary};
+            putit::BinaryIArchive iar{fin};
+
+            // Prepare a temporary output stream.
+            // It is a string stream, but used as a memory stream here.
+            // `std::stringstream` class does not convert line endings and
+            // treat NUL as a terminator of string, so that it can be safely
+            // used as a memory stream.
+            std::ostringstream out;
+            putit::BinaryOArchive oar{out};
+
+            const auto is_invs1 = entry.path().filename() == "inv.s1"
+                || entry.path().filename() == "g_inv.s1";
+            const auto begin = is_invs1 ? 0 : 1320;
+            const auto end = is_invs1 ? 1320 : 5480;
+            for (int idx = begin; idx < end; ++idx)
+            {
+                // DO NOT use usual serialization utilities to migrate old data
+                // safely because they may be changed in the future version.
+
+                // Prepare variables.
+                int number_ = 0;
+                int value = 0;
+                int image = 0;
+                int id = 0;
+                Quality quality = Quality::none;
+                Position position;
+                int weight = 0;
+                IdentifyState identification_state =
+                    IdentifyState::unidentified;
+                int count = 0;
+                int dice_x = 0;
+                int dice_y = 0;
+                int damage_bonus = 0;
+                int hit_bonus = 0;
+                int dv = 0;
+                int pv = 0;
+                int skill = 0;
+                CurseState curse_state = CurseState::none;
+                int body_part = 0;
+                int function = 0;
+                int enhancement = 0;
+                int own_state = 0;
+                int color = 0;
+                int subname = 0;
+                int material = 0;
+                int param1 = 0;
+                int param2 = 0;
+                int param3 = 0;
+                int param4 = 0;
+                int difficulty_of_identification = 0;
+                int turn = 0;
+
+                int flags = 0;
+
+                std::vector<Enchantment> enchantments(15);
+
+                // Load item data.
+                {
+                    iar(number_);
+                    iar(value);
+                    iar(image);
+                    iar(id);
+                    iar(quality);
+                    iar(position);
+                    iar(weight);
+                    iar(identification_state);
+                    iar(count);
+                    iar(dice_x);
+                    iar(dice_y);
+                    iar(damage_bonus);
+                    iar(hit_bonus);
+                    iar(dv);
+                    iar(pv);
+                    iar(skill);
+                    iar(curse_state);
+                    iar(body_part);
+                    iar(function);
+                    iar(enhancement);
+                    iar(own_state);
+                    iar(color);
+                    iar(subname);
+                    iar(material);
+                    iar(param1);
+                    iar(param2);
+                    iar(param3);
+                    iar(param4);
+                    iar(difficulty_of_identification);
+                    iar(turn);
+                    iar(flags);
+                    range::for_each(enchantments, [&](auto&& enchantment) {
+                        iar(enchantment);
+                    });
+                }
+                // Prepend "core" prefix to old god IDs.
+                if (image == 649)
+                {
+                    ELONA_LOG("[Save data] Change item chip 649 to 261.");
+                    image = 261;
+                }
+                // Dump item data to the memory stream.
+                {
+                    oar(number_);
+                    oar(value);
+                    oar(image);
+                    oar(id);
+                    oar(quality);
+                    oar(position);
+                    oar(weight);
+                    oar(identification_state);
+                    oar(count);
+                    oar(dice_x);
+                    oar(dice_y);
+                    oar(damage_bonus);
+                    oar(hit_bonus);
+                    oar(dv);
+                    oar(pv);
+                    oar(skill);
+                    oar(curse_state);
+                    oar(body_part);
+                    oar(function);
+                    oar(enhancement);
+                    oar(own_state);
+                    oar(color);
+                    oar(subname);
+                    oar(material);
+                    oar(param1);
+                    oar(param2);
+                    oar(param3);
+                    oar(param4);
+                    oar(difficulty_of_identification);
+                    oar(turn);
+                    oar(flags);
+                    range::for_each(enchantments, [&](auto&& enchantment) {
+                        oar(enchantment);
+                    });
+                }
+            }
+
+            // Close the file and reopen to write.
+            fin.close();
+            std::ofstream fout{entry.path().native(), std::ios::binary};
+            // Write the data.
+            fout.write(out.str().c_str(), out.str().size());
+        }
+        break;
+    }
     default: break;
     }
 }
