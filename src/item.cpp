@@ -778,17 +778,8 @@ void itemname_additional_info()
         if (inv[prm_518].param1 != 0)
         {
             s_ += lang(
-                i18n::s.get(
-                    "locale.god",
-                    core_god::int2godid(inv[prm_518].param1),
-                    "name")
-                    + u8"の"s,
-                u8" <"s
-                    + i18n::s.get_m(
-                          "locale.god",
-                          core_god::int2godid(inv[prm_518].param1),
-                          "name")
-                    + u8">"s);
+                god_name(inv[prm_518].param1) + u8"の"s,
+                u8" <"s + god_name(inv[prm_518].param1) + u8">"s);
         }
     }
     if (a_ == 57000)

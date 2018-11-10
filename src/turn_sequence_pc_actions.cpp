@@ -259,13 +259,13 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
         if (p == 3)
         {
-            if (!cdata.player().god_id.empty())
+            if (cdata.player().god_id == core_god::eyth)
             {
-                action = "offer";
+                action = "pray";
             }
             else
             {
-                action = "pray";
+                action = "offer";
             }
         }
         if (p == 4)

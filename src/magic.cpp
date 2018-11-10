@@ -2384,7 +2384,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (cdata.player().god_id.empty())
+        if (cdata.player().god_id == core_god::eyth)
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -2398,33 +2398,25 @@ label_2181_internal:
             chara_gain_skill_exp(cdata.player(), 181, -1000);
             break;
         }
-        if (cdata.player().god_id.empty())
+        txt(i18n::s.get(
+                "core.locale.magic.faith.apply",
+                god_name(cdata.player().god_id)),
+            Message::color{ColorIndex::green});
+        if (efstatus == CurseState::blessed)
         {
-            txt(i18n::s.get("core.locale.common.nothing_happens"));
-            obvious = 0;
+            txt(i18n::s.get("core.locale.magic.faith.blessed"));
         }
-        else
-        {
-            txt(i18n::s.get(
-                    "core.locale.magic.faith.apply",
-                    i18n::s.get_m("locale.god", cdata.player().god_id, "name")),
-                Message::color{ColorIndex::green});
-            if (efstatus == CurseState::blessed)
-            {
-                txt(i18n::s.get("core.locale.magic.faith.blessed"));
-            }
-            animode = 100 + tc;
-            MiracleAnimation().play();
-            snd("core.pray2");
-            cdata.player().praying_point += 500;
-            modpiety(75);
-            chara_gain_skill_exp(
-                cdata.player(),
-                181,
-                1000 + (efstatus == CurseState::blessed) * 750,
-                6,
-                1000);
-        }
+        animode = 100 + tc;
+        MiracleAnimation().play();
+        snd("core.pray2");
+        cdata.player().praying_point += 500;
+        modpiety(75);
+        chara_gain_skill_exp(
+            cdata.player(),
+            181,
+            1000 + (efstatus == CurseState::blessed) * 750,
+            6,
+            1000);
         chara_refresh(tc);
         break;
     case 1119:

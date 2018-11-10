@@ -32,8 +32,6 @@ using namespace elona;
 namespace
 {
 
-
-
 int chara_create_internal()
 {
     if (rc == -1)
@@ -227,15 +225,6 @@ int chara_get_free_slot_force()
 
 
 
-} // namespace
-
-
-
-namespace
-{
-
-
-
 bool can_place_character_at(const Position& position, bool allow_stairs)
 {
     // Out of range
@@ -405,8 +394,6 @@ void failed_to_place_character(Character& cc)
     }
 }
 
-
-
 } // namespace
 
 
@@ -414,11 +401,12 @@ void failed_to_place_character(Character& cc)
 namespace elona
 {
 
-
 CData cdata;
 
 
 elona_vector1<std::string> usertxt;
+
+
 
 Character::Character()
     : growth_buffs(10)

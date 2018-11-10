@@ -21,16 +21,13 @@ static std::string _get_choice_name(bool already_believing, int god_id)
         else
         {
             return i18n::s.get(
-                "core.locale.god.desc.window.convert",
-                i18n::s.get_m(
-                    "locale.god", core_god::int2godid(god_id), "name"));
+                "core.locale.god.desc.window.convert", god_name(god_id));
         }
     }
     else
     {
         return i18n::s.get(
-            "core.locale.god.desc.window.believe",
-            i18n::s.get_m("locale.god", core_god::int2godid(god_id), "name"));
+            "core.locale.god.desc.window.believe", god_name(god_id));
     }
 }
 
@@ -86,7 +83,7 @@ static std::string _get_god_description(int god_id)
 {
     std::string buff = u8" "s;
 
-    if (god_id > 0 && god_id <= 7)
+    if (god_id != 0)
     {
         buff =
             i18n::s.get_enum_property("core.locale.god.desc", "text", god_id);
@@ -125,9 +122,7 @@ static void _draw_title(int god_id)
 {
     font(18 - en * 2, snail::Font::Style::bold);
     bmes(
-        i18n::s.get(
-            "core.locale.god.desc.window.title",
-            i18n::s.get_m("locale.god", core_god::int2godid(god_id), "name")),
+        i18n::s.get("core.locale.god.desc.window.title", god_name(god_id)),
         wx + 20,
         wy + 20);
 }

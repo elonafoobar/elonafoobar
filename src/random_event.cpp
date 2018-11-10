@@ -59,7 +59,7 @@ optional<RandomEvent> generate_random_event_in_sleep()
     int id = 0;
     int luck_threshold = 0;
 
-    if (!cdata.player().god_id.empty())
+    if (cdata.player().god_id != core_god::eyth)
     {
         if (rnd(12) == 0)
         {

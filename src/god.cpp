@@ -17,13 +17,16 @@
 #include "variables.hpp"
 
 
+
 namespace elona
 {
 
 void txtgod(const GodId& id, int type)
 {
-    if (id.empty())
+    if (id == core_god::eyth)
+    {
         return;
+    }
 
     std::string message;
     switch (type)
@@ -126,14 +129,15 @@ int modpiety(int prm_1035)
 
 void set_npc_religion()
 {
-    if (!cdata[tc].god_id.empty() || cdata[tc].has_learned_words() || tc == 0)
+    if (cdata[tc].god_id != core_god::eyth || cdata[tc].has_learned_words()
+        || tc == 0)
     {
         return;
     }
     randomize(game_data.random_seed + game_data.current_map);
     cdata[tc].god_id = core_god::int2godid(rnd(8));
     randomize();
-    if (cdata[tc].god_id.empty() || rnd(4) == 0)
+    if (cdata[tc].god_id == core_god::eyth || rnd(4) == 0)
     {
         cdata[tc].has_learned_words() = true;
     }
@@ -403,12 +407,11 @@ void god_proc_switching_penalty()
         gmode(2);
         render_hud();
         redraw();
-        if (!cdata.player().god_id.empty())
+        if (cdata.player().god_id != core_god::eyth)
         {
             mode = 9;
             txt(i18n::s.get(
-                    "core.locale.god.enraged",
-                    i18n::s.get_m("locale.god", cdata.player().god_id, "name")),
+                    "core.locale.god.enraged", god_name(cdata.player().god_id)),
                 Message::color{ColorIndex::purple});
             txtgod(cdata.player().god_id, 1);
             redraw();
@@ -437,7 +440,7 @@ void switch_religion()
     spact(23) = 0;
     spact(24) = 0;
     spact(25) = 0;
-    if (cdata.player().god_id.empty())
+    if (cdata.player().god_id == core_god::eyth)
     {
         txt(i18n::s.get("core.locale.god.switch.unbeliever"),
             Message::color{ColorIndex::orange});
@@ -449,7 +452,7 @@ void switch_religion()
         snd("core.complete1");
         txt(i18n::s.get(
                 "core.locale.god.switch.follower",
-                i18n::s.get_m("locale.god", cdata.player().god_id, "name")),
+                god_name(cdata.player().god_id)),
             Message::color{ColorIndex::orange});
         if (cdata.player().god_id == core_god::itzpalt)
         {
@@ -471,7 +474,7 @@ void switch_religion()
 
 TurnResult do_pray()
 {
-    if (cdata.player().god_id.empty())
+    if (cdata.player().god_id == core_god::eyth)
     {
         txt(i18n::s.get("core.locale.god.pray.do_not_believe"));
         return TurnResult::turn_end;
@@ -485,13 +488,12 @@ TurnResult do_pray()
         return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get(
-        "core.locale.god.pray.you_pray_to",
-        i18n::s.get_m("locale.god", cdata.player().god_id, "name")));
+        "core.locale.god.pray.you_pray_to", god_name(cdata.player().god_id)));
     if (cdata.player().piety_point < 200 || cdata.player().praying_point < 1000)
     {
-        i18n::s.get(
+        txt(i18n::s.get(
             "core.locale.god.pray.indifferent",
-            i18n::s.get_m("locale.god", cdata.player().god_id, "name"));
+            god_name(cdata.player().god_id)));
         return TurnResult::turn_end;
     }
     animode = 100;
@@ -717,6 +719,27 @@ TurnResult do_pray()
         ++game_data.god_rank;
     }
     return TurnResult::turn_end;
+}
+
+
+
+std::string god_name(const GodId& id)
+{
+    if (id == core_god::eyth)
+    {
+        return i18n::s.get_m("locale.god", "core.eyth", "name");
+    }
+    else
+    {
+        return i18n::s.get_m("locale.god", id, "name");
+    }
+}
+
+
+
+std::string god_name(int legacy_god_id)
+{
+    return god_name(core_god::int2godid(legacy_god_id));
 }
 
 } // namespace elona

@@ -737,8 +737,7 @@ void talk_window_show()
     }
     if (game_data.reveals_religion)
     {
-        s += u8" ("s + i18n::s.get_m("locale.god", cdata[tc].god_id, "name")
-            + u8")"s;
+        s += u8" ("s + god_name(cdata[tc].god_id) + u8")"s;
     }
     if (scenemode)
     {

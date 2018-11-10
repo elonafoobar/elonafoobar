@@ -5,30 +5,32 @@
 #include "enums.hpp"
 
 
+
 namespace elona
 {
 
-
 using GodId = std::string;
+
 
 
 namespace core_god
 {
 
-// constexpr const char* eyth = u8""; // 0
-constexpr const char* mani = u8"mani"; // 1
-constexpr const char* lulwy = u8"lulwy"; // 2
-constexpr const char* itzpalt = u8"itzpalt"; // 3
-constexpr const char* ehekatl = u8"ehekatl"; // 4
-constexpr const char* opatos = u8"opatos"; // 5
-constexpr const char* jure = u8"jure"; // 6
-constexpr const char* kumiromi = u8"kumiromi"; // 7
+constexpr const char* eyth = ""; // 0
+constexpr const char* mani = "core.mani"; // 1
+constexpr const char* lulwy = "core.lulwy"; // 2
+constexpr const char* itzpalt = "core.itzpalt"; // 3
+constexpr const char* ehekatl = "core.ehekatl"; // 4
+constexpr const char* opatos = "core.opatos"; // 5
+constexpr const char* jure = "core.jure"; // 6
+constexpr const char* kumiromi = "core.kumiromi"; // 7
 
 
 inline GodId int2godid(int n)
 {
     switch (n)
     {
+    case 0: return eyth;
     case 1: return mani;
     case 2: return lulwy;
     case 3: return itzpalt;
@@ -43,6 +45,8 @@ inline GodId int2godid(int n)
 
 inline int godid2int(const GodId& id)
 {
+    if (id == eyth)
+        return 0;
     if (id == mani)
         return 1;
     if (id == lulwy)
@@ -74,7 +78,7 @@ void god_proc_switching_penalty();
 void switch_religion();
 TurnResult do_pray();
 TurnResult do_offer();
-
-
+std::string god_name(const GodId& id);
+std::string god_name(int legacy_god_id);
 
 } // namespace elona
