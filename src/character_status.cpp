@@ -80,11 +80,8 @@ void modify_ether_disease_stage(int delta)
             add_amount = add_amount * 100 / 150;
         }
     }
-    game_data.ether_disease_stage += add_amount;
-    if (game_data.ether_disease_stage < 0)
-    {
-        game_data.ether_disease_stage = 0;
-    }
+    game_data.ether_disease_stage =
+        clamp(game_data.ether_disease_stage + add_amount, 0, 20000);
     mod_amount = game_data.ether_disease_stage / 1000 - original_amount;
     if (mod_amount > 0)
     {
