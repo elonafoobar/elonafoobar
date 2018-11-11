@@ -8755,13 +8755,16 @@ int do_cast_magic_attempt()
     {
         if (calcspellcostmp(efid, cc) > cdata[cc].mp)
         {
-            txt(i18n::s.get("core.locale.action.cast.overcast_warning"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!Config::instance().skip_overcasting_warning)
             {
-                update_screen();
-                efsource = 0;
-                return 0;
+                txt(i18n::s.get("core.locale.action.cast.overcast_warning"));
+                rtval = yes_or_no(promptx, prompty, 160);
+                if (rtval != 0)
+                {
+                    update_screen();
+                    efsource = 0;
+                    return 0;
+                }
             }
         }
         screenupdate = -1;

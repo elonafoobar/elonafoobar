@@ -349,6 +349,8 @@ config def {
             show_fps = false
 
             skip_confirm_at_shop = false
+
+            skip_overcasting_warning = false
         }
     }
 

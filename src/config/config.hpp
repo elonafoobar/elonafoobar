@@ -88,6 +88,7 @@ public:
     bool serverlist;
     bool shadow;
     bool skip_confirm_at_shop;
+    bool skip_overcasting_warning;
     bool skiprandevents;
     bool sound;
     int startrun;
