@@ -1071,7 +1071,7 @@ locale {
         }
         gwen {
             name = "<Gwen> the innocent"
-            text_100 = ["\"Oh my! Such pretty flowers♪\"", "\"Can I tag along? I won't be a bother♪\"", "\"I hope Sandra's red cape...♪\"", "\"Eat flowers evil-doer!♪\"", "\"Red is the color of love, of blood, and of roses♪\"", "\"A crown of flowers did his mother weave with all her heart...♪\"", "\"♪La, laaaah, la, la-la. Lah, la-la,, la la....♪\""]
+            text_100 = ["\"Oh my! Such pretty flowers♪\"", "\"Can I tag along? I won't be a bother♪\"", "\"I hope Sandra's red cape...♪\"", "\"Eat flowers evil-doer!♪\"", "\"Red is the color of love, of blood, and of roses♪\"", "\"A crown of flowers did his mother weave with all her heart...♪\"", "\"♪La, laaaah, la, la-la. Lah, la-la, la la....♪\""]
         }
         pael {
             name = "Lonely <Pael>"

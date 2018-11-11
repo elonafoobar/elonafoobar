@@ -938,7 +938,7 @@ locale {
         }
         _207 {
             positive {
-                gain = " A deep sense of peace fills your heart."
+                gain = "A deep sense of peace fills your heart."
             }
             negative {
                 gain = "Hatred dominates your soul."
@@ -1020,7 +1020,7 @@ locale {
             negative {
                 gain = "You feel unstable."
                 levels {
-                    _0 = "You are unstablizing space around you. [Random teleporation]"
+                    _0 = "You are unstablizing space around you. [Random teleportation]"
                 }
             }
         }
