@@ -7527,6 +7527,16 @@ void update_save_data(const fs::path& save_dir)
 
     Version version;
     putit::BinaryIArchive::load(version_filepath, version);
+
+    if (version.serial_id > latest_version.serial_id)
+    {
+        // FIXME:
+        // It is far away from the best solution, but we do not have the way to
+        // report a fatal error to end-users by GUI window, except for
+        // OS-builtin exception handling.
+        throw std::runtime_error{"Incompatible save data!"};
+    }
+
     for (int serial_id = version.serial_id;
          serial_id != latest_version.serial_id;
          ++serial_id)
