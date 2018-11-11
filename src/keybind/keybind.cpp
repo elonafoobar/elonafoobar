@@ -135,13 +135,13 @@ bool keybind_action_has_category(
     const std::string& action_id,
     ActionCategory category)
 {
+    if (action_id.empty())
+    {
+        return false;
+    }
     if (keybind::actions.find(action_id) == keybind::actions.end())
     {
         ELONA_LOG("No such keybind action " << action_id);
-        return false;
-    }
-    if (action_id == ""s)
-    {
         return false;
     }
 
