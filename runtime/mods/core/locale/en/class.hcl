@@ -44,7 +44,7 @@ locale {
         }
         claymore {
             name = "Claymore"
-            description = "The Claymore. Half-human, with silver eyes and inhuman evasive capabilities, the Claymores are a mostly female class, as the males have… problems. Their weapon of choice is the Claymore, hence their name, and they prefer light armor, relying on their great speed and skills of evasion to protect them. They heal fast, but the healing comes at a price. Their bodies are unstable, their motto unknown."
+            description = "The Claymore. Half-human, with silver eyes and inhuman evasive capabilities, the Claymores are a mostly female class, as the males have... problems. Their weapon of choice is the Claymore, hence their name, and they prefer light armor, relying on their great speed and skills of evasion to protect them. They heal fast, but the healing comes at a price. Their bodies are unstable, their motto unknown."
         }
         # For debug
         debugger {

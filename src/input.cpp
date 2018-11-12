@@ -231,7 +231,14 @@ bool input_text_dialog(
         {
             p(4) = 18;
             cutname(s, 18);
-            s += u8"…";
+            if (jp)
+            {
+                s += u8"…";
+            }
+            else
+            {
+                s += u8"...";
+            }
             p(4) += 2;
         }
 
