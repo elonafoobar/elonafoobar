@@ -187,6 +187,9 @@ config {
 
             # Skip confirm to buy or sell items at town shop.
             skip_confirm_at_shop = false
+
+            # Skip confirm to over-cast spells.
+            skip_overcasting_warning = false
         }
     }
 }

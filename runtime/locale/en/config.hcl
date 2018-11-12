@@ -527,6 +527,11 @@ DOC
                     name = "Skip confirm at shop"
                     doc = "Skip confirm to buy or sell items at town shops."
                 }
+
+                skip_overcasting_warning {
+                    name = "Skip over-casting warning"
+                    doc = "Skip warning prompt displayed when you are going to over-cast spells."
+                }
             }
 
             android {

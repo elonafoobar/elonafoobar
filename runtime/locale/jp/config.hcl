@@ -417,6 +417,11 @@ DOC
                     name = "売買確認を省略"
                     doc = "街の店において、売り買いの確認を省略します。"
                 }
+
+                skip_overcasting_warning {
+                    name = "マナ不足の警告を省略"
+                    doc = "マナが足りないときに表示される警告画面を省略します。"
+                }
             }
 
             android {
