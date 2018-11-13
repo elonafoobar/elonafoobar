@@ -12,31 +12,43 @@
 #include "../variables.hpp"
 #include "lua_env.hpp"
 
-namespace elona
+
+
+namespace
 {
-namespace lua
-{
 
-static const std::string prompt_primary = ">";
-static const std::string prompt_secondary = ">>";
-static const std::string eof_mark = "<eof>";
+constexpr const char* prompt_primary = ">";
+constexpr const char* prompt_secondary = ">>";
+constexpr const char* eof_mark = "<eof>";
 
-static constexpr int max_scrollback_count = 1000;
+constexpr int max_scrollback_count = 1000;
 
-LuaConsole::LuaConsole(LuaEnv* lua)
-{
-    _lua = lua;
 
-    _buf = buffer(max_scrollback_count);
-    _input_history = buffer(max_scrollback_count);
-}
 
-static std::string _version_string()
+std::string _version_string()
 {
     return u8"ver."s + latest_version.short_string() + " (" +
         latest_version.revision + ") OS: " + latest_version.platform +
         ", timestamp: " + latest_version.timestamp;
 }
+
+} // namespace
+
+
+
+namespace elona
+{
+namespace lua
+{
+
+LuaConsole::LuaConsole(LuaEnv* lua)
+    : _buf(max_scrollback_count)
+    , _input_history(max_scrollback_count)
+    , _lua(lua)
+{
+}
+
+
 
 void LuaConsole::init_constants()
 {
@@ -54,6 +66,8 @@ void LuaConsole::init_constants()
     print(u8"Elona_foobar debug console");
     print(_version_string());
 }
+
+
 
 void LuaConsole::init_environment()
 {
@@ -81,6 +95,8 @@ void LuaConsole::init_environment()
     });
 }
 
+
+
 void LuaConsole::set_constants(
     int char_width,
     int char_height,
@@ -94,6 +110,8 @@ void LuaConsole::set_constants(
     _max_chars = (_width / _char_width) - 1;
     _max_lines = static_cast<size_t>(_height / _char_height);
 }
+
+
 
 /// Returns true on success.
 bool LuaConsole::run_userscript()
@@ -113,9 +131,11 @@ bool LuaConsole::run_userscript()
     return true;
 }
 
+
+
 void LuaConsole::print_single_line(const std::string& line)
 {
-    if (line.size() == 0)
+    if (line.empty())
     {
         return;
     }
@@ -135,18 +155,22 @@ void LuaConsole::print_single_line(const std::string& line)
     _buf.push_back(line.substr(last_index, cut_index));
 }
 
+
+
 void LuaConsole::print(const std::string& message)
 {
-    if (message.size() == 0)
+    if (message.empty())
     {
         return;
     }
 
-    for (std::string line : strutil::split_lines(message))
+    for (const auto& line : strutil::split_lines(message))
     {
         print_single_line(line);
     }
 }
+
+
 
 void LuaConsole::draw()
 {
@@ -189,7 +213,7 @@ void LuaConsole::draw()
     // Scrollback counter
     if (_pos > 0)
     {
-        std::string line_count = std::to_string(_pos + _max_lines) + "/" +
+        const auto line_count = std::to_string(_pos + _max_lines) + "/" +
             std::to_string(_buf.size());
         elona::pos(windoww - (line_count.size() * _char_width), 0);
         font(inf_mesfont - en * 2);
@@ -199,10 +223,14 @@ void LuaConsole::draw()
     elona::color(0, 0, 0);
 }
 
-inline bool LuaConsole::is_incomplete_lua_line(const sol::error& error)
+
+
+bool LuaConsole::is_incomplete_lua_line(const sol::error& error)
 {
     return boost::algorithm::ends_with(error.what(), eof_mark);
 }
+
+
 
 bool LuaConsole::lua_error_handler(
     const std::string& input,
@@ -222,28 +250,27 @@ bool LuaConsole::lua_error_handler(
         }
         else
         {
-            std::string mes =
-                "Error: "s + error.what(); // lang(u8"エラー: ", u8"Error: ") +
-                                           // error.what();
+            const auto mes = "Error: "s + error.what();
             print(mes);
         }
     }
     else
     {
         sol::error error = pfr;
-        std::string mes = "Error: "s +
-            error.what(); // lang(u8"エラー: ", u8"Error: ") + error.what();
+        const auto mes = "Error: "s + error.what();
         print(mes);
     }
 
     return multiline_ended;
 }
 
-/// Returns true if the Lua input is incomplete, and multiline input should be
-/// used.
+
+
+/// Returns true if the Lua input is incomplete, and multiline input should
+/// be used.
 bool LuaConsole::interpret_lua(const std::string& input)
 {
-    if (input == ""s)
+    if (input.empty())
     {
         return _is_multiline;
     }
@@ -301,6 +328,8 @@ bool LuaConsole::interpret_lua(const std::string& input)
 
     return multiline_ended;
 }
+
+
 
 void LuaConsole::grab_input()
 {
