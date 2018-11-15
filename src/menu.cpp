@@ -946,9 +946,9 @@ label_2041_internal:
         {
             if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15)
                 || fs::exists(
-                       filesystem::dir::graphic()
-                       / (u8"pcc_"s + rtvaln + u8"_"s
-                          + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s)))
+                    filesystem::dir::graphic()
+                    / (u8"pcc_"s + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 - 1)
+                       + u8".bmp"s)))
             {
                 --pcc(rtval, cc);
                 p = 1;
@@ -1179,9 +1179,9 @@ void show_weapon_dice(int val0)
     }
     s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s
         + strmid(
-              s(2),
-              0,
-              3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
+            s(2),
+            0,
+            3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
     if (val0 == 0)
     {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);

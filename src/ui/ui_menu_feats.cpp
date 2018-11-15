@@ -61,10 +61,11 @@ static void _add_trait_desc(int tc_, const std::string& trait_desc)
     listn(0, listmax) = i18n::s.get(
         "core.locale.trait.window.his_equipment",
         cnven(
-            (jp) ? ((tc_ == 0) ? u8"あなたの"
-                               : (cdata[tc_].sex == 0 ? u8"彼の" : u8"彼女の"))
-                 : ((tc_ == 0) ? "your"
-                               : (cdata[tc_].sex == 0 ? u8"his" : u8"her"))),
+            (jp)
+                ? ((tc_ == 0) ? u8"あなたの"
+                              : (cdata[tc_].sex == 0 ? u8"彼の" : u8"彼女の"))
+                : ((tc_ == 0) ? "your"
+                              : (cdata[tc_].sex == 0 ? u8"his" : u8"her"))),
         trait_desc);
     ++listmax;
 }

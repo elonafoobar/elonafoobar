@@ -1159,9 +1159,9 @@ void show_shop_log()
         {
             txt(shop_mark
                 + i18n::s.get(
-                      "core.locale.building.shop.log.could_not_sell",
-                      customer,
-                      cdata[worker]));
+                    "core.locale.building.shop.log.could_not_sell",
+                    customer,
+                    cdata[worker]));
         }
     }
     else
@@ -1177,11 +1177,11 @@ void show_shop_log()
             snd("core.ding2");
             txt(shop_mark
                     + i18n::s.get(
-                          "core.locale.building.shop.log.sold_items",
-                          customer,
-                          cdata[worker],
-                          sold,
-                          s(0)),
+                        "core.locale.building.shop.log.sold_items",
+                        customer,
+                        cdata[worker],
+                        sold,
+                        s(0)),
                 Message::color{ColorIndex::orange});
         }
         chara_gain_skill_exp(

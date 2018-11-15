@@ -398,17 +398,16 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             {
                 ally_info += ""s
                     + i18n::s.get_m(
-                          "locale.ability",
-                          the_ability_db.get_id_from_legacy(rtval)->get(),
-                          "name");
+                        "locale.ability",
+                        the_ability_db.get_id_from_legacy(rtval)->get(),
+                        "name");
                 if (rtval(1) != -1)
                 {
                     ally_info += u8", "s
                         + i18n::s.get_m(
-                              "locale.ability",
-                              the_ability_db.get_id_from_legacy(rtval(1))
-                                  ->get(),
-                              "name");
+                            "locale.ability",
+                            the_ability_db.get_id_from_legacy(rtval(1))->get(),
+                            "name");
                 }
             }
         }

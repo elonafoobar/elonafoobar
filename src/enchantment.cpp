@@ -679,8 +679,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 ammoname(sid));
             s += " ["
                 + i18n::s.get(
-                      "core.locale.enchantment.with_parameters.ammo.max",
-                      power / 1000)
+                    "core.locale.enchantment.with_parameters.ammo.max",
+                    power / 1000)
                 + "]";
             break;
         }

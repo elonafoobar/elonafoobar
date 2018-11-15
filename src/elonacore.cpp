@@ -2088,9 +2088,9 @@ void cnvbonus(int prm_895, int prm_896)
         {
             buff += u8"　　"s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(prm_895)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(prm_895)->get(),
+                    "name")
                 + u8"耐性に <green>クラス"s + prm_896 / 50 + u8"<col>("s
                 + prm_896 + u8") のボーナス\n"s;
         }
@@ -2098,9 +2098,9 @@ void cnvbonus(int prm_895, int prm_896)
         {
             buff += u8"　　"s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(prm_895)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(prm_895)->get(),
+                    "name")
                 + u8"耐性に <red>クラス"s + prm_896 / 50 + u8"<col>("s + prm_896
                 + u8") のマイナス修正\n"s;
         }
@@ -2111,18 +2111,18 @@ void cnvbonus(int prm_895, int prm_896)
         {
             buff += u8"　　"s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(prm_895)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(prm_895)->get(),
+                    "name")
                 + u8"に <green>+"s + prm_896 + u8"<col> のボーナス\n"s;
         }
         if (prm_896 < 0)
         {
             buff += u8"　　"s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(prm_895)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(prm_895)->get(),
+                    "name")
                 + u8"に <red>"s + prm_896 + u8"<col> のマイナス修正\n"s;
         }
     }
@@ -3955,11 +3955,10 @@ void proc_negative_equipments()
             {
                 if (map_data.type != mdata_t::MapType::world_map)
                 {
-                    if (rnd(25)
-                        < clamp(
-                              std::abs(inv[ci].enchantments[cnt].power) / 50,
-                              1,
-                              25))
+                    if (rnd(25) < clamp(
+                            std::abs(inv[ci].enchantments[cnt].power) / 50,
+                            1,
+                            25))
                     {
                         efid = 408;
                         tc = cc;
@@ -3998,10 +3997,10 @@ void proc_negative_equipments()
                     cdata[cc].experience -= cdata[cc].required_experience
                             / (300
                                - clamp(
-                                     std::abs(inv[ci].enchantments[cnt].power)
-                                         / 2,
-                                     0,
-                                     50))
+                                   std::abs(inv[ci].enchantments[cnt].power)
+                                       / 2,
+                                   0,
+                                   50))
                         + rnd(100);
                     if (cdata[cc].experience < 0)
                     {
@@ -4016,12 +4015,10 @@ void proc_negative_equipments()
                 {
                     if (map_data.type != mdata_t::MapType::player_owned)
                     {
-                        if (rnd(50)
-                            < clamp(
-                                  std::abs(inv[ci].enchantments[cnt].power)
-                                      / 50,
-                                  1,
-                                  50))
+                        if (rnd(50) < clamp(
+                                std::abs(inv[ci].enchantments[cnt].power) / 50,
+                                1,
+                                50))
                         {
                             if (is_in_fov(cdata[cc]))
                             {
@@ -5334,8 +5331,8 @@ void supply_income()
                     }
                     txt(s
                             + i18n::s.get(
-                                  "core.locale.misc.tax.left_bills",
-                                  game_data.left_bill - 1)
+                                "core.locale.misc.tax.left_bills",
+                                game_data.left_bill - 1)
                             + s(1),
                         Message::color{ColorIndex::red});
                 }
@@ -6558,13 +6555,12 @@ void dump_player_info()
     noteadd(
         fixtxt(u8"プラチナ   : "s + cdata.player().platinum_coin, 30)
         + fixtxt(
-              (u8"最深到達  : "s + game_data.deepest_dungeon_level
-               + u8"階相当"s),
-              32));
+            (u8"最深到達  : "s + game_data.deepest_dungeon_level + u8"階相当"s),
+            32));
     noteadd(fixtxt(
         u8"プレイ時間 : "s
             + cnvplaytime(
-                  (game_data.play_time + timeGetTime() / 1000 - time_begin)),
+                (game_data.play_time + timeGetTime() / 1000 - time_begin)),
         30));
     noteadd(""s);
     s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s
@@ -10628,10 +10624,10 @@ TurnResult proc_movement_event()
                 }
                 if (rnd(220 + cdata.player().level * 10
                         - clamp(
-                              game_data.cargo_weight * 150
-                                  / (game_data.current_cart_limit + 1),
-                              0,
-                              (210 + cdata.player().level * 10)))
+                            game_data.cargo_weight * 150
+                                / (game_data.current_cart_limit + 1),
+                            0,
+                            (210 + cdata.player().level * 10)))
                     == 0)
                 {
                     encounter = 4;
@@ -10719,8 +10715,8 @@ TurnResult proc_movement_event()
                                 p(0))
                     + " "
                     + i18n::s.get(
-                          "core.locale.action.move.global.ambush.enemy_"
-                          "strength");
+                        "core.locale.action.move.global.ambush.enemy_"
+                        "strength");
                 for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (encounterlv < 5)
@@ -13835,12 +13831,12 @@ TurnResult pc_died()
     }
     s = u8"dead"s
         + i18n::s.get(
-              "core.locale.misc.death.sent_message",
-              cdatan(1, 0),
-              cdatan(0, 0),
-              ndeathcause,
-              mdatan(0),
-              last_words);
+            "core.locale.misc.death.sent_message",
+            cdatan(1, 0),
+            cdatan(0, 0),
+            ndeathcause,
+            mdatan(0),
+            last_words);
     screenupdate = -1;
     update_entire_screen();
     levelexitby = 3;

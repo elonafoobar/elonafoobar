@@ -2545,7 +2545,7 @@ void initialize_map_from_map_type()
         if (mdatan(0) == ""s
             || mdatan(0)
                 == i18n::s.get_enum_property(
-                       "core.locale.map.unique", "name", 4))
+                    "core.locale.map.unique", "name", 4))
         {
             mdatan(0) =
                 i18n::s.get_enum_property("core.locale.map.unique", "name", 7);

@@ -298,11 +298,10 @@ void quest_set_data(int val0)
     {
         if (quest_data[rq].reward_item_id < 10000)
         {
-            s(5) += i18n::s.get("core.locale.quest.info.and")
+            s(5) +=
+                i18n::s.get("core.locale.quest.info.and")
                 + i18n::_(
-                        u8"ui",
-                        u8"reward",
-                        u8"_"s + quest_data[rq].reward_item_id);
+                    u8"ui", u8"reward", u8"_"s + quest_data[rq].reward_item_id);
         }
         else
         {
@@ -1046,10 +1045,9 @@ void quest_gen_scale_by_level()
         quest_data[rq].reward_gold = quest_data[rq].reward_gold
             * (100
                + clamp(
-                     (quest_data[rq].difficulty - cdata.player().level) / 5
-                         * 25,
-                     0,
-                     200))
+                   (quest_data[rq].difficulty - cdata.player().level) / 5 * 25,
+                   0,
+                   200))
             / 100;
     }
 }
@@ -1388,8 +1386,8 @@ void quest_complete()
                 p = clamp(
                     p
                         * static_cast<int>(
-                              static_cast<double>(quest_data[rq].extra_info_2)
-                              / quest_data[rq].extra_info_1),
+                            static_cast<double>(quest_data[rq].extra_info_2)
+                            / quest_data[rq].extra_info_1),
                     p(0),
                     p * 3);
             }

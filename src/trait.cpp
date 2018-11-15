@@ -870,7 +870,7 @@ void trait_load_desc()
             {
                 s = u8"["s
                     + i18n::s.get(
-                          "core.locale.trait.window.category.ether_disease")
+                        "core.locale.trait.window.category.ether_disease")
                     + u8"]"s;
             }
             s += traitrefn(2 + std::abs(trait(tid)));
@@ -911,8 +911,8 @@ void trait_load_desc()
         listn(0, listmax) = u8"["s
             + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
             + i18n::s.get(
-                  "core.locale.trait.body_is_complicated",
-                  cdata[tc].speed_correction_value);
+                "core.locale.trait.body_is_complicated",
+                cdata[tc].speed_correction_value);
         ++listmax;
     }
     if (tc == 0 && game_data.ether_disease_speed != 0)

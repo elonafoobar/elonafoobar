@@ -483,8 +483,8 @@ void window_recipe_(
         pos(dx_at_m184, dy_at_m184);
         mes(""s + i_at_m184 + u8"."s
             + i18n::s.get(
-                  "core.locale.blending.window.chose_the_recipe_of",
-                  rpname(rpid)));
+                "core.locale.blending.window.chose_the_recipe_of",
+                rpname(rpid)));
     }
     dy_at_m184 += 17;
     ++i_at_m184;
