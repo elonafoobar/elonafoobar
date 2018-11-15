@@ -1393,11 +1393,6 @@ void apply_general_eating_effect(int cieat)
             enc = enc % 10000;
             if (enc2 == 1)
             {
-                chara_gain_skill_exp(
-                    cdata[cc],
-                    enc,
-                    (inv[ci].enchantments[cnt].power / 50 + 1) * 100
-                        * (1 + (cc != 0) * 5));
                 if (is_in_fov(cdata[cc]))
                 {
                     if (inv[ci].enchantments[cnt].power / 50 + 1 >= 0)
@@ -1421,6 +1416,11 @@ void apply_general_eating_effect(int cieat)
                                 "name")));
                     }
                 }
+                chara_gain_skill_exp(
+                    cdata[cc],
+                    enc,
+                    (inv[ci].enchantments[cnt].power / 50 + 1) * 100
+                        * (1 + (cc != 0) * 5));
                 continue;
             }
             if (enc2 == 6)

@@ -40,11 +40,11 @@ locale {
         }
         priest {
             name = "Priest"
-            description = "The Priest. The Faithful, the devout. They bring the words of their God to the world, one battered heretic at a time. Good with all armors, shields, divine magic, blunt weapons, and reading. The Priest is a handful, though depending on their God, they may have hidden pratfalls as well. If the motto: \"A hymn a day,, will keep me away, Sinner!\" appeals to you, choose this."
+            description = "The Priest. The Faithful, the devout. They bring the words of their God to the world, one battered heretic at a time. Good with all armors, shields, divine magic, blunt weapons, and reading. The Priest is a handful, though depending on their God, they may have hidden pratfalls as well. If the motto: \"A hymn a day, will keep me away, Sinner!\" appeals to you, choose this."
         }
         claymore {
             name = "Claymore"
-            description = "The Claymore. Half-human, with silver eyes and inhuman evasive capabilities, the Claymores are a mostly female class, as the males have… problems. Their weapon of choice is the Claymore, hence their name, and they prefer light armor, relying on their great speed and skills of evasion to protect them. They heal fast, but the healing comes at a price. Their bodies are unstable, their motto unknown."
+            description = "The Claymore. Half-human, with silver eyes and inhuman evasive capabilities, the Claymores are a mostly female class, as the males have... problems. Their weapon of choice is the Claymore, hence their name, and they prefer light armor, relying on their great speed and skills of evasion to protect them. They heal fast, but the healing comes at a price. Their bodies are unstable, their motto unknown."
         }
         # For debug
         debugger {

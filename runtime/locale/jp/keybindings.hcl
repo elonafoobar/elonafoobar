@@ -1,12 +1,12 @@
 locale {
     keybind {
         menu {
-            hint = "決定 [キーの変化] "
+            hint = "決定 [キーの変更] "
 
             topics {
                 name = "名前"
-                primary = "キー１"
-                alternate = "キー２"
+                primary = "キー1"
+                alternate = "キー2"
                 joystick = "ジョイスティック"
             }
 
@@ -52,8 +52,8 @@ END
         previous_page = "前のページ"
         next_menu = "次のメニュー"
         previous_menu = "前のメニュー"
-        switch_mode = "モード変化"
-        switch_mode_2 = "モード変化２"
+        switch_mode = "モード変更"
+        switch_mode_2 = "モード変更2"
         identify = "詳細"
         portrait = "ポートレイト"
 

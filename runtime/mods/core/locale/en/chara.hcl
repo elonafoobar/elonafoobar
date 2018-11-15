@@ -73,7 +73,7 @@ locale {
         }
         zeome {
             name = "<Zeome> the false prophet"
-            text_100 = "You hear raspy bitter laughter in the distance…"
+            text_100 = "You hear raspy bitter laughter in the distance..."
             text_101 = "\"Fool!\""
             text_102 = "\"Impossible!\""
             text_103 = "\"Hahaha!\""
@@ -87,7 +87,7 @@ locale {
         }
         orphe {
             name = "<Orphe> the chaos child"
-            text_100 = ["You hear childish laughter, only it's oddly distorted in some eldritch manner.", "You have been looking for someone like this…"]
+            text_100 = ["You hear childish laughter, only it's oddly distorted in some eldritch manner.", "You have been looking for someone like this..."]
         }
         mad_scientist {
             name = "<Mad scientist>"
@@ -163,7 +163,7 @@ locale {
         }
         slan {
             name = "<Slan> the shadow of Palmia"
-            text_100 = ["\"H-help me… please...\"", "\"Is someone there? Help me... The King must be forewarned!\"", "You hear cries of help echoing off the walls. They sound quite weak...."]
+            text_100 = ["\"H-help me... please...\"", "\"Is someone there? Help me... The King must be forewarned!\"", "You hear cries of help echoing off the walls. They sound quite weak...."]
         }
         karam {
             name = "<Karam> the lonely wolf of Karune"
@@ -1071,15 +1071,15 @@ locale {
         }
         gwen {
             name = "<Gwen> the innocent"
-            text_100 = ["\"Oh my! Such pretty flowers♪\"", "\"Can I tag along? I won't be a bother♪\"", "\"I hope Sandra's red cape...♪\"", "\"Eat flowers evil-doer!♪\"", "\"Red is the color of love, of blood, and of roses♪\"", "\"A crown of flowers did his mother weave with all her heart...♪\"", "\"♪La, laaaah, la, la-la. Lah, la-la,, la la....♪\""]
+            text_100 = ["\"Oh my! Such pretty flowers♪\"", "\"Can I tag along? I won't be a bother♪\"", "\"I hope Sandra's red cape...♪\"", "\"Eat flowers evil-doer!♪\"", "\"Red is the color of love, of blood, and of roses♪\"", "\"A crown of flowers did his mother weave with all her heart...♪\"", "\"♪La, laaaah, la, la-la. Lah, la-la, la la....♪\""]
         }
         pael {
             name = "Lonely <Pael>"
-            text_100 = ["\"Mother…\"", "\"Do not go alone.\"", "\"Oh, look at you…\""]
+            text_100 = ["\"Mother...\"", "\"Do not go alone.\"", "\"Oh, look at you...\""]
         }
         lily {
             name = "Pael's mom <Lily>"
-            text_100 = ["\"Pael, such a spoiled child…dear oh dear.\"", "\"Hush now, I've got you.\"", "\"I hope Pael is not in trouble with the guards again…\"", "\"Now you be good dear, understand?\""]
+            text_100 = ["\"Pael, such a spoiled child... dear oh dear.\"", "\"Hush now, I've got you.\"", "\"I hope Pael is not in trouble with the guards again...\"", "\"Now you be good dear, understand?\""]
         }
         raphael {
             name = "<Raphael> the womanizer"
@@ -1091,7 +1091,7 @@ locale {
         }
         arnord {
             name = "<Arnord> the injured soldier"
-            text_100 = ["\"Pah, a minor flesh wound…\"", "\"Come closer… I got rounds for this thing still…\"", "\"It's not a tumor!\"", "\"I'll be back.\""]
+            text_100 = ["\"Pah, a minor flesh wound...\"", "\"Come closer... I got rounds for this thing still...\"", "\"It's not a tumor!\"", "\"I'll be back.\""]
         }
         mia {
             name = "<Mia> the cat freak"
@@ -1103,7 +1103,7 @@ locale {
         }
         marks {
             name = "<Marks> the great thief"
-            text_100 = ["\"Impossible? Bah, to you maybe.\"", "\"You catch me? Ha! You'd have a better chance shackling your shadow!\"", "You hear the swagger of a man of supreme confidence, only it's oh so quiet…"]
+            text_100 = ["\"Impossible? Bah, to you maybe.\"", "\"You catch me? Ha! You'd have a better chance shackling your shadow!\"", "You hear the swagger of a man of supreme confidence, only it's oh so quiet..."]
         }
         noel {
             name = "<Noel> the bomber"
@@ -1115,7 +1115,7 @@ locale {
         }
         thief {
             name = "thief"
-            text_100 = ["\"Heh, easy money…\"", "\"Think I can get some good coin for those fancy bits you got on stranger?\"", "\"Another one with a coinpurse just dangling there, like a bit of ripe fruit. Time to pluck it.\""]
+            text_100 = ["\"Heh, easy money...\"", "\"Think I can get some good coin for those fancy bits you got on stranger?\"", "\"Another one with a coinpurse just dangling there, like a bit of ripe fruit. Time to pluck it.\""]
         }
         robber {
             name = "robber"
@@ -1145,14 +1145,14 @@ locale {
         }
         cute_fairy {
             name = "cute fairy"
-            text_100 = ["You hear the fluttering of gossamer wings.", "You hear tittering laughter like tiny crystal bells.", "You smell what reminds you of sugarplums…"]
+            text_100 = ["You hear the fluttering of gossamer wings.", "You hear tittering laughter like tiny crystal bells.", "You smell what reminds you of sugarplums..."]
         }
         android {
             name = "android"
         }
         black_angel {
             name = "black angel"
-            text_100 = ["You hear what sounds like wings of feather, but with grace and dignity somehow...", "You hear a quiet voice in prayer, but with a note of sadness...", "You smell Myrrh in the air, but with the faintest hints of charcoal…"]
+            text_100 = ["You hear what sounds like wings of feather, but with grace and dignity somehow...", "You hear a quiet voice in prayer, but with a note of sadness...", "You smell Myrrh in the air, but with the faintest hints of charcoal..."]
         }
         exile {
             name = "exile"
@@ -1207,14 +1207,14 @@ locale {
         }
         abyss {
             name = "<Abyss> the thief watchman"
-            text_100 = ["\"I am an officer of the Thief Guild's jurisdiction. Beware the clumsy-fingered.\"", "\"Stop… Let me make sure you are on my lists.\""]
+            text_100 = ["\"I am an officer of the Thief Guild's jurisdiction. Beware the clumsy-fingered.\"", "\"Stop... Let me make sure you are on my lists.\""]
         }
         fray {
             name = "<Fray> the fighter guildmaster"
         }
         doria {
             name = "<Doria> the fighter watchman"
-            text_100 = ["\"I am an officer of the Fighter Guild's jurisdiction. Beware the weak-thewed.\"", "\"Stop… Let me make sure you are on my lists.\""]
+            text_100 = ["\"I am an officer of the Fighter Guild's jurisdiction. Beware the weak-thewed.\"", "\"Stop... Let me make sure you are on my lists.\""]
         }
         silver_eyed_witch {
             name = "silver eyed witch"
@@ -1226,11 +1226,11 @@ locale {
         }
         little_sister {
             name = "<Little sister>"
-            text_100 = ["\"Mr. Bubbles, please stand up… Please!\"", "You hear the sound of a frightened little girl somewhere.", "\"Angel, angel, until we find the right one we don't dare die…\""]
+            text_100 = ["\"Mr. Bubbles, please stand up... Please!\"", "You hear the sound of a frightened little girl somewhere.", "\"Angel, angel, until we find the right one we don't dare die...\""]
         }
         strange_scientist {
             name = "<Strange scientist>"
-            text_100 = ["\"The path of the righteous is not always easy, yes?\"", "\"I'll not have him hurt my Little ones… I've worked far too long on them to see them fail now.\""]
+            text_100 = ["\"The path of the righteous is not always easy, yes?\"", "\"I'll not have him hurt my Little ones... I've worked far too long on them to see them fail now.\""]
             text_101 = "\"How can you do these things?\""
             text_102 = "\"Have you no heart?\""
             text_103 = "\"Have you no heart?\""

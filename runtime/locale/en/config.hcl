@@ -389,7 +389,7 @@ DOC
             }
 
             message {
-                name = "Message&Log"
+                name = "Message & Log"
                 add_timestamps {
                     name = "Add time info"
                     doc = <<DOC

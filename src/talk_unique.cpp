@@ -3137,19 +3137,40 @@ TalkResult talk_unique_renton()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = u8"…"s;
+            if (jp)
+            {
+                buff = u8"…"s;
+            }
+            else
+            {
+                buff = u8"..."s;
+            }
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = u8"… …"s;
+            if (jp)
+            {
+                buff = u8"… …"s;
+            }
+            else
+            {
+                buff = u8"... ..."s;
+            }
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = u8"… … …"s;
+            if (jp)
+            {
+                buff = u8"… … …"s;
+            }
+            else
+            {
+                buff = u8"... ... ..."s;
+            }
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
