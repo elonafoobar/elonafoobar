@@ -504,19 +504,23 @@ optional<SharedId> sound_id_for_element(int element_id)
     return SharedId(result);
 }
 
+
+
 void sound_kill(const Position& position)
 {
-    static const std::vector<std::string> sounds = {
-        "core.kill1", "core.kill2", "core.more1"};
+    static const std::vector<std::string> sounds = {"core.kill1", "core.kill2"};
     snd_at(SharedId(choice(sounds)), position, false, false);
 }
 
+
+
 void sound_pick_up()
 {
-    static const std::vector<std::string> sounds = {
-        "core.get1", "core.get2", "core.drop1"};
+    static const std::vector<std::string> sounds = {"core.get1", "core.get2"};
     snd(SharedId(choice(sounds)));
 }
+
+
 
 void sound_footstep(int foot)
 {
