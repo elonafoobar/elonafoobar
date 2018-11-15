@@ -1227,9 +1227,9 @@ void saccard(int prm_1019, int prm_1020)
     card_at_tcg(4, prm_1019) = landix_at_tcg(prm_1020)
         + landsum_at_tcg(prm_1020)
             * clamp(
-                  (landspace_at_tcg - landsum_at_tcg(prm_1020) / 2),
-                  4,
-                  landspace_at_tcg);
+                (landspace_at_tcg - landsum_at_tcg(prm_1020) / 2),
+                4,
+                landspace_at_tcg);
     card_at_tcg(5, prm_1019) = landiy_at_tcg(prm_1020);
     landlist_at_tcg(landsum_at_tcg(prm_1020), prm_1020) = prm_1019;
     ++landsum_at_tcg(prm_1020);
@@ -1491,9 +1491,9 @@ int putcard(int prm_1024, int prm_1025)
         card_at_tcg(4, prm_1024) = landix_at_tcg(prm_1025)
             + landsum_at_tcg(prm_1025)
                 * clamp(
-                      (landspace_at_tcg - landsum_at_tcg(prm_1025) / 2),
-                      4,
-                      landspace_at_tcg);
+                    (landspace_at_tcg - landsum_at_tcg(prm_1025) / 2),
+                    4,
+                    landspace_at_tcg);
         card_at_tcg(5, prm_1024) = landiy_at_tcg(prm_1025);
         landlist_at_tcg(landsum_at_tcg(prm_1025), prm_1025) = prm_1024;
         ++landsum_at_tcg(prm_1025);
@@ -2086,9 +2086,9 @@ void tcg_update_mana()
             x_at_tcg = landix_at_tcg(cnt2_at_tcg)
                 + cnt
                     * clamp(
-                          (landspace_at_tcg - landsum_at_tcg(cnt2_at_tcg) / 2),
-                          4,
-                          landspace_at_tcg);
+                        (landspace_at_tcg - landsum_at_tcg(cnt2_at_tcg) / 2),
+                        4,
+                        landspace_at_tcg);
             y_at_tcg = landiy_at_tcg(cnt2_at_tcg);
             m_at_tcg = landlist_at_tcg(cnt, cnt2_at_tcg);
             n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));

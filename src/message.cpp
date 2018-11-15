@@ -187,8 +187,7 @@ void Message::_msg_write(std::string& message)
         }
         message = message.substr(0, bytewise_pos) + u8"  "
             + message.substr(
-                  bytewise_pos + std::strlen(musical_note)
-                  + (symbol_type != 0));
+                bytewise_pos + std::strlen(musical_note) + (symbol_type != 0));
         elona::pos(
             (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7
                 + en * 3,

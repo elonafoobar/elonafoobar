@@ -1402,13 +1402,13 @@ void cell_draw()
                 {
                     light_ -= (6
                                - clamp(
-                                     dist(
-                                         cdata.player().position.x,
-                                         cdata.player().position.y,
-                                         x_,
-                                         y),
-                                     0,
-                                     6))
+                                   dist(
+                                       cdata.player().position.x,
+                                       cdata.player().position.y,
+                                       x_,
+                                       y),
+                                   0,
+                                   6))
                         * light.brightness;
                     pos(dx_, dy_ - light.dy);
                     gmode(5, light.alpha_base + rnd(light.alpha_random + 1));

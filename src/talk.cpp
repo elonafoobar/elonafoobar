@@ -733,7 +733,7 @@ void talk_window_show()
     {
         s += " "
             + i18n::s.get(
-                  "core.locale.talk.window.shop_rank", cdata[tc].shop_rank);
+                "core.locale.talk.window.shop_rank", cdata[tc].shop_rank);
     }
     if (game_data.reveals_religion)
     {

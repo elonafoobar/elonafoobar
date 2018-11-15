@@ -258,10 +258,9 @@ TalkResult talk_arena_master(int chatval_)
         (220 - game_data.ranks.at(0) / 50)
                 * (100
                    + clamp(
-                         area_data[game_data.current_map]
-                             .winning_streak_in_arena,
-                         0,
-                         50))
+                       area_data[game_data.current_map].winning_streak_in_arena,
+                       0,
+                       50))
                 / 100
             + 2);
     listmax = 0;
@@ -380,10 +379,10 @@ TalkResult talk_pet_arena_master(int chatval_)
         (220 - game_data.ranks.at(1) / 50)
                 * (50
                    + clamp(
-                         area_data[game_data.current_map]
-                             .winning_streak_in_pet_arena,
-                         0,
-                         50))
+                       area_data[game_data.current_map]
+                           .winning_streak_in_pet_arena,
+                       0,
+                       50))
                 / 100
             + 2);
     listmax = 0;

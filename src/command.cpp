@@ -396,10 +396,10 @@ static void _search_for_crystal()
             continue;
         }
         if (p > dist(
-                    inv[cnt].position.x,
-                    inv[cnt].position.y,
-                    cdata.player().position.x,
-                    cdata.player().position.y))
+                inv[cnt].position.x,
+                inv[cnt].position.y,
+                cdata.player().position.x,
+                cdata.player().position.y))
         {
             p = dist(
                 inv[cnt].position.x,
@@ -1442,7 +1442,7 @@ TurnResult do_dip_command()
                     inv[ci],
                     inv[cidip])
                 + i18n::s.get(
-                      "core.locale.action.dip.result.love_food.guilty"));
+                    "core.locale.action.dip.result.love_food.guilty"));
             if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);

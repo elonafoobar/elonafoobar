@@ -558,9 +558,9 @@ label_1876_internal:
             list(0, listmax) = 2;
             listn(0, listmax) = u8"採取する("s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(180)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(180)->get(),
+                    "name")
                 + u8": "s + sdata(180, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
@@ -578,9 +578,9 @@ label_1876_internal:
             list(0, listmax) = 2;
             listn(0, listmax) = u8"掘る("s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(163)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(163)->get(),
+                    "name")
                 + u8": "s + sdata(163, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
@@ -598,9 +598,9 @@ label_1876_internal:
             list(0, listmax) = 2;
             listn(0, listmax) = u8"釣る("s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(185)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(185)->get(),
+                    "name")
                 + u8": "s + sdata(185, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
@@ -618,9 +618,9 @@ label_1876_internal:
             list(0, listmax) = 2;
             listn(0, listmax) = u8"解剖する("s
                 + i18n::s.get_m(
-                      "locale.ability",
-                      the_ability_db.get_id_from_legacy(161)->get(),
-                      "name")
+                    "locale.ability",
+                    the_ability_db.get_id_from_legacy(161)->get(),
+                    "name")
                 + u8": "s + sdata(161, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
@@ -655,7 +655,7 @@ label_1876_internal:
                 noteadd(
                     "@BL"
                     + i18n::s.get(
-                          "core.locale.casino.you_get", 1, matname(p), mat(p)));
+                        "core.locale.casino.you_get", 1, matname(p), mat(p)));
             }
             atxthrough = 1;
             goto label_1875;
@@ -800,9 +800,9 @@ label_1876_internal:
         list(0, listmax) = 1;
         listn(0, listmax) = u8"錠を解体する("s
             + i18n::s.get_m(
-                  "locale.ability",
-                  the_ability_db.get_id_from_legacy(158)->get(),
-                  "name")
+                "locale.ability",
+                the_ability_db.get_id_from_legacy(158)->get(),
+                "name")
             + u8": "s + sdata(158, 0) + u8")"s;
         ++listmax;
         list(0, listmax) = 3;
@@ -897,7 +897,7 @@ bool casino_start()
         noteadd(
             "@BL"
             + i18n::s.get(
-                  "core.locale.casino.you_get", 10, matname(1), mat(1)));
+                "core.locale.casino.you_get", 10, matname(1), mat(1)));
     }
     atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
     atxinfon(2) = "";
@@ -1188,7 +1188,7 @@ bool casino_blackjack()
                     i18n::s.get("core.locale.casino.blackjack.game.bets", stake)
                     + " "
                     + i18n::s.get(
-                          "core.locale.casino.blackjack.game.wins", winrow);
+                        "core.locale.casino.blackjack.game.wins", winrow);
                 winrow = 0;
                 txt(i18n::s.get(
                     "core.locale.casino.blackjack.game.cheat.text"));
@@ -1257,7 +1257,7 @@ bool casino_blackjack()
                 noteadd(
                     "@GR"
                     + i18n::s.get(
-                          "core.locale.casino.blackjack.game.loot", inv[ci]));
+                        "core.locale.casino.blackjack.game.loot", inv[ci]));
             }
         }
         list(0, listmax) = 0;

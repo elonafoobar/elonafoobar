@@ -174,7 +174,7 @@ void start_elona()
     quickpage = 1;
     if (Config::instance().startup_script != ""s
         && !Config::instance().get<bool>(
-               "core.config.foobar.run_script_in_save"))
+            "core.config.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();

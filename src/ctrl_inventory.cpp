@@ -892,10 +892,10 @@ label_2061_internal:
     s = ""s + listmax + u8" items"s;
     s += "  ("s
         + i18n::s.get(
-              "core.locale.ui.inv.window.total_weight",
-              cnvweight(cdata.player().inventory_weight),
-              cnvweight(cdata.player().max_inventory_weight),
-              cnvweight(game_data.cargo_weight))
+            "core.locale.ui.inv.window.total_weight",
+            cnvweight(cdata.player().inventory_weight),
+            cnvweight(cdata.player().max_inventory_weight),
+            cnvweight(game_data.cargo_weight))
         + ")"s;
     if (invctrl == 25)
     {

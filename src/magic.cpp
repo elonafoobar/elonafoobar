@@ -1496,7 +1496,7 @@ label_2181_internal:
                     cdata[game_data.mount]));
                 txt(name(game_data.mount)
                         + i18n::s.get(
-                              "core.locale.magic.mount.dismount_dialog"),
+                            "core.locale.magic.mount.dismount_dialog"),
                     Message::color{ColorIndex::cyan});
                 ride_end();
                 break;
@@ -2238,12 +2238,12 @@ label_2181_internal:
                         chara_gain_skill(cdata.player(), p, 1, 200);
                         txt(s
                                 + i18n::s.get(
-                                      "core.locale.magic.gain_knowledge.gain",
-                                      i18n::s.get_m(
-                                          "locale.ability",
-                                          the_ability_db.get_id_from_legacy(p)
-                                              ->get(),
-                                          "name")),
+                                    "core.locale.magic.gain_knowledge.gain",
+                                    i18n::s.get_m(
+                                        "locale.ability",
+                                        the_ability_db.get_id_from_legacy(p)
+                                            ->get(),
+                                        "name")),
                             Message::color{ColorIndex::green});
                         snd("core.ding2");
                         f = 1;
@@ -2454,16 +2454,16 @@ label_2181_internal:
                             snd("core.ding2");
                             txt(s
                                     + i18n::s.get(
-                                          "core.locale.magic.gain_skill_"
-                                          "potential."
-                                          "increases",
-                                          cdata[tc],
-                                          i18n::s.get_m(
-                                              "locale.ability",
-                                              the_ability_db
-                                                  .get_id_from_legacy(p)
-                                                  ->get(),
-                                              "name")),
+                                        "core.locale.magic.gain_skill_"
+                                        "potential."
+                                        "increases",
+                                        cdata[tc],
+                                        i18n::s.get_m(
+                                            "locale.ability",
+                                            the_ability_db
+                                                .get_id_from_legacy(p)
+                                                ->get(),
+                                            "name")),
                                 Message::color{ColorIndex::green});
                         }
                     }
