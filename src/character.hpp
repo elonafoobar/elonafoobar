@@ -6,7 +6,7 @@
 #include <vector>
 #include "data/types/type_character.hpp"
 #include "god.hpp"
-#include "lua_env/exported_function.hpp"
+#include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
 #include "range.hpp"
 

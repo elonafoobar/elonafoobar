@@ -73,7 +73,7 @@ int magic()
             {
                 f = 1;
                 p = the_ability_db[efid]->ability_type % 1000;
-                if (the_buff_db[p]->type == BuffData::Type::hex)
+                if (the_buff_db[p]->type == BuffType::hex)
                 {
                     efbad = 1;
                 }
@@ -106,11 +106,11 @@ int magic()
             }
             if (f)
             {
-                if (the_buff_db[p]->type == BuffData::Type::buff)
+                if (the_buff_db[p]->type == BuffType::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (the_buff_db[p]->type == BuffData::Type::hex)
+                else if (the_buff_db[p]->type == BuffType::hex)
                 {
                     BrightAuraAnimation(
                         cdata[tc].position, BrightAuraAnimation::Type::debuff)
@@ -1762,7 +1762,7 @@ label_2181_internal:
                     break;
                 }
             }
-            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffData::Type::hex)
+            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffType::hex)
             {
                 continue;
             }

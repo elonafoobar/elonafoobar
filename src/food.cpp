@@ -252,7 +252,7 @@ void chara_vomit(Character& cc)
         {
             break;
         }
-        if (the_buff_db[cc.buffs[i].id]->type == BuffData::Type::food)
+        if (the_buff_db[cc.buffs[i].id]->type == BuffType::food)
         {
             buff_delete(cc, i);
         }

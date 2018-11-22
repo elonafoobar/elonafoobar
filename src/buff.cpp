@@ -56,49 +56,6 @@ namespace elona
 {
 
 
-BuffDB the_buff_db;
-
-
-BuffDB::BuffDB()
-{
-    storage.emplace(
-        0,
-        BuffData{0,
-                 LUA_REFNIL,
-                 BuffData::Type::buff,
-                 LUA_REFNIL,
-                 LUA_REFNIL}); // dummy
-}
-
-
-void BuffDB::define(lua_State* L)
-{
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw std::runtime_error(u8"Error: fail to load buff data");
-
-    ELONA_CAT_DB_FIELD_INTEGER(type_, 0);
-    ELONA_CAT_DB_FIELD_REF(duration);
-    ELONA_CAT_DB_FIELD_REF(on_refresh);
-
-    cat::Ref self = luaL_ref(L, LUA_REGISTRYINDEX);
-    // Dummy; after calling this function, the caller pop one value from the Lua
-    // stack.
-    lua_pushnil(L);
-
-    storage.emplace(
-        std::stoi(id), // TODO
-        BuffData{
-            std::stoi(id),
-            self,
-            BuffData::Type(type_),
-            duration,
-            on_refresh,
-        });
-}
-
-
-
 bool buff_has(const Character& cc, int id)
 {
     return std::any_of(
@@ -147,7 +104,7 @@ void buff_add(
         }
     }
 
-    if (the_buff_db[id]->type == BuffData::Type::hex)
+    if (the_buff_db[id]->type == BuffType::hex)
     {
         bool resists{};
         if (sdata(60, cc.index) / 2 > rnd(power * 2 + 100))
@@ -203,7 +160,7 @@ void buff_add(
     if (is_in_fov(cc))
     {
         // Messages of fodd buff are shown elsewhere.
-        if (the_buff_db[id]->type != BuffData::Type::food)
+        if (the_buff_db[id]->type != BuffType::food)
         {
             txt(i18n::s.get_enum_property("core.locale.buff", id, "apply", cc));
         }

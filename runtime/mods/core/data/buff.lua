@@ -15,6 +15,40 @@ local function mod_skill_clamp(args, id, amount)
                  skill.current_level and 1 or 0, 9999)
 end
 
+--[[
+List of fields:
+
+duration:
+   function taking a power level which returns the number of turns the
+   buff lasts.
+on_refresh:
+   function for applying the effects of the buff. It takes two
+   arguments, "self" which is the buff definition itself and "args", a
+   table with these fields:
+      - power: buff power.
+      - chara: character which the buff is being applied to.
+description:
+   function for returning the localized buff description. It takes two
+   arguments, "self" which is the buff definition itself and "power",
+   the buff's power. It can be used for passing additional arguments
+   to be used in the localized string, primarily the buff's calculated
+   power.
+buff_type:
+   indicates if the buff has a positive or negative
+   effect. If the buff is of type "Hex" and is obtained from an item,
+   the buff will gain more power if the item is cursed (power = power
+   * 150 / 100), and less if it is blessed (power = 50). Vice-versa
+   for the other buff types.
+      - If buff_type is "Buff", the buff animation is played on gain.
+      - If the buff type is "Food", it will be lost if the bearer vomits.
+      - If buff_type is "Hex":
+         + The debuff animation is played on gain.
+         + Any instance of it will be considered a target for removal in
+           Holy Light/Vanquish Hex.
+         + The target of the buff can potentially resist gaining it
+           through skills/traits.
+]]
+
 -- TODO: buff icons
 data:define_type("buff")
 data:add_multi(

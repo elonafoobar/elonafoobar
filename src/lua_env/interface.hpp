@@ -68,6 +68,13 @@ void run_event(Args&&... args)
         std::forward<Args>(args)...);
 }
 
+template <typename... Args>
+sol::table create_table(Args&&... args)
+{
+    return lua::lua->get_state()->create_table_with(
+        std::forward<Args>(args)...);
+}
+
 /**
  * Obtains a Lua table reference to a data member in the global data table.
  */

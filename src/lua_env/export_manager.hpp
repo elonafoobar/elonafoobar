@@ -4,8 +4,8 @@
 #include "../filesystem.hpp"
 #include "../message.hpp"
 #include "../variables.hpp"
-#include "exported_function.hpp"
 #include "lua_env.hpp"
+#include "wrapped_function.hpp"
 
 namespace elona
 {
@@ -42,7 +42,7 @@ public:
      * Obtains a Lua callback where name is like
      * "exports:<mod_name>.<namespaces>", if it exists.
      */
-    optional<ExportedFunction> get_exported_function(
+    optional<WrappedFunction> get_exported_function(
         const std::string& name) const;
 
     bool has_function(const std::string& name) const

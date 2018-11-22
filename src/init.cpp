@@ -350,14 +350,13 @@ int cat_cbitmod(lua_State* L)
 
 void initialize_cat_db()
 {
+    // TODO remove
     cat::global.initialize();
 
     export_to_cat_world(cat::global.ptr());
     cat::global.register_function(u8"cdata", cat_cdata);
     cat::global.register_function(u8"sdata", cat_sdata);
     cat::global.register_function(u8"cbitmod", cat_cbitmod);
-
-    the_buff_db.initialize();
 }
 
 void initialize_lua()

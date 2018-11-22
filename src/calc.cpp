@@ -9,6 +9,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "message.hpp"
 #include "quest.hpp"
@@ -84,8 +85,11 @@ int rangedist = 0;
 
 int calc_buff_duration(int id, int power)
 {
-    auto func = the_buff_db[id]->duration;
-    return cat::global.call<int>(func, power);
+    auto buff = the_buff_db[id];
+    assert(buff);
+
+    auto& duration = buff->duration;
+    return duration.call_with_result(0, power);
 }
 
 
@@ -98,10 +102,14 @@ std::string get_buff_description(int id, int power)
 
 void apply_buff(int cc, int id, int power)
 {
-    const auto self = the_buff_db[id]->self;
-    const auto func = the_buff_db[id]->on_refresh;
-    cat::global.call_with_self<std::nullptr_t>(
-        self, func, cc, power, 1 /* TODO */);
+    auto buff = the_buff_db[id];
+    assert(buff);
+
+    auto& self = buff->self;
+    auto& on_refresh = buff->on_refresh;
+    auto args =
+        lua::create_table("power", power, "chara", lua::handle(cdata[cc]));
+    on_refresh.call(self, args);
 }
 
 
