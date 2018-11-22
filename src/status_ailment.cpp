@@ -82,7 +82,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::confused:
         if (cdata[cc].is_immune_to_confusion())
             return;
-        if (buff_has(cdata[cc], 7))
+        if (buff_has(cdata[cc], "core.hero"))
             return;
         if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 2 + 1))
             return;
@@ -185,9 +185,9 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::fear:
         if (cdata[cc].is_immune_to_fear())
             return;
-        if (buff_has(cdata[cc], 1))
+        if (buff_has(cdata[cc], "core.holy_shield"))
             return;
-        if (buff_has(cdata[cc], 7))
+        if (buff_has(cdata[cc], "core.hero"))
             return;
         if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 5 + 1))
             return;

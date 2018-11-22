@@ -92,21 +92,29 @@ void apply_buff(int cc, int id, int power)
 }
 
 
-bool buff_has(const Character& cc, int id)
+bool buff_has(const Character& cc, const std::string& id)
 {
+    auto buff_def = the_buff_db[id];
+    assert(buff_def);
+
+    int legacy_id = buff_def->id;
     return std::any_of(
         std::begin(cc.buffs), std::end(cc.buffs), [&](const auto& buff) {
-            return buff.id == id;
+            return buff.id == legacy_id;
         });
 }
 
 
 
-optional_ref<const Buff> buff_find(const Character& cc, int id)
+optional_ref<const Buff> buff_find(const Character& cc, const std::string& id)
 {
+    auto buff_def = the_buff_db[id];
+    assert(buff_def);
+
+    int legacy_id = buff_def->id;
     const auto itr = std::find_if(
         std::begin(cc.buffs), std::end(cc.buffs), [&](const auto& buff) {
-            return buff.id == id;
+            return buff.id == legacy_id;
         });
     if (itr == std::end(cc.buffs))
     {
@@ -122,15 +130,20 @@ optional_ref<const Buff> buff_find(const Character& cc, int id)
 
 void buff_add(
     Character& cc,
-    int id,
+    const std::string& id,
     int power,
     int turns,
     optional_ref<const Character> doer)
 {
+    auto buff = the_buff_db[id];
+    assert(buff);
+
+    int legacy_id = buff->id;
+
     if (turns <= 0)
         return;
 
-    const auto slot = buff_find_slot(cc, id, turns);
+    const auto slot = buff_find_slot(cc, legacy_id, turns);
     if (slot == buff_find_slot_no_effect)
     {
         if (is_in_fov(cc))
@@ -140,7 +153,7 @@ void buff_add(
         }
     }
 
-    if (the_buff_db[id]->type == BuffType::hex)
+    if (buff->type == BuffType::hex)
     {
         bool resists{};
         if (sdata(60, cc.index) / 2 > rnd(power * 2 + 100))
@@ -166,11 +179,11 @@ void buff_add(
                 turns = turns / 5 + 1;
             }
         }
-        if (cc.quality >= Quality::miracle && id == 16)
+        if (cc.quality >= Quality::miracle && id == "core.death_word")
         {
             resists = true;
         }
-        if (const auto& holy_veil = buff_find(cc, 10))
+        if (const auto& holy_veil = buff_find(cc, "core.holy_veil"))
         {
             if (holy_veil->power + 50 > power * 5 / 2 ||
                 rnd(holy_veil->power + 50) > rnd(power + 1))
@@ -196,18 +209,19 @@ void buff_add(
     if (is_in_fov(cc))
     {
         // Messages of fodd buff are shown elsewhere.
-        if (the_buff_db[id]->type != BuffType::food)
+        if (buff->type != BuffType::food)
         {
-            txt(i18n::s.get_enum_property("core.locale.buff", id, "apply", cc));
+            txt(i18n::s.get_enum_property(
+                "core.locale.buff", legacy_id, "apply", cc));
         }
 
         add_damage_popup(
-            i18n::s.get_enum_property("core.locale.buff", "name", id),
+            i18n::s.get_enum_property("core.locale.buff", "name", legacy_id),
             cc.index,
             {255, 255, 255});
     }
 
-    cc.buffs[slot] = {id, power, turns};
+    cc.buffs[slot] = {legacy_id, power, turns};
 
     chara_refresh(cc.index);
 }

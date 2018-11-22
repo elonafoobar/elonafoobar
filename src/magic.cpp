@@ -106,11 +106,15 @@ int magic()
             }
             if (f)
             {
-                if (the_buff_db[p]->type == BuffType::buff)
+                auto buff = the_buff_db[p];
+                auto buff_id = the_buff_db.get_id_from_legacy(p);
+                assert(buff);
+
+                if (buff->type == BuffType::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (the_buff_db[p]->type == BuffType::hex)
+                else if (buff->type == BuffType::hex)
                 {
                     BrightAuraAnimation(
                         cdata[tc].position, BrightAuraAnimation::Type::debuff)
@@ -126,8 +130,14 @@ int magic()
                         }
                     }
                 }
+
                 buff_add(
-                    cdata[tc], p, efp, calc_buff_duration(p, efp), cdata[cc]);
+                    cdata[tc],
+                    *buff_id,
+                    efp,
+                    calc_buff_duration(p, efp),
+                    cdata[cc]);
+
                 if (efid == 447)
                 {
                     if (efstatus == CurseState::blessed)
@@ -1782,7 +1792,7 @@ label_2181_internal:
                 continue;
             }
         }
-        buff_add(cdata[tc], 10, efp, 5 + efp / 30, cdata[cc]);
+        buff_add(cdata[tc], "core.holy_veil", efp, 5 + efp / 30, cdata[cc]);
         animeload(11, tc);
         break;
     case 1120:
@@ -4019,9 +4029,11 @@ label_2181_internal:
                         "core.locale.magic.cheer.is_excited", cdata[tc]),
                     Message::color{ColorIndex::blue});
             }
-            buff_add(cdata[tc], 5, sdata(17, cc) * 5 + 50, 15, cdata[cc]);
-            buff_add(cdata[tc], 7, sdata(17, cc) * 5 + 100, 60, cdata[cc]);
-            buff_add(cdata[tc], 18, 1500, 30, cdata[cc]);
+            buff_add(
+                cdata[tc], "core.speed", sdata(17, cc) * 5 + 50, 15, cdata[cc]);
+            buff_add(
+                cdata[tc], "core.hero", sdata(17, cc) * 5 + 100, 60, cdata[cc]);
+            buff_add(cdata[tc], "core.contingency", 1500, 30, cdata[cc]);
         }
         break;
     case 1131:

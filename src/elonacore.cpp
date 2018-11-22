@@ -9019,7 +9019,7 @@ int do_cast_magic_attempt()
                     u8"_"s + cdata[cc].special_attack_type)));
         }
     }
-    if (buff_has(cdata[cc], 2))
+    if (buff_has(cdata[cc], "core.mist_of_silence"))
     {
         if (is_in_fov(cdata[cc]))
         {

@@ -76,13 +76,7 @@ void LuaCharacter::add_buff(
     int power,
     int turns)
 {
-    auto buff = the_buff_db[id];
-    if (!buff)
-    {
-        return;
-    }
-
-    elona::buff_add(self, buff->id, power, turns);
+    elona::buff_add(self, id, power, turns);
 }
 
 void LuaCharacter::add_buff_doer(
@@ -92,14 +86,8 @@ void LuaCharacter::add_buff_doer(
     int turns,
     LuaCharacterHandle doer_handle)
 {
-    auto buff = the_buff_db[id];
-    if (!buff)
-    {
-        return;
-    }
-
     auto& doer = lua::lua->get_handle_manager().get_ref<Character>(doer_handle);
-    elona::buff_add(self, buff->id, power, turns, doer);
+    elona::buff_add(self, id, power, turns, doer);
 }
 
 void LuaCharacter::set_growth_buff(Character& self, int index, int power)

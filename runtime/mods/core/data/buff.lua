@@ -63,6 +63,8 @@ data:add_multi(
    "core.buff",
    {
       {
+         -- NOTE: Has these hardcoded behaviors.
+         --  + Attempts to apply fear will be ignored.
          name = "holy_shield",
          id = 1,
          buff_type = "Buff",
@@ -79,6 +81,8 @@ data:add_multi(
          description = get_description
       },
       {
+         -- NOTE: Has these hardcoded behaviors.
+         --  + Silence behavior.
          name = "mist_of_silence",
          id = 2,
          buff_type = "Hex",
@@ -156,6 +160,8 @@ data:add_multi(
          description = get_description
       },
       {
+         -- NOTE: Has these hardcoded behaviors.
+         --  + Attempts to apply confusion or fear will be ignored.
          name = "hero",
          id = 7,
          buff_type = "Buff",
@@ -207,6 +213,9 @@ data:add_multi(
          description = get_description
       },
       {
+         -- NOTE: Has these hardcoded behaviors.
+         --  + Additional chance to resist if a hex is applied to this
+         --    character.
          name = "holy_veil",
          id = 10,
          buff_type = "Buff",
@@ -303,6 +312,9 @@ data:add_multi(
          description = get_description
       },
       {
+         -- NOTE: Has these hardcoded behaviors.
+         --  + On application, will always be resisted if character is
+         --    of "Miracle" or "Godly" quality.
          name = "death_word",
          id = 16,
          buff_type = "Hex",
@@ -339,6 +351,10 @@ data:add_multi(
          description = get_description
       },
       {
+         -- NOTE: Has these hardcoded behaviors.
+         --  + Check for lethal damage and chance to heal. If the
+         --    "IsContractingWithReaper" flag is set then the buff is
+         --    expected to be be active on the same character.
          name = "contingency",
          id = 18,
          buff_type = "Buff",
