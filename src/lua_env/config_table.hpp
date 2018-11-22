@@ -127,9 +127,6 @@ public:
         return result;
     }
 
-
-
-private:
     sol::table storage;
     std::string id;
 };
