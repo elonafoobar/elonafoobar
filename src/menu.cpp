@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ability.hpp"
 #include "audio.hpp"
+#include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"

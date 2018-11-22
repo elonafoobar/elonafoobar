@@ -3,6 +3,7 @@
 #include <type_traits>
 #include "ability.hpp"
 #include "area.hpp"
+#include "buff.hpp"
 #include "calc.hpp"
 #include "cat.hpp"
 #include "character_status.hpp"

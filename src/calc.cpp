@@ -9,7 +9,6 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "message.hpp"
 #include "quest.hpp"
@@ -80,37 +79,6 @@ namespace elona
 
 
 int rangedist = 0;
-
-
-
-int calc_buff_duration(int id, int power)
-{
-    auto buff = the_buff_db[id];
-    assert(buff);
-
-    auto& duration = buff->duration;
-    return duration.call_with_result(0, power);
-}
-
-
-std::string get_buff_description(int id, int power)
-{
-    return i18n::fmt(u8"buff", std::to_string(id), u8"description")(power);
-}
-
-
-
-void apply_buff(int cc, int id, int power)
-{
-    auto buff = the_buff_db[id];
-    assert(buff);
-
-    auto& self = buff->self;
-    auto& on_refresh = buff->on_refresh;
-    auto args =
-        lua::create_table("power", power, "chara", lua::handle(cdata[cc]));
-    on_refresh.call(self, args);
-}
 
 
 

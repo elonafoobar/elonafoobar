@@ -15,9 +15,27 @@ local function mod_skill_level_clamp(args, id, amount)
                  skill.current_level and 1 or 0, 9999)
 end
 
+local function get_description(self, power)
+   return I18N.get_enum_property("core.locale.buff", "description", self.id, self._effect(power))
+end
+
 --[[
 List of fields:
 
+buff_type:
+   indicates if the buff has a positive or negative
+   effect. If the buff is of type "Hex" and is obtained from an item,
+   the buff will gain more power if the item is cursed (power = power
+   * 150 / 100), and less if it is blessed (power = 50). Vice-versa
+   for the other buff types.
+      - If buff_type is "Buff", the buff animation is played on gain.
+      - If the buff type is "Food", it will be lost if the bearer vomits.
+      - If buff_type is "Hex":
+         + The debuff animation is played on gain.
+         + Any instance of it will be considered a target for removal in
+           Holy Light/Vanquish Hex.
+         + The target of the buff can potentially resist gaining it
+           through skills/traits.
 duration:
    function taking a power level which returns the number of turns the
    buff lasts.
@@ -33,20 +51,10 @@ description:
    the buff's power. It can be used for passing additional arguments
    to be used in the localized string, primarily the buff's calculated
    power.
-buff_type:
-   indicates if the buff has a positive or negative
-   effect. If the buff is of type "Hex" and is obtained from an item,
-   the buff will gain more power if the item is cursed (power = power
-   * 150 / 100), and less if it is blessed (power = 50). Vice-versa
-   for the other buff types.
-      - If buff_type is "Buff", the buff animation is played on gain.
-      - If the buff type is "Food", it will be lost if the bearer vomits.
-      - If buff_type is "Hex":
-         + The debuff animation is played on gain.
-         + Any instance of it will be considered a target for removal in
-           Holy Light/Vanquish Hex.
-         + The target of the buff can potentially resist gaining it
-           through skills/traits.
+
+_effect isn't strictly necessary, but it is typically used for
+calculating the actual effect from the buff's power, and displaying it
+in the description.
 ]]
 
 -- TODO: buff icons
@@ -68,9 +76,7 @@ data:add_multi(
          _effect = function(power)
             return 25 + power // 15
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.holy_shield", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "mist_of_silence",
@@ -84,9 +90,7 @@ data:add_multi(
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.mist_of_silence")
-         end
+         description = get_description
       },
       {
          name = "regeneration",
@@ -101,9 +105,7 @@ data:add_multi(
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.regeneration")
-         end
+         description = get_description
       },
       {
          name = "elemental_shield",
@@ -120,9 +122,7 @@ data:add_multi(
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.elemental_shield")
-         end
+         description = get_description
       },
       {
          name = "speed",
@@ -137,9 +137,7 @@ data:add_multi(
          _effect = function(power)
             return Math.modf(50 + Math.sqrt(power // 5))
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.speed", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "slow",
@@ -155,9 +153,7 @@ data:add_multi(
          _effect = function(power)
             return Math.min(20 + power // 20, 50)
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.slow", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "hero",
@@ -175,9 +171,7 @@ data:add_multi(
          _effect = function(power)
             return 5 + power // 30
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.hero", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "mist_of_frailness",
@@ -193,9 +187,7 @@ data:add_multi(
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.mist_of_frailness")
-         end
+         description = get_description
       },
       {
          name = "element_scar",
@@ -212,9 +204,7 @@ data:add_multi(
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.element_scar")
-         end
+         description = get_description
       },
       {
          name = "holy_veil",
@@ -228,9 +218,7 @@ data:add_multi(
          _effect = function(power)
             return 50 + power // 3 * 2
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.holy_veil", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "nightmare",
@@ -246,9 +234,7 @@ data:add_multi(
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.nightmare")
-         end
+         description = get_description
       },
       {
          name = "divine_wisdom",
@@ -266,9 +252,7 @@ data:add_multi(
          _effect = function(power)
             return 6 + power // 40, 3 + power // 100
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.divine_wisdom", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "punishment",
@@ -286,9 +270,7 @@ data:add_multi(
          _effect = function(power)
             return 20, 20
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.punishment", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "lulwys_trick",
@@ -303,9 +285,7 @@ data:add_multi(
          _effect = function(power)
             return 155 + power // 5
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.lulwys_trick", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "incognito",
@@ -315,14 +295,12 @@ data:add_multi(
             return 4 + power // 40
          end,
          on_refresh = function(self, args)
-            args.chara:set_bit(16, 1)
+            args.chara:set_flag("IsIncognito", true)
          end,
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.incognito")
-         end
+         description = get_description
       },
       {
          name = "death_word",
@@ -332,14 +310,12 @@ data:add_multi(
             return 20
          end,
          on_refresh = function(self, args)
-            args.chara:set_bit(973, 1)
+            args.chara:set_flag("IsSentencedDaeth", true)
          end,
          _effect = function(power)
             return 0
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.death_word")
-         end
+         description = get_description
       },
       {
          name = "boost",
@@ -360,9 +336,7 @@ data:add_multi(
          _effect = function(power)
             return 120
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.boost", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "contingency",
@@ -372,14 +346,12 @@ data:add_multi(
             return 66
          end,
          on_refresh = function(self, args)
-            args.chara:set_bit(980, 1)
+            args.chara:set_flag("IsContractingWithReaper", true)
          end,
          _effect = function(power)
             return Math.clamp(25 + power // 17, 25, 80)
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.contingency", self._effect(power))
-         end
+         description = get_description
       },
       {
          name = "luck",
@@ -394,9 +366,7 @@ data:add_multi(
          _effect = function(power)
             return power
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.luck", self._effect(power))
-         end
+         description = get_description
       },
    }
 )
@@ -412,14 +382,13 @@ local function register_growth_buff(id, name, growth_buff_index)
             return 10 + power // 10
          end,
          on_refresh = function(self, args)
+            print(growth_buff_index)
             args.chara:set_growth_buff(growth_buff_index, self._effect(args.power))
          end,
          _effect = function(power)
             return power
          end,
-         description = function(self, power)
-            return I18N.get("core.buff.grow_" .. name, self._effect(power))
-         end
+         description = get_description
       }
    })
 end

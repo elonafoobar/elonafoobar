@@ -15,7 +15,7 @@ sol::optional<int> prompt_number_with_initial(const std::string&, int, int);
 
 sol::optional<std::string> prompt_text(const std::string&, bool);
 
-sol::optional<int> prompt_choice(sol::variadic_args);
+sol::optional<int> prompt_choice(sol::table);
 
 
 void bind(sol::table&);

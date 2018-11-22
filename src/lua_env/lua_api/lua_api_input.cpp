@@ -62,20 +62,18 @@ sol::optional<std::string> Input::prompt_text(
     return elona::inputlog(0);
 }
 
-sol::optional<int> Input::prompt_choice(sol::variadic_args args)
+sol::optional<int> Input::prompt_choice(sol::table choices)
 {
-    if (args.size() == 0)
-    {
-        throw sol::error("Input.prompt_choice called with no arguments");
-    }
-
     Prompt prompt;
-    for (size_t i = 0; i < args.size(); i++)
+
+    // Lua tables are 1-indexed, but the prompt is 0-indexed.
+    for (size_t i = 1; i <= choices.size(); i++)
     {
-        prompt.append(args[i].as<std::string>(), i);
+        std::string choice = choices[i];
+        prompt.append(choice, i - 1);
     }
 
-    int rtval = prompt.query(promptx, prompty, 160);
+    int rtval = prompt.query(promptx, prompty, 240);
     if (rtval == -1)
     {
         return sol::nullopt;

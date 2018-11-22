@@ -6,6 +6,7 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "lua_env/interface.hpp"
 #include "message.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -54,6 +55,41 @@ int buff_find_slot(const Character& cc, int id, int turns)
 
 namespace elona
 {
+
+
+int calc_buff_duration(int id, int power)
+{
+    auto buff = the_buff_db[id];
+    assert(buff);
+
+    auto& duration = buff->duration;
+    return duration.call_with_result(0, power);
+}
+
+
+std::string get_buff_description(int id, int power)
+{
+    auto buff = the_buff_db[id];
+    assert(buff);
+
+    auto& self = buff->self;
+    auto& description = buff->description;
+    return description.call_with_result("<error>", self, power);
+}
+
+
+
+void apply_buff(int cc, int id, int power)
+{
+    auto buff = the_buff_db[id];
+    assert(buff);
+
+    auto& self = buff->self;
+    auto& on_refresh = buff->on_refresh;
+    auto args =
+        lua::create_table("power", power, "chara", lua::handle(cdata[cc]));
+    on_refresh.call(self, args);
+}
 
 
 bool buff_has(const Character& cc, int id)

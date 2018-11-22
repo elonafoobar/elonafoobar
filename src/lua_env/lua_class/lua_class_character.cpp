@@ -1,5 +1,6 @@
 #include "lua_class_character.hpp"
 #include "../../ability.hpp"
+#include "../../buff.hpp"
 #include "../../character.hpp"
 #include "../../character_status.hpp"
 #include "../../dmgheal.hpp"
@@ -67,6 +68,48 @@ void LuaCharacter::heal_ailment(
     StatusAilment ailment =
         LuaEnums::StatusAilmentTable.ensure_from_string(ailment_name);
     elona::healcon(self.index, ailment, power);
+}
+
+void LuaCharacter::add_buff(
+    Character& self,
+    const std::string& id,
+    int power,
+    int turns)
+{
+    auto buff = the_buff_db[id];
+    if (!buff)
+    {
+        return;
+    }
+
+    elona::buff_add(self, buff->id, power, turns);
+}
+
+void LuaCharacter::add_buff_doer(
+    Character& self,
+    const std::string& id,
+    int power,
+    int turns,
+    LuaCharacterHandle doer_handle)
+{
+    auto buff = the_buff_db[id];
+    if (!buff)
+    {
+        return;
+    }
+
+    auto& doer = lua::lua->get_handle_manager().get_ref<Character>(doer_handle);
+    elona::buff_add(self, buff->id, power, turns, doer);
+}
+
+void LuaCharacter::set_growth_buff(Character& self, int index, int power)
+{
+    if (index < 0 || index > 10)
+    {
+        return;
+    }
+
+    self.growth_buffs[index] = power;
 }
 
 bool LuaCharacter::recruit_as_ally(Character& self)
@@ -239,6 +282,8 @@ void LuaCharacter::bind(sol::state& lua)
         &Character::dv,
         "hit_bonus",
         &Character::hit_bonus,
+        "growth_buffs",
+        &Character::growth_buffs,
 
         // Properties
         "new_id",
@@ -278,6 +323,9 @@ void LuaCharacter::bind(sol::state& lua)
         &LuaCharacter::damage_hp_chara),
     lua[key]["apply_ailment"] = &LuaCharacter::apply_ailment;
     lua[key]["heal_ailment"] = &LuaCharacter::heal_ailment;
+    lua[key]["add_buff"] =
+        sol::overload(&LuaCharacter::add_buff, &LuaCharacter::add_buff_doer);
+    lua[key]["set_growth_buff"] = &LuaCharacter::set_growth_buff;
     lua[key]["recruit_as_ally"] = &LuaCharacter::recruit_as_ally;
     lua[key]["set_flag"] = &LuaCharacter::set_flag;
     lua[key]["get_skill"] = &LuaCharacter::get_skill;

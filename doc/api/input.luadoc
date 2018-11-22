@@ -16,18 +16,19 @@ function yes_or_no(message) end
 
 --- Prompts the player to select from a list of choices. Raises an
 --- error if no arguments are provided.
+-- @tparam choices table a list of string choices
 -- @treturn[1] num the index of the item chosen, starting from 1
 -- @treturn[2] nil if canceled
 -- @usage GUI.txt("Which? ")
 -- local choices = {"First", "Second", "Third"}
--- local result = Input.prompt_choice(table.unpack(choices))
+-- local result = Input.prompt_choice(choices)
 --
 -- if result then
 --    GUI.txt("You chose \"" .. choices[result] .. "\". ")
 -- else
 --    GUI.txt("Never mind. ")
 -- end
-function prompt_choice(...) end
+function prompt_choice(choices) end
 
 --- Prompts the player to choose a number. Raises an error if
 --- <code>max</code> is less than 0.
