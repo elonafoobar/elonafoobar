@@ -24,7 +24,7 @@ enum class StatusAilment
 
 
 void dmgcon(int cc, StatusAilment status_ailment, int power);
-void healcon(int prm_827, int prm_828, int prm_829 = 0);
+void healcon(int cc, StatusAilment status_ailment, int power = 0);
 
 
 } // namespace elona

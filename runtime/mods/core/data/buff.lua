@@ -63,7 +63,7 @@ data:add_multi(
          end,
          on_refresh = function(self, args)
             args.chara.pv = args.chara.pv + self._effect(args.power)
-            args.chara.fear = 0
+            args.chara:heal_ailment("Fear", 0)
          end,
          _effect = function(power)
             return 25 + power // 15
@@ -169,8 +169,8 @@ data:add_multi(
          on_refresh = function(self, args)
             mod_skill(args, 10, self._effect(args.power))
             mod_skill(args, 12, self._effect(args.power))
-            args.chara.fear = 0
-            args.chara.confused = 0
+            args.chara:heal_ailment("Fear", 0)
+            args.chara:heal_ailment("Confused", 0)
          end,
          _effect = function(power)
             return 5 + power // 30

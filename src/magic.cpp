@@ -406,7 +406,7 @@ int magic()
                                     "core.locale.magic.rain_of_sanity",
                                     cdata[tc]));
                                 heal_insanity(cdata[tc], efp / 10);
-                                healcon(tc, 11, 9999);
+                                healcon(tc, StatusAilment::insane, 9999);
                             }
                             continue;
                         }
@@ -584,7 +584,7 @@ int magic()
                 heal_both_rider_and_mount();
                 if (efstatus == CurseState::blessed)
                 {
-                    healcon(tc, 12, 5 + rnd(5));
+                    healcon(tc, StatusAilment::sick, 5 + rnd(5));
                 }
                 if (rnd(3) == 0)
                 {

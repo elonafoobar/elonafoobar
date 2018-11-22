@@ -42,10 +42,29 @@ void LuaCharacter::apply_ailment(
     const EnumString& ailment_name,
     int power)
 {
-    assert(power > 0);
+    if (power <= 0)
+    {
+        return;
+    }
+
     StatusAilment ailment =
         LuaEnums::StatusAilmentTable.ensure_from_string(ailment_name);
     elona::dmgcon(self.index, ailment, power);
+}
+
+void LuaCharacter::heal_ailment(
+    Character& self,
+    const EnumString& ailment_name,
+    int power)
+{
+    if (power < 0)
+    {
+        return;
+    }
+
+    StatusAilment ailment =
+        LuaEnums::StatusAilmentTable.ensure_from_string(ailment_name);
+    elona::healcon(self.index, ailment, power);
 }
 
 bool LuaCharacter::recruit_as_ally(Character& self)
@@ -198,6 +217,12 @@ void LuaCharacter::bind(sol::state& lua)
         &Character::fame,
         "talk_type",
         &Character::talk_type,
+        "pv",
+        &Character::pv,
+        "dv",
+        &Character::dv,
+        "hit_bonus",
+        &Character::hit_bonus,
 
         // Properties
         "new_id",
@@ -236,6 +261,7 @@ void LuaCharacter::bind(sol::state& lua)
         &LuaCharacter::damage_hp_source,
         &LuaCharacter::damage_hp_chara),
     lua[key]["apply_ailment"] = &LuaCharacter::apply_ailment;
+    lua[key]["heal_ailment"] = &LuaCharacter::heal_ailment;
     lua[key]["recruit_as_ally"] = &LuaCharacter::recruit_as_ally;
     lua[key]["set_flag"] = &LuaCharacter::set_flag;
     lua[key]["gain_skill"] = sol::overload(
