@@ -99,21 +99,29 @@ public:
      * Provides a Lua reference to a handle from the isolated handle
      * environment.
      */
-    template <typename T>
-    sol::table get_handle(T& obj)
+    sol::table get_handle(int index, std::string type)
     {
-        if (obj.index == -1)
+        if (index < 0)
         {
             return sol::lua_nil;
         }
 
-        sol::object handle =
-            handle_env["Handle"]["get_handle"](obj, T::lua_type());
+        sol::object handle = handle_env["Handle"]["get_handle"](index, type);
         if (!handle.is<sol::table>())
         {
             return sol::lua_nil;
         }
         return handle;
+    }
+
+    /***
+     * Provides a Lua reference to a handle from the isolated handle
+     * environment.
+     */
+    template <typename T>
+    sol::table get_handle(T& obj)
+    {
+        return get_handle(obj.index, T::lua_type());
     }
 
 

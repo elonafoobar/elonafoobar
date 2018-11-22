@@ -1,13 +1,13 @@
 local Math = Elona.require("Math")
 local I18N = Elona.require("I18N")
 
-local function mod_skill(args, id, amount)
+local function mod_skill_level(args, id, amount)
    local skill = args.chara:get_skill(id)
 
    skill.current_level = skill.current_level + amount
 end
 
-local function mod_skill_clamp(args, id, amount)
+local function mod_skill_level_clamp(args, id, amount)
    local skill = args.chara:get_skill(id)
 
    skill.current_level =
@@ -96,7 +96,7 @@ data:add_multi(
             return 12 + power // 20
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 154, 40)
+            mod_skill_level(args, 154, 40)
          end,
          _effect = function(power)
             return 0
@@ -113,9 +113,9 @@ data:add_multi(
             return 4 + power // 6
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 50, 100)
-            mod_skill(args, 51, 100)
-            mod_skill(args, 52, 100)
+            mod_skill_level(args, 50, 100)
+            mod_skill_level(args, 51, 100)
+            mod_skill_level(args, 52, 100)
          end,
          _effect = function(power)
             return 0
@@ -132,7 +132,7 @@ data:add_multi(
             return 8 + power // 30
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 18, self._effect(args.power))
+            mod_skill_level(args, 18, self._effect(args.power))
          end,
          _effect = function(power)
             return Math.modf(50 + Math.sqrt(power // 5))
@@ -167,8 +167,8 @@ data:add_multi(
             return 10 + power // 4
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 10, self._effect(args.power))
-            mod_skill(args, 12, self._effect(args.power))
+            mod_skill_level(args, 10, self._effect(args.power))
+            mod_skill_level(args, 12, self._effect(args.power))
             args.chara:heal_ailment("Fear", 0)
             args.chara:heal_ailment("Confused", 0)
          end,
@@ -205,9 +205,9 @@ data:add_multi(
             return 4 + power // 15
          end,
          on_refresh = function(self, args)
-            mod_skill_clamp(args, 50, -100)
-            mod_skill_clamp(args, 51, -100)
-            mod_skill_clamp(args, 52, -100)
+            mod_skill_level_clamp(args, 50, -100)
+            mod_skill_level_clamp(args, 51, -100)
+            mod_skill_level_clamp(args, 52, -100)
          end,
          _effect = function(power)
             return 0
@@ -240,8 +240,8 @@ data:add_multi(
             return 4 + power // 15
          end,
          on_refresh = function(self, args)
-            mod_skill_clamp(args, 58, -100)
-            mod_skill_clamp(args, 54, -100)
+            mod_skill_level_clamp(args, 58, -100)
+            mod_skill_level_clamp(args, 54, -100)
          end,
          _effect = function(power)
             return 0
@@ -259,9 +259,9 @@ data:add_multi(
          end,
          on_refresh = function(self, args)
             local a, b = self._effect(args.power)
-            mod_skill(args, 14, a)
-            mod_skill(args, 16, a)
-            mod_skill(args, 150, b)
+            mod_skill_level(args, 14, a)
+            mod_skill_level(args, 16, a)
+            mod_skill_level(args, 150, b)
          end,
          _effect = function(power)
             return 6 + power // 40, 3 + power // 100
@@ -278,7 +278,7 @@ data:add_multi(
             return power
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 18, -self._effect(args.power))
+            mod_skill_level(args, 18, -self._effect(args.power))
             if args.chara.pv > 1 then
                args.chara.pv = args.chara.pv // 5
             end
@@ -298,7 +298,7 @@ data:add_multi(
             return 7
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 18, self._effect(args.power))
+            mod_skill_level(args, 18, self._effect(args.power))
          end,
          _effect = function(power)
             return 155 + power // 5
@@ -349,10 +349,10 @@ data:add_multi(
             return 5
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 18, self._effect(args.power))
+            mod_skill_level(args, 18, self._effect(args.power))
             args.chara:get_skill(10).current_level = args.chara:get_skill(10).current_level * 150 // 100 + 10
             args.chara:get_skill(12).current_level = args.chara:get_skill(12).current_level * 150 // 100 + 10
-            mod_skill(args, 154, 50)
+            mod_skill_level(args, 154, 50)
             args.chara.pv = args.chara.pv * 150 // 100 + 25
             args.chara.dv = args.chara.dv * 150 // 100 + 25
             args.chara.hit_bonus = args.chara.hit_bonus * 150 // 100 + 50
@@ -389,7 +389,7 @@ data:add_multi(
             return 777
          end,
          on_refresh = function(self, args)
-            mod_skill(args, 19, self._effect(args.power))
+            mod_skill_level(args, 19, self._effect(args.power))
          end,
          _effect = function(power)
             return power

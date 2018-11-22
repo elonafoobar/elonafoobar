@@ -7,6 +7,8 @@
 #include "../../enums.hpp"
 #include "../../food.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../../lua_env/interface.hpp"
+#include "lua_class_ability.hpp"
 
 namespace elona
 {
@@ -86,6 +88,20 @@ void LuaCharacter::set_flag(
     int flag = LuaEnums::CharaFlagTable.ensure_from_string(flag_name);
     int new_value = (is_setting ? 1 : 0);
     self._flags[flag] = new_value;
+}
+
+sol::optional<LuaAbility> LuaCharacter::get_skill(Character& self, int skill)
+{
+    if (skill < 0 || skill >= 600)
+    {
+        return sol::nullopt;
+    }
+
+    auto handle = lua::handle(self);
+    assert(handle != sol::lua_nil);
+
+    std::string uuid = handle["__uuid"];
+    return LuaAbility(skill, self.index, Character::lua_type(), uuid);
 }
 
 void LuaCharacter::gain_skill(Character& self, int skill, int initial_level)
@@ -264,6 +280,7 @@ void LuaCharacter::bind(sol::state& lua)
     lua[key]["heal_ailment"] = &LuaCharacter::heal_ailment;
     lua[key]["recruit_as_ally"] = &LuaCharacter::recruit_as_ally;
     lua[key]["set_flag"] = &LuaCharacter::set_flag;
+    lua[key]["get_skill"] = &LuaCharacter::get_skill;
     lua[key]["gain_skill"] = sol::overload(
         &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock);
     lua[key]["gain_skill_exp"] = &LuaCharacter::gain_skill_exp;

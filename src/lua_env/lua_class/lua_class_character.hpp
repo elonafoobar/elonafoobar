@@ -7,6 +7,8 @@ namespace elona
 namespace lua
 {
 
+struct LuaAbility;
+
 namespace LuaCharacter
 {
 void damage_hp(Character&, int);
@@ -19,6 +21,8 @@ void heal_ailment(Character&, const EnumString&, int);
 bool recruit_as_ally(Character&);
 
 void set_flag(Character&, const EnumString&, bool);
+
+sol::optional<LuaAbility> get_skill(Character&, int);
 
 void gain_skill(Character&, int, int);
 void gain_skill_stock(Character&, int, int, int);

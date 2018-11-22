@@ -633,3 +633,22 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     REQUIRE(handle_a["__uuid"].get<std::string>() == uuid_a);
     REQUIRE(handle_b["__uuid"].get<std::string>() == uuid_b);
 }
+
+TEST_CASE("Test validity check of lua reference userdata", "[Lua: Handles]")
+{
+    reset_state();
+    start_in_debug_map();
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    auto& mod_mgr = elona::lua::lua->get_mod_manager();
+
+    REQUIRE_NOTHROW(mod_mgr.create_mod("test_lua_ref"));
+    REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_lua_ref", R"(
+local Chara = Elona.require("Chara")
+local chara = Chara.create(0, 0, "core.putit")
+local skill = chara:get_skill(10)
+assert(skill.original_level > 0)
+
+chara:damage_hp(chara.max_hp + 1)
+assert(skill.original_level == 0)
+)"));
+}

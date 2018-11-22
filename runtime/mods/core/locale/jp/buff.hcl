@@ -64,7 +64,6 @@ locale {
             name = "天罰"
             message_0 = "は雷に打たれた！",
             description = "${_1}の鈍足/PVを${_2}%減少"
-            end,
         }
         _14 {
             name = "ルルウィの憑依"
