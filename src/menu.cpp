@@ -364,20 +364,22 @@ TurnResult show_skill_list()
         static_cast<size_t>(ui::UIMenuCompositeSkills::Index::skills));
 }
 
-
-void draw_spell_power_entry(int skill_id)
+static std::string _make_buff_power_string(int skill_id)
 {
-    s = "";
+    p = the_ability_db[skill_id]->ability_type % 1000;
+    const auto duration = calc_buff_duration(p, calcspellpower(skill_id, cc));
+    const auto description =
+        get_buff_description(p, calcspellpower(skill_id, cc));
+    return ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter") +
+        description;
+}
+
+std::string make_spell_description(int skill_id)
+{
+    std::string result = "";
     if (the_ability_db[skill_id]->ability_type / 1000 == 1)
     {
-        p = the_ability_db[skill_id]->ability_type % 1000;
-        const auto duration =
-            calc_buff_duration(p, calcspellpower(skill_id, cc));
-        const auto description =
-            get_buff_description(p, calcspellpower(skill_id, cc));
-        s = ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter") +
-            description;
-        return;
+        return _make_buff_power_string(skill_id);
     }
     const auto damage =
         calc_skill_damage(skill_id, cc, calcspellpower(skill_id, cc));
@@ -400,35 +402,37 @@ void draw_spell_power_entry(int skill_id)
         }
         if (dice1 != 0)
         {
-            s += ""s + dice1 + u8"d"s + dice2;
+            result += ""s + dice1 + u8"d"s + dice2;
             if (bonus != 0)
             {
                 if (bonus > 0)
                 {
-                    s += u8"+"s + bonus;
+                    result += u8"+"s + bonus;
                 }
                 else
                 {
-                    s += bonus;
+                    result += bonus;
                 }
             }
         }
         else if (skill_id == 461)
         {
-            s += ""s + clamp(bonus, 1, 100) + u8"%"s;
+            result += ""s + clamp(bonus, 1, 100) + u8"%"s;
         }
         else
         {
-            s += i18n::s.get("core.locale.ui.spell.power") + bonus;
+            result += i18n::s.get("core.locale.ui.spell.power") + bonus;
         }
-        s += u8" "s;
+        result += u8" "s;
     }
-    s += i18n::s
-             .get_m_optional(
-                 "locale.ability",
-                 the_ability_db.get_id_from_legacy(skill_id)->get(),
-                 "description")
-             .get_value_or("");
+    result += i18n::s
+                  .get_m_optional(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(skill_id)->get(),
+                      "description")
+                  .get_value_or("");
+
+    return result;
 }
 
 MenuResult _show_character_sheet_menu(size_t menu_index)

@@ -41,9 +41,10 @@ duration:
    function taking a power level which returns the number of turns the
    buff lasts.
 on_refresh:
-   function for applying the effects of the buff. It takes two
-   arguments, "self" which is the buff definition itself and "args", a
-   table with these fields:
+   function for applying the effects of the buff. The effects are
+   applied on character refresh, so the state of the character will be
+   reset before applying. It takes two arguments, "self" which is the
+   buff definition itself and "args", a table with these fields:
       - power: buff power.
       - chara: character which the buff is being applied to.
 on_removal:

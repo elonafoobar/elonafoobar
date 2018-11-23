@@ -66,7 +66,7 @@ local function query_buff()
       if power then
          local buff = data.raw["core.buff"][buff_id]
          GUI.txtef("Gold")
-         GUI.txt("Buff: " .. I18N.get_enum_property("core.locale.buff", "name", buff.id))
+         GUI.txt("Buff: " .. I18N.get_enum_property("core.locale.buff", "name", buff.id) .. " ")
          Chara.player():add_buff(buff_id, power, 50)
       end
    end
@@ -75,10 +75,14 @@ end
 local function setup()
    switcher = make_sandbag(25, 23, "core.silver_cat")
 
-   -- Guard aggro is only refreshed when entering an existing map, so
-   -- it will only be reapplied when incognito ends.
+   -- Guard aggro based on karma is only initialized when entering an
+   -- existing map, so it will only be reapplied to newly created
+   -- guards when incognito ends. Also, the incognito begin effect is
+   -- caused by the "incognito" magic itself and not the application
+   -- of the buff, so reapplying the incognito buff will not cause
+   -- guards to lose aggro as expected.
    for i=0,5 do
-      local guard = Chara.create(27, 27, "core.guard")
+      local guard = Chara.create(25, 27, "core.guard")
       guard.role = 14
    end
 
@@ -90,12 +94,4 @@ Event.register(Event.EventKind.CharaDamaged, function(chara)
                   if chara.index == switcher.index then
                      query_buff()
                   end
-end)
-
-Event.register(Event.EventKind.CharaCreated, function(chara)
-                  print("Created " .. chara.index)
-end)
-
-Event.register(Event.EventKind.CharaRemoved, function(chara)
-                  print("Removed " .. chara.index)
 end)
