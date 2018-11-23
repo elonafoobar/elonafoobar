@@ -5,7 +5,10 @@ locale {
 
         age_unknown = "Unknown"
 
-        name_with_title = "{${_1}}"
+        quality {
+            miracle = "<${_1}>"
+            godly = "{${_1}}"
+        }
 
         contract_expired = "The period of contract with ${basename(_1)} has been expired."
 

@@ -183,7 +183,8 @@ static void _draw_key(int cnt, int p_, bool is_main_hand)
     }
     else
     {
-        body_part_name = i18n::_(u8"ui", u8"body_part", u8"_"s + list(1, p_));
+        body_part_name =
+            i18n::s.get_enum("core.locale.ui.body_part", list(1, p_));
     }
 
     pos(wx + 22, wy + 60 + cnt * 19 - 4);

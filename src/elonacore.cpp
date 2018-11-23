@@ -4099,10 +4099,9 @@ void auto_identify()
                     txt(i18n::s.get(
                         "core.locale.misc.identify.almost_identified",
                         inv[ci],
-                        i18n::_(
-                            u8"ui",
-                            u8"quality",
-                            u8"_"s + static_cast<int>(inv[ci].quality))));
+                        i18n::s.get_enum(
+                            u8"core.locale.ui.quality",
+                            static_cast<int>(inv[ci].quality))));
                 }
                 item_identify(inv[ci], IdentifyState::almost_identified);
                 chara_gain_skill_exp(cdata.player(), 162, 50);
@@ -6530,7 +6529,7 @@ void dump_player_info()
     noteadd(""s);
     noteadd(
         u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34) +
-        i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex) + u8" "s +
+        i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex) + u8" "s +
         calcage(0) + u8"歳"s + u8"  "s + cdata.player().height + u8"cm"s +
         u8" "s + cdata.player().weight + u8"kg"s);
     noteadd(""s);
@@ -6600,8 +6599,8 @@ void dump_player_info()
         }
         s = fixtxt(s, 15);
         s = fixtxt(
-                i18n::_(u8"ui", u8"attribute", u8"_"s + cnt) + u8"    : "s +
-                    sdata((10 + cnt), 0) + u8"("s +
+                i18n::s.get_enum("core.locale.ui.attribute", cnt) +
+                    u8"    : "s + sdata((10 + cnt), 0) + u8"("s +
                     sdata.get(10 + cnt, 0).original_level + u8")"s,
                 24) +
             s;
@@ -6664,10 +6663,8 @@ void dump_player_info()
             {
                 listmax = 0;
             }
-            s = i18n::_(
-                u8"ui",
-                u8"body_part",
-                u8"_"s + (cdata[cc].body_parts[cnt] / 10000));
+            s = i18n::s.get_enum(
+                "core.locale.ui.body_part", cdata[cc].body_parts[cnt] / 10000);
             if (strmid(s, 0, 2) == u8"　"s)
             {
                 s = strmid(s, 2, 2);
@@ -6715,9 +6712,9 @@ void dump_player_info()
             cdatan(0, cnt) + u8" "s +
             i18n::s.get_m("locale.race", cdatan(2, cnt), "name") + u8"の"s +
             classname + u8" "s +
-            i18n::_(u8"ui", u8"sex", u8"_"s + cdata[cnt].sex) + u8" "s +
-            calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height + u8"cm"s +
-            u8" "s + cdata[cnt].weight + u8"kg"s);
+            i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex) +
+            u8" "s + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height +
+            u8"cm"s + u8" "s + cdata[cnt].weight + u8"kg"s);
         s = u8"レベル "s + cdata[cnt].level + u8" "s;
         if (cdata[cnt].is_married() == 1)
         {
@@ -9003,20 +9000,18 @@ int do_cast_magic_attempt()
                     "locale.ability",
                     the_ability_db.get_id_from_legacy(efid)->get(),
                     "name"),
-                i18n::_(
-                    u8"ui",
-                    u8"cast_style",
-                    u8"_"s + cdata[cc].special_attack_type)));
+                i18n::s.get_enum(
+                    "core.locale.ui.cast_style",
+                    cdata[cc].special_attack_type)));
         }
         else
         {
             txt(i18n::s.get(
                 "core.locale.action.cast.other",
                 cdata[cc],
-                i18n::_(
-                    u8"ui",
-                    u8"cast_style",
-                    u8"_"s + cdata[cc].special_attack_type)));
+                i18n::s.get_enum(
+                    "core.locale.ui.cast_style",
+                    cdata[cc].special_attack_type)));
         }
     }
     if (buff_has(cdata[cc], "core.mist_of_silence"))
@@ -10799,7 +10794,7 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_pick_up")(
+                txt(i18n::fmt("core.locale.ui.autopick.do_you_really_pick_up")(
                     itemname(ci)));
                 rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
@@ -10829,7 +10824,7 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_destroy")(
+                txt(i18n::fmt("core.locale.ui.autopick.do_you_really_destroy")(
                     itemname(ci)));
                 rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
@@ -10839,7 +10834,7 @@ void proc_autopick()
                 }
             }
             snd("core.crush1");
-            txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
+            txt(i18n::fmt("core.locale.ui.autopick.destroyed")(itemname(ci)));
             inv[ci].remove();
             cell_refresh(x, y);
             cell_data.at(x, y).item_appearances_memory =
@@ -10849,7 +10844,7 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_open")(
+                txt(i18n::fmt("core.locale.ui.autopick.do_you_really_open")(
                     itemname(ci)));
                 rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)

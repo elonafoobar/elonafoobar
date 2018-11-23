@@ -821,7 +821,8 @@ void itemname_additional_info()
         if (inv[prm_518].own_state == 4)
         {
             s_ += lang(""s, u8" grown "s) +
-                i18n::_(u8"ui", u8"weight", u8"_"s + inv[prm_518].subname) +
+                i18n::s.get_enum(
+                    "core.locale.ui.weight", inv[prm_518].subname) +
                 lang(u8"育った"s, ""s);
         }
     }
@@ -869,15 +870,15 @@ void itemname_additional_info()
                 }
                 else
                 {
-                    s_ += i18n::_(
-                        u8"ui", u8"furniture", u8"_"s + inv[prm_518].subname);
+                    s_ += i18n::s.get_enum(
+                        "core.locale.ui.furniture", inv[prm_518].subname);
                 }
             }
         }
         if (inv[prm_518].id == 344)
         {
             s_ += lang(""s, u8" of "s) +
-                i18n::_(u8"ui", u8"home", u8"_"s + inv[prm_518].param1) +
+                i18n::s.get_enum("core.locale.ui.home", inv[prm_518].param1) +
                 lang(u8"の"s, ""s);
         }
         if (inv[prm_518].id == 615)
@@ -1014,10 +1015,16 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         {
             switch (inv[prm_518].curse_state)
             {
-            case CurseState::doomed: s_ += i18n::_(u8"ui", u8"doomed"); break;
-            case CurseState::cursed: s_ += i18n::_(u8"ui", u8"cursed"); break;
+            case CurseState::doomed:
+                s_ += i18n::s.get("core.locale.ui.curse_state.doomed");
+                break;
+            case CurseState::cursed:
+                s_ += i18n::s.get("core.locale.ui.curse_state.cursed");
+                break;
             case CurseState::none: break;
-            case CurseState::blessed: s_ += i18n::_(u8"ui", u8"blessed"); break;
+            case CurseState::blessed:
+                s_ += i18n::s.get("core.locale.ui.curse_state.blessed");
+                break;
             }
         }
     }
@@ -1030,14 +1037,14 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             switch (inv[prm_518].curse_state)
             {
             case CurseState::doomed:
-                s_ = i18n::_(u8"ui", u8"doomed") + u8" "s;
+                s_ = i18n::s.get("core.locale.ui.curse_state.doomed") + u8" "s;
                 break;
             case CurseState::cursed:
-                s_ = i18n::_(u8"ui", u8"cursed") + u8" "s;
+                s_ = i18n::s.get("core.locale.ui.curse_state.cursed") + u8" "s;
                 break;
             case CurseState::none: break;
             case CurseState::blessed:
-                s_ = i18n::_(u8"ui", u8"blessed") + u8" "s;
+                s_ = i18n::s.get("core.locale.ui.curse_state.blessed") + u8" "s;
                 break;
             }
         }
@@ -1117,9 +1124,8 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             }
             else
             {
-                s_ +=
-                    i18n::_(
-                        u8"ui", u8"furniture", u8"_"s + inv[prm_518].subname) +
+                s_ += i18n::s.get_enum(
+                          "core.locale.ui.furniture", inv[prm_518].subname) +
                     u8" "s;
             }
         }
@@ -1424,10 +1430,9 @@ label_0313_internal:
         a_ < 50000)
     {
         s_ += u8" ("s +
-            cnven(i18n::_(
-                u8"ui",
-                u8"quality",
-                u8"_"s + static_cast<int>(inv[prm_518].quality))) +
+            cnven(i18n::s.get_enum(
+                u8"core.locale.ui.quality",
+                static_cast<int>(inv[prm_518].quality))) +
             u8")"s;
         if (jp)
         {

@@ -18,9 +18,6 @@ locale {
         platinum = " plat"
         unit_of_weight = "s"
 
-        bracket_left = "『"
-        bracket_right = "』"
-
         no_gold = "(所持金が足りない！)"
         invalid_target = "その方向には、操作できる対象はない。"
 

@@ -127,43 +127,22 @@ int access_character_info()
     case 102:
     case 103:
     case 104:
-        if (false)
+        if (dbid == 176)
         {
-        }
-        else if (dbid == 176)
-        {
+            std::string text =
+                i18n::s.get_enum("core.locale.ui.onii", cdata.player().sex);
+
             if (dbmode == 100)
             {
                 if (jp)
                 {
-                    txt(u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃんー」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん！」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃ〜ん」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃんっ」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん？」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"〜ちゃん」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん♪」",
+                    txt(u8"「" + text + u8"ちゃんー」",
+                        u8"「" + text + u8"ちゃん！」",
+                        u8"「" + text + u8"ちゃ〜ん」",
+                        u8"「" + text + u8"ちゃんっ」",
+                        u8"「" + text + u8"ちゃん？」",
+                        u8"「" + text + u8"〜ちゃん」",
+                        u8"「" + text + u8"ちゃん♪」",
                         Message::color{ColorIndex::cyan});
                     return 1;
                 }
@@ -172,18 +151,9 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txt(u8"「おかえり、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん！」",
-                        u8"「おかえりなさーい、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん♪」",
-                        u8"「待ってたよ、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん」",
+                    txt(u8"「おかえり、" + text + u8"ちゃん！」",
+                        u8"「おかえりなさーい、" + text + u8"ちゃん♪」",
+                        u8"「待ってたよ、" + text + u8"ちゃん」",
                         Message::color{ColorIndex::cyan});
                     return 1;
                 }
@@ -191,38 +161,20 @@ int access_character_info()
         }
         else if (dbid == 249)
         {
+            std::string text =
+                i18n::s.get_enum("core.locale.ui.onii", cdata.player().sex);
+
             if (dbmode == 100)
             {
                 if (jp)
                 {
-                    txt(u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃんー」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん！」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃ〜ん」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃんっ」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん？」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"〜ちゃん」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん♪」",
+                    txt(u8"「" + text + u8"ちゃんー」",
+                        u8"「" + text + u8"ちゃん！」",
+                        u8"「" + text + u8"ちゃ〜ん」",
+                        u8"「" + text + u8"ちゃんっ」",
+                        u8"「" + text + u8"ちゃん？」",
+                        u8"「" + text + u8"〜ちゃん」",
+                        u8"「" + text + u8"ちゃん♪」",
                         Message::color{ColorIndex::cyan});
                     return 1;
                 }
@@ -231,18 +183,9 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txt(u8"「おかえり、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん！」",
-                        u8"「おかえりなさーい、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん♪」",
-                        u8"「待ってたよ、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん」",
+                    txt(u8"「おかえり、" + text + u8"ちゃん！」",
+                        u8"「おかえりなさーい、" + text + u8"ちゃん♪」",
+                        u8"「待ってたよ、" + text + u8"ちゃん」",
                         Message::color{ColorIndex::cyan});
                     return 1;
                 }
@@ -250,38 +193,20 @@ int access_character_info()
         }
         else if (dbid == 210)
         {
+            std::string text =
+                i18n::s.get_enum("core.locale.ui.onii", cdata.player().sex);
+
             if (dbmode == 100)
             {
                 if (jp)
                 {
-                    txt(u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃんー」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん！」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃ〜ん」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃんっ」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん？」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"〜ちゃん」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん♪」",
+                    txt(u8"「" + text + u8"ちゃんー」",
+                        u8"「" + text + u8"ちゃん！」",
+                        u8"「" + text + u8"ちゃ〜ん」",
+                        u8"「" + text + u8"ちゃんっ」",
+                        u8"「" + text + u8"ちゃん？」",
+                        u8"「" + text + u8"〜ちゃん」",
+                        u8"「" + text + u8"ちゃん♪」",
                         Message::color{ColorIndex::cyan});
                     return 1;
                 }
@@ -290,18 +215,9 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txt(u8"「おかえりにゃ、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん！」",
-                        u8"「おかえりなさいにゃー、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん♪」",
-                        u8"「待ってたにゃ、" +
-                            i18n::_(
-                                u8"ui", u8"onii", u8"_"s + cdata.player().sex) +
-                            u8"ちゃん」",
+                    txt(u8"「おかえりにゃ、" + text + u8"ちゃん！」",
+                        u8"「おかえりなさいにゃー、" + text + u8"ちゃん♪」",
+                        u8"「待ってたにゃ、" + text + u8"ちゃん」",
                         Message::color{ColorIndex::cyan});
                     return 1;
                 }
@@ -309,19 +225,15 @@ int access_character_info()
         }
         else if (dbid == 205)
         {
+            std::string text =
+                i18n::s.get_enum("core.locale.ui.syujin", cdata.player().sex);
+
             if (dbmode == 100)
             {
                 if (jp)
                 {
-                    txt(u8"「" +
-                            i18n::_(
-                                u8"ui",
-                                u8"syujin",
-                                u8"_"s + cdata.player().sex) +
-                            u8"〜」",
-                        i18n::_(
-                            u8"ui", u8"syujin", u8"_"s + cdata.player().sex) +
-                            u8"〜",
+                    txt(u8"「" + text + u8"〜」",
+                        text + u8"〜",
                         u8"「用事はありませんか♪」",
                         u8"メイドの熱い視線を感じる…",
                         Message::color{ColorIndex::cyan});
@@ -333,12 +245,7 @@ int access_character_info()
                 if (jp)
                 {
                     txt(u8"「ダメぇ！」",
-                        u8"「" +
-                            i18n::_(
-                                u8"ui",
-                                u8"syujin",
-                                u8"_"s + cdata.player().sex) +
-                            u8"ー！」",
+                        u8"「" + text + u8"ー！」",
                         Message::color{ColorIndex::cyan});
                     return 1;
                 }
@@ -347,12 +254,7 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txt(u8"「おかえりなさいませ、" +
-                            i18n::_(
-                                u8"ui",
-                                u8"syujin",
-                                u8"_"s + cdata.player().sex) +
-                            u8"〜」",
+                    txt(u8"「おかえりなさいませ、" + text + u8"〜」",
                         u8"「おかえりなさいまし〜」",
                         Message::color{ColorIndex::cyan});
                     return 1;

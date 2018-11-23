@@ -418,7 +418,7 @@ bool grant_special_wishing(const std::string& wish)
         txt(i18n::s.get(
             "core.locale.wish.wish_sex",
             cdata.player(),
-            i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex)));
+            i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex)));
     }
     else if (match_special_wish(
                  wish, "redemption", {"redemption", "atonement"}))

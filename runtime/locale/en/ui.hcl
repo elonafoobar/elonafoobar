@@ -18,22 +18,10 @@ locale {
         platinum = " platinum pieces"
         unit_of_weight = "s"
 
-        bracket_left = "<"
-        bracket_right = ">"
-
         no_gold = "(You don't have enough money!)"
         invalid_target = "There's no valid target in that direction."
 
         assign_shortcut = "You have assigned the shortcut to {${_1}} key."
-
-        item {
-            amulet = "amulet"
-            ring = "ring"
-            potion = "potion"
-            spellbook = "spellbook"
-            scroll = "scroll"
-            rod = "rod"
-        }
 
         curse_state {
             cursed = "cursed"
@@ -775,8 +763,11 @@ locale {
             _6 = " vibrates.",
         }
 
+        # Each entry corresponds to a value of originalnameref2 in core.item. There are always 6
+        # enum values.
         random_item {
             potion {
+                name = "potion"
                 _0 = "clear",
                 _1 = "green",
                 _2 = "blue",
@@ -786,6 +777,7 @@ locale {
             }
 
             spellbook {
+                name = "spellbook"
                 _0 = "thick",
                 _1 = "mossy",
                 _2 = "clear",
@@ -795,6 +787,7 @@ locale {
             }
 
             scroll {
+                name = "scroll"
                 _0 = "blurred",
                 _1 = "mossy",
                 _2 = "ragged",
@@ -804,6 +797,7 @@ locale {
             }
 
             rod {
+                name = "rod"
                 _0 = "iron",
                 _1 = "ivy",
                 _2 = "sapphire",
@@ -813,6 +807,7 @@ locale {
             }
 
             ring {
+                name = "ring"
                 _0 = "iron",
                 _1 = "green",
                 _2 = "sapphire",

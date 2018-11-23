@@ -62,7 +62,7 @@ TalkResult talk_inn_eat()
 {
     if (cdata.player().gold < calcmealvalue())
     {
-        buff = i18n::_(u8"ui", u8"no_gold");
+        buff = i18n::s.get("core.locale.ui.no_gold");
         return TalkResult::talk_npc;
     }
     if (cdata.player().nutrition >= 15000)
@@ -87,7 +87,7 @@ TalkResult talk_wizard_identify(int chatval_)
 {
     if (cdata.player().gold < calcidentifyvalue(chatval_ - 14))
     {
-        buff = i18n::_(u8"ui", u8"no_gold");
+        buff = i18n::s.get("core.locale.ui.no_gold");
         return TalkResult::talk_npc;
     }
     p = 0;
@@ -186,7 +186,7 @@ TalkResult talk_healer_restore_attributes()
 {
     if (cdata.player().gold < calcrestorecost())
     {
-        buff = i18n::_(u8"ui", u8"no_gold");
+        buff = i18n::s.get("core.locale.ui.no_gold");
         return TalkResult::talk_npc;
     }
     snd("core.paygold1");
@@ -562,7 +562,7 @@ TalkResult talk_guard_return_item()
                 0,
                 cdata[tc]);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             buff = i18n::s.get_enum(
@@ -640,7 +640,7 @@ TalkResult talk_ally_order_wait()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.ally.wait_at_town", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
@@ -798,7 +798,7 @@ TalkResult talk_ally_marriage()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.ally.marriage.accepts");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     marry = tc;
@@ -813,7 +813,7 @@ TalkResult talk_ally_gene()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.refuses");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -821,7 +821,7 @@ TalkResult talk_ally_gene()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.accepts");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     cdata[tc].has_made_gene() = true;
@@ -838,7 +838,7 @@ TalkResult talk_innkeeper_shelter()
     buff =
         i18n::s.get("core.locale.talk.npc.innkeeper.go_to_shelter", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     game_data.previous_map2 = game_data.current_map;
@@ -1053,7 +1053,7 @@ TalkResult talk_adventurer_join()
         buff = i18n::s.get(
             "core.locale.talk.npc.adventurer.join.accept", cdata[tc]);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         f = chara_get_free_slot_ally();
@@ -1118,7 +1118,7 @@ TalkResult talk_wizard_return()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.wizard.return", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     try_to_return();
@@ -1199,7 +1199,7 @@ TalkResult talk_result_maid_chase_out()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.maid.do_not_meet", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     buff = "";
@@ -1378,7 +1378,7 @@ TalkResult talk_accepted_quest()
             "core.locale.talk.npc.quest_giver.accept.hunt", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -1397,7 +1397,7 @@ TalkResult talk_accepted_quest()
             "core.locale.talk.npc.quest_giver.accept.harvest", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -1416,7 +1416,7 @@ TalkResult talk_accepted_quest()
             "core.locale.talk.npc.quest_giver.accept.party", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -1586,7 +1586,7 @@ TalkResult talk_finish_escort()
         "core.locale.talk.npc.quest_giver.finish.escort", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -1950,7 +1950,8 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             13,
             i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat") +
-                u8" ("s + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
+                u8" ("s + calcmealvalue() + i18n::s.get("core.locale.ui.gold") +
+                u8")"s);
         if (game_data.weather == 1 || game_data.weather == 4 ||
             game_data.weather == 2)
         {
@@ -1965,18 +1966,18 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             14,
             i18n::s.get("core.locale.talk.npc.wizard.choices.identify") +
-                u8" ("s + calcidentifyvalue(0) + i18n::_(u8"ui", u8"gold") +
-                u8")"s);
+                u8" ("s + calcidentifyvalue(0) +
+                i18n::s.get("core.locale.ui.gold") + u8")"s);
         ELONA_APPEND_RESPONSE(
             15,
             i18n::s.get("core.locale.talk.npc.wizard.choices.identify_all") +
-                u8" ("s + calcidentifyvalue(1) + i18n::_(u8"ui", u8"gold") +
-                u8")"s);
+                u8" ("s + calcidentifyvalue(1) +
+                i18n::s.get("core.locale.ui.gold") + u8")"s);
         ELONA_APPEND_RESPONSE(
             16,
             i18n::s.get("core.locale.talk.npc.wizard.choices.investigate") +
-                u8" ("s + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold") +
-                u8")"s);
+                u8" ("s + calcidentifyvalue(2) +
+                i18n::s.get("core.locale.ui.gold") + u8")"s);
     }
     if (cdata[tc].character_role == 7)
     {
@@ -2002,8 +2003,8 @@ TalkResult talk_npc()
             19,
             i18n::s.get(
                 "core.locale.talk.npc.healer.choices.restore_attributes") +
-                u8"("s + calcrestorecost() + i18n::_(u8"ui", u8"gold") +
-                u8")"s);
+                u8"("s + calcrestorecost() +
+                i18n::s.get("core.locale.ui.gold") + u8")"s);
     }
     if (cdata[tc].character_role == 13)
     {
@@ -2301,7 +2302,7 @@ TalkResult talk_npc()
             }
         }
     }
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     chatesc = 1;
 
     int chatval_ = talk_window_query();
@@ -2332,7 +2333,8 @@ TalkResult talk_npc()
                             cdata[tc]);
                     }
                     tc = tc * 1 + 0;
-                    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                    ELONA_APPEND_RESPONSE(
+                        0, i18n::s.get("core.locale.ui.more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
                     return TalkResult::talk_npc;

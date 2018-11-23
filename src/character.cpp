@@ -1666,7 +1666,7 @@ void chara_modify_impression(Character& cc, int delta)
         txt(i18n::s.get(
                 "core.locale.chara.impression.lose",
                 cc,
-                i18n::_(u8"ui", u8"impression", u8"_"s + level2)),
+                i18n::s.get_enum("core.locale.ui.impression", level2)),
             Message::color{ColorIndex::purple});
     }
     else if (level2 > level1)
@@ -1676,7 +1676,7 @@ void chara_modify_impression(Character& cc, int delta)
             txt(i18n::s.get(
                     "core.locale.chara.impression.gain",
                     cc,
-                    i18n::_(u8"ui", u8"impression", u8"_"s + level2)),
+                    i18n::s.get_enum("core.locale.ui.impression", level2)),
                 Message::color{ColorIndex::green});
         }
     }
@@ -2061,14 +2061,14 @@ void chara_add_quality_parens()
 {
     if (fixlv == Quality::miracle)
     {
-        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc) +
-            i18n::_(u8"ui", u8"bracket_right");
+        cdatan(0, rc) =
+            i18n::s.get("core.locale.chara.quality.miracle", cdatan(0, rc));
         cdata[rc].level = cdata[rc].level * 10 / 8;
     }
     else if (fixlv == Quality::godly)
     {
         cdatan(0, rc) =
-            i18n::s.get("core.locale.chara.name_with_title", cdatan(0, rc));
+            i18n::s.get("core.locale.chara.quality.godly", cdatan(0, rc));
         cdata[rc].level = cdata[rc].level * 10 / 6;
     }
 }

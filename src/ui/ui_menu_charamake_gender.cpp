@@ -55,8 +55,8 @@ static void _draw_choice(int cnt, const std::string& text)
 
 static void _draw_choices()
 {
-    listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
-    listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
+    listn(0, 0) = cnven(i18n::s.get("core.locale.ui.sex3.male"));
+    listn(0, 1) = cnven(i18n::s.get("core.locale.ui.sex3.female"));
     font(14 - en * 2);
     for (int cnt = 0; cnt < 2; ++cnt)
     {

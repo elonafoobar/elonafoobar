@@ -384,8 +384,8 @@ optional<int> get_shortcut(const std::string& action)
 int yes_or_no(int x, int y, int width)
 {
     Prompt result;
-    result.append(i18n::_("ui", "yes"), snail::Key::key_y, 0);
-    result.append(i18n::_("ui", "no"), snail::Key::key_n, 1);
+    result.append(i18n::s.get("core.locale.ui.yes"), snail::Key::key_y, 0);
+    result.append(i18n::s.get("core.locale.ui.no"), snail::Key::key_n, 1);
     return result.query(x, y, width);
 }
 

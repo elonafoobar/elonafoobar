@@ -383,7 +383,7 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             }
             else
             {
-                ally_info = i18n::_(u8"ui", u8"body_part", u8"_"s + rtval);
+                ally_info = i18n::s.get_enum("core.locale.ui.body_part", rtval);
             }
         }
         ally_info += u8"/"s;
@@ -424,8 +424,8 @@ void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 
     cs_list(cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1);
 
-    std::string ally_info =
-        ""s + calcslavevalue(chara.index) * 2 / 3 + i18n::_(u8"ui", u8"gold");
+    std::string ally_info = ""s + calcslavevalue(chara.index) * 2 / 3 +
+        i18n::s.get("core.locale.ui.gold");
 
     pos(wx + 390, wy + 66 + cnt * 19 + 2);
     mes(ally_info);

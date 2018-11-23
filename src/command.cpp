@@ -87,14 +87,14 @@ TurnResult do_give_command()
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(i18n::_(u8"ui", u8"invalid_target"));
+        txt(i18n::s.get("core.locale.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     tc = cell_data.at(x, y).chara_index_plus_one;
     if (tc == 0)
     {
-        txt(i18n::_(u8"ui", u8"invalid_target"));
+        txt(i18n::s.get("core.locale.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -123,7 +123,7 @@ TurnResult do_give_command()
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    txt(i18n::_(u8"ui", u8"invalid_target"));
+    txt(i18n::s.get("core.locale.ui.invalid_target"));
     update_screen();
     return TurnResult::pc_turn_user_error;
 }
@@ -134,14 +134,14 @@ TurnResult do_interact_command()
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(i18n::_(u8"ui", u8"invalid_target"));
+        txt(i18n::s.get("core.locale.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     tc = cell_data.at(x, y).chara_index_plus_one;
     if (tc == 0)
     {
-        txt(i18n::_(u8"ui", u8"invalid_target"));
+        txt(i18n::s.get("core.locale.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -2525,7 +2525,7 @@ TurnResult do_use_command()
                 txt(i18n::s.get(
                         "core.locale.action.use.gene_machine.gains.body_part",
                         cdata[rc],
-                        i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)),
+                        i18n::s.get_enum("core.locale.ui.body_part", rtval)),
                     Message::color{ColorIndex::green});
                 refresh_speed_correction_value(cdata[rc]);
             }

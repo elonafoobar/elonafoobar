@@ -435,7 +435,7 @@ std::string _yoro(int mark)
         {{u8"よろしくッス"}, {u8"よろしくにゃの"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -456,7 +456,7 @@ std::string _dozo(int mark)
         {{u8"お待たせッス"}, {u8"お待たせにゃん"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -476,7 +476,7 @@ std::string _thanks(int mark)
         {{u8"アザーッス"}, {u8"にゃりーん"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -503,7 +503,7 @@ std::string _rob(int mark)
         {{u8"見損なったッス"}, {u8"にゃりーん"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -520,7 +520,7 @@ std::string _ka(int mark)
         {{u8"ッスか"}, {u8"かにゃ", u8"かニャン"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -537,7 +537,7 @@ std::string _da(int mark)
         {{u8"ッス"}, {u8"みゃん", u8"ミャ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -554,7 +554,7 @@ std::string _nda(int mark)
         {{u8"んだッス"}, {u8"のニャ", u8"のにゃん"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -571,7 +571,7 @@ std::string _noka(int mark)
         {{u8"のッスか"}, {u8"にゃんか", u8"ニャン"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -588,7 +588,7 @@ std::string _kana(int mark)
         {{u8"ッスか"}, {u8"かにゃん", u8"かニャ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -605,7 +605,7 @@ std::string _kimi(int mark)
         {{u8"アンタ"}, {u8"あにゃた"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -622,7 +622,7 @@ std::string _ru(int mark)
         {{u8"るッス"}, {u8"るのニャ", u8"るにゃん"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -640,7 +640,7 @@ std::string _tanomu(int mark)
         {{u8"頼むッス"}, {u8"おねがいにゃ", u8"おねがいニャン"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -657,7 +657,7 @@ std::string _ore(int mark)
         {{u8"あっし"}, {u8"みゅー"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -674,7 +674,7 @@ std::string _ga(int mark)
         {{u8"ッスけど", u8"ッスが"}, {u8"ニャけど", u8"にゃが"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -691,7 +691,7 @@ std::string _dana(int mark)
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -708,7 +708,7 @@ std::string _kure(int mark)
         {{u8"くれッス"}, {u8"にゃ", u8"みゃ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -725,7 +725,7 @@ std::string _daro(int mark)
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -742,7 +742,7 @@ std::string _yo(int mark)
         {{u8"ッスよ", u8"ッス"}, {u8"にゃぁ", u8"みゃぁ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -759,7 +759,7 @@ std::string _aru(int mark)
         {{u8"あるッスよ", u8"あるッス"}, {u8"あにゅ", u8"あみぅ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -776,7 +776,7 @@ std::string _u(int mark)
         {{u8"うッスよ", u8"うッス"}, {u8"うにぁ", u8"うみぁ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -793,7 +793,7 @@ std::string _na(int mark)
         {{u8"ッスね", u8"ッス"}, {u8"ニァ", u8"ミァ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -810,7 +810,7 @@ std::string _ta(int mark)
         {{u8"たッスよ", u8"たッス"}, {u8"たにゃぁ", u8"たみゃぁ"}},
     };
     return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+        i18n::s.get_enum("core.locale.ui.mark", mark);
 }
 
 
@@ -828,7 +828,7 @@ std::string replace_tag(const std::string source)
     }
     if (source == u8"sex"s)
     {
-        return i18n::_(u8"ui", u8"sex2", u8"_0");
+        return i18n::s.get_enum("core.locale.ui.sex2", 0);
     }
     if (source == u8"player"s)
     {
@@ -1073,7 +1073,7 @@ void get_npc_talk()
 std::string cnvweight(int weight)
 {
     return ""s + std::abs(weight) / 1000 + '.' + std::abs(weight) % 1000 / 100 +
-        i18n::_(u8"ui", u8"unit_of_weight");
+        i18n::s.get("core.locale.ui.unit_of_weight");
 }
 
 
@@ -2380,7 +2380,7 @@ skip:
 
 std::string cheer_up_message(int hours)
 {
-    return i18n::_(u8"ui", u8"cheer_up_message", u8"_"s + hours);
+    return i18n::s.get_enum("core.locale.ui.cheer_up_message", hours);
 }
 
 void text_replace_tags_in_quest_board()

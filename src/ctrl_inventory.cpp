@@ -809,12 +809,11 @@ label_2060_internal:
                 gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
                 gmode(2);
             }
+            std::string inv_command_txt =
+                i18n::s.get_enum("core.locale.ui.inventory_command", p);
             bmes(
-                i18n::_(u8"ui", u8"inventory_command", u8"_"s + p),
-                x + cnt * 44 + 46 -
-                    strlen_u(
-                        i18n::_(u8"ui", u8"inventory_command", u8"_"s + p)) *
-                        3,
+                inv_command_txt,
+                x + cnt * 44 + 46 - strlen_u(inv_command_txt) * 3,
                 y + 7,
                 invctrl == p ? snail::Color{255, 255, 255}
                              : snail::Color{165, 165, 165});
@@ -836,7 +835,7 @@ label_2060_internal:
 label_2061_internal:
     s = i18n::s.get(
         "core.locale.ui.inv.window.select_item",
-        i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl));
+        i18n::s.get_enum("core.locale.ui.inventory_command", invctrl));
     s(1) = strhint2 + strhint5 + strhint5b + strhint3;
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9 ||
         invctrl == 14 || invctrl == 15 || invctrl == 26)
@@ -939,11 +938,11 @@ label_2061_internal:
                 color(100, 100, 100);
             }
             pos(x, y);
-            mes(""s + i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)));
+            std::string body_part_desc =
+                i18n::s.get_enum("core.locale.ui.body_part", p / 10000);
+            mes(body_part_desc);
             color(0, 0, 0);
-            x += (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size() +
-                  1) *
-                6;
+            x += (body_part_desc.size() + 1) * 6;
         }
     }
     keyrange = 0;

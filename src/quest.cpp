@@ -298,10 +298,9 @@ void quest_set_data(int val0)
     {
         if (quest_data[rq].reward_item_id < 10000)
         {
-            s(5) +=
-                i18n::s.get("core.locale.quest.info.and") +
-                i18n::_(
-                    u8"ui", u8"reward", u8"_"s + quest_data[rq].reward_item_id);
+            s(5) += i18n::s.get("core.locale.quest.info.and") +
+                i18n::s.get_enum(
+                    "core.locale.ui.reward", quest_data[rq].reward_item_id);
         }
         else
         {
