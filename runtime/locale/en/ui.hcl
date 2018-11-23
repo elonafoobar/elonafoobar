@@ -1,5 +1,7 @@
 locale {
     ui {
+        yes = "Yes"
+        no = "No.."
         bye = "Bye bye."
         more = "(More)"
 
@@ -11,6 +13,33 @@ locale {
         date_hour = "${_1}h"
 
         article = "[${_1}]"
+
+        gold = " gold pieces"
+        platinum = " platinum pieces"
+        unit_of_weight = "s"
+
+        bracket_left = "<"
+        bracket_right = ">"
+
+        no_gold = "(You don't have enough money!)"
+        invalid_target = "There's no valid target in that direction."
+
+        assign_shortcut = "You have assigned the shortcut to {${_1}} key."
+
+        item {
+            amulet = "amulet"
+            ring = "ring"
+            potion = "potion"
+            spellbook = "spellbook"
+            scroll = "scroll"
+            rod = "rod"
+        }
+
+        curse_state {
+            cursed = "cursed"
+            blessed = "blessed"
+            doomed = "doomed"
+        }
 
         menu {
             change = "Change"
@@ -530,6 +559,294 @@ locale {
             }
         }
 
-        assign_shortcut = "You have assigned the shortcut to {${_1}} key."
+        impression {
+            _0 = "Foe",
+            _1 = "Hate",
+            _2 = "Annoying",
+            _3 = "Normal",
+            _4 = "Amiable",
+            _5 = "Friend",
+            _6 = "Fellow",
+            _7 = "Soul Mate",
+            _8 = "*Love*",
+        }
+
+        weather {
+            _0 = "",
+            _1 = "Etherwind",
+            _2 = "Snow",
+            _3 = "Rain",
+            _4 = "Hard rain",
+        }
+
+        home {
+            _0 = "cave",
+            _1 = "shack",
+            _2 = "cozy house",
+            _3 = "estate",
+            _4 = "cyber house",
+            _5 = "small castle",
+        }
+
+        furniture {
+            _0 = "",
+            _1 = "stupid",
+            _2 = "lame",
+            _3 = "cool",
+            _4 = "madam's favorite",
+            _5 = "bewitched",
+            _6 = "maniac",
+            _7 = "magnificent",
+            _8 = "royal",
+            _9 = "masterpiece",
+            _10 = "heavenly",
+            _11 = "godly",
+        }
+
+        weight {
+            _0 = "extremely mini",
+            _1 = "small",
+            _2 = "handy",
+            _3 = "rather big",
+            _4 = "huge",
+            _5 = "pretty huge",
+            _6 = "monstrous-size",
+            _7 = "bigger than a man",
+            _8 = "legendary-size",
+            _9 = "heavier than an elephant",
+        }
+
+        reward {
+            _0 = "",
+            _1 = "equipment",
+            _2 = "magical goods",
+            _3 = "armor",
+            _4 = "weapons",
+            _5 = "ores",
+            _6 = "furnitures",
+        }
+
+        time {
+            _0 = "Midnight",
+            _1 = "Dawn",
+            _2 = "Morning",
+            _3 = "Noon",
+            _4 = "Dusk",
+            _5 = "Night",
+            _6 = "",
+            _7 = "",
+        }
+
+        attribute {
+            _0 = " STR",
+            _1 = " CON",
+            _2 = " DEX",
+            _3 = " PER",
+            _4 = " LER",
+            _5 = " WIL",
+            _6 = " MAG",
+            _7 = " CHR",
+        }
+
+        quality {
+            _0 = "",
+            _1 = "bad",
+            _2 = "good",
+            _3 = "great",
+            _4 = "miracle",
+            _5 = "godly",
+            _6 = "special",
+        }
+
+        resistance {
+            _0 = "Critically Weak",
+            _1 = "Weak",
+            _2 = "No Resist",
+            _3 = "Little",
+            _4 = "Normal",
+            _5 = "Strong",
+            _6 = "Superb",
+        }
+
+        mark {
+            _0 = ".",
+            _1 = "?",
+            _2 = "!",
+            _3 = "",
+        }
+
+        sex {
+            _0 = "Male",
+            _1 = "Female",
+        }
+
+        sex2 {
+            _0 = "boy",
+            _1 = "girl",
+        }
+
+        sex3 {
+            male = "male"
+            female = "female"
+        }
+
+        onii {
+            _0 = "brother",
+            _1 = "sister",
+        }
+
+        syujin {
+            _0 = "my master",
+            _1 = "my lady",
+        }
+
+        inventory_command {
+            _0 = "",
+            _1 = "Examine",
+            _2 = "Drop",
+            _3 = "Pick Up",
+            _4 = "",
+            _5 = "Eat",
+            _6 = "Wear",
+            _7 = "Read",
+            _8 = "Drink",
+            _9 = "Zap",
+            _10 = "Give",
+            _11 = "Buy",
+            _12 = "Sell",
+            _13 = "Identify",
+            _14 = "Use",
+            _15 = "Open",
+            _16 = "Cook",
+            _17 = "Mix",
+            _18 = "Mix Target",
+            _19 = "Offer",
+            _20 = "Trade",
+            _21 = "Present",
+            _22 = "Take",
+            _23 = "Target",
+            _24 = "Put",
+            _25 = "Take",
+            _26 = "Throw",
+            _27 = "Pickpocket",
+            _28 = "Trade",
+            _29 = "Reserve",
+        }
+
+        body_part {
+            _0 = "",
+            _1 = "Head",
+            _2 = "Neck",
+            _3 = "Back",
+            _4 = "Body",
+            _5 = "Hand",
+            _6 = "Ring",
+            _7 = "Arm",
+            _8 = "Waist",
+            _9 = "Leg",
+            _10 = "Shoot",
+            _11 = "Ammo",
+        }
+
+        action {
+            _0 = "current action",
+            _1 = "eating",
+            _2 = "reading",
+            _3 = "moving",
+            _4 = "resting",
+            _5 = "mining",
+            _6 = "playing",
+            _7 = "fishing",
+            _8 = "collecting materials",
+            _9 = "searching",
+            _10 = "current action",
+            _11 = "current action",
+            _12 = "current action",
+            _13 = "current action",
+        }
+
+        cast_style {
+            _0 = " casts a spell.",
+            _1 = " splits cobweb.",
+            _2 = " spreads body fluid.",
+            _3 = " puts out a tentacle.",
+            _4 = " gazes.",
+            _5 = " scatters spores.",
+            _6 = " vibrates.",
+        }
+
+        random_item {
+            potion {
+                _0 = "clear",
+                _1 = "green",
+                _2 = "blue",
+                _3 = "gold",
+                _4 = "brown",
+                _5 = "red",
+            }
+
+            spellbook {
+                _0 = "thick",
+                _1 = "mossy",
+                _2 = "clear",
+                _3 = "luxurious",
+                _4 = "old",
+                _5 = "bloody",
+            }
+
+            scroll {
+                _0 = "blurred",
+                _1 = "mossy",
+                _2 = "ragged",
+                _3 = "boring",
+                _4 = "old",
+                _5 = "bloody",
+            }
+
+            rod {
+                _0 = "iron",
+                _1 = "ivy",
+                _2 = "sapphire",
+                _3 = "golden",
+                _4 = "wooden",
+                _5 = "rusty",
+            }
+
+            ring {
+                _0 = "iron",
+                _1 = "green",
+                _2 = "sapphire",
+                _3 = "golden",
+                _4 = "wooden",
+                _5 = "rusty",
+            }
+        }
+
+
+        cheer_up_message {
+            _1 = "Larnneire cheers, \"Way to go!\"",
+            _2 = "Lomias grins, \"Go for it.\"",
+            _3 = "Kumiromi worries, \"Are you...okay..?\"",
+            _4 = "Lulwy sneers, \"You're tougher than I thought, little kitty.\"",
+            _5 = "Larnneire cries, \"No...before it is too late...\"",
+            _6 = "Lomias grins, \"It hasn't even started yet... has it?\"",
+            _7 = "Lulwy warns you, \"Have a rest, kitty. If you are broken, you're no use to me.\"",
+            _8 = "Lulwy laughs, \"I guess there's no use warning you. Alright. Do as you please, kitty.\"",
+            _12 = "Opatos laughs, \"Muwahahahahahaha!\"",
+            _24 = "Ehekatl hugs you,\"Don't die! Promise you don't die!\"",
+        }
+
+        autodig {
+            mode = "Autodig",
+            enabled = "You enable autodig.",
+            disabled = "You disable autodig.",
+        }
+
+        autopick {
+            do_you_really_pick_up = "Pick up ${name(_1)}?"
+            do_you_really_destroy = "Destroy ${name(_1)}?"
+            destroyed = "${name(_1)} was destroyed."
+            do_you_really_open = "Open ${name(_1)}?"
+        }
     }
 }
