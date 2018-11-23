@@ -629,8 +629,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         foobar_data.is_autodig_enabled = !foobar_data.is_autodig_enabled;
         txt(i18n::s.get(
-            "core.locale.ui.autodig."s
-            + (foobar_data.is_autodig_enabled ? "enabled" : "disabled")));
+            "core.locale.ui.autodig."s +
+            (foobar_data.is_autodig_enabled ? "enabled" : "disabled")));
         return none;
     }
 
