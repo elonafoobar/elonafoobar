@@ -47,6 +47,20 @@ int buff_find_slot(const Character& cc, int id, int turns)
     return rnd(static_cast<int>(cc.buffs.size()));
 }
 
+void buff_on_removal(Character& chara, int id)
+{
+    auto buff = the_buff_db[id];
+    assert(buff);
+
+    auto& on_removal = buff->on_removal;
+    if (on_removal)
+    {
+        auto self = buff->self;
+        auto args = lua::create_table("chara", lua::handle(chara));
+        on_removal->call(self, args);
+    }
+}
+
 
 
 } // namespace
@@ -246,21 +260,7 @@ void buff_delete(Character& cc, int slot)
             cc.index,
             {191, 191, 191});
     }
-    if (cc.buffs[slot].id == 15)
-    {
-        if (cc.index == 0)
-        {
-            incognitoend();
-        }
-    }
-    if (cc.buffs[slot].id == 16)
-    {
-        cc.is_sentenced_daeth() = false;
-    }
-    if (cc.buffs[slot].id == 18)
-    {
-        cc.is_contracting_with_reaper() = false;
-    }
+    buff_on_removal(cc, cc.buffs[slot].id);
     cc.buffs[slot].id = 0;
     for (int cnt = slot, cnt_end = cnt + (16 - slot - 1); cnt < cnt_end; ++cnt)
     {

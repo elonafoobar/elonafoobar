@@ -5,6 +5,7 @@
 #include "../config/config.hpp"
 #include "../item.hpp"
 #include "../log.hpp"
+#include "../macro.hpp"
 #include "lua_env.hpp"
 
 namespace elona
@@ -103,6 +104,13 @@ void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
         return;
     }
 
+    // If the handle already exists, the object it references has to be invalid.
+    // Otherwise the handle would be mistakenly invalidated when the thing it
+    // points to is still valid.
+    int index = handle["__index"];
+    UNUSED(index);
+    assert(cdata[index].state() != Character::State::alive);
+
     lua->get_event_manager().run_callbacks<EventKind::character_removed>(
         handle);
     remove_chara_handle(chara);
@@ -115,6 +123,13 @@ void HandleManager::remove_item_handle_run_callbacks(const Item& item)
     {
         return;
     }
+
+    // If the handle already exists, the object it references has to be invalid.
+    // Otherwise the handle would be mistakenly invalidated when the thing it
+    // points to is still valid.
+    int index = handle["__index"];
+    UNUSED(index);
+    assert(inv[index].number() == 0);
 
     lua->get_event_manager().run_callbacks<EventKind::item_removed>(handle);
     remove_item_handle(item);

@@ -100,18 +100,7 @@ void dmgheal_death_by_backpack(Character& chara)
 
 
 /**
- * Modifies certain statuses on death for a character, like time to revive.
- * However, the new state of the character will not be set. It must be set only
- * after the character reference is no longer needed, because setting it to
- * empty will cause the corresponding Lua handle to be deleted, meaning it will
- * be unusable for running Lua-related behavior. One example of this is running
- * the Lua behavior to drop items on death. For it to work, the character's Lua
- * handle still has to be valid, as it is passed to the item drop code in Lua.
- *
- * After the death-related behavior is finished running, the state can be set
- * such that the Lua handle is cleared.
- *
- * @return the state to set the character to at the end of damage_hp().
+ * Calculates the new state to set the character to at the end of damage_hp().
  */
 Character::State dmgheal_set_death_status(Character& victim)
 {
@@ -964,11 +953,8 @@ int damage_hp(
             cell_removechara(victim.position.x, victim.position.y);
         }
 
-        // Save the state to transition the character to until all death-related
-        // behavior that needs the character to still be valid has finished
-        // running. When the state is set, the Lua handle for the character
-        // might be cleared.
-        Character::State deferred_state = dmgheal_set_death_status(victim);
+        Character::State new_state = dmgheal_set_death_status(victim);
+        victim.set_state(new_state);
 
         if (victim.breaks_into_debris())
         {
@@ -1191,10 +1177,7 @@ int damage_hp(
             for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
                  ++chara_index)
             {
-                // The victim just died, so the state will not be "alive" when
-                // set below.
-                if (chara_index == victim.index ||
-                    cdata[chara_index].state() != Character::State::alive)
+                if (cdata[chara_index].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1225,10 +1208,6 @@ int damage_hp(
         }
 
         end_dmghp(victim);
-
-        // Set the character's state, deferred from earlier. If it is "empty",
-        // the corresponding Lua reference will be cleared.
-        victim.set_state(deferred_state);
 
         return 0;
     }

@@ -272,6 +272,12 @@ void LuaCharacter::bind(sol::state& lua)
         &Character::hit_bonus,
         "growth_buffs",
         &Character::growth_buffs,
+        "hate",
+        &Character::hate,
+        "emotion_icon",
+        &Character::emotion_icon,
+        "karma",
+        &Character::karma,
 
         // Properties
         "new_id",

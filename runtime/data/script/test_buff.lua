@@ -62,7 +62,6 @@ local function query_buff()
    local index = prompt_choice_paged(buffs)
    if index then
       local buff_id = buffs[index]
-      print(buff_id)
       local power = Input.prompt_number("Power? ", 9999, 100)
       if power then
          local buff = data.raw["core.buff"][buff_id]
@@ -74,7 +73,16 @@ local function query_buff()
 end
 
 local function setup()
-   switcher = make_sandbag(25, 23, "core.yeek")
+   switcher = make_sandbag(25, 23, "core.silver_cat")
+
+   -- Guard aggro is only refreshed when entering an existing map, so
+   -- it will only be reapplied when incognito ends.
+   for i=0,5 do
+      local guard = Chara.create(27, 27, "core.guard")
+      guard.role = 14
+   end
+
+   Chara.player().karma = -50
 end
 
 Event.register(Event.EventKind.MapInitialized, setup)
@@ -82,4 +90,12 @@ Event.register(Event.EventKind.CharaDamaged, function(chara)
                   if chara.index == switcher.index then
                      query_buff()
                   end
+end)
+
+Event.register(Event.EventKind.CharaCreated, function(chara)
+                  print("Created " .. chara.index)
+end)
+
+Event.register(Event.EventKind.CharaRemoved, function(chara)
+                  print("Removed " .. chara.index)
 end)

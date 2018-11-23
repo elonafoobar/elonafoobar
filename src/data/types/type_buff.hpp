@@ -12,6 +12,7 @@ struct BuffData
     BuffType type;
     lua::WrappedFunction duration;
     lua::WrappedFunction on_refresh;
+    optional<lua::WrappedFunction> on_removal;
     lua::WrappedFunction description;
 };
 

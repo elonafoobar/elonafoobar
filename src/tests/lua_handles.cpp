@@ -128,7 +128,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
         auto handle = handle_mgr.get_handle(chara);
         elona::lua::lua->get_state()->set("chara", handle);
 
-        chara_delete(chara.index);
+        testing::invalidate_chara(chara);
 
         {
             auto result = elona::lua::lua->get_state()->safe_script(
@@ -153,7 +153,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
         auto handle = handle_mgr.get_handle(item);
         elona::lua::lua->get_state()->set("item", handle);
 
-        item_delete(item.index);
+        testing::invalidate_item(item);
 
         {
             auto result = elona::lua::lua->get_state()->safe_script(
@@ -187,7 +187,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
         REQUIRE_NOTHROW(
             mod_mgr.run_in_mod("test", "Store.global.charas = {[0]=chara}"));
 
-        chara_delete(chara.index);
+        testing::invalidate_chara(chara);
 
         REQUIRE_THROWS(
             mod_mgr.run_in_mod("test", "print(Store.global.charas[0].index)"));
@@ -204,7 +204,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
         REQUIRE_NOTHROW(
             mod_mgr.run_in_mod("test2", "Store.global.items = {[0]=item}"));
 
-        item_delete(item.index);
+        testing::invalidate_item(item);
 
         REQUIRE_THROWS(
             mod_mgr.run_in_mod("test2", "print(Store.global.items[0].index)"));
@@ -229,7 +229,7 @@ Store.global.charas = {[0]=chara}
 )"));
         int idx = mod_mgr.get_mod("test_invalid_chara")->env["idx"];
 
-        chara_delete(idx);
+        testing::invalidate_chara(elona::cdata[idx]);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod(
             "test_invalid_chara", "print(Store.global.charas[0].index)"));
@@ -244,7 +244,7 @@ Store.global.items = {[0]=items}
 )"));
         int idx = mod_mgr.get_mod("test_invalid_item")->env["idx"];
 
-        item_delete(idx);
+        testing::invalidate_item(elona::inv[idx]);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod(
             "test_invalid_item", "print(Store.global.items[0].index)"));
@@ -276,7 +276,7 @@ local Chara = Elona.require("Chara")
 print(Chara.is_ally(Store.global.charas[0]))
 )"));
 
-        chara_delete(chara.index);
+        testing::invalidate_chara(chara);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod("test_chara_arg", R"(
 local Chara = Elona.require("Chara")
@@ -299,7 +299,7 @@ local Item = Elona.require("Item")
 Item.has_enchantment(Store.global.items[0], 20)
 )"));
 
-        item_delete(item.index);
+        testing::invalidate_item(item);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod("test_item_arg", R"(
 local Item = Elona.require("Item")
@@ -365,8 +365,10 @@ TEST_CASE(
 
     REQUIRE(handle_mgr.get_handle(inv[elona::ci]) != sol::lua_nil);
     REQUIRE(pick_up_item() == 1);
-    REQUIRE(handle_mgr.get_handle(inv[elona::ci]) == sol::lua_nil);
     REQUIRE(handle_mgr.get_handle(inv[elona::ti]) != sol::lua_nil);
+
+    // Removal of handle is deferred.
+    REQUIRE(handle_mgr.get_handle(inv[elona::ci]) != sol::lua_nil);
 }
 
 TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
@@ -410,11 +412,13 @@ TEST_CASE(
     int tc = elona::rc;
     flt(20, Quality::good);
     REQUIRE(chara_create(56, 0, -3, 0));
+    auto temporary_handle = handle_mgr.get_handle(cdata.tmp());
     chara_relocate(cdata.tmp(), tc, CharaRelocationMode::change);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle["__index"].get<int>() == elona::rc);
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
+    REQUIRE(handle_mgr.handle_is_valid(temporary_handle) == false);
 }
 
 TEST_CASE("Test copying of character handles", "[Lua: Handles]")
@@ -441,11 +445,13 @@ TEST_CASE("Test copying of character handles", "[Lua: Handles]")
         handle_copy["__uuid"].get<std::string>());
 
     // Assert that copying to an existing character will not try to
-    // overwrite the existing handle.
+    // overwrite the existing handle (it would cause an exception).
     REQUIRE_NOTHROW(elona::Character::copy(chara, copy));
 }
 
-TEST_CASE("Test deletion of character causing handle removal", "[Lua: Handles]")
+TEST_CASE(
+    "Test deletion of character causing handle to remain",
+    "[Lua: Handles]")
 {
     reset_state();
     start_in_debug_map();
@@ -457,11 +463,12 @@ TEST_CASE("Test deletion of character causing handle removal", "[Lua: Handles]")
 
     chara_delete(chara.index);
 
-    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+    // Invalidation is deferred until the handle is recreated in the same slot.
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 }
 
 TEST_CASE(
-    "Test state change of character causing handle removal",
+    "Test state change of character causing handle recreation",
     "[Lua: Handles]")
 {
     reset_state();
@@ -471,12 +478,13 @@ TEST_CASE(
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
     Character& chara = elona::cdata[elona::rc];
     auto handle = handle_mgr.get_handle(chara);
+    auto old_uuid = handle["__uuid"].get<std::string>();
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     // State is set to empty.
     chara.set_state(Character::State::empty);
-    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     // State becomes non-empty again. Character counts as recreated.
     chara.set_state(Character::State::alive);
@@ -485,10 +493,12 @@ TEST_CASE(
     // The handle has been replaced, so retrieve it again.
     handle = handle_mgr.get_handle(chara);
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+
+    REQUIRE(handle["__uuid"].get<std::string>() != old_uuid);
 }
 
 TEST_CASE(
-    "Test setting of item amount causing handle deletion",
+    "Test setting of item amount causing handle recreation",
     "[Lua: Handles]")
 {
     reset_state();
@@ -499,6 +509,7 @@ TEST_CASE(
     REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
     Item& i = elona::inv[elona::ci];
     auto handle = handle_mgr.get_handle(i);
+    auto old_uuid = handle["__uuid"].get<std::string>();
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
@@ -508,7 +519,7 @@ TEST_CASE(
 
     // Amount becomes 0.
     i.set_number(-5);
-    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     // Amount becomes 1 again. Item counts as recreated.
     i.set_number(1);
@@ -517,38 +528,8 @@ TEST_CASE(
     // The handle has been replaced, so retrieve it again.
     handle = handle_mgr.get_handle(i);
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
-}
 
-TEST_CASE(
-    "Test modifying of item amount causing handle deletion",
-    "[Lua: Handles]")
-{
-    reset_state();
-    start_in_debug_map();
-    auto& handle_mgr = elona::lua::lua->get_handle_manager();
-    int amount = 2;
-
-    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
-    Item& i = elona::inv[elona::ci];
-    auto handle = handle_mgr.get_handle(i);
-
-    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
-
-    // Amount becomes 1.
-    i.modify_number(-1);
-    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
-
-    // Amount becomes 0.
-    i.modify_number(-5);
-    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
-
-    // Amount becomes 1 again. Item counts as recreated.
-    i.modify_number(1);
-    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
-
-    // The handle has been replaced, so retrieve it again.
-    handle = handle_mgr.get_handle(i);
-    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+    REQUIRE(handle["__uuid"].get<std::string>() != old_uuid);
 }
 
 TEST_CASE("Test separation of item handles", "[Lua: Handles]")
@@ -648,7 +629,11 @@ local chara = Chara.create(0, 0, "core.putit")
 local skill = chara:get_skill(10)
 assert(skill.original_level > 0)
 
+local old_index = chara.index
 chara:damage_hp(chara.max_hp + 1)
+local chara = Chara.create(0, 0, "core.putit")
+assert(chara.index == old_index)
+
 assert(skill.original_level == 0)
 )"));
 }
