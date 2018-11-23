@@ -553,7 +553,7 @@ int calcattackhit()
     }
     if (sdata(187, tc) != 0)
     {
-        if (tohit < sdata(187, tc) * 10)
+        if (tohit < sdata(187, tc) * 10 && tohit > 0)
         {
             int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)
