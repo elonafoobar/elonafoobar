@@ -199,8 +199,9 @@ TurnResult ai_proc_basic()
             efid = act;
             if (cdata[cc].mp < cdata[cc].max_mp / 7)
             {
-                if (rnd(3) || cc < 16 || cdata[cc].quality >= Quality::miracle
-                    || cdata[cc].cures_mp_frequently())
+                if (rnd(3) || cc < 16 ||
+                    cdata[cc].quality >= Quality::miracle ||
+                    cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
                     return TurnResult::turn_end;
@@ -372,10 +373,10 @@ TurnResult proc_npc_movement_event(bool retreat)
         cdata[cc]._206 = cdata[tc].position.y;
         if (retreat || cdata[cc].ai_dist > distance)
         {
-            cdata[cc]._205 = cdata[cc].position.x
-                + (cdata[cc].position.x - cdata[tc].position.x);
-            cdata[cc]._206 = cdata[cc].position.y
-                + (cdata[cc].position.y - cdata[tc].position.y);
+            cdata[cc]._205 = cdata[cc].position.x +
+                (cdata[cc].position.x - cdata[tc].position.x);
+            cdata[cc]._206 = cdata[cc].position.y +
+                (cdata[cc].position.y - cdata[tc].position.y);
         }
     }
     else
@@ -383,10 +384,10 @@ TurnResult proc_npc_movement_event(bool retreat)
         --cdata[cc]._203;
     }
     blockedbychara = 0;
-    cdata[cc].next_position.x = (cdata[cc]._205 > cdata[cc].position.x)
-        - (cdata[cc]._205 < cdata[cc].position.x) + cdata[cc].position.x;
-    cdata[cc].next_position.y = (cdata[cc]._206 > cdata[cc].position.y)
-        - (cdata[cc]._206 < cdata[cc].position.y) + cdata[cc].position.y;
+    cdata[cc].next_position.x = (cdata[cc]._205 > cdata[cc].position.x) -
+        (cdata[cc]._205 < cdata[cc].position.x) + cdata[cc].position.x;
+    cdata[cc].next_position.y = (cdata[cc]._206 > cdata[cc].position.y) -
+        (cdata[cc]._206 < cdata[cc].position.y) + cdata[cc].position.y;
     x = cdata[cc].next_position.x;
     y = cdata[cc].next_position.y;
     cell_check(x, y);
@@ -409,9 +410,9 @@ TurnResult proc_npc_movement_event(bool retreat)
             return ai_proc_basic();
         }
         else if (
-            (cdata[cc].quality > Quality::great
-             && cdata[cc].level > cdata[tc].level)
-            || cdata[tc].is_hung_on_sand_bag())
+            (cdata[cc].quality > Quality::great &&
+             cdata[cc].level > cdata[tc].level) ||
+            cdata[tc].is_hung_on_sand_bag())
         {
             if (cdata[cc].enemy_id != tc)
             {
@@ -421,8 +422,8 @@ TurnResult proc_npc_movement_event(bool retreat)
                     txt(i18n::s.get(
                         "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
-                if (cdata[tc].continuous_action.type
-                    == ContinuousAction::Type::eat)
+                if (cdata[tc].continuous_action.type ==
+                    ContinuousAction::Type::eat)
                 {
                     if (cdata[tc].continuous_action.turn > 0)
                     {
@@ -454,8 +455,9 @@ TurnResult proc_npc_movement_event(bool retreat)
                         {
                             if (y < map_data.height)
                             {
-                                if (chipm(7, cell_data.at(x, y).chip_id_actual)
-                                    & 4)
+                                if (chipm(
+                                        7, cell_data.at(x, y).chip_id_actual) &
+                                    4)
                                 {
                                     if (rnd(4) == 0)
                                     {
@@ -480,8 +482,8 @@ TurnResult proc_npc_movement_event(bool retreat)
             }
         }
     }
-    if (std::abs(cdata[cc]._205 - cdata[cc].position.x)
-        >= std::abs(cdata[cc]._206 - cdata[cc].position.y))
+    if (std::abs(cdata[cc]._205 - cdata[cc].position.x) >=
+        std::abs(cdata[cc]._206 - cdata[cc].position.y))
     {
         {
             int stat = ai_dir_check_1();
@@ -783,13 +785,12 @@ label_2692_internal:
                                 cell_data
                                     .at(cdata[cc].position.x,
                                         cdata[cc].position.y)
-                                    .chip_id_actual)
-                            == 4)
+                                    .chip_id_actual) == 4)
                         {
                             if (rnd(4) == 0)
                             {
-                                if (cdata[game_data.fire_giant].state()
-                                    == Character::State::alive)
+                                if (cdata[game_data.fire_giant].state() ==
+                                    Character::State::alive)
                                 {
                                     if (is_in_fov(cdata[game_data.fire_giant]))
                                     {
@@ -817,12 +818,11 @@ label_2692_internal:
                                 for (const auto& cnt : itemlist(-1, 541))
                                 {
                                     ti = cnt;
-                                    if (inv[ti].position.x >= scx
-                                        && inv[ti].position.x
-                                            < scx + inf_screenw
-                                        && inv[ti].position.y >= scy
-                                        && inv[ti].position.y
-                                            < scy + inf_screenh)
+                                    if (inv[ti].position.x >= scx &&
+                                        inv[ti].position.x <
+                                            scx + inf_screenw &&
+                                        inv[ti].position.y >= scy &&
+                                        inv[ti].position.y < scy + inf_screenh)
                                     {
                                         found_snowman = true;
                                         break;
@@ -845,8 +845,7 @@ label_2692_internal:
                                 if (cell_data
                                         .at(cdata[cc].position.x,
                                             cdata[cc].position.y)
-                                        .item_appearances_actual
-                                    == 0)
+                                        .item_appearances_actual == 0)
                                 {
                                     flt();
                                     int stat = itemcreate(
@@ -999,8 +998,7 @@ label_2692_internal:
                             cdata[cc].position.x,
                             cdata[cc].position.y,
                             cdata[cnt].position.x,
-                            cdata[cnt].position.y)
-                        < 6)
+                            cdata[cnt].position.y) < 6)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -1057,24 +1055,23 @@ label_2692_internal:
     }
     if (cdata[cc].ai_calm == 2)
     {
-        if (map_data.designated_spawns == 1
-            && dist(
-                   cdata[cc].position.x,
-                   cdata[cc].position.y,
-                   cdata[cc].initial_position.x,
-                   cdata[cc].initial_position.y)
-                > 2)
+        if (map_data.designated_spawns == 1 &&
+            dist(
+                cdata[cc].position.x,
+                cdata[cc].position.y,
+                cdata[cc].initial_position.x,
+                cdata[cc].initial_position.y) > 2)
         {
-            cdata[cc].next_position.x = cdata[cc].position.x
-                + rnd(2)
-                    * ((cdata[cc].position.x > cdata[cc].initial_position.x)
-                           * -1
-                       + (cdata[cc].position.x < cdata[cc].initial_position.x));
-            cdata[cc].next_position.y = cdata[cc].position.y
-                + rnd(2)
-                    * ((cdata[cc].position.y > cdata[cc].initial_position.y)
-                           * -1
-                       + (cdata[cc].position.y < cdata[cc].initial_position.y));
+            cdata[cc].next_position.x = cdata[cc].position.x +
+                rnd(2) *
+                    ((cdata[cc].position.x > cdata[cc].initial_position.x) *
+                         -1 +
+                     (cdata[cc].position.x < cdata[cc].initial_position.x));
+            cdata[cc].next_position.y = cdata[cc].position.y +
+                rnd(2) *
+                    ((cdata[cc].position.y > cdata[cc].initial_position.y) *
+                         -1 +
+                     (cdata[cc].position.y < cdata[cc].initial_position.y));
         }
         else
         {

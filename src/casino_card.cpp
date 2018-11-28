@@ -199,8 +199,8 @@ void showcard()
     showcardpile();
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
     {
-        if (card_at_cardcontrol(5, cnt) == -1
-            || card_at_cardcontrol(5, cnt) == -2)
+        if (card_at_cardcontrol(5, cnt) == -1 ||
+            card_at_cardcontrol(5, cnt) == -2)
         {
             continue;
         }
@@ -232,8 +232,8 @@ int servecard(int prm_427)
             break;
         }
     }
-    dx_at_cardcontrol = pilex_at_cardcontrol
-        - cardplayer_at_cardcontrol(1, prm_427) - p_at_cardcontrol * 88;
+    dx_at_cardcontrol = pilex_at_cardcontrol -
+        cardplayer_at_cardcontrol(1, prm_427) - p_at_cardcontrol * 88;
     dy_at_cardcontrol =
         piley_at_cardcontrol - cardplayer_at_cardcontrol(2, prm_427);
     card_at_cardcontrol(5, cardid_at_cardcontrol) = prm_427;
@@ -369,8 +369,8 @@ int trashcard(int prm_430)
              cnt < cnt_end;
              ++cnt)
         {
-            if (cardplayer_at_cardcontrol(10 + cnt, p_at_cardcontrol)
-                == prm_430)
+            if (cardplayer_at_cardcontrol(10 + cnt, p_at_cardcontrol) ==
+                prm_430)
             {
                 cardplayer_at_cardcontrol(10 + cnt, p_at_cardcontrol) = -1;
             }

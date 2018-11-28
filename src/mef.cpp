@@ -149,8 +149,7 @@ void mef_update()
                                 dx,
                                 dy,
                                 cdata.player().position.x,
-                                cdata.player().position.y)
-                            < 6)
+                                cdata.player().position.y) < 6)
                         {
                             sound = "core.fire1";
                         }
@@ -159,8 +158,8 @@ void mef_update()
                     {
                         x = rnd(2) + dx - rnd(2);
                         y = rnd(2) + dy - rnd(2);
-                        if (x < 0 || y < 0 || x >= map_data.width
-                            || y >= map_data.height)
+                        if (x < 0 || y < 0 || x >= map_data.width ||
+                            y >= map_data.height)
                         {
                             f = 0;
                             continue;
@@ -200,8 +199,8 @@ void mef_update()
 void mef_proc(int tc)
 {
     int ef = cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
-                 .mef_index_plus_one
-        - 1;
+                 .mef_index_plus_one -
+        1;
     if (mef(0, ef) == 0)
     {
         return;
@@ -292,8 +291,8 @@ void mef_proc(int tc)
 bool mef_proc_from_movement(int cc)
 {
     int i = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                .mef_index_plus_one
-        - 1;
+                .mef_index_plus_one -
+        1;
     if (mef(0, i) == 0)
     {
         return false;
@@ -302,8 +301,8 @@ bool mef_proc_from_movement(int cc)
     {
         if (cdatan(2, cc) != u8"core.spider"s)
         {
-            if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
-                || cdata[cc].weight > 100)
+            if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1) ||
+                cdata[cc].weight > 100)
             {
                 if (is_in_fov(cdata[cc]))
                 {
@@ -331,8 +330,8 @@ bool mef_proc_from_movement(int cc)
 bool mef_proc_from_physical_attack(int tc)
 {
     int i = cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
-                .mef_index_plus_one
-        - 1;
+                .mef_index_plus_one -
+        1;
     if (mef(0, i) == 0)
     {
         return false;

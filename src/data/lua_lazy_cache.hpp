@@ -216,8 +216,8 @@ private:
         }
         catch (const std::exception& e)
         {
-            std::string message = "Error initializing "s + Traits::type_id + ":"
-                + id.get() + ": " + e.what();
+            std::string message = "Error initializing "s + Traits::type_id +
+                ":" + id.get() + ": " + e.what();
             ELONA_LOG(message);
             std::cerr << message << std::endl;
 

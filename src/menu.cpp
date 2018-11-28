@@ -55,8 +55,8 @@ namespace elona
 void text_set()
 {
     strhint1 = i18n::s.get("core.locale.ui.hint.cursor");
-    strhint2 = ""s + key_pageup + u8","s + key_pagedown
-        + i18n::s.get("core.locale.ui.hint.page");
+    strhint2 = ""s + key_pageup + u8","s + key_pagedown +
+        i18n::s.get("core.locale.ui.hint.page");
     strhint3 = i18n::s.get("core.locale.ui.hint.close");
     strhint3b = i18n::s.get("core.locale.ui.hint.back");
     strhint4 = i18n::s.get("core.locale.ui.hint.enter");
@@ -205,8 +205,8 @@ void show_ex_help()
     if (p == -1)
     {
         dialog(
-            u8"help index not found %"s + ghelp + u8","s
-            + i18n::s.get("core.locale.meta.tag"));
+            u8"help index not found %"s + ghelp + u8","s +
+            i18n::s.get("core.locale.meta.tag"));
         return;
     }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
@@ -374,8 +374,8 @@ void draw_spell_power_entry(int skill_id)
             calc_buff_duration(p, calcspellpower(skill_id, cc));
         const auto description =
             get_buff_description(p, calcspellpower(skill_id, cc));
-        s = ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter")
-            + description;
+        s = ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter") +
+            description;
         return;
     }
     const auto damage =
@@ -690,8 +690,8 @@ int change_appearance()
     boxf();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        const auto filepath = filesystem::dir::user() / u8"graphic"
-            / (u8"face"s + (cnt + 1) + u8".bmp");
+        const auto filepath = filesystem::dir::user() / u8"graphic" /
+            (u8"face"s + (cnt + 1) + u8".bmp");
         if (fs::exists(filepath))
         {
             pos(cnt * 80, 0);
@@ -912,9 +912,9 @@ label_2041_internal:
         if (rtval(1) == 0)
         {
             if (fs::exists(
-                    filesystem::dir::graphic()
-                    / (u8"pcc_"s + rtvaln + u8"_" + (pcc(rtval, cc) % 1000 + 1)
-                       + u8".bmp")))
+                    filesystem::dir::graphic() /
+                    (u8"pcc_"s + rtvaln + u8"_" + (pcc(rtval, cc) % 1000 + 1) +
+                     u8".bmp")))
             {
                 ++pcc(rtval, cc);
                 p = 1;
@@ -944,11 +944,11 @@ label_2041_internal:
         }
         if (rtval(1) == 0)
         {
-            if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15)
-                || fs::exists(
-                    filesystem::dir::graphic()
-                    / (u8"pcc_"s + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 - 1)
-                       + u8".bmp"s)))
+            if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15) ||
+                fs::exists(
+                    filesystem::dir::graphic() /
+                    (u8"pcc_"s + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 - 1) +
+                     u8".bmp"s)))
             {
                 --pcc(rtval, cc);
                 p = 1;
@@ -1177,8 +1177,8 @@ void show_weapon_dice(int val0)
     {
         s(3) = s;
     }
-    s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s
-        + strmid(
+    s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s +
+        strmid(
             s(2),
             0,
             3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
@@ -1355,8 +1355,8 @@ void screen_analyze_self()
     apply_god_blessing(56);
     if (cdata.player().god_id != core_god::eyth)
     {
-        buff += u8"<title1>◆ "s + god_name(cdata.player().god_id)
-            + u8"による能力の恩恵<def>\n"s;
+        buff += u8"<title1>◆ "s + god_name(cdata.player().god_id) +
+            u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
             p = sdata(cnt, rc) - 1;

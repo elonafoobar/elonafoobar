@@ -68,11 +68,11 @@ SharedId get_default_music()
                                                          "core.mcDungeon6"};
         music_id = choices[game_data.date.hour % 6];
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon
-        || area_data[game_data.current_map].id == mdata_t::MapId::the_void)
+    if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon ||
+        area_data[game_data.current_map].id == mdata_t::MapId::the_void)
     {
-        if (game_data.current_dungeon_level
-            == area_data[game_data.current_map].deepest_level)
+        if (game_data.current_dungeon_level ==
+            area_data[game_data.current_map].deepest_level)
         {
             if (area_data[game_data.current_map].has_been_conquered != -1)
             {
@@ -140,8 +140,8 @@ SharedId get_default_music()
         music_id = "core.mcTown6"s;
     }
 
-    if (!music_id
-        || area_data[game_data.current_map].type == mdata_t::MapType::world_map)
+    if (!music_id ||
+        area_data[game_data.current_map].type == mdata_t::MapType::world_map)
     {
         static const std::vector<std::string> choices = {
             "core.mcField1", "core.mcField2", "core.mcField3"};
@@ -213,8 +213,8 @@ void snd_inner(
                      i < temporary_channels_head + temporary_channels_size;
                      ++i)
                 {
-                    if (CHECKPLAY(i)
-                        && soundlist[i - temporary_channels_head] == sound.id)
+                    if (CHECKPLAY(i) &&
+                        soundlist[i - temporary_channels_head] == sound.id)
                     {
                         channel = i;
                         found = true;
@@ -442,8 +442,8 @@ void sound_play_environmental()
         DSSETVOLUME(13, max_volume * 0.8);
     }
     else if (
-        game_data.current_dungeon_level == 1
-        || game_data.current_map == mdata_t::MapId::shelter_)
+        game_data.current_dungeon_level == 1 ||
+        game_data.current_map == mdata_t::MapId::shelter_)
     {
         DSSETVOLUME(13, max_volume * 0.2);
     }

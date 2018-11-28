@@ -71,8 +71,8 @@ bool DialogNodeBehaviorRedirector::apply(
     {
         _dialog_error(
             the_dialog_node.id,
-            callback_redirector
-                + ": Redirector callback returned invalid node id");
+            callback_redirector +
+                ": Redirector callback returned invalid node id");
         return false;
     }
 
@@ -136,8 +136,8 @@ bool DialogData::state_is_valid()
     if (current_text_index > text_amount)
     {
         throw std::runtime_error(
-            *current_node_id + ": BUG: Dialog has " + text_amount
-            + " texts, but " + current_text_index + " was requested");
+            *current_node_id + ": BUG: Dialog has " + text_amount +
+            " texts, but " + current_text_index + " was requested");
 
         return false;
     }
@@ -205,8 +205,8 @@ bool DialogData::advance(size_t choice_index)
         {
             _dialog_error(
                 *current_node_id,
-                "Current node should have \"more\" choice only, but choice "s
-                    + choice_index + " was requested"s);
+                "Current node should have \"more\" choice only, but choice "s +
+                    choice_index + " was requested"s);
             return false;
         }
 
@@ -218,8 +218,8 @@ bool DialogData::advance(size_t choice_index)
     {
         _dialog_error(
             *current_node_id,
-            "Current node has "s + choice_amount + " choices, but "s
-                + choice_index + " was requested"s);
+            "Current node has "s + choice_amount + " choices, but "s +
+                choice_index + " was requested"s);
         return false;
     }
 

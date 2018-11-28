@@ -301,8 +301,8 @@ static bool _validate_save_path(const std::string& playerid)
             filesystem::dir_entries(
                 filesystem::dir::save(), filesystem::DirEntryRange::Type::all),
             [&](const auto& entry) {
-                return filesystem::to_utf8_path(entry.path().filename())
-                    == playerid;
+                return filesystem::to_utf8_path(entry.path().filename()) ==
+                    playerid;
             }))
     {
         return false;
@@ -520,8 +520,8 @@ void draw_race_or_class_info()
                         the_ability_db.get_id_from_legacy(r)->get(),
                         "name"),
                     0,
-                    jp ? 6 : 3)
-                + u8": "s + s(p));
+                    jp ? 6 : 3) +
+                u8": "s + s(p));
             color(0, 0, 0);
         }
         ty += 16;

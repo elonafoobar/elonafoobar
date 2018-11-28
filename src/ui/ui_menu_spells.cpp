@@ -71,9 +71,9 @@ static void _draw_window()
     display_window((windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438);
     display_topic(i18n::s.get("core.locale.ui.spell.name"), wx + 28, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.ui.spell.cost") + "("
-            + i18n::s.get("core.locale.ui.spell.stock") + ")" + " "
-            + i18n::s.get("core.locale.ui.spell.lv_chance"),
+        i18n::s.get("core.locale.ui.spell.cost") + "(" +
+            i18n::s.get("core.locale.ui.spell.stock") + ")" + " " +
+            i18n::s.get("core.locale.ui.spell.lv_chance"),
         wx + 220,
         wy + 36);
     display_topic(
@@ -140,16 +140,16 @@ static void _draw_spell_name(int cnt, int spell_id)
         i18n::s.get_m(
             "locale.ability",
             the_ability_db.get_id_from_legacy(spell_id)->get(),
-            "name")
-            + spell_shortcut,
+            "name") +
+            spell_shortcut,
         wx + 84,
         wy + 66 + cnt * 19 - 1);
 }
 
 static void _draw_spell_cost(int cnt, int spell_id)
 {
-    std::string spell_cost = ""s + calcspellcostmp(spell_id, cc) + u8" ("s
-        + spell((spell_id - 400)) + u8")"s;
+    std::string spell_cost = ""s + calcspellcostmp(spell_id, cc) + u8" ("s +
+        spell((spell_id - 400)) + u8")"s;
     pos(wx + 328 - strlen_u(spell_cost) * 7, wy + 66 + cnt * 19 + 2);
     mes(spell_cost);
 }
@@ -159,8 +159,8 @@ static void _draw_spell_power(int cnt, int spell_id)
     draw_spell_power_entry(spell_id);
     std::string spell_power = strmid(s, 0, 40);
     pos(wx + 340, wy + 66 + cnt * 19 + 2);
-    mes(""s + sdata(spell_id, cc) + u8"/"s + calcspellfail(spell_id, cc)
-        + u8"%"s);
+    mes(""s + sdata(spell_id, cc) + u8"/"s + calcspellfail(spell_id, cc) +
+        u8"%"s);
     pos(wx + 420, wy + 66 + cnt * 19 + 2);
     mes(spell_power);
 }

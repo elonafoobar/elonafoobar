@@ -110,12 +110,12 @@ void await(int msec)
     // On Android, potentially quicksave if SDL detects that the app's
     // focus was lost and the player is being queried for input in
     // pc_turn().
-    if (defines::is_android
-        && snail::Application::instance().was_focus_lost_just_now())
+    if (defines::is_android &&
+        snail::Application::instance().was_focus_lost_just_now())
     {
-        if (player_queried_for_input
-            && Config::instance().get<bool>("core.config.android.quicksave")
-            && !std::uncaught_exception())
+        if (player_queried_for_input &&
+            Config::instance().get<bool>("core.config.android.quicksave") &&
+            !std::uncaught_exception())
         {
             ELONA_LOG("Focus lost, quicksaving game.");
             snail::android::toast(
@@ -164,8 +164,8 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     if (!in)
     {
         throw std::runtime_error(
-            u8"Error: fail to read "
-            + filesystem::make_preferred_path_in_utf8(filename));
+            u8"Error: fail to read " +
+            filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
     data = std::string{buf.get(), static_cast<size_t>(size)};
@@ -182,8 +182,8 @@ void bload(const fs::path& filename, int& data, int size, int)
     if (!in)
     {
         throw std::runtime_error(
-            u8"Error: fail to read "
-            + filesystem::make_preferred_path_in_utf8(filename));
+            u8"Error: fail to read " +
+            filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
     data = *reinterpret_cast<int*>(buf.get());
@@ -201,8 +201,8 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
     if (!in)
     {
         throw std::runtime_error(
-            u8"Error: fail to read "
-            + filesystem::make_preferred_path_in_utf8(filename));
+            u8"Error: fail to read " +
+            filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
     for (size_t i = 0; i < data.size(); ++i)
@@ -222,8 +222,8 @@ void bsave(const fs::path& filename, const std::string& data)
     if (!out)
     {
         throw std::runtime_error(
-            u8"Error: fail to write "
-            + filesystem::make_preferred_path_in_utf8(filename));
+            u8"Error: fail to write " +
+            filesystem::make_preferred_path_in_utf8(filename));
     }
     out.write(reinterpret_cast<const char*>(data.c_str()), data.size());
 }
@@ -343,8 +343,8 @@ void font(int size, snail::Font::Style style)
     snail::hsp::font(
         size,
         style,
-        filesystem::path(u8"font")
-            / filesystem::u8path(Config::instance().font_filename));
+        filesystem::path(u8"font") /
+            filesystem::u8path(Config::instance().font_filename));
 }
 
 
@@ -833,19 +833,19 @@ StickKey stick(StickKey allow_repeat_keys)
         check_key_pressed(StickKey::mouse_right, snail::Mouse::Button::right);
     ret |= check_key_pressed(StickKey::tab, snail::Key::tab);
 
-    if (allow_repeat_keys
-        == (StickKey::left | StickKey::up | StickKey::right | StickKey::down))
+    if (allow_repeat_keys ==
+        (StickKey::left | StickKey::up | StickKey::right | StickKey::down))
     {
-        if (is_enabled(allow_repeat_keys, StickKey::left)
-            || is_enabled(allow_repeat_keys, StickKey::right))
+        if (is_enabled(allow_repeat_keys, StickKey::left) ||
+            is_enabled(allow_repeat_keys, StickKey::right))
         {
             ret |= input.is_pressed(snail::Key::up) ? StickKey::up
                                                     : StickKey::none;
             ret |= input.is_pressed(snail::Key::down) ? StickKey::down
                                                       : StickKey::none;
         }
-        if (is_enabled(allow_repeat_keys, StickKey::up)
-            || is_enabled(allow_repeat_keys, StickKey::down))
+        if (is_enabled(allow_repeat_keys, StickKey::up) ||
+            is_enabled(allow_repeat_keys, StickKey::down))
         {
             ret |= input.is_pressed(snail::Key::left) ? StickKey::left
                                                       : StickKey::none;

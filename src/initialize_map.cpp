@@ -42,14 +42,14 @@ namespace elona
 
 static void _update_dungeon_level()
 {
-    if (game_data.current_dungeon_level
-        > area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level >
+        area_data[game_data.current_map].deepest_level)
     {
         game_data.current_dungeon_level =
             area_data[game_data.current_map].deepest_level;
     }
-    if (game_data.current_dungeon_level
-        < area_data[game_data.current_map].danger_level)
+    if (game_data.current_dungeon_level <
+        area_data[game_data.current_map].danger_level)
     {
         game_data.current_dungeon_level =
             area_data[game_data.current_map].danger_level;
@@ -61,8 +61,8 @@ static void _update_dungeon_level()
             game_data.deepest_dungeon_level = game_data.current_dungeon_level;
         }
     }
-    if (area_data[game_data.current_map].visited_deepest_level
-        < game_data.current_dungeon_level)
+    if (area_data[game_data.current_map].visited_deepest_level <
+        game_data.current_dungeon_level)
     {
         area_data[game_data.current_map].visited_deepest_level =
             game_data.current_dungeon_level;
@@ -166,8 +166,8 @@ static void _relocate_overlapping_area(Area& area)
         {
             continue;
         }
-        if (33 <= cell_data.at(x, y).chip_id_actual
-            && cell_data.at(x, y).chip_id_actual < 66)
+        if (33 <= cell_data.at(x, y).chip_id_actual &&
+            cell_data.at(x, y).chip_id_actual < 66)
         {
             continue;
         }
@@ -178,8 +178,9 @@ static void _relocate_overlapping_area(Area& area)
         i = 1;
         for (int cnt = 0, cnt_end = (300); cnt < cnt_end; ++cnt)
         {
-            if (area_data[cnt].position.x == 0 || area_data[cnt].position.y == 0
-                || area_data[cnt].id == mdata_t::MapId::none)
+            if (area_data[cnt].position.x == 0 ||
+                area_data[cnt].position.y == 0 ||
+                area_data[cnt].id == mdata_t::MapId::none)
             {
                 continue;
             }
@@ -217,15 +218,16 @@ static void _do_mapupdate_world_map()
     for (int cnt = 300; cnt < 500; ++cnt)
     {
         p = cnt;
-        if (area_data[cnt].position.x == 0 || area_data[cnt].position.y == 0
-            || area_data[cnt].id == mdata_t::MapId::none)
+        if (area_data[cnt].position.x == 0 || area_data[cnt].position.y == 0 ||
+            area_data[cnt].id == mdata_t::MapId::none)
         {
             continue;
         }
         for (int cnt = 0; cnt < 300; ++cnt)
         {
-            if (area_data[cnt].position.x == 0 || area_data[cnt].position.y == 0
-                || area_data[cnt].id == mdata_t::MapId::none)
+            if (area_data[cnt].position.x == 0 ||
+                area_data[cnt].position.y == 0 ||
+                area_data[cnt].id == mdata_t::MapId::none)
             {
                 continue;
             }
@@ -251,8 +253,8 @@ static void _prepare_mapupdate()
         {
             continue;
         }
-        if ((cnt.character_role >= 1000 && cnt.character_role < 2000)
-            || cnt.character_role == 2003)
+        if ((cnt.character_role >= 1000 && cnt.character_role < 2000) ||
+            cnt.character_role == 2003)
         {
             rolebk(0, maxnpcbk) = cnt.character_role;
             rolebk(1, maxnpcbk) = cnt.shop_rank;
@@ -293,8 +295,8 @@ static void _do_mapupdate()
         {
             continue;
         }
-        if ((cnt.character_role >= 1000 && cnt.character_role < 2000)
-            || cnt.character_role == 2003)
+        if ((cnt.character_role >= 1000 && cnt.character_role < 2000) ||
+            cnt.character_role == 2003)
         {
             int cnt2 = cnt.index;
             for (int cnt = 0, cnt_end = (maxnpcbk); cnt < cnt_end; ++cnt)
@@ -348,8 +350,8 @@ static void _update_adventurer(int cnt)
         {
             return;
         }
-        if (map_data.type != mdata_t::MapType::town
-            && map_data.type != mdata_t::MapType::guild)
+        if (map_data.type != mdata_t::MapType::town &&
+            map_data.type != mdata_t::MapType::guild)
         {
             return;
         }
@@ -358,8 +360,8 @@ static void _update_adventurer(int cnt)
             return;
         }
     }
-    if (game_data.current_map == mdata_t::MapId::arena
-        || game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game_data.current_map == mdata_t::MapId::arena ||
+        game_data.current_map == mdata_t::MapId::pet_arena)
     {
         return;
     }
@@ -391,9 +393,9 @@ static void _update_adventurers()
 
 static bool _should_regenerate_map()
 {
-    return game_data.date.hours() >= map_data.next_regenerate_date
-        && map_data.should_regenerate == 0 && map_data.next_regenerate_date != 0
-        && game_data.current_dungeon_level == 1;
+    return game_data.date.hours() >= map_data.next_regenerate_date &&
+        map_data.should_regenerate == 0 && map_data.next_regenerate_date != 0 &&
+        game_data.current_dungeon_level == 1;
 }
 
 static void _regenerate_map()
@@ -476,9 +478,9 @@ static void _relocate_character(Character& chara)
 static bool _position_blocked(Character& chara)
 {
     cell_check(chara.position.x, chara.position.y);
-    return cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one
-        != 0
-        || cellaccess != 1;
+    return cell_data.at(chara.position.x, chara.position.y)
+               .chara_index_plus_one != 0 ||
+        cellaccess != 1;
 }
 
 static void _clear_chara_indices_in_map()
@@ -610,8 +612,8 @@ void _adjust_spawns()
     {
         if (cnt.state() == Character::State::alive)
         {
-            if (cnt.position.x < 0 || cnt.position.x >= map_data.width
-                || cnt.position.y < 0 || cnt.position.y >= map_data.height)
+            if (cnt.position.x < 0 || cnt.position.x >= map_data.width ||
+                cnt.position.y < 0 || cnt.position.y >= map_data.height)
             {
                 cnt.position.x = 0;
                 cnt.position.y = 0;
@@ -658,10 +660,10 @@ static void _update_quest_flags_any()
     }
     if (game_data.quest_flags.main_quest == 115)
     {
-        if (game_data.quest_flags.magic_stone_of_fool
-                + game_data.quest_flags.magic_stone_of_king
-                + game_data.quest_flags.magic_stone_of_sage
-            >= 1)
+        if (game_data.quest_flags.magic_stone_of_fool +
+                game_data.quest_flags.magic_stone_of_king +
+                game_data.quest_flags.magic_stone_of_sage >=
+            1)
         {
             sceneid = 28;
             do_play_scene();
@@ -670,10 +672,10 @@ static void _update_quest_flags_any()
     }
     if (game_data.quest_flags.main_quest == 116)
     {
-        if (game_data.quest_flags.magic_stone_of_fool
-                + game_data.quest_flags.magic_stone_of_king
-                + game_data.quest_flags.magic_stone_of_sage
-            >= 2)
+        if (game_data.quest_flags.magic_stone_of_fool +
+                game_data.quest_flags.magic_stone_of_king +
+                game_data.quest_flags.magic_stone_of_sage >=
+            2)
         {
             sceneid = 29;
             do_play_scene();
@@ -682,10 +684,10 @@ static void _update_quest_flags_any()
     }
     if (game_data.quest_flags.main_quest == 117)
     {
-        if (game_data.quest_flags.magic_stone_of_fool
-                + game_data.quest_flags.magic_stone_of_king
-                + game_data.quest_flags.magic_stone_of_sage
-            >= 3)
+        if (game_data.quest_flags.magic_stone_of_fool +
+                game_data.quest_flags.magic_stone_of_king +
+                game_data.quest_flags.magic_stone_of_sage >=
+            3)
         {
             sceneid = 30;
             do_play_scene();
@@ -885,8 +887,8 @@ static void _update_quest_flags_north_tyris()
 
 static void _proc_no_dungeon_master()
 {
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         if (area_data[game_data.current_map].has_been_conquered == -1)
         {
@@ -938,9 +940,9 @@ static void _notify_distance_traveled()
         mapname(game_data.left_town_map),
         cnvdate(game_data.departure_date, false)));
     p = 0;
-    exp = cdata.player().level * game_data.distance_between_town * sdata(182, 0)
-            / 100
-        + 1;
+    exp = cdata.player().level * game_data.distance_between_town *
+            sdata(182, 0) / 100 +
+        1;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[cnt].state() != Character::State::alive)
@@ -1107,8 +1109,8 @@ static void _proc_map_hooks_2()
     {
         maybe_show_ex_help(14);
     }
-    if (map_is_town_or_guild()
-        || game_data.current_map == mdata_t::MapId::your_home)
+    if (map_is_town_or_guild() ||
+        game_data.current_map == mdata_t::MapId::your_home)
     {
         if (game_data.distance_between_town >= 16)
         {
@@ -1175,8 +1177,8 @@ static void _generate_new_map()
     if (mapupdate)
     {
         randomize(
-            game_data.random_seed + game_data.current_map * 1000
-            + game_data.current_dungeon_level);
+            game_data.random_seed + game_data.current_map * 1000 +
+            game_data.current_dungeon_level);
     }
 
     // Initialize map-specific features.
@@ -1229,8 +1231,8 @@ init_map_begin:
 
     _update_pets_moving_status();
 
-    mid = ""s + game_data.current_map + u8"_"s
-        + (100 + game_data.current_dungeon_level);
+    mid = ""s + game_data.current_map + u8"_"s +
+        (100 + game_data.current_dungeon_level);
 
     if (mode == 3)
     {
@@ -1254,14 +1256,14 @@ init_map_begin:
         {
             goto init_map_before_generate;
         }
-        if (map_data.regenerate_count != game_data.map_regenerate_count
-            || (game_data.reset_world_map_in_diastrophism_flag == 1
-                && map_data.type == mdata_t::MapType::world_map))
+        if (map_data.regenerate_count != game_data.map_regenerate_count ||
+            (game_data.reset_world_map_in_diastrophism_flag == 1 &&
+             map_data.type == mdata_t::MapType::world_map))
         {
-            if (map_data.type == mdata_t::MapType::town
-                || map_data.type == mdata_t::MapType::guild
-                || map_data.type == mdata_t::MapType::shelter
-                || map_data.type == mdata_t::MapType::world_map)
+            if (map_data.type == mdata_t::MapType::town ||
+                map_data.type == mdata_t::MapType::guild ||
+                map_data.type == mdata_t::MapType::shelter ||
+                map_data.type == mdata_t::MapType::world_map)
             {
                 mapupdate = 1;
                 goto init_map_before_generate;

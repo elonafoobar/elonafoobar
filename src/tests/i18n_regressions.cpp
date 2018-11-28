@@ -37,7 +37,7 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
             i18n::fmt_hil("${itemname(_1)}", item) == u8"鳥のレアチーズケーキ");
         item.subname = 3;
         REQUIRE(
-            i18n::fmt_hil("${itemname(_1)}", item)
-            == u8"プチのレアチーズケーキ");
+            i18n::fmt_hil("${itemname(_1)}", item) ==
+            u8"プチのレアチーズケーキ");
     }
 }

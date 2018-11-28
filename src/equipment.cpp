@@ -19,8 +19,8 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
 {
     int p_at_m66 = 0;
     std::string s_at_m66;
-    if (inv[prm_529].identification_state
-        != IdentifyState::completely_identified)
+    if (inv[prm_529].identification_state !=
+        IdentifyState::completely_identified)
     {
         return;
     }
@@ -187,10 +187,10 @@ void wear_most_valuable_equipment()
                     f = 0;
                 }
                 else if (
-                    inv[i].value
-                    >= inv[cdata[rc].body_parts[bodylist(cnt + 1) - 100] % 10000
-                           - 1]
-                           .value)
+                    inv[i].value >=
+                    inv[cdata[rc].body_parts[bodylist(cnt + 1) - 100] % 10000 -
+                        1]
+                        .value)
                 {
                     f = 0;
                 }
@@ -268,8 +268,7 @@ void supply_new_equipment()
                     {
                         if (the_item_db
                                 [inv[cdata[rc].body_parts[cnt] % 10000 - 1].id]
-                                    ->category
-                            == 10000)
+                                    ->category == 10000)
                         {
                             haveweapon = 1;
                         }

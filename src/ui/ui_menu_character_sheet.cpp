@@ -121,8 +121,8 @@ static void _load_list_proficiency_category(CharacterSheetOperation op)
     ++listmax;
     _load_weapon_proficiency_list(op);
 
-    if (op != CharacterSheetOperation::train_skill
-        && op != CharacterSheetOperation::learn_skill)
+    if (op != CharacterSheetOperation::train_skill &&
+        op != CharacterSheetOperation::learn_skill)
     {
         _load_resistances_list();
     }
@@ -143,8 +143,8 @@ static void _load_portrait()
     picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
     if (cdata[cc].portrait < 0)
     {
-        const auto filepath = filesystem::dir::user() / u8"graphic"
-            / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
+        const auto filepath = filesystem::dir::user() / u8"graphic" /
+            (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
         if (cdata[cc].portrait != -1)
         {
             if (fs::exists(filepath))
@@ -167,8 +167,8 @@ bool UIMenuCharacterSheet::init()
         cc = 0;
     }
 
-    if (_operation == CharacterSheetOperation::train_skill
-        || _operation == CharacterSheetOperation::learn_skill)
+    if (_operation == CharacterSheetOperation::train_skill ||
+        _operation == CharacterSheetOperation::learn_skill)
     {
         page = 1;
     }
@@ -227,18 +227,18 @@ static void _draw_title(CharacterSheetOperation op)
     case CharacterSheetOperation::normal:
         if (page == 0)
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.hint")
-                + strhint6 + strhint2 + strhint3;
+            title = i18n::s.get("core.locale.ui.chara_sheet.hint.hint") +
+                strhint6 + strhint2 + strhint3;
         }
         else
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.spend_bonus")
-                + strhint2 + strhint3;
+            title = i18n::s.get("core.locale.ui.chara_sheet.hint.spend_bonus") +
+                strhint2 + strhint3;
         }
         break;
     case CharacterSheetOperation::character_making:
-        title = i18n::s.get("core.locale.ui.chara_sheet.hint.reroll") + strhint6
-            + i18n::s.get("core.locale.ui.chara_sheet.hint.confirm");
+        title = i18n::s.get("core.locale.ui.chara_sheet.hint.reroll") +
+            strhint6 + i18n::s.get("core.locale.ui.chara_sheet.hint.confirm");
         break;
     case CharacterSheetOperation::train_skill:
         if (page == 0)
@@ -247,8 +247,8 @@ static void _draw_title(CharacterSheetOperation op)
         }
         else
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.train_skill")
-                + strhint2 + strhint3;
+            title = i18n::s.get("core.locale.ui.chara_sheet.hint.train_skill") +
+                strhint2 + strhint3;
         }
         break;
     case CharacterSheetOperation::learn_skill:
@@ -258,15 +258,16 @@ static void _draw_title(CharacterSheetOperation op)
         }
         else
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.learn_skill")
-                + strhint2 + strhint3;
+            title = i18n::s.get("core.locale.ui.chara_sheet.hint.learn_skill") +
+                strhint2 + strhint3;
         }
         break;
     case CharacterSheetOperation::investigate_ally:
         if (page == 0)
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.blessing_info")
-                + strhint6 + strhint2 + strhint3;
+            title =
+                i18n::s.get("core.locale.ui.chara_sheet.hint.blessing_info") +
+                strhint6 + strhint2 + strhint3;
         }
         else
         {
@@ -279,9 +280,9 @@ static void _draw_title(CharacterSheetOperation op)
     {
         if (page != 0)
         {
-            title += ""s + key_mode2 + u8" ["s
-                + i18n::s.get("core.locale.ui.chara_sheet.hint.track_skill")
-                + u8"]"s;
+            title += ""s + key_mode2 + u8" ["s +
+                i18n::s.get("core.locale.ui.chara_sheet.hint.track_skill") +
+                u8"]"s;
         }
     }
 
@@ -362,8 +363,8 @@ static void _draw_portrait_face()
     }
     else
     {
-        const auto filepath = filesystem::dir::user() / u8"graphic"
-            / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
+        const auto filepath = filesystem::dir::user() / u8"graphic" /
+            (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
         if (cdata[cc].portrait != -1)
         {
             if (fs::exists(filepath))
@@ -511,8 +512,8 @@ static void _draw_first_page_text_name()
     {
         s(3) = cnven(i18n::_(u8"ui", u8"female"));
     }
-    s(5) = ""s + calcage(cc) + u8" "s
-        + i18n::s.get("core.locale.ui.chara_sheet.personal.age_counter");
+    s(5) = ""s + calcage(cc) + u8" "s +
+        i18n::s.get("core.locale.ui.chara_sheet.personal.age_counter");
     s(6) = ""s + cdata[cc].height + u8" cm"s;
     s(7) = ""s + cdata[cc].weight + u8" kg"s;
     for (int cnt = 0; cnt < 8; ++cnt)
@@ -611,8 +612,8 @@ static void _draw_first_page_weapon_info()
     prot = calcattackdmg(2);
     font(14 - en * 2);
     pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
-    mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s
-        + protdice2);
+    mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s +
+        protdice2);
     pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
     mes(""s + evade + u8"%"s);
     ++p(2);
@@ -652,8 +653,8 @@ static void _draw_first_page_stats_fame()
     s(1) =
         ""s + sdata(3, cc) + u8"("s + sdata.get(3, cc).original_level + u8")"s;
     s(2) = ""s + cdata[cc].insanity;
-    s(3) = ""s + cdata[cc].current_speed + u8"("s
-        + sdata.get(18, cc).original_level + u8")"s;
+    s(3) = ""s + cdata[cc].current_speed + u8"("s +
+        sdata.get(18, cc).original_level + u8")"s;
     s(4) = "";
     s(5) = ""s + cdata[cc].fame;
     s(6) = ""s + cdata[cc].karma;
@@ -675,9 +676,8 @@ static void _draw_first_page_stats_time()
     s(1) = i18n::s.get(
         "core.locale.ui.chara_sheet.time.days_counter", game_data.play_days);
     s(2) = ""s + game_data.kill_count;
-    s(3) = ""s
-        + cnvplaytime(
-               (game_data.play_time + timeGetTime() / 1000 - time_begin));
+    s(3) = ""s +
+        cnvplaytime((game_data.play_time + timeGetTime() / 1000 - time_begin));
     s(4) = "";
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
@@ -734,13 +734,13 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
         const auto description = get_buff_description(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
-        buff_desc = ""s
-            + i18n::_(u8"buff",
-                      std::to_string(cdata[cc].buffs[_cs_buff].id),
-                      u8"name")
-            + u8": "s + cdata[cc].buffs[_cs_buff].turns
-            + i18n::s.get("core.locale.ui.chara_sheet.buff.duration", duration)
-            + description;
+        buff_desc = ""s +
+            i18n::_(u8"buff",
+                    std::to_string(cdata[cc].buffs[_cs_buff].id),
+                    u8"name") +
+            u8": "s + cdata[cc].buffs[_cs_buff].turns +
+            i18n::s.get("core.locale.ui.chara_sheet.buff.duration", duration) +
+            description;
     }
     else
     {
@@ -793,8 +793,8 @@ static void _draw_other_pages_topics()
     display_topic(
         i18n::s.get("core.locale.ui.chara_sheet.skill.name"), wx + 28, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.skill.level") + "("
-            + i18n::s.get("core.locale.ui.chara_sheet.skill.potential") + ")",
+        i18n::s.get("core.locale.ui.chara_sheet.skill.level") + "(" +
+            i18n::s.get("core.locale.ui.chara_sheet.skill.potential") + ")",
         wx + 182,
         wy + 36);
     display_topic(
@@ -918,9 +918,9 @@ static void _draw_skill_power(int cnt, int skill_id)
     }
     else
     {
-        desc = ""s + sdata.get(skill_id, cc).original_level + u8"."s
-            + std::to_string(1000 + sdata.get(skill_id, cc).experience % 1000)
-                  .substr(1);
+        desc = ""s + sdata.get(skill_id, cc).original_level + u8"."s +
+            std::to_string(1000 + sdata.get(skill_id, cc).experience % 1000)
+                .substr(1);
         if (sdata.get(skill_id, cc).original_level != sdata(skill_id, cc))
         {
             power =
@@ -988,8 +988,8 @@ static void _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
     _draw_skill_power(cnt, skill_id);
     _draw_skill_desc(cnt, skill_id);
 
-    if (op == CharacterSheetOperation::train_skill
-        || op == CharacterSheetOperation::learn_skill)
+    if (op == CharacterSheetOperation::train_skill ||
+        op == CharacterSheetOperation::learn_skill)
     {
         bool is_training = op == CharacterSheetOperation::train_skill;
         _draw_skill_train_cost(cnt, skill_id, is_training);
@@ -1175,8 +1175,8 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
     {
         if (_operation != CharacterSheetOperation::investigate_ally)
         {
-            if (_operation == CharacterSheetOperation::train_skill
-                || _operation == CharacterSheetOperation::learn_skill)
+            if (_operation == CharacterSheetOperation::train_skill ||
+                _operation == CharacterSheetOperation::learn_skill)
             {
                 screenupdate = -1;
                 update_screen();
@@ -1184,8 +1184,8 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
                 return UIMenuCharacterSheet::Result::finish(
                     UIMenuCompositeCharacterResult{skill_id});
             }
-            if (cdata.player().skill_bonus < 1 || skill_id < 0
-                || skill_id < 100)
+            if (cdata.player().skill_bonus < 1 || skill_id < 0 ||
+                skill_id < 100)
             {
                 set_reupdate();
                 return none;

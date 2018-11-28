@@ -152,8 +152,8 @@ reset_page:
                 goto reset_page;
             }
         }
-        if (card(0, list(0, pagesize * page + cs))
-            && (p != -1 || action == "switch_mode_2"))
+        if (card(0, list(0, pagesize * page + cs)) &&
+            (p != -1 || action == "switch_mode_2"))
         {
             const int ci_save = ci;
             Item tmp;

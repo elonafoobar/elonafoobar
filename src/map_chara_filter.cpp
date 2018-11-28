@@ -330,8 +330,8 @@ void map_set_chara_generation_filter()
         _chara_filter_pyramid();
         return;
     }
-    if (game_data.current_map == mdata_t::MapId::lumiest_graveyard
-        || game_data.current_map == mdata_t::MapId::truce_ground)
+    if (game_data.current_map == mdata_t::MapId::lumiest_graveyard ||
+        game_data.current_map == mdata_t::MapId::truce_ground)
     {
         _chara_filter_lumiest_graveyard();
         return;

@@ -89,8 +89,8 @@ struct elona_vector1
     template <
         typename U,
         std::enable_if_t<
-            !std::is_same<T, std::string>::value
-                || !std::is_same<U, int>::value,
+            !std::is_same<T, std::string>::value ||
+                !std::is_same<U, int>::value,
             std::nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {

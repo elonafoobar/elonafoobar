@@ -142,8 +142,8 @@ void weather_changes_by_location(bool output_immediately = true)
 {
     if (game_data.weather == 2)
     {
-        if (game_data.pc_x_in_world_map < 65
-            && game_data.pc_y_in_world_map > 10)
+        if (game_data.pc_x_in_world_map < 65 &&
+            game_data.pc_y_in_world_map > 10)
         {
             game_data.weather = 3;
             sound_play_environmental();
@@ -161,8 +161,8 @@ void weather_changes_by_location(bool output_immediately = true)
     }
     if (game_data.weather == 4 || game_data.weather == 3)
     {
-        if (game_data.pc_x_in_world_map > 65
-            || game_data.pc_y_in_world_map < 10)
+        if (game_data.pc_x_in_world_map > 65 ||
+            game_data.pc_y_in_world_map < 10)
         {
             game_data.weather = 2;
             sound_play_environmental();
@@ -1047,12 +1047,12 @@ int cargocheck()
     {
         return 1;
     }
-    if (map_data.type != mdata_t::MapType::world_map
-        && map_data.type != mdata_t::MapType::player_owned
-        && map_data.type != mdata_t::MapType::town
-        && map_data.type != mdata_t::MapType::field
-        && map_data.type != mdata_t::MapType::shelter
-        && map_data.type != mdata_t::MapType::guild)
+    if (map_data.type != mdata_t::MapType::world_map &&
+        map_data.type != mdata_t::MapType::player_owned &&
+        map_data.type != mdata_t::MapType::town &&
+        map_data.type != mdata_t::MapType::field &&
+        map_data.type != mdata_t::MapType::shelter &&
+        map_data.type != mdata_t::MapType::guild)
     {
         txt(i18n::s.get("core.locale.ui.inv.cannot_use_cargo_items"),
             Message::only_once{true});
@@ -1099,8 +1099,8 @@ void go_hostile()
 {
     for (auto&& cc : cdata.others())
     {
-        if (cc.character_role == 14 || cc.character_role == 16
-            || cc.character_role == 1010)
+        if (cc.character_role == 14 || cc.character_role == 16 ||
+            cc.character_role == 1010)
         {
             cc.relationship = -3;
             cc.hate = 80;
@@ -1213,13 +1213,13 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
     }
     if (prm_614 >= maxroute)
     {
-        if (prm_612 < scx || prm_613 < scy || prm_612 >= scx + inf_screenw
-            || prm_613 >= scy + inf_screenh)
+        if (prm_612 < scx || prm_613 < scy || prm_612 >= scx + inf_screenw ||
+            prm_613 >= scy + inf_screenh)
         {
             return 0;
         }
-        if (prm_612 < 0 || prm_613 < 0 || prm_612 >= map_data.width
-            || prm_613 >= map_data.height)
+        if (prm_612 < 0 || prm_613 < 0 || prm_612 >= map_data.width ||
+            prm_613 >= map_data.height)
         {
             return 0;
         }
@@ -1286,13 +1286,13 @@ int breath_list()
             for (int cnt = 0, cnt_end = (breathw); cnt < cnt_end; ++cnt)
             {
                 tx = cnt - breathw / 2 + dx;
-                if (tx < scx || ty < scy || tx >= scx + inf_screenw
-                    || ty >= scy + inf_screenh)
+                if (tx < scx || ty < scy || tx >= scx + inf_screenw ||
+                    ty >= scy + inf_screenh)
                 {
                     continue;
                 }
-                if (tx < 0 || ty < 0 || tx >= map_data.width
-                    || ty >= map_data.height)
+                if (tx < 0 || ty < 0 || tx >= map_data.width ||
+                    ty >= map_data.height)
                 {
                     continue;
                 }
@@ -1527,8 +1527,11 @@ void make_sound(
         {
             continue;
         }
-        if (dist(prm_777, prm_778, cdata[cnt].position.x, cdata[cnt].position.y)
-            < prm_779)
+        if (dist(
+                prm_777,
+                prm_778,
+                cdata[cnt].position.x,
+                cdata[cnt].position.y) < prm_779)
         {
             if (rnd(prm_780) == 0)
             {
@@ -1883,13 +1886,12 @@ void animeblood(int cc, int animation_type, int element)
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            pos(dx_at_m133 + 24 + x_at_m133(cnt)
-                    + (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1)
-                        * cnt2_at_m133
-                    + (x_at_m133(cnt) > -4) * (1 + (cnt % 2 == 0))
-                        * cnt2_at_m133,
-                dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2
-                    - 12 + cnt);
+            pos(dx_at_m133 + 24 + x_at_m133(cnt) +
+                    (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1) *
+                        cnt2_at_m133 +
+                    (x_at_m133(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2_at_m133,
+                dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2 -
+                    12 + cnt);
             grotate(
                 1,
                 0,
@@ -1926,8 +1928,8 @@ void spillblood(int prm_830, int prm_831, int prm_832)
             dx_at_m136 = prm_830 + rnd(2) - rnd(2);
             dy_at_m136 = prm_831 + rnd(2) - rnd(2);
         }
-        if (dx_at_m136 < 0 || dx_at_m136 >= map_data.width || dy_at_m136 < 0
-            || dy_at_m136 >= map_data.height)
+        if (dx_at_m136 < 0 || dx_at_m136 >= map_data.width || dy_at_m136 < 0 ||
+            dy_at_m136 >= map_data.height)
         {
             continue;
         }
@@ -1958,8 +1960,8 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
             dx_at_m136 = prm_833 + rnd(2) - rnd(2);
             dy_at_m136 = prm_834 + rnd(2) - rnd(2);
         }
-        if (dx_at_m136 < 0 || dx_at_m136 >= map_data.width || dy_at_m136 < 0
-            || dy_at_m136 >= map_data.height)
+        if (dx_at_m136 < 0 || dx_at_m136 >= map_data.width || dy_at_m136 < 0 ||
+            dy_at_m136 >= map_data.height)
         {
             continue;
         }
@@ -1970,10 +1972,10 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
         if (cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments / 10 < 4)
         {
             cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments =
-                cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments % 10
-                + (cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments / 10
-                   + 1)
-                    * 10;
+                cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments % 10 +
+                (cell_data.at(dx_at_m136, dy_at_m136).blood_and_fragments / 10 +
+                 1) *
+                    10;
         }
     }
 }
@@ -1983,9 +1985,9 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
 void check_kill(int prm_836, int prm_837)
 {
     int p_at_m137 = 0;
-    if (game_data.current_map == mdata_t::MapId::pet_arena
-        || game_data.current_map == mdata_t::MapId::show_house
-        || game_data.current_map == mdata_t::MapId::arena)
+    if (game_data.current_map == mdata_t::MapId::pet_arena ||
+        game_data.current_map == mdata_t::MapId::show_house ||
+        game_data.current_map == mdata_t::MapId::arena)
     {
         return;
     }
@@ -2020,9 +2022,9 @@ void check_kill(int prm_836, int prm_837)
                 {
                     p_at_m137 = -5;
                 }
-                if ((cdata[prm_837].character_role >= 1000
-                     && cdata[prm_837].character_role < 2000)
-                    || cdata[prm_837].character_role == 2003)
+                if ((cdata[prm_837].character_role >= 1000 &&
+                     cdata[prm_837].character_role < 2000) ||
+                    cdata[prm_837].character_role == 2003)
                 {
                     p_at_m137 = -10;
                 }
@@ -2086,44 +2088,44 @@ void cnvbonus(int prm_895, int prm_896)
     {
         if (prm_896 > 0)
         {
-            buff += u8"　　"s
-                + i18n::s.get_m(
+            buff += u8"　　"s +
+                i18n::s.get_m(
                     "locale.ability",
                     the_ability_db.get_id_from_legacy(prm_895)->get(),
-                    "name")
-                + u8"耐性に <green>クラス"s + prm_896 / 50 + u8"<col>("s
-                + prm_896 + u8") のボーナス\n"s;
+                    "name") +
+                u8"耐性に <green>クラス"s + prm_896 / 50 + u8"<col>("s +
+                prm_896 + u8") のボーナス\n"s;
         }
         if (prm_896 < 0)
         {
-            buff += u8"　　"s
-                + i18n::s.get_m(
+            buff += u8"　　"s +
+                i18n::s.get_m(
                     "locale.ability",
                     the_ability_db.get_id_from_legacy(prm_895)->get(),
-                    "name")
-                + u8"耐性に <red>クラス"s + prm_896 / 50 + u8"<col>("s + prm_896
-                + u8") のマイナス修正\n"s;
+                    "name") +
+                u8"耐性に <red>クラス"s + prm_896 / 50 + u8"<col>("s + prm_896 +
+                u8") のマイナス修正\n"s;
         }
     }
     else
     {
         if (prm_896 > 0)
         {
-            buff += u8"　　"s
-                + i18n::s.get_m(
+            buff += u8"　　"s +
+                i18n::s.get_m(
                     "locale.ability",
                     the_ability_db.get_id_from_legacy(prm_895)->get(),
-                    "name")
-                + u8"に <green>+"s + prm_896 + u8"<col> のボーナス\n"s;
+                    "name") +
+                u8"に <green>+"s + prm_896 + u8"<col> のボーナス\n"s;
         }
         if (prm_896 < 0)
         {
-            buff += u8"　　"s
-                + i18n::s.get_m(
+            buff += u8"　　"s +
+                i18n::s.get_m(
                     "locale.ability",
                     the_ability_db.get_id_from_legacy(prm_895)->get(),
-                    "name")
-                + u8"に <red>"s + prm_896 + u8"<col> のマイナス修正\n"s;
+                    "name") +
+                u8"に <red>"s + prm_896 + u8"<col> のマイナス修正\n"s;
         }
     }
 }
@@ -2278,8 +2280,8 @@ int try_to_cast_spell()
 
 int try_to_reveal()
 {
-    if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc))
-        > rnd(game_data.current_dungeon_level * 8 + 60))
+    if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc)) >
+        rnd(game_data.current_dungeon_level * 8 + 60))
     {
         gain_detection_experience(cc);
         return 1;
@@ -2313,8 +2315,8 @@ int can_evade_trap()
 
 int try_to_disarm_trap()
 {
-    if (rnd(sdata(175, cc) * 15 + 20 + sdata(12, cc))
-        > rnd(game_data.current_dungeon_level * 12 + 100))
+    if (rnd(sdata(175, cc) * 15 + 20 + sdata(12, cc)) >
+        rnd(game_data.current_dungeon_level * 12 + 100))
     {
         gain_disarm_trap_experience();
         return 1;
@@ -2328,11 +2330,11 @@ int try_to_perceive_npc(int cc)
 {
     int cv = 0;
     cv = 8;
-    if (cdata[cc].position.x > cdata[r2].position.x - cv
-        && cdata[cc].position.x < cdata[r2].position.x + cv)
+    if (cdata[cc].position.x > cdata[r2].position.x - cv &&
+        cdata[cc].position.x < cdata[r2].position.x + cv)
     {
-        if (cdata[cc].position.y > cdata[r2].position.y - cv
-            && cdata[cc].position.y < cdata[r2].position.y + cv)
+        if (cdata[cc].position.y > cdata[r2].position.y - cv &&
+            cdata[cc].position.y < cdata[r2].position.y + cv)
         {
             if (cdata[r2].hate > 0)
             {
@@ -2342,9 +2344,9 @@ int try_to_perceive_npc(int cc)
                     cdata[cc].position.x,
                     cdata[cc].position.y,
                     cdata[r2].position.x,
-                    cdata[r2].position.y)
-                    * 150
-                + (sdata(157, cc) * 100 + 150) + 1;
+                    cdata[r2].position.y) *
+                    150 +
+                (sdata(157, cc) * 100 + 150) + 1;
             if (rnd(p(0)) < rnd(sdata(13, r2) * 60 + 150))
             {
                 return 1;
@@ -2562,8 +2564,8 @@ void proc_turn_end(int cc)
         {
             if (cdata[cc].nutrition < 1000)
             {
-                if (cdata[cc].continuous_action.type
-                    != ContinuousAction::Type::eat)
+                if (cdata[cc].continuous_action.type !=
+                    ContinuousAction::Type::eat)
                 {
                     damage_hp(
                         cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
@@ -2642,32 +2644,32 @@ void proc_turn_end(int cc)
 
 void refresh_burden_state()
 {
-    cdata.player().inventory_weight = clamp(inv_weight(0), 0, 20000000)
-        * (100 - trait(201) * 10 + trait(205) * 20) / 100;
+    cdata.player().inventory_weight = clamp(inv_weight(0), 0, 20000000) *
+        (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata.player().max_inventory_weight =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (cdata.player().inventory_weight
-            > cdata.player().max_inventory_weight * 2)
+        if (cdata.player().inventory_weight >
+            cdata.player().max_inventory_weight * 2)
         {
             cdata.player().inventory_weight_type = 4;
             break;
         }
-        if (cdata.player().inventory_weight
-            > cdata.player().max_inventory_weight)
+        if (cdata.player().inventory_weight >
+            cdata.player().max_inventory_weight)
         {
             cdata.player().inventory_weight_type = 3;
             break;
         }
-        if (cdata.player().inventory_weight
-            > cdata.player().max_inventory_weight / 4 * 3)
+        if (cdata.player().inventory_weight >
+            cdata.player().max_inventory_weight / 4 * 3)
         {
             cdata.player().inventory_weight_type = 2;
             break;
         }
-        if (cdata.player().inventory_weight
-            > cdata.player().max_inventory_weight / 2)
+        if (cdata.player().inventory_weight >
+            cdata.player().max_inventory_weight / 2)
         {
             cdata.player().inventory_weight_type = 1;
             break;
@@ -2841,8 +2843,8 @@ int convertartifact(int prm_930, int prm_931)
         tc_at_m163 = inv_getowner(cnt);
         if (tc_at_m163 != -1)
         {
-            if (cdata[tc_at_m163].state() == Character::State::empty
-                || cdata[tc_at_m163].character_role == 13)
+            if (cdata[tc_at_m163].state() == Character::State::empty ||
+                cdata[tc_at_m163].character_role == 13)
             {
                 continue;
             }
@@ -3184,12 +3186,12 @@ void character_drops_item()
             }
             if (the_item_db[inv[ci].id]->is_cargo)
             {
-                if (map_data.type != mdata_t::MapType::world_map
-                    && map_data.type != mdata_t::MapType::player_owned
-                    && map_data.type != mdata_t::MapType::town
-                    && map_data.type != mdata_t::MapType::field
-                    && map_data.type != mdata_t::MapType::shelter
-                    && map_data.type != mdata_t::MapType::guild)
+                if (map_data.type != mdata_t::MapType::world_map &&
+                    map_data.type != mdata_t::MapType::player_owned &&
+                    map_data.type != mdata_t::MapType::town &&
+                    map_data.type != mdata_t::MapType::field &&
+                    map_data.type != mdata_t::MapType::shelter &&
+                    map_data.type != mdata_t::MapType::guild)
                 {
                     continue;
                 }
@@ -3228,8 +3230,8 @@ void character_drops_item()
                 }
             }
             else if (
-                inv[ci].identification_state
-                == IdentifyState::completely_identified)
+                inv[ci].identification_state ==
+                IdentifyState::completely_identified)
             {
                 if (rnd(4))
                 {
@@ -3243,8 +3245,8 @@ void character_drops_item()
             if (inv[ci].body_part != 0)
             {
                 cdata[rc].body_parts[inv[ci].body_part - 100] =
-                    cdata[rc].body_parts[inv[ci].body_part - 100] / 10000
-                    * 10000;
+                    cdata[rc].body_parts[inv[ci].body_part - 100] / 10000 *
+                    10000;
                 inv[ci].body_part = 0;
             }
             f = 0;
@@ -3438,8 +3440,8 @@ void character_drops_item()
         }
         inv[ci].remove();
     }
-    if (cdata[rc].quality >= Quality::miracle || rnd(20) == 0
-        || cdata[rc].drops_gold() == 1 || rc < 16)
+    if (cdata[rc].quality >= Quality::miracle || rnd(20) == 0 ||
+        cdata[rc].drops_gold() == 1 || rc < 16)
     {
         if (cdata[rc].gold > 0)
         {
@@ -3778,12 +3780,12 @@ void character_drops_item()
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         return;
     }
-    if (game_data.current_map != mdata_t::MapId::arena
-        && cdata[rc].character_role != 20)
+    if (game_data.current_map != mdata_t::MapId::arena &&
+        cdata[rc].character_role != 20)
     {
-        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0
-            || (cdata[rc].quality == Quality::miracle && rnd(2) == 0)
-            || (cdata[rc].quality == Quality::godly && rnd(3) == 0))
+        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
+            (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
+            (cdata[rc].quality == Quality::godly && rnd(3) == 0))
         {
             flt();
             itemcreate(-1, 504, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3791,9 +3793,9 @@ void character_drops_item()
             inv[ci].subname = cdata[rc].id;
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
-        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0
-            || (cdata[rc].quality == Quality::miracle && rnd(2) == 0)
-            || (cdata[rc].quality == Quality::godly && rnd(3) == 0))
+        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
+            (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
+            (cdata[rc].quality == Quality::godly && rnd(3) == 0))
         {
             flt();
             itemcreate(-1, 503, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -3809,8 +3811,8 @@ void character_drops_item()
         inv[ci].param1 = cdata[rc].shop_store_id;
         inv[ci].own_state = 2;
     }
-    if (rollanatomy == 1 || cdata[rc].quality >= Quality::miracle || 0
-        || cdata[rc].is_livestock() == 1 || 0)
+    if (rollanatomy == 1 || cdata[rc].quality >= Quality::miracle || 0 ||
+        cdata[rc].is_livestock() == 1 || 0)
     {
         flt();
         int stat =
@@ -3914,12 +3916,11 @@ void proc_pregnant()
                 -1, 330, cdata[cc].position.x, cdata[cc].position.y);
             if (stat != 0)
             {
-                if (strlen_u(cdatan(0, cc)) > 10
-                    || instr(
-                           cdatan(0, cc),
-                           0,
-                           i18n::s.get("core.locale.chara.job.alien.child"))
-                        != -1)
+                if (strlen_u(cdatan(0, cc)) > 10 ||
+                    instr(
+                        cdatan(0, cc),
+                        0,
+                        i18n::s.get("core.locale.chara.job.alien.child")) != -1)
                 {
                     cdatan(0, rc) =
                         i18n::s.get("core.locale.chara.job.alien.alien_kid");
@@ -3955,7 +3956,8 @@ void proc_negative_equipments()
             {
                 if (map_data.type != mdata_t::MapType::world_map)
                 {
-                    if (rnd(25) < clamp(
+                    if (rnd(25) <
+                        clamp(
                             std::abs(inv[ci].enchantments[cnt].power) / 50,
                             1,
                             25))
@@ -3994,14 +3996,13 @@ void proc_negative_equipments()
                                 cdata[cc]),
                             Message::color{ColorIndex::purple});
                     }
-                    cdata[cc].experience -= cdata[cc].required_experience
-                            / (300
-                               - clamp(
-                                   std::abs(inv[ci].enchantments[cnt].power)
-                                       / 2,
-                                   0,
-                                   50))
-                        + rnd(100);
+                    cdata[cc].experience -= cdata[cc].required_experience /
+                            (300 -
+                             clamp(
+                                 std::abs(inv[ci].enchantments[cnt].power) / 2,
+                                 0,
+                                 50)) +
+                        rnd(100);
                     if (cdata[cc].experience < 0)
                     {
                         cdata[cc].experience = 0;
@@ -4015,7 +4016,8 @@ void proc_negative_equipments()
                 {
                     if (map_data.type != mdata_t::MapType::player_owned)
                     {
-                        if (rnd(50) < clamp(
+                        if (rnd(50) <
+                            clamp(
                                 std::abs(inv[ci].enchantments[cnt].power) / 50,
                                 1,
                                 50))
@@ -4051,16 +4053,16 @@ void proc_negative_equipments()
 
 void auto_identify()
 {
-    if (cdata.player().confused != 0 || cdata.player().sleep != 0
-        || cdata.player().paralyzed != 0 || cdata.player().choked != 0)
+    if (cdata.player().confused != 0 || cdata.player().sleep != 0 ||
+        cdata.player().paralyzed != 0 || cdata.player().choked != 0)
     {
         return;
     }
     for (const auto& cnt : items(0))
     {
-        if (inv[cnt].number() == 0
-            || inv[cnt].identification_state
-                == IdentifyState::completely_identified)
+        if (inv[cnt].number() == 0 ||
+            inv[cnt].identification_state ==
+                IdentifyState::completely_identified)
         {
             continue;
         }
@@ -4244,9 +4246,9 @@ TurnResult exit_map()
         quest_exit_map();
     }
     Message::instance().msg_append_begin("  ");
-    if (game_data.current_map == mdata_t::MapId::show_house
-        || game_data.current_map == mdata_t::MapId::arena
-        || game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game_data.current_map == mdata_t::MapId::show_house ||
+        game_data.current_map == mdata_t::MapId::arena ||
+        game_data.current_map == mdata_t::MapId::pet_arena)
     {
         usermapid = 0;
     }
@@ -4254,8 +4256,8 @@ TurnResult exit_map()
     fixstart = 0;
     if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon)
     {
-        if (game_data.current_dungeon_level
-            == area_data[game_data.current_map].deepest_level)
+        if (game_data.current_dungeon_level ==
+            area_data[game_data.current_map].deepest_level)
         {
             if (area_data[game_data.current_map].has_been_conquered > 0)
             {
@@ -4281,14 +4283,14 @@ TurnResult exit_map()
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (game_data.current_map == mdata_t::MapId::your_home)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751)
-                != -1)
+            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751) !=
+                -1)
             {
                 feat(1) = 11;
                 feat(2) = 0;
             }
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750)
-                != -1)
+            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750) !=
+                -1)
             {
                 feat(1) = 10;
                 feat(2) = 0;
@@ -4343,8 +4345,8 @@ TurnResult exit_map()
                 if (feat(2) != 0 || feat(3) != 0)
                 {
                     game_data.current_map = feat(2) + feat(3) * 100;
-                    if (area_data[game_data.current_map].id
-                        == mdata_t::MapId::the_void)
+                    if (area_data[game_data.current_map].id ==
+                        mdata_t::MapId::the_void)
                     {
                         if (itemfind(0, 742) == -1)
                         {
@@ -4355,8 +4357,8 @@ TurnResult exit_map()
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (area_data[game_data.current_map].id
-                        == mdata_t::MapId::pyramid)
+                    if (area_data[game_data.current_map].id ==
+                        mdata_t::MapId::pyramid)
                     {
                         if (game_data.quest_flags.pyramid_trial == 0)
                         {
@@ -4368,8 +4370,8 @@ TurnResult exit_map()
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (area_data[game_data.current_map].id
-                        == mdata_t::MapId::jail)
+                    if (area_data[game_data.current_map].id ==
+                        mdata_t::MapId::jail)
                     {
                         txt(i18n::s.get(
                             "core.locale.action.exit_map.cannot_enter_jail"));
@@ -4389,20 +4391,20 @@ TurnResult exit_map()
                         static_cast<int>(mdata_t::MapId::fields);
                 }
             }
-            if (map_data.type == mdata_t::MapType::town
-                || map_data.type == mdata_t::MapType::field
-                || map_data.type == mdata_t::MapType::player_owned
-                || map_data.type == mdata_t::MapType::shelter
-                || map_data.type == mdata_t::MapType::guild)
+            if (map_data.type == mdata_t::MapType::town ||
+                map_data.type == mdata_t::MapType::field ||
+                map_data.type == mdata_t::MapType::player_owned ||
+                map_data.type == mdata_t::MapType::shelter ||
+                map_data.type == mdata_t::MapType::guild)
             {
                 game_data.current_map = game_data.destination_outer_map;
             }
         }
-        if (mdata_t::is_nefia(map_data.type)
-            || map_data.type == static_cast<int>(mdata_t::MapType::shelter))
+        if (mdata_t::is_nefia(map_data.type) ||
+            map_data.type == static_cast<int>(mdata_t::MapType::shelter))
         {
-            if (game_data.current_dungeon_level
-                < area_data[game_data.current_map].danger_level)
+            if (game_data.current_dungeon_level <
+                area_data[game_data.current_map].danger_level)
             {
                 game_data.current_map = game_data.destination_outer_map;
             }
@@ -4472,25 +4474,26 @@ TurnResult exit_map()
     }
     if (game_data.current_map != game_data.previous_map)
     {
-        if (map_is_town_or_guild()
-            || game_data.previous_map == mdata_t::MapId::your_home
-            || game_data.departure_date == 0)
+        if (map_is_town_or_guild() ||
+            game_data.previous_map == mdata_t::MapId::your_home ||
+            game_data.departure_date == 0)
         {
             game_data.departure_date = game_data.date.hours();
             game_data.distance_between_town = 0;
             game_data.left_town_map = game_data.previous_map;
         }
-        if (area_data[game_data.current_map].type != mdata_t::MapType::world_map
-            && area_data[game_data.current_map].type != mdata_t::MapType::field
-            && game_data.current_map != mdata_t::MapId::show_house)
+        if (area_data[game_data.current_map].type !=
+                mdata_t::MapType::world_map &&
+            area_data[game_data.current_map].type != mdata_t::MapType::field &&
+            game_data.current_map != mdata_t::MapId::show_house)
         {
             autosave =
                 1 * (game_data.current_map != mdata_t::MapId::show_house);
         }
         if (map_data.type != mdata_t::MapType::world_map)
         {
-            if (map_data.type != mdata_t::MapType::field
-                || map_data.type == mdata_t::MapType::player_owned)
+            if (map_data.type != mdata_t::MapType::field ||
+                map_data.type == mdata_t::MapType::player_owned)
             {
                 if (fixtransfermap == 0)
                 {
@@ -4516,8 +4519,8 @@ TurnResult exit_map()
             weather_changes_by_location(false);
         }
         else if (
-            area_data[game_data.previous_map].type
-            == mdata_t::MapType::world_map)
+            area_data[game_data.previous_map].type ==
+            mdata_t::MapType::world_map)
         {
             Message::instance().msg_append(i18n::s.get(
                 "core.locale.action.exit_map.entered",
@@ -4537,10 +4540,10 @@ TurnResult exit_map()
         }
         if (game_data.cargo_weight > game_data.current_cart_limit)
         {
-            if (area_data[game_data.current_map].type
-                    == mdata_t::MapType::world_map
-                || area_data[game_data.current_map].type
-                    == mdata_t::MapType::field)
+            if (area_data[game_data.current_map].type ==
+                    mdata_t::MapType::world_map ||
+                area_data[game_data.current_map].type ==
+                    mdata_t::MapType::field)
             {
                 Message::instance().msg_append(i18n::s.get(
                     "core.locale.action.exit_map.burdened_by_cargo"));
@@ -4562,8 +4565,8 @@ TurnResult exit_map()
     }
     if (game_data.current_map == mdata_t::MapId::mountain_pass)
     {
-        if (game_data.current_dungeon_level
-            == area_data[game_data.current_map].deepest_level)
+        if (game_data.current_dungeon_level ==
+            area_data[game_data.current_map].deepest_level)
         {
             game_data.current_map = static_cast<int>(mdata_t::MapId::larna);
             game_data.current_dungeon_level = 1;
@@ -4623,8 +4626,8 @@ TurnResult exit_map()
         }
     }
 
-    bool map_changed = game_data.current_map != previous_map
-        || game_data.current_dungeon_level != previous_dungeon_level;
+    bool map_changed = game_data.current_map != previous_map ||
+        game_data.current_dungeon_level != previous_dungeon_level;
 
     // Only clear map-local data if the map was changed. The map might
     // not change if access to it is refused (jail, pyramid, etc.).
@@ -4693,8 +4696,8 @@ void map_prepare_tileset_atlas()
     {
         pos(0, 0);
         picload(
-            filesystem::dir::graphic()
-                / (u8"map"s + map_data.atlas_number + u8".bmp"),
+            filesystem::dir::graphic() /
+                (u8"map"s + map_data.atlas_number + u8".bmp"),
             1);
         mtilefilecur = map_data.atlas_number;
         initialize_map_chip();
@@ -4708,8 +4711,8 @@ void map_prepare_tileset_atlas()
     int shadow = 5;
     if (map_data.indoors_flag == 2)
     {
-        if (game_data.date.hour >= 24
-            || (game_data.date.hour >= 0 && game_data.date.hour < 4))
+        if (game_data.date.hour >= 24 ||
+            (game_data.date.hour >= 0 && game_data.date.hour < 4))
         {
             shadow = 110;
         }
@@ -4741,8 +4744,8 @@ void map_prepare_tileset_atlas()
         {
             shadow = 65;
         }
-        if (game_data.current_map == mdata_t::MapId::noyel
-            && (game_data.date.hour >= 17 || game_data.date.hour < 7))
+        if (game_data.current_map == mdata_t::MapId::noyel &&
+            (game_data.date.hour >= 17 || game_data.date.hour < 7))
         {
             shadow += 35;
         }
@@ -4832,8 +4835,8 @@ void map_global_proc_diastrophism()
             }
         }
     }
-    if (p <= 25 || rnd(150) == 0 || game_data.diastrophism_flag != 0
-        || game_data.reset_world_map_in_diastrophism_flag)
+    if (p <= 25 || rnd(150) == 0 || game_data.diastrophism_flag != 0 ||
+        game_data.reset_world_map_in_diastrophism_flag)
     {
         game_data.diastrophism_flag = 0;
         Message::instance().msg_append(
@@ -4891,8 +4894,8 @@ void map_global_place_entrances()
     }
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        if (area_data[cnt].id == mdata_t::MapId::none
-            || area_data[cnt].appearance == 0)
+        if (area_data[cnt].id == mdata_t::MapId::none ||
+            area_data[cnt].appearance == 0)
         {
             continue;
         }
@@ -4910,9 +4913,9 @@ void map_global_place_entrances()
             area_data[cnt].id -= 800;
             continue;
         }
-        if (area_data[cnt].position.x <= 0 || area_data[cnt].position.y <= 0
-            || area_data[cnt].position.x >= map_data.width
-            || area_data[cnt].position.y >= map_data.height)
+        if (area_data[cnt].position.x <= 0 || area_data[cnt].position.y <= 0 ||
+            area_data[cnt].position.x >= map_data.width ||
+            area_data[cnt].position.y >= map_data.height)
         {
             area_data[cnt].position.x = map_data.width / 2;
             area_data[cnt].position.y = map_data.height / 2;
@@ -4922,12 +4925,10 @@ void map_global_place_entrances()
                 7,
                 cell_data
                     .at(area_data[cnt].position.x, area_data[cnt].position.y)
-                    .chip_id_actual)
-                & 4
-            || cell_data
-                    .at(area_data[cnt].position.x, area_data[cnt].position.y)
-                    .feats
-                != 0)
+                    .chip_id_actual) &
+                4 ||
+            cell_data.at(area_data[cnt].position.x, area_data[cnt].position.y)
+                    .feats != 0)
         {
             for (int cnt = 0;; ++cnt)
             {
@@ -4935,13 +4936,13 @@ void map_global_place_entrances()
                 dy = clamp(rnd(cnt / 4 + 1) + 1, 1, map_data.height);
                 x = area_data[p].position.x + rnd(dx(0)) - rnd(dx(0));
                 y = area_data[p].position.y + rnd(dy) - rnd(dy);
-                if (x <= 0 || y <= 0 || x >= map_data.width - 1
-                    || y >= map_data.height - 1)
+                if (x <= 0 || y <= 0 || x >= map_data.width - 1 ||
+                    y >= map_data.height - 1)
                 {
                     continue;
                 }
-                if (33 <= cell_data.at(x, y).chip_id_actual
-                    && cell_data.at(x, y).chip_id_actual < 66)
+                if (33 <= cell_data.at(x, y).chip_id_actual &&
+                    cell_data.at(x, y).chip_id_actual < 66)
                 {
                     continue;
                 }
@@ -4965,8 +4966,8 @@ void map_global_place_entrances()
             15,
             cnt % 100,
             cnt / 100);
-        if (area_data[cnt].type == mdata_t::MapType::town
-            || area_data[cnt].type == mdata_t::MapType::guild)
+        if (area_data[cnt].type == mdata_t::MapType::town ||
+            area_data[cnt].type == mdata_t::MapType::guild)
         {
             cell_data.at(area_data[cnt].position.x, area_data[cnt].position.y)
                 .light = 11;
@@ -5223,8 +5224,8 @@ void supply_income()
         {
             continue;
         }
-        p = calcincome(cnt) + rnd((calcincome(cnt) / 3 + 1))
-            - rnd((calcincome(cnt) / 3 + 1));
+        p = calcincome(cnt) + rnd((calcincome(cnt) / 3 + 1)) -
+            rnd((calcincome(cnt) / 3 + 1));
         income += p;
         flt();
         itemcreate(-1, 54, -1, -1, p);
@@ -5329,11 +5330,11 @@ void supply_income()
                         s(0) = i18n::s.get("core.locale.misc.tax.caution");
                         s(1) = "";
                     }
-                    txt(s
-                            + i18n::s.get(
+                    txt(s +
+                            i18n::s.get(
                                 "core.locale.misc.tax.left_bills",
-                                game_data.left_bill - 1)
-                            + s(1),
+                                game_data.left_bill - 1) +
+                            s(1),
                         Message::color{ColorIndex::red});
                 }
             }
@@ -5438,14 +5439,12 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                 cdata.player().position.x,
                 cdata.player().position.y,
                 prm_1057,
-                prm_1058)
-                == 0
-            || dist(
-                   cdata.player().position.x,
-                   cdata.player().position.y,
-                   prm_1057,
-                   prm_1058)
-                > cdata.player().vision_distance / 2)
+                prm_1058) == 0 ||
+            dist(
+                cdata.player().position.x,
+                cdata.player().position.y,
+                prm_1057,
+                prm_1058) > cdata.player().vision_distance / 2)
         {
             bmes(
                 i18n::s.get("core.locale.action.target.out_of_sight"),
@@ -5459,8 +5458,8 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     if (cell_data.at(prm_1057, prm_1058).chara_index_plus_one != 0)
     {
         i_at_m186 = cell_data.at(prm_1057, prm_1058).chara_index_plus_one - 1;
-        if (cdata[i_at_m186].is_invisible() == 0
-            || cdata.player().can_see_invisible() || cdata[i_at_m186].wet)
+        if (cdata[i_at_m186].is_invisible() == 0 ||
+            cdata.player().can_see_invisible() || cdata[i_at_m186].wet)
         {
             tc = i_at_m186;
             s = txttargetlevel(cc, tc);
@@ -5495,8 +5494,8 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
             if (cell_data.at(prm_1057, prm_1058).feats / 1000 % 100 == 15)
             {
                 p_at_m186 =
-                    cell_data.at(prm_1057, prm_1058).feats / 100000 % 100
-                    + cell_data.at(prm_1057, prm_1058).feats / 10000000 * 100;
+                    cell_data.at(prm_1057, prm_1058).feats / 100000 % 100 +
+                    cell_data.at(prm_1057, prm_1058).feats / 10000000 * 100;
                 bmes(
                     mapname(p_at_m186, true),
                     100,
@@ -5653,11 +5652,11 @@ int target_position()
             snail::Application::instance().get_renderer().fill_rect(
                 dx,
                 dy * (dy > 0),
-                inf_tiles
-                    - (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww),
-                inf_tiles + (dy < 0) * inf_screeny
-                    - (dy + inf_tiles > windowh - inf_verh)
-                        * (dy + inf_tiles - windowh + inf_verh));
+                inf_tiles -
+                    (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww),
+                inf_tiles + (dy < 0) * inf_screeny -
+                    (dy + inf_tiles > windowh - inf_verh) *
+                        (dy + inf_tiles - windowh + inf_verh));
         }
         if (homemapmode == 1)
         {
@@ -5687,14 +5686,12 @@ int target_position()
                         cdata[cc].position.x,
                         cdata[cc].position.y,
                         cdata[rc].position.x,
-                        cdata[rc].position.y)
-                    == 0)
+                        cdata[rc].position.y) == 0)
                 {
                     break;
                 }
-                if ((cdata[rc].is_invisible() == 0
-                     || cdata.player().can_see_invisible() || cdata[rc].wet)
-                    == 0)
+                if ((cdata[rc].is_invisible() == 0 ||
+                     cdata.player().can_see_invisible() || cdata[rc].wet) == 0)
                 {
                     break;
                 }
@@ -5736,13 +5733,13 @@ int target_position()
                                 .fill_rect(
                                     sx,
                                     sy * (sy > 0),
-                                    inf_tiles
-                                        - (sx + inf_tiles > windoww)
-                                            * (sx + inf_tiles - windoww),
-                                    inf_tiles + (sy < 0) * inf_screeny
-                                        - (sy + inf_tiles > windowh - inf_verh)
-                                            * (sy + inf_tiles - windowh
-                                               + inf_verh));
+                                    inf_tiles -
+                                        (sx + inf_tiles > windoww) *
+                                            (sx + inf_tiles - windoww),
+                                    inf_tiles + (sy < 0) * inf_screeny -
+                                        (sy + inf_tiles > windowh - inf_verh) *
+                                            (sy + inf_tiles - windowh +
+                                             inf_verh));
                         }
                     }
                 }
@@ -5767,8 +5764,8 @@ int target_position()
             }
             if (input == StickKey::mouse_right)
             {
-                if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 2
-                    || chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 1)
+                if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 2 ||
+                    chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 1)
                 {
                     snd("core.fail1");
                     wait_key_released();
@@ -5812,8 +5809,8 @@ int target_position()
             {
                 x = tlocx + kdx;
                 y = tlocy + kdy;
-                if (x >= 0 && y >= 0 && x < map_data.width
-                    && y < map_data.height)
+                if (x >= 0 && y >= 0 && x < map_data.width &&
+                    y < map_data.height)
                 {
                     tlocx += kdx;
                     tlocy += kdy;
@@ -5877,8 +5874,8 @@ int target_position()
         {
             if (findlocmode == 1)
             {
-                if (cansee == 0
-                    || chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4)
+                if (cansee == 0 ||
+                    chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.which_direction.cannot_see"));
@@ -6398,11 +6395,11 @@ void try_to_return()
         {
             list(0, p) = i;
             list(1, p) = area_data[i].visited_deepest_level;
-            auto text = mapname(i) + u8" "s
-                + cnvrank(
-                            (area_data[i].visited_deepest_level
-                             - area_data[i].danger_level + 1))
-                + i18n::s.get("core.locale.misc.dungeon_level");
+            auto text = mapname(i) + u8" "s +
+                cnvrank(
+                            (area_data[i].visited_deepest_level -
+                             area_data[i].danger_level + 1)) +
+                i18n::s.get("core.locale.misc.dungeon_level");
             prompt.append(text);
             ++p;
         }
@@ -6420,11 +6417,11 @@ void try_to_return()
     if (rtval >= 0)
     {
         txt(i18n::s.get("core.locale.misc.return.air_becomes_charged"));
-        if (area_data[game_data.current_map].id
-            == mdata_t::MapId::random_dungeon)
+        if (area_data[game_data.current_map].id ==
+            mdata_t::MapId::random_dungeon)
         {
-            if (game_data.current_dungeon_level
-                == area_data[game_data.current_map].deepest_level)
+            if (game_data.current_dungeon_level ==
+                area_data[game_data.current_map].deepest_level)
             {
                 if (area_data[game_data.current_map].has_been_conquered != -1)
                 {
@@ -6523,50 +6520,50 @@ void dump_player_info()
     notesel(buff);
     noteadd(latest_version.long_string());
     noteadd(
-        u8"キャラクター情報 "s + game_data.date.year + u8"年"s
-        + game_data.date.month + u8"月"s + game_data.date.day + u8"日 "s
-        + game_data.date.hour + u8"時"s + game_data.date.minute + u8"分  "s
-        + mdatan(0));
+        u8"キャラクター情報 "s + game_data.date.year + u8"年"s +
+        game_data.date.month + u8"月"s + game_data.date.day + u8"日 "s +
+        game_data.date.hour + u8"時"s + game_data.date.minute + u8"分  "s +
+        mdatan(0));
     noteadd(""s);
     noteadd(
-        u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34)
-        + i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex) + u8" "s
-        + calcage(0) + u8"歳"s + u8"  "s + cdata.player().height + u8"cm"s
-        + u8" "s + cdata.player().weight + u8"kg"s);
+        u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34) +
+        i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex) + u8" "s +
+        calcage(0) + u8"歳"s + u8"  "s + cdata.player().height + u8"cm"s +
+        u8" "s + cdata.player().weight + u8"kg"s);
     noteadd(""s);
     noteadd(
         fixtxt(
-            u8"種族       : "s
-                + i18n::s.get_m("locale.race", cdatan(2, 0), "name"),
-            30)
-        + fixtxt((u8"信仰      : "s + god_name(cdata.player().god_id)), 32));
+            u8"種族       : "s +
+                i18n::s.get_m("locale.race", cdatan(2, 0), "name"),
+            30) +
+        fixtxt((u8"信仰      : "s + god_name(cdata.player().god_id)), 32));
     noteadd(
-        fixtxt(u8"職業       : "s + classname, 30)
-        + fixtxt((u8"所属      : "s + guildname()), 32));
+        fixtxt(u8"職業       : "s + classname, 30) +
+        fixtxt((u8"所属      : "s + guildname()), 32));
     noteadd(
-        fixtxt(u8"レベル     : "s + cdata.player().level, 30)
-        + fixtxt((u8"経過日数  : "s + game_data.play_days), 32));
+        fixtxt(u8"レベル     : "s + cdata.player().level, 30) +
+        fixtxt((u8"経過日数  : "s + game_data.play_days), 32));
     noteadd(
-        fixtxt(u8"残りBP     : "s + cdata.player().skill_bonus, 30)
-        + fixtxt((u8"経過ターン: "s + game_data.play_turns), 32));
+        fixtxt(u8"残りBP     : "s + cdata.player().skill_bonus, 30) +
+        fixtxt((u8"経過ターン: "s + game_data.play_turns), 32));
     noteadd(
-        fixtxt(u8"金貨       : "s + cdata.player().gold, 30)
-        + fixtxt((u8"殺害数    : "s + game_data.kill_count), 32));
+        fixtxt(u8"金貨       : "s + cdata.player().gold, 30) +
+        fixtxt((u8"殺害数    : "s + game_data.kill_count), 32));
     noteadd(
-        fixtxt(u8"プラチナ   : "s + cdata.player().platinum_coin, 30)
-        + fixtxt(
+        fixtxt(u8"プラチナ   : "s + cdata.player().platinum_coin, 30) +
+        fixtxt(
             (u8"最深到達  : "s + game_data.deepest_dungeon_level + u8"階相当"s),
             32));
     noteadd(fixtxt(
-        u8"プレイ時間 : "s
-            + cnvplaytime(
+        u8"プレイ時間 : "s +
+            cnvplaytime(
                 (game_data.play_time + timeGetTime() / 1000 - time_begin)),
         30));
     noteadd(""s);
-    s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s
-        + sdata.get(2, 0).original_level + u8")"s;
-    s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s
-        + sdata.get(3, 0).original_level + u8")"s;
+    s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s +
+        sdata.get(2, 0).original_level + u8")"s;
+    s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s +
+        sdata.get(3, 0).original_level + u8")"s;
     s(3) = u8"狂気度    : "s + cdata.player().insanity;
     s(4) = u8"速度      : "s + cdata.player().current_speed;
     s(5) = u8"名声度    : "s + cdata.player().fame;
@@ -6600,11 +6597,11 @@ void dump_player_info()
         }
         s = fixtxt(s, 15);
         s = fixtxt(
-                i18n::_(u8"ui", u8"attribute", u8"_"s + cnt) + u8"    : "s
-                    + sdata((10 + cnt), 0) + u8"("s
-                    + sdata.get(10 + cnt, 0).original_level + u8")"s,
-                24)
-            + s;
+                i18n::_(u8"ui", u8"attribute", u8"_"s + cnt) + u8"    : "s +
+                    sdata((10 + cnt), 0) + u8"("s +
+                    sdata.get(10 + cnt, 0).original_level + u8")"s,
+                24) +
+            s;
         noteadd(s + s((1 + cnt)));
     }
     noteadd(""s);
@@ -6615,13 +6612,13 @@ void dump_player_info()
     prot = calcattackdmg(2);
     noteadd(u8"回避    : "s + evade + u8"%"s);
     noteadd(
-        u8"軽減    : "s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1
-        + u8"d"s + protdice2);
+        u8"軽減    : "s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 +
+        u8"d"s + protdice2);
     noteadd(""s);
     noteadd(
-        u8"------------------------------ 装備品 合計重量"s
-        + cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s
-        + cnveqweight(cc));
+        u8"------------------------------ 装備品 合計重量"s +
+        cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s +
+        cnveqweight(cc));
     noteadd(""s);
     listmax = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
@@ -6712,12 +6709,12 @@ void dump_player_info()
         }
         access_class_info(2, cdatan(3, cnt));
         noteadd(
-            cdatan(0, cnt) + u8" "s
-            + i18n::s.get_m("locale.race", cdatan(2, cnt), "name") + u8"の"s
-            + classname + u8" "s
-            + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[cnt].sex) + u8" "s
-            + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height + u8"cm"s
-            + u8" "s + cdata[cnt].weight + u8"kg"s);
+            cdatan(0, cnt) + u8" "s +
+            i18n::s.get_m("locale.race", cdatan(2, cnt), "name") + u8"の"s +
+            classname + u8" "s +
+            i18n::_(u8"ui", u8"sex", u8"_"s + cdata[cnt].sex) + u8" "s +
+            calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height + u8"cm"s +
+            u8" "s + cdata[cnt].weight + u8"kg"s);
         s = u8"レベル "s + cdata[cnt].level + u8" "s;
         if (cdata[cnt].is_married() == 1)
         {
@@ -6733,8 +6730,8 @@ void dump_player_info()
         if (game_data.ranks.at(cnt) < 10000)
         {
             noteadd(
-                ""s + ranktitle(cnt) + u8" Rank."s
-                + game_data.ranks.at(cnt) / 100);
+                ""s + ranktitle(cnt) + u8" Rank."s +
+                game_data.ranks.at(cnt) / 100);
             s = u8"給料: 約 "s + calcincome(cnt) + u8" gold  "s + u8"ノルマ: "s;
             gold += calcincome(cnt);
             if (cnt == 3 || cnt == 4 || cnt == 5 || cnt == 8)
@@ -6853,8 +6850,8 @@ void load_gene_files()
         {
             lomiaseaster = 1;
         }
-        if (inv[cnt].id == 511
-            || the_item_db[inv[cnt].id]->subcategory == 53100)
+        if (inv[cnt].id == 511 ||
+            the_item_db[inv[cnt].id]->subcategory == 53100)
         {
             continue;
         }
@@ -6976,8 +6973,8 @@ void update_save_data(const fs::path& save_dir, int serial_id)
             for (auto&& chara : cdatan_)
             {
                 const auto old_race_id = chara.at(2);
-                if (!old_race_id.empty()
-                    && !strutil::starts_with(old_race_id, "core."))
+                if (!old_race_id.empty() &&
+                    !strutil::starts_with(old_race_id, "core."))
                 {
                     ELONA_LOG(
                         "[Save data] Prepend \"core\" prefix to "
@@ -6990,8 +6987,8 @@ void update_save_data(const fs::path& save_dir, int serial_id)
             if (!out)
             {
                 throw std::runtime_error(
-                    u8"Error: fail to write "
-                    + filesystem::make_preferred_path_in_utf8(entry.path()));
+                    u8"Error: fail to write " +
+                    filesystem::make_preferred_path_in_utf8(entry.path()));
             }
 
             for (const auto& chara : cdatan_)
@@ -7036,8 +7033,8 @@ void update_save_data(const fs::path& save_dir, int serial_id)
             for (auto&& chara : cdatan_)
             {
                 const auto old_class_id = chara.at(3);
-                if (!old_class_id.empty()
-                    && !strutil::starts_with(old_class_id, "core."))
+                if (!old_class_id.empty() &&
+                    !strutil::starts_with(old_class_id, "core."))
                 {
                     ELONA_LOG(
                         "[Save data] Prepend \"core\" prefix to "
@@ -7050,8 +7047,8 @@ void update_save_data(const fs::path& save_dir, int serial_id)
             if (!out)
             {
                 throw std::runtime_error(
-                    u8"Error: fail to write "
-                    + filesystem::make_preferred_path_in_utf8(entry.path()));
+                    u8"Error: fail to write " +
+                    filesystem::make_preferred_path_in_utf8(entry.path()));
             }
 
             for (const auto& chara : cdatan_)
@@ -7084,8 +7081,8 @@ void update_save_data(const fs::path& save_dir, int serial_id)
             std::ostringstream out;
             putit::BinaryOArchive oar{out};
 
-            const auto is_cdatas1 = entry.path().filename() == "cdata.s1"
-                || entry.path().filename() == "g_cdata.s1";
+            const auto is_cdatas1 = entry.path().filename() == "cdata.s1" ||
+                entry.path().filename() == "g_cdata.s1";
             const auto begin = is_cdatas1 ? 0 : ELONA_MAX_PARTY_CHARACTERS;
             const auto end =
                 is_cdatas1 ? ELONA_MAX_PARTY_CHARACTERS : ELONA_MAX_CHARACTERS;
@@ -7360,8 +7357,8 @@ void update_save_data(const fs::path& save_dir, int serial_id)
                     iar(_206);
                 }
                 // Prepend "core" prefix to old god IDs.
-                if (god_id != core_god::eyth
-                    && !strutil::starts_with(god_id, "core."))
+                if (god_id != core_god::eyth &&
+                    !strutil::starts_with(god_id, "core."))
                 {
                     ELONA_LOG(
                         "[Save data] Prepend \"core\" prefix to character("
@@ -7531,8 +7528,8 @@ void update_save_data(const fs::path& save_dir, int serial_id)
             std::ostringstream out;
             putit::BinaryOArchive oar{out};
 
-            const auto is_invs1 = entry.path().filename() == "inv.s1"
-                || entry.path().filename() == "g_inv.s1";
+            const auto is_invs1 = entry.path().filename() == "inv.s1" ||
+                entry.path().filename() == "g_inv.s1";
             const auto begin = is_invs1 ? 0 : 1320;
             const auto end = is_invs1 ? 1320 : 5480;
             for (int idx = begin; idx < end; ++idx)
@@ -8034,8 +8031,8 @@ label_21451_internal:
         {
             if (feat(2) == 7)
             {
-                if ((cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
-                    || cdata[cc].is_immune_to_mine() == 1)
+                if ((cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0) ||
+                    cdata[cc].is_immune_to_mine() == 1)
                 {
                     return;
                 }
@@ -8393,8 +8390,8 @@ void sleep_start()
     else
     {
         ci = cdata.player().continuous_action.item;
-        if (inv[ci].param1 == 0 || inv[ci].number() == 0
-            || the_item_db[inv[ci].id]->subcategory != 60004)
+        if (inv[ci].param1 == 0 || inv[ci].number() == 0 ||
+            the_item_db[inv[ci].id]->subcategory != 60004)
         {
             f = 1;
         }
@@ -8515,12 +8512,11 @@ void map_global_proc_travel_events()
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 16 / 10;
         }
-        if (game_data.weather == 2
-            || chipm(
-                   0,
-                   cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                       .chip_id_actual)
-                == 4)
+        if (game_data.weather == 2 ||
+            chipm(
+                0,
+                cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                    .chip_id_actual) == 4)
         {
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 22 / 10;
@@ -8530,8 +8526,8 @@ void map_global_proc_travel_events()
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 5 / 10;
         }
-        cdata[cc].continuous_action.turn = cdata[cc].continuous_action.turn
-            * 100 / (100 + game_data.seven_league_boot_effect + sdata(182, 0));
+        cdata[cc].continuous_action.turn = cdata[cc].continuous_action.turn *
+            100 / (100 + game_data.seven_league_boot_effect + sdata(182, 0));
         return;
     }
     if (cdata.player().nutrition <= 5000)
@@ -8560,19 +8556,18 @@ void map_global_proc_travel_events()
             continuous_action_eating_finish();
         }
     }
-    if (game_data.weather == 2
-        || chipm(
-               0,
-               cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                   .chip_id_actual)
-            == 4)
+    if (game_data.weather == 2 ||
+        chipm(
+            0,
+            cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                .chip_id_actual) == 4)
     {
         if (game_data.protects_from_bad_weather == 0)
         {
             if (rnd(100) == 0)
             {
-                if (cdata.player().is_floating() == 0
-                    || cdata.player().gravity > 0)
+                if (cdata.player().is_floating() == 0 ||
+                    cdata.player().gravity > 0)
                 {
                     txt(i18n::s.get("core.locale.action.move.global.weather."
                                     "snow.sound"),
@@ -8607,8 +8602,8 @@ void map_global_proc_travel_events()
         {
             if (rnd(100) == 0)
             {
-                if (cdata.player().is_floating() == 0
-                    || cdata.player().gravity > 0)
+                if (cdata.player().is_floating() == 0 ||
+                    cdata.player().gravity > 0)
                 {
                     txt(i18n::s.get(
                             "core.locale.action.move.global.weather.heavy_rain."
@@ -8782,9 +8777,9 @@ int decode_book()
             cdata[cc],
             efid,
             1,
-            (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
-                    / clamp((100 + spell((efid - 400)) / 2), 50, 1000)
-                + 1);
+            (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20) /
+                    clamp((100 + spell((efid - 400)) / 2), 50, 1000) +
+                1);
         gain_memorization_experience(0);
         if (itemmemory(2, inv[ci].id) == 0)
         {
@@ -8942,8 +8937,8 @@ int do_cast_magic_attempt()
     {
         if (the_ability_db[efid]->ability_type == 7)
         {
-            if (cdata[cc].relationship == 10
-                || game_data.current_map == mdata_t::MapId::pet_arena)
+            if (cdata[cc].relationship == 10 ||
+                game_data.current_map == mdata_t::MapId::pet_arena)
             {
                 efsource = 0;
                 return 0;
@@ -9053,8 +9048,8 @@ int do_cast_magic_attempt()
         efp = efp * (100 + p / 10) / 100;
     }
     rapidmagic = 0;
-    if (cdata[cc].can_cast_rapid_magic()
-        && the_ability_db[efid]->ability_type == 2)
+    if (cdata[cc].can_cast_rapid_magic() &&
+        the_ability_db[efid]->ability_type == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
     }
@@ -9148,8 +9143,8 @@ int drink_potion()
 
 int drink_well()
 {
-    if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-        || (inv[ci].id == 602 && game_data.holy_well_count <= 0))
+    if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
+        (inv[ci].id == 602 && game_data.holy_well_count <= 0))
     {
         const auto valn = itemname(ci);
         txt(i18n::s.get("core.locale.action.drink.well.is_dry", valn));
@@ -9430,8 +9425,8 @@ int do_zap()
     }
     if (efid >= 400 && efid < 467)
     {
-        if ((stat == 0 && the_ability_db[efid]->range / 1000 * 1000 == 2000)
-            || noeffect == 1)
+        if ((stat == 0 && the_ability_db[efid]->range / 1000 * 1000 == 2000) ||
+            noeffect == 1)
         {
             if (is_in_fov(cdata[cc]))
             {
@@ -9445,9 +9440,9 @@ int do_zap()
     {
         txt(i18n::s.get("core.locale.action.zap.execute", inv[ci]));
     }
-    efp = efp
-        * (100 + sdata(174, cc) * 10 + sdata(16, cc) / 2 + sdata(13, cc) / 2)
-        / 100;
+    efp = efp *
+        (100 + sdata(174, cc) * 10 + sdata(16, cc) / 2 + sdata(13, cc) / 2) /
+        100;
     if (efid >= 400 && efid < 467)
     {
         f = 0;
@@ -9540,8 +9535,8 @@ int do_magic_attempt()
             return 0;
         }
     }
-    if (the_ability_db[efid]->range / 1000 * 1000 != 3000
-        && the_ability_db[efid]->range / 1000 * 1000 != 10000)
+    if (the_ability_db[efid]->range / 1000 * 1000 != 3000 &&
+        the_ability_db[efid]->range / 1000 * 1000 != 10000)
     {
         if (cdata[cc].confused != 0 || cdata[cc].blind != 0)
         {
@@ -9571,8 +9566,8 @@ int do_magic_attempt()
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1)
-                    + the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1) +
+                    the_ability_db[efid]->cost / 2 + 1);
             chara_gain_skill_exp(
                 cdata[cc], the_ability_db[efid]->related_basic_attribute, 25);
         }
@@ -9648,8 +9643,8 @@ int prompt_magic_location()
                     cdata[tc].position.x,
                     cdata[tc].position.y,
                     cdata[cc].position.x,
-                    cdata[cc].position.y)
-                > the_ability_db[efid]->range % 1000 + 1)
+                    cdata[cc].position.y) >
+                the_ability_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
@@ -9668,8 +9663,7 @@ int prompt_magic_location()
                                    cdata[cc].position.x,
                                    cdata[cc].position.y,
                                    tglocx,
-                                   tglocy)
-                        == 0)
+                                   tglocy) == 0)
                 {
                     if (stat == 0)
                     {
@@ -9707,8 +9701,7 @@ int prompt_magic_location()
                     cdata[tc].position.x,
                     cdata[tc].position.y,
                     cdata[cc].position.x,
-                    cdata[cc].position.y)
-                == 0)
+                    cdata[cc].position.y) == 0)
             {
                 return 0;
             }
@@ -9727,8 +9720,8 @@ int prompt_magic_location()
                         cdata[tc].position.x,
                         cdata[tc].position.y,
                         cdata[cc].position.x,
-                        cdata[cc].position.y)
-                    > the_ability_db[efid]->range % 1000 + 1)
+                        cdata[cc].position.y) >
+                    the_ability_db[efid]->range % 1000 + 1)
                 {
                     return 0;
                 }
@@ -9736,8 +9729,7 @@ int prompt_magic_location()
                         cdata[cc].position.x,
                         cdata[cc].position.y,
                         cdata[tc].position.x,
-                        cdata[tc].position.y)
-                    == 0)
+                        cdata[tc].position.y) == 0)
                 {
                     return 0;
                 }
@@ -9773,8 +9765,7 @@ int prompt_magic_location()
                 cdata[tc].position.x,
                 cdata[tc].position.y,
                 cdata[cc].position.x,
-                cdata[cc].position.y)
-            > the_ability_db[efid]->range % 1000 + 1)
+                cdata[cc].position.y) > the_ability_db[efid]->range % 1000 + 1)
         {
             if (cc == 0)
             {
@@ -9789,8 +9780,7 @@ int prompt_magic_location()
                 cdata[cc].position.x,
                 cdata[cc].position.y,
                 cdata[tc].position.x,
-                cdata[tc].position.y)
-            == 0)
+                cdata[tc].position.y) == 0)
         {
             return 0;
         }
@@ -9957,8 +9947,8 @@ int pick_up_item()
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
                     tmpload(filesystem::u8path(u8"mdata_"s + mid + u8".s2"));
                     if (fs::exists(
-                            filesystem::dir::tmp()
-                            / (u8"mdata_"s + mid + u8".s2")))
+                            filesystem::dir::tmp() /
+                            (u8"mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(FileOperation::map_delete);
                     }
@@ -10070,8 +10060,8 @@ int pick_up_item()
                 }
                 else if (inv[ti].param3 != 0 && inv[ti].material == 35)
                 {
-                    inv[ti].param3 = game_data.date.hours()
-                        + the_item_db[inv[ti].id]->expiration_date;
+                    inv[ti].param3 = game_data.date.hours() +
+                        the_item_db[inv[ti].id]->expiration_date;
                     if (inv[ti].param2 != 0)
                     {
                         inv[ti].param3 += 72;
@@ -10389,8 +10379,8 @@ TurnResult do_bash()
             cell_data.at(x, y).feats = 0;
             spillfrag(x, y, 2);
             flt(calcobjlv(
-                    game_data.current_dungeon_level
-                    * (game_data.current_map != mdata_t::MapId::shelter_)),
+                    game_data.current_dungeon_level *
+                    (game_data.current_map != mdata_t::MapId::shelter_)),
                 calcfixlv(Quality::bad));
             flttypemajor = choice(fsetbarrel);
             itemcreate(-1, 0, x, y, 0);
@@ -10446,8 +10436,8 @@ TurnResult do_bash()
                 }
                 if (rnd(3) == 0)
                 {
-                    if (cdata[cc].quality < Quality::miracle
-                        && encfind(cc, 60010) == -1)
+                    if (cdata[cc].quality < Quality::miracle &&
+                        encfind(cc, 60010) == -1)
                     {
                         --cdata[cc].attr_adjs[0];
                         chara_refresh(cc);
@@ -10540,8 +10530,7 @@ TurnResult proc_movement_event()
         }
     }
     if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-            .mef_index_plus_one
-        != 0)
+            .mef_index_plus_one != 0)
     {
         bool turn_ended = mef_proc_from_movement(cc);
         if (turn_ended)
@@ -10588,8 +10577,8 @@ TurnResult proc_movement_event()
             game_data.stood_world_map_tile =
                 cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
                     .chip_id_actual;
-            if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats
-                == 0)
+            if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                    .feats == 0)
             {
                 p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
                         .chip_id_actual;
@@ -10622,13 +10611,12 @@ TurnResult proc_movement_event()
                         encounter = 2;
                     }
                 }
-                if (rnd(220 + cdata.player().level * 10
-                        - clamp(
-                            game_data.cargo_weight * 150
-                                / (game_data.current_cart_limit + 1),
+                if (rnd(220 + cdata.player().level * 10 -
+                        clamp(
+                            game_data.cargo_weight * 150 /
+                                (game_data.current_cart_limit + 1),
                             0,
-                            (210 + cdata.player().level * 10)))
-                    == 0)
+                            (210 + cdata.player().level * 10))) == 0)
                 {
                     encounter = 4;
                 }
@@ -10692,12 +10680,11 @@ TurnResult proc_movement_event()
                 {
                     encounterlv /= 2;
                 }
-                if (33 <= cell_data
-                              .at(cdata[cc].position.x, cdata[cc].position.y)
-                              .chip_id_actual
-                    && cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                            .chip_id_actual
-                        < 66)
+                if (33 <=
+                        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                            .chip_id_actual &&
+                    cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                            .chip_id_actual < 66)
                 {
                     encounterlv /= 2;
                 }
@@ -10712,9 +10699,9 @@ TurnResult proc_movement_event()
                 auto valn = i18n::s.get(
                                 "core.locale.action.move.global.ambush."
                                 "distance_from_nearest_town",
-                                p(0))
-                    + " "
-                    + i18n::s.get(
+                                p(0)) +
+                    " " +
+                    i18n::s.get(
                         "core.locale.action.move.global.ambush.enemy_"
                         "strength");
                 for (int cnt = 0; cnt < 1; ++cnt)
@@ -10754,8 +10741,8 @@ TurnResult proc_movement_event()
                         "core.locale.action.move.global.ambush.rank.dragon");
                 }
                 valn += u8")"s;
-                txt(i18n::s.get("core.locale.action.move.global.ambush.text")
-                    + valn);
+                txt(i18n::s.get("core.locale.action.move.global.ambush.text") +
+                    valn);
                 msg_halt();
                 levelexitby = 4;
                 return TurnResult::exit_map;
@@ -10774,9 +10761,10 @@ void proc_autopick()
         return;
     if (is_modifier_pressed(snail::ModKey::ctrl))
         return;
-    if (area_data[game_data.current_map].type == mdata_t::MapType::player_owned
-        && area_data[game_data.current_map].id != mdata_t::MapId::shelter_
-        && area_data[game_data.current_map].id != mdata_t::MapId::ranch)
+    if (area_data[game_data.current_map].type ==
+            mdata_t::MapType::player_owned &&
+        area_data[game_data.current_map].id != mdata_t::MapId::shelter_ &&
+        area_data[game_data.current_map].id != mdata_t::MapId::ranch)
         return;
 
 
@@ -10889,9 +10877,9 @@ void sense_map_feats_on_move()
         game_data.player_y_on_map_leave = -1;
         x = cdata.player().position.x;
         y = cdata.player().position.y;
-        if (getkey(snail::Key::shift)
-            && game_data.player_cellaccess_check_flag == 0
-            && cdata.player().confused == 0 && cdata.player().dimmed == 0)
+        if (getkey(snail::Key::shift) &&
+            game_data.player_cellaccess_check_flag == 0 &&
+            cdata.player().confused == 0 && cdata.player().dimmed == 0)
         {
             if (map_data.type != mdata_t::MapType::world_map)
             {
@@ -10938,10 +10926,10 @@ void sense_map_feats_on_move()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= Config::instance().walkwait
-                            * Config::instance().startrun
-                    || cdata.player().turn % 2 == 0
-                    || map_data.type == mdata_t::MapType::world_map)
+                if (keybd_wait <= Config::instance().walkwait *
+                            Config::instance().startrun ||
+                    cdata.player().turn % 2 == 0 ||
+                    map_data.type == mdata_t::MapType::world_map)
                 {
                     sound_footstep2(foot);
                     foot += 1 + rnd(2);
@@ -10965,8 +10953,8 @@ void sense_map_feats_on_move()
             if (feat(1) == 15)
             {
                 txt(mapname(feat(2) + feat(3) * 100, true));
-                if (area_data[feat(2) + feat(3) * 100].id
-                    == mdata_t::MapId::random_dungeon)
+                if (area_data[feat(2) + feat(3) * 100].id ==
+                    mdata_t::MapId::random_dungeon)
                 {
                     maybe_show_ex_help(6);
                 }
@@ -11352,8 +11340,8 @@ void open_new_year_gift()
             {
                 tlocx = cdata.player().position.x + rnd(3) - rnd(3);
                 tlocy = cdata.player().position.y - rnd(3) + rnd(3);
-                if (tlocx < 0 || tlocx >= map_data.width || tlocy < 0
-                    || tlocy >= map_data.height)
+                if (tlocx < 0 || tlocx >= map_data.width || tlocy < 0 ||
+                    tlocy >= map_data.height)
                 {
                     continue;
                 }
@@ -11718,9 +11706,9 @@ void try_to_melee_attack()
     ele = 0;
     if (cdata[cc].equipment_type & 1)
     {
-        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
-                + cdata[cc].has_power_bash() * 5
-            > rnd(100))
+        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5) +
+                cdata[cc].has_power_bash() * 5 >
+            rnd(100))
         {
             if (is_in_fov(cdata[cc]))
             {
@@ -11792,8 +11780,7 @@ label_22191_internal:
         return;
     }
     if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
-            .mef_index_plus_one
-        != 0)
+            .mef_index_plus_one != 0)
     {
         bool return_now = mef_proc_from_physical_attack(tc);
         if (return_now)
@@ -11815,9 +11802,9 @@ label_22191_internal:
     if (attacknum > 1 || cc != 0)
     {
     }
-    expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 + cdata[tc].splits()
-        + cdata[tc].splits2()
-        + (game_data.current_map == mdata_t::MapId::show_house);
+    expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 + cdata[tc].splits() +
+        cdata[tc].splits2() +
+        (game_data.current_map == mdata_t::MapId::show_house);
     int hit = calcattackhit();
     i = 0;
     if (hit == 1)
@@ -11852,8 +11839,8 @@ label_22191_internal:
             {
                 if (inv[cw].quality == Quality::special)
                 {
-                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the")
-                        + iknownnameref(inv[cw].id);
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the") +
+                        iknownnameref(inv[cw].id);
                 }
                 else if (inv[cw].subname >= 40000)
                 {
@@ -11863,8 +11850,8 @@ label_22191_internal:
                 }
                 else
                 {
-                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the")
-                        + iknownnameref(inv[cw].id);
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the") +
+                        iknownnameref(inv[cw].id);
                 }
                 if (inv[cw].quality == Quality::godly)
                 {
@@ -11986,14 +11973,15 @@ label_22191_internal:
             chara_gain_skill_exp(cdata[cc], 186, 60 / expmodifer, 2);
             critical = 0;
         }
-        if (rtdmg > cdata[tc].max_hp / 20 || rtdmg > sdata(154, tc)
-            || rnd(5) == 0)
+        if (rtdmg > cdata[tc].max_hp / 20 || rtdmg > sdata(154, tc) ||
+            rnd(5) == 0)
         {
             chara_gain_skill_exp(
                 cdata[cc],
                 attackskill,
-                clamp((sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
-                    / expmodifer,
+                clamp(
+                    (sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50) /
+                    expmodifer,
                 0,
                 4);
             if (attackrange == 0)
@@ -12029,8 +12017,8 @@ label_22191_internal:
                 chara_gain_skill_exp(
                     cdata[tc],
                     chara_armor_class(cdata[tc]),
-                    clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100)
-                        / expmodifer,
+                    clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100) /
+                        expmodifer,
                     0,
                     5);
                 if (cdata[tc].equipment_type & 1)
@@ -12140,8 +12128,9 @@ label_22191_internal:
         }
         if (sdata(attackskill, cc) > sdata(173, tc) || rnd(5) == 0)
         {
-            p = clamp((sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20)
-                / expmodifer;
+            p = clamp(
+                    (sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20) /
+                expmodifer;
             chara_gain_skill_exp(cdata[tc], 173, p, 0, 4);
             chara_gain_skill_exp(cdata[tc], 187, p, 0, 4);
         }
@@ -12338,9 +12327,10 @@ void proc_weapon_enchantments()
                 game_data.proc_damage_events_flag = 1;
                 damage_hp(
                     cdata[tc],
-                    rnd(orgdmg * (100 + inv[cw].enchantments[cnt].power) / 1000
-                        + 1)
-                        + 5,
+                    rnd(orgdmg * (100 + inv[cw].enchantments[cnt].power) /
+                            1000 +
+                        1) +
+                        5,
                     cc,
                     ele,
                     inv[cw].enchantments[cnt].power / 2 + 100);
@@ -12369,8 +12359,8 @@ void proc_weapon_enchantments()
                 if (rnd(100) < p)
                 {
                     efid = enc;
-                    efp = inv[cw].enchantments[cnt].power
-                        + sdata(attackskill, cc) * 10;
+                    efp = inv[cw].enchantments[cnt].power +
+                        sdata(attackskill, cc) * 10;
                     magic();
                 }
                 tc = tcbk;
@@ -12614,8 +12604,7 @@ TurnResult do_plant()
     if (chipm(
             0,
             cell_data.at(cdata.player().position.x, cdata.player().position.y)
-                .chip_id_actual)
-        == 2)
+                .chip_id_actual) == 2)
     {
         val0 = 1;
     }
@@ -12838,8 +12827,8 @@ void initialize_economy()
         }
         game_data.current_map = area_data[cnt].id;
         game_data.current_dungeon_level = 1;
-        if (game_data.current_map != bkdata(0)
-            || game_data.current_dungeon_level != bkdata(1))
+        if (game_data.current_map != bkdata(0) ||
+            game_data.current_dungeon_level != bkdata(1))
         {
             initialize_map();
         }
@@ -13258,8 +13247,8 @@ void weather_changes()
                         break;
                     }
                 }
-                if (game_data.pc_x_in_world_map > 65
-                    || game_data.pc_y_in_world_map < 10)
+                if (game_data.pc_x_in_world_map > 65 ||
+                    game_data.pc_y_in_world_map < 10)
                 {
                     if (rnd(2) == 0)
                     {
@@ -13450,11 +13439,11 @@ void weather_changes()
         {
             supply_income();
         }
-        if (game_data.quest_flags.pael_and_her_mom == 1
-            || game_data.quest_flags.pael_and_her_mom == 3
-            || game_data.quest_flags.pael_and_her_mom == 5
-            || game_data.quest_flags.pael_and_her_mom == 7
-            || game_data.quest_flags.pael_and_her_mom == 9)
+        if (game_data.quest_flags.pael_and_her_mom == 1 ||
+            game_data.quest_flags.pael_and_her_mom == 3 ||
+            game_data.quest_flags.pael_and_her_mom == 5 ||
+            game_data.quest_flags.pael_and_her_mom == 7 ||
+            game_data.quest_flags.pael_and_her_mom == 9)
         {
             if (area_data[game_data.current_map].id != mdata_t::MapId::noyel)
             {
@@ -13491,8 +13480,8 @@ void weather_changes()
     }
     if (cdata.player().continuous_action.turn != 0)
     {
-        if (cdata.player().continuous_action.type
-            != ContinuousAction::Type::travel)
+        if (cdata.player().continuous_action.type !=
+            ContinuousAction::Type::travel)
         {
             update_screen();
         }
@@ -13507,8 +13496,8 @@ void weather_changes()
 
 optional<TurnResult> check_angband()
 {
-    if (game_data.angband_flag == -1
-        || map_data.type == mdata_t::MapType::world_map)
+    if (game_data.angband_flag == -1 ||
+        map_data.type == mdata_t::MapType::world_map)
         return none;
 
     switch (game_data.angband_flag)
@@ -13740,8 +13729,8 @@ TurnResult pc_died()
             buff(0) += tmp + '\n';
         }
     }
-    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + i18n::space_if_needed()
-        + last_words;
+    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + i18n::space_if_needed() +
+        last_words;
     lenfix(s, 60);
     s += i18n::s.get(
         "core.locale.misc.death.date",
@@ -13829,8 +13818,8 @@ TurnResult pc_died()
         wait_key_pressed();
         return TurnResult::finish_elona;
     }
-    s = u8"dead"s
-        + i18n::s.get(
+    s = u8"dead"s +
+        i18n::s.get(
             "core.locale.misc.death.sent_message",
             cdatan(1, 0),
             cdatan(0, 0),

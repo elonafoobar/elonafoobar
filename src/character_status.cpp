@@ -327,8 +327,8 @@ void modify_height(Character& cc, int delta)
 
 void refresh_speed(Character& cc)
 {
-    cc.current_speed = sdata(18, cc.index)
-        * clamp((100 - cc.speed_correction_value), 0, 100) / 100;
+    cc.current_speed = sdata(18, cc.index) *
+        clamp((100 - cc.speed_correction_value), 0, 100) / 100;
     if (cc.current_speed < 10)
     {
         cc.current_speed = 10;
@@ -340,17 +340,17 @@ void refresh_speed(Character& cc)
 
     if (game_data.mount != 0)
     {
-        const auto mount_speed = sdata(18, game_data.mount)
-            * clamp(100 - cdata[game_data.mount].speed_correction_value, 0, 100)
-            / 100;
+        const auto mount_speed = sdata(18, game_data.mount) *
+            clamp(100 - cdata[game_data.mount].speed_correction_value, 0, 100) /
+            100;
 
-        cdata.player().current_speed = mount_speed * 100
-            / clamp(100 + mount_speed - sdata(10, game_data.mount) * 3 / 2
-                        - sdata(301, 0) * 2
-                        - (cdata[game_data.mount].is_suitable_for_mount() == 1)
-                            * 50,
-                    100,
-                    1000);
+        cdata.player().current_speed = mount_speed * 100 /
+            clamp(100 + mount_speed - sdata(10, game_data.mount) * 3 / 2 -
+                      sdata(301, 0) * 2 -
+                      (cdata[game_data.mount].is_suitable_for_mount() == 1) *
+                          50,
+                  100,
+                  1000);
         if (cdata[game_data.mount].is_unsuitable_for_mount())
         {
             cdata.player().current_speed /= 10;
@@ -401,19 +401,19 @@ void refresh_speed(Character& cc)
     {
         cdata.player().speed_percentage_in_next_turn -= 10;
     }
-    if (map_data.type == mdata_t::MapType::world_map
-        || map_data.type == mdata_t::MapType::field)
+    if (map_data.type == mdata_t::MapType::world_map ||
+        map_data.type == mdata_t::MapType::field)
     {
         if (game_data.cargo_weight > game_data.current_cart_limit)
         {
-            cdata.player().speed_percentage_in_next_turn -= 25
-                + 25
-                    * (game_data.cargo_weight
-                       / (game_data.current_cart_limit + 1));
+            cdata.player().speed_percentage_in_next_turn -= 25 +
+                25 *
+                    (game_data.cargo_weight /
+                     (game_data.current_cart_limit + 1));
         }
     }
-    gspd = cdata.player().current_speed
-        * (100 + cdata.player().speed_percentage) / 100;
+    gspd = cdata.player().current_speed *
+        (100 + cdata.player().speed_percentage) / 100;
     if (gspd < 10)
     {
         gspd = 10;
@@ -506,9 +506,9 @@ void gain_level(Character& cc)
     {
         addnews(2, cc.index);
     }
-    p = 5 * (100 + sdata.get(14, cc.index).original_level * 10)
-            / (300 + cc.level * 15)
-        + 1;
+    p = 5 * (100 + sdata.get(14, cc.index).original_level * 10) /
+            (300 + cc.level * 15) +
+        1;
     if (cc.index == 0)
     {
         if (cc.level % 5 == 0)
@@ -526,8 +526,8 @@ void gain_level(Character& cc)
     }
     cc.skill_bonus += p;
     cc.total_skill_bonus += p;
-    if (cdatan(2, cc.index) == u8"core.mutant"s
-        || (cc.index == 0 && trait(0) == 1))
+    if (cdatan(2, cc.index) == u8"core.mutant"s ||
+        (cc.index == 0 && trait(0) == 1))
     {
         if (cc.level < 37)
         {
@@ -578,10 +578,10 @@ void grow_primary_skills(Character& cc)
 
 void update_required_experience(Character& cc)
 {
-    cc.required_experience = clamp(cc.level, 1, 200)
-            * (clamp(cc.level, 1, 200) + 1) * (clamp(cc.level, 1, 200) + 2)
-            * (clamp(cc.level, 1, 200) + 3)
-        + 3000;
+    cc.required_experience = clamp(cc.level, 1, 200) *
+            (clamp(cc.level, 1, 200) + 1) * (clamp(cc.level, 1, 200) + 2) *
+            (clamp(cc.level, 1, 200) + 3) +
+        3000;
     if (cc.required_experience > 100000000 || cc.required_experience < 0)
     {
         cc.required_experience = 100000000;

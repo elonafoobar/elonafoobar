@@ -54,15 +54,15 @@ static std::string _get_localized_action_name(
         {
             action_index_plus_1 -= 10;
         }
-        localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut")
-            + std::to_string(action_index_plus_1);
+        localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut") +
+            std::to_string(action_index_plus_1);
         break;
     }
     case ActionCategory::selection:
     {
         const auto action_index_plus_1 = keybind_index_number(action_id) + 1;
-        localized_name = i18n::s.get(mod_name + ".locale.keybind.select")
-            + std::to_string(action_index_plus_1);
+        localized_name = i18n::s.get(mod_name + ".locale.keybind.select") +
+            std::to_string(action_index_plus_1);
         break;
     }
     default:

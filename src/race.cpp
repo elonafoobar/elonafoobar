@@ -57,8 +57,8 @@ int access_race_info(int dbmode, const std::string& race_id)
     cdata[rc].dv_correction_value = data->dv_multiplier;
     cdata[rc].pv_correction_value = data->pv_multiplier;
 
-    cdata[rc].birth_year = game_data.date.year
-        - (rnd(data->max_age - data->min_age + 1) + data->min_age);
+    cdata[rc].birth_year = game_data.date.year -
+        (rnd(data->max_age - data->min_age + 1) + data->min_age);
     cdata[rc].height = data->height;
     if (mode == 1)
     {

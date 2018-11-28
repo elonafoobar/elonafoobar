@@ -13,8 +13,8 @@ bool UIMenuHire::_should_display_chara(const Character& chara)
 {
     if (_operation == HireOperation::revive)
     {
-        if (chara.state() != Character::State::pet_dead
-            && chara.state() != Character::State::villager_dead)
+        if (chara.state() != Character::State::pet_dead &&
+            chara.state() != Character::State::villager_dead)
         {
             return false;
         }

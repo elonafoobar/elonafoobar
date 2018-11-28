@@ -379,13 +379,13 @@ optional<const CraftingRecipe&> crafting_find_recipe(int matid_)
 static Quality _determine_crafted_fixlv(const CraftingRecipe& recipe)
 {
     Quality ret = Quality::good;
-    if (rnd(200 + recipe.required_skill_level * 2)
-        < sdata(recipe.skill_used, 0) + 20)
+    if (rnd(200 + recipe.required_skill_level * 2) <
+        sdata(recipe.skill_used, 0) + 20)
     {
         ret = Quality::miracle;
     }
-    if (rnd(100 + recipe.required_skill_level * 2)
-        < sdata(recipe.skill_used, 0) + 20)
+    if (rnd(100 + recipe.required_skill_level * 2) <
+        sdata(recipe.skill_used, 0) + 20)
     {
         ret = Quality::great;
     }

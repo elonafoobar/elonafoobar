@@ -87,8 +87,8 @@ void register_lua_function(
         "\
 local Exports = {}\
 \
-function Exports."
-            + callback_signature + "\n" + callback_body + R"(
+function Exports." +
+            callback_signature + "\n" + callback_body + R"(
 end
 
 return {

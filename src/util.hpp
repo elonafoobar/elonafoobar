@@ -106,8 +106,8 @@ inline bool has_prefix(const std::string& str, const std::string& prefix)
         return false;
     }
 
-    return std::mismatch(prefix.begin(), prefix.end(), str.begin()).first
-        == prefix.end();
+    return std::mismatch(prefix.begin(), prefix.end(), str.begin()).first ==
+        prefix.end();
 }
 
 
@@ -236,16 +236,15 @@ inline size_t utf8_cut_index(
     int current_char = 0;
     size_t current_byte = 0;
     bool multibyte = false;
-    while (current_char < max_length_charwise
-           && current_byte < utf8_string.size())
+    while (current_char < max_length_charwise &&
+           current_byte < utf8_string.size())
     {
         if (static_cast<unsigned char>(utf8_string[current_byte]) > 0x7F)
         {
             current_byte++;
             current_char++;
-            while (
-                (static_cast<unsigned char>(utf8_string[current_byte] & 0xC0))
-                == 0x80)
+            while ((static_cast<unsigned char>(
+                       utf8_string[current_byte] & 0xC0)) == 0x80)
             {
                 // Fullwidth characters count as length 2.
                 if (!multibyte)
@@ -379,8 +378,8 @@ struct ByLineReader
         if (!in)
         {
             throw std::runtime_error(
-                u8"Could not open file "
-                + filesystem::make_preferred_path_in_utf8(filepath));
+                u8"Could not open file " +
+                filesystem::make_preferred_path_in_utf8(filepath));
         }
         skip_bom(in);
     }

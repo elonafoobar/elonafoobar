@@ -437,8 +437,8 @@ TEST_CASE("Test copying of character handles", "[Lua: Handles]")
     // Copying will create a handle with a unique UUID if no item
     // existed before at the new index.
     REQUIRE(
-        handle["__uuid"].get<std::string>()
-        != handle_copy["__uuid"].get<std::string>());
+        handle["__uuid"].get<std::string>() !=
+        handle_copy["__uuid"].get<std::string>());
 
     // Assert that copying to an existing character will not try to
     // overwrite the existing handle.
@@ -598,8 +598,8 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     // Copying will create a handle with a unique UUID if no item
     // existed before at the new index.
     REQUIRE(
-        handle["__uuid"].get<std::string>()
-        != handle_copy["__uuid"].get<std::string>());
+        handle["__uuid"].get<std::string>() !=
+        handle_copy["__uuid"].get<std::string>());
 
     // Assert that copying to an existing item will not try to
     // overwrite the existing handle.

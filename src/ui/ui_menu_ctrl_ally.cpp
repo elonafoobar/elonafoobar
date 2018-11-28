@@ -27,8 +27,8 @@ bool UIMenuCtrlAlly::_should_display_ally(const Character& chara)
             return false;
         }
     }
-    if (_operation == ControlAllyOperation::staying
-        || _operation == ControlAllyOperation::gene_engineer)
+    if (_operation == ControlAllyOperation::staying ||
+        _operation == ControlAllyOperation::gene_engineer)
     {
         if (chara.state() != Character::State::alive)
         {
@@ -44,8 +44,8 @@ bool UIMenuCtrlAlly::_should_display_ally(const Character& chara)
     }
     if (chara.current_map != 0)
     {
-        if (_operation == ControlAllyOperation::sell
-            || _operation == ControlAllyOperation::pet_arena)
+        if (_operation == ControlAllyOperation::sell ||
+            _operation == ControlAllyOperation::pet_arena)
         {
             return false;
         }
@@ -166,8 +166,8 @@ static void _update_pet_arena()
     {
         Message::instance().txtef(ColorIndex::blue);
     }
-    txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.prompt") + ": " + i
-        + u8" / "s + arenaop(1));
+    txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.prompt") + ": " + i +
+        u8" / "s + arenaop(1));
     s(10) = i18n::s.get("core.locale.ui.ally_list.pet_arena.title");
     s(11) = strhint2 + strhint3;
     s(12) = i18n::s.get("core.locale.ui.ally_list.name");
@@ -306,8 +306,8 @@ std::string UIMenuCtrlAlly::_get_general_ally_info(const Character& chara)
         }
         else
         {
-            ally_info += u8"(Hp: "s + chara.hp * 100 / chara.max_hp + u8"%) "s
-                + i18n::s.get("core.locale.ui.ally_list.waiting");
+            ally_info += u8"(Hp: "s + chara.hp * 100 / chara.max_hp + u8"%) "s +
+                i18n::s.get("core.locale.ui.ally_list.waiting");
         }
     }
     if (chara.state() == Character::State::alive)
@@ -331,8 +331,8 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
-        _s = u8"   "s + sdata(17, chara.index) + u8" / "
-            + sdata(156, chara.index);
+        _s = u8"   "s + sdata(17, chara.index) + u8" / " +
+            sdata(156, chara.index);
     }
     else if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
     {
@@ -344,9 +344,9 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 
 static bool _has_general_info(ControlAllyOperation operation)
 {
-    return operation != ControlAllyOperation::staying
-        || (operation == ControlAllyOperation::staying
-            && game_data.current_map == mdata_t::MapId::your_home);
+    return operation != ControlAllyOperation::staying ||
+        (operation == ControlAllyOperation::staying &&
+         game_data.current_map == mdata_t::MapId::your_home);
 }
 
 std::string UIMenuCtrlAlly::_get_ally_info(const Character& chara)
@@ -396,15 +396,15 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             }
             else
             {
-                ally_info += ""s
-                    + i18n::s.get_m(
+                ally_info += ""s +
+                    i18n::s.get_m(
                         "locale.ability",
                         the_ability_db.get_id_from_legacy(rtval)->get(),
                         "name");
                 if (rtval(1) != -1)
                 {
-                    ally_info += u8", "s
-                        + i18n::s.get_m(
+                    ally_info += u8", "s +
+                        i18n::s.get_m(
                             "locale.ability",
                             the_ability_db.get_id_from_legacy(rtval(1))->get(),
                             "name");

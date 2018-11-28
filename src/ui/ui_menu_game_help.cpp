@@ -215,11 +215,11 @@ void UIMenuGameHelp::_update_key_list()
     }
     font(13 - en * 2);
     pos(x + 38, y + 408);
-    mes(u8"F9 "s
-        + i18n::s.get("core.locale.ui.manual.keys.other.hide_interface")
-        + u8"F11  "
-        + i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet")
-        + u8"F12  " + i18n::s.get("core.locale.ui.manual.keys.other.console"));
+    mes(u8"F9 "s +
+        i18n::s.get("core.locale.ui.manual.keys.other.hide_interface") +
+        u8"F11  " +
+        i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet") +
+        u8"F12  " + i18n::s.get("core.locale.ui.manual.keys.other.console"));
 }
 
 void UIMenuGameHelp::_update_regular_pages()

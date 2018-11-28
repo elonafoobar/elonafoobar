@@ -38,10 +38,9 @@ bool is_in_fov(const Character& cc)
 
 int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
-    if (prm_629 < 0 || map_data.width <= prm_629 || prm_630 < 0
-        || map_data.height <= prm_630 || prm_631 < 0
-        || map_data.width <= prm_631 || prm_632 < 0
-        || map_data.height <= prm_632)
+    if (prm_629 < 0 || map_data.width <= prm_629 || prm_630 < 0 ||
+        map_data.height <= prm_630 || prm_631 < 0 ||
+        map_data.width <= prm_631 || prm_632 < 0 || map_data.height <= prm_632)
     {
         // Out of range
         return 0;
@@ -66,13 +65,14 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(prm_629, ty_at_modfov).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -88,13 +88,14 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(prm_629, ty_at_modfov).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(prm_629, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -114,13 +115,14 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(tx_at_modfov, prm_630).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -136,13 +138,14 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(tx_at_modfov, prm_630).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_630).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -174,16 +177,14 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             if ((chipm(
                      7,
                      cell_data.at(prm_629, prm_630 + sy_at_modfov)
-                         .chip_id_actual)
-                 & 1)
-                == 0)
+                         .chip_id_actual) &
+                 1) == 0)
             {
                 if ((chipm(
                          7,
-                         cell_data.at(prm_629, (prm_630 + sy_at_modfov)).feats
-                             % 1000)
-                     & 1)
-                    == 0)
+                         cell_data.at(prm_629, (prm_630 + sy_at_modfov)).feats %
+                             1000) &
+                     1) == 0)
                 {
                     return 1;
                 }
@@ -197,16 +198,14 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             if ((chipm(
                      7,
                      cell_data.at(prm_629 + sx_at_modfov, prm_630)
-                         .chip_id_actual)
-                 & 1)
-                == 0)
+                         .chip_id_actual) &
+                 1) == 0)
             {
                 if ((chipm(
                          7,
-                         cell_data.at((prm_629 + sx_at_modfov), prm_630).feats
-                             % 1000)
-                     & 1)
-                    == 0)
+                         cell_data.at((prm_629 + sx_at_modfov), prm_630).feats %
+                             1000) &
+                     1) == 0)
                 {
                     return 1;
                 }
@@ -236,13 +235,15 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 break;
             }
             if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                & 1)
+                    7,
+                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
+                1)
             {
                 return 0;
             }
-            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                & 1)
+            if (chipm(
+                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                1)
             {
                 return 0;
             }
@@ -256,15 +257,16 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 ty_at_modfov += sy_at_modfov;
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov)
+                            .chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -300,13 +302,15 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 break;
             }
             if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                & 1)
+                    7,
+                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
+                1)
             {
                 return 0;
             }
-            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                & 1)
+            if (chipm(
+                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                1)
             {
                 return 0;
             }
@@ -320,15 +324,16 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 tx_at_modfov += sx_at_modfov;
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov)
+                            .chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -379,13 +384,14 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(prm_633, ty_at_modfov).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -407,13 +413,14 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(prm_633, ty_at_modfov).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(prm_633, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -440,13 +447,14 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(tx_at_modfov, prm_634).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -468,13 +476,14 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).chip_id_actual)
-                    & 1)
+                if (chipm(
+                        7, cell_data.at(tx_at_modfov, prm_634).chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).feats % 1000)
-                    & 1)
+                if (chipm(7, cell_data.at(tx_at_modfov, prm_634).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -510,16 +519,14 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             if ((chipm(
                      7,
                      cell_data.at(prm_633, prm_634 + sy_at_modfov)
-                         .chip_id_actual)
-                 & 1)
-                == 0)
+                         .chip_id_actual) &
+                 1) == 0)
             {
                 if ((chipm(
                          7,
-                         cell_data.at(prm_633, (prm_634 + sy_at_modfov)).feats
-                             % 1000)
-                     & 1)
-                    == 0)
+                         cell_data.at(prm_633, (prm_634 + sy_at_modfov)).feats %
+                             1000) &
+                     1) == 0)
                 {
                     p_at_modfov = 0;
                     route(0, p_at_modfov) = 2;
@@ -544,16 +551,14 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             if ((chipm(
                      7,
                      cell_data.at(prm_633 + sx_at_modfov, prm_634)
-                         .chip_id_actual)
-                 & 1)
-                == 0)
+                         .chip_id_actual) &
+                 1) == 0)
             {
                 if ((chipm(
                          7,
-                         cell_data.at((prm_633 + sx_at_modfov), prm_634).feats
-                             % 1000)
-                     & 1)
-                    == 0)
+                         cell_data.at((prm_633 + sx_at_modfov), prm_634).feats %
+                             1000) &
+                     1) == 0)
                 {
                     route(0, p_at_modfov) = 1;
                     route(1, p_at_modfov) = sx_at_modfov;
@@ -599,13 +604,15 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 break;
             }
             if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                & 1)
+                    7,
+                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
+                1)
             {
                 return 0;
             }
-            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                & 1)
+            if (chipm(
+                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                1)
             {
                 return 0;
             }
@@ -625,15 +632,16 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 ++p_at_modfov;
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov)
+                            .chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }
@@ -684,13 +692,15 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 break;
             }
             if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                & 1)
+                    7,
+                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
+                1)
             {
                 return 0;
             }
-            if (chipm(7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                & 1)
+            if (chipm(
+                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                1)
             {
                 return 0;
             }
@@ -710,15 +720,16 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 ++p_at_modfov;
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov)
+                            .chip_id_actual) &
+                    1)
                 {
                     return 0;
                 }
                 if (chipm(
                         7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000)
-                    & 1)
+                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
+                    1)
                 {
                     return 0;
                 }

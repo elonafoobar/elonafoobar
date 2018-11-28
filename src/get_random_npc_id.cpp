@@ -46,8 +46,8 @@ void get_random_npc_id()
             bool ok = true;
             for (int i = 0; i < filtermax; ++i)
             {
-                if (filter_creature(data.id).find(filtern(i))
-                    == std::string::npos)
+                if (filter_creature(data.id).find(filtern(i)) ==
+                    std::string::npos)
                 {
                     ok = false;
                     break;
@@ -58,9 +58,9 @@ void get_random_npc_id()
         }
         sampler.add(
             {data.id, 0},
-            data.rarity
-                    / (500 + std::abs(data.level - objlv) * data.coefficient)
-                + 1);
+            data.rarity /
+                    (500 + std::abs(data.level - objlv) * data.coefficient) +
+                1);
     }
 
     if (!cmshade)
@@ -92,9 +92,9 @@ void get_random_npc_id()
             }
             sampler.add(
                 {343, i},
-                clamp(userdata(6, i), 1'000, 500'000)
-                        / (500 + std::abs(userdata(2, i) - objlv) * 400)
-                    + 1);
+                clamp(userdata(6, i), 1'000, 500'000) /
+                        (500 + std::abs(userdata(2, i) - objlv) * 400) +
+                    1);
         }
     }
 

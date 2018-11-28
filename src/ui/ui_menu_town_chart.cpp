@@ -56,8 +56,8 @@ void UIMenuTownChart::draw()
     int j0 = 0;
     int n = 0;
     cs_listbk();
-    if (area_data[game_data.current_map].quest_town_id == 0
-        || game_data.current_dungeon_level != 1)
+    if (area_data[game_data.current_map].quest_town_id == 0 ||
+        game_data.current_dungeon_level != 1)
     {
         font(14 - en * 2);
         pos(wx + 40, wy + 50);

@@ -178,8 +178,8 @@ static void _draw_recipe_desc(const CraftingRecipe& recipe)
         desc += *text;
     }
 
-    desc += u8" "s + recipe.required_skill_level + u8"("s
-        + sdata(recipe.skill_used, 0) + u8")"s;
+    desc += u8" "s + recipe.required_skill_level + u8"("s +
+        sdata(recipe.skill_used, 0) + u8")"s;
 
     if (recipe.required_skill_level <= sdata(recipe.skill_used, 0))
     {
@@ -199,9 +199,9 @@ static void _draw_single_recipe_required_material(
     int mat_index,
     const RequiredMaterial& required_mat)
 {
-    std::string mat_desc = matname(required_mat.id) + " "
-        + i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount
-        + u8"("s + mat(required_mat.id) + u8")"s;
+    std::string mat_desc = matname(required_mat.id) + " " +
+        i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount +
+        u8"("s + mat(required_mat.id) + u8")"s;
 
     if (mat(required_mat.id) >= required_mat.amount)
     {

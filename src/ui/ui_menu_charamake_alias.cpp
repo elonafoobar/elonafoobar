@@ -67,8 +67,8 @@ void UIMenuCharamakeAlias::update()
 static void _draw_window()
 {
     s(0) = i18n::s.get("core.locale.chara_making.select_alias.title");
-    s(1) = strhint3b + key_mode2 + " ["
-        + i18n::s.get("core.locale.chara_making.select_alias.lock_alias") + "]";
+    s(1) = strhint3b + key_mode2 + " [" +
+        i18n::s.get("core.locale.chara_making.select_alias.lock_alias") + "]";
     display_window(
         (windoww - 400) / 2 + inf_screenx, winposy(458, 1) + 20, 400, 458);
     ++cmbg;

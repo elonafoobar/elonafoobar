@@ -21,11 +21,9 @@ namespace
 
 bool is_alnum_only(const std::string& str)
 {
-    return find_if(
-               str.begin(),
-               str.end(),
-               [](char c) { return !(isalnum(c) || (c == '_')); })
-        == str.end();
+    return find_if(str.begin(), str.end(), [](char c) {
+               return !(isalnum(c) || (c == '_'));
+           }) == str.end();
 }
 
 } // namespace
@@ -136,8 +134,8 @@ void ModManager::scan_mod(const fs::path& mod_dir)
     if (!is_alnum_only(mod_name))
     {
         throw std::runtime_error(
-            "Mod name \"" + mod_name
-            + "\" must contain alphanumeric characters only.");
+            "Mod name \"" + mod_name +
+            "\" must contain alphanumeric characters only.");
     }
     if (mod_name == "script" || mod_name == "console")
     {
@@ -150,8 +148,8 @@ void ModManager::scan_mod(const fs::path& mod_dir)
 
 void ModManager::scan_all_mods(const fs::path& mods_dir)
 {
-    if (stage != ModLoadingStage::not_started
-        && stage != ModLoadingStage::scan_finished)
+    if (stage != ModLoadingStage::not_started &&
+        stage != ModLoadingStage::scan_finished)
     {
         throw std::runtime_error("Mods have already been scanned!");
     }

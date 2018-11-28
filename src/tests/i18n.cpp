@@ -36,8 +36,8 @@ TEST_CASE("test formats", "[I18N: Formatting]")
     REQUIRE(
         i18n::fmt_hil("You see ${_1}.", u8"Palmia") == u8"You see Palmia."s);
     REQUIRE(
-        i18n::fmt_hil("You see ${_1} the ${_2}.", u8"Adam", u8"rock thrower")
-        == u8"You see Adam the rock thrower."s);
+        i18n::fmt_hil("You see ${_1} the ${_2}.", u8"Adam", u8"rock thrower") ==
+        u8"You see Adam the rock thrower."s);
 }
 
 TEST_CASE("test format chara", "[I18N: Formatting]")
@@ -47,8 +47,8 @@ TEST_CASE("test format chara", "[I18N: Formatting]")
     Character& chara = elona::cdata[elona::rc];
 
     REQUIRE(
-        i18n::fmt_hil("${_1}", chara)
-        == u8"<Character: "s + std::to_string(chara.index) + u8">"s);
+        i18n::fmt_hil("${_1}", chara) ==
+        u8"<Character: "s + std::to_string(chara.index) + u8">"s);
 }
 
 TEST_CASE("test format item", "[I18N: Formatting]")
@@ -58,8 +58,8 @@ TEST_CASE("test format item", "[I18N: Formatting]")
     Item& i = elona::inv[elona::ci];
 
     REQUIRE(
-        i18n::fmt_hil("${_1}", i)
-        == u8"<Item: "s + std::to_string(i.index) + u8">"s);
+        i18n::fmt_hil("${_1}", i) ==
+        u8"<Item: "s + std::to_string(i.index) + u8">"s);
 }
 
 TEST_CASE("test format character by function", "[I18N: Formatting]")
@@ -189,8 +189,8 @@ locale {
     REQUIRE(store.get(u8"test.locale.foo", 12, u8"bar") == u8"bar: 12");
     REQUIRE(store.get(u8"test.locale.foo", u8"bar", u8"baz") == u8"baz: bar");
     REQUIRE(
-        store.get(u8"test.locale.foo", u8"bar", u8"baz", "hoge")
-        == u8"baz: bar");
+        store.get(u8"test.locale.foo", u8"bar", u8"baz", "hoge") ==
+        u8"baz: bar");
 }
 
 
@@ -210,11 +210,11 @@ locale {
 )");
 
     REQUIRE(
-        store.get_enum_property(u8"test.locale.foo", "name", 1, "dood")
-        == u8"bar: dood");
+        store.get_enum_property(u8"test.locale.foo", "name", 1, "dood") ==
+        u8"bar: dood");
     REQUIRE(
-        store.get_enum_property(u8"test.locale.foo", "name", 2, "dood")
-        == u8"baz: dood");
+        store.get_enum_property(u8"test.locale.foo", "name", 2, "dood") ==
+        u8"baz: dood");
 }
 
 

@@ -100,8 +100,7 @@ void prepare_house_board_tiles()
         if (std::find(
                 std::begin(unavailable_tiles),
                 std::end(unavailable_tiles),
-                p(1))
-            != std::end(unavailable_tiles))
+                p(1)) != std::end(unavailable_tiles))
         {
             continue;
         }
@@ -411,8 +410,8 @@ TurnResult show_house_board()
         p = 0;
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.state() == Character::State::alive
-                || cnt.state() == Character::State::villager_dead)
+            if (cnt.state() == Character::State::alive ||
+                cnt.state() == Character::State::villager_dead)
             {
                 if (cnt.character_role != 0)
                 {
@@ -493,8 +492,8 @@ void prompt_hiring()
     p = 0;
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == Character::State::alive
-            || cnt.state() == Character::State::villager_dead)
+        if (cnt.state() == Character::State::alive ||
+            cnt.state() == Character::State::villager_dead)
         {
             if (cnt.character_role != 0)
             {
@@ -580,8 +579,8 @@ void prompt_hiring()
             {
                 continue;
             }
-            if (cnt.state() != Character::State::empty
-                && cdatan(0, cnt.index) == cdatan(0, rc))
+            if (cnt.state() != Character::State::empty &&
+                cdatan(0, cnt.index) == cdatan(0, rc))
             {
                 chara_vanquish(rc);
             }
@@ -711,8 +710,8 @@ void show_home_value()
     key_list = key_cancel;
 
     s(0) = i18n::s.get("core.locale.building.home.rank.title");
-    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key")
-        + i18n::s.get("core.locale.ui.hint.close");
+    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key") +
+        i18n::s.get("core.locale.ui.hint.close");
     windowshadow = 1;
     display_window((windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
     display_topic(
@@ -823,8 +822,8 @@ void prompt_move_ally()
                 continue;
             }
         }
-        if (chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4
-            || cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
+        if (chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4 ||
+            cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
             txt(i18n::s.get("core.locale.building.home.move.invalid"));
             goto label_1718_internal;
@@ -943,8 +942,8 @@ void show_shop_log()
         u8"["s + i18n::s.get("core.locale.building.shop.info") + u8"]"s;
     if (worker == -1)
     {
-        txt(shop_mark
-            + i18n::s.get("core.locale.building.shop.log.no_shopkeeper"));
+        txt(shop_mark +
+            i18n::s.get("core.locale.building.shop.log.no_shopkeeper"));
         return;
     }
     sold = 0;
@@ -1157,8 +1156,8 @@ void show_shop_log()
     {
         if (!Config::instance().hideshopresult)
         {
-            txt(shop_mark
-                + i18n::s.get(
+            txt(shop_mark +
+                i18n::s.get(
                     "core.locale.building.shop.log.could_not_sell",
                     customer,
                     cdata[worker]));
@@ -1175,8 +1174,8 @@ void show_shop_log()
                     "core.locale.building.shop.log.and_items", income(1));
             }
             snd("core.ding2");
-            txt(shop_mark
-                    + i18n::s.get(
+            txt(shop_mark +
+                    i18n::s.get(
                         "core.locale.building.shop.log.sold_items",
                         customer,
                         cdata[worker],
@@ -1276,8 +1275,7 @@ void update_museum()
         if (wpeek(
                 cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
                     .item_appearances_actual,
-                0)
-            != inv[cnt].image)
+                0) != inv[cnt].image)
         {
             continue;
         }
@@ -1342,8 +1340,7 @@ void calc_home_rank()
         if (wpeek(
                 cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
                     .item_appearances_actual,
-                0)
-            != inv[cnt].image)
+                0) != inv[cnt].image)
         {
             continue;
         }
@@ -1373,10 +1370,10 @@ void calc_home_rank()
     {
         game_data.total_heirloom_value = 10000;
     }
-    rankcur = 10000
-        - (game_data.basic_point_of_home_rank + game_data.total_deco_value
-           + game_data.total_heirloom_value)
-            / 3;
+    rankcur = 10000 -
+        (game_data.basic_point_of_home_rank + game_data.total_deco_value +
+         game_data.total_heirloom_value) /
+            3;
     if (rankcur < 100)
     {
         rankcur = 100;
@@ -1428,9 +1425,9 @@ void update_ranch()
         {
             goto label_1734_internal;
         }
-        if (rnd(5000)
-            > chara_breed_power(cdata[worker]) * 100 / (100 + livestock * 20)
-                - livestock * 2)
+        if (rnd(5000) >
+            chara_breed_power(cdata[worker]) * 100 / (100 + livestock * 20) -
+                livestock * 2)
         {
             if (livestock != 0 || rnd(30) != 0)
             {

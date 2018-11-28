@@ -43,8 +43,8 @@ void proc_event()
             txt(i18n::s.get(
                 "core.locale.quest.party.final_score",
                 quest_data.immediate().extra_info_2));
-            if (quest_data.immediate().extra_info_1
-                <= quest_data.immediate().extra_info_2)
+            if (quest_data.immediate().extra_info_1 <=
+                quest_data.immediate().extra_info_2)
             {
                 game_data.executing_immediate_quest_status = 3;
                 quest_data.immediate().progress = 3;
@@ -59,8 +59,8 @@ void proc_event()
             }
             break;
         case 1006:
-            if (quest_data.immediate().extra_info_1
-                < quest_data.immediate().extra_info_2)
+            if (quest_data.immediate().extra_info_1 <
+                quest_data.immediate().extra_info_2)
             {
                 game_data.executing_immediate_quest_status = 3;
                 quest_data.immediate().progress = 3;
@@ -311,9 +311,8 @@ void proc_event()
     case 15:
         for (int i = 0; i < game_data.number_of_existing_quests; ++i)
         {
-            if (quest_data[i].id == 1007 && quest_data[i].progress == 1
-                && quest_data[i].extra_info_2
-                    == evdata1(evnum - (evnum != 0) * 1))
+            if (quest_data[i].id == 1007 && quest_data[i].progress == 1 &&
+                quest_data[i].extra_info_2 == evdata1(evnum - (evnum != 0) * 1))
             {
                 rq = i;
                 quest_failed(quest_data[rq].id);
@@ -396,9 +395,9 @@ void proc_event()
             flt(0, Quality::good);
             for (int i = 0; i < 1; ++i)
             {
-                if (game_data.last_month_when_trainer_visited
-                        != game_data.date.month
-                    || rnd(5) == 0)
+                if (game_data.last_month_when_trainer_visited !=
+                        game_data.date.month ||
+                    rnd(5) == 0)
                 {
                     if (rnd(3))
                     {
@@ -449,11 +448,11 @@ void proc_event()
             for (int j = 0; j < 100; ++j)
             {
                 i = rnd(39) + 16;
-                if (cdata[i].state()
-                        == Character::State::adventurer_in_other_map
-                    && cdata[i].is_contracting() == 0
-                    && cdata[i].current_map != game_data.current_map
-                    && cdata[i].relationship >= 0)
+                if (cdata[i].state() ==
+                        Character::State::adventurer_in_other_map &&
+                    cdata[i].is_contracting() == 0 &&
+                    cdata[i].current_map != game_data.current_map &&
+                    cdata[i].relationship >= 0)
                 {
                     if (rnd(25) < p)
                     {
@@ -560,9 +559,8 @@ void proc_event()
                 if (p(2) < p(1))
                 {
                     if (cell_data.at(inv[ci].position.x, inv[ci].position.y)
-                                .chara_index_plus_one
-                            == 0
-                        || c == 0 || c == tc)
+                                .chara_index_plus_one == 0 ||
+                        c == 0 || c == tc)
                     {
                         p(0) = ci;
                         p(1) = p(2);
@@ -611,8 +609,9 @@ void proc_event()
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
-                if (cdata[cc].character_role != 0 || cdata[cc].relationship == 0
-                    || cdata[cc].current_map == game_data.current_map)
+                if (cdata[cc].character_role != 0 ||
+                    cdata[cc].relationship == 0 ||
+                    cdata[cc].current_map == game_data.current_map)
                 {
                     cdata[cc].emotion_icon = 2006;
                     int stat = chara_custom_talk(cc, 104);
@@ -813,10 +812,10 @@ void proc_event()
                 }
             }
         }
-        if (evdata1(evnum - (evnum != 0) * 1) == 33
-            && evdata2(evnum - (evnum != 0) * 1) == 16
-            && game_data.current_map == mdata_t::MapId::palmia
-            && game_data.quest_flags.red_blossom_in_palmia == 1)
+        if (evdata1(evnum - (evnum != 0) * 1) == 33 &&
+            evdata2(evnum - (evnum != 0) * 1) == 16 &&
+            game_data.current_map == mdata_t::MapId::palmia &&
+            game_data.quest_flags.red_blossom_in_palmia == 1)
         {
             game_data.quest_flags.red_blossom_in_palmia = 2;
             quest_update_journal_msg();
@@ -848,8 +847,8 @@ void proc_event()
             }
             x = rnd(inf_screenw) + scx;
             y = rnd(inf_screenh) + scy;
-            if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height
-                || rnd(5) == 0)
+            if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height ||
+                rnd(5) == 0)
             {
                 x = rnd(map_data.width);
                 y = rnd(map_data.height);

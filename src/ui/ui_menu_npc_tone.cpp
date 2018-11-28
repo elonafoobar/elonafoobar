@@ -66,8 +66,8 @@ void UIMenuNPCTone::update()
 void UIMenuNPCTone::draw()
 {
     s(0) = i18n::s.get("core.locale.action.interact.change_tone.title");
-    s(1) = i18n::s.get("core.locale.action.interact.change_tone.hint")
-        + strhint2 + strhint3;
+    s(1) = i18n::s.get("core.locale.action.interact.change_tone.hint") +
+        strhint2 + strhint3;
     display_window((windoww - 500) / 2 + inf_screenx, winposy(400), 500, 400);
 
     x = ww / 5 * 3;

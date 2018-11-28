@@ -312,8 +312,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
         }
         return;
     default:
-        throw std::runtime_error{u8"Unknown status ailment: "s
-                                 + int(status_ailment)};
+        throw std::runtime_error{u8"Unknown status ailment: "s +
+                                 int(status_ailment)};
     }
 }
 

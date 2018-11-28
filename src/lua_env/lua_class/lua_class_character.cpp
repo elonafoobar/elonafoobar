@@ -50,8 +50,8 @@ void LuaCharacter::apply_ailment(
 
 bool LuaCharacter::recruit_as_ally(Character& self)
 {
-    if (self.state() == Character::State::empty
-        || (self.index != 0 && self.index <= 16) || self.index == 0)
+    if (self.state() == Character::State::empty ||
+        (self.index != 0 && self.index <= 16) || self.index == 0)
     {
         return false;
     }

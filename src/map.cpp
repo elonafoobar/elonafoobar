@@ -263,8 +263,8 @@ std::string map_get_custom_map_name(int map_id)
 
 bool map_is_town_or_guild()
 {
-    return map_data.type == mdata_t::MapType::town
-        || map_data.type == mdata_t::MapType::guild;
+    return map_data.type == mdata_t::MapType::town ||
+        map_data.type == mdata_t::MapType::guild;
 }
 
 
@@ -282,10 +282,10 @@ bool map_should_reveal_fog()
         result |= map->reveals_fog;
     }
 
-    return result || dbg_revealmap || map_data.type == mdata_t::MapType::town
-        || map_data.type == mdata_t::MapType::world_map
-        || map_data.type == mdata_t::MapType::player_owned
-        || map_data.type == mdata_t::MapType::guild;
+    return result || dbg_revealmap || map_data.type == mdata_t::MapType::town ||
+        map_data.type == mdata_t::MapType::world_map ||
+        map_data.type == mdata_t::MapType::player_owned ||
+        map_data.type == mdata_t::MapType::guild;
 }
 
 
@@ -298,11 +298,11 @@ bool map_shows_floor_count_in_name()
         result |= map->shows_floor_count_in_name;
     }
 
-    return area_data[game_data.current_map].type != mdata_t::MapType::town
-        && (result
-            || area_data[game_data.current_map].id
-                == mdata_t::MapId::random_dungeon
-            || mdata_t::is_nefia(map_data.type));
+    return area_data[game_data.current_map].type != mdata_t::MapType::town &&
+        (result ||
+         area_data[game_data.current_map].id ==
+             mdata_t::MapId::random_dungeon ||
+         mdata_t::is_nefia(map_data.type));
 }
 
 
@@ -520,10 +520,10 @@ bool map_villagers_make_snowmen()
 
 bool map_can_use_bad_weather_in_study()
 {
-    return game_data.current_map != mdata_t::MapId::shelter_
-        && map_data.indoors_flag == 1
-        && (map_data.type == mdata_t::MapType::player_owned
-            || map_is_town_or_guild());
+    return game_data.current_map != mdata_t::MapId::shelter_ &&
+        map_data.indoors_flag == 1 &&
+        (map_data.type == mdata_t::MapType::player_owned ||
+         map_is_town_or_guild());
 }
 
 
@@ -548,8 +548,8 @@ void map_randsite(int prm_971, int prm_972)
         }
         if ((chipm(7, cell_data.at(found_x, found_y).chip_id_actual) & 4) == 0)
         {
-            if (cell_data.at(found_x, found_y).feats == 0
-                && cell_data.at(found_x, found_y).item_appearances_actual == 0)
+            if (cell_data.at(found_x, found_y).feats == 0 &&
+                cell_data.at(found_x, found_y).item_appearances_actual == 0)
             {
                 f_at_m169 = 1;
                 break;
@@ -558,10 +558,10 @@ void map_randsite(int prm_971, int prm_972)
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if ((264 <= cell_data.at(found_x, found_y).chip_id_actual
-             && cell_data.at(found_x, found_y).chip_id_actual < 363)
-            || (33 <= cell_data.at(found_x, found_y).chip_id_actual
-                && cell_data.at(found_x, found_y).chip_id_actual < 66))
+        if ((264 <= cell_data.at(found_x, found_y).chip_id_actual &&
+             cell_data.at(found_x, found_y).chip_id_actual < 363) ||
+            (33 <= cell_data.at(found_x, found_y).chip_id_actual &&
+             cell_data.at(found_x, found_y).chip_id_actual < 66))
         {
             f_at_m169 = 0;
         }
@@ -871,8 +871,8 @@ static void _map_restock_regenerate()
 {
     _grow_plants();
 
-    if (map_is_town_or_guild()
-        || game_data.current_map == mdata_t::MapId::your_home)
+    if (map_is_town_or_guild() ||
+        game_data.current_map == mdata_t::MapId::your_home)
     {
         _restock_character_inventories();
     }
@@ -1303,13 +1303,13 @@ int map_global_place_random_nefias()
         {
             x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
             y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
-            if (x <= 5 || y <= 5 || x >= map_data.width - 6
-                || y >= map_data.height - 6)
+            if (x <= 5 || y <= 5 || x >= map_data.width - 6 ||
+                y >= map_data.height - 6)
             {
                 continue;
             }
-            if (33 <= cell_data.at(x, y).chip_id_actual
-                && cell_data.at(x, y).chip_id_actual < 66)
+            if (33 <= cell_data.at(x, y).chip_id_actual &&
+                cell_data.at(x, y).chip_id_actual < 66)
             {
                 continue;
             }
@@ -1328,11 +1328,11 @@ int map_global_place_random_nefias()
                 {
                     continue;
                 }
-                if (x >= area_data[cnt].position.x - 2
-                    && x <= area_data[cnt].position.x + 2)
+                if (x >= area_data[cnt].position.x - 2 &&
+                    x <= area_data[cnt].position.x + 2)
                 {
-                    if (y >= area_data[cnt].position.y - 2
-                        && y <= area_data[cnt].position.y + 2)
+                    if (y >= area_data[cnt].position.y - 2 &&
+                        y <= area_data[cnt].position.y + 2)
                     {
                         p = 0;
                         break;

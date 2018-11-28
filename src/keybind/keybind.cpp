@@ -22,8 +22,8 @@ bool is_number_key(snail::Key k)
     constexpr auto numpad_0_ = static_cast<int>(snail::Key::keypad_0);
     constexpr auto numpad_9_ = static_cast<int>(snail::Key::keypad_9);
 
-    return (key_0_ <= k_ && k_ <= key_9_)
-        || (numpad_0_ <= k_ && k_ <= numpad_9_);
+    return (key_0_ <= k_ && k_ <= key_9_) ||
+        (numpad_0_ <= k_ && k_ <= numpad_9_);
 }
 
 } // namespace
@@ -182,8 +182,8 @@ void keybind_regenerate_key_select()
 
 int keybind_index_number(const std::string& action_id)
 {
-    if (!(keybind_action_has_category(action_id, ActionCategory::selection)
-          || keybind_action_has_category(action_id, ActionCategory::shortcut)))
+    if (!(keybind_action_has_category(action_id, ActionCategory::selection) ||
+          keybind_action_has_category(action_id, ActionCategory::shortcut)))
     {
         return 0;
     }
@@ -222,9 +222,9 @@ std::string get_bound_shortcut_key_name_by_action_id(
 {
     const auto& keybind = KeybindManager::instance().binding(action_id).primary;
 
-    if (is_number_key(keybind.main)
-        && (keybind.modifiers & (snail::ModKey::ctrl | snail::ModKey::shift))
-            != snail::ModKey::none)
+    if (is_number_key(keybind.main) &&
+        (keybind.modifiers & (snail::ModKey::ctrl | snail::ModKey::shift)) !=
+            snail::ModKey::none)
     {
         return "1" + *keybind_key_name(keybind.main);
     }

@@ -61,11 +61,10 @@ static void _add_trait_desc(int tc_, const std::string& trait_desc)
     listn(0, listmax) = i18n::s.get(
         "core.locale.trait.window.his_equipment",
         cnven(
-            (jp)
-                ? ((tc_ == 0) ? u8"あなたの"
-                              : (cdata[tc_].sex == 0 ? u8"彼の" : u8"彼女の"))
-                : ((tc_ == 0) ? "your"
-                              : (cdata[tc_].sex == 0 ? u8"his" : u8"her"))),
+            (jp) ? ((tc_ == 0) ? u8"あなたの"
+                               : (cdata[tc_].sex == 0 ? u8"彼の" : u8"彼女の"))
+                 : ((tc_ == 0) ? "your"
+                               : (cdata[tc_].sex == 0 ? u8"his" : u8"her"))),
         trait_desc);
     ++listmax;
 }
@@ -150,9 +149,9 @@ void UIMenuFeats::update()
 static void _draw_window_background(bool is_chara_making)
 {
     s(0) = i18n::s.get("core.locale.trait.window.title");
-    s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2
-        + strhint3 + u8"z,x ["s + i18n::s.get("core.locale.trait.window.ally")
-        + u8"]"s;
+    s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
+        strhint3 + u8"z,x ["s + i18n::s.get("core.locale.trait.window.ally") +
+        u8"]"s;
 
     int y_adjust;
     if (is_chara_making)
@@ -392,8 +391,8 @@ static bool _gain_trait(int p_, bool show_text)
 
 static bool _can_select_trait(int p_, int tc_)
 {
-    return game_data.acquirable_feat_count > 0 && list(1, p_) < 10000
-        && tc_ == 0;
+    return game_data.acquirable_feat_count > 0 && list(1, p_) < 10000 &&
+        tc_ == 0;
 }
 
 static void _switch_target(bool is_forwards)

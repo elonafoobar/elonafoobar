@@ -164,11 +164,11 @@ TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
     update_slight();
 
     REQUIRE(
-        i18n::fmt_hil("something go${s(_1)} to hell.", chara)
-        == u8"something gos to hell.");
+        i18n::fmt_hil("something go${s(_1)} to hell.", chara) ==
+        u8"something gos to hell.");
     REQUIRE(
-        i18n::fmt_hil("something go${s(_1, true)} to hell.", chara)
-        == u8"something goes to hell.");
+        i18n::fmt_hil("something go${s(_1, true)} to hell.", chara) ==
+        u8"something goes to hell.");
     REQUIRE(i18n::fmt_hil("${_1} stone${s(_1)}", 0) == u8"0 stones");
     REQUIRE(i18n::fmt_hil("${_1} stone${s(_1)}", 1) == u8"1 stone");
     REQUIRE(i18n::fmt_hil("${_1} stone${s(_1)}", 2) == u8"2 stones");
@@ -186,13 +186,13 @@ TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
 
     REQUIRE(i18n::fmt_hil("you ${is(_1)} killed.", you) == u8"you are killed.");
     REQUIRE(
-        i18n::fmt_hil("something ${is(_1)} killed.", chara)
-        == u8"something is killed.");
+        i18n::fmt_hil("something ${is(_1)} killed.", chara) ==
+        u8"something is killed.");
     REQUIRE(
         i18n::fmt_hil("you ${is(true)} killed.", you) == u8"you are killed.");
     REQUIRE(
-        i18n::fmt_hil("something ${is(false)} killed.", chara)
-        == u8"something is killed.");
+        i18n::fmt_hil("something ${is(false)} killed.", chara) ==
+        u8"something is killed.");
 }
 
 TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
@@ -275,8 +275,8 @@ TEST_CASE("test i18n builtin: you()", "[I18N: Builtins]")
         testing::set_japanese();
         REQUIRE(i18n::fmt_hil("${you()}") == u8"あなた");
         REQUIRE(
-            i18n::fmt_hil(u8"うわああ！${you()}は階段から足を踏み外した。")
-            == u8"うわああ！あなたは階段から足を踏み外した。");
+            i18n::fmt_hil(u8"うわああ！${you()}は階段から足を踏み外した。") ==
+            u8"うわああ！あなたは階段から足を踏み外した。");
     }
     SECTION("English")
     {
