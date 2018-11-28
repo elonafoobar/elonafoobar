@@ -414,23 +414,23 @@ void casino_random_site()
         if (map_data.type == mdata_t::MapType::world_map)
         {
             atxlv = cdata.player().level;
-            if (4 <= game_data.stood_world_map_tile &&
-                game_data.stood_world_map_tile < 9)
+            if (4 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 9)
             {
                 atxid(1) = 2;
             }
-            if (264 <= game_data.stood_world_map_tile &&
-                game_data.stood_world_map_tile < 363)
+            if (264 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 363)
             {
                 atxid(1) = 3;
             }
-            if (9 <= game_data.stood_world_map_tile &&
-                game_data.stood_world_map_tile < 13)
+            if (9 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 13)
             {
                 atxid(1) = 2;
             }
-            if (13 <= game_data.stood_world_map_tile &&
-                game_data.stood_world_map_tile < 17)
+            if (13 <= game_data.stood_world_map_tile
+                && game_data.stood_world_map_tile < 17)
             {
                 atxid(1) = 3;
             }
@@ -556,12 +556,12 @@ label_1876_internal:
             listn(0, listmax) = u8"調べる"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) = u8"採取する("s +
-                i18n::s.get_m(
-                    "locale.ability",
-                    the_ability_db.get_id_from_legacy(180)->get(),
-                    "name") +
-                u8": "s + sdata(180, 0) + u8")"s;
+            listn(0, listmax) = u8"採取する("s
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(180)->get(),
+                      "name")
+                + u8": "s + sdata(180, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -576,12 +576,12 @@ label_1876_internal:
             listn(0, listmax) = u8"調べる"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) = u8"掘る("s +
-                i18n::s.get_m(
-                    "locale.ability",
-                    the_ability_db.get_id_from_legacy(163)->get(),
-                    "name") +
-                u8": "s + sdata(163, 0) + u8")"s;
+            listn(0, listmax) = u8"掘る("s
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(163)->get(),
+                      "name")
+                + u8": "s + sdata(163, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -596,12 +596,12 @@ label_1876_internal:
             listn(0, listmax) = u8"飲む"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) = u8"釣る("s +
-                i18n::s.get_m(
-                    "locale.ability",
-                    the_ability_db.get_id_from_legacy(185)->get(),
-                    "name") +
-                u8": "s + sdata(185, 0) + u8")"s;
+            listn(0, listmax) = u8"釣る("s
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(185)->get(),
+                      "name")
+                + u8": "s + sdata(185, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -616,12 +616,12 @@ label_1876_internal:
             listn(0, listmax) = u8"あさる"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) = u8"解剖する("s +
-                i18n::s.get_m(
-                    "locale.ability",
-                    the_ability_db.get_id_from_legacy(161)->get(),
-                    "name") +
-                u8": "s + sdata(161, 0) + u8")"s;
+            listn(0, listmax) = u8"解剖する("s
+                + i18n::s.get_m(
+                      "locale.ability",
+                      the_ability_db.get_id_from_legacy(161)->get(),
+                      "name")
+                + u8": "s + sdata(161, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -653,9 +653,9 @@ label_1876_internal:
                 snd("core.get3");
                 mat(p) += 1;
                 noteadd(
-                    "@BL" +
-                    i18n::s.get(
-                        "core.locale.casino.you_get", 1, matname(p), mat(p)));
+                    "@BL"
+                    + i18n::s.get(
+                          "core.locale.casino.you_get", 1, matname(p), mat(p)));
             }
             atxthrough = 1;
             goto label_1875;
@@ -798,12 +798,12 @@ label_1876_internal:
         atxpic(3) = 96;
         noteadd(u8"宝箱がある。"s);
         list(0, listmax) = 1;
-        listn(0, listmax) = u8"錠を解体する("s +
-            i18n::s.get_m(
-                "locale.ability",
-                the_ability_db.get_id_from_legacy(158)->get(),
-                "name") +
-            u8": "s + sdata(158, 0) + u8")"s;
+        listn(0, listmax) = u8"錠を解体する("s
+            + i18n::s.get_m(
+                  "locale.ability",
+                  the_ability_db.get_id_from_legacy(158)->get(),
+                  "name")
+            + u8": "s + sdata(158, 0) + u8")"s;
         ++listmax;
         list(0, listmax) = 3;
         listn(0, listmax) = u8"叩き割る(筋力: "s + sdata(10, 0) + u8")"s;
@@ -826,8 +826,8 @@ label_1876_internal:
         snd("core.get3");
         mat(p) += 1;
         noteadd(
-            "@BL" +
-            i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p)));
+            "@BL"
+            + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p)));
         atxthrough = 1;
         goto label_1875;
     }
@@ -895,8 +895,9 @@ bool casino_start()
         snd("core.get3");
         mat(1) += 10;
         noteadd(
-            "@BL" +
-            i18n::s.get("core.locale.casino.you_get", 10, matname(1), mat(1)));
+            "@BL"
+            + i18n::s.get(
+                  "core.locale.casino.you_get", 10, matname(1), mat(1)));
     }
     atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
     atxinfon(2) = "";
@@ -1075,8 +1076,8 @@ bool casino_blackjack()
         atxinfon(1) =
             i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
         atxinfon(2) =
-            i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " " +
-            i18n::s.get("core.locale.casino.blackjack.game.wins", winrow);
+            i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " "
+            + i18n::s.get("core.locale.casino.blackjack.game.wins", winrow);
         if (cardround == -1)
         {
             if (winner == 1)
@@ -1184,11 +1185,10 @@ bool casino_blackjack()
                 atxinfon(1) =
                     i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
                 atxinfon(2) =
-                    i18n::s.get(
-                        "core.locale.casino.blackjack.game.bets", stake) +
-                    " " +
-                    i18n::s.get(
-                        "core.locale.casino.blackjack.game.wins", winrow);
+                    i18n::s.get("core.locale.casino.blackjack.game.bets", stake)
+                    + " "
+                    + i18n::s.get(
+                          "core.locale.casino.blackjack.game.wins", winrow);
                 winrow = 0;
                 txt(i18n::s.get(
                     "core.locale.casino.blackjack.game.cheat.text"));
@@ -1244,8 +1244,8 @@ bool casino_blackjack()
         }
         snd("core.get3");
         noteadd(
-            "@GR" +
-            i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
+            "@GR"
+            + i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
         if (winrow > 3)
         {
             // Potion of cure corruption
@@ -1255,9 +1255,9 @@ bool casino_blackjack()
                 itemcreate(-1, 559, -1, -1, 0);
                 snd("core.get3");
                 noteadd(
-                    "@GR" +
-                    i18n::s.get(
-                        "core.locale.casino.blackjack.game.loot", inv[ci]));
+                    "@GR"
+                    + i18n::s.get(
+                          "core.locale.casino.blackjack.game.loot", inv[ci]));
             }
         }
         list(0, listmax) = 0;

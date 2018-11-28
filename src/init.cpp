@@ -108,8 +108,8 @@ void backup_config_files()
             if (!fs::exists(from_path))
             {
                 throw std::runtime_error(
-                    "Original config file " + from_path.string() +
-                    " didn't exist.");
+                    "Original config file " + from_path.string()
+                    + " didn't exist.");
             }
             fs::copy_file(from_path, to_path);
         }
@@ -172,8 +172,9 @@ void start_elona()
     game_data.date.hour = 16;
     game_data.date.minute = 10;
     quickpage = 1;
-    if (Config::instance().startup_script != ""s &&
-        !Config::instance().get<bool>("core.config.foobar.run_script_in_save"))
+    if (Config::instance().startup_script != ""s
+        && !Config::instance().get<bool>(
+               "core.config.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();
@@ -295,12 +296,12 @@ void initialize_i18n()
     for (const auto& pair : lua::lua->get_mod_manager())
     {
         const auto& mod = pair.second;
-        if (mod->path)
+        if (mod->manifest.path)
         {
-            const auto path = *mod->path / "locale" / language;
+            const auto path = *mod->manifest.path / "locale" / language;
             if (fs::exists(path))
             {
-                locations.emplace_back(path, mod->name);
+                locations.emplace_back(path, mod->manifest.name);
             }
         }
     }

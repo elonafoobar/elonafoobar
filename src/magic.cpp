@@ -240,17 +240,13 @@ int magic()
                     {
                         continue;
                     }
-                    if (dist(
-                            dx,
-                            dy,
-                            cdata[cc].position.x,
-                            cdata[cc].position.y) >
-                        the_ability_db[efid]->range % 1000 + 1)
+                    if (dist(dx, dy, cdata[cc].position.x, cdata[cc].position.y)
+                        > the_ability_db[efid]->range % 1000 + 1)
                     {
                         break;
                     }
-                    if (dx == cdata[cc].position.x &&
-                        dy == cdata[cc].position.y)
+                    if (dx == cdata[cc].position.x
+                        && dy == cdata[cc].position.y)
                     {
                         continue;
                     }
@@ -420,8 +416,8 @@ int magic()
                             }
                             continue;
                         }
-                        if (dx == cdata[cc].position.x &&
-                            dy == cdata[cc].position.y)
+                        if (dx == cdata[cc].position.x
+                            && dy == cdata[cc].position.y)
                         {
                             continue;
                         }
@@ -445,8 +441,8 @@ int magic()
                         }
                         if (cc != tc)
                         {
-                            dmg = roll(dice1, dice2, bonus) * 100 /
-                                (75 + dist(tlocx, tlocy, dx, dy) * 25);
+                            dmg = roll(dice1, dice2, bonus) * 100
+                                / (75 + dist(tlocx, tlocy, dx, dy) * 25);
                             int stat = calcmagiccontrol(cc, tc);
                             if (stat == 1)
                             {
@@ -715,15 +711,15 @@ int magic()
                 if (efid == 613)
                 {
                     p = rnd(10);
-                    if ((cdata[tc].quality >= Quality::miracle && rnd(4)) ||
-                        encfind(tc, 60010 + p) != -1)
+                    if ((cdata[tc].quality >= Quality::miracle && rnd(4))
+                        || encfind(tc, 60010 + p) != -1)
                     {
                         p = -1;
                     }
                     if (p != -1)
                     {
-                        i = sdata.get(10 + p, tc).original_level +
-                            cdata[tc].attr_adjs[p];
+                        i = sdata.get(10 + p, tc).original_level
+                            + cdata[tc].attr_adjs[p];
                         if (i > 0)
                         {
                             i = i * efp / 2000 + 1;
@@ -742,8 +738,8 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (game_data.crowd_density + 100 >=
-                        ELONA_MAX_OTHER_CHARACTERS)
+                    if (game_data.crowd_density + 100
+                        >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
@@ -890,8 +886,8 @@ int magic()
                         goto the_end;
                     }
                     p = rnd(cdata[tc].gold / 10 + 1);
-                    if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4) ||
-                        cdata[tc].is_protected_from_thieves() == 1)
+                    if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
+                        || cdata[tc].is_protected_from_thieves() == 1)
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.teleport.suspicious_hand."
@@ -933,10 +929,10 @@ int magic()
                     {
                         p(0) = -1;
                         p(1) = 1;
-                        cdata[tc].next_position.x = cdata[tc].position.x +
-                            (3 - cnt / 70 + rnd(5)) * p(rnd(2));
-                        cdata[tc].next_position.y = cdata[tc].position.y +
-                            (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+                        cdata[tc].next_position.x = cdata[tc].position.x
+                            + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+                        cdata[tc].next_position.y = cdata[tc].position.y
+                            + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
                     }
                     else if (efidprev == 619)
                     {
@@ -1045,15 +1041,13 @@ int magic()
                     dx = breathlist(0, cnt);
                     dy = breathlist(1, cnt);
                     if (fov_los(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            dx,
-                            dy) == 0)
+                            cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                        == 0)
                     {
                         continue;
                     }
-                    if (dx == cdata[cc].position.x &&
-                        dy == cdata[cc].position.y)
+                    if (dx == cdata[cc].position.x
+                        && dy == cdata[cc].position.y)
                     {
                         continue;
                     }
@@ -1447,8 +1441,8 @@ label_2181_internal:
         get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 300:
-        if (game_data.executing_immediate_quest_type == 1008 ||
-            game_data.executing_immediate_quest_type == 1010)
+        if (game_data.executing_immediate_quest_type == 1008
+            || game_data.executing_immediate_quest_type == 1010)
         {
             txt(i18n::s.get("core.locale.magic.steal.in_quest"));
             return 0;
@@ -1467,8 +1461,8 @@ label_2181_internal:
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1) +
-                    the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         invsubroutine = 1;
         invctrl(0) = 27;
@@ -1491,8 +1485,8 @@ label_2181_internal:
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1) +
-                    the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         if (game_data.mount != 0)
         {
@@ -1510,8 +1504,9 @@ label_2181_internal:
                 txt(i18n::s.get(
                     "core.locale.magic.mount.dismount",
                     cdata[game_data.mount]));
-                txt(name(game_data.mount) +
-                        i18n::s.get("core.locale.magic.mount.dismount_dialog"),
+                txt(name(game_data.mount)
+                        + i18n::s.get(
+                              "core.locale.magic.mount.dismount_dialog"),
                     Message::color{ColorIndex::cyan});
                 ride_end();
                 break;
@@ -1522,8 +1517,8 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.mount.only_ally"));
             break;
         }
-        if (cdata[tc].is_escorted() == 1 ||
-            cdata[tc].is_escorted_in_sub_quest() == 1)
+        if (cdata[tc].is_escorted() == 1
+            || cdata[tc].is_escorted_in_sub_quest() == 1)
         {
             txt(i18n::s.get("core.locale.magic.mount.not_client"));
             break;
@@ -1552,8 +1547,8 @@ label_2181_internal:
         else
         {
             ride_begin(tc);
-            txt(name(game_data.mount) +
-                    i18n::s.get("core.locale.magic.mount.mount.dialog"),
+            txt(name(game_data.mount)
+                    + i18n::s.get("core.locale.magic.mount.mount.dialog"),
                 Message::color{ColorIndex::cyan});
         }
         break;
@@ -1602,8 +1597,8 @@ label_2181_internal:
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1) +
-                    the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         continuous_action_perform();
         break;
@@ -1638,8 +1633,8 @@ label_2181_internal:
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1) +
-                    the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         cook();
         break;
@@ -1680,8 +1675,8 @@ label_2181_internal:
             {
                 y = cdata[cc].position.y;
                 x = cdata[cc].position.x + cnt - 1;
-                if (x < 0 || y < 0 || x >= map_data.width ||
-                    y >= map_data.height)
+                if (x < 0 || y < 0 || x >= map_data.width
+                    || y >= map_data.height)
                 {
                     continue;
                 }
@@ -1703,7 +1698,8 @@ label_2181_internal:
                 0,
                 cell_data
                     .at(cdata.player().position.x, cdata.player().position.y)
-                    .chip_id_actual) == 3)
+                    .chip_id_actual)
+            == 3)
         {
             txt(i18n::s.get("core.locale.magic.fish.cannot_during_swim"));
             update_screen();
@@ -1743,8 +1739,8 @@ label_2181_internal:
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1) +
-                    the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         item_separate(ci);
         --inv[ci].count;
@@ -1959,9 +1955,9 @@ label_2181_internal:
         }
         f = 0;
         for (int cnt = 0,
-                 cnt_end = cnt +
-                 (1 + (efstatus == CurseState::blessed) +
-                  (!is_cursed(efstatus)) + rnd(2));
+                 cnt_end = cnt
+                 + (1 + (efstatus == CurseState::blessed)
+                    + (!is_cursed(efstatus)) + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2250,14 +2246,14 @@ label_2181_internal:
                                 "core.locale.magic.gain_knowledge.furthermore");
                         }
                         chara_gain_skill(cdata.player(), p, 1, 200);
-                        txt(s +
-                                i18n::s.get(
-                                    "core.locale.magic.gain_knowledge.gain",
-                                    i18n::s.get_m(
-                                        "locale.ability",
-                                        the_ability_db.get_id_from_legacy(p)
-                                            ->get(),
-                                        "name")),
+                        txt(s
+                                + i18n::s.get(
+                                      "core.locale.magic.gain_knowledge.gain",
+                                      i18n::s.get_m(
+                                          "locale.ability",
+                                          the_ability_db.get_id_from_legacy(p)
+                                              ->get(),
+                                          "name")),
                             Message::color{ColorIndex::green});
                         snd("core.ding2");
                         f = 1;
@@ -2466,18 +2462,18 @@ label_2181_internal:
                         if (is_in_fov(cdata[tc]))
                         {
                             snd("core.ding2");
-                            txt(s +
-                                    i18n::s.get(
-                                        "core.locale.magic.gain_skill_"
-                                        "potential."
-                                        "increases",
-                                        cdata[tc],
-                                        i18n::s.get_m(
-                                            "locale.ability",
-                                            the_ability_db
-                                                .get_id_from_legacy(p)
-                                                ->get(),
-                                            "name")),
+                            txt(s
+                                    + i18n::s.get(
+                                          "core.locale.magic.gain_skill_"
+                                          "potential."
+                                          "increases",
+                                          cdata[tc],
+                                          i18n::s.get_m(
+                                              "locale.ability",
+                                              the_ability_db
+                                                  .get_id_from_legacy(p)
+                                                  ->get(),
+                                              "name")),
                                 Message::color{ColorIndex::green});
                         }
                     }
@@ -2619,8 +2615,8 @@ label_2181_internal:
                         }
                         continue;
                     }
-                    if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1) ||
-                        efstatus == CurseState::blessed)
+                    if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1)
+                        || efstatus == CurseState::blessed)
                     {
                         if (efid == 429)
                         {
@@ -2629,8 +2625,9 @@ label_2181_internal:
                         }
                         if (efid == 430)
                         {
-                            if (cell_data.at(x, y).feats != 0 ||
-                                cell_data.at(x, y).item_appearances_memory != 0)
+                            if (cell_data.at(x, y).feats != 0
+                                || cell_data.at(x, y).item_appearances_memory
+                                    != 0)
                             {
                                 cell_data.at(x, y).chip_id_memory =
                                     cell_data.at(x, y).chip_id_actual;
@@ -2807,14 +2804,14 @@ label_2181_internal:
                 }
             }
             txt(i18n::s.get("core.locale.magic.escape.begin"));
-            if (area_data[game_data.current_map].id ==
-                mdata_t::MapId::random_dungeon)
+            if (area_data[game_data.current_map].id
+                == mdata_t::MapId::random_dungeon)
             {
-                if (game_data.current_dungeon_level ==
-                    area_data[game_data.current_map].deepest_level)
+                if (game_data.current_dungeon_level
+                    == area_data[game_data.current_map].deepest_level)
                 {
-                    if (area_data[game_data.current_map].has_been_conquered !=
-                        -1)
+                    if (area_data[game_data.current_map].has_been_conquered
+                        != -1)
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.escape.lord_may_disappear"));
@@ -3108,9 +3105,9 @@ label_2181_internal:
         {
             f = 0;
         }
-        if (cdata[tc].quality >= Quality::miracle ||
-            cdata[tc].character_role != 0 ||
-            cdata[tc].is_lord_of_dungeon() == 1)
+        if (cdata[tc].quality >= Quality::miracle
+            || cdata[tc].character_role != 0
+            || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
         }
@@ -3230,8 +3227,8 @@ label_2181_internal:
         invctrl(1) = 0;
         snd("core.inv");
         ctrl_inventory();
-        if (inv[ci].quality < Quality::miracle ||
-            inv[ci].quality == Quality::special)
+        if (inv[ci].quality < Quality::miracle
+            || inv[ci].quality == Quality::special)
         {
             txt(i18n::s.get("core.locale.common.it_is_impossible"));
             obvious = 0;
@@ -3293,8 +3290,8 @@ label_2181_internal:
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (ibit(15, ci) == 1) * 100,
+                enchantment_gen_p() + (fixlv == Quality::godly) * 100
+                    + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
@@ -3481,10 +3478,9 @@ label_2181_internal:
             {
                 dbid = inv[ci].id;
                 access_item_db(2);
-                if (ichargelevel < 1 || inv[ci].id == 290 ||
-                    inv[ci].id == 480 || inv[ci].id == 289 ||
-                    inv[ci].id == 732 ||
-                    (inv[ci].id == 687 && inv[ci].param2 != 0))
+                if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480
+                    || inv[ci].id == 289 || inv[ci].id == 732
+                    || (inv[ci].id == 687 && inv[ci].param2 != 0))
                 {
                     txt(i18n::s.get(
                         "core.locale.magic.fill_charge.cannot_recharge"));
@@ -3620,9 +3616,9 @@ label_2181_internal:
         {
             f = 0;
         }
-        if (cdata[tc].quality >= Quality::miracle ||
-            cdata[tc].character_role != 0 || cdata[tc].is_escorted() == 1 ||
-            cdata[tc].is_lord_of_dungeon() == 1)
+        if (cdata[tc].quality >= Quality::miracle
+            || cdata[tc].character_role != 0 || cdata[tc].is_escorted() == 1
+            || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
         }
@@ -3679,13 +3675,13 @@ label_2181_internal:
                             inv[ci].weight);
                         if (inv[ci].pv > 0)
                         {
-                            inv[ci].pv -= inv[ci].pv / 10 + 1 +
-                                (efstatus != CurseState::blessed);
+                            inv[ci].pv -= inv[ci].pv / 10 + 1
+                                + (efstatus != CurseState::blessed);
                         }
                         if (inv[ci].damage_bonus > 0)
                         {
-                            inv[ci].damage_bonus -= inv[ci].damage_bonus / 10 +
-                                1 + (efstatus != CurseState::blessed);
+                            inv[ci].damage_bonus -= inv[ci].damage_bonus / 10
+                                + 1 + (efstatus != CurseState::blessed);
                         }
                     }
                     txt(i18n::s.get("core.locale.magic.flying.apply", inv[ci]));
@@ -3801,8 +3797,8 @@ label_2181_internal:
                     }
                 }
             }
-            if (cell_data.at(x, y).chara_index_plus_one != 0 ||
-                cell_data.at(x, y).feats != 0)
+            if (cell_data.at(x, y).chara_index_plus_one != 0
+                || cell_data.at(x, y).feats != 0)
             {
                 f = 0;
             }
@@ -3876,13 +3872,13 @@ label_2181_internal:
             tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
-            if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) >
-                the_ability_db[631]->range % 1000 + 1)
+            if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                > the_ability_db[631]->range % 1000 + 1)
             {
                 continue;
             }
-            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) ==
-                0)
+            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                == 0)
             {
                 continue;
             }
@@ -4013,13 +4009,13 @@ label_2181_internal:
             tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
-            if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) >
-                the_ability_db[656]->range % 1000 + 1)
+            if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                > the_ability_db[656]->range % 1000 + 1)
             {
                 continue;
             }
-            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) ==
-                0)
+            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                == 0)
             {
                 continue;
             }

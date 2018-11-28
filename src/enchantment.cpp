@@ -677,11 +677,11 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s = i18n::s.get(
                 "core.locale.enchantment.with_parameters.ammo.text",
                 ammoname(sid));
-            s += " [" +
-                i18n::s.get(
-                    "core.locale.enchantment.with_parameters.ammo.max",
-                    power / 1000) +
-                "]";
+            s += " ["
+                + i18n::s.get(
+                      "core.locale.enchantment.with_parameters.ammo.max",
+                      power / 1000)
+                + "]";
             break;
         }
         return;
@@ -1066,8 +1066,8 @@ void enchantment_sort(int prm_454)
         for (int cnt = 0; cnt < 14; ++cnt)
         {
             cnt2_at_m47 = cnt + 1;
-            if (inv[prm_454].enchantments[cnt].id <
-                inv[prm_454].enchantments[cnt2_at_m47].id)
+            if (inv[prm_454].enchantments[cnt].id
+                < inv[prm_454].enchantments[cnt2_at_m47].id)
             {
                 p_at_m47(0) = inv[prm_454].enchantments[cnt].id;
                 p_at_m47(1) = inv[prm_454].enchantments[cnt].power;
@@ -1399,11 +1399,11 @@ void add_enchantments()
     {
         egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
         inv[ci].value = inv[ci].value * 3;
-        inv[ci].difficulty_of_identification = 50 +
-            rnd(std::abs(
-                    static_cast<int>(fixlv) - static_cast<int>(Quality::good)) *
-                    100 +
-                100);
+        inv[ci].difficulty_of_identification = 50
+            + rnd(std::abs(
+                      static_cast<int>(fixlv) - static_cast<int>(Quality::good))
+                      * 100
+                  + 100);
     }
     if (reftypeminor == 10006)
     {
@@ -1448,8 +1448,8 @@ void add_enchantments()
     if (fixlv == Quality::miracle || fixlv == Quality::godly)
     {
         inv[ci].subname = 40000 + rnd(30000);
-        if (fixlv == Quality::godly ||
-            (fixlv == Quality::miracle && rnd(10) == 0))
+        if (fixlv == Quality::godly
+            || (fixlv == Quality::miracle && rnd(10) == 0))
         {
             enchantment_add(ci, enchantment_generate(99), enchantment_gen_p());
         }
@@ -1488,8 +1488,8 @@ void add_enchantments()
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (ibit(15, ci) == 1) * 100,
+                enchantment_gen_p() + (fixlv == Quality::godly) * 100
+                    + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
         }
     }
@@ -1509,11 +1509,12 @@ void add_enchantments()
         enchantment_add(
             ci,
             enchantment_generate(enchantment_gen_level(egolv)),
-            clamp(enchantment_gen_p(), 250, 10000) *
-                (125 + (inv[ci].curse_state == CurseState::doomed) * 25) / 100);
+            clamp(enchantment_gen_p(), 250, 10000)
+                * (125 + (inv[ci].curse_state == CurseState::doomed) * 25)
+                / 100);
         for (int cnt = 0,
-                 cnt_end = cnt +
-                 (1 + (inv[ci].curse_state == CurseState::doomed) + rnd(2));
+                 cnt_end = cnt
+                 + (1 + (inv[ci].curse_state == CurseState::doomed) + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {

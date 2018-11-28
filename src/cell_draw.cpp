@@ -504,11 +504,11 @@ void render_cloud()
     for (size_t i = 0; i < clouds.size(); ++i)
     {
         gmode(5, 7 + i * 2);
-        int x = (clouds[i].x0 - cdata.player().position.x * inf_tiles + sxfix) *
-                100 / (40 + i * 5) +
-            scrturn * 100 / (50 + i * 20);
-        int y = (clouds[i].y0 - cdata.player().position.y * inf_tiles + syfix) *
-            100 / (40 + i * 5);
+        int x = (clouds[i].x0 - cdata.player().position.x * inf_tiles + sxfix)
+                * 100 / (40 + i * 5)
+            + scrturn * 100 / (50 + i * 20);
+        int y = (clouds[i].y0 - cdata.player().position.y * inf_tiles + syfix)
+            * 100 / (40 + i * 5);
         x = x % (windoww + clouds[i].width) - clouds[i].width;
         y = y % (inf_very + clouds[i].height) - clouds[i].height;
         int height = clouds[i].height;
@@ -790,16 +790,16 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 
 bool you_can_see(const Character& chara)
 {
-    return is_in_fov(chara) &&
-        (!chara.is_invisible() || cdata.player().can_see_invisible() ||
-         chara.wet != 0);
+    return is_in_fov(chara)
+        && (!chara.is_invisible() || cdata.player().can_see_invisible()
+            || chara.wet != 0);
 }
 
 bool hp_bar_visible(const Character& chara)
 {
-    return chara.has_been_used_stethoscope() ||
-        game_data.chara_last_attacked_by_player == chara.index ||
-        debug::voldemort;
+    return chara.has_been_used_stethoscope()
+        || game_data.chara_last_attacked_by_player == chara.index
+        || debug::voldemort;
 }
 
 bool is_night()
@@ -882,8 +882,9 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
 
 void draw_nefia_icons(int x, int y, int dx, int dy)
 {
-    if (cell_data.at(x, y).feats != 0 &&
-        cell_data.at(x, y).chip_id_memory == cell_data.at(x, y).chip_id_actual)
+    if (cell_data.at(x, y).feats != 0
+        && cell_data.at(x, y).chip_id_memory
+            == cell_data.at(x, y).chip_id_actual)
     {
         const auto p_ = cell_data.at(x, y).feats % 1000;
         if (p_ != 999 && p_ != 0)
@@ -898,12 +899,12 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
         }
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            const auto q_ = cell_data.at(x, y).feats / 100000 % 100 +
-                cell_data.at(x, y).feats / 10000000 * 100;
+            const auto q_ = cell_data.at(x, y).feats / 100000 % 100
+                + cell_data.at(x, y).feats / 10000000 * 100;
             if (area_data[q_].id == mdata_t::MapId::random_dungeon)
             {
-                if (area_data[q_].visited_deepest_level ==
-                    area_data[q_].deepest_level)
+                if (area_data[q_].visited_deepest_level
+                    == area_data[q_].deepest_level)
                 {
                     draw("conquered_nefia_icon", dx + 16, dy - 16);
                 }
@@ -1075,8 +1076,8 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 }
                 else
                 {
-                    if (Config::instance().objectshadow &&
-                        item_chips[p_].shadow)
+                    if (Config::instance().objectshadow
+                        && item_chips[p_].shadow)
                     {
                         draw_item_chip_shadow(
                             dx, dy - stack_height, **rect, p_, 70);
@@ -1251,17 +1252,17 @@ void cell_draw()
             int py_ = 0;
 
             // Spot light for PC (bottom a third)
-            if (reph(3) == y && x_ == repw(2) &&
-                cdata.player().state() == Character::State::alive)
+            if (reph(3) == y && x_ == repw(2)
+                && cdata.player().state() == Character::State::alive)
             {
-                px_ = (cdata.player().position.x - scx) * inf_tiles +
-                    inf_screenx - 48;
+                px_ = (cdata.player().position.x - scx) * inf_tiles
+                    + inf_screenx - 48;
                 if (scxbk == scx)
                 {
                     px_ -= sxfix;
                 }
-                py_ = (cdata.player().position.y + 1 - scy) * inf_tiles +
-                    inf_screeny;
+                py_ = (cdata.player().position.y + 1 - scy) * inf_tiles
+                    + inf_screeny;
                 if (scybk == scy)
                 {
                     py_ -= syfix;
@@ -1271,8 +1272,8 @@ void cell_draw()
                 gcopy(3, 800, 208, 144, 48);
             }
 
-            if (reph(2) == y && x_ == repw(2) &&
-                cdata.player().state() == Character::State::alive)
+            if (reph(2) == y && x_ == repw(2)
+                && cdata.player().state() == Character::State::alive)
             {
                 ground_ = cell_data
                               .at(cdata.player().position.x,
@@ -1298,8 +1299,8 @@ void cell_draw()
 
                 if (py_ < windowh - inf_verh - 24)
                 {
-                    if (cdata.player().continuous_action.type ==
-                        ContinuousAction::Type::fish)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::fish)
                     {
                         ani_ = 0;
                     }
@@ -1363,9 +1364,9 @@ void cell_draw()
 
             // Map tile
             ground_ = cell_data.at(x_, y).chip_id_memory;
-            if (chipm(2, ground_) == 2 && y < map_data.height - 1 &&
-                chipm(2, cell_data.at(x_, y + 1).chip_id_memory) != 2 &&
-                cell_data.at(x_, y + 1).chip_id_memory != tile_fog)
+            if (chipm(2, ground_) == 2 && y < map_data.height - 1
+                && chipm(2, cell_data.at(x_, y + 1).chip_id_memory) != 2
+                && cell_data.at(x_, y + 1).chip_id_memory != tile_fog)
             {
                 ground_ += 33;
             }
@@ -1375,10 +1376,10 @@ void cell_draw()
                     dx_,
                     dy_,
                     ground_,
-                    scrturn_ % (chipm(3, ground_) + 1) -
-                        (scrturn_ % (chipm(3, ground_) + 1) ==
-                         chipm(3, ground_)) *
-                            2 * (chipm(3, ground_) != 0));
+                    scrturn_ % (chipm(3, ground_) + 1)
+                        - (scrturn_ % (chipm(3, ground_) + 1)
+                           == chipm(3, ground_))
+                            * 2 * (chipm(3, ground_) != 0));
             }
             else
             {
@@ -1396,19 +1397,19 @@ void cell_draw()
             if (cell_data.at(x_, y).light != 0)
             {
                 const auto& light = lightdata[cell_data.at(x_, y).light];
-                if ((is_night() || light.always_shines) &&
-                    mapsync(x_, y) == msync)
+                if ((is_night() || light.always_shines)
+                    && mapsync(x_, y) == msync)
                 {
-                    light_ -= (6 -
-                               clamp(
-                                   dist(
-                                       cdata.player().position.x,
-                                       cdata.player().position.y,
-                                       x_,
-                                       y),
-                                   0,
-                                   6)) *
-                        light.brightness;
+                    light_ -= (6
+                               - clamp(
+                                     dist(
+                                         cdata.player().position.x,
+                                         cdata.player().position.y,
+                                         x_,
+                                         y),
+                                     0,
+                                     6))
+                        * light.brightness;
                     pos(dx_, dy_ - light.dy);
                     gmode(5, light.alpha_base + rnd(light.alpha_random + 1));
                     gcopy(
@@ -1433,14 +1434,14 @@ void cell_draw()
                             2,
                             ground_ % 33 * inf_tiles,
                             ground_ / 33 * inf_tiles,
-                            inf_tiles - std::max(dx_ + inf_tiles - windoww, 0) +
-                                std::min(dx_, 0),
+                            inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
+                                + std::min(dx_, 0),
                             12);
                         boxf(
                             std::max(dx_, 0),
                             dy_ - 20,
-                            inf_tiles - std::max(dx_ + inf_tiles - windoww, 0) +
-                                std::min(dx_, 0),
+                            inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
+                                + std::min(dx_, 0),
                             8,
                             {0, 0, 0, 25});
                     }
@@ -1454,15 +1455,15 @@ void cell_draw()
                     boxf(
                         std::max(dx_, 0),
                         dy_,
-                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0) +
-                            std::min(dx_, 0),
+                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
+                            + std::min(dx_, 0),
                         24,
                         {0, 0, 0, 16});
                     boxf(
                         std::max(dx_, 0),
                         dy_ + 24,
-                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0) +
-                            std::min(dx_, 0),
+                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
+                            + std::min(dx_, 0),
                         12,
                         {0, 0, 0, 12});
                 }

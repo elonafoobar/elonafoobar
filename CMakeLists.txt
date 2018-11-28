@@ -165,6 +165,7 @@ set(CORE_SOURCES
   src/lua_env/lua_console.cpp
   src/lua_env/lua_env.cpp
   src/lua_env/mod_manager.cpp
+  src/lua_env/mod_manifest.cpp
 
   src/lua_env/enums/enums.cpp
 

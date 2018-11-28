@@ -256,3 +256,58 @@ local a = require("../test_require_chunks/data/script")
 assert(a == nil)
 )"));
 }
+
+
+static void _create_mod(
+    elona::lua::LuaEnv& lua,
+    const std::string& name,
+    const std::unordered_set<std::string> deps)
+{
+    elona::lua::ModManifest manifest;
+    manifest.name = name;
+    manifest.dependencies = deps;
+    lua.get_mod_manager().create_mod(manifest, false);
+};
+
+
+TEST_CASE("Test calculation of loading order of mods", "[Lua: Mods]")
+{
+    elona::lua::LuaEnv lua;
+
+    _create_mod(lua, "a", {"c"});
+    _create_mod(lua, "b", {});
+    _create_mod(lua, "c", {"b", "d"});
+    _create_mod(lua, "d", {});
+
+    auto order = lua.get_mod_manager().calculate_loading_order();
+
+    REQUIRE(order.at(0) == "b");
+    REQUIRE(order.at(1) == "d");
+    REQUIRE(order.at(2) == "c");
+    REQUIRE(order.at(3) == "a");
+}
+
+TEST_CASE(
+    "Test failure to calculate loading order of mods (unknown dependency)",
+    "[Lua: Mods]")
+{
+    elona::lua::LuaEnv lua;
+
+    _create_mod(lua, "a", {"b", "c"});
+    _create_mod(lua, "b", {});
+
+    REQUIRE_THROWS(lua.get_mod_manager().calculate_loading_order());
+}
+
+TEST_CASE(
+    "Test failure to calculate loading order of mods (cyclic dependency)",
+    "[Lua: Mods]")
+{
+    elona::lua::LuaEnv lua;
+
+    _create_mod(lua, "a", {"b"});
+    _create_mod(lua, "b", {"c"});
+    _create_mod(lua, "c", {"a"});
+
+    REQUIRE_THROWS(lua.get_mod_manager().calculate_loading_order());
+}

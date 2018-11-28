@@ -75,8 +75,8 @@ void talk_to_npc()
     {
         cdata[tc].interest = 100;
     }
-    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000) ||
-        cdata[tc].character_role == 2003)
+    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
+        || cdata[tc].character_role == 2003)
     {
         invfile = cdata[tc].shop_store_id;
         shop_refresh_on_talk();
@@ -125,8 +125,8 @@ void talk_to_npc()
         talk_wrapper(TalkResult::talk_house_visitor);
     }
 
-    if (chatval_unique_chara_id &&
-        game_data.current_map != mdata_t::MapId::show_house && tc >= 16)
+    if (chatval_unique_chara_id
+        && game_data.current_map != mdata_t::MapId::show_house && tc >= 16)
     {
         const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
 
@@ -179,8 +179,8 @@ TalkResult talk_more()
 TalkResult talk_sleeping()
 {
     listmax = 0;
-    buff = u8"("s + i18n::s.get("core.locale.talk.is_sleeping", cdata[tc]) +
-        u8")"s;
+    buff = u8"("s + i18n::s.get("core.locale.talk.is_sleeping", cdata[tc])
+        + u8")"s;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"bye");
@@ -674,8 +674,8 @@ void talk_window_show()
     }
     else
     {
-        const auto portrait_filepath = filesystem::dir::user() /
-            (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
+        const auto portrait_filepath = filesystem::dir::user()
+            / (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
         if (!fs::exists(portrait_filepath) || cdata[tc].portrait == -1)
         {
             int chara_chip_id = cdata[tc].image % 1000;
@@ -713,8 +713,8 @@ void talk_window_show()
     else
     {
         s = i18n::s.get(
-                "core.locale.talk.window.of", cdatan(0, tc), cdatan(1, tc)) +
-            " ";
+                "core.locale.talk.window.of", cdatan(0, tc), cdatan(1, tc))
+            + " ";
     }
     if (cdata[tc].sex == 0)
     {
@@ -728,12 +728,12 @@ void talk_window_show()
     {
         s += " " + i18n::s.get("core.locale.talk.window.fame", cdata[tc].fame);
     }
-    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000) ||
-        cdata[tc].character_role == 2003)
+    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
+        || cdata[tc].character_role == 2003)
     {
-        s += " " +
-            i18n::s.get(
-                "core.locale.talk.window.shop_rank", cdata[tc].shop_rank);
+        s += " "
+            + i18n::s.get(
+                  "core.locale.talk.window.shop_rank", cdata[tc].shop_rank);
     }
     if (game_data.reveals_religion)
     {
@@ -817,8 +817,8 @@ int talk_guide_quest_client()
         auto client = -1;
         if (quest_data[quest_id].id == 1011)
         {
-            if (quest_data[quest_id].originating_map_id ==
-                game_data.current_map)
+            if (quest_data[quest_id].originating_map_id
+                == game_data.current_map)
             {
                 client = quest_data[quest_id].target_chara_index;
             }
@@ -826,7 +826,8 @@ int talk_guide_quest_client()
         if (quest_data[quest_id].id == 1002)
         {
             if (quest_data[quest_data[quest_id].target_chara_index]
-                    .originating_map_id == game_data.current_map)
+                    .originating_map_id
+                == game_data.current_map)
             {
                 client = quest_data[quest_data[quest_id].target_chara_index]
                              .client_chara_index;
@@ -867,8 +868,8 @@ int talk_check_trade(int prm_1081)
         {
             if (game_data.current_dungeon_level == 1)
             {
-                if (quest_data[p_at_m193].originating_map_id ==
-                    game_data.current_map)
+                if (quest_data[p_at_m193].originating_map_id
+                    == game_data.current_map)
                 {
                     if (prm_1081 == quest_data[p_at_m193].target_chara_index)
                     {

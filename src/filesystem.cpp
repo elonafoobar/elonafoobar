@@ -173,6 +173,7 @@ std::string to_forward_slashes(const fs::path& path)
 
 fs::path resolve_path_for_mod(const std::string& mod_local_path)
 {
+    // TODO: standardize mod naming convention.
     std::regex mod_name_regex("^__([a-zA-Z0-9_]+)__/(.*)");
     std::smatch match;
     std::string mod_name, rest;

@@ -110,8 +110,8 @@ TurnResult do_give_command()
     {
         if (tc < 16)
         {
-            if (!cdata[tc].is_escorted() &&
-                !cdata[tc].is_escorted_in_sub_quest())
+            if (!cdata[tc].is_escorted()
+                && !cdata[tc].is_escorted_in_sub_quest())
             {
                 return try_interact_with_npc();
             }
@@ -365,9 +365,9 @@ TurnResult do_dig_command()
             return TurnResult::turn_end;
         }
     }
-    if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0 ||
-        chipm(0, cell_data.at(x, y).chip_id_actual) == 3 ||
-        map_data.type == mdata_t::MapType::world_map)
+    if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0
+        || chipm(0, cell_data.at(x, y).chip_id_actual) == 3
+        || map_data.type == mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
@@ -464,8 +464,8 @@ static void _search_for_map_feats()
     cell_featread(x, y);
     refx = x;
     refy = y;
-    if (std::abs(cdata[cc].position.y - y) <= 1 &&
-        std::abs(cdata[cc].position.x - x) <= 1)
+    if (std::abs(cdata[cc].position.y - y) <= 1
+        && std::abs(cdata[cc].position.x - x) <= 1)
     {
         if (feat(1) == 14)
         {
@@ -616,9 +616,9 @@ TurnResult do_throw_command()
         txt(i18n::s.get(
             "core.locale.action.throw.execute", cdata[cc], inv[ci]));
     }
-    if (dist(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy) * 4 >
-            rnd(sdata(111, cc) + 10) + sdata(111, cc) / 4 ||
-        rnd(10) == 0)
+    if (dist(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy) * 4
+            > rnd(sdata(111, cc) + 10) + sdata(111, cc) / 4
+        || rnd(10) == 0)
     {
         x = tlocx + rnd(2) - rnd(2);
         y = tlocy + rnd(2) - rnd(2);
@@ -630,8 +630,8 @@ TurnResult do_throw_command()
                 {
                     if (y < map_data.height)
                     {
-                        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) ==
-                            0)
+                        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+                            == 0)
                         {
                             tlocx = x;
                             tlocy = y;
@@ -674,10 +674,10 @@ TurnResult do_throw_command()
             txt(i18n::s.get("core.locale.action.throw.hits", cdata[tc]));
             if (inv[ci].id == 685)
             {
-                if (tc < ELONA_MAX_PARTY_CHARACTERS ||
-                    cdata[tc].character_role != 0 ||
-                    cdata[tc].quality == Quality::special ||
-                    cdata[tc].is_lord_of_dungeon() == 1)
+                if (tc < ELONA_MAX_PARTY_CHARACTERS
+                    || cdata[tc].character_role != 0
+                    || cdata[tc].quality == Quality::special
+                    || cdata[tc].is_lord_of_dungeon() == 1)
                 {
                     txt(
                         i18n::s.get("core.locale.action.throw.monster_ball."
@@ -1230,13 +1230,13 @@ label_1953_internal:
                                 .fill_rect(
                                     sx,
                                     sy * (sy > 0),
-                                    inf_tiles -
-                                        (sx + inf_tiles > windoww) *
-                                            (sx + inf_tiles - windoww),
-                                    inf_tiles + (sy < 0) * inf_screeny -
-                                        (sy + inf_tiles > windowh - inf_verh) *
-                                            (sy + inf_tiles - windowh +
-                                             inf_verh));
+                                    inf_tiles
+                                        - (sx + inf_tiles > windoww)
+                                            * (sx + inf_tiles - windoww),
+                                    inf_tiles + (sy < 0) * inf_screeny
+                                        - (sy + inf_tiles > windowh - inf_verh)
+                                            * (sy + inf_tiles - windowh
+                                               + inf_verh));
                         }
                     }
                 }
@@ -1255,9 +1255,9 @@ label_1953_internal:
                         sx,
                         sy * (sy > 0),
                         inf_tiles,
-                        inf_tiles + (sy < 0) * inf_screeny -
-                            (sy + inf_tiles > windowh - inf_verh) *
-                                (sy + inf_tiles - windowh + inf_verh));
+                        inf_tiles + (sy < 0) * inf_screeny
+                            - (sy + inf_tiles > windowh - inf_verh)
+                                * (sy + inf_tiles - windowh + inf_verh));
                 }
             }
             display_key(
@@ -1371,8 +1371,8 @@ TurnResult do_dip_command()
             }
             else
             {
-                if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
-                    (inv[ci].id == 602 && game_data.holy_well_count <= 0))
+                if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
+                    || (inv[ci].id == 602 && game_data.holy_well_count <= 0))
                 {
                     txt(i18n::s.get(
                         "core.locale.action.dip.result.natural_potion_dry",
@@ -1421,8 +1421,8 @@ TurnResult do_dip_command()
             txt(i18n::s.get(
                     "core.locale.action.dip.result.love_food.made",
                     inv[ci],
-                    inv[cidip]) +
-                i18n::s.get("core.locale.action.dip.result.love_food.grin"));
+                    inv[cidip])
+                + i18n::s.get("core.locale.action.dip.result.love_food.grin"));
             if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
@@ -1440,8 +1440,9 @@ TurnResult do_dip_command()
             txt(i18n::s.get(
                     "core.locale.action.dip.result.love_food.made",
                     inv[ci],
-                    inv[cidip]) +
-                i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
+                    inv[cidip])
+                + i18n::s.get(
+                      "core.locale.action.dip.result.love_food.guilty"));
             if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
@@ -1632,15 +1633,15 @@ TurnResult do_use_command()
     {
         return do_gatcha();
     }
-    if (inv[ci].id == 312 || inv[ci].id == 313 || inv[ci].id == 314 ||
-        inv[ci].id == 315)
+    if (inv[ci].id == 312 || inv[ci].id == 313 || inv[ci].id == 314
+        || inv[ci].id == 315)
     {
         atxid = 1;
         casino_dealer();
         return TurnResult::turn_end;
     }
-    if (inv[ci].function == 1 || inv[ci].function == 2 ||
-        inv[ci].function == 3 || inv[ci].function == 4)
+    if (inv[ci].function == 1 || inv[ci].function == 2 || inv[ci].function == 3
+        || inv[ci].function == 4)
     {
         prodtype = inv[ci].function;
         snd("core.pop2");
@@ -2167,11 +2168,11 @@ TurnResult do_use_command()
             continuous_action_others();
             return TurnResult::turn_end;
         }
-        if (area_data[game_data.current_map].id ==
-            mdata_t::MapId::random_dungeon)
+        if (area_data[game_data.current_map].id
+            == mdata_t::MapId::random_dungeon)
         {
-            if (game_data.current_dungeon_level ==
-                area_data[game_data.current_map].deepest_level)
+            if (game_data.current_dungeon_level
+                == area_data[game_data.current_map].deepest_level)
             {
                 if (area_data[game_data.current_map].has_been_conquered != -1)
                 {
@@ -2219,8 +2220,8 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 22:
         snd("core.enc");
-        if (map_data.type != mdata_t::MapType::town &&
-            map_data.type != mdata_t::MapType::guild)
+        if (map_data.type != mdata_t::MapType::town
+            && map_data.type != mdata_t::MapType::guild)
         {
             txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
             goto label_2229_internal;
@@ -2342,8 +2343,8 @@ TurnResult do_use_command()
             cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
-        if (game_data.current_map != mdata_t::MapId::show_house ||
-            usermapid == 0)
+        if (game_data.current_map != mdata_t::MapId::show_house
+            || usermapid == 0)
         {
             txt(i18n::s.get("core.locale.action.use.statue.creator.normal"));
             goto label_2229_internal;
@@ -2375,8 +2376,8 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 41:
         if (game_data
-                .next_level_minus_one_kumiromis_experience_becomes_available >
-            cdata.player().level)
+                .next_level_minus_one_kumiromis_experience_becomes_available
+            > cdata.player().level)
         {
             txt(
                 i18n::s.get("core.locale.action.use.secret_experience.kumiromi."
@@ -2679,8 +2680,8 @@ TurnResult do_open_command()
             {
                 if (game_data.released_fire_giant == 0)
                 {
-                    if (cdata[game_data.fire_giant].state() ==
-                        Character::State::alive)
+                    if (cdata[game_data.fire_giant].state()
+                        == Character::State::alive)
                     {
                         tc = chara_find(203);
                         if (tc != 0)
@@ -2862,11 +2863,11 @@ TurnResult do_use_stairs_command(int val0)
     {
         if (val0 == 1)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751) !=
-                -1)
+            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751)
+                != -1)
             {
-                if (game_data.current_dungeon_level >=
-                    area_data[game_data.current_map].deepest_level)
+                if (game_data.current_dungeon_level
+                    >= area_data[game_data.current_map].deepest_level)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.cannot_go.down"));
@@ -2880,11 +2881,11 @@ TurnResult do_use_stairs_command(int val0)
         }
         if (val0 == 2)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750) !=
-                -1)
+            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750)
+                != -1)
             {
-                if (game_data.current_dungeon_level <=
-                    area_data[game_data.current_map].danger_level)
+                if (game_data.current_dungeon_level
+                    <= area_data[game_data.current_map].danger_level)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.cannot_go.up"));
@@ -2913,9 +2914,9 @@ TurnResult do_use_stairs_command(int val0)
                 else
                 {
                     movelevelbystairs = 1;
-                    if (game_data.current_map == mdata_t::MapId::the_void &&
-                        game_data.current_dungeon_level >=
-                            game_data.void_next_lord_floor)
+                    if (game_data.current_map == mdata_t::MapId::the_void
+                        && game_data.current_dungeon_level
+                            >= game_data.void_next_lord_floor)
                     {
                         txt(
                             i18n::s.get("core.locale.action.use_stairs.blocked_"
@@ -2995,8 +2996,8 @@ TurnResult do_use_stairs_command(int val0)
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon)
     {
-        if (game_data.current_dungeon_level ==
-            area_data[game_data.current_map].deepest_level)
+        if (game_data.current_dungeon_level
+            == area_data[game_data.current_map].deepest_level)
         {
             if (area_data[game_data.current_map].has_been_conquered != -1)
             {
@@ -3021,12 +3022,12 @@ TurnResult do_use_stairs_command(int val0)
                 txt(i18n::s.get("core.locale.action.use_stairs.lost_balance"));
                 damage_hp(
                     cdata[cc],
-                    cdata[cc].max_hp *
-                            (cdata.player().inventory_weight * 10 /
-                                 cdata.player().max_inventory_weight +
-                             10) /
-                            100 +
-                        1,
+                    cdata[cc].max_hp
+                            * (cdata.player().inventory_weight * 10
+                                   / cdata.player().max_inventory_weight
+                               + 10)
+                            / 100
+                        + 1,
                     -7);
                 msg_halt();
             }
@@ -3055,9 +3056,11 @@ static TurnResult _pre_proc_movement_event()
     {
         if (264 <= cell_data
                        .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
-                       .chip_id_actual &&
-            cell_data.at(cdata[cc].next_position.x, cdata[cc].next_position.y)
-                    .chip_id_actual < 363)
+                       .chip_id_actual
+            && cell_data
+                    .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
+                    .chip_id_actual
+                < 363)
         {
             return TurnResult::pc_turn_user_error;
         }
@@ -3068,12 +3071,12 @@ static TurnResult _pre_proc_movement_event()
 static TurnResult _bump_into_character()
 {
     tc = cellchara;
-    if (cdata[tc].relationship >= 10 ||
-        (cdata[tc].relationship == -1 &&
-         !Config::instance().attack_neutral_npcs) ||
-        (cdata[tc].relationship == 0 &&
-         (area_data[game_data.current_map].is_museum_or_shop() ||
-          is_modifier_pressed(snail::ModKey::shift))))
+    if (cdata[tc].relationship >= 10
+        || (cdata[tc].relationship == -1
+            && !Config::instance().attack_neutral_npcs)
+        || (cdata[tc].relationship == 0
+            && (area_data[game_data.current_map].is_museum_or_shop()
+                || is_modifier_pressed(snail::ModKey::shift))))
     {
         if (cdata[tc].is_hung_on_sand_bag() == 0)
         {
@@ -3238,15 +3241,15 @@ TurnResult do_movement_command()
     {
         return _pre_proc_movement_event();
     }
-    if (map_data.type == mdata_t::MapType::shelter ||
-        (game_data.current_dungeon_level == 1 &&
-         map_data.type != mdata_t::MapType::world_map &&
-         !mdata_t::is_nefia(map_data.type)))
+    if (map_data.type == mdata_t::MapType::shelter
+        || (game_data.current_dungeon_level == 1
+            && map_data.type != mdata_t::MapType::world_map
+            && !mdata_t::is_nefia(map_data.type)))
     {
-        if (cdata[cc].next_position.x < 0 ||
-            cdata[cc].next_position.x > map_data.width - 1 ||
-            cdata[cc].next_position.y < 0 ||
-            cdata[cc].next_position.y > map_data.height - 1)
+        if (cdata[cc].next_position.x < 0
+            || cdata[cc].next_position.x > map_data.width - 1
+            || cdata[cc].next_position.y < 0
+            || cdata[cc].next_position.y > map_data.height - 1)
         {
             txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
             if (map_data.type == mdata_t::MapType::temporary)
@@ -3436,9 +3439,9 @@ TurnResult do_get_command()
     const auto number = item_info.first;
     const auto item = item_info.second;
 
-    if (cell_data.at(cdata.player().position.x, cdata.player().position.y)
-                .feats != 0 &&
-        game_data.current_map != mdata_t::MapId::show_house && number == 0)
+    if (cell_data.at(cdata.player().position.x, cdata.player().position.y).feats
+            != 0
+        && game_data.current_map != mdata_t::MapId::show_house && number == 0)
     {
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (feat(1) == 29)
@@ -3472,7 +3475,8 @@ TurnResult do_get_command()
                     cell_data
                         .at(cdata.player().position.x,
                             cdata.player().position.y)
-                        .chip_id_actual) == 2
+                        .chip_id_actual)
+                        == 2
                     ? 1
                     : 0);
             if (feat(2) == 40)
@@ -3483,8 +3487,8 @@ TurnResult do_get_command()
             refresh_burden_state();
             return TurnResult::turn_end;
         }
-        if (map_data.type == mdata_t::MapType::world_map && feat(1) == 15 &&
-            feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
+        if (map_data.type == mdata_t::MapType::world_map && feat(1) == 15
+            && feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
             rtval = yes_or_no(promptx, prompty, 160);
@@ -3508,12 +3512,13 @@ TurnResult do_get_command()
 
     if (number == 0)
     {
-        if ((map_is_town_or_guild()) &&
-            chipm(
-                0,
-                cell_data
-                    .at(cdata.player().position.x, cdata.player().position.y)
-                    .chip_id_actual) == 4)
+        if ((map_is_town_or_guild())
+            && chipm(
+                   0,
+                   cell_data
+                       .at(cdata.player().position.x, cdata.player().position.y)
+                       .chip_id_actual)
+                == 4)
         {
             snd("core.foot2a");
             txt(i18n::s.get("core.locale.action.get.snow"));
@@ -3550,8 +3555,8 @@ TurnResult do_get_command()
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    if ((inv[ci].own_state > 0 && inv[ci].own_state < 3) ||
-        inv[ci].own_state == 5)
+    if ((inv[ci].own_state > 0 && inv[ci].own_state < 3)
+        || inv[ci].own_state == 5)
     {
         snd("core.fail1");
         if (inv[ci].own_state == 2)

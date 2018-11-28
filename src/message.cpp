@@ -185,12 +185,13 @@ void Message::_msg_write(std::string& message)
         {
             break;
         }
-        message = message.substr(0, bytewise_pos) + u8"  " +
-            message.substr(
-                bytewise_pos + std::strlen(musical_note) + (symbol_type != 0));
+        message = message.substr(0, bytewise_pos) + u8"  "
+            + message.substr(
+                  bytewise_pos + std::strlen(musical_note)
+                  + (symbol_type != 0));
         elona::pos(
-            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7 +
-                en * 3,
+            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7
+                + en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
         gmode(2);
         gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
@@ -360,15 +361,15 @@ void Message::_txt_conv()
                         {
                             break;
                         }
-                        if (!strutil::starts_with(msgtemp, u8"。", len) &&
-                            !strutil::starts_with(msgtemp, u8"、", len) &&
-                            !strutil::starts_with(msgtemp, u8"」", len) &&
-                            !strutil::starts_with(msgtemp, u8"』", len) &&
-                            !strutil::starts_with(msgtemp, u8"！", len) &&
-                            !strutil::starts_with(msgtemp, u8"？", len) &&
-                            !strutil::starts_with(msgtemp, u8"…", len) &&
-                            !strutil::starts_with(msgtemp, u8"♪", len) &&
-                            !strutil::starts_with(msgtemp, u8"♪1", len))
+                        if (!strutil::starts_with(msgtemp, u8"。", len)
+                            && !strutil::starts_with(msgtemp, u8"、", len)
+                            && !strutil::starts_with(msgtemp, u8"」", len)
+                            && !strutil::starts_with(msgtemp, u8"』", len)
+                            && !strutil::starts_with(msgtemp, u8"！", len)
+                            && !strutil::starts_with(msgtemp, u8"？", len)
+                            && !strutil::starts_with(msgtemp, u8"…", len)
+                            && !strutil::starts_with(msgtemp, u8"♪", len)
+                            && !strutil::starts_with(msgtemp, u8"♪1", len))
                         {
                             break;
                         }

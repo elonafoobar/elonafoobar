@@ -236,9 +236,9 @@ int card_ref(int prm_991)
     if (cardreftype == 10)
     {
         cardrefbg = cardrefdomain;
-        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.creature") + ">  " +
-            i18n::s.get("core.locale.tcg.card.race") + ":" + cardrefrace +
-            u8"  Hp:"s + cardrefhp + u8"  Atk:"s + cardrefattack;
+        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.creature") + ">  "
+            + i18n::s.get("core.locale.tcg.card.race") + ":" + cardrefrace
+            + u8"  Hp:"s + cardrefhp + u8"  Atk:"s + cardrefattack;
     }
     if (cardreftype == 30)
     {
@@ -250,10 +250,10 @@ int card_ref(int prm_991)
         cardrefbg = 5;
         rtvaln += " <" + i18n::s.get("core.locale.tcg.card.spell") + ">";
     }
-    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.domain") + ":" +
-        domname_at_tcg(cardrefdomain);
-    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.rare") + ":" +
-        cnvrare(cardrefrare);
+    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.domain") + ":"
+        + domname_at_tcg(cardrefdomain);
+    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.rare") + ":"
+        + cnvrare(cardrefrare);
     if (cardrefskill != 0)
     {
         s_at_tcg = "";
@@ -450,8 +450,8 @@ void tcgdrawcard(int prm_994, int prm_995)
             gmode(4, card_at_tcg(7, prm_994) * 15);
         }
         pos(x_at_tcg, y_at_tcg);
-        if (cdbit(1, prm_994) == 1 ||
-            (card_at_tcg(1, prm_994) == 0 && cnt == 1))
+        if (cdbit(1, prm_994) == 1
+            || (card_at_tcg(1, prm_994) == 0 && cnt == 1))
         {
             if (card_at_tcg(17, prm_994) > 0)
             {
@@ -459,8 +459,8 @@ void tcgdrawcard(int prm_994, int prm_995)
                 p_at_tcg = card_at_tcg(17, prm_994) % 1000;
                 auto rect = chara_preparepic(card_at_tcg(17, prm_994));
                 pos(x_at_tcg + 13,
-                    y_at_tcg + 32 - chara_chips[p_at_tcg].offset_y +
-                        rect->height / 6);
+                    y_at_tcg + 32 - chara_chips[p_at_tcg].offset_y
+                        + rect->height / 6);
                 gcopy(rect->buffer, 0, 960, rect->width, rect->height);
             }
             else
@@ -593,17 +593,17 @@ void tcgdraw()
             {
                 continue;
             }
-            if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg) ||
-                card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg) ||
-                card_at_tcg(7, c_at_tcg) > 0)
+            if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg)
+                || card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg)
+                || card_at_tcg(7, c_at_tcg) > 0)
             {
                 anime_at_tcg = 1;
                 p_at_tcg = 0;
                 if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg))
                 {
                     p_at_tcg =
-                        (card_at_tcg(4, c_at_tcg) - card_at_tcg(2, c_at_tcg)) /
-                        6;
+                        (card_at_tcg(4, c_at_tcg) - card_at_tcg(2, c_at_tcg))
+                        / 6;
                     if (card_at_tcg(2, c_at_tcg) > card_at_tcg(4, c_at_tcg))
                     {
                         --p_at_tcg;
@@ -618,8 +618,8 @@ void tcgdraw()
                 if (card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg))
                 {
                     p_at_tcg =
-                        (card_at_tcg(5, c_at_tcg) - card_at_tcg(3, c_at_tcg)) /
-                        6;
+                        (card_at_tcg(5, c_at_tcg) - card_at_tcg(3, c_at_tcg))
+                        / 6;
                     if (card_at_tcg(3, c_at_tcg) > card_at_tcg(5, c_at_tcg))
                     {
                         --p_at_tcg;
@@ -1224,12 +1224,12 @@ void saccard(int prm_1019, int prm_1020)
     int stat = card_ref(500 + card_at_tcg(23, prm_1019) * 2 + rnd(2));
     create_card(prm_1019, stat);
     cdbitmod(1, prm_1019, 1);
-    card_at_tcg(4, prm_1019) = landix_at_tcg(prm_1020) +
-        landsum_at_tcg(prm_1020) *
-            clamp(
-                (landspace_at_tcg - landsum_at_tcg(prm_1020) / 2),
-                4,
-                landspace_at_tcg);
+    card_at_tcg(4, prm_1019) = landix_at_tcg(prm_1020)
+        + landsum_at_tcg(prm_1020)
+            * clamp(
+                  (landspace_at_tcg - landsum_at_tcg(prm_1020) / 2),
+                  4,
+                  landspace_at_tcg);
     card_at_tcg(5, prm_1019) = landiy_at_tcg(prm_1020);
     landlist_at_tcg(landsum_at_tcg(prm_1020), prm_1020) = prm_1019;
     ++landsum_at_tcg(prm_1020);
@@ -1313,8 +1313,8 @@ void actionproc()
                              ++cnt)
                         {
                             c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
-                            if (cdbit(0, c_at_tcg) == 0 ||
-                                card_at_tcg(14, c_at_tcg) == -4)
+                            if (cdbit(0, c_at_tcg) == 0
+                                || card_at_tcg(14, c_at_tcg) == -4)
                             {
                                 cs_at_tcg = cnt;
                                 csline_at_tcg = cl_at_tcg;
@@ -1488,12 +1488,12 @@ int putcard(int prm_1024, int prm_1025)
     if (card_at_tcg(9, prm_1024) == 30)
     {
         cdbitmod(1, prm_1024, 1);
-        card_at_tcg(4, prm_1024) = landix_at_tcg(prm_1025) +
-            landsum_at_tcg(prm_1025) *
-                clamp(
-                    (landspace_at_tcg - landsum_at_tcg(prm_1025) / 2),
-                    4,
-                    landspace_at_tcg);
+        card_at_tcg(4, prm_1024) = landix_at_tcg(prm_1025)
+            + landsum_at_tcg(prm_1025)
+                * clamp(
+                      (landspace_at_tcg - landsum_at_tcg(prm_1025) / 2),
+                      4,
+                      landspace_at_tcg);
         card_at_tcg(5, prm_1024) = landiy_at_tcg(prm_1025);
         landlist_at_tcg(landsum_at_tcg(prm_1025), prm_1025) = prm_1024;
         ++landsum_at_tcg(prm_1025);
@@ -1627,8 +1627,8 @@ void tcginit()
 
 int calcstartcard(int prm_1026)
 {
-    return 6 - (cpdata_at_tcg(9, prm_1026) > 2) -
-        (cpdata_at_tcg(9, prm_1026) > 3) - (cpdata_at_tcg(9, prm_1026) > 4);
+    return 6 - (cpdata_at_tcg(9, prm_1026) > 2)
+        - (cpdata_at_tcg(9, prm_1026) > 3) - (cpdata_at_tcg(9, prm_1026) > 4);
 }
 
 
@@ -1745,8 +1745,8 @@ void tcgdeck()
             {
                 if (game_data.tcg_decks.at(cnt) != 30)
                 {
-                    s_at_tcg(cnt) += u8" (NG "s + game_data.tcg_decks.at(cnt) +
-                        u8"/"s + 30 + u8")"s;
+                    s_at_tcg(cnt) += u8" (NG "s + game_data.tcg_decks.at(cnt)
+                        + u8"/"s + 30 + u8")"s;
                 }
                 if (game_data.tcg_used_deck == cnt)
                 {
@@ -2083,12 +2083,12 @@ void tcg_update_mana()
              cnt < cnt_end;
              ++cnt)
         {
-            x_at_tcg = landix_at_tcg(cnt2_at_tcg) +
-                cnt *
-                    clamp(
-                        (landspace_at_tcg - landsum_at_tcg(cnt2_at_tcg) / 2),
-                        4,
-                        landspace_at_tcg);
+            x_at_tcg = landix_at_tcg(cnt2_at_tcg)
+                + cnt
+                    * clamp(
+                          (landspace_at_tcg - landsum_at_tcg(cnt2_at_tcg) / 2),
+                          4,
+                          landspace_at_tcg);
             y_at_tcg = landiy_at_tcg(cnt2_at_tcg);
             m_at_tcg = landlist_at_tcg(cnt, cnt2_at_tcg);
             n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));
@@ -2133,8 +2133,8 @@ void tcg_update_mana()
                 auto rect = chara_preparepic(card_at_tcg(17, m_at_tcg));
                 gsel(4);
                 pos(x_at_tcg + 13,
-                    y_at_tcg + 32 - chara_chips[n_at_tcg].offset_y +
-                        rect->height / 6);
+                    y_at_tcg + 32 - chara_chips[n_at_tcg].offset_y
+                        + rect->height / 6);
                 gcopy(rect->buffer, 0, 960, rect->width, rect->height);
             }
             else
@@ -2228,11 +2228,11 @@ void tcg_draw_selection()
     font(13 - en * 2);
     color(255, 255, 255);
     pos(basex_at_tcg + 160, basey_at_tcg + 510);
-    mes(""s + key_next + u8","s + key_prev +
-        i18n::s.get("core.locale.tcg.select.hint"));
+    mes(""s + key_next + u8","s + key_prev
+        + i18n::s.get("core.locale.tcg.select.hint"));
     pos(basex_at_tcg + 700, basey_at_tcg + 510);
-    mes(u8"Page "s + dsc_at_tcg / 8 / 3 + u8"/"s +
-        (dlistmax_at_tcg - 1) / 8 / 3);
+    mes(u8"Page "s + dsc_at_tcg / 8 / 3 + u8"/"s
+        + (dlistmax_at_tcg - 1) / 8 / 3);
     color(0, 0, 0);
 }
 
@@ -2277,8 +2277,8 @@ void tcg_draw_deck_editor()
             }
             else
             {
-                s_at_tcg = ""s + cpdata_at_tcg(5, cnt) + u8"/"s +
-                    cpdata_at_tcg(6, cnt);
+                s_at_tcg = ""s + cpdata_at_tcg(5, cnt) + u8"/"s
+                    + cpdata_at_tcg(6, cnt);
             }
             pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 95 - en);
             mes(s_at_tcg);
@@ -2493,10 +2493,10 @@ label_1829_internal:
         }
         for (int cnt = 0, cnt_end = (dlistmax_at_tcg - 1); cnt < cnt_end; ++cnt)
         {
-            p_at_tcg(0) = card_at_tcg(10, dlist_at_tcg(0, cnt)) * 10000 +
-                card_at_tcg(18, dlist_at_tcg(0, cnt));
-            p_at_tcg(1) = card_at_tcg(10, dlist_at_tcg(0, (cnt + 1))) * 10000 +
-                card_at_tcg(18, dlist_at_tcg(0, (cnt + 1)));
+            p_at_tcg(0) = card_at_tcg(10, dlist_at_tcg(0, cnt)) * 10000
+                + card_at_tcg(18, dlist_at_tcg(0, cnt));
+            p_at_tcg(1) = card_at_tcg(10, dlist_at_tcg(0, (cnt + 1))) * 10000
+                + card_at_tcg(18, dlist_at_tcg(0, (cnt + 1)));
             if (p_at_tcg > p_at_tcg(1))
             {
                 f_at_tcg = 1;
@@ -2587,8 +2587,8 @@ label_1830_internal:
             act_at_tcg(1) = 0;
             act_at_tcg(2) = 0;
             cc_at_tcg = dlist_at_tcg(0, dsc_at_tcg);
-            if (deck(card_at_tcg(18, cc_at_tcg)) <
-                card(0, card_at_tcg(18, cc_at_tcg)))
+            if (deck(card_at_tcg(18, cc_at_tcg))
+                < card(0, card_at_tcg(18, cc_at_tcg)))
             {
                 act_at_tcg(0) = 1;
             }
@@ -2765,8 +2765,8 @@ void tcg_prompt_action()
             {
                 if (card_at_tcg(10, cc_at_tcg) <= cpdata_at_tcg(5, cp_at_tcg))
                 {
-                    if (card_at_tcg(9, cc_at_tcg) == 20 ||
-                        selectmode_at_tcg == 0)
+                    if (card_at_tcg(9, cc_at_tcg) == 20
+                        || selectmode_at_tcg == 0)
                     {
                         act_at_tcg(0) = 1;
                         s_at_tcg +=
@@ -2779,8 +2779,8 @@ void tcg_prompt_action()
                     {
                         act_at_tcg(1) = 1;
                         s_at_tcg +=
-                            i18n::s.get("core.locale.tcg.action.sacrifice") +
-                            "\n";
+                            i18n::s.get("core.locale.tcg.action.sacrifice")
+                            + "\n";
                     }
                 }
             }
@@ -2795,8 +2795,8 @@ void tcg_prompt_action()
                             act_at_tcg(0) = 1;
                             s_at_tcg +=
                                 i18n::s.get(
-                                    "core.locale.tcg.action.declare_attack") +
-                                "\n";
+                                    "core.locale.tcg.action.declare_attack")
+                                + "\n";
                         }
                     }
                 }
