@@ -18,8 +18,8 @@ public:
 
         bool matches(const Keybind& keybind) const
         {
-            return primary == keybind || alternate == keybind
-                || joystick == keybind.main || permanent == keybind;
+            return primary == keybind || alternate == keybind ||
+                joystick == keybind.main || permanent == keybind;
         }
 
         void clear()

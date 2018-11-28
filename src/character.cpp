@@ -228,8 +228,8 @@ int chara_get_free_slot_force()
 bool can_place_character_at(const Position& position, bool allow_stairs)
 {
     // Out of range
-    if (position.x < 0 || map_data.width <= position.x || position.y < 0
-        || map_data.height <= position.y)
+    if (position.x < 0 || map_data.width <= position.x || position.y < 0 ||
+        map_data.height <= position.y)
         return false;
 
     // Wall
@@ -344,8 +344,8 @@ bool chara_place_internal(
             if (enemy_respawn && i < 20)
             {
                 const auto threshold = cdata.player().vision_distance / 2;
-                if (std::abs(cdata.player().position.x - x) <= threshold
-                    && std::abs(cdata.player().position.y - x) <= threshold)
+                if (std::abs(cdata.player().position.x - x) <= threshold &&
+                    std::abs(cdata.player().position.y - x) <= threshold)
                 {
                     // Too close
                     continue;
@@ -878,8 +878,8 @@ void initialize_character()
     {
         cdata[rc].nutrition = 5000 + rnd(4000);
     }
-    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1))
-        - rnd((cdata[rc].height / 5 + 1));
+    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1)) -
+        rnd((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
     update_required_experience(cdata[rc]);
@@ -1011,8 +1011,8 @@ void chara_refresh(int cc)
         for (size_t i = 0; i < 32 * 30; ++i)
         {
             cdata[cc]._flags[i] =
-                userdata(40 + i / (8 * sizeof(int)), cdata[cc].cnpc_id)
-                & (1 << (i % (8 * sizeof(int))));
+                userdata(40 + i / (8 * sizeof(int)), cdata[cc].cnpc_id) &
+                (1 << (i % (8 * sizeof(int))));
         }
     }
     else
@@ -1062,8 +1062,8 @@ void chara_refresh(int cc)
         {
             cdata[cc].hit_bonus += inv[rp].hit_bonus;
             cdata[cc].damage_bonus += inv[rp].damage_bonus;
-            cdata[cc].pv += inv[rp].enhancement * 2
-                + (inv[rp].curse_state == CurseState::blessed) * 2;
+            cdata[cc].pv += inv[rp].enhancement * 2 +
+                (inv[rp].curse_state == CurseState::blessed) * 2;
         }
         else if (cdata[cc].body_parts[i] / 10000 == 5)
         {
@@ -1290,8 +1290,8 @@ void chara_refresh(int cc)
         {
             if (cdata[cc].quality >= Quality::miracle)
             {
-                if (cdata[cc].attr_adjs[cnt]
-                    < sdata.get(10 + cnt, cc).original_level / 5)
+                if (cdata[cc].attr_adjs[cnt] <
+                    sdata.get(10 + cnt, cc).original_level / 5)
                 {
                     cdata[cc].attr_adjs[cnt] =
                         sdata.get(10 + cnt, cc).original_level / 5;
@@ -1333,21 +1333,21 @@ void chara_refresh(int cc)
     }
     cdata[cc].max_mp =
         clamp(
-            ((sdata(16, cc) * 2 + sdata(15, cc) + sdata(14, cc) / 3)
-                 * cdata[cc].level / 25
-             + sdata(16, cc)),
+            ((sdata(16, cc) * 2 + sdata(15, cc) + sdata(14, cc) / 3) *
+                 cdata[cc].level / 25 +
+             sdata(16, cc)),
             1,
-            1000000)
-        * sdata(3, cc) / 100;
+            1000000) *
+        sdata(3, cc) / 100;
     cdata[cc].max_hp =
         clamp(
-            ((sdata(11, cc) * 2 + sdata(10, cc) + sdata(15, cc) / 3)
-                 * cdata[cc].level / 25
-             + sdata(11, cc)),
+            ((sdata(11, cc) * 2 + sdata(10, cc) + sdata(15, cc) / 3) *
+                 cdata[cc].level / 25 +
+             sdata(11, cc)),
             1,
-            1000000)
-            * sdata(2, cc) / 100
-        + 5;
+            1000000) *
+            sdata(2, cc) / 100 +
+        5;
     cdata[cc].max_sp =
         100 + (sdata(15, cc) + sdata(11, cc)) / 5 + trait(24) * 8;
     if (cdata[cc].max_mp < 1)
@@ -1360,13 +1360,13 @@ void chara_refresh(int cc)
     }
     if (cc >= ELONA_MAX_PARTY_CHARACTERS || false)
     {
-        cdata[cc].dv = cdata[cc].level / 2
-            + cdata[cc].dv * cdata[cc].dv_correction_value / 100
-            + cdata[cc].dv_correction_value - 100;
-        cdata[cc].pv = cdata[cc].level
-            + (cdata[cc].pv + cdata[cc].level / 2
-               + cdata[cc].pv_correction_value / 25)
-                * cdata[cc].pv_correction_value / 100;
+        cdata[cc].dv = cdata[cc].level / 2 +
+            cdata[cc].dv * cdata[cc].dv_correction_value / 100 +
+            cdata[cc].dv_correction_value - 100;
+        cdata[cc].pv = cdata[cc].level +
+            (cdata[cc].pv + cdata[cc].level / 2 +
+             cdata[cc].pv_correction_value / 25) *
+                cdata[cc].pv_correction_value / 100;
         if (cdata[cc].quality == Quality::great)
         {
             cdata[cc].max_hp = cdata[cc].max_hp * 3 / 2;
@@ -1686,8 +1686,8 @@ void chara_vanquish(int cc)
         ride_end();
     }
     else if (
-        cdata[cc].state() == Character::State::alive
-        || cdata[cc].state() == Character::State::servant_being_selected)
+        cdata[cc].state() == Character::State::alive ||
+        cdata[cc].state() == Character::State::servant_being_selected)
     {
         cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
             .chara_index_plus_one = 0;
@@ -1790,9 +1790,9 @@ void chara_killed(Character& chara)
         lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
     }
     else if (
-        chara.state() == Character::State::villager_dead
-        || chara.state() == Character::State::adventurer_dead
-        || chara.state() == Character::State::pet_dead)
+        chara.state() == Character::State::villager_dead ||
+        chara.state() == Character::State::adventurer_dead ||
+        chara.state() == Character::State::pet_dead)
     {
         // This character revives.
     }
@@ -1962,8 +1962,8 @@ void chara_relocate(
         for (int element = 50; element < 61; ++element)
         {
             auto resistance = 100;
-            if (sdata.get(element, slot).original_level >= 500
-                || sdata.get(element, slot).original_level <= 100)
+            if (sdata.get(element, slot).original_level >= 500 ||
+                sdata.get(element, slot).original_level <= 100)
             {
                 resistance = sdata.get(element, slot).original_level;
             }
@@ -2033,9 +2033,9 @@ int chara_breed_power(const Character& chara)
 
 bool belong_to_same_team(const Character& c1, const Character& c2)
 {
-    return (c1.relationship >= 0 && c2.relationship >= 0)
-        || (c1.relationship == -1 && c2.relationship == -1)
-        || (c1.relationship <= -2 && c2.relationship <= -2);
+    return (c1.relationship >= 0 && c2.relationship >= 0) ||
+        (c1.relationship == -1 && c2.relationship == -1) ||
+        (c1.relationship <= -2 && c2.relationship <= -2);
 }
 
 
@@ -2044,8 +2044,8 @@ void chara_add_quality_parens()
 {
     if (fixlv == Quality::miracle)
     {
-        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc)
-            + i18n::_(u8"ui", u8"bracket_right");
+        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc) +
+            i18n::_(u8"ui", u8"bracket_right");
         cdata[rc].level = cdata[rc].level * 10 / 8;
     }
     else if (fixlv == Quality::godly)

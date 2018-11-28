@@ -526,8 +526,8 @@ bool wish_for_item(const std::string& input)
             curse_state = CurseState::blessed;
         }
         else if (
-            contains(input, u8"呪われていない")
-            || contains(input, u8"uncursed "))
+            contains(input, u8"呪われていない") ||
+            contains(input, u8"uncursed "))
         {
             curse_state = CurseState::none;
         }
@@ -626,8 +626,8 @@ bool wish_for_item(const std::string& input)
             inv[ci].curse_state = CurseState::blessed;
             txt(i18n::s.get("core.locale.wish.it_is_sold_out"));
         }
-        if (the_item_db[inv[ci].id]->category == 52000
-            || the_item_db[inv[ci].id]->category == 53000)
+        if (the_item_db[inv[ci].id]->category == 52000 ||
+            the_item_db[inv[ci].id]->category == 53000)
         {
             inv[ci].set_number(3 + rnd(2));
             if (inv[ci].value >= 20000)

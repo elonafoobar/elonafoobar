@@ -112,8 +112,8 @@ void _adventurer_hate_action()
         {
             tlocx = cdata[tc].position.x + rnd(3) - rnd(3);
             tlocy = cdata[tc].position.y - rnd(3) + rnd(3);
-            if (tlocx < 0 || tlocy < 0 || tlocx >= map_data.width
-                || tlocy >= map_data.height)
+            if (tlocx < 0 || tlocy < 0 || tlocx >= map_data.width ||
+                tlocy >= map_data.height)
             {
                 continue;
             }
@@ -253,8 +253,8 @@ TalkResult _talk_hv_adventurer_train()
                 "locale.ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "name"),
-            std::to_string(calclearncost(skill_id, cc, true))
-                + i18n::_(u8"ui", u8"platinum"),
+            std::to_string(calclearncost(skill_id, cc, true)) +
+                i18n::_(u8"ui", u8"platinum"),
             cdata[tc]);
         if (cdata.player().platinum_coin >= calclearncost(skill_id, cc, true))
         {
@@ -274,8 +274,8 @@ TalkResult _talk_hv_adventurer_train()
                 "locale.ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "name"),
-            std::to_string(calclearncost(skill_id, cc, true))
-                + i18n::_(u8"ui", u8"platinum"),
+            std::to_string(calclearncost(skill_id, cc, true)) +
+                i18n::_(u8"ui", u8"platinum"),
             cdata[tc]);
         if (cdata.player().platinum_coin >= calctraincost(skill_id, cc, true))
         {
@@ -614,8 +614,8 @@ TalkResult _talk_hv_adventurer()
     {
         return _talk_hv_adventurer_hate();
     }
-    if (cdata[tc].impression >= 100 && !cdata[tc].is_best_friend()
-        && inv_getfreeid(-1) != -1)
+    if (cdata[tc].impression >= 100 && !cdata[tc].is_best_friend() &&
+        inv_getfreeid(-1) != -1)
     {
         // NOTE: this dialog falls through.
         _talk_hv_adventurer_best_friend();

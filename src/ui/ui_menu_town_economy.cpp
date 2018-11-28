@@ -107,15 +107,15 @@ static void _draw_economy_info(int _city)
     _show_economy_info(
         x,
         y,
-        i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s
-            + game_data.politics_tax_amount + u8"%)"s,
+        i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s +
+            game_data.politics_tax_amount + u8"%)"s,
         podata(102, _city),
         podata(103, _city));
     _show_economy_info(
         x,
         y + 16,
-        i18n::s.get("core.locale.ui.economy.excise_tax") + u8" ("s
-            + podata(150, _city) + u8"%)"s,
+        i18n::s.get("core.locale.ui.economy.excise_tax") + u8" ("s +
+            podata(150, _city) + u8"%)"s,
         podata(104, _city),
         podata(105, _city));
 }
@@ -135,8 +135,8 @@ static void _draw_economy_details()
 
 static bool _map_has_economy()
 {
-    return area_data[game_data.current_map].quest_town_id != 0
-        && game_data.current_dungeon_level == 1;
+    return area_data[game_data.current_map].quest_town_id != 0 &&
+        game_data.current_dungeon_level == 1;
 }
 
 void UIMenuTownEconomy::draw()

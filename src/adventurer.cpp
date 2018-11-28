@@ -48,9 +48,9 @@ void create_adventurer()
     cdatan(1, rc) = random_title();
     cdata[rc].character_role = 13;
     p = rnd(450);
-    if (area_data[p].id == mdata_t::MapId::none
-        || area_data[p].id == mdata_t::MapId::your_home
-        || area_data[p].type == mdata_t::MapType::temporary)
+    if (area_data[p].id == mdata_t::MapId::none ||
+        area_data[p].id == mdata_t::MapId::your_home ||
+        area_data[p].type == mdata_t::MapType::temporary)
     {
         p = 4;
     }
@@ -68,8 +68,8 @@ void create_adventurer()
     }
     cdata[rc].current_map = p;
     cdata[rc].current_dungeon_level = 1;
-    cdata[rc].fame = cdata[rc].level * cdata[rc].level * 30
-        + rnd((cdata[rc].level * 200 + 100)) + rnd(500);
+    cdata[rc].fame = cdata[rc].level * cdata[rc].level * 30 +
+        rnd((cdata[rc].level * 200 + 100)) + rnd(500);
 }
 
 
@@ -122,9 +122,9 @@ void addnews2(const std::string& prm_401, int prm_402)
 void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 {
     addnews2(
-        prm_403 + u8" "s + game_data.date.year + u8"/"s + game_data.date.month
-        + u8"/"s + game_data.date.day + u8" h"s + game_data.date.hour + ""s
-        + u8" "s + prm_404);
+        prm_403 + u8" "s + game_data.date.year + u8"/"s + game_data.date.month +
+        u8"/"s + game_data.date.day + u8" h"s + game_data.date.hour + ""s +
+        u8" "s + prm_404);
 }
 
 
@@ -234,9 +234,9 @@ void adventurer_update()
                 }
             }
         }
-        if ((cdata[rc].current_map != game_data.current_map
-             || map_data.type == mdata_t::MapType::world_map)
-            && rnd(60) == 0)
+        if ((cdata[rc].current_map != game_data.current_map ||
+             map_data.type == mdata_t::MapType::world_map) &&
+            rnd(60) == 0)
         {
             for (int cnt = 0; cnt < 10; ++cnt)
             {
@@ -248,9 +248,8 @@ void adventurer_update()
                 {
                     p = rnd(300);
                 }
-                if (area_data[p].id == mdata_t::MapId::none || p == 7
-                    || area_data[p].type == mdata_t::MapType::temporary
-                    || p == 9)
+                if (area_data[p].id == mdata_t::MapId::none || p == 7 ||
+                    area_data[p].type == mdata_t::MapType::temporary || p == 9)
                 {
                     p = 4;
                 }
@@ -283,13 +282,13 @@ void adventurer_update()
         }
         if (rnd(20) == 0)
         {
-            cdata[rc].fame += rnd(cdata[rc].level * cdata[rc].level / 40 + 5)
-                - rnd((cdata[rc].level * cdata[rc].level / 50 + 5));
+            cdata[rc].fame += rnd(cdata[rc].level * cdata[rc].level / 40 + 5) -
+                rnd((cdata[rc].level * cdata[rc].level / 50 + 5));
         }
         if (rnd(2000) == 0)
         {
-            cdata[rc].experience += clamp(cdata[rc].level, 1, 1000)
-                * clamp(cdata[rc].level, 1, 1000) * 100;
+            cdata[rc].experience += clamp(cdata[rc].level, 1, 1000) *
+                clamp(cdata[rc].level, 1, 1000) * 100;
             int fame = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
             cdata[rc].fame += fame;
             addnews(4, rc, fame);

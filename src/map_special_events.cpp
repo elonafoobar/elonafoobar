@@ -45,8 +45,8 @@ static void _map_events_quest_party()
 {
     if (quest_data.immediate().progress != 3)
     {
-        if (game_data.crowd_density
-            < game_data.left_minutes_of_executing_quest / 60)
+        if (game_data.crowd_density <
+            game_data.left_minutes_of_executing_quest / 60)
         {
             dbid = 0;
             if (rnd(4) == 0)
@@ -185,8 +185,8 @@ static void _map_events_jail()
 
 static void _map_events_shelter()
 {
-    if (game_data.weather == 2 || game_data.weather == 4
-        || game_data.weather == 1)
+    if (game_data.weather == 2 || game_data.weather == 4 ||
+        game_data.weather == 1)
     {
         if (cdata.player().nutrition < 5000)
         {

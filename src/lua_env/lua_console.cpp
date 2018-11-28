@@ -33,9 +33,9 @@ LuaConsole::LuaConsole(LuaEnv* lua)
 
 static std::string _version_string()
 {
-    return u8"ver."s + latest_version.short_string() + " ("
-        + latest_version.revision + ") OS: " + latest_version.platform
-        + ", timestamp: " + latest_version.timestamp;
+    return u8"ver."s + latest_version.short_string() + " (" +
+        latest_version.revision + ") OS: " + latest_version.platform +
+        ", timestamp: " + latest_version.timestamp;
 }
 
 void LuaConsole::init_constants()
@@ -182,15 +182,15 @@ void LuaConsole::draw()
     {
         elona::pos(4, _char_height * (_max_lines - 1));
         font(inf_mesfont - en * 2);
-        mes((_is_multiline ? prompt_secondary : prompt_primary) + u8" "s
-            + _input + (_cursor_visible ? u8"|" : ""));
+        mes((_is_multiline ? prompt_secondary : prompt_primary) + u8" "s +
+            _input + (_cursor_visible ? u8"|" : ""));
     }
 
     // Scrollback counter
     if (_pos > 0)
     {
-        std::string line_count = std::to_string(_pos + _max_lines) + "/"
-            + std::to_string(_buf.size());
+        std::string line_count = std::to_string(_pos + _max_lines) + "/" +
+            std::to_string(_buf.size());
         elona::pos(windoww - (line_count.size() * _char_width), 0);
         font(inf_mesfont - en * 2);
         mes(line_count);
@@ -231,8 +231,8 @@ bool LuaConsole::lua_error_handler(
     else
     {
         sol::error error = pfr;
-        std::string mes = "Error: "s
-            + error.what(); // lang(u8"エラー: ", u8"Error: ") + error.what();
+        std::string mes = "Error: "s +
+            error.what(); // lang(u8"エラー: ", u8"Error: ") + error.what();
         print(mes);
     }
 
@@ -333,16 +333,17 @@ void LuaConsole::grab_input()
         }
         else
         {
-            return Input::instance().is_pressed(key, Config::instance().keywait)
-                && (Input::instance().modifiers() & modifiers) != ModKey::none;
+            return Input::instance().is_pressed(
+                       key, Config::instance().keywait) &&
+                (Input::instance().modifiers() & modifiers) != ModKey::none;
         }
     };
 
     while (_focused)
     {
         ++frame;
-        if (Config::instance().scrsync > 0
-            && frame % Config::instance().scrsync == 0)
+        if (Config::instance().scrsync > 0 &&
+            frame % Config::instance().scrsync == 0)
         {
             ++scrturn;
             ui_render_from_screensync();
@@ -374,9 +375,9 @@ void LuaConsole::grab_input()
         {
             if (_input_history.size() > 0)
             {
-                if (history_index == -1
-                    || static_cast<size_t>(history_index)
-                        < _input_history.size() - 1)
+                if (history_index == -1 ||
+                    static_cast<size_t>(history_index) <
+                        _input_history.size() - 1)
                 {
                     ++history_index;
                     _input = _input_history.at(
@@ -430,8 +431,8 @@ void LuaConsole::grab_input()
         else if (pressed(Key::key_c, ModKey::ctrl))
         {
             print(
-                (_is_multiline ? prompt_secondary : prompt_primary) + u8" "s
-                + _input);
+                (_is_multiline ? prompt_secondary : prompt_primary) + u8" "s +
+                _input);
             _multiline_input = "";
             _is_multiline = false;
             inputlog = "";
@@ -445,8 +446,8 @@ void LuaConsole::grab_input()
             if (_input != "")
             {
                 print(
-                    (_is_multiline ? prompt_secondary : prompt_primary) + u8" "s
-                    + _input);
+                    (_is_multiline ? prompt_secondary : prompt_primary) +
+                    u8" "s + _input);
                 if (interpret_lua(_multiline_input))
                 {
                     _multiline_input = "";

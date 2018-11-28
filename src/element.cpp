@@ -28,8 +28,8 @@ int randomele()
              ++cnt)
         {
             i_at_m45 = rnd(11) + 50;
-            if (the_ability_db[i_at_m45]->difficulty
-                < the_ability_db[p_at_m45]->difficulty)
+            if (the_ability_db[i_at_m45]->difficulty <
+                the_ability_db[p_at_m45]->difficulty)
             {
                 if (rnd(2) == 0)
                 {

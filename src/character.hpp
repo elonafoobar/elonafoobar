@@ -268,10 +268,10 @@ struct Character
 
     bool is_dead()
     {
-        return state_ == Character::State::empty
-            || state_ == Character::State::pet_dead
-            || state_ == Character::State::villager_dead
-            || state_ == Character::State::adventurer_dead;
+        return state_ == Character::State::empty ||
+            state_ == Character::State::pet_dead ||
+            state_ == Character::State::villager_dead ||
+            state_ == Character::State::adventurer_dead;
     }
 
     Character::State state() const

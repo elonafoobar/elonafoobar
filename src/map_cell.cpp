@@ -51,8 +51,8 @@ void cell_featset(
     {
         feat_at_m80(3) = cell_data.at(prm_592, prm_593).feats / 10000000;
     }
-    cell_data.at(prm_592, prm_593).feats = feat_at_m80 + feat_at_m80(1) * 1000
-        + feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
+    cell_data.at(prm_592, prm_593).feats = feat_at_m80 + feat_at_m80(1) * 1000 +
+        feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
 }
 
 
@@ -80,8 +80,8 @@ void cell_check(int prm_603, int prm_604)
     cellaccess = 1;
     cellchara = -1;
     cellfeat = -1;
-    if (prm_603 < 0 || prm_603 >= map_data.width || prm_604 < 0
-        || prm_604 >= map_data.height)
+    if (prm_603 < 0 || prm_603 >= map_data.width || prm_604 < 0 ||
+        prm_604 >= map_data.height)
     {
         cellaccess = 0;
         return;
@@ -184,8 +184,8 @@ int cell_itemlist(int prm_625, int prm_626)
     {
         if (inv[cnt].number() > 0)
         {
-            if (inv[cnt].position.x == prm_625
-                && inv[cnt].position.y == prm_626)
+            if (inv[cnt].position.x == prm_625 &&
+                inv[cnt].position.y == prm_626)
             {
                 list(0, listmax) = cnt;
                 ++listmax;
@@ -252,8 +252,8 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
             {
                 continue;
             }
-            if (chipm(7, cell_data.at(dx_at_m130, dy_at_m130).chip_id_actual)
-                & 4)
+            if (chipm(7, cell_data.at(dx_at_m130, dy_at_m130).chip_id_actual) &
+                4)
             {
                 continue;
             }

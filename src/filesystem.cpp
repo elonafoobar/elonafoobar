@@ -177,8 +177,8 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
     std::smatch match;
     std::string mod_name, rest;
 
-    if (std::regex_match(mod_local_path, match, mod_name_regex)
-        && match.size() == 3)
+    if (std::regex_match(mod_local_path, match, mod_name_regex) &&
+        match.size() == 3)
     {
         mod_name = match.str(1);
         rest = match.str(2);

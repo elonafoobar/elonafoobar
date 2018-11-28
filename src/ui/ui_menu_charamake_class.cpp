@@ -70,8 +70,8 @@ _draw_class_info(int chip_male, int chip_female, const std::string& race)
         gcopy(rect->buffer, 0, 960, inf_tiles, rect->height);
     }
     pos(wx + 460, wy + 38);
-    mes(i18n::s.get("core.locale.chara_making.select_race.race_info.race")
-        + u8": "s + race);
+    mes(i18n::s.get("core.locale.chara_making.select_race.race_info.race") +
+        u8": "s + race);
 
     draw_race_or_class_info();
 }

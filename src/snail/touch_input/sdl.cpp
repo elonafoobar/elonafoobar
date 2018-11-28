@@ -126,8 +126,8 @@ bool TouchInput::is_touched(int x, int y, const QuickAction& action)
     int size = quick_action_size() / 2;
     int deadzone = ((float)size * 0.75);
 
-    return x > action.center_x - deadzone && y > action.center_y - deadzone
-        && x <= action.center_x + deadzone && y <= action.center_y + deadzone;
+    return x > action.center_x - deadzone && y > action.center_y - deadzone &&
+        x <= action.center_x + deadzone && y <= action.center_y + deadzone;
 }
 
 void TouchInput::draw_quick_action(const QuickAction& action)
@@ -170,9 +170,9 @@ void TouchInput::on_touch_event(::SDL_TouchFingerEvent event)
     {
         QuickAction& action = *it;
 
-        if (_last_touched_quick_action_idx == none
-            && event.type != static_cast<decltype(event.type)>(EventType::up)
-            && is_touched(norm_x, norm_y, action))
+        if (_last_touched_quick_action_idx == none &&
+            event.type != static_cast<decltype(event.type)>(EventType::up) &&
+            is_touched(norm_x, norm_y, action))
         {
             action.touched = true;
             _last_touched_quick_action_idx = it - _quick_actions.begin();

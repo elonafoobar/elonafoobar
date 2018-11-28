@@ -59,8 +59,8 @@ bool Autopick::try_load(const fs::path& filepath)
         std::string line_ = line;
         Operation op{Operation::Type::pick_up};
 
-        if (strutil::starts_with(line_, u8"%=")
-            || strutil::starts_with(line_, u8"=%"))
+        if (strutil::starts_with(line_, u8"%=") ||
+            strutil::starts_with(line_, u8"=%"))
         {
             op.type = Operation::Type::save_and_no_drop;
             line_ = line_.substr(2);
@@ -142,8 +142,8 @@ bool Autopick::Matcher::matches(const Item& ci) const
 {
     const auto id = ci.id;
     const auto name = cnvitemname(id);
-    return ci.identification_state != IdentifyState::unidentified
-        && name.find(text) != std::string::npos;
+    return ci.identification_state != IdentifyState::unidentified &&
+        name.find(text) != std::string::npos;
 }
 
 } // namespace elona

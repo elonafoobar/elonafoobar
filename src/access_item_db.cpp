@@ -4684,64 +4684,64 @@ int access_item_db(int dbmode)
     case 44:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 42:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 41:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 40:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 39:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 38:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 37:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 36:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 35:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata.player().god_id == core_god::jure
-                || cdata.player().god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure ||
+                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 34:

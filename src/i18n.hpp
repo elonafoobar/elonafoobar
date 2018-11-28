@@ -353,8 +353,8 @@ inline std::string format_function_call(
                 }
                 else
                 {
-                    return "<unknown parameter "s + call.name + ", _" + *index
-                        + "/"s + args_size + ">"s;
+                    return "<unknown parameter "s + call.name + ", _" + *index +
+                        "/"s + args_size + ">"s;
                 }
             }
             else
@@ -805,8 +805,8 @@ public:
         const I18NKey& property_name)
     {
         const auto pair = strutil::split_on_string(data_key, ".");
-        const auto key = pair.first + "." + data_type_key + "." + pair.second
-            + "." + property_name;
+        const auto key = pair.first + "." + data_type_key + "." + pair.second +
+            "." + property_name;
         return get(key);
     }
 
@@ -822,8 +822,8 @@ public:
         const I18NKey& property_name)
     {
         const auto pair = strutil::split_on_string(data_key, ".");
-        const auto key = pair.first + "." + data_type_key + "." + pair.second
-            + "." + property_name;
+        const auto key = pair.first + "." + data_type_key + "." + pair.second +
+            "." + property_name;
         return get_optional(key);
     }
 

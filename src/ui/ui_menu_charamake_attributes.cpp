@@ -37,9 +37,10 @@ void UIMenuCharamakeAttributes::_reroll_attributes()
                 sdata.get(cnt, rc).original_level -=
                     rnd(sdata.get(cnt, rc).original_level / 2 + 1);
             }
-            _attributes(cnt - 10) = sdata.get(cnt, rc).original_level * 1000000
-                + sdata.get(cnt, rc).experience * 1000
-                + sdata.get(cnt, rc).potential;
+            _attributes(cnt - 10) =
+                sdata.get(cnt, rc).original_level * 1000000 +
+                sdata.get(cnt, rc).experience * 1000 +
+                sdata.get(cnt, rc).potential;
         }
     }
 }
@@ -86,9 +87,8 @@ static void _draw_window_background()
 {
     s(0) = i18n::s.get(
         "core.locale.chara_making.roll_attributes.attribute_reroll");
-    s(1) = strhint3b + key_mode2 + " ["
-        + i18n::s.get("core.locale.chara_making.roll_attributes.min_roll")
-        + "]";
+    s(1) = strhint3b + key_mode2 + " [" +
+        i18n::s.get("core.locale.chara_making.roll_attributes.min_roll") + "]";
     display_window(
         (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
 }
@@ -115,8 +115,8 @@ static void _draw_window_desc(int locks_left)
         "core.locale.chara_making.roll_attributes.locked_items_desc"));
     font(13 - en * 2, snail::Font::Style::bold);
     pos(wx + 180, wy + 84);
-    mes(i18n::s.get("core.locale.chara_making.roll_attributes.locks_left")
-        + u8": "s + locks_left);
+    mes(i18n::s.get("core.locale.chara_making.roll_attributes.locks_left") +
+        u8": "s + locks_left);
 }
 
 static void _draw_window(int locks_left)

@@ -69,8 +69,8 @@ void APIManager::add_api(
         if (!pair.first.is<std::string>())
         {
             throw sol::error(
-                "Error loading mod " + module_namespace
-                + ": Mod API tables must only have string keys.");
+                "Error loading mod " + module_namespace +
+                ": Mod API tables must only have string keys.");
         }
         api_table[pair.first.as<std::string>()] = pair.second;
     }

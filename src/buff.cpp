@@ -179,8 +179,8 @@ void buff_add(
         }
         if (const auto& holy_veil = buff_find(cc, 10))
         {
-            if (holy_veil->power + 50 > power * 5 / 2
-                || rnd(holy_veil->power + 50) > rnd(power + 1))
+            if (holy_veil->power + 50 > power * 5 / 2 ||
+                rnd(holy_veil->power + 50) > rnd(power + 1))
             {
                 txt(i18n::s.get("core.locale.magic.buff.holy_veil_repels"));
                 return;

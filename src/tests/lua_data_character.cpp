@@ -31,8 +31,8 @@ TEST_CASE("test reading invalid enum", "[Lua: Data]")
     auto data = db["chara_invalid_enum.putit"];
     REQUIRE_NONE(data);
     REQUIRE(
-        *db.error(SharedId("chara_invalid_enum.putit"))
-        == "Enum value Whatever for Color not found.");
+        *db.error(SharedId("chara_invalid_enum.putit")) ==
+        "Enum value Whatever for Color not found.");
 }
 
 TEST_CASE("test reading duplicate keys", "[Lua: Data]")

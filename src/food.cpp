@@ -49,10 +49,10 @@ void _food_gets_rotten(int chara_idx, int food_idx)
     }
 
     // Is it corpse(s) on a dryrock?
-    if (chara_idx == -1 && food.id == 204
-        && chipm(
-               0, cell_data.at(food.position.x, food.position.y).chip_id_actual)
-            == 1)
+    if (chara_idx == -1 && food.id == 204 &&
+        chipm(
+            0, cell_data.at(food.position.x, food.position.y).chip_id_actual) ==
+            1)
     {
         if (game_data.weather != 0)
         {
@@ -298,8 +298,8 @@ void chara_vomit(Character& cc)
     }
     else
     {
-        if ((cc.index < 16 && cc.anorexia_count > 10)
-            || (cc.index >= 16 && rnd(4) == 0))
+        if ((cc.index < 16 && cc.anorexia_count > 10) ||
+            (cc.index >= 16 && rnd(4) == 0))
         {
             if (rnd(5) == 0)
             {
@@ -1172,8 +1172,8 @@ void apply_general_eating_effect(int cieat)
             }
         }
     }
-    if (inv[ci].id == 204
-        || ((inv[ci].id == 571 || inv[ci].id == 573) && rnd(3) == 0))
+    if (inv[ci].id == 204 ||
+        ((inv[ci].id == 571 || inv[ci].id == 573) && rnd(3) == 0))
     {
         dbmode = 12;
         dbid = inv[ci].subname;
@@ -1220,8 +1220,8 @@ void apply_general_eating_effect(int cieat)
             modify_weight(
                 cdata[cc],
                 rnd(3) + 1,
-                cdata[cc].nutrition >= 20000
-                    && rnd(30000 / std::max(1, cdata[cc].nutrition) + 2) == 0);
+                cdata[cc].nutrition >= 20000 &&
+                    rnd(30000 / std::max(1, cdata[cc].nutrition) + 2) == 0);
         }
     }
     if (cdata[cc].id == 261)
@@ -1244,25 +1244,23 @@ void apply_general_eating_effect(int cieat)
         {
             txt(i18n::s.get("core.locale.food.effect.little_sister", cdata[cc]),
                 Message::color{ColorIndex::green});
-            if (rnd(sdata.get(2, cc).original_level
-                        * sdata.get(2, cc).original_level
-                    + 1)
-                < 2000)
+            if (rnd(sdata.get(2, cc).original_level *
+                        sdata.get(2, cc).original_level +
+                    1) < 2000)
             {
                 chara_gain_fixed_skill_exp(cdata[cc], 2, 1000);
             }
-            if (rnd(sdata.get(3, cc).original_level
-                        * sdata.get(3, cc).original_level
-                    + 1)
-                < 2000)
+            if (rnd(sdata.get(3, cc).original_level *
+                        sdata.get(3, cc).original_level +
+                    1) < 2000)
             {
                 chara_gain_fixed_skill_exp(cdata[cc], 3, 1000);
             }
             for (int cnt = 100; cnt < 400; ++cnt)
             {
-                if (!the_ability_db[cnt]
-                    || the_ability_db[cnt]->related_basic_attribute == 0
-                    || sdata.get(cnt, cc).original_level == 0)
+                if (!the_ability_db[cnt] ||
+                    the_ability_db[cnt]->related_basic_attribute == 0 ||
+                    sdata.get(cnt, cc).original_level == 0)
                 {
                     continue;
                 }
@@ -1298,8 +1296,8 @@ void apply_general_eating_effect(int cieat)
             txt(i18n::s.get(
                 "core.locale.food.effect.fortune_cookie", cdata[cc]));
             read_talk_file(u8"%COOKIE2");
-            if (inv[ci].curse_state == CurseState::blessed
-                || (inv[ci].curse_state == CurseState::none && rnd(2)))
+            if (inv[ci].curse_state == CurseState::blessed ||
+                (inv[ci].curse_state == CurseState::none && rnd(2)))
             {
                 read_talk_file(u8"%COOKIE1");
             }
@@ -1419,8 +1417,8 @@ void apply_general_eating_effect(int cieat)
                 chara_gain_skill_exp(
                     cdata[cc],
                     enc,
-                    (inv[ci].enchantments[cnt].power / 50 + 1) * 100
-                        * (1 + (cc != 0) * 5));
+                    (inv[ci].enchantments[cnt].power / 50 + 1) * 100 *
+                        (1 + (cc != 0) * 5));
                 continue;
             }
             if (enc2 == 6)
@@ -1433,8 +1431,8 @@ void apply_general_eating_effect(int cieat)
                 buff_add(
                     cdata[cc],
                     20 + (enc - 10),
-                    (inv[ci].enchantments[cnt].power / 50 + 1) * 5
-                        * (1 + (cc != 0) * 2),
+                    (inv[ci].enchantments[cnt].power / 50 + 1) * 5 *
+                        (1 + (cc != 0) * 2),
                     2000);
                 continue;
             }

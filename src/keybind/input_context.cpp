@@ -58,13 +58,13 @@ bool InputContext::_matches(
     {
         return true;
     }
-    if (binding.alternate.main == key
-        && binding.alternate.modifiers == modifiers)
+    if (binding.alternate.main == key &&
+        binding.alternate.modifiers == modifiers)
     {
         return true;
     }
-    if (binding.permanent.main == key
-        && binding.permanent.modifiers == modifiers)
+    if (binding.permanent.main == key &&
+        binding.permanent.modifiers == modifiers)
     {
         return true;
     }
@@ -81,9 +81,9 @@ optional<std::string> InputContext::_action_for_key(const Keybind& keybind)
     for (const auto& action_id : _available_actions_sorted)
     {
         const auto& binding = KeybindManager::instance().binding(action_id);
-        bool excluded =
-            _excluded_categories.find(keybind::actions.at(action_id).category)
-            != _excluded_categories.end();
+        bool excluded = _excluded_categories.find(
+                            keybind::actions.at(action_id).category) !=
+            _excluded_categories.end();
 
         if (!excluded && binding.matches(keybind))
         {
@@ -308,8 +308,8 @@ std::string InputContext::_delay_movement_action(
         }
         else if (Config::instance().scroll == 0)
         {
-            if (keybd_wait
-                < Config::instance().walkwait * Config::instance().startrun)
+            if (keybd_wait <
+                Config::instance().walkwait * Config::instance().startrun)
             {
                 if (keybd_wait % Config::instance().walkwait != 0)
                 {
@@ -352,8 +352,8 @@ std::string InputContext::_delay_movement_action(
         }
     }
     else if (
-        keybd_wait
-        < Config::instance().select_fast_start * Config::instance().select_wait)
+        keybd_wait <
+        Config::instance().select_fast_start * Config::instance().select_wait)
     {
         if (keybd_wait % Config::instance().select_wait != 0)
         {
@@ -578,8 +578,8 @@ std::unordered_set<ActionCategory> keybind_conflicting_action_categories(
     {
         const auto& categories = pair.second;
         bool is_in_context =
-            std::find(categories.begin(), categories.end(), action_category)
-            != categories.end();
+            std::find(categories.begin(), categories.end(), action_category) !=
+            categories.end();
 
         // If the action can be returned from input in this category, the
         // keybinding for it cannot confict with other actions in other

@@ -354,8 +354,8 @@ void Input::_update_modifier_keys()
              {Key::shift, Key::shift_l, Key::shift_r, ModKey::shift},
          })
     {
-        if (_keys[static_cast<size_t>(std::get<1>(tuple))].is_pressed()
-            || _keys[static_cast<int>(std::get<2>(tuple))].is_pressed())
+        if (_keys[static_cast<size_t>(std::get<1>(tuple))].is_pressed() ||
+            _keys[static_cast<int>(std::get<2>(tuple))].is_pressed())
         {
             _keys[static_cast<size_t>(std::get<0>(tuple))]._press();
             _modifiers |= std::get<3>(tuple);

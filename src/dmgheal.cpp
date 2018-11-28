@@ -262,8 +262,8 @@ int damage_hp(
     {
         if (victim.hp - dmg_at_m141 <= 0)
         {
-            if (clamp(25 + buff_find(victim, 18)->power / 17, 25, 80)
-                >= rnd(100))
+            if (clamp(25 + buff_find(victim, 18)->power / 17, 25, 80) >=
+                rnd(100))
             {
                 dmg_at_m141 *= -1;
             }
@@ -313,8 +313,8 @@ int damage_hp(
                 heal_hp(
                     *attacker,
                     clamp(
-                        rnd(dmg_at_m141 * (150 + element_power * 2) / 1000
-                            + 10),
+                        rnd(dmg_at_m141 * (150 + element_power * 2) / 1000 +
+                            10),
                         1,
                         attacker->max_hp / 10 + rnd(5)));
             }
@@ -718,9 +718,9 @@ int damage_hp(
             {
                 if (rnd(3) == 0)
                 {
-                    if (victim.confused == 0 && victim.dimmed == 0
-                        && victim.poisoned == 0 && victim.paralyzed == 0
-                        && victim.blind == 0)
+                    if (victim.confused == 0 && victim.dimmed == 0 &&
+                        victim.poisoned == 0 && victim.paralyzed == 0 &&
+                        victim.blind == 0)
                     {
                         if (map_data.type != mdata_t::MapType::world_map)
                         {
@@ -817,8 +817,8 @@ int damage_hp(
         {
             if (element)
             {
-                if (victim.index >= 16
-                    && game_data.proc_damage_events_flag == 2)
+                if (victim.index >= 16 &&
+                    game_data.proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
                     txteledmg(1, attacker_is_player, victim.index, element);
@@ -833,8 +833,8 @@ int damage_hp(
                 int death_type = rnd(4);
                 if (death_type == 0)
                 {
-                    if (victim.index >= 16
-                        && game_data.proc_damage_events_flag == 2)
+                    if (victim.index >= 16 &&
+                        game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
@@ -854,8 +854,8 @@ int damage_hp(
                 }
                 if (death_type == 1)
                 {
-                    if (victim.index >= 16
-                        && game_data.proc_damage_events_flag == 2)
+                    if (victim.index >= 16 &&
+                        game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
@@ -873,8 +873,8 @@ int damage_hp(
                 }
                 if (death_type == 2)
                 {
-                    if (victim.index >= 16
-                        && game_data.proc_damage_events_flag == 2)
+                    if (victim.index >= 16 &&
+                        game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
@@ -892,8 +892,8 @@ int damage_hp(
                 }
                 if (death_type == 3)
                 {
-                    if (victim.index >= 16
-                        && game_data.proc_damage_events_flag == 2)
+                    if (victim.index >= 16 &&
+                        game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
@@ -999,10 +999,10 @@ int damage_hp(
             {
                 chara_custom_talk(attacker->index, 103);
             }
-            gained_exp = clamp(victim.level, 1, 200)
-                    * clamp((victim.level + 1), 1, 200)
-                    * clamp((victim.level + 2), 1, 200) / 20
-                + 8;
+            gained_exp = clamp(victim.level, 1, 200) *
+                    clamp((victim.level + 1), 1, 200) *
+                    clamp((victim.level + 2), 1, 200) / 20 +
+                8;
             if (victim.level > attacker->level)
             {
                 gained_exp /= 4;
@@ -1101,13 +1101,13 @@ int damage_hp(
                                     .kill_count_of_little_sister),
                             Message::color{ColorIndex::red});
                     }
-                    if (game_data.current_dungeon_level
-                            == area_data[game_data.current_map].deepest_level
-                        || game_data.current_map == mdata_t::MapId::the_void)
+                    if (game_data.current_dungeon_level ==
+                            area_data[game_data.current_map].deepest_level ||
+                        game_data.current_map == mdata_t::MapId::the_void)
                     {
-                        if (area_data[game_data.current_map].has_been_conquered
-                                == victim.index
-                            && victim.is_lord_of_dungeon() == 1)
+                        if (area_data[game_data.current_map]
+                                    .has_been_conquered == victim.index &&
+                            victim.is_lord_of_dungeon() == 1)
                         {
                             event_add(5);
                         }
@@ -1123,9 +1123,9 @@ int damage_hp(
                 }
                 else if (game_data.current_map == mdata_t::MapId::the_void)
                 {
-                    if (area_data[game_data.current_map].has_been_conquered
-                            == victim.index
-                        && victim.is_lord_of_dungeon() == 1)
+                    if (area_data[game_data.current_map].has_been_conquered ==
+                            victim.index &&
+                        victim.is_lord_of_dungeon() == 1)
                     {
                         event_add(5);
                     }
@@ -1191,8 +1191,8 @@ int damage_hp(
             {
                 // The victim just died, so the state will not be "alive" when
                 // set below.
-                if (chara_index == victim.index
-                    || cdata[chara_index].state() != Character::State::alive)
+                if (chara_index == victim.index ||
+                    cdata[chara_index].state() != Character::State::alive)
                 {
                     continue;
                 }

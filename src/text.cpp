@@ -269,11 +269,11 @@ std::string maplevel(int)
     }
     if (map_shows_floor_count_in_name())
     {
-        return ""s
-            + cnvrank(
-                   (game_data.current_dungeon_level
-                    - area_data[game_data.current_map].danger_level + 1))
-            + i18n::s.get("core.locale.map.nefia.level");
+        return ""s +
+            cnvrank(
+                   (game_data.current_dungeon_level -
+                    area_data[game_data.current_map].danger_level + 1)) +
+            i18n::s.get("core.locale.map.nefia.level");
     }
 
     return "";
@@ -306,8 +306,8 @@ std::string mapname(int id, bool description)
         {
             name = i18n::s.get("core.locale.map.quest.outskirts");
         }
-        if (game_data.executing_immediate_quest_type == 1010
-            || game_data.executing_immediate_quest_type == 1008)
+        if (game_data.executing_immediate_quest_type == 1010 ||
+            game_data.executing_immediate_quest_type == 1008)
         {
             name = i18n::s.get("core.locale.map.quest.urban_area");
         }
@@ -434,8 +434,8 @@ std::string _yoro(int mark)
          {u8"よろしくでござりまする", u8"どうぞよしなに"}},
         {{u8"よろしくッス"}, {u8"よろしくにゃの"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -455,8 +455,8 @@ std::string _dozo(int mark)
          {u8"お待たせ致しました", u8"ささ、どうぞ"}},
         {{u8"お待たせッス"}, {u8"お待たせにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -475,8 +475,8 @@ std::string _thanks(int mark)
          {u8"ありがたや", u8"お礼申し上げます"}},
         {{u8"アザーッス"}, {u8"にゃりーん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -502,8 +502,8 @@ std::string _rob(int mark)
          {u8"ご無体な", u8"まあ、お戯れが過ぎますわ"}},
         {{u8"見損なったッス"}, {u8"にゃりーん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -519,8 +519,8 @@ std::string _ka(int mark)
         {{u8"でござるか"}, {u8"でござりまするか"}},
         {{u8"ッスか"}, {u8"かにゃ", u8"かニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -536,8 +536,8 @@ std::string _da(int mark)
         {{u8"でござる", u8"でござるよ"}, {u8"でござりまする"}},
         {{u8"ッス"}, {u8"みゃん", u8"ミャ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -553,8 +553,8 @@ std::string _nda(int mark)
         {{u8"のでござる"}, {u8"のでございます"}},
         {{u8"んだッス"}, {u8"のニャ", u8"のにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -570,8 +570,8 @@ std::string _noka(int mark)
         {{u8"のでござるか"}, {u8"のでございます"}},
         {{u8"のッスか"}, {u8"にゃんか", u8"ニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -587,8 +587,8 @@ std::string _kana(int mark)
         {{u8"でござるか"}, {u8"でございますか"}},
         {{u8"ッスか"}, {u8"かにゃん", u8"かニャ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -604,8 +604,8 @@ std::string _kimi(int mark)
         {{u8"そこもと"}, {u8"そなた様"}},
         {{u8"アンタ"}, {u8"あにゃた"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -621,8 +621,8 @@ std::string _ru(int mark)
         {{u8"るでござる", u8"るでござるよ"}, {u8"るのでございます"}},
         {{u8"るッス"}, {u8"るのニャ", u8"るにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -639,8 +639,8 @@ std::string _tanomu(int mark)
         {{u8"頼み申す", u8"頼むでござる"}, {u8"お頼み申し上げます"}},
         {{u8"頼むッス"}, {u8"おねがいにゃ", u8"おねがいニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -656,8 +656,8 @@ std::string _ore(int mark)
         {{u8"拙者"}, {u8"手前"}},
         {{u8"あっし"}, {u8"みゅー"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -673,8 +673,8 @@ std::string _ga(int mark)
         {{u8"でござるが"}, {u8"でございますが"}},
         {{u8"ッスけど", u8"ッスが"}, {u8"ニャけど", u8"にゃが"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -690,8 +690,8 @@ std::string _dana(int mark)
         {{u8"でござるな"}, {u8"でございますね"}},
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -707,8 +707,8 @@ std::string _kure(int mark)
         {{u8"頂きたいでござる"}, {u8"くださいませ"}},
         {{u8"くれッス"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -724,8 +724,8 @@ std::string _daro(int mark)
         {{u8"でござろうな"}, {u8"でございましょう"}},
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -741,8 +741,8 @@ std::string _yo(int mark)
         {{u8"でござろう"}, {u8"でございますわ"}},
         {{u8"ッスよ", u8"ッス"}, {u8"にゃぁ", u8"みゃぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -758,8 +758,8 @@ std::string _aru(int mark)
         {{u8"あるでござる", u8"あるでござるな"}, {u8"ござます"}},
         {{u8"あるッスよ", u8"あるッス"}, {u8"あにゅ", u8"あみぅ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -775,8 +775,8 @@ std::string _u(int mark)
         {{u8"うでござる", u8"うでござるよ"}, {u8"うでございます"}},
         {{u8"うッスよ", u8"うッス"}, {u8"うにぁ", u8"うみぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -792,8 +792,8 @@ std::string _na(int mark)
         {{u8"でござるな"}, {u8"でございますわ"}},
         {{u8"ッスね", u8"ッス"}, {u8"ニァ", u8"ミァ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -809,8 +809,8 @@ std::string _ta(int mark)
         {{u8"たでござる"}, {u8"ましてございます"}},
         {{u8"たッスよ", u8"たッス"}, {u8"たにゃぁ", u8"たみゃぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
-        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+        i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -1002,9 +1002,9 @@ void get_npc_talk()
                 u8"%SLAVEKEEPER,"s + i18n::s.get("core.locale.meta.tag"));
             break;
         }
-        if ((cdata[tc].character_role >= 1000
-             && cdata[tc].character_role < 2000)
-            || cdata[tc].character_role == 2003)
+        if ((cdata[tc].character_role >= 1000 &&
+             cdata[tc].character_role < 2000) ||
+            cdata[tc].character_role == 2003)
         {
             if (rnd(3))
             {
@@ -1035,8 +1035,8 @@ void get_npc_talk()
                     p = instr(
                         buff,
                         0,
-                        u8"%FEST,"s + game_data.current_map + u8","s
-                            + i18n::s.get("core.locale.meta.tag"));
+                        u8"%FEST,"s + game_data.current_map + u8","s +
+                            i18n::s.get("core.locale.meta.tag"));
                     break;
                 }
             }
@@ -1046,8 +1046,8 @@ void get_npc_talk()
             p = instr(
                 buff,
                 0,
-                u8"%PERSONALITY,"s + cdata[tc].personality + u8","s
-                    + i18n::s.get("core.locale.meta.tag"));
+                u8"%PERSONALITY,"s + cdata[tc].personality + u8","s +
+                    i18n::s.get("core.locale.meta.tag"));
             break;
         }
         if (rnd(3))
@@ -1055,8 +1055,8 @@ void get_npc_talk()
             p = instr(
                 buff,
                 0,
-                u8"%AREA,"s + game_data.current_map + u8","s
-                    + i18n::s.get("core.locale.meta.tag"));
+                u8"%AREA,"s + game_data.current_map + u8","s +
+                    i18n::s.get("core.locale.meta.tag"));
             break;
         }
     }
@@ -1072,8 +1072,8 @@ void get_npc_talk()
 
 std::string cnvweight(int weight)
 {
-    return ""s + std::abs(weight) / 1000 + '.' + std::abs(weight) % 1000 / 100
-        + i18n::_(u8"ui", u8"unit_of_weight");
+    return ""s + std::abs(weight) / 1000 + '.' + std::abs(weight) % 1000 / 100 +
+        i18n::_(u8"ui", u8"unit_of_weight");
 }
 
 
@@ -1098,43 +1098,43 @@ void quest_update_main_quest_journal()
     int progress;
 
     noteadd("@QM[" + i18n::s.get("core.locale.quest.journal.main.title") + "]");
-    if (game_data.quest_flags.main_quest >= 0
-        && game_data.quest_flags.main_quest < 30)
+    if (game_data.quest_flags.main_quest >= 0 &&
+        game_data.quest_flags.main_quest < 30)
     {
         progress = 0;
     }
-    if (game_data.quest_flags.main_quest >= 30
-        && game_data.quest_flags.main_quest < 50)
+    if (game_data.quest_flags.main_quest >= 30 &&
+        game_data.quest_flags.main_quest < 50)
     {
         progress = 1;
     }
-    if (game_data.quest_flags.main_quest >= 50
-        && game_data.quest_flags.main_quest < 60)
+    if (game_data.quest_flags.main_quest >= 50 &&
+        game_data.quest_flags.main_quest < 60)
     {
         progress = 2;
     }
-    if (game_data.quest_flags.main_quest >= 60
-        && game_data.quest_flags.main_quest < 100)
+    if (game_data.quest_flags.main_quest >= 60 &&
+        game_data.quest_flags.main_quest < 100)
     {
         progress = 3;
     }
-    if (game_data.quest_flags.main_quest >= 100
-        && game_data.quest_flags.main_quest < 110)
+    if (game_data.quest_flags.main_quest >= 100 &&
+        game_data.quest_flags.main_quest < 110)
     {
         progress = 4;
     }
-    if (game_data.quest_flags.main_quest >= 110
-        && game_data.quest_flags.main_quest < 125)
+    if (game_data.quest_flags.main_quest >= 110 &&
+        game_data.quest_flags.main_quest < 125)
     {
         progress = 5;
     }
-    if (game_data.quest_flags.main_quest >= 125
-        && game_data.quest_flags.main_quest < 180)
+    if (game_data.quest_flags.main_quest >= 125 &&
+        game_data.quest_flags.main_quest < 180)
     {
         progress = 6;
     }
-    if (game_data.quest_flags.main_quest >= 180
-        && game_data.quest_flags.main_quest < 1000)
+    if (game_data.quest_flags.main_quest >= 180 &&
+        game_data.quest_flags.main_quest < 1000)
     {
         progress = 7;
     }
@@ -1164,8 +1164,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1201,8 +1201,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1238,8 +1238,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1264,8 +1264,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1312,8 +1312,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1437,8 +1437,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1463,8 +1463,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1500,8 +1500,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1548,8 +1548,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1585,8 +1585,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1633,8 +1633,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1659,8 +1659,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1685,8 +1685,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1712,8 +1712,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1752,17 +1752,17 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
     if (val0 == 0)
     {
-        if (p
-            == game_data.quest_flags.ambitious_scientist
-                    * (game_data.quest_flags.ambitious_scientist < 6)
-                + (game_data.quest_flags.ambitious_scientist == 0))
+        if (p ==
+            game_data.quest_flags.ambitious_scientist *
+                    (game_data.quest_flags.ambitious_scientist < 6) +
+                (game_data.quest_flags.ambitious_scientist == 0))
         {
             s1 = i18n::s.get_enum(
                 "core.locale.quest.journal.sub.ambitious_scientist.progress",
@@ -1783,8 +1783,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1821,8 +1821,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1850,8 +1850,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1878,8 +1878,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1908,8 +1908,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1937,8 +1937,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1967,8 +1967,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -1995,8 +1995,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -2032,8 +2032,8 @@ void append_subquest_journal(int val0)
             if (p >= 1000)
             {
                 noteadd(
-                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
-                    + "]" + s);
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done") +
+                    "]" + s);
             }
         }
     }
@@ -2059,30 +2059,30 @@ void append_quest_item_journal()
     if (game_data.quest_flags.main_quest >= 30)
     {
         noteadd(
-            "["
-            + i18n::s.get("core.locale.quest.journal.item.letter_to_the_king")
-            + "]");
+            "[" +
+            i18n::s.get("core.locale.quest.journal.item.letter_to_the_king") +
+            "]");
     }
     if (game_data.quest_flags.magic_stone_of_fool != 0)
     {
         noteadd(
-            "["
-            + i18n::s.get("core.locale.quest.journal.item.fools_magic_stone")
-            + "]");
+            "[" +
+            i18n::s.get("core.locale.quest.journal.item.fools_magic_stone") +
+            "]");
     }
     if (game_data.quest_flags.magic_stone_of_king != 0)
     {
         noteadd(
-            "["
-            + i18n::s.get("core.locale.quest.journal.item.kings_magic_stone")
-            + "]");
+            "[" +
+            i18n::s.get("core.locale.quest.journal.item.kings_magic_stone") +
+            "]");
     }
     if (game_data.quest_flags.magic_stone_of_sage != 0)
     {
         noteadd(
-            "["
-            + i18n::s.get("core.locale.quest.journal.item.sages_magic_stone")
-            + "]");
+            "[" +
+            i18n::s.get("core.locale.quest.journal.item.sages_magic_stone") +
+            "]");
     }
 }
 
@@ -2162,8 +2162,8 @@ std::string randomname()
         }
         if (jp)
         {
-            if (strutil::starts_with(ret, u8"ー")
-                || strutil::contains(ret, u8"ーッ"))
+            if (strutil::starts_with(ret, u8"ー") ||
+                strutil::contains(ret, u8"ーッ"))
             {
                 continue;
             }
@@ -2356,8 +2356,8 @@ skip:
                       u8"The party of ",
                       u8"The house of ",
                       u8"Clan ",
-                  })
-                + ret;
+                  }) +
+                ret;
         }
         else
         {
@@ -2565,9 +2565,9 @@ std::string name(int cc)
     {
         return i18n::s.get("core.locale.chara.something");
     }
-    if (cdata.player().blind != 0
-        || (cdata[cc].is_invisible() == 1
-            && cdata.player().can_see_invisible() == 0 && cdata[cc].wet == 0))
+    if (cdata.player().blind != 0 ||
+        (cdata[cc].is_invisible() == 1 &&
+         cdata.player().can_see_invisible() == 0 && cdata[cc].wet == 0))
     {
         return i18n::s.get("core.locale.chara.something");
     }

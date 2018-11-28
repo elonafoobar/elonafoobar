@@ -263,8 +263,8 @@ EnumDef Object::visit_enum(
         throw SpecError(
             hcl_file,
             current_key,
-            "Default enum value " + default_value
-                + " not provided in enum variant list.");
+            "Default enum value " + default_value +
+                " not provided in enum variant list.");
     }
 
     def.variants = variants;

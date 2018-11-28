@@ -148,8 +148,8 @@ void do_particle_animation(
 
 bool is_in_screen(int x, int y)
 {
-    return x < windoww
-        && y < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2;
+    return x < windoww &&
+        y < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2;
 }
 
 
@@ -357,8 +357,8 @@ void BreathAnimation::do_play()
             const auto sx =
                 (dx - scx) * inf_tiles + inf_screenx + inf_tiles / 2;
             const auto sy = (dy - scy) * inf_tiles + inf_screeny + 16;
-            if (sx < windoww
-                && sy < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
+            if (sx < windoww &&
+                sy < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
             {
                 pos(sx, sy);
                 gmode(2);
@@ -455,8 +455,8 @@ void BallAnimation::do_play()
                 }
                 if (sx * inf_tiles + inf_screenx < windoww)
                 {
-                    if (sy * inf_tiles + inf_screeny
-                        < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
+                    if (sy * inf_tiles + inf_screeny <
+                        inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
                     {
                         pos(sx * inf_tiles + inf_screenx,
                             sy * inf_tiles + inf_screeny);
@@ -823,9 +823,9 @@ void MeleeAttackAnimation::do_play()
         }
         for (int cnt = 0, cnt_end = (damage_percent); cnt < cnt_end; ++cnt)
         {
-            pos(anidx + 24 + sx(cnt)
-                    + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2
-                    + (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
+            pos(anidx + 24 + sx(cnt) +
+                    (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2 +
+                    (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
                 anidy + sy(cnt) + cnt2 * cnt2 / 3);
             grotate(1, anix1, 0, inf_tiles, inf_tiles, 6, 6, 0.4 * cnt);
         }
@@ -1214,9 +1214,9 @@ void BreakingAnimation::do_play()
            auto t,
            const auto& particle,
            auto i) {
-            const auto x = center.x + particle.x
-                + (particle.x < 4) * -(1 + (i % 2 == 0)) * t
-                + (particle.x > -4) * (1 + (i % 2 == 0)) * t;
+            const auto x = center.x + particle.x +
+                (particle.x < 4) * -(1 + (i % 2 == 0)) * t +
+                (particle.x > -4) * (1 + (i % 2 == 0)) * t;
             const auto y = center.y - inf_tiles / 4 + particle.y + t * t / 3;
             draw_rotated(key, x, y, 0.5, 23 * i);
         });

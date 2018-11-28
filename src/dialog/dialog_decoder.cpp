@@ -37,8 +37,8 @@ static std::pair<std::string, std::string> parse_id(
     if (datatype_mod_name != mod_name || datatype_name != data_name)
     {
         throw std::runtime_error(
-            "Expected id of format \"" + datatype_mod_name + "." + datatype_name
-            + "\", got \"" + mod_name + "." + data_name + "\"");
+            "Expected id of format \"" + datatype_mod_name + "." +
+            datatype_name + "\", got \"" + mod_name + "." + data_name + "\"");
     }
 
     return strutil::split_on_string(datatype_id, ".");
@@ -202,7 +202,9 @@ void DialogDecoderLogic::parse_node_behavior(
     if (behaviors > 1)
     {
         throw std::runtime_error(
-            full_id + ": Only one of \"generator\", \"redirector\", or \"inherit_choices\" can be used at a time");
+            full_id +
+            ": Only one of \"generator\", \"redirector\", or "
+            "\"inherit_choices\" can be used at a time");
     }
 }
 

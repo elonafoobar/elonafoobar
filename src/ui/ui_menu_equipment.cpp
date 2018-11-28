@@ -124,8 +124,8 @@ static void _draw_window_background()
     display_window(
         (windoww - 690) / 2 + inf_screenx, winposy(428), 690, 428, 64);
     display_topic(
-        i18n::s.get("core.locale.ui.equip.category") + "/"
-            + i18n::s.get("core.locale.ui.equip.name"),
+        i18n::s.get("core.locale.ui.equip.category") + "/" +
+            i18n::s.get("core.locale.ui.equip.name"),
         wx + 28,
         wy + 30);
 }
@@ -153,13 +153,13 @@ static void _draw_window_deco(bool show_resistances)
 static void _draw_window_headers()
 {
     display_note(
-        i18n::s.get("core.locale.ui.equip.equip_weight") + ": "
-        + cnvweight(cdata[cc].sum_of_equipment_weight) + cnveqweight(cc) + " "
-        + i18n::s.get("core.locale.ui.equip.hit_bonus") + ":"
-        + cdata[cc].hit_bonus + " "
-        + i18n::s.get("core.locale.ui.equip.damage_bonus") + ":"
-        + cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s
-        + cdata[cc].pv);
+        i18n::s.get("core.locale.ui.equip.equip_weight") + ": " +
+        cnvweight(cdata[cc].sum_of_equipment_weight) + cnveqweight(cc) + " " +
+        i18n::s.get("core.locale.ui.equip.hit_bonus") + ":" +
+        cdata[cc].hit_bonus + " " +
+        i18n::s.get("core.locale.ui.equip.damage_bonus") + ":" +
+        cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s +
+        cdata[cc].pv);
 }
 
 static void _draw_window(bool show_resistances)

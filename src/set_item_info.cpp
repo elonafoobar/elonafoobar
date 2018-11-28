@@ -53,9 +53,10 @@ void set_item_info()
             // random seed of the current save data.
             int p = (data.id % game_data.random_seed) % 6;
             iknownnameref(data.id) =
-                i18n::_(u8"ui", u8"random_" + data.originalnameref2, u8"_"s + p)
-                + i18n::space_if_needed()
-                + i18n::_(u8"ui", data.originalnameref2);
+                i18n::_(
+                    u8"ui", u8"random_" + data.originalnameref2, u8"_"s + p) +
+                i18n::space_if_needed() +
+                i18n::_(u8"ui", data.originalnameref2);
         }
         else
         {

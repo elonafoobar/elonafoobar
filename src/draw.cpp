@@ -286,9 +286,9 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
     for (int i = 1; i < 16; ++i)
     {
         auto& cc = cdata[i];
-        if ((cc.state() == Character::State::alive
-             || cc.state() == Character::State::pet_dead)
-            && cdata[i].has_been_used_stethoscope())
+        if ((cc.state() == Character::State::alive ||
+             cc.state() == Character::State::pet_dead) &&
+            cdata[i].has_been_used_stethoscope())
         {
             const auto name = cdatan(0, i);
             const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
@@ -443,8 +443,7 @@ void show_damage_popups()
                     cdata.player().position.x,
                     cdata.player().position.y,
                     cc.position.x,
-                    cc.position.y)
-                > cdata.player().vision_distance / 2)
+                    cc.position.y) > cdata.player().vision_distance / 2)
             {
                 ++damage_popup.frame;
                 continue;
@@ -467,11 +466,11 @@ void show_damage_popups()
 
         int cfg_dmgfont = easing(damage_popup.frame / 10.0) * 20 + 12;
 
-        int x = (cc.position.x - scx) * inf_tiles + inf_screenx
-            - strlen_u(damage_popup.text) * (2 + cfg_dmgfont + 1) / 2 / 2
-            + inf_tiles / 2;
-        int y = (cc.position.y - scy) * inf_tiles + inf_screeny
-            - mondmgpos * (2 + cfg_dmgfont + 3) - 2 * damage_popup.frame;
+        int x = (cc.position.x - scx) * inf_tiles + inf_screenx -
+            strlen_u(damage_popup.text) * (2 + cfg_dmgfont + 1) / 2 / 2 +
+            inf_tiles / 2;
+        int y = (cc.position.y - scy) * inf_tiles + inf_screeny -
+            mondmgpos * (2 + cfg_dmgfont + 3) - 2 * damage_popup.frame;
         x += sxfix * (scx != scxbk) * (scrollp >= 3);
         y += syfix * (scy != scybk) * (scrollp >= 3);
 
@@ -507,8 +506,8 @@ void draw_emo(int cc, int x, int y)
 
 void load_pcc_part(int cc, int body_part, const char* body_part_str)
 {
-    const auto filepath = filesystem::dir::graphic()
-        / (u8"pcc_"s + body_part_str + (pcc(body_part, cc) % 1000) + u8".bmp");
+    const auto filepath = filesystem::dir::graphic() /
+        (u8"pcc_"s + body_part_str + (pcc(body_part, cc) % 1000) + u8".bmp");
     if (!fs::exists(filepath))
         return;
 
@@ -648,8 +647,8 @@ void create_pcpic(int cc, bool prm_410)
         {
             load_pcc_part(cc, 2, u8"chest_");
         }
-        if ((cc != 0 || game_data.mount == 0 || pcc(16, cc) == 0)
-            && pcc(21, cc) == 0)
+        if ((cc != 0 || game_data.mount == 0 || pcc(16, cc) == 0) &&
+            pcc(21, cc) == 0)
         {
             load_pcc_part(cc, 3, u8"leg_");
         }
@@ -1001,8 +1000,8 @@ void init_assets()
     if (!in)
     {
         throw std::runtime_error{
-            "Failed to open "
-            + filesystem::make_preferred_path_in_utf8(filepath)};
+            "Failed to open " +
+            filesystem::make_preferred_path_in_utf8(filepath)};
     }
     const auto& result = hcl::parse(in);
     if (!result.valid())

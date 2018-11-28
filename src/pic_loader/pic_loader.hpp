@@ -148,8 +148,8 @@ public:
                 if (auto e = fits(w, h, i))
                 {
                     Skyline& skyline = skylines[i];
-                    if (e->bottom() < bottom
-                        || (e->bottom() == bottom && skyline.width < width))
+                    if (e->bottom() < bottom ||
+                        (e->bottom() == bottom && skyline.width < width))
                     {
                         bottom = e->bottom();
                         width = skyline.width;

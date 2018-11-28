@@ -156,10 +156,10 @@ static void _load_item_stat_text(int ci, int& p)
     if (ibit(10, ci))
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.alive")
-            + u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s
-            + clamp(inv[ci].param2 * 100 / calcexpalive(inv[ci].param1), 0, 100)
-            + u8"%]"s;
+        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.alive") +
+            u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s +
+            clamp(inv[ci].param2 * 100 / calcexpalive(inv[ci].param1), 0, 100) +
+            u8"%]"s;
         ++p;
     }
     if (ibit(16, ci))
@@ -179,10 +179,10 @@ static void _load_item_stat_text(int ci, int& p)
         const auto pierce = calc_rate_to_pierce(inv[ci].id);
         list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, p) =
-            i18n::s.get("core.locale.item.desc.weapon.it_can_be_wielded")
-            + u8" ("s + inv[ci].dice_x + u8"d"s + inv[ci].dice_y
-            + i18n::s.get("core.locale.item.desc.weapon.pierce") + pierce
-            + u8"%)"s;
+            i18n::s.get("core.locale.item.desc.weapon.it_can_be_wielded") +
+            u8" ("s + inv[ci].dice_x + u8"d"s + inv[ci].dice_y +
+            i18n::s.get("core.locale.item.desc.weapon.pierce") + pierce +
+            u8"%)"s;
         ++p;
         if (reftype == 10000)
         {
@@ -232,8 +232,8 @@ static void _load_item_stat_text(int ci, int& p)
         }
         const auto percentage = std::min(100 * card_count / npc_count, 100);
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.deck") + u8": "s
-            + card_count + u8"/" + npc_count + u8"(" + percentage + u8"%)";
+        listn(0, p) = i18n::s.get("core.locale.item.desc.deck") + u8": "s +
+            card_count + u8"/" + npc_count + u8"(" + percentage + u8"%)";
         ++p;
     }
 }

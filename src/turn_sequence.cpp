@@ -122,9 +122,9 @@ TurnResult npc_turn()
     if (cdata[cc].relationship >= 10)
     {
         --cdata[cc].hate;
-        if (cdata[cc].enemy_id == 0 || cdata[cc].hate <= 0
-            || (cdata[cdata[cc].enemy_id].relationship >= -2
-                && cdata[cdata[cc].enemy_id].enemy_id != cc))
+        if (cdata[cc].enemy_id == 0 || cdata[cc].hate <= 0 ||
+            (cdata[cdata[cc].enemy_id].relationship >= -2 &&
+             cdata[cdata[cc].enemy_id].enemy_id != cc))
         {
             cdata[cc].enemy_id = 0;
             if (pcattacker != 0)
@@ -147,11 +147,11 @@ TurnResult npc_turn()
             }
             if (cdata[cc].enemy_id == 0)
             {
-                if (cdata.player().enemy_id != 0
-                    && cdata[cdata.player().enemy_id].relationship <= -3)
+                if (cdata.player().enemy_id != 0 &&
+                    cdata[cdata.player().enemy_id].relationship <= -3)
                 {
-                    if (cdata[cdata.player().enemy_id].state()
-                        == Character::State::alive)
+                    if (cdata[cdata.player().enemy_id].state() ==
+                        Character::State::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -216,9 +216,9 @@ TurnResult npc_turn()
             p(2) = 16;
         }
         i = cdata[cc].enemy_id;
-        if (cdata[i].relationship == p
-            && cdata[i].state() == Character::State::alive && i >= p(1)
-            && i < p(1) + p(2))
+        if (cdata[i].relationship == p &&
+            cdata[i].state() == Character::State::alive && i >= p(1) &&
+            i < p(1) + p(2))
         {
             if (rnd(10) != 0)
             {
@@ -239,8 +239,8 @@ TurnResult npc_turn()
                 }
             }
         }
-        if (cdata[cdata[cc].enemy_id].relationship != p
-            || cdata[cdata[cc].enemy_id].state() != Character::State::alive)
+        if (cdata[cdata[cc].enemy_id].relationship != p ||
+            cdata[cdata[cc].enemy_id].state() != Character::State::alive)
         {
             f = 0;
             for (int cnt = p(1), cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
@@ -277,8 +277,8 @@ TurnResult npc_turn()
             {
                 if (game_data.released_fire_giant != 0)
                 {
-                    if (cdata[game_data.fire_giant].state()
-                        == Character::State::alive)
+                    if (cdata[game_data.fire_giant].state() ==
+                        Character::State::alive)
                     {
                         cdata[cc].enemy_id = game_data.fire_giant;
                         cdata[cc].hate = 500;
@@ -326,17 +326,16 @@ TurnResult npc_turn()
             {
                 if (rnd(4) == 0)
                 {
-                    if (cdata.player().position.x > cdata[cc].position.x - 10
-                        && cdata.player().position.x
-                            < cdata[cc].position.x + 10)
+                    if (cdata.player().position.x > cdata[cc].position.x - 10 &&
+                        cdata.player().position.x < cdata[cc].position.x + 10)
                     {
-                        if (cdata.player().position.y
-                                > cdata[cc].position.y - 10
-                            && cdata.player().position.y
-                                < cdata[cc].position.y + 10)
+                        if (cdata.player().position.y >
+                                cdata[cc].position.y - 10 &&
+                            cdata.player().position.y <
+                                cdata[cc].position.y + 10)
                         {
-                            if (cdata.player().continuous_action.type
-                                != ContinuousAction::Type::perform)
+                            if (cdata.player().continuous_action.type !=
+                                ContinuousAction::Type::perform)
                             {
                                 if (cdata[cc].hate <= 0)
                                 {
@@ -361,8 +360,7 @@ TurnResult npc_turn()
                     cdata.player().position.x,
                     cdata.player().position.y,
                     cdata[cc].position.x,
-                    cdata[cc].position.y)
-                == 1)
+                    cdata[cc].position.y) == 1)
             {
                 x = cdata.player().position.x;
                 y = cdata.player().position.y;
@@ -456,8 +454,7 @@ label_2689_internal:
             if (tc == 0)
             {
                 if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                        .item_appearances_actual
-                    != 0)
+                        .item_appearances_actual != 0)
                 {
                     const auto item_info = cell_itemoncell(cdata[cc].position);
                     const auto number = item_info.first;
@@ -501,8 +498,8 @@ label_2689_internal:
                             {
                                 if (ibit(5, ci) == 0)
                                 {
-                                    if (map_data.type
-                                        != mdata_t::MapType::player_owned)
+                                    if (map_data.type !=
+                                        mdata_t::MapType::player_owned)
                                     {
                                         in = inv[ci].number();
                                         if (game_data.mount != cc)
@@ -722,8 +719,8 @@ TurnResult turn_begin()
     int spd = 0;
     ct = 0;
     mef_update();
-    gspd = cdata.player().current_speed
-        * (100 + cdata.player().speed_percentage) / 100;
+    gspd = cdata.player().current_speed *
+        (100 + cdata.player().speed_percentage) / 100;
     if (gspd < 10)
     {
         gspd = 10;
@@ -782,8 +779,8 @@ TurnResult turn_begin()
         {
             game_data.left_minutes_of_executing_quest -=
                 game_data.date.second / 60;
-            if (game_data.executing_immediate_quest_time_left_display_period
-                > game_data.left_minutes_of_executing_quest / 10)
+            if (game_data.executing_immediate_quest_time_left_display_period >
+                game_data.left_minutes_of_executing_quest / 10)
             {
                 txt(i18n::s.get(
                         "core.locale.quest.minutes_left",
@@ -907,11 +904,11 @@ TurnResult pass_one_turn(bool label_2738_flg)
                         "core.locale.magic.return.prevented.overweight"));
                     goto label_2740_internal;
                 }
-                if (game_data.destination_map
-                    == game_data.destination_outer_map)
+                if (game_data.destination_map ==
+                    game_data.destination_outer_map)
                 {
-                    if (game_data.current_map
-                        == game_data.destination_outer_map)
+                    if (game_data.current_map ==
+                        game_data.destination_outer_map)
                     {
                         txt(i18n::s.get("core.locale.common.nothing_happens"));
                         goto label_2740_internal;
@@ -974,8 +971,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         else if (rnd(1500) == 0)
         {
-            if (area_data[game_data.current_map].id != mdata_t::MapId::your_home
-                && game_data.current_map != mdata_t::MapId::shelter_)
+            if (area_data[game_data.current_map].id !=
+                    mdata_t::MapId::your_home &&
+                game_data.current_map != mdata_t::MapId::shelter_)
             {
                 modify_ether_disease_stage(10);
             }
@@ -983,8 +981,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
     }
     tc = cc;
     if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
-            .mef_index_plus_one
-        != 0)
+            .mef_index_plus_one != 0)
     {
         mef_proc(tc);
     }
@@ -1009,8 +1006,8 @@ TurnResult pass_one_turn(bool label_2738_flg)
             }
         }
     }
-    if (cdata[cc].choked > 0 || cdata[cc].sleep > 0 || cdata[cc].paralyzed > 0
-        || cdata[cc].dimmed >= 60)
+    if (cdata[cc].choked > 0 || cdata[cc].sleep > 0 ||
+        cdata[cc].paralyzed > 0 || cdata[cc].dimmed >= 60)
     {
         if (cc == 0)
         {
@@ -1041,8 +1038,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
                             cdata[cc].position.x,
                             cdata[cc].position.y,
                             cnt.position.x,
-                            cnt.position.y)
-                        > 5)
+                            cnt.position.y) > 5)
                     {
                         continue;
                     }
@@ -1050,13 +1046,12 @@ TurnResult pass_one_turn(bool label_2738_flg)
                             cdata[cc].position.x,
                             cdata[cc].position.y,
                             cnt.position.x,
-                            cnt.position.y)
-                        == 0)
+                            cnt.position.y) == 0)
                     {
                         continue;
                     }
-                    if (cnt.index == cc || rnd(3)
-                        || map_data.type == mdata_t::MapType::world_map)
+                    if (cnt.index == cc || rnd(3) ||
+                        map_data.type == mdata_t::MapType::world_map)
                     {
                         continue;
                     }
@@ -1200,12 +1195,12 @@ TurnResult turn_end()
                 txt(i18n::s.get("core.locale.action.backpack_squashing"));
                 damage_hp(
                     cdata[cc],
-                    cdata[cc].max_hp
-                            * (cdata.player().inventory_weight * 10
-                                   / cdata.player().max_inventory_weight
-                               + 10)
-                            / 200
-                        + 1,
+                    cdata[cc].max_hp *
+                            (cdata.player().inventory_weight * 10 /
+                                 cdata.player().max_inventory_weight +
+                             10) /
+                            200 +
+                        1,
                     -6);
             }
         }
@@ -1226,8 +1221,8 @@ TurnResult turn_end()
     if (game_data.left_turns_of_timestop > 0)
     {
         --game_data.left_turns_of_timestop;
-        if (cdata[cc].state() != Character::State::alive
-            || game_data.left_turns_of_timestop == 0)
+        if (cdata[cc].state() != Character::State::alive ||
+            game_data.left_turns_of_timestop == 0)
         {
             txt(i18n::s.get("core.locale.action.time_stop.ends"),
                 Message::color{ColorIndex::cyan});
@@ -1313,8 +1308,8 @@ TurnResult pc_turn(bool advance_time)
             {
                 game_data.player_cellaccess_check_flag = 0;
             }
-            if (cell_data.at(x, y).feats != 0
-                && cell_data.at(x, y).feats != 999)
+            if (cell_data.at(x, y).feats != 0 &&
+                cell_data.at(x, y).feats != 999)
             {
                 game_data.player_cellaccess_check_flag = 0;
             }
@@ -1363,9 +1358,9 @@ TurnResult pc_turn(bool advance_time)
         if (autosave)
         {
             autosave = 0;
-            if (game_data.wizard == 0
-                && game_data.current_map != mdata_t::MapId::pet_arena
-                && Config::instance().autosave)
+            if (game_data.wizard == 0 &&
+                game_data.current_map != mdata_t::MapId::pet_arena &&
+                Config::instance().autosave)
             {
                 do_save_game();
             }
@@ -1385,8 +1380,8 @@ TurnResult pc_turn(bool advance_time)
             bool pet_exists = false;
             for (int cc = 1; cc < 16; ++cc)
             {
-                if (cdata[cc].state() == Character::State::alive
-                    && cdata[cc].relationship == 10)
+                if (cdata[cc].state() == Character::State::alive &&
+                    cdata[cc].relationship == 10)
                 {
                     pet_exists = true;
                     break;
@@ -1407,12 +1402,12 @@ TurnResult pc_turn(bool advance_time)
                 snd("core.exitmap1");
                 for (int cc = 0; cc < 16; ++cc)
                 {
-                    if (arenaop == 0 && followerin(cc) == 1
-                        && cdata[cc].state() == Character::State::pet_dead)
+                    if (arenaop == 0 && followerin(cc) == 1 &&
+                        cdata[cc].state() == Character::State::pet_dead)
                         continue;
-                    if (petarenawin != 1 && followerin(cc) == 1
-                        && cdata[cc].state() == Character::State::pet_dead
-                        && rnd(5) == 0)
+                    if (petarenawin != 1 && followerin(cc) == 1 &&
+                        cdata[cc].state() == Character::State::pet_dead &&
+                        rnd(5) == 0)
                         continue;
                     cdata[cc].set_state(
                         static_cast<Character::State>(followerexist(cc)));
@@ -1445,8 +1440,8 @@ TurnResult pc_turn(bool advance_time)
                 {
                     continue;
                 }
-                if (cdata[camera].state() != Character::State::alive
-                    || camera == 0)
+                if (cdata[camera].state() != Character::State::alive ||
+                    camera == 0)
                 {
                     camera = p;
                     break;
@@ -1500,22 +1495,22 @@ TurnResult pc_turn(bool advance_time)
         if (trait(210) != 0 && rnd(5) == 0)
         {
             ci = get_random_inv(0);
-            if (inv[ci].number() > 0
-                && the_item_db[inv[ci].id]->category == 52000)
+            if (inv[ci].number() > 0 &&
+                the_item_db[inv[ci].id]->category == 52000)
             {
                 dbid = inv[ci].id;
                 access_item_db(15);
             }
         }
-        if (trait(214) != 0 && rnd(250) == 0
-            && map_data.type != mdata_t::MapType::world_map)
+        if (trait(214) != 0 && rnd(250) == 0 &&
+            map_data.type != mdata_t::MapType::world_map)
         {
             efid = 408;
             magic();
         }
-        if (cdata[cdata.player().enemy_id].is_invisible() == 1
-            && cdata.player().can_see_invisible() == 0
-            && cdata[cdata.player().enemy_id].wet == 0)
+        if (cdata[cdata.player().enemy_id].is_invisible() == 1 &&
+            cdata.player().can_see_invisible() == 0 &&
+            cdata[cdata.player().enemy_id].wet == 0)
         {
             cdata.player().enemy_id = 0;
         }

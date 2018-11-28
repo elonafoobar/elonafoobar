@@ -40,8 +40,8 @@ MainMenuResult main_title_menu()
     color(0, 0, 0);
     color(255, 255, 255);
     pos(20, 38);
-    mes(u8"  Variant foobar version "s + latest_version.short_string()
-        + u8"  Developed by KI");
+    mes(u8"  Variant foobar version "s + latest_version.short_string() +
+        u8"  Developed by KI");
     color(0, 0, 0);
     if (jp)
     {
@@ -427,13 +427,13 @@ MainMenuResult main_menu_continue()
                     playerid = listn(0, p);
                     if (jp)
                     {
-                        s = u8"本当に"s + playerid
-                            + u8"を削除していいのかい？"s;
+                        s = u8"本当に"s + playerid +
+                            u8"を削除していいのかい？"s;
                     }
                     else
                     {
-                        s = u8"Do you really want to delete "s + playerid
-                            + u8" ?"s;
+                        s = u8"Do you really want to delete "s + playerid +
+                            u8" ?"s;
                     }
                     draw_caption();
                     rtval = yes_or_no(promptx, prompty, 200);
@@ -443,13 +443,13 @@ MainMenuResult main_menu_continue()
                     }
                     if (jp)
                     {
-                        s = u8"本当の本当に"s + playerid
-                            + u8"を削除していいのかい？"s;
+                        s = u8"本当の本当に"s + playerid +
+                            u8"を削除していいのかい？"s;
                     }
                     else
                     {
-                        s = u8"Are you sure you really want to delete "s
-                            + playerid + u8" ?"s;
+                        s = u8"Are you sure you really want to delete "s +
+                            playerid + u8" ?"s;
                     }
                     draw_caption();
                     rtval = yes_or_no(promptx, prompty, 200);

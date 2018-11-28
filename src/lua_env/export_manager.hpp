@@ -60,8 +60,8 @@ public:
         else
         {
             throw std::runtime_error(
-                "Script callback error (" + name
-                + "): no such exported function was found");
+                "Script callback error (" + name +
+                "): no such exported function was found");
         }
     }
 
@@ -94,9 +94,9 @@ public:
         }
         else
         {
-            std::string message =
-                "Script callback error (" + name + "): no such exported function was "
-                  "found";
+            std::string message = "Script callback error (" + name +
+                "): no such exported function was "
+                "found";
 
             txt(message, Message::color{ColorIndex::red});
             std::cerr << message << std::endl;

@@ -185,8 +185,8 @@ public:
         if (!storage.at(key).is<T>())
         {
             throw std::runtime_error(
-                "Expected type \"" + def.type_to_string(key) + "\" for key "
-                + key);
+                "Expected type \"" + def.type_to_string(key) + "\" for key " +
+                key);
         }
 
         try

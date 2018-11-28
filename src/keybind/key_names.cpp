@@ -197,8 +197,8 @@ optional<snail::Key> keybind_key_code(const std::string& name, bool shift)
 {
     for (const auto& it : key_names)
     {
-        if ((shift && it.second.shift && *it.second.shift == name)
-            || (!shift && it.second.normal == name))
+        if ((shift && it.second.shift && *it.second.shift == name) ||
+            (!shift && it.second.normal == name))
         {
             return it.first;
         }

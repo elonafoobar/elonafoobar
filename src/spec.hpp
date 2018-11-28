@@ -184,8 +184,8 @@ public:
             throw SpecError(
                 key,
                 "Attempted to inject an enum, but it was not of type "
-                "runtime_enum: "
-                    + key);
+                "runtime_enum: " +
+                    key);
         }
 
 
@@ -201,8 +201,8 @@ public:
             def.variants = std::vector<std::string>();
             throw SpecError(
                 key,
-                "Default variant \"" + default_variant
-                    + "\" not found: " + key);
+                "Default variant \"" + default_variant +
+                    "\" not found: " + key);
         }
 
         def.default_index = *index;

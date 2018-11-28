@@ -428,8 +428,8 @@ void window_recipe_(
         prm_1052 + prm_1054 - 49 - prm_1054 % 8,
         {234, 220, 188});
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
-    s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s
-        + i18n::s.get("core.locale.blending.recipe.hint");
+    s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s +
+        i18n::s.get("core.locale.blending.recipe.hint");
     if (step == -1)
     {
         s_at_m184(1) += strhint3;
@@ -475,14 +475,14 @@ void window_recipe_(
     if (step == -1)
     {
         pos(dx_at_m184, dy_at_m184);
-        mes(""s + i_at_m184 + u8"."s
-            + i18n::s.get("core.locale.blending.window.choose_a_recipe"));
+        mes(""s + i_at_m184 + u8"."s +
+            i18n::s.get("core.locale.blending.window.choose_a_recipe"));
     }
     else
     {
         pos(dx_at_m184, dy_at_m184);
-        mes(""s + i_at_m184 + u8"."s
-            + i18n::s.get(
+        mes(""s + i_at_m184 + u8"."s +
+            i18n::s.get(
                 "core.locale.blending.window.chose_the_recipe_of",
                 rpname(rpid)));
     }
@@ -554,8 +554,8 @@ void window_recipe_(
             {20, 20, 20, 32});
     }
     pos(dx_at_m184, dy_at_m184);
-    mes(""s + i_at_m184 + u8"."s
-        + i18n::s.get("core.locale.blending.window.start"));
+    mes(""s + i_at_m184 + u8"."s +
+        i18n::s.get("core.locale.blending.window.start"));
     dy_at_m184 += 30;
     if (rppage == 0)
     {
@@ -574,8 +574,8 @@ void window_recipe_(
             {
                 break;
             }
-            if (rpdata(11 + cnt * 2, rpid)
-                > sdata(rpdata(10 + cnt * 2, rpid), 0))
+            if (rpdata(11 + cnt * 2, rpid) >
+                sdata(rpdata(10 + cnt * 2, rpid), 0))
             {
                 color(150, 0, 0);
             }
@@ -589,9 +589,9 @@ void window_recipe_(
                     the_ability_db
                         .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
                         ->get(),
-                    "name")
-                + u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s
-                + sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s);
+                    "name") +
+                u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
+                sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s);
             color(0, 0, 0);
         }
         dy_at_m184 += 50;
@@ -1200,8 +1200,8 @@ int rpdiff(int, int prm_1042, int prm_1043)
             }
         }
         p_at_m180 =
-            (d_at_m180 * 200 / sdata(rpdata((10 + cnt * 2), rpid), 0) - 200)
-            * -1;
+            (d_at_m180 * 200 / sdata(rpdata((10 + cnt * 2), rpid), 0) - 200) *
+            -1;
         if (p_at_m180 > 0)
         {
             p_at_m180 /= 5;
@@ -1279,8 +1279,8 @@ int blendcheckmat(int prm_1044)
                 {
                     continue;
                 }
-                if ((rpdata(2, rpid) <= 0 || step_at_m181 != 0)
-                    && inv[cnt].own_state > 0)
+                if ((rpdata(2, rpid) <= 0 || step_at_m181 != 0) &&
+                    inv[cnt].own_state > 0)
                 {
                     continue;
                 }
@@ -1290,8 +1290,7 @@ int blendcheckmat(int prm_1044)
                             inv[cnt].position.x,
                             inv[cnt].position.y,
                             cdata.player().position.x,
-                            cdata.player().position.y)
-                        > 4)
+                            cdata.player().position.y) > 4)
                     {
                         continue;
                     }
@@ -1318,9 +1317,9 @@ int blendcheckmat(int prm_1044)
                     if (instr(
                             the_item_db[inv[cnt].id]->rffilter,
                             0,
-                            u8"/"s + rfnameorg(0, (id_at_m181 - 9000)) + u8"/"s)
-                            != -1
-                        || id_at_m181 == 9004)
+                            u8"/"s + rfnameorg(0, (id_at_m181 - 9000)) +
+                                u8"/"s) != -1 ||
+                        id_at_m181 == 9004)
                     {
                         f_at_m181 = 1;
                         break;
@@ -1367,8 +1366,8 @@ int blendmatnum(int prm_1045, int prm_1046)
             {
                 continue;
             }
-            if ((rpdata(2, rpid) <= 0 || prm_1046 != 0)
-                && inv[cnt].own_state > 0)
+            if ((rpdata(2, rpid) <= 0 || prm_1046 != 0) &&
+                inv[cnt].own_state > 0)
             {
                 continue;
             }
@@ -1378,8 +1377,7 @@ int blendmatnum(int prm_1045, int prm_1046)
                         inv[cnt].position.x,
                         inv[cnt].position.y,
                         cdata.player().position.x,
-                        cdata.player().position.y)
-                    > 4)
+                        cdata.player().position.y) > 4)
                 {
                     continue;
                 }
@@ -1405,9 +1403,9 @@ int blendmatnum(int prm_1045, int prm_1046)
                 if (instr(
                         the_item_db[inv[cnt].id]->rffilter,
                         0,
-                        u8"/"s + rfnameorg(0, (prm_1045 - 9000)) + u8"/"s)
-                        != -1
-                    || prm_1045 == 9004)
+                        u8"/"s + rfnameorg(0, (prm_1045 - 9000)) + u8"/"s) !=
+                        -1 ||
+                    prm_1045 == 9004)
                 {
                     m_at_m182 += inv[cnt].number();
                 }
@@ -1462,8 +1460,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                         inv[cnt].position.x,
                         inv[cnt].position.y,
                         cdata.player().position.x,
-                        cdata.player().position.y)
-                    > 4)
+                        cdata.player().position.y) > 4)
                 {
                     continue;
                 }
@@ -1489,9 +1486,9 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                 if (instr(
                         the_item_db[inv[cnt].id]->rffilter,
                         0,
-                        u8"/"s + rfnameorg(0, (id_at_m183 - 9000)) + u8"/"s)
-                        == -1
-                    && id_at_m183 != 9004)
+                        u8"/"s + rfnameorg(0, (id_at_m183 - 9000)) + u8"/"s) ==
+                        -1 &&
+                    id_at_m183 != 9004)
                 {
                     continue;
                 }
@@ -1547,8 +1544,8 @@ int blending_find_required_mat()
             f = 0;
             break;
         }
-        if (inv[rpref(10 + cnt * 2)].number() <= 0
-            || inv[rpref(10 + cnt * 2)].id != rpref(11 + cnt * 2))
+        if (inv[rpref(10 + cnt * 2)].number() <= 0 ||
+            inv[rpref(10 + cnt * 2)].id != rpref(11 + cnt * 2))
         {
             f = 0;
             break;
@@ -1800,8 +1797,8 @@ void blending_proc_on_success_events()
         }
         break;
     case 10008:
-        if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-            || (inv[ci].id == 602 && game_data.holy_well_count <= 0))
+        if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
+            (inv[ci].id == 602 && game_data.holy_well_count <= 0))
         {
             txt(i18n::s.get(
                 "core.locale.action.dip.result.natural_potion_dry", inv[ci]));

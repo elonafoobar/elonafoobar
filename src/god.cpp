@@ -120,8 +120,8 @@ int modpiety(int prm_1035)
         txt(i18n::s.get("core.locale.god.indifferent"));
         return 0;
     }
-    cdata.player().piety_point += prm_1035
-        / (1 + (game_data.current_map == mdata_t::MapId::show_house) * 9);
+    cdata.player().piety_point += prm_1035 /
+        (1 + (game_data.current_map == mdata_t::MapId::show_house) * 9);
     return 1;
 }
 
@@ -129,8 +129,8 @@ int modpiety(int prm_1035)
 
 void set_npc_religion()
 {
-    if (cdata[tc].god_id != core_god::eyth || cdata[tc].has_learned_words()
-        || tc == 0)
+    if (cdata[tc].god_id != core_god::eyth || cdata[tc].has_learned_words() ||
+        tc == 0)
     {
         return;
     }

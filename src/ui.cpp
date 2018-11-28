@@ -99,8 +99,8 @@ void render_weather_effect_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i
-         < max_particles * (1 + (map_data.type == mdata_t::MapType::world_map));
+    for (int i = 0; i <
+         max_particles * (1 + (map_data.type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -143,8 +143,8 @@ void render_weather_effect_hard_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i
-         < max_particles * (1 + (map_data.type == mdata_t::MapType::world_map));
+    for (int i = 0; i <
+         max_particles * (1 + (map_data.type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -310,8 +310,8 @@ void highlight_characters_in_pet_arena()
         }
         const int x = (cc.position.x - scx) * inf_tiles + inf_screenx;
         const int y = (cc.position.y - scy) * inf_tiles + inf_screeny;
-        if (0 <= x && x - inf_screenx < (inf_screenw - 1) * inf_tiles && 0 <= y
-            && y < (inf_screenh - 1) * inf_tiles)
+        if (0 <= x && x - inf_screenx < (inf_screenw - 1) * inf_tiles &&
+            0 <= y && y < (inf_screenh - 1) * inf_tiles)
         {
             boxf(
                 x,
@@ -559,11 +559,11 @@ void render_clock()
         game_data.date.minute * 6);
 
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s
-        + game_data.date.day);
+    mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
+        game_data.date.day);
     bmes(
-        i18n::_(u8"ui", u8"time", u8"_"s + game_data.date.hour / 4) + u8" "s
-            + i18n::_(u8"ui", u8"weather", u8"_"s + game_data.weather),
+        i18n::_(u8"ui", u8"time", u8"_"s + game_data.date.hour / 4) + u8" "s +
+            i18n::_(u8"ui", u8"weather", u8"_"s + game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
 }
@@ -596,24 +596,23 @@ void render_skill_trackers()
             16,
             inf_clocky + 107 + y * 16);
         bmes(
-            ""s + sdata.get(skill, chara).original_level + u8"."s
-                + std::to_string(
-                      1000 + sdata.get(skill, chara).experience % 1000)
-                      .substr(1),
+            ""s + sdata.get(skill, chara).original_level + u8"."s +
+                std::to_string(1000 + sdata.get(skill, chara).experience % 1000)
+                    .substr(1),
             66,
             inf_clocky + 107 + y * 16);
         if (elona::Config::instance().allow_enhanced_skill)
         {
             elona::snail::Color col{255, 130, 130};
 
-            if (sdata.get(skill, chara).potential
-                > elona::Config::instance().enhanced_skill_upperbound)
+            if (sdata.get(skill, chara).potential >
+                elona::Config::instance().enhanced_skill_upperbound)
             {
                 col = {130, 255, 130};
             }
             else if (
-                sdata.get(skill, chara).potential
-                > elona::Config::instance().enhanced_skill_lowerbound)
+                sdata.get(skill, chara).potential >
+                elona::Config::instance().enhanced_skill_lowerbound)
             {
                 col = {255, 255, 130};
             }
@@ -950,10 +949,10 @@ void render_autoturn_animation()
         load_continuous_action_animation();
     }
 
-    if (firstautoturn
-        || (cdata.player().continuous_action.type
-                == ContinuousAction::Type::fish
-            && rowactre == 0 && fishanime == 0))
+    if (firstautoturn ||
+        (cdata.player().continuous_action.type ==
+             ContinuousAction::Type::fish &&
+         rowactre == 0 && fishanime == 0))
     {
         ui_render_non_hud();
         render_hud();
@@ -978,15 +977,15 @@ void render_autoturn_animation()
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
 
-    if (cdata.player().continuous_action.type
-            == ContinuousAction::Type::dig_ground
-        || cdata.player().continuous_action.type
-            == ContinuousAction::Type::dig_wall
-        || cdata.player().continuous_action.type
-            == ContinuousAction::Type::search_material
-        || (cdata.player().continuous_action.type
-                == ContinuousAction::Type::fish
-            && rowactre != 0))
+    if (cdata.player().continuous_action.type ==
+            ContinuousAction::Type::dig_ground ||
+        cdata.player().continuous_action.type ==
+            ContinuousAction::Type::dig_wall ||
+        cdata.player().continuous_action.type ==
+            ContinuousAction::Type::search_material ||
+        (cdata.player().continuous_action.type ==
+             ContinuousAction::Type::fish &&
+         rowactre != 0))
     {
         if (Config::instance().animewait != 0)
         {
@@ -997,8 +996,8 @@ void render_autoturn_animation()
                 {
                     gmode(0);
                     pos(sx + 2, sy - 102);
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::dig_wall)
+                    if (cdata.player().continuous_action.type ==
+                        ContinuousAction::Type::dig_wall)
                     {
                         if (cnt == 2)
                         {
@@ -1007,8 +1006,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2);
                     }
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::fish)
+                    if (cdata.player().continuous_action.type ==
+                        ContinuousAction::Type::fish)
                     {
                         if (racount == 0)
                         {
@@ -1020,8 +1019,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2.5);
                     }
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::search_material)
+                    if (cdata.player().continuous_action.type ==
+                        ContinuousAction::Type::search_material)
                     {
                         if (cnt == 4)
                         {
@@ -1030,8 +1029,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2.75);
                     }
-                    if (cdata.player().continuous_action.type
-                        == ContinuousAction::Type::dig_ground)
+                    if (cdata.player().continuous_action.type ==
+                        ContinuousAction::Type::dig_ground)
                     {
                         if (cnt == 2)
                         {
@@ -1115,8 +1114,8 @@ Position gmes(
             byte = 1;
         std::string m_ = strmid(message, pos, byte);
         pos += byte;
-        if (m_ == u8"。" || m_ == u8"、" || m_ == u8"」" || m_ == u8"』"
-            || m_ == u8"！" || m_ == u8"？" || m_ == u8"…")
+        if (m_ == u8"。" || m_ == u8"、" || m_ == u8"」" || m_ == u8"』" ||
+            m_ == u8"！" || m_ == u8"？" || m_ == u8"…")
         {
             wait_to_break_line = true;
         }
@@ -1357,8 +1356,8 @@ void update_minimap()
     {
         for (int x = 0; x < map_data.width; ++x)
         {
-            if (cell_data.at(x, y).chip_id_memory
-                == cell_data.at(x, y).chip_id_actual)
+            if (cell_data.at(x, y).chip_id_memory ==
+                cell_data.at(x, y).chip_id_actual)
             {
                 draw_minimap_pixel(x, y);
             }
@@ -1387,8 +1386,8 @@ void render_hud()
     font(12 - en * 2, snail::Font::Style::bold);
     render_hp_bar(cdata.player(), inf_hpx, inf_hpy, true);
     render_mp_bar(cdata.player(), inf_mpx, inf_mpy, true);
-    if (game_data.mount != 0
-        && cdata[game_data.mount].state() == Character::State::alive)
+    if (game_data.mount != 0 &&
+        cdata[game_data.mount].state() == Character::State::alive)
     {
         render_hp_bar(cdata[game_data.mount], inf_hpx - 120, inf_hpy);
     }
@@ -1458,8 +1457,8 @@ void load_continuous_action_animation()
 {
     gsel(9);
     pos(0, 0);
-    if (cdata.player().continuous_action.type
-        == ContinuousAction::Type::dig_wall)
+    if (cdata.player().continuous_action.type ==
+        ContinuousAction::Type::dig_wall)
     {
         picload(filesystem::dir::graphic() / u8"anime1.bmp");
     }
@@ -1470,13 +1469,13 @@ void load_continuous_action_animation()
             picload(filesystem::dir::graphic() / u8"anime2.bmp");
         }
     }
-    if (cdata.player().continuous_action.type
-        == ContinuousAction::Type::search_material)
+    if (cdata.player().continuous_action.type ==
+        ContinuousAction::Type::search_material)
     {
         picload(filesystem::dir::graphic() / u8"anime3.bmp");
     }
-    if (cdata.player().continuous_action.type
-        == ContinuousAction::Type::dig_ground)
+    if (cdata.player().continuous_action.type ==
+        ContinuousAction::Type::dig_ground)
     {
         picload(filesystem::dir::graphic() / u8"anime4.bmp");
     }
@@ -1672,16 +1671,16 @@ void update_slight()
             }
             if (cdata.player().blind != 0)
             {
-                if (sx != cdata.player().position.x
-                    || sy != cdata.player().position.y)
+                if (sx != cdata.player().position.x ||
+                    sy != cdata.player().position.y)
                 {
                     goto label_1431_internal;
                 }
             }
             if (sy(2) <= sy && sy <= sy(3))
             {
-                if (sx >= fovlist[sy + center.y][0] + center.x
-                    && sx < fovlist[sy + center.y][1] + center.x)
+                if (sx >= fovlist[sy + center.y][0] + center.x &&
+                    sx < fovlist[sy + center.y][1] + center.x)
                 {
                     if (fov_los(
                             cdata.player().position.x,
@@ -1696,8 +1695,8 @@ void update_slight()
                             cdata[cell_data.at(sx, sy).chara_index_plus_one - 1]
                                 .vision_flag = msync;
                         }
-                        if (cell_data.at(sx, sy).chip_id_memory
-                            != cell_data.at(sx, sy).chip_id_actual)
+                        if (cell_data.at(sx, sy).chip_id_memory !=
+                            cell_data.at(sx, sy).chip_id_actual)
                         {
                             cell_data.at(sx, sy).chip_id_memory =
                                 cell_data.at(sx, sy).chip_id_actual;
@@ -1759,13 +1758,13 @@ void ui_scroll_screen()
 {
     int scxbk2 = 0;
     int scybk2 = 0;
-    if (std::abs(cdata.player().next_position.x - cdata.player().position.x)
-        > 1)
+    if (std::abs(cdata.player().next_position.x - cdata.player().position.x) >
+        1)
     {
         return;
     }
-    if (std::abs(cdata.player().next_position.y - cdata.player().position.y)
-        > 1)
+    if (std::abs(cdata.player().next_position.y - cdata.player().position.y) >
+        1)
     {
         return;
     }
@@ -1778,8 +1777,7 @@ void ui_scroll_screen()
                 0,
                 cell_data
                     .at(cdata.player().position.x, cdata.player().position.y)
-                    .chip_id_actual)
-            == 4)
+                    .chip_id_actual) == 4)
         {
             scrollp = 9;
         }
@@ -1812,10 +1810,10 @@ void ui_scroll_screen()
         {
             ++scrturn;
         }
-        sxfix = (cdata.player().next_position.x - cdata.player().position.x)
-            * cnt * inf_tiles / scrollp * -1;
-        syfix = (cdata.player().next_position.y - cdata.player().position.y)
-            * cnt * inf_tiles / scrollp * -1;
+        sxfix = (cdata.player().next_position.x - cdata.player().position.x) *
+            cnt * inf_tiles / scrollp * -1;
+        syfix = (cdata.player().next_position.y - cdata.player().position.y) *
+            cnt * inf_tiles / scrollp * -1;
         gsel(4);
         pos(0, 0);
         gmode(0);
@@ -1995,8 +1993,9 @@ void render_fishing_animation()
         if (fishanime(1) > 15)
         {
             sx += (cdata.player().position.x - fishx) * 8 * (fishanime(1) - 15);
-            sy += (cdata.player().position.y - fishy) * 8 * (fishanime(1) - 15)
-                + fishanime(1);
+            sy +=
+                (cdata.player().position.y - fishy) * 8 * (fishanime(1) - 15) +
+                fishanime(1);
             pos(sx, sy - 44);
             gcopy(9, 144 + fishanime(1) / 2 % 2 * 48, 0, 48, 48);
         }
@@ -2168,8 +2167,8 @@ void display_window(
     font(15 + en - en * 2);
     bmes(
         s,
-        window_x + 45 * window_width / 200 + 34 - strlen_u(s) * 4
-            + clamp(int(strlen_u(s) * 8 - 120), 0, 200) / 2,
+        window_x + 45 * window_width / 200 + 34 - strlen_u(s) * 4 +
+            clamp(int(strlen_u(s) * 8 - 120), 0, 200) / 2,
         window_y + 4 + vfix,
         {255, 255, 255},
         {20, 10, 0});
@@ -2415,8 +2414,8 @@ void cs_list(
     case 0: color(10, 10, 10); break;
     case 1:
         color(0, 0, 0);
-        if (inv[ci].identification_state
-            == IdentifyState::completely_identified)
+        if (inv[ci].identification_state ==
+            IdentifyState::completely_identified)
         {
             switch (inv[ci].curse_state)
             {

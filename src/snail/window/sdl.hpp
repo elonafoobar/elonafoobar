@@ -114,12 +114,12 @@ public:
         int height,
         Flag flag)
         : Window(
-            title,
-            static_cast<int>(x),
-            static_cast<int>(y),
-            width,
-            height,
-            flag)
+              title,
+              static_cast<int>(x),
+              static_cast<int>(y),
+              width,
+              height,
+              flag)
     {
     }
 

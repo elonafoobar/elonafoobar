@@ -23,8 +23,8 @@ int calculate_original_value(const Item& ci)
 {
     if (the_item_db[ci.id]->category == 60000)
     {
-        return ci.value * 100 / (80 + std::max(1, ci.subname) * 20)
-            - the_item_material_db[ci.material]->value * 2;
+        return ci.value * 100 / (80 + std::max(1, ci.subname) * 20) -
+            the_item_material_db[ci.material]->value * 2;
     }
     else
     {
@@ -72,8 +72,8 @@ void get_random_item_id()
             bool ok = true;
             for (int i = 0; i < filtermax; ++i)
             {
-                if (the_item_db[data.id]->filter.find(filtern(i))
-                    == std::string::npos)
+                if (the_item_db[data.id]->filter.find(filtern(i)) ==
+                    std::string::npos)
                 {
                     ok = false;
                     break;
@@ -84,9 +84,9 @@ void get_random_item_id()
         }
         sampler.add(
             data.id,
-            data.rarity
-                    / (1000 + std::abs(data.level - objlv) * data.coefficient)
-                + 1);
+            data.rarity /
+                    (1000 + std::abs(data.level - objlv) * data.coefficient) +
+                1);
     }
 
     dbid = sampler.get().value_or(25);
@@ -135,8 +135,8 @@ int do_create_item(int slot, int x, int y)
                     sx = x + rnd(i + 1) - rnd(i + 1);
                     sy = y + rnd(i + 1) - rnd(i + 1);
                 }
-                if (sx < 0 || sy < 0 || sx > map_data.width - 1
-                    || sy > map_data.height - 1)
+                if (sx < 0 || sy < 0 || sx > map_data.width - 1 ||
+                    sy > map_data.height - 1)
                 {
                     continue;
                 }
@@ -150,9 +150,9 @@ int do_create_item(int slot, int x, int y)
             }
             if (cell_data.at(sx, sy).feats != 0)
             {
-                if (cell_data.at(sx, sy).feats / 1000 % 100 == 22
-                    || cell_data.at(sx, sy).feats / 1000 % 100 == 20
-                    || cell_data.at(sx, sy).feats / 1000 % 100 == 21)
+                if (cell_data.at(sx, sy).feats / 1000 % 100 == 22 ||
+                    cell_data.at(sx, sy).feats / 1000 % 100 == 20 ||
+                    cell_data.at(sx, sy).feats / 1000 % 100 == 21)
                 {
                     continue;
                 }
@@ -278,9 +278,9 @@ int do_create_item(int slot, int x, int y)
             inv[ci].param1 = 2;
         }
         inv[ci].subname = inv[ci].param1;
-        inv[ci].value = 5000
-            + 4500 * inv[ci].param1 * inv[ci].param1 * inv[ci].param1
-            + inv[ci].param1 * 20000;
+        inv[ci].value = 5000 +
+            4500 * inv[ci].param1 * inv[ci].param1 * inv[ci].param1 +
+            inv[ci].param1 * 20000;
         if (inv[ci].param1 == 5)
         {
             inv[ci].value *= 2;
@@ -370,9 +370,9 @@ int do_create_item(int slot, int x, int y)
 
     if (reftype == 72000)
     {
-        inv[ci].param1 = game_data.current_dungeon_level
-                * (game_data.current_map != mdata_t::MapId::shelter_)
-            + 5;
+        inv[ci].param1 = game_data.current_dungeon_level *
+                (game_data.current_map != mdata_t::MapId::shelter_) +
+            5;
         if (inv[ci].id == 283)
         {
             inv[ci].param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
@@ -382,9 +382,9 @@ int do_create_item(int slot, int x, int y)
             inv[ci].param1 = cdata.player().level;
         }
         inv[ci].param2 =
-            rnd(std::abs(game_data.current_dungeon_level)
-                    * (game_data.current_map != mdata_t::MapId::shelter_)
-                + 1);
+            rnd(std::abs(game_data.current_dungeon_level) *
+                    (game_data.current_map != mdata_t::MapId::shelter_) +
+                1);
         if (inv[ci].id == 284 || inv[ci].id == 283)
         {
             inv[ci].param2 = rnd(15);
@@ -438,8 +438,8 @@ int do_create_item(int slot, int x, int y)
     {
         inv[ci].identification_state = IdentifyState::completely_identified;
     }
-    if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
-        || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
+    if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622 ||
+        inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
         inv[ci].curse_state = CurseState::none;
         inv[ci].identification_state = IdentifyState::completely_identified;
@@ -703,8 +703,8 @@ void apply_item_material()
 {
     if (reftype == 60000)
     {
-        if (inv[ci].material == 3 || inv[ci].material == 16
-            || inv[ci].material == 21 || inv[ci].material == 2)
+        if (inv[ci].material == 3 || inv[ci].material == 16 ||
+            inv[ci].material == 21 || inv[ci].material == 2)
         {
             inv[ci].material = 43;
         }
@@ -742,13 +742,13 @@ void apply_item_material()
     }
     if (inv[ci].hit_bonus != 0)
     {
-        inv[ci].hit_bonus = the_item_material_db[p]->hit_bonus
-            * inv[ci].hit_bonus * 9 / (p(1) - rnd(30));
+        inv[ci].hit_bonus = the_item_material_db[p]->hit_bonus *
+            inv[ci].hit_bonus * 9 / (p(1) - rnd(30));
     }
     if (inv[ci].damage_bonus != 0)
     {
-        inv[ci].damage_bonus = the_item_material_db[p]->damage_bonus
-            * inv[ci].damage_bonus * 5 / (p(1) - rnd(30));
+        inv[ci].damage_bonus = the_item_material_db[p]->damage_bonus *
+            inv[ci].damage_bonus * 5 / (p(1) - rnd(30));
     }
     if (inv[ci].dv != 0)
     {

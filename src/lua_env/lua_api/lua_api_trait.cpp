@@ -41,15 +41,15 @@ void Trait::set(int trait_id, int level)
     {
         return;
     }
-    if (elona::trait(trait_id) < level
-        && elona::trait(trait_id) < elona::traitref(2) && traitrefn(0) != "")
+    if (elona::trait(trait_id) < level &&
+        elona::trait(trait_id) < elona::traitref(2) && traitrefn(0) != "")
     {
         snd("core.ding3");
         elona::txt(traitrefn(0), elona::Message::color{ColorIndex::green});
     }
     else if (
-        elona::trait(trait_id) > level
-        && elona::trait(trait_id) > elona::traitref(1) && traitrefn(1) != "")
+        elona::trait(trait_id) > level &&
+        elona::trait(trait_id) > elona::traitref(1) && traitrefn(1) != "")
     {
         snd("core.ding3");
         elona::txt(traitrefn(1), elona::Message::color{ColorIndex::red});
@@ -65,15 +65,15 @@ void Trait::modify(int trait_id, int delta)
     {
         return;
     }
-    if (delta > 0 && elona::trait(trait_id) < elona::traitref(2)
-        && traitrefn(0) != "")
+    if (delta > 0 && elona::trait(trait_id) < elona::traitref(2) &&
+        traitrefn(0) != "")
     {
         snd("core.ding3");
         elona::txt(traitrefn(0), elona::Message::color{ColorIndex::green});
     }
     else if (
-        delta < 0 && elona::trait(trait_id) > elona::traitref(1)
-        && traitrefn(1) != "")
+        delta < 0 && elona::trait(trait_id) > elona::traitref(1) &&
+        traitrefn(1) != "")
     {
         snd("core.ding3");
         elona::txt(traitrefn(1), elona::Message::color{ColorIndex::red});

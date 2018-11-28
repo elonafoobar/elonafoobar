@@ -195,14 +195,14 @@ public:
         if (index == -1)
         {
             throw std::runtime_error(
-                "No such enum variant \"" + default_choice + "\" in \"" + key
-                + "\".");
+                "No such enum variant \"" + default_choice + "\" in \"" + key +
+                "\".");
         }
         // If the enum variant is injected, but the selected value is
         // still unknown, try to set its index to the first known
         // value if there is one.
-        if (variants.size() >= 2 && index == 0
-            && variants.at(index).value == spec::unknown_enum_variant)
+        if (variants.size() >= 2 && index == 0 &&
+            variants.at(index).value == spec::unknown_enum_variant)
         {
             index = 1;
             Config::instance().set(key, variants.at(index).value);
@@ -221,8 +221,8 @@ public:
             index = static_cast<int>(variants.size() - 1);
         }
         // See above.
-        if (variants.size() >= 2 && index == 0
-            && variants.at(index).value == spec::unknown_enum_variant)
+        if (variants.size() >= 2 && index == 0 &&
+            variants.at(index).value == spec::unknown_enum_variant)
         {
             index = 1;
         }

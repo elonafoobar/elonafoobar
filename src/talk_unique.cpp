@@ -186,8 +186,8 @@ TalkResult talk_unique_loyter()
 
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.nightmare == 1
-        || game_data.quest_flags.nightmare == 2)
+    if (game_data.quest_flags.nightmare == 1 ||
+        game_data.quest_flags.nightmare == 2)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -861,8 +861,8 @@ TalkResult talk_unique_lomias()
                 i18n::s.get(
                     "core.locale.talk.unique.lomias.after.choices.nothing"));
         }
-        if (game_data.quest_flags.tutorial == 0
-            || game_data.quest_flags.tutorial == -1)
+        if (game_data.quest_flags.tutorial == 0 ||
+            game_data.quest_flags.tutorial == -1)
         {
             ELONA_APPEND_RESPONSE(
                 2,
@@ -1340,8 +1340,8 @@ TalkResult talk_unique_erystia()
             5,
             i18n::s.get("core.locale.talk.unique.erystia.investigation.choices."
                         "mission"));
-        if (game_data.quest_flags.main_quest >= 100
-            && game_data.quest_flags.main_quest <= 120)
+        if (game_data.quest_flags.main_quest >= 100 &&
+            game_data.quest_flags.main_quest <= 120)
         {
             ELONA_APPEND_RESPONSE(
                 3,
@@ -1784,8 +1784,8 @@ TalkResult talk_unique_pael()
 {
     if (game_data.quest_flags.pael_and_her_mom == 1000)
     {
-        if (game_data.current_map == mdata_t::MapId::noyel
-            && area_data[game_data.current_map].christmas_festival)
+        if (game_data.current_map == mdata_t::MapId::noyel &&
+            area_data[game_data.current_map].christmas_festival)
         {
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.pael.festival");
@@ -1835,8 +1835,8 @@ TalkResult talk_unique_pael()
         game_data.quest_flags.pael_and_her_mom = 1;
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.pael_and_her_mom == 1
-        || game_data.quest_flags.pael_and_her_mom == 3)
+    if (game_data.quest_flags.pael_and_her_mom == 1 ||
+        game_data.quest_flags.pael_and_her_mom == 3)
     {
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 0);
@@ -1846,8 +1846,8 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.pael_and_her_mom == 5
-        || game_data.quest_flags.pael_and_her_mom == 7)
+    if (game_data.quest_flags.pael_and_her_mom == 5 ||
+        game_data.quest_flags.pael_and_her_mom == 7)
     {
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -1858,8 +1858,8 @@ TalkResult talk_unique_pael()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.pael_and_her_mom == 2
-        || game_data.quest_flags.pael_and_her_mom == 4)
+    if (game_data.quest_flags.pael_and_her_mom == 2 ||
+        game_data.quest_flags.pael_and_her_mom == 4)
     {
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.pael.progress", 2, cdatan(0, 0));
@@ -1995,8 +1995,8 @@ TalkResult talk_unique_paels_mom()
     }
     if (game_data.quest_flags.pael_and_her_mom == 1000)
     {
-        if (game_data.current_map == mdata_t::MapId::noyel
-            && area_data[game_data.current_map].christmas_festival)
+        if (game_data.current_map == mdata_t::MapId::noyel &&
+            area_data[game_data.current_map].christmas_festival)
         {
             buff = i18n::s.get(
                 "core.locale.talk.unique.paels_mom.progress.festival.dialog");
@@ -2221,8 +2221,8 @@ TalkResult talk_unique_raphael()
 
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.wife_collector == 1
-        || game_data.quest_flags.wife_collector == 1000)
+    if (game_data.quest_flags.wife_collector == 1 ||
+        game_data.quest_flags.wife_collector == 1000)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -2719,8 +2719,8 @@ TalkResult talk_unique_gilbert()
 
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.defense_line == 1
-        || game_data.quest_flags.defense_line == 2)
+    if (game_data.quest_flags.defense_line == 1 ||
+        game_data.quest_flags.defense_line == 2)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -2845,8 +2845,8 @@ TalkResult talk_unique_arnord()
 
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.kamikaze_attack == 1
-        || game_data.quest_flags.kamikaze_attack == 2)
+    if (game_data.quest_flags.kamikaze_attack == 1 ||
+        game_data.quest_flags.kamikaze_attack == 2)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -3052,8 +3052,8 @@ TalkResult talk_unique_renton()
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.rare_books == 0
-        || game_data.quest_flags.rare_books == 1)
+    if (game_data.quest_flags.rare_books == 0 ||
+        game_data.quest_flags.rare_books == 1)
     {
         listmax = 0;
         buff =
@@ -3515,8 +3515,8 @@ TalkResult talk_unique_icolle()
 
         return TalkResult::talk_end;
     }
-    if (game_data.quest_flags.ambitious_scientist >= 1
-        && game_data.quest_flags.ambitious_scientist <= 5)
+    if (game_data.quest_flags.ambitious_scientist >= 1 &&
+        game_data.quest_flags.ambitious_scientist <= 5)
     {
         f = _icolle_check_monster_balls();
         if (f)
@@ -4866,8 +4866,8 @@ void _part_time_worker_switch_religion()
 
 TalkResult talk_unique_part_time_worker()
 {
-    if (game_data.current_map != mdata_t::MapId::noyel
-        || area_data[game_data.current_map].christmas_festival == 0)
+    if (game_data.current_map != mdata_t::MapId::noyel ||
+        area_data[game_data.current_map].christmas_festival == 0)
     {
         return TalkResult::talk_end;
     }
