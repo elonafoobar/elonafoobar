@@ -47,17 +47,17 @@ static std::unordered_set<std::string> _read_dependencies(
                 else
                 {
                     throw std::runtime_error(
-                        path.string()
-                        + ": \"dependencies\" field must be a list of "
-                          "strings.");
+                        path.string() +
+                        ": \"dependencies\" field must be a list of "
+                        "strings.");
                 }
             }
         }
         else
         {
             throw std::runtime_error(
-                path.string()
-                + ": \"dependencies\" field must be a list of strings.");
+                path.string() +
+                ": \"dependencies\" field must be a list of strings.");
         }
     }
 

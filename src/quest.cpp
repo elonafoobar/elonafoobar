@@ -298,16 +298,15 @@ void quest_set_data(int val0)
     {
         if (quest_data[rq].reward_item_id < 10000)
         {
-            s(5) += i18n::s.get("core.locale.quest.info.and")
-                + i18n::_(
-                        u8"ui",
-                        u8"reward",
-                        u8"_"s + quest_data[rq].reward_item_id);
+            s(5) +=
+                i18n::s.get("core.locale.quest.info.and") +
+                i18n::_(
+                    u8"ui", u8"reward", u8"_"s + quest_data[rq].reward_item_id);
         }
         else
         {
-            s(5) += i18n::s.get("core.locale.quest.info.and")
-                + fltname(quest_data[rq].reward_item_id);
+            s(5) += i18n::s.get("core.locale.quest.info.and") +
+                fltname(quest_data[rq].reward_item_id);
         }
     }
     if (quest_data[rq].deadline_days == -1)
@@ -376,9 +375,9 @@ void quest_set_data(int val0)
         s = u8"%DELIVER,"s + quest_data[rq].extra_info_1;
         parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(quest_data[rq].target_item_id));
-        s(11) = ""s
-            + mapname(quest_data[quest_data[rq].target_chara_index]
-                          .originating_map_id);
+        s(11) = ""s +
+            mapname(quest_data[quest_data[rq].target_chara_index]
+                        .originating_map_id);
         s(12) = ""s + qname(quest_data[rq].target_chara_index);
         if (iorgweight(quest_data[rq].target_item_id) > 50000)
         {
@@ -427,8 +426,8 @@ void quest_set_data(int val0)
         parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(quest_data[rq].target_item_id));
         s(11) = ""s + mapname(quest_data[rq].originating_map_id);
-        if (game_data.current_map == quest_data[rq].originating_map_id
-            && game_data.current_dungeon_level == 1)
+        if (game_data.current_map == quest_data[rq].originating_map_id &&
+            game_data.current_dungeon_level == 1)
         {
             s(12) = ""s + cdatan(0, quest_data[rq].target_chara_index);
         }
@@ -447,8 +446,8 @@ void quest_set_data(int val0)
     if (val0 == 1)
     {
         buff = i18n::s.get(
-                   "core.locale.quest.giver.have_something_to_ask", cdata[tc])
-            + buff;
+                   "core.locale.quest.giver.have_something_to_ask", cdata[tc]) +
+            buff;
         if (quest_data[rq].deadline_days != -1)
         {
             buff += i18n::s.get(
@@ -462,19 +461,19 @@ void quest_set_data(int val0)
     {
         if (quest_data[rq].progress == 3)
         {
-            buff += u8"@QC["s
-                + i18n::s.get("core.locale.quest.journal.complete") + u8"]"s
-                + s(3) + u8"\n"s;
+            buff += u8"@QC["s +
+                i18n::s.get("core.locale.quest.journal.complete") + u8"]"s +
+                s(3) + u8"\n"s;
         }
         else
         {
-            buff += u8"@QL["s + i18n::s.get("core.locale.quest.journal.job")
-                + u8"] "s + s(3) + u8"\n"s;
+            buff += u8"@QL["s + i18n::s.get("core.locale.quest.journal.job") +
+                u8"] "s + s(3) + u8"\n"s;
         }
-        buff += i18n::s.get("core.locale.quest.journal.client") + qname(rq)
-            + u8"\n"s;
-        buff += i18n::s.get("core.locale.quest.journal.location")
-            + mapname(quest_data[rq].originating_map_id) + u8"\n"s;
+        buff += i18n::s.get("core.locale.quest.journal.client") + qname(rq) +
+            u8"\n"s;
+        buff += i18n::s.get("core.locale.quest.journal.location") +
+            mapname(quest_data[rq].originating_map_id) + u8"\n"s;
         buff += i18n::s.get("core.locale.quest.journal.deadline");
         if (quest_data[rq].deadline_days != -1)
         {
@@ -510,8 +509,8 @@ void quest_set_data(int val0)
         }
         if (quest_data[rq].id == 1006)
         {
-            if (quest_data[rq].extra_info_1 * 125 / 100
-                < quest_data[rq].extra_info_2)
+            if (quest_data[rq].extra_info_1 * 125 / 100 <
+                quest_data[rq].extra_info_2)
             {
                 buff += i18n::s.get(
                     "core.locale.quest.giver.complete.extra_coins", cdata[tc]);
@@ -519,8 +518,8 @@ void quest_set_data(int val0)
         }
         if (quest_data[rq].id == 1009)
         {
-            if (quest_data[rq].extra_info_1 * 150 / 100
-                < quest_data[rq].extra_info_2)
+            if (quest_data[rq].extra_info_1 * 150 / 100 <
+                quest_data[rq].extra_info_2)
             {
                 buff += i18n::s.get(
                     "core.locale.quest.giver.complete.music_tickets",
@@ -648,9 +647,8 @@ int quest_generate()
             {
                 continue;
             }
-            if (cdata[n].relationship != 0
-                || (cdata[n].character_role != 4
-                    && cdata[n].character_role != 14))
+            if (cdata[n].relationship != 0 ||
+                (cdata[n].character_role != 4 && cdata[n].character_role != 14))
             {
                 continue;
             }
@@ -690,8 +688,8 @@ int quest_generate()
     {
         if (rnd(13) == 0)
         {
-            quest_data[rq].difficulty = rnd(cdata.player().level + 10)
-                + rnd((cdata.player().fame / 2500 + 1));
+            quest_data[rq].difficulty = rnd(cdata.player().level + 10) +
+                rnd((cdata.player().fame / 2500 + 1));
             quest_data[rq].difficulty =
                 roundmargin(quest_data[rq].difficulty, cdata.player().level);
             minlevel = clamp(quest_data[rq].difficulty / 7, 5, 30);
@@ -726,8 +724,8 @@ int quest_generate()
     {
         if (rnd(20) == 0)
         {
-            quest_data[rq].difficulty = rnd(cdata.player().level + 10)
-                + rnd((cdata.player().fame / 2500 + 1));
+            quest_data[rq].difficulty = rnd(cdata.player().level + 10) +
+                rnd((cdata.player().fame / 2500 + 1));
             quest_data[rq].difficulty =
                 roundmargin(quest_data[rq].difficulty, cdata.player().level);
             minlevel = clamp(quest_data[rq].difficulty / 4, 5, 30);
@@ -778,53 +776,53 @@ int quest_generate()
         p = quest_data[rq].extra_info_1;
         if (quest_data[rq].escort_difficulty == 0)
         {
-            rewardfix = 140
-                + dist(
-                      area_data[game_data.current_map].position.x,
-                      area_data[game_data.current_map].position.y,
-                      area_data[p].position.x,
-                      area_data[p].position.y)
-                    * 2;
+            rewardfix = 140 +
+                dist(
+                    area_data[game_data.current_map].position.x,
+                    area_data[game_data.current_map].position.y,
+                    area_data[p].position.x,
+                    area_data[p].position.y) *
+                    2;
             quest_data[rq].deadline_days = rnd(8) + 6;
             quest_data[rq].difficulty = clamp(
-                rnd(cdata.player().level + 10)
-                    + rnd((cdata.player().fame / 500 + 1)) + 1,
+                rnd(cdata.player().level + 10) +
+                    rnd((cdata.player().fame / 500 + 1)) + 1,
                 1,
                 80);
         }
         if (quest_data[rq].escort_difficulty == 1)
         {
-            rewardfix = 130
-                + dist(
-                      area_data[game_data.current_map].position.x,
-                      area_data[game_data.current_map].position.y,
-                      area_data[p].position.x,
-                      area_data[p].position.y)
-                    * 2;
+            rewardfix = 130 +
+                dist(
+                    area_data[game_data.current_map].position.x,
+                    area_data[game_data.current_map].position.y,
+                    area_data[p].position.x,
+                    area_data[p].position.y) *
+                    2;
             quest_data[rq].deadline_days = rnd(5) + 2;
             quest_data[rq].difficulty = clamp(rewardfix / 10 + 1, 1, 40);
         }
         if (quest_data[rq].escort_difficulty == 2)
         {
-            rewardfix = 80
-                + dist(
-                      area_data[game_data.current_map].position.x,
-                      area_data[game_data.current_map].position.y,
-                      area_data[p].position.x,
-                      area_data[p].position.y)
-                    * 2;
+            rewardfix = 80 +
+                dist(
+                    area_data[game_data.current_map].position.x,
+                    area_data[game_data.current_map].position.y,
+                    area_data[p].position.x,
+                    area_data[p].position.y) *
+                    2;
             quest_data[rq].deadline_days = rnd(8) + 6;
             quest_data[rq].difficulty = clamp(rewardfix / 20 + 1, 1, 40);
         }
-        if (quest_data[rq].extra_info_1 == 33
-            || game_data.current_map == mdata_t::MapId::noyel)
+        if (quest_data[rq].extra_info_1 == 33 ||
+            game_data.current_map == mdata_t::MapId::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }
         return 0;
     }
-    if (rnd(23) == 0
-        || (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
+    if (rnd(23) == 0 ||
+        (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         quest_data[rq].difficulty = clamp(
             rnd(sdata(183, 0) + 10),
@@ -843,12 +841,12 @@ int quest_generate()
         rewardfix = 0;
         return 0;
     }
-    if (rnd(30) == 0
-        || (game_data.current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
+    if (rnd(30) == 0 ||
+        (game_data.current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
     {
         quest_data[rq].difficulty = clamp(
-            rnd(cdata.player().level + 5) + rnd((cdata.player().fame / 800 + 1))
-                + 1,
+            rnd(cdata.player().level + 5) +
+                rnd((cdata.player().fame / 800 + 1)) + 1,
             1,
             50);
         quest_data[rq].deadline_hours =
@@ -866,8 +864,8 @@ int quest_generate()
     if (rnd(8) == 0)
     {
         quest_data[rq].difficulty = clamp(
-            rnd(cdata.player().level + 10)
-                + rnd((cdata.player().fame / 500 + 1)) + 1,
+            rnd(cdata.player().level + 10) +
+                rnd((cdata.player().fame / 500 + 1)) + 1,
             1,
             80);
         quest_data[rq].difficulty =
@@ -910,8 +908,8 @@ int quest_generate()
             }
             if (quest_data[p].client_chara_index != 0)
             {
-                if (quest_data[p].originating_map_id != game_data.current_map
-                    || 0)
+                if (quest_data[p].originating_map_id != game_data.current_map ||
+                    0)
                 {
                     i = p;
                     break;
@@ -921,13 +919,13 @@ int quest_generate()
         if (i != -1)
         {
             p = quest_data[i].originating_map_id;
-            rewardfix = 70
-                + dist(
-                      area_data[game_data.current_map].position.x,
-                      area_data[game_data.current_map].position.y,
-                      area_data[p].position.x,
-                      area_data[p].position.y)
-                    * 2;
+            rewardfix = 70 +
+                dist(
+                    area_data[game_data.current_map].position.x,
+                    area_data[game_data.current_map].position.y,
+                    area_data[p].position.x,
+                    area_data[p].position.y) *
+                    2;
             if (p == 33 || game_data.current_map == mdata_t::MapId::noyel)
             {
                 rewardfix = rewardfix * 175 / 100;
@@ -1026,31 +1024,30 @@ int quest_generate()
 void quest_gen_scale_by_level()
 {
     quest_data[rq].reward_gold =
-        ((quest_data[rq].difficulty + 3) * 100
-         + rnd((quest_data[rq].difficulty * 30 + 200)) + 400)
-        * rewardfix / 100;
-    quest_data[rq].reward_gold = quest_data[rq].reward_gold * 100
-        / (100 + quest_data[rq].difficulty * 2 / 3);
-    if (quest_data[rq].client_chara_type == 3
-        || quest_data[rq].client_chara_type == 2)
+        ((quest_data[rq].difficulty + 3) * 100 +
+         rnd((quest_data[rq].difficulty * 30 + 200)) + 400) *
+        rewardfix / 100;
+    quest_data[rq].reward_gold = quest_data[rq].reward_gold * 100 /
+        (100 + quest_data[rq].difficulty * 2 / 3);
+    if (quest_data[rq].client_chara_type == 3 ||
+        quest_data[rq].client_chara_type == 2)
     {
         return;
     }
     if (cdata.player().level >= quest_data[rq].difficulty)
     {
-        quest_data[rq].reward_gold = quest_data[rq].reward_gold * 100
-            / (100 + (cdata.player().level - quest_data[rq].difficulty) * 10);
+        quest_data[rq].reward_gold = quest_data[rq].reward_gold * 100 /
+            (100 + (cdata.player().level - quest_data[rq].difficulty) * 10);
     }
     else
     {
-        quest_data[rq].reward_gold = quest_data[rq].reward_gold
-            * (100
-               + clamp(
-                     (quest_data[rq].difficulty - cdata.player().level) / 5
-                         * 25,
-                     0,
-                     200))
-            / 100;
+        quest_data[rq].reward_gold = quest_data[rq].reward_gold *
+            (100 +
+             clamp(
+                 (quest_data[rq].difficulty - cdata.player().level) / 5 * 25,
+                 0,
+                 200)) /
+            100;
     }
 }
 
@@ -1293,14 +1290,16 @@ void quest_team_victorious()
         cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
         modrank(1, 100, 2);
         ++area_data[game_data.previous_map2].winning_streak_in_pet_arena;
-        if (area_data[game_data.previous_map2].winning_streak_in_pet_arena % 20
-            == 0)
+        if (area_data[game_data.previous_map2].winning_streak_in_pet_arena %
+                20 ==
+            0)
         {
             matgetmain(41, 1);
         }
         else if (
-            area_data[game_data.previous_map2].winning_streak_in_pet_arena % 5
-            == 0)
+            area_data[game_data.previous_map2].winning_streak_in_pet_arena %
+                5 ==
+            0)
         {
             matgetmain(40, 1);
         }
@@ -1342,8 +1341,8 @@ void quest_all_targets_killed()
         txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
         map_placeupstairs(map_data.width / 2, map_data.height / 2);
         ++area_data[game_data.previous_map2].winning_streak_in_arena;
-        if (area_data[game_data.previous_map2].winning_streak_in_arena % 20
-            == 0)
+        if (area_data[game_data.previous_map2].winning_streak_in_arena % 20 ==
+            0)
         {
             matgetmain(41, 1);
         }
@@ -1353,8 +1352,8 @@ void quest_all_targets_killed()
             matgetmain(40, 1);
         }
     }
-    if (game_data.executing_immediate_quest_type == 1001
-        || game_data.executing_immediate_quest_type == 1010)
+    if (game_data.executing_immediate_quest_type == 1001 ||
+        game_data.executing_immediate_quest_type == 1010)
     {
         quest_data.immediate().progress = 3;
         txt(i18n::s.get("core.locale.quest.hunt.complete"),
@@ -1382,14 +1381,14 @@ void quest_complete()
     {
         if (quest_data[rq].extra_info_1 != 0)
         {
-            if (quest_data[rq].extra_info_1 * 125 / 100
-                < quest_data[rq].extra_info_2)
+            if (quest_data[rq].extra_info_1 * 125 / 100 <
+                quest_data[rq].extra_info_2)
             {
                 p = clamp(
-                    p
-                        * static_cast<int>(
-                              static_cast<double>(quest_data[rq].extra_info_2)
-                              / quest_data[rq].extra_info_1),
+                    p *
+                        static_cast<int>(
+                            static_cast<double>(quest_data[rq].extra_info_2) /
+                            quest_data[rq].extra_info_1),
                     p(0),
                     p * 3);
             }
@@ -1417,8 +1416,8 @@ void quest_complete()
     itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, p);
     if (quest_data[rq].id == 1009)
     {
-        if (quest_data[rq].extra_info_1 * 150 / 100
-            < quest_data[rq].extra_info_2)
+        if (quest_data[rq].extra_info_1 * 150 / 100 <
+            quest_data[rq].extra_info_2)
         {
             flt();
             itemcreate(

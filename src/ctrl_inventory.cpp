@@ -84,9 +84,10 @@ label_20591:
         if (cnt == 0)
         {
             p = -1;
-            if (invctrl == 2 || invctrl == 6 || invctrl == 10 || invctrl == 12
-                || invctrl == 16 || invctrl == 20 || invctrl == 21
-                || invctrl == 23 || invctrl == 24 || invctrl == 25)
+            if (invctrl == 2 || invctrl == 6 || invctrl == 10 ||
+                invctrl == 12 || invctrl == 16 || invctrl == 20 ||
+                invctrl == 21 || invctrl == 23 || invctrl == 24 ||
+                invctrl == 25)
             {
                 continue;
             }
@@ -112,9 +113,9 @@ label_20591:
             }
         }
         int cnt2 = cnt;
-        if (invctrl != 1 && invctrl != 5 && invctrl != 13 && invctrl != 14
-            && invctrl != 18 && invctrl != 20 && invctrl != 23 && invctrl != 25
-            && invctrl != 27)
+        if (invctrl != 1 && invctrl != 5 && invctrl != 13 && invctrl != 14 &&
+            invctrl != 18 && invctrl != 20 && invctrl != 23 && invctrl != 25 &&
+            invctrl != 27)
         {
             countequip = 0;
         }
@@ -153,8 +154,8 @@ label_20591:
             {
                 if (invctrl == 7)
                 {
-                    if (the_item_db[inv[cnt].id]->subcategory != 53100
-                        && inv[cnt].id != 621)
+                    if (the_item_db[inv[cnt].id]->subcategory != 53100 &&
+                        inv[cnt].id != 621)
                     {
                         continue;
                     }
@@ -164,16 +165,16 @@ label_20591:
             {
                 if (invctrl == 27)
                 {
-                    if (inv[cnt].position.x != tlocx
-                        || inv[cnt].position.y != tlocy)
+                    if (inv[cnt].position.x != tlocx ||
+                        inv[cnt].position.y != tlocy)
                     {
                         continue;
                     }
                 }
                 else if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                 {
-                    if (inv[cnt].position.x != cdata[cc].position.x
-                        || inv[cnt].position.y != cdata[cc].position.y)
+                    if (inv[cnt].position.x != cdata[cc].position.x ||
+                        inv[cnt].position.y != cdata[cc].position.y)
                     {
                         continue;
                     }
@@ -202,8 +203,8 @@ label_20591:
             {
                 if (reftype == 10000)
                 {
-                    if (mainweapon == -1
-                        || inv[cnt].body_part < inv[mainweapon].body_part)
+                    if (mainweapon == -1 ||
+                        inv[cnt].body_part < inv[mainweapon].body_part)
                     {
                         mainweapon = cnt;
                     }
@@ -211,8 +212,8 @@ label_20591:
             }
             if (invctrl == 5)
             {
-                if (reftype != 57000 && reftype != 91000
-                    && inv[cnt].material != 35)
+                if (reftype != 57000 && reftype != 91000 &&
+                    inv[cnt].material != 35)
                 {
                     continue;
                 }
@@ -291,17 +292,16 @@ label_20591:
             }
             if (invctrl == 13)
             {
-                if (inv[cnt].identification_state
-                    == IdentifyState::completely_identified)
+                if (inv[cnt].identification_state ==
+                    IdentifyState::completely_identified)
                 {
                     continue;
                 }
             }
             if (invctrl == 14)
             {
-                if (inv[cnt].function == 0
-                    && !the_item_db[inv[cnt].id]->is_usable
-                    && ibit(10, cnt) == 0)
+                if (inv[cnt].function == 0 &&
+                    !the_item_db[inv[cnt].id]->is_usable && ibit(10, cnt) == 0)
                 {
                     continue;
                 }
@@ -364,8 +364,8 @@ label_20591:
             }
             if (invctrl == 21)
             {
-                if (calcitemvalue(cnt, 0) * inv[cnt].number()
-                    < calcitemvalue(citrade, 0) * inv[citrade].number() / 2 * 3)
+                if (calcitemvalue(cnt, 0) * inv[cnt].number() <
+                    calcitemvalue(citrade, 0) * inv[citrade].number() / 2 * 3)
                 {
                     continue;
                 }
@@ -430,8 +430,8 @@ label_20591:
                 }
                 if (invctrl(1) == 7)
                 {
-                    if (inv[cnt].quality >= Quality::miracle
-                        || reftype >= 50000)
+                    if (inv[cnt].quality >= Quality::miracle ||
+                        reftype >= 50000)
                     {
                         continue;
                     }
@@ -497,16 +497,17 @@ label_20591:
             }
             else if (inv[cnt].own_state == 4)
             {
-                if (invctrl != 1 && invctrl != 2 && invctrl != 3
-                    && invctrl != 5)
+                if (invctrl != 1 && invctrl != 2 && invctrl != 3 &&
+                    invctrl != 5)
                 {
                     continue;
                 }
             }
             if (invctrl == 26)
             {
-                if (reftype != 52000 && inv[cnt].id != 578 && inv[cnt].id != 685
-                    && inv[cnt].id != 699 && inv[cnt].id != 772)
+                if (reftype != 52000 && inv[cnt].id != 578 &&
+                    inv[cnt].id != 685 && inv[cnt].id != 699 &&
+                    inv[cnt].id != 772)
                 {
                     continue;
                 }
@@ -810,10 +811,10 @@ label_2060_internal:
             }
             bmes(
                 i18n::_(u8"ui", u8"inventory_command", u8"_"s + p),
-                x + cnt * 44 + 46
-                    - strlen_u(
-                          i18n::_(u8"ui", u8"inventory_command", u8"_"s + p))
-                        * 3,
+                x + cnt * 44 + 46 -
+                    strlen_u(
+                        i18n::_(u8"ui", u8"inventory_command", u8"_"s + p)) *
+                        3,
                 y + 7,
                 invctrl == p ? snail::Color{255, 255, 255}
                              : snail::Color{165, 165, 165});
@@ -827,8 +828,8 @@ label_2060_internal:
             }
         }
         bmes(
-            ""s + key_prev + u8","s + key_next + u8",Tab,Ctrl+Tab "s + "["
-                + i18n::s.get("core.locale.ui.inv.window.change") + "]",
+            ""s + key_prev + u8","s + key_next + u8",Tab,Ctrl+Tab "s + "[" +
+                i18n::s.get("core.locale.ui.inv.window.change") + "]",
             x + 260,
             y + 32);
     }
@@ -837,22 +838,22 @@ label_2061_internal:
         "core.locale.ui.inv.window.select_item",
         i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl));
     s(1) = strhint2 + strhint5 + strhint5b + strhint3;
-    if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
-        || invctrl == 14 || invctrl == 15 || invctrl == 26)
+    if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9 ||
+        invctrl == 14 || invctrl == 15 || invctrl == 26)
     {
         s(1) += strhint7;
     }
     if (invctrl == 1)
     {
-        s(1) += ""s + key_mode2 + u8" "s + "["
-            + i18n::s.get("core.locale.ui.inv.window.tag.no_drop") + "]";
+        s(1) += ""s + key_mode2 + u8" "s + "[" +
+            i18n::s.get("core.locale.ui.inv.window.tag.no_drop") + "]";
     }
     if (invctrl == 2)
     {
         if (dropcontinue == 0)
         {
-            s(1) += ""s + key_mode2 + u8" "s + "["
-                + i18n::s.get("core.locale.ui.inv.window.tag.multi_drop") + "]";
+            s(1) += ""s + key_mode2 + u8" "s + "[" +
+                i18n::s.get("core.locale.ui.inv.window.tag.multi_drop") + "]";
         }
     }
     display_window((windoww - 640) / 2 + inf_screenx, winposy(432), 640, 432);
@@ -890,13 +891,13 @@ label_2061_internal:
     pos(wx - 6, wy - 6);
     gcopy(3, 960, 216, 48, 72);
     s = ""s + listmax + u8" items"s;
-    s += "  ("s
-        + i18n::s.get(
-              "core.locale.ui.inv.window.total_weight",
-              cnvweight(cdata.player().inventory_weight),
-              cnvweight(cdata.player().max_inventory_weight),
-              cnvweight(game_data.cargo_weight))
-        + ")"s;
+    s += "  ("s +
+        i18n::s.get(
+            "core.locale.ui.inv.window.total_weight",
+            cnvweight(cdata.player().inventory_weight),
+            cnvweight(cdata.player().max_inventory_weight),
+            cnvweight(game_data.cargo_weight)) +
+        ")"s;
     if (invctrl == 25)
     {
         s = ""s;
@@ -914,9 +915,9 @@ label_2061_internal:
         pos(x + 16, y + 17);
         mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
         pos(x + 16, y + 35);
-        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight")
-            + ":" + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s
-            + cnveqweight(tc));
+        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight") +
+            ":" + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s +
+            cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
         pos(x, y);
@@ -940,9 +941,9 @@ label_2061_internal:
             pos(x, y);
             mes(""s + i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)));
             color(0, 0, 0);
-            x += (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size()
-                  + 1)
-                * 6;
+            x += (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size() +
+                  1) *
+                6;
         }
     }
     keyrange = 0;
@@ -988,19 +989,19 @@ label_2061_internal:
                 "core.locale.ui.inv.trade_medals.medal_value",
                 calcmedalvalue(p));
         }
-        if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27
-            && invctrl != 28)
+        if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
+            invctrl != 28)
         {
             if (p >= 5080)
             {
-                s += i18n::space_if_needed() + "("
-                    + i18n::s.get("core.locale.ui.inv.window.ground") + ")";
+                s += i18n::space_if_needed() + "(" +
+                    i18n::s.get("core.locale.ui.inv.window.ground") + ")";
             }
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            if (game_data.skill_shortcuts.at(cnt)
-                == inv[p].id + invctrl * 10000)
+            if (game_data.skill_shortcuts.at(cnt) ==
+                inv[p].id + invctrl * 10000)
             {
                 s +=
                     u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
@@ -1016,8 +1017,8 @@ label_2061_internal:
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             if (p == mainweapon)
             {
-                s += i18n::space_if_needed() + "("
-                    + i18n::s.get("core.locale.ui.inv.window.main_hand") + ")";
+                s += i18n::space_if_needed() + "(" +
+                    i18n::s.get("core.locale.ui.inv.window.main_hand") + ")";
             }
         }
         if (showresist)
@@ -1140,8 +1141,8 @@ label_2061_internal:
             result.turn_result = TurnResult::turn_end;
             return result;
         }
-        if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22
-            || (invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5)))
+        if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22 ||
+            (invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5)))
         {
             if (invctrl != 3 && invctrl != 22)
             {
@@ -1485,8 +1486,8 @@ label_2061_internal:
                 return result;
             }
             f = 0;
-            p = sdata(10, tc) * 500 + sdata(11, tc) * 500
-                + sdata(153, tc) * 2500 + 25000;
+            p = sdata(10, tc) * 500 + sdata(11, tc) * 500 +
+                sdata(153, tc) * 2500 + 25000;
             if (cdata[tc].id == 265)
             {
                 p *= 5;
@@ -1524,8 +1525,8 @@ label_2061_internal:
             }
             else
             {
-                if (inv[ci].identification_state
-                    <= IdentifyState::partly_identified)
+                if (inv[ci].identification_state <=
+                    IdentifyState::partly_identified)
                 {
                     snd("core.fail1");
                     txt(i18n::s.get(
@@ -1589,8 +1590,8 @@ label_2061_internal:
                     }
                     if (cdata[tc].is_pregnant())
                     {
-                        if (inv[ci].id == 262 || inv[ci].id == 519
-                            || inv[ci].id == 392)
+                        if (inv[ci].id == 262 || inv[ci].id == 519 ||
+                            inv[ci].id == 392)
                         {
                             f = 1;
                             txt(i18n::s.get(
@@ -1816,9 +1817,10 @@ label_2061_internal:
                         game_data.guild.mages_guild_quota = 0;
                     }
                     txt(i18n::s.get(
-                            "core.locale.ui.inv.put.guild.you_deliver", inv[ci])
-                            + u8"("s + (inv[ci].param1 + 1) * inv[ci].number()
-                            + u8" Guild Point)"s,
+                            "core.locale.ui.inv.put.guild.you_deliver",
+                            inv[ci]) +
+                            u8"("s + (inv[ci].param1 + 1) * inv[ci].number() +
+                            u8" Guild Point)"s,
                         Message::color{ColorIndex::green});
                     if (game_data.guild.mages_guild_quota == 0)
                     {
@@ -2218,8 +2220,8 @@ label_2061_internal:
         result.turn_result = TurnResult::pc_turn_user_error;
         return result;
     }
-    if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
-        || invctrl == 14 || invctrl == 15 || invctrl == 26)
+    if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9 ||
+        invctrl == 14 || invctrl == 15 || invctrl == 26)
     {
         if (auto shortcut = get_shortcut(action))
         {

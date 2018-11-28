@@ -38,8 +38,8 @@ static void _init_map_shelter()
 static void _init_map_nefia()
 {
     generate_random_nefia();
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         event_add(4);
     }
@@ -131,8 +131,8 @@ static void _init_map_test_site()
         p = cnt;
         for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
         {
-            cell_data.at(cnt, p).chip_id_actual = tile_default
-                + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
+            cell_data.at(cnt, p).chip_id_actual = tile_default +
+                (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
         }
     }
     map_placeplayer();
@@ -2218,9 +2218,9 @@ static void _init_map_fields_maybe_generate_encounter()
             flt(calcobjlv(encounterlv), calcfixlv(Quality::bad));
             if (game_data.weather == 1)
             {
-                if ((33 > game_data.stood_world_map_tile
-                     || game_data.stood_world_map_tile >= 66)
-                    && rnd(3) == 0)
+                if ((33 > game_data.stood_world_map_tile ||
+                     game_data.stood_world_map_tile >= 66) &&
+                    rnd(3) == 0)
                 {
                     fixlv = Quality::godly;
                 }
@@ -2255,29 +2255,29 @@ static void _init_map_fields()
         p = cnt;
         for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
         {
-            cell_data.at(cnt, p).chip_id_actual = tile_default
-                + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
+            cell_data.at(cnt, p).chip_id_actual = tile_default +
+                (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
         }
     }
 
     mdatan(0) = "";
-    if (4 <= game_data.stood_world_map_tile
-        && game_data.stood_world_map_tile < 9)
+    if (4 <= game_data.stood_world_map_tile &&
+        game_data.stood_world_map_tile < 9)
     {
         _init_map_fields_forest();
     }
-    if (264 <= game_data.stood_world_map_tile
-        && game_data.stood_world_map_tile < 363)
+    if (264 <= game_data.stood_world_map_tile &&
+        game_data.stood_world_map_tile < 363)
     {
         _init_map_fields_sea();
     }
-    if (9 <= game_data.stood_world_map_tile
-        && game_data.stood_world_map_tile < 13)
+    if (9 <= game_data.stood_world_map_tile &&
+        game_data.stood_world_map_tile < 13)
     {
         _init_map_fields_grassland();
     }
-    if (13 <= game_data.stood_world_map_tile
-        && game_data.stood_world_map_tile < 17)
+    if (13 <= game_data.stood_world_map_tile &&
+        game_data.stood_world_map_tile < 17)
     {
         _init_map_fields_desert();
     }
@@ -2291,8 +2291,8 @@ static void _init_map_fields()
     }
 
     map_placeplayer();
-    if (264 > game_data.stood_world_map_tile
-        || game_data.stood_world_map_tile >= 363)
+    if (264 > game_data.stood_world_map_tile ||
+        game_data.stood_world_map_tile >= 363)
     {
         for (int cnt = 0, cnt_end = (4 + rnd(5)); cnt < cnt_end; ++cnt)
         {
@@ -2328,8 +2328,8 @@ static void _init_map_lesimas()
     map_tileset(map_data.tileset);
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (game_data.current_dungeon_level
-            == area_data[game_data.current_map].deepest_level)
+        if (game_data.current_dungeon_level ==
+            area_data[game_data.current_map].deepest_level)
         {
             map_initcustom(u8"lesimas_1"s);
             map_data.max_crowd_density = 0;
@@ -2379,8 +2379,8 @@ static void _init_map_lesimas()
 
 static void _init_map_tower_of_fire()
 {
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         map_initcustom(u8"firet1"s);
         map_data.max_crowd_density = 0;
@@ -2395,8 +2395,8 @@ static void _init_map_tower_of_fire()
 
 static void _init_map_crypt_of_the_damned()
 {
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         map_initcustom(u8"undeadt1"s);
         map_data.max_crowd_density = 0;
@@ -2411,8 +2411,8 @@ static void _init_map_crypt_of_the_damned()
 
 static void _init_map_ancient_castle()
 {
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         map_initcustom(u8"roguet1"s);
         map_data.max_crowd_density = 0;
@@ -2427,8 +2427,8 @@ static void _init_map_ancient_castle()
 
 static void _init_map_dragons_nest()
 {
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         map_initcustom(u8"d_1"s);
         map_data.max_crowd_density = 0;
@@ -2444,8 +2444,8 @@ static void _init_map_dragons_nest()
 static void _init_map_puppy_cave()
 {
     generate_random_nefia();
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         if (game_data.quest_flags.puppys_cave < 2)
         {
@@ -2462,8 +2462,8 @@ static void _init_map_puppy_cave()
 static void _init_map_minotaurs_nest()
 {
     generate_random_nefia();
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         if (game_data.quest_flags.minotaur_king < 2)
         {
@@ -2476,8 +2476,8 @@ static void _init_map_minotaurs_nest()
 static void _init_map_yeeks_nest()
 {
     generate_random_nefia();
-    if (game_data.current_dungeon_level
-        == area_data[game_data.current_map].deepest_level)
+    if (game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level)
     {
         if (game_data.quest_flags.novice_knight < 2)
         {
@@ -2542,10 +2542,9 @@ void initialize_map_from_map_type()
     using namespace mdata_t;
     if (game_data.current_map == MapId::your_home)
     {
-        if (mdatan(0) == ""s
-            || mdatan(0)
-                == i18n::s.get_enum_property(
-                       "core.locale.map.unique", "name", 4))
+        if (mdatan(0) == ""s ||
+            mdatan(0) ==
+                i18n::s.get_enum_property("core.locale.map.unique", "name", 4))
         {
             mdatan(0) =
                 i18n::s.get_enum_property("core.locale.map.unique", "name", 7);

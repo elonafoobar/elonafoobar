@@ -97,8 +97,8 @@ TalkResult talk_wizard_identify(int chatval_)
         {
             continue;
         }
-        if (inv[cnt].identification_state
-            != IdentifyState::completely_identified)
+        if (inv[cnt].identification_state !=
+            IdentifyState::completely_identified)
         {
             ++p;
         }
@@ -122,8 +122,8 @@ TalkResult talk_wizard_identify(int chatval_)
             {
                 continue;
             }
-            if (inv[cnt].identification_state
-                != IdentifyState::completely_identified)
+            if (inv[cnt].identification_state !=
+                IdentifyState::completely_identified)
             {
                 const auto result = item_identify(inv[cnt], 250);
                 item_stack(0, cnt, 1);
@@ -255,21 +255,20 @@ TalkResult talk_arena_master(int chatval_)
     }
     game_data.executing_immediate_quest_fame_gained = calcfame(
         0,
-        (220 - game_data.ranks.at(0) / 50)
-                * (100
-                   + clamp(
-                         area_data[game_data.current_map]
-                             .winning_streak_in_arena,
-                         0,
-                         50))
-                / 100
-            + 2);
+        (220 - game_data.ranks.at(0) / 50) *
+                (100 +
+                 clamp(
+                     area_data[game_data.current_map].winning_streak_in_arena,
+                     0,
+                     50)) /
+                100 +
+            2);
     listmax = 0;
     randomize(area_data[game_data.current_map].time_of_next_arena);
     if (chatval_ == 21)
     {
-        if (area_data[game_data.current_map].time_of_next_arena
-            > game_data.date.hours())
+        if (area_data[game_data.current_map].time_of_next_arena >
+            game_data.date.hours())
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
@@ -316,8 +315,8 @@ TalkResult talk_arena_master(int chatval_)
     }
     else
     {
-        if (area_data[game_data.current_map].time_of_next_rumble
-            > game_data.date.hours())
+        if (area_data[game_data.current_map].time_of_next_rumble >
+            game_data.date.hours())
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
@@ -376,15 +375,15 @@ TalkResult talk_pet_arena_master(int chatval_)
 {
     game_data.executing_immediate_quest_fame_gained = calcfame(
         0,
-        (220 - game_data.ranks.at(1) / 50)
-                * (50
-                   + clamp(
-                         area_data[game_data.current_map]
-                             .winning_streak_in_pet_arena,
-                         0,
-                         50))
-                / 100
-            + 2);
+        (220 - game_data.ranks.at(1) / 50) *
+                (50 +
+                 clamp(
+                     area_data[game_data.current_map]
+                         .winning_streak_in_pet_arena,
+                     0,
+                     50)) /
+                100 +
+            2);
     listmax = 0;
     if (chatval_ == 40)
     {
@@ -989,15 +988,15 @@ TalkResult talk_ally_silence()
     if (cdata[tc].is_silent() == 0)
     {
         cdata[tc].is_silent() = true;
-        buff = u8"("s
-            + i18n::s.get("core.locale.talk.npc.ally.silence.start", cdata[tc])
-            + u8")"s;
+        buff = u8"("s +
+            i18n::s.get("core.locale.talk.npc.ally.silence.start", cdata[tc]) +
+            u8")"s;
     }
     else
     {
-        buff = u8"("s
-            + i18n::s.get("core.locale.talk.npc.ally.silence.stop", cdata[tc])
-            + u8")"s;
+        buff = u8"("s +
+            i18n::s.get("core.locale.talk.npc.ally.silence.stop", cdata[tc]) +
+            u8")"s;
         cdata[tc].is_silent() = false;
     }
     return TalkResult::talk_npc;
@@ -1849,8 +1848,8 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.npc.common.choices.talk"));
     }
-    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
-        || cdata[tc].character_role == 2003)
+    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000) ||
+        cdata[tc].character_role == 2003)
     {
         ELONA_APPEND_RESPONSE(
             10, i18n::s.get("core.locale.talk.npc.shop.choices.buy"));
@@ -1861,8 +1860,8 @@ TalkResult talk_npc()
             ELONA_APPEND_RESPONSE(
                 31, i18n::s.get("core.locale.talk.npc.shop.choices.attack"));
         }
-        if (cdata[tc].character_role != 1010
-            && cdata[tc].character_role != 1009)
+        if (cdata[tc].character_role != 1010 &&
+            cdata[tc].character_role != 1009)
         {
             ELONA_APPEND_RESPONSE(
                 12, i18n::s.get("core.locale.talk.npc.shop.choices.invest"));
@@ -1950,10 +1949,10 @@ TalkResult talk_npc()
     {
         ELONA_APPEND_RESPONSE(
             13,
-            i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat") + u8" ("s
-                + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
-        if (game_data.weather == 1 || game_data.weather == 4
-            || game_data.weather == 2)
+            i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat") +
+                u8" ("s + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
+        if (game_data.weather == 1 || game_data.weather == 4 ||
+            game_data.weather == 2)
         {
             ELONA_APPEND_RESPONSE(
                 43,
@@ -1965,19 +1964,19 @@ TalkResult talk_npc()
     {
         ELONA_APPEND_RESPONSE(
             14,
-            i18n::s.get("core.locale.talk.npc.wizard.choices.identify")
-                + u8" ("s + calcidentifyvalue(0) + i18n::_(u8"ui", u8"gold")
-                + u8")"s);
+            i18n::s.get("core.locale.talk.npc.wizard.choices.identify") +
+                u8" ("s + calcidentifyvalue(0) + i18n::_(u8"ui", u8"gold") +
+                u8")"s);
         ELONA_APPEND_RESPONSE(
             15,
-            i18n::s.get("core.locale.talk.npc.wizard.choices.identify_all")
-                + u8" ("s + calcidentifyvalue(1) + i18n::_(u8"ui", u8"gold")
-                + u8")"s);
+            i18n::s.get("core.locale.talk.npc.wizard.choices.identify_all") +
+                u8" ("s + calcidentifyvalue(1) + i18n::_(u8"ui", u8"gold") +
+                u8")"s);
         ELONA_APPEND_RESPONSE(
             16,
-            i18n::s.get("core.locale.talk.npc.wizard.choices.investigate")
-                + u8" ("s + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold")
-                + u8")"s);
+            i18n::s.get("core.locale.talk.npc.wizard.choices.investigate") +
+                u8" ("s + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold") +
+                u8")"s);
     }
     if (cdata[tc].character_role == 7)
     {
@@ -2002,9 +2001,9 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             19,
             i18n::s.get(
-                "core.locale.talk.npc.healer.choices.restore_attributes")
-                + u8"("s + calcrestorecost() + i18n::_(u8"ui", u8"gold")
-                + u8")"s);
+                "core.locale.talk.npc.healer.choices.restore_attributes") +
+                u8"("s + calcrestorecost() + i18n::_(u8"ui", u8"gold") +
+                u8")"s);
     }
     if (cdata[tc].character_role == 13)
     {
@@ -2198,8 +2197,8 @@ TalkResult talk_npc()
             quest_complete();
         }
         else if (
-            quest_data[rq].client_chara_type == 3
-            && quest_data[rq].progress == 1)
+            quest_data[rq].client_chara_type == 3 &&
+            quest_data[rq].progress == 1)
         {
             supply = -1;
             for (const auto& cnt : items(0))
@@ -2216,8 +2215,8 @@ TalkResult talk_npc()
                 {
                     if (the_item_db[inv[cnt].id]->category == 57000)
                     {
-                        if (inv[cnt].param1 / 1000
-                            == quest_data[rq].extra_info_1)
+                        if (inv[cnt].param1 / 1000 ==
+                            quest_data[rq].extra_info_1)
                         {
                             if (inv[cnt].param2 == quest_data[rq].extra_info_2)
                             {
@@ -2273,9 +2272,9 @@ TalkResult talk_npc()
         {
             if (cdata[tc].character_role != 0)
             {
-                if ((cdata[tc].character_role < 2000
-                     || cdata[tc].character_role >= 3000)
-                    && event_id() == -1)
+                if ((cdata[tc].character_role < 2000 ||
+                     cdata[tc].character_role >= 3000) &&
+                    event_id() == -1)
                 {
                     ELONA_APPEND_RESPONSE(
                         44,
@@ -2309,15 +2308,15 @@ TalkResult talk_npc()
 
     if (chatval_ == 10 || chatval_ == 11)
     {
-        if ((cdata[tc].character_role >= 1000
-             && cdata[tc].character_role < 2000)
-            || cdata[tc].character_role == 2003)
+        if ((cdata[tc].character_role >= 1000 &&
+             cdata[tc].character_role < 2000) ||
+            cdata[tc].character_role == 2003)
         {
-            if (cdata.player().karma < -30
-                && cdata.player().is_incognito() == 0)
+            if (cdata.player().karma < -30 &&
+                cdata.player().is_incognito() == 0)
             {
-                if (game_data.current_map != mdata_t::MapId::derphy
-                    && game_data.current_map != mdata_t::MapId::your_home)
+                if (game_data.current_map != mdata_t::MapId::derphy &&
+                    game_data.current_map != mdata_t::MapId::your_home)
                 {
                     listmax = 0;
                     if (chatval_ == 10)

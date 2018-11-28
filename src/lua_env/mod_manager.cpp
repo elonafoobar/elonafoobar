@@ -26,8 +26,8 @@ static bool _is_alnum_only(const std::string& str)
 
 static bool _mod_name_is_reserved(const std::string& mod_name)
 {
-    return mod_name == "script" || mod_name == "console"
-        || mod_name == "BUILTIN";
+    return mod_name == "script" || mod_name == "console" ||
+        mod_name == "BUILTIN";
 }
 
 
@@ -410,9 +410,9 @@ std::vector<std::string> ModManager::calculate_loading_order()
             if (mods.find(dependency) == mods.end())
             {
                 throw std::runtime_error(
-                    "The dependency '" + dependency + "' of mod '"
-                    + mod->manifest.name
-                    + "' could not be found in the list of scanned mods.");
+                    "The dependency '" + dependency + "' of mod '" +
+                    mod->manifest.name +
+                    "' could not be found in the list of scanned mods.");
             }
 
             sorter.add_dependency(mod->manifest.name, dependency);
