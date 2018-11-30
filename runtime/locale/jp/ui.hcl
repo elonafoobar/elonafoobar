@@ -23,15 +23,6 @@ locale {
 
         assign_shortcut = "{${_1}}キーにショートカットを割り当てた。"
 
-        item {
-            amulet = "首飾り"
-            ring = "指輪"
-            potion = "ポーション"
-            spellbook = "魔法書"
-            scroll = "巻物"
-            rod = "魔法棒"
-        }
-
         curse_state {
             cursed = "呪われた"
             blessed = "祝福された"
@@ -772,6 +763,7 @@ locale {
 
         random_item {
             potion {
+                potion = "ポーション"
                 _0 = "透明な",
                 _1 = "緑色の",
                 _2 = "青い",
@@ -781,6 +773,7 @@ locale {
             }
 
             spellbook {
+                spellbook = "魔法書"
                 _0 = "分厚い",
                 _1 = "苔むした",
                 _2 = "真新しい",
@@ -790,6 +783,7 @@ locale {
             }
 
             scroll {
+                scroll = "巻物"
                 _0 = "かすれた",
                 _1 = "苔むした",
                 _2 = "ぼろぼろの",
@@ -799,6 +793,7 @@ locale {
             }
 
             rod {
+                name = "魔法棒"
                 _0 = "鉄の",
                 _1 = "つたの",
                 _2 = "サファイアの",
@@ -808,6 +803,7 @@ locale {
             }
 
             ring {
+                name = "指輪"
                 _0 = "鉄の",
                 _1 = "緑の",
                 _2 = "サファイアの",

@@ -2380,7 +2380,15 @@ skip:
 
 std::string cheer_up_message(int hours)
 {
-    return i18n::s.get_enum("core.locale.ui.cheer_up_message", hours);
+    auto message =
+        i18n::s.get_enum_optional("core.locale.ui.cheer_up_message", hours);
+
+    if (message)
+    {
+        return *message;
+    }
+
+    return "";
 }
 
 void text_replace_tags_in_quest_board()
