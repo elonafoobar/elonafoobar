@@ -1365,7 +1365,7 @@ void continuous_action_others()
     }
     if (game_data.continuous_action_about_to_start == 102)
     {
-        txt(i18n::s.get("core.locale.activity.pull_hatch.finish"));
+        txt(i18n::s.get("core.locale.activity.pull_hatch.finish", inv[ci]));
         chatteleport = 1;
         game_data.previous_map2 = game_data.current_map;
         game_data.previous_dungeon_level = game_data.current_dungeon_level;
