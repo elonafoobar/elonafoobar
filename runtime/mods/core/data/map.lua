@@ -419,7 +419,7 @@ data:add_multi(
          appearance = 141,
          map_type = "Dungeon",
          outer_map = 4,
-         outer_map_position = { x = 37, y = 20 },
+         outer_map_position = { x = 38, y = 20 },
          entrance_type = "StairUp",
          tile_set = "Normal",
          tile_type = 0,
