@@ -607,7 +607,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(
         }
         else
         {
-            return UIMenuCtrlAlly::Result::finish(_index);
+            return UIMenuCtrlAlly::Result::finish(list(0, _index));
         }
     }
     else if (action == "next_page")
