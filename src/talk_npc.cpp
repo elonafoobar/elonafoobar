@@ -310,8 +310,7 @@ TalkResult talk_arena_master(int chatval_)
         arenaop(1) = cdata[rc].id;
         buff = i18n::s.get(
             "core.locale.talk.npc.arena_master.enter.target",
-            cdata[rc],
-            chara_refstr(cdata[rc].id, 2),
+            cdatan(0, rc),
             cdata[tc]);
     }
     else
