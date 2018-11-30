@@ -40,8 +40,8 @@
                 }
 
                 ari_nashi_slow_fast {
-                    yes = "あり（低速）"
-                    no = "なし（高速）"
+                    yes = "あり (低速)"
+                    no = "なし (高速)"
                 }
 
                 tsukau_tsukawanai {
@@ -83,7 +83,10 @@
                     variants {
                         "" = "使用しない"
                     }
-                    doc = "Elonaを起動した際にデフォルトで読み込まれるセーブデータです。\nこれを設定するとタイトル画面を飛ばしてすぐにゲームを始めることができます。"
+                    doc = <<DOC
+Elonaを起動した際にデフォルトで読み込まれるセーブデータです。
+これを設定するとタイトル画面を飛ばしてすぐにゲームを始めることができます。
+DOC
                 }
                 story {
                     name = "シーンの再生"
@@ -118,7 +121,10 @@
                 }
                 stereo_sound {
                     name = "ステレオサウンド"
-                    doc = "音が鳴った場所に応じてSEを再生します。\n例えば、画面左で鳴ったSEが左から聞こえるようになります。"
+                    doc = <<DOC
+音が鳴った場所に応じてSEを再生します。
+例えば、画面左で鳴ったSEが左から聞こえるようになります。
+DOC
                 }
                 fullscreen {
                     name = "画面モード*"
@@ -127,6 +133,10 @@
                         fullscreen = "フルスクリーン"
                         desktop_fullscreen = "フルスクリーン2"
                     }
+                    doc = <<DOC
+ウィンドウとフルスクリーンを切り替えます。
+フルスクリーン2は、スクリーンと同じサイズのウィンドウを生成し擬似的にフルスクリーンとします。
+DOC
                 }
                 display_mode {
                     name = "画面の大きさ*"
@@ -149,13 +159,16 @@
                 }
                 high_quality_shadows {
                     name = "光源の描写"
-                    doc = "Render shadows at higher quality."
                     yes_no = core.locale.config.common.yes_no.kougashitsu_teigashitsu
+                    doc = <<DOC
+影の描写品質を設定します。
+高画質は描写速度がやや低下しますが、影がより綺麗に表示されます。
+DOC
                 }
                 object_shadows {
                     name = "アイテムの影描写"
-                    doc = "Display shadows under items on the ground."
                     yes_no = core.locale.config.common.yes_no.ari_nashi_slow_fast
+                    doc = "地面に置かれたアイテムの下に影を表示します。"
                 }
                 heartbeat {
                     name = "心臓の音"
@@ -164,11 +177,17 @@
                 }
                 heartbeat_threshold {
                     name = "心音再生の閾値"
-                    doc = "HPがこのパーセンテージを下回っているとき心拍音が再生されます。"
+                    doc = <<DOC
+現在のHPがこのパーセンテージを下回っているとき心拍音が再生されます。
+この設定は「心臓の音」の設定を「再生する」にしているときのみ使われます。
+DOC
                 }
                 skip_random_event_popups {
                     name = "イベントの短縮"
-                    doc = "ランダムイベントのポップアップウィンドウをスキップします。\nスキップされた場合デフォルトの選択肢が選ばれます。"
+                    doc = <<DOC
+ランダムイベントのポップアップウィンドウをスキップします。
+スキップされた場合デフォルトの選択肢が選ばれます。
+DOC
                 }
             }
 
@@ -202,7 +221,10 @@
                 }
                 scroll_when_run {
                     name = "走り時スクロール"
-                    doc = "走っているときもスクロールアニメーションを表示します。\nこれを切ることで若干の高速化が望めます。"
+                    doc = <<DOC
+走っているときもスクロールアニメーションを表示します。
+これを切ることで若干の高速化が望めます。
+DOC
                 }
                 general_wait {
                     name = "キーウェイト"
@@ -295,10 +317,17 @@
                 name = "フォント設定"
                 vertical_offset {
                     name = "垂直オフセット"
-                    doc = "テキストを表示する際、垂直方向にこの値だけずらして表示します。\nお使いのフォントに合わせて調整してください。"
+                    doc = <<DOC
+テキストを表示する際、垂直方向にこの値だけずらして表示します。
+お使いのフォントに合わせて調整してください。
+DOC
                 }
                 size_adjustment {
                     name = "サイズの調整"
+                    doc = <<DOC
+テキストを表示する際、この値だけ大きくまたは小さくして表示します。
+お使いのフォントに合わせて調整してください。
+DOC
                 }
                 quality {
                     name = "描写の品質"
@@ -331,7 +360,7 @@ DOC
                 restock_interval {
                     name = "入荷頻度"
                     formatter = "${_1}日" # TODO
-                    doc = "店主の品物が入荷する頻度を変更します。"
+                    doc = "街の店の品揃えが更新される頻度を設定します。"
                 }
                 extra_race {
                     name = "Extra種族"
@@ -363,7 +392,10 @@ DOC
                         left = "左側に表示"
                         right = "右側に表示"
                     }
-                    doc = "聴診器を当てたペットのHPを表示します。\n[右側に表示]を推奨しています。"
+                    doc = <<DOC
+聴診器を当てたペットのHPを表示します。
+「右側に表示」を推奨しています。
+DOC
                 }
                 allow_enhanced_skill_tracking {
                     name = "スキルトラック拡張"
@@ -371,15 +403,24 @@ DOC
                 }
                 enhanced_skill_tracking_lowerbound {
                     name = "スキルトラック拡張(下限)"
-                    doc = "この値よりも潜在能力が低い場合赤色で表示されます。\nスキルトラック拡張を[する]に設定している場合にのみ効果があります。"
+                    doc = <<DOC
+この値よりも潜在能力が低い場合赤色で表示されます。
+スキルトラック拡張を「する」に設定している場合にのみ効果があります。
+DOC
                 }
                 enhanced_skill_tracking_upperbound {
                     name = "スキルトラック拡張(上限)"
-                    doc = "この値よりも潜在能力が高い場合緑色で表示されます。\nスキルトラック拡張を[する]に設定している場合にのみ効果があります。"
+                    doc = <<DOC
+この値よりも潜在能力が高い場合緑色で表示されます。
+スキルトラック拡張を「する」に設定している場合にのみ効果があります。
+DOC
                 }
                 leash_icon {
                     name = "紐のアイコン表示"
-                    doc = "紐で繋がれているペットのHPバーの横に紐のアイコンを表示します。\nペットのHPバーを[左側に表示]か[右側に表示]にしている場合にのみ効果があります。"
+                    doc = <<DOC
+紐で繋がれているペットのHPバーの横に紐のアイコンを表示します。
+ペットのHPバーを「左側に表示」か「右側に表示」にしている場合にのみ効果があります。
+DOC
                 }
                 autopick {
                     name = "Autopick"

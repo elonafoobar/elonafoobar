@@ -19,10 +19,9 @@ locale {
                     no = "Don't play"
                 }
 
-                # NOTE: "Slow" and "Fast" were originally the opposite in English.
                 slow_fast {
-                    yes = "Yes(Slow)"
-                    no = "No(Fast)"
+                    yes = "Yes (Slow)"
+                    no = "No (Fast)"
                 }
 
                 high_low {
