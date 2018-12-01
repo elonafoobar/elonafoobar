@@ -111,7 +111,7 @@ public:
                 y = std::max(y, skyline.y);
 
                 bool contained =
-                    x >= 0 && y >= 0 && x + w < width && y + h < height;
+                    x >= 0 && y >= 0 && x + w <= width && y + h <= height;
 
                 if (!contained)
                 {
@@ -207,6 +207,7 @@ public:
                     if (now.width <= shrink_amount)
                     {
                         skylines.erase(skylines.begin() + i);
+                        --i;
                     }
                     else
                     {
