@@ -431,7 +431,7 @@ TEST_CASE("Test copying of character handles", "[Lua: Handles]")
     Character& chara = elona::cdata[elona::rc];
     auto handle = handle_mgr.get_handle(chara);
 
-    int tc = chara_copy(chara);
+    int tc = elona::chara_copy(chara);
     Character& copy = elona::cdata[tc];
     sol::table handle_copy = handle_mgr.get_handle(copy);
 
@@ -447,6 +447,25 @@ TEST_CASE("Test copying of character handles", "[Lua: Handles]")
     // Assert that copying to an existing character will not try to
     // overwrite the existing handle (it would cause an exception).
     REQUIRE_NOTHROW(elona::Character::copy(chara, copy));
+}
+
+TEST_CASE("Test copying of character handles after removal", "[Lua: Handles]")
+{
+    reset_state();
+    start_in_debug_map();
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    Character& a = elona::cdata[elona::rc];
+
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 9));
+    Character& b = elona::cdata[elona::rc];
+
+    // Mark the handle in b's slot as invalid.
+    b.set_state(Character::State::empty);
+
+    // chara_copy should clean up the handle in b's slot.
+    REQUIRE_NOTHROW(elona::chara_copy(a));
 }
 
 TEST_CASE(
@@ -585,6 +604,26 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     // Assert that copying to an existing item will not try to
     // overwrite the existing handle.
     REQUIRE_NOTHROW(elona::item_copy(elona::ci, ti));
+}
+
+TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
+{
+    reset_state();
+    start_in_debug_map();
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    int amount = 1;
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
+    Item& a = elona::inv[elona::ci];
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 9, amount));
+    Item& b = elona::inv[elona::ci];
+
+    // Mark the handle in b's slot as invalid.
+    b.set_number(0);
+
+    // item_copy should clean up the handle in b's slot.
+    REQUIRE_NOTHROW(elona::item_copy(a.index, b.index));
 }
 
 TEST_CASE("Test swapping of item handles", "[Lua: Handles]")

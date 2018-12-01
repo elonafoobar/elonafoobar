@@ -485,6 +485,13 @@ void item_copy(int a, int b)
 
     bool was_empty = inv[b].number() == 0;
 
+    if (was_empty && inv[a].number() > 0)
+    {
+        // Clean up any stale handles that may have been left over from an item
+        // in the same index being removed.
+        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(inv[b]);
+    }
+
     Item::copy(inv[a], inv[b]);
 
     if (was_empty && inv[b].number() != 0)
