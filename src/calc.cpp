@@ -82,30 +82,6 @@ int rangedist = 0;
 
 
 
-int calc_buff_duration(int id, int power)
-{
-    auto func = the_buff_db[id]->duration;
-    return cat::global.call<int>(func, power);
-}
-
-
-std::string get_buff_description(int id, int power)
-{
-    return i18n::fmt(u8"buff", std::to_string(id), u8"description")(power);
-}
-
-
-
-void apply_buff(int cc, int id, int power)
-{
-    const auto self = the_buff_db[id]->self;
-    const auto func = the_buff_db[id]->on_refresh;
-    cat::global.call_with_self<std::nullptr_t>(
-        self, func, cc, power, 1 /* TODO */);
-}
-
-
-
 optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
 {
     int x = sdata(the_ability_db[skill]->related_basic_attribute, cc);
@@ -577,7 +553,7 @@ int calcattackhit()
     }
     if (sdata(187, tc) != 0)
     {
-        if (tohit < sdata(187, tc) * 10)
+        if (tohit < sdata(187, tc) * 10 && tohit > 0)
         {
             int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)

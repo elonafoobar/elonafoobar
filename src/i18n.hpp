@@ -11,8 +11,8 @@
 #include "filesystem.hpp"
 #include "hcl.hpp"
 #include "log.hpp"
-#include "lua_env/exported_function.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/wrapped_function.hpp"
 #include "macro.hpp"
 #include "optional.hpp"
 

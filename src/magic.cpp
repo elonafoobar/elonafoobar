@@ -73,7 +73,7 @@ int magic()
             {
                 f = 1;
                 p = the_ability_db[efid]->ability_type % 1000;
-                if (the_buff_db[p]->type == BuffData::Type::hex)
+                if (the_buff_db[p]->type == BuffType::hex)
                 {
                     efbad = 1;
                 }
@@ -106,11 +106,15 @@ int magic()
             }
             if (f)
             {
-                if (the_buff_db[p]->type == BuffData::Type::buff)
+                auto buff = the_buff_db[p];
+                auto buff_id = the_buff_db.get_id_from_legacy(p);
+                assert(buff);
+
+                if (buff->type == BuffType::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (the_buff_db[p]->type == BuffData::Type::hex)
+                else if (buff->type == BuffType::hex)
                 {
                     BrightAuraAnimation(
                         cdata[tc].position, BrightAuraAnimation::Type::debuff)
@@ -126,8 +130,14 @@ int magic()
                         }
                     }
                 }
+
                 buff_add(
-                    cdata[tc], p, efp, calc_buff_duration(p, efp), cdata[cc]);
+                    cdata[tc],
+                    *buff_id,
+                    efp,
+                    calc_buff_duration(p, efp),
+                    cdata[cc]);
+
                 if (efid == 447)
                 {
                     if (efstatus == CurseState::blessed)
@@ -406,7 +416,7 @@ int magic()
                                     "core.locale.magic.rain_of_sanity",
                                     cdata[tc]));
                                 heal_insanity(cdata[tc], efp / 10);
-                                healcon(tc, 11, 9999);
+                                healcon(tc, StatusAilment::insane, 9999);
                             }
                             continue;
                         }
@@ -584,7 +594,7 @@ int magic()
                 heal_both_rider_and_mount();
                 if (efstatus == CurseState::blessed)
                 {
-                    healcon(tc, 12, 5 + rnd(5));
+                    healcon(tc, StatusAilment::sick, 5 + rnd(5));
                 }
                 if (rnd(3) == 0)
                 {
@@ -1762,7 +1772,7 @@ label_2181_internal:
                     break;
                 }
             }
-            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffData::Type::hex)
+            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffType::hex)
             {
                 continue;
             }
@@ -1782,7 +1792,7 @@ label_2181_internal:
                 continue;
             }
         }
-        buff_add(cdata[tc], 10, efp, 5 + efp / 30, cdata[cc]);
+        buff_add(cdata[tc], "core.holy_veil", efp, 5 + efp / 30, cdata[cc]);
         animeload(11, tc);
         break;
     case 1120:
@@ -4019,9 +4029,11 @@ label_2181_internal:
                         "core.locale.magic.cheer.is_excited", cdata[tc]),
                     Message::color{ColorIndex::blue});
             }
-            buff_add(cdata[tc], 5, sdata(17, cc) * 5 + 50, 15, cdata[cc]);
-            buff_add(cdata[tc], 7, sdata(17, cc) * 5 + 100, 60, cdata[cc]);
-            buff_add(cdata[tc], 18, 1500, 30, cdata[cc]);
+            buff_add(
+                cdata[tc], "core.speed", sdata(17, cc) * 5 + 50, 15, cdata[cc]);
+            buff_add(
+                cdata[tc], "core.hero", sdata(17, cc) * 5 + 100, 60, cdata[cc]);
+            buff_add(cdata[tc], "core.contingency", 1500, 30, cdata[cc]);
         }
         break;
     case 1131:

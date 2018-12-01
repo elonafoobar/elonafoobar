@@ -3,6 +3,7 @@
 #include <type_traits>
 #include "ability.hpp"
 #include "area.hpp"
+#include "buff.hpp"
 #include "calc.hpp"
 #include "cat.hpp"
 #include "character_status.hpp"
@@ -421,6 +422,13 @@ void Character::set_state(Character::State new_state)
 {
     bool was_alive = !this->is_dead();
     bool was_empty = this->state_ == Character::State::empty;
+
+    if (was_empty && new_state != Character::State::empty)
+    {
+        // Clean up any stale handles that may have been left over from a
+        // character in the same index being removed.
+        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(*this);
+    }
 
     this->state_ = new_state;
 
@@ -1784,10 +1792,9 @@ void chara_killed(Character& chara)
 
     if (chara.state() == Character::State::empty)
     {
-        // This character slot is invalid, and can be overwritten by
-        // newly created characters at any time. Run any Lua callbacks
-        // to clean up character things.
-        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
+        // This character slot is invalid, and can be overwritten by newly
+        // created characters at any time. Defer removing its handle until a new
+        // character is created in its slot.
     }
     else if (
         chara.state() == Character::State::villager_dead ||
@@ -1807,7 +1814,6 @@ void chara_killed(Character& chara)
 void chara_remove(Character& chara)
 {
     chara.set_state(Character::State::empty);
-    lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
 }
 
 
@@ -1902,12 +1908,22 @@ void chara_relocate(
     Character::copy(source, destination);
     source.clear();
 
-    // Relocate the corresponding Lua reference, if it exists. It may
-    // not always exist, since if the mode is "change" the
-    // source's state will be empty. If the source's state is empty, the
-    // destination slot will instead be set to empty as well.
-    lua::lua->get_handle_manager().relocate_handle<Character>(
-        source, destination, slot);
+    if (mode == CharaRelocationMode::normal)
+    {
+        // Relocate the corresponding Lua reference, if it exists. It may
+        // not always exist, since if the mode is "change" the
+        // source's state will be empty. If the source's state is empty, the
+        // destination slot will instead be set to empty as well.
+        lua::lua->get_handle_manager().relocate_handle<Character>(
+            source, destination, slot);
+    }
+    else
+    {
+        // Clear the source's handle, as it is now invalid. Preserve the handle
+        // that exists in the slot already.
+        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(
+            source);
+    }
 
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -1923,9 +1939,10 @@ void chara_relocate(
 
     if (mode == CharaRelocationMode::change)
     {
-        // A new Lua handle is created here. The handles at both slots should
-        // have been cleared by now.
-        destination.set_state(Character::State::alive);
+        // Set the destination as "alive" without altering any handle state,
+        // since a valid handle was just moved into the destination's index and
+        // it shouldn't be regenerated.
+        destination.set_state_raw(Character::State::alive);
 
         destination.position = position;
         destination.initial_position = initial_position;
@@ -1947,7 +1964,7 @@ void chara_relocate(
         else
         {
             rc = slot;
-            destination.set_state(Character::State::alive);
+            destination.set_state_raw(Character::State::alive);
             cxinit = cdata.player().position.x;
             cyinit = cdata.player().position.y;
             chara_place();

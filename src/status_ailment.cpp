@@ -82,7 +82,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::confused:
         if (cdata[cc].is_immune_to_confusion())
             return;
-        if (buff_has(cdata[cc], 7))
+        if (buff_has(cdata[cc], "core.hero"))
             return;
         if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 2 + 1))
             return;
@@ -185,9 +185,9 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::fear:
         if (cdata[cc].is_immune_to_fear())
             return;
-        if (buff_has(cdata[cc], 1))
+        if (buff_has(cdata[cc], "core.holy_shield"))
             return;
-        if (buff_has(cdata[cc], 7))
+        if (buff_has(cdata[cc], "core.hero"))
             return;
         if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 5 + 1))
             return;
@@ -319,24 +319,25 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
 
 
 
-void healcon(int prm_827, int prm_828, int prm_829)
+void healcon(int cc, StatusAilment status_ailment, int power)
 {
-    if (prm_828 == 6)
+    switch (status_ailment)
     {
-        if (cdata[prm_827].fear > 0)
+    case StatusAilment::fear:
+        if (cdata[cc].fear > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].fear = 0;
+                cdata[cc].fear = 0;
             }
             else
             {
-                cdata[prm_827].fear -= prm_829;
+                cdata[cc].fear -= power;
             }
-            if (cdata[prm_827].fear <= 0)
+            if (cdata[cc].fear <= 0)
             {
-                cdata[prm_827].fear = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].fear = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.fear.heal", cdata[cc]));
@@ -344,23 +345,22 @@ void healcon(int prm_827, int prm_828, int prm_829)
             }
             return;
         }
-    }
-    if (prm_828 == 4)
-    {
-        if (cdata[prm_827].blind > 0)
+        break;
+    case StatusAilment::blinded:
+        if (cdata[cc].blind > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].blind = 0;
+                cdata[cc].blind = 0;
             }
             else
             {
-                cdata[prm_827].blind -= prm_829;
+                cdata[cc].blind -= power;
             }
-            if (cdata[prm_827].blind <= 0)
+            if (cdata[cc].blind <= 0)
             {
-                cdata[prm_827].blind = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].blind = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.blinded.heal", cdata[cc]));
@@ -368,23 +368,22 @@ void healcon(int prm_827, int prm_828, int prm_829)
             }
             return;
         }
-    }
-    if (prm_828 == 5)
-    {
-        if (cdata[prm_827].confused > 0)
+        break;
+    case StatusAilment::confused:
+        if (cdata[cc].confused > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].confused = 0;
+                cdata[cc].confused = 0;
             }
             else
             {
-                cdata[prm_827].confused -= prm_829;
+                cdata[cc].confused -= power;
             }
-            if (cdata[prm_827].confused <= 0)
+            if (cdata[cc].confused <= 0)
             {
-                cdata[prm_827].confused = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].confused = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.confused.heal", cdata[cc]));
@@ -392,23 +391,22 @@ void healcon(int prm_827, int prm_828, int prm_829)
             }
             return;
         }
-    }
-    if (prm_828 == 3)
-    {
-        if (cdata[prm_827].paralyzed > 0)
+        break;
+    case StatusAilment::paralyzed:
+        if (cdata[cc].paralyzed > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].paralyzed = 0;
+                cdata[cc].paralyzed = 0;
             }
             else
             {
-                cdata[prm_827].paralyzed -= prm_829;
+                cdata[cc].paralyzed -= power;
             }
-            if (cdata[prm_827].paralyzed <= 0)
+            if (cdata[cc].paralyzed <= 0)
             {
-                cdata[prm_827].paralyzed = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].paralyzed = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.paralyzed.heal",
@@ -417,23 +415,22 @@ void healcon(int prm_827, int prm_828, int prm_829)
             }
             return;
         }
-    }
-    if (prm_828 == 1)
-    {
-        if (cdata[prm_827].poisoned > 0)
+        break;
+    case StatusAilment::poisoned:
+        if (cdata[cc].poisoned > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].poisoned = 0;
+                cdata[cc].poisoned = 0;
             }
             else
             {
-                cdata[prm_827].poisoned -= prm_829;
+                cdata[cc].poisoned -= power;
             }
-            if (cdata[prm_827].poisoned <= 0)
+            if (cdata[cc].poisoned <= 0)
             {
-                cdata[prm_827].poisoned = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].poisoned = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.poisoned.heal", cdata[cc]));
@@ -441,23 +438,22 @@ void healcon(int prm_827, int prm_828, int prm_829)
             }
             return;
         }
-    }
-    if (prm_828 == 2)
-    {
-        if (cdata[prm_827].sleep > 0)
+        break;
+    case StatusAilment::sleep:
+        if (cdata[cc].sleep > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].sleep = 0;
+                cdata[cc].sleep = 0;
             }
             else
             {
-                cdata[prm_827].sleep -= prm_829;
+                cdata[cc].sleep -= power;
             }
-            if (cdata[prm_827].sleep <= 0)
+            if (cdata[cc].sleep <= 0)
             {
-                cdata[prm_827].sleep = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].sleep = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.sleep.heal", cdata[cc]));
@@ -465,121 +461,120 @@ void healcon(int prm_827, int prm_828, int prm_829)
             }
             return;
         }
-    }
-    if (prm_828 == 7)
-    {
-        if (cdata[prm_827].dimmed > 0)
+        break;
+    case StatusAilment::dimmed:
+        if (cdata[cc].dimmed > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].dimmed = 0;
+                cdata[cc].dimmed = 0;
             }
             else
             {
-                cdata[prm_827].dimmed -= prm_829;
+                cdata[cc].dimmed -= power;
             }
-            if (cdata[prm_827].dimmed <= 0)
+            if (cdata[cc].dimmed <= 0)
             {
-                cdata[prm_827].dimmed = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].dimmed = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.dimmed.heal", cdata[cc]));
                 }
             }
         }
-    }
-    if (prm_828 == 9)
-    {
-        if (cdata[prm_827].bleeding > 0)
+        break;
+    case StatusAilment::bleeding:
+        if (cdata[cc].bleeding > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].bleeding = 0;
+                cdata[cc].bleeding = 0;
             }
             else
             {
-                cdata[prm_827].bleeding -= prm_829;
+                cdata[cc].bleeding -= power;
             }
-            if (cdata[prm_827].bleeding <= 0)
+            if (cdata[cc].bleeding <= 0)
             {
-                cdata[prm_827].bleeding = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].bleeding = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.bleeding.heal", cdata[cc]));
                 }
             }
         }
-    }
-    if (prm_828 == 8)
-    {
-        if (cdata[prm_827].drunk > 0)
+        break;
+    case StatusAilment::drunk:
+        if (cdata[cc].drunk > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].drunk = 0;
+                cdata[cc].drunk = 0;
             }
             else
             {
-                cdata[prm_827].drunk -= prm_829;
+                cdata[cc].drunk -= power;
             }
-            if (cdata[prm_827].drunk <= 0)
+            if (cdata[cc].drunk <= 0)
             {
-                cdata[prm_827].drunk = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].drunk = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.drunk.heal", cdata[cc]));
                 }
             }
         }
-    }
-    if (prm_828 == 11)
-    {
-        if (cdata[prm_827].insane > 0)
+        break;
+    case StatusAilment::insane:
+        if (cdata[cc].insane > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].insane = 0;
+                cdata[cc].insane = 0;
             }
             else
             {
-                cdata[prm_827].insane -= prm_829;
+                cdata[cc].insane -= power;
             }
-            if (cdata[prm_827].insane <= 0)
+            if (cdata[cc].insane <= 0)
             {
-                cdata[prm_827].insane = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].insane = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.insane.heal", cdata[cc]));
                 }
             }
         }
-    }
-    if (prm_828 == 12)
-    {
-        if (cdata[prm_827].sick > 0)
+        break;
+    case StatusAilment::sick:
+        if (cdata[cc].sick > 0)
         {
-            if (prm_829 == 0)
+            if (power == 0)
             {
-                cdata[prm_827].sick = 0;
+                cdata[cc].sick = 0;
             }
             else
             {
-                cdata[prm_827].sick -= prm_829;
+                cdata[cc].sick -= power;
             }
-            if (cdata[prm_827].sick <= 0)
+            if (cdata[cc].sick <= 0)
             {
-                cdata[prm_827].sick = 0;
-                if (is_in_fov(cdata[prm_827]))
+                cdata[cc].sick = 0;
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.sick.heal", cdata[cc]));
                 }
             }
         }
+        break;
+    default:
+        throw std::runtime_error{u8"Unknown status ailment: "s +
+                                 int(status_ailment)};
     }
 }
 

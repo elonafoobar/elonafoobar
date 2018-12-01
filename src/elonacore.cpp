@@ -2372,7 +2372,7 @@ void proc_turn_end(int cc)
     regen = 1;
     if (cdata[cc].sleep > 0)
     {
-        healcon(cc, 2, 1);
+        healcon(cc, StatusAilment::sleep, 1);
         if (cdata[cc].sleep > 0)
         {
             cdata[cc].emotion_icon = 114;
@@ -2383,7 +2383,7 @@ void proc_turn_end(int cc)
     if (cdata[cc].poisoned > 0)
     {
         damage_hp(cdata[cc], rnd(2 + sdata(11, cc) / 10), -4);
-        healcon(cc, 1, 1);
+        healcon(cc, StatusAilment::poisoned, 1);
         if (cdata[cc].poisoned > 0)
         {
             cdata[cc].emotion_icon = 108;
@@ -2453,14 +2453,14 @@ void proc_turn_end(int cc)
             {
                 if (rnd(200) == 0)
                 {
-                    healcon(cc, 12);
+                    healcon(cc, StatusAilment::sick);
                 }
             }
         }
     }
     if (cdata[cc].blind > 0)
     {
-        healcon(cc, 4, 1);
+        healcon(cc, StatusAilment::blinded, 1);
         if (cdata[cc].blind > 0)
         {
             cdata[cc].emotion_icon = 110;
@@ -2469,7 +2469,7 @@ void proc_turn_end(int cc)
     if (cdata[cc].paralyzed > 0)
     {
         regen = 0;
-        healcon(cc, 3, 1);
+        healcon(cc, StatusAilment::paralyzed, 1);
         if (cdata[cc].paralyzed > 0)
         {
             cdata[cc].emotion_icon = 115;
@@ -2477,7 +2477,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].confused > 0)
     {
-        healcon(cc, 5, 1);
+        healcon(cc, StatusAilment::confused, 1);
         if (cdata[cc].confused > 0)
         {
             cdata[cc].emotion_icon = 111;
@@ -2485,7 +2485,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].fear > 0)
     {
-        healcon(cc, 6, 1);
+        healcon(cc, StatusAilment::fear, 1);
         if (cdata[cc].fear > 0)
         {
             cdata[cc].emotion_icon = 113;
@@ -2493,7 +2493,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].dimmed > 0)
     {
-        healcon(cc, 7, 1);
+        healcon(cc, StatusAilment::dimmed, 1);
         if (cdata[cc].dimmed > 0)
         {
             cdata[cc].emotion_icon = 112;
@@ -2501,7 +2501,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].drunk > 0)
     {
-        healcon(cc, 8, 1);
+        healcon(cc, StatusAilment::drunk, 1);
         if (cdata[cc].drunk > 0)
         {
             cdata[cc].emotion_icon = 106;
@@ -2513,7 +2513,10 @@ void proc_turn_end(int cc)
             cdata[cc],
             rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
-        healcon(cc, 9, 1 + cdata[cc].cures_bleeding_quickly() * 3);
+        healcon(
+            cc,
+            StatusAilment::bleeding,
+            1 + cdata[cc].cures_bleeding_quickly() * 3);
         if (cdata[cc].bleeding > 0)
         {
             cdata[cc].emotion_icon = 109;
@@ -2552,7 +2555,7 @@ void proc_turn_end(int cc)
         {
             cdata[cc].fear += rnd(10);
         }
-        healcon(cc, 11, 1);
+        healcon(cc, StatusAilment::insane, 1);
         if (cdata[cc].insane > 0)
         {
             cdata[cc].emotion_icon = 124;
@@ -8311,7 +8314,7 @@ void sleep_start()
         cdata[tc].hp = cdata[tc].max_hp;
         cdata[tc].mp = cdata[tc].max_mp;
         cdata[tc].sp = cdata[tc].max_sp;
-        healcon(tc, 12, 7 + rnd(7));
+        healcon(tc, StatusAilment::sick, 7 + rnd(7));
         if (cdata[tc].has_anorexia())
         {
             cdata[tc].anorexia_count -= rnd(6);
@@ -9016,7 +9019,7 @@ int do_cast_magic_attempt()
                     u8"_"s + cdata[cc].special_attack_type)));
         }
     }
-    if (buff_has(cdata[cc], 2))
+    if (buff_has(cdata[cc], "core.mist_of_silence"))
     {
         if (is_in_fov(cdata[cc]))
         {
@@ -9838,11 +9841,11 @@ void heal_both_rider_and_mount()
     {
         const auto amount = roll(dice1, dice2, bonus);
         heal_hp(cdata[tc(cnt)], amount);
-        healcon(tc(cnt), 6);
-        healcon(tc(cnt), 1, 50);
-        healcon(tc(cnt), 5, 50);
-        healcon(tc(cnt), 7, 30);
-        healcon(tc(cnt), 9, 20);
+        healcon(tc(cnt), StatusAilment::fear);
+        healcon(tc(cnt), StatusAilment::poisoned, 50);
+        healcon(tc(cnt), StatusAilment::confused, 50);
+        healcon(tc(cnt), StatusAilment::dimmed, 30);
+        healcon(tc(cnt), StatusAilment::bleeding, 20);
         heal_insanity(cdata[tc(cnt)], 1);
         if (is_in_fov(cdata[tc(cnt)]))
         {

@@ -105,7 +105,7 @@ Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
         .get_mod("test_chara_removed")
         ->env.set("idx", idx);
 
-    elona::chara_delete(idx);
+    testing::invalidate_chara(chara);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_removed", R"(assert(Store.global.removed_idx == idx))"));
@@ -149,7 +149,12 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_townsperson_killed", R"(
+local Chara = Elona.require("Chara")
 local Event = Elona.require("Event")
+
+Store.global.townsperson = Chara.create(0, 0, "core.putit")
+Store.global.townsperson.role = 14
+Store.global.idx = Store.global.townsperson.index
 
 local function my_chara_removed_handler(chara)
    Store.global.removed_idx = chara.index
@@ -166,21 +171,14 @@ Event.register(Event.EventKind.CharaKilled, my_chara_killed_handler)
 Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
-    int idx = elona::rc;
-    elona::Character& chara = elona::cdata[idx];
-    elona::lua::lua->get_mod_manager()
-        .get_mod("test_townsperson_killed")
-        ->env.set("idx", idx);
-
-    // Make this character a townsperson.
-    chara.character_role = 13;
-
-    elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_townsperson_killed",
-        R"(assert(Store.global.killed_idx == idx))"));
+        R"(Store.global.townsperson:damage_hp(Store.global.townsperson.max_hp + 1))"));
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
+        "test_townsperson_killed",
+        R"(assert(Store.global.killed_idx == Store.global.idx))"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_townsperson_killed",
         R"(assert(Store.global.removed_idx == -1))"));

@@ -9,11 +9,19 @@ namespace elona
 namespace lua
 {
 
-// Holds identifier and function pointer from an exported Lua
-// function.
-struct ExportedFunction
+/**
+ * Wrapper around sol::protected function for better ergonomics of handling
+ * failure and default values.
+ */
+struct WrappedFunction
 {
-    ExportedFunction(std::string id, sol::protected_function func)
+    WrappedFunction()
+        : id("")
+        , func(sol::lua_nil)
+    {
+    }
+
+    WrappedFunction(std::string id, sol::protected_function func)
         : id(id)
         , func(func)
     {

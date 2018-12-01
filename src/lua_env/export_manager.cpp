@@ -43,13 +43,13 @@ Exports = scan_exports(_API_TABLE)
     }
 }
 
-optional<ExportedFunction> ExportManager::get_exported_function(
+optional<WrappedFunction> ExportManager::get_exported_function(
     const std::string& name) const
 {
     sol::optional<sol::protected_function> func = export_env["Exports"][name];
     if (func && *func != sol::lua_nil)
     {
-        return ExportedFunction{name, *func};
+        return WrappedFunction{name, *func};
     }
     else
     {

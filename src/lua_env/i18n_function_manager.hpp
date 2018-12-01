@@ -2,8 +2,8 @@
 #include <string>
 #include "../enums.hpp"
 #include "../filesystem.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 #include "../variables.hpp"
-#include "exported_function.hpp"
 
 namespace elona
 {

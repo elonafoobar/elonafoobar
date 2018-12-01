@@ -6,7 +6,7 @@
 #include <vector>
 #include "data/types/type_character.hpp"
 #include "god.hpp"
-#include "lua_env/exported_function.hpp"
+#include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
@@ -278,7 +278,23 @@ struct Character
     {
         return state_;
     }
+
+    /**
+     * Sets the state of this character. If the state transitions from "empty"
+     * to any other state, the corresponding Lua handle will be created or
+     * regenerated.
+     */
     void set_state(Character::State);
+
+    /**
+     * Sets the state of this character without causing any handles to be
+     * modified. Only to be used in internal character management functions
+     * (relocation) where handles are manually copied or relocated.
+     */
+    void set_state_raw(Character::State new_state)
+    {
+        state_ = new_state;
+    }
 
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS

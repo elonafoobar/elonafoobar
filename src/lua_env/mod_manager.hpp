@@ -177,8 +177,8 @@ public:
      */
     ModInfo* create_mod(
         const std::string& name,
-        optional<fs::path> mod_dir,
-        bool readonly);
+        optional<fs::path> mod_dir = none,
+        bool readonly = false);
 
     /***
      * Retrieves a pointer to an instantiated mod.

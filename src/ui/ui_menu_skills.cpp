@@ -158,11 +158,11 @@ static void _draw_spell_cost(int cnt, int skill_id)
     mes(spell_cost);
 }
 
-static void _draw_spell_power(int cnt, int skill_id)
+static void _draw_spell_desc_and_power(int cnt, int skill_id)
 {
-    draw_spell_power_entry(skill_id);
+    std::string spell_power_raw = make_spell_description(skill_id);
     pos(wx + 325, wy + 66 + cnt * 19 + 2);
-    mes(strmid(s, 0, 34));
+    mes(strmid(spell_power_raw, 0, 34));
 }
 
 static void _draw_single_list_entry(int cnt, int skill_id)
@@ -170,7 +170,7 @@ static void _draw_single_list_entry(int cnt, int skill_id)
     _draw_skill_attribute(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);
     _draw_spell_cost(cnt, skill_id);
-    _draw_spell_power(cnt, skill_id);
+    _draw_spell_desc_and_power(cnt, skill_id);
 }
 
 static void _draw_list_entries()

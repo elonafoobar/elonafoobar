@@ -133,6 +133,13 @@ EnumMap<Quality> QualityTable{"Quality",
                                   {"Special", Quality::special},
                               }};
 
+EnumMap<BuffType> BuffTypeTable{"Buff",
+                                {
+                                    {"Buff", BuffType::buff},
+                                    {"Hex", BuffType::hex},
+                                    {"Food", BuffType::food},
+                                }};
+
 EnumMap<mdata_t::MapType> MapTypeTable{
     "MapType",
     {

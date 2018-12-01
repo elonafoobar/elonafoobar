@@ -2273,7 +2273,7 @@ TurnResult do_use_command()
         snd("core.pray1");
         txt(i18n::s.get("core.locale.action.use.statue.ehekatl"),
             Message::color{ColorIndex::orange});
-        buff_add(cdata[tc], 19, 77, 2500);
+        buff_add(cdata[tc], "core.luck", 77, 2500);
         goto label_2229_internal;
     case 27:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));

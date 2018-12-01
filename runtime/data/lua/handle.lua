@@ -157,10 +157,10 @@ function Handle.get_metatable(kind)
    return metatables[kind]
 end
 
---- Given a C++ userdata reference and kind, retrieves the handle that
---- references it.
-function Handle.get_handle(cpp_ref, kind)
-   local handle = handles_by_index[kind][cpp_ref.index]
+--- Given an integer index of a C++ object and kind, retrieves the
+--- handle that references it.
+function Handle.get_handle(index, kind)
+   local handle = handles_by_index[kind][index]
 
    if handle and handle.__kind ~= kind then
       print(debug.traceback())

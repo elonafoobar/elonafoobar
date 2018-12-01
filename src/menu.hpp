@@ -55,7 +55,7 @@ TurnResult play_scene();
 
 TurnResult show_spell_list();
 TurnResult show_skill_list();
-void draw_spell_power_entry(int skill_id);
+std::string make_spell_description(int skill_id);
 int change_appearance();
 MenuResult menu_feats();
 MenuResult menu_materials();

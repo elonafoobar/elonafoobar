@@ -1,5 +1,6 @@
 #include "lua_class_character.hpp"
 #include "../../ability.hpp"
+#include "../../buff.hpp"
 #include "../../character.hpp"
 #include "../../character_status.hpp"
 #include "../../dmgheal.hpp"
@@ -7,6 +8,8 @@
 #include "../../enums.hpp"
 #include "../../food.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../../lua_env/interface.hpp"
+#include "lua_class_ability.hpp"
 
 namespace elona
 {
@@ -42,10 +45,59 @@ void LuaCharacter::apply_ailment(
     const EnumString& ailment_name,
     int power)
 {
-    assert(power > 0);
+    if (power <= 0)
+    {
+        return;
+    }
+
     StatusAilment ailment =
         LuaEnums::StatusAilmentTable.ensure_from_string(ailment_name);
     elona::dmgcon(self.index, ailment, power);
+}
+
+void LuaCharacter::heal_ailment(
+    Character& self,
+    const EnumString& ailment_name,
+    int power)
+{
+    if (power < 0)
+    {
+        return;
+    }
+
+    StatusAilment ailment =
+        LuaEnums::StatusAilmentTable.ensure_from_string(ailment_name);
+    elona::healcon(self.index, ailment, power);
+}
+
+void LuaCharacter::add_buff(
+    Character& self,
+    const std::string& id,
+    int power,
+    int turns)
+{
+    elona::buff_add(self, id, power, turns);
+}
+
+void LuaCharacter::add_buff_doer(
+    Character& self,
+    const std::string& id,
+    int power,
+    int turns,
+    LuaCharacterHandle doer_handle)
+{
+    auto& doer = lua::lua->get_handle_manager().get_ref<Character>(doer_handle);
+    elona::buff_add(self, id, power, turns, doer);
+}
+
+void LuaCharacter::set_growth_buff(Character& self, int index, int power)
+{
+    if (index < 0 || index > 10)
+    {
+        return;
+    }
+
+    self.growth_buffs[index] = power;
 }
 
 bool LuaCharacter::recruit_as_ally(Character& self)
@@ -67,6 +119,20 @@ void LuaCharacter::set_flag(
     int flag = LuaEnums::CharaFlagTable.ensure_from_string(flag_name);
     int new_value = (is_setting ? 1 : 0);
     self._flags[flag] = new_value;
+}
+
+sol::optional<LuaAbility> LuaCharacter::get_skill(Character& self, int skill)
+{
+    if (skill < 0 || skill >= 600)
+    {
+        return sol::nullopt;
+    }
+
+    auto handle = lua::handle(self);
+    assert(handle != sol::lua_nil);
+
+    std::string uuid = handle["__uuid"];
+    return LuaAbility(skill, self.index, Character::lua_type(), uuid);
 }
 
 void LuaCharacter::gain_skill(Character& self, int skill, int initial_level)
@@ -198,6 +264,20 @@ void LuaCharacter::bind(sol::state& lua)
         &Character::fame,
         "talk_type",
         &Character::talk_type,
+        "pv",
+        &Character::pv,
+        "dv",
+        &Character::dv,
+        "hit_bonus",
+        &Character::hit_bonus,
+        "growth_buffs",
+        &Character::growth_buffs,
+        "hate",
+        &Character::hate,
+        "emotion_icon",
+        &Character::emotion_icon,
+        "karma",
+        &Character::karma,
 
         // Properties
         "new_id",
@@ -236,8 +316,13 @@ void LuaCharacter::bind(sol::state& lua)
         &LuaCharacter::damage_hp_source,
         &LuaCharacter::damage_hp_chara),
     lua[key]["apply_ailment"] = &LuaCharacter::apply_ailment;
+    lua[key]["heal_ailment"] = &LuaCharacter::heal_ailment;
+    lua[key]["add_buff"] =
+        sol::overload(&LuaCharacter::add_buff, &LuaCharacter::add_buff_doer);
+    lua[key]["set_growth_buff"] = &LuaCharacter::set_growth_buff;
     lua[key]["recruit_as_ally"] = &LuaCharacter::recruit_as_ally;
     lua[key]["set_flag"] = &LuaCharacter::set_flag;
+    lua[key]["get_skill"] = &LuaCharacter::get_skill;
     lua[key]["gain_skill"] = sol::overload(
         &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock);
     lua[key]["gain_skill_exp"] = &LuaCharacter::gain_skill_exp;

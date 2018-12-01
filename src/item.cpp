@@ -514,7 +514,6 @@ void item_exchange(int a, int b)
 void Item::remove()
 {
     number_ = 0;
-    lua::lua->get_handle_manager().remove_item_handle_run_callbacks(*this);
 }
 
 void item_delete(int ci)
@@ -559,6 +558,13 @@ void Item::modify_number(int delta)
 void Item::set_number(int number_)
 {
     bool item_was_empty = this->number_ <= 0;
+
+    if (item_was_empty && number_ > 0)
+    {
+        // Clean up any stale handles that may have been left over from an item
+        // in the same index being removed.
+        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(*this);
+    }
 
     this->number_ = std::max(number_, 0);
     item_refresh(*this);

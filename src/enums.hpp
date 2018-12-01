@@ -143,6 +143,13 @@ enum class DamageSource : int
     mochi = -21,
 };
 
+enum class BuffType
+{
+    buff,
+    hex,
+    food,
+};
+
 enum class TurnResult
 {
     none,

@@ -252,7 +252,7 @@ void chara_vomit(Character& cc)
         {
             break;
         }
-        if (the_buff_db[cc.buffs[i].id]->type == BuffData::Type::food)
+        if (the_buff_db[cc.buffs[i].id]->type == BuffType::food)
         {
             buff_delete(cc, i);
         }
@@ -346,7 +346,7 @@ void eatstatus(CurseState curse_state, int eater)
         }
         if (rnd(5) == 0)
         {
-            buff_add(cdata[eater], 19, 100, 500 + rnd(500));
+            buff_add(cdata[eater], "core.luck", 100, 500 + rnd(500));
         }
         heal_insanity(cdata[eater], 2);
     }
@@ -1428,12 +1428,18 @@ void apply_general_eating_effect(int cieat)
                     txt(i18n::s.get_enum_property(
                         "core.locale.buff", enc + 10, "apply", cdata[cc]));
                 }
+
+                int legacy_id = 20 + (enc - 10);
+                auto buff_id = the_buff_db.get_id_from_legacy(legacy_id);
+                assert(buff_id);
+
                 buff_add(
                     cdata[cc],
-                    20 + (enc - 10),
+                    *buff_id,
                     (inv[ci].enchantments[cnt].power / 50 + 1) * 5 *
                         (1 + (cc != 0) * 2),
                     2000);
+
                 continue;
             }
         }

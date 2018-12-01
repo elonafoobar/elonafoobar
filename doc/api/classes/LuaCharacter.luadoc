@@ -62,6 +62,21 @@ function damage_hp(amount, source) end
 --chara:apply_ailment(Enums.StatusAilment.Blinded, 100)
 function apply_ailment(ailment, power) end
 
+--- Heals a status ailment on a character.
+-- @tparam Enums.StatusAilment ailment the kind of status ailment
+-- @tparam num power the power of the healing. If 0, heal the ailment
+-- completely.
+-- @usage local chara = Chara.player()
+--chara:heal_ailment(Enums.StatusAilment.Blinded, 100)
+function heal_ailment(ailment, power) end
+
+--- Adds a buff to a character.
+-- @tparam string id the buff to add
+-- @tparam power num the buff's power
+-- @tparam turns num the number of turns the buff will last
+-- @tparam[opt] LuaCharacter doer the character who applied this buff
+function add_buff(id, power, turns, doer) end
+
 --- Attempts to recruit this character as an ally of the player.
 --- This will only work if the character isn't already an ally, isn't
 --- the player, is alive and the player has a free party slot.
