@@ -26,18 +26,17 @@ void DataManager::_init_from_mod(ModInfo& mod)
     // new global variables.
     mod.env.raw_set("data", _data.storage);
 
-    if (mod.path)
+    if (mod.manifest.path)
     {
-        // The name of the mod for which the current data script is being
-        // ran is present in the mod's environment table. However, it is not
-        // present in the chunk where the 'data' table originates from, as
-        // it was ran outside of an environment on creation. To determine
-        // which mod is adding new types/data in the data chunk, it has to
-        // be set globally for each mod temporarily during the data loading
-        // process.
-        _lua->get_state()->set("_MOD_NAME", mod.name);
+        // The name of the mod for which the current data script is being ran is
+        // present in the mod's environment table. However, it is not present in
+        // the chunk where the 'data' table originates from, as it originated
+        // outside of a mod environment. To determine which mod is adding new
+        // types/data in the data chunk, it has to be set on the global Lua
+        // state temporarily during the data loading process.
+        _lua->get_state()->set("_MOD_NAME", mod.manifest.name);
 
-        const auto data_script = *mod.path / "data.lua";
+        const auto data_script = *mod.manifest.path / "data.lua";
         if (fs::exists(data_script))
         {
             auto result = _lua->get_state()->safe_script_file(
@@ -56,26 +55,11 @@ void DataManager::_init_from_mod(ModInfo& mod)
 
 void DataManager::init_from_mods()
 {
-    // HACK: Really dumb thing to get around lack of mod dependencies
-    // temporarily. Data types in one mod could be used by another, but they
-    // have to be declared in order first. For now, load "core" and the types it
-    // defines before anything else.
-    for (const auto& pair : _lua->get_mod_manager())
+    for (const auto& mod_name :
+         _lua->get_mod_manager().calculate_loading_order())
     {
-        const auto& mod = pair.second;
-        if (mod->name == "core")
-        {
-            _init_from_mod(*mod);
-            break;
-        }
-    }
-    for (const auto& pair : _lua->get_mod_manager())
-    {
-        const auto& mod = pair.second;
-        if (mod->name != "core")
-        {
-            _init_from_mod(*mod);
-        }
+        const auto& mod = _lua->get_mod_manager().get_mod(mod_name);
+        _init_from_mod(*mod);
     }
 
     _lua->get_state()->set("_MOD_NAME", sol::lua_nil);

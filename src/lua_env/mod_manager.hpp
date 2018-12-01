@@ -6,6 +6,7 @@
 #include "../optional.hpp"
 #include "loaded_chunk_cache.hpp"
 #include "lua_env.hpp"
+#include "mod_manifest.hpp"
 
 namespace elona
 {
@@ -25,11 +26,9 @@ using namespace std::literals::string_literals;
 struct ModInfo
 {
     explicit ModInfo(
-        const std::string name_,
-        const optional<fs::path> path_,
+        const ModManifest& manifest_,
         std::shared_ptr<sol::state> state)
-        : name(name_)
-        , path(path_)
+        : manifest(manifest_)
     {
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
@@ -37,17 +36,16 @@ struct ModInfo
         store_local = state->create_table();
         store_global = state->create_table();
 
-        if (path)
+        if (manifest.path)
         {
-            chunk_cache = LoadedChunkCache{*path};
+            chunk_cache = LoadedChunkCache{*manifest.path};
         }
     }
     ModInfo(const ModInfo&) = delete;
     ModInfo& operator=(const ModInfo&) = delete;
     ~ModInfo() = default;
 
-    std::string name;
-    optional<fs::path> path;
+    ModManifest manifest;
     optional<LoadedChunkCache> chunk_cache;
     sol::environment env;
     sol::table store_local;
@@ -171,7 +169,17 @@ public:
      * Creates a new mod, optionally setting its global environment to be read
      * only.
      *
-     * Will throw if the mod already exists.
+     * Will throw if a mod with the same name already exists.
+     *
+     * @return a pointer to the created mod.
+     */
+    ModInfo* create_mod(const ModManifest& manifest, bool readonly);
+
+    /***
+     * Creates a new mod, optionally setting its global environment to be read
+     * only.
+     *
+     * Will throw if a mod with the same name already exists.
      *
      * @return a pointer to the created mod.
      */
@@ -194,6 +202,15 @@ public:
             throw std::runtime_error("No such mod "s + name + "."s);
         return val->second.get();
     }
+
+    /***
+     * Calculates the order in which mods should be loaded such that all the
+     * needed dependencies of a mod are loaded by the time that mod is loaded.
+     *
+     * @return a list of mod names, ordered by loading order
+     * @throws if there is a cyclic dependency, or a dependency is unknown
+     */
+    std::vector<std::string> calculate_loading_order();
 
 private:
     //********************* Lifecycle methods **********************//

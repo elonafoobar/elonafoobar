@@ -295,12 +295,12 @@ void initialize_i18n()
     for (const auto& pair : lua::lua->get_mod_manager())
     {
         const auto& mod = pair.second;
-        if (mod->path)
+        if (mod->manifest.path)
         {
-            const auto path = *mod->path / "locale" / language;
+            const auto path = *mod->manifest.path / "locale" / language;
             if (fs::exists(path))
             {
-                locations.emplace_back(path, mod->name);
+                locations.emplace_back(path, mod->manifest.name);
             }
         }
     }
