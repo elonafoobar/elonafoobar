@@ -1739,6 +1739,14 @@ int chara_copy(const Character& source)
     const auto x = pos->x;
     const auto y = pos->y;
 
+    if (source.state() != Character::State::empty)
+    {
+        // Clean up any stale handles that may have been left over from a
+        // character in the same index being removed.
+        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(
+            cdata[slot]);
+    }
+
     // Delete completely the previous character in `slot`.
     chara_delete(slot);
 
