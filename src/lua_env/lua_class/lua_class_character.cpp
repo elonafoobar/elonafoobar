@@ -76,6 +76,11 @@ void LuaCharacter::add_buff(
     int power,
     int turns)
 {
+    if (!the_buff_db[id])
+    {
+        throw sol::error{"No such buff \"" + id + "\""};
+    }
+
     elona::buff_add(self, id, power, turns);
 }
 
@@ -86,6 +91,11 @@ void LuaCharacter::add_buff_doer(
     int turns,
     LuaCharacterHandle doer_handle)
 {
+    if (!the_buff_db[id])
+    {
+        throw sol::error{"No such buff \"" + id + "\""};
+    }
+
     auto& doer = lua::lua->get_handle_manager().get_ref<Character>(doer_handle);
     elona::buff_add(self, id, power, turns, doer);
 }

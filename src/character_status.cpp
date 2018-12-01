@@ -469,7 +469,7 @@ void gain_new_body_part(Character& cc)
         txt(i18n::s.get(
             "core.locale.chara_status.gain_new_body_part",
             cc,
-            i18n::_(u8"ui", u8"body_part", u8"_"s + body_part)));
+            i18n::s.get_enum("core.locale.ui.body_part", body_part)));
     }
 
     refresh_speed_correction_value(cc);

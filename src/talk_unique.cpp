@@ -38,7 +38,7 @@ TalkResult talk_unique_zeome()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.zeome");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
 
@@ -56,39 +56,39 @@ TalkResult talk_unique_orphe()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.orphe.dialog",
             0,
-            i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex));
+            i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.orphe.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.orphe.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.orphe.dialog", 3);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.orphe.dialog", 4);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.orphe.dialog", 5);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -133,7 +133,7 @@ TalkResult talk_unique_loyter()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.fame_too_low");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -143,7 +143,7 @@ TalkResult talk_unique_loyter()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -154,7 +154,7 @@ TalkResult talk_unique_loyter()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.loyter.quest.dialog", 0, cdatan(1, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
@@ -169,7 +169,7 @@ TalkResult talk_unique_loyter()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.loyter.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -178,7 +178,7 @@ TalkResult talk_unique_loyter()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -204,7 +204,7 @@ TalkResult talk_unique_loyter()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.loyter.quest.begin.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -213,7 +213,7 @@ TalkResult talk_unique_loyter()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.quest.begin.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -229,7 +229,7 @@ TalkResult talk_unique_loyter()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -266,7 +266,7 @@ TalkResult talk_unique_miches()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -277,7 +277,7 @@ TalkResult talk_unique_miches()
         buff =
             i18n::s.get_enum("core.locale.talk.unique.miches.quest.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
@@ -292,7 +292,7 @@ TalkResult talk_unique_miches()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.miches.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -301,7 +301,7 @@ TalkResult talk_unique_miches()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -314,7 +314,7 @@ TalkResult talk_unique_miches()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.quest.waiting");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -326,7 +326,7 @@ TalkResult talk_unique_miches()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -366,7 +366,7 @@ TalkResult talk_unique_shena()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -377,7 +377,7 @@ TalkResult talk_unique_shena()
         buff =
             i18n::s.get_enum("core.locale.talk.unique.shena.quest.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
@@ -392,7 +392,7 @@ TalkResult talk_unique_shena()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.shena.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -401,7 +401,7 @@ TalkResult talk_unique_shena()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -415,7 +415,7 @@ TalkResult talk_unique_shena()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.quest.waiting");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -427,7 +427,7 @@ TalkResult talk_unique_shena()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -448,7 +448,7 @@ TalkResult talk_unique_larnneire()
         i18n::s.get("core.locale.talk.unique.larnneire.choices.north_tyris"));
     ELONA_APPEND_RESPONSE(
         1, i18n::s.get("core.locale.talk.unique.larnneire.choices.fairy_tale"));
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get("core.locale.talk.unique.larnneire.dialog");
     chatval_ = talk_window_query();
     if (chatval_ == 1)
@@ -457,42 +457,42 @@ TalkResult talk_unique_larnneire()
         buff =
             i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 3);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 4);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 5);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_unique;
@@ -503,14 +503,14 @@ TalkResult talk_unique_larnneire()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.larnneire.north_tyris", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.larnneire.north_tyris", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_unique;
@@ -520,7 +520,7 @@ TalkResult talk_unique_larnneire()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.larnneire.mission");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_unique;
@@ -635,21 +635,21 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.movement.dialog", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.movement.dialog", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.movement.dialog", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             buff = i18n::s.get_enum(
@@ -669,14 +669,14 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.skills.dialog", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.skills.dialog", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             buff = i18n::s.get_enum(
@@ -694,7 +694,7 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get(
                 "core.locale.talk.unique.lomias.tutorial.after_dig.dialog");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -706,14 +706,14 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.identify.dialog", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.identify.dialog", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             buff = i18n::s.get_enum(
@@ -750,7 +750,7 @@ TalkResult talk_unique_lomias()
                     "core.locale.talk.unique.lomias.tutorial.combat.not_"
                     "finished");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_end;
@@ -759,7 +759,7 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get(
                 "core.locale.talk.unique.lomias.tutorial.combat.finished");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -771,14 +771,14 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.chests.dialog", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.chests.dialog", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -805,28 +805,28 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.house.dialog", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.house.dialog", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.house.dialog", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.house.dialog", 3);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -838,14 +838,14 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.end.dialog", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lomias.tutorial.end.dialog", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -877,7 +877,7 @@ TalkResult talk_unique_lomias()
         buff =
             i18n::s.get("core.locale.talk.unique.lomias.tutorial.before.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -898,7 +898,7 @@ TalkResult talk_unique_lomias()
             buff = i18n::s.get(
                 "core.locale.talk.unique.lomias.after.get_out.larnneire_died");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -909,7 +909,7 @@ TalkResult talk_unique_lomias()
             0,
             cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
@@ -917,7 +917,7 @@ TalkResult talk_unique_lomias()
             "core.locale.talk.unique.lomias.after.get_out.dialog", 1);
         tc =
             tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
@@ -927,7 +927,7 @@ TalkResult talk_unique_lomias()
             cdatan(1, 0));
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -949,14 +949,14 @@ TalkResult talk_unique_lomias()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -970,14 +970,14 @@ TalkResult talk_unique_lomias()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.tutorial.identify.done.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.tutorial.identify.done.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -992,21 +992,21 @@ TalkResult talk_unique_lomias()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1024,7 +1024,7 @@ TalkResult talk_unique_stersha()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.stersha.late");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1034,7 +1034,7 @@ TalkResult talk_unique_stersha()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.stersha.early");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
@@ -1043,7 +1043,7 @@ TalkResult talk_unique_stersha()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.stersha.mid");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
@@ -1075,7 +1075,7 @@ TalkResult talk_unique_xabi()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.xabi.late");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1085,7 +1085,7 @@ TalkResult talk_unique_xabi()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.xabi.mid");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1097,7 +1097,7 @@ TalkResult talk_unique_xabi()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.xabi.early", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1112,7 +1112,7 @@ TalkResult talk_unique_xabi()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.xabi.early", 1, cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1157,19 +1157,19 @@ TalkResult talk_unique_slan()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.slan.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.slan.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.slan.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1217,13 +1217,13 @@ TalkResult talk_unique_erystia()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.erystia.late", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.erystia.late", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
@@ -1233,7 +1233,7 @@ TalkResult talk_unique_erystia()
             cdatan(1, 0),
             cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1246,21 +1246,21 @@ TalkResult talk_unique_erystia()
             0,
             cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.erystia.all_stones.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.erystia.all_stones.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
@@ -1269,7 +1269,7 @@ TalkResult talk_unique_erystia()
             3,
             cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1283,7 +1283,7 @@ TalkResult talk_unique_erystia()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.erystia.stones.dialog", 0, cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1298,28 +1298,28 @@ TalkResult talk_unique_erystia()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.erystia.stones.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.erystia.stones.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.erystia.stones.dialog", 3);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.erystia.stones.dialog", 4);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1356,7 +1356,7 @@ TalkResult talk_unique_erystia()
                 i18n::s.get("core.locale.talk.unique.erystia.investigation."
                             "choices.stones.crypt"));
         }
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         chatval_ = talk_window_query();
         if (chatval_ == 6)
@@ -1365,35 +1365,35 @@ TalkResult talk_unique_erystia()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.lesmias", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.lesmias", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.lesmias", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.lesmias", 3);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.lesmias", 4);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -1408,7 +1408,7 @@ TalkResult talk_unique_erystia()
                     "excavation",
                     0);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 listmax = 0;
@@ -1417,7 +1417,7 @@ TalkResult talk_unique_erystia()
                     "excavation",
                     1);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -1430,7 +1430,7 @@ TalkResult talk_unique_erystia()
                     "stones",
                     0);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -1441,7 +1441,7 @@ TalkResult talk_unique_erystia()
                 1,
                 cdatan(0, 0));
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -1452,21 +1452,21 @@ TalkResult talk_unique_erystia()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.castle", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.castle", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.castle", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -1477,21 +1477,21 @@ TalkResult talk_unique_erystia()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.inferno", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.inferno", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.inferno", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -1502,21 +1502,21 @@ TalkResult talk_unique_erystia()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.crypt", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.crypt", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.erystia.investigation.crypt", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -1545,7 +1545,7 @@ TalkResult talk_unique_erystia()
             buff = i18n::s.get(
                 "core.locale.talk.unique.erystia.introduction.not_interested");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -1556,7 +1556,7 @@ TalkResult talk_unique_erystia()
             "dialog",
             0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
@@ -1565,7 +1565,7 @@ TalkResult talk_unique_erystia()
             "dialog",
             1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
@@ -1574,7 +1574,7 @@ TalkResult talk_unique_erystia()
             "dialog",
             2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
@@ -1584,7 +1584,7 @@ TalkResult talk_unique_erystia()
             3,
             cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1627,37 +1627,37 @@ TalkResult talk_unique_karam()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.karam.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.karam.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.karam.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.karam.dialog", 3);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.karam.dialog", 4);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.karam.dialog", 5);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1671,7 +1671,7 @@ TalkResult talk_unique_karam()
 
 TalkResult talk_unique_garokk()
 {
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get("core.locale.talk.unique.garokk");
     chatval_ = talk_window_query();
     if (chatval_ == 1)
@@ -1713,7 +1713,7 @@ TalkResult talk_unique_miral()
         2, i18n::s.get("core.locale.talk.unique.miral.choices.small_medals"));
     ELONA_APPEND_RESPONSE(
         3, i18n::s.get("core.locale.talk.unique.miral.choices.upgrade_cart"));
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get("core.locale.talk.unique.miral.dialog");
     chatval_ = talk_window_query();
     if (chatval_ == 2)
@@ -1721,7 +1721,7 @@ TalkResult talk_unique_miral()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miral.small_medals");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1759,7 +1759,7 @@ TalkResult talk_unique_miral()
             buff = i18n::s.get(
                 "core.locale.talk.unique.miral.upgrade_cart.go_back");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -1771,7 +1771,7 @@ TalkResult talk_unique_miral()
         buff = i18n::s.get(
             "core.locale.talk.unique.miral.upgrade_cart.give.dialog");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_unique;
@@ -1790,7 +1790,7 @@ TalkResult talk_unique_pael()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.pael.festival");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -1798,7 +1798,7 @@ TalkResult talk_unique_pael()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.pael.after_face");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1808,7 +1808,7 @@ TalkResult talk_unique_pael()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.pael.after_death");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1818,7 +1818,7 @@ TalkResult talk_unique_pael()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.pael.after_sold");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1841,7 +1841,7 @@ TalkResult talk_unique_pael()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1853,7 +1853,7 @@ TalkResult talk_unique_pael()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.pael.progress", 1, cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1903,7 +1903,7 @@ TalkResult talk_unique_pael()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 5);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1914,7 +1914,7 @@ TalkResult talk_unique_pael()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.pael.progress", 6, cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1958,7 +1958,7 @@ TalkResult talk_unique_paels_mom()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.paels_mom.after_sold");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -1969,14 +1969,14 @@ TalkResult talk_unique_paels_mom()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.paels_mom.progress.last", 0, cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.paels_mom.progress.last", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -1986,7 +1986,7 @@ TalkResult talk_unique_paels_mom()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.paels_mom.progress.last", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2023,7 +2023,7 @@ TalkResult talk_unique_paels_mom()
                     "core.locale.talk.unique.paels_mom.progress.festival.give."
                     "dialog");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_end;
@@ -2033,7 +2033,7 @@ TalkResult talk_unique_paels_mom()
                 "core.locale.talk.unique.paels_mom.progress.festival.take_"
                 "care");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2047,7 +2047,7 @@ TalkResult talk_unique_paels_mom()
             0,
             cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         buff = i18n::s.get_enum(
@@ -2076,7 +2076,7 @@ TalkResult talk_unique_paels_mom()
             buff = i18n::s.get(
                 "core.locale.talk.unique.paels_mom.progress.end_life.end");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -2093,7 +2093,7 @@ TalkResult talk_unique_paels_mom()
                 "core.locale.talk.unique.paels_mom.progress.end_life.give."
                 "dialog");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2102,7 +2102,7 @@ TalkResult talk_unique_paels_mom()
         buff = i18n::s.get(
             "core.locale.talk.unique.paels_mom.progress.end_life.leave");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2113,7 +2113,7 @@ TalkResult talk_unique_paels_mom()
         buff =
             i18n::s.get("core.locale.talk.unique.paels_mom.progress.very_late");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2124,7 +2124,7 @@ TalkResult talk_unique_paels_mom()
         buff = i18n::s.get(
             "core.locale.talk.unique.paels_mom.progress.late", cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2134,7 +2134,7 @@ TalkResult talk_unique_paels_mom()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.mid");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2142,7 +2142,7 @@ TalkResult talk_unique_paels_mom()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.early");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     return TalkResult::talk_end;
@@ -2204,7 +2204,7 @@ TalkResult talk_unique_raphael()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.raphael.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2213,7 +2213,7 @@ TalkResult talk_unique_raphael()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.raphael.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2240,7 +2240,7 @@ TalkResult talk_unique_raphael()
             buff = i18n::s.get(
                 "core.locale.talk.unique.raphael.bring_wife.go_back");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2253,7 +2253,7 @@ TalkResult talk_unique_raphael()
                 "core.locale.talk.unique.raphael.bring_wife.this_one.no_such_"
                 "wife");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2266,7 +2266,7 @@ TalkResult talk_unique_raphael()
                 "core.locale.talk.unique.raphael.bring_wife.this_one.not_"
                 "married");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2276,7 +2276,7 @@ TalkResult talk_unique_raphael()
             "core.locale.talk.unique.raphael.bring_wife.this_one.come_along",
             cdatan(0, rc));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2288,7 +2288,7 @@ TalkResult talk_unique_raphael()
         buff = i18n::s.get(
             "core.locale.talk.unique.raphael.bring_wife.this_one.leaving");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         tc = tcbk;
@@ -2300,7 +2300,7 @@ TalkResult talk_unique_raphael()
                 "core.locale.talk.unique.raphael.bring_wife.this_one.not_"
                 "human");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
@@ -2314,7 +2314,7 @@ TalkResult talk_unique_raphael()
         buff = i18n::s.get(
             "core.locale.talk.unique.raphael.bring_wife.this_one.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2348,7 +2348,7 @@ TalkResult talk_unique_ainc()
         buff =
             i18n::s.get("core.locale.talk.unique.ainc.complete", cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2357,7 +2357,7 @@ TalkResult talk_unique_ainc()
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.unique.ainc.quest.choices.do_it"));
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.dialog");
         chatval_ = talk_window_query();
         if (chatval_ != 1)
@@ -2365,7 +2365,7 @@ TalkResult talk_unique_ainc()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.ainc.quest.bye");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2374,7 +2374,7 @@ TalkResult talk_unique_ainc()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.do_it");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2387,7 +2387,7 @@ TalkResult talk_unique_ainc()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.waiting");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2397,7 +2397,7 @@ TalkResult talk_unique_ainc()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2426,7 +2426,7 @@ TalkResult talk_unique_poppy()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.poppy.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2436,7 +2436,7 @@ TalkResult talk_unique_poppy()
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.unique.poppy.find.choices.take"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get("core.locale.talk.unique.poppy.find.dialog");
     chatval_ = talk_window_query();
     if (chatval_ == 1)
@@ -2480,7 +2480,7 @@ TalkResult talk_unique_rilian()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.rilian.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2490,7 +2490,7 @@ TalkResult talk_unique_rilian()
         ELONA_APPEND_RESPONSE(
             1,
             i18n::s.get("core.locale.talk.unique.rilian.quest.choices.do_it"));
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff = i18n::s.get("core.locale.talk.unique.rilian.quest.dialog");
         chatval_ = talk_window_query();
         if (chatval_ != 1)
@@ -2498,7 +2498,7 @@ TalkResult talk_unique_rilian()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.rilian.quest.bye");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2507,7 +2507,7 @@ TalkResult talk_unique_rilian()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.rilian.quest.do_it");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2522,7 +2522,7 @@ TalkResult talk_unique_rilian()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.rilian.quest.waiting");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2530,7 +2530,7 @@ TalkResult talk_unique_rilian()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.rilian.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2568,7 +2568,7 @@ TalkResult talk_unique_tam()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2586,7 +2586,7 @@ TalkResult talk_unique_tam()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.tam.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2595,7 +2595,7 @@ TalkResult talk_unique_tam()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2609,7 +2609,7 @@ TalkResult talk_unique_tam()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.quest.waiting");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2621,7 +2621,7 @@ TalkResult talk_unique_tam()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         game_data.quest_flags.cat_house = 1000;
@@ -2665,7 +2665,7 @@ TalkResult talk_unique_gilbert()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2675,7 +2675,7 @@ TalkResult talk_unique_gilbert()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.fame_too_low");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2686,7 +2686,7 @@ TalkResult talk_unique_gilbert()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.gilbert.quest.dialog", 0, cdatan(1, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
@@ -2702,7 +2702,7 @@ TalkResult talk_unique_gilbert()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2711,7 +2711,7 @@ TalkResult talk_unique_gilbert()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2739,7 +2739,7 @@ TalkResult talk_unique_gilbert()
             buff =
                 i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2748,7 +2748,7 @@ TalkResult talk_unique_gilbert()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2763,7 +2763,7 @@ TalkResult talk_unique_gilbert()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2810,7 +2810,7 @@ TalkResult talk_unique_arnord()
         buff = i18n::s.get(
             "core.locale.talk.unique.arnord.complete", cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2828,7 +2828,7 @@ TalkResult talk_unique_arnord()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.arnord.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2837,7 +2837,7 @@ TalkResult talk_unique_arnord()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2863,7 +2863,7 @@ TalkResult talk_unique_arnord()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.arnord.quest.begin.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2872,7 +2872,7 @@ TalkResult talk_unique_arnord()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.begin.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2887,7 +2887,7 @@ TalkResult talk_unique_arnord()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2927,7 +2927,7 @@ TalkResult talk_unique_mia()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.mia.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -2945,7 +2945,7 @@ TalkResult talk_unique_mia()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.mia.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2954,7 +2954,7 @@ TalkResult talk_unique_mia()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.mia.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -2969,7 +2969,7 @@ TalkResult talk_unique_mia()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.mia.quest.waiting");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -2977,13 +2977,13 @@ TalkResult talk_unique_mia()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.mia.quest.end", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.mia.quest.end", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -3047,7 +3047,7 @@ TalkResult talk_unique_renton()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.renton.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3059,28 +3059,28 @@ TalkResult talk_unique_renton()
         buff =
             i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 1);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 2);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
         buff =
             i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 3);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -3121,7 +3121,7 @@ TalkResult talk_unique_renton()
                 buff = i18n::s.get(
                     "core.locale.talk.unique.renton.quest.brought", p(0));
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_end;
@@ -3133,7 +3133,7 @@ TalkResult talk_unique_renton()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.renton.quest.brought_all.dialog", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
@@ -3146,7 +3146,7 @@ TalkResult talk_unique_renton()
                 buff = u8"..."s;
             }
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
@@ -3159,7 +3159,7 @@ TalkResult talk_unique_renton()
                 buff = u8"... ..."s;
             }
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
@@ -3172,14 +3172,14 @@ TalkResult talk_unique_renton()
                 buff = u8"... ... ..."s;
             }
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.renton.quest.brought_all.dialog", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             txt(i18n::s.get(
@@ -3190,7 +3190,7 @@ TalkResult talk_unique_renton()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.renton.quest.brought_all.dialog", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -3218,7 +3218,7 @@ TalkResult talk_unique_marks()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.marks.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3228,7 +3228,7 @@ TalkResult talk_unique_marks()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.marks.fame_too_low");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3239,7 +3239,7 @@ TalkResult talk_unique_marks()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.marks.quest.dialog", 0, cdatan(1, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         if (cdata.player().gold >= 20000)
@@ -3248,7 +3248,7 @@ TalkResult talk_unique_marks()
                 1,
                 i18n::s.get("core.locale.talk.unique.marks.quest.choices.pay"));
         }
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff =
             i18n::s.get_enum("core.locale.talk.unique.marks.quest.dialog", 1);
         chatval_ = talk_window_query();
@@ -3257,7 +3257,7 @@ TalkResult talk_unique_marks()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.marks.quest.bye");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -3270,7 +3270,7 @@ TalkResult talk_unique_marks()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.marks.quest.pay");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -3315,7 +3315,7 @@ TalkResult talk_unique_noel()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
@@ -3324,7 +3324,7 @@ TalkResult talk_unique_noel()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.waiting");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
@@ -3335,7 +3335,7 @@ TalkResult talk_unique_noel()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
@@ -3344,14 +3344,14 @@ TalkResult talk_unique_noel()
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.noel.quest.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
             1,
             i18n::s.get(
                 "core.locale.talk.unique.noel.quest.choices.of_course"));
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff = i18n::s.get_enum("core.locale.talk.unique.noel.quest.dialog", 1);
         chatval_ = talk_window_query();
         if (chatval_ != 1)
@@ -3359,7 +3359,7 @@ TalkResult talk_unique_noel()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.noel.quest.bye");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -3371,7 +3371,7 @@ TalkResult talk_unique_noel()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.of_course");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
@@ -3382,7 +3382,7 @@ TalkResult talk_unique_noel()
             i18n::s.get(
                 "core.locale.talk.unique.noel.quest.buy_nuke.choices.buy"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get("core.locale.talk.unique.noel.quest.buy_nuke.dialog");
     chatval_ = talk_window_query();
     if (chatval_ != 1)
@@ -3390,7 +3390,7 @@ TalkResult talk_unique_noel()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.buy_nuke.bye");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3401,7 +3401,7 @@ TalkResult talk_unique_noel()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.noel.quest.buy_nuke.buy");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     return TalkResult::talk_end;
@@ -3476,7 +3476,7 @@ TalkResult talk_unique_icolle()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.icolle.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3487,7 +3487,7 @@ TalkResult talk_unique_icolle()
             1,
             i18n::s.get(
                 "core.locale.talk.unique.icolle.quest.choices.alright"));
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff = i18n::s.get("core.locale.talk.unique.icolle.quest.dialog");
         chatval_ = talk_window_query();
         if (chatval_ != 1)
@@ -3495,7 +3495,7 @@ TalkResult talk_unique_icolle()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.icolle.quest.bye");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -3507,7 +3507,7 @@ TalkResult talk_unique_icolle()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.icolle.quest.alright");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -3525,7 +3525,7 @@ TalkResult talk_unique_icolle()
             buff =
                 i18n::s.get("core.locale.talk.unique.icolle.quest.give.have");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
@@ -3535,7 +3535,7 @@ TalkResult talk_unique_icolle()
             buff = i18n::s.get(
                 "core.locale.talk.unique.icolle.quest.give.do_not_have");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
@@ -3546,7 +3546,7 @@ TalkResult talk_unique_icolle()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.icolle.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -3584,7 +3584,7 @@ TalkResult talk_unique_balzak()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3595,7 +3595,7 @@ TalkResult talk_unique_balzak()
         buff =
             i18n::s.get_enum("core.locale.talk.unique.balzak.quest.dialog", 0);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
@@ -3610,7 +3610,7 @@ TalkResult talk_unique_balzak()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.balzak.quest.no");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -3619,7 +3619,7 @@ TalkResult talk_unique_balzak()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.quest.yes");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -3633,7 +3633,7 @@ TalkResult talk_unique_balzak()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.quest.waiting");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3645,7 +3645,7 @@ TalkResult talk_unique_balzak()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         game_data.quest_flags.sewer_sweeping = 1000;
@@ -3736,7 +3736,7 @@ TalkResult talk_unique_lexus()
             1,
             i18n::s.get("core.locale.talk.unique.lexus.nonmember.choices.want_"
                         "to_join"));
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff = i18n::s.get("core.locale.talk.unique.lexus.nonmember.dialog");
         chatval_ = talk_window_query();
         if (chatval_ == 2)
@@ -3745,7 +3745,7 @@ TalkResult talk_unique_lexus()
             buff = i18n::s.get(
                 "core.locale.talk.unique.lexus.nonmember.tell_me_about");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -3758,14 +3758,14 @@ TalkResult talk_unique_lexus()
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.lexus.nonmember.want_to_join", 0);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 listmax = 0;
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.lexus.nonmember.want_to_join", 1);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
 
@@ -3775,7 +3775,7 @@ TalkResult talk_unique_lexus()
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.lexus.nonmember.want_to_join", 2);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -3786,7 +3786,7 @@ TalkResult talk_unique_lexus()
                 buff = i18n::s.get(
                     "core.locale.talk.unique.lexus.nonmember.quota");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -3795,7 +3795,7 @@ TalkResult talk_unique_lexus()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lexus.nonmember.end", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -3805,7 +3805,7 @@ TalkResult talk_unique_lexus()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lexus.nonmember.end", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -3829,7 +3829,7 @@ TalkResult talk_unique_lexus()
             i18n::s.get(
                 "core.locale.talk.unique.lexus.member.choices.report_quota"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get(
         "core.locale.talk.unique.lexus.member.dialog",
         ranktitle(8),
@@ -3844,7 +3844,7 @@ TalkResult talk_unique_lexus()
             "core.locale.talk.unique.lexus.member.new_quota",
             game_data.guild.mages_guild_quota);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_unique;
@@ -3857,7 +3857,7 @@ TalkResult talk_unique_lexus()
             buff = i18n::s.get(
                 "core.locale.talk.unique.lexus.member.report_quota.waiting");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -3869,7 +3869,7 @@ TalkResult talk_unique_lexus()
         buff = i18n::s.get(
             "core.locale.talk.unique.lexus.member.report_quota.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -3959,7 +3959,7 @@ TalkResult talk_unique_abyss()
             1,
             i18n::s.get("core.locale.talk.unique.abyss.nonmember.choices.want_"
                         "to_join"));
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff = i18n::s.get("core.locale.talk.unique.abyss.nonmember.dialog");
         chatval_ = talk_window_query();
         if (chatval_ == 2)
@@ -3968,7 +3968,7 @@ TalkResult talk_unique_abyss()
             buff = i18n::s.get(
                 "core.locale.talk.unique.abyss.nonmember.tell_me_about");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -3981,7 +3981,7 @@ TalkResult talk_unique_abyss()
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.abyss.nonmember.want_to_join", 0);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
 
@@ -3991,7 +3991,7 @@ TalkResult talk_unique_abyss()
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.abyss.nonmember.want_to_join", 1);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -4002,7 +4002,7 @@ TalkResult talk_unique_abyss()
                 buff = i18n::s.get(
                     "core.locale.talk.unique.abyss.nonmember.quota");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -4011,7 +4011,7 @@ TalkResult talk_unique_abyss()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.abyss.nonmember.end", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -4021,7 +4021,7 @@ TalkResult talk_unique_abyss()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.abyss.nonmember.end", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -4045,7 +4045,7 @@ TalkResult talk_unique_abyss()
             i18n::s.get(
                 "core.locale.talk.unique.lexus.member.choices.report_quota"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get(
         "core.locale.talk.unique.abyss.member.dialog",
         ranktitle(8),
@@ -4060,7 +4060,7 @@ TalkResult talk_unique_abyss()
             "core.locale.talk.unique.abyss.member.new_quota",
             game_data.guild.thieves_guild_quota);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_unique;
@@ -4073,7 +4073,7 @@ TalkResult talk_unique_abyss()
             buff = i18n::s.get(
                 "core.locale.talk.unique.lexus.member.report_quota.waiting");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -4085,7 +4085,7 @@ TalkResult talk_unique_abyss()
         buff = i18n::s.get(
             "core.locale.talk.unique.lexus.member.report_quota.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -4215,7 +4215,7 @@ TalkResult talk_unique_doria()
             1,
             i18n::s.get("core.locale.talk.unique.doria.nonmember.choices.want_"
                         "to_join"));
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         buff = i18n::s.get("core.locale.talk.unique.doria.nonmember.dialog");
         chatval_ = talk_window_query();
         if (chatval_ == 2)
@@ -4224,7 +4224,7 @@ TalkResult talk_unique_doria()
             buff = i18n::s.get(
                 "core.locale.talk.unique.doria.nonmember.tell_me_about");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -4237,7 +4237,7 @@ TalkResult talk_unique_doria()
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.doria.nonmember.want_to_join", 0);
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 listmax = 0;
@@ -4250,7 +4250,7 @@ TalkResult talk_unique_doria()
                     game_data.guild.fighters_guild_quota,
                     chara_refstr(game_data.guild.fighters_guild_target, 2));
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -4263,7 +4263,7 @@ TalkResult talk_unique_doria()
                     game_data.guild.fighters_guild_quota,
                     chara_refstr(game_data.guild.fighters_guild_target, 2));
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
@@ -4272,7 +4272,7 @@ TalkResult talk_unique_doria()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.lexus.nonmember.end", 0);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -4282,7 +4282,7 @@ TalkResult talk_unique_doria()
             buff = i18n::s.get_enum(
                 "core.locale.talk.unique.doria.nonmember.end", 1);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -4306,7 +4306,7 @@ TalkResult talk_unique_doria()
             i18n::s.get(
                 "core.locale.talk.unique.lexus.member.choices.report_quota"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     buff = i18n::s.get(
         "core.locale.talk.unique.doria.member.dialog",
         ranktitle(8),
@@ -4322,7 +4322,7 @@ TalkResult talk_unique_doria()
             game_data.guild.fighters_guild_quota,
             chara_refstr(game_data.guild.fighters_guild_target, 2));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_unique;
@@ -4335,7 +4335,7 @@ TalkResult talk_unique_doria()
             buff = i18n::s.get(
                 "core.locale.talk.unique.lexus.member.report_quota.waiting");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_unique;
@@ -4347,7 +4347,7 @@ TalkResult talk_unique_doria()
         buff = i18n::s.get(
             "core.locale.talk.unique.lexus.member.report_quota.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -4383,7 +4383,7 @@ TalkResult talk_unique_conery()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.conery.complete");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -4402,7 +4402,7 @@ TalkResult talk_unique_conery()
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.conery.quest.bye");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             return TalkResult::talk_end;
@@ -4412,7 +4412,7 @@ TalkResult talk_unique_conery()
         buff = i18n::s.get(
             "core.locale.talk.unique.conery.quest.do_it", cdatan(0, 0));
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -4425,7 +4425,7 @@ TalkResult talk_unique_conery()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.conery.quest.waiting");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -4435,7 +4435,7 @@ TalkResult talk_unique_conery()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.conery.quest.end");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -4480,7 +4480,7 @@ TalkResult talk_unique_rogue_boss()
         buff = i18n::s.get(
             "core.locale.talk.unique.rogue_boss.too_poor", cdata[tc]);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -4508,7 +4508,7 @@ TalkResult talk_unique_rogue_boss()
         buff = i18n::s.get(
             "core.locale.talk.unique.rogue_boss.ambush.surrender", cdata[tc]);
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -4520,7 +4520,7 @@ TalkResult talk_unique_rogue_boss()
     buff = i18n::s.get(
         "core.locale.talk.unique.rogue_boss.ambush.try_me", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     return TalkResult::talk_end;
@@ -4648,7 +4648,7 @@ TalkResult talk_unique_strange_scientist()
         listmax = 0;
         i18n::s.get("core.locale.talk.unique.strange_scientist.first");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
 
@@ -4673,7 +4673,7 @@ TalkResult talk_unique_strange_scientist()
                 i18n::s.get("core.locale.talk.unique.strange_scientist.choices."
                             "turn_over"));
         }
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         i18n::s.get("core.locale.talk.unique.strange_scientist.dialog");
         chatval_ = talk_window_query();
         if (chatval_ == 1)
@@ -4684,7 +4684,7 @@ TalkResult talk_unique_strange_scientist()
                 i18n::s.get(
                     "core.locale.talk.unique.strange_scientist.reward.dialog");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
 
@@ -4694,7 +4694,7 @@ TalkResult talk_unique_strange_scientist()
                 buff = i18n::s.get(
                     "core.locale.talk.unique.strange_scientist.reward.find");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
@@ -4705,7 +4705,7 @@ TalkResult talk_unique_strange_scientist()
                     "core.locale.talk.unique.strange_scientist.reward.not_"
                     "enough");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
@@ -4717,7 +4717,7 @@ TalkResult talk_unique_strange_scientist()
             buff = i18n::s.get(
                 "core.locale.talk.unique.strange_scientist.replenish");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -4733,7 +4733,7 @@ TalkResult talk_unique_strange_scientist()
             buff = i18n::s.get(
                 "core.locale.talk.unique.strange_scientist.turn_over.dialog");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
@@ -4786,7 +4786,7 @@ TalkResult talk_unique_kaneda_bike()
                     "core.locale.talk.unique.kaneda_bike.after_drug.yes.party_"
                     "full");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
@@ -4794,7 +4794,7 @@ TalkResult talk_unique_kaneda_bike()
             buff = i18n::s.get(
                 "core.locale.talk.unique.kaneda_bike.after_drug.yes.dialog");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
 
@@ -4805,7 +4805,7 @@ TalkResult talk_unique_kaneda_bike()
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.after_drug.no");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -4835,7 +4835,7 @@ TalkResult talk_unique_kaneda_bike()
                     "core.locale.talk.unique.kaneda_bike.before_drug.yes."
                     "dialog");
                 tc = tc * 1 + 0;
-                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+                ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
 
@@ -4848,7 +4848,7 @@ TalkResult talk_unique_kaneda_bike()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.do_not_have_drug");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     return TalkResult::talk_end;
@@ -4877,7 +4877,7 @@ TalkResult talk_unique_part_time_worker()
         buff = i18n::s.get(
             "core.locale.talk.unique.part_time_worker.already_believe_in_jure");
         tc = tc * 1 + 0;
-        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return TalkResult::talk_end;
@@ -4909,7 +4909,7 @@ TalkResult talk_unique_part_time_worker()
             buff =
                 i18n::s.get("core.locale.talk.unique.part_time_worker.yes.yes");
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             txt(i18n::s.get(
@@ -4923,7 +4923,7 @@ TalkResult talk_unique_part_time_worker()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.part_time_worker.no");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     return TalkResult::talk_end;

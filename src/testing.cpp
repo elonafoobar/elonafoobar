@@ -141,7 +141,6 @@ void pre_init()
     filesystem::dir::set_base_save_directory(fs::path("save"));
     initialize_config(config_file);
 
-    initialize_cat_db();
     configure_lua();
     initialize_i18n();
 

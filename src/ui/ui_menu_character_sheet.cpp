@@ -444,7 +444,7 @@ static void _draw_first_page_text_attribute()
         gcopy_c(1, cnt * inf_tiles, 672, inf_tiles, inf_tiles);
         pos(wx + 54, wy + 151 + cnt * 15);
         color(20, 10, 0);
-        mes(i18n::_(u8"ui", u8"attribute", u8"_"s + cnt));
+        mes(i18n::s.get_enum("core.locale.ui.attribute", cnt));
         color(0, 0, 0);
     }
 }
@@ -507,11 +507,11 @@ static void _draw_first_page_text_name()
     s(4) = cnven(classname);
     if (cdata[cc].sex == 0)
     {
-        s(3) = cnven(i18n::_(u8"ui", u8"male"));
+        s(3) = cnven(i18n::s.get("core.locale.ui.sex3.male"));
     }
     else
     {
-        s(3) = cnven(i18n::_(u8"ui", u8"female"));
+        s(3) = cnven(i18n::s.get("core.locale.ui.sex3.female"));
     }
     s(5) = ""s + calcage(cc) + u8" "s +
         i18n::s.get("core.locale.ui.chara_sheet.personal.age_counter");
@@ -736,10 +736,9 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
         const auto description = get_buff_description(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
         buff_desc = ""s +
-            i18n::_(u8"buff",
-                    std::to_string(cdata[cc].buffs[_cs_buff].id),
-                    u8"name") +
-            u8": "s + cdata[cc].buffs[_cs_buff].turns +
+            i18n::s.get_enum_property(
+                "core.locale.buff", "name", cdata[cc].buffs[_cs_buff].id) +
+            ": "s + cdata[cc].buffs[_cs_buff].turns +
             i18n::s.get("core.locale.ui.chara_sheet.buff.duration", duration) +
             description;
     }
@@ -915,7 +914,7 @@ static void _draw_skill_power(int cnt, int skill_id)
     if (_is_resistance(skill_id))
     {
         power = clamp(sdata(skill_id, cc) / 50, 0, 6);
-        desc = i18n::_(u8"ui", u8"resistance", u8"_"s + power);
+        desc = i18n::s.get_enum("core.locale.ui.resistance", power);
     }
     else
     {

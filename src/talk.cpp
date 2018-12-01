@@ -161,7 +161,7 @@ TalkResult talk_more()
     buff = buff;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -183,7 +183,7 @@ TalkResult talk_sleeping()
         u8")"s;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.bye");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -203,7 +203,7 @@ TalkResult talk_busy()
     buff = u8"("s + i18n::s.get("core.locale.talk.is_busy", cdata[tc]) + u8")"s;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.bye");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -222,7 +222,7 @@ TalkResult talk_ignored()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.ignores_you", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     return TalkResult::talk_end;
@@ -241,7 +241,7 @@ bool talk_give_potion_of_cure_corruption()
     listn(0, listmax) = i18n::s.get("core.locale.talk.unique.pael.give.choice");
     ++listmax;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.bye");
     ++listmax;
     int chatval_ = talk_window_query();
     if (chatval_ != 1)
@@ -255,7 +255,7 @@ bool talk_give_potion_of_cure_corruption()
         buff = i18n::s.get("core.locale.talk.unique.pael.give.do_not_have");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -276,7 +276,7 @@ bool talk_give_potion_of_cure_corruption()
         i18n::s.get("core.locale.talk.unique.pael.give.dialog", cdatan(0, 0));
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -303,7 +303,7 @@ TalkResult talk_game_begin()
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -320,7 +320,7 @@ TalkResult talk_game_begin()
         tc =
             tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -351,7 +351,7 @@ TalkResult talk_game_begin()
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -368,7 +368,7 @@ TalkResult talk_game_begin()
         tc =
             tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -385,7 +385,7 @@ TalkResult talk_game_begin()
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -402,7 +402,7 @@ TalkResult talk_game_begin()
         tc =
             tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -419,7 +419,7 @@ TalkResult talk_game_begin()
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -451,7 +451,7 @@ TalkResult talk_game_begin()
     buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 0);
     tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -466,7 +466,7 @@ TalkResult talk_game_begin()
     buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 1);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -481,7 +481,7 @@ TalkResult talk_game_begin()
     buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 2);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -496,7 +496,7 @@ TalkResult talk_game_begin()
     buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 3);
     tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -512,7 +512,7 @@ TalkResult talk_game_begin()
         "core.locale.talk.unique.lomias.begin", 4, cdatan(0, 0));
     tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -718,11 +718,11 @@ void talk_window_show()
     }
     if (cdata[tc].sex == 0)
     {
-        s += cnven(i18n::_(u8"ui", u8"male"));
+        s += cnven(i18n::s.get("core.locale.ui.sex3.male"));
     }
     else
     {
-        s += cnven(i18n::_(u8"ui", u8"female"));
+        s += cnven(i18n::s.get("core.locale.ui.sex3.female"));
     }
     if (cdatan(1, tc) != ""s)
     {
@@ -750,10 +750,9 @@ void talk_window_show()
     font(13 - en * 2);
     if (chatval_show_impress)
     {
-        s = i18n::_(
-            u8"ui",
-            u8"impression",
-            u8"_"s + chara_impression_level(cdata[tc].impression));
+        s = i18n::s.get_enum(
+            u8"core.locale.ui.impression",
+            chara_impression_level(cdata[tc].impression));
         if (cdata[tc].impression < 150)
         {
             s(1) = ""s + cdata[tc].impression;

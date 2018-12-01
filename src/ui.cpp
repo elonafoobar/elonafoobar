@@ -562,8 +562,9 @@ void render_clock()
     mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
         game_data.date.day);
     bmes(
-        i18n::_(u8"ui", u8"time", u8"_"s + game_data.date.hour / 4) + u8" "s +
-            i18n::_(u8"ui", u8"weather", u8"_"s + game_data.weather),
+        i18n::s.get_enum("core.locale.ui.time", game_data.date.hour / 4) +
+            u8" "s +
+            i18n::s.get_enum("core.locale.ui.weather", game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
 }
@@ -727,10 +728,14 @@ void render_status_ailments()
         y,
         [](auto nutrition) { return !(5 <= nutrition && nutrition <= 9); },
         [](auto nutrition) {
-            return (nutrition >= 12)
-                ? i18n::_("ui", "hunger", "_12")
-                : (nutrition >= 1) ? i18n::_("ui", "hunger", "_"s + nutrition)
-                                   : i18n::_("ui", "hunger", "_0");
+            int index = 0;
+            if (nutrition >= 1)
+                index = nutrition;
+            if (nutrition >= 12)
+                index = 12;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.hunger", index);
         },
         [](auto nutrition) {
             return (nutrition >= 10)
@@ -745,8 +750,12 @@ void render_status_ailments()
         y,
         [](auto turn) { return turn != 0; },
         [](auto turn) {
-            return (turn >= 30) ? i18n::_("ui", "sick", "_1")
-                                : i18n::_("ui", "sick", "_0");
+            int index = 0;
+            if (turn >= 30)
+                index = 1;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.sick", index);
         },
         {80, 120, 0});
 
@@ -756,8 +765,12 @@ void render_status_ailments()
         y,
         [](auto turn) { return turn != 0; },
         [](auto turn) {
-            return (turn >= 30) ? i18n::_("ui", "poison", "_1")
-                                : i18n::_("ui", "poison", "_0");
+            int index = 0;
+            if (turn >= 30)
+                index = 1;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.poison", index);
         },
         {0, 150, 0});
 
@@ -767,8 +780,12 @@ void render_status_ailments()
         y,
         [](auto turn) { return turn != 0; },
         [](auto turn) {
-            return (turn >= 30) ? i18n::_("ui", "sleep", "_1")
-                                : i18n::_("ui", "sleep", "_0");
+            int index = 0;
+            if (turn >= 30)
+                index = 1;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.sleep", index);
         },
         {0, 50, 50});
 
@@ -777,7 +794,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_("ui", "blind"),
+        i18n::s.get("core.locale.status_ailment.name.blind"),
         {100, 100, 0});
 
     y = render_one_status_ailment(
@@ -785,7 +802,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_("ui", "paralyzed"),
+        i18n::s.get("core.locale.status_ailment.name.paralyzed"),
         {0, 100, 100});
 
     y = render_one_status_ailment(
@@ -793,7 +810,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_("ui", "choked"),
+        i18n::s.get("core.locale.status_ailment.name.choked"),
         {0, 100, 100});
 
     y = render_one_status_ailment(
@@ -801,7 +818,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_("ui", "confused"),
+        i18n::s.get("core.locale.status_ailment.name.confused"),
         {100, 0, 100});
 
     y = render_one_status_ailment(
@@ -809,7 +826,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_("ui", "fear"),
+        i18n::s.get("core.locale.status_ailment.name.fear"),
         {100, 0, 100});
 
     y = render_one_status_ailment(
@@ -818,10 +835,14 @@ void render_status_ailments()
         y,
         [](auto turn) { return turn != 0; },
         [](auto turn) {
-            return (turn >= 60)
-                ? i18n::_(u8"ui", u8"dimmed", u8"_2")
-                : (turn >= 30) ? i18n::_(u8"ui", u8"dimmed", u8"_1")
-                               : i18n::_(u8"ui", u8"dimmed", u8"_0");
+            int index = 0;
+            if (turn >= 30)
+                index = 1;
+            if (turn >= 60)
+                index = 2;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.dimmed", index);
         },
         {0, 100, 100});
 
@@ -831,8 +852,12 @@ void render_status_ailments()
         y,
         [](auto turn) { return turn != 0; },
         [](auto turn) {
-            return (turn >= 30) ? i18n::_(u8"ui", u8"angry", u8"_1")
-                                : i18n::_(u8"ui", u8"angry", u8"_0");
+            int index = 0;
+            if (turn >= 30)
+                index = 1;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.angry", index);
         },
         {150, 0, 0});
 
@@ -842,10 +867,14 @@ void render_status_ailments()
         y,
         [](auto turn) { return turn != 0; },
         [](auto turn) {
-            return (turn >= 20)
-                ? i18n::_(u8"ui", u8"bleeding", u8"_2")
-                : (turn >= 10) ? i18n::_(u8"ui", u8"bleeding", u8"_1")
-                               : i18n::_(u8"ui", u8"bleeding", u8"_0");
+            int index = 0;
+            if (turn >= 10)
+                index = 1;
+            if (turn >= 20)
+                index = 2;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.bleeding", index);
         },
         {150, 0, 0});
 
@@ -855,10 +884,14 @@ void render_status_ailments()
         y,
         [](auto turn) { return turn != 0; },
         [](auto turn) {
-            return (turn >= 50)
-                ? i18n::_(u8"ui", u8"insane", u8"_2")
-                : (turn >= 25) ? i18n::_(u8"ui", u8"insane", u8"_1")
-                               : i18n::_(u8"ui", u8"insane", u8"_0");
+            int index = 0;
+            if (turn >= 25)
+                index = 1;
+            if (turn >= 50)
+                index = 2;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.insane", index);
         },
         {150, 100, 0});
 
@@ -867,7 +900,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_(u8"ui", u8"drunk"),
+        i18n::s.get("core.locale.status_ailment.name.drunk"),
         {100, 0, 100});
 
     y = render_one_status_ailment(
@@ -875,7 +908,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_(u8"ui", u8"wet"),
+        i18n::s.get("core.locale.status_ailment.name.wet"),
         {0, 0, 160});
 
     y = render_one_status_ailment(
@@ -883,7 +916,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::_(u8"ui", u8"gravity"),
+        i18n::s.get("core.locale.status_ailment.name.gravity"),
         {0, 80, 80});
 
     y = render_one_status_ailment(
@@ -892,10 +925,14 @@ void render_status_ailments()
         y,
         [](auto hours) { return hours >= 15; },
         [](auto hours) {
-            return (hours >= 50)
-                ? i18n::_(u8"ui", u8"sleepy", u8"_2")
-                : (hours >= 30) ? i18n::_(u8"ui", u8"sleepy", u8"_1")
-                                : i18n::_(u8"ui", u8"sleepy", u8"_0");
+            int index = 0;
+            if (hours >= 30)
+                index = 1;
+            if (hours >= 50)
+                index = 2;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.sleepy", index);
         },
         [](auto hours) {
             return (hours >= 50) ? snail::Color{255, 0, 0}
@@ -909,9 +946,14 @@ void render_status_ailments()
         y,
         [](auto sp) { return sp < 50; },
         [](auto sp) {
-            return (sp < 0) ? i18n::_(u8"ui", u8"tired", u8"_2")
-                            : (sp < 25) ? i18n::_(u8"ui", u8"tired", u8"_1")
-                                        : i18n::_(u8"ui", u8"tired", u8"_0");
+            int index = 0;
+            if (sp < 25)
+                index = 1;
+            if (sp < 0)
+                index = 2;
+
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.tired", index);
         },
         [](auto sp) {
             return (sp < 0)
@@ -924,7 +966,10 @@ void render_status_ailments()
         x,
         y,
         [](auto state) { return state != 0; },
-        [](auto state) { return i18n::_(u8"ui", u8"burden", u8"_"s + state); },
+        [](auto state) {
+            return i18n::s.get_enum(
+                "core.locale.status_ailment.name.burden", state);
+        },
         [](auto state) {
             return snail::Color{0,
                                 static_cast<uint8_t>(state * 40),
@@ -936,7 +981,7 @@ void render_status_ailments()
         x,
         y,
         [](auto is_enabled) { return is_enabled == 1; },
-        i18n::_(u8"ui", u8"autodig", u8"mode"),
+        i18n::s.get("core.locale.ui.autodig.mode"),
         {0, 0, 0});
 }
 

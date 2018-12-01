@@ -31,7 +31,7 @@ TalkResult _talk_hv_visitor()
     buff = i18n::s.get("core.locale.talk.visitor.wanted_to_say_hi", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -69,7 +69,7 @@ TalkResult _talk_hv_adventurer_new_year()
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -85,7 +85,7 @@ TalkResult _talk_hv_adventurer_new_year()
         "core.locale.talk.visitor.adventurer.new_year.gift", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -157,7 +157,7 @@ TalkResult _talk_hv_adventurer_hate()
         "core.locale.talk.visitor.adventurer.hate.dialog", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -191,7 +191,7 @@ void _talk_hv_adventurer_best_friend()
         "core.locale.talk.visitor.adventurer.like.dialog", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -254,7 +254,7 @@ TalkResult _talk_hv_adventurer_train()
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "name"),
             std::to_string(calclearncost(skill_id, cc, true)) +
-                i18n::_(u8"ui", u8"platinum"),
+                i18n::s.get("core.locale.ui.platinum"),
             cdata[tc]);
         if (cdata.player().platinum_coin >= calclearncost(skill_id, cc, true))
         {
@@ -275,7 +275,7 @@ TalkResult _talk_hv_adventurer_train()
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "name"),
             std::to_string(calclearncost(skill_id, cc, true)) +
-                i18n::_(u8"ui", u8"platinum"),
+                i18n::s.get("core.locale.ui.platinum"),
             cdata[tc]);
         if (cdata.player().platinum_coin >= calctraincost(skill_id, cc, true))
         {
@@ -295,7 +295,7 @@ TalkResult _talk_hv_adventurer_train()
             "core.locale.talk.visitor.adventurer.train.pass", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -318,7 +318,7 @@ TalkResult _talk_hv_adventurer_train()
             "core.locale.talk.visitor.adventurer.train.learn.after", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -339,7 +339,7 @@ TalkResult _talk_hv_adventurer_train()
             "core.locale.talk.visitor.adventurer.train.train.after", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -388,7 +388,7 @@ TalkResult _talk_hv_adventurer_friendship()
         "core.locale.talk.visitor.adventurer.friendship.dialog", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -430,7 +430,7 @@ TalkResult _talk_hv_adventurer_souvenir()
         "core.locale.talk.visitor.adventurer.souvenir.dialog", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -464,7 +464,7 @@ TalkResult _talk_hv_adventurer_materials()
         "core.locale.talk.visitor.adventurer.materials.dialog", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -494,7 +494,7 @@ TalkResult _talk_hv_adventurer_favorite_skill()
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -521,7 +521,7 @@ TalkResult _talk_hv_adventurer_favorite_stat()
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -551,7 +551,7 @@ TalkResult _talk_hv_adventurer_conversation()
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -587,7 +587,7 @@ TalkResult _talk_hv_adventurer_drink()
         "core.locale.talk.visitor.adventurer.drink.dialog", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -731,7 +731,7 @@ TalkResult _talk_hv_trainer()
             "core.locale.talk.visitor.trainer.no_more_this_month", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -778,7 +778,7 @@ TalkResult _talk_hv_trainer()
             i18n::s.get("core.locale.talk.visitor.trainer.regret", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -798,7 +798,7 @@ TalkResult _talk_hv_trainer()
     buff = i18n::s.get("core.locale.talk.visitor.trainer.after", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -843,7 +843,7 @@ TalkResult _talk_hv_beggar()
         buff = i18n::s.get("core.locale.talk.visitor.beggar.after", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
+        listn(0, listmax) = i18n::s.get("core.locale.ui.more");
         ++listmax;
         chatesc = 1;
         talk_window_query();
@@ -860,7 +860,7 @@ TalkResult _talk_hv_beggar()
     buff = i18n::s.get("core.locale.talk.visitor.beggar.cheap");
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -911,7 +911,7 @@ TalkResult _talk_hv_punk()
     buff = i18n::s.get("core.locale.talk.visitor.punk.hump");
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -967,7 +967,7 @@ TalkResult _talk_hv_mysterious_producer()
     buff = i18n::s.get("core.locale.talk.visitor.punk.hump");
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -1034,7 +1034,7 @@ TalkResult _talk_hv_merchant()
     buff = i18n::s.get("core.locale.talk.visitor.merchant.regret", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    listn(0, listmax) = i18n::s.get("core.locale.ui.more");
     ++listmax;
     chatesc = 1;
     talk_window_query();

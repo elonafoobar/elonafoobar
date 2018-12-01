@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <memory>
-#include "cat.hpp"
 #include "config/config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
@@ -20,6 +19,8 @@ namespace i18n
 {
 
 i18n::Store s;
+
+
 
 void Store::init(const std::vector<Store::Location>& locations)
 {
@@ -141,40 +142,6 @@ void Store::visit(
     {
         visit_object(value.as<hcl::Object>(), current_key, hcl_file);
     }
-}
-
-
-void load(const std::string& language)
-{
-    for (auto&& entry : filesystem::dir_entries(
-             filesystem::path(u8"lang") / language,
-             filesystem::DirEntryRange::Type::file))
-    {
-        cat::global.load(entry.path());
-    }
-}
-
-
-std::string _(
-    const std::string& key_head,
-    const std::vector<std::string>& key_tail)
-{
-    lua_getglobal(cat::global.ptr(), key_head.c_str());
-    int pop_count = 1;
-    for (const auto& k : key_tail)
-    {
-        lua_getfield(cat::global.ptr(), -1, k.c_str());
-        ++pop_count;
-    }
-    if (lua_istable(cat::global.ptr(), -1))
-    {
-        lua_rawgeti(
-            cat::global.ptr(), -1, rnd(lua_rawlen(cat::global.ptr(), -1)) + 1);
-        ++pop_count;
-    }
-    const char* ret = lua_tostring(cat::global.ptr(), -1);
-    lua_pop(cat::global.ptr(), pop_count);
-    return ret ? ret : "";
 }
 
 std::string space_if_needed()

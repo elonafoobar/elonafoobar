@@ -1,6 +1,5 @@
 #include "buff.hpp"
 #include "ability.hpp"
-#include "cat.hpp"
 #include "character.hpp"
 #include "draw.hpp"
 #include "elona.hpp"

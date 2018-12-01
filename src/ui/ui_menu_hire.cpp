@@ -169,11 +169,11 @@ static void _draw_list_entry_info(int cnt, const Character& chara)
 
     if (chara.sex == 0)
     {
-        level += cnven(i18n::_(u8"ui", u8"male"));
+        level += cnven(i18n::s.get("core.locale.ui.sex3.male"));
     }
     else
     {
-        level += cnven(i18n::_(u8"ui", u8"female"));
+        level += cnven(i18n::s.get("core.locale.ui.sex3.female"));
     }
 
     level += i18n::s.get(

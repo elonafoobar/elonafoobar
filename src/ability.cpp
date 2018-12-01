@@ -1,7 +1,6 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
-#include "cat.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "fov.hpp"

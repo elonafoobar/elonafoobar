@@ -69,7 +69,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.blinded.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.blinded.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -96,7 +97,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.confused.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.confused.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -121,7 +123,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.paralyzed.apply",
+                        "core.locale.status_ailment.message.paralyzed.apply",
                         cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
@@ -147,7 +149,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.poisoned.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.poisoned.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -172,7 +175,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.sleep.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.sleep.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -202,7 +206,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
-                "core.locale.status_ailment.fear.apply", cdata[cc]));
+                "core.locale.status_ailment.message.fear.apply", cdata[cc]));
         }
         return;
     case StatusAilment::dimmed:
@@ -220,7 +224,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.dimmed.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.dimmed.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -244,7 +249,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.bleeding.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.bleeding.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -264,7 +270,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                    "core.locale.status_ailment.drunk.apply", cdata[cc]));
+                    "core.locale.status_ailment.message.drunk.apply",
+                    cdata[cc]));
             }
         }
         else
@@ -282,7 +289,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.insane.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.insane.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -302,7 +310,8 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.sick.apply", cdata[cc]),
+                        "core.locale.status_ailment.message.sick.apply",
+                        cdata[cc]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -340,7 +349,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.fear.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.fear.heal",
+                        cdata[cc]));
                 }
             }
             return;
@@ -363,7 +373,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.blinded.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.blinded.heal",
+                        cdata[cc]));
                 }
             }
             return;
@@ -386,7 +397,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.confused.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.confused.heal",
+                        cdata[cc]));
                 }
             }
             return;
@@ -409,7 +421,7 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.paralyzed.heal",
+                        "core.locale.status_ailment.message.paralyzed.heal",
                         cdata[cc]));
                 }
             }
@@ -433,7 +445,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.poisoned.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.poisoned.heal",
+                        cdata[cc]));
                 }
             }
             return;
@@ -456,7 +469,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.sleep.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.sleep.heal",
+                        cdata[cc]));
                 }
             }
             return;
@@ -479,7 +493,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.dimmed.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.dimmed.heal",
+                        cdata[cc]));
                 }
             }
         }
@@ -501,7 +516,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.bleeding.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.bleeding.heal",
+                        cdata[cc]));
                 }
             }
         }
@@ -523,7 +539,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.drunk.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.drunk.heal",
+                        cdata[cc]));
                 }
             }
         }
@@ -545,7 +562,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.insane.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.insane.heal",
+                        cdata[cc]));
                 }
             }
         }
@@ -567,7 +585,8 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.sick.heal", cdata[cc]));
+                        "core.locale.status_ailment.message.sick.heal",
+                        cdata[cc]));
                 }
             }
         }

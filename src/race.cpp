@@ -1,6 +1,5 @@
 #include "race.hpp"
 #include "ability.hpp"
-#include "cat.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"

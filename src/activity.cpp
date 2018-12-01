@@ -94,10 +94,9 @@ void activity_handle_damage(Character& chara)
             txt(i18n::s.get(
                 "core.locale.activity.cancel.normal",
                 chara,
-                i18n::_(
-                    u8"ui",
-                    u8"action",
-                    u8"_"s + static_cast<int>(chara.continuous_action.type))));
+                i18n::s.get_enum(
+                    u8"core.locale.ui.action",
+                    static_cast<int>(chara.continuous_action.type))));
         }
         chara.continuous_action.finish();
     }
@@ -206,10 +205,9 @@ void prompt_stop_continuous_action()
 {
     txt(i18n::s.get(
         "core.locale.activity.cancel.prompt",
-        i18n::_(
-            u8"ui",
-            u8"action",
-            u8"_"s + static_cast<int>(cdata[cc].continuous_action.type))));
+        i18n::s.get_enum(
+            "core.locale.ui.action",
+            static_cast<int>(cdata[cc].continuous_action.type))));
     rtval = yes_or_no(promptx, prompty, 160);
 }
 
@@ -667,7 +665,7 @@ void continuous_action_sex()
         {
             txt(i18n::s.get(
                 "core.locale.activity.sex.spare_life",
-                i18n::_(u8"ui", u8"sex2", u8"_"s + cdata[tc].sex),
+                i18n::s.get("core.locale.ui.sex2", cdata[tc].sex),
                 cdata[tc]));
         }
         cdata[cc].continuous_action.finish();

@@ -7,7 +7,6 @@
 #include "blending.hpp"
 #include "buff.hpp"
 #include "building.hpp"
-#include "cat.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
@@ -220,12 +219,6 @@ namespace elona
 {
 
 
-void initialize_cat_db()
-{
-    // TODO remove
-    cat::global.initialize();
-}
-
 void initialize_lua()
 {
     // Scan mods under "mods/" folder.
@@ -285,7 +278,6 @@ void initialize_config(const fs::path& config_file)
 void initialize_i18n()
 {
     const std::string language = jp ? "jp" : "en";
-    i18n::load(language);
 
     // Load built-in translations in data/locale/(jp|en).
     std::vector<i18n::Store::Location> locations{
@@ -689,7 +681,6 @@ int run()
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
 
     lua::lua = std::make_unique<lua::LuaEnv>();
-    initialize_cat_db();
 
     Config::instance().init(config_def_file);
     initialize_config_preload(config_file);

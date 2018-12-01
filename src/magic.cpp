@@ -619,20 +619,18 @@ int magic()
                                     the_ability_db.get_id_from_legacy(efid)
                                         ->get(),
                                     "name"),
-                                i18n::_(
-                                    u8"ui",
-                                    u8"cast_style",
-                                    u8"_"s + cdata[cc].special_attack_type)));
+                                i18n::s.get_enum(
+                                    "core.locale.ui.cast_style",
+                                    cdata[cc].special_attack_type)));
                         }
                         else
                         {
                             txt(i18n::s.get(
                                 "core.locale.magic.special_attack.other",
                                 cdata[cc],
-                                i18n::_(
-                                    u8"ui",
-                                    u8"cast_style",
-                                    u8"_"s + cdata[cc].special_attack_type)));
+                                i18n::s.get_enum(
+                                    "core.locale.ui.cast_style",
+                                    cdata[cc].special_attack_type)));
                         }
                     }
                 }
