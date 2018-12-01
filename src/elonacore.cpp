@@ -10622,8 +10622,8 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::fmt("core.locale.ui.autopick.do_you_really_pick_up")(
-                    itemname(ci)));
+                txt(i18n::s.get(
+                    "core.locale.ui.autopick.do_you_really_pick_up", inv[ci]));
                 rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
@@ -10652,8 +10652,8 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::fmt("core.locale.ui.autopick.do_you_really_destroy")(
-                    itemname(ci)));
+                txt(i18n::s.get(
+                    "core.locale.ui.autopick.do_you_really_destroy", inv[ci]));
                 rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {
@@ -10662,7 +10662,7 @@ void proc_autopick()
                 }
             }
             snd("core.crush1");
-            txt(i18n::fmt("core.locale.ui.autopick.destroyed")(itemname(ci)));
+            txt(i18n::s.get("core.locale.ui.autopick.destroyed", inv[ci]));
             inv[ci].remove();
             cell_refresh(x, y);
             cell_data.at(x, y).item_appearances_memory =
@@ -10672,8 +10672,8 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::fmt("core.locale.ui.autopick.do_you_really_open")(
-                    itemname(ci)));
+                txt(i18n::s.get(
+                    "core.locale.ui.autopick.do_you_really_open", inv[ci]));
                 rtval = yes_or_no(promptx, prompty, 160);
                 if (rtval != 0)
                 {

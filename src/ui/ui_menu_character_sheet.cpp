@@ -736,10 +736,9 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
         const auto description = get_buff_description(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
         buff_desc = ""s +
-            i18n::_(u8"buff",
-                    std::to_string(cdata[cc].buffs[_cs_buff].id),
-                    u8"name") +
-            u8": "s + cdata[cc].buffs[_cs_buff].turns +
+            i18n::s.get_enum_property(
+                "core.locale.buff", "name", cdata[cc].buffs[_cs_buff].id) +
+            ": "s + cdata[cc].buffs[_cs_buff].turns +
             i18n::s.get("core.locale.ui.chara_sheet.buff.duration", duration) +
             description;
     }
