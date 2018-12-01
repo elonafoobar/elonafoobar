@@ -295,7 +295,7 @@ data:add_multi(
       },
       {
          name = "arena",
-         id = 40,
+         id = 6,
          appearance = 0,
          map_type = "Temporary",
          outer_map = 4,
@@ -770,7 +770,7 @@ data:add_multi(
       },
       {
          name = "shelter",
-         id = 6,
+         id = 30,
          appearance = 0,
          map_type = "PlayerOwned",
          outer_map = 4,
