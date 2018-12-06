@@ -19,6 +19,7 @@
 #include "i18n.hpp"
 #include "log.hpp"
 #include "macro.hpp"
+#include "save.hpp"
 #include "util.hpp"
 #include "variables.hpp"
 #ifdef ELONA_OS_WINDOWS

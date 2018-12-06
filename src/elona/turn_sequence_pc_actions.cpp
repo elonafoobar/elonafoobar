@@ -17,6 +17,7 @@
 #include "message.hpp"
 #include "network.hpp"
 #include "optional.hpp"
+#include "save.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "wish.hpp"

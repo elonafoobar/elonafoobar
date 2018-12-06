@@ -36,6 +36,7 @@
 #include "network.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

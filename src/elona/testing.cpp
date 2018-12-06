@@ -10,6 +10,7 @@
 #include "init.hpp"
 #include "log.hpp"
 #include "lua_env/lua_env.hpp"
+#include "save.hpp"
 #include "variables.hpp"
 #include "version.hpp"
 
