@@ -89,6 +89,7 @@ race.cpp \
 random.cpp \
 random_event.cpp \
 save.cpp \
+save_update.cpp \
 set_item_info.cpp \
 shop.cpp \
 spec.cpp \

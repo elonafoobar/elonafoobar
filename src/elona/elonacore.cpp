@@ -54,6 +54,7 @@
 #include "random.hpp"
 #include "random_event.hpp"
 #include "save.hpp"
+#include "save_update.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
