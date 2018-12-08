@@ -90,7 +90,9 @@ if(ANDROID)
   add_library( SDL2_ttf SHARED IMPORTED )
   add_library( SDL2_mixer SHARED IMPORTED )
   add_library( lua SHARED IMPORTED )
+  add_library( lib SHARED IMPORTED )
   add_library( snail SHARED IMPORTED )
+  add_library( elona SHARED IMPORTED )
   add_library( boost_filesystem SHARED IMPORTED )
   add_library( boost_system SHARED IMPORTED )
   add_library( boost_iostreams SHARED IMPORTED )
@@ -105,8 +107,12 @@ if(ANDROID)
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libSDL2_mixer.so)
   set_target_properties(lua PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/liblua.so)
+  set_target_properties(lib PROPERTIES IMPORTED_LOCATION
+    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/lib.so)
   set_target_properties(snail PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libsnail.so)
+  set_target_properties(elona PROPERTIES IMPORTED_LOCATION
+    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libelona.so)
 
   set_target_properties(boost_filesystem PROPERTIES IMPORTED_LOCATION
     ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_filesystem.so)
@@ -120,13 +126,15 @@ if(ANDROID)
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_ttf)
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_mixer)
   include_directories(${EXTERNAL_LIB_LOCATION}/lua/src)
+  include_directories(${EXTERNAL_LIB_LOCATION}/lib)
   include_directories(${EXTERNAL_LIB_LOCATION}/snail)
+  include_directories(${EXTERNAL_LIB_LOCATION}/elona)
   include_directories(${EXTERNAL_LIB_LOCATION}/boost/include)
   link_directories(${EXTERNAL_LIB_LOCATION}/boost/libs/llvm/armeabi-v7a)
 
   add_library( ${PROJECT_NAME} SHARED src/main.cpp )
 
-  target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams snail )
+  target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams lib snail elona)
 else()
   # Options
   option(WITH_TESTS "Build test executable (TESTS or BENCH)" "OFF")
