@@ -53,6 +53,9 @@ Window::Window(
     int width,
     int height,
     Flag flag)
+    : _ptr(
+          nullptr,
+          ::SDL_DestroyWindow /* It is never called because _ptr is null. */)
 {
     (void)title;
     (void)x;

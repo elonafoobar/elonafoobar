@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
@@ -35,69 +36,42 @@ void enforce_ttf(int result);
 void enforce_img(int result);
 void enforce_mixer(int result);
 
+void* enforce_sdl_internal(void* result);
+void* enforce_ttf_internal(void* result);
+void* enforce_img_internal(void* result);
+void* enforce_mixer_internal(void* result);
 
-#if defined(SNAIL_RENDERER_HEADLESS)
+
 
 template <typename T>
 T* enforce_sdl(T* result)
 {
-    return result;
+    return static_cast<T*>(enforce_sdl_internal(result));
 }
+
 
 
 template <typename T>
 T* enforce_ttf(T* result)
 {
-    return result;
+    return static_cast<T*>(enforce_ttf_internal(result));
 }
+
 
 
 template <typename T>
 T* enforce_img(T* result)
 {
-    return result;
+    return static_cast<T*>(enforce_img_internal(result));
 }
+
 
 
 template <typename T>
 T* enforce_mixer(T* result)
 {
-    return result;
+    return static_cast<T*>(enforce_mixer_internal(result));
 }
-
-#elif defined(SNAIL_RENDERER_SDL)
-
-template <typename T>
-T* enforce_sdl(T* result)
-{
-    return result ? result : throw SDLError(::SDL_GetError());
-}
-
-
-template <typename T>
-T* enforce_ttf(T* result)
-{
-    return result ? result : throw SDLError(::TTF_GetError());
-}
-
-
-template <typename T>
-T* enforce_img(T* result)
-{
-    return result ? result : throw SDLError(::IMG_GetError());
-}
-
-
-template <typename T>
-T* enforce_mixer(T* result)
-{
-    return result ? result : throw SDLError(::Mix_GetError());
-}
-
-
-#else
-#error Unsupported renderer
-#endif
 
 
 
