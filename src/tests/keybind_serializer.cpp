@@ -1,9 +1,9 @@
 #include "../thirdparty/catch2/catch.hpp"
 
 #include <iostream>
-#include "../keybind/keybind.hpp"
-#include "../keybind/keybind_manager.hpp"
-#include "../keybind/keybind_serializer.hpp"
+#include "../elona/keybind/keybind.hpp"
+#include "../elona/keybind/keybind_manager.hpp"
+#include "../elona/keybind/keybind_serializer.hpp"
 
 using namespace elona;
 using namespace elona::snail;

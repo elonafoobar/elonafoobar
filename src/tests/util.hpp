@@ -1,6 +1,6 @@
 #pragma once
-#include "../character.hpp"
-#include "../item.hpp"
+#include "../elona/character.hpp"
+#include "../elona/item.hpp"
 
 namespace elona
 {

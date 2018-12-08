@@ -43,7 +43,9 @@ string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
 set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
 
 # Versioning file
-configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
+configure_file("${PROJECT_SOURCE_DIR}/src/elona/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/elona/version.cpp")
+
+
 
 # CMake is run last in the Android build process, so gradle.properties
 # has to be generated beforehand.
@@ -58,202 +60,6 @@ enable_language(CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Source files
-set(CORE_SOURCES
-  src/ability.cpp
-  src/access_character_info.cpp
-  src/access_item_db.cpp
-  src/activity.cpp
-  src/adventurer.cpp
-  src/ai.cpp
-  src/animation.cpp
-  src/area.cpp
-  src/audio.cpp
-  src/autopick.cpp
-  src/blending.cpp
-  src/buff.cpp
-  src/building.cpp
-  src/calc.cpp
-  src/card.cpp
-  src/casino.cpp
-  src/casino_card.cpp
-  src/cell_draw.cpp
-  src/character.cpp
-  src/character_making.cpp
-  src/character_status.cpp
-  src/class.cpp
-  src/command.cpp
-  src/crafting.cpp
-  src/ctrl_file.cpp
-  src/ctrl_inventory.cpp
-  src/debug.cpp
-  src/dmgheal.cpp
-  src/draw.cpp
-  src/element.cpp
-  src/elonacore.cpp
-  src/enchantment.cpp
-  src/equipment.cpp
-  src/event.cpp
-  src/filesystem.cpp
-  src/fish.cpp
-  src/food.cpp
-  src/fov.cpp
-  src/gdata.cpp
-  src/get_card_info.cpp
-  src/get_random_npc_id.cpp
-  src/god.cpp
-  src/i18n.cpp
-  src/init.cpp
-  src/initialize_map.cpp
-  src/initialize_map_types.cpp
-  src/input.cpp
-  src/input_prompt.cpp
-  src/item.cpp
-  src/item_load_desc.cpp
-  src/item_material.cpp
-  src/itemgen.cpp
-  src/log.cpp
-  src/magic.cpp
-  src/main_menu.cpp
-  src/map.cpp
-  src/map_cell.cpp
-  src/map_chara_filter.cpp
-  src/map_special_events.cpp
-  src/map_trainer_skills.cpp
-  src/mapgen.cpp
-  src/mef.cpp
-  src/menu.cpp
-  src/menu_quick_menu.cpp
-  src/message.cpp
-  src/network.cpp
-  src/proc_event.cpp
-  src/quest.cpp
-  src/race.cpp
-  src/random.cpp
-  src/random_event.cpp
-  src/set_item_info.cpp
-  src/shop.cpp
-  src/spec.cpp
-  src/status_ailment.cpp
-  src/std.cpp
-  src/talk.cpp
-  src/talk_house_visitor.cpp
-  src/talk_npc.cpp
-  src/talk_unique.cpp
-  src/tcg.cpp
-  src/testing.cpp
-  src/text.cpp
-  src/trait.cpp
-  src/turn_sequence.cpp
-  src/turn_sequence_pc_actions.cpp
-  src/ui.cpp
-  src/variables.cpp
-  src/wish.cpp
-
-  src/data/init.cpp
-  src/data/types.cpp
-  src/data/util.cpp
-
-  src/lua_env/api_manager.cpp
-  src/lua_env/data_manager.cpp
-  src/lua_env/event_manager.cpp
-  src/lua_env/export_manager.cpp
-  src/lua_env/handle_manager.cpp
-  src/lua_env/i18n_function_manager.cpp
-  src/lua_env/interface.cpp
-  src/lua_env/lua_console.cpp
-  src/lua_env/lua_env.cpp
-  src/lua_env/mod_manager.cpp
-  src/lua_env/mod_manifest.cpp
-
-  src/lua_env/enums/enums.cpp
-
-  src/lua_env/lua_api/lua_api_animation.cpp
-  src/lua_env/lua_api/lua_api_chara.cpp
-  src/lua_env/lua_api/lua_api.cpp
-  src/lua_env/lua_api/lua_api_debug.cpp
-  src/lua_env/lua_api/lua_api_fov.cpp
-  src/lua_env/lua_api/lua_api_gui.cpp
-  src/lua_env/lua_api/lua_api_i18n.cpp
-  src/lua_env/lua_api/lua_api_input.cpp
-  src/lua_env/lua_api/lua_api_item.cpp
-  src/lua_env/lua_api/lua_api_magic.cpp
-  src/lua_env/lua_api/lua_api_map.cpp
-  src/lua_env/lua_api/lua_api_math.cpp
-  src/lua_env/lua_api/lua_api_pos.cpp
-  src/lua_env/lua_api/lua_api_rand.cpp
-  src/lua_env/lua_api/lua_api_skill.cpp
-  src/lua_env/lua_api/lua_api_trait.cpp
-  src/lua_env/lua_api/lua_api_world.cpp
-
-  src/lua_env/lua_class/lua_class.cpp
-  src/lua_env/lua_class/lua_class_ability.cpp
-  src/lua_env/lua_class/lua_class_character.cpp
-  src/lua_env/lua_class/lua_class_item.cpp
-  src/lua_env/lua_class/lua_class_position.cpp
-
-  src/config/config.cpp
-  src/config/config_def.cpp
-  src/config/set_option.cpp
-  src/config/create_config_screen.cpp
-
-  src/dialog/dialog.cpp
-  src/dialog/dialog_data.cpp
-  src/dialog/dialog_decoder.cpp
-
-  src/keybind/input_context.cpp
-  src/keybind/key_names.cpp
-  src/keybind/keybind.cpp
-  src/keybind/keybind_actions.cpp
-  src/keybind/keybind_deserializer.cpp
-  src/keybind/keybind_manager.cpp
-  src/keybind/keybind_serializer.cpp
-
-  src/lib/fps_counter.cpp
-  src/lib/profiler.cpp
-
-  src/pic_loader/pic_loader.cpp
-
-  src/ui/ui_menu_adventurers.cpp
-  src/ui/ui_menu_alias.cpp
-  src/ui/ui_menu_book.cpp
-  src/ui/ui_menu_character_sheet.cpp
-  src/ui/ui_menu_charamake_alias.cpp
-  src/ui/ui_menu_charamake_attributes.cpp
-  src/ui/ui_menu_charamake_class.cpp
-  src/ui/ui_menu_charamake_gender.cpp
-  src/ui/ui_menu_charamake_race.cpp
-  src/ui/ui_menu_chat_history.cpp
-  src/ui/ui_menu_config.cpp
-  src/ui/ui_menu_crafting.cpp
-  src/ui/ui_menu_ctrl_ally.cpp
-  src/ui/ui_menu_dialog.cpp
-  src/ui/ui_menu_equipment.cpp
-  src/ui/ui_menu_feats.cpp
-  src/ui/ui_menu_game_help.cpp
-  src/ui/ui_menu_god.cpp
-  src/ui/ui_menu_hire.cpp
-  src/ui/ui_menu_item_desc.cpp
-  src/ui/ui_menu_journal.cpp
-  src/ui/ui_menu_keybindings.cpp
-  src/ui/ui_menu_materials.cpp
-  src/ui/ui_menu_message_log.cpp
-  src/ui/ui_menu_npc_tone.cpp
-  src/ui/ui_menu_quest_board.cpp
-  src/ui/ui_menu_scene.cpp
-  src/ui/ui_menu_skills.cpp
-  src/ui/ui_menu_spell_writer.cpp
-  src/ui/ui_menu_spells.cpp
-  src/ui/ui_menu_town_chart.cpp
-  src/ui/ui_menu_town_economy.cpp
-  src/ui/ui_menu_town_politics.cpp
-  src/ui/ui_menu_composite_character.cpp
-  src/ui/ui_menu_composite_message.cpp
-  src/ui/ui_menu_composite_skills.cpp
-  src/ui/ui_menu_composite_town.cpp
-
-  src/version.cpp
-  )
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
@@ -318,7 +124,7 @@ if(ANDROID)
   include_directories(${EXTERNAL_LIB_LOCATION}/boost/include)
   link_directories(${EXTERNAL_LIB_LOCATION}/boost/libs/llvm/armeabi-v7a)
 
-  add_library( ${PROJECT_NAME} SHARED ${CORE_SOURCES} src/main.cpp )
+  add_library( ${PROJECT_NAME} SHARED src/main.cpp )
 
   target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams snail )
 else()
@@ -370,7 +176,6 @@ else()
       src/tests/keybind_manager.cpp
       src/tests/keybind_serializer.cpp
       src/tests/serialization.cpp
-      ${CORE_SOURCES}
       )
 
     add_executable(${PROJECT_NAME} ${TEST_SOURCES})
@@ -386,13 +191,12 @@ else()
       src/bench/lua_callbacks.cpp
       src/bench/magic.cpp
       src/bench/util.cpp
-      ${CORE_SOURCES}
       )
 
     add_executable(${PROJECT_NAME} ${BENCH_SOURCES})
     target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
   else()
-    add_executable(${PROJECT_NAME} WIN32 ${CORE_SOURCES} src/main.cpp)
+    add_executable(${PROJECT_NAME} WIN32 src/main.cpp)
   endif()
 
   if(WIN32)
@@ -424,7 +228,7 @@ else()
   if(WIN32)
     # Build custom version of Lua 5.3 with UTF-16 filename support
     add_subdirectory(${CMAKE_PREFIX_PATH}/lib/lua ${PROJECT_BINARY_DIR}/lib/lua)
-    target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_PREFIX_PATH}/lib/lua/src/)
+    include_directories(PUBLIC ${CMAKE_PREFIX_PATH}/lib/lua/src/)
     target_link_libraries(${PROJECT_NAME} liblua53)
   else()
     if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
@@ -591,9 +395,12 @@ else()
     add_definitions("-D${opt}")
   endforeach()
 
-  # My libraries
-  add_subdirectory(src/snail)
+  # My libraries: lib
+  add_subdirectory(src/lib)
+  target_link_libraries(${PROJECT_NAME} lib)
 
+  # My libraries: snail
+  add_subdirectory(src/snail)
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
     target_link_libraries(${PROJECT_NAME} snail_headless)
   elseif(WITH_TESTS STREQUAL "OFF")
@@ -602,6 +409,9 @@ else()
     # Use the previous flags.
   endif()
 
+  # My libraries: elona
+  add_subdirectory(src/elona)
+  target_link_libraries(${PROJECT_NAME} elona)
 
   INSTALL(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime

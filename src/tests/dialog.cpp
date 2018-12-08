@@ -1,10 +1,10 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../dialog/dialog_data.hpp"
-#include "../dialog/dialog_decoder.hpp"
-#include "../lua_env/config_table.hpp"
-#include "../lua_env/lua_env.hpp"
-#include "../testing.hpp"
+#include "../elona/dialog/dialog_data.hpp"
+#include "../elona/dialog/dialog_decoder.hpp"
+#include "../elona/lua_env/config_table.hpp"
+#include "../elona/lua_env/lua_env.hpp"
+#include "../elona/testing.hpp"
 #include "tests.hpp"
 #include "util.hpp"
 

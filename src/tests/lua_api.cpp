@@ -1,9 +1,9 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../filesystem.hpp"
-#include "../lua_env/lua_env.hpp"
-#include "../testing.hpp"
-#include "../variables.hpp"
+#include "../elona/filesystem.hpp"
+#include "../elona/lua_env/lua_env.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/variables.hpp"
 #include "util.hpp"
 
 using namespace std::literals::string_literals;
