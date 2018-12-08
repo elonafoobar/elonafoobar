@@ -8,6 +8,8 @@ namespace elona
 namespace snail
 {
 
+Application::Application() = default;
+
 
 
 Application& Application::instance()
@@ -67,16 +69,98 @@ void Application::proc_event()
 }
 
 
-void set_fullscreen_mode(Window::FullscreenMode)
+
+void Application::set_fullscreen_mode(Window::FullscreenMode)
 {
 }
 
-void set_display_mode(const std::string&)
+
+
+std::map<std::string, ::SDL_DisplayMode> Application::get_display_modes()
+{
+    return {};
+}
+
+
+
+std::string Application::get_default_display_mode()
+{
+    return "";
+}
+
+
+
+::SDL_DisplayMode Application::get_display_mode()
+{
+    return ::SDL_DisplayMode{};
+}
+
+
+
+::SDL_DisplayMode get_display_mode()
+{
+    return ::SDL_DisplayMode{};
+}
+
+
+
+void Application::set_display_mode(const std::string&)
 {
 }
 
-void set_display_mode(const ::SDL_DisplayMode)
+
+
+void Application::set_display_mode(const ::SDL_DisplayMode)
 {
+}
+
+
+
+void Application::set_subwindow_display_mode(const std::string&)
+{
+}
+
+
+
+void Application::initialize_dpi()
+{
+}
+
+
+
+void Application::render_scene(std::shared_ptr<SceneBase>)
+{
+}
+
+
+
+void Application::update_orientation()
+{
+}
+
+
+
+void Application::handle_event(const ::SDL_Event&)
+{
+}
+
+
+
+void Application::handle_window_event(const ::SDL_WindowEvent&)
+{
+}
+
+
+
+void Application::on_size_changed(const ::SDL_WindowEvent&)
+{
+}
+
+
+
+Rect Application::calculate_android_window_pos()
+{
+    return {};
 }
 
 } // namespace snail

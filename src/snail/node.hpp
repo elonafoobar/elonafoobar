@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lib/noncopyable.hpp"
+#include "../util/noncopyable.hpp"
 #include "renderer.hpp"
 
 

@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "../lib/noncopyable.hpp"
-#include "../optional.hpp"
+#include "../elona/optional.hpp"
+#include "../util/noncopyable.hpp"
 #include "application.hpp"
 #include "detail/sdl.hpp"
 #include "filesystem.hpp"

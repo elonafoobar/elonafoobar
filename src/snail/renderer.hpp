@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "../lib/enumutil.hpp"
-#include "../lib/noncopyable.hpp"
+#include "../util/enumutil.hpp"
+#include "../util/noncopyable.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"

@@ -1,11 +1,11 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../character.hpp"
-#include "../enums.hpp"
-#include "../filesystem.hpp"
-#include "../lua_env/lua_env.hpp"
-#include "../testing.hpp"
-#include "../variables.hpp"
+#include "../elona/character.hpp"
+#include "../elona/enums.hpp"
+#include "../elona/filesystem.hpp"
+#include "../elona/lua_env/lua_env.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/variables.hpp"
 #include "tests.hpp"
 
 static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)

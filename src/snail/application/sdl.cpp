@@ -14,6 +14,14 @@ namespace elona
 namespace snail
 {
 
+Application::Application()
+    : _sdl_core(new detail::SDLCore)
+    , _sdl_ttf(new detail::SDLTTF)
+    , _sdl_image(new detail::SDLImage)
+    , _sdl_mixer(new detail::SDLMixer)
+{
+}
+
 
 
 Application& Application::instance()
@@ -314,6 +322,15 @@ std::string Application::get_default_display_mode()
 
     return display_modes.begin()->first;
 }
+
+
+
+::SDL_DisplayMode Application::get_display_mode()
+{
+    return (*_window).get_display_mode();
+}
+
+
 
 void Application::set_display_mode(const std::string& display_mode_str)
 {

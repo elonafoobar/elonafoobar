@@ -1,10 +1,10 @@
 #include <iostream>
 #include <stdexcept>
 #include <SDL.h>
-#include "defines.hpp"
-#include "init.hpp"
-#include "log.hpp"
-#include "version.hpp"
+#include "elona/defines.hpp"
+#include "elona/init.hpp"
+#include "elona/log.hpp"
+#include "elona/version.hpp"
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA
 #endif

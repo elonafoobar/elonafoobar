@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_RUNNER
-#include "../testing.hpp"
+#include "../elona/testing.hpp"
 #include "../thirdparty/catch2/catch.hpp"
 
 #ifdef ELONA_OS_WINDOWS

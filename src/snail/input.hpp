@@ -3,9 +3,9 @@
 #include <array>
 #include <set>
 #include <string>
-#include "../lib/enumutil.hpp"
-#include "../lib/noncopyable.hpp"
-#include "../optional.hpp"
+#include "../elona/optional.hpp"
+#include "../util/enumutil.hpp"
+#include "../util/noncopyable.hpp"
 #include "detail/sdl.hpp"
 
 

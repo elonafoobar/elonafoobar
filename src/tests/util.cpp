@@ -1,12 +1,12 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../config/config.hpp"
-#include "../enums.hpp"
-#include "../i18n.hpp"
-#include "../init.hpp"
-#include "../item.hpp"
-#include "../itemgen.hpp"
-#include "../variables.hpp"
+#include "../elona/config/config.hpp"
+#include "../elona/enums.hpp"
+#include "../elona/i18n.hpp"
+#include "../elona/init.hpp"
+#include "../elona/item.hpp"
+#include "../elona/itemgen.hpp"
+#include "../elona/variables.hpp"
 #include "tests.hpp"
 
 namespace elona

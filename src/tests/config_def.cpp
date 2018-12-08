@@ -1,7 +1,7 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../config/config_def.hpp"
-#include "../testing.hpp"
+#include "../elona/config/config_def.hpp"
+#include "../elona/testing.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;

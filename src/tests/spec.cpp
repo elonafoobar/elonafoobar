@@ -1,7 +1,7 @@
 #include "../thirdparty/catch2/catch.hpp"
 
 #include <iostream>
-#include "../spec.hpp"
+#include "../elona/spec.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
