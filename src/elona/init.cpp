@@ -41,6 +41,7 @@
 #include "race.hpp"
 #include "random.hpp"
 #include "range.hpp"
+#include "save.hpp"
 #include "trait.hpp"
 #include "turn_sequence.hpp"
 #include "ui.hpp"

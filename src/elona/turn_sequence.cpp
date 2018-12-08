@@ -33,6 +33,7 @@
 #include "network.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "ui.hpp"
 #include "ui/ui_menu_keybindings.hpp"
 #include "variables.hpp"

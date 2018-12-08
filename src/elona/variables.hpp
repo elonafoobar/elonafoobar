@@ -1123,12 +1123,6 @@ std::string sntrainer(const std::string&);
 //// Casino/ATX
 void atxinit();
 
-
-//// Save/load
-void load_save_data();
-void do_save_game();
-void save_game();
-
 // Save manipulation
 void begintempinv();
 void exittempinv();
