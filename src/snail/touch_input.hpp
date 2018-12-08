@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "../elona/optional.hpp"
-#include "../lib/noncopyable.hpp"
+#include "../util/noncopyable.hpp"
 #include "application.hpp"
 #include "detail/sdl.hpp"
 #include "filesystem.hpp"

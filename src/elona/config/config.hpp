@@ -2,9 +2,9 @@
 
 #include <iostream>
 #include <string>
-#include "../../lib/noncopyable.hpp"
 #include "../../snail/window.hpp"
 #include "../../thirdparty/ordered_map/ordered_map.h"
+#include "../../util/noncopyable.hpp"
 #include "../elona.hpp"
 #include "../filesystem.hpp"
 #include "../log.hpp"

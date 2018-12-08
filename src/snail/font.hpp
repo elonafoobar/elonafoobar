@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <string>
-#include "../lib/enumutil.hpp"
+#include "../util/enumutil.hpp"
 #include "detail/sdl.hpp"
 #include "filesystem.hpp"
 

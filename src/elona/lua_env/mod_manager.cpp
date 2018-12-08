@@ -2,7 +2,7 @@
 #include <map>
 #include <sstream>
 #include <vector>
-#include "../../lib/topological_sorter.hpp"
+#include "../../util/topological_sorter.hpp"
 #include "../character.hpp"
 #include "../elona.hpp"
 #include "../filesystem.hpp"

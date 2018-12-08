@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lib/enumutil.hpp"
+#include "../util/enumutil.hpp"
 
 
 

@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
-#include "../../lib/noncopyable.hpp"
+#include "../../util/noncopyable.hpp"
 
 
 

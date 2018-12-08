@@ -4,8 +4,8 @@
 #include <set>
 #include <string>
 #include "../elona/optional.hpp"
-#include "../lib/enumutil.hpp"
-#include "../lib/noncopyable.hpp"
+#include "../util/enumutil.hpp"
+#include "../util/noncopyable.hpp"
 #include "detail/sdl.hpp"
 
 

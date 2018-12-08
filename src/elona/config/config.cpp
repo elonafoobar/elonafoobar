@@ -4,11 +4,11 @@
 #include <functional>
 #include <stdexcept>
 #include <string>
-#include "../../lib/fps_counter.hpp"
 #include "../../snail/android.hpp"
 #include "../../snail/application.hpp"
 #include "../../snail/touch_input.hpp"
 #include "../../snail/window.hpp"
+#include "../../util/fps_counter.hpp"
 #include "../elona.hpp"
 #include "../hcl.hpp"
 #include "../range.hpp"

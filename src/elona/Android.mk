@@ -211,7 +211,7 @@ version.cpp \
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
 
-LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem boost_system lua lib snail
+LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem boost_system lua util snail
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 

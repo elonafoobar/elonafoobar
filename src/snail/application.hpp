@@ -4,8 +4,8 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "../lib/noncopyable.hpp"
-#include "../lib/scope_guard.hpp"
+#include "../util/noncopyable.hpp"
+#include "../util/scope_guard.hpp"
 #include "detail/sdl.hpp"
 #include "effect.hpp"
 #include "fpsmanager.hpp"

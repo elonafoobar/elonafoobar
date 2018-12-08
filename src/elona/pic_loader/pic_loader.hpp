@@ -1,9 +1,9 @@
 #pragma once
 #include <cassert>
 #include <climits>
-#include "../../lib/noncopyable.hpp"
 #include "../../snail/image.hpp"
 #include "../../thirdparty/ordered_map/ordered_map.h"
+#include "../../util/noncopyable.hpp"
 #include "../filesystem.hpp"
 #include "../optional.hpp"
 #include "../shared_id.hpp"

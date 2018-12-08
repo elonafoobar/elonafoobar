@@ -1,9 +1,9 @@
 #pragma once
 #include <unordered_map>
 #include <vector>
-#include "../../lib/noncopyable.hpp"
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../thirdparty/sol2/sol.hpp"
+#include "../../util/noncopyable.hpp"
 #include "../filesystem.hpp"
 #include "../log.hpp"
 #include "../lua_env/config_table.hpp"

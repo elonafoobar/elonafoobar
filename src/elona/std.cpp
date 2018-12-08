@@ -12,7 +12,7 @@
 #include "../snail/hsp.hpp"
 #include "../snail/window.hpp"
 
-#include "../lib/fps_counter.hpp"
+#include "../util/fps_counter.hpp"
 #include "config/config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"

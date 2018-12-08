@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../lib/noncopyable.hpp"
+#include "../util/noncopyable.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
 

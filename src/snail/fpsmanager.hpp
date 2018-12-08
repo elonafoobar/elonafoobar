@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../lib/noncopyable.hpp"
+#include "../util/noncopyable.hpp"
 #include "detail/sdl.hpp"
 #include "hsp.hpp"
 
