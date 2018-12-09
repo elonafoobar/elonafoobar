@@ -282,6 +282,11 @@ void initialize_rankn()
 
     for (int category = 0; category < 9; category++)
     {
+        if (category == 7)
+        {
+            // Skips the 7th row because there are no defined locale resources.
+            continue;
+        }
         for (int rank = 0; rank < 11; rank++)
         {
             rankn(rank, category) =
