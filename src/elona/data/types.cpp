@@ -10,6 +10,7 @@
 #include "types/type_item_material.cpp"
 #include "types/type_map.cpp"
 #include "types/type_music.cpp"
+#include "types/type_portrait.cpp"
 #include "types/type_race.cpp"
 #include "types/type_sound.cpp"
 #include "types/type_trait.cpp"

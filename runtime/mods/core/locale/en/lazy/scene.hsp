@@ -47,7 +47,7 @@ Without even time for her passengers to say a final prayer, the Queen Sedona
 
 
 {1}
-{actor_1}	"<Saimore> The Crown Prince of Zanan,54"
+{actor_1}	"<Saimore> The Crown Prince of Zanan,core.saimore"
 {mc}	"core.mcTown1"
 
 {pic}	"bg1"
@@ -91,9 +91,9 @@ of both unease and interest.
 
 
 {2}
-{actor_1}	"<Loyter> The Crimson of Zanan,49"
-{actor_2}	"Soldier,18"
-{actor_3}	"????,50"
+{actor_1}	"<Loyter> The Crimson of Zanan,core.loyter"
+{actor_2}	"Soldier,core.man19"
+{actor_3}	"????,core.bethel"
 {mc}	"core.mcTown1"
 {pic}	"bg2"
 {txt}
@@ -180,9 +180,9 @@ As you request then, Bethel Rumford. It seems you've become soft. Any danger you
 {3}
 
 
-{actor_1}	"<Saimore> The Crown Prince of Zanan,54"
-{actor_2}	"<Barius> The Blue Haired,48"
-{actor_3}	"Soldier,18"
+{actor_1}	"<Saimore> The Crown Prince of Zanan,core.saimore"
+{actor_2}	"<Barius> The Blue Haired,core.barius"
+{actor_3}	"Soldier,core.man19"
 
 {mc}	"core.mcUnrest2"
 
@@ -224,10 +224,10 @@ I expect nothing but that he shall live and bear witness to the comedy that shal
 {4}
 
 
-{actor_1}	"<Xabi> The King of Palmia,55"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Barius> The Blue Haired,48"
-{actor_4}	"<Saimore> The Crown Prince of Zanan,54"
+{actor_1}	"<Xabi> The King of Palmia,core.xabi"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Barius> The Blue Haired,core.barius"
+{actor_4}	"<Saimore> The Crown Prince of Zanan,core.saimore"
 
 {mc}	"core.mcTown4"
 {pic}	"bg5"
@@ -318,10 +318,10 @@ While I don't believe in fate, this lively stage that has been set has exceeded 
 {5}
 
 
-{actor_1}	"<Larnneire> The Listener of the Wind,112"
-{actor_2}	"<Lomias> The Messenger From Vindale,57"
-{actor_3}	"????,120"
-{actor_4}	"<Bethel> The White Hawk,50"
+{actor_1}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_2}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_3}	"????,core.liana"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
 
 {mc}	"core.mcPsml515"
 {pic}	"bg2"
@@ -345,7 +345,7 @@ Any request for a price, is it? ...Fufu. Well, I certainly know someone who is s
 {pic}	"bg8"
 {fadein}
 
-{actor_3}	"<Liana> The Girl of Fancies,120"
+{actor_3}	"<Liana> The Girl of Fancies,core.liana"
 
 {chat_3}
 Bethel, I've finally got some work for you... *cough* *cough*
@@ -398,12 +398,12 @@ We don't have time to stop and ask questions. Don't lose sight of me. We're goin
 
 {7}
 
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
-{actor_5}	"Sevilis' Subordinate,18"
-{actor_6}	"<Barius> The Blue Haired,48"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
+{actor_5}	"Sevilis' Subordinate,core.man19"
+{actor_6}	"<Barius> The Blue Haired,core.barius"
 
 {mc}	"core.mcLonely"
 {pic}	"bg5"
@@ -473,9 +473,9 @@ Don't worry. Your subordinates have been treated courteously. I'll have them del
 
 {15}
 
-{actor_1}	"<Saimore> The Crown Prince of Zanan,54"
-{actor_2}	"<Barius> The Blue Haired,48"
-{actor_3}	"<Larnneire> The Listener of the Wind,112"
+{actor_1}	"<Saimore> The Crown Prince of Zanan,core.saimore"
+{actor_2}	"<Barius> The Blue Haired,core.barius"
+{actor_3}	"<Larnneire> The Listener of the Wind,core.larnneire"
 
 {mc}	"core.mcUnrest2"
 
@@ -524,12 +524,12 @@ For the boy, she was... No, I think that's a story for another time... Suffice i
 
 {16}
 
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
-{actor_5}	"Sevilis' Subordinate,18"
-{actor_6}	"<Barius> The Blue Haired,48"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
+{actor_5}	"Sevilis' Subordinate,core.man19"
+{actor_6}	"<Barius> The Blue Haired,core.barius"
 
 {mc}	"core.mcLonely"
 {pic}	"bg2"
@@ -562,9 +562,9 @@ If his intent was simply to arrest you all, there were innumerable methods he co
 
 {17}
 
-{actor_1}	"<Saimore> The Crown Prince of Zanan,54"
-{actor_2}	"<Barius> The Blue Haired,48"
-{actor_3}	"<Larnneire> The Listener of the Wind,112"
+{actor_1}	"<Saimore> The Crown Prince of Zanan,core.saimore"
+{actor_2}	"<Barius> The Blue Haired,core.barius"
+{actor_3}	"<Larnneire> The Listener of the Wind,core.larnneire"
 
 {mc}	"core.mcPsml035"
 {pic}	"bg6"
@@ -616,12 +616,12 @@ Ah, but is it not that absurdity that makes it enjoyable? If you would prefer to
 
 {24}
 
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
-{actor_5}	"Soldier,18"
-{actor_6}	"<Barius> The Blue Haired,48"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
+{actor_5}	"Soldier,core.man19"
+{actor_6}	"<Barius> The Blue Haired,core.barius"
 
 
 {pic}	"bg6"
@@ -685,10 +685,10 @@ I am so sick of Saimore's schemes. When will we ever be free of his plotting?
 
 
 {25}
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
 
 {mc}	"core.mcLonely"
 {pic}	"bg9"
@@ -724,10 +724,10 @@ Then we head for Zanan. Been a long time hasn't it, Bethel?
 
 
 {26}
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
 
 {mc}	"core.mcPsml515"
 {pic}	"bg4"
@@ -755,8 +755,8 @@ Some people don't mesh well with this world. Yes, he has his own problems, and h
 
 
 {28}
-{actor_1}	"<Bethel> The White Hawk,50"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
+{actor_1}	"<Bethel> The White Hawk,core.bethel"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
 
 {pic}	"bg7"
 {mc}	"core.mcMemory2"
@@ -807,8 +807,8 @@ Whether that man was the "fairy" himself or simply a courier, I never found out.
 
 
 {29}
-{actor_1}	"<Bethel> The White Hawk,50"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
+{actor_1}	"<Bethel> The White Hawk,core.bethel"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
 
 {pic}	"bg7"
 {mc}	"core.mcMemory2"
@@ -835,8 +835,8 @@ In order to protect her, in order to make her happy, I was able to accept my pas
 
 
 {30}
-{actor_1}	"<Bethel> The White Hawk,50"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
+{actor_1}	"<Bethel> The White Hawk,core.bethel"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
 
 {mc}	"core.mcMemory"
 {pic}	"bg7"
@@ -866,11 +866,11 @@ I buried my head into the ground until dawn came. When I came across Elishe's bo
 
 {33}
 
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
-{actor_5}	"<Barius> The Blue Haired,48"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
+{actor_5}	"<Barius> The Blue Haired,core.barius"
 
 {mc}	"core.mcUnrest2"
 {pic}	"bg10"
@@ -921,11 +921,11 @@ The forest "devouring" Meshera gradually spread, and where they spread, they cre
 {35}
 
 
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
-{actor_5}	"<Barius> The Blue Haired,48"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
+{actor_5}	"<Barius> The Blue Haired,core.barius"
 
 {mc}	"core.mcAnoSora"
 {pic}	"bg10"
@@ -956,10 +956,10 @@ I believe Rehm-Ido to be the ideal civilization. Yet, something as weak as fello
 
 {40}
 
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
 
 {mc}	"core.mcLonely"
 {pic}	"bg9"
@@ -990,11 +990,11 @@ Saimore wished for the two of you to live a happy life... And so he helped. You 
 
 {60}
 
-{actor_1}	"<Saimore> The Crown Prince of Zanan,54"
-{actor_2}	"<Barius> The Blue Haired,48"
-{actor_3}	"<Larnneire> The Listener of the Wind,112"
-{actor_4}	"<Sevilis> The Fog of Derphy,59"
-{actor_5}	"<Lomias> The Messenger From Vindale,57"
+{actor_1}	"<Saimore> The Crown Prince of Zanan,core.saimore"
+{actor_2}	"<Barius> The Blue Haired,core.barius"
+{actor_3}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_4}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_5}	"<Lomias> The Messenger From Vindale,core.lomias"
 
 {mc}	"core.mcLonely"
 {pic}	"bg7"
@@ -1032,10 +1032,10 @@ Once the Forest is gone, I leave things in your hands. I intend to hide, though 
 
 
 {70}
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"<Lomias> The Messenger From Vindale,57"
-{actor_4}	"<Bethel> The White Hawk,50"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"<Lomias> The Messenger From Vindale,core.lomias"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
 
 {mc}	"core.mcBoss2"
 {pic}	"bg11"
@@ -1062,11 +1062,11 @@ Don't worry, Larnneire. I won't allow any soldiers to lay a single finger on you
 
 
 {90}
-{actor_1}	"<Sevilis> The Fog of Derphy,59"
-{actor_2}	"<Larnneire> The Listener of the Wind,112"
-{actor_3}	"Soldier,18"
-{actor_4}	"<Bethel> The White Hawk,50"
-{actor_5}	"<Barius> The Blue Haired,48"
+{actor_1}	"<Sevilis> The Fog of Derphy,core.sevilis"
+{actor_2}	"<Larnneire> The Listener of the Wind,core.larnneire"
+{actor_3}	"Soldier,core.man19"
+{actor_4}	"<Bethel> The White Hawk,core.bethel"
+{actor_5}	"<Barius> The Blue Haired,core.barius"
 
 {mc}	"core.mcBoss2"
 {pic}	"bg11"

@@ -6,6 +6,7 @@
 #include "data/types/type_chara_chip.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_chip.hpp"
+#include "data/types/type_portrait.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "hcl.hpp"
@@ -126,15 +127,27 @@ optional_ref<Extent> draw_get_rect_chara(int id)
     return draw_get_rect(chara_chips[id].key);
 }
 
+
+
 optional_ref<Extent> draw_get_rect_item(int id)
 {
     return draw_get_rect(item_chips[id].key);
 }
 
+
+
+optional_ref<Extent> draw_get_rect_portrait(const std::string& key)
+{
+    return loader["core.portrait:" + key];
+}
+
+
+
 optional_ref<Extent> draw_get_rect(const std::string& key)
 {
     return loader[key];
 }
+
 
 
 optional_ref<Extent> prepare_item_image(int id, int color)
@@ -883,6 +896,36 @@ void initialize_item_chips(const ItemChipDB& db)
         predefined_extents,
         PicLoader::PageType::item);
 }
+
+
+
+void initialize_portraits(const PortraitDB& db)
+{
+    PicLoader::MapType predefined_extents;
+
+    for (const auto& portrait_data : db)
+    {
+        SharedId key = portrait_data.key;
+
+        if (portrait_data.filepath)
+        {
+            // Portrait is from an external file.
+            loader.load(
+                *portrait_data.filepath, key, PicLoader::PageType::portrait);
+        }
+        else
+        {
+            // Portrait is located in face1.bmp.
+            predefined_extents[key] = portrait_data.rect;
+        }
+    }
+
+    loader.add_predefined_extents(
+        filesystem::dir::graphic() / u8"face1.bmp",
+        predefined_extents,
+        PicLoader::PageType::portrait);
+}
+
 
 
 void initialize_chara_chips(const CharaChipDB& db)

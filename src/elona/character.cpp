@@ -891,9 +891,11 @@ void initialize_character()
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
     update_required_experience(cdata[rc]);
     chara_init_common_skills(cdata[rc]);
-    if (cdata[rc].portrait == 0)
+    if (cdata[rc].portrait == "__random__")
     {
-        cdata[rc].portrait = rnd(32);
+        const auto index = std::to_string(1 + rnd(32));
+        const auto man_or_woman = cdata[rc].sex ? "woman" : "man";
+        cdata[rc].portrait = "core."s + man_or_woman + index;
     }
     cdata[rc].personality = rnd(4);
     cdata[rc].talk_type = rnd(7);

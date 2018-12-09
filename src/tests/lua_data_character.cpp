@@ -61,7 +61,8 @@ TEST_CASE("test registering character", "[Lua: Data]")
     REQUIRE(data->item_type == 2);
     REQUIRE(data->filter == "/slime/ether/");
     REQUIRE(data->level == 2);
-    REQUIRE(data->portrait == 200);
+    REQUIRE(data->portrait_male == "core.zeome");
+    REQUIRE(data->portrait_female == "core.zeome");
     REQUIRE(data->image == 430);
     REQUIRE(data->female_image == 431);
     REQUIRE(data->male_image == 432);
@@ -88,6 +89,53 @@ TEST_CASE("test registering character", "[Lua: Data]")
     REQUIRE(data->_flags[27] == true);
 }
 
+TEST_CASE("test character's portrait", "[Lua: Data]")
+{
+    elona::lua::LuaEnv lua;
+    auto table = load(lua, "chara_portrait");
+
+    CharacterDB db;
+    db.initialize(lua.get_data_manager().get());
+
+    {
+        auto data = db["chara_portrait.no_portrait"];
+        REQUIRE(data->portrait_male == "");
+        REQUIRE(data->portrait_female == "");
+    }
+    {
+        auto data = db["chara_portrait.random_portrait"];
+        REQUIRE(data->portrait_male == "__random__");
+        REQUIRE(data->portrait_female == "__random__");
+    }
+    {
+        // The portrait resource named "john_doe" will not be defined, but the
+        // ID that refers to is accepted.
+        auto data = db["chara_portrait.undefined_portrait"];
+        REQUIRE(data->portrait_male == "john_doe");
+        REQUIRE(data->portrait_female == "john_doe");
+    }
+    {
+        auto data = db["chara_portrait.loyter_portrait"];
+        REQUIRE(data->portrait_male == "core.loyter");
+        REQUIRE(data->portrait_female == "core.loyter");
+    }
+    {
+        auto data = db["chara_portrait.male_portrait_only"];
+        REQUIRE(data->portrait_male == "male_portrait_only");
+        REQUIRE(data->portrait_female == "");
+    }
+    {
+        auto data = db["chara_portrait.female_portrait_only"];
+        REQUIRE(data->portrait_male == "");
+        REQUIRE(data->portrait_female == "female_portrait_only");
+    }
+    {
+        auto data = db["chara_portrait.both_portrait"];
+        REQUIRE(data->portrait_male == "male_portrait");
+        REQUIRE(data->portrait_female == "female_portrait");
+    }
+}
+
 TEST_CASE("test registering character with all defaults", "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
@@ -103,7 +151,8 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
     REQUIRE(data->item_type == 0);
     REQUIRE(data->filter == "");
     REQUIRE(data->level == 0);
-    REQUIRE(data->portrait == 0);
+    REQUIRE(data->portrait_male == "");
+    REQUIRE(data->portrait_female == "");
     REQUIRE(data->image == 0);
     REQUIRE(data->race == "");
     REQUIRE(data->class_ == "");

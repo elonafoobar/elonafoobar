@@ -1103,9 +1103,6 @@ TalkResult talk_unique_xabi()
 
         update_screen();
         fade_out();
-        gsel(4);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
 
         listmax = 0;
@@ -1289,9 +1286,6 @@ TalkResult talk_unique_erystia()
 
         update_screen();
         fade_out();
-        gsel(4);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
 
         listmax = 0;

@@ -12007,7 +12007,6 @@ label_2682_internal:
         csvsort(s, s(1), 44);
         actor(0, rc) = s;
         actor(1, rc) = s(1);
-        actor(2, rc) = s(2);
     }
     goto label_2682_internal;
 label_2684_internal:

@@ -47,7 +47,7 @@
 
 
 {1}
-{actor_1}	"ザナンの皇子『サイモア』,54"
+{actor_1}	"ザナンの皇子『サイモア』,core.saimore"
 {mc}	"core.mcTown1"
 
 {pic}	"bg1"
@@ -91,9 +91,9 @@
 
 
 {2}
-{actor_1}	"ザナンの紅血『ロイター』,49"
-{actor_2}	"兵士,18"
-{actor_3}	"????,50"
+{actor_1}	"ザナンの紅血『ロイター』,core.loyter"
+{actor_2}	"兵士,core.man19"
+{actor_3}	"????,core.bethel"
 {mc}	"core.mcTown1"
 {pic}	"bg2"
 {txt}
@@ -180,9 +180,9 @@
 {3}
 
 
-{actor_1}	"ザナンの皇子『サイモア』,54"
-{actor_2}	"青い髪の『ヴァリウス』,48"
-{actor_3}	"兵士,18"
+{actor_1}	"ザナンの皇子『サイモア』,core.saimore"
+{actor_2}	"青い髪の『ヴァリウス』,core.barius"
+{actor_3}	"兵士,core.man19"
 
 {mc}	"core.mcUnrest2"
 
@@ -224,10 +224,10 @@
 {4}
 
 
-{actor_1}	"パルミア王『ジャビ』,55"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"青い髪の『ヴァリウス』,48"
-{actor_4}	"ザナンの皇子サイモア,54"
+{actor_1}	"パルミア王『ジャビ』,core.xabi"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"青い髪の『ヴァリウス』,core.barius"
+{actor_4}	"ザナンの皇子サイモア,core.saimore"
 
 {mc}	"core.mcTown4"
 {pic}	"bg5"
@@ -318,10 +318,10 @@
 {5}
 
 
-{actor_1}	"風を聴く者『ラーネイレ』,112"
-{actor_2}	"異形の森の使者『ロミアス』,57"
-{actor_3}	"????,120"
-{actor_4}	"白き鷹『ヴェセル』,50"
+{actor_1}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_2}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_3}	"????,core.liana"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
 
 {mc}	"core.mcPsml515"
 {pic}	"bg2"
@@ -345,7 +345,7 @@
 {pic}	"bg8"
 {fadein}
 
-{actor_3}	"妄想少女『リアナ』,120"
+{actor_3}	"妄想少女『リアナ』,core.liana"
 
 {chat_3}
 ヴェセル、ひさしぶりの仕事よ、ぅ…げほっ、げほっ。
@@ -398,12 +398,12 @@
 
 {7}
 
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
-{actor_5}	"セビリスの部下,18"
-{actor_6}	"青い髪の『ヴァリウス』,48"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
+{actor_5}	"セビリスの部下,core.man19"
+{actor_6}	"青い髪の『ヴァリウス』,core.barius"
 
 {mc}	"core.mcLonely"
 {pic}	"bg5"
@@ -473,9 +473,9 @@
 
 {15}
 
-{actor_1}	"ザナンの皇子『サイモア』,54"
-{actor_2}	"青い髪の『ヴァリウス』,48"
-{actor_3}	"風を聴く者『ラーネイレ』,112"
+{actor_1}	"ザナンの皇子『サイモア』,core.saimore"
+{actor_2}	"青い髪の『ヴァリウス』,core.barius"
+{actor_3}	"風を聴く者『ラーネイレ』,core.larnneire"
 
 {mc}	"core.mcUnrest2"
 
@@ -524,12 +524,12 @@
 
 {16}
 
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
-{actor_5}	"セビリスの部下,18"
-{actor_6}	"青い髪の『ヴァリウス』,48"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
+{actor_5}	"セビリスの部下,core.man19"
+{actor_6}	"青い髪の『ヴァリウス』,core.barius"
 
 {mc}	"core.mcLonely"
 {pic}	"bg2"
@@ -562,9 +562,9 @@
 
 {17}
 
-{actor_1}	"ザナンの皇子『サイモア』,54"
-{actor_2}	"青い髪の『ヴァリウス』,48"
-{actor_3}	"風を聴く者『ラーネイレ』,112"
+{actor_1}	"ザナンの皇子『サイモア』,core.saimore"
+{actor_2}	"青い髪の『ヴァリウス』,core.barius"
+{actor_3}	"風を聴く者『ラーネイレ』,core.larnneire"
 
 {mc}	"core.mcPsml035"
 {pic}	"bg6"
@@ -616,12 +616,12 @@
 
 {24}
 
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
-{actor_5}	"兵士,18"
-{actor_6}	"青い髪の『ヴァリウス』,48"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
+{actor_5}	"兵士,core.man19"
+{actor_6}	"青い髪の『ヴァリウス』,core.barius"
 
 
 {pic}	"bg6"
@@ -685,10 +685,10 @@
 
 
 {25}
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
 
 {mc}	"core.mcLonely"
 {pic}	"bg9"
@@ -724,10 +724,10 @@
 
 
 {26}
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
 
 {mc}	"core.mcPsml515"
 {pic}	"bg4"
@@ -755,8 +755,8 @@
 
 
 {28}
-{actor_1}	"ヴェセル,50"
-{actor_2}	"ラーネイレ,112"
+{actor_1}	"ヴェセル,core.bethel"
+{actor_2}	"ラーネイレ,core.larnneire"
 
 {pic}	"bg7"
 {mc}	"core.mcMemory2"
@@ -807,8 +807,8 @@
 
 
 {29}
-{actor_1}	"ヴェセル,50"
-{actor_2}	"ラーネイレ,112"
+{actor_1}	"ヴェセル,core.bethel"
+{actor_2}	"ラーネイレ,core.larnneire"
 
 {pic}	"bg7"
 {mc}	"core.mcMemory2"
@@ -835,8 +835,8 @@
 
 
 {30}
-{actor_1}	"ヴェセル,50"
-{actor_2}	"ラーネイレ,112"
+{actor_1}	"ヴェセル,core.bethel"
+{actor_2}	"ラーネイレ,core.larnneire"
 
 {mc}	"core.mcMemory"
 {pic}	"bg7"
@@ -866,11 +866,11 @@
 
 {33}
 
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
-{actor_5}	"青い髪の『ヴァリウス』,48"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
+{actor_5}	"青い髪の『ヴァリウス』,core.barius"
 
 {mc}	"core.mcUnrest2"
 {pic}	"bg10"
@@ -921,11 +921,11 @@
 {35}
 
 
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
-{actor_5}	"青い髪の『ヴァリウス』,48"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
+{actor_5}	"青い髪の『ヴァリウス』,core.barius"
 
 {mc}	"core.mcAnoSora"
 {pic}	"bg10"
@@ -956,10 +956,10 @@
 
 {40}
 
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
 
 {mc}	"core.mcLonely"
 {pic}	"bg9"
@@ -990,11 +990,11 @@
 
 {60}
 
-{actor_1}	"ザナンの皇子『サイモア』,54"
-{actor_2}	"青い髪の『ヴァリウス』,48"
-{actor_3}	"風を聴く者『ラーネイレ』,112"
-{actor_4}	"ダルフィの霧『セビリス』,59"
-{actor_5}	"異形の森の使者『ロミアス』,57"
+{actor_1}	"ザナンの皇子『サイモア』,core.saimore"
+{actor_2}	"青い髪の『ヴァリウス』,core.barius"
+{actor_3}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_4}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_5}	"異形の森の使者『ロミアス』,core.lomias"
 
 {mc}	"core.mcLonely"
 {pic}	"bg7"
@@ -1032,10 +1032,10 @@
 
 
 {70}
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"異形の森の使者『ロミアス』,57"
-{actor_4}	"白き鷹『ヴェセル』,50"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"異形の森の使者『ロミアス』,core.lomias"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
 
 {mc}	"core.mcBoss2"
 {pic}	"bg11"
@@ -1062,11 +1062,11 @@
 
 
 {90}
-{actor_1}	"ダルフィの霧『セビリス』,59"
-{actor_2}	"風を聴く者『ラーネイレ』,112"
-{actor_3}	"兵士,18"
-{actor_4}	"白き鷹『ヴェセル』,50"
-{actor_5}	"青い髪の『ヴァリウス』,48"
+{actor_1}	"ダルフィの霧『セビリス』,core.sevilis"
+{actor_2}	"風を聴く者『ラーネイレ』,core.larnneire"
+{actor_3}	"兵士,core.man19"
+{actor_4}	"白き鷹『ヴェセル』,core.bethel"
+{actor_5}	"青い髪の『ヴァリウス』,core.barius"
 
 {mc}	"core.mcBoss2"
 {pic}	"bg11"

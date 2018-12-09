@@ -82,7 +82,25 @@ CharacterData CharacterDB::convert(
     DATA_OPT_OR(level, int, 0);
     DATA_OPT_OR(male_image, int, 0);
     DATA_ENUM(original_relationship, int, RelationTable, 0);
-    DATA_OPT_OR(portrait, int, 0);
+
+    // Portrait
+    std::string portrait_male;
+    std::string portrait_female;
+    {
+        const auto common = data.optional<std::string>("portrait");
+        if (common)
+        {
+            portrait_male = portrait_female = *common;
+        }
+        else
+        {
+            auto male_and_female =
+                data.unordered_map<std::string, std::string>("portrait");
+            portrait_male = male_and_female["male"];
+            portrait_female = male_and_female["female"];
+        }
+    }
+
     DATA_OPT_OR(race, std::string, "");
     DATA_OPT_OR(class_, std::string, "");
     DATA_ENUM(sex, int, GenderTable, -1);
@@ -148,7 +166,8 @@ CharacterData CharacterDB::convert(
         level,
         male_image,
         original_relationship,
-        portrait,
+        portrait_male,
+        portrait_female,
         race,
         sex,
         resistances,

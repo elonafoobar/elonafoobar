@@ -137,25 +137,7 @@ static void _load_list(CharacterSheetOperation op)
     sort_list_by_column1();
 }
 
-static void _load_portrait()
-{
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
-    if (cdata[cc].portrait < 0)
-    {
-        const auto filepath = filesystem::dir::user() / u8"graphic" /
-            (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
-        if (cdata[cc].portrait != -1)
-        {
-            if (fs::exists(filepath))
-            {
-                pos(0, 0);
-                picload(filepath, 1);
-            }
-        }
-    }
-}
+
 
 bool UIMenuCharacterSheet::init()
 {
@@ -197,8 +179,6 @@ bool UIMenuCharacterSheet::init()
         snd("core.chara");
     }
     window_animation(wx, wy, ww, wh, 9, 4);
-
-    _load_portrait();
 
     gsel(0);
     if (!_returned_from_portrait)
@@ -355,25 +335,12 @@ static void _draw_first_page_topics()
 
 static void _draw_portrait_face()
 {
-    if (cdata[cc].portrait >= 0)
+    if (cdata[cc].portrait != "")
     {
-        int portrait_id = cdata[cc].sex * 64 + cdata[cc].portrait;
-        boxf(wx + 560, wy + 27, 80, 112, snail::Color{0, 0, 0, 255});
-        pos(wx + 560, wy + 27);
-        gcopy(4, portrait_id % 16 * 48, portrait_id / 16 * 72, 48, 72, 80, 112);
-    }
-    else
-    {
-        const auto filepath = filesystem::dir::user() / u8"graphic" /
-            (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
-        if (cdata[cc].portrait != -1)
+        if (const auto rect = draw_get_rect_portrait(cdata[cc].portrait))
         {
-            if (fs::exists(filepath))
-            {
-                boxf(wx + 560, wy + 27, 80, 112, snail::Color{0, 0, 0, 255});
-                pos(wx + 560, wy + 27);
-                gcopy(4, 0, 0, 80, 112, 80, 112);
-            }
+            pos(wx + 560, wy + 27);
+            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
         }
     }
     window2(wx + 557, wy + 23, 87, 120, 1, 10);

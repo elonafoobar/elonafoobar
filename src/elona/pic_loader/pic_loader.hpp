@@ -47,7 +47,8 @@ public:
     enum class PageType
     {
         character,
-        item
+        item,
+        portrait,
     };
 
     struct Skyline

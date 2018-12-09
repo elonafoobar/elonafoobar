@@ -64,6 +64,12 @@ void _initialize_chip_dbs(lua::DataTable& data)
         the_chara_chip_db.load_all();
         initialize_chara_chips(the_chara_chip_db);
     }
+
+    {
+        the_portrait_db.initialize(data);
+        the_portrait_db.load_all();
+        initialize_portraits(the_portrait_db);
+    }
 }
 
 

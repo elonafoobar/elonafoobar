@@ -118,7 +118,8 @@ struct CharacterData
     int level;
     int male_image;
     int original_relationship;
-    int portrait;
+    std::string portrait_male;
+    std::string portrait_female;
     std::string race;
     int sex;
     std::unordered_map<int, int> resistances;
