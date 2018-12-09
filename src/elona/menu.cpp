@@ -697,21 +697,6 @@ int change_appearance()
     wy = winposy(wh);
     snd("core.port");
     window_animation(wx, wy, ww, wh, 9, 7);
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
-    buffer(7, 800, 112);
-    boxf();
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        const auto filepath = filesystem::dir::user() / u8"graphic" /
-            (u8"face"s + (cnt + 1) + u8".bmp");
-        if (fs::exists(filepath))
-        {
-            pos(cnt * 80, 0);
-            picload(filepath, 1);
-        }
-    }
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_mirror.bmp", 1);

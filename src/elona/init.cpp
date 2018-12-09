@@ -96,7 +96,6 @@ void backup_config_files()
     std::pair<const char*, const char*> files[] = {
         {u8"./original/export.txt", u8"./user/export.txt"},
         {u8"./original/musiclist.txt", u8"./user/music/musiclist.txt"},
-        {u8"./original/face1.bmp", u8"./user/graphic/face1.bmp"},
     };
 
     for (const auto& from_to : files)

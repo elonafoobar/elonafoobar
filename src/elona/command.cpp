@@ -280,9 +280,6 @@ TurnResult do_interact_command()
     }
     if (p == 8)
     {
-        gsel(4);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
         ccbk = cc;
         cc = tc;

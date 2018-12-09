@@ -30,9 +30,6 @@ int p_at_m193 = 0;
 
 void talk_start()
 {
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
     gsel(7);
     picload(filesystem::dir::graphic() / u8"ie_chat.bmp");
     gsel(0);
@@ -433,9 +430,6 @@ TalkResult talk_game_begin()
         await(1500);
         update_screen();
         fade_out();
-        gsel(4);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
         cdata.player().blind = 0;
         txt(i18n::s.get(
