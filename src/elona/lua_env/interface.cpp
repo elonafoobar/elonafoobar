@@ -1,5 +1,8 @@
 #include "interface.hpp"
 #include "config_table.hpp"
+#include "data_manager.hpp"
+
+
 
 namespace elona
 {
@@ -14,6 +17,8 @@ optional<ConfigTable> data(const char* type, const std::string& id)
     }
     return none;
 }
+
+
 
 optional<ConfigTable> data(const char* type, int legacy_id)
 {

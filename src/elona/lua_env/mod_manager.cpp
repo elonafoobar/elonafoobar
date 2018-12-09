@@ -10,7 +10,12 @@
 #include "../log.hpp"
 #include "../message.hpp"
 #include "../variables.hpp"
+#include "api_manager.hpp"
+#include "data_manager.hpp"
 #include "event_manager.hpp"
+#include "export_manager.hpp"
+
+
 
 namespace elona
 {

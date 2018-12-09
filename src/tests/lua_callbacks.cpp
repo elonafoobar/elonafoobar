@@ -7,6 +7,7 @@
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
 #include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
 #include "tests.hpp"

@@ -1,5 +1,10 @@
 #pragma once
+
+#include "event_manager.hpp"
+#include "export_manager.hpp"
+#include "handle_manager.hpp"
 #include "lua_env.hpp"
+
 
 
 /**

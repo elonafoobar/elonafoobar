@@ -6,6 +6,8 @@
 #include "../elona/init.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
+#include "../elona/lua_env/export_manager.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/variables.hpp"
 #include "tests.hpp"
 

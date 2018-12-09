@@ -1,11 +1,17 @@
-#include "lua_api_item.hpp"
 #include "../../calc.hpp"
+#include "../../character.hpp"
 #include "../../data/types/type_item.hpp"
 #include "../../enchantment.hpp"
 #include "../../item.hpp"
 #include "../../itemgen.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../interface.hpp"
+
+// You must include lua_api_item.hpp at the end because "namespace Item"
+// defined in lua_api_item.hpp conflicts with "struct Item".
+#include "lua_api_item.hpp"
+
+
 
 namespace elona
 {

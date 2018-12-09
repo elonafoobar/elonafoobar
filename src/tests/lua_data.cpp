@@ -1,7 +1,10 @@
 #include "../thirdparty/catch2/catch.hpp"
 
 #include "../elona/filesystem.hpp"
+#include "../elona/lua_env/data_manager.hpp"
+#include "../elona/lua_env/export_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
 #include "tests.hpp"

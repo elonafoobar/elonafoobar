@@ -8,6 +8,7 @@
 #include "filesystem.hpp"
 #include "item.hpp"
 #include "log.hpp"
+#include "lua_env/handle_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "mef.hpp"

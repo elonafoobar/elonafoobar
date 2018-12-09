@@ -10,7 +10,9 @@
 #include "../ui.hpp"
 #include "../util.hpp"
 #include "../variables.hpp"
+#include "api_manager.hpp"
 #include "lua_env.hpp"
+#include "mod_manager.hpp"
 
 
 
