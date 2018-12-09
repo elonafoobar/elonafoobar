@@ -1,4 +1,4 @@
-data:add_multi("core.chara"
+data:add_multi("core.chara",
    {
       {
          name = "no_portrait",
