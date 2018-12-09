@@ -225,6 +225,13 @@ MainMenuResult character_making_customize_appearance()
 {
     pcc(15, 0) = 0;
 
+    if (cdata.player().portrait == "")
+    {
+        // TODO: if neither "core.woman1" nor "core.man1" exists, what happens?
+        cdata.player().portrait =
+            cdata.player().sex ? "core.woman1" : "core.man1";
+    }
+
     while (true)
     {
         character_making_draw_background(
@@ -251,7 +258,7 @@ MainMenuResult character_making_customize_appearance()
 
 static void _reroll_character()
 {
-    int cmportrait = cdata[rc].portrait;
+    const auto portrait_save = cdata[rc].portrait;
 
     chara_delete(0);
     access_race_info(3, cmrace);
@@ -267,7 +274,7 @@ static void _reroll_character()
     }
     initialize_character();
     initialize_pc_character();
-    cdata[rc].portrait = cmportrait;
+    cdata[rc].portrait = portrait_save;
     create_pcpic(0, true);
 }
 

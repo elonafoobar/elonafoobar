@@ -661,44 +661,23 @@ void talk_window_show()
     gmode(2);
     pos(wx, wy - 20);
     gcopy(7, 0, 0, 600, 380);
-    if (cdata[tc].portrait >= 0 || scenemode)
+    if (cdata[tc].portrait != "" || scenemode)
     {
-        p = cdata[tc].sex * 64 + cdata[tc].portrait;
-        if (scenemode)
+        const auto id = scenemode ? actor(1, rc) : cdata[tc].portrait;
+        if (const auto rect = draw_get_rect_portrait(id))
         {
-            p = elona::stoi(actor(1, rc));
+            pos(wx + 42, wy + 42);
+            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
         }
-        boxf(wx + 42, wy + 42, 80, 112, snail::Color{0, 0, 0, 255});
-        pos(wx + 42, wy + 42);
-        gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
     }
     else
     {
-        const auto portrait_filepath = filesystem::dir::user() /
-            (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
-        if (!fs::exists(portrait_filepath) || cdata[tc].portrait == -1)
-        {
-            int chara_chip_id = cdata[tc].image % 1000;
-            draw_chara(
-                cdata[tc],
-                wx + 82,
-                wy + 125 - chara_chips[chara_chip_id].offset_y,
-                2);
-        }
-        else
-        {
-            if (chatpicloaded == 0)
-            {
-                gsel(4);
-                pos(0, 0);
-                picload(portrait_filepath, 1);
-                gsel(0);
-                chatpicloaded = 1;
-            }
-            boxf(wx + 42, wy + 42, 80, 112, snail::Color{0, 0, 0, 255});
-            pos(wx + 42, wy + 42);
-            gcopy(4, 0, 0, 80, 112, 80, 112);
-        }
+        const auto chara_chip_id = cdata[tc].image % 1000;
+        draw_chara(
+            cdata[tc],
+            wx + 82,
+            wy + 125 - chara_chips[chara_chip_id].offset_y,
+            2);
     }
     font(10 - en * 2);
     display_topic(

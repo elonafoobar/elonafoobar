@@ -8,7 +8,7 @@ data:add(
          item_type = 2,
          tags = {"slime", "ether"},
          level = 2,
-         portrait = 200,
+         portrait = "core.zeome",
          ai_calm = 2,
          ai_move = 100,
          ai_dist = 1,

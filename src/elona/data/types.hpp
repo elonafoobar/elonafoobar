@@ -11,6 +11,7 @@
 #include "types/type_item_material.hpp"
 #include "types/type_map.hpp"
 #include "types/type_music.hpp"
+#include "types/type_portrait.hpp"
 #include "types/type_race.hpp"
 #include "types/type_sound.hpp"
 #include "types/type_trait.hpp"

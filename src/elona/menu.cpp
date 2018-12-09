@@ -10,6 +10,7 @@
 #include "command.hpp"
 #include "config/config.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_portrait.hpp"
 #include "defines.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
@@ -47,6 +48,148 @@
 #include "ui/ui_menu_composite_character.hpp"
 #include "ui/ui_menu_composite_message.hpp"
 #include "ui/ui_menu_composite_town.hpp"
+
+
+
+namespace
+{
+
+void _set_pcc_info(int val0)
+{
+    rtval = -2;
+    if (page == 0)
+    {
+        if (val0 == 0)
+        {
+            rtval = -2;
+        }
+        if (val0 == 1)
+        {
+            rtval(0) = 100;
+            rtval(1) = 0;
+            rtval(2) = -2;
+            rtvaln = cdata[cc].portrait;
+        }
+        if (val0 == 2)
+        {
+            rtval(0) = 1;
+            rtval(1) = 0;
+            rtval(2) = pcc(1, cc) % 1000;
+            rtvaln = u8"hair"s;
+        }
+        if (val0 == 3)
+        {
+            rtval(0) = 10;
+            rtval(1) = 0;
+            rtval(2) = pcc(10, cc) % 1000;
+            rtvaln = u8"subhair"s;
+        }
+        if (val0 == 4)
+        {
+            rtval(0) = 1;
+            rtval(1) = 1;
+            rtval(2) = pcc(1, cc) / 1000;
+        }
+        if (val0 == 5)
+        {
+            rtval(0) = 15;
+            rtval(1) = 0;
+            rtval(2) = pcc(15, cc) % 1000;
+            rtvaln = u8"body"s;
+        }
+        if (val0 == 6)
+        {
+            rtval(0) = 9;
+            rtval(1) = 0;
+            rtval(2) = pcc(9, cc) % 1000;
+            rtvaln = u8"cloth"s;
+        }
+        if (val0 == 7)
+        {
+            rtval(0) = 7;
+            rtval(1) = 0;
+            rtval(2) = pcc(7, cc) % 1000;
+            rtvaln = u8"pants"s;
+        }
+        if (val0 == 8)
+        {
+            rtval = -1;
+            rtvaln = "";
+        }
+        if (val0 == 9)
+        {
+            if (cc != 0)
+            {
+                rtval(0) = 101;
+                rtval(1) = 0;
+                rtval(2) = cdata[cc].has_own_sprite();
+            }
+            else
+            {
+                rtval(0) = 16;
+                rtval(1) = 0;
+                rtval(2) = pcc(16, cc) % 1000;
+                rtvaln = u8"ride"s;
+            }
+        }
+    }
+    else
+    {
+        if (val0 == 0)
+        {
+            rtval(0) = 15;
+            rtval(1) = 1;
+            rtval(2) = pcc(15, cc) / 1000;
+        }
+        if (val0 == 1)
+        {
+            rtval(0) = 9;
+            rtval(1) = 1;
+            rtval(2) = pcc(9, cc) / 1000;
+        }
+        if (val0 == 2)
+        {
+            rtval(0) = 7;
+            rtval(1) = 1;
+            rtval(2) = pcc(7, cc) / 1000;
+        }
+        if (val0 == 3)
+        {
+            rtval(0) = 11;
+            rtval(1) = 0;
+            rtval(2) = pcc(11, cc) % 1000;
+            rtvaln = u8"etc"s;
+        }
+        if (val0 == 4)
+        {
+            rtval(0) = 12;
+            rtval(1) = 0;
+            rtval(2) = pcc(12, cc) % 1000;
+            rtvaln = u8"etc"s;
+        }
+        if (val0 == 5)
+        {
+            rtval(0) = 13;
+            rtval(1) = 0;
+            rtval(2) = pcc(13, cc) % 1000;
+            rtvaln = u8"etc"s;
+        }
+        if (val0 == 6)
+        {
+            rtval(0) = 14;
+            rtval(1) = 0;
+            rtval(2) = pcc(14, cc) % 1000;
+            rtvaln = u8"eye"s;
+        }
+        if (val0 == 7)
+        {
+            rtval = -1;
+            rtvaln = "";
+        }
+    }
+}
+
+} // namespace
 
 
 
@@ -541,140 +684,6 @@ MenuResult menu_feats_character_making()
 
 
 
-void set_pcc_info(int val0)
-{
-    rtval = -2;
-    if (page == 0)
-    {
-        if (val0 == 0)
-        {
-            rtval = -2;
-        }
-        if (val0 == 1)
-        {
-            rtval(0) = 100;
-            rtval(1) = 0;
-            rtval(2) = cdata[cc].portrait;
-        }
-        if (val0 == 2)
-        {
-            rtval(0) = 1;
-            rtval(1) = 0;
-            rtval(2) = pcc(1, cc) % 1000;
-            rtvaln = u8"hair"s;
-        }
-        if (val0 == 3)
-        {
-            rtval(0) = 10;
-            rtval(1) = 0;
-            rtval(2) = pcc(10, cc) % 1000;
-            rtvaln = u8"subhair"s;
-        }
-        if (val0 == 4)
-        {
-            rtval(0) = 1;
-            rtval(1) = 1;
-            rtval(2) = pcc(1, cc) / 1000;
-        }
-        if (val0 == 5)
-        {
-            rtval(0) = 15;
-            rtval(1) = 0;
-            rtval(2) = pcc(15, cc) % 1000;
-            rtvaln = u8"body"s;
-        }
-        if (val0 == 6)
-        {
-            rtval(0) = 9;
-            rtval(1) = 0;
-            rtval(2) = pcc(9, cc) % 1000;
-            rtvaln = u8"cloth"s;
-        }
-        if (val0 == 7)
-        {
-            rtval(0) = 7;
-            rtval(1) = 0;
-            rtval(2) = pcc(7, cc) % 1000;
-            rtvaln = u8"pants"s;
-        }
-        if (val0 == 8)
-        {
-            rtval = -1;
-            rtvaln = "";
-        }
-        if (val0 == 9)
-        {
-            if (cc != 0)
-            {
-                rtval(0) = 101;
-                rtval(1) = 0;
-                rtval(2) = cdata[cc].has_own_sprite();
-            }
-            else
-            {
-                rtval(0) = 16;
-                rtval(1) = 0;
-                rtval(2) = pcc(16, cc) % 1000;
-                rtvaln = u8"ride"s;
-            }
-        }
-    }
-    else
-    {
-        if (val0 == 0)
-        {
-            rtval(0) = 15;
-            rtval(1) = 1;
-            rtval(2) = pcc(15, cc) / 1000;
-        }
-        if (val0 == 1)
-        {
-            rtval(0) = 9;
-            rtval(1) = 1;
-            rtval(2) = pcc(9, cc) / 1000;
-        }
-        if (val0 == 2)
-        {
-            rtval(0) = 7;
-            rtval(1) = 1;
-            rtval(2) = pcc(7, cc) / 1000;
-        }
-        if (val0 == 3)
-        {
-            rtval(0) = 11;
-            rtval(1) = 0;
-            rtval(2) = pcc(11, cc) % 1000;
-            rtvaln = u8"etc"s;
-        }
-        if (val0 == 4)
-        {
-            rtval(0) = 12;
-            rtval(1) = 0;
-            rtval(2) = pcc(12, cc) % 1000;
-            rtvaln = u8"etc"s;
-        }
-        if (val0 == 5)
-        {
-            rtval(0) = 13;
-            rtval(1) = 0;
-            rtval(2) = pcc(13, cc) % 1000;
-            rtvaln = u8"etc"s;
-        }
-        if (val0 == 6)
-        {
-            rtval(0) = 14;
-            rtval(1) = 0;
-            rtval(2) = pcc(14, cc) % 1000;
-            rtvaln = u8"eye"s;
-        }
-        if (val0 == 7)
-        {
-            rtval = -1;
-            rtvaln = "";
-        }
-    }
-}
-
 int change_appearance()
 {
     create_pcpic(cc, false);
@@ -785,25 +794,14 @@ label_2041_internal:
     window2(wx + 234, wy + 71, 88, 120, 1, 1);
     if (cs == 1 && page == 0)
     {
-        if (cdata[cc].portrait >= 0)
+        if (cdata[cc].portrait != "")
         {
-            p = cdata[cc].sex * 64 + cdata[cc].portrait;
-            pos(wx + 238, wy + 75);
-            boxf(wx + 238, wy + 75, 80, 112, snail::Color{0, 0, 0, 255});
-            gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
-        }
-        else if (cdata[cc].portrait != -1)
-        {
-            pos(wx + 238, wy + 75);
-            boxf(wx + 238, wy + 75, 80, 112, snail::Color{0, 0, 0, 255});
-            gcopy(
-                7,
-                std::abs((cdata[cc].portrait + 2)) * 80,
-                0,
-                80,
-                112,
-                80,
-                112);
+            if (const auto rect = draw_get_rect_portrait(cdata[cc].portrait))
+            {
+                pos(wx + 238, wy + 75);
+                gcopy(
+                    rect->buffer, rect->x, rect->y, rect->width, rect->height);
+            }
         }
     }
     else if (cdata[cc].has_own_sprite() == 1)
@@ -831,7 +829,7 @@ label_2041_internal:
         {
             break;
         }
-        set_pcc_info(cnt);
+        _set_pcc_info(cnt);
         s = listn(0, p);
         if (rtval >= 0)
         {
@@ -845,7 +843,7 @@ label_2041_internal:
             }
             else
             {
-                s += u8" u"s + (std::abs(rtval(2)) - 1);
+                s += " " + rtvaln;
             }
         }
         cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
@@ -863,7 +861,7 @@ label_2041_internal:
     }
     redraw();
     auto action = cursor_check_ex();
-    set_pcc_info(cs);
+    _set_pcc_info(cs);
     p = 0;
     if (rtval == -2)
     {
@@ -903,10 +901,8 @@ label_2041_internal:
         snd("core.cursor1");
         if (rtval == 100)
         {
-            if (cdata[cc].portrait < 31)
-            {
-                ++cdata[cc].portrait;
-            }
+            cdata[cc].portrait =
+                the_portrait_db.get_next_portrait(cdata[cc].portrait);
             goto label_2041_internal;
         }
         if (rtval == 101)
@@ -936,10 +932,8 @@ label_2041_internal:
         snd("core.cursor1");
         if (rtval == 100)
         {
-            if (cdata[cc].portrait > -10)
-            {
-                --cdata[cc].portrait;
-            }
+            cdata[cc].portrait =
+                the_portrait_db.get_previous_portrait(cdata[cc].portrait);
             goto label_2041_internal;
         }
         if (rtval == 101)

@@ -4,11 +4,17 @@
 #include "../elona.hpp"
 #include "../hcl.hpp"
 
-namespace elona
-{
+
 
 namespace
 {
+
+constexpr int _displayed_portrait_width = 80;
+constexpr int _displayed_portrait_height = 112;
+constexpr int _portrait_grid_column = 16;
+constexpr int _portrait_grid_row = 8;
+
+
 
 static void copy_image(snail::BasicImage& img, const Extent& ext)
 {
@@ -20,6 +26,8 @@ static void copy_image(snail::BasicImage& img, const Extent& ext)
         img, ext.x, ext.y, ext.width, ext.height);
     snail::Application::instance().get_renderer().set_blend_mode(save);
 }
+
+
 
 static void copy_image_cropped(
     snail::BasicImage& img,
@@ -35,8 +43,38 @@ static void copy_image_cropped(
     snail::Application::instance().get_renderer().set_blend_mode(save);
 }
 
+
+
+// FIXME: refactor this dirty hack.
+static void copy_image_portrait(
+    snail::BasicImage& img,
+    const Extent& source,
+    const Extent& dest)
+{
+    auto& renderer = snail::Application::instance().get_renderer();
+    const auto save = renderer.blend_mode();
+
+    boxf(dest.x, dest.y, dest.width, dest.height, snail::Color{0, 0, 0});
+    renderer.set_blend_mode(snail::BlendMode::blend);
+    renderer.render_image(
+        img,
+        source.x,
+        source.y,
+        source.width,
+        source.height,
+        dest.x,
+        dest.y,
+        dest.width,
+        dest.height);
+    renderer.set_blend_mode(save);
+}
+
 } // namespace
 
+
+
+namespace elona
+{
 
 void PicLoader::clear()
 {
@@ -110,7 +148,17 @@ void PicLoader::add_predefined_extents(
     // not hold in the degenerate case, but for the atlases used
     // (character.bmp, image.bmp) there is still a good amount of
     // unused space to hold any potential overflow.
-    BufferInfo& info = add_buffer(type, img.width(), img.height());
+
+    // FIXME: refactor this dirty hack.
+    int width = img.width();
+    int height = img.height();
+    if (type == PageType::portrait)
+    {
+        width = _displayed_portrait_width * _portrait_grid_column;
+        height = _displayed_portrait_height * _portrait_grid_row;
+    }
+
+    BufferInfo& info = add_buffer(type, width, height);
     gsel(info.buffer_id);
 
     for (auto& pair : extents)
@@ -122,7 +170,17 @@ void PicLoader::add_predefined_extents(
         assert(source.bottom() < img.height());
 
         // Find a region on a buffer to place the sprite.
-        auto found = info.find(source.width, source.height);
+
+        // FIXME: refactor this dirty hack.
+        int width = source.width;
+        int height = source.height;
+        if (type == PageType::portrait)
+        {
+            width = _displayed_portrait_width;
+            height = _displayed_portrait_height;
+        }
+
+        auto found = info.find(width, height);
         assert(found);
 
         size_t skyline_index = found->first;
@@ -134,7 +192,14 @@ void PicLoader::add_predefined_extents(
         info.insert_extent(skyline_index, dest);
 
         // Render the defined portion of the image onto the buffer.
-        copy_image_cropped(img, source, dest);
+        if (type == PageType::portrait)
+        {
+            copy_image_portrait(img, source, dest);
+        }
+        else
+        {
+            copy_image_cropped(img, source, dest);
+        }
 
         // Store the buffer region for later lookup.
         storage[pair.first] = dest;

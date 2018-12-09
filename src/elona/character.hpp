@@ -139,7 +139,7 @@ struct Character
     int turn_cost = 0;
     int current_speed = 0;
     int item_which_will_be_used = 0;
-    int portrait = 0;
+    std::string portrait;
     int interest = 0;
     int time_interest_revive = 0;
     int personality = 0;

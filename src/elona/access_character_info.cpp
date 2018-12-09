@@ -46,7 +46,6 @@ int access_character_info()
         {
             cdata[rc].level = voidlv * (100 + data->level * 2) / 100;
         }
-        cdata[rc].portrait = data->portrait;
         cdata[rc].ai_calm = data->ai_calm;
         cdata[rc].ai_heal = data->ai_heal;
         cdata[rc].ai_move = data->ai_move;
@@ -96,6 +95,14 @@ int access_character_info()
         if (cdata[rc].sex == 1 && data->female_image != 0)
         {
             cdata[rc].image = data->female_image;
+        }
+        if (cdata[rc].sex == 0)
+        {
+            cdata[rc].portrait = data->portrait_male;
+        }
+        else
+        {
+            cdata[rc].portrait = data->portrait_female;
         }
         {
             int color = generate_color(data->color, cdata[rc].id);

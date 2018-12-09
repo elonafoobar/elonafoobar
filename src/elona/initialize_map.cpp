@@ -813,7 +813,7 @@ static void _update_paels_mom()
         if (game_data.quest_flags.pael_and_her_mom >= 10)
         {
             cdata[tc].image = 360;
-            cdata[tc].portrait = -1;
+            cdata[tc].portrait = "";
         }
     }
 }
