@@ -35,6 +35,8 @@ struct MessageLog
     std::vector<MessageLogLine> lines;
 };
 
+
+
 extern MessageLog message_log;
 
 } // namespace elona

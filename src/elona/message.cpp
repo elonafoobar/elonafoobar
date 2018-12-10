@@ -124,22 +124,22 @@ void help_halt()
 
 
 
-void Message::msg_append_begin(const std::string& first)
+void Message::buffered_message_begin(const std::string& message)
 {
     _msg_newline();
-    msgtemp = first;
+    msgtemp = message;
 }
 
 
 
-void Message::msg_append(const std::string& msg)
+void Message::buffered_message_append(const std::string& message)
 {
-    msgtemp += msg;
+    msgtemp += message;
 }
 
 
 
-void Message::msg_append_end()
+void Message::buffered_message_end()
 {
     _txt_conv();
 }

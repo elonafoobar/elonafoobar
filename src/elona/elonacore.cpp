@@ -156,7 +156,7 @@ void weather_changes_by_location(bool output_immediately = true)
             }
             else
             {
-                Message::instance().msg_append(
+                Message::instance().buffered_message_append(
                     i18n::s.get("core.locale.action.weather.changes"));
             }
         }
@@ -175,7 +175,7 @@ void weather_changes_by_location(bool output_immediately = true)
             }
             else
             {
-                Message::instance().msg_append(
+                Message::instance().buffered_message_append(
                     i18n::s.get("core.locale.action.weather.changes"));
             }
         }
@@ -4082,7 +4082,7 @@ TurnResult exit_map()
         rq = game_data.executing_immediate_quest;
         quest_exit_map();
     }
-    Message::instance().msg_append_begin("  ");
+    Message::instance().buffered_message_begin("  ");
     if (game_data.current_map == mdata_t::MapId::show_house ||
         game_data.current_map == mdata_t::MapId::arena ||
         game_data.current_map == mdata_t::MapId::pet_arena)
@@ -4136,7 +4136,7 @@ TurnResult exit_map()
         f = 0;
         if (feat(1) == 11)
         {
-            Message::instance().msg_append(
+            Message::instance().buffered_message_append(
                 i18n::s.get("core.locale.misc.walk_down_stairs"));
             f = 1;
             game_data.entrance_type = 1;
@@ -4155,7 +4155,7 @@ TurnResult exit_map()
         }
         if (feat(1) == 10)
         {
-            Message::instance().msg_append(
+            Message::instance().buffered_message_append(
                 i18n::s.get("core.locale.misc.walk_up_stairs"));
             f = 1;
             game_data.entrance_type = 2;
@@ -4252,13 +4252,13 @@ TurnResult exit_map()
             {
                 if (game_data.current_dungeon_level == 1)
                 {
-                    Message::instance().msg_append(i18n::s.get(
+                    Message::instance().buffered_message_append(i18n::s.get(
                         "core.locale.action.exit_map.surface.returned_to",
                         mapname(game_data.current_map)));
                 }
                 else
                 {
-                    Message::instance().msg_append(i18n::s.get(
+                    Message::instance().buffered_message_append(i18n::s.get(
                         "core.locale.action.exit_map.surface.left",
                         mapname(game_data.current_map)));
                 }
@@ -4307,7 +4307,8 @@ TurnResult exit_map()
     }
     if (rdtry > 1)
     {
-        Message::instance().msg_append(u8"(再生成"s + rdtry + u8"回)"s);
+        Message::instance().buffered_message_append(
+            u8"(再生成"s + rdtry + u8"回)"s);
     }
     if (game_data.current_map != game_data.previous_map)
     {
@@ -4351,7 +4352,7 @@ TurnResult exit_map()
         }
         if (event_find(6))
         {
-            Message::instance().msg_append(i18n::s.get(
+            Message::instance().buffered_message_append(i18n::s.get(
                 "core.locale.action.exit_map.delivered_to_your_home"));
             weather_changes_by_location(false);
         }
@@ -4359,19 +4360,19 @@ TurnResult exit_map()
             area_data[game_data.previous_map].type ==
             mdata_t::MapType::world_map)
         {
-            Message::instance().msg_append(i18n::s.get(
+            Message::instance().buffered_message_append(i18n::s.get(
                 "core.locale.action.exit_map.entered",
                 mapname(game_data.current_map)));
         }
         else if (map_data.type == mdata_t::MapType::temporary)
         {
-            Message::instance().msg_append(i18n::s.get(
+            Message::instance().buffered_message_append(i18n::s.get(
                 "core.locale.action.exit_map.returned_to",
                 mapname(game_data.current_map)));
         }
         else
         {
-            Message::instance().msg_append(i18n::s.get(
+            Message::instance().buffered_message_append(i18n::s.get(
                 "core.locale.action.exit_map.left",
                 mapname(game_data.previous_map)));
         }
@@ -4382,7 +4383,7 @@ TurnResult exit_map()
                 area_data[game_data.current_map].type ==
                     mdata_t::MapType::field)
             {
-                Message::instance().msg_append(i18n::s.get(
+                Message::instance().buffered_message_append(i18n::s.get(
                     "core.locale.action.exit_map.burdened_by_cargo"));
             }
         }
@@ -4396,7 +4397,7 @@ TurnResult exit_map()
             game_data.current_dungeon_level =
                 area_data[game_data.current_map].deepest_level - 1;
             game_data.entrance_type = 1;
-            Message::instance().msg_append(
+            Message::instance().buffered_message_append(
                 i18n::s.get("core.locale.action.exit_map.mountain_pass"));
         }
     }
@@ -4408,7 +4409,7 @@ TurnResult exit_map()
             game_data.current_map = static_cast<int>(mdata_t::MapId::larna);
             game_data.current_dungeon_level = 1;
             game_data.entrance_type = 2;
-            Message::instance().msg_append(
+            Message::instance().buffered_message_append(
                 i18n::s.get("core.locale.action.exit_map.larna"));
         }
     }
@@ -4676,7 +4677,7 @@ void map_global_proc_diastrophism()
         game_data.reset_world_map_in_diastrophism_flag)
     {
         game_data.diastrophism_flag = 0;
-        Message::instance().msg_append(
+        Message::instance().buffered_message_append(
             i18n::s.get("core.locale.action.move.global.diastrophism"));
         for (int cnt = 450; cnt < 500; ++cnt)
         {
