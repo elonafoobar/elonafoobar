@@ -88,4 +88,9 @@ private:
     bool _menu_cycle_key_pressed{};
 };
 
+namespace keybind
+{
+std::string pressed_key_name();
+}
+
 } // namespace elona

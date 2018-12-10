@@ -15,7 +15,7 @@ MKDIR := mkdir
 
 
 all: $(BIN_DIR)
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make -j24
 
 
 build: $(BIN_DIR) $(PROGRAM)

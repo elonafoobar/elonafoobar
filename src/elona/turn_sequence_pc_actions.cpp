@@ -305,8 +305,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         await(100);
     }
 
-    // TODO
-    if (key != ""s)
+    if (action == "")
     {
         const auto angband_result = check_angband();
         if (angband_result)

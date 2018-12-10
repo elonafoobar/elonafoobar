@@ -12429,10 +12429,12 @@ optional<TurnResult> check_angband()
         map_data.type == mdata_t::MapType::world_map)
         return none;
 
+    auto key = keybind::pressed_key_name();
+
     switch (game_data.angband_flag)
     {
     case 0:
-        if (key == u8"Q"s)
+        if (key == "Q")
         {
             txt(i18n::s.get("core.locale.action.angband.q"));
             ++game_data.angband_flag;
@@ -12441,7 +12443,7 @@ optional<TurnResult> check_angband()
         }
         break;
     case 1:
-        if (key == u8"y"s)
+        if (key == "y")
         {
             txt(i18n::s.get("core.locale.action.angband.y"));
             ++game_data.angband_flag;
@@ -12450,7 +12452,7 @@ optional<TurnResult> check_angband()
         }
         break;
     case 2:
-        if (key == u8"@"s)
+        if (key == "@")
         {
             txt(i18n::s.get("core.locale.action.angband.at"));
             for (int i = 0; i < 10; ++i)

@@ -19,7 +19,6 @@ namespace
 snail::Key last_held_key = snail::Key::none;
 int last_held_key_frames = 0;
 
-} // namespace
 
 // This map holds the action categories available in an input context.
 // Categories at the top will override categories further down. This is to
@@ -28,7 +27,7 @@ int last_held_key_frames = 0;
 // categories.
 
 // clang-format off
-static std::map<InputContextType, std::vector<ActionCategory>> input_context_types =
+std::map<InputContextType, std::vector<ActionCategory>> input_context_types =
 {
     {InputContextType::menu, {ActionCategory::shortcut,
                               ActionCategory::menu,
@@ -41,6 +40,8 @@ static std::map<InputContextType, std::vector<ActionCategory>> input_context_typ
                               ActionCategory::default_}}
 };
 // clang-format on
+
+} // namespace
 
 bool InputContext::_matches(
     const std::string& action_id,
@@ -591,5 +592,27 @@ std::unordered_set<ActionCategory> keybind_conflicting_action_categories(
     }
     return result;
 }
+
+namespace keybind
+{
+std::string pressed_key_name()
+{
+    if (last_held_key == snail::Key::none ||
+        _is_keypress_delayed(last_held_key_frames, 1, 20))
+    {
+        return "";
+    }
+
+    auto shift = (snail::Input::instance().modifiers() &
+                  snail::ModKey::shift) != snail::ModKey::none;
+
+    if (auto name = keybind_key_name(last_held_key, shift))
+    {
+        return *name;
+    }
+
+    return "";
+}
+} // namespace keybind
 
 } // namespace elona
