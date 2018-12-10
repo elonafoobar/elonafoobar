@@ -50,6 +50,16 @@ void LuaMapGenerator::set_entrance_type(const EnumString& type)
         LuaEnums::MapEntranceTypeTable.ensure_from_string(type);
 }
 
+bool LuaMapGenerator::is_first_generation()
+{
+    return mapupdate == 0;
+}
+
+void LuaMapGenerator::initialize_world_map()
+{
+    initialize_world_map();
+}
+
 void LuaMapGenerator::place_player()
 {
     map_placeplayer();
@@ -70,6 +80,10 @@ void LuaMapGenerator::bind(sol::state& lua)
     LuaMapGenerator.set(
         "set_entrance_type", &LuaMapGenerator::set_entrance_type);
     LuaMapGenerator.set("place_player", &LuaMapGenerator::place_player);
+    LuaMapGenerator.set(
+        "is_first_generation", &LuaMapGenerator::is_first_generation);
+    LuaMapGenerator.set(
+        "initialize_world_map", &LuaMapGenerator::initialize_world_map);
 
     lua.set_usertype("LuaMapGenerator", LuaMapGenerator);
 }
