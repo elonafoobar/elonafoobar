@@ -121,8 +121,10 @@ public:
     DialogData(
         map_type nodes,
         std::string starting_node,
+        bool is_cancelable,
         lua::ExportManager& export_manager)
         : nodes(nodes)
+        , is_cancelable(is_cancelable)
         , export_manager(export_manager)
     {
         set_node(starting_node);
@@ -199,6 +201,7 @@ private:
     bool show_dialog();
 
     map_type nodes;
+    bool is_cancelable;
     size_t current_text_index = 0;
     optional<std::string> current_node_id = none;
 

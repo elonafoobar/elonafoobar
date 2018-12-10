@@ -241,6 +241,8 @@ DialogData DialogDecoderLogic::decode(lua::ConfigTable& table)
     DialogData::map_type nodes;
     std::string full_id = table.required<std::string>("_full_id");
 
+    bool is_cancelable = table.optional_or<bool>("is_cancelable", true);
+
     sol::object nodes_table = table.required<sol::object>("nodes");
     if (nodes_table == sol::lua_nil)
     {
@@ -266,8 +268,7 @@ DialogData DialogDecoderLogic::decode(lua::ConfigTable& table)
             full_id + ": Cannot find starting dialog node " + starting_node);
     }
 
-    DialogData the_dialog(nodes, starting_node, export_manager);
-    return the_dialog;
+    return {nodes, starting_node, is_cancelable, export_manager};
 }
 
 } // namespace elona

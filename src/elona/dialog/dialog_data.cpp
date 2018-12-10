@@ -153,7 +153,7 @@ bool DialogData::state_is_valid()
 
 bool DialogData::is_cancelable_now()
 {
-    return false;
+    return is_cancelable;
 }
 
 static bool _run_callback(
