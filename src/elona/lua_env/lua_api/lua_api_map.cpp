@@ -76,6 +76,11 @@ int LuaApiMap::instance_id()
     return game_data.current_map;
 }
 
+int LuaApiMap::current_dungeon_level()
+{
+    return game_data.current_dungeon_level;
+}
+
 /**
  * @luadoc
  *
@@ -281,6 +286,7 @@ void LuaApiMap::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, legacy_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, instance_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, is_overworld);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, current_dungeon_level);
     api_table.set_function(
         "valid", sol::overload(LuaApiMap::valid, LuaApiMap::valid_xy));
     api_table.set_function(

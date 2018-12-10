@@ -4,6 +4,7 @@
 namespace elona
 {
 enum class TileKind;
+struct MapData;
 
 namespace lua
 {
@@ -25,6 +26,10 @@ sol::optional<std::string> id();
 int legacy_id();
 
 int instance_id();
+
+int current_dungeon_level();
+
+MapData* data();
 
 bool is_overworld();
 
