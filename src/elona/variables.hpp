@@ -245,7 +245,6 @@ ELONA_EXTERN(elona_vector1<std::string> invkey);
 ELONA_EXTERN(elona_vector1<std::string> ioriginalnameref2);
 ELONA_EXTERN(elona_vector1<std::string> ioriginalnameref);
 ELONA_EXTERN(elona_vector1<std::string> jkey);
-ELONA_EXTERN(elona_vector1<std::string> key);
 ELONA_EXTERN(std::string key_identify);
 ELONA_EXTERN(std::string key_pageup);
 ELONA_EXTERN(std::string key_pagedown);

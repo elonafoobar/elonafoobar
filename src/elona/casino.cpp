@@ -62,7 +62,6 @@ void casino_dealer()
 void casino_choose_card()
 {
 label_18671_internal:
-    key = "";
     keylog = "";
     screenupdate = -1;
     update_screen();

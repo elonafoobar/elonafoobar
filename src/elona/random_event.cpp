@@ -609,7 +609,6 @@ int show_random_event_window(
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = "";
     objprm(0, ""s);
     keylog = "";
     if (listmax <= 1)
@@ -700,7 +699,6 @@ int show_random_event_window(
         if (rtval != -1)
         {
             snd("core.click1");
-            key = "";
             return rtval;
         }
     }

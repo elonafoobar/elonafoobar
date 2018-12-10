@@ -38,7 +38,6 @@ bool UIMenuGod::init()
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = "";
     objprm(0, ""s);
     keylog = "";
     listmax = 0;

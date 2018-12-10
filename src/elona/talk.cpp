@@ -545,7 +545,6 @@ int talk_window_query()
         ++keyrange;
     }
     keyrange = listmax;
-    key = "";
     objprm(0, ""s);
     keylog = "";
     talk_window_init_and_show();

@@ -146,7 +146,6 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         rtval = -1;
     }
     keywait = 1;
-    key = "";
     rtval = 0;
 }
 
@@ -262,7 +261,6 @@ bool input_text_dialog(
             {
                 inputlog = "";
                 keywait = 1;
-                key = "";
                 break;
             }
         }

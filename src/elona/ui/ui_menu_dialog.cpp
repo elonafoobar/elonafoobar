@@ -32,7 +32,6 @@ bool UIMenuDialog::init()
     }
     keyrange = listmax;
 
-    key = "";
     objprm(0, ""s);
     keylog = "";
     buff = i18n::s.get(_dialog.text_key());

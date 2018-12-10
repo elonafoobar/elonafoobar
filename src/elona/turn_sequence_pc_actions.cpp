@@ -99,14 +99,12 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (action == "quicksave")
     {
-        key = "";
         save_game();
         txt(i18n::s.get("core.locale.action.quicksave"));
         return none;
     }
     if (action == "quickload")
     {
-        key = "";
         Message::instance().clear();
         firstturn = 1;
         load_save_data();
