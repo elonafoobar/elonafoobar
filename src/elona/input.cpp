@@ -442,5 +442,18 @@ void wait_key_pressed(bool only_enter_or_cancel)
 }
 
 
+bool nonmodifier_key_pressed()
+{
+    auto keys = snail::Input::instance().pressed_keys();
+
+    for (auto key : keys)
+    {
+        if (!is_modifier(key))
+            return true;
+    }
+
+    return false;
+}
+
 
 } // namespace elona

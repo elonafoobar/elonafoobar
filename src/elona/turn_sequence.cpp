@@ -1243,7 +1243,6 @@ TurnResult turn_end()
 }
 
 
-
 TurnResult pc_turn(bool advance_time)
 {
     if (advance_time)
@@ -1517,7 +1516,6 @@ TurnResult pc_turn(bool advance_time)
         }
         t = 1;
         keylog = "";
-        key = "";
         objprm(0, ""s);
     }
 
@@ -1573,6 +1571,12 @@ label_2747:
         InputContext::instance().check_for_command(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
+    const auto angband_result = check_angband();
+    if (angband_result)
+    {
+        return *angband_result;
+    }
+
     if (command == ""s)
     {
         goto label_2747;
@@ -1589,6 +1593,6 @@ label_2747:
     }
 
     goto label_2747;
-}
+} // namespace elona
 
 } // namespace elona

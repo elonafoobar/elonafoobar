@@ -90,7 +90,7 @@ private:
 
 namespace keybind
 {
-std::string pressed_key_name();
+optional<std::string> pressed_key_name();
 }
 
 } // namespace elona

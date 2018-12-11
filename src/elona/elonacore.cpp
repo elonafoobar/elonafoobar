@@ -36,6 +36,7 @@
 #include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "keybind/input_context.hpp"
 #include "log.hpp"
 #include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
@@ -12429,12 +12430,18 @@ optional<TurnResult> check_angband()
         map_data.type == mdata_t::MapType::world_map)
         return none;
 
-    auto key = keybind::pressed_key_name();
+    const auto key = keybind::pressed_key_name();
+    auto shift = is_modifier_pressed(snail::ModKey::shift);
+
+    if (!key)
+    {
+        return none;
+    }
 
     switch (game_data.angband_flag)
     {
     case 0:
-        if (key == "Q")
+        if (*key == "q" && shift)
         {
             txt(i18n::s.get("core.locale.action.angband.q"));
             ++game_data.angband_flag;
@@ -12443,7 +12450,7 @@ optional<TurnResult> check_angband()
         }
         break;
     case 1:
-        if (key == "y")
+        if (*key == "y" && !shift)
         {
             txt(i18n::s.get("core.locale.action.angband.y"));
             ++game_data.angband_flag;
@@ -12452,7 +12459,7 @@ optional<TurnResult> check_angband()
         }
         break;
     case 2:
-        if (key == "@")
+        if (*key == "2" && shift)
         {
             txt(i18n::s.get("core.locale.action.angband.at"));
             for (int i = 0; i < 10; ++i)

@@ -50,6 +50,11 @@ static bool _proc_autodig()
 
 optional<TurnResult> handle_pc_action(std::string& action)
 {
+    if (action != "cancel" && game_data.angband_flag != -1)
+    {
+        game_data.angband_flag = 0;
+    }
+
     if (game_data.wizard)
     {
         if (action == "wizard_open_console")
@@ -303,14 +308,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         await(100);
     }
 
-    if (action == "")
-    {
-        const auto angband_result = check_angband();
-        if (angband_result)
-        {
-            return *angband_result;
-        }
-    }
     if (action == "quick_menu")
     {
         action = show_quick_menu();

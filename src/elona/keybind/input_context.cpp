@@ -455,17 +455,19 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
 
     if (const auto keybind = _check_normal_action())
     {
+        bool delayed = _delay_normal_action(*keybind);
+
         if (const auto action = _action_for_key(*keybind))
         {
-            if (!_delay_normal_action(*keybind))
+            if (!delayed)
             {
                 return *action;
             }
         }
         else
         {
-            last_held_key = snail::Key::none;
-            last_held_key_frames = 0;
+            // last_held_key = snail::Key::none;
+            // last_held_key_frames = 0;
         }
     }
     else
@@ -595,23 +597,24 @@ std::unordered_set<ActionCategory> keybind_conflicting_action_categories(
 
 namespace keybind
 {
-std::string pressed_key_name()
+optional<std::string> pressed_key_name()
 {
-    if (last_held_key == snail::Key::none ||
-        _is_keypress_delayed(last_held_key_frames, 1, 20))
+    if (last_held_key == snail::Key::none || is_modifier(last_held_key) ||
+        last_held_key_frames == 0)
     {
-        return "";
+        return none;
     }
 
-    auto shift = (snail::Input::instance().modifiers() &
-                  snail::ModKey::shift) != snail::ModKey::none;
-
-    if (auto name = keybind_key_name(last_held_key, shift))
+    // If a key was pressed for the first time this frame, its held frames count
+    // will be 1, since the delay happened when an action was polled for in an
+    // earlier call to @ref check_for_command() or similar. Subtract 1 from it
+    // for determining simulated key delay.
+    if (_is_keypress_delayed(last_held_key_frames - 1, 1, 20))
     {
-        return *name;
+        return none;
     }
 
-    return "";
+    return keybind_key_name(last_held_key, false);
 }
 } // namespace keybind
 

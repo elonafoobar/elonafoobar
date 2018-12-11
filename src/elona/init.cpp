@@ -346,7 +346,6 @@ void initialize_elona()
     DIM2(dir, 5);
     DIM3(dblist, 2, 800);
     SDIM2(inputlog, 100);
-    SDIM2(key, 20);
     SDIM2(keylog, 20);
     SDIM3(randn1, 30, 20);
     DIM2(rtval, 10);
