@@ -49,7 +49,6 @@ int yes_or_no(int x, int y, int width);
 bool is_modifier_pressed(snail::ModKey modifier);
 void wait_key_released();
 void wait_key_pressed(bool only_enter_or_cancel = false);
-bool nonmodifier_key_pressed();
 
 
 } // namespace elona
