@@ -13,12 +13,17 @@ public:
     {
     }
 
+
 protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
     virtual optional<UIMenuMessageLog::ResultType> on_key(
         const std::string& key);
+
+
+private:
+    int message_offset{};
 };
 
 } // namespace ui
