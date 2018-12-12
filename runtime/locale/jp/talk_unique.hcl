@@ -858,7 +858,7 @@ locale {
                 }
 
                 member {
-                    dialog = "ようこそ魔術士ギルドへ、${_1}の${_2}... Please come in."
+                    dialog = "ようこそ魔術士ギルドへ、${_1}の${_2}…どうぞ中にお入り下さい。"
                     choices {
                         new_quota = "ノルマを貰う"
                         report_quota = "ノルマを報告する"
