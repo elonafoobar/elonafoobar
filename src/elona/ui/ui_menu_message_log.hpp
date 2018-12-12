@@ -23,6 +23,9 @@ protected:
 
 
 private:
+    void _scroll_by(int lines);
+
+
     int message_offset{};
 };
 

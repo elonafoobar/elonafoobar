@@ -129,20 +129,34 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
 {
     if (action == "north")
     {
-        message_offset -= 1;
-        if (message_offset < 4 - static_cast<int>(message_log.line_size()))
-        {
-            message_offset = 4 - static_cast<int>(message_log.line_size());
-        }
+        _scroll_by(-1);
         return none;
     }
     else if (action == "south")
     {
-        message_offset += 1;
-        if (message_offset > 0)
-        {
-            message_offset = 0;
-        }
+        _scroll_by(1);
+        return none;
+    }
+    else if (action == "previous_page" || action == "northwest")
+    {
+        _scroll_by(-(inf_maxlog - 3));
+        return none;
+    }
+    else if (action == "next_page" || action == "southwest")
+    {
+        _scroll_by(inf_maxlog - 3);
+        return none;
+    }
+    else if (action == "northeast")
+    {
+        // Jump to the oldest.
+        message_offset = 4 - static_cast<int>(message_log.line_size());
+        return none;
+    }
+    else if (action == "southeast")
+    {
+        // Jump to the newest.
+        message_offset = 0;
         return none;
     }
     else if (action != ""s)
@@ -152,6 +166,24 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
     }
 
     return none;
+}
+
+
+
+void UIMenuMessageLog::_scroll_by(int lines)
+{
+    const auto min = 4 - static_cast<int>(message_log.line_size());
+    const auto max = 0;
+
+    message_offset += lines;
+    if (message_offset < min)
+    {
+        message_offset = min;
+    }
+    if (max < message_offset)
+    {
+        message_offset = max;
+    }
 }
 
 } // namespace ui
