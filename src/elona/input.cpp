@@ -358,7 +358,7 @@ std::string get_selected_item(int& p_)
     auto command = InputContext::for_menu().check_for_command_with_list(index);
 
     p_ = -1;
-    if (index != -1)
+    if (index != -1 && index < keyrange)
     {
         p_ = list(0, pagesize * page + index);
     }
