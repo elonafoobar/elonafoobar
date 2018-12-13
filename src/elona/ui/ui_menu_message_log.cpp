@@ -39,43 +39,41 @@ void _draw_window()
 
 
 
-int message_width{};
-int offset{};
-void _draw_single_message(size_t cnt)
+void _draw_single_message(size_t cnt, int message_offset)
 {
-    const auto n = message_log.lines.size();
+    const auto n = message_log.line_size();
     if (n == 0)
     {
         return;
     }
-    if (static_cast<int>(n) + offset < static_cast<int>(cnt) + 4)
+    if (static_cast<int>(n) + message_offset < static_cast<int>(cnt) + 4)
     {
         return;
     }
 
-    message_width = 0;
+    int message_width = 0;
     font(inf_mesfont - en * 2);
-    for (const auto& msgs : message_log.lines.at(n - cnt - 4 + offset).spans)
+    for (const auto& span : message_log.at(n - cnt - 4 + message_offset))
     {
         pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
             inf_msgy - cnt * inf_msgspace + vfix);
-        color(msgs.color.r, msgs.color.g, msgs.color.b);
-        mes(msgs.content);
+        color(span.color.r, span.color.g, span.color.b);
+        mes(span.text);
 
-        message_width += strlen_u(msgs.content);
+        message_width += strlen_u(span.text);
     }
 }
 
 
 
-void _draw_messages()
+void _draw_messages(int message_offset)
 {
     gsel(4);
     gmode(0);
     boxf();
     for (int cnt = 0; cnt < inf_maxlog - 3; ++cnt)
     {
-        _draw_single_message(cnt);
+        _draw_single_message(cnt, message_offset);
     }
     gsel(0);
     gmode(2);
@@ -121,7 +119,7 @@ void UIMenuMessageLog::update()
 void UIMenuMessageLog::draw()
 {
     _draw_window();
-    _draw_messages();
+    _draw_messages(message_offset);
 }
 
 
@@ -131,20 +129,34 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
 {
     if (action == "north")
     {
-        offset -= 1;
-        if (offset < 4 - static_cast<int>(message_log.lines.size()))
-        {
-            offset = 4 - static_cast<int>(message_log.lines.size());
-        }
+        _scroll_by(-1);
         return none;
     }
     else if (action == "south")
     {
-        offset += 1;
-        if (offset > 0)
-        {
-            offset = 0;
-        }
+        _scroll_by(1);
+        return none;
+    }
+    else if (action == "previous_page" || action == "northwest")
+    {
+        _scroll_by(-(inf_maxlog - 3));
+        return none;
+    }
+    else if (action == "next_page" || action == "southwest")
+    {
+        _scroll_by(inf_maxlog - 3);
+        return none;
+    }
+    else if (action == "northeast")
+    {
+        // Jump to the oldest.
+        message_offset = 4 - static_cast<int>(message_log.line_size());
+        return none;
+    }
+    else if (action == "southeast")
+    {
+        // Jump to the newest.
+        message_offset = 0;
         return none;
     }
     else if (action != ""s)
@@ -154,6 +166,24 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
     }
 
     return none;
+}
+
+
+
+void UIMenuMessageLog::_scroll_by(int lines)
+{
+    const auto min = 4 - static_cast<int>(message_log.line_size());
+    const auto max = 0;
+
+    message_offset += lines;
+    if (message_offset < min)
+    {
+        message_offset = min;
+    }
+    if (max < message_offset)
+    {
+        message_offset = max;
+    }
 }
 
 } // namespace ui

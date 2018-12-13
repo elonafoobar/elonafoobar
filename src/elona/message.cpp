@@ -30,10 +30,6 @@ std::vector<LogObserver*> observers;
 
 
 
-MessageLog message_log;
-
-
-
 LogObserver::~LogObserver()
 {
     unsubscribe_log(this);
@@ -124,22 +120,22 @@ void help_halt()
 
 
 
-void Message::msg_append_begin(const std::string& first)
+void Message::buffered_message_begin(const std::string& message)
 {
     _msg_newline();
-    msgtemp = first;
+    msgtemp = message;
 }
 
 
 
-void Message::msg_append(const std::string& msg)
+void Message::buffered_message_append(const std::string& message)
 {
-    msgtemp += msg;
+    msgtemp += message;
 }
 
 
 
-void Message::msg_append_end()
+void Message::buffered_message_end()
 {
     _txt_conv();
 }
@@ -204,18 +200,14 @@ void Message::_msg_write(std::string& message)
     mes(message);
     elona::color(0, 0, 0);
 
-    if (message_log.lines.empty())
-    {
-        message_log.lines.emplace_back();
-    }
-    message_log.lines.back().spans.emplace_back(message, text_color);
+    message_log.append(message, text_color);
 }
 
 
 
 void Message::_msg_newline()
 {
-    message_log.lines.emplace_back();
+    message_log.linebreak();
 
     message_width = 0;
     ++msgline;

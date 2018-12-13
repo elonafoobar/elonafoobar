@@ -88,9 +88,20 @@ public:
     }
 
 
-    void msg_append_begin(const std::string&);
-    void msg_append(const std::string&);
-    void msg_append_end();
+    /**
+     * Messages passed to these three functions are "buffered". They does not
+     * shown immediately, and the output of them is delayed until
+     * buffered_message_end() is called.
+     * @example
+     * Message::instance().buffered_message_begin("1");
+     * Message::instance().buffered_message_append("2");
+     * Message::instance().buffered_message_append("3");
+     * // The joined message "123" is shwon at the below line.
+     * Message::instance().buffered_message_end();
+     */
+    void buffered_message_begin(const std::string& message);
+    void buffered_message_append(const std::string& message);
+    void buffered_message_end();
 
 
 
