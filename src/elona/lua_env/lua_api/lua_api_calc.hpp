@@ -13,7 +13,7 @@ namespace lua
  */
 namespace LuaApiMath
 {
-int clamp(int, int, int);
+int calc_objlv(int n);
 
 
 void bind(sol::table&);

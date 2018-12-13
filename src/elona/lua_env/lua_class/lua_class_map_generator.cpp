@@ -1,5 +1,7 @@
 #include "lua_class_map_generator.hpp"
+#include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"
+#include "../../mapgen.hpp"
 #include "../../position.hpp"
 
 namespace elona

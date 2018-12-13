@@ -28,6 +28,10 @@ void set_stair_down_pos(int x, int y);
 
 void set_entrance_type(const EnumString& type);
 
+bool is_first_generation();
+
+void initialize_world_map();
+
 void place_player();
 
 

@@ -8,7 +8,9 @@ MapDefDB the_mapdef_db;
 const constexpr char* data::LuaLazyCacheTraits<MapDefDB>::type_id;
 
 
-MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
+MapDefData MapDefDB::convert(
+    const lua::ConfigTable& data,
+    const std::string& id)
 {
     auto legacy_id = data.required<int>("id");
     DATA_REQ(appearance, int);
@@ -39,6 +41,8 @@ MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
     DATA_OPT_OR(prevents_random_events, bool, false);
     DATA_OPT_OR(villagers_make_snowmen, bool, false);
 
+    DATA_OPT_FUNC(chara_filter);
+
     Position outer_map_position_{outer_map_position.get<int>("x"),
                                  outer_map_position.get<int>("y")};
 
@@ -68,7 +72,9 @@ MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
                       prevents_monster_ball,
                       prevents_building_shelter,
                       prevents_random_events,
-                      villagers_make_snowmen};
+                      villagers_make_snowmen,
+
+                      chara_filter};
 }
 
 } // namespace elona

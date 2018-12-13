@@ -1,3 +1,40 @@
+local Calc = Elona.require("Calc")
+local Map = Elona.require("Map")
+local Math = Elona.require("Math")
+local Rand = Elona.require("Rand")
+local table = Elona.require("table")
+
+local function chara_filter_town(callbacks)
+   return function()
+      local opts = { level = 10, quality = "Bad", fltselect = 5 }
+
+      local result = {}
+      local level = Map.current_dungeon_level()
+      local callback = callbacks[level]
+
+      if callback then
+         local result_ = callback()
+         if result_ ~= nil and type(result_) == "table" then
+            result = result_
+         end
+      end
+
+      return table.merge(opts, result)
+   end
+end
+
+--[[
+   chara_filter:
+   a function that returns a table with any of the following properties:
+   id: string ID of the character to generate
+   level: approximate level of the character to generate
+   quality: approximate quality of the character to generate
+   objlv: exact level of the character to generate
+   fixlv: exact quality of the character to generate
+   fltn: filter, to be used with fltn()
+   fltselect: ?
+   flttypemajor: ?
+]]
 data:define_type("map")
 data:add_multi(
    "core.map",
@@ -121,6 +158,18 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          quest_town_id = 1,
+
+         chara_filter = chara_filter_town(
+            {
+               [1] = function()
+                  if Rand.rnd(2) then
+                     return { dbid = 273 }
+                  end
+
+                  return nil
+               end
+            }
+         )
       },
       {
          name = "yowyn",
@@ -139,6 +188,18 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          quest_town_id = 2,
+
+         chara_filter = chara_filter_town(
+            {
+               [1] = function()
+                  if Rand.rnd(2) then
+                     return { dbid = 269 }
+                  end
+
+                  return nil
+               end
+            }
+         )
       },
       {
          name = "palmia",
@@ -157,6 +218,18 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          quest_town_id = 3,
+
+         chara_filter = chara_filter_town(
+            {
+               [1] = function()
+                  if Rand.rnd(3) then
+                     return { dbid = 274 }
+                  end
+
+                  return nil
+               end
+            }
+         )
       },
       {
          name = "derphy",
@@ -175,6 +248,23 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          quest_town_id = 4,
+
+         chara_filter = chara_filter_town(
+            {
+               [1] = function()
+                  if Rand.rnd(3) then
+                     return { dbid = 271 }
+                  elseif Rand.rnd(2) then
+                     return { dbid = 335 }
+                  end
+               end,
+
+               -- Thieves guild
+               [3] = function()
+                  return { dbid = 293 }
+               end
+            }
+         )
       },
       {
          name = "port_kapul",
@@ -193,6 +283,15 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          quest_town_id = 5,
+
+         chara_filter = chara_filter_town(
+            {
+               -- Fighters guild
+               [3] = function()
+                  return { dbid = 295 }
+               end
+            }
+         )
       },
       {
          name = "noyel",
@@ -213,6 +312,15 @@ data:add_multi(
          quest_town_id = 6,
 
          villagers_make_snowmen = true,
+         chara_filter = chara_filter_town(
+            {
+               [1] = function()
+                  if Rand.rnd(3) then
+                     return { dbid = 270 }
+                  end
+               end
+            }
+         )
       },
       {
          name = "lumiest",
@@ -231,6 +339,21 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
          quest_town_id = 7,
+
+         chara_filter = chara_filter_town(
+            {
+               [1] = function()
+                  if Rand.rnd(3) then
+                     return { dbid = 272 }
+                  end
+               end,
+
+               -- Mages guild
+               [3] = function()
+                  return { dbid = 289 }
+               end
+            }
+         )
       },
       {
          name = "fields",
@@ -375,6 +498,15 @@ data:add_multi(
 
          can_return_to = true,
          shows_floor_count_in_name = true,
+         chara_filter = function()
+            local opts = { objlv = Calc.calc_objlv(Map.current_dungeon_level()), quality = "Bad" }
+
+            if Map.current_dungeon_level() < 4 and opts.objlv > 5 then
+               opts.objlv = 5
+            end
+
+            return opts
+         end
       },
       {
          name = "the_void",
@@ -395,6 +527,9 @@ data:add_multi(
 
          can_return_to = true,
          prevents_domination = true,
+         chara_filter = function()
+            return { level = Math.modf(Map.current_dungeon_level(), 50) + 5, quality = "Bad" }
+         end
       },
       {
          name = "tower_of_fire",
@@ -412,6 +547,10 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         chara_filter = function()
+            return { level = Map.current_dungeon_level(), quality = "Bad", fltn = "fire" }
+         end
       },
       {
          name = "crypt_of_the_damned",
@@ -429,6 +568,10 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         chara_filter = function()
+            return { level = Map.current_dungeon_level(), quality = "Bad", fltn = "undead" }
+         end
       },
       {
          name = "ancient_castle",
@@ -446,6 +589,16 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         chara_filter = function()
+            local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
+
+            if Rand.rnd(2) then
+               opts.fltn = "man"
+            end
+
+            return opts
+         end
       },
       {
          name = "dragons_nest",
@@ -463,6 +616,10 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         chara_filter = function()
+            return { level = Map.current_dungeon_level(), quality = "Bad" }
+         end
       },
       {
          name = "mountain_pass",
@@ -514,6 +671,16 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         chara_filter = function()
+            local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
+
+            if Rand.rnd(2) then
+               opts.fltn = "mino"
+            end
+
+            return opts
+         end
       },
       {
          name = "yeeks_nest",
@@ -531,6 +698,16 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         chara_filter = function()
+            local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
+
+            if Rand.rnd(2) then
+               opts.fltn = "yeek"
+            end
+
+            return opts
+         end
       },
       {
          name = "pyramid",
@@ -550,6 +727,9 @@ data:add_multi(
          default_ai_calm = 0,
 
          prevents_teleport = true,
+         chara_filter = function()
+            return { level = Map.current_dungeon_level(), quality = "Bad", flttypemajor = 13 }
+         end
       },
       {
          name = "lumiest_graveyard",
@@ -567,6 +747,10 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         chara_filter = function()
+            return { level = 20, quality = "Bad", fltselect = 4 }
+         end
       },
       {
          name = "truce_ground",
@@ -584,6 +768,10 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         chara_filter = function()
+            return { level = 20, quality = "Bad", fltselect = 4 }
+         end
       },
       {
          name = "jail",
@@ -622,6 +810,10 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         chara_filter = function()
+            return { level = 10, quality = "Bad", fltn = "sf" }
+         end
       },
       {
          name = "larna",

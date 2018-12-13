@@ -1,4 +1,5 @@
 #pragma once
+#include "../../lua_env/wrapped_function.hpp"
 #include "../../mdata.hpp"
 #include "../../position.hpp"
 #include "../lua_lazy_cache.hpp"
@@ -35,6 +36,8 @@ struct MapDefData
     bool prevents_building_shelter{};
     bool prevents_random_events{};
     bool villagers_make_snowmen{};
+
+    optional<lua::WrappedFunction> chara_filter{};
 };
 
 ELONA_DEFINE_LUA_DB(MapDefDB, MapDefData, true, "core.map")
