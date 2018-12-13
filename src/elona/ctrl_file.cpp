@@ -1142,6 +1142,7 @@ void fmode_16()
 
     load_v3(
         fmapfile + u8".map", map, 0, map_data.width, 0, map_data.height, 0, 3);
+    cell_data.unpack_from(map);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
