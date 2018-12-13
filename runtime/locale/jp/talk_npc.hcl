@@ -432,7 +432,7 @@ locale {
                 choices {
                     where_is = "${basename(_1)}の居場所を聞く"
                     lost_wallet = "落し物の財布を届ける"
-                    lost_suitcase = "落し物のカバンを届ける。"
+                    lost_suitcase = "落し物のカバンを届ける"
                 }
 
                 where_is {

@@ -4467,7 +4467,7 @@ locale {
             name = "milk"
             description {
                 main {
-                    text = "Mil"
+                    text = "Milk"
                 }
             }
         }
