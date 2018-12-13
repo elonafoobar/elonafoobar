@@ -43,7 +43,6 @@ std::string key_check(KeyWaitDelay = KeyWaitDelay::always);
 std::string cursor_check_ex();
 std::string cursor_check_ex(int& index);
 std::string get_selected_item(int& p_);
-std::string get_selected_item(int& p_, int& index);
 optional<int> get_shortcut(const std::string& action);
 int yes_or_no(int x, int y, int width);
 bool is_modifier_pressed(snail::ModKey modifier);
