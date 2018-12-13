@@ -87,7 +87,7 @@ build_script:
   - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
   - cmake --build . --config %CONFIGURATION%
   - cd %CONFIGURATION%
-  - Elona_foobar.exe
+  - Elona_foobar.exe --durations=yes
   - cd %APPVEYOR_BUILD_FOLDER%\bin
   - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
   - cmake --build . --config %CONFIGURATION%
