@@ -344,7 +344,8 @@ std::string cursor_check_ex()
     return cursor_check_ex(index);
 }
 
-std::string get_selected_item(int& p_, int& index)
+
+std::string get_selected_item(int& p_)
 {
     if (msgalert == 1)
     {
@@ -352,6 +353,7 @@ std::string get_selected_item(int& p_, int& index)
         msgalert = 0;
     }
 
+    int index{};
     await(Config::instance().wait1);
     auto command = InputContext::for_menu().check_for_command_with_list(index);
 
@@ -364,11 +366,6 @@ std::string get_selected_item(int& p_, int& index)
     return command;
 }
 
-std::string get_selected_item(int& p_)
-{
-    int index{};
-    return get_selected_item(p_, index);
-}
 
 
 optional<int> get_shortcut(const std::string& action)
