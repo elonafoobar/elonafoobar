@@ -162,8 +162,8 @@ data:add_multi(
          chara_filter = chara_filter_town(
             {
                [1] = function()
-                  if Rand.rnd(2) then
-                     return { dbid = 273 }
+                  if Rand.one_in(2) then
+                     return { id = "core.miner" }
                   end
 
                   return nil
@@ -192,8 +192,8 @@ data:add_multi(
          chara_filter = chara_filter_town(
             {
                [1] = function()
-                  if Rand.rnd(2) then
-                     return { dbid = 269 }
+                  if Rand.one_in(2) then
+                     return { id = "core.farmer" }
                   end
 
                   return nil
@@ -222,8 +222,8 @@ data:add_multi(
          chara_filter = chara_filter_town(
             {
                [1] = function()
-                  if Rand.rnd(3) then
-                     return { dbid = 274 }
+                  if Rand.one_in(3) then
+                     return { id = "core.noble" }
                   end
 
                   return nil
@@ -252,16 +252,16 @@ data:add_multi(
          chara_filter = chara_filter_town(
             {
                [1] = function()
-                  if Rand.rnd(3) then
-                     return { dbid = 271 }
-                  elseif Rand.rnd(2) then
-                     return { dbid = 335 }
+                  if Rand.one_in(3) then
+                     return { id = "core.rogue" }
+                  elseif Rand.one_in(2) then
+                     return { id = "core.prostitute" }
                   end
                end,
 
                -- Thieves guild
                [3] = function()
-                  return { dbid = 293 }
+                  return { id = "core.thief_guild_member" }
                end
             }
          )
@@ -288,7 +288,7 @@ data:add_multi(
             {
                -- Fighters guild
                [3] = function()
-                  return { dbid = 295 }
+                  return { id = "core.fighter_guild_member" }
                end
             }
          )
@@ -315,8 +315,8 @@ data:add_multi(
          chara_filter = chara_filter_town(
             {
                [1] = function()
-                  if Rand.rnd(3) then
-                     return { dbid = 270 }
+                  if Rand.one_in(3) then
+                     return { id = "core.sister" }
                   end
                end
             }
@@ -343,14 +343,14 @@ data:add_multi(
          chara_filter = chara_filter_town(
             {
                [1] = function()
-                  if Rand.rnd(3) then
-                     return { dbid = 272 }
+                  if Rand.one_in(3) then
+                     return { id = "core.artist" }
                   end
                end,
 
                -- Mages guild
                [3] = function()
-                  return { dbid = 289 }
+                  return { id = "core.mage_guild_member" }
                end
             }
          )
@@ -593,7 +593,7 @@ data:add_multi(
          chara_filter = function()
             local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
 
-            if Rand.rnd(2) then
+            if Rand.one_in(2) then
                opts.fltn = "man"
             end
 
@@ -675,7 +675,7 @@ data:add_multi(
          chara_filter = function()
             local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
 
-            if Rand.rnd(2) then
+            if Rand.one_in(2) then
                opts.fltn = "mino"
             end
 
@@ -702,7 +702,7 @@ data:add_multi(
          chara_filter = function()
             local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
 
-            if Rand.rnd(2) then
+            if Rand.one_in(2) then
                opts.fltn = "yeek"
             end
 
