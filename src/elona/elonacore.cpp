@@ -39,6 +39,7 @@
 #include "log.hpp"
 #include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"

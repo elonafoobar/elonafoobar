@@ -14,6 +14,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"

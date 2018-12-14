@@ -10,33 +10,47 @@
 #include "../ui.hpp"
 #include "../util.hpp"
 #include "../variables.hpp"
+#include "api_manager.hpp"
 #include "lua_env.hpp"
+#include "mod_manager.hpp"
+
+
+
+namespace
+{
+
+constexpr const char* prompt_primary = "> ";
+constexpr const char* prompt_secondary = ">> ";
+constexpr const char* eof_mark = "<eof>";
+
+constexpr int max_scrollback_count = 1000;
+
+
+
+std::string _version_string()
+{
+    return u8"ver."s + latest_version.short_string() + " (" +
+        latest_version.revision + ") OS: " + latest_version.platform +
+        ", timestamp: " + latest_version.timestamp;
+}
+
+} // namespace
+
+
 
 namespace elona
 {
 namespace lua
 {
 
-static const std::string prompt_primary = ">";
-static const std::string prompt_secondary = ">>";
-static const std::string eof_mark = "<eof>";
-
-static constexpr int max_scrollback_count = 1000;
-
 LuaConsole::LuaConsole(LuaEnv* lua)
+    : _buf(max_scrollback_count)
+    , _input_history(max_scrollback_count)
+    , _lua(lua)
 {
-    _lua = lua;
-
-    _buf = buffer(max_scrollback_count);
-    _input_history = buffer(max_scrollback_count);
 }
 
-static std::string _version_string()
-{
-    return u8"ver."s + latest_version.short_string() + " (" +
-        latest_version.revision + ") OS: " + latest_version.platform +
-        ", timestamp: " + latest_version.timestamp;
-}
+
 
 void LuaConsole::init_constants()
 {
@@ -54,6 +68,8 @@ void LuaConsole::init_constants()
     print(u8"Elona_foobar debug console");
     print(_version_string());
 }
+
+
 
 void LuaConsole::init_environment()
 {
@@ -81,6 +97,8 @@ void LuaConsole::init_environment()
     });
 }
 
+
+
 void LuaConsole::set_constants(
     int char_width,
     int char_height,
@@ -95,9 +113,13 @@ void LuaConsole::set_constants(
     _max_lines = static_cast<size_t>(_height / _char_height);
 }
 
+
+
 /// Returns true on success.
 bool LuaConsole::run_userscript()
 {
+    // TODO: if Elona foobar is placed in a folder containing non-ASCII
+    // characters, it may cause some bug!
     auto result = _lua->get_state()->safe_script_file(
         filesystem::make_preferred_path_in_utf8(
             filesystem::dir::user() / "console.lua"),
@@ -113,9 +135,11 @@ bool LuaConsole::run_userscript()
     return true;
 }
 
+
+
 void LuaConsole::print_single_line(const std::string& line)
 {
-    if (line.size() == 0)
+    if (line.empty())
     {
         return;
     }
@@ -135,18 +159,22 @@ void LuaConsole::print_single_line(const std::string& line)
     _buf.push_back(line.substr(last_index, cut_index));
 }
 
+
+
 void LuaConsole::print(const std::string& message)
 {
-    if (message.size() == 0)
+    if (message.empty())
     {
         return;
     }
 
-    for (std::string line : strutil::split_lines(message))
+    for (const auto& line : strutil::split_lines(message))
     {
         print_single_line(line);
     }
 }
+
+
 
 void LuaConsole::draw()
 {
@@ -182,14 +210,13 @@ void LuaConsole::draw()
     {
         elona::pos(4, _char_height * (_max_lines - 1));
         font(inf_mesfont - en * 2);
-        mes((_is_multiline ? prompt_secondary : prompt_primary) + u8" "s +
-            _input + (_cursor_visible ? u8"|" : ""));
+        mes(prompt() + _input + (_cursor_visible ? u8"|" : ""));
     }
 
     // Scrollback counter
     if (_pos > 0)
     {
-        std::string line_count = std::to_string(_pos + _max_lines) + "/" +
+        const auto line_count = std::to_string(_pos + _max_lines) + "/" +
             std::to_string(_buf.size());
         elona::pos(windoww - (line_count.size() * _char_width), 0);
         font(inf_mesfont - en * 2);
@@ -199,108 +226,96 @@ void LuaConsole::draw()
     elona::color(0, 0, 0);
 }
 
-inline bool LuaConsole::is_incomplete_lua_line(const sol::error& error)
+
+
+bool LuaConsole::is_incomplete_lua_line(const sol::error& error)
 {
     return boost::algorithm::ends_with(error.what(), eof_mark);
 }
 
-bool LuaConsole::lua_error_handler(
-    const std::string& input,
-    const sol::protected_function_result pfr)
+
+
+const char* LuaConsole::prompt() const
 {
-    UNUSED(input);
-
-    bool multiline_ended = true;
-
-    if (pfr.status() == sol::call_status::syntax)
-    {
-        sol::error error = pfr;
-        if (is_incomplete_lua_line(error))
-        {
-            _is_multiline = true;
-            multiline_ended = false;
-        }
-        else
-        {
-            std::string mes =
-                "Error: "s + error.what(); // lang(u8"エラー: ", u8"Error: ") +
-                                           // error.what();
-            print(mes);
-        }
-    }
-    else
-    {
-        sol::error error = pfr;
-        std::string mes = "Error: "s +
-            error.what(); // lang(u8"エラー: ", u8"Error: ") + error.what();
-        print(mes);
-    }
-
-    return multiline_ended;
+    return _is_multiline ? prompt_secondary : prompt_primary;
 }
 
-/// Returns true if the Lua input is incomplete, and multiline input should be
-/// used.
+
+
+/// Returns true if the Lua input is incomplete, and multiline input should
+/// be used.
 bool LuaConsole::interpret_lua(const std::string& input)
 {
-    if (input == ""s)
+    if (input.empty())
     {
         return _is_multiline;
     }
 
-    bool multiline_ended = true;
-
-    // Print errors to the console instead of throwing.
-    auto handler = [this, &multiline_ended, &input](
-                       lua_State*, sol::protected_function_result pfr) {
-        multiline_ended = lua_error_handler(input, pfr);
-        return pfr;
-    };
-
     // First, try prepending "return" to the statement, ignoring errors.
-    auto result = lua::lua->get_state()->safe_script(
-        u8"return " + input, _console_mod->env, sol::script_pass_on_error);
+    auto load_result = lua::lua->get_state()->load("return " + input);
 
-    // If that fails, execute the original statement.
-    if (!result.valid())
+    // If that fails because of syntax error, execute the original statement.
+    if (load_result.status() == sol::load_status::syntax)
     {
-        result = lua::lua->get_state()->safe_script(
-            input, _console_mod->env, handler);
+        load_result = lua::lua->get_state()->load(input);
     }
 
-    if (result.valid())
+    if (!load_result.valid())
     {
-        // Bypass read-only metatable on mod environment
-        _console_mod->env.raw_set("_LAST_RESULT", result.get<sol::object>());
-
-        if (result.get<sol::object>() == sol::lua_nil)
+        sol::error error = load_result;
+        if (load_result.status() == sol::load_status::syntax &&
+            is_incomplete_lua_line(error))
         {
-            print("nil");
+            return true /* incomplete line; more input needed. */;
         }
         else
         {
-            auto as_string = _lua->get_state()->safe_script(
-                "return inspect(_LAST_RESULT)", _console_mod->env);
+            print("Error: "s + error.what());
+            return false /* some syntax error in this line. */;
+        }
+    }
+    else
+    {
+        // Run the parsed snippet.
+        sol::protected_function pfunc{load_result};
+        sol::protected_function_result prf = pfunc();
+        if (!prf.valid())
+        {
+            sol::error error = prf;
+            print("Error: "s + error.what());
+            return false /* panic during execution. */;
+        }
+        else
+        {
+            // Bypass read-only metatable on mod environment
+            _console_mod->env.raw_set("_LAST_RESULT", prf.get<sol::object>());
 
-            if (as_string.valid())
+            if (prf.get<sol::object>() == sol::lua_nil)
             {
-                print(as_string.get<std::string>());
+                print("nil");
             }
             else
             {
-                print("<Unknown result>");
+                auto as_string = _lua->get_state()->safe_script(
+                    "return inspect(_LAST_RESULT)", _console_mod->env);
+
+                if (as_string.valid())
+                {
+                    print(as_string.get<std::string>());
+                }
+                else
+                {
+                    print("<Unknown result>");
+                }
             }
+
+            update_slight();
+            return false /* successfully done. */;
         }
     }
-    else if (multiline_ended)
-    {
-        print("<Unknown result>");
-    }
-
-    update_slight();
-
-    return multiline_ended;
 }
+
+
 
 void LuaConsole::grab_input()
 {
@@ -430,9 +445,7 @@ void LuaConsole::grab_input()
         }
         else if (pressed(Key::key_c, ModKey::ctrl))
         {
-            print(
-                (_is_multiline ? prompt_secondary : prompt_primary) + u8" "s +
-                _input);
+            print(prompt() + _input);
             _multiline_input = "";
             _is_multiline = false;
             inputlog = "";
@@ -445,17 +458,16 @@ void LuaConsole::grab_input()
             _multiline_input += _input;
             if (_input != "")
             {
-                print(
-                    (_is_multiline ? prompt_secondary : prompt_primary) +
-                    u8" "s + _input);
+                print(prompt() + _input);
                 if (interpret_lua(_multiline_input))
                 {
-                    _multiline_input = "";
-                    _is_multiline = false;
+                    _multiline_input += "\n";
+                    _is_multiline = true;
                 }
                 else
                 {
-                    _multiline_input += "\n";
+                    _multiline_input = "";
+                    _is_multiline = false;
                 }
                 _input_history.push_back(_input);
                 history_index = -1;

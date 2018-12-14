@@ -1,4 +1,8 @@
 #include "lua_api_magic.hpp"
+#include "../../character.hpp"
+#include "../handle_manager.hpp"
+
+
 
 namespace elona
 {

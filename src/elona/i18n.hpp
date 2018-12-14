@@ -1,18 +1,22 @@
 #pragma once
 
-#include "../thirdparty/microhil/hil.hpp"
-#include "../thirdparty/sol2/sol.hpp"
-
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "../thirdparty/microhil/hil.hpp"
+#include "../thirdparty/sol2/sol.hpp"
+#include "character.hpp"
 #include "filesystem.hpp"
 #include "hcl.hpp"
+#include "item.hpp"
 #include "log.hpp"
+#include "lua_env/handle_manager.hpp"
+#include "lua_env/i18n_function_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "macro.hpp"
 #include "optional.hpp"
+
 
 
 using namespace std::literals::string_literals;
@@ -22,8 +26,6 @@ namespace elona
 
 using I18NKey = std::string;
 
-struct Character;
-struct Item;
 
 
 namespace i18n

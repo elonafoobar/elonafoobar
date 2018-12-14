@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "init.hpp"
 #include "log.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "save.hpp"
 #include "variables.hpp"

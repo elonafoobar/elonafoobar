@@ -1,13 +1,8 @@
 #pragma once
+
 #include "../../thirdparty/sol2/sol.hpp"
-#include "api_manager.hpp"
-#include "data_manager.hpp"
-#include "event_manager.hpp"
-#include "export_manager.hpp"
-#include "handle_manager.hpp"
-#include "i18n_function_manager.hpp"
-#include "lua_console.hpp"
-#include "mod_manager.hpp"
+
+
 
 namespace elona
 {
@@ -23,6 +18,8 @@ class I18NFunctionManager;
 class ModManager;
 class LuaConsole;
 
+
+
 /***
  * Main singleton encapsulating various Lua subsystems. Delegates
  * responsibility for specific Lua-related operations to invidual
@@ -32,6 +29,7 @@ class LuaEnv
 {
 public:
     explicit LuaEnv();
+    ~LuaEnv();
 
     /***
      * Returns a shared pointer to the Lua environment's internal Lua
@@ -118,6 +116,8 @@ private:
     std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
     std::unique_ptr<LuaConsole> lua_console;
 };
+
+
 
 extern std::unique_ptr<LuaEnv> lua;
 

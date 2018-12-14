@@ -1,6 +1,10 @@
 #include "lua_api_skill.hpp"
 #include "../../ability.hpp"
-#include "../../lua_env/enums/enums.hpp"
+#include "../../character.hpp"
+#include "../enums/enums.hpp"
+#include "../handle_manager.hpp"
+
+
 
 namespace elona
 {

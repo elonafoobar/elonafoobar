@@ -1,11 +1,15 @@
 #include "dialog_data.hpp"
 #include "../lua_env/config_table.hpp"
+#include "../lua_env/export_manager.hpp"
+#include "../lua_env/handle_manager.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../message.hpp"
 #include "../talk.hpp"
 #include "../ui/ui_menu_dialog.hpp"
 #include "../variables.hpp"
 #include "dialog_decoder.hpp"
+
+
 
 namespace elona
 {

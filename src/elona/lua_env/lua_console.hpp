@@ -6,6 +6,8 @@
 #include <boost/circular_buffer.hpp>
 #include "../../thirdparty/sol2/sol.hpp"
 
+
+
 namespace elona
 {
 namespace lua
@@ -13,6 +15,8 @@ namespace lua
 
 class LuaEnv;
 struct ModInfo;
+
+
 
 class LuaConsole
 {
@@ -35,18 +39,17 @@ public:
     void print(const std::string&);
     void grab_input();
 
+
 private:
     void set_constants(int char_width, int char_height, int width, int height);
 
     static bool is_incomplete_lua_line(const sol::error& error);
     void print_single_line(const std::string& line);
-    bool lua_error_handler(
-        const std::string&,
-        const sol::protected_function_result);
     bool interpret_lua(const std::string&);
     void input_loop();
     void read_line();
     void add_line(std::string);
+    const char* prompt() const;
 
     // Assumes the font is monospaced.
     int _char_width = 10;

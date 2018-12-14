@@ -6,7 +6,11 @@
 #include "../item.hpp"
 #include "../log.hpp"
 #include "../macro.hpp"
+#include "api_manager.hpp"
+#include "event_manager.hpp"
 #include "lua_env.hpp"
+
+
 
 namespace elona
 {
