@@ -35,6 +35,11 @@ create_from_id_xy(int, int, const std::string&);
 sol::optional<LuaCharacterHandle> generate_from_map();
 sol::optional<LuaCharacterHandle> generate_from_map_pos(const Position&);
 sol::optional<LuaCharacterHandle> generate_from_map_xy(int, int);
+sol::optional<LuaCharacterHandle> generate_from_map_id_pos(
+    const Position&,
+    const std::string&);
+sol::optional<LuaCharacterHandle>
+generate_from_map_id_xy(int, int, const std::string&);
 
 int kill_count(const std::string&);
 

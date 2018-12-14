@@ -28,7 +28,7 @@ local function create_charas(charas)
    for _, data in ipairs(charas) do
       local id, x, y, opts = table.unpack(data)
 
-      local count = opts["_count"] or 1
+      local count = (opts and opts["_count"]) or 1
 
       for i=0,count do
          local chara = Chara.create(x, y, id)
@@ -235,16 +235,16 @@ function maps.embassy(generator)
    Map.data.bgm = "core.mcRuin"
 
    local charas = {
-      { 173, 9, 2, { role = 1012, shop_rank = 10 } },
-      { 173, 15, 2, { role = 1012, shop_rank = 10 } },
-      { 173, 21, 2, { role = 1013, shop_rank = 10 } },
-      { 173, 3, 2, { role = 1013, shop_rank = 10 } },
-      { 16, -3, 0, { _count = 3, role = 4 } },
-      { 39, -3, 0, { _count = 3, role = 4 } },
-      { 77, 3, 9, { role = 14 } },
-      { 77, 9, 9, { role = 14 } },
-      { 77, 15, 9, { role = 14 } },
-      { 77, 21, 9, { role = 14 } },
+      { "core.sales_person", 9, 2, { role = 1012, shop_rank = 10 } },
+      { "core.sales_person", 15, 2, { role = 1012, shop_rank = 10 } },
+      { "core.sales_person", 21, 2, { role = 1013, shop_rank = 10 } },
+      { "core.sales_person", 3, 2, { role = 1013, shop_rank = 10 } },
+      { "core.citizen", -3, 0, { _count = 3, role = 4 } },
+      { "core.citizen2", -3, 0, { _count = 3, role = 4 } },
+      { "core.guard", 3, 9, { role = 14 } },
+      { "core.guard", 9, 9, { role = 14 } },
+      { "core.guard", 15, 9, { role = 14 } },
+      { "core.guard", 21, 9, { role = 14 } },
    }
 
    create_charas(charas)
@@ -394,7 +394,7 @@ function maps.larna(generator)
    Map.data.bgm = "core.mcRuin"
 
    local charas = {
-      { 41, 21, 23, { role = 21 } },
+      { "core.wizard", 21, 23, { role = 21 } },
       { "core.shopkeeper", 9, 44, { role = 1017, shop_rank = 5, _name = "core.locale.chara.job.dye_vendor" } },
       { "core.shopkeeper", 13, 37, { role = 1018, shop_rank = 30, _name = "core.locale.chara.job.souvenir_vendor" } },
       { "core.bartender", 24, 48, { role = 9 } },
@@ -483,10 +483,10 @@ local function initialize_rank_5_home()
       { "core.shopkeeper", 31, 20, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
       { "core.shopkeeper", 9, 20, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
       { "core.shopkeeper", 4, 20, { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
-      { 41, 4, 11, { role = 5 } },
-      { 70, 30, 11, { role = 9 } },
-      { 74, 30, 4, { role = 12 } },
-      { 41, 4, 4, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.wizard", 4, 11, { role = 5 } },
+      { "core.bartender", 30, 11, { role = 9 } },
+      { "core.healer", 30, 4, { role = 12 } },
+      { "core.wizard", 4, 4, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
    }
 
    create_charas(charas)
@@ -555,24 +555,24 @@ function maps.derphy(generator)
    generator.place_player()
 
    local charas = {
-      { 253, 23, 14, { role = 3 } },
-      { 259, 13, 18, { role = 3 } },
-      { 294, 16, 17, { role = 3 } },
-      { 1, 10, 17, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-      { 70, 15, 15, { role = 9 } },
-      { 1, 13, 3, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-      { 1, 29, 23, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 1, 26, 7, { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
-      { 1, 30, 4, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
-      { 1, 29, 4, { role = 17, _name = "core.locale.chara.job.slave_master" } },
-      { 1, 10, 6, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-      { 73, 7, 15, { role = 10 } },
-      { 38, 9, 18, { role = 6, _name = "core.locale.chara.job.of_derphy" } },
-      { 40, 13, 18, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 5, 26, { role = 5 } },
-      { 69, 3, 28, { role = 8 } },
-      { 16, -3, 0, { _count = 4, role = 4 } },
-      { 39, -3, 0, { _count = 4, role = 4 } },
+      { "core.marks", 23, 14, { role = 3 } },
+      { "core.noel", 13, 18, { role = 3 } },
+      { "core.abyss", 16, 17, { role = 3 } },
+      { "core.shopkeeper", 10, 17, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { "core.bartender", 15, 15, { role = 9 } },
+      { "core.shopkeeper", 13, 3, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { "core.shopkeeper", 29, 23, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { "core.shopkeeper", 26, 7, { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
+      { "core.shopkeeper", 30, 4, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
+      { "core.shopkeeper", 29, 4, { role = 17, _name = "core.locale.chara.job.slave_master" } },
+      { "core.shopkeeper", 10, 6, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { "core.arena_master", 7, 15, { role = 10 } },
+      { "core.elder", 9, 18, { role = 6, _name = "core.locale.chara.job.of_derphy" } },
+      { "core.trainer", 13, 18, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 5, 26, { role = 5 } },
+      { "core.informer", 3, 28, { role = 8 } },
+      { "core.citizen", -3, 0, { _count = 4, role = 4 } },
+      { "core.citizen2", -3, 0, { _count = 4, role = 4 } },
    }
 
    create_charas(charas)
@@ -598,13 +598,13 @@ function maps.thieves_guild(generator)
    generator.place_player()
 
    local charas = {
-      { 292, 21, 9, { role = 3, _name = "core.locale.chara.job.trainer" } },
-      { 40, 3, 6, { role = 7 } },
-      { 41, 3, 12, { role = 5 } },
-      { 1, 5, 18, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
-      { 1, 27, 13, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
-      { 1, 21, 19, { role = 1021, shop_rank = 10, _name = "core.locale.chara.job.fence" } },
-      { 293, -3, 0, { _count = 16 } },
+      { "core.sin", 21, 9, { role = 3, _name = "core.locale.chara.job.trainer" } },
+      { "core.trainer", 3, 6, { role = 7 } },
+      { "core.wizard", 3, 12, { role = 5 } },
+      { "core.shopkeeper", 5, 18, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
+      { "core.shopkeeper", 27, 13, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
+      { "core.shopkeeper", 21, 19, { role = 1021, shop_rank = 10, _name = "core.locale.chara.job.fence" } },
+      { "core.thief_guild_member", -3, 0, { _count = 16 } },
    }
 
    create_charas(charas)
@@ -619,45 +619,45 @@ function maps.palmia(generator)
    generator.place_player()
 
    local charas = {
-      { 70, 42, 27, { role = 9 } },
-      { 74, 34, 3, { role = 12 } },
-      { 73, 22, 31, { role = 10 } },
-      { 142, 5, 15, { role = 3 } },
-      { 247, 41, 11, { role = 3 } },
-      { 301, 5, 6, { role = 3 } },
-      { 320, 24, 6, { role = 3 } },
-      { 320, 15, 22, { role = 3 } },
-      { 326, 15, 22, { role = 3 } },
+      { "core.bartender", 42, 27, { role = 9 } },
+      { "core.healer", 34, 3, { role = 12 } },
+      { "core.arena_master", 22, 31, { role = 10 } },
+      { "core.erystia", 5, 15, { role = 3 } },
+      { "core.mia", 41, 11, { role = 3 } },
+      { "core.conery", 5, 6, { role = 3 } },
+      { "core.cleaner", 24, 6, { role = 3 } },
+      { "core.cleaner", 15, 22, { role = 3 } },
+      { "core.bard", 15, 22, { role = 3 } },
       -- TODO
       -- if (game_data.quest_flags.mias_dream == 1000)
       -- {
       --     { 246, 42, 11, { role = 3 } },
       -- }
-      { 1, 48, 18, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-      { 1, 30, 17, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 1, 48, 3, { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
-      { 1, 42, 17, { role = 1001, shop_rank = 12 } },
-      { 1, 11, 14, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
-      { 41, 41, 3, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-      { 1, 41, 28, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-      { 79, 7, 2, { role = 15, ai_calm = 3 } },
-      { 80, 6, 2, { role = 15, ai_calm = 3 } },
-      { 38, 49, 11, { role = 6, _name = "core.locale.chara.job.of_palmia" } },
-      { 40, 30, 27, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 32, 27, { role = 5 } },
-      { 69, 29, 28, { role = 8 } },
-      { 77, 16, 5, { role = 14, ai_calm = 3 } },
-      { 77, 16, 9, { role = 14, ai_calm = 3 } },
-      { 77, 5, 3, { role = 14, ai_calm = 3 } },
-      { 77, 8, 3, { role = 14, ai_calm = 3 } },
-      { 77, 35, 14, { role = 14, ai_calm = 3 } },
-      { 77, 38, 14, { role = 14, ai_calm = 3 } },
-      { 77, 29, 2, { role = 14, ai_calm = 3 } },
-      { 77, 19, 18, { role = 14, ai_calm = 3 } },
-      { 77, 22, 18, { role = 14, ai_calm = 3 } },
-      { 16, -3, 0, { _count = 5, role = 4 } },
-      { 39, -3, 0, { _count = 5, role = 4 } },
-      { 77, -3, 0, { _count = 4, role = 14 } },
+      { "core.shopkeeper", 48, 18, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { "core.shopkeeper", 30, 17, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { "core.shopkeeper", 48, 3, { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
+      { "core.shopkeeper", 42, 17, { role = 1001, shop_rank = 12 } },
+      { "core.shopkeeper", 11, 14, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { "core.wizard", 41, 3, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.shopkeeper", 41, 28, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { "core.stersha", 7, 2, { role = 15, ai_calm = 3 } },
+      { "core.xabi", 6, 2, { role = 15, ai_calm = 3 } },
+      { "core.elder", 49, 11, { role = 6, _name = "core.locale.chara.job.of_palmia" } },
+      { "core.trainer", 30, 27, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 32, 27, { role = 5 } },
+      { "core.informer", 29, 28, { role = 8 } },
+      { "core.guard", 16, 5, { role = 14, ai_calm = 3 } },
+      { "core.guard", 16, 9, { role = 14, ai_calm = 3 } },
+      { "core.guard", 5, 3, { role = 14, ai_calm = 3 } },
+      { "core.guard", 8, 3, { role = 14, ai_calm = 3 } },
+      { "core.guard", 35, 14, { role = 14, ai_calm = 3 } },
+      { "core.guard", 38, 14, { role = 14, ai_calm = 3 } },
+      { "core.guard", 29, 2, { role = 14, ai_calm = 3 } },
+      { "core.guard", 19, 18, { role = 14, ai_calm = 3 } },
+      { "core.guard", 22, 18, { role = 14, ai_calm = 3 } },
+      { "core.citizen", -3, 0, { _count = 5, role = 4 } },
+      { "core.citizen2", -3, 0, { _count = 5, role = 4 } },
+      { "core.guard", -3, 0, { _count = 4, role = 14 } },
    }
 
    create_charas(charas)
@@ -690,32 +690,34 @@ function maps.lumiest(generator)
    -- }
 
    local charas = {
-      { 252, 12, 24, { role = 3 } },
-      { 280, 21, 3, { role = 3 } },
-      { 290, 5, 20, { role = 3 } },
-      { 320, 28, 29, { role = 3 } },
-      { 326, 41, 19, { role = 3 } },
-      { 326, 32, 43, { role = 3 } },
-      { 326, 29, 28, { role = 3 } },
-      { 326, 16, 45, { role = 3 } },
-      { 326, 13, 24, { role = 3 } },
-      { 70, 41, 42, { role = 9 } },
-      { 74, 10, 16, { role = 12 } },
-      { 1, 47, 30, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-      { 1, 24, 47, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 1, 37, 30, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-      { 1, 37, 12, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
-      { 41, 6, 15, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-      { 1, 33, 43, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-      { 1, 47, 12, { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
-      { 38, 3, 38, { role = 6, _name = "core.locale.chara.job.of_lumiest" } },
-      { 40, 21, 28, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 21, 30, { role = 5 } },
-      { 69, 23, 38, { role = 8 } },
-      { 16, -3, 0, { _count = 6, role = 4 } },
-      { 39, -3, 0, { _count = 6, role = 4 } },
-      { 77, -3, 0, { _count = 7, role = 14 } },
+      { "core.renton", 12, 24, { role = 3 } },
+      { "core.balzak", 21, 3, { role = 3 } },
+      { "core.lexus", 5, 20, { role = 3 } },
+      { "core.cleaner", 28, 29, { role = 3 } },
+      { "core.bard", 41, 19, { role = 3 } },
+      { "core.bard", 32, 43, { role = 3 } },
+      { "core.bard", 29, 28, { role = 3 } },
+      { "core.bard", 16, 45, { role = 3 } },
+      { "core.bard", 13, 24, { role = 3 } },
+      { "core.bartender", 41, 42, { role = 9 } },
+      { "core.healer", 10, 16, { role = 12 } },
+      { "core.shopkeeper", 47, 30, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { "core.shopkeeper", 24, 47, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { "core.shopkeeper", 37, 30, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { "core.shopkeeper", 37, 12, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { "core.wizard", 6, 15, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.shopkeeper", 33, 43, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { "core.shopkeeper", 47, 12, { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
+      { "core.elder", 3, 38, { role = 6, _name = "core.locale.chara.job.of_lumiest" } },
+      { "core.trainer", 21, 28, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 21, 30, { role = 5 } },
+      { "core.informer", 23, 38, { role = 8 } },
+      { "core.citizen", -3, 0, { _count = 6, role = 4 } },
+      { "core.citizen2", -3, 0, { _count = 6, role = 4 } },
+      { "core.guard", -3, 0, { _count = 7, role = 14 } },
    }
+
+   create_charas(charas)
 
    generator.update_quests_in_map()
 
@@ -738,19 +740,19 @@ function maps.mages_guild(generator)
    generator.place_player()
 
    local charas = {
-      { 288, 24, 3, { role = 3 } },
-      { 41, 27, 8, { role = 1020, _name = "core.locale.chara.job.spell_writer" } },
-      { 41, 22, 8, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-      { 74, 3, 9, { role = 12 } },
-      { 40, 12, 6, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 3, 3, { role = 5 } },
-      { 289, -3, 0, { _count = 16 } },
+      { "core.revlus", 24, 3, { role = 3 } },
+      { "core.wizard", 27, 8, { role = 1020, _name = "core.locale.chara.job.spell_writer" } },
+      { "core.wizard", 22, 8, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.healer", 3, 9, { role = 12 } },
+      { "core.trainer", 12, 6, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 3, 3, { role = 5 } },
+      { "core.mage_guild_member", -3, 0, { _count = 16 } },
    }
 
    create_charas(charas)
 end
 
-function map.lumiest_sewer(generator)
+function maps.lumiest_sewer(generator)
    generator.load_custom("sqSewer")
 
    Map.data.tileset = 0
@@ -767,7 +769,7 @@ function map.lumiest_sewer(generator)
    generator.place_player()
 end
 
-function map.yowyn(generator)
+function maps.yowyn(generator)
    generator.load_custom("yowyn")
    Map.data.max_crowd_density = 35
    Map.data.is_user_map = false
@@ -781,26 +783,26 @@ function map.yowyn(generator)
    -- }
 
    local charas = {
-      { 224, 3, 17, { role = 3 } },
-      { 227, 26, 11, { role = 3 } },
-      { 231, 14, 20, { role = 3 } },
-      { 1, 11, 5, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-      { 1, 25, 8, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 1, 7, 8, { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
-      { 1, 14, 14, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-      { 1, 35, 18, { role = 22, _name = "core.locale.chara.job.horse_master" } },
-      { 267, 33, 16, { role = 3 } },
-      { 267, 37, 19, { role = 3 } },
-      { 268, 34, 19, { role = 3 } },
-      { 268, 38, 16, { role = 3 } },
-      { 38, 3, 4, { role = 6, _name = "core.locale.chara.job.of_yowyn" } },
-      { 40, 20, 14, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 24, 16, { role = 5 } },
-      { 69, 26, 16, { role = 8 } },
-      { 213, 14, 12, { role = 3 } },
-      { 16, -3, 0, { _count = 2, role = 4 } },
-      { 39, -3, 0, { _count = 2, role = 4 } },
-      { 77, -3, 0, { _count = 3, role = 14 } },
+      { "core.ainc", 3, 17, { role = 3 } },
+      { "core.tam", 26, 11, { role = 3 } },
+      { "core.gilbert_the_colonel", 14, 20, { role = 3 } },
+      { "core.shopkeeper", 11, 5, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { "core.shopkeeper", 25, 8, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { "core.shopkeeper", 7, 8, { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
+      { "core.shopkeeper", 14, 14, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { "core.shopkeeper", 35, 18, { role = 22, _name = "core.locale.chara.job.horse_master" } },
+      { "core.lame_horse", 33, 16, { role = 3 } },
+      { "core.lame_horse", 37, 19, { role = 3 } },
+      { "core.yowyn_horse", 34, 19, { role = 3 } },
+      { "core.yowyn_horse", 38, 16, { role = 3 } },
+      { "core.elder", 3, 4, { role = 6, _name = "core.locale.chara.job.of_yowyn" } },
+      { "core.trainer", 20, 14, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 24, 16, { role = 5 } },
+      { "core.informer", 26, 16, { role = 8 } },
+      { "core.gwen", 14, 12, { role = 3 } },
+      { "core.citizen", -3, 0, { _count = 2, role = 4 } },
+      { "core.citizen2", -3, 0, { _count = 2, role = 4 } },
+      { "core.guard", -3, 0, { _count = 3, role = 14 } },
    }
 
    create_charas(charas)
@@ -880,32 +882,32 @@ function maps.noyel(generator)
 
    local charas = {
       -- TODO
-      { 202, 46, 18, { role = 3 } },
+      { "core.ebon", 46, 18, { role = 3 } },
       -- game_data.fire_giant = rc
-      { 203, 47, 18, { role = 1015 } },
-      { 35, 47, 20, { role = 3 } },
-      { 35, 45, 19, { role = 3 } },
-      { 35, 49, 20, { role = 3 } },
-      { 326, 28, 22, { role = 3 } },
-      { 221, 19, 3, { role = 3 } },
+      { "core.ebon_the_crooked", 47, 18, { role = 1015 } },
+      { "core.town_child", 47, 20, { role = 3 } },
+      { "core.town_child", 45, 19, { role = 3 } },
+      { "core.town_child", 49, 20, { role = 3 } },
+      { "core.bard", 28, 22, { role = 3 } },
+      { "core.pael", 19, 3, { role = 3 } },
       -- TODO
       -- if (game_data.quest_flags.pael_and_her_mom != 1001)
       -- {
       --     { 222, 19, 2, { role = 3 } },
       -- }
-      { 70, 40, 33, { role = 9 } },
-      { 74, 44, 6, { role = 12 } },
-      { 206, 44, 3, { role = 19 } },
-      { 1, 19, 31, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-      { 1, 11, 31, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-      { 1, 38, 34, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 1, 5, 27, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
-      { 41, 56, 5, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-      { 1, 39, 35, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-      { 38, 5, 18, { role = 6, _name = "core.locale.chara.job.of_noyel" } },
-      { 40, 18, 20, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 4, 33, { role = 5 } },
-      { 69, 6, 33, { role = 8 } },
+      { "core.bartender", 40, 33, { role = 9 } },
+      { "core.healer", 44, 6, { role = 12 } },
+      { "core.nun", 44, 3, { role = 19 } },
+      { "core.shopkeeper", 19, 31, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { "core.shopkeeper", 11, 31, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { "core.shopkeeper", 38, 34, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { "core.shopkeeper", 5, 27, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { "core.wizard", 56, 5, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.shopkeeper", 39, 35, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { "core.elder", 5, 18, { role = 6, _name = "core.locale.chara.job.of_noyel" } },
+      { "core.trainer", 18, 20, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 4, 33, { role = 5 } },
+      { "core.informer", 6, 33, { role = 8 } },
    }
 
    create_charas(charas)
@@ -913,24 +915,24 @@ function maps.noyel(generator)
    local chara
 
    for i=0,3 do
-      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 16)
+      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), "core.citizen")
       chara.role = 4
-      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 39)
+      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), "core.citizen2")
       chara.role = 4
    end
    for i=0,3 do
-      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 77)
+      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), "core.guard")
       chara.role = 14
    end
 
    generator.update_quests_in_map()
 
    for i=0,8 do
-      chara = Chara.generate_from_map(Rand.rnd(11) + 25, Rand.rnd(5) + 15, 35)
+      chara = Chara.generate_from_map(Rand.rnd(11) + 25, Rand.rnd(5) + 15, "core.town_child")
       chara.role = 3
    end
    for i=0,20 do
-      chara = Chara.generate_from_map(Rand.rnd(55), Rand.rnd(Map.height()))
+      Chara.generate_from_map(Rand.rnd(55), Rand.rnd(Map.height()))
    end
 end
 
@@ -943,36 +945,38 @@ function maps.port_kapul(generator)
    generator.place_player()
 
    local charas = {
-      { 223, 15, 18, { role = 3 } },
-      { 243, 36, 27, { role = 3 } },
-      { 279, 5, 26, { role = 3 } },
-      { 297, 29, 3, { role = 3 } },
-      { 320, 24, 21, { role = 3 } },
-      { 320, 12, 26, { role = 3 } },
-      { 320, 8, 11, { role = 3 } },
-      { 326, 8, 14, { role = 3 } },
+      { "core.raphael", 15, 18, { role = 3 } },
+      { "core.arnord", 36, 27, { role = 3 } },
+      { "core.icolle", 5, 26, { role = 3 } },
+      { "core.doria", 29, 3, { role = 3 } },
+      { "core.cleaner", 24, 21, { role = 3 } },
+      { "core.cleaner", 12, 26, { role = 3 } },
+      { "core.cleaner", 8, 11, { role = 3 } },
+      { "core.bard", 8, 14, { role = 3 } },
       { "core.shopkeeper", 16, 17, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
       { "core.shopkeeper", 23, 7, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
       { "core.shopkeeper", 32, 14, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
       { "core.shopkeeper", 22, 14, { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
       { "core.shopkeeper", 16, 25, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
       { "core.shopkeeper", 17, 28, { role = 1002, shop_rank = 10, _name = "core.locale.chara.job.food_vendor" } },
-      { 41, 22, 22, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.wizard", 22, 22, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
       { "core.shopkeeper", 35, 3, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 70, 15, 15, { role = 9 } },
-      { 73, 26, 3, { role = 10 } },
-      { 179, 25, 4, { role = 11 } },
-      { 38, 8, 12, { role = 6, _name = "core.locale.chara.job.of_port_kapul" } },
-      { 40, 16, 4, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 14, 4, { role = 5 } },
-      { 69, 17, 5, { role = 8 } },
-      { 74, 27, 11, { role = 12 } },
-      { 16, -3, 0, { _count = 2, role = 4 } },
-      { 39, -3, 0, { _count = 2, role = 4 } },
-      { 71, -3, 0, { _count = 4, role = 4 } },
-      { 76, -3, 0, { _count = 5, role = 14 } },
-      { 72, 7, 6, { role = 4 } },
+      { "core.bartender", 15, 15, { role = 9 } },
+      { "core.arena_master", 26, 3, { role = 10 } },
+      { "core.master_of_pet_arena", 25, 4, { role = 11 } },
+      { "core.elder", 8, 12, { role = 6, _name = "core.locale.chara.job.of_port_kapul" } },
+      { "core.trainer", 16, 4, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 14, 4, { role = 5 } },
+      { "core.informer", 17, 5, { role = 8 } },
+      { "core.healer", 27, 11, { role = 12 } },
+      { "core.citizen", -3, 0, { _count = 2, role = 4 } },
+      { "core.citizen2", -3, 0, { _count = 2, role = 4 } },
+      { "core.sailor", -3, 0, { _count = 4, role = 4 } },
+      { "core.guard_port_kapul", -3, 0, { _count = 5, role = 14 } },
+      { "core.captain", 7, 6, { role = 4 } },
    }
+
+   create_charas(charas)
 
    generator.update_quests_in_map()
 
@@ -995,12 +999,12 @@ function maps.fighters_guild(generator)
    generator.place_player()
 
    local charas = {
-      { 291, 27, 4, { role = 3 } },
-      { 74, 28, 10, { role = 12 } },
-      { 40, 15, 10, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 41, 14, 18, { role = 5 } },
-      { 1, 29, 15, { role = 1001, shop_rank = 12, "core.locale.chara.job.armory" } },
-      { 295, -3, 0 },
+      { "core.fray", 27, 4, { role = 3 } },
+      { "core.healer", 28, 10, { role = 12 } },
+      { "core.trainer", 15, 10, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.wizard", 14, 18, { role = 5 } },
+      { "core.shopkeeper", 29, 15, { role = 1001, shop_rank = 12, "core.locale.chara.job.armory" } },
+      { "core.fighter_guild_member", -3, 0, { _count = 16 } },
    }
 
    create_charas(charas)
@@ -1024,7 +1028,7 @@ function maps.doom_ground(generator)
    generator.place_player()
 
    for i=0, 10 do
-      local chara = Chara.create(204, Chara.player().position, 204)
+      local chara = Chara.create(Chara.player().position, "core.palmian_elite_soldier")
       chara.relationship = "Friend"
       chara.original_relationship = "Friend"
    end
@@ -1047,35 +1051,37 @@ function maps.vernis(generator)
    -- }
 
    local charas = {
-      { 28, 39, 3 },
-      { 29, 42, 23, { role = 3 } },
-      { 30, 24, 5, { role = 3 } },
-      { 31, 40, 24, { role = 3 } },
-      { 32, 40, 25, { role = 3 } },
-      { 226, 30, 5, { role = 3 } },
-      { 326, 42, 24, { role = 3 } },
+      { "core.whom_dwell_in_the_vanity", 39, 3 },
+      { "core.loyter", 42, 23, { role = 3 } },
+      { "core.miches", 24, 5, { role = 3 } },
+      { "core.shena", 40, 24, { role = 3 } },
+      { "core.dungeon_cleaner", 40, 25, { role = 3 } },
+      { "core.rilian", 30, 5, { role = 3 } },
+      { "core.bard", 42, 24, { role = 3 } },
       -- TODO
       -- if (game_data.quest_flags.puppys_cave == 1000)
       -- {
       --     { 225, 31, 4, { role = 3 } },
       -- }
-      { 1, 47, 9, { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
-      { 1, 14, 12, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-      { 1, 39, 27, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-      { 1, 10, 15, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-      { 41, 7, 26, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-      { 1, 14, 25, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 1, 22, 26, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
-      { 41, 28, 16, { role = 5 } },
-      { 70, 38, 27, { role = 9 } },
-      { 74, 6, 25, { role = 12 } },
-      { 38, 10, 7, { role = 6, _name = "core.locale.chara.job.of_vernis" } },
-      { 40, 27, 16, { role = 7, _name = "core.locale.chara.job.trainer" } },
-      { 69, 25, 16, { role = 8 } },
-      { 16, -3, 0, { _count = 4, role = 4 } },
-      { 39, -3, 0, { _count = 4, role = 4 } },
-      { 77, -3, 0, { _count = 4, role = 14 } },
+      { "core.shopkeeper", 47, 9, { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
+      { "core.shopkeeper", 14, 12, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { "core.shopkeeper", 39, 27, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { "core.shopkeeper", 10, 15, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { "core.wizard", 7, 26, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.shopkeeper", 14, 25, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { "core.shopkeeper", 22, 26, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { "core.wizard", 28, 16, { role = 5 } },
+      { "core.bartender", 38, 27, { role = 9 } },
+      { "core.healer", 6, 25, { role = 12 } },
+      { "core.elder", 10, 7, { role = 6, _name = "core.locale.chara.job.of_vernis" } },
+      { "core.trainer", 27, 16, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { "core.informer", 25, 16, { role = 8 } },
+      { "core.citizen", -3, 0, { _count = 4, role = 4 } },
+      { "core.citizen2", -3, 0, { _count = 4, role = 4 } },
+      { "core.guard", -3, 0, { _count = 4, role = 14 } },
    }
+
+   create_charas(charas)
 
    generator.update_quests_in_map()
 
@@ -1255,12 +1261,12 @@ function maps.lesimas(generator)
    generator.generate_nefia()
 
    if Map.current_dungeon_level() == 3 then
-      local chara = Chara.create(Chara.player().position, 139)
+      local chara = Chara.create(Chara.player().position, "core.slan")
       chara.role = 3
       chara.ai_calm = 3
    end
    if Map.current_dungeon_level() == 17 then
-      local chara = Chara.create(Chara.player().position, 146)
+      local chara = Chara.create(Chara.player().position, "core.karam")
       chara.role = 3
       chara.ai_calm = 3
    end
