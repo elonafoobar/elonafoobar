@@ -77,6 +77,13 @@ int LuaApiMap::instance_id()
     return game_data.current_map;
 }
 
+
+/**
+ * @luadoc
+ *
+ * Returns the current dungeon level.
+ * TODO: unify with World.data or Map.data
+ */
 int LuaApiMap::current_dungeon_level()
 {
     return game_data.current_dungeon_level;

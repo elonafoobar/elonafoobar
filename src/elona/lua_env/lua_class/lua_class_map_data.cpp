@@ -46,7 +46,8 @@ void LuaMapData::bind(sol::state& lua)
      * [R] The current dungeon level of this map.
      */
     LuaMapData.set(
-        "current_dungeon_level", sol::readonly(&MapData::max_crowd_density));
+        "current_dungeon_level",
+        sol::readonly(&MapData::current_dungeon_level));
 
     /**
      * @luadoc tileset field num
@@ -190,10 +191,38 @@ void LuaMapData::bind(sol::state& lua)
             [](MapData& d) { return d.indoors_flag == 1; },
             [](MapData& d, bool flag) { d.indoors_flag = flag ? 1 : 2; }));
     LuaMapData.set(
-        "is_indoors",
+        "is_user_map",
         sol::property(
-            [](MapData& d) { return d.indoors_flag == 1; },
-            [](MapData& d, bool flag) { d.indoors_flag = flag ? 1 : 2; }));
+            [](MapData& d) { return d.user_map_flag == 1; },
+            [](MapData& d, bool flag) { d.user_map_flag = flag ? 1 : 0; }));
+    LuaMapData.set(
+        "play_campfire_sound",
+        sol::property(
+            [](MapData& d) { return d.play_campfire_sound == 1; },
+            [](MapData& d, bool flag) {
+                d.play_campfire_sound = flag ? 1 : 0;
+            }));
+    LuaMapData.set(
+        "bgm",
+        sol::property(
+            [](MapData& d) {
+                auto id = the_music_db.get_id_from_legacy(d.bgm);
+                if (!id)
+                {
+                    return ""s;
+                }
+
+                return id->get();
+            },
+            [](MapData& d, const std::string& s) {
+                auto data = the_music_db[s];
+                if (!data)
+                {
+                    return;
+                }
+
+                d.bgm = data->id;
+            }));
 
     /**
      * @luadoc bgm field core.music

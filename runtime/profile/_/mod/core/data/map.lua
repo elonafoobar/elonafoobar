@@ -6,6 +6,17 @@ local table = Elona.require("table")
 
 local maps = require "data/mapgen/static"
 
+local function generator_town(callbacks)
+   return function(generator)
+      local level = Map.current_dungeon_level()
+      local callback = callbacks[level]
+
+      if callback then
+         callback(generator)
+      end
+   end
+end
+
 local function chara_filter_town(callbacks)
    return function()
       local opts = { level = 10, quality = "Bad", fltselect = 5 }
@@ -173,18 +184,21 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 1,
 
-         generator = maps.vernis,
-         chara_filter = chara_filter_town(
-            {
-               [1] = function()
-                  if Rand.one_in(2) then
-                     return { id = "core.miner" }
-                  end
-
-                  return nil
+         generator = generator_town {
+            [1] = maps.vernis,
+            [3] = maps.the_mine,
+            [4] = maps.robbers_hideout,
+            [5] = maps.test_site_vernis,
+         },
+         chara_filter = chara_filter_town {
+            [1] = function()
+               if Rand.one_in(2) then
+                  return { id = "core.miner" }
                end
-            }
-         )
+
+               return nil
+            end
+         }
       },
       {
          name = "yowyn",
@@ -204,18 +218,20 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 2,
 
-         generator = maps.yowyn,
-         chara_filter = chara_filter_town(
-            {
-               [1] = function()
-                  if Rand.one_in(2) then
-                     return { id = "core.farmer" }
-                  end
-
-                  return nil
+         generator = generator_town {
+            [1] = maps.yowyn,
+            [3] = maps.cat_mansion,
+            [4] = maps.battle_field,
+         },
+         chara_filter = chara_filter_town {
+            [1] = function()
+               if Rand.one_in(2) then
+                  return { id = "core.farmer" }
                end
-            }
-         )
+
+               return nil
+            end
+         }
       },
       {
          name = "palmia",
@@ -236,17 +252,15 @@ data:add_multi(
          quest_town_id = 3,
 
          generator = maps.palmia,
-         chara_filter = chara_filter_town(
-            {
-               [1] = function()
-                  if Rand.one_in(3) then
-                     return { id = "core.noble" }
-                  end
-
-                  return nil
+         chara_filter = chara_filter_town {
+            [1] = function()
+               if Rand.one_in(3) then
+                  return { id = "core.noble" }
                end
-            }
-         )
+
+               return nil
+            end
+         }
       },
       {
          name = "derphy",
@@ -266,23 +280,25 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 4,
 
-         generator = maps.derphy,
-         chara_filter = chara_filter_town(
-            {
-               [1] = function()
-                  if Rand.one_in(3) then
-                     return { id = "core.rogue" }
-                  elseif Rand.one_in(2) then
-                     return { id = "core.prostitute" }
-                  end
-               end,
+         generator = generator_town {
+            [1] = maps.derphy,
+            [3] = maps.thieves_guild,
+         },
+         chara_filter = chara_filter_town {
+            [1] = function()
+               if Rand.one_in(3) then
+                  return { id = "core.rogue" }
+               elseif Rand.one_in(2) then
+                  return { id = "core.prostitute" }
+               end
+            end,
 
                -- Thieves guild
                [3] = function()
                   return { id = "core.thief_guild_member" }
                end
             }
-         )
+
       },
       {
          name = "port_kapul",
@@ -302,15 +318,17 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 5,
 
-         generator = maps.port_kapul,
-         chara_filter = chara_filter_town(
-            {
-               -- Fighters guild
-               [3] = function()
-                  return { id = "core.fighter_guild_member" }
-               end
-            }
-         )
+         generator = generator_town {
+            [1] = maps.port_kapul,
+            [3] = maps.fighters_guild,
+            [25] = maps.doom_ground,
+         },
+         chara_filter = chara_filter_town {
+            -- Fighters guild
+            [3] = function()
+               return { id = "core.fighter_guild_member" }
+            end
+         }
       },
       {
          name = "noyel",
@@ -332,15 +350,13 @@ data:add_multi(
 
          generator = maps.noyel,
          villagers_make_snowmen = true,
-         chara_filter = chara_filter_town(
-            {
-               [1] = function()
-                  if Rand.one_in(3) then
-                     return { id = "core.sister" }
-                  end
+         chara_filter = chara_filter_town {
+            [1] = function()
+               if Rand.one_in(3) then
+                  return { id = "core.sister" }
                end
-            }
-         )
+            end
+         }
       },
       {
          name = "lumiest",
@@ -360,21 +376,23 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 7,
 
-         generator = maps.lumiest,
-         chara_filter = chara_filter_town(
-            {
-               [1] = function()
-                  if Rand.one_in(3) then
-                     return { id = "core.artist" }
-                  end
-               end,
-
-               -- Mages guild
-               [3] = function()
-                  return { id = "core.mage_guild_member" }
+         generator = generator_town {
+            [1] = maps.lumiest,
+            [3] = maps.mages_guild,
+            [20] = maps.sewer,
+         },
+         chara_filter = chara_filter_town {
+            [1] = function()
+               if Rand.one_in(3) then
+                  return { id = "core.artist" }
                end
-            }
-         )
+            end,
+
+            -- Mages guild
+            [3] = function()
+               return { id = "core.mage_guild_member" }
+            end
+         }
       },
       {
          name = "fields",
@@ -1065,20 +1083,20 @@ data:add_multi(
 
 local function player_owned(opts)
    local new_opts = {
-         is_home = true,
+      is_home = true,
 
-         -- Dummy; they are overwritten when you build the building.
-         map_type = "PlayerOwned",
-         outer_map = 0,
-         outer_map_position = { x = 0, y = 0 },
-         entrance_type = "South",
-         tile_set = "Normal",
-         tile_type = 3,
-         base_turn_cost = 10000,
-         danger_level = 1,
-         deepest_level = 1,
-         is_generated_every_time = false,
-         default_ai_calm = 0,
+      -- Dummy; they are overwritten when you build the building.
+      map_type = "PlayerOwned",
+      outer_map = 0,
+      outer_map_position = { x = 0, y = 0 },
+      entrance_type = "South",
+      tile_set = "Normal",
+      tile_type = 3,
+      base_turn_cost = 10000,
+      danger_level = 1,
+      deepest_level = 1,
+      is_generated_every_time = false,
+      default_ai_calm = 0,
    }
 
    return table.merge(new_opts, opts)

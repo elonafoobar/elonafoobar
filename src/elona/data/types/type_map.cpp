@@ -69,7 +69,6 @@ MapDefData MapDefDB::convert(
                       is_generated_every_time,
                       default_ai_calm,
                       quest_town_id,
-                      deed,
 
                       can_return_to,
                       is_fixed,
@@ -82,6 +81,7 @@ MapDefData MapDefDB::convert(
                       prevents_building_shelter,
                       prevents_random_events,
                       villagers_make_snowmen,
+                      deed,
 
                       generator,
                       chara_filter};

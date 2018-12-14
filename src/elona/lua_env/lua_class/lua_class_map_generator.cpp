@@ -1,8 +1,10 @@
 #include "lua_class_map_generator.hpp"
+#include "../../area.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"
 #include "../../mapgen.hpp"
 #include "../../position.hpp"
+#include "../../quest.hpp"
 
 namespace elona
 {
@@ -110,11 +112,9 @@ void LuaMapGenerator::bind(sol::state& lua)
     auto LuaMapGenerator = lua.create_simple_usertype<MapGenerator>();
 
     LuaMapGenerator.set(
-        "stood_world_map_tile",
-        sol::readonly(&LuaMapGenerator::stood_world_map_tile));
+        "stood_world_map_tile", &LuaMapGenerator::stood_world_map_tile);
     LuaMapGenerator.set(
-        "is_first_generation",
-        sol::readonly(&LuaMapGenerator::is_first_generation));
+        "is_first_generation", &LuaMapGenerator::is_first_generation);
 
     LuaMapGenerator.set("create", &LuaMapGenerator::create);
     LuaMapGenerator.set("load_custom", &LuaMapGenerator::load_custom);

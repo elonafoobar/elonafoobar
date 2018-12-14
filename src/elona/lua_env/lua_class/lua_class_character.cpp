@@ -719,6 +719,13 @@ void LuaCharacter::bind(sol::state& lua)
      */
     LuaCharacter.set("interest", &Character::interest);
 
+    /**
+     * @luadoc interest field num
+     *
+     * [RW] The character's AI calmness.
+     */
+    LuaCharacter.set("ai_calm", &Character::ai_calm);
+
 
     /**
      * @luadoc id field string

@@ -29,8 +29,6 @@ int instance_id();
 
 int current_dungeon_level();
 
-MapData* data();
-
 bool is_overworld();
 
 bool valid(const Position&);
