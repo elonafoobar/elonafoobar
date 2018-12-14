@@ -203,6 +203,16 @@ void LuaMapData::bind(sol::state& lua)
                 d.play_campfire_sound = flag ? 1 : 0;
             }));
     LuaMapData.set(
+        "should_restock",
+        sol::property(
+            [](MapData& d) { return d.should_regenerate == 0; },
+            [](MapData& d, bool flag) { d.should_regenerate = flag ? 0 : 1; }));
+    LuaMapData.set(
+        "is_temporary",
+        sol::property(
+            [](MapData& d) { return d.refresh_type == 0; },
+            [](MapData& d, bool flag) { d.refresh_type = flag ? 0 : 1; }));
+    LuaMapData.set(
         "bgm",
         sol::property(
             [](MapData& d) {

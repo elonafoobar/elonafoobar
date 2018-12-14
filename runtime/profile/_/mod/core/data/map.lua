@@ -37,16 +37,20 @@ local function chara_filter_town(callbacks)
 end
 
 --[[
-   chara_filter:
-   a function that returns a table with any of the following properties:
-   id: string ID of the character to generate
-   level: approximate level of the character to generate
-   quality: approximate quality of the character to generate
-   objlv: exact level of the character to generate
-   fixlv: exact quality of the character to generate
-   fltn: filter, to be used with fltn()
-   fltselect: ?
-   flttypemajor: ?
+  chara_filter:
+    a function that returns a table with any of the following properties:
+    id: string ID of the character to generate
+    level: approximate level of the character to generate
+    quality: approximate quality of the character to generate
+    objlv: exact level of the character to generate
+    fixlv: exact quality of the character to generate
+    fltn: filter, to be used with fltn()
+    fltselect: ?
+    flttypemajor: ?
+   generator:
+    a function taking an object of type LuaMapGenerator which
+    generates the map. See the mapgen/ folder for examples.
+
 ]]
 data:define_type("map")
 data:add_multi(

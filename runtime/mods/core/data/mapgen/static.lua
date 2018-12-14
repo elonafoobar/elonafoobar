@@ -30,7 +30,7 @@ local function create_charas(charas)
 
       local count = (opts and opts["_count"]) or 1
 
-      for i=0,count do
+      for i=1,count do
          local chara = Chara.create(x, y, id)
 
          if opts then
@@ -49,7 +49,7 @@ end
 function maps.shelter(generator)
    if Map.current_dungeon_level() == 1 then
       generator.load_custom("shelter_2")
-      Map.data.refresh_type = 0
+      Map.data.is_temporary = true
       Map.data.type = "Shelter"
    else
       generator.load_custom("shelter_1")
@@ -63,11 +63,10 @@ function maps.shelter(generator)
    generator.place_player()
 end
 
+-- Hardcoded behavior:
+-- - handling of dungeon lord at lowest level
 function maps.nefia(generator)
    generator.generate_nefia()
-   if Map.current_dungeon_level() == Map.deepest_level then
-      World.add_event(4)
-   end
 end
 
 function maps.museum(generator)
@@ -421,6 +420,9 @@ function maps.larna(generator)
    generator.place_player()
 end
 
+-- Hardcoded behavior:
+-- - removal of pets from map
+-- - creation of arena boss(es)
 function maps.arena(generator)
    generator.load_custom("arena_1")
 
@@ -429,6 +431,10 @@ function maps.arena(generator)
    -- NOTE: internally, arena logic is handled
 end
 
+-- Hardcoded behavior:
+-- - removal of non-participant pets from map
+-- - creation of enemy team
+-- - display of health bars for enemies
 function maps.pet_arena(generator)
    generator.load_custom("arena_2")
 
@@ -514,6 +520,9 @@ local function initialize_home_map_data()
    end
 end
 
+-- Hardcoded behavior:
+-- - moving of existing characters if home was upgraded
+-- - application of home rank points based on home scale
 function maps.your_home(generator)
    generator.load_custom("home" .. World.home_scale())
 
@@ -597,7 +606,7 @@ function maps.thieves_guild(generator)
    Map.data.type = "Guild"
    Map.data.max_crowd_density = 25
    Map.data.bgm = "core.mcRuin"
-   Map.data.should_regenerate = false
+   Map.data.should_restock = true
    generator.set_name(I18N.get("core.locale.map.unique.thieves_guild.name"))
 
    generator.place_player()
@@ -615,6 +624,8 @@ function maps.thieves_guild(generator)
    create_charas(charas)
 end
 
+-- Hardcoded behavior:
+-- - creation of character based on quest (mia's dream)
 function maps.palmia(generator)
    generator.load_custom("palmia")
 
@@ -633,11 +644,6 @@ function maps.palmia(generator)
       { 24, 6, "core.cleaner", { role = 3 } },
       { 15, 22, "core.cleaner", { role = 3 } },
       { 15, 22, "core.bard", { role = 3 } },
-      -- TODO
-      -- if (game_data.quest_flags.mias_dream == 1000)
-      -- {
-      --     { 246, 42, 11, { role = 3 } },
-      -- }
       { 48, 18, "core.shopkeeper", { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
       { 30, 17, "core.shopkeeper", { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
       { 48, 3, "core.shopkeeper", { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
@@ -667,12 +673,6 @@ function maps.palmia(generator)
 
    create_charas(charas)
 
-   --TODO
-   -- if (game_data.quest_flags.mias_dream == 1000)
-   -- {
-   --     { 246, 42, 11, { role = 3 } },
-   -- }
-
    generator.update_quests_in_map()
 
    for i=0, 25 do
@@ -680,6 +680,8 @@ function maps.palmia(generator)
    end
 end
 
+-- Hardcoded behavior:
+-- - creation of stairs based on quest (sewer sweeping)
 function maps.lumiest(generator)
    generator.load_custom("lumiest")
 
@@ -687,12 +689,6 @@ function maps.lumiest(generator)
    Map.data.is_user_map = false
 
    generator.place_player()
-
-   -- TODO
-   -- if (game_data.quest_flags.sewer_sweeping)
-   -- {
-   --     cell_featset(18, 45, tile_downstairs, 11, 20)
-   -- }
 
    local charas = {
       { 12, 24, "core.renton", { role = 3 } },
@@ -739,7 +735,7 @@ function maps.mages_guild(generator)
    Map.data.type = "Guild"
    Map.data.max_crowd_density = 25
    Map.data.bgm = "core.mcRuin"
-   Map.data.should_regenerate = false
+   Map.data.should_restock = true
    generator.set_name(I18N.get("core.locale.map.unique.mages_guild.name"))
 
    generator.place_player()
@@ -765,7 +761,7 @@ function maps.lumiest_sewer(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = 61
-   Map.data.should_regenerate = true
+   Map.data.should_restock = false
    generator.set_name(I18N.get("core.locale.map.unique.the_sewer.name"))
 
    generator.mark_quest_targets()
@@ -774,18 +770,14 @@ function maps.lumiest_sewer(generator)
    generator.place_player()
 end
 
+-- Hardcoded behavior:
+-- - creation of stairs based on quest (cat house)
 function maps.yowyn(generator)
    generator.load_custom("yowyn")
    Map.data.max_crowd_density = 35
    Map.data.is_user_map = false
 
    generator.place_player()
-
-   -- TODO
-   -- if (game_data.quest_flags.cat_house)
-   -- {
-   --     cell_featset(23, 22, tile_downstairs, 11, 3)
-   -- }
 
    local charas = {
       { 3, 17, "core.ainc", { role = 3 } },
@@ -826,7 +818,7 @@ function maps.cat_mansion(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_regenerate = true
+   Map.data.should_restock = false
    generator.set_name(I18N.get("core.locale.map.unique.cat_mansion.name"))
 
    generator.mark_quest_targets()
@@ -841,8 +833,8 @@ function maps.battle_field(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_regenerate = true
-   Map.data.refresh_type = 0
+   Map.data.should_restock = false
+   Map.data.is_temporary = true
    generator.set_name(I18N.get("core.locale.map.unique.battle_field.name"))
 
    generator.mark_quest_targets()
@@ -877,6 +869,9 @@ function maps.battle_field(generator)
    generator.set_no_aggro_refresh(true)
 end
 
+-- Hardcoded behavior:
+-- - creation of fire giant (uses serialized variable)
+-- - creation of character based on quest (pael and her mom)
 function maps.noyel(generator)
    generator.load_custom("noyel")
 
@@ -991,7 +986,7 @@ function maps.fighters_guild(generator)
    Map.data.type = "Guild"
    Map.data.max_crowd_density = 25
    Map.data.bgm = "core.mcRuin"
-   Map.data.should_regenerate = 0
+   Map.data.should_restock = true
    generator.set_name(I18N.get("core.locale.map.unique.fighters_guild.name"))
 
    generator.place_player()
@@ -1008,6 +1003,8 @@ function maps.fighters_guild(generator)
    create_charas(charas)
 end
 
+-- Hardcoded behavior:
+-- - setting of a quest flag (duration of kamikaze attack)
 function maps.doom_ground(generator)
    generator.load_custom("sqkamikaze")
 
@@ -1016,8 +1013,8 @@ function maps.doom_ground(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_regenerate = true
-   Map.data.refresh_type = 0
+   Map.data.should_restock = false
+   Map.data.is_temporary = true
    generator.set_name(I18N.get("core.locale.map.unique.doom_ground.name"))
 
    generator.set_entrance_type("Center")
@@ -1032,6 +1029,9 @@ function maps.doom_ground(generator)
    generator.set_no_aggro_refresh(true)
 end
 
+-- Hardcoded behavior:
+-- - creation of stairs based on quest (thieves hideout)
+-- - creation of character based on quest (puppy's cave)
 function maps.vernis(generator)
    generator.load_custom("vernis")
 
@@ -1039,12 +1039,6 @@ function maps.vernis(generator)
    Map.data.is_user_map = false
 
    generator.place_player()
-
-   -- TODO
-   -- if (game_data.quest_flags.thieves_hideout)
-   -- {
-   --     cell_featset(48, 5, tile_downstairs, 11, 4)
-   -- }
 
    local charas = {
       { 39, 3, "core.whom_dwell_in_the_vanity" },
@@ -1054,11 +1048,6 @@ function maps.vernis(generator)
       { 40, 25, "core.dungeon_cleaner", { role = 3 } },
       { 30, 5, "core.rilian", { role = 3 } },
       { 42, 24, "core.bard", { role = 3 } },
-      -- TODO
-      -- if (game_data.quest_flags.puppys_cave == 1000)
-      -- {
-      --     { 225, 31, 4, { role = 3 } },
-      -- }
       { 47, 9, "core.shopkeeper", { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
       { 14, 12, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
       { 39, 27, "core.shopkeeper", { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
@@ -1094,7 +1083,7 @@ function maps.the_mine(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_regenerate = true
+   Map.data.should_restock = false
    generator.set_name(I18N.get("core.locale.map.unique.the_mine.name"))
 
    generator.mark_quest_targets()
@@ -1110,7 +1099,7 @@ function maps.robbers_hideout(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_regenerate = true
+   Map.data.should_restock = false
    generator.set_name(I18N.get("core.locale.map.unique.robbers_hideout.name"))
 
    generator.mark_quest_targets()
@@ -1126,7 +1115,7 @@ function maps.test_site_vernis(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = 61
-   Map.data.should_regenerate = 1
+   Map.data.should_restock = false
    generator.set_name(I18N.get("core.locale.map.unique.test_site.name"))
 
    generator.mark_quest_targets()
@@ -1175,7 +1164,7 @@ function maps.fields_desert(generator)
    Map.spray_tile(20, 4)
    Map.spray_tile(21, 2)
    for i=0, 4 + Rand.rnd(4) do
-      local item = Item.create(-1, -1, 527)
+      local item = Item.create(-1, -1, "core.dead_tree", 0)
       item.own_state = 1
    end
 end
@@ -1204,11 +1193,13 @@ function maps.fields_plain_field(generator)
    Map.spray_tile(5, 2)
    Map.spray_tile(6, 2)
    for i=0, 5 + Rand.rnd(5) do
-      local item = Item.create(-1, 0, -1, -1, { flttypemajor = 80000 })
+      local item = Item.create(-1, -1, { flttypemajor = 80000 })
       item.own_state = 1
    end
 end
 
+-- Hardcoded behavior:
+-- - creation of random encounters
 function maps.fields(generator)
    Map.data.max_crowd_density = 4
    Map.data.is_user_map = false
@@ -1248,23 +1239,48 @@ function maps.fields(generator)
    end
 end
 
+-- Hardcoded behavior:
+-- - setting of next boss floor every 5 floors
+-- - creation of random boss every 5 floors
 function maps.the_void(generator)
    generator.generate_nefia()
 end
 
+-- Hardcoded behavior:
+-- - quest event when deepest level is reached
+-- - creation of stairs when deepest level is reached
 function maps.lesimas(generator)
    generator.set_tileset(Map.data.tileset)
-   generator.generate_nefia()
 
-   if Map.current_dungeon_level() == 3 then
-      local chara = Chara.create(Chara.player().position, "core.slan")
-      chara.role = 3
-      chara.ai_calm = 3
-   end
-   if Map.current_dungeon_level() == 17 then
-      local chara = Chara.create(Chara.player().position, "core.karam")
-      chara.role = 3
-      chara.ai_calm = 3
+   if generator.is_deepest_level() then
+      generator.load_custom("lesimas_1")
+
+      Map.data.max_crowd_density = 0;
+      Map.data.is_temporary = true;
+      Map.data.bgm = "core.mcLastBoss";
+      generator.set_name(I18N.get_enum_property("core.locale.map.unique", "the_depth", 3))
+
+      generator.set_stair_up_pos(16, 13)
+      generator.place_player();
+
+      if Chara.kill_count("core.zeome") == 0 then
+         Chara.create(16, 6, "core.zeome")
+      elseif Chara.kill_count("core.orphe") == 0 then
+         Chara.create(16, 6, "core.orphe")
+      end
+   else
+      generator.generate_nefia()
+
+      if Map.current_dungeon_level() == 3 then
+         local chara = Chara.create(Chara.player().position, "core.slan")
+         chara.role = 3
+         chara.ai_calm = 3
+      end
+      if Map.current_dungeon_level() == 17 then
+         local chara = Chara.create(Chara.player().position, "core.karam")
+         chara.role = 3
+         chara.ai_calm = 3
+      end
    end
 end
 
@@ -1286,14 +1302,20 @@ maps.crypt_of_the_damned = dungeon_with_boss("undeadt1")
 maps.ancient_castle = dungeon_with_boss("roguet1")
 maps.dragons_nest = dungeon_with_boss("d_1")
 
+-- Hardcoded behavior:
+-- - creation of character based on quest (puppy's cave)
 function maps.puppy_cave(generator)
    generator.generate_nefia()
 end
 
+-- Hardcoded behavior:
+-- - creation of character based on quest (minotaur king)
 function maps.minotaurs_nest(generator)
    generator.generate_nefia()
 end
 
+-- Hardcoded behavior:
+-- - creation of character based on quest (novice knight)
 function maps.yeeks_nest(generator)
    generator.generate_nefia()
 end
@@ -1320,7 +1342,7 @@ function maps.mountain_pass(generator)
 end
 
 function maps.quest(generator)
-   -- Internally, generates the appropriate map based on quest type.
+   -- Internally, nefia generation is affected by the global quest ID.
    generator.generate_nefia()
 end
 

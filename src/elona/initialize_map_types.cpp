@@ -247,12 +247,6 @@ static void _initialize_home_mdata()
 
 static void _init_map_your_home()
 {
-    map_initcustom(u8"home"s + game_data.home_scale);
-    map_data.bgm = 68;
-    game_data.entrance_type = 4;
-    map_placeplayer();
-    map_data.user_map_flag = 0;
-    map_data.tileset = 3;
     if (game_data.current_dungeon_level == 1)
     {
         if (game_data.home_scale != 0)
@@ -535,12 +529,6 @@ static void _init_map_lesimas()
     if (game_data.current_dungeon_level ==
         area_data[game_data.current_map].deepest_level)
     {
-        map_initcustom(u8"lesimas_1"s);
-        map_data.max_crowd_density = 0;
-        map_data.refresh_type = 0;
-        map_data.bgm = 66;
-        mdatan(0) =
-            i18n::s.get_enum_property("core.locale.map.unique", "the_depth", 3);
         if (game_data.quest_flags.main_quest < 170)
         {
             event_add(3);
@@ -548,18 +536,6 @@ static void _init_map_lesimas()
         x = 16;
         y = 13;
         cell_featset(x, y, tile_upstairs, 10);
-        map_data.stair_up_pos = y * 1000 + x;
-        map_placeplayer();
-        if (npcmemory(0, 2) == 0)
-        {
-            flt();
-            chara_create(-1, 2, 16, 6);
-        }
-        else if (npcmemory(0, 23) == 0)
-        {
-            flt();
-            chara_create(-1, 23, 16, 6);
-        }
     }
 }
 
@@ -667,10 +643,10 @@ void initialize_map_from_map_type()
     {
         mdatan(0) = mapname(game_data.current_map);
     }
+
     // In most cases the area's map ID will be the same as
     // game_data.current_map. However, multiple player-owned areas can share
     // the same map ID.
-
     int map_id = area_data[game_data.current_map].id;
     auto map = the_mapdef_db[map_id];
 
@@ -682,68 +658,67 @@ void initialize_map_from_map_type()
 
     _generate_map_from_lua(**map);
 
-    MapId map_id_b =
-        static_cast<mdata_t::MapId>(area_data[game_data.current_map].id);
+    MapId map_id_b = static_cast<MapId>(area_data[game_data.current_map].id);
 
     switch (map_id_b)
     {
         // clang-format off
-    case mdata_t::MapId::shelter_:                   _init_map_shelter();                   break;
-    case mdata_t::MapId::random_dungeon:             _init_map_nefia();                     break;
-    case mdata_t::MapId::museum:                     _init_map_museum();                    break;
-    case mdata_t::MapId::shop:                       _init_map_shop();                      break;
-    case mdata_t::MapId::crop:                       _init_map_crop();                      break;
-    case mdata_t::MapId::ranch:                      _init_map_ranch();                     break;
-    case mdata_t::MapId::your_dungeon:               _init_map_your_dungeon();              break;
-    case mdata_t::MapId::storage_house:              _init_map_storage_house();             break;
+    case MapId::shelter_:                   _init_map_shelter();                   break;
+    case MapId::random_dungeon:             _init_map_nefia();                     break;
+    case MapId::museum:                     _init_map_museum();                    break;
+    case MapId::shop:                       _init_map_shop();                      break;
+    case MapId::crop:                       _init_map_crop();                      break;
+    case MapId::ranch:                      _init_map_ranch();                     break;
+    case MapId::your_dungeon:               _init_map_your_dungeon();              break;
+    case MapId::storage_house:              _init_map_storage_house();             break;
 
-    case mdata_t::MapId::quest:                      generate_random_nefia();               break;
-    case mdata_t::MapId::test_site:                  _init_map_test_site();                 break;
-    case mdata_t::MapId::lumiest_graveyard:          _init_map_lumiest_graveyard();         break;
-    case mdata_t::MapId::jail:                       _init_map_jail();                      break;
-    case mdata_t::MapId::truce_ground:               _init_map_truce_ground();              break;
-    case mdata_t::MapId::embassy:                    _init_map_embassy();                   break;
-    case mdata_t::MapId::test_world_north_border:    _init_map_test_world_north_border();   break;
-    case mdata_t::MapId::north_tyris_south_border:
-    case mdata_t::MapId::south_tyris_north_border:
+    case MapId::quest:                      generate_random_nefia();               break;
+    case MapId::test_site:                  _init_map_test_site();                 break;
+    case MapId::lumiest_graveyard:          _init_map_lumiest_graveyard();         break;
+    case MapId::jail:                       _init_map_jail();                      break;
+    case MapId::truce_ground:               _init_map_truce_ground();              break;
+    case MapId::embassy:                    _init_map_embassy();                   break;
+    case MapId::test_world_north_border:    _init_map_test_world_north_border();   break;
+    case MapId::north_tyris_south_border:
+    case MapId::south_tyris_north_border:
         _init_map_tyris_border();
         break;
-    case mdata_t::MapId::the_smoke_and_pipe:         _init_map_the_smoke_and_pipe();        break;
-    case mdata_t::MapId::miral_and_garoks_workshop:  _init_map_miral_and_garoks_workshop(); break;
-    case mdata_t::MapId::mansion_of_younger_sister:  _init_map_mansion_of_younger_sister(); break;
-    case mdata_t::MapId::cyber_dome:                 _init_map_cyber_dome();                break;
-    case mdata_t::MapId::larna:                      _init_map_larna();                     break;
-    case mdata_t::MapId::arena:                      _init_map_arena();                     break;
-    case mdata_t::MapId::pet_arena:                  _init_map_pet_arena();                 break;
-    case mdata_t::MapId::fort_of_chaos_beast:        _init_map_fort_of_chaos_beast();       break;
-    case mdata_t::MapId::fort_of_chaos_machine:      _init_map_fort_of_chaos_machine();     break;
-    case mdata_t::MapId::fort_of_chaos_collapsed:    _init_map_fort_of_chaos_collapsed();   break;
-    case mdata_t::MapId::your_home:                  _init_map_your_home();                 break;
-    case mdata_t::MapId::north_tyris:                _init_map_north_tyris();               break;
-    case mdata_t::MapId::south_tyris:                _init_map_south_tyris();               break;
-    case mdata_t::MapId::test_world:                 _init_map_test_world();                break;
-    case mdata_t::MapId::derphy:                     _init_map_derphy();                    break;
-    case mdata_t::MapId::palmia:                     _init_map_palmia();                    break;
-    case mdata_t::MapId::lumiest:                    _init_map_lumiest();                   break;
-    case mdata_t::MapId::yowyn:                      _init_map_yowyn();                     break;
-    case mdata_t::MapId::noyel:                      _init_map_noyel();                     break;
-    case mdata_t::MapId::port_kapul:                 _init_map_port_kapul();                break;
-    case mdata_t::MapId::vernis:                     _init_map_vernis();                    break;
-    case mdata_t::MapId::debug_map:                  generate_debug_map();                  break;
-    case mdata_t::MapId::fields:                     _init_map_fields();                    break;
-    case mdata_t::MapId::the_void:                   _init_map_the_void();                  break;
-    case mdata_t::MapId::lesimas:                    _init_map_lesimas();                   break;
-    case mdata_t::MapId::tower_of_fire:              _init_map_tower_of_fire();             break;
-    case mdata_t::MapId::crypt_of_the_damned:        _init_map_crypt_of_the_damned();       break;
-    case mdata_t::MapId::ancient_castle:             _init_map_ancient_castle();            break;
-    case mdata_t::MapId::dragons_nest:               _init_map_dragons_nest();              break;
-    case mdata_t::MapId::puppy_cave:                 _init_map_puppy_cave();                break;
-    case mdata_t::MapId::minotaurs_nest:             _init_map_minotaurs_nest();            break;
-    case mdata_t::MapId::yeeks_nest:                 _init_map_yeeks_nest();                break;
-    case mdata_t::MapId::pyramid:                    _init_map_pyramid();                   break;
-    case mdata_t::MapId::mountain_pass:              generate_random_nefia();               break;
-    case mdata_t::MapId::show_house:
-    case mdata_t::MapId::none:
+    case MapId::the_smoke_and_pipe:         _init_map_the_smoke_and_pipe();        break;
+    case MapId::miral_and_garoks_workshop:  _init_map_miral_and_garoks_workshop(); break;
+    case MapId::mansion_of_younger_sister:  _init_map_mansion_of_younger_sister(); break;
+    case MapId::cyber_dome:                 _init_map_cyber_dome();                break;
+    case MapId::larna:                      _init_map_larna();                     break;
+    case MapId::arena:                      _init_map_arena();                     break;
+    case MapId::pet_arena:                  _init_map_pet_arena();                 break;
+    case MapId::fort_of_chaos_beast:        _init_map_fort_of_chaos_beast();       break;
+    case MapId::fort_of_chaos_machine:      _init_map_fort_of_chaos_machine();     break;
+    case MapId::fort_of_chaos_collapsed:    _init_map_fort_of_chaos_collapsed();   break;
+    case MapId::your_home:                  _init_map_your_home();                 break;
+    case MapId::north_tyris:                _init_map_north_tyris();               break;
+    case MapId::south_tyris:                _init_map_south_tyris();               break;
+    case MapId::test_world:                 _init_map_test_world();                break;
+    case MapId::derphy:                     _init_map_derphy();                    break;
+    case MapId::palmia:                     _init_map_palmia();                    break;
+    case MapId::lumiest:                    _init_map_lumiest();                   break;
+    case MapId::yowyn:                      _init_map_yowyn();                     break;
+    case MapId::noyel:                      _init_map_noyel();                     break;
+    case MapId::port_kapul:                 _init_map_port_kapul();                break;
+    case MapId::vernis:                     _init_map_vernis();                    break;
+    case MapId::debug_map:                  generate_debug_map();                  break;
+    case MapId::fields:                     _init_map_fields();                    break;
+    case MapId::the_void:                   _init_map_the_void();                  break;
+    case MapId::lesimas:                    _init_map_lesimas();                   break;
+    case MapId::tower_of_fire:              _init_map_tower_of_fire();             break;
+    case MapId::crypt_of_the_damned:        _init_map_crypt_of_the_damned();       break;
+    case MapId::ancient_castle:             _init_map_ancient_castle();            break;
+    case MapId::dragons_nest:               _init_map_dragons_nest();              break;
+    case MapId::puppy_cave:                 _init_map_puppy_cave();                break;
+    case MapId::minotaurs_nest:             _init_map_minotaurs_nest();            break;
+    case MapId::yeeks_nest:                 _init_map_yeeks_nest();                break;
+    case MapId::pyramid:                    _init_map_pyramid();                   break;
+    case MapId::mountain_pass:              generate_random_nefia();               break;
+    case MapId::show_house:
+    case MapId::none:
     default: break;
         // clang-format on
     }

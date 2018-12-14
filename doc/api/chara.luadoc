@@ -29,6 +29,13 @@ function count() end
 --  @function player
 function player() end
 
+--- Attempts to create a randomly generated character at a given position.
+--- Returns the character if creation succeeded, nil otherwise.
+-- @tparam LuaPosition position (const) position to create the character at
+-- @treturn[1] LuaCharacter the created character
+-- @treturn[2] nil
+function create(position) end
+
 --- Attempts to create a character at a given position.
 --  Returns the character if creation succeeded, nil otherwise.
 --  @tparam LuaPosition position (const) position to create the character at
@@ -62,3 +69,36 @@ function can_recruit_allies() end
 --  @tparam LuaCharacter ally
 --  @function remove_from_party
 function remove_from_party(ally) end
+--- Returns the character if creation succeeded, nil otherwise.
+-- @tparam LuaPosition position (const) position to create the character at
+-- @tparam string id the character prototype ID
+-- @treturn[1] LuaCharacter the created character
+-- @treturn[2] nil
+function create(position, id) end
+
+--- Generates a character based on this map's character generation filter.
+--- Returns the character if creation succeeded, nil otherwise.
+-- @treturn[1] LuaCharacter the created character
+-- @treturn[2] nil
+function generate_from_map() end
+
+--- Generates a character based on this map's character generation filter.
+--- Returns the character if creation succeeded, nil otherwise.
+-- @tparam LuaPosition position (const) position to create the character at
+-- @treturn[1] LuaCharacter the created character
+-- @treturn[2] nil
+function generate_from_map(position) end
+
+--- Generates a character based on this map's character generation filter.
+--- Returns the character if creation succeeded, nil otherwise.
+-- @tparam LuaPosition position (const) position to create the character at
+-- @tparam string id the character prototype ID
+-- @treturn[1] LuaCharacter the created character
+-- @treturn[2] nil
+function generate_from_map(position, id) end
+
+--- Iterates between two character indices.
+-- @tparam num from the starting index
+-- @tparam num to the ending index
+-- @treturn iterator a character iterator
+function iter(from, to) end
