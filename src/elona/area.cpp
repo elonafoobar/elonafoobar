@@ -156,6 +156,12 @@ void initialize_adata()
 {
     for (const auto& map : the_mapdef_db.values())
     {
+        if (map.deed)
+        {
+            // This map can have multiple instances, so don't instantiate it.
+            continue;
+        }
+
         int map_id = map.id;
         auto& area = area_data[map_id];
 

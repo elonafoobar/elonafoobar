@@ -999,27 +999,42 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 0,
       },
-      {
-         name = "museum",
-         id = 101,
-         is_fixed = false,
+   }
+)
+
+local function player_owned(opts)
+   local new_opts = {
+         is_home = true,
 
          -- Dummy; they are overwritten when you build the building.
-         is_indoor = true,
-         appearance = 151,
-         base_turn_cost = 10000,
          map_type = "PlayerOwned",
+         outer_map = 0,
          outer_map_position = { x = 0, y = 0 },
-         deepest_level = 1,
          entrance_type = "South",
-         is_generated_every_time = false,
-         default_ai_calm = 1,
-         danger_level = 1,
-         tile_type = 3,
          tile_set = "Normal",
-         outer_map = 4,
+         tile_type = 3,
+         base_turn_cost = 10000,
+         danger_level = 1,
+         deepest_level = 1,
+         is_generated_every_time = false,
+         default_ai_calm = 0,
+   }
+
+   return table.merge(new_opts, opts)
+end
+
+-- These maps can be player-owned.
+data:add_multi(
+   "core.map",
+   {
+      player_owned {
+         name = "museum",
+         id = 101,
+         appearance = 151,
+         is_indoor = true,
+         deed = "core.deed_of_museum"
       },
-      {
+      player_owned {
          name = "shop",
          id = 102,
          is_fixed = false,
@@ -1027,97 +1042,49 @@ data:add_multi(
          -- Dummy; they are overwritten when you build the building.
          is_indoor = true,
          appearance = 150,
-         base_turn_cost = 10000,
-         map_type = "PlayerOwned",
-         outer_map_position = { x = 0, y = 0 },
-         deepest_level = 1,
-         entrance_type = "South",
-         is_generated_every_time = false,
-         default_ai_calm = 1,
-         danger_level = 1,
-         tile_type = 3,
-         tile_set = "Normal",
-         outer_map = 4,
+         deed = "core.deed_of_shop"
       },
-      {
+      player_owned {
          name = "crop",
          id = 103,
          is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
-         is_indoor = true,
          appearance = 152,
-         base_turn_cost = 10000,
-         map_type = "PlayerOwned",
-         outer_map_position = { x = 0, y = 0 },
-         deepest_level = 1,
-         entrance_type = "South",
-         is_generated_every_time = false,
-         default_ai_calm = 1,
-         danger_level = 1,
-         tile_type = 3,
-         tile_set = "Normal",
-         outer_map = 4,
+         is_indoor = false,
+         deed = "core.deed_of_farm"
       },
-      {
+      player_owned {
          name = "storage_house",
          id = 104,
          is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
-         is_indoor = true,
          appearance = 153,
-         base_turn_cost = 10000,
-         map_type = "PlayerOwned",
-         outer_map_position = { x = 0, y = 0 },
-         deepest_level = 1,
-         entrance_type = "South",
-         is_generated_every_time = false,
-         default_ai_calm = 1,
-         danger_level = 1,
-         tile_type = 3,
-         tile_set = "Normal",
-         outer_map = 4,
+         is_indoor = true,
+         deed = "core.deed_of_storage_house"
       },
-      {
+      player_owned {
          name = "ranch",
          id = 31,
          is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
-         is_indoor = true,
          appearance = 154,
-         base_turn_cost = 10000,
-         map_type = "PlayerOwned",
-         outer_map_position = { x = 0, y = 0 },
-         deepest_level = 1,
-         entrance_type = "South",
-         is_generated_every_time = false,
+         is_indoor = false,
          default_ai_calm = 1,
-         danger_level = 1,
-         tile_type = 3,
-         tile_set = "Normal",
-         outer_map = 4,
+         deed = "core.deed_of_ranch"
       },
-      {
+      player_owned {
          name = "your_dungeon",
          id = 39,
          is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
-         is_indoor = true,
          appearance = 138,
-         base_turn_cost = 10000,
-         map_type = "PlayerOwned",
-         outer_map_position = { x = 0, y = 0 },
-         deepest_level = 1,
-         entrance_type = "South",
-         is_generated_every_time = false,
+         is_indoor = true,
          default_ai_calm = 1,
-         danger_level = 1,
-         tile_type = 3,
-         tile_set = "Normal",
-         outer_map = 4,
+         deed = "core.deed_of_dungeon"
       },
       {
          name = "random_dungeon",

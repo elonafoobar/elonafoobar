@@ -36,6 +36,7 @@ struct MapDefData
     bool prevents_building_shelter{};
     bool prevents_random_events{};
     bool villagers_make_snowmen{};
+    optional<SharedId> deed{};
 
     optional<lua::WrappedFunction> chara_filter{};
 };

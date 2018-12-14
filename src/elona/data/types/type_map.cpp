@@ -28,6 +28,7 @@ MapDefData MapDefDB::convert(
     DATA_REQ(is_generated_every_time, bool);
     DATA_REQ(default_ai_calm, int);
     DATA_OPT_OR(quest_town_id, int, 0);
+    DATA_OPT(deed, SharedId);
 
     DATA_OPT_OR(can_return_to, bool, false);
     DATA_OPT_OR(is_fixed, bool, true);
@@ -46,6 +47,12 @@ MapDefData MapDefDB::convert(
     Position outer_map_position_{outer_map_position.get<int>("x"),
                                  outer_map_position.get<int>("y")};
 
+    // optional<SharedId> deed_ = none;
+    // if (deed)
+    // {
+    //     deed_ = SharedId(*deed);
+    // }
+
     return MapDefData{legacy_id,
                       appearance,
                       map_type,
@@ -61,6 +68,7 @@ MapDefData MapDefDB::convert(
                       is_generated_every_time,
                       default_ai_calm,
                       quest_town_id,
+                      deed,
 
                       can_return_to,
                       is_fixed,
