@@ -4,6 +4,8 @@ local Math = Elona.require("Math")
 local Rand = Elona.require("Rand")
 local table = Elona.require("table")
 
+local maps = require "data/mapgen/static"
+
 local function chara_filter_town(callbacks)
    return function()
       local opts = { level = 10, quality = "Bad", fltselect = 5 }
@@ -55,6 +57,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         generator = maps.test_world,
       },
       {
          name = "test_world_north_border",
@@ -72,6 +76,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         generator = maps.test_world_north_border,
       },
       {
          name = "south_tyris",
@@ -89,6 +95,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         generator = maps.south_tyris,
       },
       {
          name = "south_tyris_north_border",
@@ -106,6 +114,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         generator = maps.south_tyris_north_border,
       },
       {
          name = "the_smoke_and_pipe",
@@ -123,6 +133,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         generator = maps.the_smoke_and_pipe,
       },
       {
          name = "north_tyris",
@@ -140,6 +152,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         generator = maps.north_tyris,
       },
       {
          name = "vernis",
@@ -159,6 +173,7 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 1,
 
+         generator = maps.vernis,
          chara_filter = chara_filter_town(
             {
                [1] = function()
@@ -189,6 +204,7 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 2,
 
+         generator = maps.yowyn,
          chara_filter = chara_filter_town(
             {
                [1] = function()
@@ -219,6 +235,7 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 3,
 
+         generator = maps.palmia,
          chara_filter = chara_filter_town(
             {
                [1] = function()
@@ -249,6 +266,7 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 4,
 
+         generator = maps.derphy,
          chara_filter = chara_filter_town(
             {
                [1] = function()
@@ -284,6 +302,7 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 5,
 
+         generator = maps.port_kapul,
          chara_filter = chara_filter_town(
             {
                -- Fighters guild
@@ -311,6 +330,7 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 6,
 
+         generator = maps.noyel,
          villagers_make_snowmen = true,
          chara_filter = chara_filter_town(
             {
@@ -340,6 +360,7 @@ data:add_multi(
          default_ai_calm = 1,
          quest_town_id = 7,
 
+         generator = maps.lumiest,
          chara_filter = chara_filter_town(
             {
                [1] = function()
@@ -371,6 +392,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = true,
          default_ai_calm = 0,
+
+         generator = maps.fields,
       },
       {
          name = "your_home",
@@ -390,6 +413,8 @@ data:add_multi(
          tile_set = "Normal",
          tile_type = 3,
          outer_map = 4,
+
+         generator = maps.your_home,
 
          -- Special case due to Your Home being able to change
          -- position/appearance, so those properties shouldn't be
@@ -413,6 +438,7 @@ data:add_multi(
          tile_set = "Normal",
          tile_type = 3,
 
+         generator = maps.show_house,
          reveals_fog = true,
          prevents_monster_ball = true,
       },
@@ -433,6 +459,7 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 0,
 
+         generator = maps.arena,
          reveals_fog = true,
          prevents_domination = true,
          prevents_monster_ball = true,
@@ -454,6 +481,7 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 0,
 
+         generator = maps.pet_arena,
          reveals_fog = true,
          prevents_teleport = true,
          prevents_domination = true,
@@ -476,6 +504,7 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 0,
 
+         generator = maps.quest,
          shows_floor_count_in_name = true,
          prevents_building_shelter = true,
       },
@@ -496,6 +525,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.lesimas,
          can_return_to = true,
          shows_floor_count_in_name = true,
          chara_filter = function()
@@ -525,6 +555,7 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 0,
 
+         generator = maps.the_void,
          can_return_to = true,
          prevents_domination = true,
          chara_filter = function()
@@ -548,6 +579,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.tower_of_fire,
          chara_filter = function()
             return { level = Map.current_dungeon_level(), quality = "Bad", fltn = "fire" }
          end
@@ -569,6 +601,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.crypt_of_the_damned,
          chara_filter = function()
             return { level = Map.current_dungeon_level(), quality = "Bad", fltn = "undead" }
          end
@@ -590,6 +623,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.ancient_castle,
          chara_filter = function()
             local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
 
@@ -617,6 +651,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.dragons_nest,
          chara_filter = function()
             return { level = Map.current_dungeon_level(), quality = "Bad" }
          end
@@ -637,6 +672,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+
+         generator = maps.mountain_pass,
       },
       {
          name = "puppy_cave",
@@ -654,6 +691,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = true,
          default_ai_calm = 0,
+
+         generator = maps.puppy_cave,
       },
       {
          name = "minotaurs_nest",
@@ -672,6 +711,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.minotaurs_nest,
          chara_filter = function()
             local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
 
@@ -699,6 +739,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.yeeks_nest,
          chara_filter = function()
             local opts = { level = Map.current_dungeon_level(), quality = "Bad" }
 
@@ -726,6 +767,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 0,
 
+         generator = maps.pyramid,
          prevents_teleport = true,
          chara_filter = function()
             return { level = Map.current_dungeon_level(), quality = "Bad", flttypemajor = 13 }
@@ -748,6 +790,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
 
+         generator = maps.lumiest_graveyard,
          chara_filter = function()
             return { level = 20, quality = "Bad", fltselect = 4 }
          end
@@ -769,6 +812,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
 
+         generator = maps.truce_ground,
          chara_filter = function()
             return { level = 20, quality = "Bad", fltselect = 4 }
          end
@@ -790,6 +834,7 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 0,
 
+         generator = maps.jail,
          prevents_teleport = true,
          prevents_return = true,
          prevents_random_events = true,
@@ -811,6 +856,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
 
+         generator = maps.cyber_dome,
          chara_filter = function()
             return { level = 10, quality = "Bad", fltn = "sf" }
          end
@@ -832,6 +878,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
 
+         generator = maps.larna,
          can_return_to = true,
       },
       {
@@ -851,6 +898,7 @@ data:add_multi(
          default_ai_calm = 1,
          outer_map = 4,
 
+         generator = maps.miral_and_garoks_workshop,
          reveals_fog = true,
       },
       {
@@ -870,6 +918,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
 
+         generator = maps.mansion_of_younger_sister,
          can_return_to = true,
          villagers_make_snowmen = true,
       },
@@ -890,6 +939,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
 
+         generator = maps.embassy,
          reveals_fog = true,
       },
       {
@@ -908,6 +958,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         generator = maps.north_tyris_south_border,
       },
       {
          name = "fort_of_chaos_beast",
@@ -925,6 +977,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         generator = maps.fort_of_chaos_beast,
       },
       {
          name = "fort_of_chaos_machine",
@@ -942,6 +996,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         generator = maps.fort_of_chaos_machine,
       },
       {
          name = "fort_of_chaos_collapsed",
@@ -959,6 +1015,8 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 1,
+
+         generator = maps.fort_of_chaos_collapsed,
       },
       {
          name = "shelter",
@@ -977,6 +1035,7 @@ data:add_multi(
          is_generated_every_time = false,
          default_ai_calm = 1,
 
+         generator = maps.shelter,
          reveals_fog = true,
          prevents_return = true,
          prevents_building_shelter = true,
@@ -998,6 +1057,8 @@ data:add_multi(
          is_indoor = false,
          is_generated_every_time = true,
          default_ai_calm = 0,
+
+         generator = maps.test_site,
       },
    }
 )
@@ -1023,7 +1084,7 @@ local function player_owned(opts)
    return table.merge(new_opts, opts)
 end
 
--- These maps can be player-owned.
+-- These maps are player-created.
 data:add_multi(
    "core.map",
    {
@@ -1032,7 +1093,8 @@ data:add_multi(
          id = 101,
          appearance = 151,
          is_indoor = true,
-         deed = "core.deed_of_museum"
+         generator = maps.museum,
+         deed = "core.deed_of_museum",
       },
       player_owned {
          name = "shop",
@@ -1042,7 +1104,8 @@ data:add_multi(
          -- Dummy; they are overwritten when you build the building.
          is_indoor = true,
          appearance = 150,
-         deed = "core.deed_of_shop"
+         generator = maps.shop,
+         deed = "core.deed_of_shop",
       },
       player_owned {
          name = "crop",
@@ -1052,7 +1115,8 @@ data:add_multi(
          -- Dummy; they are overwritten when you build the building.
          appearance = 152,
          is_indoor = false,
-         deed = "core.deed_of_farm"
+         generator = maps.crop,
+         deed = "core.deed_of_farm",
       },
       player_owned {
          name = "storage_house",
@@ -1062,7 +1126,8 @@ data:add_multi(
          -- Dummy; they are overwritten when you build the building.
          appearance = 153,
          is_indoor = true,
-         deed = "core.deed_of_storage_house"
+         generator = maps.storage_house,
+         deed = "core.deed_of_storage_house",
       },
       player_owned {
          name = "ranch",
@@ -1073,7 +1138,8 @@ data:add_multi(
          appearance = 154,
          is_indoor = false,
          default_ai_calm = 1,
-         deed = "core.deed_of_ranch"
+         generator = maps.ranch,
+         deed = "core.deed_of_ranch",
       },
       player_owned {
          name = "your_dungeon",
@@ -1084,7 +1150,8 @@ data:add_multi(
          appearance = 138,
          is_indoor = true,
          default_ai_calm = 1,
-         deed = "core.deed_of_dungeon"
+         generator = maps.your_dungeon,
+         deed = "core.deed_of_dungeon",
       },
       {
          name = "random_dungeon",

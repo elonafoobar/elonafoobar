@@ -38,6 +38,7 @@ struct MapDefData
     bool villagers_make_snowmen{};
     optional<SharedId> deed{};
 
+    lua::WrappedFunction generator{};
     optional<lua::WrappedFunction> chara_filter{};
 };
 

@@ -8,6 +8,8 @@ local table = Elona.require("table")
 
 local maps = {}
 
+local TILE_DEFAULT = 396
+
 local function create_items(items)
    for _, data in ipairs(items) do
       local id, x, y, opts = table.unpack(data)
@@ -17,6 +19,28 @@ local function create_items(items)
       if opts then
          for k, v in pairs(opts) do
             item[k] = v
+         end
+      end
+   end
+end
+
+local function create_charas(charas)
+   for _, data in ipairs(charas) do
+      local id, x, y, opts = table.unpack(data)
+
+      local count = opts["_count"] or 1
+
+      for i=0,count do
+         local chara = Chara.create(x, y, id)
+
+         if opts then
+            for k, v in pairs(opts) do
+               if k == "_name" then
+                  chara.name = I18N.get(v, chara.name)
+               else
+                  chara[k] = v
+               end
+            end
          end
       end
    end
@@ -145,13 +169,12 @@ function maps.test_site(generator)
    for j=0, Map.height() do
       for i=0, Map.width() do
          -- TODO
-         Map.set_tile(0)
+         Map.set_tile(i, j, TILE_DEFAULT)
       end
    end
 
    generator.place_player()
 
-   -- TODO
    local pos = Chara.player().position
    Chara.create(pos.x, pos.y + 5)
 
@@ -169,8 +192,7 @@ function maps.lumiest_graveyard(generator)
    generator.place_player()
 
    for i=0, Map.data.max_crowd_density do
-      -- TODO
-      Map.generate_chara()
+      Chara.generate_from_map()
    end
 end
 
@@ -202,8 +224,7 @@ function maps.truce_ground(generator)
    create_items(items)
 
    for i=0, Map.data.max_crowd_density do
-      -- TODO
-      Map.generate_chara()
+      Chara.generate_from_map()
    end
 end
 
@@ -247,9 +268,9 @@ local function generate_tyris_border(generator)
       { "core.guard", 8, 7, { role = 14, ai_calm = 3 } },
    }
 
-create_charas(charas)
+   create_charas(charas)
 
-generator.place_player()
+   generator.place_player()
 end
 
 function maps.test_world_north_border(generator)
@@ -312,11 +333,11 @@ function maps.miral_and_garoks_workship(generator)
       { "core.garokk", 17, 11, { role = 3, shop_rank = 100 } },
       { "core.miral", 8, 16, { role = 1016, shop_rank = 100 } },
       { "core.cat", -3, 0, { _count = 5, role = 3 } },
-}
+   }
 
-create_charas(charas)
+   create_charas(charas)
 
-generator.place_player()
+   generator.place_player()
 end
 
 function maps.mansion_of_younger_sister(generator)
@@ -325,7 +346,6 @@ function maps.mansion_of_younger_sister(generator)
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcRuin"
 
-   -- TODO
    if generator.is_first_generation then
       local item = Item.create(12, 8, "core.book_of_rachel", 0)
       item.param2 = 4
@@ -341,7 +361,7 @@ function maps.mansion_of_younger_sister(generator)
    generator.place_player()
 end
 
-function map.cyber_dome(generator)
+function maps.cyber_dome(generator)
    generator.load_custom("cyberdome")
 
    Map.data.max_crowd_density = 10
@@ -363,8 +383,7 @@ function map.cyber_dome(generator)
    create_charas(charas)
 
    for i=0, Map.data.max_crowd_density do
-      -- TODO
-      Map.generate_chara()
+      Chara.generate_from_map()
    end
 end
 
@@ -390,13 +409,13 @@ function maps.larna(generator)
       { "core.hot_spring_maniac", -3, 0, { _count = 22 } },
    }
 
-create_charas(charas)
+   create_charas(charas)
 
-for i=0, Map.data.max_crowd_density do
-   Map.generate_chara()
-end
+   for i=0, Map.data.max_crowd_density do
+      Chara.generate_from_map()
+   end
 
-generator.place_player()
+   generator.place_player()
 end
 
 function maps.arena(generator)
@@ -558,11 +577,10 @@ function maps.derphy(generator)
 
    create_charas(charas)
 
-   -- TODO
-   generator.initialize_quest()
+   generator.update_quests_in_map()
 
    for i=0, 20 do
-      Map.generate_chara()
+      Chara.generate_from_map()
    end
 end
 
@@ -642,20 +660,19 @@ function maps.palmia(generator)
       { 77, -3, 0, { _count = 4, role = 14 } },
    }
 
-create_charas(charas)
+   create_charas(charas)
 
---TODO
--- if (game_data.quest_flags.mias_dream == 1000)
--- {
---     { 246, 42, 11, { role = 3 } },
--- }
+   --TODO
+   -- if (game_data.quest_flags.mias_dream == 1000)
+   -- {
+   --     { 246, 42, 11, { role = 3 } },
+   -- }
 
--- TODO
-generator.initialize_quest()
+   generator.update_quests_in_map()
 
-for i=0, 25 do
-   Map.generate_chara()
-end
+   for i=0, 25 do
+      Chara.generate_from_map()
+   end
 end
 
 function maps.lumiest(generator)
@@ -700,11 +717,11 @@ function maps.lumiest(generator)
       { 77, -3, 0, { _count = 7, role = 14 } },
    }
 
-generator.initialize_quest()
+   generator.update_quests_in_map()
 
-for i=0,25 do
-   Map.generate_chara()
-end
+   for i=0,25 do
+      Chara.generate_from_map()
+   end
 end
 
 function maps.mages_guild(generator)
@@ -721,13 +738,13 @@ function maps.mages_guild(generator)
    generator.place_player()
 
    local charas = {
-    { 288, 24, 3, { role = 3 } },
-    { 41, 27, 8, { role = 1020, _name = "core.locale.chara.job.spell_writer" } },
-    { 41, 22, 8, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-    { 74, 3, 9, { role = 12 } },
-    { 40, 12, 6, { role = 7, _name = "core.locale.chara.job.trainer" } },
-    { 41, 3, 3, { role = 5 } },
-    { 289, -3, 0, { _count = 16 } },
+      { 288, 24, 3, { role = 3 } },
+      { 41, 27, 8, { role = 1020, _name = "core.locale.chara.job.spell_writer" } },
+      { 41, 22, 8, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { 74, 3, 9, { role = 12 } },
+      { 40, 12, 6, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { 41, 3, 3, { role = 5 } },
+      { 289, -3, 0, { _count = 16 } },
    }
 
    create_charas(charas)
@@ -744,12 +761,9 @@ function map.lumiest_sewer(generator)
    Map.data.should_regenerate = true
    generator.set_name(I18N.get("core.locale.map.unique.the_sewer.name"))
 
-   -- TODO
-   -- quest_place_target()
+   generator.mark_quest_targets()
 
-   -- TODO
-   generator.set_entrance_type(1)
-
+   generator.set_entrance_type("StairUp")
    generator.place_player()
 end
 
@@ -767,49 +781,48 @@ function map.yowyn(generator)
    -- }
 
    local charas = {
-    { 224, 3, 17, { role = 3 } },
-    { 227, 26, 11, { role = 3 } },
-    { 231, 14, 20, { role = 3 } },
-    { 1, 11, 5, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-    { 1, 25, 8, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-    { 1, 7, 8, { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
-    { 1, 14, 14, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-    { 1, 35, 18, { role = 22, _name = "core.locale.chara.job.horse_master" } },
-    { 267, 33, 16, { role = 3 } },
-    { 267, 37, 19, { role = 3 } },
-    { 268, 34, 19, { role = 3 } },
-    { 268, 38, 16, { role = 3 } },
-    { 38, 3, 4, { role = 6, _name = "core.locale.chara.job.of_yowyn" } },
-    { 40, 20, 14, { role = 7, _name = "core.locale.chara.job.trainer" } },
-    { 41, 24, 16, { role = 5 } },
-    { 69, 26, 16, { role = 8 } },
-    { 213, 14, 12, { role = 3 } },
-    { 16, -3, 0, { _count = 2, role = 4 } },
-    { 39, -3, 0, { _count = 2, role = 4 } },
-    { 77, -3, 0, { _count = 3, role = 14 } },
+      { 224, 3, 17, { role = 3 } },
+      { 227, 26, 11, { role = 3 } },
+      { 231, 14, 20, { role = 3 } },
+      { 1, 11, 5, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { 1, 25, 8, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { 1, 7, 8, { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
+      { 1, 14, 14, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { 1, 35, 18, { role = 22, _name = "core.locale.chara.job.horse_master" } },
+      { 267, 33, 16, { role = 3 } },
+      { 267, 37, 19, { role = 3 } },
+      { 268, 34, 19, { role = 3 } },
+      { 268, 38, 16, { role = 3 } },
+      { 38, 3, 4, { role = 6, _name = "core.locale.chara.job.of_yowyn" } },
+      { 40, 20, 14, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { 41, 24, 16, { role = 5 } },
+      { 69, 26, 16, { role = 8 } },
+      { 213, 14, 12, { role = 3 } },
+      { 16, -3, 0, { _count = 2, role = 4 } },
+      { 39, -3, 0, { _count = 2, role = 4 } },
+      { 77, -3, 0, { _count = 3, role = 14 } },
    }
 
    create_charas(charas)
 
-   generator.initialize_quest()
+   generator.update_quests_in_map()
 
    for i=0,15 do
-      Map.generate_chara()
+      Chara.generate_from_map()
    end
 end
 
 function maps.cat_mansion(generator)
    Map.data.tileset = 0
    generator.load_custom("sqcat")
-   Map.data.indoors_flag = 1
+   Map.data.is_indoors = true
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
    Map.data.should_regenerate = true
-   generator.set_name(I18n.get("core.locale.map.unique.cat_mansion.name"))
+   generator.set_name(I18N.get("core.locale.map.unique.cat_mansion.name"))
 
-   -- TODO
-   --quest_place_target()
+   generator.mark_quest_targets()
 
    generator.place_player()
 end
@@ -817,8 +830,7 @@ end
 function maps.battle_field(generator)
    Map.data.tileset = 0
    generator.load_custom("sqwar")
-   -- TODO
-   Map.data.indoors_flag = 2
+   Map.data.is_indoors = false
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
@@ -826,14 +838,11 @@ function maps.battle_field(generator)
    Map.data.refresh_type = 0
    generator.set_name(I18N.get("core.locale.map.unique.battle_field.name"))
 
-   -- TODO
-   -- quest_place_target()
+   generator.mark_quest_targets()
 
-   -- TODO
-   generator.set_entrance_type(8)
+   generator.set_entrance_type("South")
    generator.place_player()
 
-   -- TODO
    local enemies = {}
 
    for chara in Chara.iter(57, 245) do
@@ -843,286 +852,284 @@ function maps.battle_field(generator)
    end
 
    for i=0, 30 do
-      local chara = Chara.create(-1, 233 + 2 * (cnt > 22), 11, 16)
+      local id = "core.juere_infantry"
+      if i > 22 then
+         id = "core.juere_swordman"
+      end
 
-      cdata[rc].relationship = 10
-      cdata[rc].original_relationship = 10
-      cdata[rc].hate = 100
-      p = list(0, rnd(listmax))
-      cdata[rc].enemy_id = p
-      cdata[p].hate = 100
-      cdata[p].enemy_id = rc
+      local chara = Chara.create(11, 16, id)
+
+      chara.relationship = "Friend"
+      chara.original_relationship = "Friend"
+      chara.hate = 100
+      local enemy = Rand.choice(enemies)
+      chara.enemy_id = enemy.index
+      enemy.hate = 100
+      enemy.enemy_id = chara.index
    end
-   -- noaggrorefresh = 1
+   generator.set_no_aggro_refresh(true)
 end
 
 function maps.noyel(generator)
-    generator.load_custom("noyel")
+   generator.load_custom("noyel")
 
-    Map.data.max_crowd_density = 35
-    Map.data.user_map_flag = 0
+   Map.data.max_crowd_density = 35
+   Map.data.user_map_flag = 0
 
-    generator.place_player()
+   generator.place_player()
 
-    local charas = {
-       -- TODO
-       { 202, 46, 18, { role = 3 } },
-       -- game_data.fire_giant = rc
-       { 203, 47, 18, { role = 1015 } },
-       { 35, 47, 20, { role = 3 } },
-       { 35, 45, 19, { role = 3 } },
-       { 35, 49, 20, { role = 3 } },
-       { 326, 28, 22, { role = 3 } },
-       { 221, 19, 3, { role = 3 } },
-       -- TODO
-       -- if (game_data.quest_flags.pael_and_her_mom != 1001)
-       -- {
-       --     { 222, 19, 2, { role = 3 } },
-       -- }
-       { 70, 40, 33, { role = 9 } },
-       { 74, 44, 6, { role = 12 } },
-       { 206, 44, 3, { role = 19 } },
-       { 1, 19, 31, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-       { 1, 11, 31, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-       { 1, 38, 34, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-       { 1, 5, 27, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
-       { 41, 56, 5, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-       { 1, 39, 35, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-       { 38, 5, 18, { role = 6, _name = "core.locale.chara.job.of_noyel" } },
-       { 40, 18, 20, { role = 7, _name = "core.locale.chara.job.trainer" } },
-       { 41, 4, 33, { role = 5 } },
-       { 69, 6, 33, { role = 8 } },
-    }
+   local charas = {
+      -- TODO
+      { 202, 46, 18, { role = 3 } },
+      -- game_data.fire_giant = rc
+      { 203, 47, 18, { role = 1015 } },
+      { 35, 47, 20, { role = 3 } },
+      { 35, 45, 19, { role = 3 } },
+      { 35, 49, 20, { role = 3 } },
+      { 326, 28, 22, { role = 3 } },
+      { 221, 19, 3, { role = 3 } },
+      -- TODO
+      -- if (game_data.quest_flags.pael_and_her_mom != 1001)
+      -- {
+      --     { 222, 19, 2, { role = 3 } },
+      -- }
+      { 70, 40, 33, { role = 9 } },
+      { 74, 44, 6, { role = 12 } },
+      { 206, 44, 3, { role = 19 } },
+      { 1, 19, 31, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { 1, 11, 31, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { 1, 38, 34, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { 1, 5, 27, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { 41, 56, 5, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { 1, 39, 35, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { 38, 5, 18, { role = 6, _name = "core.locale.chara.job.of_noyel" } },
+      { 40, 18, 20, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { 41, 4, 33, { role = 5 } },
+      { 69, 6, 33, { role = 8 } },
+   }
 
-    create_charas(charas)
+   create_charas(charas)
 
-    local chara
+   local chara
 
-    for i=0,3 do
-       chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 16)
-       chara.role = 4
-       chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 39)
-       chara.role = 4
-    end
-    for i=0,3 do
-       chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 77)
-       chara.role = 14
-    end
+   for i=0,3 do
+      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 16)
+      chara.role = 4
+      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 39)
+      chara.role = 4
+   end
+   for i=0,3 do
+      chara = Chara.create(Rand.rnd(32), Rand.rnd(Map.height()), 77)
+      chara.role = 14
+   end
 
-    -- TODO
-    generator.initialize_quest()
+   generator.update_quests_in_map()
 
-    for i=0,8 do
-       chara = Map.generate_chara(Rand.rnd(11) + 25, Rand.rnd(5) + 15, 35)
-       chara.role = 3
-    end
-    for i=0,20 do
-       chara = Map.generate_chara(Rand.rnd(55), Rand.rnd(Map.height()))
-    end
+   for i=0,8 do
+      chara = Chara.generate_from_map(Rand.rnd(11) + 25, Rand.rnd(5) + 15, 35)
+      chara.role = 3
+   end
+   for i=0,20 do
+      chara = Chara.generate_from_map(Rand.rnd(55), Rand.rnd(Map.height()))
+   end
 end
 
 function maps.port_kapul(generator)
-    generator.load_custom("kapul")
+   generator.load_custom("kapul")
 
-    Map.data.max_crowd_density = 40
-    Map.data.user_map_flag = 0
+   Map.data.max_crowd_density = 40
+   Map.data.user_map_flag = 0
 
-    generator.place_player()
+   generator.place_player()
 
-    local charas = {
-       { 223, 15, 18, { role = 3 } },
-       { 243, 36, 27, { role = 3 } },
-       { 279, 5, 26, { role = 3 } },
-       { 297, 29, 3, { role = 3 } },
-       { 320, 24, 21, { role = 3 } },
-       { 320, 12, 26, { role = 3 } },
-       { 320, 8, 11, { role = 3 } },
-       { 326, 8, 14, { role = 3 } },
-       { "core.shopkeeper", 16, 17, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-       { "core.shopkeeper", 23, 7, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-       { "core.shopkeeper", 32, 14, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-       { "core.shopkeeper", 22, 14, { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
-       { "core.shopkeeper", 16, 25, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
-       { "core.shopkeeper", 17, 28, { role = 1002, shop_rank = 10, _name = "core.locale.chara.job.food_vendor" } },
-       { 41, 22, 22, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-       { "core.shopkeeper", 35, 3, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-       { 70, 15, 15, { role = 9 } },
-       { 73, 26, 3, { role = 10 } },
-       { 179, 25, 4, { role = 11 } },
-       { 38, 8, 12, { role = 6, _name = "core.locale.chara.job.of_port_kapul" } },
-       { 40, 16, 4, { role = 7, _name = "core.locale.chara.job.trainer" } },
-       { 41, 14, 4, { role = 5 } },
-       { 69, 17, 5, { role = 8 } },
-       { 74, 27, 11, { role = 12 } },
-       { 16, -3, 0, { _count = 2, role = 4 } },
-       { 39, -3, 0, { _count = 2, role = 4 } },
-       { 71, -3, 0, { _count = 4, role = 4 } },
-       { 76, -3, 0, { _count = 5, role = 14 } },
-       { 72, 7, 6, { role = 4 } },
-    }
+   local charas = {
+      { 223, 15, 18, { role = 3 } },
+      { 243, 36, 27, { role = 3 } },
+      { 279, 5, 26, { role = 3 } },
+      { 297, 29, 3, { role = 3 } },
+      { 320, 24, 21, { role = 3 } },
+      { 320, 12, 26, { role = 3 } },
+      { 320, 8, 11, { role = 3 } },
+      { 326, 8, 14, { role = 3 } },
+      { "core.shopkeeper", 16, 17, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { "core.shopkeeper", 23, 7, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { "core.shopkeeper", 32, 14, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { "core.shopkeeper", 22, 14, { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
+      { "core.shopkeeper", 16, 25, { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
+      { "core.shopkeeper", 17, 28, { role = 1002, shop_rank = 10, _name = "core.locale.chara.job.food_vendor" } },
+      { 41, 22, 22, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { "core.shopkeeper", 35, 3, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { 70, 15, 15, { role = 9 } },
+      { 73, 26, 3, { role = 10 } },
+      { 179, 25, 4, { role = 11 } },
+      { 38, 8, 12, { role = 6, _name = "core.locale.chara.job.of_port_kapul" } },
+      { 40, 16, 4, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { 41, 14, 4, { role = 5 } },
+      { 69, 17, 5, { role = 8 } },
+      { 74, 27, 11, { role = 12 } },
+      { 16, -3, 0, { _count = 2, role = 4 } },
+      { 39, -3, 0, { _count = 2, role = 4 } },
+      { 71, -3, 0, { _count = 4, role = 4 } },
+      { 76, -3, 0, { _count = 5, role = 14 } },
+      { 72, 7, 6, { role = 4 } },
+   }
 
-    -- TODO
-    generator.initialize_quest()
+   generator.update_quests_in_map()
 
-    for i=0,20 do
-       Map.generate_chara()
-    end
+   for i=0,20 do
+      Chara.generate_from_map()
+   end
 end
 
 function maps.fighters_guild(generator)
-    generator.load_custom("fighterguild")
+   generator.load_custom("fighterguild")
 
-    Map.data.tileset = 0
-    Map.data.indoors_flag = 1
-    Map.data.type = "Guild"
-    Map.data.max_crowd_density = 25
-    Map.data.bgm = "core.mcRuin"
-    Map.data.should_regenerate = 0
-    generator.set_name(I18N.get("core.locale.map.unique.fighters_guild.name"))
+   Map.data.tileset = 0
+   Map.data.is_indoors = true
+   Map.data.type = "Guild"
+   Map.data.max_crowd_density = 25
+   Map.data.bgm = "core.mcRuin"
+   Map.data.should_regenerate = 0
+   generator.set_name(I18N.get("core.locale.map.unique.fighters_guild.name"))
 
-    generator.place_player()
+   generator.place_player()
 
-    local charas = {
-       { 291, 27, 4, { role = 3 } },
-       { 74, 28, 10, { role = 12 } },
-       { 40, 15, 10, { role = 7, _name = "core.locale.chara.job.trainer" } },
-       { 41, 14, 18, { role = 5 } },
-       { 1, 29, 15, { role = 1001, shop_rank = 12, "core.locale.chara.job.armory" } },
-       { 295, -3, 0 },
-    }
+   local charas = {
+      { 291, 27, 4, { role = 3 } },
+      { 74, 28, 10, { role = 12 } },
+      { 40, 15, 10, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { 41, 14, 18, { role = 5 } },
+      { 1, 29, 15, { role = 1001, shop_rank = 12, "core.locale.chara.job.armory" } },
+      { 295, -3, 0 },
+   }
 
-    create_charas(charas)
+   create_charas(charas)
 end
 
 function maps.doom_ground(generator)
-    generator.load_custom("sqkamikaze")
+   generator.load_custom("sqkamikaze")
 
-    Map.data.tileset = 0
-    Map.data.indoors_flag = 2
-    Map.data.type = "Dungeon"
-    Map.data.max_crowd_density = 0
-    Map.data.bgm = "core.mcPuti"
-    Map.data.should_regenerate = true
-    Map.data.refresh_type = 0
-    generator.set_name(I18N.get("core.locale.map.unique.doom_ground.name"))
+   Map.data.tileset = 0
+   Map.data.is_indoors = false
+   Map.data.type = "Dungeon"
+   Map.data.max_crowd_density = 0
+   Map.data.bgm = "core.mcPuti"
+   Map.data.should_regenerate = true
+   Map.data.refresh_type = 0
+   generator.set_name(I18N.get("core.locale.map.unique.doom_ground.name"))
 
-    -- TODO
-    -- game_data.quest_flags.duration_of_kamikaze_attack = 0
-    generator.set_entrance_type(4)
-    generator.place_player()
+   -- TODO
+   -- game_data.quest_flags.duration_of_kamikaze_attack = 0
+   generator.set_entrance_type("Center")
+   generator.place_player()
 
-    for i=0, 10 do
-       local chara = Chara.create(204, Chara.player().position, 204)
-       chara.relationship = "Friend"
-       chara.original_relationship = "Friend"
-    end
+   for i=0, 10 do
+      local chara = Chara.create(204, Chara.player().position, 204)
+      chara.relationship = "Friend"
+      chara.original_relationship = "Friend"
+   end
 
-    -- TODO
-    -- noaggrorefresh = 1
+   generator.set_no_aggro_refresh(true)
 end
 
 function maps.vernis(generator)
-    generator.load_custom("vernis")
+   generator.load_custom("vernis")
 
-    Map.data.max_crowd_density = 40
-    Map.data.user_map_flag = 0
+   Map.data.max_crowd_density = 40
+   Map.data.user_map_flag = 0
 
-    generator.place_player()
+   generator.place_player()
 
-    -- TODO
-    -- if (game_data.quest_flags.thieves_hideout)
-    -- {
-    --     cell_featset(48, 5, tile_downstairs, 11, 4)
-    -- }
+   -- TODO
+   -- if (game_data.quest_flags.thieves_hideout)
+   -- {
+   --     cell_featset(48, 5, tile_downstairs, 11, 4)
+   -- }
 
-    local charas = {
-       { 28, 39, 3 },
-       { 29, 42, 23, { role = 3 } },
-       { 30, 24, 5, { role = 3 } },
-       { 31, 40, 24, { role = 3 } },
-       { 32, 40, 25, { role = 3 } },
-       { 226, 30, 5, { role = 3 } },
-       { 326, 42, 24, { role = 3 } },
-       -- TODO
-       -- if (game_data.quest_flags.puppys_cave == 1000)
-       -- {
-       --     { 225, 31, 4, { role = 3 } },
-       -- }
-       { 1, 47, 9, { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
-       { 1, 14, 12, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-       { 1, 39, 27, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-       { 1, 10, 15, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-       { 41, 7, 26, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
-       { 1, 14, 25, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-       { 1, 22, 26, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
-       { 41, 28, 16, { role = 5 } },
-       { 70, 38, 27, { role = 9 } },
-       { 74, 6, 25, { role = 12 } },
-       { 38, 10, 7, { role = 6, _name = "core.locale.chara.job.of_vernis" } },
-       { 40, 27, 16, { role = 7, _name = "core.locale.chara.job.trainer" } },
-       { 69, 25, 16, { role = 8 } },
-       { 16, -3, 0, { _count = 4, role = 4 } },
-       { 39, -3, 0, { _count = 4, role = 4 } },
-       { 77, -3, 0, { _count = 4, role = 14 } },
-    }
+   local charas = {
+      { 28, 39, 3 },
+      { 29, 42, 23, { role = 3 } },
+      { 30, 24, 5, { role = 3 } },
+      { 31, 40, 24, { role = 3 } },
+      { 32, 40, 25, { role = 3 } },
+      { 226, 30, 5, { role = 3 } },
+      { 326, 42, 24, { role = 3 } },
+      -- TODO
+      -- if (game_data.quest_flags.puppys_cave == 1000)
+      -- {
+      --     { 225, 31, 4, { role = 3 } },
+      -- }
+      { 1, 47, 9, { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
+      { 1, 14, 12, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { 1, 39, 27, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+      { 1, 10, 15, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+      { 41, 7, 26, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+      { 1, 14, 25, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+      { 1, 22, 26, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { 41, 28, 16, { role = 5 } },
+      { 70, 38, 27, { role = 9 } },
+      { 74, 6, 25, { role = 12 } },
+      { 38, 10, 7, { role = 6, _name = "core.locale.chara.job.of_vernis" } },
+      { 40, 27, 16, { role = 7, _name = "core.locale.chara.job.trainer" } },
+      { 69, 25, 16, { role = 8 } },
+      { 16, -3, 0, { _count = 4, role = 4 } },
+      { 39, -3, 0, { _count = 4, role = 4 } },
+      { 77, -3, 0, { _count = 4, role = 14 } },
+   }
 
-    generator.initialize_quest()
+   generator.update_quests_in_map()
 
-    for i=0,25 do
-       Map.generate_chara()
-    end
+   for i=0,25 do
+      Chara.generate_from_map()
+   end
 end
 
 function maps.the_mine(generator)
-    generator.load_custom("puti")
+   generator.load_custom("puti")
 
-    Map.data.tileset = 0
-    Map.data.indoors_flag = 1
-    Map.data.type = "Dungeon"
-    Map.data.max_crowd_density = 0
-    Map.data.bgm = "core.mcPuti"
-    Map.data.should_regenerate = true
-    generator.set_name(I18N.get("core.locale.map.unique.the_mine.name"))
+   Map.data.tileset = 0
+   Map.data.is_indoors = true
+   Map.data.type = "Dungeon"
+   Map.data.max_crowd_density = 0
+   Map.data.bgm = "core.mcPuti"
+   Map.data.should_regenerate = true
+   generator.set_name(I18N.get("core.locale.map.unique.the_mine.name"))
 
-    -- TODO
-    -- quest_place_target()
+   generator.mark_quest_targets()
 
-    generator.place_player()
+   generator.place_player()
 end
 
 function maps.robbers_hideout(generator)
-    generator.load_custom("sqrogue")
+   generator.load_custom("sqrogue")
 
-    Map.data.tileset = 0
-    Map.data.indoors_flag = 1
-    Map.data.type = "Dungeon"
-    Map.data.max_crowd_density = 0
-    Map.data.bgm = "core.mcPuti"
-    Map.data.should_regenerate = true
-    generator.set_name(I18N.get("core.locale.map.unique.robbers_hideout.name"))
+   Map.data.tileset = 0
+   Map.data.is_indoors = true
+   Map.data.type = "Dungeon"
+   Map.data.max_crowd_density = 0
+   Map.data.bgm = "core.mcPuti"
+   Map.data.should_regenerate = true
+   generator.set_name(I18N.get("core.locale.map.unique.robbers_hideout.name"))
 
-    -- TODO
-    -- quest_place_target()
+   generator.mark_quest_targets()
 
-    generator.place_player()
+   generator.place_player()
 end
 
 function maps.test_site(generator)
-    generator.load_custom("sqNightmare")
+   generator.load_custom("sqNightmare")
 
-    Map.data.tileset = 0
-    Map.data.indoors_flag = 1
-    Map.data.type = "Dungeon"
-    Map.data.max_crowd_density = 0
-    Map.data.bgm = 61
-    Map.data.should_regenerate = 1
-    generator.set_name(I18N.get("core.locale.map.unique.test_site.name"))
+   Map.data.tileset = 0
+   Map.data.is_indoors = true
+   Map.data.type = "Dungeon"
+   Map.data.max_crowd_density = 0
+   Map.data.bgm = 61
+   Map.data.should_regenerate = 1
+   generator.set_name(I18N.get("core.locale.map.unique.test_site.name"))
 
-    -- TODO
-    -- quest_place_target()
+   generator.mark_quest_targets()
 
-    generator.set_entrance_type(7)
-    generator.place_player(6, 27)
+   generator.place_player(6, 27)
 end
 
 function maps.fields_forest(generator)
@@ -1153,8 +1160,7 @@ function maps.fields_grassland(generator)
    Map.spray_tile(4, 2)
    Map.spray_tile(5, 2)
    for i=0, 10 + Rand.rnd(10) do
-      -- TODO
-      local item = Item.create(-1, -1, { flttypemajor = 80000 } )
+      local item = Item.create(-1, -1, { flttypemajor = 80000 })
       item.own_state = 1
    end
 end
@@ -1189,57 +1195,55 @@ end
 
 function maps.fields_plain_field(generator)
    generator.set_name(I18N.get_enum_property("core.locale.map.unique", "plain_field", 2))
-    Map.spray_tile(1, 10)
-    Map.spray_tile(2, 2)
-    Map.spray_tile(3, 2)
-    Map.spray_tile(4, 2)
-    Map.spray_tile(5, 2)
-    Map.spray_tile(6, 2)
-    for i=0, 5 + Rand.rnd(5) do
-        local item = Item.create(-1, 0, -1, -1, { flttypemajor = 80000 })
-        item.own_state = 1
-    end
+   Map.spray_tile(1, 10)
+   Map.spray_tile(2, 2)
+   Map.spray_tile(3, 2)
+   Map.spray_tile(4, 2)
+   Map.spray_tile(5, 2)
+   Map.spray_tile(6, 2)
+   for i=0, 5 + Rand.rnd(5) do
+      local item = Item.create(-1, 0, -1, -1, { flttypemajor = 80000 })
+      item.own_state = 1
+   end
 end
 
-local TILE_DEFAULT = 396
-
 function maps.fields(generator)
-    Map.data.max_crowd_density = 4
-    Map.data.is_user_map = false
-    generator.create(34, 22)
+   Map.data.max_crowd_density = 4
+   Map.data.is_user_map = false
+   generator.create(34, 22)
 
-    for i=0, Map.height() do
-       for j=0, Map.width() do
-          -- TODO
-          Map.set_tile = TILE_DEFAULT + 1
-       end
-    end
+   for i=0, Map.height() do
+      for j=0, Map.width() do
+         -- TODO
+         Map.set_tile(i, j, TILE_DEFAULT)
+      end
+   end
 
-    generator.set_name("")
+   generator.set_name("")
 
-    local stood_tile = generator.stood_world_map_tile()
+   local stood_tile = generator.stood_world_map_tile
 
-    if 4 <= stood_tile and stood_tile < 9 then
-       maps.fields_forest(generator)
-    elseif 264 <= stood_tile and stood_tile < 363 then
-       maps.fields_sea(generator)
-    elseif 9 <= stood_tile and stood_tile < 13 then
-       maps.fields_grassland(generator)
-    elseif 13 <= stood_tile and stood_tile < 17 then
-       maps.fields_desert(generator)
-    elseif Map.chip_type(stood_tile) == 4 then
-       maps.fields_snow_field(generator)
-    else
-       maps.fields_plain_field(generator)
-    end
+   if 4 <= stood_tile and stood_tile < 9 then
+      maps.fields_forest(generator)
+   elseif 264 <= stood_tile and stood_tile < 363 then
+      maps.fields_sea(generator)
+   elseif 9 <= stood_tile and stood_tile < 13 then
+      maps.fields_grassland(generator)
+   elseif 13 <= stood_tile and stood_tile < 17 then
+      maps.fields_desert(generator)
+   elseif Map.chip_type(stood_tile) == 4 then
+      maps.fields_snow_field(generator)
+   else
+      maps.fields_plain_field(generator)
+   end
 
-    generator.place_player()
+   generator.place_player()
 
-    if 264 > stood_tile or stood_tile >= 363 then
-        for i=0, 4 + Rand.rnd(5) do
-            Item.create(-1, -1, { flttypeminor = 64000 } )
-        end
-    end
+   if 264 > stood_tile or stood_tile >= 363 then
+      for i=0, 4 + Rand.rnd(5) do
+         Item.create(-1, -1, { flttypeminor = 64000 })
+      end
+   end
 end
 
 function maps.the_void(generator)
@@ -1299,7 +1303,7 @@ function maps.pyramid(generator)
       Map.data.bgm = "core.mcPuti"
       generator.place_player()
       for i=0, Map.data.max_crowd_density + 1 do
-         Map.generate_chara()
+         Chara.generate_from_map()
       end
    elseif Map.current_dungeon_level == 21 then
       generator.load_custom("sqPyramid2")
@@ -1307,6 +1311,19 @@ function maps.pyramid(generator)
       Map.data.bgm = "core.mcPuti"
       generator.place_player()
    end
+end
+
+function maps.mountain_pass(generator)
+   generator.generate_nefia()
+end
+
+function maps.quest(generator)
+   -- Internally, generates the appropriate map based on quest type.
+   generator.generate_nefia()
+end
+
+function maps.show_house()
+   -- no-op
 end
 
 return maps

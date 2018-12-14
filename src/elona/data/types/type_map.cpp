@@ -42,6 +42,7 @@ MapDefData MapDefDB::convert(
     DATA_OPT_OR(prevents_random_events, bool, false);
     DATA_OPT_OR(villagers_make_snowmen, bool, false);
 
+    DATA_REQ_FUNC(generator);
     DATA_OPT_FUNC(chara_filter);
 
     Position outer_map_position_{outer_map_position.get<int>("x"),
@@ -82,6 +83,7 @@ MapDefData MapDefDB::convert(
                       prevents_random_events,
                       villagers_make_snowmen,
 
+                      generator,
                       chara_filter};
 }
 

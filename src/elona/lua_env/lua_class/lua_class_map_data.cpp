@@ -184,6 +184,16 @@ void LuaMapData::bind(sol::state& lua)
         "stair_down_pos", sol::property([](MapData& d) {
             return Position{d.stair_down_pos % 1000, d.stair_down_pos / 1000};
         }));
+    LuaMapData.set(
+        "is_indoors",
+        sol::property(
+            [](MapData& d) { return d.indoors_flag == 1; },
+            [](MapData& d, bool flag) { d.indoors_flag = flag ? 1 : 2; }));
+    LuaMapData.set(
+        "is_indoors",
+        sol::property(
+            [](MapData& d) { return d.indoors_flag == 1; },
+            [](MapData& d, bool flag) { d.indoors_flag = flag ? 1 : 2; }));
 
     /**
      * @luadoc bgm field core.music

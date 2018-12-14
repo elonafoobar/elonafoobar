@@ -24,13 +24,17 @@ int count();
 
 sol::optional<LuaCharacterHandle> player();
 
-sol::optional<LuaCharacterHandle> create(const Position&, int);
-sol::optional<LuaCharacterHandle> create_xy(int, int, int);
+sol::optional<LuaCharacterHandle> create_random(const Position&);
+sol::optional<LuaCharacterHandle> create_random_xy(int, int);
 sol::optional<LuaCharacterHandle> create_from_id(
     const Position&,
     const std::string&);
 sol::optional<LuaCharacterHandle>
 create_from_id_xy(int, int, const std::string&);
+
+sol::optional<LuaCharacterHandle> generate_from_map();
+sol::optional<LuaCharacterHandle> generate_from_map_pos(const Position&);
+sol::optional<LuaCharacterHandle> generate_from_map_xy(int, int);
 
 int kill_count(const std::string&);
 

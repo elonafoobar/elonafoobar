@@ -63,9 +63,24 @@ void LuaMapGenerator::set_entrance_type(const EnumString& type)
         LuaEnums::MapEntranceTypeTable.ensure_from_string(type);
 }
 
+void LuaMapGenerator::set_no_aggro_refresh(bool flag)
+{
+    noaggrorefresh = flag ? 1 : 0;
+}
+
 bool LuaMapGenerator::is_first_generation()
 {
     return mapupdate == 0;
+}
+
+void LuaMapGenerator::update_quests_in_map()
+{
+    quest_on_map_initialize();
+}
+
+void LuaMapGenerator::mark_quest_targets()
+{
+    quest_place_target();
 }
 
 void LuaMapGenerator::initialize_world_map()
@@ -78,12 +93,29 @@ void LuaMapGenerator::place_player()
     map_placeplayer();
 }
 
+void LuaMapGenerator::place_player_xy(int x, int y)
+{
+    // Set the entrance type to "Specified" as a specific position was
+    // requested.
+    game_data.entrance_type = 7;
+
+    mapstartx = x;
+    mapstarty = y;
+    map_placeplayer();
+}
+
 
 void LuaMapGenerator::bind(sol::state& lua)
 {
     auto LuaMapGenerator = lua.create_simple_usertype<MapGenerator>();
 
-    LuaMapGenerator.set("stood_world_map_tile", &LuaMapGenerator::create);
+    LuaMapGenerator.set(
+        "stood_world_map_tile",
+        sol::readonly(&LuaMapGenerator::stood_world_map_tile));
+    LuaMapGenerator.set(
+        "is_first_generation",
+        sol::readonly(&LuaMapGenerator::is_first_generation));
+
     LuaMapGenerator.set("create", &LuaMapGenerator::create);
     LuaMapGenerator.set("load_custom", &LuaMapGenerator::load_custom);
     LuaMapGenerator.set("set_tileset", &LuaMapGenerator::set_tileset);
@@ -95,9 +127,14 @@ void LuaMapGenerator::bind(sol::state& lua)
         "set_stair_down_pos", &LuaMapGenerator::set_stair_down_pos);
     LuaMapGenerator.set(
         "set_entrance_type", &LuaMapGenerator::set_entrance_type);
-    LuaMapGenerator.set("place_player", &LuaMapGenerator::place_player);
     LuaMapGenerator.set(
-        "is_first_generation", &LuaMapGenerator::is_first_generation);
+        "place_player",
+        sol::overload(
+            &LuaMapGenerator::place_player, &LuaMapGenerator::place_player_xy));
+    LuaMapGenerator.set(
+        "update_quests_in_map", &LuaMapGenerator::update_quests_in_map);
+    LuaMapGenerator.set(
+        "mark_quest_targets", &LuaMapGenerator::mark_quest_targets);
     LuaMapGenerator.set(
         "initialize_world_map", &LuaMapGenerator::initialize_world_map);
 

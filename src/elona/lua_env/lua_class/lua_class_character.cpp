@@ -685,6 +685,13 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("karma", &Character::karma);
 
     /**
+     * @luadoc enemy_id field num
+     *
+     * [RW] The index of a character this character is targeting..
+     */
+    LuaCharacter.set("enemy_id", &Character::enemy_id);
+
+    /**
      * @luadoc portrait field string
      *
      * [RW] The character's current image.
