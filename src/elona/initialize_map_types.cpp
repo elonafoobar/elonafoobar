@@ -19,10 +19,6 @@
 namespace elona
 {
 
-static void _init_map_shelter()
-{
-}
-
 static void _init_map_nefia()
 {
     if (game_data.current_dungeon_level ==
@@ -30,78 +26,6 @@ static void _init_map_nefia()
     {
         event_add(4);
     }
-}
-
-static void _init_map_museum()
-{
-}
-
-static void _init_map_shop()
-{
-}
-
-static void _init_map_crop()
-{
-}
-
-static void _init_map_ranch()
-{
-}
-
-static void _init_map_your_dungeon()
-{
-}
-
-static void _init_map_storage_house()
-{
-}
-
-static void _init_map_test_site()
-{
-}
-
-static void _init_map_lumiest_graveyard()
-{
-}
-
-static void _init_map_jail()
-{
-}
-
-static void _init_map_truce_ground()
-{
-}
-
-static void _init_map_embassy()
-{
-}
-
-static void _init_map_test_world_north_border()
-{
-}
-
-static void _init_map_tyris_border()
-{
-}
-
-static void _init_map_the_smoke_and_pipe()
-{
-}
-
-static void _init_map_miral_and_garoks_workshop()
-{
-}
-
-static void _init_map_mansion_of_younger_sister()
-{
-}
-
-static void _init_map_cyber_dome()
-{
-}
-
-static void _init_map_larna()
-{
 }
 
 static void _init_map_arena()
@@ -220,18 +144,6 @@ static void _init_map_pet_arena()
     }
 }
 
-static void _init_map_fort_of_chaos_beast()
-{
-}
-
-static void _init_map_fort_of_chaos_machine()
-{
-}
-
-static void _init_map_fort_of_chaos_collapsed()
-{
-}
-
 static void _initialize_home_mdata()
 {
     switch (game_data.home_scale)
@@ -277,22 +189,6 @@ static void _init_map_your_home()
     }
 
     _initialize_home_mdata();
-}
-
-static void _init_map_north_tyris()
-{
-}
-
-static void _init_map_south_tyris()
-{
-}
-
-static void _init_map_test_world()
-{
-}
-
-static void _init_map_derphy()
-{
 }
 
 static void _init_map_palmia()
@@ -539,22 +435,6 @@ static void _init_map_lesimas()
     }
 }
 
-static void _init_map_tower_of_fire()
-{
-}
-
-static void _init_map_crypt_of_the_damned()
-{
-}
-
-static void _init_map_ancient_castle()
-{
-}
-
-static void _init_map_dragons_nest()
-{
-}
-
 static void _init_map_puppy_cave()
 {
     if (game_data.current_dungeon_level ==
@@ -614,10 +494,6 @@ static void _init_map_yeeks_nest()
     }
 }
 
-static void _init_map_pyramid()
-{
-}
-
 
 static void _generate_map_from_lua(const MapDefData& map)
 {
@@ -663,41 +539,12 @@ void initialize_map_from_map_type()
     switch (map_id_b)
     {
         // clang-format off
-    case MapId::shelter_:                   _init_map_shelter();                   break;
     case MapId::random_dungeon:             _init_map_nefia();                     break;
-    case MapId::museum:                     _init_map_museum();                    break;
-    case MapId::shop:                       _init_map_shop();                      break;
-    case MapId::crop:                       _init_map_crop();                      break;
-    case MapId::ranch:                      _init_map_ranch();                     break;
-    case MapId::your_dungeon:               _init_map_your_dungeon();              break;
-    case MapId::storage_house:              _init_map_storage_house();             break;
 
     case MapId::quest:                      generate_random_nefia();               break;
-    case MapId::test_site:                  _init_map_test_site();                 break;
-    case MapId::lumiest_graveyard:          _init_map_lumiest_graveyard();         break;
-    case MapId::jail:                       _init_map_jail();                      break;
-    case MapId::truce_ground:               _init_map_truce_ground();              break;
-    case MapId::embassy:                    _init_map_embassy();                   break;
-    case MapId::test_world_north_border:    _init_map_test_world_north_border();   break;
-    case MapId::north_tyris_south_border:
-    case MapId::south_tyris_north_border:
-        _init_map_tyris_border();
-        break;
-    case MapId::the_smoke_and_pipe:         _init_map_the_smoke_and_pipe();        break;
-    case MapId::miral_and_garoks_workshop:  _init_map_miral_and_garoks_workshop(); break;
-    case MapId::mansion_of_younger_sister:  _init_map_mansion_of_younger_sister(); break;
-    case MapId::cyber_dome:                 _init_map_cyber_dome();                break;
-    case MapId::larna:                      _init_map_larna();                     break;
     case MapId::arena:                      _init_map_arena();                     break;
     case MapId::pet_arena:                  _init_map_pet_arena();                 break;
-    case MapId::fort_of_chaos_beast:        _init_map_fort_of_chaos_beast();       break;
-    case MapId::fort_of_chaos_machine:      _init_map_fort_of_chaos_machine();     break;
-    case MapId::fort_of_chaos_collapsed:    _init_map_fort_of_chaos_collapsed();   break;
     case MapId::your_home:                  _init_map_your_home();                 break;
-    case MapId::north_tyris:                _init_map_north_tyris();               break;
-    case MapId::south_tyris:                _init_map_south_tyris();               break;
-    case MapId::test_world:                 _init_map_test_world();                break;
-    case MapId::derphy:                     _init_map_derphy();                    break;
     case MapId::palmia:                     _init_map_palmia();                    break;
     case MapId::lumiest:                    _init_map_lumiest();                   break;
     case MapId::yowyn:                      _init_map_yowyn();                     break;
@@ -708,14 +555,9 @@ void initialize_map_from_map_type()
     case MapId::fields:                     _init_map_fields();                    break;
     case MapId::the_void:                   _init_map_the_void();                  break;
     case MapId::lesimas:                    _init_map_lesimas();                   break;
-    case MapId::tower_of_fire:              _init_map_tower_of_fire();             break;
-    case MapId::crypt_of_the_damned:        _init_map_crypt_of_the_damned();       break;
-    case MapId::ancient_castle:             _init_map_ancient_castle();            break;
-    case MapId::dragons_nest:               _init_map_dragons_nest();              break;
     case MapId::puppy_cave:                 _init_map_puppy_cave();                break;
     case MapId::minotaurs_nest:             _init_map_minotaurs_nest();            break;
     case MapId::yeeks_nest:                 _init_map_yeeks_nest();                break;
-    case MapId::pyramid:                    _init_map_pyramid();                   break;
     case MapId::mountain_pass:              generate_random_nefia();               break;
     case MapId::show_house:
     case MapId::none:
