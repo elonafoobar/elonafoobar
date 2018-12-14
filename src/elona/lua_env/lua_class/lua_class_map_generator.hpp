@@ -18,6 +18,10 @@ void create(int width, int height);
 
 void load_custom(const std::string& name);
 
+void set_tileset(int tileset);
+
+bool is_deepest_level();
+
 void generate_nefia();
 
 void set_name(const std::string& name);

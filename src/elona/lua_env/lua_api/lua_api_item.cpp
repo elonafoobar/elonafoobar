@@ -176,6 +176,11 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
         flttypeminor = *it;
     }
 
+    if (auto it = args.get<sol::optional<int>>("fltselect"))
+    {
+        fltselect = *it;
+    }
+
     if (auto it = args.get<sol::optional<std::string>>("fltn"))
     {
         fltn(*it);

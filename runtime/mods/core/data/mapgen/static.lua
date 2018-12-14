@@ -2,6 +2,7 @@ local Chara = Elona.require("Chara")
 local I18N = Elona.require("I18N")
 local Item = Elona.require("Item")
 local Map = Elona.require("Map")
+local Rand = Elona.require("Rand")
 local World = Elona.require("World")
 local table = Elona.require("table")
 
@@ -866,7 +867,7 @@ function maps.noyel(generator)
     local charas = {
        -- TODO
        { 202, 46, 18, { role = 3 } },
-       -- game_data.fire_giant = rc;
+       -- game_data.fire_giant = rc
        { 203, 47, 18, { role = 1015 } },
        { 35, 47, 20, { role = 3 } },
        { 35, 45, 19, { role = 3 } },
@@ -973,9 +974,9 @@ function maps.fighters_guild(generator)
 
     Map.data.tileset = 0
     Map.data.indoors_flag = 1
-    Map.data.type = static_cast<int>(mdata_t::MapType::guild)
+    Map.data.type = "Guild"
     Map.data.max_crowd_density = 25
-    Map.data.bgm = 79
+    Map.data.bgm = "core.mcRuin"
     Map.data.should_regenerate = 0
     generator.set_name(I18N.get("core.locale.map.unique.fighters_guild.name"))
 
@@ -987,7 +988,7 @@ function maps.fighters_guild(generator)
        { 40, 15, 10, { role = 7, _name = "core.locale.chara.job.trainer" } },
        { 41, 14, 18, { role = 5 } },
        { 1, 29, 15, { role = 1001, shop_rank = 12, "core.locale.chara.job.armory" } },
-       { 295, -3, 0, {} },
+       { 295, -3, 0 },
     }
 
     create_charas(charas)
@@ -1034,70 +1035,278 @@ function maps.vernis(generator)
     --     cell_featset(48, 5, tile_downstairs, 11, 4)
     -- }
 
-    {
-    { 28, 39, 3, {} },
-    { 29, 42, 23, { role = 3 } },
-    { 30, 24, 5, { role = 3 } },
-    { 31, 40, 24, { role = 3 } },
-    { 32, 40, 25, { role = 3 } },
-    { 226, 30, 5, { role = 3 } },
-    { 326, 42, 24, { role = 3 } },
+    local charas = {
+       { 28, 39, 3 },
+       { 29, 42, 23, { role = 3 } },
+       { 30, 24, 5, { role = 3 } },
+       { 31, 40, 24, { role = 3 } },
+       { 32, 40, 25, { role = 3 } },
+       { 226, 30, 5, { role = 3 } },
+       { 326, 42, 24, { role = 3 } },
+       -- TODO
+       -- if (game_data.quest_flags.puppys_cave == 1000)
+       -- {
+       --     { 225, 31, 4, { role = 3 } },
+       -- }
+       { 1, 47, 9, { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
+       { 1, 14, 12, { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+       { 1, 39, 27, { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
+       { 1, 10, 15, { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
+       { 41, 7, 26, { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
+       { 1, 14, 25, { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
+       { 1, 22, 26, { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+       { 41, 28, 16, { role = 5 } },
+       { 70, 38, 27, { role = 9 } },
+       { 74, 6, 25, { role = 12 } },
+       { 38, 10, 7, { role = 6, _name = "core.locale.chara.job.of_vernis" } },
+       { 40, 27, 16, { role = 7, _name = "core.locale.chara.job.trainer" } },
+       { 69, 25, 16, { role = 8 } },
+       { 16, -3, 0, { _count = 4, role = 4 } },
+       { 39, -3, 0, { _count = 4, role = 4 } },
+       { 77, -3, 0, { _count = 4, role = 14 } },
+    }
+
+    generator.initialize_quest()
+
+    for i=0,25 do
+       Map.generate_chara()
+    end
+end
+
+function maps.the_mine(generator)
+    generator.load_custom("puti")
+
+    Map.data.tileset = 0
+    Map.data.indoors_flag = 1
+    Map.data.type = "Dungeon"
+    Map.data.max_crowd_density = 0
+    Map.data.bgm = "core.mcPuti"
+    Map.data.should_regenerate = true
+    generator.set_name(I18N.get("core.locale.map.unique.the_mine.name"))
+
     -- TODO
-    -- if (game_data.quest_flags.puppys_cave == 1000)
-    -- {
-    --     { 225, 31, 4, { role = 3 } },
-    -- }
-    { 1, 47, 9, { role = 1014 } },
-    cdata[rc].shop_rank = 5
-    cdatan(0, rc) = snfish(cdatan(0, rc))
-    { 1, 14, 12, { role = 1001 } },
-    cdata[rc].shop_rank = 12
-    cdatan(0, rc) = snarmor(cdatan(0, rc))
-    { 1, 39, 27, { role = 1009 } },
-    cdata[rc].shop_rank = 12
-    cdatan(0, rc) = sntrade(cdatan(0, rc))
-    { 1, 10, 15, { role = 1006 } },
-    cdata[rc].shop_rank = 10
-    cdatan(0, rc) = sngeneral(cdatan(0, rc))
-    { 41, 7, 26, { role = 1004 } },
-    cdata[rc].shop_rank = 11
-    cdatan(0, rc) = snmagic(cdatan(0, rc))
-    { 1, 14, 25, { role = 1005 } },
-    cdata[rc].shop_rank = 8
-    cdatan(0, rc) = sninn(cdatan(0, rc))
-    { 1, 22, 26, { role = 1003 } },
-    cdata[rc].shop_rank = 9
-    cdatan(0, rc) = snbakery(cdatan(0, rc))
-    cdata[rc].image = 138
-    { 41, 28, 16, { role = 5 } },
-    { 70, 38, 27, { role = 9 } },
-    { 74, 6, 25, { role = 12 } },
-    { 38, 10, 7, { role = 6 } },
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_vernis", cdatan(0, rc))
-    { 40, 27, 16, { role = 7 } },
-    cdatan(0, rc) = sntrainer(cdatan(0, rc))
-    { 69, 25, 16, { role = 8 } },
-    for (int cnt = 0; cnt < 4; ++cnt)
-    {
-        chara_create(-1, 16, -3, 0)
-        cdata[rc].character_role = 4
-        chara_create(-1, 39, -3, 0)
-        cdata[rc].character_role = 4
-    }
-    for (int cnt = 0; cnt < 4; ++cnt)
-    {
-        chara_create(-1, 77, -3, 0)
-        cdata[rc].character_role = 14
-    }
-    }
-    quest_on_map_initialize()
-    for (int cnt = 0; cnt < 25; ++cnt)
-    {
-        dbid = 0
-        map_set_chara_generation_filter()
-        chara_create(-1, dbid, -3, 0)
-    }
+    -- quest_place_target()
+
+    generator.place_player()
+end
+
+function maps.robbers_hideout(generator)
+    generator.load_custom("sqrogue")
+
+    Map.data.tileset = 0
+    Map.data.indoors_flag = 1
+    Map.data.type = "Dungeon"
+    Map.data.max_crowd_density = 0
+    Map.data.bgm = "core.mcPuti"
+    Map.data.should_regenerate = true
+    generator.set_name(I18N.get("core.locale.map.unique.robbers_hideout.name"))
+
+    -- TODO
+    -- quest_place_target()
+
+    generator.place_player()
+end
+
+function maps.test_site(generator)
+    generator.load_custom("sqNightmare")
+
+    Map.data.tileset = 0
+    Map.data.indoors_flag = 1
+    Map.data.type = "Dungeon"
+    Map.data.max_crowd_density = 0
+    Map.data.bgm = 61
+    Map.data.should_regenerate = 1
+    generator.set_name(I18N.get("core.locale.map.unique.test_site.name"))
+
+    -- TODO
+    -- quest_place_target()
+
+    generator.set_entrance_type(7)
+    generator.place_player(6, 27)
+end
+
+function maps.fields_forest(generator)
+   generator.set_name(I18N.get_enum_property("core.locale.map.unique", "forest", 2))
+   Map.spray_tile(8, 25)
+   Map.spray_tile(0, 10)
+   Map.spray_tile(1, 4)
+   Map.spray_tile(4, 2)
+   for i=0, 20 + Rand.rnd(20) do
+      local item = Item.create(-1, -1, { flttypemajor = 80000 })
+      item.own_state = 1
+      Map.set_tile(item.position, 0)
+   end
+end
+
+function maps.fields_sea(generator)
+   generator.set_name(I18N.get_enum_property("core.locale.map.unique", "sea", 2))
+end
+
+function maps.fields_grassland(generator)
+   generator.set_name(I18N.get_enum_property("core.locale.map.unique", "grassland", 2))
+   Map.spray_tile(9, 10)
+   Map.spray_tile(10, 10)
+   Map.spray_tile(0, 30)
+   Map.spray_tile(1, 4)
+   Map.spray_tile(4, 2)
+   Map.spray_tile(3, 2)
+   Map.spray_tile(4, 2)
+   Map.spray_tile(5, 2)
+   for i=0, 10 + Rand.rnd(10) do
+      -- TODO
+      local item = Item.create(-1, -1, { flttypemajor = 80000 } )
+      item.own_state = 1
+   end
+end
+
+function maps.fields_desert(generator)
+   generator.set_name(I18N.get_enum_property("core.locale.map.unique", "desert", 2))
+   Map.spray_tile(18, 25)
+   Map.spray_tile(17, 10)
+   Map.spray_tile(19, 2)
+   Map.spray_tile(20, 4)
+   Map.spray_tile(21, 2)
+   for i=0, 4 + Rand.rnd(4) do
+      local item = Item.create(-1, -1, 527)
+      item.own_state = 1
+   end
+end
+
+function maps.fields_snow_field(generator)
+   generator.set_name(I18N.get_enum_property("core.locale.map.unique", "snow_field", 2))
+   Map.spray_tile(57, 4)
+   Map.spray_tile(56, 4)
+   Map.spray_tile(49, 2)
+   Map.spray_tile(46, 1)
+   Map.spray_tile(47, 1)
+   Map.spray_tile(48, 1)
+   Map.spray_tile(51, 1)
+   for i=0, 3 + Rand.rnd(5) do
+      local item = Item.create(-1, -1, { flttypemajor = 80000, fltselect = 8 })
+      item.own_state = 1
+   end
+end
+
+function maps.fields_plain_field(generator)
+   generator.set_name(I18N.get_enum_property("core.locale.map.unique", "plain_field", 2))
+    Map.spray_tile(1, 10)
+    Map.spray_tile(2, 2)
+    Map.spray_tile(3, 2)
+    Map.spray_tile(4, 2)
+    Map.spray_tile(5, 2)
+    Map.spray_tile(6, 2)
+    for i=0, 5 + Rand.rnd(5) do
+        local item = Item.create(-1, 0, -1, -1, { flttypemajor = 80000 })
+        item.own_state = 1
+    end
+end
+
+local TILE_DEFAULT = 396
+
+function maps.fields(generator)
+    Map.data.max_crowd_density = 4
+    Map.data.is_user_map = false
+    generator.create(34, 22)
+
+    for i=0, Map.height() do
+       for j=0, Map.width() do
+          -- TODO
+          Map.set_tile = TILE_DEFAULT + 1
+       end
+    end
+
+    generator.set_name("")
+
+    local stood_tile = generator.stood_world_map_tile()
+
+    if 4 <= stood_tile and stood_tile < 9 then
+       maps.fields_forest(generator)
+    elseif 264 <= stood_tile and stood_tile < 363 then
+       maps.fields_sea(generator)
+    elseif 9 <= stood_tile and stood_tile < 13 then
+       maps.fields_grassland(generator)
+    elseif 13 <= stood_tile and stood_tile < 17 then
+       maps.fields_desert(generator)
+    elseif Map.chip_type(stood_tile) == 4 then
+       maps.fields_snow_field(generator)
+    else
+       maps.fields_plain_field(generator)
+    end
+
+    generator.place_player()
+
+    if 264 > stood_tile or stood_tile >= 363 then
+        for i=0, 4 + Rand.rnd(5) do
+            Item.create(-1, -1, { flttypeminor = 64000 } )
+        end
+    end
+end
+
+function maps.the_void(generator)
+   generator.generate_nefia()
+end
+
+function maps.lesimas(generator)
+   generator.set_tileset(Map.data.tileset)
+   generator.generate_nefia()
+
+   if Map.current_dungeon_level() == 3 then
+      local chara = Chara.create(Chara.player().position, 139)
+      chara.role = 3
+      chara.ai_calm = 3
+   end
+   if Map.current_dungeon_level() == 17 then
+      local chara = Chara.create(Chara.player().position, 146)
+      chara.role = 3
+      chara.ai_calm = 3
+   end
+end
+
+local function dungeon_with_boss(deepest_map)
+   return function(generator)
+      if generator.is_deepest_level() then
+         generator.load_custom(deepest_map)
+         Map.data.max_crowd_density = 0
+         Map.data.bgm = "core.mcLastBoss"
+         generator.place_player()
+      else
+         generator.generate_random_nefia()
+      end
+   end
+end
+
+maps.tower_of_fire = dungeon_with_boss("firet1")
+maps.crypt_of_the_damned = dungeon_with_boss("undeadt1")
+maps.ancient_castle = dungeon_with_boss("roguet1")
+maps.dragons_nest = dungeon_with_boss("d_1")
+
+function maps.puppy_cave(generator)
+   generator.generate_nefia()
+end
+
+function maps.minotaurs_nest(generator)
+   generator.generate_nefia()
+end
+
+function maps.yeeks_nest(generator)
+   generator.generate_nefia()
+end
+
+function maps.pyramid(generator)
+   if Map.current_dungeon_level == 20 then
+      generator.load_custom("sqPyramid")
+      Map.data.max_crowd_density = 40
+      Map.data.bgm = "core.mcPuti"
+      generator.place_player()
+      for i=0, Map.data.max_crowd_density + 1 do
+         Map.generate_chara()
+      end
+   elseif Map.current_dungeon_level == 21 then
+      generator.load_custom("sqPyramid2")
+      Map.data.max_crowd_density = 0
+      Map.data.bgm = "core.mcPuti"
+      generator.place_player()
+   end
 end
 
 return maps

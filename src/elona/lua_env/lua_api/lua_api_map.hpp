@@ -57,6 +57,8 @@ void set_feat_xy(int, int, int, int, int);
 void clear_feat(const Position&);
 void clear_feat_xy(int, int);
 
+void spray_tile(int, int);
+
 
 void bind(sol::table&);
 } // namespace LuaApiMap

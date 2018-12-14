@@ -26,6 +26,17 @@ void LuaMapGenerator::load_custom(const std::string& name)
     map_initcustom(name);
 }
 
+void LuaMapGenerator::set_tileset(int tileset)
+{
+    map_tileset(tileset);
+}
+
+bool LuaMapGenerator::is_deepest_level()
+{
+    return game_data.current_dungeon_level ==
+        area_data[game_data.current_map].deepest_level;
+}
+
 void LuaMapGenerator::generate_nefia()
 {
     generate_random_nefia();
@@ -72,8 +83,11 @@ void LuaMapGenerator::bind(sol::state& lua)
 {
     auto LuaMapGenerator = lua.create_simple_usertype<MapGenerator>();
 
+    LuaMapGenerator.set("stood_world_map_tile", &LuaMapGenerator::create);
     LuaMapGenerator.set("create", &LuaMapGenerator::create);
     LuaMapGenerator.set("load_custom", &LuaMapGenerator::load_custom);
+    LuaMapGenerator.set("set_tileset", &LuaMapGenerator::set_tileset);
+    LuaMapGenerator.set("is_deepest_level", &LuaMapGenerator::is_deepest_level);
     LuaMapGenerator.set("generate_nefia", &LuaMapGenerator::generate_nefia);
     LuaMapGenerator.set("set_name", &LuaMapGenerator::set_name);
     LuaMapGenerator.set("set_stair_up_pos", &LuaMapGenerator::set_stair_up_pos);
