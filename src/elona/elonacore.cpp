@@ -4097,7 +4097,7 @@ TurnResult exit_map()
         }
     }
     game_data.previous_map = game_data.current_map;
-    if (game_data.previous_map == 30)
+    if (game_data.previous_map == mdata_t::MapId::shelter_)
     {
         game_data.current_map = game_data.previous_map2;
         game_data.current_dungeon_level = game_data.previous_dungeon_level;
@@ -4294,7 +4294,8 @@ TurnResult exit_map()
         rc = 0;
         revive_player();
         game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-        game_data.destination_outer_map = area_data[7].outer_map;
+        game_data.destination_outer_map =
+            area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map;
         game_data.current_dungeon_level = 1;
     }
     if (rdtry > 1)
@@ -6637,13 +6638,7 @@ std::string getnpctxt(const std::string& tag, const std::string& default_text)
 TurnResult do_enter_strange_gate()
 {
     snd("core.exitmap1");
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = 35;
-    game_data.destination_dungeon_level = 1;
-    levelexitby = 2;
+    map_prepare_for_travel_with_prev(35);
     return TurnResult::exit_map;
 }
 

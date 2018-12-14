@@ -185,54 +185,6 @@ void LuaMapData::bind(sol::state& lua)
         "stair_down_pos", sol::property([](MapData& d) {
             return Position{d.stair_down_pos % 1000, d.stair_down_pos / 1000};
         }));
-    LuaMapData.set(
-        "is_indoors",
-        sol::property(
-            [](MapData& d) { return d.indoors_flag == 1; },
-            [](MapData& d, bool flag) { d.indoors_flag = flag ? 1 : 2; }));
-    LuaMapData.set(
-        "is_user_map",
-        sol::property(
-            [](MapData& d) { return d.user_map_flag == 1; },
-            [](MapData& d, bool flag) { d.user_map_flag = flag ? 1 : 0; }));
-    LuaMapData.set(
-        "play_campfire_sound",
-        sol::property(
-            [](MapData& d) { return d.play_campfire_sound == 1; },
-            [](MapData& d, bool flag) {
-                d.play_campfire_sound = flag ? 1 : 0;
-            }));
-    LuaMapData.set(
-        "should_restock",
-        sol::property(
-            [](MapData& d) { return d.should_regenerate == 0; },
-            [](MapData& d, bool flag) { d.should_regenerate = flag ? 0 : 1; }));
-    LuaMapData.set(
-        "is_temporary",
-        sol::property(
-            [](MapData& d) { return d.refresh_type == 0; },
-            [](MapData& d, bool flag) { d.refresh_type = flag ? 0 : 1; }));
-    LuaMapData.set(
-        "bgm",
-        sol::property(
-            [](MapData& d) {
-                auto id = the_music_db.get_id_from_legacy(d.bgm);
-                if (!id)
-                {
-                    return ""s;
-                }
-
-                return id->get();
-            },
-            [](MapData& d, const std::string& s) {
-                auto data = the_music_db[s];
-                if (!data)
-                {
-                    return;
-                }
-
-                d.bgm = data->id;
-            }));
 
     /**
      * @luadoc bgm field core.music

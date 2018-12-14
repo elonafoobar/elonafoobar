@@ -297,6 +297,40 @@ void LuaApiMap::spray_tile(int tile, int amount)
     elona::map_randomtile(tile, amount);
 }
 
+void LuaApiMap::travel_to(const std::string& map_id)
+{
+    LuaApiMap::travel_to_with_level(map_id, 1);
+}
+
+void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
+{
+    auto map = the_mapdef_db[map_id];
+
+    if (!map)
+    {
+        throw sol::error{"No such map '"s + map_id + "'."s};
+    }
+
+    // Set up the outer map of the map traveled to, such that the player will
+    // appear on top the map's area when they leave via the map's edge.
+    if (map->map_type != mdata_t::MapType::world_map)
+    {
+        auto outer_map = the_mapdef_db[map->outer_map];
+
+        if (outer_map)
+        {
+            game_data.previous_map2 = outer_map->id;
+            game_data.previous_dungeon_level = 1;
+            game_data.previous_x = map->outer_map_position.x;
+            game_data.previous_y = map->outer_map_position.y;
+        }
+    }
+
+    map_prepare_for_travel(map->id, level);
+    exit_map();
+    initialize_map();
+}
+
 void LuaApiMap::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, width);
@@ -326,6 +360,9 @@ void LuaApiMap::bind(sol::table& api_table)
         "clear_feat",
         sol::overload(LuaApiMap::clear_feat, LuaApiMap::clear_feat_xy));
     LUA_API_BIND_FUNCTION(api_table, Map, spray_tile);
+    api_table.set_function(
+        "travel_to",
+        sol::overload(LuaApiMap::travel_to, LuaApiMap::travel_to_with_level));
 
     /**
      * @luadoc data field LuaMapData

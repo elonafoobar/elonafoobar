@@ -156,6 +156,15 @@ void initialize_adata()
 {
     for (const auto& map : the_mapdef_db.values())
     {
+        auto outer_map = the_mapdef_db[map.outer_map];
+        if (!outer_map)
+        {
+            auto id = the_mapdef_db.get_id_from_legacy(map.id)->get();
+            throw std::runtime_error{
+                "Error when initializing area data. Can't find outer map '"s +
+                map.outer_map.get() + "' for map '" + id + "'."};
+        }
+
         if (map.deed)
         {
             // This map can have multiple instances, so don't instantiate it.
@@ -187,7 +196,7 @@ void initialize_adata()
             area.appearance = map.appearance;
             area.tile_set = map.tile_set;
             area.tile_type = map.tile_type;
-            area.outer_map = map.outer_map;
+            area.outer_map = outer_map->id;
         }
     }
 }

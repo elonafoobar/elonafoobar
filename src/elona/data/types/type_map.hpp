@@ -12,7 +12,7 @@ struct MapDefData
     int id;
     int appearance{};
     mdata_t::MapType map_type;
-    int outer_map{};
+    SharedId outer_map{};
     Position outer_map_position{};
     int entrance_type{};
     int tile_set{};
@@ -24,6 +24,8 @@ struct MapDefData
     bool is_generated_every_time{};
     int default_ai_calm{};
     int quest_town_id{};
+    optional<std::string> quest_custom_map{};
+    optional<SharedId> deed{};
 
     bool can_return_to{};
     bool is_fixed{};
@@ -36,7 +38,6 @@ struct MapDefData
     bool prevents_building_shelter{};
     bool prevents_random_events{};
     bool villagers_make_snowmen{};
-    optional<SharedId> deed{};
 
     lua::WrappedFunction generator{};
     optional<lua::WrappedFunction> chara_filter{};

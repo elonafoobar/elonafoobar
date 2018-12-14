@@ -57,6 +57,9 @@ void clear_feat_xy(int, int);
 
 void spray_tile(int, int);
 
+void travel_to(const std::string&);
+void travel_to_with_level(const std::string&, int);
+
 
 void bind(sol::table&);
 } // namespace LuaApiMap

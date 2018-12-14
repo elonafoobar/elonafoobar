@@ -16,7 +16,7 @@ MapDefData MapDefDB::convert(
     DATA_REQ(appearance, int);
     DATA_ENUM(
         map_type, mdata_t::MapType, MapTypeTable, mdata_t::MapType::world_map);
-    DATA_REQ(outer_map, int);
+    DATA_REQ(outer_map, SharedId);
     DATA_REQ(outer_map_position, sol::table);
     DATA_ENUM(entrance_type, int, MapEntranceTypeTable, 8);
     DATA_ENUM(tile_set, int, MapTilesetTable, 2);
@@ -28,6 +28,7 @@ MapDefData MapDefDB::convert(
     DATA_REQ(is_generated_every_time, bool);
     DATA_REQ(default_ai_calm, int);
     DATA_OPT_OR(quest_town_id, int, 0);
+    DATA_OPT(quest_custom_map, std::string);
     DATA_OPT(deed, SharedId);
 
     DATA_OPT_OR(can_return_to, bool, false);
@@ -69,6 +70,8 @@ MapDefData MapDefDB::convert(
                       is_generated_every_time,
                       default_ai_calm,
                       quest_town_id,
+                      quest_custom_map,
+                      deed,
 
                       can_return_to,
                       is_fixed,
@@ -81,7 +84,6 @@ MapDefData MapDefDB::convert(
                       prevents_building_shelter,
                       prevents_random_events,
                       villagers_make_snowmen,
-                      deed,
 
                       generator,
                       chara_filter};

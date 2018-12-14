@@ -387,35 +387,15 @@ void map_reload(const std::string& map_filename)
 // Used for huntex/conquer quests.
 std::string map_get_custom_map_name(int map_id)
 {
-    if (area_data[map_id].id == mdata_t::MapId::vernis)
+    auto area_map_id = area_data[map_id].id;
+    auto map = the_mapdef_db[area_map_id];
+
+    if (map && map->quest_custom_map)
     {
-        return u8"vernis"s;
+        return *map->quest_custom_map;
     }
-    if (area_data[map_id].id == mdata_t::MapId::port_kapul)
-    {
-        return u8"kapul"s;
-    }
-    if (area_data[map_id].id == mdata_t::MapId::yowyn)
-    {
-        return u8"yowyn"s;
-    }
-    if (area_data[map_id].id == mdata_t::MapId::derphy)
-    {
-        return u8"rogueden"s;
-    }
-    if (area_data[map_id].id == mdata_t::MapId::palmia)
-    {
-        return u8"palmia"s;
-    }
-    if (area_data[map_id].id == mdata_t::MapId::noyel)
-    {
-        return u8"noyel"s;
-    }
-    if (area_data[map_id].id == mdata_t::MapId::lumiest)
-    {
-        return u8"lumiest"s;
-    }
-    return u8"vernis"s;
+
+    return "vernis";
 }
 
 
@@ -1387,6 +1367,23 @@ int map_global_place_random_nefias()
     return p;
 }
 
+void map_prepare_for_travel(int id, int level)
+{
+    game_data.destination_map = id;
+    game_data.destination_dungeon_level = level;
+    levelexitby = 2;
+}
+
+void map_prepare_for_travel_with_prev(int id, int level)
+{
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = id;
+    game_data.destination_dungeon_level = level;
+    levelexitby = 2;
+}
 
 
 } // namespace elona

@@ -606,7 +606,7 @@ function maps.thieves_guild(generator)
    Map.data.type = "Guild"
    Map.data.max_crowd_density = 25
    Map.data.bgm = "core.mcRuin"
-   Map.data.should_restock = true
+   Map.data.should_regenerate = true
    generator.set_name(I18N.get("core.locale.map.unique.thieves_guild.name"))
 
    generator.place_player()
@@ -735,7 +735,7 @@ function maps.mages_guild(generator)
    Map.data.type = "Guild"
    Map.data.max_crowd_density = 25
    Map.data.bgm = "core.mcRuin"
-   Map.data.should_restock = true
+   Map.data.should_regenerate = true
    generator.set_name(I18N.get("core.locale.map.unique.mages_guild.name"))
 
    generator.place_player()
@@ -761,7 +761,7 @@ function maps.lumiest_sewer(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = 61
-   Map.data.should_restock = false
+   Map.data.should_regenerate = false
    generator.set_name(I18N.get("core.locale.map.unique.the_sewer.name"))
 
    generator.mark_quest_targets()
@@ -818,7 +818,7 @@ function maps.cat_mansion(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_restock = false
+   Map.data.should_regenerate = false
    generator.set_name(I18N.get("core.locale.map.unique.cat_mansion.name"))
 
    generator.mark_quest_targets()
@@ -833,7 +833,7 @@ function maps.battle_field(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_restock = false
+   Map.data.should_regenerate = false
    Map.data.is_temporary = true
    generator.set_name(I18N.get("core.locale.map.unique.battle_field.name"))
 
@@ -986,7 +986,7 @@ function maps.fighters_guild(generator)
    Map.data.type = "Guild"
    Map.data.max_crowd_density = 25
    Map.data.bgm = "core.mcRuin"
-   Map.data.should_restock = true
+   Map.data.should_regenerate = true
    generator.set_name(I18N.get("core.locale.map.unique.fighters_guild.name"))
 
    generator.place_player()
@@ -1013,7 +1013,7 @@ function maps.doom_ground(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_restock = false
+   Map.data.should_regenerate = false
    Map.data.is_temporary = true
    generator.set_name(I18N.get("core.locale.map.unique.doom_ground.name"))
 
@@ -1083,7 +1083,7 @@ function maps.the_mine(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_restock = false
+   Map.data.should_regenerate = false
    generator.set_name(I18N.get("core.locale.map.unique.the_mine.name"))
 
    generator.mark_quest_targets()
@@ -1099,7 +1099,7 @@ function maps.robbers_hideout(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = "core.mcPuti"
-   Map.data.should_restock = false
+   Map.data.should_regenerate = false
    generator.set_name(I18N.get("core.locale.map.unique.robbers_hideout.name"))
 
    generator.mark_quest_targets()
@@ -1115,7 +1115,7 @@ function maps.test_site_vernis(generator)
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
    Map.data.bgm = 61
-   Map.data.should_restock = false
+   Map.data.should_regenerate = false
    generator.set_name(I18N.get("core.locale.map.unique.test_site.name"))
 
    generator.mark_quest_targets()
