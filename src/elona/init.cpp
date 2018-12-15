@@ -592,7 +592,8 @@ void initialize_debug_globals()
     game_data.date.minute = 10;
     game_data.played_scene = 50;
     game_data.has_not_been_to_vernis = 1;
-    area_data[7].outer_map = 4;
+    area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map =
+        static_cast<int>(mdata_t::MapId::north_tyris);
     game_data.destination_outer_map =
         area_data[game_data.current_map].outer_map;
     game_data.acquirable_feat_count = 2;
@@ -625,6 +626,39 @@ void initialize_debug_globals()
 }
 
 
+
+void initialize_world()
+{
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 1;
+    game_data.date.minute = 10;
+    game_data.pc_x_in_world_map = 22;
+    game_data.pc_y_in_world_map = 21;
+    game_data.previous_map = -1;
+    game_data.destination_outer_map =
+        static_cast<int>(mdata_t::MapId::north_tyris);
+    // ghelp = 1;
+    game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
+    game_data.current_dungeon_level = 1;
+    game_data.entrance_type = 4;
+    game_data.version = 1220;
+    game_data.home_scale = 0;
+    initialize_adata();
+    game_data.weather = 3;
+    game_data.hours_until_weather_changes = 6;
+    for (int cnt = 0; cnt < 9; ++cnt)
+    {
+        game_data.ranks.at(cnt) = 10000;
+    }
+}
+
+void initialize_testbed()
+{
+    game_data.current_map = 499;
+    game_data.current_dungeon_level = 2;
+}
 
 void initialize_game()
 {

@@ -48,10 +48,12 @@ end
 
 function maps.shelter(generator)
    if Map.current_dungeon_level() == 1 then
+      -- Shelter from innkeeper
       generator.load_custom("shelter_2")
       Map.data.is_temporary = true
       Map.data.type = "Shelter"
    else
+      -- Shelter from item (dungeon level is shelter ID)
       generator.load_custom("shelter_1")
       Map.data.is_user_map = false
    end

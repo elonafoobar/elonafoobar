@@ -1295,11 +1295,15 @@ init_map_after_refresh:
         {
             dialog(i18n::s.get("core.locale.map.loading_failed"));
             mode = 2;
-            game_data.current_map = 7;
+            game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
             game_data.current_dungeon_level = 1;
-            game_data.pc_x_in_world_map = area_data[7].position.x;
-            game_data.pc_y_in_world_map = area_data[7].position.y;
-            game_data.previous_map = 2;
+            game_data.pc_x_in_world_map =
+                area_data[static_cast<int>(mdata_t::MapId::your_home)]
+                    .position.x;
+            game_data.pc_y_in_world_map =
+                area_data[static_cast<int>(mdata_t::MapId::your_home)]
+                    .position.y;
+            game_data.previous_map = static_cast<int>(mdata_t::MapId::fields);
             levelexitby = 4;
             goto init_map_begin;
         }

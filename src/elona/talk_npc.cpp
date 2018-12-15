@@ -362,7 +362,7 @@ TalkResult talk_arena_master(int chatval_)
     game_data.executing_immediate_quest_show_hunt_remain = 1;
     game_data.executing_immediate_quest = 0;
     game_data.executing_immediate_quest_status = 1;
-    map_prepare_for_travel_with_prev(6);
+    map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::arena));
     chatteleport = 1;
     return TalkResult::talk_end;
 }
@@ -437,7 +437,8 @@ TalkResult talk_pet_arena_master(int chatval_)
     game_data.executing_immediate_quest_show_hunt_remain = 0;
     game_data.executing_immediate_quest = 0;
     game_data.executing_immediate_quest_status = 1;
-    map_prepare_for_travel_with_prev(40);
+    map_prepare_for_travel_with_prev(
+        static_cast<int>(mdata_t::MapId::pet_arena));
     chatteleport = 1;
     return TalkResult::talk_end;
 }
@@ -831,7 +832,8 @@ TalkResult talk_innkeeper_shelter()
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    map_prepare_for_travel_with_prev(30);
+    map_prepare_for_travel_with_prev(
+        static_cast<int>(mdata_t::MapId::shelter_));
     chatteleport = 1;
     snd("core.exitmap1");
     return TalkResult::talk_end;
@@ -1414,7 +1416,7 @@ TalkResult talk_accepted_quest()
         quest_data[rq].client_chara_type;
     game_data.executing_immediate_quest = rq;
     game_data.executing_immediate_quest_status = 1;
-    map_prepare_for_travel_with_prev(13);
+    map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::quest));
     chatteleport = 1;
     return TalkResult::talk_end;
 }

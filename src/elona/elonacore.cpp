@@ -6638,7 +6638,8 @@ std::string getnpctxt(const std::string& tag, const std::string& default_text)
 TurnResult do_enter_strange_gate()
 {
     snd("core.exitmap1");
-    map_prepare_for_travel_with_prev(35);
+    map_prepare_for_travel_with_prev(
+        static_cast<int>(mdata_t::MapId::show_house));
     return TurnResult::exit_map;
 }
 

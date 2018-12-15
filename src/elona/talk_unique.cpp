@@ -79,7 +79,7 @@ void _loyter_goto_map()
 {
     map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
-    map_prepare_for_travel(5, 5);
+    map_prepare_for_travel(static_cast<int>(mdata_t::MapId::vernis), 5);
     chatteleport = 1;
 }
 
@@ -2606,7 +2606,7 @@ void _gilbert_goto_map()
     game_data.quest_flags.defense_line = 2;
     map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
-    map_prepare_for_travel(12, 4);
+    map_prepare_for_travel(static_cast<int>(mdata_t::MapId::yowyn), 4);
     chatteleport = 1;
 }
 
@@ -2748,7 +2748,7 @@ void _arnord_goto_map()
     game_data.quest_flags.kamikaze_attack = 2;
     map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
-    map_prepare_for_travel(11, 25);
+    map_prepare_for_travel(static_cast<int>(mdata_t::MapId::port_kapul), 25);
     chatteleport = 1;
 }
 

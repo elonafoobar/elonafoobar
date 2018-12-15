@@ -1380,7 +1380,7 @@ void continuous_action_others()
         game_data.previous_dungeon_level = game_data.current_dungeon_level;
         game_data.previous_x = cdata.player().position.x;
         game_data.previous_y = cdata.player().position.y;
-        game_data.destination_map = 30;
+        game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
         game_data.destination_dungeon_level = inv[ci].count;
         levelexitby = 2;
         snd("core.exitmap1");
