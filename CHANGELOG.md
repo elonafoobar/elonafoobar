@@ -2,6 +2,15 @@
 
 
 
+## [0.3.1] - 2018-12-17
+
+### Fixed
+
+- Fix crash on launching.
+- Fix crash if Elona foobar is placed in a folder which contains non-ASCII characters.
+
+
+
 ## [0.3.0] - 2018-12-15
 
 ### Added
