@@ -97,6 +97,9 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
 MIT License. See LICENSE for details. This license is applied for the
 contents in this repository. Note that images, sounds and fonts are not included.
+For files under [graphics](graphics/) folder of the repository, see
+[graphics/LICENSE](graphics/LICENSE).
+
 
 ## Thirdparty libraries
 
