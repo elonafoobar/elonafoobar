@@ -715,12 +715,18 @@ void Config::save()
         };
 
         // Get the mod-level scope ("core").
-        assert(advance());
+        {
+            const auto ok = advance();
+            assert(ok);
+        }
         std::string scope = token;
         set(token);
 
         // Skip the "config" section name in "core.<config>.some.option".
-        assert(advance());
+        {
+            const auto ok = advance();
+            assert(ok);
+        }
         assert(token == "config");
 
         // Traverse the remaining namespaces ("some.option").
