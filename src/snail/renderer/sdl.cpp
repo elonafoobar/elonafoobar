@@ -103,8 +103,11 @@ Rect Renderer::render_text(
     if (text.empty())
         return Rect{x, y, 0, 0};
 
-    auto surface = detail::enforce_ttf(::TTF_RenderUTF8_Solid(
-        _font.ptr(), text.c_str(), detail::to_sdl_color(color)));
+    auto render_func = _blended_text_rendering ? &::TTF_RenderUTF8_Blended
+                                               : &::TTF_RenderUTF8_Solid;
+
+    auto surface = detail::enforce_ttf(
+        render_func(_font.ptr(), text.c_str(), detail::to_sdl_color(color)));
     auto texture =
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(ptr(), surface));
     detail::enforce_sdl(::SDL_SetTextureAlphaMod(texture, color.a));

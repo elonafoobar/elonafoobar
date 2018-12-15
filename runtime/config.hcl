@@ -83,6 +83,9 @@ config {
 
             vertical_offset = -1 # fontVfix1
             size_adjustment = 1 # fontSfix1
+
+            # Font quality. "low" or "high" is available.
+            quality = "high"
         }
 
         game {
@@ -107,7 +110,6 @@ config {
 
         debug {
             wizard = false
-            noa_debug = false
         }
 
         message {
@@ -182,6 +184,12 @@ config {
 
             # Show damage popups.
             damage_popup = true
+
+            # Skip confirm to buy or sell items at town shop.
+            skip_confirm_at_shop = false
+
+            # Skip confirm to over-cast spells.
+            skip_overcasting_warning = false
         }
     }
 }

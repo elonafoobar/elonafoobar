@@ -227,8 +227,8 @@ struct MessageBox
         {
             if (!input.is_ime_active())
             {
-                if (input.was_pressed_just_now(Key::enter)
-                    || input.was_pressed_just_now(Key::keypad_enter))
+                if (input.was_pressed_just_now(Key::enter) ||
+                    input.was_pressed_just_now(Key::keypad_enter))
                 {
                     // New line.
                     buffer += '\n';
@@ -240,9 +240,9 @@ struct MessageBox
                 }
                 else if (input.is_pressed(Key::backspace) && !buffer.empty())
                 {
-                    if (backspace_held_frames == 0
-                        || (backspace_held_frames > 15
-                            && backspace_held_frames % 2 == 0))
+                    if (backspace_held_frames == 0 ||
+                        (backspace_held_frames > 15 &&
+                         backspace_held_frames % 2 == 0))
                     {
                         // Delete the last character.
                         size_t last_byte_count{};
@@ -258,7 +258,8 @@ struct MessageBox
                     backspace_held_frames++;
                 }
                 else if (
-                    input.is_pressed(Key::key_v) && input.is_pressed(Key::ctrl))
+                    input.was_pressed_just_now(Key::key_v) &&
+                    input.is_pressed(Key::ctrl))
                 {
                     // Paste.
                     std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
@@ -275,8 +276,8 @@ struct MessageBox
         }
         else
         {
-            if (input.is_pressed(Key::enter, keywait)
-                || input.is_pressed(Key::keypad_enter, keywait))
+            if (input.is_pressed(Key::enter, keywait) ||
+                input.is_pressed(Key::keypad_enter, keywait))
             {
                 // New line.
                 buffer += '\n';

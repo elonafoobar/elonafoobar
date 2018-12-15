@@ -89,7 +89,7 @@ locale {
                 name = "the Tower of Fire"
             }
             _17 {
-                name = " the crypt of the damned "
+                name = "the crypt of the damned"
             }
             _18 {
                 name = "the Ancient Castle"
@@ -263,6 +263,7 @@ locale {
             outskirts = "The outskirts"
             urban_area = "Urban area"
             party_room = "Party Room"
+            field = "Field nearby town"
 
             on_enter {
                 party = "You have to warm up the party within ${_1} minites. Your target score is ${_2} points."

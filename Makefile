@@ -14,7 +14,7 @@ MKDIR := mkdir
 .PHONY: FORCE
 
 
-all:
+all: $(BIN_DIR)
 	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make
 
 

@@ -1,9 +1,12 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../filesystem.hpp"
-#include "../lua_env/lua_env.hpp"
-#include "../testing.hpp"
-#include "../variables.hpp"
+#include "../elona/filesystem.hpp"
+#include "../elona/lua_env/api_manager.hpp"
+#include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/variables.hpp"
+#include "util.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -12,7 +15,9 @@ void lua_testcase(const std::string& filename)
 {
     std::cout << "TEST FILE: " << filename << std::endl;
     elona::testing::reset_state();
+    testing::set_english();
     elona::fixlv = Quality::none;
+
     elona::lua::lua->get_state()->open_libraries(sol::lib::os);
     elona::lua::lua->get_api_manager().set_on(*elona::lua::lua);
     REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script_file(
@@ -38,7 +43,7 @@ TEST_CASE("test Elona.require from other mods", "[Lua: API]")
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
         filesystem::dir::mods(),
-        filesystem::dir::exe() / u8"tests/data/mods/test_require");
+        {filesystem::dir::exe() / u8"tests/data/mods/test_require"});
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_mod_from_script("test_require_from_mods", R"(

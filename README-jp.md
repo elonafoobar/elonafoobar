@@ -86,7 +86,7 @@ Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を
 **注意:ここに書かれた日本語でのライセンス表記と英語でのライセンス表記が矛盾する場合、常に英語版が優先されます。あくまで参考程度であり、厳密なライセンスは\*必ず\*英語版のREADME.mdをご覧ください。**
 
 MIT Licenseです。詳細はLICENSEを参照してください。このライセンスはこのリポジトリ内にあるものにのみ適用されます。
-画像や音声は含まれないことに注意してください。
+画像や音声は含まれないことに注意してください。このリポジトリの[graphics](graphics/)フォルダ以下にあるファイルについては、[graphics/LICENSE](graphics/LICENSE)を参照してください。
 
 ## サードパーティーライブラリ
 
@@ -96,6 +96,7 @@ MIT Licenseです。詳細はLICENSEを参照してください。このライ�
 * hayai: src/thirdparty/hayai/LICENSEを参照してください。
 * sol2: src/thirdparty/sol2/LICENSEを参照してください。
 * ordered_map: src/thirdparty/ordered_map/LICENSEを参照してください。
+* boostrandom: src/thirdparty/LICENSE_1_0.txtを参照してください。
 * cmake/FindXXX.cmake: cmake/LICENSEを参照してください。
 
 ## Luaライブラリ

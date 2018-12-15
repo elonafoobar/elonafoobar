@@ -2,11 +2,12 @@
 #include "../window.hpp"
 #endif
 
+
+
 namespace elona
 {
 namespace snail
 {
-
 
 void Window::move_to_center()
 {
@@ -16,6 +17,8 @@ void Window::move_to_center()
         static_cast<int>(InitialPosition::centered));
 }
 
+
+
 std::pair<int, int> Window::get_size()
 {
     int width, height;
@@ -23,15 +26,21 @@ std::pair<int, int> Window::get_size()
     return {width, height};
 }
 
+
+
 void Window::set_size(int width, int height)
 {
     ::SDL_SetWindowSize(ptr(), width, height);
 }
 
+
+
 void Window::set_display_mode(::SDL_DisplayMode display_mode)
 {
     detail::enforce_sdl(::SDL_SetWindowDisplayMode(ptr(), &display_mode));
 }
+
+
 
 ::SDL_DisplayMode Window::get_display_mode()
 {
@@ -40,11 +49,15 @@ void Window::set_display_mode(::SDL_DisplayMode display_mode)
     return mode;
 }
 
+
+
 void Window::set_fullscreen_mode(FullscreenMode fullscreen_mode)
 {
     detail::enforce_sdl(
         ::SDL_SetWindowFullscreen(ptr(), static_cast<Uint32>(fullscreen_mode)));
 }
+
+
 
 Window::Window(
     const std::string& title,
@@ -64,8 +77,6 @@ Window::Window(
           ::SDL_DestroyWindow)
 {
 }
-
-
 
 } // namespace snail
 } // namespace elona

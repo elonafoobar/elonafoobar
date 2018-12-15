@@ -7,7 +7,7 @@ local function setup()
    item.param1 = 1
 
    local shop = Chara.create(23, 23, "core.shopkeeper")
-   shop.character_role = 1007
+   shop.role = 1007
    shop.shop_rank = 1000
 
    local putit = Chara.create(23, 23, "core.putit")
@@ -22,13 +22,13 @@ local function setup()
    Item.create(25, 24, "core.gene_machine", 1)
 
    local bar = Chara.create(28, 23, "core.bartender")
-   bar.character_role = 9
+   bar.role = 9
 
    local informer = Chara.create(28, 23, "core.informer")
-   informer.character_role = 8
+   informer.role = 8
 
    local slaver = Chara.create(28, 23, "core.elder")
-   slaver.character_role = 17
+   slaver.role = 17
 
    Item.create(25, 25, "core.scroll_of_return", 1)
 
@@ -40,7 +40,7 @@ local function setup()
    Item.create(25, 25, "core.scroll_of_name", 10)
 
    local spell_writer = Chara.create(28, 23, "core.wizard")
-   spell_writer.character_role = 1020
+   spell_writer.role = 1020
 end
 
 Event.register(Event.EventKind.ScriptLoaded, setup)

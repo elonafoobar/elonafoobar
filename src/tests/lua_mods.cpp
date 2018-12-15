@@ -1,14 +1,16 @@
 #include "../thirdparty/catch2/catch.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 
-#include "../character.hpp"
-#include "../dmgheal.hpp"
-#include "../filesystem.hpp"
-#include "../item.hpp"
-#include "../itemgen.hpp"
-#include "../lua_env/lua_env.hpp"
-#include "../testing.hpp"
-#include "../variables.hpp"
+#include "../elona/character.hpp"
+#include "../elona/dmgheal.hpp"
+#include "../elona/filesystem.hpp"
+#include "../elona/item.hpp"
+#include "../elona/itemgen.hpp"
+#include "../elona/lua_env/event_manager.hpp"
+#include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/variables.hpp"
 #include "tests.hpp"
 
 using namespace elona::testing;
@@ -224,7 +226,7 @@ TEST_CASE("Test requiring Lua chunk multiple times", "[Lua: Mods]")
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
         filesystem::dir::mods(),
-        filesystem::dir::exe() / u8"tests/data/mods/test_require_chunks");
+        {filesystem::dir::exe() / u8"tests/data/mods/test_require_chunks"});
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require_chunks", R"(
 local a = require("data/script")
@@ -247,7 +249,7 @@ TEST_CASE(
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
         filesystem::dir::mods(),
-        filesystem::dir::exe() / u8"tests/data/mods/test_require");
+        {filesystem::dir::exe() / u8"tests/data/mods/test_require"});
 
     // Attempts to load a file outside the mod's directory.
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require", R"(
@@ -255,4 +257,59 @@ local a = require("../test_require_chunks/data/script")
 
 assert(a == nil)
 )"));
+}
+
+
+static void _create_mod(
+    elona::lua::LuaEnv& lua,
+    const std::string& name,
+    const std::unordered_set<std::string> deps)
+{
+    elona::lua::ModManifest manifest;
+    manifest.name = name;
+    manifest.dependencies = deps;
+    lua.get_mod_manager().create_mod(manifest, false);
+};
+
+
+TEST_CASE("Test calculation of loading order of mods", "[Lua: Mods]")
+{
+    elona::lua::LuaEnv lua;
+
+    _create_mod(lua, "a", {"c"});
+    _create_mod(lua, "b", {});
+    _create_mod(lua, "c", {"b", "d"});
+    _create_mod(lua, "d", {});
+
+    auto order = lua.get_mod_manager().calculate_loading_order();
+
+    REQUIRE(order.at(0) == "b");
+    REQUIRE(order.at(1) == "d");
+    REQUIRE(order.at(2) == "c");
+    REQUIRE(order.at(3) == "a");
+}
+
+TEST_CASE(
+    "Test failure to calculate loading order of mods (unknown dependency)",
+    "[Lua: Mods]")
+{
+    elona::lua::LuaEnv lua;
+
+    _create_mod(lua, "a", {"b", "c"});
+    _create_mod(lua, "b", {});
+
+    REQUIRE_THROWS(lua.get_mod_manager().calculate_loading_order());
+}
+
+TEST_CASE(
+    "Test failure to calculate loading order of mods (cyclic dependency)",
+    "[Lua: Mods]")
+{
+    elona::lua::LuaEnv lua;
+
+    _create_mod(lua, "a", {"b"});
+    _create_mod(lua, "b", {"c"});
+    _create_mod(lua, "c", {"a"});
+
+    REQUIRE_THROWS(lua.get_mod_manager().calculate_loading_order());
 }

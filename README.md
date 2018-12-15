@@ -4,7 +4,7 @@
 * It is made of C++.
 * It is derived from Elona v1.22.
 * It is alpha version yet.
-* It ~~has~~will have the highest extensibity with Lua. [####+]
+* It ~~has~~will have the highest extensibility with Lua. [####+]
 * It ~~achieves~~will achieve truly internationalization. [####+]
 * It works on multi-platform. [####+]
 
@@ -97,6 +97,9 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
 MIT License. See LICENSE for details. This license is applied for the
 contents in this repository. Note that images, sounds and fonts are not included.
+For files under [graphics](graphics/) folder of the repository, see
+[graphics/LICENSE](graphics/LICENSE).
+
 
 ## Thirdparty libraries
 
@@ -106,6 +109,7 @@ contents in this repository. Note that images, sounds and fonts are not included
 * hayai: see src/thirdparty/hayai/LICENSE.
 * sol2: see src/thirdparty/sol2/LICENSE.
 * ordered_map: see src/thirdparty/ordered_map/LICENSE.
+* boostrandom: see src/thirdparty/LICENSE_1_0.txt.
 * cmake/FindXXX.cmake: see cmake/LICENSE.
 
 ## Lua libraries

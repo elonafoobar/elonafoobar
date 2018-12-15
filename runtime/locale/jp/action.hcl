@@ -715,5 +715,9 @@ locale {
                 }
             }
         }
+
+        autopick {
+            reloaded_autopick_file = "autopickファイルを再読み込みした。"
+        }
     }
 }

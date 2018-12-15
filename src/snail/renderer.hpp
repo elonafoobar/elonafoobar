@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "../lib/enumutil.hpp"
-#include "../lib/noncopyable.hpp"
+#include "../util/enumutil.hpp"
+#include "../util/noncopyable.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
@@ -89,6 +89,18 @@ public:
     void set_font(const Font& font)
     {
         _font = font;
+    }
+
+
+    void enable_blended_text_rendering()
+    {
+        _blended_text_rendering = true;
+    }
+
+
+    void disable_blended_text_rendering()
+    {
+        _blended_text_rendering = false;
     }
 
 
@@ -210,6 +222,7 @@ private:
     TextBaseline _text_baseline = TextBaseline::top;
     Font _font;
     BlendMode _blend_mode = BlendMode::blend;
+    bool _blended_text_rendering;
 };
 
 

@@ -1186,7 +1186,7 @@ locale {
             name = "sink"
             description {
                 main {
-                    text = "The water is dirty…"
+                    text = "The water is dirty..."
                 }
             }
         }
@@ -1282,7 +1282,7 @@ locale {
             name = "ornamented with flowers"
             description {
                 main {
-                    text = "A recent grave with flowers for the departed… The name is still readable,"
+                    text = "A recent grave with flowers for the departed... The name is still readable,"
                 }
             }
         }
@@ -1290,7 +1290,7 @@ locale {
             name = "brand new grave"
             description {
                 main {
-                    text = "A recent grave… The name is still readable,"
+                    text = "A recent grave... The name is still readable,"
                 }
             }
         }
@@ -1617,7 +1617,7 @@ locale {
             unidentified_name = "valuable gold bar"
             description {
                 main {
-                    text = "What a waste of time……,"
+                    text = "What a waste of time......,"
                 }
             }
         }
@@ -1713,7 +1713,7 @@ locale {
             name = "dead fish"
             description {
                 main {
-                    text = "Hiding one of these is a popular prank in North Tyris…"
+                    text = "Hiding one of these is a popular prank in North Tyris..."
                 }
             }
         }
@@ -1871,7 +1871,7 @@ locale {
             name = "safe"
             description {
                 main {
-                    text = "It might not be safe to carry…"
+                    text = "It might not be safe to carry..."
                 }
             }
         }
@@ -2496,7 +2496,7 @@ locale {
             name = "cheap bed"
             description {
                 main {
-                    text = "A bed made out of recycled parts…,,"
+                    text = "A bed made out of recycled parts...,,"
                 }
             }
         }
@@ -2829,7 +2829,7 @@ locale {
             name = "silence"
             description {
                 main {
-                    text = "…,,"
+                    text = "...,,"
                 }
             }
         }
@@ -4467,7 +4467,7 @@ locale {
             name = "milk"
             description {
                 main {
-                    text = "Mil"
+                    text = "Milk"
                 }
             }
         }
@@ -4475,7 +4475,7 @@ locale {
             name = "shit"
             description {
                 main {
-                    text = "Stinky…,,"
+                    text = "Stinky...,,"
                 }
             }
         }
@@ -4499,7 +4499,7 @@ locale {
             name = "kitty bank"
             description {
                 main {
-                    text = "Please don't break me,…, Nyu?"
+                    text = "Please don't break me,..., Nyu?"
                 }
             }
         }
@@ -5218,7 +5218,7 @@ locale {
             name = "monster ball"
             description {
                 main {
-                    text = "A strange item invented by a mad scientist…,"
+                    text = "A strange item invented by a mad scientist...,"
                 }
             }
         }
@@ -5318,7 +5318,7 @@ locale {
             unidentified_name = "mechanical ball"
             description {
                 main {
-                    text = "This ball gives you unique powers…"
+                    text = "This ball gives you unique powers..."
                 }
             }
         }

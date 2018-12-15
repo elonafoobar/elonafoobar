@@ -1,6 +1,6 @@
 #pragma once
-#include "../character.hpp"
-#include "../item.hpp"
+#include "../elona/character.hpp"
+#include "../elona/item.hpp"
 
 namespace elona
 {
@@ -17,8 +17,11 @@ void set_english();
 void set_japanese();
 void normalize_item(Item&);
 std::string test_itemname(int, int, bool = false);
-Item& create_item(int, int = 1);
 Character& create_chara(int, int = 0, int = 0);
+Item& create_item(int, int = 1);
+
+void invalidate_chara(Character&);
+void invalidate_item(Item&);
 
 /**
  * Registers a single callback in a mod.

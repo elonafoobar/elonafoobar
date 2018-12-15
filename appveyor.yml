@@ -87,11 +87,8 @@ build_script:
   - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
   - cmake --build . --config %CONFIGURATION%
   - cd %CONFIGURATION%
-  - Elona_foobar.exe
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - rd /q /s bin
-  - mkdir bin
-  - cd bin
+  - Elona_foobar.exe --durations=yes
+  - cd %APPVEYOR_BUILD_FOLDER%\bin
   - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
   - cmake --build . --config %CONFIGURATION%
 
@@ -101,6 +98,7 @@ after_build:
   - mv CHANGELOG*.md bin\Elona_foobar
   - mv README*.md bin\Elona_foobar
   - mv LICENSE bin\Elona_foobar
+  - mv CREDITS bin\Elona_foobar
   - del bin\Elona_foobar\*.ilk
   - del bin\Elona_foobar\*.pdb
   - rd /q /s bin\Elona_foobar\graphic

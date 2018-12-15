@@ -62,7 +62,6 @@ locale {
 
                 shortcut {
                     cargo = "You can't make a shortcut for cargo stuff."
-                    assigned = "You have assigned the shortcut to {${_1}} key."
                 }
             }
 

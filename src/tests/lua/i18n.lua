@@ -9,7 +9,7 @@ local Item = Elona.require("Item")
 lrun("test I18N.get", function()
         Testing.start_in_debug_map()
 
-        Testing.load_translations([[
+        Testing.reinit_core_and_load_translations([[
 locale {
   foo = "bar"
   baz = "You passed in ${_1} and ${_2}."
@@ -28,14 +28,14 @@ locale {
         lequal(I18N.get("test.locale.hoge", "dood", 42), "You are nice.")
         lequal(I18N.get("test.locale.piyo", "dood", 42), "She is nice.")
 
-        local chara = Chara.create(23, 23, 3)
+        local chara = Chara.create(23, 23, "core.putit")
         FOV.refresh();
-        lequal(I18N.get("test.locale.hello", chara), "Hello, プチ!")
-        lequal(I18N.get("test.locale.hello_base", chara), "Hello, プチ!")
+        lequal(I18N.get("test.locale.hello", chara), "Hello, the putit!")
+        lequal(I18N.get("test.locale.hello_base", chara), "Hello, putit!")
 
-        local item = Item.create(0, 1, 792, 3)
-        lequal(I18N.get("test.locale.item", item), "Got 3個のプチトロ!")
-        lequal(I18N.get("test.locale.item_base", item), "Got プチトロ!")
+        local item = Item.create(0, 1, "core.putitoro", 3)
+        lequal(I18N.get("test.locale.item", item), "Got 3 putitoros!")
+        lequal(I18N.get("test.locale.item_base", item), "Got putitoro!")
 end)
 
 lrun("test I18N.get_optional", function()
@@ -59,15 +59,6 @@ locale {
         lequal(I18N.get_optional("test.locale.baz", "dood"), "You passed in dood and <missing>.")
         lequal(I18N.get_optional("test.locale.hoge", "dood", 42), "You are nice.")
         lequal(I18N.get_optional("test.locale.piyo", "dood", 42), "She is nice.")
-
-        local chara = Chara.create(23, 23, 3)
-        FOV.refresh();
-        lequal(I18N.get_optional("test.locale.hello", chara), "Hello, プチ!")
-        lequal(I18N.get_optional("test.locale.hello_base", chara), "Hello, プチ!")
-
-        local item = Item.create(0, 1, 792, 3)
-        lequal(I18N.get_optional("test.locale.item", item), "Got 3個のプチトロ!")
-        lequal(I18N.get_optional("test.locale.item_base", item), "Got プチトロ!")
 
         lequal(I18N.get_optional("test.locale.asdfg"), nil)
         lequal(I18N.get_optional(""), nil)

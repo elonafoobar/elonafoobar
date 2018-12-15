@@ -1,10 +1,10 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../dialog/dialog_data.hpp"
-#include "../dialog/dialog_decoder.hpp"
-#include "../lua_env/config_table.hpp"
-#include "../lua_env/lua_env.hpp"
-#include "../testing.hpp"
+#include "../elona/dialog/dialog_data.hpp"
+#include "../elona/dialog/dialog_decoder.hpp"
+#include "../elona/lua_env/config_table.hpp"
+#include "../elona/lua_env/lua_env.hpp"
+#include "../elona/testing.hpp"
 #include "tests.hpp"
 #include "util.hpp"
 
@@ -16,36 +16,26 @@ namespace
 
 optional<DialogData> load(const std::string& str, lua::LuaEnv& lua)
 {
-    lua.get_state()->set("_DIALOG", str);
-    auto result = lua.get_state()->safe_script(R"(
-local HCL = require "hclua"
-local parsed = HCL.parse(_DIALOG)
-
-if parsed.msg then
-  -- parse failed
-  return nil
-end
-
-local dialog = parsed.dialog
-dialog._full_id = "core.dialog:test"
-return dialog
+    auto result =
+        lua.get_state()->safe_script("local result = {" + str + "}" + R"(
+result._full_id = "core.dialog:test"
+return result
 )");
-
     if (!result.valid())
     {
         return none;
     }
 
-    auto parsed = result.get<sol::table>();
+    auto table = result.get<sol::table>();
 
-    if (parsed == sol::lua_nil)
+    if (table == sol::lua_nil)
     {
         return none;
     }
 
     try
     {
-        lua::ConfigTable wrapped_result(parsed);
+        lua::ConfigTable wrapped_result(table);
         return DialogDecoderLogic(lua.get_export_manager())
             .decode(wrapped_result);
     }
@@ -62,13 +52,7 @@ TEST_CASE("Loading an invalid dialog should fail", "[Dialog]")
 {
     lua::LuaEnv lua;
 
-    REQUIRE_NONE(load(
-        R"(
-dialog {
-    foo = "bar"
-}
-)",
-        lua));
+    REQUIRE_NONE(load(R"({foo = "bar"})", lua));
 }
 
 
@@ -76,14 +60,7 @@ TEST_CASE("Loading a dialog without any nodes should fail", "[Dialog]")
 {
     lua::LuaEnv lua;
 
-    REQUIRE_NONE(load(
-        R"(
-dialog {
-    nodes {
-    }
-}
-)",
-        lua));
+    REQUIRE_NONE(load(R"(nodes = {})", lua));
 }
 
 TEST_CASE(
@@ -94,11 +71,9 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-        }
+nodes = {
+    _start = {
+        text = "foo"
     }
 }
 )",
@@ -117,11 +92,9 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            choices = End
-        }
+nodes = {
+    _start = {
+        choices = "End"
     }
 }
 )",
@@ -136,12 +109,10 @@ TEST_CASE(
 
     REQUIRE_NONE(load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = 42
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = 42,
+        choices = "End"
     }
 }
 )",
@@ -157,12 +128,10 @@ TEST_CASE(
 
     REQUIRE_NONE(load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            choices = 42
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        choices = 42
     }
 }
 )",
@@ -177,15 +146,13 @@ TEST_CASE(
 
     REQUIRE_NONE(load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            choices = [
-                {
-                    node = "bar"
-                }
-            ]
+nodes = {
+    _start = {
+        text = "foo",
+        choices = {
+            {
+                node = "bar"
+            }
         }
     }
 }
@@ -201,15 +168,13 @@ TEST_CASE(
 
     REQUIRE_NONE(load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            choices = [
-                {
-                    text = "bar"
-                }
-            ]
+node = {
+    _start = {
+        text = "foo",
+        choices = {
+            {
+                text = "bar"
+            }
         }
     }
 }
@@ -223,90 +188,10 @@ TEST_CASE("Loading a dialog without a _start node should fail", "[Dialog]")
 
     REQUIRE_NONE(load(
         R"(
-dialog {
-    nodes {
-        foo {
-            text = "bar"
-            choices = End
-        }
-    }
-}
-)",
-        lua));
-}
-
-TEST_CASE(
-    "Loading a dialog node with unknown Lua callback should fail "
-    "(before/after)",
-    "[Dialog]")
-{
-    lua::LuaEnv lua;
-
-    REQUIRE_NONE(load(
-        R"(
-dialog {
-    nodes {
-        _start {
-            text = "bar"
-            run_before = "baz"
-            choices = End
-        }
-    }
-}
-)",
-        lua));
-
-    REQUIRE_NONE(load(
-        R"(
-dialog {
-    nodes {
-        _start {
-            text = "bar"
-            run_after = "baz"
-            choices = End
-        }
-    }
-}
-)",
-        lua));
-}
-
-TEST_CASE(
-    "Loading a dialog node with unknown Lua callback should fail (generator)",
-    "[Dialog]")
-{
-    lua::LuaEnv lua;
-
-    REQUIRE_NONE(load(
-        R"(
-dialog {
-    nodes {
-        _start {
-            text = "bar"
-            generator = "baz"
-            choices = End
-        }
-    }
-}
-)",
-        lua));
-}
-
-TEST_CASE(
-    "Loading a dialog node with unknown Lua callback should fail (redirector)",
-    "[Dialog]")
-{
-    lua::LuaEnv lua;
-
-    REQUIRE_NONE(load(
-        R"(
-dialog {
-    nodes {
-        _start {
-            text = "bar"
-            redirector = "baz"
-            choices = End
-        }
+nodes = {
+    foo = {
+        text = "bar",
+        choices = "End"
     }
 }
 )",
@@ -322,14 +207,12 @@ TEST_CASE(
 
     REQUIRE_NONE(load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            generator = "exports:test.my_callback"
-            redirector = "exports:test.my_callback"
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        generator = "exports:test.my_callback",
+        redirector = "exports:test.my_callback",
+        choices = "End"
     }
 }
 )",
@@ -337,14 +220,12 @@ dialog {
 
     REQUIRE_NONE(load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            redirector = "exports:test.my_callback"
-            inherit_choices = "bar"
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        redirector = "exports:test.my_callback",
+        inherit_choices = "bar",
+        choices = "End"
     }
 }
 )",
@@ -359,12 +240,10 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        choices = "End"
     }
 }
 )",
@@ -384,12 +263,10 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = ["foo", "bar", "baz"]
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = {"foo", "bar", "baz"},
+        choices = "End"
     }
 }
 )",
@@ -408,12 +285,10 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = ["foo", "bar", "baz"]
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = {"foo", "bar", "baz"},
+        choices = "End"
     }
 }
 )",
@@ -444,12 +319,10 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = ["foo", "bar"]
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = {"foo", "bar"},
+        choices = "End"
     }
 }
 )",
@@ -473,27 +346,25 @@ TEST_CASE("Selecting a dialog choice should move to its node", "[Dialog]")
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            choices = [{
-                text = "choice_a"
-                node = "core.dialog:test.a"
-            },
-            {
-                text = "choice_b"
-                node = "core.dialog:test.b"
-            }]
-        }
-        a {
-            text = "bar"
-            choices = End
-        }
-        b {
-            text = "baz"
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        choices = {{
+            text = "choice_a",
+            node = "core.dialog:test.a"
+        },
+        {
+            text = "choice_b",
+            node = "core.dialog:test.b"
+        }}
+    },
+    a = {
+        text = "bar",
+        choices = "End"
+    },
+    b = {
+        text = "baz",
+        choices = "End"
     }
 }
 )",
@@ -518,16 +389,14 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            choices = "core.dialog:test.a"
-        }
-        a {
-            text = "bar"
-            choices = End
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        choices = "core.dialog:test.a"
+    },
+    a = {
+        text = "bar",
+        choices = "End"
     }
 }
 )",
@@ -551,11 +420,9 @@ TEST_CASE("Generating a nil result should fail", "[Dialog Behavior: Generator]")
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            generator = "exports:test.my_callback"
-        }
+nodes = {
+    _start = {
+        generator = "exports:test.my_callback"
     }
 }
 )",
@@ -579,11 +446,9 @@ return {
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            generator = "exports:test.my_callback"
-        }
+nodes = {
+    _start = {
+        generator = "exports:test.my_callback"
     }
 }
 )",
@@ -611,19 +476,17 @@ return {
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            generator = "exports:test.my_callback"
-        }
-        a {
-            text = "baz"
-            choices = "core.dialog:test._start"
-        }
-        b {
-            text = "quux"
-            choices = End
-        }
+nodes = {
+    _start = {
+        generator = "exports:test.my_callback"
+    },
+    a = {
+        text = "baz",
+        choices = "core.dialog:test._start"
+    },
+    b = {
+        text = "quux",
+        choices = "End"
     }
 }
 )",
@@ -656,11 +519,9 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            redirector = "exports:test.my_callback"
-        }
+nodes = {
+    _start = {
+        redirector = "exports:test.my_callback"
     }
 }
 )",
@@ -681,11 +542,9 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            redirector = "exports:test.my_callback"
-        }
+nodes = {
+    _start = {
+        redirector = "exports:test.my_callback"
     }
 }
 )",
@@ -706,15 +565,13 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            redirector = "exports:test.my_callback"
-        }
-        a {
-            text = "foo"
-            choices = End
-        }
+nodes = {
+    _start = {
+        redirector = "exports:test.my_callback"
+    },
+    a = {
+        text = "foo",
+        choices = "End"
     }
 }
 )",
@@ -735,11 +592,9 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            inherit_choices = 42
-        }
+nodes = {
+    _start = {
+        inherit_choices = 42
     }
 }
 )",
@@ -758,11 +613,9 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            inherit_choices = "core.dialog:test.foo"
-        }
+nodes = {
+    _start = {
+        inherit_choices = "core.dialog:test.foo"
     }
 }
 )",
@@ -783,18 +636,16 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            inherit_choices = "core.dialog:test.a"
-        }
-        a {
-            redirector = "exports:test.my_callback"
-        }
-        b {
-            text = "foo"
-            choices = End
-        }
+nodes = {
+    _start = {
+        inherit_choices = "core.dialog:test.a"
+    },
+    a = {
+        redirector = "exports:test.my_callback"
+    },
+    b = {
+        text = "foo",
+        choices = "End"
     }
 }
 )",
@@ -813,18 +664,16 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            inherit_choices = "core.dialog:test.a"
-        }
-        a {
-            inherit_choices = "core.dialog:test.b"
-        }
-        b {
-            text = "foo"
-            choices = End
-        }
+nodes = {
+    _start = {
+        inherit_choices = "core.dialog:test.a"
+    },
+    a = {
+        inherit_choices = "core.dialog:test.b"
+    },
+    b = {
+        text = "foo",
+        choices = "End"
     }
 }
 )",
@@ -843,23 +692,21 @@ TEST_CASE(
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            inherit_choices = "core.dialog:test.a"
-        }
-        a {
-            text = "bar"
-            choices = [{
-                text = "choice_a"
-                node = "core.dialog:test.a"
-            },
-            {
-                text = "choice_b"
-                node = End
-            }]
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        inherit_choices = "core.dialog:test.a"
+    },
+    a = {
+        text = "bar",
+        choices = {{
+            text = "choice_a",
+            node = "core.dialog:test.a"
+        },
+        {
+            text = "choice_b",
+            node = "End"
+        }}
     }
 }
 )",
@@ -903,15 +750,13 @@ return {
 
     auto data = load(
         R"(
-dialog {
-    nodes {
-        _start {
-            text = "foo"
-            inherit_choices = "core.dialog:test.a"
-        }
-        a {
-            generator = "exports:test.my_callback"
-        }
+nodes = {
+    _start = {
+        text = "foo",
+        inherit_choices = "core.dialog:test.a"
+    },
+    a = {
+        generator = "exports:test.my_callback"
     }
 }
 )",

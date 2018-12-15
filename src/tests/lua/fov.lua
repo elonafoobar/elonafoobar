@@ -38,7 +38,7 @@ lrun("test FOV.you_see", function()
         Testing.start_in_debug_map()
 
         local pos = Chara.player().position
-        local chara = Chara.create(pos.x, pos.y + 5, 3) -- putit
+        local chara = Chara.create(pos.x, pos.y + 5, "core.putit")
         FOV.refresh()
         lequal(FOV.you_see(chara), true)
         lequal(FOV.you_see(chara.position), true)

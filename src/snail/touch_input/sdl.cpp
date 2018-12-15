@@ -65,24 +65,25 @@ void TouchInput::initialize_quick_actions()
         }
     }
 
-    using Tuple =
-        std::tuple<std::string, optional<snail::Key>, int, int, bool>[];
+    using Tuple = std::tuple<std::string, snail::Key, int, int, bool>[];
     for (const auto& tuple : Tuple{
              {"OK", snail::Key::enter, 1, 1, true},
-             {"Back", snail::Key::shift, 2, 1, true},
-             {"z", none, 1, 2, true},
-             {"x", none, 2, 2, true},
-             {"g", none, 1, 3, true},
-             {"d", none, 2, 3, true},
-             {"f", none, 2, 4, true},
+             // Modifier status is only updated when shift_l or shift_r is
+             // pressed specifically.
+             {"Back", snail::Key::shift_l, 2, 1, true},
+             {"z", snail::Key::key_z, 1, 2, true},
+             {"x", snail::Key::key_x, 2, 2, true},
+             {"g", snail::Key::key_g, 1, 3, true},
+             {"d", snail::Key::key_d, 2, 3, true},
+             {"f", snail::Key::key_f, 2, 4, true},
              {"Esc", snail::Key::escape, 1, 4, true},
-             {"v", none, 1, 4, false},
-             {"/", none, 2, 4, false},
-             {"*", none, 3, 4, false},
+             {"v", snail::Key::key_v, 1, 4, false},
+             {"/", snail::Key::slash, 2, 4, false},
+             {"*", snail::Key::keypad_asterisk, 3, 4, false},
          })
     {
         std::string text = std::get<0>(tuple);
-        optional<snail::Key> key = std::get<1>(tuple);
+        snail::Key key = std::get<1>(tuple);
         int w;
         if (std::get<4>(tuple))
         {
@@ -125,8 +126,8 @@ bool TouchInput::is_touched(int x, int y, const QuickAction& action)
     int size = quick_action_size() / 2;
     int deadzone = ((float)size * 0.75);
 
-    return x > action.center_x - deadzone && y > action.center_y - deadzone
-        && x <= action.center_x + deadzone && y <= action.center_y + deadzone;
+    return x > action.center_x - deadzone && y > action.center_y - deadzone &&
+        x <= action.center_x + deadzone && y <= action.center_y + deadzone;
 }
 
 void TouchInput::draw_quick_action(const QuickAction& action)
@@ -169,9 +170,9 @@ void TouchInput::on_touch_event(::SDL_TouchFingerEvent event)
     {
         QuickAction& action = *it;
 
-        if (_last_touched_quick_action_idx == none
-            && event.type != static_cast<decltype(event.type)>(EventType::up)
-            && is_touched(norm_x, norm_y, action))
+        if (_last_touched_quick_action_idx == none &&
+            event.type != static_cast<decltype(event.type)>(EventType::up) &&
+            is_touched(norm_x, norm_y, action))
         {
             action.touched = true;
             _last_touched_quick_action_idx = it - _quick_actions.begin();

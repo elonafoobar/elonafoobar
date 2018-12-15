@@ -261,6 +261,7 @@ locale {
             outskirts = "街近辺"
             urban_area = "市街地"
             party_room = "パーティー場"
+            field = "街周辺の畑"
 
             on_enter {
                 party = "${_1}分間の間にパーティーを盛り上げよう。目標は${_2}ポイント。"

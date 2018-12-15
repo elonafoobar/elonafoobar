@@ -19,10 +19,9 @@ locale {
                     no = "Don't play"
                 }
 
-                # NOTE: "Slow" and "Fast" were originally the opposite in English.
                 slow_fast {
-                    yes = "Yes(Slow)"
-                    no = "No(Fast)"
+                    yes = "Yes (Slow)"
+                    no = "No (Fast)"
                 }
 
                 high_low {
@@ -308,24 +307,6 @@ It can fix issues related to holding Shift and a numpad movement key at the same
 This only has an effect on Windows.
 DOC
                 }
-                assign_z_key {
-                    name = "Assign z key"
-                    variants {
-                        quick_menu = "Quick menu"
-                        zap = "Zap"
-                        none = "Don't assign"
-                    }
-                    doc = "Change the assignment of the 'z' key."
-                }
-                assign_x_key {
-                    name = "Assign x key"
-                    variants {
-                        quick_inv = "Quick Inv"
-                        identify = "Identify"
-                        none = "Don't assign"
-                    }
-                    doc = "Change the assignment of the 'x' key."
-                }
                 walk_wait {
                     name = "Walk Speed"
                     doc = "Number of frames to wait between movement commands when walking."
@@ -394,10 +375,20 @@ DOC
 Size adjustment for certain pieces of text.
 DOC
                 }
+                quality {
+                    name = "Rendering Quality"
+                    doc = <<DOC
+Text rendering quality. High is beautiful, but slow. Low is cheap, but fast.
+DOC
+                    variants {
+                        low = "Low"
+                        high = "High"
+                    }
+                }
             }
 
             message {
-                name = "Message&Log"
+                name = "Message & Log"
                 add_timestamps {
                     name = "Add time info"
                     doc = <<DOC
@@ -525,6 +516,21 @@ DOC
                         fullscale = "Full-scale"
                     }
                 }
+
+                show_fps {
+                    name = "Show FPS"
+                    yes_no = core.locale.config.common.yes_no.show_dont_show
+                }
+
+                skip_confirm_at_shop {
+                    name = "Skip confirm at shop"
+                    doc = "Skip confirm to buy or sell items at town shops."
+                }
+
+                skip_overcasting_warning {
+                    name = "Skip over-casting warning"
+                    doc = "Skip warning prompt displayed when you are going to over-cast spells."
+                }
             }
 
             android {
@@ -565,16 +571,11 @@ DOC
                     name = "Quick Action Size"
                     doc = "Controls size of touch actions."
                 }
+            }
 
-                quick_action_repeat_start_wait {
-                    name = "Quick Action Repeat Wait"
-                    doc = "Controls the held time before a quick action begins to repeat."
-                }
-
-                quick_action_repeat_wait {
-                    name = "Quick Action Wait"
-                    doc = "Controls the time between repeats of a held quick action."
-                }
+            keybindings {
+                name = "Keybindings"
+                doc = "Configure game keybindings."
             }
         }
     }

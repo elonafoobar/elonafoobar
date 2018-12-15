@@ -1,10 +1,10 @@
 #include <iostream>
 #include <stdexcept>
 #include <SDL.h>
-#include "defines.hpp"
-#include "init.hpp"
-#include "log.hpp"
-#include "version.hpp"
+#include "elona/defines.hpp"
+#include "elona/init.hpp"
+#include "elona/log.hpp"
+#include "elona/version.hpp"
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA
 #endif
@@ -36,6 +36,9 @@ int main(int argc, char** argv)
 
     ELONA_LOG(latest_version.long_string());
 
+#if DEBUG
+    return run();
+#else
     try
     {
         return run();
@@ -44,6 +47,7 @@ int main(int argc, char** argv)
     {
         report_error(e.what());
     }
+#endif
 
     return 0;
 }

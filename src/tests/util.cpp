@@ -1,11 +1,14 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../enums.hpp"
-#include "../i18n.hpp"
-#include "../init.hpp"
-#include "../item.hpp"
-#include "../itemgen.hpp"
-#include "../variables.hpp"
+#include "../elona/config/config.hpp"
+#include "../elona/enums.hpp"
+#include "../elona/i18n.hpp"
+#include "../elona/init.hpp"
+#include "../elona/item.hpp"
+#include "../elona/itemgen.hpp"
+#include "../elona/lua_env/export_manager.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
+#include "../elona/variables.hpp"
 #include "tests.hpp"
 
 namespace elona
@@ -15,6 +18,7 @@ namespace testing
 
 void set_english()
 {
+    Config::instance().set("core.config.language.language", "en");
     elona::jp = 0;
     elona::en = 1;
     initialize_i18n();
@@ -23,6 +27,7 @@ void set_english()
 
 void set_japanese()
 {
+    Config::instance().set("core.config.language.language", "jp");
     elona::jp = 1;
     elona::en = 0;
     initialize_i18n();
@@ -57,6 +62,13 @@ std::string test_itemname(int id, int number, bool prefix)
     return name;
 }
 
+Character& create_chara(int id, int x, int y)
+{
+    elona::fixlv = Quality::none;
+    REQUIRE(chara_create(-1, id, x, y));
+    return elona::cdata[elona::rc];
+}
+
 Item& create_item(int id, int number)
 {
     REQUIRE(itemcreate(-1, id, 0, 0, number) == 1);
@@ -64,11 +76,34 @@ Item& create_item(int id, int number)
     return elona::inv[elona::ci];
 }
 
-Character& create_chara(int id, int x, int y)
+void invalidate_item(Item& item)
 {
-    elona::fixlv = Quality::none;
-    REQUIRE(chara_create(-1, id, x, y));
-    return elona::cdata[elona::rc];
+    int old_index = item.index;
+    int old_id = item.id;
+    int old_x = item.position.x;
+    int old_y = item.position.y;
+
+    // Delete the item and create new ones until the index is taken again.
+    item_delete(old_index);
+    do
+    {
+        REQUIRE(itemcreate(-1, old_id, old_x, old_y, 3) == 1);
+    } while (elona::ci != old_index);
+}
+
+void invalidate_chara(Character& chara)
+{
+    int old_index = chara.index;
+    int old_id = chara.id;
+    int old_x = chara.position.x;
+    int old_y = chara.position.y;
+
+    // Delete the character and create new ones until the index is taken again.
+    chara_delete(chara.index);
+    do
+    {
+        REQUIRE(chara_create(-1, old_id, old_x, old_y));
+    } while (elona::rc != old_index);
 }
 
 void register_lua_function(
@@ -84,8 +119,8 @@ void register_lua_function(
         "\
 local Exports = {}\
 \
-function Exports."
-            + callback_signature + "\n" + callback_body + R"(
+function Exports." +
+            callback_signature + "\n" + callback_body + R"(
 end
 
 return {

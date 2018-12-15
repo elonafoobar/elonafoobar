@@ -1,13 +1,13 @@
 #include "../thirdparty/catch2/catch.hpp"
 
 #include <sstream>
-#include "../character.hpp"
-#include "../i18n.hpp"
-#include "../item.hpp"
-#include "../itemgen.hpp"
-#include "../testing.hpp"
-#include "../ui.hpp"
-#include "../variables.hpp"
+#include "../elona/character.hpp"
+#include "../elona/i18n.hpp"
+#include "../elona/item.hpp"
+#include "../elona/itemgen.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/ui.hpp"
+#include "../elona/variables.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;
@@ -15,6 +15,7 @@ using namespace elona;
 
 TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     Character& you = elona::cdata.player();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
@@ -42,6 +43,7 @@ TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     Character& you = elona::cdata.player();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
@@ -69,6 +71,7 @@ TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: him()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     Character& you = elona::cdata.player();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
@@ -96,6 +99,7 @@ TEST_CASE("test i18n builtin: him()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: name()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -110,6 +114,7 @@ TEST_CASE("test i18n builtin: name()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -123,6 +128,7 @@ TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
@@ -140,6 +146,7 @@ TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: itembasename()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
@@ -150,17 +157,18 @@ TEST_CASE("test i18n builtin: itembasename()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
     REQUIRE(
-        i18n::fmt_hil("something go${s(_1)} to hell.", chara)
-        == u8"something gos to hell.");
+        i18n::fmt_hil("something go${s(_1)} to hell.", chara) ==
+        u8"something gos to hell.");
     REQUIRE(
-        i18n::fmt_hil("something go${s(_1, true)} to hell.", chara)
-        == u8"something goes to hell.");
+        i18n::fmt_hil("something go${s(_1, true)} to hell.", chara) ==
+        u8"something goes to hell.");
     REQUIRE(i18n::fmt_hil("${_1} stone${s(_1)}", 0) == u8"0 stones");
     REQUIRE(i18n::fmt_hil("${_1} stone${s(_1)}", 1) == u8"1 stone");
     REQUIRE(i18n::fmt_hil("${_1} stone${s(_1)}", 2) == u8"2 stones");
@@ -169,6 +177,7 @@ TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -177,17 +186,18 @@ TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
 
     REQUIRE(i18n::fmt_hil("you ${is(_1)} killed.", you) == u8"you are killed.");
     REQUIRE(
-        i18n::fmt_hil("something ${is(_1)} killed.", chara)
-        == u8"something is killed.");
+        i18n::fmt_hil("something ${is(_1)} killed.", chara) ==
+        u8"something is killed.");
     REQUIRE(
         i18n::fmt_hil("you ${is(true)} killed.", you) == u8"you are killed.");
     REQUIRE(
-        i18n::fmt_hil("something ${is(false)} killed.", chara)
-        == u8"something is killed.");
+        i18n::fmt_hil("something ${is(false)} killed.", chara) ==
+        u8"something is killed.");
 }
 
 TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -200,6 +210,7 @@ TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: himself()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -214,6 +225,7 @@ TEST_CASE("test i18n builtin: himself()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: his_owned()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -227,6 +239,7 @@ TEST_CASE("test i18n builtin: his_owned()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: name_nojob()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
     Character& you = elona::cdata.player();
@@ -239,6 +252,7 @@ TEST_CASE("test i18n builtin: name_nojob()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
     testing::set_japanese();
     Character& you = elona::cdata.player();
@@ -253,6 +267,7 @@ TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
 
 TEST_CASE("test i18n builtin: you()", "[I18N: Builtins]")
 {
+    testing::reset_state();
     testing::start_in_debug_map();
 
     SECTION("Japanese")
@@ -260,12 +275,42 @@ TEST_CASE("test i18n builtin: you()", "[I18N: Builtins]")
         testing::set_japanese();
         REQUIRE(i18n::fmt_hil("${you()}") == u8"あなた");
         REQUIRE(
-            i18n::fmt_hil(u8"うわああ！${you()}は階段から足を踏み外した。")
-            == u8"うわああ！あなたは階段から足を踏み外した。");
+            i18n::fmt_hil(u8"うわああ！${you()}は階段から足を踏み外した。") ==
+            u8"うわああ！あなたは階段から足を踏み外した。");
     }
     SECTION("English")
     {
         testing::set_english();
         REQUIRE(i18n::fmt_hil("${you()}") == u8"you");
     }
+}
+
+TEST_CASE("test i18n builtin: capitalize()", "[I18N: Builtins]")
+{
+    testing::reset_state();
+    testing::start_in_debug_map();
+    testing::set_english();
+
+    REQUIRE(i18n::fmt_hil("${capitalize(_1)}", "") == u8"");
+    REQUIRE(i18n::fmt_hil("${capitalize(_1)}", "test") == u8"Test");
+    REQUIRE(i18n::fmt_hil("${capitalize(_1)}", "TEST") == u8"TEST");
+}
+
+TEST_CASE("test i18n builtin: ordinal()", "[I18N: Builtins]")
+{
+    testing::reset_state();
+    testing::start_in_debug_map();
+    testing::set_english();
+
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 1) == u8"1st");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 2) == u8"2nd");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 3) == u8"3rd");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 11) == u8"11th");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 12) == u8"12th");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 13) == u8"13th");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 14) == u8"14th");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 21) == u8"21st");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 22) == u8"22nd");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 23) == u8"23rd");
+    REQUIRE(i18n::fmt_hil("${ordinal(_1)}", 24) == u8"24th");
 }

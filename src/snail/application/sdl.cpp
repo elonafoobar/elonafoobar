@@ -14,6 +14,14 @@ namespace elona
 namespace snail
 {
 
+Application::Application()
+    : _sdl_core(new detail::SDLCore)
+    , _sdl_ttf(new detail::SDLTTF)
+    , _sdl_image(new detail::SDLImage)
+    , _sdl_mixer(new detail::SDLMixer)
+{
+}
+
 
 
 Application& Application::instance()
@@ -315,6 +323,15 @@ std::string Application::get_default_display_mode()
     return display_modes.begin()->first;
 }
 
+
+
+::SDL_DisplayMode Application::get_display_mode()
+{
+    return (*_window).get_display_mode();
+}
+
+
+
 void Application::set_display_mode(const std::string& display_mode_str)
 {
     std::string display_mode = display_mode_str;
@@ -382,7 +399,7 @@ void Application::set_subwindow_display_mode(const std::string& mode)
             _width = width;
             _height = height;
         }
-        catch (boost::bad_lexical_cast)
+        catch (const boost::bad_lexical_cast&)
         {
             throw std::logic_error("Invalid subwindow mode string: " + mode);
         }
@@ -462,11 +479,6 @@ static Rect calculate_android_window_pos_landscape(
 
 Rect Application::calculate_android_window_pos()
 {
-    int x, y, width, height;
-
-    x = 0;
-    y = 0;
-
     if (_orientation == Orientation::portrait)
     {
         return calculate_android_window_pos_portrait(
@@ -477,8 +489,6 @@ Rect Application::calculate_android_window_pos()
         return calculate_android_window_pos_landscape(
             _width, _height, _physical_width, _physical_height);
     }
-
-    return {x, y, width, height};
 }
 
 

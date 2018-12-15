@@ -5,7 +5,10 @@ locale {
 
         age_unknown = "Unknown"
 
-        name_with_title = "{${basename(_1)}}"
+        quality {
+            miracle = "<${_1}>"
+            godly = "{${_1}}"
+        }
 
         contract_expired = "The period of contract with ${basename(_1)} has been expired."
 
@@ -42,7 +45,7 @@ locale {
 
         job {
             general_vendor = "${trim_job(_1)}the general vendor"
-            innkeeper = "${trim_job(_1)}the Innkeeper"
+            innkeeper = "${trim_job(_1)}the innkeeper"
             trader = "${trim_job(_1)}the trader"
             goods_vendor = "${trim_job(_1)}the goods vendor"
             baker = "${trim_job(_1)}the baker"

@@ -1,8 +1,8 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../config.hpp"
-#include "../config_def.hpp"
-#include "../testing.hpp"
+#include "../elona/config/config.hpp"
+#include "../elona/config/config_def.hpp"
+#include "../elona/testing.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;
@@ -75,11 +75,6 @@ TEST_CASE("Test invalid config object name", "[Config: Loading]")
 TEST_CASE("Test loading blank config", "[Config: Loading]")
 {
     REQUIRE_FALSE(load_fails(R"(config def {})", R"(config core {})"));
-}
-
-TEST_CASE("Test loading config with unknown value", "[Config: Loading]")
-{
-    REQUIRE(load_fails(R"(config def {})", R"(config core {foo = "bar"})"));
 }
 
 TEST_CASE("Test loading config with differing type", "[Config: Loading]")

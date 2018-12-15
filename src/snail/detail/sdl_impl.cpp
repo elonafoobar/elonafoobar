@@ -49,6 +49,34 @@ void enforce_mixer(int result)
 
 
 
+void* enforce_sdl_internal(void* result)
+{
+    return result ? result : throw SDLError(::SDL_GetError());
+}
+
+
+
+void* enforce_ttf_internal(void* result)
+{
+    return result ? result : throw SDLError(::TTF_GetError());
+}
+
+
+
+void* enforce_img_internal(void* result)
+{
+    return result ? result : throw SDLError(::IMG_GetError());
+}
+
+
+
+void* enforce_mixer_internal(void* result)
+{
+    return result ? result : throw SDLError(::Mix_GetError());
+}
+
+
+
 SDLCore::SDLCore()
 {
     enforce_sdl(::SDL_Init(SDL_INIT_EVERYTHING));

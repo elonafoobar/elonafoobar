@@ -77,7 +77,7 @@ module "Event.EventKind"
 -- local function place_characters()
 --     for i=0, 50 do
 --         local pos = Map.random_pos()
---         Chara.create(pos, 3)
+--         Chara.create(pos, "core.putit")
 --     end
 -- end
 --

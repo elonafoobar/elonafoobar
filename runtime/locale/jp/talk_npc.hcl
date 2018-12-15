@@ -346,7 +346,7 @@ locale {
 
                 enter {
                     game_is_over = "残念だが、今日の試合はもう終了し${ta(_1)}"
-                    target = "今日の対戦相手は${_2}${da(_3)}挑戦する${noka(_3, 1)}"
+                    target = "今日の対戦相手は${_1}${da(_2)}挑戦する${noka(_2, 1)}"
                     target_group = "対戦相手はレベル${_1}以下の相手複数${da(_2)}挑戦する${noka(_2, 1)}"
 
                     choices {
@@ -432,7 +432,7 @@ locale {
                 choices {
                     where_is = "${basename(_1)}の居場所を聞く"
                     lost_wallet = "落し物の財布を届ける"
-                    lost_suitcase = "落し物のカバンを届ける。"
+                    lost_suitcase = "落し物のカバンを届ける"
                 }
 
                 where_is {

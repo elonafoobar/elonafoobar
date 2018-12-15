@@ -1,11 +1,11 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../i18n.hpp"
-#include "../item.hpp"
-#include "../itemgen.hpp"
-#include "../testing.hpp"
-#include "../ui.hpp"
-#include "../variables.hpp"
+#include "../elona/i18n.hpp"
+#include "../elona/item.hpp"
+#include "../elona/itemgen.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/ui.hpp"
+#include "../elona/variables.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;
@@ -37,7 +37,7 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
             i18n::fmt_hil("${itemname(_1)}", item) == u8"鳥のレアチーズケーキ");
         item.subname = 3;
         REQUIRE(
-            i18n::fmt_hil("${itemname(_1)}", item)
-            == u8"プチのレアチーズケーキ");
+            i18n::fmt_hil("${itemname(_1)}", item) ==
+            u8"プチのレアチーズケーキ");
     }
 }

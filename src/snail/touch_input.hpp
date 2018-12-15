@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "../lib/noncopyable.hpp"
-#include "../optional.hpp"
+#include "../elona/optional.hpp"
+#include "../util/noncopyable.hpp"
 #include "application.hpp"
 #include "detail/sdl.hpp"
 #include "filesystem.hpp"
@@ -16,11 +16,7 @@ namespace snail
 
 struct QuickAction
 {
-    QuickAction(
-        std::string text,
-        optional<snail::Key> key,
-        int center_x,
-        int center_y)
+    QuickAction(std::string text, snail::Key key, int center_x, int center_y)
         : center_x(center_x)
         , center_y(center_y)
         , key(key)
@@ -31,15 +27,7 @@ struct QuickAction
     int center_x;
     int center_y;
 
-    // If "key" is none, when the action is triggered "text" will be
-    // sent to the input text buffer (as if SDL_TextInputEvent was
-    // received). Otherwise, said key will be pressed/released. This
-    // is because key detection for alphanumeric keys is handled
-    // through SDL_TextInputEvent, but non-alphanumeric keys use
-    // SDL_KeyboardEvent. This is a result of the use of HSP's
-    // "mesbox" function to check if alphanumeric keys are pressed by
-    // checking the string input it receives.
-    optional<snail::Key> key;
+    snail::Key key;
     std::string text;
 
     bool touched = false;

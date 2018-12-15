@@ -2,6 +2,78 @@
 
 
 
+## [0.3.0] - 2018-12-XX
+
+### Added
+
+- Add new shortcut key, `Ctrl+Tab`, to move to the previous (left) menu.
+- Make possible to reload autopick definition file via `Shift+Backspace`.
+- Prevent precious ally from being destroyed by gene machine. You can regard an ally as precious by using stethoscope to him/her.
+- Implement keybinding. You can customize them throuth the keybinding menu in the bottom of the option menu.
+- Add option to show the current FPS, frame per second (default: disable).
+- Reimplement console by using lua. You can run any lua snippet in the console.
+- Externalize data of character loots.
+- Improve blackjack drawing.
+  - Draw character image in full-scale.
+  - Show each card's suit.
+  - Render card's rank as image.
+- Port English translation of the main scenario's cutscenes from E+C.
+- Externalize almost all of map definition data.
+- Externalize data of sold goods in town shops.
+- Add option to skip prompt to confirm selling/buying items in town shops (defualt: disable).
+- Make message log window scrollable, storing up to 1000 lines. Available shortcut keys are as follows:
+  - `Up`: scroll 1 line up (to older)
+  - `Down`: scroll 1 line down (to newer)
+  - `PageUp` or `Left`: scroll 1 page up (to older)
+  - `PageDown` or `Right`: scroll 1 page down (to newer)
+  - `Home`: jump to the top (to the oldest)
+  - `End`: jump to the bottom (to the newest)
+- Give "yeek" (boss) to his own name, "\<Rodlob\> the boss of yeeks".
+  - The name is the reverse spelling of "Boldor", the Angband monster, as his Japanese name is.
+- Improve shadow graphics.
+- Add option to enable text antialiasing (default: enabled). Also change the bundled font from KochiGothic to GenShinGochic to make text rendering more beatiful when antialiasing is on.
+- Add option to skip overcast warning prompt (default: disable).
+- Check whether the save data you are trying to load now is compatible or not, and report error if the running Elona foobar is not able to load the save.
+- Load each mod in proper order using dependencies.
+- Improve portrait system. Now, you can choose portraits prepared for different gender, and portraits for NPCs.
+- Add application icon of putit to `Elona_foobar.exe` for Windows
+
+
+### Changed
+
+- Do not query direction on using dresser if there are no allies around you.
+- Insert linebreak before message of changing ammo.
+- Show adventurers name in news.
+- Change the order of messages when you eat raw equipments.
+
+
+### Fixed
+
+- [vanilla] Do not show message "something falls down" if the item is on the ground.
+- [vanilla] Fix aspect ratio of PCC in change apperance menu.
+- [vanilla] Fix item chip of double bed and happy bed being cut off.
+- [vanilla] Remove garbage displayed around selection keys.
+- [vanilla] Remove strange spacing in the message log window when the weather changes.
+- [vanilla] Fix item chip of chain mail stacking on too high position.
+- [vanilla] Fix food not getting rotten sometimes if you believe in Kumiromi.
+- [vanilla] Fix the progress of ether disase advancing over the upper limit.
+- [vanilla] Replace ellipsis symbols with 3 periods in English text because some English fonts do not have the glyph.
+- [vanilla] Move the position of the crypt of the damned in the grobal map right. The previous one was on the cliff, which was of course invalid, so that the crypt might be placed at different position in each save and rarely "moves" every time diastrophism occurs.
+- Fix fading out in cutscenes not working.
+- Fix skill tracker's overlap when your skill levels are very high (4 digits).
+- Fix item names in crafting menu being colored wrong.
+- Fix default music not being loaded correctly.
+- Fix random number generator not generating the same result on 3 platforms.
+- Prevent `Ctrl+V` key (to paste text from clipboard) in input box from repeating.
+- Fix being unable to see IME-translated text in input box on macOS.
+- Fix not being able to choose one of your allies correctly in ally selection menu.
+- Fix item graphics being replaced with different one sometimes.
+- Fix female rogue boss having a black-filled portrait.
+- Fix being unable to cancel the talk with whom dwell in the vanity by pressing `Shift` or `ESC`.
+- Fix typo.
+
+
+
 ## [0.2.8] - 2018-09-15
 
 ### Added

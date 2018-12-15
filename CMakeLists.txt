@@ -3,15 +3,22 @@ cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(Elona_foobar VERSION 0.2.8)
+project(Elona_foobar VERSION 0.3.0)
 
 # Android version code. Increment on every distinct release.
-set(PROJECT_VERSION_CODE 1)
+set(PROJECT_VERSION_CODE 2)
 
 
 # Options
 option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
 option(ANDROID_GENERATE_PROPERTIES "Generate android/app/gradle.properties" OFF)
+
+
+# Platform detection
+set(LINUX FALSE)
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+  set(LINUX TRUE)
+endif()
 
 
 # Versioning
@@ -36,7 +43,9 @@ string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
 set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
 
 # Versioning file
-configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
+configure_file("${PROJECT_SOURCE_DIR}/src/elona/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/elona/version.cpp")
+
+
 
 # CMake is run last in the Android build process, so gradle.properties
 # has to be generated beforehand.
@@ -51,179 +60,6 @@ enable_language(CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Source files
-set(CORE_SOURCES
-  src/ability.cpp
-  src/access_character_info.cpp
-  src/access_item_db.cpp
-  src/activity.cpp
-  src/adventurer.cpp
-  src/ai.cpp
-  src/animation.cpp
-  src/area.cpp
-  src/audio.cpp
-  src/autopick.cpp
-  src/blending.cpp
-  src/buff.cpp
-  src/building.cpp
-  src/calc.cpp
-  src/card.cpp
-  src/casino.cpp
-  src/casino_card.cpp
-  src/cat.cpp
-  src/cell_draw.cpp
-  src/character.cpp
-  src/character_making.cpp
-  src/character_status.cpp
-  src/class.cpp
-  src/command.cpp
-  src/config.cpp
-  src/config_def.cpp
-  src/crafting.cpp
-  src/ctrl_file.cpp
-  src/ctrl_inventory.cpp
-  src/db_character.cpp
-  src/db_chara_chip.cpp
-  src/db_item.cpp
-  src/db_item_chip.cpp
-  src/db_music.cpp
-  src/db_sound.cpp
-  src/debug.cpp
-  src/dmgheal.cpp
-  src/draw.cpp
-  src/element.cpp
-  src/elonacore.cpp
-  src/enchantment.cpp
-  src/equipment.cpp
-  src/event.cpp
-  src/filesystem.cpp
-  src/fish.cpp
-  src/food.cpp
-  src/fov.cpp
-  src/gdata.cpp
-  src/get_card_info.cpp
-  src/get_random_item_id.cpp
-  src/get_random_npc_id.cpp
-  src/god.cpp
-  src/i18n.cpp
-  src/init.cpp
-  src/initialize_map.cpp
-  src/input.cpp
-  src/item.cpp
-  src/item_load_desc.cpp
-  src/item_material.cpp
-  src/itemgen.cpp
-  src/lion.cpp
-  src/log.cpp
-  src/magic.cpp
-  src/main_menu.cpp
-  src/map.cpp
-  src/map_cell.cpp
-  src/mapgen.cpp
-  src/mef.cpp
-  src/menu.cpp
-  src/message.cpp
-  src/network.cpp
-  src/proc_event.cpp
-  src/quest.cpp
-  src/race.cpp
-  src/random.cpp
-  src/random_event.cpp
-  src/set_item_info.cpp
-  src/set_option.cpp
-  src/shop.cpp
-  src/spec.cpp
-  src/status_ailment.cpp
-  src/std.cpp
-  src/talk.cpp
-  src/talk_house_visitor.cpp
-  src/talk_npc.cpp
-  src/talk_unique.cpp
-  src/tcg.cpp
-  src/testing.cpp
-  src/text.cpp
-  src/trait.cpp
-  src/turn_sequence.cpp
-  src/ui.cpp
-  src/variables.cpp
-  src/wish.cpp
-
-  src/lua_env/api_manager.cpp
-  src/lua_env/event_manager.cpp
-  src/lua_env/export_manager.cpp
-  src/lua_env/handle_manager.cpp
-  src/lua_env/lua_enums.cpp
-  src/lua_env/lua_env.cpp
-  src/lua_env/mod_manager.cpp
-  src/lua_env/registry_manager.cpp
-
-  src/lua_env/lua_api/lua_api_animation.cpp
-  src/lua_env/lua_api/lua_api_chara.cpp
-  src/lua_env/lua_api/lua_api.cpp
-  src/lua_env/lua_api/lua_api_debug.cpp
-  src/lua_env/lua_api/lua_api_fov.cpp
-  src/lua_env/lua_api/lua_api_gui.cpp
-  src/lua_env/lua_api/lua_api_i18n.cpp
-  src/lua_env/lua_api/lua_api_input.cpp
-  src/lua_env/lua_api/lua_api_item.cpp
-  src/lua_env/lua_api/lua_api_magic.cpp
-  src/lua_env/lua_api/lua_api_map.cpp
-  src/lua_env/lua_api/lua_api_math.cpp
-  src/lua_env/lua_api/lua_api_pos.cpp
-  src/lua_env/lua_api/lua_api_rand.cpp
-  src/lua_env/lua_api/lua_api_skill.cpp
-  src/lua_env/lua_api/lua_api_trait.cpp
-  src/lua_env/lua_api/lua_api_world.cpp
-
-  src/lua_env/lua_class/lua_class_character.cpp
-  src/lua_env/lua_class/lua_class.cpp
-  src/lua_env/lua_class/lua_class_item.cpp
-  src/lua_env/lua_class/lua_class_position.cpp
-
-  src/dialog/dialog.cpp
-  src/dialog/dialog_data.cpp
-  src/dialog/dialog_decoder.cpp
-
-  src/pic_loader/pic_loader.cpp
-
-  src/ui/ui_menu_adventurers.cpp
-  src/ui/ui_menu_alias.cpp
-  src/ui/ui_menu_book.cpp
-  src/ui/ui_menu_character_sheet.cpp
-  src/ui/ui_menu_charamake_alias.cpp
-  src/ui/ui_menu_charamake_attributes.cpp
-  src/ui/ui_menu_charamake_class.cpp
-  src/ui/ui_menu_charamake_gender.cpp
-  src/ui/ui_menu_charamake_race.cpp
-  src/ui/ui_menu_chat_history.cpp
-  src/ui/ui_menu_crafting.cpp
-  src/ui/ui_menu_ctrl_ally.cpp
-  src/ui/ui_menu_dialog.cpp
-  src/ui/ui_menu_equipment.cpp
-  src/ui/ui_menu_feats.cpp
-  src/ui/ui_menu_game_help.cpp
-  src/ui/ui_menu_god.cpp
-  src/ui/ui_menu_hire.cpp
-  src/ui/ui_menu_item_desc.cpp
-  src/ui/ui_menu_journal.cpp
-  src/ui/ui_menu_materials.cpp
-  src/ui/ui_menu_message_log.cpp
-  src/ui/ui_menu_npc_tone.cpp
-  src/ui/ui_menu_quest_board.cpp
-  src/ui/ui_menu_scene.cpp
-  src/ui/ui_menu_skills.cpp
-  src/ui/ui_menu_spell_writer.cpp
-  src/ui/ui_menu_spells.cpp
-  src/ui/ui_menu_town_chart.cpp
-  src/ui/ui_menu_town_economy.cpp
-  src/ui/ui_menu_town_politics.cpp
-  src/ui/ui_menu_composite_character.cpp
-  src/ui/ui_menu_composite_message.cpp
-  src/ui/ui_menu_composite_skills.cpp
-  src/ui/ui_menu_composite_town.cpp
-
-  src/version.cpp
-  )
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
@@ -248,14 +84,15 @@ if(ANDROID)
   set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
   SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
-  add_definitions(-DSNAIL_RENDERER_SDL)
 
   add_library( SDL2 SHARED IMPORTED )
   add_library( SDL2_image SHARED IMPORTED )
   add_library( SDL2_ttf SHARED IMPORTED )
   add_library( SDL2_mixer SHARED IMPORTED )
   add_library( lua SHARED IMPORTED )
+  add_library( util SHARED IMPORTED )
   add_library( snail SHARED IMPORTED )
+  add_library( elona SHARED IMPORTED )
   add_library( boost_filesystem SHARED IMPORTED )
   add_library( boost_system SHARED IMPORTED )
   add_library( boost_iostreams SHARED IMPORTED )
@@ -270,8 +107,12 @@ if(ANDROID)
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libSDL2_mixer.so)
   set_target_properties(lua PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/liblua.so)
+  set_target_properties(util PROPERTIES IMPORTED_LOCATION
+    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libutil.so)
   set_target_properties(snail PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libsnail.so)
+  set_target_properties(elona PROPERTIES IMPORTED_LOCATION
+    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libelona.so)
 
   set_target_properties(boost_filesystem PROPERTIES IMPORTED_LOCATION
     ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_filesystem.so)
@@ -285,13 +126,15 @@ if(ANDROID)
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_ttf)
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_mixer)
   include_directories(${EXTERNAL_LIB_LOCATION}/lua/src)
+  include_directories(${EXTERNAL_LIB_LOCATION}/util)
   include_directories(${EXTERNAL_LIB_LOCATION}/snail)
+  include_directories(${EXTERNAL_LIB_LOCATION}/elona)
   include_directories(${EXTERNAL_LIB_LOCATION}/boost/include)
   link_directories(${EXTERNAL_LIB_LOCATION}/boost/libs/llvm/armeabi-v7a)
 
-  add_library( ${PROJECT_NAME} SHARED ${CORE_SOURCES} src/main.cpp )
+  add_library( ${PROJECT_NAME} SHARED src/main.cpp )
 
-  target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams snail )
+  target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams util snail elona)
 else()
   # Options
   option(WITH_TESTS "Build test executable (TESTS or BENCH)" "OFF")
@@ -299,11 +142,9 @@ else()
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
     unset(SNAIL_HEADLESS CACHE)
     SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
-    add_definitions(-DSNAIL_RENDERER_HEADLESS)
   elseif(WITH_TESTS STREQUAL "OFF")
     unset(SNAIL_HEADLESS CACHE)
     SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
-    add_definitions(-DSNAIL_RENDERER_SDL)
   else()
     # Use the previous flags.
   endif()
@@ -321,6 +162,7 @@ else()
       src/tests/config.cpp
       src/tests/config_def.cpp
       src/tests/dialog.cpp
+      src/tests/filesystem.cpp
       src/tests/spec.cpp
       src/tests/lua_api.cpp
       src/tests/lua_callbacks.cpp
@@ -328,17 +170,20 @@ else()
       src/tests/lua_exports.cpp
       src/tests/lua_handles.cpp
       src/tests/lua_mods.cpp
-      src/tests/lua_registry.cpp
-      src/tests/lua_registry_character.cpp
-      src/tests/lua_registry_item.cpp
+      src/tests/lua_data.cpp
+      src/tests/lua_data_character.cpp
+      src/tests/lua_data_item.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
       src/tests/item.cpp
       src/tests/i18n.cpp
       src/tests/i18n_builtins.cpp
       src/tests/i18n_regressions.cpp
+      src/tests/keybind_deserializer.cpp
+      src/tests/keybind_key_names.cpp
+      src/tests/keybind_manager.cpp
+      src/tests/keybind_serializer.cpp
       src/tests/serialization.cpp
-      ${CORE_SOURCES}
       )
 
     add_executable(${PROJECT_NAME} ${TEST_SOURCES})
@@ -351,17 +196,20 @@ else()
       src/bench/ai.cpp
       src/bench/generate.cpp
       src/bench/i18n.cpp
-      src/bench/lion.cpp
       src/bench/lua_callbacks.cpp
       src/bench/magic.cpp
       src/bench/util.cpp
-      ${CORE_SOURCES}
       )
 
     add_executable(${PROJECT_NAME} ${BENCH_SOURCES})
     target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
   else()
-    add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES} src/main.cpp)
+    if(WIN32)
+      set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
+    else(WIN32)
+      set(RESOURCES "")
+    endif()
+    add_executable(${PROJECT_NAME} WIN32 src/main.cpp ${RESOURCES})
   endif()
 
   if(WIN32)
@@ -393,7 +241,7 @@ else()
   if(WIN32)
     # Build custom version of Lua 5.3 with UTF-16 filename support
     add_subdirectory(${CMAKE_PREFIX_PATH}/lib/lua ${PROJECT_BINARY_DIR}/lib/lua)
-    target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_PREFIX_PATH}/lib/lua/src/)
+    include_directories(PUBLIC ${CMAKE_PREFIX_PATH}/lib/lua/src/)
     target_link_libraries(${PROJECT_NAME} liblua53)
   else()
     if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
@@ -430,48 +278,142 @@ else()
   # Compiler options
   target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
+  set(GENERAL_OPTIONS)
+  set(DEBUG_OPTIONS)
+  set(RELEASE_OPTIONS)
+  set(LINKER_OPTIONS)
+  set(EXTRA_DEFINES)
+  set(DISABLED_WARNINGS)
+  set(WARNINGS_AS_ERRORS)
+
   if(MSVC)
-    add_definitions("-D_UNICODE")
-    set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
-  else()
+    list(APPEND EXTRA_DEFINES "_UNICODE")
+    list(APPEND GENERAL_OPTIONS
+      "W4"
+      "source-charset:utf-8"
+      "MT"
+      "EHsc")
+    list(APPEND DEBUG_OPTIONS
+      "MP8"
+      "MTd"
+      "ZI"
+      "Od")
+    list(APPEND RELEASE_OPTIONS
+      "MT")
+    list(APPEND DISABLED_WARNINGS
+      "4244" # 'conversion' conversion from 'type1' to 'type2', possible loss of data
+      "4267" # 'var' : conversion from 'size_t' to 'type', possible loss of data
+      "4456" # declaration of 'identifier' hides previous local declaration
+      "4459" # declaration of 'identifier' hides global declaration
+      "4996" # Call to 'std::equal' with parameters that may be unsafe
+      )
+    list(APPEND EXTRA_DEFINES
+      "BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE")
+
+
+    foreach(opt ${DISABLED_WARNINGS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd${opt}")
+    endforeach()
+
+    foreach(opt ${GENERAL_OPTIONS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /${opt}")
+    endforeach()
+
+    foreach(opt ${DEBUG_OPTIONS})
+      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /${opt}")
+    endforeach()
+
+    foreach(opt ${RELEASE_OPTIONS})
+      foreach(flag_var CMAKE_CXX_FLAGS_RELEASE CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+        set(${flag_var} "${${flag_var}} /${opt}")
+      endforeach()
+    endforeach()
+  else() # GCC or Clang
+    list(APPEND GENERAL_OPTIONS
+      "Wall"
+      "Wextra")
+    list(APPEND DEBUG_OPTIONS
+      "g"
+      "O0")
+    list(APPEND EXTRA_DEFINES
+      "DEBUG")
     if(WITH_TESTS STREQUAL "BENCH")
-      set(CMAKE_CXX_FLAGS "-Wall -Wextra -g3")
-    else()
-      set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+      list(APPEND GENERAL_OPTIONS "g1")
     endif()
+    list(APPEND DISABLED_WARNINGS
+      "deprecated-declarations")
+    list(APPEND WARNINGS_AS_ERRORS
+      "return-type")
+
+    # Speed up linking on Linux by using split DWARF
+    if (LINUX)
+      list(APPEND GENERAL_OPTIONS
+        "gsplit-dwarf")
+    endif ()
+
+    # Use gold linker or lld if available
+    set(LINKER)
+
+    option(USE_GOLD_LINKER "Link with GNU gold" ON)
+    if (USE_GOLD_LINKER)
+      execute_process(COMMAND ${CMAKE_CXX_COMPILER} -fuse-ld=gold -Wl,--version ERROR_QUIET OUTPUT_VARIABLE LD_VERSION)
+      if(LD_VERSION MATCHES "GNU gold")
+        set(LINKER "gold")
+      endif()
+    endif()
+
+    option(USE_LLD_LINKER "Link with lld" ON)
+    if (USE_LLD_LINKER)
+      execute_process(COMMAND ${CMAKE_CXX_COMPILER} -fuse-ld=lld -Wl,--version ERROR_QUIET OUTPUT_VARIABLE LD_VERSION)
+      if(LD_VERSION MATCHES "LLD")
+        set(LINKER "lld")
+      endif()
+    endif()
+
+    if (LINKER)
+      list(APPEND LINKER_OPTIONS
+        "fuse-ld=${LINKER}")
+      message(STATUS "Using linker: ${LINKER}")
+    else()
+      message(STATUS "Using system linker.")
+    endif()
+
+
+    foreach(opt ${DISABLED_WARNINGS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-${opt}")
+    endforeach()
+
+    foreach(opt ${WARNINGS_AS_ERRORS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=${opt}")
+    endforeach()
+
+    foreach(opt ${GENERAL_OPTIONS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -${opt}")
+    endforeach()
+
+    foreach(opt ${DEBUG_OPTIONS})
+      set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -${opt}")
+    endforeach()
+
+    foreach(opt ${RELEASE_OPTIONS})
+      set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -${opt}")
+    endforeach()
+
+    foreach(opt ${LINKER_OPTIONS})
+      set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -${opt}")
+    endforeach()
   endif()
 
-  # Compiler options(debug build)
-  if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG "/MP8 /MTd /ZI /Od")
-  else()
-    set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
-  endif()
+  foreach(opt ${EXTRA_DEFINES})
+    add_definitions("-D${opt}")
+  endforeach()
 
-  if(MSVC)
-    set(CMAKE_CXX_FLAGS_RELEASE "/MT")
-  endif()
+  # My libraries: util
+  add_subdirectory(src/util)
+  target_link_libraries(${PROJECT_NAME} util)
 
-  if(WITH_TESTS STREQUAL "BENCH")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-  endif()
-
-  # Warning suppressions
-  if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    # Force GCC to output warnings about undefined symbols
-    string(APPEND CMAKE_CXX_FLAGS " -Wl,--no-undefined")
-    # Disable deprecated declarations, because it causes warnings with boost_locale's use of auto_ptr
-    string(APPEND CMAKE_CXX_FLAGS " -Wno-deprecated-declarations")
-  elseif(MSVC)
-    # Disable warnings about hiding of global/local declarations
-    string(APPEND CMAKE_CXX_FLAGS " /wd4459 /wd4456")
-    # Disable warnings about Boost versions.
-    add_definitions(-DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE)
-  endif()
-
-  # My libraries
+  # My libraries: snail
   add_subdirectory(src/snail)
-
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
     target_link_libraries(${PROJECT_NAME} snail_headless)
   elseif(WITH_TESTS STREQUAL "OFF")
@@ -480,6 +422,9 @@ else()
     # Use the previous flags.
   endif()
 
+  # My libraries: elona
+  add_subdirectory(src/elona)
+  target_link_libraries(${PROJECT_NAME} elona)
 
   INSTALL(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime
@@ -541,12 +486,11 @@ endif()
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/data/ "${RUNTIME_DIR}/data/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
-copy_dir(${CMAKE_SOURCE_DIR}/runtime/lang/ "${RUNTIME_DIR}/lang/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/mods/ "${RUNTIME_DIR}/mods/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/original/ "${RUNTIME_DIR}/original/")
-copy_file(${CMAKE_SOURCE_DIR}/runtime/__init__.lua "${RUNTIME_DIR}")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/user/ "${RUNTIME_DIR}/user/")
 copy_file(${CMAKE_SOURCE_DIR}/runtime/assets.hcl "${RUNTIME_DIR}")
 
 # Copy assets from Elona 1.22 if they are present.
