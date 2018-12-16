@@ -17,9 +17,8 @@ DataManager::DataManager(LuaEnv* lua)
 
 void DataManager::clear()
 {
-    sol::table data =
-        _lua->get_state()->script_file(filesystem::make_preferred_path_in_utf8(
-            filesystem::dir::data() / "lua" / "data.lua"));
+    sol::table data = _lua->get_state()->script_file(
+        filesystem::to_utf8_path(filesystem::dir::data() / "lua" / "data.lua"));
     _data.storage = data;
 }
 
@@ -43,7 +42,7 @@ void DataManager::_init_from_mod(ModInfo& mod)
         if (fs::exists(data_script))
         {
             auto result = _lua->get_state()->safe_script_file(
-                filesystem::make_preferred_path_in_utf8(data_script),
+                filesystem::to_utf8_path(data_script),
                 mod.env,
                 sol::script_pass_on_error);
 

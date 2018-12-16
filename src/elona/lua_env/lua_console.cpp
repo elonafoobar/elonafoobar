@@ -83,9 +83,8 @@ void LuaConsole::init_environment()
     }
 
     // inspect = require("inspect")
-    auto inspect =
-        lua->get_state()->script_file(filesystem::make_preferred_path_in_utf8(
-            filesystem::dir::data() / "lua"s / "inspect.lua"));
+    auto inspect = lua->get_state()->script_file(filesystem::to_utf8_path(
+        filesystem::dir::data() / "lua"s / "inspect.lua"));
     _console_mod->env.raw_set("inspect", inspect);
 
     // Add ability to reload user/console.lua.
@@ -121,8 +120,7 @@ bool LuaConsole::run_userscript()
     // TODO: if Elona foobar is placed in a folder containing non-ASCII
     // characters, it may cause some bug!
     auto result = _lua->get_state()->safe_script_file(
-        filesystem::make_preferred_path_in_utf8(
-            filesystem::dir::user() / "console.lua"),
+        filesystem::to_utf8_path(filesystem::dir::user() / "console.lua"),
         _console_mod->env);
 
     if (!result.valid())

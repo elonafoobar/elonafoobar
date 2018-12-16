@@ -382,8 +382,7 @@ void load_config(const fs::path& hcl_file)
     conf.bind_setter<std::string>(
         "core.config.font.quality", &convert_and_set_requested_font_quality);
 
-    std::ifstream ifs{
-        filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+    std::ifstream ifs{hcl_file.native()};
     conf.load(ifs, hcl_file.string(), false);
 
     if (Config::instance().runwait < 1)
@@ -456,7 +455,7 @@ void initialize_config_preload(const fs::path& hcl_file)
     }
 
     std::ifstream ifs{
-        filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+        hcl_file.native()};
     conf.load(ifs, hcl_file.string(), true);
 
     snail::android::set_navigation_bar_visibility(

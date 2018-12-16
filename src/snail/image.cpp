@@ -1,4 +1,5 @@
 #include "image.hpp"
+#include "../elona/filesystem.hpp"
 #include "application.hpp"
 #include "renderer.hpp"
 
@@ -61,7 +62,8 @@ BasicImage::BasicImage(
     const fs::path& filepath,
     const optional<Color>& keycolor)
 {
-    auto surface = detail::enforce_img(::IMG_Load(filepath.string().c_str()));
+    auto surface = detail::enforce_img(
+        ::IMG_Load(elona::filesystem::to_utf8_path(filepath).c_str()));
 
     if (keycolor)
     {

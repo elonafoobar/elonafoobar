@@ -165,7 +165,7 @@ std::string to_utf8_path(const fs::path& path)
 
 std::string to_forward_slashes(const fs::path& path)
 {
-    std::string path_str = path.string();
+    std::string path_str = to_utf8_path(path);
     std::replace(path_str.begin(), path_str.end(), '\\', '/');
     return path_str;
 }
