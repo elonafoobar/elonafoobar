@@ -524,14 +524,18 @@ void initialize_map_from_map_type()
     // game_data.current_map. However, multiple player-owned areas can share
     // the same map ID.
     int map_id = area_data[game_data.current_map].id;
+    std::cerr << "area: " << map_id << " gamedata:" << game_data.current_map
+              << std::endl;
     auto map = the_mapdef_db[map_id];
 
     if (!map)
     {
-        txt("Could not find map with ID "s + map_id);
+        txt("Could not find map with ID "s + map_id + ". "s);
         return;
     }
 
+    std::cerr << "wb: " << map_data.width << " hb: " << map_data.height
+              << std::endl;
     _generate_map_from_lua(**map);
 
     MapId map_id_b = static_cast<MapId>(area_data[game_data.current_map].id);
@@ -564,6 +568,8 @@ void initialize_map_from_map_type()
     default: break;
         // clang-format on
     }
+    std::cerr << "wn: " << map_data.width << " hn: " << map_data.height
+              << std::endl;
 }
 
 } // namespace elona

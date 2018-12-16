@@ -457,7 +457,7 @@ local function fort_of_chaos(boss)
       Map.data.bgm = "core.mcBoss2"
 
       local charas = {
-         { boss, 12, 14 }
+         { 12, 14, boss }
       }
 
       create_charas(charas)
@@ -494,7 +494,7 @@ end
 local function initialize_rank_5_home()
    local charas = {
       { 31, 20, "core.shopkeeper", { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
-      { 9, 20, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { 9, 20, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.blacksmith" } },
       { 4, 20, "core.shopkeeper", { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
       { 4, 11, "core.wizard", { role = 5 } },
       { 30, 11, "core.bartender", { role = 9 } },
@@ -581,7 +581,7 @@ function maps.derphy(generator)
       { 26, 7, "core.shopkeeper", { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
       { 30, 4, "core.shopkeeper", { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
       { 29, 4, "core.shopkeeper", { role = 17, _name = "core.locale.chara.job.slave_master" } },
-      { 10, 6, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { 10, 6, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.blacksmith" } },
       { 7, 15, "core.arena_master", { role = 10 } },
       { 9, 18, "core.elder", { role = 6, _name = "core.locale.chara.job.of_derphy" } },
       { 13, 18, "core.trainer", { role = 7, _name = "core.locale.chara.job.trainer" } },
@@ -650,7 +650,7 @@ function maps.palmia(generator)
       { 30, 17, "core.shopkeeper", { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
       { 48, 3, "core.shopkeeper", { role = 1008, shop_rank = 8, _name = "core.locale.chara.job.goods_vendor" } },
       { 42, 17, "core.shopkeeper", { role = 1001, shop_rank = 12 } },
-      { 11, 14, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { 11, 14, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.baker", image = 138 } },
       { 41, 3, "core.wizard", { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
       { 41, 28, "core.shopkeeper", { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
       { 7, 2, "core.stersha", { role = 15, ai_calm = 3 } },
@@ -706,8 +706,8 @@ function maps.lumiest(generator)
       { 10, 16, "core.healer", { role = 12 } },
       { 47, 30, "core.shopkeeper", { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
       { 24, 47, "core.shopkeeper", { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 37, 30, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
-      { 37, 12, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { 37, 30, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.blacksmith" } },
+      { 37, 12, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.baker", image = 138 } },
       { 6, 15, "core.wizard", { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
       { 33, 43, "core.shopkeeper", { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
       { 47, 12, "core.shopkeeper", { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
@@ -893,10 +893,10 @@ function maps.noyel(generator)
       { 40, 33, "core.bartender", { role = 9 } },
       { 44, 6, "core.healer", { role = 12 } },
       { 44, 3, "core.nun", { role = 19 } },
-      { 19, 31, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { 19, 31, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.blacksmith" } },
       { 11, 31, "core.shopkeeper", { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
       { 38, 34, "core.shopkeeper", { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 5, 27, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { 5, 27, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.baker", image = 138 } },
       { 56, 5, "core.wizard", { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
       { 39, 35, "core.shopkeeper", { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
       { 5, 18, "core.elder", { role = 6, _name = "core.locale.chara.job.of_noyel" } },
@@ -949,7 +949,7 @@ function maps.port_kapul(generator)
       { 8, 11, "core.cleaner", { role = 3 } },
       { 8, 14, "core.bard", { role = 3 } },
       { 16, 17, "core.shopkeeper", { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
-      { 23, 7, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { 23, 7, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.blacksmith" } },
       { 32, 14, "core.shopkeeper", { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
       { 22, 14, "core.shopkeeper", { role = 1008, shop_rank = 10, _name = "core.locale.chara.job.goods_vendor" } },
       { 16, 25, "core.shopkeeper", { role = 1007, shop_rank = 10, _name = "core.locale.chara.job.blackmarket" } },
@@ -998,7 +998,7 @@ function maps.fighters_guild(generator)
       { 28, 10, "core.healer", { role = 12 } },
       { 15, 10, "core.trainer", { role = 7, _name = "core.locale.chara.job.trainer" } },
       { 14, 18, "core.wizard", { role = 5 } },
-      { 29, 15, "core.shopkeeper", { role = 1001, shop_rank = 12, "core.locale.chara.job.armory" } },
+      { 29, 15, "core.shopkeeper", { role = 1001, shop_rank = 12, "core.locale.chara.job.blacksmith" } },
       { -3, 0, "core.fighter_guild_member", { _count = 16 } },
    }
 
@@ -1051,12 +1051,12 @@ function maps.vernis(generator)
       { 30, 5, "core.rilian", { role = 3 } },
       { 42, 24, "core.bard", { role = 3 } },
       { 47, 9, "core.shopkeeper", { role = 1014, shop_rank = 5, _name = "core.locale.chara.job.fisher" } },
-      { 14, 12, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.armory" } },
+      { 14, 12, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.blacksmith" } },
       { 39, 27, "core.shopkeeper", { role = 1009, shop_rank = 12, _name = "core.locale.chara.job.trader" } },
       { 10, 15, "core.shopkeeper", { role = 1006, shop_rank = 10, _name = "core.locale.chara.job.general_vendor" } },
       { 7, 26, "core.wizard", { role = 1004, shop_rank = 11, _name = "core.locale.chara.job.magic_vendor" } },
       { 14, 25, "core.shopkeeper", { role = 1005, shop_rank = 8, _name = "core.locale.chara.job.innkeeper" } },
-      { 22, 26, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.bakery", image = 138 } },
+      { 22, 26, "core.shopkeeper", { role = 1003, shop_rank = 9, _name = "core.locale.chara.job.baker", image = 138 } },
       { 28, 16, "core.wizard", { role = 5 } },
       { 38, 27, "core.bartender", { role = 9 } },
       { 6, 25, "core.healer", { role = 12 } },
@@ -1094,7 +1094,7 @@ function maps.the_mine(generator)
 end
 
 function maps.robbers_hideout(generator)
-   generator.load_custom("sqrogue")
+   generator.load_custom("sqRogue")
 
    Map.data.tileset = 0
    Map.data.is_indoors = true
@@ -1294,7 +1294,7 @@ local function dungeon_with_boss(deepest_map)
          Map.data.bgm = "core.mcLastBoss"
          generator.place_player()
       else
-         generator.generate_random_nefia()
+         generator.generate_nefia()
       end
    end
 end
@@ -1345,6 +1345,10 @@ end
 
 function maps.quest(generator)
    -- Internally, nefia generation is affected by the global quest ID.
+   generator.generate_nefia()
+end
+
+function maps.random_dungeon(generator)
    generator.generate_nefia()
 end
 

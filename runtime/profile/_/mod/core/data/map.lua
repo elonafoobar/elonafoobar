@@ -1116,6 +1116,17 @@ local function player_owned(opts)
    return table.merge(new_opts, opts)
 end
 
+local function chara_filter_museum_shop()
+   local fltselect
+   if Rand.one_in(1) then
+      fltselect = 5
+   else
+      fltselect = 7
+   end
+
+   return { level = 100, quality = "Bad", fltselect = fltselect }
+end
+
 -- These maps are player-created.
 data:add_multi(
    "core.map",
@@ -1126,6 +1137,7 @@ data:add_multi(
          appearance = 151,
          is_indoor = true,
          generator = maps.museum,
+         chara_filter = chara_filter_museum_shop,
          deed = "core.deed_of_museum",
       },
       player_owned {
@@ -1137,6 +1149,7 @@ data:add_multi(
          is_indoor = true,
          appearance = 150,
          generator = maps.shop,
+         chara_filter = chara_filter_museum_shop,
          deed = "core.deed_of_shop",
       },
       player_owned {
@@ -1188,21 +1201,26 @@ data:add_multi(
       {
          name = "random_dungeon",
          id = 8,
-         is_fixed = false,
-
-         -- Dummy; they are overwritten when a dungeon is generated.
-         is_indoor = true,
-         appearance = 138,
-         base_turn_cost = 10000,
-         map_type = "PlayerOwned",
-         outer_map_position = { x = 0, y = 0 },
-         deepest_level = 1,
-         entrance_type = "South",
-         is_generated_every_time = false,
-         default_ai_calm = 1,
-         danger_level = 1,
-         tile_type = 3,
+         entrance_type = "StairUp",
          tile_set = "Normal",
-         outer_map = 4,
+         base_turn_cost = 10000,
+         is_indoor = true,
+         is_generated_every_time = false,
+         default_ai_calm = 0,
+
+         generator = maps.random_dungeon,
+         chara_filter = function()
+            return { level = Map.data.current_dungeon_level, quality = "Bad" }
+         end,
+
+         -- The following fields are required for loading the data but
+         -- ignored. They are replaced on generation.
+         appearance = 133,
+         tile_type = 1,
+         map_type = "Dungeon",
+         outer_map = "core.north_tyris",
+         outer_map_position = { x = 0, y = 0 },
+         danger_level = 1,
+         deepest_level = 1,
       },
 })

@@ -1241,18 +1241,13 @@ static void _create_nefia(int index, int x, int y)
     ctrl_file(FileOperation::temp_dir_delete_area);
 
     auto& area = area_data[index];
+    const auto map = the_mapdef_db["core.random_dungeon"];
+    assert(map);
+
+    area_generate_from_mapdef(
+        area, **map, game_data.destination_outer_map, x, y);
 
     area.type = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
-    area.id = static_cast<int>(mdata_t::MapId::random_dungeon);
-    area.appearance = 133;
-    area.position.x = x;
-    area.position.y = y;
-    area.entrance = 1;
-    area.tile_set = 1;
-    area.tile_type = 1;
-    area.turn_cost_base = 10000;
-    area.is_indoor = true;
-    area.outer_map = game_data.destination_outer_map;
     if (rnd(3))
     {
         area.danger_level = rnd(cdata.player().level + 5) + 1;
@@ -1266,11 +1261,11 @@ static void _create_nefia(int index, int x, int y)
         }
     }
     area.deepest_level = area.danger_level + rnd(4) + 2;
-    area.is_generated_every_time = false;
-    area.default_ai_calm = 0;
     area.has_been_conquered = 0;
     area.dungeon_prefix = rnd(mapnamerd.i_size());
+
     cell_data.at(x, y).feats = 1;
+
     if (area.type == mdata_t::MapType::dungeon)
     {
         area.appearance = 133;

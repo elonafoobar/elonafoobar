@@ -43,6 +43,8 @@ Position random_pos();
 
 int generate_tile(const EnumString&);
 
+int chip_type(int);
+
 void set_tile(const Position&, int);
 void set_tile_xy(int, int, int);
 

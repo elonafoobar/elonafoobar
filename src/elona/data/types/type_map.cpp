@@ -16,7 +16,7 @@ MapDefData MapDefDB::convert(
     DATA_REQ(appearance, int);
     DATA_ENUM(
         map_type, mdata_t::MapType, MapTypeTable, mdata_t::MapType::world_map);
-    DATA_REQ(outer_map, SharedId);
+    DATA_REQ(outer_map, std::string);
     DATA_REQ(outer_map_position, sol::table);
     DATA_ENUM(entrance_type, int, MapEntranceTypeTable, 8);
     DATA_ENUM(tile_set, int, MapTilesetTable, 2);
@@ -29,7 +29,7 @@ MapDefData MapDefDB::convert(
     DATA_REQ(default_ai_calm, int);
     DATA_OPT_OR(quest_town_id, int, 0);
     DATA_OPT(quest_custom_map, std::string);
-    DATA_OPT(deed, SharedId);
+    DATA_OPT(deed, std::string);
 
     DATA_OPT_OR(can_return_to, bool, false);
     DATA_OPT_OR(is_fixed, bool, true);
@@ -49,6 +49,12 @@ MapDefData MapDefDB::convert(
     Position outer_map_position_{outer_map_position.get<int>("x"),
                                  outer_map_position.get<int>("y")};
 
+    optional<SharedId> deed_ = none;
+    if (deed)
+    {
+        deed_ = SharedId(*deed);
+    }
+
     // optional<SharedId> deed_ = none;
     // if (deed)
     // {
@@ -58,7 +64,7 @@ MapDefData MapDefDB::convert(
     return MapDefData{legacy_id,
                       appearance,
                       map_type,
-                      outer_map,
+                      SharedId(outer_map),
                       outer_map_position_,
                       entrance_type,
                       tile_set,
@@ -71,7 +77,7 @@ MapDefData MapDefDB::convert(
                       default_ai_calm,
                       quest_town_id,
                       quest_custom_map,
-                      deed,
+                      deed_,
 
                       can_return_to,
                       is_fixed,

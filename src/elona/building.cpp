@@ -239,25 +239,6 @@ static optional<const MapDefData&> _find_map_from_deed(int item_id)
     return **map;
 }
 
-static void
-_generate_area_from_mapdef(Area& area, const MapDefData& map, int outer_map)
-{
-    area.id = map.id;
-    area.appearance = map.appearance;
-    area.is_indoor = map.is_indoor;
-    area.position = cdata.player().position;
-    area.type = static_cast<int>(map.map_type);
-    area.is_generated_every_time = map.is_generated_every_time;
-    area.default_ai_calm = map.default_ai_calm;
-    area.tile_type = map.tile_type;
-    area.turn_cost_base = map.base_turn_cost;
-    area.danger_level = map.danger_level;
-    area.deepest_level = map.danger_level;
-    area.tile_set = map.tile_set;
-    area.entrance = map.entrance_type;
-    area.outer_map = outer_map;
-}
-
 static TurnResult _build_new_home(int home_scale)
 {
     game_data.home_scale = home_scale;
@@ -357,7 +338,9 @@ TurnResult build_new_building()
     }
 
     auto& area = area_data[p];
-    _generate_area_from_mapdef(area, *map, game_data.destination_outer_map);
+    auto pos = cdata.player().position;
+    area_generate_from_mapdef(
+        area, *map, game_data.destination_outer_map, pos.x, pos.y);
 
     s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
     snd("core.build1");

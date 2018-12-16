@@ -119,5 +119,12 @@ extern AreaData area_data;
 
 void initialize_adata();
 
+void area_generate_from_mapdef(
+    Area& area,
+    const MapDefData& map,
+    int outer_map,
+    int x,
+    int y);
+
 
 } // namespace elona

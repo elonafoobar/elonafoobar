@@ -31,17 +31,17 @@ void LuaMapGenerator::create(int width, int height)
 {
     map_data.width = width;
     map_data.height = height;
-    map_initialize();
+    elona::map_initialize();
 }
 
 void LuaMapGenerator::load_custom(const std::string& name)
 {
-    map_initcustom(name);
+    elona::map_initcustom(name);
 }
 
 void LuaMapGenerator::generate_nefia()
 {
-    generate_random_nefia();
+    elona::generate_random_nefia();
 }
 
 void LuaMapGenerator::set_name(const std::string& name)
@@ -51,7 +51,7 @@ void LuaMapGenerator::set_name(const std::string& name)
 
 void LuaMapGenerator::set_tileset(int tileset)
 {
-    map_tileset(tileset);
+    elona::map_tileset(tileset);
 }
 
 void LuaMapGenerator::set_stair_up_pos(int x, int y)
@@ -77,7 +77,7 @@ void LuaMapGenerator::set_no_aggro_refresh(bool flag)
 
 void LuaMapGenerator::place_player()
 {
-    map_placeplayer();
+    elona::map_placeplayer();
 }
 
 void LuaMapGenerator::place_player_xy(int x, int y)
@@ -88,22 +88,22 @@ void LuaMapGenerator::place_player_xy(int x, int y)
 
     mapstartx = x;
     mapstarty = y;
-    map_placeplayer();
+    elona::map_placeplayer();
 }
 
 void LuaMapGenerator::update_quests_in_map()
 {
-    quest_on_map_initialize();
+    elona::quest_on_map_initialize();
 }
 
 void LuaMapGenerator::mark_quest_targets()
 {
-    quest_place_target();
+    elona::quest_place_target();
 }
 
 void LuaMapGenerator::initialize_world_map()
 {
-    initialize_world_map();
+    elona::initialize_world_map();
 }
 
 

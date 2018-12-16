@@ -201,6 +201,29 @@ void initialize_adata()
     }
 }
 
+void area_generate_from_mapdef(
+    Area& area,
+    const MapDefData& map,
+    int outer_map,
+    int x,
+    int y)
+{
+    area.id = map.id;
+    area.appearance = map.appearance;
+    area.is_indoor = map.is_indoor;
+    area.position.x = x;
+    area.position.y = y;
+    area.type = static_cast<int>(map.map_type);
+    area.is_generated_every_time = map.is_generated_every_time;
+    area.default_ai_calm = map.default_ai_calm;
+    area.tile_type = map.tile_type;
+    area.turn_cost_base = map.base_turn_cost;
+    area.danger_level = map.danger_level;
+    area.deepest_level = map.danger_level;
+    area.tile_set = map.tile_set;
+    area.entrance = map.entrance_type;
+    area.outer_map = outer_map;
+}
 
 
 } // namespace elona

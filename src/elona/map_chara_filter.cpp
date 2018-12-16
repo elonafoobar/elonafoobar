@@ -25,24 +25,6 @@ static void _chara_filter_quest()
     }
 }
 
-static void _chara_filter_nefia()
-{
-    flt(calcobjlv(game_data.current_dungeon_level), calcfixlv(Quality::bad));
-}
-
-static void _chara_filter_museum_shop()
-{
-    flt(calcobjlv(100), calcfixlv(Quality::bad));
-    if (rnd(1))
-    {
-        fltselect = 5;
-    }
-    else
-    {
-        fltselect = 7;
-    }
-}
-
 static void _process_chara_filter(const lua::WrappedFunction& chara_filter)
 {
     sol::optional<sol::table> result = chara_filter.call_with_result(
@@ -120,27 +102,17 @@ void map_set_chara_generation_filter()
 {
     dbid = 0;
 
-    auto mapdef_data = the_mapdef_db[game_data.current_map];
-    if (mapdef_data && mapdef_data->chara_filter)
-    {
-        auto& chara_filter = *mapdef_data->chara_filter;
-        _process_chara_filter(chara_filter);
-        return;
-    }
-
     if (game_data.current_map == mdata_t::MapId::quest)
     {
         _chara_filter_quest();
         return;
     }
-    if (mdata_t::is_nefia(map_data.type))
+
+    auto mapdef_data = the_mapdef_db[game_data.current_map];
+    if (mapdef_data && mapdef_data->chara_filter)
     {
-        _chara_filter_nefia();
-        return;
-    }
-    if (area_data[game_data.current_map].is_museum_or_shop())
-    {
-        _chara_filter_museum_shop();
+        auto& chara_filter = *mapdef_data->chara_filter;
+        _process_chara_filter(chara_filter);
         return;
     }
 
