@@ -43,7 +43,7 @@ void Store::load(const fs::path& path, const std::string& mod_name)
         {
             throw std::runtime_error{
                 "Failed to open " +
-                filesystem::make_preferred_path_in_utf8(entry.path())};
+                filepathutil::make_preferred_path_in_utf8(entry.path())};
         }
 
         load(ifs, entry.path().string(), mod_name);

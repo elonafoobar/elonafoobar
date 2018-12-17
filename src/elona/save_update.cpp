@@ -85,7 +85,7 @@ void _update_save_data_1(const fs::path& save_dir, int serial_id)
         {
             throw std::runtime_error(
                 u8"Error: fail to write " +
-                filesystem::make_preferred_path_in_utf8(entry.path()));
+                filepathutil::make_preferred_path_in_utf8(entry.path()));
         }
 
         for (const auto& chara : cdatan_)
@@ -148,7 +148,7 @@ void _update_save_data_2(const fs::path& save_dir, int serial_id)
         {
             throw std::runtime_error(
                 u8"Error: fail to write " +
-                filesystem::make_preferred_path_in_utf8(entry.path()));
+                filepathutil::make_preferred_path_in_utf8(entry.path()));
         }
 
         for (const auto& chara : cdatan_)

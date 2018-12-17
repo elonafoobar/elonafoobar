@@ -114,8 +114,7 @@ void ModManager::load_mod(ModInfo& mod)
     }
 
     auto result = lua_->get_state()->safe_script_file(
-        filesystem::make_preferred_path_in_utf8(
-            *mod.manifest.path / u8"init.lua"s),
+        filepathutil::to_utf8_path(*mod.manifest.path / u8"init.lua"s),
         mod.env);
 
     // Add the API table returned by the mod's init.lua, if one
@@ -248,8 +247,7 @@ void ModManager::run_startup_script(const std::string& name)
     ModInfo* script_mod = create_mod("script", none, true);
 
     lua_->get_state()->safe_script_file(
-        filesystem::make_preferred_path_in_utf8(
-            filesystem::dir::data() / "script"s / name),
+        filepathutil::to_utf8_path(filesystem::dir::data() / "script"s / name),
         script_mod->env);
 
     // Bypass read-only metatable

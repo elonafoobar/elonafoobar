@@ -1735,7 +1735,7 @@ void tcgdeck()
                 i18n::s.get("core.locale.tcg.deck.name", s_at_tcg(cnt));
             const auto deck_filepath =
                 filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
-            tmpload(filesystem::u8path(u8"deck_"s + cnt + u8".s2"));
+            tmpload(filepathutil::u8path(u8"deck_"s + cnt + u8".s2"));
             if (!fs::exists(deck_filepath))
             {
                 s_at_tcg(cnt) +=
@@ -1762,7 +1762,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        tmpload(filesystem::u8path(u8"deck_"s + curdeck + u8".s2"));
+        tmpload(filepathutil::u8path(u8"deck_"s + curdeck + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {

@@ -128,7 +128,7 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
     {
         throw std::runtime_error(
             u8"Error: fail to write " +
-            filesystem::make_preferred_path_in_utf8(filepath));
+            filepathutil::make_preferred_path_in_utf8(filepath));
     }
 
     if (fmode_str == u8"qname"s)

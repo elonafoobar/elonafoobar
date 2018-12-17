@@ -267,7 +267,7 @@ int DSINIT()
 
 void DSLOADFNAME(const fs::path& filepath, int channel)
 {
-    snail::audio::DSLOADFNAME(filesystem::to_utf8_path(filepath), channel);
+    snail::audio::DSLOADFNAME(filepathutil::to_utf8_path(filepath), channel);
 }
 
 
@@ -309,7 +309,7 @@ int DMINIT()
 
 void DMLOADFNAME(const fs::path& filepath, int)
 {
-    snail::audio::DMLOADFNAME(filesystem::to_utf8_path(filepath), 0);
+    snail::audio::DMLOADFNAME(filepathutil::to_utf8_path(filepath), 0);
 }
 
 

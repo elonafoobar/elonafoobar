@@ -26,7 +26,7 @@ static int _load_talk_entries()
     {
         list(0, _listmax) = _listmax;
         listn(0, _listmax) =
-            filesystem::to_utf8_path(fs::relative(entry.path(), base_dir));
+            filepathutil::to_utf8_path(fs::relative(entry.path(), base_dir));
         ++_listmax;
     }
 

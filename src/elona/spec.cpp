@@ -19,7 +19,7 @@ void Object::init(const fs::path& path)
     clear();
 
     // TODO support loading multiple files.
-    std::ifstream ifs(filesystem::make_preferred_path_in_utf8(path));
+    std::ifstream ifs(path.native());
     load(ifs, path.string());
 }
 
