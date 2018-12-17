@@ -17,7 +17,7 @@ Font::Font(const fs::path& filepath, int size, Style style)
     , _style(style)
     , _ptr(
           detail::enforce_ttf(::TTF_OpenFont(
-              elona::filesystem::to_utf8_path(filepath).c_str(),
+              filepathutil::to_utf8_path(filepath).c_str(),
               size)),
           ::TTF_CloseFont)
 {

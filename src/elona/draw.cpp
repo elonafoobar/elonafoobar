@@ -1044,7 +1044,7 @@ void init_assets()
     {
         throw std::runtime_error{
             "Failed to open " +
-            filesystem::make_preferred_path_in_utf8(filepath)};
+            filepathutil::make_preferred_path_in_utf8(filepath)};
     }
     const auto& result = hcl::parse(in);
     if (!result.valid())

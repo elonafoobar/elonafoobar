@@ -63,7 +63,7 @@ BasicImage::BasicImage(
     const optional<Color>& keycolor)
 {
     auto surface = detail::enforce_img(
-        ::IMG_Load(elona::filesystem::to_utf8_path(filepath).c_str()));
+        ::IMG_Load(filepathutil::to_utf8_path(filepath).c_str()));
 
     if (keycolor)
     {

@@ -1,8 +1,5 @@
 #include "filesystem.hpp"
-#include <algorithm>
-#include <boost/locale.hpp>
 #include "defines.hpp"
-#include "util.hpp"
 
 // For get_executable_path()
 #if defined(ELONA_OS_WINDOWS)
@@ -23,7 +20,6 @@
 
 namespace
 {
-
 
 fs::path get_executable_path()
 {
@@ -63,7 +59,6 @@ fs::path get_executable_path()
     return cache;
 }
 
-
 } // namespace
 
 
@@ -73,10 +68,8 @@ namespace elona
 namespace filesystem
 {
 
-
 namespace dir
 {
-
 
 fs::path base_save_dir;
 
@@ -109,14 +102,14 @@ fs::path save()
 
 fs::path save(const std::string& player_id)
 {
-    return save() / u8path(player_id);
+    return save() / filepathutil::u8path(player_id);
 }
 
 
 
 fs::path for_mod(const std::string& mod_id)
 {
-    return mods() / u8path(mod_id);
+    return mods() / filepathutil::u8path(mod_id);
 }
 
 
@@ -126,49 +119,15 @@ void set_base_save_directory(const fs::path& base_save_dir)
     dir::base_save_dir = base_save_dir;
 }
 
-
 } // namespace dir
 
 
 
 fs::path path(const std::string& str)
 {
-    return get_executable_path() / u8path(str);
+    return get_executable_path() / filepathutil::u8path(str);
 }
 
-
-
-fs::path u8path(const std::string& str)
-{
-    return boost::locale::conv::utf_to_utf<fs::path::string_type::value_type>(
-        str);
-}
-
-
-
-std::string make_preferred_path_in_utf8(const fs::path& path)
-{
-    // Since make_preferred() modifies this and `path` is const, need to copy
-    // it.
-    auto path_ = path;
-    return boost::locale::conv::utf_to_utf<char>(
-        path_.make_preferred().native());
-}
-
-
-
-std::string to_utf8_path(const fs::path& path)
-{
-    return boost::locale::conv::utf_to_utf<char>(path.native());
-}
-
-
-std::string to_forward_slashes(const fs::path& path)
-{
-    std::string path_str = to_utf8_path(path);
-    std::replace(path_str.begin(), path_str.end(), '\\', '/');
-    return path_str;
-}
 
 
 fs::path resolve_path_for_mod(const std::string& mod_local_path)
@@ -198,7 +157,6 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
         return dir::for_mod(mod_name) / rest;
     }
 }
-
 
 } // namespace filesystem
 } // namespace elona

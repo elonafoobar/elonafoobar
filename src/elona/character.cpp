@@ -1706,7 +1706,7 @@ void chara_vanquish(int cc)
     cdata[cc].character_role = 0;
     if (cdata[cc].shop_store_id != 0)
     {
-        const auto storage_filename = filesystem::u8path(
+        const auto storage_filename = filepathutil::u8path(
             "shop"s + std::to_string(cdata[cc].shop_store_id) + ".s2");
         const auto storage_filepath = filesystem::dir::tmp() / storage_filename;
         tmpload(storage_filename);

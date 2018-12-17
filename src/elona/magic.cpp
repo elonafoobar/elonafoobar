@@ -4278,7 +4278,7 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.four_dimensional_pocket"));
         invfile = 8;
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-        tmpload(filesystem::u8path(u8"shop"s + invfile + u8".s2"));
+        tmpload(filepathutil::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {

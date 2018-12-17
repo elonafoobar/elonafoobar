@@ -68,7 +68,7 @@ inline hcl::Value load(const fs::path& filepath)
 {
     std::ifstream in{filepath.native()};
     std::string filepath_string =
-        filesystem::make_preferred_path_in_utf8(filepath);
+        filepathutil::make_preferred_path_in_utf8(filepath);
 
     if (!in)
     {

@@ -1,4 +1,5 @@
 #pragma once
-#define BOOST_FILESYSTEM_NO_DEPRECATED
-#include <boost/filesystem.hpp>
+
+#include "../util/filepathutil.hpp"
+
 namespace fs = boost::filesystem;

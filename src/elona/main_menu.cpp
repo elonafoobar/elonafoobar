@@ -307,7 +307,7 @@ MainMenuResult main_menu_continue()
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
     {
-        s = filesystem::to_utf8_path(entry.path().filename());
+        s = filepathutil::to_utf8_path(entry.path().filename());
         const auto header_filepath = filesystem::dir::save(s) / u8"header.txt";
         if (!fs::exists(header_filepath))
         {
@@ -517,7 +517,7 @@ MainMenuResult main_menu_incarnate()
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
     {
-        s = filesystem::to_utf8_path(entry.path().filename());
+        s = filepathutil::to_utf8_path(entry.path().filename());
         const auto gene_header_filepath =
             filesystem::dir::save(s) / u8"gene_header.txt";
         if (!fs::exists(gene_header_filepath))

@@ -87,7 +87,8 @@ void APIManager::load_lua_support_libraries(LuaEnv& lua)
     }
 
     auto result = lua.get_state()->safe_script_file(
-        filesystem::to_utf8_path(filesystem::dir::data() / "lua" / "init.lua"),
+        filepathutil::to_utf8_path(
+            filesystem::dir::data() / "lua" / "init.lua"),
         api_env);
 
     if (!result.valid())

@@ -119,7 +119,7 @@ void inject_save_files(Config& conf)
                  filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
         {
             std::string folder =
-                filesystem::to_utf8_path(entry.path().filename());
+                filepathutil::to_utf8_path(entry.path().filename());
             saves.push_back(folder);
         }
     }
@@ -143,7 +143,7 @@ void inject_languages(Config& conf)
              filesystem::dir::locale(), filesystem::DirEntryRange::Type::dir))
     {
         std::string identifier =
-            filesystem::to_utf8_path(entry.path().filename());
+            filepathutil::to_utf8_path(entry.path().filename());
         locales.push_back(identifier);
 
         if (identifier == "en")
@@ -646,7 +646,7 @@ void Config::save()
     {
         throw ConfigLoadingError{
             u8"Failed to open: "s
-            + filesystem::make_preferred_path_in_utf8(
+            + filepathutil::make_preferred_path_in_utf8(
                   filesystem::dir::exe() / u8"config.hcl")};
     }
 

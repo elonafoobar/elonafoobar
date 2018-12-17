@@ -38,7 +38,7 @@ public:
             return sol::lua_nil;
 
         sol::object result =
-            state.script_file(filesystem::to_utf8_path(full_path), env);
+            state.script_file(filepathutil::to_utf8_path(full_path), env);
 
         if (result != sol::lua_nil)
             chunk_cache[name] = result;
