@@ -444,21 +444,6 @@ TurnResult show_chat_history()
 
 
 
-int cnvjkey(const std::string& prm_1092)
-{
-    int p_at_m198 = 0;
-    p_at_m198 = -2;
-    for (int cnt = 0; cnt < 12; ++cnt)
-    {
-        if (prm_1092 == jkey(cnt))
-        {
-            p_at_m198 = cnt;
-            break;
-        }
-    }
-    return p_at_m198 + 1;
-}
-
 TurnResult play_scene()
 {
     auto result = ui::UIMenuScene().show();

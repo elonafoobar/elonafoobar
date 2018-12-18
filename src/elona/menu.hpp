@@ -43,7 +43,6 @@ enum class CharacterSheetOperation
 
 
 void text_set();
-int cnvjkey(const std::string&);
 std::string show_quick_menu();
 bool maybe_show_ex_help(int id, bool should_update_screen = false);
 void show_ex_help();
