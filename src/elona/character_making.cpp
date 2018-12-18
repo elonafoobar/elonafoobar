@@ -308,7 +308,7 @@ static bool _validate_save_path(const std::string& playerid)
             filesystem::dir_entries(
                 filesystem::dir::save(), filesystem::DirEntryRange::Type::all),
             [&](const auto& entry) {
-                return filesystem::to_utf8_path(entry.path().filename()) ==
+                return filepathutil::to_utf8_path(entry.path().filename()) ==
                     playerid;
             }))
     {

@@ -108,7 +108,7 @@ void save_game()
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
     {
-        if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
+        if (filepathutil::to_utf8_path(entry.path().filename()) == playerid)
         {
             save_f = 1;
             break;

@@ -4448,7 +4448,7 @@ TurnResult exit_map()
         // quest instance)
         prepare_charas_for_map_unload();
 
-        tmpload(filesystem::u8path("mdata_" + mid + ".s2"));
+        tmpload(filepathutil::u8path("mdata_" + mid + ".s2"));
         // delete all map-local data
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
@@ -5042,7 +5042,7 @@ void supply_income()
 {
     invfile = 4;
     ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-    tmpload(filesystem::u8path(u8"shop4.s2"));
+    tmpload(filepathutil::u8path(u8"shop4.s2"));
     if (fs::exists(filesystem::dir::tmp() / u8"shop4.s2"s))
     {
         ctrl_file(FileOperation2::map_items_read, u8"shop4.s2"s);
@@ -8877,7 +8877,7 @@ int pick_up_item()
                 {
                     std::string midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
-                    tmpload(filesystem::u8path(u8"mdata_"s + mid + u8".s2"));
+                    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
                     if (fs::exists(
                             filesystem::dir::tmp() /
                             (u8"mdata_"s + mid + u8".s2")))

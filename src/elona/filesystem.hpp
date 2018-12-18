@@ -2,12 +2,10 @@
 
 #include <functional>
 #include <regex>
+#include "../util/filepathutil.hpp"
 
-// Prevent some old features from being defined.
-// See also https://www.boost.org/doc/libs/1_66_0/libs/filesystem/doc/index.htm.
-#define BOOST_FILESYSTEM_NO_DEPRECATED
-#include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
+
 
 
 namespace std
@@ -58,11 +56,8 @@ void set_base_save_directory(const fs::path& base_save_dir);
 } // namespace dir
 
 
+
 fs::path path(const std::string&);
-fs::path u8path(const std::string&);
-std::string make_preferred_path_in_utf8(const fs::path& path);
-std::string to_utf8_path(const fs::path& path);
-std::string to_forward_slashes(const fs::path& path);
 fs::path resolve_path_for_mod(const std::string& mod_local_path);
 
 
@@ -180,7 +175,7 @@ struct DirEntryRange
                     case Type::all: break;
                     }
                     return !std::regex_match(
-                        filesystem::to_utf8_path(itr->path().filename()),
+                        filepathutil::to_utf8_path(itr->path().filename()),
                         pattern);
                 }};
     }

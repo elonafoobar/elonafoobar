@@ -119,7 +119,7 @@ void inject_save_files(Config& conf)
                  filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
         {
             std::string folder =
-                filesystem::to_utf8_path(entry.path().filename());
+                filepathutil::to_utf8_path(entry.path().filename());
             saves.push_back(folder);
         }
     }
@@ -143,7 +143,7 @@ void inject_languages(Config& conf)
              filesystem::dir::locale(), filesystem::DirEntryRange::Type::dir))
     {
         std::string identifier =
-            filesystem::to_utf8_path(entry.path().filename());
+            filepathutil::to_utf8_path(entry.path().filename());
         locales.push_back(identifier);
 
         if (identifier == "en")
@@ -382,8 +382,7 @@ void load_config(const fs::path& hcl_file)
     conf.bind_setter<std::string>(
         "core.config.font.quality", &convert_and_set_requested_font_quality);
 
-    std::ifstream ifs{
-        filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+    std::ifstream ifs{hcl_file.native()};
     conf.load(ifs, hcl_file.string(), false);
 
     if (Config::instance().runwait < 1)
@@ -456,7 +455,7 @@ void initialize_config_preload(const fs::path& hcl_file)
     }
 
     std::ifstream ifs{
-        filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+        hcl_file.native()};
     conf.load(ifs, hcl_file.string(), true);
 
     snail::android::set_navigation_bar_visibility(
@@ -647,7 +646,7 @@ void Config::save()
     {
         throw ConfigLoadingError{
             u8"Failed to open: "s
-            + filesystem::make_preferred_path_in_utf8(
+            + filepathutil::make_preferred_path_in_utf8(
                   filesystem::dir::exe() / u8"config.hcl")};
     }
 
@@ -715,12 +714,18 @@ void Config::save()
         };
 
         // Get the mod-level scope ("core").
-        assert(advance());
+        {
+            const auto ok = advance();
+            assert(ok);
+        }
         std::string scope = token;
         set(token);
 
         // Skip the "config" section name in "core.<config>.some.option".
-        assert(advance());
+        {
+            const auto ok = advance();
+            assert(ok);
+        }
         assert(token == "config");
 
         // Traverse the remaining namespaces ("some.option").

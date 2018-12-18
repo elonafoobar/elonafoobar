@@ -92,7 +92,7 @@ static void _update_pets_moving_status()
 
 static void _prompt_initialize_map()
 {
-    tmpload(filesystem::u8path(u8"mdata_"s + mid + u8".s2"));
+    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
         int stat = dialog(i18n::s.get("core.locale.map.prompt_initialize"), 3);
@@ -1247,7 +1247,7 @@ init_map_begin:
         _prompt_initialize_map();
     }
 
-    tmpload(filesystem::u8path(u8"mdata_"s + mid + u8".s2"));
+    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
         lua::lua->get_handle_manager().clear_map_local_handles();

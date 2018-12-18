@@ -16,6 +16,7 @@ LOCAL_CPP_FEATURES := exceptions rtti
 
 # Add your application source files here...
 LOCAL_SRC_FILES := \
+filepathutil.cpp \
 fps_counter.cpp \
 profiler.cpp \
 

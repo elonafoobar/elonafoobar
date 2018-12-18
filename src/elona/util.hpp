@@ -379,7 +379,7 @@ struct ByLineReader
         {
             throw std::runtime_error(
                 u8"Could not open file " +
-                filesystem::make_preferred_path_in_utf8(filepath));
+                filepathutil::make_preferred_path_in_utf8(filepath));
         }
         skip_bom(in);
     }
