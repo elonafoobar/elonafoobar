@@ -1010,6 +1010,16 @@ void fix_input_chat(std::string&);
 void fix_input_chat2(std::string&);
 
 
+// Text generation
+std::string randomname();
+enum class RandomTitleType
+{
+    character,
+    weapon,
+    party,
+    living_weapon,
+};
+std::string random_title(RandomTitleType type = RandomTitleType::character);
 
 // Text fragments
 std::string cnvarticle(const std::string&);

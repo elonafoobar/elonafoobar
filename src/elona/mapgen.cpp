@@ -572,7 +572,10 @@ void map_nextdir1(int x, int y)
             return;
         }
     }
-    if (dir_at_m168 == 1 || dir_at_m168 == 2)
+}
+else
+{
+    if (dest_at_m168 == 1)
     {
         if (ty_at_m168 > y)
         {
@@ -584,15 +587,11 @@ void map_nextdir1(int x, int y)
         }
         if (tx_at_m168 > x)
         {
-            dest_at_m168 = 1;
+            dir_at_m168 = 1;
+            dest_at_m168 = -2;
         }
-        else
-        {
-            dest_at_m168 = 2;
-        }
-        return;
     }
-    else
+    if (dest_at_m168 == 2)
     {
         if (tx_at_m168 > x)
         {
@@ -601,6 +600,7 @@ void map_nextdir1(int x, int y)
         else
         {
             dir_at_m168 = 2;
+            dest_at_m168 = -2;
         }
         if (ty_at_m168 > y)
         {
@@ -690,7 +690,7 @@ void map_nextdir2(int x, int y)
             }
         }
     }
-    if (dir_at_m168 == 1 || dir_at_m168 == 2)
+    if (dest_at_m168 == 0)
     {
         if (tx_at_m168 == x)
         {
@@ -711,9 +711,8 @@ void map_nextdir2(int x, int y)
                 }
             }
         }
-        return;
     }
-    else
+    if (dest_at_m168 == -2)
     {
         if (ty_at_m168 == y)
         {
@@ -732,10 +731,12 @@ void map_nextdir2(int x, int y)
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 2;
                 }
+                jjjjjj
             }
         }
         return;
     }
+    map_nextdir1(x2, y2);
 }
 
 
