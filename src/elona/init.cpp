@@ -36,7 +36,6 @@
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
-#include "main.hpp"
 #include "main_menu.hpp"
 #include "map.hpp"
 #include "mef.hpp"

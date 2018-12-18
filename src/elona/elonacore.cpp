@@ -41,7 +41,6 @@
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
-#include "main.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -189,9 +188,6 @@ void weather_changes_by_location(bool output_immediately = true)
 
 namespace elona
 {
-
-
-int prm_518;
 
 double r_at_m133;
 

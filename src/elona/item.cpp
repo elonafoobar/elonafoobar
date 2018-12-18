@@ -18,7 +18,6 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "lua_env/lua_env.hpp"
-#include "main.hpp"
 #include "map.hpp"
 #include "mef.hpp"
 #include "message.hpp"
@@ -37,6 +36,7 @@ namespace elona
 
 Inventory inv;
 
+int prm_518;
 int ci_at_m138 = 0;
 int p_at_m138 = 0;
 int max_at_m138 = 0;
