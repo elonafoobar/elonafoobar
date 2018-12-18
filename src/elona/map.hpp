@@ -236,7 +236,6 @@ bool map_villagers_make_snowmen();
 bool map_can_use_bad_weather_in_study();
 int map_random_site_amount();
 
-void map_randsite(int = 0, int = 0);
 void map_proc_regen_and_update();
 void map_reload_noyel();
 

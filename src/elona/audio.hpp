@@ -25,7 +25,6 @@ void DMLOADFNAME(const fs::path& filepath, int);
 void DMPLAY(int, int);
 void DMSTOP();
 
-void sndload(const fs::path& filepath, int = 0);
 void initialize_sound_file();
 
 std::pair<short, unsigned char> sound_calculate_position(const Position& p);

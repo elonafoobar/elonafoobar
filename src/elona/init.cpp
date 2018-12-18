@@ -790,7 +790,7 @@ void initialize_debug_globals()
         mat(cnt) = 200;
     }
     create_all_adventurers();
-    create_pcpic(0, true);
+    create_pcpic(0);
     cdatan(1, 0) = random_title();
     cdatan(0, 0) = randomname();
 }

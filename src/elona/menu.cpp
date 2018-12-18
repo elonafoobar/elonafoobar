@@ -837,7 +837,7 @@ label_2041_internal:
     {
         if (action == "enter")
         {
-            create_pcpic(cc, true);
+            create_pcpic(cc);
             return 1;
         }
         if (action == "next_page" || action == "previous_page")
@@ -932,7 +932,7 @@ label_2041_internal:
     create_pcpic(cc, false);
     if (action == "cancel")
     {
-        create_pcpic(cc, true);
+        create_pcpic(cc);
         return 0;
     }
     if (mode == 1)
@@ -947,7 +947,7 @@ label_2041_internal:
 
 int change_appearance_equipment()
 {
-    create_pcpic(cc, true);
+    create_pcpic(cc);
     snd("core.pop2");
     page = 0;
     pagesize = 18;
@@ -1053,14 +1053,14 @@ int change_appearance_equipment()
                 {
                     pcc(20 + cs - 1, cc) = 0;
                 }
-                create_pcpic(cc, true);
+                create_pcpic(cc);
                 snd("core.cursor1");
             }
         }
         if ((cs == 0 && action == "entry") || action == "cancel")
         {
             snd("core.ok1");
-            create_pcpic(cc, true);
+            create_pcpic(cc);
             return 1;
         }
     }
@@ -1133,7 +1133,7 @@ void show_weapon_dice(int val0)
     }
     attackvar = 0;
     int tohit = calc_accuracy(false);
-    dmg = calcattackdmg(1);
+    dmg = calcattackdmg(AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;

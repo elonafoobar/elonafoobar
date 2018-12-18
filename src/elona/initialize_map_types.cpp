@@ -696,7 +696,7 @@ static void _init_map_pet_arena()
             --cnt;
             continue;
         }
-        map_placearena(rc, 1);
+        map_placearena(rc, true);
         if (cnt == 0)
         {
             enemyteam = rc;
@@ -2156,7 +2156,7 @@ static void _init_map_fields_maybe_generate_encounter()
             chara_create(-1, 303 + rnd(3), 14, 11);
             cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         }
-        gdatan(1) = random_title(2);
+        gdatan(1) = random_title(RandomTitleType::party);
         event_add(23);
     }
     if (encounter == 3)

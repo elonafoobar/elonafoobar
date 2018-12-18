@@ -386,12 +386,7 @@ void window_recipe2(int val0)
 
 
 
-void window_recipe_(
-    int prm_1050,
-    int prm_1051,
-    int prm_1052,
-    int prm_1053,
-    int prm_1054)
+void window_recipe_(int item_index, int x, int y, int width, int height)
 {
     elona_vector1<std::string> s_at_m184;
     int xfix2_at_m184 = 0;
@@ -403,29 +398,24 @@ void window_recipe_(
     SDIM1(s_at_m184);
     if (windowshadow == 1)
     {
-        window(
-            prm_1051 + 4,
-            prm_1052 + 4,
-            prm_1053,
-            prm_1054 - prm_1054 % 8,
-            true);
-        boxf(prm_1051 + prm_1053 - 522, 0, 486, 69, {30, 30, 30});
+        window(x + 4, y + 4, width, height - height % 8, true);
+        boxf(x + width - 522, 0, 486, 69, {30, 30, 30});
         windowshadow = 0;
     }
-    window(prm_1051, prm_1052, prm_1053, prm_1054 - prm_1054 % 8);
+    window(x, y, width, height - height % 8);
     window_recipe2();
     gmode(2);
     line(
-        prm_1051 + 50 + 0,
-        prm_1052 + prm_1054 - 48 - prm_1054 % 8,
-        prm_1051 + prm_1053 - 40,
-        prm_1052 + prm_1054 - 48 - prm_1054 % 8,
+        x + 50 + 0,
+        y + height - 48 - height % 8,
+        x + width - 40,
+        y + height - 48 - height % 8,
         {194, 170, 146});
     line(
-        prm_1051 + 50 + 0,
-        prm_1052 + prm_1054 - 49 - prm_1054 % 8,
-        prm_1051 + prm_1053 - 40,
-        prm_1052 + prm_1054 - 49 - prm_1054 % 8,
+        x + 50 + 0,
+        y + height - 49 - height % 8,
+        x + width - 40,
+        y + height - 49 - height % 8,
         {234, 220, 188});
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
     s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s +
@@ -439,14 +429,14 @@ void window_recipe_(
         s_at_m184(1) += strhint3b;
     }
     font(12 + sizefix - en * 2);
-    pos(prm_1051 + 25 + 0, prm_1052 + prm_1054 - 43 - prm_1054 % 8);
+    pos(x + 25 + 0, y + height - 43 - height % 8);
     mes(s_at_m184(1));
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(prm_1051 + prm_1053 - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
-        prm_1052 + prm_1054 - 65 - prm_1054 % 8);
+    pos(x + width - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
+        y + height - 65 - height % 8);
     mes(s_at_m184);
-    dx_at_m184 = prm_1051 + 35;
-    dy_at_m184 = prm_1052 + 48;
+    dx_at_m184 = x + 35;
+    dy_at_m184 = y + 48;
     font(12 - en * 2, snail::Font::Style::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(i18n::s.get("core.locale.blending.window.procedure"));
@@ -456,21 +446,11 @@ void window_recipe_(
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
     if (step == i_at_m184 - 2)
     {
-        boxf(
-            dx_at_m184 - 10,
-            dy_at_m184 - 2,
-            prm_1053 - 60,
-            17,
-            {60, 20, 10, 32});
+        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
     }
     else if (step > i_at_m184 - 2)
     {
-        boxf(
-            dx_at_m184 - 10,
-            dy_at_m184 - 2,
-            prm_1053 - 60,
-            17,
-            {20, 20, 20, 32});
+        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {20, 20, 20, 32});
     }
     if (step == -1)
     {
@@ -500,7 +480,7 @@ void window_recipe_(
             boxf(
                 dx_at_m184 - 10,
                 dy_at_m184 - 2,
-                prm_1053 - 60,
+                width - 60,
                 17,
                 {60, 20, 10, 32});
         }
@@ -509,7 +489,7 @@ void window_recipe_(
             boxf(
                 dx_at_m184 - 10,
                 dy_at_m184 - 2,
-                prm_1053 - 60,
+                width - 60,
                 17,
                 {20, 20, 20, 32});
         }
@@ -537,21 +517,11 @@ void window_recipe_(
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
     if (step == i_at_m184 - 2)
     {
-        boxf(
-            dx_at_m184 - 10,
-            dy_at_m184 - 2,
-            prm_1053 - 60,
-            17,
-            {60, 20, 10, 32});
+        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
     }
     else if (step > i_at_m184 - 2)
     {
-        boxf(
-            dx_at_m184 - 10,
-            dy_at_m184 - 2,
-            prm_1053 - 60,
-            17,
-            {20, 20, 20, 32});
+        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {20, 20, 20, 32});
     }
     pos(dx_at_m184, dy_at_m184);
     mes(""s + i_at_m184 + u8"."s +
@@ -600,38 +570,39 @@ void window_recipe_(
         mes(i18n::s.get("core.locale.blending.window.required_equipment"));
         return;
     }
-    if (prm_1050 == -1)
+    if (item_index == -1)
     {
         return;
     }
     font(12 - en * 2, snail::Font::Style::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
-    mes(itemname(prm_1050));
+    mes(itemname(item_index));
     dy_at_m184 += 20;
     font(13 - en * 2);
-    if (inv[prm_1050].identification_state <= IdentifyState::partly_identified)
+    if (inv[item_index].identification_state <=
+        IdentifyState::partly_identified)
     {
         pos(dx_at_m184, dy_at_m184);
         mes(i18n::s.get("core.locale.blending.window.havent_identified"));
         dy_at_m184 += 16;
         return;
     }
-    getinheritance(prm_1050, inhlist_at_m184, p_at_m184);
+    getinheritance(item_index, inhlist_at_m184, p_at_m184);
     if (p_at_m184 > 0)
     {
         for (int cnt = 0, cnt_end = (p_at_m184); cnt < cnt_end; ++cnt)
         {
             cnt2_at_m184 = inhlist_at_m184(cnt);
-            if (inv[prm_1050].enchantments[cnt2_at_m184].id == 0)
+            if (inv[item_index].enchantments[cnt2_at_m184].id == 0)
             {
                 break;
             }
             get_enchantment_description(
-                inv[prm_1050].enchantments[cnt2_at_m184].id,
-                inv[prm_1050].enchantments[cnt2_at_m184].power,
-                the_item_db[inv[prm_1050].id]->category);
+                inv[item_index].enchantments[cnt2_at_m184].id,
+                inv[item_index].enchantments[cnt2_at_m184].power,
+                the_item_db[inv[item_index].id]->category);
             color(0, 0, 100);
-            if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
+            if (inv[item_index].enchantments[cnt2_at_m184].power < 0)
             {
                 color(180, 0, 0);
             }
@@ -649,6 +620,8 @@ void window_recipe_(
         ++p_at_m184;
     }
 }
+
+
 
 TurnResult blending_menu()
 {
@@ -1032,30 +1005,32 @@ label_1928_internal:
     goto label_1928_internal;
 }
 
-std::string rpmatname(int prm_1037)
+
+
+std::string rpmatname(int step)
 {
     std::string s_at_m177;
     int p_at_m177 = 0;
     s_at_m177 = u8"?????"s;
-    if (rpdata(20 + prm_1037, rpid) < 9000)
+    if (rpdata(20 + step, rpid) < 9000)
     {
-        s_at_m177 = ioriginalnameref(rpdata(20 + prm_1037, rpid));
+        s_at_m177 = ioriginalnameref(rpdata(20 + step, rpid));
     }
-    else if (rpdata(20 + prm_1037, rpid) < 10000)
+    else if (rpdata(20 + step, rpid) < 10000)
     {
-        s_at_m177 = rfnameorg(1, rpdata(20 + prm_1037, rpid) - 9000);
+        s_at_m177 = rfnameorg(1, rpdata(20 + step, rpid) - 9000);
     }
     else
     {
-        s_at_m177 = fltname(rpdata(20 + prm_1037, rpid));
+        s_at_m177 = fltname(rpdata(20 + step, rpid));
     }
-    if (rpdata(40 + prm_1037, rpid) == 0)
+    if (rpdata(40 + step, rpid) == 0)
     {
         return s_at_m177;
     }
-    if (rpdata(40 + prm_1037, rpid) >= 10000)
+    if (rpdata(40 + step, rpid) >= 10000)
     {
-        p_at_m177 = rpdata((40 + prm_1037), rpid) % 10000;
+        p_at_m177 = rpdata((40 + step), rpid) % 10000;
         if (p_at_m177 < 0 || p_at_m177 >= 800)
         {
             s_at_m177 += u8"/bugged/"s;
@@ -1070,41 +1045,42 @@ std::string rpmatname(int prm_1037)
 }
 
 
-std::string rpsuccessrate(int prm_1040)
+
+std::string rpsuccessrate(int success_rate)
 {
-    if (prm_1040 == 100)
+    if (success_rate == 100)
     {
         return i18n::s.get("core.locale.blending.success_rate.perfect");
     }
-    if (prm_1040 >= 90)
+    if (success_rate >= 90)
     {
         return i18n::s.get("core.locale.blending.success_rate.piece_of_cake");
     }
-    if (prm_1040 >= 80)
+    if (success_rate >= 80)
     {
         return i18n::s.get("core.locale.blending.success_rate.very_likely");
     }
-    if (prm_1040 >= 70)
+    if (success_rate >= 70)
     {
         return i18n::s.get("core.locale.blending.success_rate.no_problem");
     }
-    if (prm_1040 >= 60)
+    if (success_rate >= 60)
     {
         return i18n::s.get("core.locale.blending.success_rate.probably_ok");
     }
-    if (prm_1040 >= 50)
+    if (success_rate >= 50)
     {
         return i18n::s.get("core.locale.blending.success_rate.maybe");
     }
-    if (prm_1040 >= 40)
+    if (success_rate >= 40)
     {
         return i18n::s.get("core.locale.blending.success_rate.bad");
     }
-    if (prm_1040 >= 30)
+    if (success_rate >= 30)
     {
         return i18n::s.get("core.locale.blending.success_rate.very_bad");
     }
-    if (prm_1040 >= 20)
+    if (success_rate >= 20)
     {
         return i18n::s.get(
             "core.locale.blending.success_rate.almost_impossible");
@@ -1112,22 +1088,26 @@ std::string rpsuccessrate(int prm_1040)
     return i18n::s.get("core.locale.blending.success_rate.impossible");
 }
 
-std::string rpname(int prm_516)
+
+
+std::string rpname(int recipe_id)
 {
     std::string s_at_m62;
     s_at_m62 = u8"?????"s;
-    if (rpdatan(prm_516) != ""s)
+    if (rpdatan(recipe_id) != ""s)
     {
-        return rpdatan(prm_516);
+        return rpdatan(recipe_id);
     }
-    if (prm_516 >= 400)
+    if (recipe_id >= 400)
     {
-        return ioriginalnameref(prm_516 - 400);
+        return ioriginalnameref(recipe_id - 400);
     }
     return s_at_m62;
 }
 
-int rpdiff(int, int prm_1042, int prm_1043)
+
+
+int rpdiff(int, int number_of_ingredients, int current_step)
 {
     int p1_at_m180 = 0;
     int f_at_m180 = 0;
@@ -1137,9 +1117,10 @@ int rpdiff(int, int prm_1042, int prm_1043)
     int p_at_m180 = 0;
     p1_at_m180 = 80;
     f_at_m180 = 100;
-    if (prm_1042 > 0)
+    if (number_of_ingredients > 0)
     {
-        for (int cnt = 0, cnt_end = (prm_1042); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (number_of_ingredients); cnt < cnt_end;
+             ++cnt)
         {
             f2_at_m180 = 0;
             if (rpref(10 + cnt * 2) == -1)
@@ -1156,7 +1137,7 @@ int rpdiff(int, int prm_1042, int prm_1043)
                 f2_at_m180 += 20;
             }
             f_at_m180 += f2_at_m180;
-            if (prm_1043 == cnt)
+            if (current_step == cnt)
             {
                 while (1)
                 {
@@ -1191,7 +1172,7 @@ int rpdiff(int, int prm_1042, int prm_1043)
             continue;
         }
         d_at_m180 = rpdata(11 + cnt * 2, rpid);
-        if (prm_1042 > 0)
+        if (number_of_ingredients > 0)
         {
             d_at_m180 = d_at_m180 * f_at_m180 / 100;
             if (d_at_m180 < 1)
@@ -1223,17 +1204,19 @@ int rpdiff(int, int prm_1042, int prm_1043)
     return p1_at_m180;
 }
 
-int blendcheckext(int prm_1038, int prm_1039)
+
+
+int blendcheckext(int item_index, int step)
 {
     int p_at_m178 = 0;
-    if (rpdata(40 + prm_1039, rpid) >= 10000)
+    if (rpdata(40 + step, rpid) >= 10000)
     {
-        p_at_m178 = rpdata((40 + prm_1039), rpid) % 10000;
+        p_at_m178 = rpdata((40 + step), rpid) % 10000;
         if (p_at_m178 < 0 || p_at_m178 >= 800)
         {
             return 0;
         }
-        if (inv[prm_1038].subname == p_at_m178)
+        if (inv[item_index].subname == p_at_m178)
         {
             return 1;
         }
@@ -1245,14 +1228,16 @@ int blendcheckext(int prm_1038, int prm_1039)
     return 0;
 }
 
-int blendcheckmat(int prm_1044)
+
+
+int blendcheckmat(int recipe_id)
 {
     int f_at_m181 = 0;
     int step_at_m181 = 0;
     int id_at_m181 = 0;
     int rp_at_m181 = 0;
     int o_at_m181 = 0;
-    rpid = prm_1044;
+    rpid = recipe_id;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpdata(20 + cnt, rpid) == 0)
@@ -1345,7 +1330,9 @@ int blendcheckmat(int prm_1044)
     return f_at_m181;
 }
 
-int blendmatnum(int prm_1045, int prm_1046)
+
+
+int blendmatnum(int matcher, int step)
 {
     int m_at_m182 = 0;
     int o_at_m182 = 0;
@@ -1366,8 +1353,7 @@ int blendmatnum(int prm_1045, int prm_1046)
             {
                 continue;
             }
-            if ((rpdata(2, rpid) <= 0 || prm_1046 != 0) &&
-                inv[cnt].own_state > 0)
+            if ((rpdata(2, rpid) <= 0 || step != 0) && inv[cnt].own_state > 0)
             {
                 continue;
             }
@@ -1382,36 +1368,36 @@ int blendmatnum(int prm_1045, int prm_1046)
                     continue;
                 }
             }
-            if (rpdata(40 + prm_1046, rpid))
+            if (rpdata(40 + step, rpid))
             {
-                int stat = blendcheckext(cnt, prm_1046);
+                int stat = blendcheckext(cnt, step);
                 if (stat == 0)
                 {
                     continue;
                 }
             }
-            if (prm_1045 < 9000)
+            if (matcher < 9000)
             {
-                if (inv[cnt].id == prm_1045)
+                if (inv[cnt].id == matcher)
                 {
                     m_at_m182 += inv[cnt].number();
                 }
                 continue;
             }
-            if (prm_1045 < 10000)
+            if (matcher < 10000)
             {
                 if (instr(
                         the_item_db[inv[cnt].id]->rffilter,
                         0,
-                        u8"/"s + rfnameorg(0, (prm_1045 - 9000)) + u8"/"s) !=
+                        u8"/"s + rfnameorg(0, (matcher - 9000)) + u8"/"s) !=
                         -1 ||
-                    prm_1045 == 9004)
+                    matcher == 9004)
                 {
                     m_at_m182 += inv[cnt].number();
                 }
                 continue;
             }
-            if (the_item_db[inv[cnt].id]->category == prm_1045)
+            if (the_item_db[inv[cnt].id]->category == matcher)
             {
                 m_at_m182 += inv[cnt].number();
                 continue;
@@ -1421,14 +1407,16 @@ int blendmatnum(int prm_1045, int prm_1046)
     return m_at_m182;
 }
 
-int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
+
+
+int blendlist(elona_vector2<int>& result_array, int step)
 {
     int id_at_m183 = 0;
     int m_at_m183 = 0;
     int o_at_m183 = 0;
     int reftype_at_m183 = 0;
     int f_at_m183 = 0;
-    id_at_m183 = rpdata(20 + prm_1048, rpid);
+    id_at_m183 = rpdata(20 + step, rpid);
     m_at_m183 = 0;
     for (int cnt = 0; cnt < 2; ++cnt)
     {
@@ -1466,9 +1454,9 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                 }
             }
             reftype_at_m183 = the_item_db[inv[cnt].id]->category;
-            if (rpdata(40 + prm_1048, rpid))
+            if (rpdata(40 + step, rpid))
             {
-                int stat = blendcheckext(cnt, prm_1048);
+                int stat = blendcheckext(cnt, step);
                 if (stat == 0)
                 {
                     continue;
@@ -1513,13 +1501,15 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     continue;
                 }
             }
-            prm_1047(0, m_at_m183) = cnt;
-            prm_1047(1, m_at_m183) = reftype_at_m183 * 1000 + inv[cnt].id;
+            result_array(0, m_at_m183) = cnt;
+            result_array(1, m_at_m183) = reftype_at_m183 * 1000 + inv[cnt].id;
             ++m_at_m183;
         }
     }
     return m_at_m183;
 }
+
+
 
 void clear_rprefmat()
 {
@@ -1842,7 +1832,7 @@ void blending_proc_on_success_events()
     item_stack(0, ci);
     if (inv[ci].body_part != 0)
     {
-        create_pcpic(0, true);
+        create_pcpic(0);
     }
     if (inv_getowner(ci) == -1)
     {

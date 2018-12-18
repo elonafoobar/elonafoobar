@@ -1079,7 +1079,7 @@ TurnResult do_offer_command()
         }
         if (f == 1)
         {
-            modpiety(i * 5);
+            god_modify_piety(i * 5);
             cdata.player().praying_point += i * 30;
             animode = 100;
             MiracleAnimation().play();
@@ -1128,7 +1128,7 @@ TurnResult do_offer_command()
             txt(i18n::s.get("core.locale.action.offer.result.poor", inv[ci]),
                 Message::color{ColorIndex::green});
         }
-        modpiety(i);
+        god_modify_piety(i);
         cdata.player().praying_point += i * 7;
     }
     inv[ci].modify_number((-inv[ci].number()));
@@ -1468,7 +1468,7 @@ TurnResult do_dip_command()
         }
         if (inv[ci].body_part != 0)
         {
-            create_pcpic(cc, true);
+            create_pcpic(cc);
         }
         return TurnResult::turn_end;
     }

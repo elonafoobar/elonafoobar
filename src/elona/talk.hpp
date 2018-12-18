@@ -26,7 +26,6 @@ void talk_window_init_and_show();
 void talk_window_init();
 void talk_window_show();
 int talk_window_query();
-int talk_check_trade(int = 0);
 int talk_guide_quest_client();
 
 TalkResult talk_more();

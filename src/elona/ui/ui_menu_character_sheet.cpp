@@ -577,7 +577,7 @@ static void _draw_first_page_weapon_info()
     color(0, 0, 0);
     attackskill = 106;
     int evade = calc_evasion(tc);
-    prot = calcattackdmg(2);
+    prot = calcattackdmg(AttackDamageCalculationMode::defense);
     font(14 - en * 2);
     pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
     mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s +

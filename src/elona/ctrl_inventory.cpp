@@ -1639,7 +1639,7 @@ label_2061_internal:
                 wear_most_valuable_equipment_for_all_body_parts();
                 if (tc < 16)
                 {
-                    create_pcpic(tc, true);
+                    create_pcpic(tc);
                 }
                 chara_refresh(tc);
                 refresh_burden_state();
@@ -1954,7 +1954,7 @@ label_2061_internal:
             wear_most_valuable_equipment_for_all_body_parts();
             if (tc < 16)
             {
-                create_pcpic(tc, true);
+                create_pcpic(tc);
             }
             chara_refresh(tc);
             refresh_burden_state();

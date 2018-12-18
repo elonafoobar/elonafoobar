@@ -614,7 +614,7 @@ int calcattackhit()
 
 
 
-int calcattackdmg(int prm_894)
+int calcattackdmg(AttackDamageCalculationMode mode)
 {
     int prot2 = 0;
     int protfix = 0;
@@ -662,7 +662,7 @@ int calcattackdmg(int prm_894)
     }
     if (attackrange)
     {
-        if (prm_894 == 0)
+        if (mode == AttackDamageCalculationMode::actual_damage)
         {
             const auto effective_range = calc_effective_range(inv[cw].id);
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
@@ -687,7 +687,7 @@ int calcattackdmg(int prm_894)
             dmgfix += 5 + cdata.player().level * 2 / 3;
         }
     }
-    if (prm_894 == 1)
+    if (mode == AttackDamageCalculationMode::raw_damage)
     {
         return damage;
     }
@@ -712,7 +712,7 @@ int calcattackdmg(int prm_894)
         protfix = 0;
         prot = 0;
     }
-    if (prm_894 == 2)
+    if (mode == AttackDamageCalculationMode::defense)
     {
         return prot;
     }

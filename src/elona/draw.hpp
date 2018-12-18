@@ -78,7 +78,7 @@ struct Character;
 optional_ref<Extent> chara_preparepic(const Character& cc);
 optional_ref<Extent> chara_preparepic(int image_id);
 
-void create_pcpic(int cc, bool prm_410);
+void create_pcpic(int cc, bool with_equipments = true);
 void initialize_map_chip();
 void initialize_chara_chips(const CharaChipDB&);
 void initialize_item_chips(const ItemChipDB&);

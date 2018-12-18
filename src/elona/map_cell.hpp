@@ -18,7 +18,7 @@ enum class TileKind : int
 };
 
 std::pair<int, int> cell_itemoncell(const Position& pos);
-int cell_featread(int = 0, int = 0, int = 0);
+void cell_featread(int x, int y);
 int cell_findspace(int = 0, int = 0, int = 0);
 int cell_itemlist(int = 0, int = 0);
 void cell_check(int = 0, int = 0);

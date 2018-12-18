@@ -10,96 +10,90 @@ namespace elona
 
 int tc_at_m81 = 0;
 
-void cell_featset(
-    int prm_592,
-    int prm_593,
-    int prm_594,
-    int prm_595,
-    int prm_596,
-    int prm_597)
+
+
+void cell_featset(int x, int y, int info1, int info2, int info3, int info4)
 {
     elona_vector1<int> feat_at_m80;
-    if (prm_594 != -1)
+    if (info1 != -1)
     {
-        feat_at_m80 = prm_594;
+        feat_at_m80 = info1;
     }
     else
     {
-        feat_at_m80 = cell_data.at(prm_592, prm_593).feats % 1000;
+        feat_at_m80 = cell_data.at(x, y).feats % 1000;
     }
-    if (prm_595 != -1)
+    if (info2 != -1)
     {
-        feat_at_m80(1) = prm_595;
+        feat_at_m80(1) = info2;
     }
     else
     {
-        feat_at_m80(1) = cell_data.at(prm_592, prm_593).feats / 1000 % 100;
+        feat_at_m80(1) = cell_data.at(x, y).feats / 1000 % 100;
     }
-    if (prm_596 != -1)
+    if (info3 != -1)
     {
-        feat_at_m80(2) = prm_596;
+        feat_at_m80(2) = info3;
     }
     else
     {
-        feat_at_m80(2) = cell_data.at(prm_592, prm_593).feats / 100000 % 100;
+        feat_at_m80(2) = cell_data.at(x, y).feats / 100000 % 100;
     }
-    if (prm_597 != -1)
+    if (info4 != -1)
     {
-        feat_at_m80(3) = prm_597;
+        feat_at_m80(3) = info4;
     }
     else
     {
-        feat_at_m80(3) = cell_data.at(prm_592, prm_593).feats / 10000000;
+        feat_at_m80(3) = cell_data.at(x, y).feats / 10000000;
     }
-    cell_data.at(prm_592, prm_593).feats = feat_at_m80 + feat_at_m80(1) * 1000 +
+    cell_data.at(x, y).feats = feat_at_m80 + feat_at_m80(1) * 1000 +
         feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
 }
 
 
 
-int cell_featread(int prm_598, int prm_599, int)
+void cell_featread(int x, int y)
 {
-    feat(0) = cell_data.at(prm_598, prm_599).feats % 1000;
-    feat(1) = cell_data.at(prm_598, prm_599).feats / 1000 % 100;
-    feat(2) = cell_data.at(prm_598, prm_599).feats / 100000 % 100;
-    feat(3) = cell_data.at(prm_598, prm_599).feats / 10000000;
-    return 0;
+    feat(0) = cell_data.at(x, y).feats % 1000;
+    feat(1) = cell_data.at(x, y).feats / 1000 % 100;
+    feat(2) = cell_data.at(x, y).feats / 100000 % 100;
+    feat(3) = cell_data.at(x, y).feats / 10000000;
 }
 
 
 
-void cell_featclear(int prm_601, int prm_602)
+void cell_featclear(int x, int y)
 {
-    cell_data.at(prm_601, prm_602).feats = 0;
+    cell_data.at(x, y).feats = 0;
 }
 
 
 
-void cell_check(int prm_603, int prm_604)
+void cell_check(int x, int y)
 {
     cellaccess = 1;
     cellchara = -1;
     cellfeat = -1;
-    if (prm_603 < 0 || prm_603 >= map_data.width || prm_604 < 0 ||
-        prm_604 >= map_data.height)
+    if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
     {
         cellaccess = 0;
         return;
     }
-    if (cell_data.at(prm_603, prm_604).chara_index_plus_one != 0)
+    if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        cellchara = cell_data.at(prm_603, prm_604).chara_index_plus_one - 1;
+        cellchara = cell_data.at(x, y).chara_index_plus_one - 1;
         cellaccess = 0;
     }
-    if (cell_data.at(prm_603, prm_604).feats != 0)
+    if (cell_data.at(x, y).feats != 0)
     {
-        cellfeat = cell_data.at(prm_603, prm_604).feats / 1000 % 100;
-        if (chipm(7, cell_data.at(prm_603, prm_604).feats % 1000) & 4)
+        cellfeat = cell_data.at(x, y).feats / 1000 % 100;
+        if (chipm(7, cell_data.at(x, y).feats % 1000) & 4)
         {
             cellaccess = 0;
         }
     }
-    if (chipm(7, cell_data.at(prm_603, prm_604).chip_id_actual) & 4)
+    if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
     {
         cellaccess = 0;
     }
@@ -107,45 +101,50 @@ void cell_check(int prm_603, int prm_604)
 
 
 
-bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
+bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
 {
     int x2_at_m81 = 0;
     int y2_at_m81 = 0;
     if (game_data.mount != 0)
     {
-        if (game_data.mount == prm_605 || game_data.mount == prm_606)
+        if (game_data.mount == chara_index_a ||
+            game_data.mount == chara_index_b)
         {
             return false;
         }
     }
-    tc_at_m81 = prm_606;
+    tc_at_m81 = chara_index_b;
     if (tc_at_m81 == -1)
     {
-        if (cell_data.at(prm_607, prm_608).chara_index_plus_one != 0)
+        if (cell_data.at(x, y).chara_index_plus_one != 0)
         {
-            tc_at_m81 = cell_data.at(prm_607, prm_608).chara_index_plus_one - 1;
+            tc_at_m81 = cell_data.at(x, y).chara_index_plus_one - 1;
         }
     }
     if (tc_at_m81 != -1)
     {
-        cell_data.at(cdata[prm_605].position.x, cdata[prm_605].position.y)
+        cell_data
+            .at(cdata[chara_index_a].position.x,
+                cdata[chara_index_a].position.y)
             .chara_index_plus_one = tc_at_m81 + 1;
         x2_at_m81 = cdata[tc_at_m81].position.x;
         y2_at_m81 = cdata[tc_at_m81].position.y;
-        cdata[tc_at_m81].position.x = cdata[prm_605].position.x;
-        cdata[tc_at_m81].position.y = cdata[prm_605].position.y;
+        cdata[tc_at_m81].position.x = cdata[chara_index_a].position.x;
+        cdata[tc_at_m81].position.y = cdata[chara_index_a].position.y;
     }
     else
     {
-        cell_data.at(cdata[prm_605].position.x, cdata[prm_605].position.y)
+        cell_data
+            .at(cdata[chara_index_a].position.x,
+                cdata[chara_index_a].position.y)
             .chara_index_plus_one = 0;
-        x2_at_m81 = prm_607;
-        y2_at_m81 = prm_608;
+        x2_at_m81 = x;
+        y2_at_m81 = y;
     }
-    cell_data.at(x2_at_m81, y2_at_m81).chara_index_plus_one = prm_605 + 1;
-    cdata[prm_605].position.x = x2_at_m81;
-    cdata[prm_605].position.y = y2_at_m81;
-    if (prm_605 == 0 || tc_at_m81 == 0)
+    cell_data.at(x2_at_m81, y2_at_m81).chara_index_plus_one = chara_index_a + 1;
+    cdata[chara_index_a].position.x = x2_at_m81;
+    cdata[chara_index_a].position.y = y2_at_m81;
+    if (chara_index_a == 0 || tc_at_m81 == 0)
     {
         if (game_data.mount)
         {
@@ -177,15 +176,16 @@ void cell_movechara(int cc, int x, int y)
     }
 }
 
-int cell_itemlist(int prm_625, int prm_626)
+
+
+int cell_itemlist(int x, int y)
 {
     listmax = 0;
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number() > 0)
         {
-            if (inv[cnt].position.x == prm_625 &&
-                inv[cnt].position.y == prm_626)
+            if (inv[cnt].position.x == x && inv[cnt].position.y == y)
             {
                 list(0, listmax) = cnt;
                 ++listmax;
@@ -194,6 +194,8 @@ int cell_itemlist(int prm_625, int prm_626)
     }
     return rtval;
 }
+
+
 
 // Returns pair of number of items and the last item on the cell.
 std::pair<int, int> cell_itemoncell(const Position& pos)
@@ -213,6 +215,8 @@ std::pair<int, int> cell_itemoncell(const Position& pos)
     return std::make_pair(number, item);
 }
 
+
+
 void cell_setchara(int cc, int x, int y)
 {
     cell_data.at(x, y).chara_index_plus_one = cc + 1;
@@ -228,22 +232,22 @@ void cell_removechara(int x, int y)
 
 
 
-int cell_findspace(int prm_796, int prm_797, int prm_798)
+int cell_findspace(int base_x, int base_y, int range)
 {
     int f_at_m130 = 0;
     int dy_at_m130 = 0;
     int dx_at_m130 = 0;
     f_at_m130 = 0;
-    for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (range * 2 + 1); cnt < cnt_end; ++cnt)
     {
-        dy_at_m130 = prm_797 + cnt - 1;
+        dy_at_m130 = base_y + cnt - 1;
         if (dy_at_m130 < 0 || dy_at_m130 >= map_data.height)
         {
             continue;
         }
-        for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (range * 2 + 1); cnt < cnt_end; ++cnt)
         {
-            dx_at_m130 = prm_796 + cnt - 1;
+            dx_at_m130 = base_x + cnt - 1;
             if (dx_at_m130 < 0 || dx_at_m130 >= map_data.width)
             {
                 continue;
@@ -272,6 +276,8 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
     }
     return f_at_m130;
 }
+
+
 
 static int _random_tile(elona_vector1<int> tile)
 {
