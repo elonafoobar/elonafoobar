@@ -21,8 +21,8 @@ struct MapData
     int height{};
     int atlas_number{};
     int next_regenerate_date{};
-    int stair_up_pos{};
     int stair_down_pos{};
+    int stair_up_pos{};
     int type{};
     int refresh_type{};
     int designated_spawns{};
