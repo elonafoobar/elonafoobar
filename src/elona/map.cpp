@@ -226,6 +226,7 @@ void map_reload(const std::string& map_filename)
 }
 
 
+
 // Used for huntex/conquer quests.
 std::string map_get_custom_map_name(int map_id)
 {
@@ -936,6 +937,7 @@ void map_proc_regen_and_update()
 }
 
 
+
 void map_reload_noyel()
 {
     for (const auto& cnt : items(-1))
@@ -948,7 +950,8 @@ void map_reload_noyel()
 
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
-    if (area_data[game_data.current_map].christmas_festival == 1)
+
+    if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
         int stat = itemcreate(-1, 763, 29, 16, 0);
@@ -1218,7 +1221,7 @@ void map_reload_noyel()
     {
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.only_christmas() == 1)
+            if (cnt.only_christmas())
             {
                 chara_vanquish(cnt.index);
             }

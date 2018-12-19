@@ -398,6 +398,8 @@ static bool _should_regenerate_map()
         game_data.current_dungeon_level == 1;
 }
 
+
+
 static void _regenerate_map()
 {
     if (game_data.current_map == mdata_t::MapId::lumiest)
@@ -428,18 +430,18 @@ static void _regenerate_map()
     {
         if (game_data.date.month == 12)
         {
-            if (area_data[game_data.current_map].christmas_festival == 0)
+            if (!area_data[game_data.current_map].christmas_festival)
             {
-                area_data[game_data.current_map].christmas_festival = 1;
+                area_data[game_data.current_map].christmas_festival = true;
                 map_reload_noyel();
             }
             map_reload(u8"noyel_fest"s);
         }
         else
         {
-            if (area_data[game_data.current_map].christmas_festival == 1)
+            if (area_data[game_data.current_map].christmas_festival)
             {
-                area_data[game_data.current_map].christmas_festival = 0;
+                area_data[game_data.current_map].christmas_festival = false;
                 map_reload_noyel();
             }
             map_reload(u8"noyel"s);
@@ -447,6 +449,8 @@ static void _regenerate_map()
         game_data.released_fire_giant = 0;
     }
 }
+
+
 
 static void _relocate_character(Character& chara)
 {
