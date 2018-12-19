@@ -152,6 +152,12 @@ struct Cell
     void unpack_from(elona_vector3<int>& legacy_map, int x, int y);
 
     /**
+     * Moves part of `map` fields into this struct. To be called after
+     * deserializing `map`.
+     */
+    void partly_unpack_from(elona_vector3<int>& legacy_map, int x, int y);
+
+    /**
      * Clear this Cell.
      */
     void clear();
@@ -193,8 +199,10 @@ struct CellData
     void pack_to(elona_vector3<int>& legacy_map);
 
 
-    // Helper method to unpack all cell data from `map`.
-    void unpack_from(elona_vector3<int>& legacy_map);
+    /// Helper method to unpack all cell data from `map`.
+    /// @param clear Whether the previous data is cleared or not. If it is true,
+    /// the size of `map` must be the same as the previous one.
+    void unpack_from(elona_vector3<int>& legacy_map, bool clear = true);
 
 
 private:
