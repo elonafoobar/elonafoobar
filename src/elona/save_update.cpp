@@ -1304,6 +1304,62 @@ void _update_save_data_5(const fs::path& save_dir, int serial_id)
 
 
 
+/// Updates save file from v6 to v7.
+/// - Changes indoor flag of North Tyris south border, South Tyris north border,
+///   and Test World north border in area data (adata.s1).
+void _update_save_data_6(const fs::path& save_dir, int serial_id)
+{
+    assert(serial_id == 6);
+
+    const auto adata_filepath = save_dir / "adata.s1";
+    // Temporary data for contents of `adata.s1`.
+    std::vector<int> data(40 * 500, 0);
+
+    {
+        // Open file.
+        std::ifstream in(adata_filepath.native(), std::ios::binary);
+        putit::BinaryIArchive iar(in);
+
+        // Load all of data `adata.s1` has.
+        for (size_t j = 0; j < 500; ++j)
+        {
+            for (size_t i = 0; i < 40; ++i)
+            {
+                iar.load(data.at(j * 40 + i));
+            }
+        }
+    }
+
+    {
+        // Modify indoor flags.
+
+        const auto modify_indoor_flag = [&data](int map_id) {
+            ELONA_LOG("[Save data] Make the map(" << map_id << ") outdoor.");
+            data.at(map_id * 40 + 21) = 2;
+        };
+
+        modify_indoor_flag(43); // North Tyris south border
+        modify_indoor_flag(45); // South Tyris north border
+        modify_indoor_flag(48); // Test World north border
+    }
+
+    {
+        // Write the data.
+        std::ofstream out(adata_filepath.native(), std::ios::binary);
+        putit::BinaryOArchive oar(out);
+
+        for (size_t j = 0; j < 500; ++j)
+        {
+            for (size_t i = 0; i < 40; ++i)
+            {
+                oar.save(data.at(j * 40 + i));
+            }
+        }
+    }
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
 #define ELONA_CASE(n) \
@@ -1317,6 +1373,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(3)
         ELONA_CASE(4)
         ELONA_CASE(5)
+        ELONA_CASE(6)
     default: assert(0); break;
     }
 #undef ELONA_CASE
