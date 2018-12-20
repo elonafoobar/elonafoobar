@@ -1360,6 +1360,128 @@ void _update_save_data_6(const fs::path& save_dir, int serial_id)
 
 
 
+/// Update save data from v7 to v8. Fix wrongly saved positions of
+/// up/downstairs.
+void _update_save_data_7(const fs::path& save_dir, int serial_id)
+{
+    assert(serial_id == 7);
+
+    for (const auto& entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(mdata_(\d+)_(\d+)\.s2)"}))
+    {
+        // Temporary data for contents of each `mdata` file.
+        std::vector<int> data(100, 0);
+
+        {
+            // Read mdata file.
+            std::ifstream in{entry.path().native(), std::ios::binary};
+            putit::BinaryIArchive iar{in};
+
+            for (auto&& field : data)
+            {
+                iar(field);
+            }
+        }
+
+        const auto width = data.at(0);
+        const auto height = data.at(1);
+        // Temporary data for contents of each `map` file. It is used to find
+        // the positions of stairs.
+        std::vector<int> cell_data(width * height * 10, 0);
+
+        // Truncate directory part and "mdata". E.g., "_7_101.s2"
+        const auto map_id_and_level =
+            entry.path().filename().string().substr(5);
+        const auto map_filepath = save_dir / ("map" + map_id_and_level);
+        if (!fs::exists(map_filepath))
+        {
+            continue;
+        }
+
+        {
+            // Read map file.
+            std::ifstream in{map_filepath.native(), std::ios::binary};
+            putit::BinaryIArchive iar{in};
+
+            for (auto&& field : cell_data)
+            {
+                iar(field);
+            }
+        }
+
+        // Find positions of upstairs/downstairs and rewrite the data if needed.
+        int actual_stair_up_pos = 0;
+        int actual_stair_down_pos = 0;
+        for (int y = 0; y < height; ++y)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                const auto feat =
+                    cell_data.at(6 * height * width + y * width + x);
+                const auto type = feat / 1000 % 100;
+                if (type == 10)
+                {
+                    actual_stair_up_pos = y * 1000 + x;
+                }
+                if (type == 11)
+                {
+                    actual_stair_down_pos = y * 1000 + x;
+                }
+            }
+        }
+
+        auto fixed = false;
+        if (actual_stair_down_pos != data.at(4))
+        {
+            Position old_downstairs_pos{data.at(5) % 1000, data.at(5) / 1000};
+            Position new_downstairs_pos{actual_stair_down_pos % 1000,
+                                        actual_stair_down_pos / 1000};
+
+            ELONA_LOG(
+                "[Save data] Correct downstairs position in "
+                << entry.path().filename() << ": " << old_downstairs_pos
+                << " -> " << new_downstairs_pos << ".");
+
+            data.at(4) = actual_stair_down_pos;
+            fixed = true;
+        }
+        if (actual_stair_up_pos != data.at(5))
+        {
+            Position old_upstairs_pos{data.at(4) % 1000, data.at(4) / 1000};
+            Position new_upstairs_pos{actual_stair_up_pos % 1000,
+                                      actual_stair_up_pos / 1000};
+
+            ELONA_LOG(
+                "[Save data] Correct upstairs position in "
+                << entry.path().filename() << ": " << old_upstairs_pos << " -> "
+                << new_upstairs_pos << ".");
+
+            data.at(5) = actual_stair_up_pos;
+            fixed = true;
+        }
+
+        if (!fixed)
+        {
+            continue;
+        }
+
+        {
+            // Write mdata.
+            std::ofstream out{entry.path().native(), std::ios::binary};
+            putit::BinaryOArchive oar{out};
+
+            for (auto&& field : data)
+            {
+                oar(field);
+            }
+        }
+    }
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
 #define ELONA_CASE(n) \
@@ -1374,6 +1496,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(4)
         ELONA_CASE(5)
         ELONA_CASE(6)
+        ELONA_CASE(7)
     default: assert(0); break;
     }
 #undef ELONA_CASE
