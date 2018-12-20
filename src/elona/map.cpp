@@ -84,6 +84,8 @@ void MapData::clear()
     SERIALIZE(0, chip_id_actual); \
     SERIALIZE(1, chara_index_plus_one); \
     SERIALIZE(2, chip_id_memory); \
+    if (!all_fields) \
+        return; \
     /* 3 */ \
     SERIALIZE(4, item_appearances_actual); \
     SERIALIZE(5, item_appearances_memory); \
@@ -96,6 +98,7 @@ void MapData::clear()
 #define SERIALIZE MAP_PACK
 void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
 {
+    constexpr auto all_fields = true;
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
@@ -103,6 +106,13 @@ void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
 #define SERIALIZE MAP_UNPACK
 void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
 {
+    constexpr auto all_fields = true;
+    SERIALIZE_ALL();
+}
+
+void Cell::partly_unpack_from(elona_vector3<int>& legacy_map, int x, int y)
+{
+    constexpr auto all_fields = false;
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
@@ -157,15 +167,32 @@ void CellData::pack_to(elona_vector3<int>& legacy_map)
 
 
 
-void CellData::unpack_from(elona_vector3<int>& legacy_map)
+void CellData::unpack_from(elona_vector3<int>& legacy_map, bool clear)
 {
-    init(legacy_map.i_size(), legacy_map.j_size());
+    if (clear)
+    {
+        init(legacy_map.i_size(), legacy_map.j_size());
+    }
+    else
+    {
+        // In this case, the size of map must equal to the previous one.
+        assert(
+            legacy_map.i_size() == static_cast<size_t>(width_) &&
+            legacy_map.j_size() == static_cast<size_t>(height_));
+    }
 
     for (int y = 0; y < height_; y++)
     {
         for (int x = 0; x < width_; x++)
         {
-            at(x, y).unpack_from(legacy_map, x, y);
+            if (clear)
+            {
+                at(x, y).unpack_from(legacy_map, x, y);
+            }
+            else
+            {
+                at(x, y).partly_unpack_from(legacy_map, x, y);
+            }
         }
     }
 }
@@ -224,6 +251,7 @@ void map_reload(const std::string& map_filename)
         }
     }
 }
+
 
 
 // Used for huntex/conquer quests.
@@ -936,6 +964,7 @@ void map_proc_regen_and_update()
 }
 
 
+
 void map_reload_noyel()
 {
     for (const auto& cnt : items(-1))
@@ -948,7 +977,8 @@ void map_reload_noyel()
 
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
-    if (area_data[game_data.current_map].christmas_festival == 1)
+
+    if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
         int stat = itemcreate(-1, 763, 29, 16, 0);
@@ -1218,7 +1248,7 @@ void map_reload_noyel()
     {
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.only_christmas() == 1)
+            if (cnt.only_christmas())
             {
                 chara_vanquish(cnt.index);
             }

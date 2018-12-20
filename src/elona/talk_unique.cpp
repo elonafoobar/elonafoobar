@@ -4861,7 +4861,7 @@ void _part_time_worker_switch_religion()
 TalkResult talk_unique_part_time_worker()
 {
     if (game_data.current_map != mdata_t::MapId::noyel ||
-        area_data[game_data.current_map].christmas_festival == 0)
+        !area_data[game_data.current_map].christmas_festival)
     {
         return TalkResult::talk_end;
     }
