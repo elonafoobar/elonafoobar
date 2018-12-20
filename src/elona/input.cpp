@@ -100,8 +100,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
             snd("core.cursor1");
             number = max_number;
         }
-        // Translated from "northwest" in menu mode
-        if (action == "previous_menu")
+        if (action == "northwest")
         {
             snd("core.cursor1");
             number -= 100;
@@ -110,8 +109,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
                 number += max_number;
             }
         }
-        // Translated from "northeast" in menu mode
-        if (action == "next_menu")
+        if (action == "northeast")
         {
             snd("core.cursor1");
             number += 100;
