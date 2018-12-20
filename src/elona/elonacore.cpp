@@ -9791,10 +9791,9 @@ void proc_autopick()
             (void)do_open_command(); // Result is unused.
             break;
         }
-        if (did_something && !op.sound.empty())
+        if (did_something && op.sound != "")
         {
-            DSLOADFNAME(filesystem::dir::sound() / op.sound, 15);
-            DSPLAY(15, 0);
+            snd(op.sound);
         }
     }
 }
