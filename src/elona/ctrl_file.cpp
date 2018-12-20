@@ -1177,7 +1177,7 @@ void fmode_5_6(bool read)
             map_data.height = mdata(1);
             map_data.atlas_number = mdata(2);
             map_data.next_regenerate_date = mdata(3);
-            map_data.stair_up_pos = mdata(4);
+            map_data.stair_down_pos = mdata(4);
         }
         else
         {
