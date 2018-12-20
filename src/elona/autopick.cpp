@@ -83,7 +83,7 @@ Autopick::Matcher Autopick::_parse_each_line(std::string line)
         }
     }
 
-    // xxx:sound.wav?
+    // xxx:core.sound_id?
     if (!line.empty() && line.back() == '?')
     {
         op.show_prompt = true;
@@ -95,7 +95,7 @@ Autopick::Matcher Autopick::_parse_each_line(std::string line)
     if (colon != std::string::npos)
     {
         auto sound_id = line.substr(colon + 1);
-        if (!strutil::contains(op.sound, "."))
+        if (!strutil::contains(sound_id, "."))
         {
             // Adds "core" if no mod prefix.
             sound_id = "core." + sound_id;
@@ -104,7 +104,7 @@ Autopick::Matcher Autopick::_parse_each_line(std::string line)
         line = line.substr(0, colon);
     }
 
-    // xxx?:sound.wav
+    // xxx?:core.sound_id
     if (!line.empty() && line.back() == '?')
     {
         op.show_prompt = true;

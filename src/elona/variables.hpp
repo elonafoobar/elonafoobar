@@ -855,7 +855,7 @@ int drink_well();
 int read_scroll();
 int do_zap();
 int do_magic_attempt();
-int pick_up_item();
+int pick_up_item(bool play_sound = true);
 int unlock_box(int);
 void do_ranged_attack();
 

@@ -30,7 +30,7 @@ TurnResult do_eat_command();
 TurnResult do_read_command();
 TurnResult do_drink_command();
 TurnResult do_zap_command();
-TurnResult do_open_command();
+TurnResult do_open_command(bool play_sound = true);
 TurnResult do_offer_command();
 
 int ask_direction_to_close();
