@@ -4,7 +4,6 @@
 #include "ai.hpp"
 #include "area.hpp"
 #include "audio.hpp"
-#include "autopick.hpp"
 #include "buff.hpp"
 #include "building.hpp"
 #include "character.hpp"

@@ -4,6 +4,7 @@
 #include "../util/noncopyable.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
+#include "shared_id.hpp"
 
 
 namespace elona
@@ -33,7 +34,7 @@ public:
 
         Type type = Type::do_nothing;
         bool show_prompt = false;
-        std::string sound;
+        SharedId sound;
     };
 
     static Autopick& instance();
@@ -63,8 +64,9 @@ private:
     Autopick() = default;
 
 
-    void clear();
-    bool try_load(const fs::path&);
+    void _clear();
+    bool _try_load(const fs::path&);
+    Matcher _parse_each_line(std::string line);
 };
 
 
