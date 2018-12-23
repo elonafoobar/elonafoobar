@@ -105,7 +105,6 @@ END
         dump_player_info = "プレイヤー情報出力"
         enable_voldemort = "Voldemortモード"
         reload_autopick = "Autopickの再読み込み"
-        auto_action = "自動行動"
 
         wizard_toggle_console = "コンソールを切り替える"
         wizard_open_console = "コンソールを開く"

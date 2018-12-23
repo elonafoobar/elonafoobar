@@ -180,7 +180,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         return none;
     }
 
-    if (action == "auto_action")
+    if (action == "enter")
     {
         action = "search";
         cell_featread(cdata[cc].position.x, cdata[cc].position.y);
