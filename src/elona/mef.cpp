@@ -35,25 +35,25 @@ void initialize_mef()
     mefsubref(1, 5) = 624;
 }
 
-void mef_delete(int prm_581)
+void mef_delete(int mef_index)
 {
-    if (mef(0, prm_581) == 7)
+    if (mef(0, mef_index) == 7)
     {
-        event_add(21, mef(2, prm_581), mef(3, prm_581));
+        event_add(21, mef(2, mef_index), mef(3, mef_index));
     }
-    cell_data.at(mef(2, prm_581), mef(3, prm_581)).mef_index_plus_one = 0;
-    mef(0, prm_581) = 0;
+    cell_data.at(mef(2, mef_index), mef(3, mef_index)).mef_index_plus_one = 0;
+    mef(0, mef_index) = 0;
     i_at_m79 = 199;
-    for (int cnt = 0, cnt_end = (MEF_MAX - prm_581); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (MEF_MAX - mef_index); cnt < cnt_end; ++cnt)
     {
         if (mef(0, i_at_m79) != 0)
         {
             for (int cnt = 0; cnt < 9; ++cnt)
             {
-                mef(cnt, prm_581) = mef(cnt, i_at_m79);
+                mef(cnt, mef_index) = mef(cnt, i_at_m79);
             }
             cell_data.at(mef(2, i_at_m79), mef(3, i_at_m79))
-                .mef_index_plus_one = prm_581 + 1;
+                .mef_index_plus_one = mef_index + 1;
             mef(0, i_at_m79) = 0;
             break;
         }
@@ -66,18 +66,18 @@ void mef_delete(int prm_581)
 void mef_add(
     int pos_x,
     int pos_y,
-    int prm_584,
-    int prm_585,
-    int prm_586,
+    int type,
+    int item_chip,
+    int turns,
     int effect_power,
     int chara,
-    int prm_589,
-    int prm_590,
-    int prm_591)
+    int potion_item_id,
+    int potion_item_curse_status,
+    int color)
 {
     int p_at_m79 = 0;
     p_at_m79 = cell_data.at(pos_x, pos_y).chip_id_actual;
-    if (prm_584 == 5)
+    if (type == 5)
     {
         if (chipm(0, p_at_m79) == 3)
         {
@@ -106,15 +106,15 @@ void mef_add(
                 .mef_index_plus_one = 0;
         }
     }
-    mef(0, i_at_m79) = prm_584;
-    mef(1, i_at_m79) = prm_585 + prm_591 * 10000;
+    mef(0, i_at_m79) = type;
+    mef(1, i_at_m79) = item_chip + color * 10000;
     mef(2, i_at_m79) = pos_x;
     mef(3, i_at_m79) = pos_y;
-    mef(4, i_at_m79) = prm_586;
+    mef(4, i_at_m79) = turns;
     mef(5, i_at_m79) = effect_power;
     mef(6, i_at_m79) = chara;
-    mef(7, i_at_m79) = prm_589;
-    mef(8, i_at_m79) = prm_590;
+    mef(7, i_at_m79) = potion_item_id;
+    mef(8, i_at_m79) = potion_item_curse_status;
     cell_data.at(pos_x, pos_y).mef_index_plus_one = i_at_m79 + 1;
 }
 

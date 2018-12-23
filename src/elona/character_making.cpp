@@ -275,7 +275,7 @@ static void _reroll_character()
     initialize_character();
     initialize_pc_character();
     cdata[rc].portrait = portrait_save;
-    create_pcpic(0, true);
+    create_pcpic(0);
 }
 
 static int _prompt_satisfied()

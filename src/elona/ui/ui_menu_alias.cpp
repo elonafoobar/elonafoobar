@@ -37,7 +37,8 @@ void UIMenuAlias::update()
         }
         if (list(0, 0) == -1)
         {
-            listn(0, cnt) = random_title(_alias_type);
+            listn(0, cnt) =
+                random_title(static_cast<RandomTitleType>(_alias_type));
             list(1, cnt) = title_id;
         }
         if (cnt == 0)

@@ -597,7 +597,7 @@ optional_ref<Extent> chara_preparepic(int image_id)
 
 
 
-void create_pcpic(int cc, bool prm_410)
+void create_pcpic(int cc, bool with_equipments)
 {
     buffer(20 + cc, 384, 198);
     boxf();
@@ -612,7 +612,7 @@ void create_pcpic(int cc, bool prm_410)
         pcc(16, cc) = 1;
     }
 
-    if (prm_410)
+    if (with_equipments)
     {
         pcc(4, cc) = 0;
         pcc(2, cc) = 0;
@@ -632,7 +632,7 @@ void create_pcpic(int cc, bool prm_410)
 
     pcc(10, cc) = pcc(1, cc) / 1000 * 1000 + pcc(10, cc) % 1000;
     pcc(14, cc) = pcc(15, cc) / 1000 * 1000 + pcc(14, cc) % 1000;
-    if (prm_410)
+    if (with_equipments)
     {
         if (pcc(24, cc) == 0)
         {
@@ -654,7 +654,7 @@ void create_pcpic(int cc, bool prm_410)
         load_pcc_part(cc, 7, u8"pants_");
     }
     load_pcc_part(cc, 9, u8"cloth_");
-    if (prm_410)
+    if (with_equipments)
     {
         if (pcc(20, cc) == 0)
         {
@@ -681,7 +681,7 @@ void create_pcpic(int cc, bool prm_410)
             load_pcc_part(cc, 16, u8"ride_");
         }
     }
-    if (prm_410)
+    if (with_equipments)
     {
         if (pcc(24, cc) == 0)
         {

@@ -252,6 +252,16 @@ void snd_inner(
     DSPLAY(channel, loop);
 }
 
+
+
+void _preload_sound_if_needed(const fs::path& filepath, int id)
+{
+    if (id < temporary_channels_head)
+    {
+        DSLOADFNAME(filepath, id);
+    }
+}
+
 } // namespace
 
 
@@ -328,23 +338,13 @@ void DMSTOP()
 
 
 
-void sndload(const fs::path& filepath, int prm_293)
-{
-    if (prm_293 < temporary_channels_head)
-    {
-        DSLOADFNAME(filepath, prm_293);
-    }
-}
-
-
-
 void initialize_sound_file()
 {
     soundlist.resize(temporary_channels_size);
 
     for (const auto& se : the_sound_db)
     {
-        sndload(se.file, se.id);
+        _preload_sound_if_needed(se.file, se.id);
     }
 }
 

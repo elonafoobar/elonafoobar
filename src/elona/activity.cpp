@@ -30,21 +30,21 @@ namespace elona
 int digx = 0;
 int digy = 0;
 
-void rowact_check(int prm_789)
+void rowact_check(int chara_index)
 {
-    if (cdata[prm_789].continuous_action)
+    if (cdata[chara_index].continuous_action)
     {
-        if (cdata[prm_789].continuous_action.type !=
+        if (cdata[chara_index].continuous_action.type !=
             ContinuousAction::Type::travel)
         {
-            cdata[prm_789].stops_continuous_action_if_damaged = 1;
+            cdata[chara_index].stops_continuous_action_if_damaged = 1;
         }
     }
 }
 
 
 
-void rowact_item(int prm_790)
+void rowact_item(int item_index)
 {
     for (auto&& cc : cdata.all())
     {
@@ -59,7 +59,7 @@ void rowact_item(int prm_790)
         if (cc.continuous_action.type == ContinuousAction::Type::eat ||
             cc.continuous_action.type == ContinuousAction::Type::read)
         {
-            if (cc.continuous_action.item == prm_790)
+            if (cc.continuous_action.item == item_index)
             {
                 cdata[cc.index].continuous_action.finish();
                 txt(i18n::s.get("core.locale.activity.cancel.item", cc));

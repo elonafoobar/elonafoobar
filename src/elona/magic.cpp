@@ -2422,7 +2422,7 @@ label_2181_internal:
         MiracleAnimation().play();
         snd("core.pray2");
         cdata.player().praying_point += 500;
-        modpiety(75);
+        god_modify_piety(75);
         chara_gain_skill_exp(
             cdata.player(),
             181,

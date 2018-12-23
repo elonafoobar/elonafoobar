@@ -263,37 +263,21 @@ int dist_town()
 
 
 
-void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
+void map_placecharaonentrance(int chara_index, int entrance_type)
 {
     int x_at_m167 = 0;
     int y_at_m167 = 0;
-    if (prm_937 == 1)
+    if (entrance_type == 1)
     {
         x_at_m167 = map_data.stair_up_pos % 1000;
-        if (prm_938 != 0)
-        {
-            x_at_m167 += rnd(prm_938) - rnd(prm_938);
-        }
         y_at_m167 = map_data.stair_up_pos / 1000;
-        if (prm_938 != 0)
-        {
-            y_at_m167 += rnd(prm_938) - rnd(prm_938);
-        }
     }
-    if (prm_937 == 2)
+    if (entrance_type == 2)
     {
         x_at_m167 = map_data.stair_down_pos % 1000;
-        if (prm_938 != 0)
-        {
-            x_at_m167 += rnd(prm_938) - rnd(prm_938);
-        }
         y_at_m167 = map_data.stair_down_pos / 1000;
-        if (prm_938 != 0)
-        {
-            y_at_m167 += rnd(prm_938) - rnd(prm_938);
-        }
     }
-    if (prm_937 == 3)
+    if (entrance_type == 3)
     {
         if (game_data.player_next_move_direction == 1)
         {
@@ -366,70 +350,73 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
             y_at_m167 = game_data.player_y_on_map_leave;
         }
     }
-    if (prm_937 == 4)
+    if (entrance_type == 4)
     {
         x_at_m167 = map_data.width / 2;
         y_at_m167 = map_data.height / 2;
     }
-    if (prm_937 == 8)
+    if (entrance_type == 8)
     {
         x_at_m167 = map_data.width / 2;
         y_at_m167 = map_data.height - 2;
     }
-    if (prm_937 == 5)
+    if (entrance_type == 5)
     {
         x_at_m167 = rnd(map_data.width - 5) + 2;
         y_at_m167 = rnd(map_data.height - 5) + 2;
     }
-    if (prm_937 == 6)
+    if (entrance_type == 6)
     {
-        x_at_m167 = game_data.pc_x_in_world_map + rnd((prm_936 / 5 + 1));
-        y_at_m167 = game_data.pc_y_in_world_map + rnd((prm_936 / 5 + 1));
+        x_at_m167 = game_data.pc_x_in_world_map + rnd(chara_index / 5 + 1);
+        y_at_m167 = game_data.pc_y_in_world_map + rnd(chara_index / 5 + 1);
     }
-    if (prm_937 == 7)
+    if (entrance_type == 7)
     {
         x_at_m167 = mapstartx;
         y_at_m167 = mapstarty;
     }
     cxinit = x_at_m167;
     cyinit = y_at_m167;
-    rc = prm_936;
+    rc = chara_index;
     chara_place();
 }
 
 
 
-void map_placearena(int prm_939, int prm_940)
+void map_placearena(int chara_index, bool is_enemy)
 {
     while (1)
     {
         x = rnd(7) + 5;
         y = rnd(6) + 6;
-        if (prm_940 == 0)
+        if (!is_enemy)
         {
             x += 8;
         }
         cxinit = x;
         cyinit = y;
-        rc = prm_939;
+        rc = chara_index;
         chara_place();
-        if (prm_940 == 0)
+        if (!is_enemy)
         {
-            if (cdata[prm_939].position.x >= 13 &&
-                cdata[prm_939].position.y >= 6 &&
-                cdata[prm_939].position.x < 20 &&
-                cdata[prm_939].position.y < 12)
+            if (cdata[chara_index].position.x >= 13 &&
+                cdata[chara_index].position.y >= 6 &&
+                cdata[chara_index].position.x < 20 &&
+                cdata[chara_index].position.y < 12)
             {
                 break;
             }
         }
         else if (
-            cdata[prm_939].position.x >= 5 && cdata[prm_939].position.y >= 6 &&
-            cdata[prm_939].position.x < 12 && cdata[prm_939].position.y < 12)
+            cdata[chara_index].position.x >= 5 &&
+            cdata[chara_index].position.y >= 6 &&
+            cdata[chara_index].position.x < 12 &&
+            cdata[chara_index].position.y < 12)
         {
             break;
         }
-        cell_data.at(cdata[prm_939].position.x, cdata[prm_939].position.y)
+        cell_data
+            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
             .chara_index_plus_one = 0;
     }
 }
@@ -466,7 +453,7 @@ void map_placeplayer()
                 {
                     camera = cnt;
                 }
-                map_placearena(cnt, 0);
+                map_placearena(cnt, false);
                 continue;
             }
         }
@@ -487,46 +474,44 @@ void map_placeplayer()
 
 
 
-void map_randomtile(int prm_941, int prm_942)
+void map_randomtile(int tile_id, int density)
 {
-    for (int cnt = 0,
-             cnt_end = (map_data.width * map_data.height * prm_942 / 100 + 1);
-         cnt < cnt_end;
-         ++cnt)
+    const auto n = map_data.width * map_data.height * density / 100 + 1;
+    for (int i = 0; i < n; ++i)
     {
-        cell_data.at(rnd(map_data.width), rnd(map_data.height)).chip_id_actual =
-            prm_941;
+        const auto x = rnd(map_data.width);
+        const auto y = rnd(map_data.height);
+        cell_data.at(x, y).chip_id_actual = tile_id;
     }
 }
 
 
 
-int map_digcheck(int prm_953, int prm_954)
+int map_digcheck(int x, int y)
 {
-    if (prm_953 < 1 || prm_954 < 1 || prm_953 > map_data.width - 2 ||
-        prm_954 > map_data.height - 2)
+    if (x < 1 || y < 1 || x > map_data.width - 2 || y > map_data.height - 2)
     {
         return 0;
     }
-    if (cell_data.at(prm_953, prm_954).chip_id_actual == 100)
+    if (cell_data.at(x, y).chip_id_actual == 100)
     {
         return 100;
     }
-    return cell_data.at(prm_953, prm_954).chip_id_actual == 0;
+    return cell_data.at(x, y).chip_id_actual == 0;
 }
 
 
 
-void map_nextdir1(int prm_955, int prm_956)
+void map_nextdir1(int x, int y)
 {
-    if (tx_at_m168 >= prm_955 - 4 && tx_at_m168 <= prm_955 + 4)
+    if (tx_at_m168 >= x - 4 && tx_at_m168 <= x + 4)
     {
-        if (ty_at_m168 >= prm_956 - 4 && ty_at_m168 <= prm_956 + 4)
+        if (ty_at_m168 >= y - 4 && ty_at_m168 <= y + 4)
         {
-            if (tx_at_m168 < prm_955)
+            if (tx_at_m168 < x)
             {
                 dir_at_m168 = 2;
-                if (ty_at_m168 > prm_956)
+                if (ty_at_m168 > y)
                 {
                     dest_at_m168 = 3;
                 }
@@ -535,10 +520,10 @@ void map_nextdir1(int prm_955, int prm_956)
                     dest_at_m168 = 0;
                 }
             }
-            if (tx_at_m168 > prm_955)
+            if (tx_at_m168 > x)
             {
                 dir_at_m168 = 1;
-                if (ty_at_m168 > prm_956)
+                if (ty_at_m168 > y)
                 {
                     dest_at_m168 = 3;
                 }
@@ -547,10 +532,10 @@ void map_nextdir1(int prm_955, int prm_956)
                     dest_at_m168 = 0;
                 }
             }
-            if (ty_at_m168 < prm_956)
+            if (ty_at_m168 < y)
             {
                 dir_at_m168 = 0;
-                if (tx_at_m168 > prm_955)
+                if (tx_at_m168 > x)
                 {
                     dest_at_m168 = 1;
                 }
@@ -559,10 +544,10 @@ void map_nextdir1(int prm_955, int prm_956)
                     dest_at_m168 = 2;
                 }
             }
-            if (ty_at_m168 > prm_956)
+            if (ty_at_m168 > y)
             {
                 dir_at_m168 = 3;
-                if (tx_at_m168 > prm_955)
+                if (tx_at_m168 > x)
                 {
                     dest_at_m168 = 1;
                 }
@@ -576,7 +561,7 @@ void map_nextdir1(int prm_955, int prm_956)
     }
     if (dir_at_m168 == 1 || dir_at_m168 == 2)
     {
-        if (ty_at_m168 > prm_956)
+        if (ty_at_m168 > y)
         {
             dir_at_m168 = 3;
         }
@@ -584,7 +569,7 @@ void map_nextdir1(int prm_955, int prm_956)
         {
             dir_at_m168 = 0;
         }
-        if (tx_at_m168 > prm_955)
+        if (tx_at_m168 > x)
         {
             dest_at_m168 = 1;
         }
@@ -596,7 +581,7 @@ void map_nextdir1(int prm_955, int prm_956)
     }
     else
     {
-        if (tx_at_m168 > prm_955)
+        if (tx_at_m168 > x)
         {
             dir_at_m168 = 1;
         }
@@ -604,7 +589,7 @@ void map_nextdir1(int prm_955, int prm_956)
         {
             dir_at_m168 = 2;
         }
-        if (ty_at_m168 > prm_956)
+        if (ty_at_m168 > y)
         {
             dest_at_m168 = 3;
         }
@@ -618,7 +603,7 @@ void map_nextdir1(int prm_955, int prm_956)
 
 
 
-void map_nextdir2(int prm_957, int prm_958)
+void map_nextdir2(int x, int y)
 {
     int p_at_m168 = 0;
     if (dir2_at_m168 != -1)
@@ -627,7 +612,7 @@ void map_nextdir2(int prm_957, int prm_958)
         {
             if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
             {
-                if (tx_at_m168 == prm_957)
+                if (tx_at_m168 == x)
                 {
                     p_at_m168 = dir2_at_m168;
                     dir2_at_m168 = dir_at_m168;
@@ -644,7 +629,7 @@ void map_nextdir2(int prm_957, int prm_958)
         {
             if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
             {
-                if (tx_at_m168 == prm_957)
+                if (tx_at_m168 == x)
                 {
                     p_at_m168 = dir2_at_m168;
                     dir2_at_m168 = dir_at_m168;
@@ -661,7 +646,7 @@ void map_nextdir2(int prm_957, int prm_958)
         {
             if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
             {
-                if (ty_at_m168 == prm_958)
+                if (ty_at_m168 == y)
                 {
                     p_at_m168 = dir2_at_m168;
                     dir2_at_m168 = dir_at_m168;
@@ -678,7 +663,7 @@ void map_nextdir2(int prm_957, int prm_958)
         {
             if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
             {
-                if (ty_at_m168 == prm_958)
+                if (ty_at_m168 == y)
                 {
                     p_at_m168 = dir2_at_m168;
                     dir2_at_m168 = dir_at_m168;
@@ -694,9 +679,9 @@ void map_nextdir2(int prm_957, int prm_958)
     }
     if (dir_at_m168 == 1 || dir_at_m168 == 2)
     {
-        if (tx_at_m168 == prm_957)
+        if (tx_at_m168 == x)
         {
-            if (ty_at_m168 > prm_958)
+            if (ty_at_m168 > y)
             {
                 if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
                 {
@@ -704,7 +689,7 @@ void map_nextdir2(int prm_957, int prm_958)
                     dir_at_m168 = 3;
                 }
             }
-            if (ty_at_m168 < prm_958)
+            if (ty_at_m168 < y)
             {
                 if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
                 {
@@ -717,9 +702,9 @@ void map_nextdir2(int prm_957, int prm_958)
     }
     else
     {
-        if (ty_at_m168 == prm_958)
+        if (ty_at_m168 == y)
         {
-            if (tx_at_m168 > prm_957)
+            if (tx_at_m168 > x)
             {
                 if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
                 {
@@ -727,7 +712,7 @@ void map_nextdir2(int prm_957, int prm_958)
                     dir_at_m168 = 1;
                 }
             }
-            if (tx_at_m168 < prm_957)
+            if (tx_at_m168 < x)
             {
                 if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
                 {
@@ -742,47 +727,36 @@ void map_nextdir2(int prm_957, int prm_958)
 
 
 
-int map_digtoentrance1(
-    int prm_959,
-    int prm_960,
-    int prm_961,
-    int prm_962,
-    int prm_963)
+int map_digtoentrance1(int x1, int y1, int x2, int y2)
 {
     int f_at_m168 = 0;
     int dx_at_m168 = 0;
     int dy_at_m168 = 0;
-    tx_at_m168 = prm_959;
-    ty_at_m168 = prm_960;
+    tx_at_m168 = x1;
+    ty_at_m168 = y1;
     dest_at_m168 = -1;
     f_at_m168 = 0;
-    if (prm_963 == 1)
-    {
-        dir2_at_m168 = -1;
-        map_nextdir1(prm_961, prm_962);
-    }
+    dir2_at_m168 = -1;
+    map_nextdir1(x2, y2);
     for (int cnt = 0; cnt < 2000; ++cnt)
     {
-        if (tx_at_m168 == prm_961)
+        if (tx_at_m168 == x2)
         {
-            if (ty_at_m168 + 1 == prm_962 || ty_at_m168 - 1 == prm_962)
+            if (ty_at_m168 + 1 == y2 || ty_at_m168 - 1 == y2)
             {
                 f_at_m168 = 1;
                 break;
             }
         }
-        if (ty_at_m168 == prm_962)
+        if (ty_at_m168 == y2)
         {
-            if (tx_at_m168 + 1 == prm_961 || tx_at_m168 - 1 == prm_961)
+            if (tx_at_m168 + 1 == x2 || tx_at_m168 - 1 == x2)
             {
                 f_at_m168 = 1;
                 break;
             }
         }
-        if (prm_963 == 1)
-        {
-            map_nextdir2(prm_961, prm_962);
-        }
+        map_nextdir2(x2, y2);
         dx_at_m168 = tx_at_m168;
         dy_at_m168 = ty_at_m168;
         if (dir_at_m168 == 1)
@@ -810,13 +784,6 @@ int map_digtoentrance1(
             {
                 cell_data.at(dx_at_m168, dy_at_m168).chip_id_actual = 4;
                 cell_featset(dx_at_m168, dy_at_m168, 0, 22);
-            }
-            if (prm_963 == 0)
-            {
-                if (rnd(4) == 0)
-                {
-                    map_nextdir1(prm_961, prm_962);
-                }
             }
         }
         else
@@ -858,14 +825,7 @@ int map_digtoentrance1(
                 dest_at_m168 = -1;
                 continue;
             }
-            if (prm_963 == 0)
-            {
-                map_nextdir1(prm_961, prm_962);
-            }
-            if (prm_963 == 1)
-            {
-                map_nextdir1(prm_961, prm_962);
-            }
+            map_nextdir1(x2, y2);
         }
     }
     return f_at_m168;
@@ -887,20 +847,24 @@ void map_setfog(int, int)
     }
 }
 
-void rndshuffle(elona_vector1<int>& prm_534)
+
+
+void rndshuffle(elona_vector1<int>& array)
 {
     int p_at_m68 = 0;
     int r_at_m68 = 0;
-    p_at_m68 = prm_534.size();
+    p_at_m68 = array.size();
     for (int cnt = 0, cnt_end = (p_at_m68); cnt < cnt_end; ++cnt)
     {
         r_at_m68 = rnd(p_at_m68);
         --p_at_m68;
-        i_at_m68 = prm_534(r_at_m68);
-        prm_534(r_at_m68) = prm_534(p_at_m68);
-        prm_534(p_at_m68) = i_at_m68;
+        i_at_m68 = array(r_at_m68);
+        array(r_at_m68) = array(p_at_m68);
+        array(p_at_m68) = i_at_m68;
     }
 }
+
+
 
 void map_createroomdoor()
 {
@@ -993,7 +957,7 @@ void map_createroomdoor()
 
 
 
-int map_createroom(int prm_966)
+int map_createroom(int type)
 {
     int roompos = 0;
     int roomwall = 0;
@@ -1001,31 +965,31 @@ int map_createroom(int prm_966)
     {
         return 0;
     }
-    if (prm_966 == 0)
+    if (type == 0)
     {
         roompos = 0;
         roomwall = 0;
         roomdoor = 0;
     }
-    if (prm_966 == 1)
+    if (type == 1)
     {
         roompos = 1;
         roomwall = 1;
         roomdoor = 0;
     }
-    if (prm_966 == 2)
+    if (type == 2)
     {
         roompos = 2;
         roomwall = 1;
         roomdoor = 1;
     }
-    if (prm_966 == 3)
+    if (type == 3)
     {
         roompos = 3;
         roomwall = 2;
         roomdoor = 3;
     }
-    if (prm_966 == 4)
+    if (type == 4)
     {
         roompos = 4;
         roomwall = 3;
@@ -1286,19 +1250,19 @@ int map_createroom(int prm_966)
 
 
 
-int map_placeupstairs(int prm_967, int prm_968)
+int map_placeupstairs(int x, int y)
 {
     int found_x;
     int found_y;
-    if (prm_967 == 0)
+    if (x == 0)
     {
         found_x = rnd(roomwidth(cr) - 2) + roomx(cr) + 1;
         found_y = rnd(roomheight(cr) - 2) + roomy(cr) + 1;
     }
     else
     {
-        found_x = prm_967;
-        found_y = prm_968;
+        found_x = x;
+        found_y = y;
     }
     cell_featset(found_x, found_y, tile_upstairs, 10);
     map_data.stair_up_pos = found_y * 1000 + found_x;
@@ -1308,7 +1272,7 @@ int map_placeupstairs(int prm_967, int prm_968)
 
 
 
-int map_placedownstairs(int prm_969, int prm_970)
+int map_placedownstairs(int x, int y)
 {
     int found_x;
     int found_y;
@@ -1318,15 +1282,15 @@ int map_placedownstairs(int prm_969, int prm_970)
     {
         return 0;
     }
-    if (prm_969 == 0)
+    if (x == 0)
     {
         found_x = rnd(roomwidth(cr) - 2) + roomx(cr) + 1;
         found_y = rnd(roomheight(cr) - 2) + roomy(cr) + 1;
     }
     else
     {
-        found_x = prm_969;
-        found_y = prm_970;
+        found_x = x;
+        found_y = y;
     }
     cell_featset(found_x, found_y, tile_downstairs, 11);
     map_data.stair_down_pos = found_y * 1000 + found_x;
@@ -1336,11 +1300,11 @@ int map_placedownstairs(int prm_969, int prm_970)
 
 
 
-int map_trap(int prm_973, int prm_974, int, int prm_976)
+int map_trap(int x, int y, int, int trap_type)
 {
     int trap_at_m170 = 0;
-    dx_at_m170 = prm_973;
-    dy_at_m170 = prm_974;
+    dx_at_m170 = x;
+    dy_at_m170 = y;
     p_at_m170 = 0;
     while (1)
     {
@@ -1348,28 +1312,28 @@ int map_trap(int prm_973, int prm_974, int, int prm_976)
         {
             return 0;
         }
-        if (prm_973 == 0)
+        if (x == 0)
         {
             dx_at_m170 = rnd(map_data.width - 5) + 2;
             dy_at_m170 = rnd(map_data.height - 5) + 2;
         }
         else
         {
-            dx_at_m170 = prm_973;
-            dy_at_m170 = prm_974;
+            dx_at_m170 = x;
+            dy_at_m170 = y;
         }
         if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) &
              4) == 0)
         {
             if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
-                if (prm_976 == 0)
+                if (trap_type == 0)
                 {
                     trap_at_m170 = rnd(8);
                 }
                 else
                 {
-                    trap_at_m170 = prm_976;
+                    trap_at_m170 = trap_type;
                 }
                 if (game_data.current_dungeon_level <= 5)
                 {
@@ -1403,10 +1367,10 @@ int map_trap(int prm_973, int prm_974, int, int prm_976)
 
 
 
-int map_web(int prm_977, int prm_978, int prm_979)
+int map_web(int x, int y, int power)
 {
-    dx_at_m170 = prm_977;
-    dy_at_m170 = prm_978;
+    dx_at_m170 = x;
+    dy_at_m170 = y;
     p_at_m170 = 0;
 
     while (1)
@@ -1415,22 +1379,22 @@ int map_web(int prm_977, int prm_978, int prm_979)
         {
             return 0;
         }
-        if (prm_977 == 0)
+        if (x == 0)
         {
             dx_at_m170 = rnd(map_data.width - 5) + 2;
             dy_at_m170 = rnd(map_data.height - 5) + 2;
         }
         else
         {
-            dx_at_m170 = prm_977;
-            dy_at_m170 = prm_978;
+            dx_at_m170 = x;
+            dy_at_m170 = y;
         }
         if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) &
              4) == 0)
         {
             if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
-                mef_add(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
+                mef_add(dx_at_m170, dy_at_m170, 1, 11, -1, power);
                 return 1;
             }
         }
@@ -1440,10 +1404,10 @@ int map_web(int prm_977, int prm_978, int prm_979)
 
 
 
-int map_barrel(int prm_980, int prm_981)
+int map_barrel(int x, int y)
 {
-    dx_at_m170 = prm_980;
-    dy_at_m170 = prm_981;
+    dx_at_m170 = x;
+    dy_at_m170 = y;
     p_at_m170 = 0;
 
     while (1)
@@ -1452,15 +1416,15 @@ int map_barrel(int prm_980, int prm_981)
         {
             return 0;
         }
-        if (prm_980 == 0)
+        if (x == 0)
         {
             dx_at_m170 = rnd(map_data.width - 5) + 2;
             dy_at_m170 = rnd(map_data.height - 5) + 2;
         }
         else
         {
-            dx_at_m170 = prm_980;
-            dy_at_m170 = prm_981;
+            dx_at_m170 = x;
+            dy_at_m170 = y;
         }
         if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) &
              4) == 0)
@@ -1541,7 +1505,7 @@ int map_connectroom()
                     ty = dy;
                 }
             }
-            ok = map_digtoentrance1(tx, ty, dx, dy, 1);
+            ok = map_digtoentrance1(tx, ty, dx, dy);
         }
         if (!ok)
         {
@@ -3094,17 +3058,17 @@ void initialize_random_nefia_rdtype8()
 
 
 
-void dimmix(elona_vector1<int>& prm_983)
+void dimmix(elona_vector1<int>& array)
 {
     int mx_at_m172 = 0;
     int r_at_m172 = 0;
-    mx_at_m172 = prm_983.size();
+    mx_at_m172 = array.size();
     for (int cnt = 0, cnt_end = (mx_at_m172); cnt < cnt_end; ++cnt)
     {
         r_at_m172 = cnt + rnd((mx_at_m172 - cnt));
-        tmp_at_m172 = prm_983(r_at_m172);
-        prm_983(r_at_m172) = prm_983(cnt);
-        prm_983(cnt) = tmp_at_m172;
+        tmp_at_m172 = array(r_at_m172);
+        array(r_at_m172) = array(cnt);
+        array(cnt) = tmp_at_m172;
     }
 }
 
@@ -3526,7 +3490,9 @@ void initialize_random_nefia_rdtype10()
     }
 }
 
-void map_tileset(int prm_933)
+
+
+void map_tileset(int tileset_type)
 {
     tile_doorclosed = 726;
     tile_dooropen = 236;
@@ -3549,34 +3515,34 @@ void map_tileset(int prm_933)
     tile_tunnel(1) = 1;
     tile_tunnel(2) = 1;
     tile_pot = 242;
-    if (prm_933 == 12)
+    if (tileset_type == 12)
     {
         tile_doorclosed = 733;
         tile_dooropen = 265;
     }
-    if (prm_933 == 8)
+    if (tileset_type == 8)
     {
         tile_doorclosed = 728;
         tile_dooropen = 241;
     }
-    if (prm_933 == 9)
+    if (tileset_type == 9)
     {
         tile_doorclosed = 730;
         tile_dooropen = 264;
     }
-    if (prm_933 == 3)
+    if (tileset_type == 3)
     {
         tile_room = 41;
         tile_tunnel = 41;
         tile_wall = 469;
         tile_fog = tile_wall + 66;
     }
-    if (prm_933 == 2)
+    if (tileset_type == 2)
     {
         tile_wall = 462;
         tile_fog = 529;
     }
-    if (prm_933 == 10)
+    if (tileset_type == 10)
     {
         tile_room = 165;
         tile_tunnel(0) = 33;
@@ -3585,7 +3551,7 @@ void map_tileset(int prm_933)
         tile_wall = 469;
         tile_default = 469;
     }
-    if (prm_933 == 11)
+    if (tileset_type == 11)
     {
         tile_default = 465;
         tile_fog = 530;
@@ -3593,7 +3559,7 @@ void map_tileset(int prm_933)
         tile_wall = 467;
         tile_room = 203;
     }
-    if (prm_933 == 0)
+    if (tileset_type == 0)
     {
         tile_default = 469;
         tile_fog = 529;
@@ -3605,7 +3571,7 @@ void map_tileset(int prm_933)
         tile_room(1) = 4;
         tile_room(2) = 2;
     }
-    if (prm_933 == 6)
+    if (tileset_type == 6)
     {
         tile_default = 469;
         tile_fog = 529;
@@ -3617,7 +3583,7 @@ void map_tileset(int prm_933)
         tile_room(1) = 6;
         tile_room(2) = 3;
     }
-    if (prm_933 == 7)
+    if (tileset_type == 7)
     {
         tile_default = 474;
         tile_fog = 530;
@@ -3627,7 +3593,7 @@ void map_tileset(int prm_933)
         tile_room(1) = 2;
         tile_room(2) = 2;
     }
-    if (prm_933 == 300)
+    if (tileset_type == 300)
     {
         tile_default = 475;
         tile_fog = 528;
@@ -3637,7 +3603,7 @@ void map_tileset(int prm_933)
         tile_room(1) = 6;
         tile_room(2) = 6;
     }
-    if (prm_933 == 100)
+    if (tileset_type == 100)
     {
         tile_default = 472;
         tile_fog = 530;
@@ -3647,7 +3613,7 @@ void map_tileset(int prm_933)
         tile_room(1) = 3;
         tile_room(2) = 2;
     }
-    if (prm_933 == 101)
+    if (tileset_type == 101)
     {
         tile_default = 477;
         tile_fog = 530;
@@ -3655,7 +3621,7 @@ void map_tileset(int prm_933)
         tile_wall = 477;
         tile_room = 99;
     }
-    if (prm_933 == 200)
+    if (tileset_type == 200)
     {
         tile_default = 468;
         tile_fog = 531;
@@ -3667,14 +3633,14 @@ void map_tileset(int prm_933)
         tile_room(1) = 4;
         tile_room(2) = 2;
     }
-    if (prm_933 == 1)
+    if (tileset_type == 1)
     {
         tile_wall = -1;
         tile_fog(0) = 396;
         tile_fog(1) = 4;
         tile_fog(2) = 2;
     }
-    if (prm_933 == 4)
+    if (tileset_type == 4)
     {
         tile_default = 0;
         tile_fog = 528;
@@ -3708,6 +3674,8 @@ void map_tileset(int prm_933)
         }
     }
 }
+
+
 
 void initialize_home_mdata()
 {
@@ -3744,9 +3712,9 @@ void initialize_home_mdata()
     }
 }
 
-void map_initcustom(const std::string& prm_934)
+void map_initcustom(const std::string& map_filename)
 {
-    fmapfile = (filesystem::dir::map() / prm_934).generic_string();
+    fmapfile = (filesystem::dir::map() / map_filename).generic_string();
     ctrl_file(FileOperation::custom_map_read);
     map_tileset(map_data.tileset);
     nooracle = 1;

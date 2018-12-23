@@ -18,6 +18,134 @@
 
 
 
+namespace
+{
+
+void _map_randsite()
+{
+    optional<Position> pos;
+    for (int i = 0; i < 20; ++i)
+    {
+        const auto x = rnd(map_data.width - 5) + 2;
+        const auto y = rnd(map_data.height - 5) + 2;
+        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0)
+        {
+            if (cell_data.at(x, y).feats == 0 &&
+                cell_data.at(x, y).item_appearances_actual == 0)
+            {
+                pos = Position(x, y);
+                break;
+            }
+        }
+    }
+    if (!pos)
+    {
+        return;
+    }
+    if (map_data.type == mdata_t::MapType::world_map)
+    {
+        if ((264 <= cell_data.at(pos->x, pos->y).chip_id_actual &&
+             cell_data.at(pos->x, pos->y).chip_id_actual < 363) ||
+            (33 <= cell_data.at(pos->x, pos->y).chip_id_actual &&
+             cell_data.at(pos->x, pos->y).chip_id_actual < 66))
+        {
+            return;
+        }
+    }
+
+    if (mdata_t::is_nefia(map_data.type))
+    {
+        if (map_data.next_regenerate_date == 0)
+        {
+            if (rnd(25) == 0)
+            {
+                flt();
+                itemcreate(-1, 173, pos->x, pos->y, 0);
+                inv[ci].own_state = 1;
+                return;
+            }
+            if (rnd(100) == 0)
+            {
+                flt();
+                itemcreate(-1, 172, pos->x, pos->y, 0);
+                inv[ci].own_state = 1;
+                inv[ci].param1 = choice(isetgod);
+                return;
+            }
+        }
+    }
+
+    if (mdata_t::is_nefia(map_data.type))
+    {
+        if (rnd(14) == 0)
+        {
+            cell_featset(pos->x, pos->y, 243, 27);
+            return;
+        }
+        if (rnd(13) == 0)
+        {
+            cell_featset(pos->x, pos->y, 244, 25);
+            return;
+        }
+        if (rnd(12) == 0)
+        {
+            cell_featset(pos->x, pos->y, 245, 26);
+            return;
+        }
+        if (rnd(11) == 0)
+        {
+            cell_featset(pos->x, pos->y, 246, 28);
+            return;
+        }
+        cell_featset(pos->x, pos->y, tile_re + rnd(3), 24);
+        return;
+    }
+
+    if (map_is_town_or_guild())
+    {
+        if (rnd(3) == 0)
+        {
+            flt();
+            itemcreate(-1, 631, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(15) == 0)
+        {
+            flt();
+            itemcreate(-1, 55, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(20) == 0)
+        {
+            flt();
+            itemcreate(-1, 284, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(15) == 0)
+        {
+            flt();
+            itemcreate(-1, 283, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(18) == 0)
+        {
+            flt(calcobjlv(rnd(cdata.player().level + 10)),
+                calcfixlv(Quality::good));
+            flttypemajor = choice(fsetwear);
+            itemcreate(-1, 0, pos->x, pos->y, 0);
+            return;
+        }
+        flt(10);
+        flttypeminor = 64100;
+        itemcreate(-1, 0, pos->x, pos->y, 0);
+        return;
+    }
+}
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -555,136 +683,6 @@ bool map_can_use_bad_weather_in_study()
 }
 
 
-void map_randsite(int prm_971, int prm_972)
-{
-    int f_at_m169 = 0;
-    int found_x;
-    int found_y;
-
-    f_at_m169 = 0;
-    for (int cnt = 0; cnt < 20; ++cnt)
-    {
-        if (prm_971 == 0)
-        {
-            found_x = rnd(map_data.width - 5) + 2;
-            found_y = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            found_x = prm_971;
-            found_y = prm_972;
-        }
-        if ((chipm(7, cell_data.at(found_x, found_y).chip_id_actual) & 4) == 0)
-        {
-            if (cell_data.at(found_x, found_y).feats == 0 &&
-                cell_data.at(found_x, found_y).item_appearances_actual == 0)
-            {
-                f_at_m169 = 1;
-                break;
-            }
-        }
-    }
-    if (map_data.type == mdata_t::MapType::world_map)
-    {
-        if ((264 <= cell_data.at(found_x, found_y).chip_id_actual &&
-             cell_data.at(found_x, found_y).chip_id_actual < 363) ||
-            (33 <= cell_data.at(found_x, found_y).chip_id_actual &&
-             cell_data.at(found_x, found_y).chip_id_actual < 66))
-        {
-            f_at_m169 = 0;
-        }
-    }
-    if (f_at_m169 == 0)
-    {
-        return;
-    }
-    if (mdata_t::is_nefia(map_data.type))
-    {
-        if (map_data.next_regenerate_date == 0)
-        {
-            if (rnd(25) == 0)
-            {
-                flt();
-                itemcreate(-1, 173, found_x, found_y, 0);
-                inv[ci].own_state = 1;
-                return;
-            }
-            if (rnd(100) == 0)
-            {
-                flt();
-                itemcreate(-1, 172, found_x, found_y, 0);
-                inv[ci].own_state = 1;
-                inv[ci].param1 = choice(isetgod);
-                return;
-            }
-        }
-    }
-    if (mdata_t::is_nefia(map_data.type))
-    {
-        if (rnd(14) == 0)
-        {
-            cell_featset(found_x, found_y, 243, 27);
-            return;
-        }
-        if (rnd(13) == 0)
-        {
-            cell_featset(found_x, found_y, 244, 25);
-            return;
-        }
-        if (rnd(12) == 0)
-        {
-            cell_featset(found_x, found_y, 245, 26);
-            return;
-        }
-        if (rnd(11) == 0)
-        {
-            cell_featset(found_x, found_y, 246, 28);
-            return;
-        }
-        cell_featset(found_x, found_y, tile_re + rnd(3), 24);
-        return;
-    }
-    if (map_is_town_or_guild())
-    {
-        if (rnd(3) == 0)
-        {
-            flt();
-            itemcreate(-1, 631, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(15) == 0)
-        {
-            flt();
-            itemcreate(-1, 55, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(20) == 0)
-        {
-            flt();
-            itemcreate(-1, 284, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(15) == 0)
-        {
-            flt();
-            itemcreate(-1, 283, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(18) == 0)
-        {
-            flt(calcobjlv(rnd(cdata.player().level + 10)),
-                calcfixlv(Quality::good));
-            flttypemajor = choice(fsetwear);
-            itemcreate(-1, 0, found_x, found_y, 0);
-            return;
-        }
-        flt(10);
-        flttypeminor = 64100;
-        itemcreate(-1, 0, found_x, found_y, 0);
-        return;
-    }
-}
-
 
 static void _map_update_arena_random_seed()
 {
@@ -779,7 +777,7 @@ static void _set_feats_on_regenerate()
     p = map_random_site_amount();
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        map_randsite();
+        _map_randsite();
     }
 }
 

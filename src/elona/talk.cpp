@@ -827,32 +827,4 @@ int talk_guide_quest_client()
     return ret;
 }
 
-
-
-int talk_check_trade(int prm_1081)
-{
-    j_at_m193 = 0;
-    for (int cnt = 0; cnt < 5; ++cnt)
-    {
-        p_at_m193 = game_data.taken_quests.at(cnt);
-        if (quest_data[p_at_m193].progress == 1)
-        {
-            if (game_data.current_dungeon_level == 1)
-            {
-                if (quest_data[p_at_m193].originating_map_id ==
-                    game_data.current_map)
-                {
-                    if (prm_1081 == quest_data[p_at_m193].target_chara_index)
-                    {
-                        j_at_m193 = 1;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    return j_at_m193;
-}
-
-
 } // namespace elona

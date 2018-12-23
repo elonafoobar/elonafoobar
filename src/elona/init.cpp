@@ -36,7 +36,6 @@
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
-#include "main.hpp"
 #include "main_menu.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -791,7 +790,7 @@ void initialize_debug_globals()
         mat(cnt) = 200;
     }
     create_all_adventurers();
-    create_pcpic(0, true);
+    create_pcpic(0);
     cdatan(1, 0) = random_title();
     cdatan(0, 0) = randomname();
 }

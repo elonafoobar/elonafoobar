@@ -70,7 +70,7 @@ inline int godid2int(const GodId& id)
 
 
 void txtgod(const GodId& id, int type);
-int modpiety(int prm_1035);
+void god_modify_piety(int amount);
 void set_npc_religion();
 void apply_god_blessing(int cc);
 std::string get_god_description(int);

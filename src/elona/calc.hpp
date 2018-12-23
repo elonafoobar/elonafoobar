@@ -30,7 +30,16 @@ int calcexpalive(int = 0);
 int calc_evasion(int cc);
 int calc_accuracy(bool consider_distance);
 int calcattackhit();
-int calcattackdmg(int = 0);
+
+
+enum class AttackDamageCalculationMode
+{
+    actual_damage,
+    raw_damage,
+    defense,
+};
+int calcattackdmg(AttackDamageCalculationMode);
+
 int calcmedalvalue(int = 0);
 int calcitemvalue(int = 0, int = 0);
 int calcinvestvalue();
