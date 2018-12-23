@@ -7,8 +7,9 @@
 #include "data/types/type_item.hpp"
 #include "enums.hpp"
 #include "position.hpp"
+#include "putit.hpp"
+#include "range.hpp"
 #include "shared_id.hpp"
-
 
 
 namespace elona
@@ -206,6 +207,119 @@ public:
 #undef ELONA_ITEM_DEFINE_FLAG_ACCESSOR
 
 
+    template <
+        typename Archive,
+        std::enable_if_t<
+            std::is_base_of<putit::IArchiveBase, Archive>::value,
+            std::nullptr_t> = nullptr>
+    void serialize(Archive& ar)
+    {
+        // WARNING: Changing this will break save compatibility!
+        ar(number_);
+        ar(value);
+        ar(image);
+        ar(id);
+        ar(quality);
+        ar(position);
+        ar(weight);
+        ar(identification_state);
+        ar(count);
+        ar(dice_x);
+        ar(dice_y);
+        ar(damage_bonus);
+        ar(hit_bonus);
+        ar(dv);
+        ar(pv);
+        ar(skill);
+        ar(curse_state);
+        ar(body_part);
+        ar(function);
+        ar(enhancement);
+        ar(own_state);
+        ar(color);
+        ar(subname);
+        ar(material);
+        ar(param1);
+        ar(param2);
+        ar(param3);
+        ar(param4);
+        ar(difficulty_of_identification);
+        ar(turn);
+        {
+            uint32_t tmp;
+            ar(tmp);
+            _flags = tmp;
+        }
+        range::for_each(
+            enchantments, [&](auto&& enchantment) { ar(enchantment); });
+    }
+
+
+    template <
+        typename Archive,
+        std::enable_if_t<
+            std::is_base_of<putit::OArchiveBase, Archive>::value,
+            std::nullptr_t> = nullptr>
+    void serialize(Archive& ar)
+    {
+        // WARNING: Changing this will break save compatibility!
+        ar(number_);
+        ar(value);
+        ar(image);
+        ar(id);
+        ar(quality);
+        ar(position);
+        ar(weight);
+        ar(identification_state);
+        ar(count);
+        ar(dice_x);
+        ar(dice_y);
+        ar(damage_bonus);
+        ar(hit_bonus);
+        ar(dv);
+        ar(pv);
+        ar(skill);
+        ar(curse_state);
+        ar(body_part);
+        ar(function);
+        ar(enhancement);
+        ar(own_state);
+        ar(color);
+        ar(subname);
+        ar(material);
+        ar(param1);
+        ar(param2);
+        ar(param3);
+        ar(param4);
+        ar(difficulty_of_identification);
+        ar(turn);
+        {
+            auto tmp = static_cast<uint32_t>(_flags.to_ulong());
+            ar(tmp);
+        }
+        range::for_each(
+            enchantments, [&](auto&& enchantment) { ar(enchantment); });
+    }
+
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_acidproof, 1)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_fireproof, 2)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(has_charge, 4)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_precious, 5)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_aphrodisiac, 6)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(has_cooldown_time, 7)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_blessed_by_ehekatl, 8)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_stolen, 9)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_alive, 10)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_quest_target, 12)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_marked_as_no_drop, 13)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_poisoned, 14)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_eternal_force, 15)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_showroom_only, 16)
+    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_handmade, 17)
+
+#undef ELONA_ITEM_DEFINE_FLAG_ACCESSOR
+
+
 #include "_putit/item.cpp"
 
 
@@ -219,6 +333,9 @@ public:
 
 private:
     static void refresh();
+    int number_ = 0;
+
+    FlagSet _flags;
 
     Item(const Item&) = default;
     Item(Item&&) = default;
