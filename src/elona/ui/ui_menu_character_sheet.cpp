@@ -8,6 +8,7 @@
 #include "../class.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
+#include "../keybind/keybind.hpp"
 #include "../map.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
@@ -1068,7 +1069,17 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
 {
     if (page == 0)
     {
-        if (action == "portrait")
+        // HACK: Horrible workaround as 'p' also gets bound to a list selection
+        // key by default. Maybe in this case key conflicts should be allowed
+        // with a warning.
+        // This is caused because 'p' is used differently depending on what page
+        // is selected. This is the only menu where this is the case.
+        std::string action_ = action;
+        if (key == get_bound_shortcut_key_name_by_action_id("portrait"))
+        {
+            action_ = "portrait";
+        }
+        if (action_ == "portrait")
         {
             if (cc < 16)
             {
@@ -1082,7 +1093,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
                 return none;
             }
         }
-        else if (action == "north")
+        else if (action_ == "north")
         {
             --_cs_buff;
             if (_cs_buff < 0)
@@ -1092,7 +1103,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
             set_reupdate();
             return none;
         }
-        else if (action == "south")
+        else if (action_ == "south")
         {
             ++_cs_buff;
             if (_cs_buff >= _cs_buffmax)

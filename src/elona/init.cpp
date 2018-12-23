@@ -313,6 +313,8 @@ void initialize_elona()
     buffer(3, 1440, 800);
     picload(filesystem::dir::graphic() / u8"interface.bmp", 1);
 
+    mesbox(keylog);
+
     pos(0, 656);
     picload(filesystem::dir::graphic() / u8"interface_ex1.png", 1);
     pos(144, 656);

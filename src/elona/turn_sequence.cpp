@@ -1570,9 +1570,17 @@ label_2747:
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
     await(Config::instance().wait1);
-    auto command =
-        InputContext::instance().check_for_command(KeyWaitDelay::walk_run);
+    auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
+
+    if (key != ""s)
+    {
+        const auto angband_result = check_angband();
+        if (angband_result)
+        {
+            return *angband_result;
+        }
+    }
 
     if (command == ""s)
     {

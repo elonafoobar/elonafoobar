@@ -306,15 +306,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         await(100);
     }
 
-    // TODO
-    if (key != ""s)
-    {
-        const auto angband_result = check_angband();
-        if (angband_result)
-        {
-            return *angband_result;
-        }
-    }
     if (action == "quick_menu")
     {
         action = show_quick_menu();
