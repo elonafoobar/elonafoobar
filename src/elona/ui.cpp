@@ -2471,7 +2471,7 @@ void cs_list(
             case CurseState::blessed: color(10, 110, 30); break;
             }
         }
-        if (ibit(13, ci))
+        if (inv[ci].is_marked_as_no_drop())
         {
             color(120, 80, 0);
         }

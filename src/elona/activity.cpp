@@ -1247,7 +1247,7 @@ void continuous_action_others()
             {
                 f = 1;
             }
-            if (ibit(5, ci) == 1)
+            if (inv[ci].is_precious())
             {
                 if (f != 1)
                 {
@@ -1304,7 +1304,7 @@ void continuous_action_others()
                 "core.locale.action.pick_up.your_inventory_is_full"));
             return;
         }
-        ibitmod(12, ci, 0);
+        inv[ci].is_quest_target() = false;
         if (inv[ci].body_part != 0)
         {
             tc = inv_getowner(ci);
@@ -1319,7 +1319,7 @@ void continuous_action_others()
         }
         item_copy(ci, ti);
         inv[ti].set_number(in);
-        ibitmod(9, ti, 1);
+        inv[ti].is_stolen() = true;
         inv[ti].own_state = 0;
         inv[ci].modify_number((-in));
         if (inv[ci].number() <= 0)

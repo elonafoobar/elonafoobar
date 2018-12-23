@@ -2227,7 +2227,7 @@ TalkResult talk_npc()
                 {
                     continue;
                 }
-                if (ibit(13, cnt))
+                if (inv[cnt].is_marked_as_no_drop())
                 {
                     continue;
                 }

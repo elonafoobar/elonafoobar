@@ -659,7 +659,7 @@ int quest_generate()
                 inv[ci].count = rq;
                 i(0) = n;
                 i(1) = inv[ci].id;
-                ibitmod(12, ci, 1);
+                inv[ci].is_quest_target() = true;
                 break;
             }
             else

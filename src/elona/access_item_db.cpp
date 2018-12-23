@@ -100,7 +100,7 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 61;
             fixeditemenc(3) = 200;
             fixeditemenc(4) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -169,8 +169,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 26;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param3 = 240;
             fixlv = Quality::special;
         }
@@ -179,8 +179,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 26;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param3 = 240;
             fixlv = Quality::special;
         }
@@ -188,7 +188,7 @@ int access_item_db(int dbmode)
     case 775:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param2 = 8;
         }
         break;
@@ -235,7 +235,7 @@ int access_item_db(int dbmode)
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
             inv[ci].function = 17;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param1 = 200;
             fixlv = Quality::special;
         }
@@ -244,7 +244,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 49;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param1 = rnd(20000) + 1;
             fixlv = Quality::special;
         }
@@ -262,7 +262,7 @@ int access_item_db(int dbmode)
             fixeditemenc(0) = 35;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -281,7 +281,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 33;
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -302,15 +302,15 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 48;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 748:
         if (dbmode == 3)
         {
             inv[ci].function = 47;
-            ibitmod(5, ci, 1);
-            ibitmod(16, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].is_showroom_only() = true;
         }
         break;
     case 747:
@@ -329,8 +329,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 30;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param1 = 1132;
             inv[ci].param2 = 100;
             inv[ci].param3 = 24;
@@ -340,8 +340,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 30;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param1 = 1132;
             inv[ci].param2 = 100;
             inv[ci].param3 = 24;
@@ -351,8 +351,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 30;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param1 = 1132;
             inv[ci].param2 = 100;
             inv[ci].param3 = 24;
@@ -362,8 +362,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 30;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param1 = 1132;
             inv[ci].param2 = 100;
             inv[ci].param3 = 24;
@@ -372,7 +372,7 @@ int access_item_db(int dbmode)
     case 742:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             fixlv = Quality::special;
         }
         if (dbmode == 13)
@@ -394,7 +394,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 10011;
             fixeditemenc(7) = 720;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -409,7 +409,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 20057;
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -431,7 +431,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 80003;
             fixeditemenc(11) = 350;
             fixeditemenc(12) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -479,7 +479,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -493,7 +493,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -506,7 +506,7 @@ int access_item_db(int dbmode)
     case 730:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 728:
@@ -519,7 +519,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 20050;
             fixeditemenc(5) = 350;
             fixeditemenc(6) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -533,7 +533,7 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 20058;
             fixeditemenc(3) = 450;
             fixeditemenc(4) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -549,7 +549,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 53;
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -565,7 +565,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 44;
             fixeditemenc(5) = 450;
             fixeditemenc(6) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -573,7 +573,7 @@ int access_item_db(int dbmode)
     case 724:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 723:
@@ -584,7 +584,7 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 30166;
             fixeditemenc(3) = 650;
             fixeditemenc(4) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -597,7 +597,7 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 30109;
             fixeditemenc(3) = 700;
             fixeditemenc(4) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -606,8 +606,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 43;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param3 = 480;
             fixlv = Quality::special;
         }
@@ -629,7 +629,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 33;
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -649,7 +649,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 30;
             fixeditemenc(9) = 500;
             fixeditemenc(10) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -664,7 +664,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].skill = 111;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -713,7 +713,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -749,7 +749,7 @@ int access_item_db(int dbmode)
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
             inv[ci].function = 17;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param1 = 180;
             fixlv = Quality::special;
         }
@@ -773,7 +773,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 41;
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -796,7 +796,7 @@ int access_item_db(int dbmode)
     case 702:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param2 = 4;
             fixlv = Quality::special;
         }
@@ -818,7 +818,7 @@ int access_item_db(int dbmode)
     case 699:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 698:
@@ -834,7 +834,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -848,7 +848,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -865,7 +865,7 @@ int access_item_db(int dbmode)
             fixeditemenc(0) = 44;
             fixeditemenc(1) = 750;
             fixeditemenc(2) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -918,7 +918,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -930,8 +930,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 34;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param3 = 720;
             fixlv = Quality::special;
         }
@@ -946,15 +946,15 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 32;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 683:
         if (dbmode == 3)
         {
             inv[ci].function = 30;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param1 = 1132;
             inv[ci].param2 = 100;
             inv[ci].param3 = 24;
@@ -965,8 +965,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 31;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param3 = 72;
             fixlv = Quality::special;
         }
@@ -975,8 +975,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 30;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param1 = 404;
             inv[ci].param2 = 400;
             inv[ci].param3 = 8;
@@ -987,8 +987,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 30;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param1 = 446;
             inv[ci].param2 = 300;
             inv[ci].param3 = 12;
@@ -1010,7 +1010,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 20054;
             fixeditemenc(9) = 400;
             fixeditemenc(10) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1030,7 +1030,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 30185;
             fixeditemenc(9) = 600;
             fixeditemenc(10) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1050,7 +1050,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 20056;
             fixeditemenc(9) = 150;
             fixeditemenc(10) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1074,7 +1074,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 20052;
             fixeditemenc(13) = 250;
             fixeditemenc(14) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1098,7 +1098,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 80025;
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1116,7 +1116,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 20057;
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1134,7 +1134,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 20052;
             fixeditemenc(7) = 300;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1143,7 +1143,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 29;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             fixlv = Quality::special;
         }
         break;
@@ -1151,7 +1151,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 28;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             fixlv = Quality::special;
         }
         break;
@@ -1189,8 +1189,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 27;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param3 = 120;
             fixlv = Quality::special;
         }
@@ -1199,8 +1199,8 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 26;
-            ibitmod(5, ci, 1);
-            ibitmod(7, ci, 1);
+            inv[ci].is_precious() = true;
+            inv[ci].has_cooldown_time() = true;
             inv[ci].param3 = 240;
             fixlv = Quality::special;
         }
@@ -1216,14 +1216,14 @@ int access_item_db(int dbmode)
     case 663:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             fixlv = Quality::special;
         }
         break;
     case 662:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param2 = 7;
             fixlv = Quality::special;
         }
@@ -1240,7 +1240,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 30182;
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1249,7 +1249,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1262,7 +1262,7 @@ int access_item_db(int dbmode)
     case 655:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param2 = 7;
             fixlv = Quality::special;
         }
@@ -1295,7 +1295,7 @@ int access_item_db(int dbmode)
     case 641:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             fixlv = Quality::special;
         }
         break;
@@ -1308,7 +1308,7 @@ int access_item_db(int dbmode)
     case 639:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].param2 = 7;
             fixlv = Quality::special;
         }
@@ -1325,7 +1325,7 @@ int access_item_db(int dbmode)
     case 637:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             fixlv = Quality::special;
         }
         break;
@@ -1370,14 +1370,14 @@ int access_item_db(int dbmode)
         {
             inv[ci].function = 20;
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         break;
     case 628:
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1403,7 +1403,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 30161;
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -1411,7 +1411,7 @@ int access_item_db(int dbmode)
     case 626:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         if (dbmode == 15)
         {
@@ -1424,13 +1424,13 @@ int access_item_db(int dbmode)
     case 625:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 624:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         if (dbmode == 13)
         {
@@ -1443,7 +1443,7 @@ int access_item_db(int dbmode)
     case 623:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         if (dbmode == 13)
         {
@@ -1456,7 +1456,7 @@ int access_item_db(int dbmode)
     case 622:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 621:
@@ -1491,13 +1491,13 @@ int access_item_db(int dbmode)
     case 616:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 615:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 613:
@@ -1523,7 +1523,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].function = 44;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 602:
@@ -1540,7 +1540,7 @@ int access_item_db(int dbmode)
     case 600:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 598:
@@ -1579,7 +1579,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1593,7 +1593,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 6 + rnd(6) - rnd(6);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1656,7 +1656,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1669,7 +1669,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1683,14 +1683,14 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 12 + rnd(12) - rnd(12);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         break;
     case 567:
         if (dbmode == 3)
         {
             inv[ci].count = 12 + rnd(12) - rnd(12);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         break;
     case 566:
@@ -1706,7 +1706,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1719,7 +1719,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1749,7 +1749,7 @@ int access_item_db(int dbmode)
     case 560:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         break;
     case 559:
@@ -1825,7 +1825,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1838,7 +1838,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1861,7 +1861,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1875,7 +1875,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1889,7 +1889,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 7 + rnd(7) - rnd(7);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1969,7 +1969,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1982,7 +1982,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2024,7 +2024,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 20059;
             fixeditemenc(9) = 300;
             fixeditemenc(10) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -2097,7 +2097,7 @@ int access_item_db(int dbmode)
     case 505:
         if (dbmode == 3)
         {
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
         }
         if (dbmode == 13)
         {
@@ -2224,7 +2224,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2237,7 +2237,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2267,7 +2267,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2281,7 +2281,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2345,7 +2345,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2496,7 +2496,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2518,7 +2518,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2607,7 +2607,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2621,7 +2621,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2659,7 +2659,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2699,7 +2699,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2713,7 +2713,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2727,7 +2727,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 6 + rnd(6) - rnd(6);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2749,7 +2749,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2772,7 +2772,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2786,7 +2786,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2809,7 +2809,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2823,7 +2823,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2854,7 +2854,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2868,7 +2868,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2891,7 +2891,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2914,7 +2914,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2937,7 +2937,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2951,7 +2951,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 7 + rnd(7) - rnd(7);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2964,7 +2964,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3017,7 +3017,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 20059;
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3035,7 +3035,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 26;
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3057,7 +3057,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 30172;
             fixeditemenc(11) = 420;
             fixeditemenc(12) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3082,7 +3082,7 @@ int access_item_db(int dbmode)
             fixeditemenc(14) = 24;
             fixeditemenc(15) = 100;
             fixeditemenc(16) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3104,7 +3104,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 26;
             fixeditemenc(11) = 100;
             fixeditemenc(12) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3127,7 +3127,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 25;
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3374,7 +3374,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 1 + rnd(1) - rnd(1);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -3387,7 +3387,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 1 + rnd(1) - rnd(1);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3437,7 +3437,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3451,7 +3451,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3465,7 +3465,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3479,7 +3479,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3493,7 +3493,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3507,7 +3507,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3527,7 +3527,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3541,7 +3541,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3555,7 +3555,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3609,7 +3609,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3654,7 +3654,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3668,7 +3668,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3682,7 +3682,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3696,7 +3696,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3710,7 +3710,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3724,7 +3724,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3738,7 +3738,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3947,7 +3947,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 70055;
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3965,7 +3965,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 30172;
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -3994,7 +3994,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4007,7 +4007,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 9 + rnd(9) - rnd(9);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4228,7 +4228,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4241,7 +4241,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 10 + rnd(10) - rnd(10);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4317,7 +4317,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4330,7 +4330,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 10 + rnd(10) - rnd(10);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4343,7 +4343,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4356,7 +4356,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4369,7 +4369,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 10 + rnd(10) - rnd(10);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4382,7 +4382,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4395,7 +4395,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4409,7 +4409,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4515,7 +4515,7 @@ int access_item_db(int dbmode)
             fixeditemenc(0) = 37;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -4582,7 +4582,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 20056;
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -4602,7 +4602,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 80025;
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -4658,7 +4658,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 20058;
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -4676,7 +4676,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 24;
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
-            ibitmod(5, ci, 1);
+            inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
@@ -4748,7 +4748,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4762,7 +4762,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4776,7 +4776,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4878,7 +4878,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4892,7 +4892,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4906,7 +4906,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4920,7 +4920,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 12 + rnd(12) - rnd(12);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4933,7 +4933,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
-            ibitmod(4, ci, 1);
+            inv[ci].has_charge() = true;
         }
         if (dbmode == 14)
         {

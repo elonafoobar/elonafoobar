@@ -3268,7 +3268,7 @@ label_2181_internal:
                 break;
             }
         }
-        if (inv[ci].quality >= Quality::miracle || ibit(10, ci) == 1)
+        if (inv[ci].quality >= Quality::miracle || inv[ci].is_alive())
         {
             txt(i18n::s.get("core.locale.magic.garoks_hammer.no_effect"));
             fixmaterial = 0;
@@ -3292,8 +3292,9 @@ label_2181_internal:
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
                 enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (ibit(15, ci) == 1) * 100,
-                20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
+                    (inv[ci].is_eternal_force()) * 100,
+                20 - (fixlv == Quality::godly) * 10 -
+                    (inv[ci].is_eternal_force()) * 20);
         }
         randomize();
         txt(i18n::s.get("core.locale.magic.garoks_hammer.apply", inv[ci]));
@@ -3326,7 +3327,7 @@ label_2181_internal:
             MenuResult result = ctrl_inventory();
             f = result.succeeded ? 1 : 0;
         }
-        if (inv[ci].quality == Quality::godly || ibit(10, ci) == 1)
+        if (inv[ci].quality == Quality::godly || inv[ci].is_alive())
         {
             if (efid == 1127)
             {
@@ -3730,7 +3731,7 @@ label_2181_internal:
         }
         if (f)
         {
-            if (inv[ci].quality > Quality::miracle || ibit(5, ci) == 1)
+            if (inv[ci].quality > Quality::miracle || inv[ci].is_precious())
             {
                 f = 0;
             }
@@ -4186,7 +4187,7 @@ label_2181_internal:
                 {
                     continue;
                 }
-                if (ibit(5, cnt))
+                if (inv[cnt].is_precious())
                 {
                     continue;
                 }
@@ -4203,7 +4204,7 @@ label_2181_internal:
             break;
         }
         ci = p;
-        if (ibit(6, ci))
+        if (inv[ci].is_aphrodisiac())
         {
             if (is_in_fov(cdata[tc]))
             {

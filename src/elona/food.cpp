@@ -1310,7 +1310,7 @@ void apply_general_eating_effect(int cieat)
             "core.locale.food.effect.sisters_love_fueled_lunch", cdata[cc]));
         heal_insanity(cdata[cc], 30);
     }
-    if (ibit(14, ci) == 1)
+    if (inv[ci].is_poisoned())
     {
         if (is_in_fov(cdata[cc]))
         {
@@ -1331,7 +1331,7 @@ void apply_general_eating_effect(int cieat)
             return;
         }
     }
-    if (ibit(6, ci) == 1)
+    if (inv[ci].is_aphrodisiac())
     {
         if (cc == 0)
         {

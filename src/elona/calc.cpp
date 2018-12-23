@@ -922,7 +922,7 @@ int calcitemvalue(int ci, int situation)
             }
         }
     }
-    if (ibit(4, ci) == 1)
+    if (inv[ci].has_charge())
     {
         dbid = inv[ci].id;
         access_item_db(2);
@@ -974,7 +974,7 @@ int calcitemvalue(int ci, int situation)
         {
             ret /= 20;
         }
-        if (ibit(9, ci))
+        if (inv[ci].is_stolen())
         {
             if (game_data.guild.belongs_to_thieves_guild == 0)
             {
@@ -1001,7 +1001,7 @@ int calcitemvalue(int ci, int situation)
         {
             ret = 15000;
         }
-        if (ibit(9, ci))
+        if (inv[ci].is_stolen())
         {
             ret = 1;
         }

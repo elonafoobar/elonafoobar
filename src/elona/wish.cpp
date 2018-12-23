@@ -596,7 +596,7 @@ bool wish_for_item(const std::string& input)
         nooracle = 0;
 
         // Unwishable item
-        if (ibit(5, ci) || inv[ci].quality == Quality::special)
+        if (inv[ci].is_precious() || inv[ci].quality == Quality::special)
         {
             if (!game_data.wizard)
             {

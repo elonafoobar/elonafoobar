@@ -1425,7 +1425,7 @@ TurnResult do_dip_command()
             {
                 dipcursed(ci);
             }
-            ibitmod(14, ci, 1);
+            inv[ci].is_poisoned() = true;
             return TurnResult::turn_end;
         }
     }
@@ -1444,7 +1444,7 @@ TurnResult do_dip_command()
             {
                 dipcursed(ci);
             }
-            ibitmod(6, ci, 1);
+            inv[ci].is_aphrodisiac() = true;
             return TurnResult::turn_end;
         }
     }
@@ -1491,7 +1491,7 @@ TurnResult do_dip_command()
         }
         else
         {
-            ibitmod(1, ci, 1);
+            inv[ci].is_acidproof() = true;
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_acidproof", inv[ci]));
         }
@@ -1521,7 +1521,7 @@ TurnResult do_dip_command()
         }
         else
         {
-            ibitmod(2, ci, 1);
+            inv[ci].is_fireproof() = true;
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
@@ -1582,7 +1582,7 @@ TurnResult do_use_command()
         }
     }
 
-    if (ibit(7, ci) == 1)
+    if (inv[ci].has_cooldown_time())
     {
         if (game_data.date.hours() < inv[ci].count)
         {
@@ -1595,7 +1595,7 @@ TurnResult do_use_command()
         item_separate(ci);
         inv[ci].count = game_data.date.hours() + inv[ci].param3;
     }
-    if (ibit(4, ci) == 1)
+    if (inv[ci].has_charge())
     {
         if (inv[ci].count <= 0)
         {
@@ -1646,7 +1646,7 @@ TurnResult do_use_command()
         crafting_menu();
         return TurnResult::turn_end;
     }
-    if (ibit(10, ci))
+    if (inv[ci].is_alive())
     {
         if (inv[ci].param2 < calcexpalive(inv[ci].param1))
         {
