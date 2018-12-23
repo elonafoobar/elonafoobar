@@ -167,6 +167,10 @@ locale {
             trade {
                 too_low_value = "You don't have stuff that match ${itemname(_1)}."
                 you_receive = "You receive ${itemname(_1)} in exchange for ${itemname(_2)}."
+                how_many = "How many? (${_2} to ${_3})"
+                need_at_least = "You need to trade at least ${_1} to match one ${itemname(_2, 1)}."
+                confirm_trade_for = "Trade ${_1} for ${_2}?"
+                no_room = "${name(_1)} ${have(_1)} no room to keep the remaining items."
             }
 
             take {

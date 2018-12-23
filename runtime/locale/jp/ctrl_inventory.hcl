@@ -165,6 +165,10 @@ locale {
             trade {
                 too_low_value = "${itemname(_1)}に見合う物を所持していない。"
                 you_receive = "${itemname(_2)}を${itemname(_1)}と交換した。"
+                how_many = "${itemname(_1, 1)}をいくつ交換する？ (${_2}〜${_3}) "
+                need_at_least = "${itemname(_2, 1)}に見合うには、${_1}を交換する必要がある。"
+                confirm_trade_for = "本当に${_2}を${_1}と交換する？"
+                no_room = "${name(_1)}は残りのアイテムを持てない。"
             }
 
             take {

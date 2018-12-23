@@ -1807,4 +1807,9 @@ int calc_exp_gain_crafting(int mat_amount)
     return 50 + mat_amount * 20;
 }
 
+int calc_trade_minimum_value_needed(int item_value)
+{
+    return item_value / 2 * 3;
+}
+
 } // namespace elona

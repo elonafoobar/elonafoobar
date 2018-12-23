@@ -211,4 +211,14 @@ int calc_exp_gain_weight_lifting(const Character& chara);
 int calc_exp_gain_memorization(int spell_id);
 int calc_exp_gain_crafting(int mat_amount);
 
+/**
+ * Calculates the minimum item value needed to trade for a single item of the
+ * given value.
+ *
+ * @param item_value the value of the item that is wanted
+ *
+ * @return the minimum value needed to trade for the item
+ */
+int calc_trade_minimum_value_needed(int item_value);
+
 } // namespace elona

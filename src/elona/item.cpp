@@ -585,6 +585,15 @@ void Item::set_number(int number_)
 
 
 
+/**
+ * Attempts to separate an item stack into two item stacks by separating out a
+ * stack of quantity 1 into a free item slot inside the inventory of the item's
+ * owner. On failure, the item at the given item slot is set to quantity 1.
+ *
+ * @param ci inventory index to separate
+ *
+ * @return index of the larger stack.
+ */
 int item_separate(int ci)
 {
     if (inv[ci].number() <= 1)

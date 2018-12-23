@@ -365,7 +365,7 @@ label_20591:
             if (invctrl == 21)
             {
                 if (calcitemvalue(cnt, 0) * inv[cnt].number() <
-                    calcitemvalue(citrade, 0) * inv[citrade].number() / 2 * 3)
+                    calc_trade_minimum_value_needed(calcitemvalue(citrade, 0)))
                 {
                     continue;
                 }
@@ -1747,6 +1747,92 @@ label_2061_internal:
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
+
+            int value = calcitemvalue(ci, 0);
+            int value_needed =
+                calc_trade_minimum_value_needed(calcitemvalue(citrade, 0));
+            int minimum_amount = std::ceil(float(value_needed) / value);
+            int maximum_amount = std::min(
+                inv[ci].number(),
+                int(std::ceil(
+                    (float(value_needed * inv[citrade].number())) / value)));
+            int give_amount = 0;
+
+            txt(i18n::s.get(
+                "core.locale.ui.inv.trade.how_many",
+                inv[ci],
+                minimum_amount,
+                maximum_amount));
+            input_number_dialog(
+                (windoww - 200) / 2 + inf_screenx,
+                winposy(60),
+                maximum_amount,
+                minimum_amount);
+            give_amount = elona::stoi(inputlog(0));
+
+            int receive_amount = std::min(
+                inv[citrade].number(),
+                int(std::floor(float(give_amount * value) / value_needed)));
+
+            if (give_amount < minimum_amount)
+            {
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.trade.need_at_least",
+                    itemname(ci, minimum_amount),
+                    inv[citrade]));
+                goto label_2060_internal;
+            }
+
+            txt(i18n::s.get(
+                "core.locale.ui.inv.trade.confirm_trade_for",
+                itemname(ci, give_amount),
+                itemname(citrade, receive_amount)));
+            if (yes_or_no(promptx, prompty, 160) != 0)
+            {
+                goto label_2060_internal;
+            }
+
+            // Check inventory space in both trade participants.
+            int free_index_player = -1;
+            int free_index_trader = -1;
+
+            if (give_amount < inv[ci].number())
+            {
+                free_index_player = inv_getfreeid(0);
+                if (free_index_player == -1)
+                {
+                    txt(i18n::s.get("core.locale.ui.inv.trade.no_room"));
+                    goto label_2060_internal;
+                }
+            }
+            if (receive_amount < inv[citrade].number())
+            {
+                free_index_trader = inv_getfreeid(inv_getowner(citrade));
+                if (free_index_trader == -1)
+                {
+                    txt(i18n::s.get("core.locale.ui.inv.trade.no_room"));
+                    goto label_2060_internal;
+                }
+            }
+
+            // For both participants, split the stack such that inv[ci/citrade]
+            // points to the amount being traded, and keep the remaining items
+            // in a new stack.
+            if (give_amount != inv[ci].number())
+            {
+                item_copy(ci, free_index_player);
+                inv[free_index_player].set_number(
+                    inv[ci].number() - give_amount);
+                inv[ci].set_number(give_amount);
+            }
+            if (receive_amount != inv[citrade].number())
+            {
+                item_copy(citrade, free_index_trader);
+                inv[free_index_trader].set_number(
+                    inv[citrade].number() - receive_amount);
+                inv[citrade].set_number(receive_amount);
+            }
+
             if (cdata[tc].continuous_action)
             {
                 cdata[tc].continuous_action.type = ContinuousAction::Type::none;
