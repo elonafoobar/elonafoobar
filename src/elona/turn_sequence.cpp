@@ -1573,16 +1573,7 @@ label_2747:
     auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
-    if (key != ""s)
-    {
-        const auto angband_result = check_angband();
-        if (angband_result)
-        {
-            return *angband_result;
-        }
-    }
-
-    if (command == ""s)
+    if (command == ""s && key == ""s)
     {
         goto label_2747;
     }
