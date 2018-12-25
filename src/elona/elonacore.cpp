@@ -8803,14 +8803,21 @@ void heal_completely()
 
 
 
-int pick_up_item()
+int pick_up_item(bool play_sound)
 {
+    const auto snd_ = [play_sound](const char* id) {
+        if (play_sound)
+        {
+            snd(id);
+        }
+    };
+
     int sellgold = 0;
     if (cc != -1)
     {
         if (inv[ci].id == 54 || inv[ci].id == 55)
         {
-            snd("core.getgold1");
+            snd_("core.getgold1");
             ti = ci;
             in = inv[ci].number();
             inv[ci].remove();
@@ -8871,7 +8878,7 @@ int pick_up_item()
             rtval = yes_or_no(promptx, prompty, 160);
             if (rtval == 0)
             {
-                snd("core.build1");
+                snd_("core.build1");
                 if (inv[ci].id == 555)
                 {
                     std::string midbk = mid;
@@ -9013,7 +9020,7 @@ int pick_up_item()
             txt(i18n::s.get(
                 "core.locale.action.pick_up.you_buy", itemname(ti, in)));
             sellgold = calcitemvalue(ti, 0) * in;
-            snd("core.paygold1");
+            snd_("core.paygold1");
             cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
             if (the_item_db[inv[ti].id]->category == 92000)
@@ -9048,7 +9055,7 @@ int pick_up_item()
                         game_data.guild.thieves_guild_quota));
                 }
             }
-            snd("core.getgold1");
+            snd_("core.getgold1");
             earn_gold(cdata.player(), sellgold);
             cdata[tc].gold -= sellgold;
             if (cdata[tc].gold < 0)
@@ -9738,7 +9745,7 @@ void proc_autopick()
             }
             in = inv[ci].number();
             elona::ci = ci;
-            pick_up_item();
+            pick_up_item(op.sound == "");
             if (int(op.type) & int(Autopick::Operation::Type::no_drop))
             {
                 ibitmod(13, ti, 1);
@@ -9766,7 +9773,10 @@ void proc_autopick()
                     break;
                 }
             }
-            snd("core.crush1");
+            if (op.sound == "")
+            {
+                snd("core.crush1");
+            }
             txt(i18n::s.get("core.locale.ui.autopick.destroyed", inv[ci]));
             inv[ci].remove();
             cell_refresh(x, y);
@@ -9787,13 +9797,12 @@ void proc_autopick()
                 }
             }
             elona::ci = ci;
-            (void)do_open_command(); // Result is unused.
+            (void)do_open_command(op.sound == ""); // Result is unused.
             break;
         }
-        if (did_something && !op.sound.empty())
+        if (did_something && op.sound != "")
         {
-            DSLOADFNAME(filesystem::dir::sound() / op.sound, 15);
-            DSPLAY(15, 0);
+            snd(op.sound);
         }
     }
 }

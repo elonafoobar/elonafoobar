@@ -2626,8 +2626,15 @@ label_2229_internal:
     return TurnResult::turn_end;
 }
 
-TurnResult do_open_command()
+TurnResult do_open_command(bool play_sound)
 {
+    const auto snd_ = [play_sound](const char* id) {
+        if (play_sound)
+        {
+            snd(id);
+        }
+    };
+
     int refweight = 0;
     if (inv[ci].id == 361)
     {
@@ -2635,7 +2642,7 @@ TurnResult do_open_command()
         invctrl(0) = 22;
         invctrl(1) = 0;
         invfile = inv[ci].param1;
-        snd("core.chest1");
+        snd_("core.chest1");
         shop_sell_item();
         screenupdate = -1;
         update_screen();
@@ -2645,7 +2652,7 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
-        snd("core.inv");
+        snd_("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -2654,7 +2661,7 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
-        snd("core.inv");
+        snd_("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -2663,13 +2670,13 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 8;
-        snd("core.inv");
+        snd_("core.inv");
         ctrl_inventory();
         return TurnResult::turn_end;
     }
     if (inv[ci].id == 600)
     {
-        snd("core.locked1");
+        snd_("core.locked1");
         txt(i18n::s.get("core.locale.action.open.shackle.text"));
         if (game_data.current_map == mdata_t::MapId::noyel)
         {
@@ -2767,7 +2774,7 @@ TurnResult do_open_command()
             invctrl(1) = 3;
         }
         mode = 6;
-        snd("core.inv");
+        snd_("core.inv");
         ctrl_inventory();
         invcontainer = 0;
         if (refweight == -1)
