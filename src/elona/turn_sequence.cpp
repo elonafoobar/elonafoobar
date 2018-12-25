@@ -497,7 +497,7 @@ label_2689_internal:
                         {
                             if (inv[ci].own_state <= 0)
                             {
-                                if (ibit(5, ci) == 0)
+                                if (!inv[ci].is_precious())
                                 {
                                     if (map_data.type !=
                                         mdata_t::MapType::player_owned)

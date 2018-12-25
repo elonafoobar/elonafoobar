@@ -963,7 +963,7 @@ label_1928_internal:
     if (p != -1)
     {
         ci = p;
-        if (ibit(13, ci))
+        if (inv[ci].is_marked_as_no_drop())
         {
             snd("core.fail1");
             txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
@@ -1672,7 +1672,7 @@ void blending_proc_on_success_events()
     switch (rpdata(0, rpid))
     {
     case 10000:
-        ibitmod(6, ci, 1);
+        inv[ci].is_aphrodisiac() = true;
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]),
             Message::color{ColorIndex::green});
         txt(i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
@@ -1685,7 +1685,7 @@ void blending_proc_on_success_events()
         snd("core.drink1");
         break;
     case 10002:
-        ibitmod(14, ci, 1);
+        inv[ci].is_poisoned() = true;
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]),
             Message::color{ColorIndex::green});
         txt(i18n::s.get("core.locale.action.dip.result.poisoned_food"));
@@ -1701,7 +1701,7 @@ void blending_proc_on_success_events()
         }
         else
         {
-            ibitmod(2, ci, 1);
+            inv[ci].is_fireproof() = true;
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
@@ -1711,7 +1711,7 @@ void blending_proc_on_success_events()
         txt(i18n::s.get(
                 "core.locale.action.dip.result.put_on", inv[ci], inv[ti]),
             Message::color{ColorIndex::green});
-        ibitmod(1, ci, 1);
+        inv[ci].is_acidproof() = true;
         txt(i18n::s.get(
             "core.locale.action.dip.result.gains_acidproof", inv[ci]));
         snd("core.drink1");

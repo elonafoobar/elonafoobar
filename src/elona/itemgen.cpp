@@ -339,7 +339,7 @@ int do_create_item(int slot, int x, int y)
 
     if (inv[ci].id == 667)
     {
-        ibitmod(17, ci, 1);
+        inv[ci].is_handmade() = true;
     }
 
     if (inv[ci].id == 641)
@@ -779,11 +779,11 @@ void set_material_specific_attributes()
     {
         if (the_item_material_db[p]->fireproof)
         {
-            ibitmod(1, ci, 1);
+            inv[ci].is_acidproof() = true;
         }
         if (the_item_material_db[p]->acidproof)
         {
-            ibitmod(2, ci, 1);
+            inv[ci].is_fireproof() = true;
         }
     }
 }

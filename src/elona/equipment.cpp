@@ -228,7 +228,7 @@ void supply_new_equipment()
             {
                 continue;
             }
-            if (ibit(12, ci))
+            if (inv[ci].is_quest_target())
             {
                 continue;
             }

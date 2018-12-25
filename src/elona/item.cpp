@@ -82,7 +82,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position)
         param4 == other.param4 &&
         difficulty_of_identification == other.difficulty_of_identification
         // && turn == other.turn
-        && flags == other.flags &&
+        && _flags == other._flags &&
         range::equal(enchantments, other.enchantments);
 }
 
@@ -92,27 +92,6 @@ Inventory::Inventory()
     for (size_t i = 0; i < storage.size(); ++i)
     {
         storage[i].index = static_cast<int>(i);
-    }
-}
-
-int ibit(size_t type, int ci)
-{
-    assert(type < sizeof(Item::flags) * 8);
-    return inv[ci].flags & (1 << type) ? 1 : 0;
-}
-
-
-
-void ibitmod(size_t type, int ci, int on)
-{
-    assert(type < sizeof(Item::flags) * 8);
-    if (on)
-    {
-        inv[ci].flags |= 1 << type;
-    }
-    else
-    {
-        inv[ci].flags &= ~(1 << type);
     }
 }
 
@@ -1206,7 +1185,7 @@ std::string itemname(int item_index, int number, int skip_article)
             IdentifyState::completely_identified &&
         a_ < 50000)
     {
-        if (ibit(15, item_index))
+        if (inv[item_index].is_eternal_force())
         {
             alpha_ = 1;
             s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) +
@@ -1284,7 +1263,8 @@ std::string itemname(int item_index, int number, int skip_article)
         }
     }
     else if (
-        inv[item_index].quality == Quality::special || ibit(5, item_index) == 1)
+        inv[item_index].quality == Quality::special ||
+        inv[item_index].is_precious())
     {
         if (jp)
         {
@@ -1372,7 +1352,7 @@ label_0313_internal:
         {
             s_ += ""s + cnvfix(inv[item_index].enhancement) + u8" "s;
         }
-        if (ibit(4, item_index) == 1)
+        if (inv[item_index].has_charge())
         {
             s_ +=
                 i18n::s.get("core.locale.item.charges", inv[item_index].count);
@@ -1508,15 +1488,15 @@ label_0313_internal:
             u8"(仕入れ値 "s + inv[item_index].param2 + u8"g)"s,
             u8"(Buying price: "s + inv[item_index].param2 + u8")"s);
     }
-    if (ibit(6, item_index) == 1)
+    if (inv[item_index].is_aphrodisiac())
     {
         s_ += lang(u8"(媚薬混入)"s, u8"(Aphrodisiac)"s);
     }
-    if (ibit(14, item_index) == 1)
+    if (inv[item_index].is_poisoned())
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (ibit(7, item_index) == 1 &&
+    if (inv[item_index].has_cooldown_time() &&
         game_data.date.hours() < inv[item_index].count)
     {
         s_ += lang(
@@ -1670,15 +1650,15 @@ void item_acid(const Character& owner, int ci)
         return;
     }
 
-    if (ibit(1, ci) == 0)
+    if (inv[ci].is_acidproof())
+    {
+        txt(i18n::s.get("core.locale.item.acid.immune", owner, inv[ci]));
+    }
+    else
     {
         txt(i18n::s.get("core.locale.item.acid.damaged", owner, inv[ci]),
             Message::color{ColorIndex::purple});
         --inv[ci].enhancement;
-    }
-    else
-    {
-        txt(i18n::s.get("core.locale.item.acid.immune", owner, inv[ci]));
     }
 }
 
@@ -1738,7 +1718,7 @@ bool item_fire(int owner, int ci)
             continue;
         }
         rowact_item(ci_);
-        if (ibit(2, ci_) || ibit(5, ci_))
+        if (inv[ci_].is_fireproof() || inv[ci_].is_precious())
         {
             continue;
         }
@@ -1967,7 +1947,7 @@ bool item_cold(int owner, int ci)
             continue;
         }
         rowact_item(ci_);
-        if (ibit(5, ci_))
+        if (inv[ci_].is_precious())
         {
             continue;
         }
@@ -2165,7 +2145,7 @@ int inv_compress(int owner)
         {
             if (inv[cnt].number() != 0)
             {
-                if (!ibit(5, cnt) && inv[cnt].value < threshold)
+                if (!inv[cnt].is_precious() && inv[cnt].value < threshold)
                 {
                     inv[cnt].remove();
                     ++number_of_deleted_items;

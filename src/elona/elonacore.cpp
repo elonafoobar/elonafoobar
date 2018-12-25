@@ -3009,7 +3009,7 @@ void character_drops_item()
                 {
                     continue;
                 }
-                if (ibit(5, ci))
+                if (inv[ci].is_precious())
                 {
                     continue;
                 }
@@ -3088,7 +3088,7 @@ void character_drops_item()
                 inv[ci].body_part = 0;
             }
             f = 0;
-            if (ibit(5, ci) == 0)
+            if (!inv[ci].is_precious())
             {
                 if (rnd(4) == 0)
                 {
@@ -3221,7 +3221,7 @@ void character_drops_item()
         {
             f = 1;
         }
-        if (ibit(12, ci))
+        if (inv[ci].is_quest_target())
         {
             f = 1;
         }
@@ -3231,7 +3231,7 @@ void character_drops_item()
         }
         if (catitem != 0)
         {
-            if (ibit(8, ci) == 0)
+            if (!inv[ci].is_blessed_by_ehekatl())
             {
                 if (the_item_db[inv[ci].id]->category < 50000)
                 {
@@ -3244,7 +3244,7 @@ void character_drops_item()
                                     cdata[catitem],
                                     inv[ci]),
                                 Message::color{ColorIndex::cyan});
-                            ibitmod(8, ci, 1);
+                            inv[ci].is_blessed_by_ehekatl() = true;
                             reftype = the_item_db[inv[ci].id]->category;
                             enchantment_add(
                                 ci,
@@ -6696,7 +6696,7 @@ void load_gene_files()
         {
             continue;
         }
-        if (ibit(5, cnt))
+        if (inv[cnt].is_precious())
         {
             continue;
         }
@@ -7698,7 +7698,7 @@ int decode_book()
             "core.locale.action.read.book.finished_decoding", inv[ci]));
         inv[ci].param2 = 1;
         inv[ci].count = 1;
-        ibitmod(4, ci, 0);
+        inv[ci].has_charge() = false;
         item_stack(0, ci, 1);
     }
     else
@@ -8957,7 +8957,7 @@ int pick_up_item(bool play_sound)
     {
         inv[ci].own_state = 0;
     }
-    ibitmod(12, ci, 0);
+    inv[ci].is_quest_target() = false;
     item_checkknown(ci);
     int stat = item_stack(cc, ci);
     if (stat == 0)
@@ -9032,14 +9032,14 @@ int pick_up_item(bool play_sound)
         {
             msgkeep = 1;
             sellgold = calcitemvalue(ci, 1) * in;
-            if (ibit(9, ti) == 0)
+            if (!inv[ti].is_stolen())
             {
                 txt(i18n::s.get(
                     "core.locale.action.pick_up.you_sell", itemname(ti, in)));
             }
             else
             {
-                ibitmod(9, ti, 0);
+                inv[ti].is_stolen() = false;
                 txt(i18n::s.get(
                     "core.locale.action.pick_up.you_sell_stolen",
                     itemname(ti, in)));
@@ -9748,7 +9748,7 @@ void proc_autopick()
             pick_up_item(op.sound == "");
             if (int(op.type) & int(Autopick::Operation::Type::no_drop))
             {
-                ibitmod(13, ti, 1);
+                inv[ti].is_marked_as_no_drop() = true;
                 txt(i18n::s.get(
                     "core.locale.ui.inv.examine.no_drop.set", inv[ti]));
             }
@@ -11129,7 +11129,7 @@ label_22191_internal:
         if (cdata[tc].state() != Character::State::alive)
         {
             cw = attackitem;
-            if (ibit(10, cw))
+            if (inv[cw].is_alive())
             {
                 if (inv[cw].param2 < calcexpalive(inv[cw].param1))
                 {

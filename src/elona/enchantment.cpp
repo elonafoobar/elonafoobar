@@ -1461,7 +1461,7 @@ void add_enchantments()
         {
             if (reftype == 24000 || reftype == 10000)
             {
-                ibitmod(10, ci, 1);
+                inv[ci].is_alive() = true;
                 inv[ci].param1 = 1;
                 return;
             }
@@ -1480,7 +1480,7 @@ void add_enchantments()
             {
                 if (rnd(10) == 0)
                 {
-                    ibitmod(15, ci, 1);
+                    inv[ci].is_eternal_force() = true;
                     enchantment_add(
                         ci, enchantment_generate(99), enchantment_gen_p());
                     inv[ci].curse_state = CurseState::blessed;
@@ -1493,8 +1493,9 @@ void add_enchantments()
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
                 enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (ibit(15, ci) == 1) * 100,
-                20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
+                    (inv[ci].is_eternal_force()) * 100,
+                20 - (fixlv == Quality::godly) * 10 -
+                    (inv[ci].is_eternal_force()) * 20);
         }
     }
     if (fixlv == Quality::special)
