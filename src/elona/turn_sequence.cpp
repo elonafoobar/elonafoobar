@@ -1569,11 +1569,10 @@ label_2747:
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
     await(Config::instance().wait1);
-    auto command =
-        InputContext::instance().check_for_command(KeyWaitDelay::walk_run);
+    auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
-    if (command == ""s)
+    if (command == ""s && key == ""s)
     {
         goto label_2747;
     }

@@ -31,8 +31,8 @@ int last_held_key_frames = 0;
 static std::map<InputContextType, std::vector<ActionCategory>> input_context_types =
 {
     {InputContextType::menu, {ActionCategory::shortcut,
-                              ActionCategory::menu,
                               ActionCategory::selection,
+                              ActionCategory::menu,
                               ActionCategory::default_}},
 
     {InputContextType::game, {ActionCategory::wizard,

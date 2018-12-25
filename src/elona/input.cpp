@@ -312,6 +312,22 @@ static void _handle_msgalert()
     }
 }
 
+static void _update_pressed_key_name()
+{
+    key = "";
+    if (keylog != ""s)
+    {
+        keylog = strmid(keylog, 0, 1);
+        if (keylog(0)[0] == '\n')
+        {
+            keylog = "Enter";
+        }
+        key = keylog;
+        keylog = "";
+    }
+}
+
+
 std::string key_check(KeyWaitDelay delay_type)
 {
     if (msgalert == 1)
@@ -320,9 +336,27 @@ std::string key_check(KeyWaitDelay delay_type)
         msgalert = 0;
     }
 
+    _update_pressed_key_name();
+
     await(Config::instance().wait1);
     return InputContext::for_menu().check_for_command(delay_type);
 }
+
+
+std::string key_check_pc_turn(KeyWaitDelay delay_type)
+{
+    if (msgalert == 1)
+    {
+        _handle_msgalert();
+        msgalert = 0;
+    }
+
+    _update_pressed_key_name();
+
+    await(Config::instance().wait1);
+    return InputContext::instance().check_for_command(delay_type);
+}
+
 
 std::string cursor_check_ex(int& index)
 {
@@ -331,6 +365,8 @@ std::string cursor_check_ex(int& index)
         _handle_msgalert();
         msgalert = 0;
     }
+
+    _update_pressed_key_name();
 
     await(Config::instance().wait1);
     return InputContext::for_menu().check_for_command_with_list(index);
@@ -350,6 +386,8 @@ std::string get_selected_item(int& p_)
         _handle_msgalert();
         msgalert = 0;
     }
+
+    _update_pressed_key_name();
 
     int index{};
     await(Config::instance().wait1);

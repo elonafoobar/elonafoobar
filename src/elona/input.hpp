@@ -40,6 +40,7 @@ bool input_text_dialog(
 StickKey stick(StickKey allow_repeat_keys = StickKey::none);
 
 std::string key_check(KeyWaitDelay = KeyWaitDelay::always);
+std::string key_check_pc_turn(KeyWaitDelay = KeyWaitDelay::always);
 std::string cursor_check_ex();
 std::string cursor_check_ex(int& index);
 std::string get_selected_item(int& p_);
