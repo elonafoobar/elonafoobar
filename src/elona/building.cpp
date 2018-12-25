@@ -836,10 +836,8 @@ void show_home_value()
 
 void prompt_move_ally()
 {
-    int tchome = 0;
     while (true)
     {
-
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.building.home.move.who"));
         int stat = show_hire_menu(HireOperation::move);
@@ -856,33 +854,35 @@ void prompt_move_ally()
                 Message::color{ColorIndex::cyan});
             break;
         }
-        tchome = stat;
+        const auto tchome = stat;
         tc = stat;
         snd("core.ok1");
-    label_1718_internal:
-        Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.building.home.move.where", cdata[stat]));
+        while (true)
         {
+            Message::instance().linebreak();
+            txt(i18n::s.get(
+                "core.locale.building.home.move.where", cdata[stat]));
             int stat = target_position();
             if (stat == -1)
             {
                 continue;
             }
-        }
-        if (chip_data.for_cell(tlocx, tlocy).effect & 4 ||
-            cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
-        {
-            txt(i18n::s.get("core.locale.building.home.move.invalid"));
-            goto label_1718_internal;
+            if (chip_data.for_cell(tlocx, tlocy).effect & 4 ||
+                cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
+            {
+                txt(i18n::s.get("core.locale.building.home.move.invalid"));
+            }
+            else
+            {
+                break;
+            }
         }
         tc = tchome;
         cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
             .chara_index_plus_one = 0;
         cell_data.at(tlocx, tlocy).chara_index_plus_one = tc + 1;
-        cdata[tc].position.x = tlocx;
-        cdata[tc].initial_position.x = tlocx;
-        cdata[tc].position.y = tlocy;
-        cdata[tc].initial_position.y = tlocy;
+        cdata[tc].position = cdata[tc].initial_position =
+            Position{tlocx, tlocy};
         cdata[tc].continuous_action.finish();
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.building.home.move.is_moved", cdata[tc]));
