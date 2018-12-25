@@ -86,7 +86,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
     {"precious",
      [](const Item& item) {
          return item.identification_state >= IdentifyState::almost_identified &&
-             ibit(5, item.index) == 1;
+             item.is_precious();
      }},
     {"blessed",
      [](const Item& item) {
@@ -103,7 +103,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
          return item.identification_state >= IdentifyState::almost_identified &&
              item.curse_state == CurseState::doomed;
      }},
-    {"alive", [](const Item& item) { return ibit(10, item.index) == 1; }},
+    {"alive", [](const Item& item) { return item.is_alive(); }},
 };
 
 
