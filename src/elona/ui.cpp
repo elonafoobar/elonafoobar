@@ -1144,6 +1144,18 @@ void render_autoturn_animation()
 
 
 
+void _update_slight_internal(int x, int y)
+{
+    slight(x + 1, y) += 1;
+    slight(x - 1, y) += 8;
+    slight(x, y - 1) += 2;
+    slight(x, y + 1) += 4;
+    slight(x + 1, y + 1) += 16;
+    slight(x - 1, y - 1) += 32;
+    slight(x + 1, y - 1) += 64;
+    slight(x - 1, y + 1) += 128;
+}
+
 } // namespace
 
 
@@ -1657,13 +1669,11 @@ void update_scrolling_info()
 
 void update_slight()
 {
-    int ly = 0;
-    int lx = 0;
     slight.clear();
     ++msync;
 
-    Position center{cdata.player().position.x - (fov_max + 2) / 2,
-                    (fov_max + 2) / 2 - cdata.player().position.y};
+    const Position center{cdata.player().position.x - (fov_max + 2) / 2,
+                          (fov_max + 2) / 2 - cdata.player().position.y};
     sy(2) = cdata.player().position.y - fov_max / 2;
     sy(3) = cdata.player().position.y + fov_max / 2;
 
@@ -1681,103 +1691,83 @@ void update_slight()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = Config::instance().scroll ? 1 : 2;
-    for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
+    const auto _repwidth = repw(0);
+    const auto _repx = repw(1);
+    const auto _repheight = reph(0);
+    const auto _repy = reph(1);
+    const auto _fov_y_top = sy(2);
+    const auto _fov_y_bottom = sy(3);
+
+    // (sx, sy): absolute position.
+    // (lx, ly): relative position based on the viewport.
+
+    int ly = Config::instance().scroll ? 1 : 2;
+    for (int sy = _repy; sy < _repy + _repheight; ++sy, ++ly)
     {
-        sy = cnt;
-        lx = Config::instance().scroll ? 1 : 2;
-        if (sy < 0 || sy >= map_data.height)
+        int lx = Config::instance().scroll ? 1 : 2;
+        if (sy < 0 || map_data.height <= sy)
         {
-            for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
-                 ++cnt)
+            for (int sx = _repx; sx < _repx + _repwidth; ++sx, ++lx)
             {
-                slight(lx + 1, ly) += 1;
-                slight(lx - 1, ly) += 8;
-                slight(lx, ly - 1) += 2;
-                slight(lx, ly + 1) += 4;
-                slight(lx + 1, ly + 1) += 16;
-                slight(lx - 1, ly - 1) += 32;
-                slight(lx + 1, ly - 1) += 64;
-                slight(lx - 1, ly + 1) += 128;
-                ++lx;
+                _update_slight_internal(lx, ly);
             }
-            ++ly;
             continue;
         }
-        for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end; ++cnt)
+        for (int sx = _repx; sx < _repx + _repwidth; ++sx, ++lx)
         {
-            sx = cnt;
-            if (sx < 0 || sx >= map_data.width)
+            if (sx < 0 || map_data.width <= sx)
             {
-                slight(lx + 1, ly) += 1;
-                slight(lx - 1, ly) += 8;
-                slight(lx, ly - 1) += 2;
-                slight(lx, ly + 1) += 4;
-                slight(lx + 1, ly + 1) += 16;
-                slight(lx - 1, ly - 1) += 32;
-                slight(lx + 1, ly - 1) += 64;
-                slight(lx - 1, ly + 1) += 128;
-                ++lx;
+                _update_slight_internal(lx, ly);
                 continue;
             }
-            if (game_data.current_map == mdata_t::MapId::pet_arena)
-            {
-                goto label_1430_internal;
-            }
+            const auto all_cells_visible =
+                game_data.current_map == mdata_t::MapId::pet_arena;
+            bool blinded = false;
             if (cdata.player().blind != 0)
             {
                 if (sx != cdata.player().position.x ||
                     sy != cdata.player().position.y)
                 {
-                    goto label_1431_internal;
+                    blinded = true;
                 }
             }
-            if (sy(2) <= sy && sy <= sy(3))
+            if (all_cells_visible ||
+                (!blinded && (_fov_y_top <= sy && sy <= _fov_y_bottom) &&
+                 (sx >= fovlist[sy + center.y][0] + center.x &&
+                  sx < fovlist[sy + center.y][1] + center.x) &&
+                 fov_los(
+                     cdata.player().position.x,
+                     cdata.player().position.y,
+                     sx,
+                     sy)))
             {
-                if (sx >= fovlist[sy + center.y][0] + center.x &&
-                    sx < fovlist[sy + center.y][1] + center.x)
+                mapsync(sx, sy) = msync;
+                if (cell_data.at(sx, sy).chara_index_plus_one != 0)
                 {
-                    if (fov_los(
-                            cdata.player().position.x,
-                            cdata.player().position.y,
-                            sx,
-                            sy))
-                    {
-                    label_1430_internal:
-                        mapsync(sx, sy) = msync;
-                        if (cell_data.at(sx, sy).chara_index_plus_one != 0)
-                        {
-                            cdata[cell_data.at(sx, sy).chara_index_plus_one - 1]
-                                .vision_flag = msync;
-                        }
-                        if (cell_data.at(sx, sy).chip_id_memory !=
-                            cell_data.at(sx, sy).chip_id_actual)
-                        {
-                            cell_data.at(sx, sy).chip_id_memory =
-                                cell_data.at(sx, sy).chip_id_actual;
-                            draw_minimap_pixel(sx, sy);
-                        }
-                        cell_data.at(sx, sy).item_appearances_memory =
-                            cell_data.at(sx, sy).item_appearances_actual;
-                        ++lx;
-                        continue;
-                    }
+                    cdata[cell_data.at(sx, sy).chara_index_plus_one - 1]
+                        .vision_flag = msync;
                 }
+                if (cell_data.at(sx, sy).chip_id_memory !=
+                    cell_data.at(sx, sy).chip_id_actual)
+                {
+                    cell_data.at(sx, sy).chip_id_memory =
+                        cell_data.at(sx, sy).chip_id_actual;
+                    draw_minimap_pixel(sx, sy);
+                }
+                cell_data.at(sx, sy).item_appearances_memory =
+                    cell_data.at(sx, sy).item_appearances_actual;
             }
-        label_1431_internal:
-            slight(lx, ly) += 1000;
-            slight(lx + 1, ly) += 1;
-            slight(lx - 1, ly) += 8;
-            slight(lx, ly - 1) += 2;
-            slight(lx, ly + 1) += 4;
-            slight(lx + 1, ly + 1) += 16;
-            slight(lx - 1, ly - 1) += 32;
-            slight(lx + 1, ly - 1) += 64;
-            slight(lx - 1, ly + 1) += 128;
-            ++lx;
+            else
+            {
+                slight(lx, ly) += 1000;
+                _update_slight_internal(lx, ly);
+            }
         }
-        ++ly;
     }
+
+    // TODO: are they really needed?
+    sx = _repx + _repwidth - 1;
+    sy = _repy + _repheight - 1;
 }
 
 
