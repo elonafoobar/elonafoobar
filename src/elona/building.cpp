@@ -166,6 +166,18 @@ void add_heirloom_if_valuable_enough(
 
 
 
+bool _livestock_will_breed(const Character& breeder, int livestock_count)
+{
+    const auto B = chara_breed_power(breeder);
+    const auto L = livestock_count;
+
+    // The breeder has breed power big enough to breed compared to livestocks
+    // count, or if there is no livestocks, new one will be born in low
+    // probability regardless of the breed power.
+    return (rnd(5000) <= B * 100 / (100 + L * 20) - L * 2) ||
+        (L == 0 && rnd(30) == 0);
+}
+
 } // namespace
 
 
@@ -834,6 +846,8 @@ void show_home_value()
     }
 }
 
+
+
 void prompt_move_ally()
 {
     while (true)
@@ -889,6 +903,8 @@ void prompt_move_ally()
         snd("core.foot");
     }
 }
+
+
 
 void prompt_ally_staying()
 {
@@ -984,7 +1000,7 @@ void show_shop_log()
     int shoplv = 0;
     int customer = 0;
     int dblistmax = 0;
-    worker = getworker(area);
+    const auto worker = getworker(area);
     std::string shop_mark =
         u8"["s + i18n::s.get("core.locale.building.shop.info") + u8"]"s;
     if (worker == -1)
@@ -1452,69 +1468,55 @@ void calc_home_rank()
 
 void update_ranch()
 {
-    worker = getworker(game_data.current_map);
-    livestock = 0;
-    for (auto&& cnt : cdata.all())
+    int livestock_count = 0;
+    for (auto&& chara : cdata.all())
     {
-        if (cnt.state() != Character::State::alive)
+        if (chara.state() == Character::State::alive && chara.is_livestock())
         {
-            continue;
+            ++livestock_count;
         }
-        if (cnt.is_livestock() == 0)
-        {
-            continue;
-        }
-        ++livestock;
     }
-    for (int cnt = 0, cnt_end = (renewmulti); cnt < cnt_end; ++cnt)
+
+    const auto worker = getworker(game_data.current_map);
+    for (int i = 0; i < renewmulti; ++i)
     {
-        if (worker == -1)
+        if (worker != -1 &&
+            _livestock_will_breed(cdata[worker], livestock_count))
         {
-            goto label_1734_internal;
-        }
-        if (rnd(5000) >
-            chara_breed_power(cdata[worker]) * 100 / (100 + livestock * 20) -
-                livestock * 2)
-        {
-            if (livestock != 0 || rnd(30) != 0)
+            flt(calcobjlv(cdata[worker].level), Quality::bad);
+            if (rnd(2))
             {
-                goto label_1734_internal;
+                dbid = cdata[worker].id;
             }
-        }
-        flt(calcobjlv(cdata[worker].level), Quality::bad);
-        if (rnd(2))
-        {
-            dbid = cdata[worker].id;
-        }
-        else
-        {
-            dbid = 0;
-        }
-        if (rnd(10) != 0)
-        {
-            fltnrace = cdatan(2, worker);
-        }
-        if (cdata[worker].id == 319)
-        {
-            dbid = 176;
-        }
-        {
+            else
+            {
+                dbid = 0;
+            }
+            if (rnd(10) != 0)
+            {
+                fltnrace = cdatan(2, worker);
+            }
+            if (cdata[worker].id == 319)
+            {
+                // Little sister -> younger sister
+                dbid = 176;
+            }
             int stat = chara_create(-1, dbid, 4 + rnd(11), 4 + rnd(8));
             if (stat != 0)
             {
                 cdata[rc].is_livestock() = true;
-                ++livestock;
+                ++livestock_count;
             }
         }
-    label_1734_internal:
-        egg = 0;
-        for (auto&& cnt : cdata.all())
+
+        int egg_or_milk_count = 0;
+        for (auto&& chara : cdata.all())
         {
-            if (cnt.state() != Character::State::alive)
+            if (chara.state() != Character::State::alive)
             {
                 continue;
             }
-            if (cnt.is_livestock() == 0)
+            if (!chara.is_livestock())
             {
                 continue;
             }
@@ -1524,118 +1526,87 @@ void update_ranch()
             {
                 continue;
             }
-            flt(calcobjlv(cnt.level), Quality::good);
-            p = rnd(5);
-            f = 0;
-            if (rnd(egg + 1) > 2)
+            flt(calcobjlv(chara.level), Quality::good);
+            if (rnd(egg_or_milk_count + 1) > 2)
             {
                 continue;
             }
-            if (livestock > 10)
+            if (livestock_count > 10)
             {
                 if (rnd(4) == 0)
                 {
                     continue;
                 }
             }
-            if (livestock > 20)
+            if (livestock_count > 20)
             {
                 if (rnd(4) == 0)
                 {
                     continue;
                 }
             }
-            if (livestock > 30)
+            if (livestock_count > 30)
             {
                 if (rnd(4) == 0)
                 {
                     continue;
                 }
             }
-            if (livestock > 40)
+            if (livestock_count > 40)
             {
                 if (rnd(4) == 0)
                 {
                     continue;
                 }
             }
-            if (p == 0)
+            switch (rnd(5))
             {
-                if (rnd(60) == 0)
+            case 0:
+                // Egg
+                if (rnd(60) == 0 ||
+                    (cdatan(2, chara.index) == "core.chicken" && rnd(20) == 0))
                 {
-                    f = 1;
-                }
-                if (cdatan(2, cnt.index) == u8"core.chicken"s)
-                {
-                    if (rnd(20) == 0)
-                    {
-                        f = 1;
-                    }
-                }
-                if (f)
-                {
-                    ++egg;
+                    ++egg_or_milk_count;
                     int stat = itemcreate(-1, 573, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cnt.id;
-                        inv[ci].weight = cnt.weight * 10 + 250;
-                        inv[ci].value =
-                            clamp(cnt.weight * cnt.weight / 10000, 200, 40000);
+                        inv[ci].subname = chara.id;
+                        inv[ci].weight = chara.weight * 10 + 250;
+                        inv[ci].value = clamp(
+                            chara.weight * chara.weight / 10000, 200, 40000);
                     }
                 }
-                continue;
-            }
-            if (p == 1)
-            {
-                if (rnd(60) == 0)
+                break;
+            case 1:
+                // Milk
+                if (rnd(60) == 0 ||
+                    (cdatan(2, chara.index) == "core.sheep" && rnd(20) == 0))
                 {
-                    f = 1;
-                }
-                if (cdatan(2, cnt.index) == u8"core.sheep"s)
-                {
-                    if (rnd(20) == 0)
-                    {
-                        f = 1;
-                    }
-                }
-                if (f)
-                {
-                    ++egg;
+                    ++egg_or_milk_count;
                     int stat = itemcreate(-1, 574, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cnt.id;
+                        inv[ci].subname = chara.id;
                     }
                 }
-                continue;
-            }
-            if (p == 2)
-            {
+                break;
+            case 2:
+                // Shit
                 if (rnd(80) == 0)
-                {
-                    f = 1;
-                }
-                if (f)
                 {
                     int stat = itemcreate(-1, 575, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cnt.id;
-                        inv[ci].weight = cnt.weight * 40 + 300;
+                        inv[ci].subname = chara.id;
+                        inv[ci].weight = chara.weight * 40 + 300;
                         inv[ci].value =
-                            clamp(cnt.weight * cnt.weight / 5000, 1, 20000);
+                            clamp(chara.weight * chara.weight / 5000, 1, 20000);
                     }
                 }
-                continue;
-            }
-            if (p == 3)
-            {
+                break;
+            case 3:
+                // Garbage
                 if (rnd(80) == 0)
-                {
-                    f = 1;
-                }
-                if (f)
                 {
                     dbid = 222;
                     if (rnd(2))
@@ -1644,12 +1615,13 @@ void update_ranch()
                     }
                     itemcreate(-1, dbid, x, y, 0);
                 }
-                continue;
+                break;
+            case 4:
+                // Do nothing.
+                break;
             }
         }
     }
 }
-
-
 
 } // namespace elona
