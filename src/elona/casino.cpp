@@ -49,142 +49,151 @@ void casino_dealer()
     casino_acquire_items();
 }
 
+
+
 void casino_choose_card()
 {
-label_18671_internal:
-    key = "";
-    keylog = "";
-    screenupdate = -1;
-    update_screen();
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+    bool init = true;
+    while (true)
     {
-        noteget(s, cnt);
-        snail::Color text_color{0, 0, 0};
-        if (strmid(s, 0, 1) == u8"@"s)
+        if (init)
         {
-            s(1) = strmid(s, 1, 2);
-            s = strmid(s, 3, s(0).size() - 3);
-            font(16 - en * 2);
-            if (s(1) == u8"BL"s)
+            key = "";
+            keylog = "";
+            screenupdate = -1;
+            update_screen();
+            for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
             {
-                text_color = snail::Color{130, 130, 250};
+                noteget(s, cnt);
+                snail::Color text_color{0, 0, 0};
+                if (strmid(s, 0, 1) == u8"@"s)
+                {
+                    s(1) = strmid(s, 1, 2);
+                    s = strmid(s, 3, s(0).size() - 3);
+                    font(16 - en * 2);
+                    if (s(1) == u8"BL"s)
+                    {
+                        text_color = snail::Color{130, 130, 250};
+                    }
+                    else if (s(1) == u8"GR"s)
+                    {
+                        text_color = snail::Color{130, 250, 130};
+                    }
+                    else if (s(1) == u8"QM"s)
+                    {
+                        text_color = snail::Color{0, 100, 0};
+                    }
+                    else
+                    {
+                        text_color = snail::Color{250, 240, 230};
+                    }
+                }
+                else
+                {
+                    font(16 - en * 2);
+                    text_color = snail::Color{250, 240, 230};
+                }
+                mes(170, cnt * 20 + 120 + txtadvmsgfix, s, text_color);
             }
-            else if (s(1) == u8"GR"s)
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
             {
-                text_color = snail::Color{130, 250, 130};
+                page = pagemax;
             }
-            else if (s(1) == u8"QM"s)
+            else if (page > pagemax)
             {
-                text_color = snail::Color{0, 100, 0};
+                page = 0;
             }
-            else
+            gsel(2);
+            gmode(0);
+            gcopy(0, 0, 0, windoww, windowh, 0, 0);
+            gsel(0);
+            gmode(2);
+            keyrange = 0;
+            for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
             {
-                text_color = snail::Color{250, 240, 230};
+                p = pagesize * page + cnt;
+                if (p >= listmax)
+                {
+                    break;
+                }
+                key_list(cnt) = key_select(cnt);
+                ++keyrange;
+            }
+            casino_adv_draw_mat();
+        }
+
+        x(0) = 170;
+        x(1) = 400;
+        y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
+        y(1) = 20 * listmax;
+        gmode(0);
+        gcopy(2, x, y, x(1), y(1), x, y);
+        gmode(2);
+        font(14 - en * 2);
+        cs_listbk();
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        {
+            p = pagesize * page + cnt;
+            if (p >= listmax)
+            {
+                break;
+            }
+            i = list(0, p);
+            display_key(
+                170, noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
+            s = listn(0, p);
+            cs_list(
+                cs == cnt,
+                s,
+                200,
+                noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
+                0,
+                {240, 240, 240});
+        }
+        if (keyrange != 0)
+        {
+            cs_bk = cs;
+        }
+        redraw();
+        auto action = get_selected_item(rtval);
+        if (chatesc != -1)
+        {
+            if (action == "cancel")
+            {
+                snd("core.click1");
+                rtval = chatesc;
             }
         }
-        else
-        {
-            font(16 - en * 2);
-            text_color = snail::Color{250, 240, 230};
-        }
-        mes(170, cnt * 20 + 120 + txtadvmsgfix, s, text_color);
-    }
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-    gsel(2);
-    gmode(0);
-    gcopy(0, 0, 0, windoww, windowh, 0, 0);
-    gsel(0);
-    gmode(2);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-    }
-    casino_adv_draw_mat();
-label_1868_internal:
-    x(0) = 170;
-    x(1) = 400;
-    y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
-    y(1) = 20 * listmax;
-    gmode(0);
-    gcopy(2, x, y, x(1), y(1), x, y);
-    gmode(2);
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        i = list(0, p);
-        display_key(
-            170, noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
-        s = listn(0, p);
-        cs_list(
-            cs == cnt,
-            s,
-            200,
-            noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
-            0,
-            {240, 240, 240});
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    auto action = get_selected_item(rtval);
-    if (chatesc != -1)
-    {
-        if (action == "cancel")
+        if (rtval != -1)
         {
             snd("core.click1");
-            rtval = chatesc;
+            casino_fade_in_choices();
+            atxpic = 0;
+            return;
         }
-    }
-    if (rtval != -1)
-    {
-        snd("core.click1");
-        casino_fade_in_choices();
-        atxpic = 0;
-        return;
-    }
-    if (action == "next_page")
-    {
-        if (pagemax != 0)
+        if (action == "next_page")
         {
-            snd("core.pop1");
-            ++page;
-            goto label_18671_internal;
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                init = true;
+                continue;
+            }
         }
-    }
-    if (action == "previous_page")
-    {
-        if (pagemax != 0)
+        if (action == "previous_page")
         {
-            snd("core.pop1");
-            --page;
-            goto label_18671_internal;
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                init = true;
+                continue;
+            }
         }
     }
-    goto label_1868_internal;
 }
 
 void casino_adv_draw_mat()
