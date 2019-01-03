@@ -1770,7 +1770,7 @@ label_2181_internal:
                     break;
                 }
             }
-            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffType::hex)
+            if (cdata[tc].buffs[i].id == 0)
             {
                 continue;
             }
@@ -1778,7 +1778,7 @@ label_2181_internal:
             {
                 continue;
             }
-            if (cdata[tc].buffs[i].id == 0)
+            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffType::hex)
             {
                 continue;
             }
