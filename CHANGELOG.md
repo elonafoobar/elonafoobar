@@ -33,10 +33,8 @@
 - Make message log window scrollable, storing up to 1000 lines. Available shortcut keys are as follows:
   - `Up`: scroll 1 line up (to older)
   - `Down`: scroll 1 line down (to newer)
-  - `PageUp` or `Left`: scroll 1 page up (to older)
-  - `PageDown` or `Right`: scroll 1 page down (to newer)
-  - `Home`: jump to the top (to the oldest)
-  - `End`: jump to the bottom (to the newest)
+  - `Left`: scroll 1 page up (to older)
+  - `Right`: scroll 1 page down (to newer)
 - Give "yeek" (boss) to his own name, "\<Rodlob\> the boss of yeeks".
   - The name is the reverse spelling of "Boldor", the Angband monster, as his Japanese name is.
 - Improve shadow graphics.
