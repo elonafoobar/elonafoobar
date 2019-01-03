@@ -139,12 +139,12 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
     }
     else if (action == "previous_page" || action == "northwest")
     {
-        _scroll_by(-(inf_maxlog - 3));
+        _scroll_by(-(inf_maxlog - 4));
         return none;
     }
     else if (action == "next_page" || action == "southwest")
     {
-        _scroll_by(inf_maxlog - 3);
+        _scroll_by(inf_maxlog - 4);
         return none;
     }
     else if (action == "northeast")
