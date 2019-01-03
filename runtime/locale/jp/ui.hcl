@@ -98,7 +98,11 @@ locale {
         }
 
         message {
-            hit_any_key = "何かキーを押すと閉じる"
+            key_hint = "Up,Down [1行ｽｸﾛｰﾙ]   Left,Right [1ﾍﾟｰｼﾞｽｸﾛｰﾙ]   他のキーを押すと閉じる"
+        }
+
+        chat {
+            key_hint = "何かキーを押すと閉じる"
         }
 
         scene {

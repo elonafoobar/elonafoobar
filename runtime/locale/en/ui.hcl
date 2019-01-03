@@ -99,7 +99,11 @@ locale {
         }
 
         message {
-            hit_any_key = "Hit any key to close"
+            key_hint = "Up,Down [Scr 1 line]   Left,Right [Scr 1 page]   Hit other key to close"
+        }
+
+        chat {
+            key_hint = "Hit any key to close"
         }
 
         scene {
