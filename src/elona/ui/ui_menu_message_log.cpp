@@ -137,26 +137,14 @@ optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
         _scroll_by(1);
         return none;
     }
-    else if (action == "previous_page" || action == "northwest")
+    else if (action == "previous_page")
     {
         _scroll_by(-(inf_maxlog - 4));
         return none;
     }
-    else if (action == "next_page" || action == "southwest")
+    else if (action == "next_page")
     {
         _scroll_by(inf_maxlog - 4);
-        return none;
-    }
-    else if (action == "northeast")
-    {
-        // Jump to the oldest.
-        message_offset = 4 - static_cast<int>(message_log.line_size());
-        return none;
-    }
-    else if (action == "southeast")
-    {
-        // Jump to the newest.
-        message_offset = 0;
         return none;
     }
     else if (action != ""s)
