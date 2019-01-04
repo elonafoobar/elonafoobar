@@ -18,7 +18,6 @@ LOCAL_CPP_FEATURES := exceptions rtti
 LOCAL_SRC_FILES := \
 filepathutil.cpp \
 fps_counter.cpp \
-profiler.cpp \
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
