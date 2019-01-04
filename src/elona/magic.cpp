@@ -36,11 +36,11 @@
 #include "wish.hpp"
 
 
+
 namespace elona
 {
 
-
-int magic()
+bool magic()
 {
     int efcibk = 0;
     int efbad = 0;
@@ -1102,7 +1102,6 @@ int magic()
                 }
                 goto the_end;
             }
-            goto label_2181_internal;
         }
         else
         {
@@ -1116,8 +1115,6 @@ int magic()
             }
         }
     }
-
-label_2181_internal:
 
     switch (efid)
     {
@@ -1449,7 +1446,7 @@ label_2181_internal:
             game_data.executing_immediate_quest_type == 1010)
         {
             txt(i18n::s.get("core.locale.magic.steal.in_quest"));
-            return 0;
+            return false;
         }
         if (cc == 0)
         {
@@ -1574,7 +1571,7 @@ label_2181_internal:
             }
             if (f == 0)
             {
-                return 0;
+                return false;
             }
         }
         if (sdata(183, cc) == 0)
@@ -1583,7 +1580,7 @@ label_2181_internal:
             {
                 txt(i18n::s.get(
                     "core.locale.magic.perform.do_not_know", cdata[cc]));
-                return 0;
+                return false;
             }
         }
         if (cc == 0)
@@ -1609,7 +1606,7 @@ label_2181_internal:
         if (sdata(184, 0) == 0)
         {
             txt(i18n::s.get("core.locale.magic.cook.do_not_know"));
-            return 0;
+            return false;
         }
         cooktool = ci;
         invsubroutine = 1;
@@ -1619,7 +1616,7 @@ label_2181_internal:
             MenuResult result = ctrl_inventory();
             if (!result.succeeded)
             {
-                return 0;
+                return false;
             }
         }
         if (cc == 0)
@@ -1645,17 +1642,17 @@ label_2181_internal:
         if (sdata(185, 0) == 0)
         {
             txt(i18n::s.get("core.locale.magic.fish.do_not_know"));
-            return 0;
+            return false;
         }
         if (!inv_getspace(0))
         {
             txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
-            return 0;
+            return false;
         }
         if (inv[ci].count == 0)
         {
             txt(i18n::s.get("core.locale.magic.fish.need_bait"));
-            return 0;
+            return false;
         }
         f = 0;
         for (int cnt = 0; cnt < 3; ++cnt)
@@ -1695,7 +1692,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.fish.not_good_place"),
                 Message::only_once{true});
             update_screen();
-            return 0;
+            return false;
         }
         if (chipm(
                 0,
@@ -1705,7 +1702,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.fish.cannot_during_swim"));
             update_screen();
-            return 0;
+            return false;
         }
         if (cdata.player().position.x - x > 0)
         {
@@ -4159,7 +4156,7 @@ label_2181_internal:
             efp,
             cc);
         mapitem_fire(cdata[tc].position.x, cdata[tc].position.y);
-        return 0;
+        return false;
     case 651:
         if (is_in_fov(cdata[tc]))
         {
@@ -4314,9 +4311,7 @@ the_end:
     ci = efcibk;
     efstatus = CurseState::none;
     efsource = 0;
-    return 1;
+    return true;
 }
-
-
 
 } // namespace elona

@@ -44,6 +44,7 @@
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"

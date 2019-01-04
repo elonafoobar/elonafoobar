@@ -28,6 +28,7 @@
 #include "itemgen.hpp"
 #include "lua_env/interface.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
