@@ -1,3 +1,4 @@
+#include "../version.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "adventurer.hpp"
@@ -61,7 +62,6 @@
 #include "turn_sequence.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include "version.hpp"
 #include "wish.hpp"
 
 using namespace elona;

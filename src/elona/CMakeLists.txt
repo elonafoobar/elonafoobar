@@ -191,8 +191,6 @@ set(ELONA_SOURCES
   ui/ui_menu_composite_message.cpp
   ui/ui_menu_composite_skills.cpp
   ui/ui_menu_composite_town.cpp
-
-  version.cpp
   )
 
 add_library(elona STATIC ${ELONA_SOURCES})

@@ -43,7 +43,7 @@ string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
 set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
 
 # Versioning file
-configure_file("${PROJECT_SOURCE_DIR}/src/elona/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/elona/version.cpp")
+configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
 
 
 
@@ -132,7 +132,7 @@ if(ANDROID)
   include_directories(${EXTERNAL_LIB_LOCATION}/boost/include)
   link_directories(${EXTERNAL_LIB_LOCATION}/boost/libs/llvm/armeabi-v7a)
 
-  add_library( ${PROJECT_NAME} SHARED src/main.cpp )
+  add_library(${PROJECT_NAME} SHARED src/main.cpp src/version.cpp)
 
   target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams util snail elona)
 else()
@@ -186,7 +186,7 @@ else()
       src/tests/serialization.cpp
       )
 
-    add_executable(${PROJECT_NAME} ${TEST_SOURCES})
+    add_executable(${PROJECT_NAME} src/version.cpp ${TEST_SOURCES})
     target_link_libraries(${PROJECT_NAME} Catch)
   elseif(WITH_TESTS STREQUAL "BENCH")
     add_subdirectory(src/thirdparty/hayai)
@@ -201,7 +201,7 @@ else()
       src/bench/util.cpp
       )
 
-    add_executable(${PROJECT_NAME} ${BENCH_SOURCES})
+    add_executable(${PROJECT_NAME} src/version.cpp ${BENCH_SOURCES})
     target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
   else()
     if(WIN32)
@@ -209,7 +209,7 @@ else()
     else(WIN32)
       set(RESOURCES "")
     endif()
-    add_executable(${PROJECT_NAME} WIN32 src/main.cpp ${RESOURCES})
+    add_executable(${PROJECT_NAME} WIN32 src/main.cpp src/version.cpp ${RESOURCES})
   endif()
 
   if(WIN32)

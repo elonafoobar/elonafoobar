@@ -1,6 +1,6 @@
 #pragma once
 #include <array>
-#include "version.hpp"
+#include "../version.hpp"
 
 namespace elona
 {

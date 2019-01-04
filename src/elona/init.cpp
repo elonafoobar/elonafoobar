@@ -1,5 +1,6 @@
 #include "init.hpp"
 #include "../snail/touch_input.hpp"
+#include "../version.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
@@ -50,7 +51,6 @@
 #include "turn_sequence.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include "version.hpp"
 
 
 using namespace elona;
