@@ -1,3 +1,4 @@
+#include "../util/range.hpp"
 #pragma once
 #include <cassert>
 #include <map>
@@ -106,7 +107,7 @@ struct EnumDef
      */
     optional<size_t> get_index_of(std::string variant) const
     {
-        auto it = std::find(variants.begin(), variants.end(), variant);
+        auto it = range::find(variants, variant);
         if (it == variants.end())
             return none;
 
