@@ -526,7 +526,7 @@ locale {
                 }
             }
         }
-        raw_ore_of_mika {
+        raw_ore_of_mica {
             name = "ミカ"
             description {
                 main {

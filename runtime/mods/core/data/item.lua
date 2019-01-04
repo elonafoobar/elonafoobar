@@ -1383,7 +1383,7 @@ data:add_multi(
          locale_key_prefix = "core.locale.item.raw_ore_of_rubynus",
       },
       {
-         name = "raw_ore_of_mika",
+         name = "raw_ore_of_mica",
          id = 40,
          image = 212,
          value = 720,
@@ -1414,7 +1414,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.raw_ore_of_mika",
+         locale_key_prefix = "core.locale.item.raw_ore_of_mica",
       },
       {
          name = "raw_ore_of_emerald",

@@ -1,5 +1,5 @@
 locale {
     mod {
-        loaded_script = "Loaded script {_1}. "
+        loaded_script = "Loaded script ${_1}. "
     }
 }

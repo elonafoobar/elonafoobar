@@ -7,7 +7,7 @@ locale {
                 passive = "${name(_1)} ${is(_1)} transformed into several pieces of meat."
             }
             destroyed {
-                active = "destroy${s(_2)} ${him(_1)}"
+                active = "destroy${s(_2)} ${him(_1)}."
                 passive = "${name(_1)} ${is(_1)} killed."
             }
             minced {
