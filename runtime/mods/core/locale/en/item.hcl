@@ -300,8 +300,8 @@ locale {
         raw_ore_of_rubynus {
             name = "rubynus"
         }
-        raw_ore_of_mika {
-            name = "mika"
+        raw_ore_of_mica {
+            name = "mica"
         }
         raw_ore_of_emerald {
             name = "emerald"
