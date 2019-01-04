@@ -32,7 +32,7 @@ locale {
             }
             bleeding {
                 apply = "${name(_1)} begin${s(_1)} to bleed."
-                heal = "${name(_1)}${r(_1)} bleeding stops."
+                heal = "${name(_1)}${his_owned(_1)} bleeding stops."
             }
             drunk {
                 apply = "${name(_1)} get${s(_1)} drunk."
