@@ -988,15 +988,12 @@ TalkResult talk_ally_silence()
     if (cdata[tc].is_silent() == 0)
     {
         cdata[tc].is_silent() = true;
-        buff = u8"("s +
-            i18n::s.get("core.locale.talk.npc.ally.silence.start", cdata[tc]) +
-            u8")"s;
+        buff =
+            i18n::s.get("core.locale.talk.npc.ally.silence.start", cdata[tc]);
     }
     else
     {
-        buff = u8"("s +
-            i18n::s.get("core.locale.talk.npc.ally.silence.stop", cdata[tc]) +
-            u8")"s;
+        buff = i18n::s.get("core.locale.talk.npc.ally.silence.stop", cdata[tc]);
         cdata[tc].is_silent() = false;
     }
     return TalkResult::talk_npc;
