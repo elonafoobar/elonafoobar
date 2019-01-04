@@ -926,7 +926,7 @@ label_2182:
             {
                 txt(traitrefn(0), Message::color{ColorIndex::green});
             }
-            else
+            if (trait(tid) > 0)
             {
                 txt(traitrefn(1), Message::color{ColorIndex::red});
             }
@@ -2109,7 +2109,7 @@ bool _magic_645_1114()
         {
             inv[i].curse_state = CurseState::doomed;
         }
-        else
+        if (is_in_fov(cdata[tc]))
         {
             inv[i].curse_state = CurseState::cursed;
         }
@@ -2487,7 +2487,69 @@ bool _magic_21_1127()
             flt();
             itemcreate(0, inv[ci].id, -1, -1, 0);
         }
-        else
+    }
+    else
+    {
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
+        obvious = 0;
+    }
+    if (equip != 0)
+    {
+        cdata[cc].body_parts[equip - 100] =
+            cdata[cc].body_parts[equip - 100] / 10000 * 10000 + ci + 1;
+        inv[ci].body_part = equip;
+    }
+    chara_refresh(cc);
+    fixmaterial = 0;
+    objfix = 0;
+    return true;
+}
+
+
+
+bool _magic_1128()
+{
+    if (cc != 0)
+    {
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
+        obvious = 0;
+        return true;
+    }
+    snd("core.ding2");
+    p = rnd((efp + 1)) / 100 + 1;
+    game_data.rights_to_succeed_to += p;
+    txt(i18n::s.get("core.locale.magic.deed_of_inheritance.claim", p(0)),
+        Message::color{ColorIndex::orange});
+    txt(i18n::s.get(
+        "core.locale.magic.deed_of_inheritance.can_now_inherit",
+        game_data.rights_to_succeed_to));
+    return true;
+}
+
+
+
+bool _magic_1124_1125()
+{
+    if (cc != 0)
+    {
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
+        return true;
+    }
+    invsubroutine = 1;
+    if (efid == 1124)
+    {
+        invctrl(0) = 23;
+        invctrl(1) = 1;
+    }
+    else
+    {
+        invctrl(0) = 23;
+        invctrl(1) = 2;
+    }
+    snd("core.inv");
+    {
+        MenuResult result = ctrl_inventory();
+        if (result.succeeded)
         {
             int material = fixmaterial;
 
