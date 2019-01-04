@@ -1,3 +1,4 @@
+#include "../util/strutil.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"

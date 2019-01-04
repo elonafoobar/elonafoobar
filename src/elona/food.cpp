@@ -1,4 +1,5 @@
 #include "food.hpp"
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"

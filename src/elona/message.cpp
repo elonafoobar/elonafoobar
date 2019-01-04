@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <iomanip>
 #include <sstream>
+#include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"

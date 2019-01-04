@@ -1,5 +1,6 @@
 #include "ctrl_file.hpp"
 #include <set>
+#include "../util/fileutil.hpp"
 #include "ability.hpp"
 #include "area.hpp"
 #include "character.hpp"

@@ -1,6 +1,7 @@
 #include "item.hpp"
 #include <iostream>
 #include <type_traits>
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"

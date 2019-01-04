@@ -19,7 +19,6 @@
 #include "enums.hpp"
 #include "gdata.hpp"
 #include "mdata.hpp"
-#include "util.hpp"
 
 
 namespace elona

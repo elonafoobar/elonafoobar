@@ -1,10 +1,10 @@
 #include "dialog_decoder.hpp"
+#include "../../util/strutil.hpp"
 #include "../enums.hpp"
 #include "../lua_env/config_table.hpp"
 #include "../lua_env/data_manager.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../message.hpp"
-#include "../util.hpp"
 #include "dialog.hpp"
 #include "dialog_data.hpp"
 

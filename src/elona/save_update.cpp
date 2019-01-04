@@ -1,4 +1,6 @@
 #include "save_update.hpp"
+#include "../util/fileutil.hpp"
+#include "../util/strutil.hpp"
 #include "character.hpp"
 #include "item.hpp"
 #include "putit.hpp"

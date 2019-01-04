@@ -1,4 +1,5 @@
 #include "wish.hpp"
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"

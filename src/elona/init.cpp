@@ -1,5 +1,6 @@
 #include "init.hpp"
 #include "../snail/touch_input.hpp"
+#include "../util/fileutil.hpp"
 #include "../version.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"

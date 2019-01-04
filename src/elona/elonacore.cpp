@@ -1,3 +1,5 @@
+#include "../util/fileutil.hpp"
+#include "../util/strutil.hpp"
 #include "../version.hpp"
 #include "ability.hpp"
 #include "activity.hpp"

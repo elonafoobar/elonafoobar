@@ -1,3 +1,4 @@
+#include "../util/strutil.hpp"
 #include "area.hpp"
 #include "character.hpp"
 #include "data/types/type_ability.hpp"

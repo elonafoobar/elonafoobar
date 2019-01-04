@@ -1,5 +1,6 @@
 #include "input.hpp"
 #include "../snail/android.hpp"
+#include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "blending.hpp"
 #include "config/config.hpp"
