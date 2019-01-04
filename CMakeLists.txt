@@ -489,7 +489,6 @@ copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/mods/ "${RUNTIME_DIR}/mods/")
-copy_dir(${CMAKE_SOURCE_DIR}/runtime/original/ "${RUNTIME_DIR}/original/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/user/ "${RUNTIME_DIR}/user/")
 copy_file(${CMAKE_SOURCE_DIR}/runtime/assets.hcl "${RUNTIME_DIR}")
 
