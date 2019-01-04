@@ -1,5 +1,6 @@
 #include "testing.hpp"
 #include <sstream>
+#include "../version.hpp"
 #include "config/config.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_music.hpp"
@@ -13,7 +14,6 @@
 #include "lua_env/lua_env.hpp"
 #include "save.hpp"
 #include "variables.hpp"
-#include "version.hpp"
 
 namespace elona
 {

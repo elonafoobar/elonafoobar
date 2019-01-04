@@ -4,7 +4,7 @@
 #include "elona/defines.hpp"
 #include "elona/init.hpp"
 #include "elona/log.hpp"
-#include "elona/version.hpp"
+#include "version.hpp"
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA
 #endif

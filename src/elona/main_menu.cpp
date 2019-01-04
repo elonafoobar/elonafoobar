@@ -1,4 +1,5 @@
 #include "main_menu.hpp"
+#include "../version.hpp"
 #include "audio.hpp"
 #include "character_making.hpp"
 #include "config/config.hpp"
@@ -12,7 +13,6 @@
 #include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include "version.hpp"
 
 namespace elona
 {
