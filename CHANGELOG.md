@@ -52,7 +52,7 @@
 - Add new shortcut key, `Ctrl+Tab`, to move to the previous (left) menu.
 - Make possible to reload autopick definition file via `Shift+Backspace`.
 - Prevent precious ally from being destroyed by gene machine. You can regard an ally as precious by using stethoscope to him/her.
-- Implement keybinding. You can customize them throuth the keybinding menu in the bottom of the option menu.
+- Implement keybinding. You can customize them through the keybinding menu in the bottom of the option menu.
 - Add option to show the current FPS, frame per second (default: disable).
 - Reimplement console by using lua. You can run any lua snippet in the console.
 - Externalize data of character loots.
@@ -63,7 +63,7 @@
 - Port English translation of the main scenario's cutscenes from E+C.
 - Externalize almost all of map definition data.
 - Externalize data of sold goods in town shops.
-- Add option to skip prompt to confirm selling/buying items in town shops (defualt: disable).
+- Add option to skip prompt to confirm selling/buying items in town shops (default: disable).
 - Make message log window scrollable, storing up to 1000 lines. Available shortcut keys are as follows:
   - `Up`: scroll 1 line up (to older)
   - `Down`: scroll 1 line down (to newer)
@@ -72,7 +72,7 @@
 - Give "yeek" (boss) to his own name, "\<Rodlob\> the boss of yeeks".
   - The name is the reverse spelling of "Boldor", the Angband monster, as his Japanese name is.
 - Improve shadow graphics.
-- Add option to enable text antialiasing (default: enabled). Also change the bundled font from KochiGothic to GenShinGochic to make text rendering more beatiful when antialiasing is on.
+- Add option to enable text antialiasing (default: enabled). Also change the bundled font from KochiGothic to GenShinGochic to make text rendering more beautiful when antialiasing is on.
 - Add option to skip overcast warning prompt (default: disable).
 - Check whether the save data you are trying to load now is compatible or not, and report error if the running Elona foobar is not able to load the save.
 - Load each mod in proper order using dependencies.
@@ -91,15 +91,15 @@
 ### Fixed
 
 - [vanilla] Do not show message "something falls down" if the item is on the ground.
-- [vanilla] Fix aspect ratio of PCC in change apperance menu.
+- [vanilla] Fix aspect ratio of PCC in change appearance menu.
 - [vanilla] Fix item chip of double bed and happy bed being cut off.
 - [vanilla] Remove garbage displayed around selection keys.
 - [vanilla] Remove strange spacing in the message log window when the weather changes.
 - [vanilla] Fix item chip of chain mail stacking on too high position.
 - [vanilla] Fix food not getting rotten sometimes if you believe in Kumiromi.
-- [vanilla] Fix the progress of ether disase advancing over the upper limit.
+- [vanilla] Fix the progress of ether disease advancing over the upper limit.
 - [vanilla] Replace ellipsis symbols with 3 periods in English text because some English fonts do not have the glyph.
-- [vanilla] Move the position of the crypt of the damned in the grobal map right. The previous one was on the cliff, which was of course invalid, so that the crypt might be placed at different position in each save and rarely "moves" every time diastrophism occurs.
+- [vanilla] Move the position of the crypt of the damned in the global map right. The previous one was on the cliff, which was of course invalid, so that the crypt might be placed at different position in each save and rarely "moves" every time diastrophism occurs.
 - Fix fading out in cutscenes not working.
 - Fix skill tracker's overlap when your skill levels are very high (4 digits).
 - Fix item names in crafting menu being colored wrong.
@@ -139,7 +139,7 @@
 - [vanilla] Fix glitch of drawing bottom left of small map if the window size is large enough.
 - Fix special ammo enchantment not being added.
 - Fix living weapon not destroying the last enchantment when the weapon has 15 enchantments and sucks blood.
-- Fix water dropped on an alter not geting blessed.
+- Fix water dropped on an alter not getting blessed.
 - Fix crashes when an item is burned/broken by fire or cold.
 - Fix character's tone changing in one dialog(only in Japanese mode).
 - Add a missing key hint to home rank window you can see via house board.
@@ -174,7 +174,7 @@
   - Color high potentials in green and low potentials in red.
 - Port English translation from omake EN, omake overhaul EN, and omake overhaul EN hack. Great thanks to Doorknob, the main translator of them.
 - Migrate config file from JSON to HCL.
-  - Almost all of options get avaiable ingame now. You don't need touch it directly, maybe.
+  - Almost all of options get available ingame now. You don't need touch it directly, maybe.
 - Add a minute hand to the top left clock.
 
 
@@ -202,7 +202,7 @@
   - Fix blanket being separated even when no item is destroyed.
   - Fix messages saying about cold damage being displayed even if you cannot see the incident.
   - Fix fireproof blanket's behavior changing based on your vision.
-- Fix not being able to walk diagonally in a certan condition.
+- Fix not being able to walk diagonally in a certain condition.
 - Fix typos, mainly in English.
 - Fix being able to change your alias via wishing even if you are in wizard mode.
 - Fix your karma changing via wishing even if you are a good citizen.
@@ -276,7 +276,7 @@
 
 - [vanilla] Fix known issues since vanilla in Elona Bugfix wiki.
   - Too many...
-- [vanilla] Fix the lords of Chaos Chastles not dropping rod of wishing.
+- [vanilla] Fix the lords of Chaos Castles not dropping rod of wishing.
 - [vanilla] Fix PC dying in main scenario in a certain condition.
 - [vanilla] Fix you cannot talk to your pet unique NPC like god's servant.
 - [vanilla] Fix infinite loop when entering map filled with doors or walls.
@@ -426,7 +426,7 @@
 - Delete unavailable option, `cfg_msg_box`.
 - Remove test NPCs(they are too strong in spite of their low level).
 - Disable rendering high quality shadow temporarily.
-- Disable voldemort mode by default.
+- Disable Voldemort mode by default.
   - It is available and you can enable it via [F12].
 
 
@@ -435,7 +435,7 @@
 - Fix Ainc drops fruits by bashing.
 - Fix crash when wishing skills.
 - Fix not being able to uncurse items.
-- Fix Foobar quiting when rolling attributes.
+- Fix Foobar quitting when rolling attributes.
 - Fix glitch at casino.
 - Fix not being able to draw tab character correctly.
 - Fix crash when pickpocketing.
@@ -463,7 +463,7 @@
 - Specify number of wished items in wizard mode.
 - Do not ask direction to close if there is only one door around you.
 - Autodig.
-- Highlight positions of upstaris/downstairs.
+- Highlight positions of upstairs/downstairs.
 - Always show HP bars.
 - Exchange position pressing Shift key.
 - Quick save and quick load.
