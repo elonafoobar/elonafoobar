@@ -2,6 +2,40 @@
 
 
 
+## [0.3.2] - 2019-01-06
+
+### Added
+
+- Enhance autopick feature. These new features are almost omake-compatible.
+  - Support category-based selector.
+  - Support item modifiers.
+
+
+### Changed
+
+- Now, action "Enter" and action "Auto action" are unified.
+- In autopick, use sound IDs instead of filename.
+  - E.g., old: `atk_chaos.wav` new: `core.atk_chaos`
+  - They are defined in `mods\core\data\sound.lua` in this version.
+
+
+### Fixed
+
+- [vanilla] Fix 3 continent border maps being regarded as indoor.
+- Fix the previous data of item appearance of map remaining before and after Noyel Festival.
+- Fix upstairs and downstairs position being saved reversely.
+- Fix different item name being displayed after trading items for "I want it!" quest.
+- Fix number input by +100/-100 via northwest/northeast key not working.
+- Add missing map data for player-owned buildings. It caused a crash on Returning.
+- Fix diagonal movement being bound to wrong keys.
+- Restore an Easter egg command in vanilla which was unavailable in the previous version.
+- Fix key to open portrait menu in character sheet, `p`, conflicts with the 16th menu selection key.
+- Fix 1 page scrolling in log window skipping the top or bottom line.
+- Fix crash when you try to remove debuffs (hexes) you have. E.g., spell of Holy Light, scroll of vanquish hex, etc.
+- Fix typo.
+
+
+
 ## [0.3.1] - 2018-12-17
 
 ### Fixed
