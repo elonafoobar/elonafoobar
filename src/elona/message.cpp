@@ -2,6 +2,8 @@
 #include <ctype.h>
 #include <iomanip>
 #include <sstream>
+#include "../util/range.hpp"
+#include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
@@ -48,8 +50,7 @@ void subscribe_log(LogObserver* observer)
 
 void unsubscribe_log(LogObserver* observer)
 {
-    const auto itr = std::find(
-        std::begin(detail::observers), std::end(detail::observers), observer);
+    const auto itr = range::find(detail::observers, observer);
     if (itr == std::end(detail::observers))
     {
         return;

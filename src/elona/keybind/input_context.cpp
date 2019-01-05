@@ -1,4 +1,5 @@
 #include "input_context.hpp"
+#include "../../util/range.hpp"
 #include "../audio.hpp"
 #include "../config/config.hpp"
 #include "../variables.hpp"
@@ -238,10 +239,8 @@ optional<Keybind> InputContext::_check_normal_action()
     // Pick the first nonmovement key out of the ones that were held.
     // The only actions for which holding multiple keys makes sense is for the
     // movement keys.
-    const auto it =
-        std::find_if(keys.begin(), keys.end(), [this](const snail::Key& k) {
-            return _is_nonmovement_key(k);
-        });
+    const auto it = range::find_if(
+        keys, [this](const snail::Key& k) { return _is_nonmovement_key(k); });
 
     if (it != keys.end())
     {
@@ -578,8 +577,7 @@ std::unordered_set<ActionCategory> keybind_conflicting_action_categories(
     {
         const auto& categories = pair.second;
         bool is_in_context =
-            std::find(categories.begin(), categories.end(), action_category) !=
-            categories.end();
+            range::find(categories, action_category) != categories.end();
 
         // If the action can be returned from input in this category, the
         // keybinding for it cannot confict with other actions in other

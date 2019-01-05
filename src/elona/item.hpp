@@ -3,10 +3,10 @@
 #include <bitset>
 #include <memory>
 #include <vector>
+#include "../util/range.hpp"
 #include "enums.hpp"
 #include "position.hpp"
 #include "putit.hpp"
-#include "range.hpp"
 
 
 namespace elona

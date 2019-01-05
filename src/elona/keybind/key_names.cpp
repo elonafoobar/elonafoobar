@@ -1,7 +1,7 @@
 #include <unordered_map>
 #include "../../snail/input.hpp"
+#include "../../util/strutil.hpp"
 #include "../optional.hpp"
-#include "../util.hpp"
 
 namespace elona
 {

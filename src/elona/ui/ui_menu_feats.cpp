@@ -1,5 +1,7 @@
 #include "ui_menu_feats.hpp"
 #include "../../snail/color.hpp"
+#include "../../util/range.hpp"
+#include "../../util/strutil.hpp"
 #include "../enchantment.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
@@ -89,8 +91,7 @@ static void _load_traits_by_enchantments()
             }
         }
     }
-    std::sort(
-        std::begin(traits_by_enchantments), std::end(traits_by_enchantments));
+    range::sort(traits_by_enchantments);
     traits_by_enchantments.erase(
         std::unique(
             std::begin(traits_by_enchantments),

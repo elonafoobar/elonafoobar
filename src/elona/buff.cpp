@@ -1,4 +1,5 @@
 #include "buff.hpp"
+#include "../util/range.hpp"
 #include "ability.hpp"
 #include "character.hpp"
 #include "draw.hpp"
@@ -111,10 +112,8 @@ bool buff_has(const Character& cc, const std::string& id)
     assert(buff_def);
 
     int legacy_id = buff_def->id;
-    return std::any_of(
-        std::begin(cc.buffs), std::end(cc.buffs), [&](const auto& buff) {
-            return buff.id == legacy_id;
-        });
+    return range::any_of(
+        cc.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
 }
 
 
@@ -125,10 +124,8 @@ optional_ref<const Buff> buff_find(const Character& cc, const std::string& id)
     assert(buff_def);
 
     int legacy_id = buff_def->id;
-    const auto itr = std::find_if(
-        std::begin(cc.buffs), std::end(cc.buffs), [&](const auto& buff) {
-            return buff.id == legacy_id;
-        });
+    const auto itr = range::find_if(
+        cc.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
     if (itr == std::end(cc.buffs))
     {
         return none;

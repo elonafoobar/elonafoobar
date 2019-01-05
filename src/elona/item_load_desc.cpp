@@ -1,10 +1,10 @@
+#include "../util/strutil.hpp"
 #include "calc.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "util.hpp"
 
 namespace elona
 {

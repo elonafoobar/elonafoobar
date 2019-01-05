@@ -13,6 +13,7 @@
 #include "../snail/window.hpp"
 
 #include "../util/fps_counter.hpp"
+#include "../util/strutil.hpp"
 #include "config/config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
@@ -20,7 +21,6 @@
 #include "log.hpp"
 #include "macro.hpp"
 #include "save.hpp"
-#include "util.hpp"
 #include "variables.hpp"
 #ifdef ELONA_OS_WINDOWS
 #include <windows.h> // MessageBoxA

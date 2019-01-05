@@ -1,6 +1,9 @@
 #include "character.hpp"
 #include <cassert>
 #include <type_traits>
+#include "../util/fileutil.hpp"
+#include "../util/range.hpp"
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "area.hpp"
 #include "buff.hpp"
@@ -22,7 +25,6 @@
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
-#include "range.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -1559,7 +1561,7 @@ int chara_custom_talk(int cc, int talk_type)
         }
         const auto end_text = std::find_if(
             std::next(start_text),
-            std::cend(talk_file_buffer),
+            std::end(talk_file_buffer),
             [](const auto& line) { return strutil::contains(line, u8"%"); });
         if (end_text == std::end(talk_file_buffer))
         {

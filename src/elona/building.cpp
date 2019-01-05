@@ -1,4 +1,5 @@
 #include "building.hpp"
+#include "../util/range.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
@@ -97,10 +98,7 @@ void prepare_house_board_tiles()
             }
         }
         ++p(1);
-        if (std::find(
-                std::begin(unavailable_tiles),
-                std::end(unavailable_tiles),
-                p(1)) != std::end(unavailable_tiles))
+        if (range::find(unavailable_tiles, p(1)) != std::end(unavailable_tiles))
         {
             continue;
         }
@@ -154,10 +152,9 @@ void add_heirloom_if_valuable_enough(
         heirlooms.back() = {heirloom.index, value};
         // Sort by value in descending order. The first item is the most
         // valuable one.
-        std::sort(
-            std::begin(heirlooms),
-            std::end(heirlooms),
-            [](const auto& a, const auto& b) { return a.second > b.second; });
+        range::sort(heirlooms, [](const auto& a, const auto& b) {
+            return a.second > b.second;
+        });
     }
 }
 

@@ -1,6 +1,6 @@
 #include "keybind_manager.hpp"
+#include "../../util/strutil.hpp"
 #include "../filesystem.hpp"
-#include "../util.hpp"
 #include "../variables.hpp"
 #include "keybind.hpp"
 #include "keybind_deserializer.hpp"

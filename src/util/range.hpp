@@ -1,16 +1,15 @@
 #pragma once
+
 #include <algorithm>
 #include <iterator>
 
 
-namespace elona
-{
+
 namespace range
 {
 
-
-template <typename R, typename P>
-auto count_if(const R& range, P predicate)
+template <typename Range, typename Predicate>
+auto count_if(Range&& range, Predicate predicate)
 {
     using std::begin;
     using std::end;
@@ -19,8 +18,8 @@ auto count_if(const R& range, P predicate)
 
 
 
-template <typename R>
-auto distance(const R& range)
+template <typename Range>
+auto distance(Range&& range)
 {
     using std::begin;
     using std::end;
@@ -29,8 +28,8 @@ auto distance(const R& range)
 
 
 
-template <typename R, typename F>
-bool all_of(const R& range, F predicate)
+template <typename Range, typename Predicate>
+bool all_of(Range&& range, Predicate predicate)
 {
     using std::begin;
     using std::end;
@@ -39,8 +38,8 @@ bool all_of(const R& range, F predicate)
 
 
 
-template <typename R, typename F>
-bool any_of(const R& range, F predicate)
+template <typename Range, typename Predicate>
+bool any_of(Range&& range, Predicate predicate)
 {
     using std::begin;
     using std::end;
@@ -49,8 +48,8 @@ bool any_of(const R& range, F predicate)
 
 
 
-template <typename R, typename I, typename F>
-auto transform(const R& src, I dst, F func)
+template <typename Range, typename OutputIterator, typename UnaryFunc>
+auto transform(Range&& src, OutputIterator dst, UnaryFunc func)
 {
     using std::begin;
     using std::end;
@@ -59,18 +58,8 @@ auto transform(const R& src, I dst, F func)
 
 
 
-template <typename R, typename I, typename F>
-auto transform(R&& src, I dst, F func)
-{
-    using std::begin;
-    using std::end;
-    return std::transform(begin(src), end(src), dst, func);
-}
-
-
-
-template <typename R, typename I>
-auto copy(const R& src, I dst)
+template <typename Range, typename OutputIterator>
+auto copy(Range&& src, OutputIterator dst)
 {
     using std::begin;
     using std::end;
@@ -79,18 +68,8 @@ auto copy(const R& src, I dst)
 
 
 
-template <typename R, typename I>
-auto copy(R&& src, I dst)
-{
-    using std::begin;
-    using std::end;
-    return std::copy(begin(src), end(src), dst);
-}
-
-
-
-template <typename R, typename F>
-auto for_each(const R& range, F func)
+template <typename Range, typename UnaryFunc>
+auto for_each(Range&& range, UnaryFunc func)
 {
     using std::begin;
     using std::end;
@@ -99,18 +78,8 @@ auto for_each(const R& range, F func)
 
 
 
-template <typename R, typename F>
-auto for_each(R&& range, F func)
-{
-    using std::begin;
-    using std::end;
-    return std::for_each(begin(range), end(range), func);
-}
-
-
-
-template <typename R, typename T>
-auto find(const R& range, const T& value)
+template <typename Range, typename T>
+auto find(Range&& range, const T& value)
 {
     using std::begin;
     using std::end;
@@ -119,8 +88,8 @@ auto find(const R& range, const T& value)
 
 
 
-template <typename R, typename F>
-auto find_if(const R& range, F predicate)
+template <typename Range, typename Predicate>
+auto find_if(Range&& range, Predicate predicate)
 {
     using std::begin;
     using std::end;
@@ -129,8 +98,8 @@ auto find_if(const R& range, F predicate)
 
 
 
-template <typename R, typename T>
-auto fill(R&& range, const T& value)
+template <typename Range, typename T>
+auto fill(Range&& range, const T& value)
 {
     using std::begin;
     using std::end;
@@ -139,8 +108,8 @@ auto fill(R&& range, const T& value)
 
 
 
-template <typename R1, typename R2>
-bool equal(const R1& range1, const R2& range2)
+template <typename Range1, typename Range2>
+bool equal(Range1&& range1, Range2&& range2)
 {
     using std::begin;
     using std::end;
@@ -149,8 +118,8 @@ bool equal(const R1& range1, const R2& range2)
 
 
 
-template <typename R>
-void sort(R&& range)
+template <typename Range>
+void sort(Range&& range)
 {
     using std::begin;
     using std::end;
@@ -159,12 +128,12 @@ void sort(R&& range)
 
 
 
-template <typename R, typename F>
-void sort(R&& range, F compare)
+template <typename Range, typename Comparator>
+void sort(Range&& range, Comparator less)
 {
     using std::begin;
     using std::end;
-    std::sort(begin(range), end(range), compare);
+    std::sort(begin(range), end(range), less);
 }
 
 
@@ -240,7 +209,4 @@ private:
     const T last;
 };
 
-
-
 } // namespace range
-} // namespace elona

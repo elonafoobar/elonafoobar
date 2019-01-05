@@ -1,4 +1,6 @@
 #include "wish.hpp"
+#include "../util/range.hpp"
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
@@ -37,10 +39,9 @@ public:
 
     void remove(const T& value)
     {
-        const auto itr = std::find_if(
-            std::begin(candidates),
-            std::end(candidates),
-            [&](const auto& candidate) { return candidate.value == value; });
+        const auto itr = range::find_if(candidates, [&](const auto& candidate) {
+            return candidate.value == value;
+        });
         if (itr != std::end(candidates))
         {
             candidates.erase(itr);
@@ -294,7 +295,7 @@ bool _match_wish(
     auto words = i18n::s.get_list(key);
     words.insert(
         std::end(words), std::begin(english_words), std::end(english_words));
-    return std::any_of(std::begin(words), std::end(words), match);
+    return range::any_of(words, match);
 }
 
 
