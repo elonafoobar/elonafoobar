@@ -1,4 +1,4 @@
-# CMake v2.8 or later
+# CMake v3.0 or later
 cmake_minimum_required(VERSION 3.0)
 
 
