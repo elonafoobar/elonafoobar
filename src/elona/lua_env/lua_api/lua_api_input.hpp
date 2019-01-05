@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-namespace Input
+namespace LuaApiInput
 {
 bool yes_no(const std::string&);
 
@@ -19,7 +19,7 @@ sol::optional<int> prompt_choice(sol::table);
 
 
 void bind(sol::table&);
-}; // namespace Input
+}; // namespace LuaApiInput
 
 } // namespace lua
 } // namespace elona

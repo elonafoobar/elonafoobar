@@ -112,23 +112,7 @@ set(ELONA_SOURCES
 
   lua_env/enums/enums.cpp
 
-  lua_env/lua_api/lua_api_animation.cpp
-  lua_env/lua_api/lua_api_chara.cpp
   lua_env/lua_api/lua_api.cpp
-  lua_env/lua_api/lua_api_debug.cpp
-  lua_env/lua_api/lua_api_fov.cpp
-  lua_env/lua_api/lua_api_gui.cpp
-  lua_env/lua_api/lua_api_i18n.cpp
-  lua_env/lua_api/lua_api_input.cpp
-  lua_env/lua_api/lua_api_item.cpp
-  lua_env/lua_api/lua_api_magic.cpp
-  lua_env/lua_api/lua_api_map.cpp
-  lua_env/lua_api/lua_api_math.cpp
-  lua_env/lua_api/lua_api_pos.cpp
-  lua_env/lua_api/lua_api_rand.cpp
-  lua_env/lua_api/lua_api_skill.cpp
-  lua_env/lua_api/lua_api_trait.cpp
-  lua_env/lua_api/lua_api_world.cpp
 
   lua_env/lua_class/lua_class.cpp
   lua_env/lua_class/lua_class_ability.cpp

@@ -13,12 +13,12 @@ namespace elona
 namespace lua
 {
 
-void Debug::log(const std::string& message)
+void LuaApiDebug::log(const std::string& message)
 {
     ELONA_LOG(message);
 }
 
-void Debug::report_error(const std::string& message)
+void LuaApiDebug::report_error(const std::string& message)
 {
     std::istringstream sstream(message);
     std::string line;
@@ -33,7 +33,7 @@ void Debug::report_error(const std::string& message)
     std::cerr << "Script error: " << message << std::endl;
 }
 
-void Debug::dump_characters()
+void LuaApiDebug::dump_characters()
 {
     ELONA_LOG("===== Charas =====")
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
@@ -46,7 +46,7 @@ void Debug::dump_characters()
     }
 }
 
-void Debug::dump_items()
+void LuaApiDebug::dump_items()
 {
     ELONA_LOG("===== Items  =====")
     for (const auto& cnt : items(-1))
@@ -62,12 +62,12 @@ void Debug::dump_items()
     }
 }
 
-void Debug::bind(sol::table& api_table)
+void LuaApiDebug::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, Debug, log);
-    LUA_API_BIND_FUNCTION(api_table, Debug, report_error);
-    LUA_API_BIND_FUNCTION(api_table, Debug, dump_characters);
-    LUA_API_BIND_FUNCTION(api_table, Debug, dump_items);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, log);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, report_error);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, dump_characters);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, dump_items);
 }
 
 } // namespace lua

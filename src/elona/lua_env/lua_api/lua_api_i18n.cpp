@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-std::string I18N::get(const std::string& key, sol::variadic_args args)
+std::string LuaApiI18N::get(const std::string& key, sol::variadic_args args)
 {
     switch (args.size())
     {
@@ -49,7 +49,7 @@ std::string I18N::get(const std::string& key, sol::variadic_args args)
     }
 }
 
-sol::optional<std::string> I18N::get_optional(
+sol::optional<std::string> LuaApiI18N::get_optional(
     const std::string& key,
     sol::variadic_args args)
 {
@@ -109,7 +109,7 @@ sol::optional<std::string> I18N::get_optional(
 }
 
 std::string
-I18N::get_enum(const std::string& key, int index, sol::variadic_args args)
+LuaApiI18N::get_enum(const std::string& key, int index, sol::variadic_args args)
 {
     switch (args.size())
     {
@@ -156,7 +156,7 @@ I18N::get_enum(const std::string& key, int index, sol::variadic_args args)
     }
 }
 
-std::string I18N::get_enum_property(
+std::string LuaApiI18N::get_enum_property(
     const std::string& key_head,
     const std::string& key_tail,
     int index,
@@ -219,7 +219,7 @@ std::string I18N::get_enum_property(
     }
 }
 
-sol::optional<std::string> I18N::get_enum_property_optional(
+sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
     const std::string& key_head,
     const std::string& key_tail,
     int index,
@@ -296,7 +296,7 @@ sol::optional<std::string> I18N::get_enum_property_optional(
     return sol::nullopt;
 }
 
-void I18N::register_function(
+void LuaApiI18N::register_function(
     const std::string& language,
     const std::string& name,
     sol::protected_function function)
@@ -305,15 +305,15 @@ void I18N::register_function(
         language, name, function);
 }
 
-void I18N::bind(sol::table& api_table)
+void LuaApiI18N::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, I18N, get);
-    LUA_API_BIND_FUNCTION(api_table, I18N, get_optional);
-    LUA_API_BIND_FUNCTION(api_table, I18N, get_enum);
-    LUA_API_BIND_FUNCTION(api_table, I18N, get_enum_property);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_optional);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum_property);
     api_table.set_function(
-        "get_enum_property_optional", I18N::get_enum_property_optional);
-    LUA_API_BIND_FUNCTION(api_table, I18N, register_function);
+        "get_enum_property_optional", LuaApiI18N::get_enum_property_optional);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, register_function);
 }
 
 } // namespace lua

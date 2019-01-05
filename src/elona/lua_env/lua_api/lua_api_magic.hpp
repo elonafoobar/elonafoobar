@@ -6,14 +6,14 @@ namespace elona
 namespace lua
 {
 
-namespace Magic
+namespace LuaApiMagic
 {
 void cast_self(LuaCharacterHandle, int, int, const Position&);
 void cast(LuaCharacterHandle, LuaCharacterHandle, int, int);
 
 
 void bind(sol::table&);
-} // namespace Magic
+} // namespace LuaApiMagic
 
 } // namespace lua
 } // namespace elona

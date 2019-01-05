@@ -11,33 +11,33 @@ namespace elona
 namespace lua
 {
 
-bool FOV::los(const Position& from, const Position& to)
+bool LuaApiFOV::los(const Position& from, const Position& to)
 {
-    return FOV::los_xy(from.x, from.y, to.x, to.y);
+    return LuaApiFOV::los_xy(from.x, from.y, to.x, to.y);
 }
 
-bool FOV::los_xy(int fx, int fy, int tx, int ty)
+bool LuaApiFOV::los_xy(int fx, int fy, int tx, int ty)
 {
     return elona::fov_los(fx, fy, tx, ty) == 1;
 }
 
-bool FOV::you_see(LuaCharacterHandle handle)
+bool LuaApiFOV::you_see(LuaCharacterHandle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     return elona::is_in_fov(chara);
 }
 
-bool FOV::you_see_pos(const Position& pos)
+bool LuaApiFOV::you_see_pos(const Position& pos)
 {
     return elona::is_in_fov(pos) == 1;
 }
 
-bool FOV::you_see_pos_xy(int x, int y)
+bool LuaApiFOV::you_see_pos_xy(int x, int y)
 {
     return elona::is_in_fov(Position(x, y)) == 1;
 }
 
-void FOV::refresh()
+void LuaApiFOV::refresh()
 {
     gmode(2);
     sxfix = 0;
@@ -47,13 +47,17 @@ void FOV::refresh()
     ui_render_non_hud();
 }
 
-void FOV::bind(sol::table& api_table)
+void LuaApiFOV::bind(sol::table& api_table)
 {
-    api_table.set_function("los", sol::overload(FOV::los, FOV::los_xy));
+    api_table.set_function(
+        "los", sol::overload(LuaApiFOV::los, LuaApiFOV::los_xy));
     api_table.set_function(
         "you_see",
-        sol::overload(FOV::you_see_pos, FOV::you_see_pos_xy, FOV::you_see));
-    LUA_API_BIND_FUNCTION(api_table, FOV, refresh);
+        sol::overload(
+            LuaApiFOV::you_see_pos,
+            LuaApiFOV::you_see_pos_xy,
+            LuaApiFOV::you_see));
+    LUA_API_BIND_FUNCTION(api_table, LuaApiFOV, refresh);
 }
 
 } // namespace lua

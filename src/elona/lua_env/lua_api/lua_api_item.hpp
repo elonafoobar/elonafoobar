@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-namespace Item
+namespace LuaApiItem
 {
 int count();
 
@@ -33,7 +33,7 @@ int trade_rate(LuaItemHandle);
 
 
 void bind(sol::table&);
-} // namespace Item
+} // namespace LuaApiItem
 
 } // namespace lua
 } // namespace elona

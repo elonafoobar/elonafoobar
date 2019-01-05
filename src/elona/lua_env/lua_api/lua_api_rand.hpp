@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-namespace Rand
+namespace LuaApiRand
 {
 int rnd(int n);
 
@@ -18,7 +18,7 @@ sol::object choice(sol::table table);
 
 
 void bind(sol::table&);
-}; // namespace Rand
+}; // namespace LuaApiRand
 
 } // namespace lua
 } // namespace elona

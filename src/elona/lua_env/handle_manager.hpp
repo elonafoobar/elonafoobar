@@ -6,13 +6,13 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include "../../util/noncopyable.hpp"
-#include "../item.hpp"
 #include "lua_env.hpp"
 
 namespace elona
 {
 
 struct Character;
+struct Item;
 
 namespace lua
 {

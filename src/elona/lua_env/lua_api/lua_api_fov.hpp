@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-namespace FOV
+namespace LuaApiFOV
 {
 bool los(const Position&, const Position&);
 bool los_xy(int, int, int, int);
@@ -19,7 +19,7 @@ void refresh();
 
 
 void bind(sol::table&);
-}; // namespace FOV
+}; // namespace LuaApiFOV
 
 } // namespace lua
 } // namespace elona

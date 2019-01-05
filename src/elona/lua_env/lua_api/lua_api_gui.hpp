@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-namespace GUI
+namespace LuaApiGUI
 {
 void txt(const std::string&);
 void txt_txtef(const std::string&, const EnumString&);
@@ -17,7 +17,7 @@ void txtef(const EnumString&);
 
 
 void bind(sol::table&);
-}; // namespace GUI
+}; // namespace LuaApiGUI
 
 } // namespace lua
 } // namespace elona
