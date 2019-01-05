@@ -76,7 +76,7 @@ _draw_class_info(int chip_male, int chip_female, const std::string& race)
     draw_race_or_class_info();
 }
 
-static void _draw_window()
+void UIMenuCharamakeClass::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.chara_making.select_class.title");
     s(1) = strhint3b;
@@ -99,13 +99,13 @@ static void _draw_window()
         wy + 30);
 }
 
-static void _draw_choice(int cnt, const std::string& text)
+void UIMenuCharamakeClass::_draw_choice(int cnt, const std::string& text)
 {
     display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_choices()
+void UIMenuCharamakeClass::_draw_choices()
 {
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)

@@ -22,6 +22,10 @@ protected:
         const std::string& key);
 
 private:
+    void _draw_window();
+    void _draw_choice(int, const std::string&);
+    void _draw_choices();
+
     std::string _race;
 };
 

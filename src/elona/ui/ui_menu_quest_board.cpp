@@ -53,7 +53,7 @@ static void _populate_quest_list()
     sort_list_by_column1();
 }
 
-static void _draw_background()
+void UIMenuQuestBoard::_draw_background()
 {
     gsel(3);
     pos(960, 96);
@@ -114,7 +114,7 @@ void UIMenuQuestBoard::update()
     }
 }
 
-static void _draw_window()
+void UIMenuQuestBoard::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.board.title");
     s(1) = strhint2 + strhint3b;
@@ -126,13 +126,13 @@ static void _draw_window()
     bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), wx + ww + 20, wy);
 }
 
-static void _draw_key(int cnt)
+void UIMenuQuestBoard::_draw_key(int cnt)
 {
     boxf(wx + 70, y, 460, 18, {12, 14, 16, 16});
     display_key(wx + 70, y - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuQuestBoard::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -171,20 +171,20 @@ static snail::Color _get_quest_difficulty_color(
     }
 }
 
-static void _draw_list_entry_title(int cnt, const std::string& title)
+void UIMenuQuestBoard::_draw_list_entry_title(int cnt, const std::string& title)
 {
     font(14 - en * 2);
     cs_list(cs == cnt, title, wx + 96, y - 1, 19);
 }
 
-static void _draw_list_entry_date(const std::string& date_text)
+void UIMenuQuestBoard::_draw_list_entry_date(const std::string& date_text)
 {
     std::string quest_date = u8"("s + date_text + u8")"s;
     pos(wx + 344, y + 2);
     mes(quest_date);
 }
 
-static void _draw_list_entry_giver_name(int chara_index)
+void UIMenuQuestBoard::_draw_list_entry_giver_name(int chara_index)
 {
     std::string name = cdatan(0, chara_index);
     cutname(name, 20);
@@ -192,7 +192,7 @@ static void _draw_list_entry_giver_name(int chara_index)
     mes(name);
 }
 
-static void _draw_list_entry_difficulty(
+void UIMenuQuestBoard::_draw_list_entry_difficulty(
     int quest_difficulty,
     int difficulty_stars)
 {
@@ -222,7 +222,7 @@ static void _draw_list_entry_difficulty(
     }
 }
 
-static void _draw_list_entry_desc()
+void UIMenuQuestBoard::_draw_list_entry_desc()
 {
     talk_conv(buff, 70);
     color(0, 0, 0);
@@ -231,7 +231,7 @@ static void _draw_list_entry_desc()
     mes(buff);
 }
 
-static void _draw_list_entry(int cnt, int rq, int tc)
+void UIMenuQuestBoard::_draw_list_entry(int cnt, int rq, int tc)
 {
     quest_set_data(0);
     int quest_difficulty = quest_data[rq].difficulty / 5 + 1;
@@ -246,7 +246,7 @@ static void _draw_list_entry(int cnt, int rq, int tc)
     _draw_list_entry_desc();
 }
 
-static void _draw_list_entries()
+void UIMenuQuestBoard::_draw_list_entries()
 {
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

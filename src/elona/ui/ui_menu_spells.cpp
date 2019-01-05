@@ -64,7 +64,7 @@ void UIMenuSpells::update()
     }
 }
 
-static void _draw_window()
+void UIMenuSpells::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.spell.title");
     s(1) = strhint2 + strhint3 + strhint7;
@@ -87,7 +87,7 @@ static void _draw_window()
     gcopy(3, 1032, 96, 72, 96);
 }
 
-static void _draw_key(int cnt)
+void UIMenuSpells::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -96,7 +96,7 @@ static void _draw_key(int cnt)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuSpells::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -112,7 +112,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_spell_attribute(int cnt, int spell_id)
+void UIMenuSpells::_draw_spell_attribute(int cnt, int spell_id)
 {
     pos(wx + 40, wy + 74 + cnt * 19);
     gmode(2);
@@ -124,7 +124,7 @@ static void _draw_spell_attribute(int cnt, int spell_id)
         inf_tiles);
 }
 
-static void _draw_spell_name(int cnt, int spell_id)
+void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
 {
     std::string spell_shortcut = "";
     for (int cnt = 0; cnt < 20; ++cnt)
@@ -146,7 +146,7 @@ static void _draw_spell_name(int cnt, int spell_id)
         wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_spell_cost(int cnt, int spell_id)
+void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
 {
     std::string spell_cost = ""s + calcspellcostmp(spell_id, cc) + u8" ("s +
         spell((spell_id - 400)) + u8")"s;
@@ -154,7 +154,7 @@ static void _draw_spell_cost(int cnt, int spell_id)
     mes(spell_cost);
 }
 
-static void _draw_spell_power(int cnt, int spell_id)
+void UIMenuSpells::_draw_spell_power(int cnt, int spell_id)
 {
     std::string spell_power_raw = make_spell_description(spell_id);
     std::string spell_power = strmid(spell_power_raw, 0, 40);
@@ -165,7 +165,7 @@ static void _draw_spell_power(int cnt, int spell_id)
     mes(spell_power);
 }
 
-static void _draw_single_list_entry(int cnt, int spell_id)
+void UIMenuSpells::_draw_single_list_entry(int cnt, int spell_id)
 {
     _draw_spell_attribute(cnt, spell_id);
     _draw_spell_name(cnt, spell_id);
@@ -173,7 +173,7 @@ static void _draw_single_list_entry(int cnt, int spell_id)
     _draw_spell_power(cnt, spell_id);
 }
 
-static void _draw_list_entries()
+void UIMenuSpells::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -200,7 +200,7 @@ void UIMenuSpells::draw()
     _draw_list_entries();
 }
 
-static void _assign_shortcut(int sc_, int spell_id)
+void UIMenuSpells::_assign_shortcut(int sc_, int spell_id)
 {
     snd("core.ok1");
     if (game_data.skill_shortcuts.at(sc_) == spell_id)

@@ -47,7 +47,7 @@ void UIMenuAdventurers::update()
     }
 }
 
-static void _draw_window()
+void UIMenuAdventurers::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.adventurers.title");
     s(1) = strhint2 + strhint3;
@@ -62,7 +62,7 @@ static void _draw_window()
         i18n::s.get("core.locale.ui.adventurers.location"), wx + 420, wy + 36);
 }
 
-static void _draw_key(int cnt)
+void UIMenuAdventurers::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -71,7 +71,7 @@ static void _draw_key(int cnt)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuAdventurers::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -97,7 +97,7 @@ _draw_list_entry_pic_and_rank(int cnt, const Character& chara, int _p)
         i18n::s.get("core.locale.ui.adventurers.rank_counter"));
 }
 
-static void _draw_list_entry_name(int cnt, const Character& chara)
+void UIMenuAdventurers::_draw_list_entry_name(int cnt, const Character& chara)
 {
     std::string name =
         ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
@@ -106,14 +106,16 @@ static void _draw_list_entry_name(int cnt, const Character& chara)
     cs_list(cs == cnt, name, wx + 118, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_list_entry_level(int cnt, const Character& chara)
+void UIMenuAdventurers::_draw_list_entry_level(int cnt, const Character& chara)
 {
     std::string level = ""s + chara.fame + u8"("s + chara.level + u8")"s;
     pos(wx + 402 - strlen_u(level) * 7, wy + 66 + cnt * 19 + 2);
     mes(level);
 }
 
-static void _draw_list_entry_map_name(int cnt, const Character& chara)
+void UIMenuAdventurers::_draw_list_entry_map_name(
+    int cnt,
+    const Character& chara)
 {
     std::string map_name = mapname(chara.current_map);
 
@@ -130,7 +132,10 @@ static void _draw_list_entry_map_name(int cnt, const Character& chara)
     mes(map_name);
 }
 
-static void _draw_list_entry(int cnt, const Character& chara, int _p)
+void UIMenuAdventurers::_draw_list_entry(
+    int cnt,
+    const Character& chara,
+    int _p)
 {
     _draw_list_entry_pic_and_rank(cnt, chara, _p);
     _draw_list_entry_name(cnt, chara);
@@ -138,7 +143,7 @@ static void _draw_list_entry(int cnt, const Character& chara, int _p)
     _draw_list_entry_map_name(cnt, chara);
 }
 
-static void _draw_list_entries()
+void UIMenuAdventurers::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();

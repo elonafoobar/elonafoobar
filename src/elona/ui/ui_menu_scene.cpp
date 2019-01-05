@@ -80,7 +80,7 @@ void UIMenuScene::update()
     wy = winposy(468);
 }
 
-static void _draw_window()
+void UIMenuScene::_draw_window()
 {
     gmode(2);
     pos(wx, wy);
@@ -93,12 +93,12 @@ static void _draw_window()
     gmode(2);
 }
 
-static void _draw_key(int cnt)
+void UIMenuScene::_draw_key(int cnt)
 {
     display_key(wx + 394, wy + 91 + cnt * 22 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuScene::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -114,7 +114,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_title()
+void UIMenuScene::_draw_title()
 {
     font(
         12 - en * 2,
@@ -126,7 +126,7 @@ static void _draw_title()
     mes(i18n::s.get("core.locale.ui.scene.you_can_play"));
 }
 
-static void _draw_list_entry(int cnt, int list_item)
+void UIMenuScene::_draw_list_entry(int cnt, int list_item)
 {
     cs_list(
         cs == cnt,
@@ -135,7 +135,7 @@ static void _draw_list_entry(int cnt, int list_item)
         wy + 91 + cnt * 22 - 1);
 }
 
-static void _draw_list_entries()
+void UIMenuScene::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -151,7 +151,7 @@ static void _draw_list_entries()
     }
 }
 
-static void _draw_more()
+void UIMenuScene::_draw_more()
 {
     font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 500, wy + 375);

@@ -64,7 +64,7 @@ void UIMenuCharamakeAlias::update()
     _redraw_aliases = true;
 }
 
-static void _draw_window()
+void UIMenuCharamakeAlias::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.chara_making.select_alias.title");
     s(1) = strhint3b + key_mode2 + " [" +
@@ -84,7 +84,7 @@ static void _draw_window()
         wy + 30);
 }
 
-static void _draw_alias_locked(int cnt)
+void UIMenuCharamakeAlias::_draw_alias_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 280, wy + 66 + cnt * 19 + 2);
@@ -93,7 +93,7 @@ static void _draw_alias_locked(int cnt)
     color(0, 0, 0);
 }
 
-static void _draw_alias(int cnt, const std::string& text, bool is_locked)
+void UIMenuCharamakeAlias::_draw_alias(int cnt, const std::string& text, bool is_locked)
 {
     font(14 - en * 2);
     pos(wx + 38, wy + 66 + cnt * 19 - 2);

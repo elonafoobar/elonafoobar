@@ -73,7 +73,7 @@ void UIMenuSkills::update()
     }
 }
 
-static void _draw_window()
+void UIMenuSkills::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.skill.title");
     s(1) = strhint2 + strhint3 + strhint7;
@@ -92,7 +92,7 @@ static void _draw_window()
     gcopy(3, 1032, 96, 102, 48);
 }
 
-static void _draw_key(int cnt)
+void UIMenuSkills::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -101,7 +101,7 @@ static void _draw_key(int cnt)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuSkills::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -117,7 +117,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_skill_attribute(int cnt, int skill_id)
+void UIMenuSkills::_draw_skill_attribute(int cnt, int skill_id)
 {
     pos(wx + 40, wy + 74 + cnt * 19);
     gmode(2);
@@ -129,7 +129,7 @@ static void _draw_skill_attribute(int cnt, int skill_id)
         inf_tiles);
 }
 
-static void _draw_skill_name(int cnt, int skill_id)
+void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)
 {
     std::string skill_shortcut = "";
     for (int cnt = 0; cnt < 20; ++cnt)
@@ -151,21 +151,21 @@ static void _draw_skill_name(int cnt, int skill_id)
         wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_spell_cost(int cnt, int skill_id)
+void UIMenuSkills::_draw_spell_cost(int cnt, int skill_id)
 {
     std::string spell_cost = ""s + the_ability_db[skill_id]->cost + u8" Sp"s;
     pos(wx + 288 - strlen_u(spell_cost) * 7, wy + 66 + cnt * 19 + 2);
     mes(spell_cost);
 }
 
-static void _draw_spell_desc_and_power(int cnt, int skill_id)
+void UIMenuSkills::_draw_spell_desc_and_power(int cnt, int skill_id)
 {
     std::string spell_power_raw = make_spell_description(skill_id);
     pos(wx + 325, wy + 66 + cnt * 19 + 2);
     mes(strmid(spell_power_raw, 0, 34));
 }
 
-static void _draw_single_list_entry(int cnt, int skill_id)
+void UIMenuSkills::_draw_single_list_entry(int cnt, int skill_id)
 {
     _draw_skill_attribute(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);
@@ -173,7 +173,7 @@ static void _draw_single_list_entry(int cnt, int skill_id)
     _draw_spell_desc_and_power(cnt, skill_id);
 }
 
-static void _draw_list_entries()
+void UIMenuSkills::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -200,7 +200,7 @@ void UIMenuSkills::draw()
     _draw_list_entries();
 }
 
-static void _assign_shortcut(int sc_, int skill_id)
+void UIMenuSkills::_assign_shortcut(int sc_, int skill_id)
 {
     snd("core.ok1");
     if (game_data.skill_shortcuts.at(sc_) == skill_id)

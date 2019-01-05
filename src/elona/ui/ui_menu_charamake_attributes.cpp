@@ -83,7 +83,7 @@ void UIMenuCharamakeAttributes::update()
     windowshadow = 1;
 }
 
-static void _draw_window_background()
+void UIMenuCharamakeAttributes::_draw_window_background()
 {
     s(0) = i18n::s.get(
         "core.locale.chara_making.roll_attributes.attribute_reroll");
@@ -93,7 +93,7 @@ static void _draw_window_background()
         (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
 }
 
-static void _draw_window_topic()
+void UIMenuCharamakeAttributes::_draw_window_topic()
 {
     x = 150;
     y = 240;
@@ -107,7 +107,7 @@ static void _draw_window_topic()
         wy + 30);
 }
 
-static void _draw_window_desc(int locks_left)
+void UIMenuCharamakeAttributes::_draw_window_desc(int locks_left)
 {
     font(12 + sizefix - en * 2);
     pos(wx + 175, wy + 52);
@@ -119,14 +119,14 @@ static void _draw_window_desc(int locks_left)
         u8": "s + locks_left);
 }
 
-static void _draw_window(int locks_left)
+void UIMenuCharamakeAttributes::_draw_window(int locks_left)
 {
     _draw_window_background();
     _draw_window_topic();
     _draw_window_desc(locks_left);
 }
 
-static void _draw_attribute_locked(int cnt)
+void UIMenuCharamakeAttributes::_draw_attribute_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 240, wy + 66 + cnt * 23 + 2);
@@ -135,7 +135,7 @@ static void _draw_attribute_locked(int cnt)
     color(0, 0, 0);
 }
 
-static void _draw_attribute_value(int cnt, int list_value, bool is_locked)
+void UIMenuCharamakeAttributes::_draw_attribute_value(int cnt, int list_value, bool is_locked)
 {
     // Copy image from item sheet.
     // TODO: migrate to PicLoader
@@ -152,7 +152,7 @@ static void _draw_attribute_value(int cnt, int list_value, bool is_locked)
     }
 }
 
-static void _draw_attribute(
+void UIMenuCharamakeAttributes::_draw_attribute(
     int cnt,
     int list_value,
     const std::string& text,

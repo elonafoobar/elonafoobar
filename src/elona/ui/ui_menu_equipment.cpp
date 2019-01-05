@@ -117,7 +117,7 @@ void UIMenuEquipment::update()
     }
 }
 
-static void _draw_window_background()
+void UIMenuEquipment::_draw_window_background()
 {
     s(0) = i18n::s.get("core.locale.ui.equip.title");
     s(1) = strhint5 + strhint5b + strhint3;
@@ -130,7 +130,7 @@ static void _draw_window_background()
         wy + 30);
 }
 
-static void _draw_window_deco(bool show_resistances)
+void UIMenuEquipment::_draw_window_deco(bool show_resistances)
 {
     if (!show_resistances)
     {
@@ -150,7 +150,7 @@ static void _draw_window_deco(bool show_resistances)
     }
 }
 
-static void _draw_window_headers()
+void UIMenuEquipment::_draw_window_headers()
 {
     display_note(
         i18n::s.get("core.locale.ui.equip.equip_weight") + ": " +
@@ -162,14 +162,14 @@ static void _draw_window_headers()
         cdata[cc].pv);
 }
 
-static void _draw_window(bool show_resistances)
+void UIMenuEquipment::_draw_window(bool show_resistances)
 {
     _draw_window_background();
     _draw_window_deco(show_resistances);
     _draw_window_headers();
 }
 
-static void _draw_key(int cnt, int p_, bool is_main_hand)
+void UIMenuEquipment::_draw_key(int cnt, int p_, bool is_main_hand)
 {
     if (cnt % 2 == 0)
     {
@@ -193,7 +193,7 @@ static void _draw_key(int cnt, int p_, bool is_main_hand)
     mes(body_part_name);
 }
 
-static void _draw_keys(int main_hand)
+void UIMenuEquipment::_draw_keys(int main_hand)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     gmode(2);
@@ -255,7 +255,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
     mes(item_weight);
 }
 
-static void _draw_list_entries(bool show_resistances)
+void UIMenuEquipment::_draw_list_entries(bool show_resistances)
 {
     font(14 - en * 2);
     cs_listbk();

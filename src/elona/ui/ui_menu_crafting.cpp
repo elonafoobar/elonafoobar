@@ -124,7 +124,7 @@ bool UIMenuCrafting::init()
     return true;
 }
 
-static void _draw_window()
+void UIMenuCrafting::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.crafting.menu.title");
     s(1) = strhint2 + strhint3b;
@@ -141,12 +141,12 @@ static void _draw_window()
         i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
 }
 
-static void _draw_key(int cnt)
+void UIMenuCrafting::_draw_key(int cnt)
 {
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuCrafting::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -166,7 +166,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_recipe_desc(const CraftingRecipe& recipe)
+void UIMenuCrafting::_draw_recipe_desc(const CraftingRecipe& recipe)
 {
     font(13 - en * 2);
 
@@ -195,7 +195,7 @@ static void _draw_recipe_desc(const CraftingRecipe& recipe)
     color(0, 0, 0);
 }
 
-static void _draw_single_recipe_required_material(
+void UIMenuCrafting::_draw_single_recipe_required_material(
     int mat_index,
     const RequiredMaterial& required_mat)
 {
@@ -217,7 +217,7 @@ static void _draw_single_recipe_required_material(
     color(0, 0, 0);
 }
 
-static void _draw_recipe_required_materials(const CraftingRecipe& recipe)
+void UIMenuCrafting::_draw_recipe_required_materials(const CraftingRecipe& recipe)
 {
     int mat_index = 0;
     for (const auto required_mat : recipe.required_materials)
@@ -227,7 +227,7 @@ static void _draw_recipe_required_materials(const CraftingRecipe& recipe)
     }
 }
 
-static void _draw_recipe(int item_id, bool draw_desc)
+void UIMenuCrafting::_draw_recipe(int item_id, bool draw_desc)
 {
     auto recipe = crafting_find_recipe(item_id);
     assert(recipe);
@@ -239,7 +239,7 @@ static void _draw_recipe(int item_id, bool draw_desc)
     _draw_recipe_required_materials(*recipe);
 }
 
-static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
+void UIMenuCrafting::_draw_single_list_entry(int cnt, int item_id, bool can_craft)
 {
     std::string item_name = ioriginalnameref(item_id);
     std::string item_make =
@@ -262,7 +262,7 @@ static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
     draw_item_material(ipicref(item_id), wx + 37, wy + 69 + cnt * 19 + 2);
 }
 
-static bool _draw_list_entries(bool draw_desc)
+bool UIMenuCrafting::_draw_list_entries(bool draw_desc)
 {
     bool should_redraw = false;
 

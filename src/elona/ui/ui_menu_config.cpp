@@ -12,7 +12,7 @@ namespace elona
 namespace ui
 {
 
-static void _draw_background()
+void UIMenuConfig::_draw_background()
 {
     int bg_variant_buffer = mode == 10 ? 2 : 4;
     load_background_variants(bg_variant_buffer);
@@ -77,7 +77,7 @@ void UIMenuConfig::update()
     }
 }
 
-static void _draw_window(const std::string& title, int width, int height)
+void UIMenuConfig::_draw_window(const std::string& title, int width, int height)
 {
     s(0) = title;
     s(1) = strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help");
@@ -100,7 +100,7 @@ static void _draw_window(const std::string& title, int width, int height)
     }
 }
 
-static void _draw_deco()
+void UIMenuConfig::_draw_deco()
 {
     display_topic(
         i18n::s.get("core.locale.config.common.menu"), wx + 34, wy + 36);
@@ -122,7 +122,7 @@ static void _draw_deco()
     gmode(2);
 }
 
-static void _draw_keys(bool is_root_menu)
+void UIMenuConfig::_draw_keys(bool is_root_menu)
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -146,7 +146,7 @@ static void _draw_keys(bool is_root_menu)
     }
 }
 
-static void _draw_arrows(int item_pos)
+void UIMenuConfig::_draw_arrows(int item_pos)
 {
     pos(wx + 220, wy + 66 + item_pos * 19 - 5);
     gcopy(3, 312, 336, 24, 24);
@@ -154,7 +154,7 @@ static void _draw_arrows(int item_pos)
     gcopy(3, 336, 336, 24, 24);
 }
 
-static void _draw_items(ConfigMenu& menu, bool is_root_menu)
+void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)
 {
     font(14 - en * 2);
     cs_listbk();

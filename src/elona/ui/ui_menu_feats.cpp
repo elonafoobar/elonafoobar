@@ -147,7 +147,7 @@ void UIMenuFeats::update()
     }
 }
 
-static void _draw_window_background(bool is_chara_making)
+void UIMenuFeats::_draw_window_background(bool is_chara_making)
 {
     s(0) = i18n::s.get("core.locale.trait.window.title");
     s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
@@ -174,7 +174,7 @@ static void _draw_window_background(bool is_chara_making)
         40);
 }
 
-static void _draw_window_deco()
+void UIMenuFeats::_draw_window_deco()
 {
     s(0) = i18n::s.get("core.locale.trait.window.name");
     s(1) = i18n::s.get("core.locale.trait.window.level");
@@ -193,13 +193,13 @@ static void _draw_window_deco()
     gcopy(3, 1008, 240, 96, 48);
 }
 
-static void _draw_window(bool is_chara_making)
+void UIMenuFeats::_draw_window(bool is_chara_making)
 {
     _draw_window_background(is_chara_making);
     _draw_window_deco();
 }
 
-static void _draw_key(int cnt, int p_)
+void UIMenuFeats::_draw_key(int cnt, int p_)
 {
     int list_item = list(0, p_);
     int list_value = list(1, p_);
@@ -220,7 +220,7 @@ static void _draw_key(int cnt, int p_)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuFeats::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -236,7 +236,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_acquirable_trait_number(int tc_)
+void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
 {
     std::string note;
     if (tc_ == 0)
@@ -253,7 +253,7 @@ static void _draw_acquirable_trait_number(int tc_)
     display_note(note, 50);
 }
 
-static void _draw_single_list_entry_name(
+void UIMenuFeats::_draw_single_list_entry_name(
     int cnt,
     const snail::Color& text_color)
 {
@@ -264,7 +264,7 @@ static void _draw_single_list_entry_name(
     color(0, 0, 0);
 }
 
-static void _draw_single_list_entry_text(
+void UIMenuFeats::_draw_single_list_entry_text(
     int cnt,
     bool draw_name,
     const snail::Color& text_color,
@@ -308,7 +308,7 @@ static snail::Color _get_trait_color(int trait_value)
     }
 }
 
-static void _draw_single_list_entry(
+void UIMenuFeats::_draw_single_list_entry(
     int cnt,
     int list_item,
     int list_value,
@@ -336,7 +336,7 @@ static void _draw_single_list_entry(
     _draw_single_list_entry_text(cnt, draw_name, text_color, text);
 }
 
-static void _draw_list_entries()
+void UIMenuFeats::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
