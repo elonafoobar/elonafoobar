@@ -1,6 +1,9 @@
 #include "character.hpp"
 #include <cassert>
 #include <type_traits>
+#include "../util/fileutil.hpp"
+#include "../util/range.hpp"
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "area.hpp"
 #include "buff.hpp"
@@ -22,7 +25,6 @@
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
-#include "range.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -923,29 +925,29 @@ void initialize_character()
 
 
 
-int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
+int chara_create(int slot, int chara_id, int x, int y)
 {
     bool success = false;
 
-    if (prm_758 == -3)
+    if (x == -3)
     {
         cxinit = -1;
         cyinit = -1;
     }
     else
     {
-        cxinit = prm_758;
-        cyinit = prm_759;
+        cxinit = x;
+        cyinit = y;
     }
-    if (prm_757 == 0)
+    if (chara_id == 0)
     {
         dbid = -1;
     }
     else
     {
-        dbid = prm_757;
+        dbid = chara_id;
     }
-    rc = prm_756;
+    rc = slot;
     int stat = chara_create_internal();
     initlv = 0;
     voidlv = 0;
@@ -959,7 +961,7 @@ int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
         }
         if (rc != 0)
         {
-            if (prm_758 != -1)
+            if (x != -1)
             {
                 success = chara_place();
             }
@@ -1559,7 +1561,7 @@ int chara_custom_talk(int cc, int talk_type)
         }
         const auto end_text = std::find_if(
             std::next(start_text),
-            std::cend(talk_file_buffer),
+            std::end(talk_file_buffer),
             [](const auto& line) { return strutil::contains(line, u8"%"); });
         if (end_text == std::end(talk_file_buffer))
         {
@@ -1612,11 +1614,11 @@ int chara_custom_talk(int cc, int talk_type)
 
 
 
-std::string chara_refstr(int prm_0258, int prm_0259)
+std::string chara_refstr(int id, int info_type)
 {
     dbmode = 16;
-    dbid = prm_0258;
-    dbspec = prm_0259;
+    dbid = id;
+    dbspec = info_type;
     access_character_info();
     return refstr;
 }

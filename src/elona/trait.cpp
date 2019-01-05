@@ -1,10 +1,10 @@
 #include "trait.hpp"
+#include "../util/range.hpp"
 #include "ability.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "optional.hpp"
-#include "range.hpp"
 #include "variables.hpp"
 
 

@@ -1,3 +1,4 @@
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
@@ -184,7 +185,7 @@ label_20591:
             reftype = the_item_db[inv[cnt].id]->category;
             if (inv[cnt].own_state == 5)
             {
-                if (ibit(16, cnt) == 0 || invctrl != 14)
+                if (!inv[cnt].is_showroom_only() || invctrl != 14)
                 {
                     if (invctrl != 1)
                     {
@@ -277,7 +278,7 @@ label_20591:
                 {
                     continue;
                 }
-                if (ibit(5, cnt) == 1)
+                if (inv[cnt].is_precious())
                 {
                     continue;
                 }
@@ -301,7 +302,8 @@ label_20591:
             if (invctrl == 14)
             {
                 if (inv[cnt].function == 0 &&
-                    !the_item_db[inv[cnt].id]->is_usable && ibit(10, cnt) == 0)
+                    !the_item_db[inv[cnt].id]->is_usable &&
+                    !inv[cnt].is_alive())
                 {
                     continue;
                 }
@@ -369,7 +371,7 @@ label_20591:
                 {
                     continue;
                 }
-                if (ibit(9, cnt))
+                if (inv[cnt].is_stolen())
                 {
                     continue;
                 }
@@ -402,7 +404,7 @@ label_20591:
                 }
                 if (invctrl(1) == 3)
                 {
-                    if (ibit(4, cnt) == 0)
+                    if (!inv[cnt].has_charge())
                     {
                         continue;
                     }
@@ -713,7 +715,7 @@ label_2060_internal:
             {
                 ci = p;
                 f = 1;
-                if (ibit(4, ci))
+                if (inv[ci].has_charge())
                 {
                     if (inv[ci].count <= 0)
                     {
@@ -1079,7 +1081,7 @@ label_2061_internal:
         }
         if (invctrl == 2)
         {
-            if (ibit(13, ci))
+            if (inv[ci].is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
@@ -1145,7 +1147,7 @@ label_2061_internal:
         {
             if (invctrl != 3 && invctrl != 22)
             {
-                if (ibit(13, ci))
+                if (inv[ci].is_marked_as_no_drop())
                 {
                     snd("core.fail1");
                     txt(i18n::s.get(
@@ -1360,7 +1362,7 @@ label_2061_internal:
         }
         if (invctrl == 5)
         {
-            if (ibit(13, ci))
+            if (inv[ci].is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
@@ -1447,7 +1449,7 @@ label_2061_internal:
         }
         if (invctrl == 10)
         {
-            if (ibit(13, ci))
+            if (inv[ci].is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
@@ -1639,7 +1641,7 @@ label_2061_internal:
                 wear_most_valuable_equipment_for_all_body_parts();
                 if (tc < 16)
                 {
-                    create_pcpic(tc, true);
+                    create_pcpic(tc);
                 }
                 chara_refresh(tc);
                 refresh_burden_state();
@@ -1720,7 +1722,7 @@ label_2061_internal:
         }
         if (invctrl == 19)
         {
-            if (ibit(13, ci))
+            if (inv[ci].is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
@@ -1741,7 +1743,7 @@ label_2061_internal:
         }
         if (invctrl == 21)
         {
-            if (ibit(13, ci))
+            if (inv[ci].is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
@@ -1754,7 +1756,7 @@ label_2061_internal:
                 cdata[tc].continuous_action.item = 0;
             }
             snd("core.equip1");
-            ibitmod(12, citrade, 0);
+            inv[citrade].is_quest_target() = false;
             txt(i18n::s.get(
                 "core.locale.ui.inv.trade.you_receive", inv[ci], inv[citrade]));
             if (inv[citrade].body_part != 0)
@@ -1789,7 +1791,7 @@ label_2061_internal:
         {
             if (invctrl(1) == 4)
             {
-                if (ibit(13, ci))
+                if (inv[ci].is_marked_as_no_drop())
                 {
                     snd("core.fail1");
                     txt(i18n::s.get(
@@ -1926,7 +1928,7 @@ label_2061_internal:
                 goto label_20591;
             }
             snd("core.equip1");
-            ibitmod(12, ci, 0);
+            inv[ci].is_quest_target() = false;
             if (inv[ci].id == 54)
             {
                 in = inv[ci].number();
@@ -1954,7 +1956,7 @@ label_2061_internal:
             wear_most_valuable_equipment_for_all_body_parts();
             if (tc < 16)
             {
-                create_pcpic(tc, true);
+                create_pcpic(tc);
             }
             chara_refresh(tc);
             refresh_burden_state();
@@ -2124,17 +2126,17 @@ label_2061_internal:
         if (invctrl == 1)
         {
             ci = list(0, pagesize * page + cs);
-            if (ibit(13, ci) == 0)
+            if (inv[ci].is_marked_as_no_drop())
             {
-                ibitmod(13, ci, 1);
+                inv[ci].is_marked_as_no_drop() = false;
                 txt(i18n::s.get(
-                    "core.locale.ui.inv.examine.no_drop.set", inv[ci]));
+                    "core.locale.ui.inv.examine.no_drop.unset", inv[ci]));
             }
             else
             {
-                ibitmod(13, ci, 0);
+                inv[ci].is_marked_as_no_drop() = true;
                 txt(i18n::s.get(
-                    "core.locale.ui.inv.examine.no_drop.unset", inv[ci]));
+                    "core.locale.ui.inv.examine.no_drop.set", inv[ci]));
             }
         }
         if (invctrl == 2)

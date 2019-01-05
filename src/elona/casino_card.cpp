@@ -35,13 +35,13 @@ enum class Suit
 };
 
 
-void showcard2(int prm_425, bool show_rank = true)
+void showcard2(int card_index, bool show_rank = true)
 {
-    const auto rank = card_at_cardcontrol(0, prm_425);
-    const auto suit = static_cast<Suit>(card_at_cardcontrol(1, prm_425));
-    const auto is_closed = card_at_cardcontrol(2, prm_425) == 1;
-    const auto x = card_at_cardcontrol(3, prm_425);
-    const auto y = card_at_cardcontrol(4, prm_425);
+    const auto rank = card_at_cardcontrol(0, card_index);
+    const auto suit = static_cast<Suit>(card_at_cardcontrol(1, card_index));
+    const auto is_closed = card_at_cardcontrol(2, card_index) == 1;
+    const auto x = card_at_cardcontrol(3, card_index);
+    const auto y = card_at_cardcontrol(4, card_index);
 
     gmode(2);
     if (is_closed)
@@ -109,28 +109,31 @@ void showcard2(int prm_425, bool show_rank = true)
 namespace elona
 {
 
-
-void cardplayerinit(int prm_417, int prm_418)
+void cardplayerinit(int player_max, int holder_max)
 {
-    DIM3(cardplayer_at_cardcontrol, 100, prm_417);
-    cardplayermax_at_cardcontrol = prm_417;
-    cardholdermax_at_cardcontrol = prm_418;
+    DIM3(cardplayer_at_cardcontrol, 100, player_max);
+    cardplayermax_at_cardcontrol = player_max;
+    cardholdermax_at_cardcontrol = holder_max;
 }
 
-void cardplayeradd(int prm_419, int prm_420, int prm_421)
+
+
+void cardplayeradd(int player_id, int x, int y)
 {
-    cardplayer_at_cardcontrol(1, prm_419) = prm_420;
-    cardplayer_at_cardcontrol(2, prm_419) = prm_421;
+    cardplayer_at_cardcontrol(1, player_id) = x;
+    cardplayer_at_cardcontrol(2, player_id) = y;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cardplayer_at_cardcontrol(10 + cnt, prm_419) = -1;
+        cardplayer_at_cardcontrol(10 + cnt, player_id) = -1;
     }
 }
 
-void initcard(int prm_422, int prm_423, int)
+
+
+void initcard(int x, int y, int)
 {
-    pilex_at_cardcontrol = prm_422;
-    piley_at_cardcontrol = prm_423;
+    pilex_at_cardcontrol = x;
+    piley_at_cardcontrol = y;
     DIM3(card_at_cardcontrol, 6, 53);
     cardmax_at_cardcontrol = 52;
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
@@ -208,7 +211,9 @@ void showcard()
     }
 }
 
-int servecard(int prm_427)
+
+
+int servecard(int player_id)
 {
     int cardid_at_cardcontrol = 0;
     cardid_at_cardcontrol = -1;
@@ -226,18 +231,18 @@ int servecard(int prm_427)
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (cardplayer_at_cardcontrol(10 + cnt, prm_427) == -1)
+        if (cardplayer_at_cardcontrol(10 + cnt, player_id) == -1)
         {
             p_at_cardcontrol = cnt;
             break;
         }
     }
     dx_at_cardcontrol = pilex_at_cardcontrol -
-        cardplayer_at_cardcontrol(1, prm_427) - p_at_cardcontrol * 88;
+        cardplayer_at_cardcontrol(1, player_id) - p_at_cardcontrol * 88;
     dy_at_cardcontrol =
-        piley_at_cardcontrol - cardplayer_at_cardcontrol(2, prm_427);
-    card_at_cardcontrol(5, cardid_at_cardcontrol) = prm_427;
-    cardplayer_at_cardcontrol(10 + p_at_cardcontrol, prm_427) =
+        piley_at_cardcontrol - cardplayer_at_cardcontrol(2, player_id);
+    card_at_cardcontrol(5, cardid_at_cardcontrol) = player_id;
+    cardplayer_at_cardcontrol(10 + p_at_cardcontrol, player_id) =
         cardid_at_cardcontrol;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -280,6 +285,8 @@ int servecard(int prm_427)
     return cardid_at_cardcontrol;
 }
 
+
+
 void showcardholder()
 {
     for (int cnt = 0, cnt_end = (cardplayermax_at_cardcontrol); cnt < cnt_end;
@@ -299,54 +306,58 @@ void showcardholder()
     }
 }
 
-int opencard2(int prm_428, int prm_429)
+
+
+int opencard2(int card_index, int player_id)
 {
-    if (prm_429 == 1)
+    if (player_id == 1)
     {
-        if (card_at_cardcontrol(2, prm_428) == 0)
+        if (card_at_cardcontrol(2, card_index) == 0)
         {
-            return prm_428;
+            return card_index;
         }
     }
     snd("core.card1");
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (prm_429 == 0)
+        if (player_id == 0)
         {
-            pos(card_at_cardcontrol(3, prm_428) - 8,
-                card_at_cardcontrol(4, prm_428) - 8);
+            pos(card_at_cardcontrol(3, card_index) - 8,
+                card_at_cardcontrol(4, card_index) - 8);
             gcopy(3, 528, 216, 80, 112);
         }
         else
         {
-            pos(card_at_cardcontrol(3, prm_428),
-                card_at_cardcontrol(4, prm_428));
+            pos(card_at_cardcontrol(3, card_index),
+                card_at_cardcontrol(4, card_index));
             gcopy(
                 4,
-                card_at_cardcontrol(3, prm_428) - wx - 4,
-                card_at_cardcontrol(4, prm_428) - wy - 4,
+                card_at_cardcontrol(3, card_index) - wx - 4,
+                card_at_cardcontrol(4, card_index) - wy - 4,
                 80,
                 112);
         }
-        pos(card_at_cardcontrol(3, prm_428) + 32,
-            card_at_cardcontrol(4, prm_428) + 48);
+        pos(card_at_cardcontrol(3, card_index) + 32,
+            card_at_cardcontrol(4, card_index) + 48);
         gmode(2);
         gcopy_c(3, 736, 216, 64, 96, 64 - cnt * 14, 96);
         await(10);
         redraw();
     }
-    card_at_cardcontrol(2, prm_428) = 0;
-    showcard2(prm_428, !prm_429);
+    card_at_cardcontrol(2, card_index) = 0;
+    showcard2(card_index, !player_id);
     redraw();
-    return prm_428;
+    return card_index;
 }
 
-int trashcard(int prm_430)
+
+
+int trashcard(int card_index)
 {
     for (int cnt = 0; cnt < 21; ++cnt)
     {
-        pos(card_at_cardcontrol(3, prm_430) - 8,
-            card_at_cardcontrol(4, prm_430) - 8);
+        pos(card_at_cardcontrol(3, card_index) - 8,
+            card_at_cardcontrol(4, card_index) - 8);
         gcopy(3, 528, 216, 80, 112);
         gmode(2);
         if (cnt == 20)
@@ -354,8 +365,8 @@ int trashcard(int prm_430)
             redraw();
             break;
         }
-        pos(card_at_cardcontrol(3, prm_430) + 32,
-            card_at_cardcontrol(4, prm_430) + 48);
+        pos(card_at_cardcontrol(3, card_index) + 32,
+            card_at_cardcontrol(4, card_index) + 48);
         grotate(
             3, 736, 216, 64, 96, 64 - cnt * 3, 96 - cnt * 4, 0.015 * cnt * cnt);
         await(10);
@@ -370,16 +381,18 @@ int trashcard(int prm_430)
              ++cnt)
         {
             if (cardplayer_at_cardcontrol(10 + cnt, p_at_cardcontrol) ==
-                prm_430)
+                card_index)
             {
                 cardplayer_at_cardcontrol(10 + cnt, p_at_cardcontrol) = -1;
             }
         }
     }
-    return prm_430;
+    return card_index;
 }
 
-int cpscore(int prm_431)
+
+
+int cpscore(int player_id)
 {
     int ace_at_cardcontrol = 0;
     i_at_cardcontrol = 0;
@@ -387,7 +400,7 @@ int cpscore(int prm_431)
     for (int cnt = 0, cnt_end = (cardholdermax_at_cardcontrol); cnt < cnt_end;
          ++cnt)
     {
-        c_at_cardcontrol = cardplayer_at_cardcontrol(10 + cnt, prm_431);
+        c_at_cardcontrol = cardplayer_at_cardcontrol(10 + cnt, player_id);
         if (c_at_cardcontrol == -1)
         {
             break;
@@ -414,28 +427,32 @@ int cpscore(int prm_431)
     return i_at_cardcontrol;
 }
 
-int lastcard(int prm_432)
+
+
+int lastcard(int player_id)
 {
     c_at_cardcontrol = 0;
     for (int cnt = 0, cnt_end = (cardholdermax_at_cardcontrol); cnt < cnt_end;
          ++cnt)
     {
-        if (cardplayer_at_cardcontrol(10 + cnt, prm_432) == -1)
+        if (cardplayer_at_cardcontrol(10 + cnt, player_id) == -1)
         {
             break;
         }
-        c_at_cardcontrol = cardplayer_at_cardcontrol(10 + cnt, prm_432);
+        c_at_cardcontrol = cardplayer_at_cardcontrol(10 + cnt, player_id);
     }
     return c_at_cardcontrol;
 }
 
-int cpblackcard(int prm_433)
+
+
+int cpblackcard(int player_id)
 {
     c_at_cardcontrol = 0;
     for (int cnt = 0, cnt_end = (cardholdermax_at_cardcontrol); cnt < cnt_end;
          ++cnt)
     {
-        c_at_cardcontrol = cardplayer_at_cardcontrol(10 + cnt, prm_433);
+        c_at_cardcontrol = cardplayer_at_cardcontrol(10 + cnt, player_id);
         if (card_at_cardcontrol(2, c_at_cardcontrol) == 1)
         {
             break;
@@ -444,19 +461,23 @@ int cpblackcard(int prm_433)
     return c_at_cardcontrol;
 }
 
-int cpcardnum(int prm_434)
+
+
+int cpcardnum(int player_id)
 {
     c_at_cardcontrol = 0;
     for (int cnt = 0, cnt_end = (cardholdermax_at_cardcontrol); cnt < cnt_end;
          ++cnt)
     {
-        if (cardplayer_at_cardcontrol(10 + cnt, prm_434) != -1)
+        if (cardplayer_at_cardcontrol(10 + cnt, player_id) != -1)
         {
             ++c_at_cardcontrol;
         }
     }
     return c_at_cardcontrol;
 }
+
+
 
 int pileremain()
 {
@@ -470,6 +491,5 @@ int pileremain()
     }
     return p_at_cardcontrol;
 }
-
 
 } // namespace elona

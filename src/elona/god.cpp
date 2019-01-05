@@ -89,8 +89,9 @@ void txtgod(const GodId& id, int type)
 
 
 
-int modpiety(int prm_1035)
+void god_modify_piety(int amount)
 {
+    // Check the degree of the piety.
     if (game_data.god_rank == 4)
     {
         if (cdata.player().piety_point >= 4000)
@@ -115,14 +116,20 @@ int modpiety(int prm_1035)
             txtgod(cdata.player().god_id, 7);
         }
     }
+
+    // Faith skill is not enough.
     if (sdata(181, 0) * 100 < cdata.player().piety_point)
     {
         txt(i18n::s.get("core.locale.god.indifferent"));
-        return 0;
+        return;
     }
-    cdata.player().piety_point += prm_1035 /
-        (1 + (game_data.current_map == mdata_t::MapId::show_house) * 9);
-    return 1;
+
+    // Modify the piety.
+    if (game_data.current_map == mdata_t::MapId::show_house)
+    {
+        amount /= 10;
+    }
+    cdata.player().piety_point += amount;
 }
 
 

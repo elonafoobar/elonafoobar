@@ -104,6 +104,8 @@ after_build:
   - rd /q /s bin\Elona_foobar\graphic
   - rd /q /s bin\Elona_foobar\original
   - rd /q /s bin\Elona_foobar\sound
+  - rd /q /s bin\Elona_foobar\tests
+  - rd /q /s bin\Elona_foobar\tmp
   - rd /q /s bin\Elona_foobar\user
   - xcopy /s /e /y runtime\* bin\Elona_foobar
   - cd bin

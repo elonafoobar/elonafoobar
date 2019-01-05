@@ -73,9 +73,9 @@ void create_adventurer()
 }
 
 
-int advfavoriteskill(int prm_868)
+int advfavoriteskill(int seed)
 {
-    randomize(prm_868);
+    randomize(seed);
     rtval = 0;
     i_at_m145 = 0;
     while (1)
@@ -97,19 +97,18 @@ int advfavoriteskill(int prm_868)
 
 
 
-int advfavoritestat(int prm_869)
+int advfavoritestat(int seed)
 {
-    randomize(prm_869);
+    randomize(seed);
     i_at_m145 = rnd(8) + 10;
     randomize();
     return i_at_m145;
 }
 
-void addnews2(const std::string& prm_401, int prm_402)
+void addnews2(const std::string& news_content, int show_message)
 {
-    std::string n_at_m36;
-    n_at_m36 = prm_401;
-    if (prm_402)
+    std::string n_at_m36 = news_content;
+    if (show_message)
     {
         txt(u8"[News] "s + n_at_m36, Message::color{ColorIndex::light_brown});
     }
@@ -119,12 +118,12 @@ void addnews2(const std::string& prm_401, int prm_402)
 
 
 
-void addnewstopic(const std::string& prm_403, const std::string& prm_404)
+void addnewstopic(const std::string& mark, const std::string& news_content)
 {
     addnews2(
-        prm_403 + u8" "s + game_data.date.year + u8"/"s + game_data.date.month +
+        mark + u8" "s + game_data.date.year + u8"/"s + game_data.date.month +
         u8"/"s + game_data.date.day + u8" h"s + game_data.date.hour + ""s +
-        u8" "s + prm_404);
+        u8" "s + news_content);
 }
 
 

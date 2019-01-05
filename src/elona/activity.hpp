@@ -7,8 +7,8 @@ namespace elona
 
 struct Character;
 
-void rowact_check(int = 0);
-void rowact_item(int = 0);
+void rowact_check(int chara_index);
+void rowact_item(int item_index);
 
 void activity_handle_damage(Character&);
 optional<TurnResult> activity_proc(Character&);

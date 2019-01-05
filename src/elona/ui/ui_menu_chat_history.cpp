@@ -9,7 +9,7 @@ namespace
 
 void _load_chat_history()
 {
-    std::string scroll_text = i18n::s.get("core.locale.ui.message.hit_any_key");
+    std::string scroll_text = i18n::s.get("core.locale.ui.chat.key_hint");
     showscroll(scroll_text, wx, wy, ww, wh);
 }
 

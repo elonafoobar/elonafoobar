@@ -988,15 +988,12 @@ TalkResult talk_ally_silence()
     if (cdata[tc].is_silent() == 0)
     {
         cdata[tc].is_silent() = true;
-        buff = u8"("s +
-            i18n::s.get("core.locale.talk.npc.ally.silence.start", cdata[tc]) +
-            u8")"s;
+        buff =
+            i18n::s.get("core.locale.talk.npc.ally.silence.start", cdata[tc]);
     }
     else
     {
-        buff = u8"("s +
-            i18n::s.get("core.locale.talk.npc.ally.silence.stop", cdata[tc]) +
-            u8")"s;
+        buff = i18n::s.get("core.locale.talk.npc.ally.silence.stop", cdata[tc]);
         cdata[tc].is_silent() = false;
     }
     return TalkResult::talk_npc;
@@ -1760,6 +1757,26 @@ TalkResult talk_quest_giver()
 }
 
 
+
+/// Check whether character at `chara_index` is one of the targets of the
+/// trading quests you are taking now.
+bool _talk_check_trade(int chara_index)
+{
+    for (const auto& quest_index : game_data.taken_quests)
+    {
+        const auto& quest = quest_data[quest_index];
+        if (quest.progress == 1 &&
+            quest.originating_map_id == game_data.current_map &&
+            game_data.current_dungeon_level == 1 &&
+            chara_index == quest.target_chara_index)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 } // namespace
 
 void talk_wrapper(TalkResult initial)
@@ -2059,8 +2076,7 @@ TalkResult talk_npc()
             46,
             i18n::s.get("core.locale.talk.npc.sister.choices.buy_indulgence"));
     }
-    int stat = talk_check_trade(tc);
-    if (stat)
+    if (_talk_check_trade(tc))
     {
         ELONA_APPEND_RESPONSE(
             20, i18n::s.get("core.locale.talk.npc.common.choices.trade"));
@@ -2208,7 +2224,7 @@ TalkResult talk_npc()
                 {
                     continue;
                 }
-                if (ibit(13, cnt))
+                if (inv[cnt].is_marked_as_no_drop())
                 {
                     continue;
                 }

@@ -247,15 +247,7 @@ end
 --- Exchanges the positions of two handles and updates their __index
 --- fields with the new values. Both handles must be valid.
 function Handle.swap_handles(cpp_ref_a, cpp_ref_b, kind)
-   local handle_a = handles_by_index[kind][cpp_ref_a.index]
-   local handle_b = handles_by_index[kind][cpp_ref_b.index]
-   assert(Handle.is_valid(handle_a))
-   assert(Handle.is_valid(handle_b))
-
-   handle_b.__index = cpp_ref_a.index
-   handle_a.__index = cpp_ref_b.index
-   handles_by_index[kind][cpp_ref_a.index] = handle_b
-   handles_by_index[kind][cpp_ref_b.index] = handle_a
+   -- Do nothing.
 end
 
 

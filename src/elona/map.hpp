@@ -21,8 +21,8 @@ struct MapData
     int height{};
     int atlas_number{};
     int next_regenerate_date{};
-    int stair_up_pos{};
     int stair_down_pos{};
+    int stair_up_pos{};
     int type{};
     int refresh_type{};
     int designated_spawns{};
@@ -152,6 +152,12 @@ struct Cell
     void unpack_from(elona_vector3<int>& legacy_map, int x, int y);
 
     /**
+     * Moves part of `map` fields into this struct. To be called after
+     * deserializing `map`.
+     */
+    void partly_unpack_from(elona_vector3<int>& legacy_map, int x, int y);
+
+    /**
      * Clear this Cell.
      */
     void clear();
@@ -193,8 +199,10 @@ struct CellData
     void pack_to(elona_vector3<int>& legacy_map);
 
 
-    // Helper method to unpack all cell data from `map`.
-    void unpack_from(elona_vector3<int>& legacy_map);
+    /// Helper method to unpack all cell data from `map`.
+    /// @param clear Whether the previous data is cleared or not. If it is true,
+    /// the size of `map` must be the same as the previous one.
+    void unpack_from(elona_vector3<int>& legacy_map, bool clear = true);
 
 
 private:
@@ -228,7 +236,6 @@ bool map_villagers_make_snowmen();
 bool map_can_use_bad_weather_in_study();
 int map_random_site_amount();
 
-void map_randsite(int = 0, int = 0);
 void map_proc_regen_and_update();
 void map_reload_noyel();
 

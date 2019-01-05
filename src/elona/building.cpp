@@ -1,4 +1,5 @@
 #include "building.hpp"
+#include "../util/range.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
@@ -97,10 +98,7 @@ void prepare_house_board_tiles()
             }
         }
         ++p(1);
-        if (std::find(
-                std::begin(unavailable_tiles),
-                std::end(unavailable_tiles),
-                p(1)) != std::end(unavailable_tiles))
+        if (range::find(unavailable_tiles, p(1)) != std::end(unavailable_tiles))
         {
             continue;
         }
@@ -154,10 +152,9 @@ void add_heirloom_if_valuable_enough(
         heirlooms.back() = {heirloom.index, value};
         // Sort by value in descending order. The first item is the most
         // valuable one.
-        std::sort(
-            std::begin(heirlooms),
-            std::end(heirlooms),
-            [](const auto& a, const auto& b) { return a.second > b.second; });
+        range::sort(heirlooms, [](const auto& a, const auto& b) {
+            return a.second > b.second;
+        });
     }
 }
 
@@ -318,26 +315,26 @@ TurnResult build_new_building()
     return TurnResult::turn_end;
 }
 
-void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
+void addbuilding(int related_town_quest_id, int building_type, int x, int y)
 {
-    int p_at_m194 = 0;
-    p_at_m194 = -1;
-    for (int cnt = 0; cnt < 10; ++cnt)
+    int slot = -1;
+    for (int i = 0; i < 10; ++i)
     {
-        if (bddata(0, prm_1082, cnt) == 0)
+        if (bddata(0, related_town_quest_id, i) == 0)
         {
-            p_at_m194 = cnt;
+            slot = i;
             break;
         }
     }
-    if (p_at_m194 == -1)
+    if (slot == -1)
     {
         return;
     }
-    bddata(0, prm_1082, p_at_m194) = prm_1083;
-    bddata(1, prm_1082, p_at_m194) = prm_1084;
-    bddata(2, prm_1082, p_at_m194) = prm_1085;
-    bddata(3, prm_1082, p_at_m194) = bdref(0, prm_1083) + 363;
+
+    bddata(0, related_town_quest_id, slot) = building_type;
+    bddata(1, related_town_quest_id, slot) = x;
+    bddata(2, related_town_quest_id, slot) = y;
+    bddata(3, related_town_quest_id, slot) = bdref(0, building_type) + 363;
 }
 
 TurnResult show_house_board()

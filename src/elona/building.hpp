@@ -8,7 +8,7 @@ enum class TurnResult;
 void initialize_home_adata();
 TurnResult build_new_building();
 TurnResult show_house_board();
-void addbuilding(int = 0, int = 0, int = 0, int = 0);
+void addbuilding(int related_town_quest_id, int building_type, int x, int y);
 void start_home_map_mode();
 void show_home_value();
 void show_shop_log();

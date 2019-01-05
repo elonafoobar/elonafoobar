@@ -1,3 +1,4 @@
+#include "../util/strutil.hpp"
 #include "area.hpp"
 #include "character.hpp"
 #include "data/types/type_ability.hpp"
@@ -367,15 +368,12 @@ std::string mapname(int id, bool description)
 
 
 
-std::string txtbuilding(int prm_368, int prm_369)
+std::string txtbuilding(int x, int y)
 {
-    int p_at_m32 = 0;
-    std::string s_at_m32;
-    p_at_m32 = bddata(0, prm_368, prm_369);
-    s_at_m32 = i18n::s.get(
+    const auto type = bddata(0, x, y);
+    return i18n::s.get(
         "core.locale.map.you_see",
-        i18n::s.get_enum("core.locale.map.misc_location", p_at_m32));
-    return s_at_m32;
+        i18n::s.get_enum("core.locale.map.misc_location", type));
 }
 
 
@@ -2176,7 +2174,7 @@ std::string randomname()
 
 
 
-std::string random_title(int prm_439)
+std::string random_title(RandomTitleType type)
 {
     std::string ret;
 
@@ -2194,7 +2192,8 @@ redo:
         }
     }
 
-    if (prm_439 == 1 || prm_439 == 3)
+    if (type == RandomTitleType::weapon ||
+        type == RandomTitleType::living_weapon)
     {
         if (rnlist(14, p_at_m41(2)) == u8"具"s)
         {
@@ -2328,7 +2327,7 @@ redo:
 
 skip:
 
-    if (prm_439 == 2)
+    if (type == RandomTitleType::party)
     {
         if (jp)
         {

@@ -209,7 +209,8 @@ ui/ui_menu_composite_message.cpp \
 ui/ui_menu_composite_skills.cpp \
 ui/ui_menu_composite_town.cpp \
  \
-version.cpp \
+../version.cpp
+
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)

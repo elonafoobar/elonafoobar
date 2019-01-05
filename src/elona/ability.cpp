@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "../util/range.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -7,7 +8,6 @@
 #include "i18n.hpp"
 #include "message.hpp"
 #include "random.hpp"
-#include "range.hpp"
 #include "variables.hpp"
 
 using namespace elona;

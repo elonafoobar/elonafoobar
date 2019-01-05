@@ -1079,7 +1079,7 @@ TurnResult do_offer_command()
         }
         if (f == 1)
         {
-            modpiety(i * 5);
+            god_modify_piety(i * 5);
             cdata.player().praying_point += i * 30;
             animode = 100;
             MiracleAnimation().play();
@@ -1128,7 +1128,7 @@ TurnResult do_offer_command()
             txt(i18n::s.get("core.locale.action.offer.result.poor", inv[ci]),
                 Message::color{ColorIndex::green});
         }
-        modpiety(i);
+        god_modify_piety(i);
         cdata.player().praying_point += i * 7;
     }
     inv[ci].modify_number((-inv[ci].number()));
@@ -1425,7 +1425,7 @@ TurnResult do_dip_command()
             {
                 dipcursed(ci);
             }
-            ibitmod(14, ci, 1);
+            inv[ci].is_poisoned() = true;
             return TurnResult::turn_end;
         }
     }
@@ -1444,7 +1444,7 @@ TurnResult do_dip_command()
             {
                 dipcursed(ci);
             }
-            ibitmod(6, ci, 1);
+            inv[ci].is_aphrodisiac() = true;
             return TurnResult::turn_end;
         }
     }
@@ -1468,7 +1468,7 @@ TurnResult do_dip_command()
         }
         if (inv[ci].body_part != 0)
         {
-            create_pcpic(cc, true);
+            create_pcpic(cc);
         }
         return TurnResult::turn_end;
     }
@@ -1491,7 +1491,7 @@ TurnResult do_dip_command()
         }
         else
         {
-            ibitmod(1, ci, 1);
+            inv[ci].is_acidproof() = true;
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_acidproof", inv[ci]));
         }
@@ -1521,7 +1521,7 @@ TurnResult do_dip_command()
         }
         else
         {
-            ibitmod(2, ci, 1);
+            inv[ci].is_fireproof() = true;
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
@@ -1582,7 +1582,7 @@ TurnResult do_use_command()
         }
     }
 
-    if (ibit(7, ci) == 1)
+    if (inv[ci].has_cooldown_time())
     {
         if (game_data.date.hours() < inv[ci].count)
         {
@@ -1595,7 +1595,7 @@ TurnResult do_use_command()
         item_separate(ci);
         inv[ci].count = game_data.date.hours() + inv[ci].param3;
     }
-    if (ibit(4, ci) == 1)
+    if (inv[ci].has_charge())
     {
         if (inv[ci].count <= 0)
         {
@@ -1646,7 +1646,7 @@ TurnResult do_use_command()
         crafting_menu();
         return TurnResult::turn_end;
     }
-    if (ibit(10, ci))
+    if (inv[ci].is_alive())
     {
         if (inv[ci].param2 < calcexpalive(inv[ci].param1))
         {
@@ -2626,8 +2626,15 @@ label_2229_internal:
     return TurnResult::turn_end;
 }
 
-TurnResult do_open_command()
+TurnResult do_open_command(bool play_sound)
 {
+    const auto snd_ = [play_sound](const char* id) {
+        if (play_sound)
+        {
+            snd(id);
+        }
+    };
+
     int refweight = 0;
     if (inv[ci].id == 361)
     {
@@ -2635,7 +2642,7 @@ TurnResult do_open_command()
         invctrl(0) = 22;
         invctrl(1) = 0;
         invfile = inv[ci].param1;
-        snd("core.chest1");
+        snd_("core.chest1");
         shop_sell_item();
         screenupdate = -1;
         update_screen();
@@ -2645,7 +2652,7 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
-        snd("core.inv");
+        snd_("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -2654,7 +2661,7 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
-        snd("core.inv");
+        snd_("core.inv");
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
@@ -2663,13 +2670,13 @@ TurnResult do_open_command()
     {
         invctrl(0) = 24;
         invctrl(1) = 8;
-        snd("core.inv");
+        snd_("core.inv");
         ctrl_inventory();
         return TurnResult::turn_end;
     }
     if (inv[ci].id == 600)
     {
-        snd("core.locked1");
+        snd_("core.locked1");
         txt(i18n::s.get("core.locale.action.open.shackle.text"));
         if (game_data.current_map == mdata_t::MapId::noyel)
         {
@@ -2767,7 +2774,7 @@ TurnResult do_open_command()
             invctrl(1) = 3;
         }
         mode = 6;
-        snd("core.inv");
+        snd_("core.inv");
         ctrl_inventory();
         invcontainer = 0;
         if (refweight == -1)

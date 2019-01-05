@@ -105,7 +105,6 @@ END
         dump_player_info = "Dump Player Info"
         enable_voldemort = "Enable Voldemort"
         reload_autopick = "Reload Autopick"
-        auto_action = "Auto Action"
 
         wizard_toggle_console = "Toggle Console"
         wizard_open_console = "Open Console"

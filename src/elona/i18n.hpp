@@ -5,6 +5,7 @@
 #include <vector>
 #include "../thirdparty/microhil/hil.hpp"
 #include "../thirdparty/sol2/sol.hpp"
+#include "../util/strutil.hpp"
 #include "character.hpp"
 #include "filesystem.hpp"
 #include "hcl.hpp"

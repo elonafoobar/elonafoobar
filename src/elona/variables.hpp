@@ -855,7 +855,7 @@ int drink_well();
 int read_scroll();
 int do_zap();
 int do_magic_attempt();
-int pick_up_item();
+int pick_up_item(bool play_sound = true);
 int unlock_box(int);
 void do_ranged_attack();
 
@@ -960,7 +960,6 @@ int map_barrel(int = 0, int = 0);
 int map_connectroom();
 int map_createroom(int = 0);
 int map_digcheck(int = 0, int = 0);
-int map_digtoentrance1(int = 0, int = 0, int = 0, int = 0, int = 0);
 int map_placedownstairs(int = 0, int = 0);
 int map_placeupstairs(int = 0, int = 0);
 int map_trap(int = 0, int = 0, int = 0, int = 0);
@@ -1036,7 +1035,7 @@ int ai_dir_check_2();
 //// UI
 void help_halt();
 int winposy(int = 0, int = 0);
-void txttargetnpc(int = 0, int = 0, int = 0);
+void txttargetnpc(int x, int y);
 
 // character sheet
 void append_accuracy_info(int);
@@ -1075,7 +1074,14 @@ void fix_input_chat2(std::string&);
 
 // Text generation
 std::string randomname();
-std::string random_title(int = 0);
+enum class RandomTitleType
+{
+    character,
+    weapon,
+    party,
+    living_weapon,
+};
+std::string random_title(RandomTitleType type = RandomTitleType::character);
 
 // Text fragments
 std::string cnvarticle(const std::string&);
@@ -1090,7 +1096,7 @@ std::string cnvweight(int = 0);
 
 // Whole message creation
 std::string getnpctxt(const std::string&, const std::string&);
-std::string txtbuilding(int = 0, int = 0);
+std::string txtbuilding(int x, int y);
 std::string txtitemoncell(int = 0, int = 0);
 std::string txtskillchange(int, int, bool);
 std::string txttargetlevel(int, int);

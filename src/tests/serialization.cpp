@@ -40,7 +40,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     int number = 3;
     REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, x, y, number));
     int index = elona::ci;
-    ibitmod(6, index, 1);
+    elona::inv[index].is_aphrodisiac() = true;
     elona::inv[index].curse_state = CurseState::blessed;
 
     save_and_reload();
@@ -50,7 +50,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     REQUIRE(elona::inv[index].position.x == 4);
     REQUIRE(elona::inv[index].position.y == 8);
     REQUIRE(elona::inv[index].curse_state == CurseState::blessed);
-    REQUIRE(elona::ibit(6, index) == 1);
+    REQUIRE(elona::inv[index].is_aphrodisiac());
     REQUIRE(itemname(index) == u8"3個のプチトロ(媚薬混入)");
 }
 

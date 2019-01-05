@@ -1,4 +1,5 @@
 #include "ui.hpp"
+#include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
@@ -2136,28 +2137,28 @@ void render_fishing_animation()
 
 
 void display_window2(
-    int prm_662,
-    int prm_663,
-    int prm_664,
-    int prm_665,
-    int prm_666,
-    int prm_667)
+    int x,
+    int y,
+    int width,
+    int height,
+    int buffer_id,
+    int y_offset)
 {
     gmode(2);
-    pos(prm_662, prm_663);
-    gcopy(prm_666, 0, 0, prm_664, prm_665);
+    pos(x, y);
+    gcopy(buffer_id, 0, 0, width, height);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (s != ""s)
     {
-        pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
-            prm_663 + prm_665 - 24 - prm_665 % 8 + prm_667);
+        pos(x + width - strlen_u(s) * 7 - 140,
+            y + height - 24 - height % 8 + y_offset);
         mes(s);
     }
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        pos(prm_662 + prm_664 - strlen_u(s) * 7 - 40,
-            prm_663 + prm_665 - 24 - prm_665 % 8 + prm_667);
+        pos(x + width - strlen_u(s) * 7 - 40,
+            y + height - 24 - height % 8 + y_offset);
         mes(s);
     }
 }
@@ -2169,8 +2170,8 @@ void display_window(
     int window_y,
     int window_width,
     int window_height,
-    int prm_672,
-    int prm_673)
+    int x_offset,
+    int y_offset)
 {
     if (windowshadow == 1)
     {
@@ -2196,16 +2197,16 @@ void display_window(
     gmode(2);
     draw(
         "tip_icon",
-        window_x + 30 + prm_672,
+        window_x + 30 + x_offset,
         window_y + window_height - 47 - window_height % 8);
     line(
-        window_x + 50 + prm_672,
+        window_x + 50 + x_offset,
         window_y + window_height - 48 - window_height % 8,
         window_x + window_width - 40,
         window_y + window_height - 48 - window_height % 8,
         {194, 170, 146});
     line(
-        window_x + 50 + prm_672,
+        window_x + 50 + x_offset,
         window_y + window_height - 49 - window_height % 8,
         window_x + window_width - 40,
         window_y + window_height - 49 - window_height % 8,
@@ -2219,14 +2220,14 @@ void display_window(
         {255, 255, 255},
         {20, 10, 0});
     font(12 + sizefix - en * 2);
-    pos(window_x + 58 + prm_672,
+    pos(window_x + 58 + x_offset,
         window_y + window_height - 43 - window_height % 8);
     mes(s(1));
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(window_x + window_width - strlen_u(s) * 7 - 40 - prm_673,
+        pos(window_x + window_width - strlen_u(s) * 7 - 40 - y_offset,
             window_y + window_height - 65 - window_height % 8);
         mes(s);
     }
@@ -2238,11 +2239,11 @@ void display_window(
 
 
 
-void display_note(const std::string& prm_674, int prm_675)
+void display_note(const std::string& text, int x_offset)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(wx + ww - strlen_u(prm_674) * 7 - 140 - prm_675, wy + wh - 65 - wh % 8);
-    mes(prm_674);
+    pos(wx + ww - strlen_u(text) * 7 - 140 - x_offset, wy + wh - 65 - wh % 8);
+    mes(text);
 }
 
 
@@ -2277,10 +2278,10 @@ void display_key(int x, int y, int nth)
 
 
 
-void display_msg(int prm_680, int prm_681)
+void display_msg(int msgkeep_, int msgy_)
 {
-    msgkeep = prm_681;
-    msgy = prm_680;
+    msgkeep = msgkeep_;
+    msgy = msgy_;
 }
 
 
@@ -2471,7 +2472,7 @@ void cs_list(
             case CurseState::blessed: color(10, 110, 30); break;
             }
         }
-        if (ibit(13, ci))
+        if (inv[ci].is_marked_as_no_drop())
         {
             color(120, 80, 0);
         }

@@ -23,13 +23,13 @@ bool event_was_set()
     return evnum != 0;
 }
 
-int event_find(int prm_288)
+int event_find(int event_type)
 {
     int f_at_m17 = 0;
     f_at_m17 = 0;
     for (int cnt = 0, cnt_end = (evnum); cnt < cnt_end; ++cnt)
     {
-        if (evlist(cnt) == prm_288)
+        if (evlist(cnt) == event_type)
         {
             f_at_m17 = 1;
         }
@@ -37,22 +37,22 @@ int event_find(int prm_288)
     return f_at_m17;
 }
 
-void event_add(int prm_289, int prm_290, int prm_291)
+void event_add(int event_type, int info1, int info2)
 {
     if (evproc)
     {
         evlist(evnum) = evlist(evnum - 1);
         evdata1(evnum) = evdata1(evnum - 1);
         evdata2(evnum) = evdata2(evnum - 1);
-        evlist(evnum - 1) = prm_289;
-        evdata1(evnum - 1) = prm_290;
-        evdata2(evnum - 1) = prm_291;
+        evlist(evnum - 1) = event_type;
+        evdata1(evnum - 1) = info1;
+        evdata2(evnum - 1) = info2;
     }
     else
     {
-        evlist(evnum) = prm_289;
-        evdata1(evnum) = prm_290;
-        evdata2(evnum) = prm_291;
+        evlist(evnum) = event_type;
+        evdata1(evnum) = info1;
+        evdata2(evnum) = info2;
     }
     ++evnum;
 }

@@ -180,7 +180,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         return none;
     }
 
-    if (action == "auto_action")
+    if (action == "enter")
     {
         action = "search";
         cell_featread(cdata[cc].position.x, cdata[cc].position.y);
@@ -306,7 +306,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         await(100);
     }
 
-    // TODO
     if (key != ""s)
     {
         const auto angband_result = check_angband();

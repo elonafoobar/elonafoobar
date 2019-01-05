@@ -1,5 +1,8 @@
 #include "init.hpp"
 #include "../snail/touch_input.hpp"
+#include "../util/fileutil.hpp"
+#include "../util/range.hpp"
+#include "../version.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
@@ -36,7 +39,6 @@
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
-#include "main.hpp"
 #include "main_menu.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -45,13 +47,11 @@
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
-#include "range.hpp"
 #include "save.hpp"
 #include "trait.hpp"
 #include "turn_sequence.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include "version.hpp"
 
 
 using namespace elona;
@@ -312,6 +312,8 @@ void initialize_elona()
     redraw();
     buffer(3, 1440, 800);
     picload(filesystem::dir::graphic() / u8"interface.bmp", 1);
+
+    mesbox(keylog);
 
     pos(0, 656);
     picload(filesystem::dir::graphic() / u8"interface_ex1.png", 1);
@@ -791,7 +793,7 @@ void initialize_debug_globals()
         mat(cnt) = 200;
     }
     create_all_adventurers();
-    create_pcpic(0, true);
+    create_pcpic(0);
     cdatan(1, 0) = random_title();
     cdatan(0, 0) = randomname();
 }

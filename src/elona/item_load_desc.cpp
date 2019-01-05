@@ -1,10 +1,10 @@
+#include "../util/strutil.hpp"
 #include "calc.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "util.hpp"
 
 namespace elona
 {
@@ -122,38 +122,38 @@ static void _load_item_stat_text(int ci, int& p)
             i18n::s.get("core.locale.item.desc.speeds_up_ether_disease");
         ++p;
     }
-    if (ibit(1, ci))
+    if (inv[ci].is_acidproof())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.acidproof");
         ++p;
     }
-    if (ibit(2, ci))
+    if (inv[ci].is_fireproof())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.fireproof");
         ++p;
     }
-    if (ibit(5, ci))
+    if (inv[ci].is_precious())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.precious");
         ++p;
     }
-    if (ibit(8, ci))
+    if (inv[ci].is_blessed_by_ehekatl())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) =
             i18n::s.get("core.locale.item.desc.bit.blessed_by_ehekatl");
         ++p;
     }
-    if (ibit(9, ci))
+    if (inv[ci].is_stolen())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.stolen");
         ++p;
     }
-    if (ibit(10, ci))
+    if (inv[ci].is_alive())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.alive") +
@@ -162,13 +162,13 @@ static void _load_item_stat_text(int ci, int& p)
             u8"%]"s;
         ++p;
     }
-    if (ibit(16, ci))
+    if (inv[ci].is_showroom_only())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.show_room_only");
         ++p;
     }
-    if (ibit(17, ci))
+    if (inv[ci].is_handmade())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.handmade");
@@ -271,7 +271,7 @@ static void _load_item_enchantment_desc(int ci, int& p)
         }
         ++p;
     }
-    if (ibit(15, ci))
+    if (inv[ci].is_eternal_force())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::enchantment);
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.eternal_force");

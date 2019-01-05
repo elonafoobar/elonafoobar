@@ -18,6 +18,134 @@
 
 
 
+namespace
+{
+
+void _map_randsite()
+{
+    optional<Position> pos;
+    for (int i = 0; i < 20; ++i)
+    {
+        const auto x = rnd(map_data.width - 5) + 2;
+        const auto y = rnd(map_data.height - 5) + 2;
+        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0)
+        {
+            if (cell_data.at(x, y).feats == 0 &&
+                cell_data.at(x, y).item_appearances_actual == 0)
+            {
+                pos = Position(x, y);
+                break;
+            }
+        }
+    }
+    if (!pos)
+    {
+        return;
+    }
+    if (map_data.type == mdata_t::MapType::world_map)
+    {
+        if ((264 <= cell_data.at(pos->x, pos->y).chip_id_actual &&
+             cell_data.at(pos->x, pos->y).chip_id_actual < 363) ||
+            (33 <= cell_data.at(pos->x, pos->y).chip_id_actual &&
+             cell_data.at(pos->x, pos->y).chip_id_actual < 66))
+        {
+            return;
+        }
+    }
+
+    if (mdata_t::is_nefia(map_data.type))
+    {
+        if (map_data.next_regenerate_date == 0)
+        {
+            if (rnd(25) == 0)
+            {
+                flt();
+                itemcreate(-1, 173, pos->x, pos->y, 0);
+                inv[ci].own_state = 1;
+                return;
+            }
+            if (rnd(100) == 0)
+            {
+                flt();
+                itemcreate(-1, 172, pos->x, pos->y, 0);
+                inv[ci].own_state = 1;
+                inv[ci].param1 = choice(isetgod);
+                return;
+            }
+        }
+    }
+
+    if (mdata_t::is_nefia(map_data.type))
+    {
+        if (rnd(14) == 0)
+        {
+            cell_featset(pos->x, pos->y, 243, 27);
+            return;
+        }
+        if (rnd(13) == 0)
+        {
+            cell_featset(pos->x, pos->y, 244, 25);
+            return;
+        }
+        if (rnd(12) == 0)
+        {
+            cell_featset(pos->x, pos->y, 245, 26);
+            return;
+        }
+        if (rnd(11) == 0)
+        {
+            cell_featset(pos->x, pos->y, 246, 28);
+            return;
+        }
+        cell_featset(pos->x, pos->y, tile_re + rnd(3), 24);
+        return;
+    }
+
+    if (map_is_town_or_guild())
+    {
+        if (rnd(3) == 0)
+        {
+            flt();
+            itemcreate(-1, 631, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(15) == 0)
+        {
+            flt();
+            itemcreate(-1, 55, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(20) == 0)
+        {
+            flt();
+            itemcreate(-1, 284, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(15) == 0)
+        {
+            flt();
+            itemcreate(-1, 283, pos->x, pos->y, 0);
+            return;
+        }
+        if (rnd(18) == 0)
+        {
+            flt(calcobjlv(rnd(cdata.player().level + 10)),
+                calcfixlv(Quality::good));
+            flttypemajor = choice(fsetwear);
+            itemcreate(-1, 0, pos->x, pos->y, 0);
+            return;
+        }
+        flt(10);
+        flttypeminor = 64100;
+        itemcreate(-1, 0, pos->x, pos->y, 0);
+        return;
+    }
+}
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -35,8 +163,8 @@ CellData cell_data;
     SERIALIZE(1, height); \
     SERIALIZE(2, atlas_number); \
     SERIALIZE(3, next_regenerate_date); \
-    SERIALIZE(4, stair_up_pos); \
-    SERIALIZE(5, stair_down_pos); \
+    SERIALIZE(4, stair_down_pos); \
+    SERIALIZE(5, stair_up_pos); \
     SERIALIZE(6, type); \
     SERIALIZE(7, refresh_type); \
     SERIALIZE(8, designated_spawns); \
@@ -84,6 +212,8 @@ void MapData::clear()
     SERIALIZE(0, chip_id_actual); \
     SERIALIZE(1, chara_index_plus_one); \
     SERIALIZE(2, chip_id_memory); \
+    if (!all_fields) \
+        return; \
     /* 3 */ \
     SERIALIZE(4, item_appearances_actual); \
     SERIALIZE(5, item_appearances_memory); \
@@ -96,6 +226,7 @@ void MapData::clear()
 #define SERIALIZE MAP_PACK
 void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
 {
+    constexpr auto all_fields = true;
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
@@ -103,6 +234,13 @@ void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
 #define SERIALIZE MAP_UNPACK
 void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
 {
+    constexpr auto all_fields = true;
+    SERIALIZE_ALL();
+}
+
+void Cell::partly_unpack_from(elona_vector3<int>& legacy_map, int x, int y)
+{
+    constexpr auto all_fields = false;
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
@@ -157,15 +295,32 @@ void CellData::pack_to(elona_vector3<int>& legacy_map)
 
 
 
-void CellData::unpack_from(elona_vector3<int>& legacy_map)
+void CellData::unpack_from(elona_vector3<int>& legacy_map, bool clear)
 {
-    init(legacy_map.i_size(), legacy_map.j_size());
+    if (clear)
+    {
+        init(legacy_map.i_size(), legacy_map.j_size());
+    }
+    else
+    {
+        // In this case, the size of map must equal to the previous one.
+        assert(
+            legacy_map.i_size() == static_cast<size_t>(width_) &&
+            legacy_map.j_size() == static_cast<size_t>(height_));
+    }
 
     for (int y = 0; y < height_; y++)
     {
         for (int x = 0; x < width_; x++)
         {
-            at(x, y).unpack_from(legacy_map, x, y);
+            if (clear)
+            {
+                at(x, y).unpack_from(legacy_map, x, y);
+            }
+            else
+            {
+                at(x, y).partly_unpack_from(legacy_map, x, y);
+            }
         }
     }
 }
@@ -224,6 +379,7 @@ void map_reload(const std::string& map_filename)
         }
     }
 }
+
 
 
 // Used for huntex/conquer quests.
@@ -527,136 +683,6 @@ bool map_can_use_bad_weather_in_study()
 }
 
 
-void map_randsite(int prm_971, int prm_972)
-{
-    int f_at_m169 = 0;
-    int found_x;
-    int found_y;
-
-    f_at_m169 = 0;
-    for (int cnt = 0; cnt < 20; ++cnt)
-    {
-        if (prm_971 == 0)
-        {
-            found_x = rnd(map_data.width - 5) + 2;
-            found_y = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            found_x = prm_971;
-            found_y = prm_972;
-        }
-        if ((chipm(7, cell_data.at(found_x, found_y).chip_id_actual) & 4) == 0)
-        {
-            if (cell_data.at(found_x, found_y).feats == 0 &&
-                cell_data.at(found_x, found_y).item_appearances_actual == 0)
-            {
-                f_at_m169 = 1;
-                break;
-            }
-        }
-    }
-    if (map_data.type == mdata_t::MapType::world_map)
-    {
-        if ((264 <= cell_data.at(found_x, found_y).chip_id_actual &&
-             cell_data.at(found_x, found_y).chip_id_actual < 363) ||
-            (33 <= cell_data.at(found_x, found_y).chip_id_actual &&
-             cell_data.at(found_x, found_y).chip_id_actual < 66))
-        {
-            f_at_m169 = 0;
-        }
-    }
-    if (f_at_m169 == 0)
-    {
-        return;
-    }
-    if (mdata_t::is_nefia(map_data.type))
-    {
-        if (map_data.next_regenerate_date == 0)
-        {
-            if (rnd(25) == 0)
-            {
-                flt();
-                itemcreate(-1, 173, found_x, found_y, 0);
-                inv[ci].own_state = 1;
-                return;
-            }
-            if (rnd(100) == 0)
-            {
-                flt();
-                itemcreate(-1, 172, found_x, found_y, 0);
-                inv[ci].own_state = 1;
-                inv[ci].param1 = choice(isetgod);
-                return;
-            }
-        }
-    }
-    if (mdata_t::is_nefia(map_data.type))
-    {
-        if (rnd(14) == 0)
-        {
-            cell_featset(found_x, found_y, 243, 27);
-            return;
-        }
-        if (rnd(13) == 0)
-        {
-            cell_featset(found_x, found_y, 244, 25);
-            return;
-        }
-        if (rnd(12) == 0)
-        {
-            cell_featset(found_x, found_y, 245, 26);
-            return;
-        }
-        if (rnd(11) == 0)
-        {
-            cell_featset(found_x, found_y, 246, 28);
-            return;
-        }
-        cell_featset(found_x, found_y, tile_re + rnd(3), 24);
-        return;
-    }
-    if (map_is_town_or_guild())
-    {
-        if (rnd(3) == 0)
-        {
-            flt();
-            itemcreate(-1, 631, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(15) == 0)
-        {
-            flt();
-            itemcreate(-1, 55, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(20) == 0)
-        {
-            flt();
-            itemcreate(-1, 284, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(15) == 0)
-        {
-            flt();
-            itemcreate(-1, 283, found_x, found_y, 0);
-            return;
-        }
-        if (rnd(18) == 0)
-        {
-            flt(calcobjlv(rnd(cdata.player().level + 10)),
-                calcfixlv(Quality::good));
-            flttypemajor = choice(fsetwear);
-            itemcreate(-1, 0, found_x, found_y, 0);
-            return;
-        }
-        flt(10);
-        flttypeminor = 64100;
-        itemcreate(-1, 0, found_x, found_y, 0);
-        return;
-    }
-}
-
 
 static void _map_update_arena_random_seed()
 {
@@ -751,7 +777,7 @@ static void _set_feats_on_regenerate()
     p = map_random_site_amount();
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        map_randsite();
+        _map_randsite();
     }
 }
 
@@ -936,6 +962,7 @@ void map_proc_regen_and_update()
 }
 
 
+
 void map_reload_noyel()
 {
     for (const auto& cnt : items(-1))
@@ -948,7 +975,8 @@ void map_reload_noyel()
 
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
-    if (area_data[game_data.current_map].christmas_festival == 1)
+
+    if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
         int stat = itemcreate(-1, 763, 29, 16, 0);
@@ -1218,7 +1246,7 @@ void map_reload_noyel()
     {
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.only_christmas() == 1)
+            if (cnt.only_christmas())
             {
                 chara_vanquish(cnt.index);
             }

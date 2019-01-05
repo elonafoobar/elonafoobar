@@ -4,11 +4,11 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "../util/range.hpp"
 #include "data/types/type_character.hpp"
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
-#include "range.hpp"
 
 
 #define ELONA_MAX_CHARACTERS 245

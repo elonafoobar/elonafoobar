@@ -4,7 +4,6 @@
 #include "ai.hpp"
 #include "area.hpp"
 #include "audio.hpp"
-#include "autopick.hpp"
 #include "buff.hpp"
 #include "building.hpp"
 #include "character.hpp"
@@ -498,7 +497,7 @@ label_2689_internal:
                         {
                             if (inv[ci].own_state <= 0)
                             {
-                                if (ibit(5, ci) == 0)
+                                if (!inv[ci].is_precious())
                                 {
                                     if (map_data.type !=
                                         mdata_t::MapType::player_owned)
@@ -1570,11 +1569,10 @@ label_2747:
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
     await(Config::instance().wait1);
-    auto command =
-        InputContext::instance().check_for_command(KeyWaitDelay::walk_run);
+    auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
-    if (command == ""s)
+    if (command == ""s && key == ""s)
     {
         goto label_2747;
     }

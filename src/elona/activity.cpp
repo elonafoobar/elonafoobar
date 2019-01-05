@@ -30,21 +30,21 @@ namespace elona
 int digx = 0;
 int digy = 0;
 
-void rowact_check(int prm_789)
+void rowact_check(int chara_index)
 {
-    if (cdata[prm_789].continuous_action)
+    if (cdata[chara_index].continuous_action)
     {
-        if (cdata[prm_789].continuous_action.type !=
+        if (cdata[chara_index].continuous_action.type !=
             ContinuousAction::Type::travel)
         {
-            cdata[prm_789].stops_continuous_action_if_damaged = 1;
+            cdata[chara_index].stops_continuous_action_if_damaged = 1;
         }
     }
 }
 
 
 
-void rowact_item(int prm_790)
+void rowact_item(int item_index)
 {
     for (auto&& cc : cdata.all())
     {
@@ -59,7 +59,7 @@ void rowact_item(int prm_790)
         if (cc.continuous_action.type == ContinuousAction::Type::eat ||
             cc.continuous_action.type == ContinuousAction::Type::read)
         {
-            if (cc.continuous_action.item == prm_790)
+            if (cc.continuous_action.item == item_index)
             {
                 cdata[cc.index].continuous_action.finish();
                 txt(i18n::s.get("core.locale.activity.cancel.item", cc));
@@ -1247,7 +1247,7 @@ void continuous_action_others()
             {
                 f = 1;
             }
-            if (ibit(5, ci) == 1)
+            if (inv[ci].is_precious())
             {
                 if (f != 1)
                 {
@@ -1304,7 +1304,7 @@ void continuous_action_others()
                 "core.locale.action.pick_up.your_inventory_is_full"));
             return;
         }
-        ibitmod(12, ci, 0);
+        inv[ci].is_quest_target() = false;
         if (inv[ci].body_part != 0)
         {
             tc = inv_getowner(ci);
@@ -1319,7 +1319,7 @@ void continuous_action_others()
         }
         item_copy(ci, ti);
         inv[ti].set_number(in);
-        ibitmod(9, ti, 1);
+        inv[ti].is_stolen() = true;
         inv[ti].own_state = 0;
         inv[ci].modify_number((-in));
         if (inv[ci].number() <= 0)

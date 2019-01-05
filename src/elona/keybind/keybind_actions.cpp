@@ -30,10 +30,10 @@ void initialize_keybind_actions(ActionMap& actions)
     actions.emplace("south",                 Action{ActionCategory::default_,  {{Key::down,            ModKey::none}, {Key::keypad_2,     ModKey::none}}});
     actions.emplace("east",                  Action{ActionCategory::default_,  {{Key::left,            ModKey::none}, {Key::keypad_4,     ModKey::none}}});
     actions.emplace("west",                  Action{ActionCategory::default_,  {{Key::right,           ModKey::none}, {Key::keypad_6,     ModKey::none}}});
-    actions.emplace("northwest",             Action{ActionCategory::default_,  {{Key::pageup,          ModKey::none}, {Key::keypad_7,     ModKey::none}}});
-    actions.emplace("northeast",             Action{ActionCategory::default_,  {{Key::home,            ModKey::none}, {Key::keypad_9,     ModKey::none}}});
-    actions.emplace("southwest",             Action{ActionCategory::default_,  {{Key::pagedown,        ModKey::none}, {Key::keypad_1,     ModKey::none}}});
-    actions.emplace("southeast",             Action{ActionCategory::default_,  {{Key::end,             ModKey::none}, {Key::keypad_3,     ModKey::none}}});
+    actions.emplace("northwest",             Action{ActionCategory::default_,  {{Key::home,            ModKey::none}, {Key::keypad_7,     ModKey::none}}});
+    actions.emplace("northeast",             Action{ActionCategory::default_,  {{Key::pageup,          ModKey::none}, {Key::keypad_9,     ModKey::none}}});
+    actions.emplace("southwest",             Action{ActionCategory::default_,  {{Key::end,             ModKey::none}, {Key::keypad_1,     ModKey::none}}});
+    actions.emplace("southeast",             Action{ActionCategory::default_,  {{Key::pagedown,        ModKey::none}, {Key::keypad_3,     ModKey::none}}});
 
     actions.emplace("shortcut_1",            Action{ActionCategory::shortcut,  {{Key::key_1,           ModKey::none}}});
     actions.emplace("shortcut_2",            Action{ActionCategory::shortcut,  {{Key::key_2,           ModKey::none}}});
@@ -133,7 +133,6 @@ void initialize_keybind_actions(ActionMap& actions)
     actions.emplace("dump_player_info",      Action{ActionCategory::game,      {{Key::f11,             ModKey::none}}});
     actions.emplace("enable_voldemort",      Action{ActionCategory::game,      {{Key::f12,             ModKey::none}}});
     actions.emplace("reload_autopick",       Action{ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
-    actions.emplace("auto_action",           Action{ActionCategory::game,      {{Key::enter,           ModKey::none}}});
 
     actions.emplace("wizard_toggle_console", Action{ActionCategory::wizard,    {{Key::backquote,       ModKey::none}}});
     actions.emplace("wizard_open_console",   Action{ActionCategory::wizard,    {{Key::backquote,       ModKey::shift}}});

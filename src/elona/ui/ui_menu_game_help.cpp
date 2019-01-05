@@ -1,4 +1,5 @@
 #include "ui_menu_game_help.hpp"
+#include "../../util/strutil.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"

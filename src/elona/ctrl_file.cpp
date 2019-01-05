@@ -1,5 +1,6 @@
 #include "ctrl_file.hpp"
 #include <set>
+#include "../util/fileutil.hpp"
 #include "ability.hpp"
 #include "area.hpp"
 #include "character.hpp"
@@ -1143,7 +1144,7 @@ void fmode_16()
 
     load_v3(
         fmapfile + u8".map", map, 0, map_data.width, 0, map_data.height, 0, 3);
-    cell_data.unpack_from(map);
+    cell_data.unpack_from(map, false);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
@@ -1177,7 +1178,7 @@ void fmode_5_6(bool read)
             map_data.height = mdata(1);
             map_data.atlas_number = mdata(2);
             map_data.next_regenerate_date = mdata(3);
-            map_data.stair_up_pos = mdata(4);
+            map_data.stair_down_pos = mdata(4);
         }
         else
         {

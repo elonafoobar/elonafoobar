@@ -1,5 +1,6 @@
 #include "input.hpp"
 #include "../snail/android.hpp"
+#include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "blending.hpp"
 #include "config/config.hpp"
@@ -100,8 +101,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
             snd("core.cursor1");
             number = max_number;
         }
-        // Translated from "northwest" in menu mode
-        if (action == "previous_menu")
+        if (action == "northwest")
         {
             snd("core.cursor1");
             number -= 100;
@@ -110,8 +110,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
                 number += max_number;
             }
         }
-        // Translated from "northeast" in menu mode
-        if (action == "next_menu")
+        if (action == "northeast")
         {
             snd("core.cursor1");
             number += 100;
@@ -314,6 +313,22 @@ static void _handle_msgalert()
     }
 }
 
+static void _update_pressed_key_name()
+{
+    key = "";
+    if (keylog != ""s)
+    {
+        keylog = strmid(keylog, 0, 1);
+        if (keylog(0)[0] == '\n')
+        {
+            keylog = "Enter";
+        }
+        key = keylog;
+        keylog = "";
+    }
+}
+
+
 std::string key_check(KeyWaitDelay delay_type)
 {
     if (msgalert == 1)
@@ -322,9 +337,27 @@ std::string key_check(KeyWaitDelay delay_type)
         msgalert = 0;
     }
 
+    _update_pressed_key_name();
+
     await(Config::instance().wait1);
     return InputContext::for_menu().check_for_command(delay_type);
 }
+
+
+std::string key_check_pc_turn(KeyWaitDelay delay_type)
+{
+    if (msgalert == 1)
+    {
+        _handle_msgalert();
+        msgalert = 0;
+    }
+
+    _update_pressed_key_name();
+
+    await(Config::instance().wait1);
+    return InputContext::instance().check_for_command(delay_type);
+}
+
 
 std::string cursor_check_ex(int& index)
 {
@@ -333,6 +366,8 @@ std::string cursor_check_ex(int& index)
         _handle_msgalert();
         msgalert = 0;
     }
+
+    _update_pressed_key_name();
 
     await(Config::instance().wait1);
     return InputContext::for_menu().check_for_command_with_list(index);
@@ -352,6 +387,8 @@ std::string get_selected_item(int& p_)
         _handle_msgalert();
         msgalert = 0;
     }
+
+    _update_pressed_key_name();
 
     int index{};
     await(Config::instance().wait1);

@@ -15,18 +15,18 @@ namespace elona
 
 int i_at_m66 = 0;
 
-void equipinfo(int prm_529, int prm_530, int prm_531)
+void equipinfo(int item_index, int x, int y)
 {
     int p_at_m66 = 0;
     std::string s_at_m66;
-    if (inv[prm_529].identification_state !=
+    if (inv[item_index].identification_state !=
         IdentifyState::completely_identified)
     {
         return;
     }
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        p_at_m66 = inv[prm_529].enchantments[cnt].id;
+        p_at_m66 = inv[item_index].enchantments[cnt].id;
         if (p_at_m66 == 0)
         {
             break;
@@ -37,8 +37,9 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             continue;
         }
         i_at_m66 = p_at_m66 % 10000;
-        pos(prm_530 + (i_at_m66 - 50) * 20, prm_531);
-        p_at_m66 = std::abs(inv[prm_529].enchantments[cnt].power / 2 / 50) + 1;
+        pos(x + (i_at_m66 - 50) * 20, y);
+        p_at_m66 =
+            std::abs(inv[item_index].enchantments[cnt].power / 2 / 50) + 1;
         if (p_at_m66 > 5)
         {
             s_at_m66 = u8"+"s;
@@ -50,7 +51,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
         if (jp)
         {
             colorres();
-            if (inv[prm_529].enchantments[cnt].power >= 0)
+            if (inv[item_index].enchantments[cnt].power >= 0)
             {
                 mes(u8"●"s);
             }
@@ -58,9 +59,9 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             {
                 mes(u8"▼"s);
             }
-            pos(prm_530 + (i_at_m66 - 50) * 20 + 5, prm_531 + 1);
+            pos(x + (i_at_m66 - 50) * 20 + 5, y + 1);
             mes(s_at_m66);
-            pos(prm_530 + (i_at_m66 - 50) * 20 + 4, prm_531);
+            pos(x + (i_at_m66 - 50) * 20 + 4, y);
             color(255, 255, 255);
             mes(s_at_m66);
             color(0, 0, 0);
@@ -68,11 +69,11 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
         else
         {
             color(80, 60, 40);
-            pos(prm_530 + (i_at_m66 - 50) * 20 + 5, prm_531);
+            pos(x + (i_at_m66 - 50) * 20 + 5, y);
             mes(""s + p_at_m66);
             color(0, 0, 0);
             colorres();
-            pos(prm_530 + (i_at_m66 - 50) * 20 + 4, prm_531);
+            pos(x + (i_at_m66 - 50) * 20 + 4, y);
             mes(""s + p_at_m66);
             color(0, 0, 0);
         }
@@ -114,19 +115,17 @@ int eqweaponheavy()
 
 
 
-void eqrandweaponmage(int prm_929)
+void eqrandweaponmage()
 {
-    int p_at_m162 = 0;
-    p_at_m162 = rnd(2);
-    if (p_at_m162 == 0)
-    {
-        eqweapon1(0) = 10003;
-        eqweapon1(1) = prm_929;
-    }
-    if (p_at_m162 == 1)
+    if (rnd(2))
     {
         eqweapon1(0) = 10006;
-        eqweapon1(1) = prm_929;
+        eqweapon1(1) = 2;
+    }
+    else
+    {
+        eqweapon1(0) = 10003;
+        eqweapon1(1) = 2;
     }
 }
 
@@ -229,7 +228,7 @@ void supply_new_equipment()
             {
                 continue;
             }
-            if (ibit(12, ci))
+            if (inv[ci].is_quest_target())
             {
                 continue;
             }
@@ -551,7 +550,7 @@ void supply_initial_equipments()
     if (cequipment == 2)
     {
         generatemoney(rc);
-        eqrandweaponmage(2);
+        eqrandweaponmage();
         eqamulet1(0) = 34001;
         eqamulet1(1) = 1;
         eqring1(0) = 32001;
@@ -609,7 +608,7 @@ void supply_initial_equipments()
     if (cequipment == 5)
     {
         generatemoney(rc);
-        eqrandweaponmage(2);
+        eqrandweaponmage();
         eqamulet1(0) = 34001;
         eqamulet1(1) = 1;
         eqring1(0) = 32001;
