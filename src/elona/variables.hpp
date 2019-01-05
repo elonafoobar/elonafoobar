@@ -234,7 +234,6 @@ ELONA_EXTERN(elona_vector1<std::string> cardrefn);
 ELONA_EXTERN(elona_vector1<std::string> description);
 ELONA_EXTERN(elona_vector1<std::string> egominorn);
 ELONA_EXTERN(elona_vector1<std::string> egoname);
-ELONA_EXTERN(elona_vector1<std::string> filter_creature);
 ELONA_EXTERN(elona_vector1<std::string> filtern);
 ELONA_EXTERN(elona_vector1<std::string> fltnrace);
 ELONA_EXTERN(elona_vector1<std::string> gdatan);
