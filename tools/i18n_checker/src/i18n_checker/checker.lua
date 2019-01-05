@@ -149,6 +149,11 @@ local function check_get_property(locale_table, args)
    return results
 end
 
+-- TODO implement it!
+local function check_get_m(locale_table, args)
+   return {}
+end
+
 dispatchers["i18n::s.get"] = check_get
 dispatchers["i18n::s.get_optional"] = check_get
 
@@ -158,6 +163,12 @@ dispatchers["i18n::s.get_enum_optional"] = check_get_enum
 dispatchers["i18n::s.get_enum_property"] = check_get_property
 dispatchers["i18n::s.get_enum_property_opt"] = check_get_property
 
+dispatchers["i18n::s.get_m"] = check_get_m
+dispatchers["i18n::s.get_m_optional"] = check_get_m
+
+dispatchers["i18n::s.get_list"] = check_get
+
+dispatchers["i18n::s.get_locale_dir"] = function() return {} end
 dispatchers["i18n::s.init"] = function() return {} end
 dispatchers["i18n::s.load"] = function() return {} end
 

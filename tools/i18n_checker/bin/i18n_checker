@@ -1,0 +1,3 @@
+#!/bin/sh
+
+lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path' tools/i18n_checker/src/i18n_checker/main.lua "$@"
