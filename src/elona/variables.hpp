@@ -932,7 +932,6 @@ void sense_map_feats_on_move();
 
 
 //// Magic
-int magic();
 int breath_list();
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 int route_info(int&, int&, int = 0);

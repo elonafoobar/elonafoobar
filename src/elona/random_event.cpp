@@ -15,6 +15,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "message.hpp"
 #include "optional.hpp"

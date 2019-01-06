@@ -19,6 +19,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "menu.hpp"
 #include "message.hpp"
 #include "network.hpp"

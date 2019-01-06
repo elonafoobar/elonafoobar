@@ -17,6 +17,7 @@
 #include "itemgen.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
