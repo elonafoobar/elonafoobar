@@ -467,7 +467,12 @@ else()
     target_link_libraries(nfd)
   endif()
 
-  install(TARGETS ${PROJECT_NAME}
+  if(WITH_TESTS STREQUAL "OFF")
+    add_subdirectory(src/thirdparty/nfd)
+    target_link_libraries(nfd)
+  endif()
+
+  INSTALL(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime)
 
