@@ -330,5 +330,6 @@ void item_load_desc(int ci, int& p);
 
 
 int iequiploc(const Item& item);
+int access_item_db(Item& item, int legacy_id, int dbmode);
 
 } // namespace elona

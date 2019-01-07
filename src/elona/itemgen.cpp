@@ -210,8 +210,8 @@ int do_create_item(int slot, int x, int y)
         dbid = 501;
     }
 
-    access_item_db(3);
-    access_item_db(2);
+    access_item_db(inv[ci], dbid, 3);
+    access_item_db(inv[ci], dbid, 2);
 
     inv[ci].color = generate_color(the_item_db[inv[ci].id]->color, inv[ci].id);
 
@@ -684,7 +684,7 @@ void change_item_material(Item& item, int material_id)
     const auto original_value = calculate_original_value(item);
 
     dbid = item.id;
-    access_item_db(10);
+    access_item_db(inv[ci], dbid, 10);
     item.value = original_value;
     if (material_id != 0)
     {

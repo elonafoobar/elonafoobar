@@ -1498,7 +1498,7 @@ TurnResult pc_turn(bool advance_time)
                 the_item_db[inv[ci].id]->category == 52000)
             {
                 dbid = inv[ci].id;
-                access_item_db(15);
+                access_item_db(inv[ci], dbid, 15);
             }
         }
         if (trait(214) != 0 && rnd(250) == 0 &&

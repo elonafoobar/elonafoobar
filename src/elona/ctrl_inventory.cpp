@@ -354,7 +354,7 @@ label_20591:
             {
                 dbid = inv[cnt].id;
                 dbspec = 12;
-                int is_offerable = access_item_db(16);
+                int is_offerable = access_item_db(inv[ci], dbid, 16);
                 if (is_offerable == 0)
                 {
                     continue;

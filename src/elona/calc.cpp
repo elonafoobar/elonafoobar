@@ -925,7 +925,7 @@ int calcitemvalue(int ci, int situation)
     if (inv[ci].has_charge())
     {
         dbid = inv[ci].id;
-        access_item_db(2);
+        access_item_db(inv[ci], dbid, 2);
         if (inv[ci].count < 0)
         {
             ret = ret / 10;

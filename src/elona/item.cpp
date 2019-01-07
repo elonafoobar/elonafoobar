@@ -1573,8 +1573,8 @@ void item_dump_desc(const Item& i)
     reftype = the_item_db[i.id]->category;
 
     dbid = i.id;
-    access_item_db(2);
-    access_item_db(17);
+    access_item_db(inv[ci], dbid, 2);
+    access_item_db(inv[ci], dbid, 17);
 
     item_load_desc(ci, p(0));
 

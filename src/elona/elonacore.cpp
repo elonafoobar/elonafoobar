@@ -8788,7 +8788,7 @@ int pick_up_item(bool play_sound)
                 if (inv[ci].count > 0)
                 {
                     dbid = inv[ci].id;
-                    access_item_db(14);
+                    access_item_db(inv[ci], dbid, 14);
                     txt(i18n::s.get(
                         "core.locale.action.pick_up.you_absorb_magic",
                         inv[ci]));
