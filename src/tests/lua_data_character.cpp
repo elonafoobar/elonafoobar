@@ -179,20 +179,6 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
     REQUIRE(data->_flags[27] == false);
 }
 
-TEST_CASE("test usage of legacy ID", "[Lua: Data]")
-{
-    elona::lua::LuaEnv lua;
-    auto table = load(lua, "chara");
-
-    CharacterDB db;
-    db.initialize(lua.get_data_manager().get());
-
-    auto data = db[9999];
-
-    REQUIRE(data);
-    REQUIRE(data->id == 9999);
-}
-
 TEST_CASE("test character flags", "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
