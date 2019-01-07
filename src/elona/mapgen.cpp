@@ -15,6 +15,19 @@
 #include "random.hpp"
 #include "variables.hpp"
 
+
+
+namespace
+{
+
+int tile_board;
+int tile_townboard;
+int tile_votebox;
+
+} // namespace
+
+
+
 namespace elona
 {
 

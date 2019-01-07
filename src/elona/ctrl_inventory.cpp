@@ -26,6 +26,16 @@
 #include "variables.hpp"
 
 
+
+namespace
+{
+
+int showresist;
+
+}
+
+
+
 namespace elona
 {
 

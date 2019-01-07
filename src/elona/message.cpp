@@ -24,8 +24,9 @@ namespace
 {
 
 constexpr int inf_msgline = 4;
+int msgline;
 
-}
+} // namespace
 
 
 

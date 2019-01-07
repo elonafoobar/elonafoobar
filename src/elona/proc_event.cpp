@@ -24,6 +24,16 @@
 #include "variables.hpp"
 
 
+
+namespace
+{
+
+std::string usermsg;
+
+}
+
+
+
 namespace elona
 {
 

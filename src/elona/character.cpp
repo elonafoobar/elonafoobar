@@ -35,6 +35,10 @@ using namespace elona;
 namespace
 {
 
+int shade;
+
+
+
 int chara_create_internal()
 {
     if (rc == -1)

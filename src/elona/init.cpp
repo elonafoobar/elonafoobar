@@ -53,12 +53,17 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
-
 using namespace elona;
+
 
 
 namespace
 {
+
+elona_vector1<std::string> jkey;
+elona_vector1<std::string> musicfile;
+elona_vector1<std::string> untaglist;
+
 
 
 void main_loop()

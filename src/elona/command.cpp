@@ -47,6 +47,9 @@
 namespace
 {
 
+int dbg_freemove;
+
+
 
 template <typename F>
 bool any_of_characters_around_you(F predicate, bool ignore_pc = true)

@@ -18,6 +18,10 @@
 namespace
 {
 
+int windowx;
+int windowy;
+
+
 
 struct ConfigLoadingError : public std::runtime_error
 {

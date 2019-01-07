@@ -6,6 +6,17 @@
 #include "i18n.hpp"
 #include "item.hpp"
 
+
+
+namespace
+{
+
+elona_vector1<int> inhlist;
+
+}
+
+
+
 namespace elona
 {
 
