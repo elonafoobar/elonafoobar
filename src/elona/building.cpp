@@ -1221,45 +1221,58 @@ void update_shop()
     }
 }
 
-void calc_collection_value(bool val0)
+
+
+int calc_collection_value(
+    std::array<std::unordered_map<std::string, int>, 2>& collection_list,
+    bool is_figure)
 {
+    int value = 0;
+    auto& list = collection_list[is_figure ? 1 : 0];
+
     rc = 56;
     fixlv = Quality::good;
     dbmode = 3;
     access_character_info();
-    ++dblist(val0 ? 1 : 0, cdata.tmp().id.to_integer());
+
+    list[cdata.tmp().id.get()] += 1;
+
     if (fixlv == Quality::special)
     {
-        rtval = 70 + cdata.tmp().level;
+        value = 70 + cdata.tmp().level;
     }
     else
     {
-        rtval = cdata.tmp().level / 10 + 2;
+        value = cdata.tmp().level / 10 + 2;
         if (draw_get_rect_chara(cdata.tmp().image % 1000)->height > inf_tiles)
         {
-            rtval = rtval / 2 * 3 + 40;
+            value = value / 2 * 3 + 40;
         }
-        p = the_character_db[cdata.tmp().id.get()]->rarity / 1000;
-        if (p < 80)
+        const auto rarity =
+            the_character_db[cdata.tmp().id.get()]->rarity / 1000;
+        if (rarity < 80)
         {
-            rtval = rtval + 80 - p;
+            value += 80 - rarity;
         }
     }
-    if (dblist(val0 ? 1 : 0, cdata.tmp().id.to_integer()) > 1)
+
+    if (list[cdata.tmp().id.get()] > 1)
     {
-        rtval /= 3;
-        if (rtval > 15)
-        {
-            rtval = 15;
-        }
+        return std::max(value / 3, 15);
+    }
+    else
+    {
+        return value;
     }
 }
+
+
 
 void update_museum()
 {
     rankorg = game_data.ranks.at(3);
     rankcur = 0;
-    DIM3(dblist, 2, 800);
+    std::array<std::unordered_map<std::string, int>, 2> collection_list;
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number() == 0)
@@ -1278,14 +1291,15 @@ void update_museum()
             continue;
         }
         dbid = inv[cnt].subname;
-        calc_collection_value(inv[cnt].id != 503);
+        const auto value =
+            calc_collection_value(collection_list, inv[cnt].id == 503);
         if (inv[cnt].id == 503)
         {
-            rankcur += rtval;
+            rankcur += value;
         }
         else
         {
-            rankcur += rtval / 2;
+            rankcur += value / 2;
         }
     }
     rankcur = 10000 - int(std::sqrt(rankcur) * 100);
