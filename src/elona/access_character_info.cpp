@@ -20,7 +20,7 @@ namespace elona
 
 int access_character_info()
 {
-    const auto data = the_character_db[dbid];
+    const auto data = the_character_db[CharacterId{dbid}.get()];
     if (!data)
         return 0;
 
@@ -30,10 +30,8 @@ int access_character_info()
         switch (dbspec)
         {
         case 2:
-            refstr = i18n::s.get_m(
-                "locale.chara",
-                the_character_db.get_id_from_legacy(dbid)->get(),
-                "name");
+            refstr =
+                i18n::s.get_m("locale.chara", CharacterId{dbid}.get(), "name");
             return 0;
         case 3: return data->item_type;
         case 8: refstr = data->filter; return 0;
@@ -55,10 +53,8 @@ int access_character_info()
         cdata[rc].special_actions = data->special_actions;
         creaturepack = data->creaturepack;
         cdata[rc].can_talk = data->can_talk;
-        cdatan(0, rc) = i18n::s.get_m(
-            "locale.chara",
-            the_character_db.get_id_from_legacy(dbid)->get(),
-            "name");
+        cdatan(0, rc) =
+            i18n::s.get_m("locale.chara", CharacterId{dbid}.get(), "name");
         if (data->has_random_name)
         {
             cdatan(0, rc) = i18n::s.get(
@@ -105,7 +101,8 @@ int access_character_info()
             cdata[rc].portrait = data->portrait_female;
         }
         {
-            int color = generate_color(data->color, cdata[rc].id);
+            int color = generate_color(
+                data->color, 0 /* dummy; it's unsed for characters. */);
             cdata[rc].image += color * 1000;
         }
         eqammo(0) = data->eqammo_0;
@@ -269,8 +266,7 @@ int access_character_info()
             }
         }
         {
-            const auto chara_id =
-                the_character_db.get_id_from_legacy(dbid)->get();
+            const auto chara_id = CharacterId{dbid}.get();
             const auto dialog_id = "text_" + std::to_string(dbmode);
             if (const auto text =
                     i18n::s.get_m_optional("locale.chara", chara_id, dialog_id))

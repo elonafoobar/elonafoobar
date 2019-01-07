@@ -1309,12 +1309,21 @@ int calcinitgold(int owner)
             1;
     }
 
-    switch (cdata[owner].id)
+    if (cdata[owner].id == 183)
     {
-    case 183: return 5000 + rnd(11000);
-    case 184: return 2000 + rnd(5000);
-    case 185: return 1000 + rnd(3000);
-    default: return rnd(cdata[owner].level * 25 + 10) + 1;
+        return 5000 + rnd(11000);
+    }
+    else if (cdata[owner].id == 184)
+    {
+        return 2000 + rnd(5000);
+    }
+    else if (cdata[owner].id == 185)
+    {
+        return 1000 + rnd(3000);
+    }
+    else
+    {
+        return rnd(cdata[owner].level * 25 + 10) + 1;
     }
 }
 

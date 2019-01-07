@@ -596,7 +596,7 @@ int chara_create(int slot, int chara_id, int x, int y)
         if (rc == 56)
         {
             cdata[rc].set_state(Character::State::empty);
-            --npcmemory(1, cdata[rc].id);
+            --npcmemory(1, cdata[rc].id.to_integer());
             return 1;
         }
         if (rc != 0)
@@ -671,7 +671,8 @@ void chara_refresh(int cc)
     {
         for (size_t i = 0; i < 32 * 30; ++i)
         {
-            cdata[cc]._flags[i] = the_character_db[cdata[cc].id]->_flags[i];
+            cdata[cc]._flags[i] =
+                the_character_db[cdata[cc].id.get()]->_flags[i];
         }
     }
     for (auto&& growth_buff : cdata[cc].growth_buffs)
@@ -1244,7 +1245,7 @@ int chara_custom_talk(int cc, int talk_type)
 
     if (cdata[cc].can_talk != 0)
     {
-        dbid = cdata[cc].id;
+        dbid = cdata[cc].id.to_integer();
         dbmode = talk_type;
         access_character_info();
         return 1;
@@ -1429,7 +1430,7 @@ int chara_copy(const Character& source)
     // Increase crowd density.
     modify_crowd_density(slot, 1);
     // Increase the generation counter.
-    ++npcmemory(1, destination.id);
+    ++npcmemory(1, destination.id.to_integer());
 
     return slot;
 }

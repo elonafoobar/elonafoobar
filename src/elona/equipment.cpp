@@ -662,7 +662,7 @@ void supply_initial_equipments()
     if (cspecialeq)
     {
         dbmode = 4;
-        dbid = cdata[rc].id;
+        dbid = cdata[rc].id.to_integer();
         access_character_info();
     }
     if (eqtwohand)

@@ -285,7 +285,7 @@ void chara_vomit(Character& cc)
             {
                 if (cc.index != 0)
                 {
-                    inv[ci].subname = cc.id;
+                    inv[ci].subname = cc.id.to_integer();
                 }
             }
         }

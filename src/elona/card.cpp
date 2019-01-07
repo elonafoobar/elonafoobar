@@ -105,9 +105,7 @@ reset_page:
             cs_list(
                 cs == i,
                 i18n::s.get_m(
-                    "locale.chara",
-                    the_character_db.get_id_from_legacy(list(0, p))->get(),
-                    "name"),
+                    "locale.chara", CharacterId{list(0, p)}.get(), "name"),
                 x + 30,
                 y,
                 0,

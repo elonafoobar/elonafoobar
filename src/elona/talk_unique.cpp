@@ -2146,7 +2146,7 @@ TalkResult talk_unique_paels_mom()
 
 void _raphael_give_wife()
 {
-    s = chara_refstr(cdata[tc].id, 8);
+    s = chara_refstr(cdata[tc].id.to_integer(), 8);
     if (!strutil::contains(s(0), u8"/man/"))
     {
         dmgcon(tcbk, StatusAilment::insane, 1000);
@@ -4097,7 +4097,7 @@ void _doria_start_trial()
     {
         flt(10);
         chara_create(56, 0, -3, 0);
-        if (the_character_db[cdata.tmp().id]->rarity / 1000 < 70)
+        if (the_character_db[cdata.tmp().id.get()]->rarity / 1000 < 70)
         {
             continue;
         }
@@ -4112,7 +4112,7 @@ void _doria_start_trial()
         break;
     }
     game_data.guild.fighters_guild_quota = 15;
-    game_data.guild.fighters_guild_target = cdata.tmp().id;
+    game_data.guild.fighters_guild_target = cdata.tmp().id.to_integer();
     chara_vanquish(56);
 }
 
@@ -4150,7 +4150,7 @@ void _doria_update_quota()
     {
         flt(cdata.player().level + 10);
         chara_create(56, 0, -3, 0);
-        if (the_character_db[cdata.tmp().id]->rarity / 1000 < 70)
+        if (the_character_db[cdata.tmp().id.get()]->rarity / 1000 < 70)
         {
             continue;
         }
@@ -4165,7 +4165,7 @@ void _doria_update_quota()
         break;
     }
     game_data.guild.fighters_guild_quota = 2 + rnd(3);
-    game_data.guild.fighters_guild_target = cdata.tmp().id;
+    game_data.guild.fighters_guild_target = cdata.tmp().id.to_integer();
     chara_vanquish(56);
     game_data.guild.fighters_guild_quota_recurring = 1;
     quest_update_journal_msg();

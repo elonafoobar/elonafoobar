@@ -706,7 +706,7 @@ int quest_generate()
                 }
                 break;
             }
-            quest_data[rq].extra_info_1 = cdata.tmp().id;
+            quest_data[rq].extra_info_1 = cdata.tmp().id.to_integer();
             quest_data[rq].deadline_hours =
                 (rnd(6) + 2) * 24 + game_data.date.hours();
             quest_data[rq].reward_item_id = 0;
@@ -742,7 +742,7 @@ int quest_generate()
                 }
                 break;
             }
-            quest_data[rq].extra_info_1 = cdata.tmp().id;
+            quest_data[rq].extra_info_1 = cdata.tmp().id.to_integer();
             quest_data[rq].deadline_hours =
                 (rnd(6) + 2) * 24 + game_data.date.hours();
             quest_data[rq].reward_item_id = 0;
@@ -1203,7 +1203,7 @@ void quest_failed(int val0)
                 {
                     if (cdata[cnt].is_escorted() == 1)
                     {
-                        if (quest_data[rq].extra_info_2 == cdata[cnt].id)
+                        if (cdata[cnt].id == quest_data[rq].extra_info_2)
                         {
                             tc = cnt;
                             cdata[cnt].is_escorted() = false;

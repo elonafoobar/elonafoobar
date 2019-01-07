@@ -258,7 +258,7 @@ void wish_for_card()
     flt();
     itemcreate(
         -1, 504, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].subname = cdata.tmp().id;
+    inv[ci].subname = cdata.tmp().id.to_integer();
     inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
     cell_refresh(cdata.player().position.x, cdata.player().position.y);
@@ -276,7 +276,7 @@ void wish_for_figure()
     flt();
     itemcreate(
         -1, 503, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].subname = cdata.tmp().id;
+    inv[ci].subname = cdata.tmp().id.to_integer();
     inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
     cell_refresh(cdata.player().position.x, cdata.player().position.y);

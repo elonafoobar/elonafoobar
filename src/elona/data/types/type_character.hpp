@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include "../../character_id.hpp"
 #include "../../enums.hpp"
 #include "../../optional.hpp"
 #include "../lua_lazy_cache.hpp"
@@ -133,7 +134,7 @@ struct CharacterData
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };
 
-ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, true, "core.chara")
+ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, false, "core.chara")
 
 extern CharacterDB the_character_db;
 

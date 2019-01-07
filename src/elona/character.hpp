@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "../util/range.hpp"
+#include "character_id.hpp"
 #include "data/types/type_character.hpp"
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
@@ -152,7 +153,7 @@ struct Character
     int can_talk = 0;
     Quality quality = Quality::none;
     int turn = 0;
-    int id = 0;
+    CharacterId id;
     int vision_distance = 0;
     int enemy_id = 0;
     int gold = 0;

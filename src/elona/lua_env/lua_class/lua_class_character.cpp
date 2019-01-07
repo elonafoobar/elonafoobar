@@ -291,9 +291,7 @@ void LuaCharacter::bind(sol::state& lua)
 
         // Properties
         "new_id",
-        sol::property([](Character& c) {
-            return the_character_db.get_id_from_legacy(c.id)->get();
-        }),
+        sol::property([](Character& c) { return c.id.get(); }),
         "name",
         sol::property([](Character& c) { return elona::name(c.index); }),
         "basename",

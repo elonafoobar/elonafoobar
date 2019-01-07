@@ -94,7 +94,7 @@ void invalidate_item(Item& item)
 void invalidate_chara(Character& chara)
 {
     int old_index = chara.index;
-    int old_id = chara.id;
+    int old_id = chara.id.to_integer();
     int old_x = chara.position.x;
     int old_y = chara.position.y;
 

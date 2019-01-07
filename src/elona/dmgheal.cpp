@@ -130,7 +130,7 @@ Character::State dmgheal_set_death_status(Character& victim)
             victim.current_map = 0;
             if (victim.is_escorted() == 1)
             {
-                event_add(15, victim.id);
+                event_add(15, victim.id.to_integer());
                 new_state = Character::State::empty;
             }
             if (victim.is_escorted_in_sub_quest() == 1)
@@ -1122,7 +1122,7 @@ int damage_hp(
         }
         if (victim.index != 0)
         {
-            ++npcmemory(0, victim.id);
+            ++npcmemory(0, victim.id.to_integer());
             chara_custom_talk(victim.index, 102);
             if (victim.index < 16)
             {

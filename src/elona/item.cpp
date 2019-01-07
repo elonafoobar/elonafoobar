@@ -1526,7 +1526,7 @@ label_0313_internal:
 
 void remain_make(int ci, int cc)
 {
-    inv[ci].subname = cdata[cc].id;
+    inv[ci].subname = cdata[cc].id.to_integer();
     inv[ci].color = cdata[cc].image / 1000;
     inv[ci].weight = cdata[cc].weight;
 
@@ -1539,13 +1539,15 @@ void remain_make(int ci, int cc)
     {
         inv[ci].weight = 20 * (inv[ci].weight + 500) / 500;
         inv[ci].value = cdata[cc].level * 40 + 600;
-        if (the_character_db[cdata[cc].id]->rarity / 1000 < 20 &&
+        if (the_character_db[cdata[cc].id.get()]->rarity / 1000 < 20 &&
             cdata[cc].original_relationship < -1)
         {
-            inv[ci].value = inv[ci].value *
-                clamp(4 - the_character_db[cdata[cc].id]->rarity / 1000 / 5,
-                      1,
-                      5);
+            inv[ci].value =
+                inv[ci].value *
+                clamp(
+                    4 - the_character_db[cdata[cc].id.get()]->rarity / 1000 / 5,
+                    1,
+                    5);
         }
     }
 }

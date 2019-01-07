@@ -702,7 +702,7 @@ TurnResult do_throw_command()
                         cdata[tc]),
                     Message::color{ColorIndex::green});
                 animeload(8, tc);
-                inv[ci].subname = cdata[tc].id;
+                inv[ci].subname = cdata[tc].id.to_integer();
                 inv[ci].param3 = cdata[tc].level;
                 inv[ci].weight = clamp(cdata[tc].weight, 10000, 100000);
                 inv[ci].value = 1000;

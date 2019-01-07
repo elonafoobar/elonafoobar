@@ -9,9 +9,9 @@ namespace
 
 
 
-struct CharacterId
+struct CharacterIdInfo
 {
-    int id;
+    CharacterId id;
     int cnpcid; // It is used only if id equals 343.
 };
 
@@ -26,7 +26,7 @@ namespace elona
 
 void get_random_npc_id()
 {
-    WeightedRandomSampler<CharacterId> sampler;
+    WeightedRandomSampler<CharacterIdInfo> sampler;
 
     for (const auto& data : the_character_db)
     {
@@ -90,15 +90,16 @@ void get_random_npc_id()
                     continue;
             }
             sampler.add(
-                {343, i},
+                {CharacterId{343}, i},
                 clamp(userdata(6, i), 1'000, 500'000) /
                         (500 + std::abs(userdata(2, i) - objlv) * 400) +
                     1);
         }
     }
 
-    const auto id_info = sampler.get().value_or(CharacterId{0, 0});
-    dbid = id_info.id;
+    const auto id_info =
+        sampler.get().value_or(CharacterIdInfo{CharacterId{0}, 0});
+    dbid = id_info.id.to_integer();
     if (id_info.id == 343)
     {
         cdata[rc].cnpc_id = id_info.cnpcid;

@@ -1227,7 +1227,7 @@ void calc_collection_value(bool val0)
     fixlv = Quality::good;
     dbmode = 3;
     access_character_info();
-    ++dblist(val0 ? 1 : 0, cdata.tmp().id);
+    ++dblist(val0 ? 1 : 0, cdata.tmp().id.to_integer());
     if (fixlv == Quality::special)
     {
         rtval = 70 + cdata.tmp().level;
@@ -1239,13 +1239,13 @@ void calc_collection_value(bool val0)
         {
             rtval = rtval / 2 * 3 + 40;
         }
-        p = the_character_db[cdata.tmp().id]->rarity / 1000;
+        p = the_character_db[cdata.tmp().id.get()]->rarity / 1000;
         if (p < 80)
         {
             rtval = rtval + 80 - p;
         }
     }
-    if (dblist(val0 ? 1 : 0, cdata.tmp().id) > 1)
+    if (dblist(val0 ? 1 : 0, cdata.tmp().id.to_integer()) > 1)
     {
         rtval /= 3;
         if (rtval > 15)
@@ -1435,7 +1435,7 @@ void update_ranch()
         flt(calcobjlv(cdata[worker].level), Quality::bad);
         if (rnd(2))
         {
-            dbid = cdata[worker].id;
+            dbid = cdata[worker].id.to_integer();
         }
         else
         {
@@ -1529,7 +1529,7 @@ void update_ranch()
                     int stat = itemcreate(-1, 573, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cnt.id;
+                        inv[ci].subname = cnt.id.to_integer();
                         inv[ci].weight = cnt.weight * 10 + 250;
                         inv[ci].value =
                             clamp(cnt.weight * cnt.weight / 10000, 200, 40000);
@@ -1556,7 +1556,7 @@ void update_ranch()
                     int stat = itemcreate(-1, 574, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cnt.id;
+                        inv[ci].subname = cnt.id.to_integer();
                     }
                 }
                 continue;
@@ -1572,7 +1572,7 @@ void update_ranch()
                     int stat = itemcreate(-1, 575, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cnt.id;
+                        inv[ci].subname = cnt.id.to_integer();
                         inv[ci].weight = cnt.weight * 40 + 300;
                         inv[ci].value =
                             clamp(cnt.weight * cnt.weight / 5000, 1, 20000);

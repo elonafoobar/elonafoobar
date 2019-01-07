@@ -88,7 +88,7 @@ void talk_to_npc()
     chatval_show_impress = true;
     if (cdata[tc].quality == Quality::special && tc >= 16)
     {
-        chatval_unique_chara_id = cdata[tc].id;
+        chatval_unique_chara_id = cdata[tc].id.to_integer();
         chatval_show_impress = false;
     }
     if (event_id() == 2)
@@ -125,7 +125,7 @@ void talk_to_npc()
     if (chatval_unique_chara_id &&
         game_data.current_map != mdata_t::MapId::show_house && tc >= 16)
     {
-        const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
+        const auto& dialog_id = the_character_db[cdata[tc].id.get()]->dialog_id;
 
         if (dialog_id)
         {
