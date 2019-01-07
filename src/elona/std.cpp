@@ -333,12 +333,6 @@ int dialog(const std::string& message, int option)
 
 
 
-void exec(const std::string&, int)
-{
-}
-
-
-
 void font(int size, snail::Font::Style style)
 {
     snail::hsp::font(

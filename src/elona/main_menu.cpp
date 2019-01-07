@@ -1,6 +1,9 @@
 #include "main_menu.hpp"
+#include "../util/fileutil.hpp"
+#include "../util/strutil.hpp"
 #include "../version.hpp"
 #include "audio.hpp"
+#include "browser.hpp"
 #include "character_making.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
@@ -14,35 +17,131 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+
+
 namespace elona
 {
+
+struct Release
+{
+    Release(
+        const std::string& version,
+        const std::string& date,
+        const std::string& content)
+        : version(version)
+        , date(date)
+        , content(content)
+    {
+    }
+
+
+
+    std::string title() const
+    {
+        return version + u8" (" + date + u8")";
+    }
+
+
+
+    std::string version;
+    std::string date;
+    std::string content;
+};
+
+
+
+struct Changelog
+{
+public:
+    using iterator = std::vector<Release>::const_iterator;
+
+
+    void load(const fs::path& changelog_path)
+    {
+        for (const auto& line : fileutil::read_by_line(changelog_path))
+        {
+            if (strutil::starts_with(line, u8"## "))
+            {
+                // ## [version] - date
+                const auto open_bracket_pos = line.find('[');
+                const auto closing_bracket_pos = line.find(']');
+                const auto hyphen_bracket_pos = line.find('-');
+                const auto version = line.substr(
+                    open_bracket_pos + 1,
+                    closing_bracket_pos - open_bracket_pos - 1);
+                const auto date = line.substr(hyphen_bracket_pos + 2);
+                releases.emplace_back(version, date, "");
+            }
+            else if (!releases.empty())
+            {
+                releases.back().content += line + '\n';
+            }
+        }
+    }
+
+
+
+    const Release& at(size_t index) const
+    {
+        return releases.at(index);
+    }
+
+
+
+    iterator begin() const
+    {
+        return std::begin(releases);
+    }
+
+
+
+    iterator end() const
+    {
+        return std::end(releases);
+    }
+
+
+
+private:
+    // The first element is the latest. The last, the oldest.
+    std::vector<Release> releases;
+};
+
+
 
 MainMenuResult main_title_menu()
 {
     mode = 10;
     lomiaseaster = 0;
+
     play_music("core.mcOpening");
+
     cs = 0;
     cs_bk = -1;
     keyrange = 6;
     pagesize = 0;
+
     load_background_variants(2);
+
     gsel(4);
     gmode(0);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"title.bmp", 1);
     gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
+
     font(13 - en * 2);
     color(255, 255, 255);
     pos(20, 20);
     mes(u8"Elona version 1.22  Developed by Noa"s);
     color(0, 0, 0);
+
     color(255, 255, 255);
     pos(20, 38);
     mes(u8"  Variant foobar version "s + latest_version.short_string() +
         u8"  Developed by KI");
     color(0, 0, 0);
+
     if (jp)
     {
         color(255, 255, 255);
@@ -61,6 +160,7 @@ MainMenuResult main_title_menu()
         mes(u8"Cutscenes translator: AnnaBannana");
         color(0, 0, 0);
     }
+
     windowshadow = 1;
     ui_display_window(
         jp ? u8"冒険の道標" : u8"Starting Menu",
@@ -76,6 +176,7 @@ MainMenuResult main_title_menu()
     gmode(4, 50);
     gcopy_c(2, cmbg / 2 * 180, cmbg % 2 * 300, 180, 300, x, y);
     gmode(2);
+
     if (jp)
     {
         s(0) = u8"Restore an adventurer"s;
@@ -84,8 +185,8 @@ MainMenuResult main_title_menu()
         s(3) = u8"新しい冒険者を作成する"s;
         s(4) = u8"Incarnate an adventurer"s;
         s(5) = u8"冒険者の引継ぎ"s;
-        s(6) = u8"View the homepage"s;
-        s(7) = u8"ホームページを開く"s;
+        s(6) = u8"About"s;
+        s(7) = u8"このゲームについて"s;
         s(8) = u8"Configure"s;
         s(9) = u8"設定の変更"s;
         s(10) = u8"Exit"s;
@@ -96,10 +197,11 @@ MainMenuResult main_title_menu()
         s(0) = u8"Restore an Adventurer"s;
         s(1) = u8"Generate an Adventurer"s;
         s(2) = u8"Incarnate an Adventurer"s;
-        s(3) = u8"View the Homepage"s;
+        s(3) = u8"About"s;
         s(4) = u8"Options"s;
         s(5) = u8"Exit"s;
     }
+
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_title.bmp", 1);
@@ -109,7 +211,7 @@ MainMenuResult main_title_menu()
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
 
-    while (1)
+    while (true)
     {
         if (Config::instance().autonumlock)
         {
@@ -120,6 +222,7 @@ MainMenuResult main_title_menu()
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
+
         cs_listbk();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
@@ -141,6 +244,7 @@ MainMenuResult main_title_menu()
             }
         }
         cs_bk = cs;
+
         redraw();
 
         int index{};
@@ -165,7 +269,7 @@ MainMenuResult main_title_menu()
         if (index == 3)
         {
             snd("core.ok1");
-            exec(homepage, 16);
+            return MainMenuResult::main_menu_about;
         }
         if (index == 4)
         {
@@ -180,6 +284,8 @@ MainMenuResult main_title_menu()
         }
     }
 }
+
+
 
 MainMenuResult main_menu_wrapper()
 {
@@ -200,6 +306,16 @@ MainMenuResult main_menu_wrapper()
             break;
         case MainMenuResult::main_menu_new_game:
             result = main_menu_new_game();
+            break;
+        case MainMenuResult::main_menu_about: result = main_menu_about(); break;
+        case MainMenuResult::main_menu_about_changelogs:
+            result = main_menu_about_changelogs();
+            break;
+        case MainMenuResult::main_menu_about_license:
+            result = main_menu_about_license();
+            break;
+        case MainMenuResult::main_menu_about_credits:
+            result = main_menu_about_credits();
             break;
         case MainMenuResult::main_title_menu:
             // Loop back to the start.
@@ -261,6 +377,7 @@ MainMenuResult main_menu_wrapper()
     }
     return result;
 }
+
 
 
 MainMenuResult main_menu_new_game()
@@ -556,6 +673,380 @@ MainMenuResult main_menu_incarnate()
         }
     }
     return MainMenuResult::main_title_menu;
+}
+
+
+
+MainMenuResult main_menu_about()
+{
+    cs = 0;
+    cs_bk = -1;
+    keyrange = 5;
+    listmax = 5;
+
+    gsel(4);
+    gmode(0);
+    pos(0, 0);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    gmode(2);
+
+    ui_draw_caption("Elona foobar " + latest_version.short_string());
+
+    windowshadow = 1;
+    ui_display_window(
+        "About",
+        strhint3b,
+        (windoww - 440) / 2 + inf_screenx,
+        winposy(288, 1),
+        440,
+        288);
+
+    if (jp)
+    {
+        s(0) = "本家ホームページ";
+        s(1) = "Elona foobar ホームページ";
+        s(2) = "Elona foobar 変更履歴";
+        s(3) = "ライセンス";
+        s(4) = "クレジット";
+    }
+    else
+    {
+        s(0) = "Vanilla Elona Homepage";
+        s(1) = "Elona foobar Homepage";
+        s(2) = "Elona foobar Changelog";
+        s(3) = "License";
+        s(4) = "Credits";
+    }
+
+    gsel(0);
+
+    while (true)
+    {
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
+
+        cs_listbk();
+        for (int cnt = 0; cnt < 5; ++cnt)
+        {
+            const auto x = wx + 40;
+            const auto y = cnt * 35 + wy + 50;
+            display_key(x, y, cnt);
+            font(14 - en * 2);
+            cs_list(cs == cnt, s(cnt), x + 40, y + 1);
+        }
+        cs_bk = cs;
+
+        redraw();
+
+        int index{};
+        auto action = cursor_check_ex(index);
+
+        if (index == 0)
+        {
+            snd("core.ok1");
+            if (jp)
+            {
+                open_browser("http://ylvania.org/jp");
+            }
+            else
+            {
+                open_browser("http://ylvania.org/en");
+            }
+        }
+        if (index == 1)
+        {
+            snd("core.ok1");
+            open_browser("https://elonafoobar.com");
+        }
+        if (index == 2)
+        {
+            snd("core.ok1");
+            return MainMenuResult::main_menu_about_changelogs;
+        }
+        if (index == 3)
+        {
+            snd("core.ok1");
+            return MainMenuResult::main_menu_about_license;
+        }
+        if (index == 4)
+        {
+            snd("core.ok1");
+            return MainMenuResult::main_menu_about_credits;
+        }
+
+        if (action == "cancel")
+        {
+            return MainMenuResult::main_title_menu;
+        }
+    }
+}
+
+
+
+void main_menu_about_one_changelog(const Release& release)
+{
+    std::vector<std::string> changes;
+    if (release.content.empty())
+    {
+        changes.push_back("");
+    }
+    else
+    {
+        constexpr size_t text_width = 60;
+        constexpr size_t lines_per_page = 10;
+        std::string buffer = release.content;
+        talk_conv(buffer, text_width);
+        size_t line_count = 0;
+        for (const auto& line : strutil::split_lines(buffer))
+        {
+            if (line_count == 0)
+            {
+                changes.push_back(line + '\n');
+            }
+            else
+            {
+                changes.back() += line + '\n';
+            }
+            ++line_count;
+            if (line_count == lines_per_page)
+            {
+                line_count = 0;
+            }
+        }
+    }
+    pagemax = changes.size() - 1;
+
+    page = 0;
+
+    gsel(4);
+    gmode(0);
+    pos(0, 0);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    gmode(2);
+    gsel(0);
+
+    ui_draw_caption(jp ? u8"更新履歴" : u8"Changelogs");
+
+    while (true)
+    {
+    savegame_change_page:
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
+
+        cs_bk = -1;
+        if (page < 0)
+        {
+            page = pagemax;
+        }
+        else if (page > pagemax)
+        {
+            page = 0;
+        }
+
+        windowshadow = 1;
+    savegame_draw_page:
+        ui_display_window(
+            release.title(),
+            strhint2 + strhint3b,
+            (windoww - 440) / 2 + inf_screenx,
+            winposy(288, 1),
+            440,
+            288);
+
+        font(13 - en * 2);
+        pos(wx + 20, wy + 30);
+        mes(changes.at(page));
+
+        redraw();
+
+        int cursor{};
+        auto action = cursor_check_ex(cursor);
+        (void)cursor;
+
+        if (action == "next_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                goto savegame_change_page;
+            }
+        }
+        if (action == "previous_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                goto savegame_change_page;
+            }
+        }
+        if (action == "cancel")
+        {
+            return;
+        }
+        goto savegame_draw_page;
+    }
+}
+
+
+
+MainMenuResult main_menu_about_changelogs()
+{
+    int index = 0;
+    cs = 0;
+    cs_bk = -1;
+    page = 0;
+    pagesize = 5;
+    keyrange = 0;
+
+    gsel(4);
+    gmode(0);
+    pos(0, 0);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    gmode(2);
+    gsel(0);
+
+    ui_draw_caption(jp ? u8"更新履歴" : u8"Changelogs");
+
+    Changelog changelog;
+    if (jp)
+    {
+        changelog.load(filesystem::path("../CHANGELOG-jp.md"));
+    }
+    else
+    {
+        changelog.load(filesystem::path("../CHANGELOG.md"));
+    }
+
+    listmax = 0;
+    for (const auto& release : changelog)
+    {
+        list(0, listmax) = listmax;
+        listn(0, listmax) = release.title();
+        key_list(listmax) = key_select(listmax);
+        ++listmax;
+    }
+
+    while (true)
+    {
+    savegame_change_page:
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
+
+        cs_bk = -1;
+        pagemax = (listmax - 1) / pagesize;
+        if (page < 0)
+        {
+            page = pagemax;
+        }
+        else if (page > pagemax)
+        {
+            page = 0;
+        }
+
+        windowshadow = 1;
+    savegame_draw_page:
+        ui_display_window(
+            "",
+            strhint2 + strhint3b,
+            (windoww - 440) / 2 + inf_screenx,
+            winposy(288, 1),
+            440,
+            288);
+        cs_listbk();
+        keyrange = 0;
+        for (int cnt = 0, cnt_end = pagesize; cnt < cnt_end; ++cnt)
+        {
+            index = pagesize * page + cnt;
+            if (index >= listmax)
+            {
+                break;
+            }
+            x = wx + 20;
+            y = cnt * 40 + wy + 30;
+            display_key(x + 20, y, cnt);
+            font(13 - en * 2);
+            cs_list(cs == cnt, listn(0, index), x + 48, y);
+            ++keyrange;
+        }
+        cs_bk = cs;
+        redraw();
+
+        int cursor{};
+        auto action = cursor_check_ex(cursor);
+
+        p = -1;
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        {
+            index = pagesize * page + cnt;
+            if (index >= listmax)
+            {
+                break;
+            }
+            if (cursor == cnt)
+            {
+                p = list(0, index);
+                break;
+            }
+        }
+        if (p != -1)
+        {
+            snd("core.ok1");
+            const auto page_save = page;
+            const auto pagemax_save = pagemax;
+            main_menu_about_one_changelog(changelog.at(p));
+            page = page_save;
+            pagemax = pagemax_save;
+            goto savegame_change_page;
+        }
+        if (action == "next_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                goto savegame_change_page;
+            }
+        }
+        if (action == "previous_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                goto savegame_change_page;
+            }
+        }
+        if (action == "cancel")
+        {
+            return MainMenuResult::main_menu_about;
+        }
+        goto savegame_draw_page;
+    }
+}
+
+
+
+MainMenuResult main_menu_about_license()
+{
+    return MainMenuResult::main_menu_about;
+}
+
+
+
+MainMenuResult main_menu_about_credits()
+{
+    return MainMenuResult::main_menu_about;
 }
 
 } // namespace elona

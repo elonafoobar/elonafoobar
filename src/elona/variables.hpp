@@ -628,7 +628,6 @@ ELONA_EXTERN(std::string dbidn);
 ELONA_EXTERN(std::string defload);
 ELONA_EXTERN(std::string fmapfile);
 ELONA_EXTERN(std::string geneuse);
-ELONA_EXTERN(std::string homepage);
 ELONA_EXTERN(std::string mid);
 ELONA_EXTERN(std::string note_buff);
 ELONA_EXTERN(std::string playerid);

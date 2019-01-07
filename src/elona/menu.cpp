@@ -295,8 +295,9 @@ void text_set()
         _melee(1, 7) = u8"attack"s;
         _melee(2, 7) = u8"spore"s;
     }
-    homepage = i18n::s.get("core.locale.system.lafrontier_homepage");
 }
+
+
 
 bool maybe_show_ex_help(int id, bool should_update_screen)
 {
