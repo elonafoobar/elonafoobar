@@ -704,8 +704,9 @@ void apply_general_eating_effect(int cieat)
                 {
                     if (inv[ci].id == 204)
                     {
-                        s = chara_refstr(inv[ci].subname, 8);
-                        if (strutil::contains(s(0), u8"/man/"))
+                        if (strutil::contains(
+                                chara_get_filter(CharacterId{inv[ci].subname}),
+                                "/man/"))
                         {
                             txt(i18n::s.get(
                                 "core.locale.food.effect.human.delicious"));
@@ -1139,10 +1140,10 @@ void apply_general_eating_effect(int cieat)
     }
     if (inv[ci].id == 204)
     {
-        s = chara_refstr(inv[ci].subname, 8);
         if (cc == 0)
         {
-            if (strutil::contains(s(0), u8"/man/"))
+            if (strutil::contains(
+                    chara_get_filter(CharacterId{inv[ci].subname}), "/man/"))
             {
                 if (trait(41))
                 {
@@ -1464,7 +1465,7 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
         }
         else
         {
-            ingredient = chara_refstr(character_id, 2);
+            ingredient = chara_get_plain_name(character_id);
         }
     }
     else if (type == 5 || type == 7)

@@ -844,7 +844,7 @@ void itemname_additional_info(int item_index)
             if (inv[item_index].own_state != 4)
             {
                 s_ += lang(""s, u8" of "s) +
-                    chara_refstr(inv[item_index].subname, 2);
+                    chara_get_plain_name(CharacterId{inv[item_index].subname});
                 if (jp)
                 {
                     s_ += u8"の"s;
@@ -887,8 +887,11 @@ void itemname_additional_info(int item_index)
                 return;
             }
             s_ += lang(
-                ""s + chara_refstr(inv[item_index].subname, 2) + u8"の"s,
-                u8" of "s + chara_refstr(inv[item_index].subname, 2));
+                ""s +
+                    chara_get_plain_name(CharacterId{inv[item_index].subname}) +
+                    u8"の"s,
+                u8" of "s +
+                    chara_get_plain_name(CharacterId{inv[item_index].subname}));
         }
     }
     if (inv[item_index].id == 672)
@@ -1420,7 +1423,9 @@ label_0313_internal:
         }
         else
         {
-            s_ += u8" ("s + chara_refstr(inv[item_index].subname, 2) + u8")"s;
+            s_ += u8" ("s +
+                chara_get_plain_name(CharacterId{inv[item_index].subname}) +
+                u8")"s;
         }
     }
     if (inv[item_index].id == 734)

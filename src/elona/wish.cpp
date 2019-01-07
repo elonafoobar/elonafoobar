@@ -218,7 +218,7 @@ int select_wished_character(const std::string& input)
     for (int i = 0; i < 800; ++i)
     {
         int similarity{};
-        auto name = chara_refstr(i, 2);
+        auto name = chara_get_plain_name(CharacterId{i});
         if (en)
         {
             name = to_lower(name);

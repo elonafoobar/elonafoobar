@@ -1038,7 +1038,7 @@ std::string rpmatname(int step)
         }
         s_at_m177 = i18n::s.get(
             "core.locale.blending.ingredient.corpse",
-            chara_refstr(p_at_m177, 2));
+            chara_get_plain_name(CharacterId{p_at_m177}));
         return s_at_m177;
     }
     return s_at_m177;

@@ -1255,13 +1255,16 @@ int chara_custom_talk(int cc, int talk_type)
 
 
 
-std::string chara_refstr(int id, int info_type)
+std::string chara_get_plain_name(const CharacterId& id)
 {
-    dbmode = 16;
-    dbid = id;
-    dbspec = info_type;
-    access_character_info();
-    return refstr;
+    return i18n::s.get_m("locale.chara", id.get(), "name");
+}
+
+
+
+std::string chara_get_filter(const CharacterId& id)
+{
+    return the_character_db[CharacterId{id}.get()]->filter;
 }
 
 

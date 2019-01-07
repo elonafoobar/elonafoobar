@@ -26,17 +26,6 @@ int access_character_info()
 
     switch (dbmode)
     {
-    case 16:
-        switch (dbspec)
-        {
-        case 2:
-            refstr =
-                i18n::s.get_m("locale.chara", CharacterId{dbid}.get(), "name");
-            return 0;
-        case 3: return data->item_type;
-        case 8: refstr = data->filter; return 0;
-        default: assert(0);
-        }
     case 3:
         cdata[rc].id = dbid;
         cdata[rc].level = initlv != 0 ? initlv : data->level;

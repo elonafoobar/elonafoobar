@@ -1889,7 +1889,8 @@ void append_subquest_journal(int val0)
                 "core.locale.quest.journal.sub.joining_fighters_guild.progress",
                 0,
                 game_data.guild.fighters_guild_quota,
-                chara_refstr(game_data.guild.fighters_guild_target, 2));
+                chara_get_plain_name(
+                    CharacterId{game_data.guild.fighters_guild_target}));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1948,7 +1949,8 @@ void append_subquest_journal(int val0)
                 "core.locale.quest.journal.sub.quota_fighters_guild.progress",
                 0,
                 game_data.guild.fighters_guild_quota,
-                chara_refstr(game_data.guild.fighters_guild_target, 2));
+                chara_get_plain_name(
+                    CharacterId{game_data.guild.fighters_guild_target}));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);

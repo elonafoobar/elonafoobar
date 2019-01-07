@@ -2144,21 +2144,26 @@ TalkResult talk_unique_paels_mom()
 }
 
 
-void _raphael_give_wife()
+
+/**
+ * @return Whether the wife is human or not.
+ */
+bool _raphael_give_wife(const Character& raphael, const Character& wife)
 {
-    s = chara_refstr(cdata[tc].id.to_integer(), 8);
-    if (!strutil::contains(s(0), u8"/man/"))
+    if (strutil::contains(chara_get_filter(wife.id), "/man/"))
     {
-        dmgcon(tcbk, StatusAilment::insane, 1000);
-        f = 1;
-        modify_karma(cdata.player(), 2);
+        modify_karma(cdata.player(), -15);
+        return true;
     }
     else
     {
-        f = 0;
-        modify_karma(cdata.player(), -15);
+        dmgcon(raphael.index, StatusAilment::insane, 1000);
+        modify_karma(cdata.player(), 2);
+        return false;
     }
 }
+
+
 
 void _raphael_receive_reward()
 {
@@ -2277,7 +2282,7 @@ TalkResult talk_unique_raphael()
 
         tcbk = tc;
         tc = rc;
-        _raphael_give_wife();
+        const auto is_human = _raphael_give_wife(cdata[tcbk], cdata[tc]);
 
         listmax = 0;
         buff = i18n::s.get(
@@ -2288,7 +2293,7 @@ TalkResult talk_unique_raphael()
         ELONA_TALK_SCENE_CUT();
         tc = tcbk;
 
-        if (f == 1)
+        if (!is_human)
         {
             listmax = 0;
             buff = i18n::s.get(
@@ -4243,7 +4248,8 @@ TalkResult talk_unique_doria()
                     "core.locale.talk.unique.doria.nonmember.want_to_join",
                     1,
                     game_data.guild.fighters_guild_quota,
-                    chara_refstr(game_data.guild.fighters_guild_target, 2));
+                    chara_get_plain_name(
+                        CharacterId{game_data.guild.fighters_guild_target}));
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
@@ -4256,7 +4262,8 @@ TalkResult talk_unique_doria()
                 buff = i18n::s.get(
                     "core.locale.talk.unique.doria.nonmember.quota",
                     game_data.guild.fighters_guild_quota,
-                    chara_refstr(game_data.guild.fighters_guild_target, 2));
+                    chara_get_plain_name(
+                        CharacterId{game_data.guild.fighters_guild_target}));
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
                 chatesc = 1;
@@ -4315,7 +4322,8 @@ TalkResult talk_unique_doria()
         buff = i18n::s.get(
             "core.locale.talk.unique.doria.member.new_quota",
             game_data.guild.fighters_guild_quota,
-            chara_refstr(game_data.guild.fighters_guild_target, 2));
+            chara_get_plain_name(
+                CharacterId{game_data.guild.fighters_guild_target}));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.bye"));
         chatesc = 1;

@@ -11224,8 +11224,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 57)
         {
-            s = chara_refstr(cdata[tc].id.to_integer(), 8);
-            if (strutil::contains(s(0), u8"/dragon/"))
+            if (strutil::contains(chara_get_filter(cdata[tc].id), "/dragon/"))
             {
                 game_data.proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
@@ -11234,8 +11233,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 61)
         {
-            s = chara_refstr(cdata[tc].id.to_integer(), 8);
-            if (strutil::contains(s(0), u8"/god/"))
+            if (strutil::contains(chara_get_filter(cdata[tc].id), "/god/"))
             {
                 game_data.proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
@@ -11244,8 +11242,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 58)
         {
-            s = chara_refstr(cdata[tc].id.to_integer(), 8);
-            if (strutil::contains(s(0), u8"/undead/"))
+            if (strutil::contains(chara_get_filter(cdata[tc].id), "/undead/"))
             {
                 game_data.proc_damage_events_flag = 1;
                 damage_hp(cdata[tc], orgdmg / 2, cc);
@@ -11430,8 +11427,7 @@ int gain_skills_by_geen_engineering()
 int transplant_body_parts()
 {
     int dbmax = 0;
-    s(1) = chara_refstr(cdata[tc].id.to_integer(), 8);
-    if (strutil::contains(s(1), u8"/man/"))
+    if (strutil::contains(chara_get_filter(cdata[tc].id), u8"/man/"))
     {
         return -1;
     }
