@@ -1,4 +1,5 @@
 #include "character_id.hpp"
+#include <cassert>
 
 
 

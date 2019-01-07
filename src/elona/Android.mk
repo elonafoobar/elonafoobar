@@ -36,6 +36,7 @@ casino.cpp \
 casino_card.cpp \
 cell_draw.cpp \
 character.cpp \
+character_id.cpp \
 character_making.cpp \
 character_status.cpp \
 class.cpp \
