@@ -543,6 +543,72 @@ private:
 
 extern CData cdata;
 
+
+
+class CharacterMemory : public lib::noncopyable
+{
+public:
+    struct Memory
+    {
+        int killed = 0;
+        int created = 0;
+
+
+        template <typename Archive>
+        void serialize(Archive& ar)
+        {
+            ar(killed);
+            ar(created);
+        }
+    };
+
+
+    /**
+     * Returns the killed count of character `id`. If `id` is not found from
+     * `storage`, returns 0. Because it does not check whether `id` is defined
+     * or not, it can return non-zero value against non-existing `id` in case
+     * that you previously called `add_killed` with that id.
+     */
+    int killed_count(const std::string& id) const;
+
+    /**
+     * Returns the created count of character `id`. If `id` is not found from
+     * `storage`, returns 0. Because it does not check whether `id` is defined
+     * or not, it can return non-zero value against non-existing `id` in case
+     * that you previously called `add_created` with that id.
+     */
+    int created_count(const std::string& id) const;
+
+    /**
+     * Adds the killed count of `id` character by `amount`. It does not check
+     * whether `id` is defined or not.
+     */
+    void add_killed(const std::string& id, int amount = 1);
+
+    /**
+     * Adds the created count of `id` character by `amount`. It does not check
+     * whether `id` is defined or not.
+     */
+    void add_created(const std::string& id, int amount = 1);
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(storage);
+    }
+
+
+private:
+    std::unordered_map<std::string, Memory> storage;
+
+    Memory _get_memory(const std::string& id) const;
+};
+
+extern CharacterMemory chara_memory;
+
+
+
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 void initialize_character();
 bool chara_place();

@@ -119,9 +119,9 @@ reset_page:
                 color(128, 128, 128);
             }
             pos(x + 365, y + 3);
-            mes(npcmemory(0, list(0, p)));
+            mes(chara_memory.killed_count(CharacterId{list(0, p)}.get()));
             pos(x + 455, y + 3);
-            mes(npcmemory(1, list(0, p)));
+            mes(chara_memory.created_count(CharacterId{list(0, p)}.get()));
             color(0, 0, 0);
         }
 

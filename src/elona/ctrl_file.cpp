@@ -595,12 +595,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                load_v2(filepath, npcmemory, 0, 2, 0, 800);
+                BinaryIArchive.load(filepath, chara_memory);
             }
         }
         else
         {
-            save_v2(filepath, npcmemory, 0, 2, 0, 800);
+            BinaryOArchive.save(filepath, chara_memory);
         }
     }
 

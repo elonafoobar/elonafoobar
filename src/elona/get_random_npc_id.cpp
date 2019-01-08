@@ -34,7 +34,8 @@ void get_random_npc_id()
             continue;
         if (fltselect != data.fltselect)
             continue;
-        if (fltselect == 2 && npcmemory(1, data.id) != 0)
+        if (fltselect == 2 &&
+            chara_memory.created_count(CharacterId{data.id}.get()) != 0)
             continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;

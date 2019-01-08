@@ -339,7 +339,6 @@ ELONA_EXTERN(elona_vector1<int> eqring1);
 ELONA_EXTERN(elona_vector2<int> itemmemory);
 ELONA_EXTERN(elona_vector2<int> list);
 ELONA_EXTERN(elona_vector2<int> mapsync);
-ELONA_EXTERN(elona_vector2<int> npcmemory);
 ELONA_EXTERN(elona_vector2<int> pcc);
 ELONA_EXTERN(elona_vector2<int> picfood);
 ELONA_EXTERN(elona_vector2<int> qdata);

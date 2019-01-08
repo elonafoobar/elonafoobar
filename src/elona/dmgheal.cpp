@@ -1122,7 +1122,7 @@ int damage_hp(
         }
         if (victim.index != 0)
         {
-            ++npcmemory(0, victim.id.to_integer());
+            chara_memory.add_killed(victim.id.get());
             chara_custom_talk(victim.index, 102);
             if (victim.index < 16)
             {

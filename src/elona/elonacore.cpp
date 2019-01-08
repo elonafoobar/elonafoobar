@@ -4470,7 +4470,7 @@ TurnResult exit_map()
         {
             if (cnt.state() != Character::State::empty)
             {
-                --npcmemory(1, cnt.id.to_integer());
+                chara_memory.add_created(cnt.id.get(), -1);
             }
         }
     }

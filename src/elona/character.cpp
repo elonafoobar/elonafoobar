@@ -98,7 +98,7 @@ int chara_create_internal()
 
     cm = 1;
     cmshade = 0;
-    ++npcmemory(1, dbid);
+    chara_memory.add_created(CharacterId{dbid});
     if (dbid == 323)
     {
         if (rnd(5))
@@ -405,6 +405,7 @@ namespace elona
 {
 
 CData cdata;
+CharacterMemory chara_memory;
 
 
 elona_vector1<std::string> usertxt;
@@ -471,6 +472,51 @@ CData::CData()
     for (size_t i = 0; i < storage.size(); ++i)
     {
         storage[i].index = static_cast<int>(i);
+    }
+}
+
+
+
+int CharacterMemory::killed_count(const std::string& id) const
+{
+    return _get_memory(id).killed;
+}
+
+
+
+int CharacterMemory::created_count(const std::string& id) const
+{
+    return _get_memory(id).created;
+}
+
+
+
+void CharacterMemory::add_killed(const std::string& id, int amount)
+{
+    // operator[] inserts a newly allocated item if not found.
+    storage[id].killed += amount;
+}
+
+
+
+void CharacterMemory::add_created(const std::string& id, int amount)
+{
+    // operator[] inserts a newly allocated item if not found.
+    storage[id].created += amount;
+}
+
+
+
+Memory CharacterMemory::_get_memory(const std::string& id) const
+{
+    const auto itr = storage.find(id);
+    if (itr == std::end(storage))
+    {
+        return {0, 0};
+    }
+    else
+    {
+        return *itr;
     }
 }
 
@@ -596,7 +642,7 @@ int chara_create(int slot, int chara_id, int x, int y)
         if (rc == 56)
         {
             cdata[rc].set_state(Character::State::empty);
-            --npcmemory(1, cdata[rc].id.to_integer());
+            chara_memory.add_created(cdata[rc].id.get(), -1);
             return 1;
         }
         if (rc != 0)
@@ -1433,7 +1479,7 @@ int chara_copy(const Character& source)
     // Increase crowd density.
     modify_crowd_density(slot, 1);
     // Increase the generation counter.
-    ++npcmemory(1, destination.id.to_integer());
+    chara_memory.add_created(destination.id.get());
 
     return slot;
 }

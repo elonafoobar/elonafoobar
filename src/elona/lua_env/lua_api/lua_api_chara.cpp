@@ -100,7 +100,7 @@ int Chara::kill_count(const std::string& id)
     {
         return 0;
     }
-    return npcmemory(0, data->id);
+    return chara_memory.killed_count(CharacterId{data->id}.get());
 }
 
 void Chara::bind(sol::table& api_table)
