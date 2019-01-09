@@ -149,11 +149,6 @@ void UIMenuFeats::update()
 
 static void _draw_window_background(bool is_chara_making)
 {
-    s(0) = i18n::s.get("core.locale.trait.window.title");
-    s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
-        strhint3 + u8"z,x ["s + i18n::s.get("core.locale.trait.window.ally") +
-        u8"]"s;
-
     int y_adjust;
     if (is_chara_making)
     {
@@ -165,7 +160,11 @@ static void _draw_window_background(bool is_chara_making)
         y_adjust = 0;
     }
 
-    display_window(
+    ui_display_window(
+        i18n::s.get("core.locale.trait.window.title"),
+        i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
+            strhint3 + u8"z,x [" +
+            i18n::s.get("core.locale.trait.window.ally") + u8"]",
         (windoww - 730) / 2 + inf_screenx,
         winposy(430, y_adjust) + y_adjust * 15,
         730,

@@ -78,10 +78,13 @@ _draw_class_info(int chip_male, int chip_female, const std::string& race)
 
 static void _draw_window()
 {
-    s(0) = i18n::s.get("core.locale.chara_making.select_class.title");
-    s(1) = strhint3b;
-    display_window(
-        (windoww - 680) / 2 + inf_screenx, winposy(500, 1) + 20, 680, 500);
+    ui_display_window(
+        i18n::s.get("core.locale.chara_making.select_class.title"),
+        strhint3b,
+        (windoww - 680) / 2 + inf_screenx,
+        winposy(500, 1) + 20,
+        680,
+        500);
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;

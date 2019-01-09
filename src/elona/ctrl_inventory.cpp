@@ -835,29 +835,36 @@ label_2060_internal:
             y + 32);
     }
 label_2061_internal:
-    s = i18n::s.get(
-        "core.locale.ui.inv.window.select_item",
-        i18n::s.get_enum("core.locale.ui.inventory_command", invctrl));
-    s(1) = strhint2 + strhint5 + strhint5b + strhint3;
+{
+    auto key_help = strhint2 + strhint5 + strhint5b + strhint3;
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9 ||
         invctrl == 14 || invctrl == 15 || invctrl == 26)
     {
-        s(1) += strhint7;
+        key_help += strhint7;
     }
     if (invctrl == 1)
     {
-        s(1) += ""s + key_mode2 + u8" "s + "[" +
+        key_help += ""s + key_mode2 + u8" "s + "[" +
             i18n::s.get("core.locale.ui.inv.window.tag.no_drop") + "]";
     }
     if (invctrl == 2)
     {
         if (dropcontinue == 0)
         {
-            s(1) += ""s + key_mode2 + u8" "s + "[" +
+            key_help += ""s + key_mode2 + u8" "s + "[" +
                 i18n::s.get("core.locale.ui.inv.window.tag.multi_drop") + "]";
         }
     }
-    display_window((windoww - 640) / 2 + inf_screenx, winposy(432), 640, 432);
+    ui_display_window(
+        i18n::s.get(
+            "core.locale.ui.inv.window.select_item",
+            i18n::s.get_enum("core.locale.ui.inventory_command", invctrl)),
+        key_help,
+        (windoww - 640) / 2 + inf_screenx,
+        winposy(432),
+        640,
+        432);
+}
     if (invicon(invctrl) != -1)
     {
         pos(wx + 46, wy - 14);
@@ -1112,7 +1119,6 @@ label_2061_internal:
                     "core.locale.ui.inv.drop.how_many",
                     inv[ci].number(),
                     inv[ci]));
-                display_msg(screenmsgy, 1);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
@@ -1250,7 +1256,6 @@ label_2061_internal:
                         inv[ci].number(),
                         inv[ci]));
                 }
-                display_msg(screenmsgy, 2);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
@@ -1305,7 +1310,6 @@ label_2061_internal:
                         update_screen();
                         txt(i18n::s.get(
                             "core.locale.ui.inv.buy.not_enough_money"));
-                        msgkeep = 1;
                         goto label_20591;
                     }
                 }
@@ -1320,7 +1324,6 @@ label_2061_internal:
                             txt(i18n::s.get(
                                 "core.locale.ui.inv.sell.not_enough_money",
                                 cdata[tc]));
-                            msgkeep = 1;
                             goto label_20591;
                         }
                     }

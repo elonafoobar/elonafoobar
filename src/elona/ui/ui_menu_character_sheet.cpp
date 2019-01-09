@@ -276,7 +276,6 @@ void UIMenuCharacterSheet::update()
 {
     if (_operation != CharacterSheetOperation::character_making)
     {
-        display_msg(inf_tiles + inf_screeny);
     }
 
     pagemax = (listmax - 1) / pagesize + 1;
@@ -300,15 +299,15 @@ void UIMenuCharacterSheet::update()
 
 static void _draw_window(bool show_bonus)
 {
-    s = "";
+    std::string tips;
     if (show_bonus && page != 0)
     {
-        s = i18n::s.get(
+        tips = i18n::s.get(
             "core.locale.ui.chara_sheet.you_can_spend_bonus",
             cdata[cc].skill_bonus);
     }
-    display_window2(
-        (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400, 7);
+    ui_display_window2(
+        tips, (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400);
 }
 
 

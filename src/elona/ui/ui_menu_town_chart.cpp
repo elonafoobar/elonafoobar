@@ -49,9 +49,13 @@ void UIMenuTownChart::update()
 
 void UIMenuTownChart::draw()
 {
-    s(0) = i18n::s.get("core.locale.ui.town_chart.title");
-    s(1) = strhint3b;
-    display_window((windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.town_chart.title"),
+        strhint3b,
+        (windoww - 580) / 2 + inf_screenx,
+        winposy(400),
+        580,
+        400);
     keyrange = 0;
     int j0 = 0;
     int n = 0;

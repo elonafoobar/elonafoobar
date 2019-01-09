@@ -79,25 +79,23 @@ void UIMenuConfig::update()
 
 static void _draw_window(const std::string& title, int width, int height)
 {
-    s(0) = title;
-    s(1) = strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help");
     pagesize = 0;
+    int y;
     if (mode == 1)
     {
-        display_window(
-            (windoww - width) / 2 + inf_screenx,
-            winposy(height, 1),
-            width,
-            height);
+        y = winposy(height, 1);
     }
     else
     {
-        display_window(
-            (windoww - width) / 2 + inf_screenx,
-            winposy(height) - 12,
-            width,
-            height);
+        y = winposy(height) - 12;
     }
+    ui_display_window(
+        title,
+        strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help"),
+        (windoww - width) / 2 + inf_screenx,
+        y,
+        width,
+        height);
 }
 
 static void _draw_deco()

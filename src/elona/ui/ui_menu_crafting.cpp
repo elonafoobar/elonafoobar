@@ -126,9 +126,13 @@ bool UIMenuCrafting::init()
 
 static void _draw_window()
 {
-    s(0) = i18n::s.get("core.locale.crafting.menu.title");
-    s(1) = strhint2 + strhint3b;
-    display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
+    ui_display_window(
+        i18n::s.get("core.locale.crafting.menu.title"),
+        strhint2 + strhint3b,
+        (windoww - 640) / 2 + inf_screenx,
+        winposy(448),
+        640,
+        448);
     display_topic(
         i18n::s.get("core.locale.crafting.menu.product"), wx + 28, wy + 36);
     display_topic(

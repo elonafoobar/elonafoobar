@@ -468,9 +468,13 @@ void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const Character& chara)
 
 void UIMenuCtrlAlly::draw()
 {
-    s(0) = s(10);
-    s(1) = s(11);
-    display_window((windoww - 620) / 2 + inf_screenx, winposy(400), 620, 400);
+    ui_display_window(
+        s(10),
+        s(11),
+        (windoww - 620) / 2 + inf_screenx,
+        winposy(400),
+        620,
+        400);
     display_topic(s(12), wx + 28, wy + 36);
     display_topic(s(13), wx + 350 + x, wy + 36);
     keyrange = 0;

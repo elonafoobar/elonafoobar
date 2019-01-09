@@ -3628,7 +3628,6 @@ TurnResult do_short_cut_command(int sc_)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return TurnResult::pc_turn_user_error;
         }
@@ -3650,7 +3649,6 @@ TurnResult do_short_cut_command(int sc_)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return TurnResult::pc_turn_user_error;
         }

@@ -517,7 +517,6 @@ ELONA_EXTERN(int minlevel);
 ELONA_EXTERN(int mode);
 ELONA_EXTERN(int mousel);
 ELONA_EXTERN(int msgalert);
-ELONA_EXTERN(int msgkeep);
 ELONA_EXTERN(int msgline);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
