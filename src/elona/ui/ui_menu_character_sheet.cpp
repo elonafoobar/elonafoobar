@@ -935,16 +935,18 @@ static bool _has_enchantment(int cc, int skill_id)
 
 static void _draw_skill_enchantment_power(int cnt, int skill_id)
 {
-    skill_id = sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+    const auto bonus =
+        sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+    int star_count;
     if (skill_id >= 50)
     {
-        skill_id = skill_id / 50;
+        star_count = bonus / 50;
     }
     else
     {
-        skill_id = skill_id / 5;
+        star_count = bonus / 5;
     }
-    std::string enchantment_level = enchantment_print_level(skill_id);
+    std::string enchantment_level = enchantment_print_level(star_count);
     pos(wx + 282, wy + 66 + cnt * 19 + 2);
     mes(enchantment_level);
 }
