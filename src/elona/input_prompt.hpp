@@ -82,14 +82,27 @@ private:
     int _promptmax{};
 };
 
+
+
 class PromptWithNumber : public Prompt
 {
 public:
+    struct Result
+    {
+        int index;
+        int number;
+    };
+
+
     PromptWithNumber(int number, I18NKey locale_key_root)
         : Prompt(locale_key_root)
     {
         _number = number;
     }
+
+
+    Result query(int x, int y, int width);
+
 
 protected:
     void _draw_box() override;

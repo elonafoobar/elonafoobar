@@ -665,12 +665,13 @@ label_1923:
             prompt.append("start", snail::Key::key_a);
             prompt.append("go_back", snail::Key::key_b);
             prompt.append("from_the_start", snail::Key::key_c);
-            rtval = prompt.query(promptx, prompty, 220);
+            const auto result = prompt.query(promptx, prompty, 220);
+            rtval = result.index;
 
             rpmode = 0;
             if (rtval == 0)
             {
-                rpref(1) = TODO_show_prompt_val;
+                rpref(1) = result.number;
                 rpref(2) = rpdata(1, rpid);
                 rpref(3) = rpdiff(rpid, step, -1);
                 continuous_action_blending();

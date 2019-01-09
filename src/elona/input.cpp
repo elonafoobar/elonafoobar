@@ -19,10 +19,6 @@
 namespace elona
 {
 
-
-int TODO_show_prompt_val;
-
-
 void input_number_dialog(int x, int y, int max_number, int initial_number)
 {
     snd("core.pop2");

@@ -140,6 +140,14 @@ void Prompt::_draw_entries()
 }
 
 
+
+PromptWithNumber::Result PromptWithNumber::query(int x, int y, int width)
+{
+    const auto index = Prompt::query(x, y, width);
+    return {index, _show_prompt_val};
+}
+
+
 void PromptWithNumber::_draw_box()
 {
     dx(0) = 200;
