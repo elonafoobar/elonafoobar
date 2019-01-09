@@ -98,6 +98,7 @@ MIT Licenseです。詳細はLICENSEを参照してください。このライ�
 * ordered_map: src/thirdparty/ordered_map/LICENSEを参照してください。
 * boostrandom: src/thirdparty/LICENSE_1_0.txtを参照してください。
 * cmake/FindXXX.cmake: cmake/LICENSEを参照してください。
+* nativefiledialog: src/thirdparty/nfd/LICENSEを参照してください。
 
 ## Luaライブラリ
 

@@ -426,6 +426,11 @@ else()
   add_subdirectory(src/elona)
   target_link_libraries(${PROJECT_NAME} elona)
 
+  if(WITH_TESTS STREQUAL "OFF")
+    add_subdirectory(src/thirdparty/nfd)
+    target_link_libraries(nfd)
+  endif()
+
   INSTALL(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime)

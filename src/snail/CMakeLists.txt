@@ -15,6 +15,7 @@ set(SNAIL_SOURCES
     audio.cpp
     detail/sdl.cpp
     font.cpp
+    filedialog.cpp
     fpsmanager.cpp
     hsp.cpp
     image.cpp
@@ -52,3 +53,9 @@ if(NOT DEFINED SDL2_MIXER_INCLUDE_DIR OR NOT DEFINED SDL2_MIXER_LIBRARIES)
 endif()
 include_directories(${SDL2_MIXER_INCLUDE_DIR})
 target_link_libraries(${LIBRARY_NAME} ${SDL2_MIXER_LIBRARIES})
+
+if(SNAIL_HEADLESS)
+else()
+    include_directories(${LIBRARY_NAME} ../thirdparty/nfd/include)
+    target_link_libraries(${LIBRARY_NAME} nfd)
+endif()

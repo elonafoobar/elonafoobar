@@ -111,6 +111,7 @@ For files under [graphics](graphics/) folder of the repository, see
 * ordered_map: see src/thirdparty/ordered_map/LICENSE.
 * boostrandom: see src/thirdparty/LICENSE_1_0.txt.
 * cmake/FindXXX.cmake: see cmake/LICENSE.
+* nativefiledialog: see src/thirdparty/nfd/LICENSE.
 
 ## Lua libraries
 
