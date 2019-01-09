@@ -8,8 +8,6 @@
 namespace elona
 {
 
-extern int TODO_show_prompt_val;
-
 enum class ActionCategory;
 class InputContext;
 
