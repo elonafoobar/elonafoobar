@@ -1119,7 +1119,6 @@ label_2061_internal:
                     "core.locale.ui.inv.drop.how_many",
                     inv[ci].number(),
                     inv[ci]));
-                display_msg(screenmsgy, 1);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
@@ -1257,7 +1256,6 @@ label_2061_internal:
                         inv[ci].number(),
                         inv[ci]));
                 }
-                display_msg(screenmsgy, 2);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
@@ -1312,7 +1310,6 @@ label_2061_internal:
                         update_screen();
                         txt(i18n::s.get(
                             "core.locale.ui.inv.buy.not_enough_money"));
-                        msgkeep = 1;
                         goto label_20591;
                     }
                 }
@@ -1327,7 +1324,6 @@ label_2061_internal:
                             txt(i18n::s.get(
                                 "core.locale.ui.inv.sell.not_enough_money",
                                 cdata[tc]));
-                            msgkeep = 1;
                             goto label_20591;
                         }
                     }

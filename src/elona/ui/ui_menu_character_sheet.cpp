@@ -276,7 +276,6 @@ void UIMenuCharacterSheet::update()
 {
     if (_operation != CharacterSheetOperation::character_making)
     {
-        display_msg(inf_tiles + inf_screeny);
     }
 
     pagemax = (listmax - 1) / pagesize + 1;

@@ -2291,14 +2291,6 @@ void display_key(int x, int y, int nth)
 
 
 
-void display_msg(int msgkeep_, int msgy_)
-{
-    msgkeep = msgkeep_;
-    msgy = msgy_;
-}
-
-
-
 void fillbg(
     int tile_window_id,
     int tile_x,

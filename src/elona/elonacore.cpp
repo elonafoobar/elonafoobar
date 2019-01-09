@@ -6249,7 +6249,6 @@ void try_to_return()
         return;
     }
     txt(i18n::s.get("core.locale.misc.return.where_do_you_want_to_go"));
-    display_msg(inf_screeny + inf_tiles);
     rtval = prompt.query(promptx, prompty, 240);
     update_screen();
     if (rtval >= 0)
@@ -8824,7 +8823,6 @@ int pick_up_item(bool play_sound)
             ti = ci;
             in = inv[ci].number();
             inv[ci].remove();
-            msgkeep = 1;
             txt(i18n::s.get(
                 "core.locale.action.pick_up.execute",
                 cdata[cc],
@@ -9019,7 +9017,6 @@ int pick_up_item(bool play_sound)
         }
         if (invctrl == 11)
         {
-            msgkeep = 1;
             txt(i18n::s.get(
                 "core.locale.action.pick_up.you_buy", itemname(ti, in)));
             sellgold = calcitemvalue(ti, 0) * in;
@@ -9033,7 +9030,6 @@ int pick_up_item(bool play_sound)
         }
         if (invctrl == 12)
         {
-            msgkeep = 1;
             sellgold = calcitemvalue(ci, 1) * in;
             if (!inv[ti].is_stolen())
             {
@@ -9070,7 +9066,6 @@ int pick_up_item(bool play_sound)
         if (invctrl == 22 || invctrl == 24)
         {
             sound_pick_up();
-            msgkeep = 1;
             if (invctrl == 22)
             {
                 txt(i18n::s.get(
@@ -9098,7 +9093,6 @@ int pick_up_item(bool play_sound)
             cell_data.at(inv[ci].position.x, inv[ci].position.y)
                 .item_appearances_actual;
         sound_pick_up();
-        msgkeep = 1;
         txt(i18n::s.get(
             "core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
     }

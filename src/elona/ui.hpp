@@ -12,7 +12,6 @@ Position gmes(const std::string&, int, int, int, const snail::Color&, bool);
 void initialize_ui_constants();
 void display_customkey(const std::string&, int, int);
 void display_key(int = 0, int = 0, int = 0);
-void display_msg(int = 0, int = 0);
 void display_note(const std::string&, int = 0);
 
 

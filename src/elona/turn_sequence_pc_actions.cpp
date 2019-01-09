@@ -339,7 +339,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -366,7 +365,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -409,7 +407,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -436,7 +433,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -455,7 +451,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -488,7 +483,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -503,7 +497,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -527,7 +520,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -556,7 +548,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -578,7 +569,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -593,7 +583,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -642,7 +631,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -661,7 +649,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -676,7 +663,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
