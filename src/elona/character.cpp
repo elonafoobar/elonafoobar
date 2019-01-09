@@ -98,7 +98,7 @@ int chara_create_internal()
 
     cm = 1;
     cmshade = 0;
-    chara_memory.add_created(CharacterId{dbid});
+    chara_memory.add_created(CharacterId{dbid}.get());
     if (dbid == 323)
     {
         if (rnd(5))
@@ -507,7 +507,8 @@ void CharacterMemory::add_created(const std::string& id, int amount)
 
 
 
-Memory CharacterMemory::_get_memory(const std::string& id) const
+CharacterMemory::Memory CharacterMemory::_get_memory(
+    const std::string& id) const
 {
     const auto itr = storage.find(id);
     if (itr == std::end(storage))
@@ -516,7 +517,7 @@ Memory CharacterMemory::_get_memory(const std::string& id) const
     }
     else
     {
-        return *itr;
+        return itr->second;
     }
 }
 

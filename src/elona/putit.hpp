@@ -1,7 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <map>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 #include "defines.hpp"
 #include "filesystem.hpp"
@@ -240,29 +242,41 @@ void serialize(Archive& ar, T& data)
 }
 
 
-#define PRIMITIVE_TYPES(T) \
+#define ELONA_PUTIT_PRIMITIVE_TYPES(T) \
     template <typename Archive> \
     void serialize(Archive& ar, T& data) \
     { \
         ar.primitive(data); \
     }
 
-PRIMITIVE_TYPES(bool)
-PRIMITIVE_TYPES(char)
-PRIMITIVE_TYPES(unsigned char)
-PRIMITIVE_TYPES(short)
-PRIMITIVE_TYPES(unsigned short)
-PRIMITIVE_TYPES(int)
-PRIMITIVE_TYPES(unsigned int)
-PRIMITIVE_TYPES(long)
-PRIMITIVE_TYPES(unsigned long)
-PRIMITIVE_TYPES(long long)
-PRIMITIVE_TYPES(unsigned long long)
-PRIMITIVE_TYPES(float)
-PRIMITIVE_TYPES(double)
-PRIMITIVE_TYPES(long double)
+ELONA_PUTIT_PRIMITIVE_TYPES(bool)
+ELONA_PUTIT_PRIMITIVE_TYPES(char)
+ELONA_PUTIT_PRIMITIVE_TYPES(unsigned char)
+ELONA_PUTIT_PRIMITIVE_TYPES(short)
+ELONA_PUTIT_PRIMITIVE_TYPES(unsigned short)
+ELONA_PUTIT_PRIMITIVE_TYPES(int)
+ELONA_PUTIT_PRIMITIVE_TYPES(unsigned int)
+ELONA_PUTIT_PRIMITIVE_TYPES(long)
+ELONA_PUTIT_PRIMITIVE_TYPES(unsigned long)
+ELONA_PUTIT_PRIMITIVE_TYPES(long long)
+ELONA_PUTIT_PRIMITIVE_TYPES(unsigned long long)
+ELONA_PUTIT_PRIMITIVE_TYPES(float)
+ELONA_PUTIT_PRIMITIVE_TYPES(double)
+ELONA_PUTIT_PRIMITIVE_TYPES(long double)
 
-#undef PRIMITIVE_TYPES
+#undef ELONA_PUTIT_PRIMITIVE_TYPES
+
+
+
+// For SFINAE
+#define ELONA_PUTIT_IN \
+    std::enable_if_t< \
+        std::is_base_of<IArchiveBase, Archive>::value, \
+        std::nullptr_t> = nullptr
+#define ELONA_PUTIT_OUT \
+    std::enable_if_t< \
+        std::is_base_of<OArchiveBase, Archive>::value, \
+        std::nullptr_t> = nullptr
 
 
 
@@ -270,9 +284,7 @@ template <
     typename Archive,
     typename E,
     std::enable_if_t<std::is_enum<E>::value, std::nullptr_t> = nullptr,
-    std::enable_if_t<
-        std::is_base_of<IArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+    ELONA_PUTIT_IN>
 void serialize(Archive& ar, E& data)
 {
     using PrimitiveType = std::underlying_type_t<E>;
@@ -288,9 +300,7 @@ template <
     typename Archive,
     typename E,
     std::enable_if_t<std::is_enum<E>::value, std::nullptr_t> = nullptr,
-    std::enable_if_t<
-        std::is_base_of<OArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+    ELONA_PUTIT_OUT>
 void serialize(Archive& ar, E& data)
 {
     using PrimitiveType = std::underlying_type_t<E>;
@@ -301,11 +311,7 @@ void serialize(Archive& ar, E& data)
 
 
 
-template <
-    typename Archive,
-    std::enable_if_t<
-        std::is_base_of<IArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+template <typename Archive, ELONA_PUTIT_IN>
 void serialize(Archive& ar, std::string& data)
 {
     uint64_t length;
@@ -317,11 +323,7 @@ void serialize(Archive& ar, std::string& data)
 
 
 
-template <
-    typename Archive,
-    std::enable_if_t<
-        std::is_base_of<OArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+template <typename Archive, ELONA_PUTIT_OUT>
 void serialize(Archive& ar, std::string& data)
 {
     const uint64_t length = data.size();
@@ -331,12 +333,7 @@ void serialize(Archive& ar, std::string& data)
 
 
 
-template <
-    typename Archive,
-    typename T,
-    std::enable_if_t<
-        std::is_base_of<IArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+template <typename Archive, typename T, ELONA_PUTIT_IN>
 void serialize(Archive& ar, std::vector<T>& data)
 {
     uint64_t length;
@@ -348,12 +345,7 @@ void serialize(Archive& ar, std::vector<T>& data)
 
 
 
-template <
-    typename Archive,
-    typename T,
-    std::enable_if_t<
-        std::is_base_of<OArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+template <typename Archive, typename T, ELONA_PUTIT_OUT>
 void serialize(Archive& ar, std::vector<T>& data)
 {
     const uint64_t length = data.size();
@@ -363,12 +355,7 @@ void serialize(Archive& ar, std::vector<T>& data)
 
 
 
-template <
-    typename Archive,
-    size_t N,
-    std::enable_if_t<
-        std::is_base_of<IArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+template <typename Archive, size_t N, ELONA_PUTIT_IN>
 void serialize(Archive& ar, std::bitset<N>& data)
 {
     std::string buf;
@@ -378,18 +365,93 @@ void serialize(Archive& ar, std::bitset<N>& data)
 
 
 
-template <
-    typename Archive,
-    size_t N,
-    std::enable_if_t<
-        std::is_base_of<OArchiveBase, Archive>::value,
-        std::nullptr_t> = nullptr>
+template <typename Archive, size_t N, ELONA_PUTIT_OUT>
 void serialize(Archive& ar, std::bitset<N>& data)
 {
     auto buf = data.to_string();
     serialize(ar, buf);
 }
 
+
+
+template <typename Archive, typename Key, typename Value, ELONA_PUTIT_IN>
+void serialize(Archive& ar, std::map<Key, Value>& data)
+{
+    data.clear();
+
+    uint64_t length;
+    ar.primitive(length);
+    // Use same instance in each loop to avoid allocate Key and Value many
+    // times.
+    Key key;
+    Value value;
+    for (uint64_t i = 0; i < length; ++i)
+    {
+        ar(key);
+        ar(value);
+        data.emplace_back(key, value);
+    }
+}
+
+
+
+template <typename Archive, typename Key, typename Value, ELONA_PUTIT_OUT>
+void serialize(Archive& ar, std::map<Key, Value>& data)
+{
+    const uint64_t length = data.size();
+    ar.primitive(length);
+    for (auto&& pair : data)
+    {
+        Key key = pair.first;
+        Value value = pair.second;
+        ar(key);
+        ar(value);
+    }
+}
+
+
+
+template <typename Archive, typename Key, typename Value, ELONA_PUTIT_IN>
+void serialize(Archive& ar, std::unordered_map<Key, Value>& data)
+{
+    data.clear();
+
+    uint64_t length;
+    ar.primitive(length);
+    // Use same instance in each loop to avoid allocate Key and Value many
+    // times.
+    Key key;
+    Value value;
+    for (uint64_t i = 0; i < length; ++i)
+    {
+        ar(key);
+        ar(value);
+        data.emplace(key, value);
+    }
+}
+
+
+
+template <typename Archive, typename Key, typename Value, ELONA_PUTIT_OUT>
+void serialize(Archive& ar, std::unordered_map<Key, Value>& data)
+{
+    std::map<Key, Value> map(std::begin(data), std::end(data));
+    ar(map);
+}
+
+
+
+template <typename Archive, typename T1, typename T2>
+void serialize(Archive& ar, std::pair<T1, T2>& data)
+{
+    ar(data.first);
+    ar(data.second);
+}
+
+
+
+#undef ELONA_PUTIT_IN
+#undef ELONA_PUTIT_OUT
 
 } // namespace putit
 } // namespace elona

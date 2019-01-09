@@ -1932,6 +1932,37 @@ void _update_save_data_8(const fs::path& save_dir, int serial_id)
         // Write the data.
         fout.write(out.str().c_str(), out.str().size());
     }
+
+    // knpc.s1
+    const auto knpc_path = save_dir / "knpc.s1";
+    std::vector<std::pair<int, int>> knpc_data(800);
+    {
+        // Read
+        std::ifstream in{knpc_path.native(), std::ios::binary};
+        putit::BinaryIArchive ar{in};
+        for (size_t i = 0; i < 800; ++i)
+        {
+            ar.load(knpc_data.at(i).first);
+            ar.load(knpc_data.at(i).second);
+        }
+    }
+    std::map<std::string, std::pair<int, int>> new_knpc_data;
+    {
+        // Update
+        for (size_t i = 0; i < 354; ++i)
+        {
+            const auto new_id = CharacterId(i).get();
+            const auto killed = knpc_data[i].first;
+            const auto created = knpc_data[i].second;
+            new_knpc_data[new_id] = std::make_pair(killed, created);
+        }
+    }
+    {
+        // Write
+        std::ofstream out{knpc_path.native(), std::ios::binary};
+        putit::BinaryOArchive ar{out};
+        ar(new_knpc_data);
+    }
 }
 
 

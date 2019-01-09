@@ -595,12 +595,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                BinaryIArchive.load(filepath, chara_memory);
+                putit::BinaryIArchive::load(filepath, chara_memory);
             }
         }
         else
         {
-            BinaryOArchive.save(filepath, chara_memory);
+            putit::BinaryOArchive::save(filepath, chara_memory);
         }
     }
 
