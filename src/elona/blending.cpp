@@ -748,11 +748,15 @@ label_1924_internal:
         blendchecklist(cnt) = blendcheckmat(list(0, p));
     }
 label_1925_internal:
-    s(0) = i18n::s.get("core.locale.blending.recipe.title");
-    s(1) = strhint2;
     windowshadow = windowshadow(1);
-    display_window(
-        (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
+    ui_display_window(
+        i18n::s.get("core.locale.blending.recipe.title"),
+        strhint2,
+        (windoww - 780) / 2 + inf_screenx,
+        winposy(445),
+        380,
+        432,
+        74);
     display_topic(
         i18n::s.get("core.locale.blending.recipe.name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.recipe.counter", listmax);
@@ -868,12 +872,17 @@ label_1928_internal:
     {
         page = 0;
     }
-    s(0) = i18n::s.get(
-        "core.locale.blending.steps.add_ingredient_prompt", rpmatname(step));
-    s(1) = strhint2;
     windowshadow = windowshadow(1);
-    display_window(
-        (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
+    ui_display_window(
+        i18n::s.get(
+            "core.locale.blending.steps.add_ingredient_prompt",
+            rpmatname(step)),
+        strhint2,
+        (windoww - 780) / 2 + inf_screenx,
+        winposy(445),
+        380,
+        432,
+        74);
     display_topic(
         i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.steps.item_counter", listmax);

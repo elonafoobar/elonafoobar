@@ -12565,16 +12565,19 @@ void conquer_lesimas()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"g1.bmp", 1);
     gsel(0);
-    s = i18n::s.get(
-        "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0));
-    draw_caption();
-    s(0) = i18n::s.get("core.locale.win.window.title");
-    s(1) = ""s + strhint3;
+    ui_draw_caption(i18n::s.get(
+        "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0)));
     windowshadow = 1;
     ww = 680;
     wh = 488;
     pagesize = 0;
-    display_window(windoww / 2 - ww / 2, windowh / 2 - wh / 2, ww, wh);
+    ui_display_window(
+        i18n::s.get("core.locale.win.window.title"),
+        ""s + strhint3,
+        windoww / 2 - ww / 2,
+        windowh / 2 - wh / 2,
+        ww,
+        wh);
     cmbg = 0;
     x = ww / 3 - 20;
     y = wh - 140;
@@ -12745,8 +12748,8 @@ TurnResult pc_died()
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gsel(0);
     show_game_score_ranking();
-    s = i18n::s.get("core.locale.misc.death.you_are_about_to_be_buried");
-    draw_caption();
+    ui_draw_caption(
+        i18n::s.get("core.locale.misc.death.you_are_about_to_be_buried"));
 
     Prompt prompt("core.locale.misc.death");
     prompt.append("crawl_up", snail::Key::key_a);
@@ -12756,8 +12759,8 @@ TurnResult pc_died()
     if (rtval == 1)
     {
         show_game_score_ranking();
-        s = i18n::s.get("core.locale.misc.death.you_have_been_buried");
-        draw_caption();
+        ui_draw_caption(
+            i18n::s.get("core.locale.misc.death.you_have_been_buried"));
         redraw();
         wait_key_pressed();
         return TurnResult::finish_elona;

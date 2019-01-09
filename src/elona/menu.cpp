@@ -742,10 +742,13 @@ label_2040_internal:
     }
 label_2041_internal:
     pagesize = 0;
-    s(0) = i18n::s.get("core.locale.ui.appearance.basic.title");
-    s(1) = i18n::s.get("core.locale.ui.appearance.hint");
-    display_window(
-        (windoww - 380) / 2 + inf_screenx, winposy(340) - 12, 380, 340);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.appearance.basic.title"),
+        i18n::s.get("core.locale.ui.appearance.hint"),
+        (windoww - 380) / 2 + inf_screenx,
+        winposy(340) - 12,
+        380,
+        340);
     pagesize = listmax;
     display_topic(
         i18n::s.get("core.locale.ui.appearance.basic.category"),
@@ -984,10 +987,13 @@ int change_appearance_equipment()
     while (1)
     {
         pagesize = 0;
-        s(0) = i18n::s.get("core.locale.ui.appearance.equipment.title");
-        s(1) = i18n::s.get("core.locale.ui.appearance.hint");
-        display_window(
-            (windoww - 360) / 2 + inf_screenx, winposy(289) - 12, 360, 289);
+        ui_display_window(
+            i18n::s.get("core.locale.ui.appearance.equipment.title"),
+            i18n::s.get("core.locale.ui.appearance.hint"),
+            (windoww - 360) / 2 + inf_screenx,
+            winposy(289) - 12,
+            360,
+            289);
         s = i18n::s.get("core.locale.ui.appearance.equipment.part");
         pagesize = listmax;
         display_topic(s, wx + 34, wy + 36);
@@ -1350,9 +1356,13 @@ label_1965_internal:
     {
         page = 0;
     }
-    s(0) = i18n::s.get("core.locale.ui.analysis.title");
-    s(1) = strhint2 + strhint3b;
-    display_window((windoww - 400) / 2 + inf_screenx, winposy(448), 400, 448);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.analysis.title"),
+        strhint2 + strhint3b,
+        (windoww - 400) / 2 + inf_screenx,
+        winposy(448),
+        400,
+        448);
     s = i18n::s.get("core.locale.ui.analysis.result");
     display_topic(s, wx + 28, wy + 36);
     font(14 - en * 2);

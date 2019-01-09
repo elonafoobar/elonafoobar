@@ -43,8 +43,7 @@ static void _draw_background_and_caption(const I18NKey& key)
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    s = i18n::s.get(key);
-    draw_caption();
+    ui_draw_caption(i18n::s.get(key));
 }
 
 void character_making_draw_background(const I18NKey& key)
@@ -286,9 +285,8 @@ static int _prompt_satisfied()
     gcopy(0, 0, 100, windoww, windowh - 100);
     gsel(0);
     clear_background_in_character_making();
-    s = i18n::s.get(
-        "core.locale.chara_making.final_screen.are_you_satisfied.prompt");
-    draw_caption();
+    ui_draw_caption(i18n::s.get(
+        "core.locale.chara_making.final_screen.are_you_satisfied.prompt"));
 
     Prompt prompt("core.locale.chara_making.final_screen.are_you_satisfied");
     prompt.append("yes", snail::Key::key_a);
@@ -370,8 +368,8 @@ MainMenuResult character_making_final_phase()
     pos(0, 100);
     gcopy(2, 0, 0, windoww, windowh - 100);
     gmode(2);
-    s = i18n::s.get("core.locale.chara_making.final_screen.what_is_your_name");
-    draw_caption();
+    ui_draw_caption(
+        i18n::s.get("core.locale.chara_making.final_screen.what_is_your_name"));
 
     while (true)
     {
@@ -401,10 +399,9 @@ MainMenuResult character_making_final_phase()
             pos(0, 100);
             gcopy(2, 0, 0, windoww, windowh - 100);
             gmode(2);
-            s = i18n::s.get(
+            ui_draw_caption(i18n::s.get(
                 "core.locale.chara_making.final_screen.name_is_already_"
-                "taken");
-            draw_caption();
+                "taken"));
         }
     }
 

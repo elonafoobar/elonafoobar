@@ -21,8 +21,21 @@ void display_topic(const std::string& topic, int x, int y);
 
 
 
-void display_window(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void display_window2(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+void ui_display_window(
+    const std::string& title,
+    const std::string& key_help,
+    int x,
+    int y,
+    int width,
+    int height,
+    int x_offset = 0,
+    int y_offset = 0);
+void ui_display_window2(
+    const std::string& tips,
+    int x,
+    int y,
+    int width,
+    int height);
 
 
 
@@ -43,7 +56,7 @@ void update_minimap();
 void ui_render_from_screensync();
 void render_hud();
 void load_continuous_action_animation();
-void draw_caption();
+void ui_draw_caption(const std::string& text);
 void update_scrolling_info();
 void update_slight();
 void ui_render_non_hud();

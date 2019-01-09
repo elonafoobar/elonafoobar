@@ -66,9 +66,13 @@ void UIMenuSpells::update()
 
 static void _draw_window()
 {
-    s(0) = i18n::s.get("core.locale.ui.spell.title");
-    s(1) = strhint2 + strhint3 + strhint7;
-    display_window((windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.spell.title"),
+        strhint2 + strhint3 + strhint7,
+        (windoww - 720) / 2 + inf_screenx,
+        winposy(438),
+        720,
+        438);
     display_topic(i18n::s.get("core.locale.ui.spell.name"), wx + 28, wy + 36);
     display_topic(
         i18n::s.get("core.locale.ui.spell.cost") + "(" +

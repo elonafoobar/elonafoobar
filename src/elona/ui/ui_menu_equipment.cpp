@@ -119,10 +119,14 @@ void UIMenuEquipment::update()
 
 static void _draw_window_background()
 {
-    s(0) = i18n::s.get("core.locale.ui.equip.title");
-    s(1) = strhint5 + strhint5b + strhint3;
-    display_window(
-        (windoww - 690) / 2 + inf_screenx, winposy(428), 690, 428, 64);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.equip.title"),
+        strhint5 + strhint5b + strhint3,
+        (windoww - 690) / 2 + inf_screenx,
+        winposy(428),
+        690,
+        428,
+        64);
     display_topic(
         i18n::s.get("core.locale.ui.equip.category") + "/" +
             i18n::s.get("core.locale.ui.equip.name"),

@@ -85,12 +85,16 @@ void UIMenuCharamakeAttributes::update()
 
 static void _draw_window_background()
 {
-    s(0) = i18n::s.get(
-        "core.locale.chara_making.roll_attributes.attribute_reroll");
-    s(1) = strhint3b + key_mode2 + " [" +
-        i18n::s.get("core.locale.chara_making.roll_attributes.min_roll") + "]";
-    display_window(
-        (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
+    ui_display_window(
+        i18n::s.get(
+            "core.locale.chara_making.roll_attributes.attribute_reroll"),
+        strhint3b + key_mode2 + " [" +
+            i18n::s.get("core.locale.chara_making.roll_attributes.min_roll") +
+            "]",
+        (windoww - 360) / 2 + inf_screenx,
+        winposy(352, 1) - 20,
+        360,
+        352);
 }
 
 static void _draw_window_topic()

@@ -61,9 +61,9 @@ reset_page:
 
     while (1)
     {
-        s(0) = i18n::s.get("core.locale.action.use.deck.title");
-        s(1) = strhint5;
-        display_window(
+        ui_display_window(
+            i18n::s.get("core.locale.action.use.deck.title"),
+            strhint5,
             (windoww - 730) / 2 + inf_screenx,
             winposy(430, 0),
             730,
