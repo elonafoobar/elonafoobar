@@ -246,39 +246,19 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
         equipped_item = -1;
     }
 
+    const auto text_color = equipped_item == -1
+        ? snail::Color{10, 10, 10}
+        : cs_list_get_item_color(inv[equipped_item]);
     cs_list(
         cs == cnt,
         item_name,
         wx + 140 - 26,
         wy + 60 + cnt * 19 - 1,
         30,
-        equipped_item != -1,
-        equipped_item);
+        text_color);
 
     pos(wx + 640 - strlen_u(item_weight) * 7, wy + 60 + cnt * 19 + 2);
-    if (equipped_item == -1)
-    {
-        color(10, 10, 10);
-    }
-    else
-    {
-        color(0, 0, 0);
-        if (inv[equipped_item].identification_state ==
-            IdentifyState::completely_identified)
-        {
-            switch (inv[equipped_item].curse_state)
-            {
-            case CurseState::doomed: color(100, 10, 100); break;
-            case CurseState::cursed: color(150, 10, 10); break;
-            case CurseState::none: color(10, 40, 120); break;
-            case CurseState::blessed: color(10, 110, 30); break;
-            }
-        }
-        if (inv[equipped_item].is_marked_as_no_drop())
-        {
-            color(120, 80, 0);
-        }
-    }
+    color(text_color.r, text_color.g, text_color.b);
     mes(item_weight);
     color(0, 0, 0);
 }

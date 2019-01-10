@@ -157,7 +157,7 @@ label_1868_internal:
             200,
             noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
             0,
-            2);
+            {240, 240, 240});
     }
     if (keyrange != 0)
     {
@@ -334,7 +334,7 @@ void casino_prepare_choice_graphic()
             200,
             noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
             0,
-            2);
+            {240, 240, 240});
     }
     if (keyrange != 0)
     {

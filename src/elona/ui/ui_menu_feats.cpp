@@ -252,22 +252,13 @@ static void _draw_acquirable_trait_number(int tc_)
     display_note(note, 50);
 }
 
-static void _draw_single_list_entry_name(int cnt, int text_color)
+static void _draw_single_list_entry_name(
+    int cnt,
+    const snail::Color& text_color)
 {
     pos(wx + 270, wy + 66 + cnt * 19 + 2);
 
-    if (text_color == 0)
-    {
-        color(0, 0, 0);
-    }
-    else if (text_color == 5)
-    {
-        color(0, 0, 200);
-    }
-    else
-    {
-        color(200, 0, 0);
-    }
+    color(text_color.r, text_color.g, text_color.b);
     mes(traitrefn(2));
     color(0, 0, 0);
 }
@@ -275,7 +266,7 @@ static void _draw_single_list_entry_name(int cnt, int text_color)
 static void _draw_single_list_entry_text(
     int cnt,
     bool draw_name,
-    int text_color,
+    const snail::Color& text_color,
     const std::string& text)
 {
     if (draw_name)
@@ -298,21 +289,25 @@ static void _draw_single_list_entry_text(
     }
 }
 
-static int _get_trait_color(int trait_value)
+
+
+static snail::Color _get_trait_color(int trait_value)
 {
     if (trait_value == 0)
     {
-        return 0;
+        return {10, 10, 10};
     }
     else if (trait_value > 0)
     {
-        return 5;
+        return {0, 0, 200};
     }
     else
     {
-        return 6;
+        return {200, 0, 0};
     }
 }
+
+
 
 static void _draw_single_list_entry(
     int cnt,
@@ -326,7 +321,7 @@ static void _draw_single_list_entry(
         return;
     }
 
-    int text_color = 0;
+    snail::Color text_color = {10, 10, 10};
 
     if (list_value != trait_desc_value)
     {

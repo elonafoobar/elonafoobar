@@ -2434,8 +2434,7 @@ void cs_list(
     int x,
     int y,
     int x_offset,
-    int color_mode,
-    int ci)
+    const snail::Color& text_color)
 {
     if (is_selected)
     {
@@ -2461,38 +2460,35 @@ void cs_list(
         cs_posbk_h = 19;
     }
 
-    switch (color_mode)
-    {
-    case 0: color(10, 10, 10); break;
-    case 1:
-        color(0, 0, 0);
-        if (inv[ci].identification_state ==
-            IdentifyState::completely_identified)
-        {
-            switch (inv[ci].curse_state)
-            {
-            case CurseState::doomed: color(100, 10, 100); break;
-            case CurseState::cursed: color(150, 10, 10); break;
-            case CurseState::none: color(10, 40, 120); break;
-            case CurseState::blessed: color(10, 110, 30); break;
-            }
-        }
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            color(120, 80, 0);
-        }
-        break;
-    case 2: color(240, 240, 240); break;
-    case 3: color(160, 10, 10); break;
-    case 4: color(128, 128, 128); break;
-    case 5: color(0, 0, 200); break;
-    case 6: color(200, 0, 0); break;
-    default: assert(0); break;
-    }
-
+    color(text_color.r, text_color.g, text_color.b);
     pos(x + 4 + x_offset, y + vfix + 3);
     mes(text);
     color(0, 0, 0);
+}
+
+
+
+snail::Color cs_list_get_item_color(const Item& item)
+{
+    if (item.is_marked_as_no_drop())
+    {
+        return {120, 80, 0};
+    }
+
+    if (item.identification_state == IdentifyState::completely_identified)
+    {
+        switch (item.curse_state)
+        {
+        case CurseState::doomed: return {100, 10, 100};
+        case CurseState::cursed: return {150, 10, 10};
+        case CurseState::none: return {10, 40, 120};
+        case CurseState::blessed: return {10, 110, 30};
+        }
+    }
+    else
+    {
+        return {0, 0, 0};
+    }
 }
 
 
