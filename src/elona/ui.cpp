@@ -1536,7 +1536,6 @@ void ui_draw_caption(const std::string& text)
     int msgx = 0;
     gmode(0);
     font(16 - en * 2);
-    color(245, 245, 245);
     msgx = 20;
     msgy = 30;
     sx = 760;
@@ -1564,7 +1563,9 @@ void ui_draw_caption(const std::string& text)
         gcopy(3, 672, 477, ap, 2);
     }
     pos(msgx + 18, msgy + vfix + 4);
+    color(245, 245, 245);
     mes(text);
+    color(0, 0, 0);
     gmode(2);
 
     // __s__

@@ -15,7 +15,7 @@ MKDIR := mkdir
 
 
 all: $(BIN_DIR)
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make -j8
 
 
 build: $(BIN_DIR) $(PROGRAM)
@@ -38,7 +38,7 @@ $(BIN_DIR):
 
 
 $(PROGRAM): FORCE
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF; make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF; make -j8
 
 
 $(TEST_RUNNER):
