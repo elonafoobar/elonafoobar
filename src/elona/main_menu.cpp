@@ -177,30 +177,20 @@ MainMenuResult main_title_menu()
     gcopy_c(2, cmbg / 2 * 180, cmbg % 2 * 300, 180, 300, x, y);
     gmode(2);
 
-    if (jp)
-    {
-        s(0) = u8"Restore an adventurer"s;
-        s(1) = u8"冒険を再開する"s;
-        s(2) = u8"Generate an adventurer"s;
-        s(3) = u8"新しい冒険者を作成する"s;
-        s(4) = u8"Incarnate an adventurer"s;
-        s(5) = u8"冒険者の引継ぎ"s;
-        s(6) = u8"About"s;
-        s(7) = u8"このゲームについて"s;
-        s(8) = u8"Configure"s;
-        s(9) = u8"設定の変更"s;
-        s(10) = u8"Exit"s;
-        s(11) = u8"終了"s;
-    }
-    if (en)
-    {
-        s(0) = u8"Restore an Adventurer"s;
-        s(1) = u8"Generate an Adventurer"s;
-        s(2) = u8"Incarnate an Adventurer"s;
-        s(3) = u8"About"s;
-        s(4) = u8"Options"s;
-        s(5) = u8"Exit"s;
-    }
+    std::vector<std::string> items = {
+        u8"Restore an Adventurer",
+        i18n::s.get("core.locale.main_menu.title_menu.continue"),
+        u8"Generate an Adventurer",
+        i18n::s.get("core.locale.main_menu.title_menu.new"),
+        u8"Incarnate an Adventurer",
+        i18n::s.get("core.locale.main_menu.title_menu.incarnate"),
+        u8"About",
+        i18n::s.get("core.locale.main_menu.title_menu.about"),
+        u8"Options",
+        i18n::s.get("core.locale.main_menu.title_menu.options"),
+        u8"Exit",
+        i18n::s.get("core.locale.main_menu.title_menu.exit"),
+    };
 
     gsel(3);
     pos(960, 96);
@@ -229,18 +219,18 @@ MainMenuResult main_title_menu()
             x = wx + 40;
             y = cnt * 35 + wy + 50;
             display_customkey(key_select(cnt), x, y);
-            if (jp)
+            if (en)
             {
-                font(11 - en * 2);
-                pos(x + 40, y - 4);
-                mes(s(cnt * 2));
-                font(13 - en * 2);
-                cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
+                font(14 - en * 2);
+                cs_list(cs == cnt, items.at(cnt * 2 + 1), x + 40, y + 1);
             }
             else
             {
-                font(14 - en * 2);
-                cs_list(cs == cnt, s(cnt), x + 40, y + 1);
+                font(11 - en * 2);
+                pos(x + 40, y - 4);
+                mes(items.at(cnt * 2));
+                font(13 - en * 2);
+                cs_list(cs == cnt, items.at(cnt * 2 + 1), x + 40, y + 8);
             }
         }
         cs_bk = cs;
@@ -456,14 +446,13 @@ MainMenuResult main_menu_continue()
 
         clear_background_in_continue();
         ui_draw_caption(
-            jp ? u8"どの冒険を再開するんだい？"
-               : u8"Which save game do you want to continue?");
+            i18n::s.get("core.locale.main_menu.continue.which_save"));
         windowshadow = 1;
     savegame_draw_page:
         ui_display_window(
-            jp ? u8"冒険者の選択" : u8"Game Selection",
-            jp ? u8"BackSpace [削除]  " + strhint2 + strhint3b
-               : u8"BackSpace [Delete]  " + strhint2 + strhint3b,
+            i18n::s.get("core.locale.main_menu.continue.title"),
+            i18n::s.get("core.locale.main_menu.continue.key_hint") + strhint2 +
+                strhint3b,
             (windoww - 440) / 2 + inf_screenx,
             winposy(288, 1),
             440,
@@ -492,7 +481,7 @@ MainMenuResult main_menu_continue()
         {
             font(14 - en * 2);
             pos(wx + 140, wy + 120);
-            mes(u8"No save files found"s);
+            mes(i18n::s.get("core.locale.main_menu.continue.no_save"));
         }
         redraw();
 
@@ -528,20 +517,15 @@ MainMenuResult main_menu_continue()
                 {
                     p = list(0, cs);
                     playerid = listn(0, p);
-                    ui_draw_caption(
-                        jp ? u8"本当に" + playerid + u8"を削除していいのかい？"
-                           : u8"Do you really want to delete " + playerid +
-                                u8" ?");
+                    ui_draw_caption(i18n::s.get(
+                        "core.locale.main_menu.continue.delete", playerid));
                     rtval = yes_or_no(promptx, prompty, 200);
                     if (rtval != 0)
                     {
                         return MainMenuResult::main_menu_continue;
                     }
-                    ui_draw_caption(
-                        jp ? u8"本当の本当に" + playerid +
-                                u8"を削除していいのかい？"
-                           : u8"Are you sure you really want to delete " +
-                                playerid + u8" ?");
+                    ui_draw_caption(i18n::s.get(
+                        "core.locale.main_menu.continue.delete2", playerid));
                     rtval = yes_or_no(promptx, prompty, 200);
                     if (rtval == 0)
                     {
@@ -593,9 +577,7 @@ MainMenuResult main_menu_incarnate()
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    ui_draw_caption(
-        jp ? u8"どの遺伝子を引き継ぐ？"
-           : u8"Which gene do you want to incarnate?");
+    ui_draw_caption(i18n::s.get("core.locale.main_menu.incarnate.which_gene"));
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::dir_entries(
@@ -621,7 +603,7 @@ MainMenuResult main_menu_incarnate()
     while (1)
     {
         ui_display_window(
-            jp ? u8"遺伝子の選択" : u8"Gene Selection",
+            i18n::s.get("core.locale.main_menu.incarnate.title"),
             strhint3b,
             (windoww - 440) / 2 + inf_screenx,
             winposy(288, 1),
@@ -644,7 +626,7 @@ MainMenuResult main_menu_incarnate()
         {
             font(14 - en * 2);
             pos(wx + 140, wy + 120);
-            mes(u8"No gene files found"s);
+            mes(i18n::s.get("core.locale.main_menu.incarnate.no_gene"));
         }
         redraw();
 
@@ -695,29 +677,18 @@ MainMenuResult main_menu_about()
 
     windowshadow = 1;
     ui_display_window(
-        "About",
+        i18n::s.get("core.locale.main_menu.about.title"),
         strhint3b,
         (windoww - 440) / 2 + inf_screenx,
         winposy(288, 1),
         440,
         288);
 
-    if (jp)
-    {
-        s(0) = "本家ホームページ";
-        s(1) = "Elona foobar ホームページ";
-        s(2) = "Elona foobar 変更履歴";
-        s(3) = "ライセンス";
-        s(4) = "クレジット";
-    }
-    else
-    {
-        s(0) = "Vanilla Elona Homepage";
-        s(1) = "Elona foobar Homepage";
-        s(2) = "Elona foobar Changelog";
-        s(3) = "License";
-        s(4) = "Credits";
-    }
+    s(0) = i18n::s.get("core.locale.main_menu.about.vanilla_homepage");
+    s(1) = i18n::s.get("core.locale.main_menu.about.foobar_homepage");
+    s(2) = i18n::s.get("core.locale.main_menu.about.foobar_changelog");
+    s(3) = i18n::s.get("core.locale.main_menu.about.license");
+    s(4) = i18n::s.get("core.locale.main_menu.about.credits");
 
     gsel(0);
 
@@ -829,7 +800,7 @@ void main_menu_about_one_changelog(const Release& release)
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(jp ? u8"更新履歴" : u8"Changelogs");
+    ui_draw_caption(i18n::s.get("core.locale.main_menu.about_changelog.title"));
 
     while (true)
     {
@@ -914,7 +885,7 @@ MainMenuResult main_menu_about_changelogs()
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(jp ? u8"更新履歴" : u8"Changelogs");
+    ui_draw_caption(i18n::s.get("core.locale.main_menu.about_changelog.title"));
 
     Changelog changelog;
     if (jp)
