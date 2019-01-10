@@ -766,25 +766,36 @@ void main_menu_about_one_changelog(const Release& release)
     }
     else
     {
-        constexpr size_t text_width = 60;
-        constexpr size_t lines_per_page = 10;
-        std::string buffer = release.content;
-        talk_conv(buffer, text_width);
-        size_t line_count = 0;
-        for (const auto& line : strutil::split_lines(buffer))
+        const size_t text_width = 75 - en * 15;
+        constexpr size_t lines_per_page = 16;
+
+        std::vector<std::string> buffer;
+        range::copy(
+            strutil::split_lines(release.content), std::back_inserter(buffer));
+        for (auto&& line : buffer)
         {
-            if (line_count == 0)
+            // talk_conv only accepts single line text, so you need to split by
+            // line.
+            talk_conv(line, text_width);
+        }
+        size_t line_count = 0;
+        for (const auto& lines : buffer)
+        {
+            for (const auto& line : strutil::split_lines(lines))
             {
-                changes.push_back(line + '\n');
-            }
-            else
-            {
-                changes.back() += line + '\n';
-            }
-            ++line_count;
-            if (line_count == lines_per_page)
-            {
-                line_count = 0;
+                if (line_count == 0)
+                {
+                    changes.push_back(line + '\n');
+                }
+                else
+                {
+                    changes.back() += line + '\n';
+                }
+                ++line_count;
+                if (line_count == lines_per_page)
+                {
+                    line_count = 0;
+                }
             }
         }
     }
@@ -825,12 +836,12 @@ void main_menu_about_one_changelog(const Release& release)
         ui_display_window(
             release.title(),
             strhint2 + strhint3b,
-            (windoww - 440) / 2 + inf_screenx,
-            winposy(288, 1),
-            440,
-            288);
+            (windoww - 600) / 2 + inf_screenx,
+            winposy(425, 1),
+            600,
+            425);
 
-        font(13 - en * 2);
+        font(13);
         pos(wx + 20, wy + 30);
         mes(changes.at(page));
 
