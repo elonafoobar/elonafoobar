@@ -2483,6 +2483,7 @@ snail::Color cs_list_get_item_color(const Item& item)
         case CurseState::cursed: return {150, 10, 10};
         case CurseState::none: return {10, 40, 120};
         case CurseState::blessed: return {10, 110, 30};
+        default: assert(0); return {0, 0, 0};
         }
     }
     else
