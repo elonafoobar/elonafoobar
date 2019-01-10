@@ -450,7 +450,16 @@ void UIMenuCtrlAlly::_draw_ally_info(int cnt, const Character& chara)
     }
 
     pos(wx + 370, wy + 66 + cnt * 19 + 2);
+    if (_draw_get_color_mode(chara) == 0)
+    {
+        color(10, 10, 10);
+    }
+    else
+    {
+        color(160, 10, 10);
+    }
     mes(ally_info);
+    color(0, 0, 0);
 }
 
 void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const Character& chara)

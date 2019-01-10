@@ -804,7 +804,7 @@ label_1925_internal:
         rpid = p;
         s = i18n::s.get("core.locale.blending.recipe.of", cnven(rpname(rpid)));
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 0, p);
+        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1);
     }
     if (cs_bk != cs)
     {

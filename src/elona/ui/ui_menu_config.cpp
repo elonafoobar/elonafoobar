@@ -187,7 +187,7 @@ static void _draw_items(ConfigMenu& menu, bool is_root_menu)
         //         }
         //     }
         // }
-        cs_list(cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1, 0);
+        cs_list(cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1);
         if ((true || cnt <= 0) && !is_root_menu)
         {
             _draw_arrows(item_pos);

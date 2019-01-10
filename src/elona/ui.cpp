@@ -2485,9 +2485,9 @@ void cs_list(
     case 2: color(240, 240, 240); break;
     case 3: color(160, 10, 10); break;
     case 4: color(128, 128, 128); break;
-    default:
-        // Use current color.
-        break;
+    case 5: color(0, 0, 200); break;
+    case 6: color(200, 0, 0); break;
+    default: assert(0); break;
     }
 
     pos(x + 4 + x_offset, y + vfix + 3);

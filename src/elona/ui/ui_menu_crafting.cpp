@@ -261,7 +261,16 @@ static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
         color_mode);
 
     pos(wx + 308, wy + 66 + cnt * 19 + 2);
+    if (can_craft)
+    {
+        color(10, 10, 10);
+    }
+    else
+    {
+        color(160, 10, 10);
+    }
     mes(item_make);
+    color(0, 0, 0);
 
     draw_item_material(ipicref(item_id), wx + 37, wy + 69 + cnt * 19 + 2);
 }

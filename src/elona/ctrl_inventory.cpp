@@ -1036,7 +1036,24 @@ label_2061_internal:
         }
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
         pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
+
+        color(0, 0, 0);
+        if (inv[p].identification_state == IdentifyState::completely_identified)
+        {
+            switch (inv[p].curse_state)
+            {
+            case CurseState::doomed: color(100, 10, 100); break;
+            case CurseState::cursed: color(150, 10, 10); break;
+            case CurseState::none: color(10, 40, 120); break;
+            case CurseState::blessed: color(10, 110, 30); break;
+            }
+        }
+        if (inv[p].is_marked_as_no_drop())
+        {
+            color(120, 80, 0);
+        }
         mes(s(1));
+        color(0, 0, 0);
     }
     if (keyrange != 0)
     {
