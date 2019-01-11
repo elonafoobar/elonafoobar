@@ -52,7 +52,7 @@ locale {
             }
 
             design {
-                help = "Left click to place the tile, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit."
+                help = "Left click to place the tile, left click with Ctrl key to fill, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit."
             }
 
             move {
