@@ -1172,7 +1172,6 @@ void scene_fade_to_black();
 //// Scenario
 void conquer_lesimas();
 void play_the_last_scene_again();
-std::vector<std::string> txtsetwinword(int);
 
 
 //// Game lifecycle

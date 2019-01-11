@@ -12485,23 +12485,43 @@ optional<TurnResult> check_angband()
 
 
 
+std::string ask_win_comment()
+{
+    std::vector<std::string> choices;
+    {
+        const auto choices_ =
+            i18n::s.get_list("core.locale.scenario.win_words");
+        if (choices_.empty())
+        {
+            choices.push_back("I can't sleep tonight.");
+        }
+        else
+        {
+            choices = sampled(choices_, std::min(choices_.size(), size_t(3)));
+        }
+    }
+
+    Prompt prompt(Prompt::Type::cannot_cancel);
+    for (const auto& choice : choices)
+    {
+        prompt.append(choice);
+    }
+    const auto selected_index = prompt.query(promptx, prompty, 310);
+
+    return choices[selected_index];
+}
+
+
+
 void conquer_lesimas()
 {
-    std::string wincomment;
     snd("core.complete1");
     stop_music();
     txt(i18n::s.get("core.locale.win.conquer_lesimas"));
     update_screen();
-    const auto win_words = txtsetwinword(3);
 
-    Prompt prompt(Prompt::Type::cannot_cancel);
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        prompt.append(win_words[cnt]);
-    }
-    rtval = prompt.query(promptx, prompty, 310);
+    const auto win_comment = ask_win_comment();
 
-    wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
     update_screen();
@@ -12598,7 +12618,7 @@ void conquer_lesimas()
         game_data.date.month,
         game_data.date.day));
     pos(wx + 40, wy + 206);
-    mes(i18n::s.get("core.locale.win.window.comment", wincomment));
+    mes(i18n::s.get("core.locale.win.window.comment", win_comment));
     pos(wx + 40, wy + 246);
     mes(i18n::s.get("core.locale.win.window.your_journey_continues"));
     redraw();
