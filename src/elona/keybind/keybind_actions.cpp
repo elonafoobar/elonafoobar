@@ -88,8 +88,8 @@ void initialize_keybind_actions(ActionMap& actions)
     actions.emplace("wait",                  Action{ActionCategory::game,      {{Key::period,          ModKey::none}, {Key::keypad_5, ModKey::none}}});
     actions.emplace("quick_menu",            Action{ActionCategory::game,      {{Key::key_z,           ModKey::none}}});
     actions.emplace("zap",                   Action{ActionCategory::game,      {{Key::key_z,           ModKey::shift}}});
-    actions.emplace("inventory",             Action{ActionCategory::game,      {{Key::key_x,           ModKey::none}}});
     actions.emplace("quick_inventory",       Action{ActionCategory::game,      {{Key::key_x,           ModKey::shift}}});
+    actions.emplace("inventory",             Action{ActionCategory::game,      {{Key::key_x,           ModKey::none}}});
     actions.emplace("get",                   Action{ActionCategory::game,      {{Key::key_g,           ModKey::none}, {Key::keypad_0, ModKey::none}}});
     actions.emplace("drop",                  Action{ActionCategory::game,      {{Key::key_d,           ModKey::none}}});
     actions.emplace("chara_info",            Action{ActionCategory::game,      {{Key::key_c,           ModKey::none}}});
