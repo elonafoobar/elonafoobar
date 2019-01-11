@@ -90,15 +90,11 @@ luacheck:
 	luacheck src/tests/lua
 
 i18n-check:
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) en
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) jp
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp
 
 i18n-check-err:
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) en --no-warnings
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) jp --no-warnings
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en --no-warnings
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp --no-warnings
 
 rebuild: clean build

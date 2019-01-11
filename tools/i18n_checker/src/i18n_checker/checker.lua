@@ -65,14 +65,22 @@ local function get_max_enum_value(locale_table, key_head)
    return i - 1
 end
 
+local function check_list(locale_table, locale_key)
+   return locale_table[locale_key .. ".1"]
+end
+
 local function check_get(locale_table, args)
    local results = {}
    local locale_key = try_get_key(args)
    if locale_key then
       if locale_table[locale_key] == nil then
-         results[#results+1] = {key = locale_key,
-                                kind = "error",
-                                msg = "Translation found in code but not in store"}
+         if not check_list(locale_table, locale_key) then
+            results[#results+1] = {key = locale_key,
+                                   kind = "error",
+                                   msg = "Translation found in code but not in store"}
+         else
+            locale_table[locale_key .. ".1"].used = true
+         end
       else
          locale_table[locale_key].used = true
       end
@@ -149,6 +157,11 @@ local function check_get_property(locale_table, args)
    return results
 end
 
+-- TODO implement it!
+local function check_get_m(locale_table, args)
+   return {}
+end
+
 dispatchers["i18n::s.get"] = check_get
 dispatchers["i18n::s.get_optional"] = check_get
 
@@ -158,6 +171,12 @@ dispatchers["i18n::s.get_enum_optional"] = check_get_enum
 dispatchers["i18n::s.get_enum_property"] = check_get_property
 dispatchers["i18n::s.get_enum_property_opt"] = check_get_property
 
+dispatchers["i18n::s.get_m"] = check_get_m
+dispatchers["i18n::s.get_m_optional"] = check_get_m
+
+dispatchers["i18n::s.get_list"] = check_get
+
+dispatchers["i18n::s.get_locale_dir"] = function() return {} end
 dispatchers["i18n::s.init"] = function() return {} end
 dispatchers["i18n::s.load"] = function() return {} end
 
