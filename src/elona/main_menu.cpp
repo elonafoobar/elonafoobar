@@ -1028,7 +1028,125 @@ MainMenuResult main_menu_about_license()
 
 MainMenuResult main_menu_about_credits()
 {
-    return MainMenuResult::main_menu_about;
+    std::vector<std::string> credits_text_lines;
+    range::copy(
+        fileutil::read_by_line(filesystem::path("../CREDITS")),
+        std::back_inserter(credits_text_lines));
+
+    std::vector<std::string> credits_pages;
+
+    if (credits_text_lines.empty())
+    {
+        credits_pages.push_back("");
+    }
+    else
+    {
+        const size_t text_width = 75 - en * 15;
+        constexpr size_t lines_per_page = 16;
+
+        for (auto&& line : credits_text_lines)
+        {
+            // talk_conv only accepts single line text, so you need to split by
+            // line.
+            talk_conv(line, text_width);
+        }
+        size_t line_count = 0;
+        for (const auto& lines : credits_text_lines)
+        {
+            for (const auto& line : strutil::split_lines(lines))
+            {
+                if (line_count == 0)
+                {
+                    credits_pages.push_back(line + '\n');
+                }
+                else
+                {
+                    credits_pages.back() += line + '\n';
+                }
+                ++line_count;
+                if (line_count == lines_per_page)
+                {
+                    line_count = 0;
+                }
+            }
+        }
+    }
+    pagemax = credits_pages.size() - 1;
+
+    page = 0;
+
+    gsel(4);
+    gmode(0);
+    pos(0, 0);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    gmode(2);
+    gsel(0);
+
+    ui_draw_caption(i18n::s.get("core.locale.main_menu.about.credits"));
+
+    while (true)
+    {
+    savegame_change_page:
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
+
+        cs_bk = -1;
+        if (page < 0)
+        {
+            page = pagemax;
+        }
+        else if (page > pagemax)
+        {
+            page = 0;
+        }
+
+        windowshadow = 1;
+    savegame_draw_page:
+        ui_display_window(
+            "",
+            strhint2 + strhint3b,
+            (windoww - 600) / 2 + inf_screenx,
+            winposy(425, 1),
+            600,
+            425);
+
+        font(13);
+        pos(wx + 20, wy + 30);
+        mes(credits_pages.at(page));
+
+        redraw();
+
+        int cursor{};
+        auto action = cursor_check_ex(cursor);
+        (void)cursor;
+
+        if (action == "next_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                goto savegame_change_page;
+            }
+        }
+        if (action == "previous_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                goto savegame_change_page;
+            }
+        }
+        if (action == "cancel")
+        {
+            return MainMenuResult::main_menu_about;
+        }
+        goto savegame_draw_page;
+    }
 }
 
 } // namespace elona
