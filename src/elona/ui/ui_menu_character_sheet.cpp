@@ -276,7 +276,6 @@ void UIMenuCharacterSheet::update()
 {
     if (_operation != CharacterSheetOperation::character_making)
     {
-        display_msg(inf_tiles + inf_screeny);
     }
 
     pagemax = (listmax - 1) / pagesize + 1;
@@ -300,15 +299,15 @@ void UIMenuCharacterSheet::update()
 
 static void _draw_window(bool show_bonus)
 {
-    s = "";
+    std::string tips;
     if (show_bonus && page != 0)
     {
-        s = i18n::s.get(
+        tips = i18n::s.get(
             "core.locale.ui.chara_sheet.you_can_spend_bonus",
             cdata[cc].skill_bonus);
     }
-    display_window2(
-        (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400, 7);
+    ui_display_window2(
+        tips, (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400);
 }
 
 
@@ -935,16 +934,18 @@ static bool _has_enchantment(int cc, int skill_id)
 
 static void _draw_skill_enchantment_power(int cnt, int skill_id)
 {
-    skill_id = sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+    const auto bonus =
+        sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+    int star_count;
     if (skill_id >= 50)
     {
-        skill_id = skill_id / 50;
+        star_count = bonus / 50;
     }
     else
     {
-        skill_id = skill_id / 5;
+        star_count = bonus / 5;
     }
-    std::string enchantment_level = enchantment_print_level(skill_id);
+    std::string enchantment_level = enchantment_print_level(star_count);
     pos(wx + 282, wy + 66 + cnt * 19 + 2);
     mes(enchantment_level);
 }

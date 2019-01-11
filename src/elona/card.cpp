@@ -61,9 +61,9 @@ reset_page:
 
     while (1)
     {
-        s(0) = i18n::s.get("core.locale.action.use.deck.title");
-        s(1) = strhint5;
-        display_window(
+        ui_display_window(
+            i18n::s.get("core.locale.action.use.deck.title"),
+            strhint5,
             (windoww - 730) / 2 + inf_screenx,
             winposy(430, 0),
             730,
@@ -102,6 +102,9 @@ reset_page:
             x = wx + 46;
             y = wy + 66 + i * 19 - 1;
             display_key(x, y, i);
+            const auto text_color = card(0, list(0, p))
+                ? snail::Color{10, 10, 10}
+                : snail::Color{128, 128, 128};
             cs_list(
                 cs == i,
                 i18n::s.get_m(
@@ -111,15 +114,8 @@ reset_page:
                 x + 30,
                 y,
                 0,
-                card(0, list(0, p)) ? 0 : 4);
-            if (card(0, list(0, p)))
-            {
-                color(10, 10, 10);
-            }
-            else
-            {
-                color(128, 128, 128);
-            }
+                text_color);
+            color(text_color.r, text_color.g, text_color.b);
             pos(x + 365, y + 3);
             mes(npcmemory(0, list(0, p)));
             pos(x + 455, y + 3);

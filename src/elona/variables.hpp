@@ -234,7 +234,6 @@ ELONA_EXTERN(elona_vector1<std::string> cardrefn);
 ELONA_EXTERN(elona_vector1<std::string> description);
 ELONA_EXTERN(elona_vector1<std::string> egominorn);
 ELONA_EXTERN(elona_vector1<std::string> egoname);
-ELONA_EXTERN(elona_vector1<std::string> filter_creature);
 ELONA_EXTERN(elona_vector1<std::string> filtern);
 ELONA_EXTERN(elona_vector1<std::string> fltnrace);
 ELONA_EXTERN(elona_vector1<std::string> gdatan);
@@ -518,7 +517,6 @@ ELONA_EXTERN(int minlevel);
 ELONA_EXTERN(int mode);
 ELONA_EXTERN(int mousel);
 ELONA_EXTERN(int msgalert);
-ELONA_EXTERN(int msgkeep);
 ELONA_EXTERN(int msgline);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
@@ -932,7 +930,6 @@ void sense_map_feats_on_move();
 
 
 //// Magic
-int magic();
 int breath_list();
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 int route_info(int&, int&, int = 0);

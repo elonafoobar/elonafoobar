@@ -6,6 +6,11 @@ namespace elona
 struct Character;
 enum class ControlAllyOperation;
 
+namespace snail
+{
+struct Color;
+}
+
 namespace ui
 {
 
@@ -32,7 +37,7 @@ private:
     std::string _get_ally_info(const Character& chara);
     std::string _get_general_ally_info(const Character& chara);
     std::string _get_specific_ally_info(const Character& chara);
-    int _draw_get_color_mode(const Character& chara);
+    snail::Color _draw_get_color(const Character& chara);
 
     void _draw_ally_list_entry(int cnt, const Character& chara);
     void _draw_ally_name(int cnt, const Character& chara);

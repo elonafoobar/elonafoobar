@@ -1531,16 +1531,15 @@ void load_continuous_action_animation()
 
 
 
-void draw_caption()
+void ui_draw_caption(const std::string& text)
 {
     int msgx = 0;
     gmode(0);
     font(16 - en * 2);
-    color(245, 245, 245);
     msgx = 20;
     msgy = 30;
     sx = 760;
-    sx = s(0).size() * 8 + 45;
+    sx = text.size() * 8 + 45;
     if (sx > 760)
     {
         sx = 760;
@@ -1564,8 +1563,13 @@ void draw_caption()
         gcopy(3, 672, 477, ap, 2);
     }
     pos(msgx + 18, msgy + vfix + 4);
-    mes(s);
+    color(245, 245, 245);
+    mes(text);
+    color(0, 0, 0);
     gmode(2);
+
+    // __s__
+    elona::s(0) = text;
 }
 
 
@@ -2136,105 +2140,115 @@ void render_fishing_animation()
 
 
 
-void display_window2(
+void ui_display_window(
+    const std::string& title,
+    const std::string& key_help,
     int x,
     int y,
     int width,
     int height,
-    int buffer_id,
-    int y_offset)
-{
-    gmode(2);
-    pos(x, y);
-    gcopy(buffer_id, 0, 0, width, height);
-    font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    if (s != ""s)
-    {
-        pos(x + width - strlen_u(s) * 7 - 140,
-            y + height - 24 - height % 8 + y_offset);
-        mes(s);
-    }
-    if (pagesize != 0)
-    {
-        s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        pos(x + width - strlen_u(s) * 7 - 40,
-            y + height - 24 - height % 8 + y_offset);
-        mes(s);
-    }
-}
-
-
-
-void display_window(
-    int window_x,
-    int window_y,
-    int window_width,
-    int window_height,
     int x_offset,
     int y_offset)
 {
     if (windowshadow == 1)
     {
-        window(
-            window_x + 4,
-            window_y + 4,
-            window_width,
-            window_height - window_height % 8,
-            true);
+        window(x + 4, y + 4, width, height - height % 8, true);
         windowshadow = 0;
     }
-    window(window_x, window_y, window_width, window_height - window_height % 8);
-    if (s != ""s)
+    window(x, y, width, height - height % 8);
+    if (title != "")
     {
         window2(
-            window_x + 34,
-            window_y - 4,
-            45 * window_width / 100 + clamp(int(strlen_u(s) * 8 - 120), 0, 200),
+            x + 34,
+            y - 4,
+            45 * width / 100 + clamp(int(strlen_u(title) * 8 - 120), 0, 200),
             32,
             1,
             1);
     }
     gmode(2);
-    draw(
-        "tip_icon",
-        window_x + 30 + x_offset,
-        window_y + window_height - 47 - window_height % 8);
+    draw("tip_icon", x + 30 + x_offset, y + height - 47 - height % 8);
     line(
-        window_x + 50 + x_offset,
-        window_y + window_height - 48 - window_height % 8,
-        window_x + window_width - 40,
-        window_y + window_height - 48 - window_height % 8,
+        x + 50 + x_offset,
+        y + height - 48 - height % 8,
+        x + width - 40,
+        y + height - 48 - height % 8,
         {194, 170, 146});
     line(
-        window_x + 50 + x_offset,
-        window_y + window_height - 49 - window_height % 8,
-        window_x + window_width - 40,
-        window_y + window_height - 49 - window_height % 8,
+        x + 50 + x_offset,
+        y + height - 49 - height % 8,
+        x + width - 40,
+        y + height - 49 - height % 8,
         {234, 220, 188});
     font(15 + en - en * 2);
     bmes(
-        s,
-        window_x + 45 * window_width / 200 + 34 - strlen_u(s) * 4 +
-            clamp(int(strlen_u(s) * 8 - 120), 0, 200) / 2,
-        window_y + 4 + vfix,
+        title,
+        x + 45 * width / 200 + 34 - strlen_u(title) * 4 +
+            clamp(int(strlen_u(title) * 8 - 120), 0, 200) / 2,
+        y + 4 + vfix,
         {255, 255, 255},
         {20, 10, 0});
     font(12 + sizefix - en * 2);
-    pos(window_x + 58 + x_offset,
-        window_y + window_height - 43 - window_height % 8);
-    mes(s(1));
+    pos(x + 58 + x_offset, y + height - 43 - height % 8);
+    mes(key_help);
     if (pagesize != 0)
     {
-        s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(window_x + window_width - strlen_u(s) * 7 - 40 - y_offset,
-            window_y + window_height - 65 - window_height % 8);
-        mes(s);
+        pos(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
+            y + height - 65 - height % 8);
+        mes(page_str);
+
+        // __s__
+        elona::s(0) = title;
+        elona::s(1) = page_str;
     }
-    wx = window_x;
-    wy = window_y;
-    ww = window_width;
-    wh = window_height;
+    else
+    {
+        // __s__
+        elona::s(0) = title;
+        elona::s(1) = key_help;
+    }
+    wx = x;
+    wy = y;
+    ww = width;
+    wh = height;
+}
+
+
+
+void ui_display_window2(
+    const std::string& tips,
+    int x,
+    int y,
+    int width,
+    int height)
+{
+    gmode(2);
+    pos(x, y);
+    gcopy(7, 0, 0, width, height);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
+    if (tips != ""s)
+    {
+        pos(x + width - strlen_u(tips) * 7 - 140,
+            y + height - 24 - height % 8 + 0);
+        mes(tips);
+    }
+    if (pagesize != 0)
+    {
+        const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        pos(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 24 - height % 8 + 0);
+        mes(page_str);
+
+        // __s__
+        elona::s(0) = page_str;
+    }
+    else
+    {
+        // __s__
+        elona::s(0) = tips;
+    }
 }
 
 
@@ -2274,14 +2288,6 @@ void display_key(int x, int y, int nth)
 {
     pos(x, y);
     gcopy(3, nth * 24 + 72, 30, 24, 18);
-}
-
-
-
-void display_msg(int msgkeep_, int msgy_)
-{
-    msgkeep = msgkeep_;
-    msgy = msgy_;
 }
 
 
@@ -2429,8 +2435,7 @@ void cs_list(
     int x,
     int y,
     int x_offset,
-    int color_mode,
-    int ci)
+    const snail::Color& text_color)
 {
     if (is_selected)
     {
@@ -2456,38 +2461,36 @@ void cs_list(
         cs_posbk_h = 19;
     }
 
-    switch (color_mode)
-    {
-    case 0: color(10, 10, 10); break;
-    case 1:
-        color(0, 0, 0);
-        if (inv[ci].identification_state ==
-            IdentifyState::completely_identified)
-        {
-            switch (inv[ci].curse_state)
-            {
-            case CurseState::doomed: color(100, 10, 100); break;
-            case CurseState::cursed: color(150, 10, 10); break;
-            case CurseState::none: color(10, 40, 120); break;
-            case CurseState::blessed: color(10, 110, 30); break;
-            }
-        }
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            color(120, 80, 0);
-        }
-        break;
-    case 2: color(240, 240, 240); break;
-    case 3: color(160, 10, 10); break;
-    case 4: color(128, 128, 128); break;
-    default:
-        // Use current color.
-        break;
-    }
-
+    color(text_color.r, text_color.g, text_color.b);
     pos(x + 4 + x_offset, y + vfix + 3);
     mes(text);
     color(0, 0, 0);
+}
+
+
+
+snail::Color cs_list_get_item_color(const Item& item)
+{
+    if (item.is_marked_as_no_drop())
+    {
+        return {120, 80, 0};
+    }
+
+    if (item.identification_state == IdentifyState::completely_identified)
+    {
+        switch (item.curse_state)
+        {
+        case CurseState::doomed: return {100, 10, 100};
+        case CurseState::cursed: return {150, 10, 10};
+        case CurseState::none: return {10, 40, 120};
+        case CurseState::blessed: return {10, 110, 30};
+        default: assert(0); return {0, 0, 0};
+        }
+    }
+    else
+    {
+        return {0, 0, 0};
+    }
 }
 
 
@@ -2525,10 +2528,14 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
     mes(hint);
     if (pagesize != 0)
     {
-        s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
-        mes(s);
+        pos(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 63 - height % 8);
+        mes(page_str);
+
+        // __s__
+        elona::s(0) = page_str;
     }
 }
 

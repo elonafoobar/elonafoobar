@@ -127,9 +127,13 @@ static void _draw_message(int cnt, int list_item, const std::string& list_text)
 
 void UIMenuItemDesc::draw()
 {
-    s(0) = i18n::s.get("core.locale.item.desc.window.title");
-    s(1) = strhint4 + strhint3;
-    display_window((windoww - 600) / 2 + inf_screenx, winposy(408), 600, 408);
+    ui_display_window(
+        i18n::s.get("core.locale.item.desc.window.title"),
+        strhint4 + strhint3,
+        (windoww - 600) / 2 + inf_screenx,
+        winposy(408),
+        600,
+        408);
     display_topic(itemname(ci), wx + 28, wy + 34);
 
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

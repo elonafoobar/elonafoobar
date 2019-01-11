@@ -61,18 +61,14 @@ MainMenuResult main_title_menu()
         mes(u8"Cutscenes translator: AnnaBannana");
         color(0, 0, 0);
     }
-    if (jp)
-    {
-        s(0) = u8"冒険の道標"s;
-        s(1) = strhint1;
-    }
-    else
-    {
-        s(0) = u8"Starting Menu"s;
-        s(1) = strhint1;
-    }
     windowshadow = 1;
-    display_window(80, winposy(308, 1), 320, 320);
+    ui_display_window(
+        jp ? u8"冒険の道標" : u8"Starting Menu",
+        strhint1,
+        80,
+        winposy(308, 1),
+        320,
+        320);
     cmbg = 4;
     x = ww / 5 * 4;
     y = wh - 80;
@@ -342,29 +338,19 @@ MainMenuResult main_menu_continue()
         }
 
         clear_background_in_continue();
-        if (jp)
-        {
-            s = u8"どの冒険を再開するんだい？"s;
-        }
-        else
-        {
-            s = u8"Which save game do you want to continue?"s;
-        }
-        draw_caption();
+        ui_draw_caption(
+            jp ? u8"どの冒険を再開するんだい？"
+               : u8"Which save game do you want to continue?");
         windowshadow = 1;
     savegame_draw_page:
-        if (jp)
-        {
-            s(0) = u8"冒険者の選択"s;
-            s(1) = u8"BackSpace [削除]  "s + strhint2 + strhint3b;
-        }
-        else
-        {
-            s(0) = u8"Game Selection"s;
-            s(1) = u8"BackSpace [Delete]  "s + strhint2 + strhint3b;
-        }
-        display_window(
-            (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
+        ui_display_window(
+            jp ? u8"冒険者の選択" : u8"Game Selection",
+            jp ? u8"BackSpace [削除]  " + strhint2 + strhint3b
+               : u8"BackSpace [Delete]  " + strhint2 + strhint3b,
+            (windoww - 440) / 2 + inf_screenx,
+            winposy(288, 1),
+            440,
+            288);
         cs_listbk();
         keyrange = 0;
         for (int cnt = 0, cnt_end = pagesize; cnt < cnt_end; ++cnt)
@@ -425,33 +411,20 @@ MainMenuResult main_menu_continue()
                 {
                     p = list(0, cs);
                     playerid = listn(0, p);
-                    if (jp)
-                    {
-                        s = u8"本当に"s + playerid +
-                            u8"を削除していいのかい？"s;
-                    }
-                    else
-                    {
-                        s = u8"Do you really want to delete "s + playerid +
-                            u8" ?"s;
-                    }
-                    draw_caption();
+                    ui_draw_caption(
+                        jp ? u8"本当に" + playerid + u8"を削除していいのかい？"
+                           : u8"Do you really want to delete " + playerid +
+                                u8" ?");
                     rtval = yes_or_no(promptx, prompty, 200);
                     if (rtval != 0)
                     {
                         return MainMenuResult::main_menu_continue;
                     }
-                    if (jp)
-                    {
-                        s = u8"本当の本当に"s + playerid +
-                            u8"を削除していいのかい？"s;
-                    }
-                    else
-                    {
-                        s = u8"Are you sure you really want to delete "s +
-                            playerid + u8" ?"s;
-                    }
-                    draw_caption();
+                    ui_draw_caption(
+                        jp ? u8"本当の本当に" + playerid +
+                                u8"を削除していいのかい？"
+                           : u8"Are you sure you really want to delete " +
+                                playerid + u8" ?");
                     rtval = yes_or_no(promptx, prompty, 200);
                     if (rtval == 0)
                     {
@@ -503,15 +476,9 @@ MainMenuResult main_menu_incarnate()
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    if (jp)
-    {
-        s = u8"どの遺伝子を引き継ぐ？"s;
-    }
-    else
-    {
-        s = u8"Which gene do you want to incarnate?"s;
-    }
-    draw_caption();
+    ui_draw_caption(
+        jp ? u8"どの遺伝子を引き継ぐ？"
+           : u8"Which gene do you want to incarnate?");
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::dir_entries(
@@ -536,18 +503,13 @@ MainMenuResult main_menu_incarnate()
 
     while (1)
     {
-        if (jp)
-        {
-            s(0) = u8"遺伝子の選択"s;
-            s(1) = strhint3b;
-        }
-        else
-        {
-            s(0) = u8"Gene Selection"s;
-            s(1) = strhint3b;
-        }
-        display_window(
-            (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
+        ui_display_window(
+            jp ? u8"遺伝子の選択" : u8"Gene Selection",
+            strhint3b,
+            (windoww - 440) / 2 + inf_screenx,
+            winposy(288, 1),
+            440,
+            288);
         cs_listbk();
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {

@@ -75,10 +75,15 @@ void UIMenuSkills::update()
 
 static void _draw_window()
 {
-    s(0) = i18n::s.get("core.locale.ui.skill.title");
-    s(1) = strhint2 + strhint3 + strhint7;
-    display_window(
-        (windoww - 600) / 2 + inf_screenx, winposy(438), 600, 438, 0, 60);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.skill.title"),
+        strhint2 + strhint3 + strhint7,
+        (windoww - 600) / 2 + inf_screenx,
+        winposy(438),
+        600,
+        438,
+        0,
+        60);
     display_topic(i18n::s.get("core.locale.ui.skill.name"), wx + 28, wy + 36);
     display_topic(i18n::s.get("core.locale.ui.skill.cost"), wx + 220, wy + 36);
     display_topic(
@@ -219,7 +224,6 @@ static void _assign_shortcut(int sc_, int skill_id)
     txt(i18n::s.get(
         "core.locale.ui.assign_shortcut",
         get_bound_shortcut_key_name_by_index(sc_)));
-    display_msg(inf_screeny + inf_tiles);
 }
 
 optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(

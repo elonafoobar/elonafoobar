@@ -56,9 +56,13 @@ void UIMenuSpellWriter::update()
 
 static void _draw_window()
 {
-    s(0) = i18n::s.get("core.locale.ui.reserve.title");
-    s(1) = strhint2 + strhint3;
-    display_window((windoww - 540) / 2 + inf_screenx, winposy(448), 540, 448);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.reserve.title"),
+        strhint2 + strhint3,
+        (windoww - 540) / 2 + inf_screenx,
+        winposy(448),
+        540,
+        448);
     display_topic(i18n::s.get("core.locale.ui.reserve.name"), wx + 28, wy + 36);
     display_topic(
         i18n::s.get("core.locale.ui.reserve.status"), wx + 390, wy + 36);

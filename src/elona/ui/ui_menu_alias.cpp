@@ -53,9 +53,13 @@ void UIMenuAlias::update()
 
 void UIMenuAlias::draw()
 {
-    s(0) = i18n::s.get("core.locale.ui.alias.title");
-    s(1) = strhint3b;
-    display_window((windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.alias.title"),
+        strhint3b,
+        (windoww - 400) / 2 + inf_screenx,
+        winposy(458),
+        400,
+        458);
     display_topic(i18n::s.get("core.locale.ui.alias.list"), wx + 28, wy + 30);
 
     font(14 - en * 2);
