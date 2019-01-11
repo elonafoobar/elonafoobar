@@ -2,6 +2,17 @@
 
 
 
+## [0.3.3] - 2019-01-12
+
+### Fixed
+
+- Fix skill's and resistance's bonuses in character sheet being wrongly displayed.
+- Fix not being able to blend more than one items at once regardless of your input number.
+- Fix some of text colors.
+- Fix crash on recruiting an ally under certain conditions.
+
+
+
 ## [0.3.2] - 2019-01-06
 
 ### Added
