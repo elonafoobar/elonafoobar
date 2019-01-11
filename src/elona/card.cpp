@@ -115,12 +115,10 @@ reset_page:
                 y,
                 0,
                 text_color);
-            color(text_color.r, text_color.g, text_color.b);
             pos(x + 365, y + 3);
-            mes(npcmemory(0, list(0, p)));
+            mes(std::to_string(npcmemory(0, list(0, p))), text_color);
             pos(x + 455, y + 3);
-            mes(npcmemory(1, list(0, p)));
-            color(0, 0, 0);
+            mes(std::to_string(npcmemory(1, list(0, p))), text_color);
         }
 
         if (keyrange != 0)

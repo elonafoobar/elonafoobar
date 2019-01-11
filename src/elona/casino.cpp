@@ -73,33 +73,36 @@ label_18671_internal:
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
+        snail::Color text_color{0, 0, 0};
         if (strmid(s, 0, 1) == u8"@"s)
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
             font(16 - en * 2);
-            color(250, 240, 230);
             if (s(1) == u8"BL"s)
             {
-                color(130, 130, 250);
+                text_color = snail::Color{130, 130, 250};
             }
-            if (s(1) == u8"GR"s)
+            else if (s(1) == u8"GR"s)
             {
-                color(130, 250, 130);
+                text_color = snail::Color{130, 250, 130};
             }
-            if (s(1) == u8"QM"s)
+            else if (s(1) == u8"QM"s)
             {
-                color(0, 100, 0);
+                text_color = snail::Color{0, 100, 0};
+            }
+            else
+            {
+                text_color = snail::Color{250, 240, 230};
             }
         }
         else
         {
             font(16 - en * 2);
-            color(250, 240, 230);
+            text_color = snail::Color{250, 240, 230};
         }
         pos(170, cnt * 20 + 120 + txtadvmsgfix);
-        mes(s);
-        color(0, 0, 0);
+        mes(s, text_color);
     }
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -1001,12 +1004,12 @@ bool casino_blackjack()
             cardplayeradd(1, 220, 240);
         }
         font(14 - en * 2, snail::Font::Style::bold);
-        color(255, 255, 255);
         pos(152, 154);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"));
+        mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"),
+            {255, 255, 255});
         pos(152, 270);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.you"));
-        color(0, 0, 0);
+        mes(i18n::s.get("core.locale.casino.blackjack.game.you"),
+            {255, 255, 255});
         showcardpile();
         showcardholder();
         showcard();

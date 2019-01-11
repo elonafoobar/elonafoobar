@@ -1264,7 +1264,6 @@ label_1953_internal:
                 y * inf_tiles + inf_screeny - 12,
                 cnt);
         }
-        color(0, 0, 0);
         txttargetnpc(
             cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
         cs_bk = cs;

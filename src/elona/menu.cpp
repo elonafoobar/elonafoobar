@@ -399,9 +399,7 @@ void show_ex_help()
                 {
                     break;
                 }
-                color(30, 30, 30);
                 const auto ny = gmes(s, tx, y, 330, {30, 30, 30}, true).y;
-                color(0, 0, 0);
                 y = ny;
             }
         }
@@ -1125,15 +1123,13 @@ void show_weapon_dice(int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    color(20, 10, 0);
     if (val0 == 0)
     {
         pos(wx + 590, wy + 281 + p(2) * 16);
-        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.hit"));
+        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.hit"), {20, 10, 0});
         pos(wx + 417, wy + 281 + p(2) * 16);
-        mes(s(1));
+        mes(s(1), {20, 10, 0});
     }
-    color(0, 0, 0);
     attackrange = 0;
     if (the_item_db[inv[cw].id]->category == 24000) // TODO coupling
     {

@@ -544,25 +544,20 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
             {
                 break;
             }
-            if (rpdata(11 + cnt * 2, rpid) >
-                sdata(rpdata(10 + cnt * 2, rpid), 0))
-            {
-                color(150, 0, 0);
-            }
-            else
-            {
-                color(0, 120, 0);
-            }
             pos(dx_at_m184 + cnt % 2 * 140, dy_at_m184 + cnt / 2 * 17);
+            const auto text_color = (rpdata(11 + cnt * 2, rpid) >
+                                     sdata(rpdata(10 + cnt * 2, rpid), 0))
+                ? snail::Color{150, 0, 0}
+                : snail::Color{0, 120, 0};
             mes(i18n::s.get_m(
                     "locale.ability",
                     the_ability_db
                         .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
                         ->get(),
                     "name") +
-                u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
-                sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s);
-            color(0, 0, 0);
+                    u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
+                    sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s,
+                text_color);
         }
         dy_at_m184 += 50;
         font(12 - en * 2, snail::Font::Style::bold);
@@ -601,14 +596,12 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
                 inv[item_index].enchantments[cnt2_at_m184].id,
                 inv[item_index].enchantments[cnt2_at_m184].power,
                 the_item_db[inv[item_index].id]->category);
-            color(0, 0, 100);
-            if (inv[item_index].enchantments[cnt2_at_m184].power < 0)
-            {
-                color(180, 0, 0);
-            }
             pos(dx_at_m184, dy_at_m184);
-            mes(cnven(s));
-            color(0, 0, 0);
+            const auto text_color =
+                inv[item_index].enchantments[cnt2_at_m184].power < 0
+                ? snail::Color{180, 0, 0}
+                : snail::Color{0, 0, 100};
+            mes(cnven(s), text_color);
             dy_at_m184 += 16;
         }
     }

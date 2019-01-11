@@ -414,38 +414,32 @@ void render_basic_attributes_and_pv_dv()
         if (i < 8)
         {
             // Basic attributes except for Speed
-            if (cdata.player().attr_adjs[i] < 0)
-            {
-                color(200, 0, 0);
-            }
-            else
-            {
-                color(0, 0, 0);
-            }
             pos(x, y);
             gcopy(3, 0, 440, 28, 16);
-            mes(sdata(10 + i, 0));
-            color(0, 0, 0);
+            const auto text_color = cdata.player().attr_adjs[i] < 0
+                ? snail::Color{200, 0, 0}
+                : snail::Color{0, 0, 0};
+            mes(std::to_string(sdata(10 + i, 0)), text_color);
         }
         else if (i == 8)
         {
             // Speed
+            pos(x + 8, y);
+            gcopy(3, 0, 440, 34, 16);
+            snail::Color text_color{0, 0, 0};
             if (gspdorg > gspd)
             {
-                color(200, 0, 0);
+                text_color = snail::Color{200, 0, 0};
             }
             else if (gspdorg < gspd)
             {
-                color(0, 120, 0);
+                text_color = snail::Color{0, 120, 0};
             }
             else
             {
-                color(0, 0, 0);
+                text_color = snail::Color{0, 0, 0};
             }
-            pos(x + 8, y);
-            gcopy(3, 0, 440, 34, 16);
-            mes(gspd);
-            color(0, 0, 0);
+            mes(std::to_string(gspd), text_color);
         }
         else
         {
@@ -528,12 +522,10 @@ void render_buffs()
         gcopy(5, buff.id * 32, 1120, 32, 32);
         // Turns
         pos(x + 3, y + 19);
-        mes(buff.turns);
+        mes(std::to_string(buff.turns));
         // Turns
-        color(255, 255, 255);
         pos(x + 2, y + 18);
-        mes(buff.turns);
-        color(0, 0, 0);
+        mes(std::to_string(buff.turns), {255, 255, 255});
 
         y -= 32;
     }
@@ -656,13 +648,11 @@ int render_one_status_ailment(
     if (!do_render(value))
         return y;
 
-    const auto text_color = get_color(value);
-    color(text_color.r, text_color.g, text_color.b);
     pos(x, y);
     gcopy(3, 0, 416, 50 + en * 30, 15);
     pos(x + 6, y + vfix + 1);
-    mes(get_text(value));
-    color(0, 0, 0);
+    const auto text_color = get_color(value);
+    mes(get_text(value), text_color);
 
     return y - 20;
 }
@@ -1235,15 +1225,11 @@ Position gmes(
         }
         if (shadow)
         {
-            color(180, 160, 140);
             elona::pos(x + 1, y + 1);
-            mes(m_);
-            color(0, 0, 0);
+            mes(m_, {180, 160, 140});
         }
-        color(text_color.r, text_color.g, text_color.b);
         elona::pos(x, y);
-        mes(m_);
-        color(0, 0, 0);
+        mes(m_, text_color);
         x += font_size / 2 * (byte == 1 ? 1 : 2);
     }
 
@@ -1373,7 +1359,6 @@ void screen_txtadv()
     for (int i = 0; i < 4; ++i)
     {
         font(13 - en * 2);
-        color(250, 250, 250);
         if (i == 0)
         {
             sx = 265;
@@ -1390,7 +1375,7 @@ void screen_txtadv()
             sy = 10 + i * 14;
         }
         pos(sx, sy);
-        mes(atxinfon(i));
+        mes(atxinfon(i), {250, 250, 250});
     }
     txtadvscreenupdate = 1;
 }
@@ -1563,9 +1548,7 @@ void ui_draw_caption(const std::string& text)
         gcopy(3, 672, 477, ap, 2);
     }
     pos(msgx + 18, msgy + vfix + 4);
-    color(245, 245, 245);
-    mes(text);
-    color(0, 0, 0);
+    mes(text, {245, 245, 245});
     gmode(2);
 
     // __s__
@@ -2447,11 +2430,7 @@ void cs_list(
         gcopy(0, x, y, width, 19);
         gsel(0);
 
-        const auto colorbk_r = ginfo(16);
-        const auto colorbk_g = ginfo(17);
-        const auto colorbk_b = ginfo(18);
         boxf(x, y, width, 19, {127, 191, 255, 63});
-        color(colorbk_r, colorbk_g, colorbk_b);
         pos(x + width - 20, y + 4);
         gcopy(3, 48, 360, 16, 16);
 
@@ -2461,10 +2440,8 @@ void cs_list(
         cs_posbk_h = 19;
     }
 
-    color(text_color.r, text_color.g, text_color.b);
     pos(x + 4 + x_offset, y + vfix + 3);
-    mes(text);
-    color(0, 0, 0);
+    mes(text, text_color);
 }
 
 
@@ -2523,7 +2500,6 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
         y + height - 69 - height % 8,
         {224, 213, 191});
     font(12 + sizefix - en * 2);
-    color(0, 0, 0);
     pos(x + 68, y + height - 63 - height % 8);
     mes(hint);
     if (pagesize != 0)

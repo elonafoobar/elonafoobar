@@ -134,9 +134,7 @@ static void _draw_attribute_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 240, wy + 66 + cnt * 23 + 2);
-    color(20, 20, 140);
-    mes(u8"Locked!"s);
-    color(0, 0, 0);
+    mes(u8"Locked!"s, {20, 20, 140});
 }
 
 static void _draw_attribute_value(int cnt, int list_value, bool is_locked)

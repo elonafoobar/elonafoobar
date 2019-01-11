@@ -258,9 +258,7 @@ static void _draw_single_list_entry_name(
 {
     pos(wx + 270, wy + 66 + cnt * 19 + 2);
 
-    color(text_color.r, text_color.g, text_color.b);
-    mes(traitrefn(2));
-    color(0, 0, 0);
+    mes(traitrefn(2), text_color);
 }
 
 static void _draw_single_list_entry_text(

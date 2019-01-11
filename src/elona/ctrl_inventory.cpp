@@ -938,19 +938,13 @@ label_2061_internal:
                 continue;
             }
             p = cdata[tc].body_parts[cnt];
-            if (p % 10000 != 0)
-            {
-                color(50, 50, 200);
-            }
-            else
-            {
-                color(100, 100, 100);
-            }
             pos(x, y);
             std::string body_part_desc =
                 i18n::s.get_enum("core.locale.ui.body_part", p / 10000);
-            mes(body_part_desc);
-            color(0, 0, 0);
+            const auto text_color = p % 10000 != 0
+                ? snail::Color{50, 50, 200}
+                : snail::Color{100, 100, 100};
+            mes(body_part_desc, text_color);
             x += (body_part_desc.size() + 1) * 6;
         }
     }
@@ -1037,9 +1031,7 @@ label_2061_internal:
         const auto text_color = cs_list_get_item_color(inv[p]);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);
         pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
-        color(text_color.r, text_color.g, text_color.b);
-        mes(s(1));
-        color(0, 0, 0);
+        mes(s(1), text_color);
     }
     if (keyrange != 0)
     {

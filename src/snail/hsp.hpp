@@ -29,7 +29,7 @@ inline T clamp(const T& x, const T& min, const T& max)
 }
 
 int timeGetTime();
-void mes(const std::string& text);
+void mes(const std::string& text, const snail::Color& color);
 void mesbox(std::string& buffer, int keywait, bool text);
 void picload(BasicImage& img, int mode);
 void pos(int x, int y);
@@ -40,7 +40,6 @@ void await(int msec);
 void boxf(int x1, int y1, int x2, int y2, const Color& color);
 void boxf(const Color& color);
 void buffer(int window_id, int width, int height);
-void color(int r, int g, int b);
 void font(int size, Font::Style style, const fs::path& filepath);
 void gcopy(
     int window_id,

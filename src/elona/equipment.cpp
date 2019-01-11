@@ -79,33 +79,20 @@ void equipinfo(int item_index, int x, int y)
         const auto element_color = _get_element_color(i_at_m66);
         if (jp)
         {
-            color(element_color.r, element_color.g, element_color.b);
-            if (inv[item_index].enchantments[cnt].power >= 0)
-            {
-                mes(u8"●"s);
-            }
-            else
-            {
-                mes(u8"▼"s);
-            }
+            const auto glyph =
+                inv[item_index].enchantments[cnt].power >= 0 ? u8"●" : u8"▼";
+            mes(glyph, element_color);
             pos(x + (i_at_m66 - 50) * 20 + 5, y + 1);
-            mes(s_at_m66);
-            color(0, 0, 0);
+            mes(s_at_m66, element_color);
             pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            color(255, 255, 255);
-            mes(s_at_m66);
-            color(0, 0, 0);
+            mes(s_at_m66, {255, 255, 255});
         }
         else
         {
-            color(80, 60, 40);
             pos(x + (i_at_m66 - 50) * 20 + 5, y);
-            mes(""s + p_at_m66);
-            color(0, 0, 0);
-            color(element_color.r, element_color.g, element_color.b);
+            mes(""s + p_at_m66, {80, 60, 40});
             pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            mes(""s + p_at_m66);
-            color(0, 0, 0);
+            mes(""s + p_at_m66, element_color);
         }
     }
 }

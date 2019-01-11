@@ -100,7 +100,7 @@ struct TexBuffer
     ::SDL_Texture* texture = nullptr;
     int tex_width = 32;
     int tex_height = 32;
-    snail::Color color{0, 0, 0, 255};
+    uint8_t alpha = 255;
     int x = 0;
     int y = 0;
     int mode = 2;
@@ -309,9 +309,13 @@ int timeGetTime()
     return ::SDL_GetTicks();
 }
 
-void mes(const std::string& text)
+
+
+void mes(const std::string& text, const snail::Color& color)
 {
     constexpr size_t tab_width = 4;
+
+    auto& renderer = Application::instance().get_renderer();
 
     auto copy = text;
     for (auto i = copy.find('\t'); i != std::string::npos; i = copy.find('\t'))
@@ -321,21 +325,23 @@ void mes(const std::string& text)
 
     if (copy.size() >= 25 /* TODO */)
     {
-        Application::instance().get_renderer().render_multiline_text(
+        renderer.render_multiline_text(
             copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
-            detail::current_tex_buffer().color);
+            color);
     }
     else
     {
-        Application::instance().get_renderer().render_text(
+        renderer.render_text(
             copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
-            detail::current_tex_buffer().color);
+            color);
     }
 }
+
+
 
 void mesbox(std::string& buffer, int keywait, bool text)
 {
@@ -459,10 +465,10 @@ void await(int msec)
     await_detail::last_await = now;
 }
 
+
+
 void boxf(int x, int y, int width, int height, const snail::Color& color)
 {
-    const auto save_color = detail::current_tex_buffer().color;
-    detail::current_tex_buffer().color = color;
     Application::instance().get_renderer().set_draw_color(color);
     if (color == snail::Color{0, 0, 0, 0})
     {
@@ -473,8 +479,9 @@ void boxf(int x, int y, int width, int height, const snail::Color& color)
         Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
     }
     Application::instance().get_renderer().fill_rect(x, y, width, height);
-    detail::current_tex_buffer().color = save_color;
 }
+
+
 
 void boxf(const snail::Color& color)
 {
@@ -485,6 +492,8 @@ void boxf(const snail::Color& color)
         detail::current_tex_buffer().tex_height,
         color);
 }
+
+
 
 void buffer(int window_id, int width, int height)
 {
@@ -540,17 +549,7 @@ void buffer(int window_id, int width, int height)
     gsel(window_id);
 }
 
-void color(int r, int g, int b)
-{
-    detail::current_tex_buffer().color = {
-        static_cast<uint8_t>(clamp(r, 0, 255)),
-        static_cast<uint8_t>(clamp(g, 0, 255)),
-        static_cast<uint8_t>(clamp(b, 0, 255)),
-        detail::current_tex_buffer().color.a,
-    };
-    Application::instance().get_renderer().set_draw_color(
-        detail::current_tex_buffer().color);
-}
+
 
 void font(int size, Font::Style style, const fs::path& filepath)
 {
@@ -589,7 +588,7 @@ void gcopy(
     detail::set_blend_mode();
     snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
         detail::tex_buffers[window_id].texture,
-        detail::current_tex_buffer().color.a));
+        detail::current_tex_buffer().alpha));
 
     int dst_x = detail::current_tex_buffer().x;
     int dst_y = detail::current_tex_buffer().y;
@@ -686,9 +685,6 @@ int ginfo(int type)
         return detail::current_tex_buffer().tex_height; // window client height
     case 14: return 0; // font width
     case 15: return 0; // font height
-    case 16: return detail::current_tex_buffer().color.r; // current color r
-    case 17: return detail::current_tex_buffer().color.g; // current color g
-    case 18: return detail::current_tex_buffer().color.b; // current color b
     case 19: return 0; // color mode
     case 20: return 0; // resolution x
     case 21: return 0; // resolution y
@@ -705,7 +701,7 @@ void gmode(int mode, int alpha)
     detail::current_tex_buffer().mode = mode;
     detail::set_blend_mode();
 
-    detail::current_tex_buffer().color.a = clamp(alpha, 0, 255);
+    detail::current_tex_buffer().alpha = clamp(alpha, 0, 255);
 }
 
 
@@ -746,7 +742,7 @@ void grotate(
     detail::set_blend_mode();
     snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
         detail::tex_buffers[window_id].texture,
-        detail::current_tex_buffer().color.a));
+        detail::current_tex_buffer().alpha));
 
     ::SDL_Rect src_rect{
         src_x,

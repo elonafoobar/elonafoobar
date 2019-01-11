@@ -189,8 +189,6 @@ void LuaConsole::draw()
     snail::Application::instance().get_renderer().fill_rect(
         0, 0, _width, _height);
 
-    elona::color(255, 255, 255);
-
     // Text
     size_t n = std::min((_max_lines - 1) + _pos, _buf.size());
     int i = 0;
@@ -198,7 +196,7 @@ void LuaConsole::draw()
     {
         elona::pos(4, _char_height * i);
         font(inf_mesfont - en * 2);
-        mes(*it);
+        mes(*it, {255, 255, 255});
 
         i++;
     }
@@ -208,7 +206,8 @@ void LuaConsole::draw()
     {
         elona::pos(4, _char_height * (_max_lines - 1));
         font(inf_mesfont - en * 2);
-        mes(prompt() + _input + (_cursor_visible ? u8"|" : ""));
+        mes(prompt() + _input + (_cursor_visible ? u8"|" : ""),
+            {255, 255, 255});
     }
 
     // Scrollback counter
@@ -218,10 +217,8 @@ void LuaConsole::draw()
             std::to_string(_buf.size());
         elona::pos(windoww - (line_count.size() * _char_width), 0);
         font(inf_mesfont - en * 2);
-        mes(line_count);
+        mes(line_count, {255, 255, 255});
     }
-
-    elona::color(0, 0, 0);
 }
 
 

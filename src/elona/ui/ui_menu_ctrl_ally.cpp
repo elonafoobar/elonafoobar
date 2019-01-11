@@ -456,9 +456,7 @@ void UIMenuCtrlAlly::_draw_ally_info(int cnt, const Character& chara)
 
     pos(wx + 370, wy + 66 + cnt * 19 + 2);
     const auto text_color = _draw_get_color(chara);
-    color(text_color.r, text_color.g, text_color.b);
-    mes(ally_info);
-    color(0, 0, 0);
+    mes(ally_info, text_color);
 }
 
 void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const Character& chara)
