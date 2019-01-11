@@ -4,17 +4,6 @@
 # Details
 
 
-# Tasks
-
-* [ ] Implement
-* [ ] CHANGELOG.md
-
-
-# Implementation note
-
-optional
-
-
 # Variants having this feature
 
 optional
