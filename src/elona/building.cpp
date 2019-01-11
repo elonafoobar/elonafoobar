@@ -762,7 +762,7 @@ void show_home_value()
     sort_list_by_column1();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        p = list(0, cnt);
+        p = list(0, 10 - cnt - 1);
         if (p == 0)
         {
             continue;
@@ -773,7 +773,7 @@ void show_home_value()
 
         pos(wx + 68, cnt * 16 + wy + 138);
         mes(i18n::s.get(
-            "core.locale.building.home.rank.place", cnvrank(10 - cnt)));
+            "core.locale.building.home.rank.place", cnvrank(cnt + 1)));
         pos(wx + 110, cnt * 16 + wy + 138);
         mes(itemname(p));
     }
