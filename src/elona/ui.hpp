@@ -7,6 +7,7 @@ namespace elona
 {
 
 struct Position;
+struct Item;
 
 Position gmes(const std::string&, int, int, int, const snail::Color&, bool);
 void initialize_ui_constants();
@@ -79,8 +80,8 @@ void cs_list(
     int x,
     int y,
     int x_offset = 0,
-    int color_mode = 0,
-    int ci = 0);
+    const snail::Color& text_color = {10, 10, 10});
+snail::Color cs_list_get_item_color(const Item& item);
 void showscroll(const std::string& title, int x, int y, int width, int height);
 
 

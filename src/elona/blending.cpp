@@ -804,7 +804,7 @@ label_1925_internal:
         rpid = p;
         s = i18n::s.get("core.locale.blending.recipe.of", cnven(rpname(rpid)));
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 0, p);
+        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1);
     }
     if (cs_bk != cs)
     {
@@ -930,7 +930,13 @@ label_1928_internal:
         {
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
         }
-        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
+        cs_list(
+            cs == cnt,
+            s,
+            wx + 84,
+            wy + 60 + cnt * 19 - 1,
+            0,
+            cs_list_get_item_color(inv[p]));
     }
     p = list(0, pagesize * page + cs);
     if (listmax == 0)

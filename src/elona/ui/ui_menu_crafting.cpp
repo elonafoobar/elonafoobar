@@ -251,17 +251,20 @@ static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
 
     font(14 - en * 2);
 
-    int color_mode = can_craft ? 0 : 3;
+    const auto text_color =
+        can_craft ? snail::Color{10, 10, 10} : snail::Color{160, 10, 10};
     cs_list(
         cs == cnt,
         cnven(item_name),
         wx + 86,
         wy + 66 + cnt * 19 - 1,
         0,
-        color_mode);
+        text_color);
 
     pos(wx + 308, wy + 66 + cnt * 19 + 2);
+    color(text_color.r, text_color.g, text_color.b);
     mes(item_make);
+    color(0, 0, 0);
 
     draw_item_material(ipicref(item_id), wx + 37, wy + 69 + cnt * 19 + 2);
 }

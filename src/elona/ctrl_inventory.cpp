@@ -1034,9 +1034,12 @@ label_2061_internal:
             equipinfo(p, wx + 300, wy + 60 + cnt * 19 + 2);
             s = strmid(s, 0, 24);
         }
-        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
+        const auto text_color = cs_list_get_item_color(inv[p]);
+        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);
         pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
+        color(text_color.r, text_color.g, text_color.b);
         mes(s(1));
+        color(0, 0, 0);
     }
     if (keyrange != 0)
     {

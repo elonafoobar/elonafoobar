@@ -820,7 +820,7 @@ label_2041_internal:
                 s += " " + rtvaln;
             }
         }
-        cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
+        cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         if (rtval != -2)
         {
             pos(wx + 30, wy + 66 + cnt * 21 - 5);
@@ -1036,7 +1036,7 @@ int change_appearance_equipment()
                 pos(wx + 175, wy + 66 + cnt * 21 - 5);
                 gcopy(3, 336, 336, 24, 24);
             }
-            cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
+            cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         }
         if (keyrange != 0)
         {

@@ -281,15 +281,15 @@ static void _draw_single_list_entry_text(
     }
     gcopy(3, 384 + traitref * 24, 336, 24, 24);
 
-    color(text_color.r, text_color.g, text_color.b);
-    cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
-    color(0, 0, 0);
+    cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, text_color);
 
     if (draw_name)
     {
         _draw_single_list_entry_name(cnt, text_color);
     }
 }
+
+
 
 static snail::Color _get_trait_color(int trait_value)
 {
@@ -306,6 +306,8 @@ static snail::Color _get_trait_color(int trait_value)
         return {200, 0, 0};
     }
 }
+
+
 
 static void _draw_single_list_entry(
     int cnt,

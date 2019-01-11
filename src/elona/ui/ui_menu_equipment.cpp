@@ -246,17 +246,21 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
         equipped_item = -1;
     }
 
+    const auto text_color = equipped_item == -1
+        ? snail::Color{10, 10, 10}
+        : cs_list_get_item_color(inv[equipped_item]);
     cs_list(
         cs == cnt,
         item_name,
         wx + 140 - 26,
         wy + 60 + cnt * 19 - 1,
         30,
-        equipped_item != -1,
-        equipped_item);
+        text_color);
 
     pos(wx + 640 - strlen_u(item_weight) * 7, wy + 60 + cnt * 19 + 2);
+    color(text_color.r, text_color.g, text_color.b);
     mes(item_weight);
+    color(0, 0, 0);
 }
 
 static void _draw_list_entries(bool show_resistances)

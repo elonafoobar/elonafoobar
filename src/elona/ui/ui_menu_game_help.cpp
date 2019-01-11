@@ -259,7 +259,7 @@ void UIMenuGameHelp::_draw_navigation_menu()
         }
         i = list(0, p);
         s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1, 0);
+        cs_list(cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1);
     }
     if (keyrange != 0)
     {
