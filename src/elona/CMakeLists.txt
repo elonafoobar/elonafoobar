@@ -142,4 +142,3 @@ set(ELONA_SOURCES
   )
 
 add_library(elona STATIC ${ELONA_SOURCES})
-

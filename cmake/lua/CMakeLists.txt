@@ -1,8 +1,8 @@
-project ( lua C )
-cmake_minimum_required ( VERSION 2.8 )
+project(lua C)
+cmake_minimum_required(VERSION 2.8)
 
-include_directories ( lua src/ )
-set ( SRC_CORE
+include_directories (lua src/)
+set(SRC_CORE
   src/lapi.c
   src/lcode.c
   src/lctype.c
@@ -23,8 +23,9 @@ set ( SRC_CORE
   src/lundump.c
   src/lvm.c
   src/lzio.c
-  src/lwstring.c )
-set ( SRC_LIB
+  src/lwstring.c
+  )
+set(SRC_LIB
   src/lauxlib.c
   src/lbaselib.c
   # src/lbitlib.c
@@ -37,20 +38,21 @@ set ( SRC_LIB
   src/ltablib.c
   src/lutf8lib.c
   src/loadlib.c
-  src/linit.c )
+  src/linit.c
+  )
 
-add_library ( liblua53 STATIC ${SRC_CORE} ${SRC_LIB} )
-target_include_directories( liblua53 INTERFACE src/ )
-set_target_properties ( liblua53 PROPERTIES OUTPUT_NAME lua53 )
+add_library(liblua53 STATIC ${SRC_CORE} ${SRC_LIB})
+target_include_directories(liblua53 INTERFACE src/)
+set_target_properties(liblua53 PROPERTIES OUTPUT_NAME lua53)
 
-set(CompilerFlags
-        CMAKE_CXX_FLAGS
-        CMAKE_CXX_FLAGS_DEBUG
-        CMAKE_CXX_FLAGS_RELEASE
-        CMAKE_C_FLAGS
-        CMAKE_C_FLAGS_DEBUG
-        CMAKE_C_FLAGS_RELEASE
-        )
-foreach(CompilerFlag ${CompilerFlags})
-  string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+set(COMPILER_FLAGS
+  CMAKE_CXX_FLAGS
+  CMAKE_CXX_FLAGS_DEBUG
+  CMAKE_CXX_FLAGS_RELEASE
+  CMAKE_C_FLAGS
+  CMAKE_C_FLAGS_DEBUG
+  CMAKE_C_FLAGS_RELEASE
+  )
+foreach(COMPILER_FLAG ${COMPILER_FLAGS})
+  string(REPLACE "/MD" "/MT" ${COMPILER_FLAG} "${${COMPILER_FLAG}}")
 endforeach()
