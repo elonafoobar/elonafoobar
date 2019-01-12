@@ -48,13 +48,13 @@ $(BIN_DIR):
 
 $(ELONA_DEBUG): FORCE
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME; \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Debug; \
 		cmake --build . --config Debug
 
 
 $(ELONA_RELEASE): FORCE
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME; \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release; \
 		cmake --build --config Release .
 	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
 	echo "Something is placed at $(BIN_DIR)."
@@ -62,13 +62,13 @@ $(ELONA_RELEASE): FORCE
 
 $(TEST_RUNNER):
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS; \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug; \
 		cmake --build . --config Debug
 
 
 $(BENCH_RUNNER):
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH; \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release; \
 		cmake --build . --config Release
 
 

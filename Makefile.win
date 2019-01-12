@@ -43,25 +43,25 @@ $(BIN_DIR):
 
 $(ELONA_DEBUG): FORCE
 	cd $(BIN_DIR) & \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME & \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Debug & \
 		cmake --build . --config Debug
 
 
 $(ELONA_RELEASE): FORCE
 	cd $(BIN_DIR) & \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME & \
-		cmake --build --config Release .
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release & \
+		cmake --build . --config Release
 
 
 $(TEST_RUNNER):
 	cd $(BIN_DIR) & \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS & \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug & \
 		cmake --build . --config Debug
 
 
 $(BENCH_RUNNER):
 	cd $(BIN_DIR) & \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH & \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release & \
 		cmake --build . --config Release
 
 
