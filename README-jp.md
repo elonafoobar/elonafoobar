@@ -77,7 +77,7 @@ Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を
 
 # How To Contribute
 
-詳細は[CONTRIBUTING.md](CONTRIBUTING.md)を参照してください。
+詳細は[CONTRIBUTING.md](.github/CONTRIBUTING.md)を参照してください。
 
 
 
@@ -86,19 +86,19 @@ Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を
 **注意:ここに書かれた日本語でのライセンス表記と英語でのライセンス表記が矛盾する場合、常に英語版が優先されます。あくまで参考程度であり、厳密なライセンスは\*必ず\*英語版のREADME.mdをご覧ください。**
 
 MIT Licenseです。詳細はLICENSEを参照してください。このライセンスはこのリポジトリ内にあるものにのみ適用されます。
-画像や音声は含まれないことに注意してください。このリポジトリの[graphics](graphics/)フォルダ以下にあるファイルについては、[graphics/LICENSE](graphics/LICENSE)を参照してください。
+画像や音声は含まれないことに注意してください。このリポジトリの[runtime/graphic](runtime/graphic/)フォルダ以下にあるファイルについては、[runtime/graphic/LICENSE](runtime/graphic/LICENSE)を参照してください。
 
 ## サードパーティーライブラリ
 
-* microhcl: src/thirdparty/microhcl/LICENSEを参照してください。
-* microhil: src/thirdparty/microhil/LICENSEを参照してください。
-* Catch2: src/thirdparty/catch2/LICENSEを参照してください。
-* hayai: src/thirdparty/hayai/LICENSEを参照してください。
-* sol2: src/thirdparty/sol2/LICENSEを参照してください。
-* ordered_map: src/thirdparty/ordered_map/LICENSEを参照してください。
-* boostrandom: src/thirdparty/LICENSE_1_0.txtを参照してください。
-* cmake/FindXXX.cmake: cmake/LICENSEを参照してください。
-* nativefiledialog: src/thirdparty/nfd/LICENSEを参照してください。
+* microhcl: [src/thirdparty/microhcl/LICENSE](src/thirdparty/microhcl/LICENSE)を参照してください。
+* microhil: [src/thirdparty/microhil/LICENSE](src/thirdparty/microhil/LICENSE)を参照してください。
+* Catch2: [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE)を参照してください。
+* hayai: [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE)を参照してください。
+* sol2: [src/thirdparty/sol2/LICENSE](src/thirdparty/sol2/LICENSE)を参照してください。
+* ordered_map: [src/thirdparty/ordered_map/LICENSE](src/thirdparty/ordered_map/LICENSE)を参照してください。
+* boostrandom: [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt)を参照してください。
+* cmake/FindXXX.cmake: [cmake/LICENSE](cmake/LICENSE)を参照してください。
+* nativefiledialog: [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE)を参照してください。
 
 ## Luaライブラリ
 
