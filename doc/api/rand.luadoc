@@ -17,6 +17,6 @@ function one_in(n) end
 function coinflip() end
 
 --- Returns a random object from a table.
--- @tparam t a table
+-- @tparam table t a table
 -- @treturn object an object from the table
 function choice(t) end

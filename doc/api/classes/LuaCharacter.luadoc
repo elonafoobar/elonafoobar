@@ -72,8 +72,8 @@ function heal_ailment(ailment, power) end
 
 --- Adds a buff to a character.
 -- @tparam string id the buff to add
--- @tparam power num the buff's power
--- @tparam turns num the number of turns the buff will last
+-- @tparam num power the buff's power
+-- @tparam num turns the number of turns the buff will last
 -- @tparam[opt] LuaCharacter doer the character who applied this buff
 function add_buff(id, power, turns, doer) end
 

@@ -224,7 +224,7 @@
     <td class="summary">Heals a status ailment on a character.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#LuaCharacter:add_buff">LuaCharacter:add_buff (id, num, num[, doer])</a></td>
+    <td class="name"><a href="#LuaCharacter:add_buff">LuaCharacter:add_buff (id, power, turns[, doer])</a></td>
     <td class="summary">Adds a buff to a character.</td>
     </tr>
     <tr>
@@ -1257,7 +1257,7 @@ chara:heal_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>)
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
     <a href="#LuaCharacter:add_buff" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="LuaCharacter:add_buff">LuaCharacter:add_buff (id, num, num[, doer])</span>
+    <span class="section-item-title" id="LuaCharacter:add_buff">LuaCharacter:add_buff (id, power, turns[, doer])</span>
     </div>
     </dt>
     <dd>
@@ -1295,13 +1295,13 @@ chara:heal_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>)
 
     <li class="section-subitem-li">
 
-    <strong><em>num</em></strong>
+    <strong><em>power</em></strong>
 
     <strong> : </strong>
 
-    (<span class="types"><span class="type">turns</span></span>)
+    (<span class="types"><span class="type">num</span></span>)
 
-     the number of turns the buff will last
+     the buff's power
 
     </li>
 
@@ -1311,11 +1311,11 @@ chara:heal_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>)
 
     <li class="section-subitem-li">
 
-    <strong><em>num</em></strong>
+    <strong><em>turns</em></strong>
 
     <strong> : </strong>
 
-    (<span class="types"><span class="type">turns</span></span>)
+    (<span class="types"><span class="type">num</span></span>)
 
      the number of turns the buff will last
 

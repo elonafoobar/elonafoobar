@@ -16,7 +16,7 @@ function yes_or_no(message) end
 
 --- Prompts the player to select from a list of choices. Raises an
 --- error if no arguments are provided.
--- @tparam choices table a list of string choices
+-- @tparam table choices a list of string choices
 -- @treturn[1] num the index of the item chosen, starting from 1
 -- @treturn[2] nil if canceled
 -- @usage GUI.txt("Which? ")
