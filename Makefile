@@ -27,7 +27,7 @@ run: build FORCE # Run Elona foobar (debug).
 
 build: $(BIN_DIR) FORCE # Build Elona foobar (debug).
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Debug; \
+		cmake .. -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Debug $(CMAKE_ARGS); \
 		cmake --build . --config Debug
 
 
@@ -37,7 +37,7 @@ run_release: build_release FORCE # Run Elona foobar (release).
 
 build_release: $(BIN_DIR) FORCE # Build Elona foobar (release).
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release; \
+		cmake .. -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS); \
 		cmake --build . --config Release
 	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
 	echo "Something is placed at $(BIN_DIR)."
@@ -51,7 +51,7 @@ tests: test_runner FORCE # Run all tests.
 test_runner: $(BIN_DIR) FORCE # Build test runner.
 	# -@$(RM) -rf ./$(BIN_DIR)/tests
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug; \
+		cmake .. -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug $(CMAKE_ARGS); \
 		cmake --build . --config Debug
 
 
@@ -62,7 +62,7 @@ bench: bench_runner FORCE # Run benchmark.
 
 bench_runner: $(BIN_DIR) FORCE # Build benchmark runner.
 	cd $(BIN_DIR); \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release; \
+		cmake .. -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS); \
 		cmake --build . --config Release
 
 
