@@ -1,8 +1,5 @@
 BIN_DIR := bin
-ELONA_DEBUG := $(BIN_DIR)/Elona_foobar
-ELONA_RELEASE := $(BIN_DIR)/Elona_foobar-release
-TEST_RUNNER := $(BIN_DIR)/test_runner
-BENCH_RUNNER := $(BIN_DIR)/bench_runner
+
 APK := $(BIN_DIR)/Elona_foobar-debug.apk
 APK_RELEASE := $(BIN_DIR)/Elona_foobar-release.apk
 
@@ -18,70 +15,71 @@ AWK := awk
 .PHONY: FORCE
 
 
-all: $(BIN_DIR) # Build the most recently built target.
+all: $(BIN_DIR) FORCE # Build the most recently built target.
 	cd $(BIN_DIR); \
 		cmake .. $(CMAKE_ARGS); \
 		cmake --build .
 
 
-build: $(BIN_DIR) $(ELONA_DEBUG) # Build Elona foobar (debug).
+run: build FORCE # Run Elona foobar (debug).
+	./$(BIN_DIR)/Elona_foobar
 
 
-build_release: $(BIN_DIR) $(ELONA_RELEASE) # Build Elona foobar (release).
-
-
-tests: $(BIN_DIR) $(TEST_RUNNER) # Build test runner.
-
-
-bench: $(BIN_DIR) $(BENCH_RUNNER) # Build benchmark runner.
-
-
-android: $(APK) # Build android Elona foobar (debug).
-
-
-android_release: $(APK_RELEASE) # Build android Elona foobar (release).
-
-
-$(BIN_DIR):
-	$(MKDIR) $(BIN_DIR)
-
-
-$(ELONA_DEBUG): FORCE
+build: $(BIN_DIR) FORCE # Build Elona foobar (debug).
 	cd $(BIN_DIR); \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Debug; \
 		cmake --build . --config Debug
 
 
-$(ELONA_RELEASE): FORCE
+run_release: build_release FORCE # Run Elona foobar (release).
+	./$(BIN_DIR)/Elona_foobar
+
+
+build_release: $(BIN_DIR) FORCE # Build Elona foobar (release).
 	cd $(BIN_DIR); \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release; \
-		cmake --build --config Release .
+		cmake --build . --config Release
 	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
 	echo "Something is placed at $(BIN_DIR)."
 
 
-$(TEST_RUNNER):
+tests: test_runner FORCE # Run all tests.
+	cd $(BIN_DIR); \
+		./Elona_foobar --durations=yes
+
+
+test_runner: $(BIN_DIR) FORCE # Build test runner.
+	# -@$(RM) -rf ./$(BIN_DIR)/tests
 	cd $(BIN_DIR); \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug; \
 		cmake --build . --config Debug
 
 
-$(BENCH_RUNNER):
+bench: bench_runner FORCE # Run benchmark.
+	cd $(BIN_DIR); \
+		./Elona_foobar
+
+
+bench_runner: $(BIN_DIR) FORCE # Build benchmark runner.
 	cd $(BIN_DIR); \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release; \
 		cmake --build . --config Release
 
 
-$(APK): FORCE
+android: $(BIN_DIR) FORCE # Build android Elona foobar (debug).
 	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
-	export TERM=xterm-color; cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk ../${APK}
+	export TERM=xterm-color; cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk ../$(APK)
 
 
-$(APK_RELEASE): FORCE
+android_release: $(BIN_DIR) FORCE # Build android Elona foobar (release).
 	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
-	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/release/app-release-unsigned.apk ../${APK_RELEASE}
+	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/release/app-release-unsigned.apk ../$(APK_RELEASE)
 	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
 	echo "Something is placed at $(BIN_DIR)."
+
+
+$(BIN_DIR):
+	$(MKDIR) $(BIN_DIR)
 
 
 clean: FORCE # Clean up built products.
@@ -97,9 +95,9 @@ format: FORCE # Format all C++ source files.
 	test -z "$$(git status --short)"
 
 
-ldoc: # Generate LDoc.
-	rm -rf $(BIN_DIR)/doc
-	rm -rf docs
+ldoc: FORCE # Generate LDoc.
+	-@$(RM) -rf $(BIN_DIR)/doc
+	-@$(RM) -rf docs
 	mkdir -p $(BIN_DIR)/doc
 	cp doc/README.md $(BIN_DIR)/doc/readme.md
 	cp doc/ldoc.css $(BIN_DIR)/doc/ldoc.css
@@ -111,25 +109,25 @@ ldoc: # Generate LDoc.
 	cp -r $(BIN_DIR)/doc docs
 
 
-luacheck: # Run luacheck.
+luacheck: FORCE # Run luacheck.
 	luacheck --version
 	luacheck runtime/mods/
 	luacheck src/tests/lua
 
 
-i18n-check: # Run i18n-checker.
+i18n-check:FORCE  # Run i18n-checker.
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp
 
 
-i18n-check-err: # Run i18n-checker with --no-warnings.
+i18n-check-err: FORCE # Run i18n-checker with --no-warnings.
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en --no-warnings
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp --no-warnings
 
 
-rebuild: clean build # Clean and build Elona.
+rebuild: clean build FORCE # Clean and build Elona.
 
 
-help: # Show help.
+help: FORCE # Show help.
 	@$(GREP) '^[a-zA-Z_-]*:.* # .*' $(MAKEFILE_LIST) \
 		| $(AWK) 'BEGIN {FS = ":.* # "}; {printf "%-25s%s\n", $$1, $$2}'

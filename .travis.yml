@@ -95,15 +95,10 @@ script:
   - rm elona122.zip
   - cd "$TRAVIS_BUILD_DIR"
   - make clean
-  - mkdir -p "$TRAVIS_BUILD_DIR/bin";
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
       make tests VERBOSE=1;
-      cd bin;
-      ./Elona_foobar --durations=yes;
     elif [[ "$BUILD_TYPE" == "osx" ]]; then
       make tests VERBOSE=1;
-      cd bin;
-      ./Elona_foobar --durations=yes;
     elif [[ "$BUILD_TYPE" == "android" ]]; then
       make android;
     fi

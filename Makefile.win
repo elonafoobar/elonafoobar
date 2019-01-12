@@ -2,12 +2,6 @@
 BOOST_DIR = E:\build\SDK\boost_1_66_0
 
 BIN_DIR = bin
-ELONA = $(BIN_DIR)\Elona_foobar.exe
-ELONA_RELEASE = $(BIN_DIR)\Elona_foobar-release.exe
-TEST_RUNNER = $(BIN_DIR)\test_runner.exe
-BENCH_RUNNER = $(BIN_DIR)\bench_runner.exe
-
-MKDIR = mkdir
 
 BOOST_ROOT = $(BOOST_INCLUDEDIR)
 BOOST_INCLUDEDIR = $(BOOST_DIR)
@@ -18,51 +12,64 @@ CMAKE_ARGS = \
         -DBOOST_LIBRARYDIR="$(BOOST_LIBRARYDIR)" \
         -G "Visual Studio 15 2017 Win64"
 
+# Utilities
+MKDIR = mkdir
 
-all: $(BIN_DIR) # Build the most recently built target.
+
+.PHONY: FORCE
+
+
+all: $(BIN_DIR) FORCE # Build the most recently built target.
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) & \
 		cmake --build .
 
 
-build: $(BIN_DIR) $(ELONA_DEBUG) # Build Elona foobar (debug).
+run: build FORCE # Run Elona foobar (debug).
+	.\$(BIN_DIR)\Debug\Elona_foobar.exe
 
 
-build_release: $(BIN_DIR) $(ELONA_RELEASE) # Build Elona foobar (release).
-
-
-tests: $(BIN_DIR) $(TEST_RUNNER) # Build test runner.
-
-
-bench: $(BIN_DIR) $(BENCH_RUNNER) # Build benchmark runner.
-
-
-$(BIN_DIR):
-	$(MKDIR) $(BIN_DIR)
-
-
-$(ELONA_DEBUG): FORCE
+build: $(BIN_DIR) FORCE # Build Elona foobar (debug).
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Debug & \
 		cmake --build . --config Debug
 
 
-$(ELONA_RELEASE): FORCE
+run_release: build_release FORCE # Run Elona foobar (release).
+	.\$(BIN_DIR)\Release\Elona_foobar.exe
+
+
+build_release: $(BIN_DIR) FORCE # Build Elona foobar (release).
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release & \
 		cmake --build . --config Release
 
 
-$(TEST_RUNNER):
+tests: test_runner FORCE # Run all tests.
+	cd $(BIN_DIR)\Debug & \
+		.\Elona_foobar.exe --durations=yes
+
+
+test_runner: $(BIN_DIR) FORCE # Build test runner.
+	-rd /q /s .\$(BIN_DIR)\Debug\tests
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug & \
 		cmake --build . --config Debug
 
 
-$(BENCH_RUNNER):
+bench: bench_runner FORCE # Run benchmark.
+	cd $(BIN_DIR)\Release & \
+		.\Elona_foobar
+
+
+bench_runner: $(BIN_DIR) FORCE # Build benchmark runner.
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release & \
 		cmake --build . --config Release
+
+
+$(BIN_DIR):
+	$(MKDIR) $(BIN_DIR)
 
 
 clean: FORCE # Clean up built products.
@@ -75,7 +82,4 @@ format: FORCE # Format all C++ source files.
 	git diff
 
 
-FORCE:
-
-
-rebuild: clean build # Clean and build Elona.
+rebuild: clean build FORCE # Clean and build Elona.
