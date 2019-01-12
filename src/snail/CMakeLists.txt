@@ -1,5 +1,3 @@
-option(SNAIL_HEADLESS "Don't render anything" OFF)
-
 # Library
 if(SNAIL_HEADLESS)
   set(LIBRARY_NAME snail_headless)

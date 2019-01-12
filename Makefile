@@ -38,15 +38,15 @@ $(BIN_DIR):
 
 
 $(PROGRAM): FORCE
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF; make -j8
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME; make -j8
 
 
 $(TEST_RUNNER):
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TESTS; make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS; make
 
 
 $(BENCH_RUNNER):
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release; make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH --config Release; make
 
 
 $(APK): FORCE

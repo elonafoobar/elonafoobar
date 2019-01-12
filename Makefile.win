@@ -36,15 +36,15 @@ $(BIN_DIR):
 
 
 $(PROGRAM): FORCE
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF & cmake --build .
+	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME & cmake --build .
 
 
 $(TEST_RUNNER):
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TESTS & cmake --build .
+	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS & cmake --build .
 
 
 $(BENCH_RUNNER):
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release & cmake --build .
+	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH --config Release & cmake --build .
 
 
 clean: FORCE

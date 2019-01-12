@@ -86,7 +86,7 @@ if(ANDROID)
 
   set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
-  set(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
+  set(SNAIL_HEADLESS OFF)
 
   add_library(SDL2 SHARED IMPORTED)
   add_library(SDL2_image SHARED IMPORTED)
@@ -140,20 +140,16 @@ if(ANDROID)
   target_link_libraries(${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams util snail elona)
 else()
   # Options
-  option(WITH_TESTS "Build test executable (TESTS or BENCH)" "OFF")
+  set(ELONA_BUILD_TARGET "GAME" CACHE STRING "Build executable type (GAME, TESTS, or BENCH)")
 
-  if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
-    unset(SNAIL_HEADLESS CACHE)
-    set(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
-  elseif(WITH_TESTS STREQUAL "OFF")
-    unset(SNAIL_HEADLESS CACHE)
-    set(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
+  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
+    set(SNAIL_HEADLESS ON)
   else()
-    # Use the previous flags.
+    set(SNAIL_HEADLESS OFF)
   endif()
 
   # Executable
-  if(WITH_TESTS STREQUAL "TESTS")
+  if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     set (CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/thirdparty/catch2})
     add_library(Catch INTERFACE)
     target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
@@ -191,7 +187,7 @@ else()
 
     add_executable(${PROJECT_NAME} src/version.cpp ${TEST_SOURCES})
     target_link_libraries(${PROJECT_NAME} Catch)
-  elseif(WITH_TESTS STREQUAL "BENCH")
+  elseif(ELONA_BUILD_TARGET STREQUAL "BENCH")
     add_subdirectory(src/thirdparty/hayai)
 
     # Benchmark sources
@@ -206,13 +202,15 @@ else()
 
     add_executable(${PROJECT_NAME} src/version.cpp ${BENCH_SOURCES})
     target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
-  else()
+  elseif(ELONA_BUILD_TARGET STREQUAL "GAME")
     if(WIN32)
       set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
     else(WIN32)
       set(RESOURCES "")
     endif()
     add_executable(${PROJECT_NAME} WIN32 src/main.cpp src/version.cpp ${RESOURCES})
+  else()
+    message(FATAL_ERROR "Unknown build mode: ${ELONA_BUILD_TARGET}")
   endif()
 
   if(WIN32)
@@ -346,7 +344,7 @@ else()
     list(APPEND EXTRA_DEFINES
       "DEBUG"
       )
-    if(WITH_TESTS STREQUAL "BENCH")
+    if(ELONA_BUILD_TARGET STREQUAL "BENCH")
       list(APPEND GENERAL_OPTIONS "g1")
     endif()
     list(APPEND DISABLED_WARNINGS
@@ -422,19 +420,17 @@ else()
 
   # My libraries: snail
   add_subdirectory(src/snail)
-  if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
     target_link_libraries(${PROJECT_NAME} snail_headless)
-  elseif(WITH_TESTS STREQUAL "OFF")
-    target_link_libraries(${PROJECT_NAME} snail)
   else()
-    # Use the previous flags.
+    target_link_libraries(${PROJECT_NAME} snail)
   endif()
 
   # My libraries: elona
   add_subdirectory(src/elona)
   target_link_libraries(${PROJECT_NAME} elona)
 
-  if(WITH_TESTS STREQUAL "OFF")
+  if(ELONA_BUILD_TARGET STREQUAL "GAME")
     add_subdirectory(src/thirdparty/nfd)
     target_link_libraries(nfd)
   endif()
@@ -519,11 +515,11 @@ if (NOT ANDROID OR ANDROID_BUNDLE_ASSETS)
 endif()
 
 if(NOT ANDROID)
-  if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
     copy_dir(${CMAKE_SOURCE_DIR}/src/tests/data "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
   endif()
 
-  if(WITH_TESTS STREQUAL "TESTS")
+  if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     copy_dir(${CMAKE_SOURCE_DIR}/src/tests/lua "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
   endif()
 endif()
