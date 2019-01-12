@@ -45,6 +45,7 @@ private:
 
     static bool is_incomplete_lua_line(const sol::error& error);
     void print_single_line(const std::string& line);
+    bool lua_error_handler(const sol::protected_function_result& pfr);
     bool interpret_lua(const std::string&);
     void input_loop();
     void read_line();

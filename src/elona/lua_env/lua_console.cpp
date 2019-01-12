@@ -239,78 +239,96 @@ const char* LuaConsole::prompt() const
 }
 
 
+bool LuaConsole::lua_error_handler(const sol::protected_function_result& pfr)
+{
+    bool multiline_ended = true;
+
+    if (pfr.status() == sol::call_status::syntax)
+    {
+        sol::error error = pfr;
+        if (is_incomplete_lua_line(error))
+        {
+            _is_multiline = true;
+            multiline_ended = false;
+        }
+        else
+        {
+            std::string mes = "Error: "s + error.what();
+            print(mes);
+        }
+    }
+    else
+    {
+        sol::error error = pfr;
+        std::string mes = "Error: "s + error.what();
+        print(mes);
+    }
+
+    return multiline_ended;
+}
+
 
 /// Returns true if the Lua input is incomplete, and multiline input should
 /// be used.
 bool LuaConsole::interpret_lua(const std::string& input)
 {
-    if (input.empty())
+    if (input == ""s)
     {
         return _is_multiline;
     }
 
+    bool multiline_ended = true;
+
+    // Print errors to the console instead of throwing.
+    auto handler = [this, &multiline_ended](
+                       lua_State*, sol::protected_function_result pfr) {
+        multiline_ended = lua_error_handler(pfr);
+        return pfr;
+    };
+
     // First, try prepending "return" to the statement, ignoring errors.
-    auto load_result = lua::lua->get_state()->load("return " + input);
+    auto result = lua::lua->get_state()->safe_script(
+        u8"return " + input, _console_mod->env, sol::script_pass_on_error);
 
-    // If that fails because of syntax error, execute the original statement.
-    if (load_result.status() == sol::load_status::syntax)
+    // If that fails, execute the original statement.
+    if (!result.valid())
     {
-        load_result = lua::lua->get_state()->load(input);
+        result = lua::lua->get_state()->safe_script(
+            input, _console_mod->env, handler);
     }
 
-    if (!load_result.valid())
+    if (result.valid())
     {
-        sol::error error = load_result;
-        if (load_result.status() == sol::load_status::syntax &&
-            is_incomplete_lua_line(error))
+        // Bypass read-only metatable on mod environment
+        _console_mod->env.raw_set("_LAST_RESULT", result.get<sol::object>());
+
+        if (result.get<sol::object>() == sol::lua_nil)
         {
-            return true /* incomplete line; more input needed. */;
+            print("nil");
         }
         else
         {
-            print("Error: "s + error.what());
-            return false /* some syntax error in this line. */;
-        }
-    }
-    else
-    {
-        // Run the parsed snippet.
-        sol::protected_function pfunc{load_result};
-        sol::protected_function_result prf = pfunc();
-        if (!prf.valid())
-        {
-            sol::error error = prf;
-            print("Error: "s + error.what());
-            return false /* panic during execution. */;
-        }
-        else
-        {
-            // Bypass read-only metatable on mod environment
-            _console_mod->env.raw_set("_LAST_RESULT", prf.get<sol::object>());
+            auto as_string = _lua->get_state()->safe_script(
+                "return inspect(_LAST_RESULT)", _console_mod->env);
 
-            if (prf.get<sol::object>() == sol::lua_nil)
+            if (as_string.valid())
             {
-                print("nil");
+                print(as_string.get<std::string>());
             }
             else
             {
-                auto as_string = _lua->get_state()->safe_script(
-                    "return inspect(_LAST_RESULT)", _console_mod->env);
-
-                if (as_string.valid())
-                {
-                    print(as_string.get<std::string>());
-                }
-                else
-                {
-                    print("<Unknown result>");
-                }
+                print("<Unknown result>");
             }
-
-            update_slight();
-            return false /* successfully done. */;
         }
     }
+    else if (multiline_ended)
+    {
+        print("<Unknown result>");
+    }
+
+    update_slight();
+
+    return multiline_ended;
 }
 
 
@@ -459,13 +477,13 @@ void LuaConsole::grab_input()
                 print(prompt() + _input);
                 if (interpret_lua(_multiline_input))
                 {
-                    _multiline_input += "\n";
-                    _is_multiline = true;
+                    _multiline_input = "";
+                    _is_multiline = false;
                 }
                 else
                 {
-                    _multiline_input = "";
-                    _is_multiline = false;
+                    _multiline_input += "\n";
+                    _is_multiline = true;
                 }
                 _input_history.push_back(_input);
                 history_index = -1;
