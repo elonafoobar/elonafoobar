@@ -91,7 +91,6 @@
     <h2 class="uk-panel-title">Examples</h2>
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
-    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     </ul>
     </li>
     </ul>
@@ -219,6 +218,14 @@
     <tr>
     <td class="name"><a href="#LuaCharacter:apply_ailment">LuaCharacter:apply_ailment (ailment, power)</a></td>
     <td class="summary">Applies a status ailment to this character.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:heal_ailment">LuaCharacter:heal_ailment (ailment, power)</a></td>
+    <td class="summary">Heals a status ailment on a character.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#LuaCharacter:add_buff">LuaCharacter:add_buff (id, num, num[, doer])</a></td>
+    <td class="summary">Adds a buff to a character.</td>
     </tr>
     <tr>
     <td class="name"><a href="#LuaCharacter:recruit_as_ally">LuaCharacter:recruit_as_ally ()</a></td>
@@ -1098,7 +1105,7 @@ chara:damage_hp(<span class="number">100</span>)</code></pre>
     <!-- usage start -->
     <strong>Usage:</strong>
     <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> chara = Chara.player()
-<span class="keyword">local</span> other = Chara.create(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>)
+<span class="keyword">local</span> other = Chara.create(<span class="number">0</span>, <span class="number">0</span>, <span class="string">"core.putit"</span>)
 hara:damage_hp(<span class="number">100</span>, other)</code></pre>
     <!-- usage end -->
 
@@ -1171,6 +1178,179 @@ hara:damage_hp(<span class="number">100</span>, other)</code></pre>
     <strong>Usage:</strong>
     <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> chara = Chara.player()
 chara:apply_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>)</code></pre>
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:heal_ailment" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:heal_ailment">LuaCharacter:heal_ailment (ailment, power)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Heals a status ailment on a character.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>ailment</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#StatusAilment">Enums.StatusAilment</a></span>)
+
+     the kind of status ailment
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>power</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the power of the healing. If 0, heal the ailment
+ completely.
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <strong>Usage:</strong>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> chara = Chara.player()
+chara:heal_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>)</code></pre>
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#LuaCharacter:add_buff" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="LuaCharacter:add_buff">LuaCharacter:add_buff (id, num, num[, doer])</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Adds a buff to a character.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>id</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">string</span></span>)
+
+     the buff to add
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>num</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">turns</span></span>)
+
+     the number of turns the buff will last
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>num</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">turns</span></span>)
+
+     the number of turns the buff will last
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>doer</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../classes/LuaCharacter.html#">LuaCharacter</a></span>)
+
+     the character who applied this buff
+
+    (<em>optional</em>)
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
     <!-- usage end -->
 
     </dd>
@@ -1740,7 +1920,7 @@ Event.register(Event.EventKind.CharaCreated, make_invisible)</code></pre>
     <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
     </div>
     <div class="content-footer column col-9 col-sm-12">
-    <i>Last updated 2018-09-10 14:50:37 UTC</i>
+    <i>Last updated 2019-01-12 10:11:58 UTC</i>
     </div>
     </div>
     </div>
