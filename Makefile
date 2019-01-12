@@ -15,7 +15,9 @@ MKDIR := mkdir
 
 
 all: $(BIN_DIR)
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make -j8
+	cd $(BIN_DIR); \
+		cmake .. $(CMAKE_ARGS); \
+		cmake --build .
 
 
 build: $(BIN_DIR) $(PROGRAM)
@@ -38,15 +40,21 @@ $(BIN_DIR):
 
 
 $(PROGRAM): FORCE
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME; make -j8
+	cd $(BIN_DIR); \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME; \
+		cmake --build .
 
 
 $(TEST_RUNNER):
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS; make
+	cd $(BIN_DIR); \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS; \
+		cmake --build .
 
 
 $(BENCH_RUNNER):
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH --config Release; make
+	cd $(BIN_DIR); \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH --config Release; \
+		cmake --build .
 
 
 $(APK): FORCE
