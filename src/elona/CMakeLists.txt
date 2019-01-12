@@ -11,6 +11,7 @@ set(ELONA_SOURCES
   audio.cpp
   autopick.cpp
   blending.cpp
+  browser.cpp
   buff.cpp
   building.cpp
   calc.cpp
