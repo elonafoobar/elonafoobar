@@ -40,19 +40,19 @@ $(BIN_DIR):
 $(PROGRAM): FORCE
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME & \
-		cmake --build .
+		cmake --build . --config Debug
 
 
 $(TEST_RUNNER):
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=TESTS & \
-		cmake --build .
+		cmake --build . --config Debug
 
 
 $(BENCH_RUNNER):
 	cd $(BIN_DIR) & \
-		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH --config Release & \
-		cmake --build .
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=BENCH & \
+		cmake --build . --config Release
 
 
 clean: FORCE # Clean up built products.
