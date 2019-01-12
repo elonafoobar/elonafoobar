@@ -39,8 +39,8 @@ build_release: $(BIN_DIR) FORCE # Build Elona foobar (release).
 	cd $(BIN_DIR); \
 		cmake .. -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS); \
 		cmake --build . --config Release
-	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
-	echo "Something is placed at $(BIN_DIR)."
+	@echo "\"You've been a faithful servant of me. Here, use it wisely.\""
+	@echo "Something is placed at $(BIN_DIR)."
 
 
 tests: test_runner FORCE # Run all tests.
@@ -74,8 +74,8 @@ android: $(BIN_DIR) FORCE # Build android Elona foobar (debug).
 android_release: $(BIN_DIR) FORCE # Build android Elona foobar (release).
 	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
 	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/release/app-release-unsigned.apk ../$(APK_RELEASE)
-	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
-	echo "Something is placed at $(BIN_DIR)."
+	@echo "\"You've been a faithful servant of me. Here, use it wisely.\""
+	@echo "Something is placed at $(BIN_DIR)."
 
 
 $(BIN_DIR):
