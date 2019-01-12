@@ -5,34 +5,37 @@ BENCH_RUNNER := $(BIN_DIR)/bench_runner
 APK := $(BIN_DIR)/Elona_foobar-debug.apk
 APK_RELEASE := $(BIN_DIR)/Elona_foobar-release.apk
 
+# Utilities
 FORMAT := clang-format
 FIND := find
 XARGS := xargs
 MKDIR := mkdir
+GREP := grep
+AWK := awk
 
 
 .PHONY: FORCE
 
 
-all: $(BIN_DIR)
+all: $(BIN_DIR) # Build the most recently built target.
 	cd $(BIN_DIR); \
 		cmake .. $(CMAKE_ARGS); \
 		cmake --build .
 
 
-build: $(BIN_DIR) $(PROGRAM)
+build: $(BIN_DIR) $(PROGRAM) # Build Elona foobar (debug).
 
 
-tests: $(BIN_DIR) $(TEST_RUNNER)
+tests: $(BIN_DIR) $(TEST_RUNNER) # Build test runner.
 
 
-bench: $(BIN_DIR) $(BENCH_RUNNER)
+bench: $(BIN_DIR) $(BENCH_RUNNER) # Build benchmark runner.
 
 
-android: $(BIN_DIR) $(APK)
+android: $(APK) # Build android Elona foobar (debug).
 
 
-android_release: $(BIN_DIR) $(APK_RELEASE)
+android_release: $(APK_RELEASE) # Build android Elona foobar (release).
 
 
 $(BIN_DIR):
@@ -69,19 +72,20 @@ $(APK_RELEASE): FORCE
 	echo "Something is placed at $(BIN_DIR)."
 
 
-clean: FORCE
+clean: FORCE # Clean up built products.
 	-@$(RM) -rf $(BIN_DIR)
 	-@$(RM) -rf android/distribution android/app/.externalNativeBuild android/SDL2/.externalNativeBuild
 
 
 # Format src/*.{hpp,cpp} except under src/thirdparty.
-format: FORCE
+format: FORCE # Format all C++ source files.
 	$(FIND) src \( -type d -name "thirdparty" -prune \) -or \( -name "*.cpp" -or -name "*.hpp" \) -print0 | \
 		$(XARGS) -n 1 -0 -I{} sh -c "$(FORMAT) -i {}; echo {}"
 	git diff
 	test -z "$$(git status --short)"
 
-ldoc:
+
+ldoc: # Generate LDoc.
 	rm -rf $(BIN_DIR)/doc
 	rm -rf docs
 	mkdir -p $(BIN_DIR)/doc
@@ -94,17 +98,26 @@ ldoc:
 	cd $(BIN_DIR) && ldoc -c ../doc/config.ld -l ../doc -s ../doc ../doc/api/
 	cp -r $(BIN_DIR)/doc docs
 
-luacheck:
+
+luacheck: # Run luacheck.
 	luacheck --version
 	luacheck runtime/mods/
 	luacheck src/tests/lua
 
-i18n-check:
+
+i18n-check: # Run i18n-checker.
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp
 
-i18n-check-err:
+
+i18n-check-err: # Run i18n-checker with --no-warnings.
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en --no-warnings
 	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp --no-warnings
 
-rebuild: clean build
+
+rebuild: clean build # Clean and build Elona.
+
+
+help: # Show help.
+	@$(GREP) '^[a-zA-Z_-]*:.* # .*' $(MAKEFILE_LIST) \
+		| $(AWK) 'BEGIN {FS = ":.* # "}; {printf "%-25s%s\n", $$1, $$2}'

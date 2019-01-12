@@ -18,19 +18,19 @@ CMAKE_ARGS = \
         -G "Visual Studio 15 2017 Win64"
 
 
-all: $(BIN_DIR)
+all: $(BIN_DIR) # Build the most recently built target.
 	cd $(BIN_DIR) & \
 		cmake .. $(CMAKE_ARGS) & \
 		cmake --build .
 
 
-build: $(BIN_DIR) $(PROGRAM)
+build: $(BIN_DIR) $(PROGRAM) # Build Elona foobar (debug).
 
 
-tests: $(BIN_DIR) $(TEST_RUNNER)
+tests: $(BIN_DIR) $(TEST_RUNNER) # Build test runner.
 
 
-bench: $(BIN_DIR) $(BENCH_RUNNER)
+bench: $(BIN_DIR) $(BENCH_RUNNER) # Build benchmark runner.
 
 
 $(BIN_DIR):
@@ -55,14 +55,17 @@ $(BENCH_RUNNER):
 		cmake --build .
 
 
-clean: FORCE
+clean: FORCE # Clean up built products.
 	-rd /q /s $(BIN_DIR)
 
-format: FORCE
-        powershell -Command "Get-ChildItem src -Include *.cpp,*.hpp -Recurs | Where {$$_.FullName -notlike '*\src\thirdparty\*'} | Foreach {clang-format -i $$_.FullName; Write-Host $$_.Name}"
-        git diff
+
+# Format src/*.{hpp,cpp} except under src/thirdparty.
+format: FORCE # Format all C++ source files.
+	powershell -Command "Get-ChildItem src -Include *.cpp,*.hpp -Recurs | Where {$$_.FullName -notlike '*\src\thirdparty\*'} | Foreach {clang-format -i $$_.FullName; Write-Host $$_.Name}"
+	git diff
+
 
 FORCE:
 
 
-rebuild: clean build
+rebuild: clean build # Clean and build Elona.
