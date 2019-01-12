@@ -276,9 +276,6 @@ else()
   include_directories(${SDL2_MIXER_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
-  # Compiler options
-  target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
-
   set(GENERAL_OPTIONS)
   set(DEBUG_OPTIONS)
   set(RELEASE_OPTIONS)
