@@ -223,21 +223,6 @@ std::string snfood(const std::string& name)
 
 
 
-std::vector<std::string> txtsetwinword(int n)
-{
-    std::vector<std::string> ret;
-    std::vector<std::string> choices;
-    for (int cnt = 0; cnt < 6; cnt++)
-    {
-        choices.push_back(
-            i18n::s.get_enum("core.locale.scenario.win_words", cnt));
-    }
-    sample(choices, std::back_inserter(ret), n);
-    return ret;
-}
-
-
-
 void initialize_nefia_names()
 {
     SDIM4(mapnamerd, 20, 2, 5);
