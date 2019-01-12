@@ -54,7 +54,7 @@ sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer smpeg lua boost timidit
 ```
 `apt`のあるLinux用:
 ```
-sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-def smpeg timidity
+sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev smpeg timidity
 ```
 2. `cd path/to/Elona_foobar; make build`
 
