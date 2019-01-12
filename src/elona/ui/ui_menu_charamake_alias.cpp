@@ -93,7 +93,10 @@ void UIMenuCharamakeAlias::_draw_alias_locked(int cnt)
     color(0, 0, 0);
 }
 
-void UIMenuCharamakeAlias::_draw_alias(int cnt, const std::string& text, bool is_locked)
+void UIMenuCharamakeAlias::_draw_alias(
+    int cnt,
+    const std::string& text,
+    bool is_locked)
 {
     font(14 - en * 2);
     pos(wx + 38, wy + 66 + cnt * 19 - 2);

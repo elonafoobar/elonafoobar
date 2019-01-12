@@ -135,7 +135,10 @@ void UIMenuCharamakeAttributes::_draw_attribute_locked(int cnt)
     color(0, 0, 0);
 }
 
-void UIMenuCharamakeAttributes::_draw_attribute_value(int cnt, int list_value, bool is_locked)
+void UIMenuCharamakeAttributes::_draw_attribute_value(
+    int cnt,
+    int list_value,
+    bool is_locked)
 {
     // Copy image from item sheet.
     // TODO: migrate to PicLoader

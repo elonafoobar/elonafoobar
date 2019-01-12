@@ -217,7 +217,8 @@ void UIMenuCrafting::_draw_single_recipe_required_material(
     color(0, 0, 0);
 }
 
-void UIMenuCrafting::_draw_recipe_required_materials(const CraftingRecipe& recipe)
+void UIMenuCrafting::_draw_recipe_required_materials(
+    const CraftingRecipe& recipe)
 {
     int mat_index = 0;
     for (const auto required_mat : recipe.required_materials)
@@ -239,7 +240,10 @@ void UIMenuCrafting::_draw_recipe(int item_id, bool draw_desc)
     _draw_recipe_required_materials(*recipe);
 }
 
-void UIMenuCrafting::_draw_single_list_entry(int cnt, int item_id, bool can_craft)
+void UIMenuCrafting::_draw_single_list_entry(
+    int cnt,
+    int item_id,
+    bool can_craft)
 {
     std::string item_name = ioriginalnameref(item_id);
     std::string item_make =

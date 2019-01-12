@@ -672,7 +672,9 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
     }
 }
 
-void UIMenuCharacterSheet::_draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
+void UIMenuCharacterSheet::_draw_first_page_buffs(
+    int& _cs_buff,
+    int& _cs_buffmax)
 {
     _cs_buffmax = 0;
     for (int cnt = 0; cnt < 15; ++cnt)
@@ -912,7 +914,10 @@ void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
             .get_value_or(""));
 }
 
-void UIMenuCharacterSheet::_draw_skill_train_cost(int cnt, int skill_id, bool is_training)
+void UIMenuCharacterSheet::_draw_skill_train_cost(
+    int cnt,
+    int skill_id,
+    bool is_training)
 {
     std::string train_cost;
 
@@ -949,7 +954,10 @@ void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)
     mes(enchantment_level);
 }
 
-void UIMenuCharacterSheet::_draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_skill_entry(
+    int cnt,
+    int skill_id,
+    CharacterSheetOperation op)
 {
     _draw_skill_icon(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);
@@ -991,7 +999,8 @@ void UIMenuCharacterSheet::_draw_other_page_single_list_entry(
     }
 }
 
-void UIMenuCharacterSheet::_draw_other_page_list_entries(CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_other_page_list_entries(
+    CharacterSheetOperation op)
 {
     font(14 - en * 2);
     cs_listbk();

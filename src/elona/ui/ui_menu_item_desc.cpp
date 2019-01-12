@@ -113,7 +113,10 @@ void UIMenuItemDesc::_draw_marks(int cnt, int list_item)
     }
 }
 
-void UIMenuItemDesc::_draw_message(int cnt, int list_item, const std::string& list_text)
+void UIMenuItemDesc::_draw_message(
+    int cnt,
+    int list_item,
+    const std::string& list_text)
 {
     _set_color(list_item);
     _set_font(list_item);
