@@ -192,13 +192,14 @@ static void _draw_list_entry_giver_name(int chara_index)
     mes(name);
 }
 
+
+
 static void _draw_list_entry_difficulty(
     int quest_difficulty,
     int difficulty_stars)
 {
-    auto col =
+    const auto col =
         _get_quest_difficulty_color(cdata.player().level, quest_difficulty);
-    color(col.r, col.g, col.b);
 
     if (difficulty_stars < 11)
     {
@@ -211,21 +212,23 @@ static void _draw_list_entry_difficulty(
         for (int cnt = 0, cnt_end = (difficulty_stars); cnt < cnt_end; ++cnt)
         {
             pos(wx + 270 + cnt % 5 * 13, y + dy + cnt / 5 * 8 + 2);
-            mes(i18n::s.get("core.locale.ui.board.difficulty"));
+            mes(i18n::s.get("core.locale.ui.board.difficulty"), col);
         }
     }
     else
     {
         pos(wx + 270, y + 2);
         mes(i18n::s.get(
-            "core.locale.ui.board.difficulty_counter", difficulty_stars));
+                "core.locale.ui.board.difficulty_counter", difficulty_stars),
+            col);
     }
 }
+
+
 
 static void _draw_list_entry_desc()
 {
     talk_conv(buff, 70);
-    color(0, 0, 0);
     font(13 - en * 2);
     pos(wx + 20, y + 20);
     mes(buff);

@@ -12814,7 +12814,7 @@ void show_game_score_ranking()
     {
         p = 0;
     }
-    color(138, 131, 100);
+
     for (int cnt = p, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
         p = cnt * 4;
@@ -12828,9 +12828,7 @@ void show_game_score_ranking()
             s = " "s + i18n::s.get("core.locale.misc.score.rank", cnt + 1);
         }
         pos(x - 80, y + 10);
-        color(10, 10, 10);
-        mes(s);
-        color(0, 0, 0);
+        mes(s, {10, 10, 10});
         bool no_entry = false;
         if (p >= noteinfo())
         {
@@ -12845,28 +12843,23 @@ void show_game_score_ranking()
             }
         }
         pos(x, y);
-        color(10, 10, 10);
         if (no_entry)
         {
-            mes(u8"no entry");
-            color(0, 0, 0);
+            mes(u8"no entry", {10, 10, 10});
             continue;
         }
-        mes(s);
+        mes(s, {10, 10, 10});
         noteget(s, p + 2);
         pos(x, y + 20);
-        mes(s);
+        mes(s, {10, 10, 10});
         noteget(s(10), p + 3);
         csvsort(s, s(10), 44);
         pos(x + 480, y + 20);
-        mes(i18n::s.get("core.locale.misc.score.score", s(0)));
+        mes(i18n::s.get("core.locale.misc.score.score", s(0)), {10, 10, 10});
         p = elona::stoi(s(1)) % 1000;
 
         draw_chara_scale_height(elona::stoi(s(1)), x - 22, y + 12);
-
-        color(0, 0, 0);
     }
-    color(0, 0, 0);
 }
 
 

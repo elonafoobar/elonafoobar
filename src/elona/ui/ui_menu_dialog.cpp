@@ -59,7 +59,6 @@ void UIMenuDialog::draw()
         y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
         display_key(x, y, cnt);
         cs_list(cs == cnt, _choice_text.at(cnt), x + 30, y, 4);
-        color(0, 0, 0);
     }
     cs_bk = cs;
 }

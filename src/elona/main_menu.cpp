@@ -131,34 +131,28 @@ MainMenuResult main_title_menu()
     gmode(2);
 
     font(13 - en * 2);
-    color(255, 255, 255);
     pos(20, 20);
-    mes(u8"Elona version 1.22  Developed by Noa"s);
-    color(0, 0, 0);
+    mes(u8"Elona version 1.22  Developed by Noa"s, {255, 255, 255});
 
-    color(255, 255, 255);
     pos(20, 38);
     mes(u8"  Variant foobar version "s + latest_version.short_string() +
-        u8"  Developed by KI");
-    color(0, 0, 0);
+            u8"  Developed by KI",
+        {255, 255, 255});
 
     if (jp)
     {
-        color(255, 255, 255);
         pos(20, 56);
-        mes(u8"Contributor MSL / View the credits for more"s);
-        color(0, 0, 0);
+        mes(u8"Contributor MSL / View the credits for more"s, {255, 255, 255});
     }
     else
     {
-        color(255, 255, 255);
         pos(20, 56);
-        mes(u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s);
+        mes(u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s,
+            {255, 255, 255});
         pos(20, 76);
-        mes(u8"Omake/OO translator: Doorknob");
+        mes(u8"Omake/OO translator: Doorknob", {255, 255, 255});
         pos(20, 96);
-        mes(u8"Cutscenes translator: AnnaBannana");
-        color(0, 0, 0);
+        mes(u8"Cutscenes translator: AnnaBannana", {255, 255, 255});
     }
 
     windowshadow = 1;

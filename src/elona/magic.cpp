@@ -149,9 +149,8 @@ bool _magic_1136()
                 {
                     pos(sx, sy);
                     font(40 - en * 2, snail::Font::Style::italic);
-                    color(255, 20, 20);
-                    mes(i18n::s.get("core.locale.magic.map.mark"));
-                    color(0, 0, 0);
+                    mes(i18n::s.get("core.locale.magic.map.mark"),
+                        {255, 20, 20});
                 }
             }
         }

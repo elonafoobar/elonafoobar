@@ -57,11 +57,10 @@ static snail::Color _desc_to_color(int desc)
     }
 }
 
-static void _set_color(int list_item)
+static snail::Color _get_color(int list_item)
 {
     int desc = list_item % 10000;
-    auto col = _desc_to_color(desc);
-    color(col.r, col.g, col.b);
+    return _desc_to_color(desc);
 }
 
 static void _set_font(int list_item)
@@ -115,12 +114,10 @@ static void _draw_marks(int cnt, int list_item)
 
 static void _draw_message(int cnt, int list_item, const std::string& list_text)
 {
-    _set_color(list_item);
     _set_font(list_item);
     _set_pos(cnt, list_item, list_text);
 
-    mes(list_text);
-    color(0, 0, 0);
+    mes(list_text, _get_color(list_item));
 
     _draw_marks(cnt, list_item);
 }

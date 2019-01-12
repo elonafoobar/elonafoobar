@@ -184,33 +184,37 @@ void UIMenuJournal::update()
         x = wx + 80 + cnt / 20 * 306;
         y = wy + 45 + cnt % 20 * 16;
         noteget(s, p);
+        snail::Color text_color{0, 0, 0};
         if (strmid(s, 0, 1) == u8"@"s)
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
             font(10 + en - en * 2, snail::Font::Style::bold);
-            color(0, 0, 200);
             if (s(1) == u8"QL"s)
             {
-                color(100, 100, 0);
+                text_color = snail::Color{100, 100, 0};
             }
-            if (s(1) == u8"QC"s)
+            else if (s(1) == u8"QC"s)
             {
-                color(0, 100, 100);
+                text_color = snail::Color{0, 100, 100};
             }
-            if (s(1) == u8"QM"s)
+            else if (s(1) == u8"QM"s)
             {
-                color(0, 100, 0);
+                text_color = snail::Color{0, 100, 0};
             }
-            if (s(1) == u8"RE"s)
+            else if (s(1) == u8"RE"s)
             {
-                color(100, 0, 0);
+                text_color = snail::Color{100, 0, 0};
                 font(12 + sizefix - en * 2);
             }
-            if (s(1) == u8"BL"s)
+            else if (s(1) == u8"BL"s)
             {
-                color(0, 0, 100);
+                text_color = snail::Color{0, 0, 100};
                 font(12 + sizefix - en * 2);
+            }
+            else
+            {
+                text_color = snail::Color{0, 0, 200};
             }
         }
         else
@@ -218,8 +222,7 @@ void UIMenuJournal::update()
             font(12 + sizefix - en * 2);
         }
         pos(x, y);
-        mes(s);
-        color(0, 0, 0);
+        mes(s, text_color);
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);

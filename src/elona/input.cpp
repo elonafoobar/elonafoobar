@@ -54,9 +54,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         gcopy(3, 336, 336, 24, 24);
         const std::string inputlog2 = inputlog + u8"(" + max_number + u8")";
         pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + vfix + 11);
-        color(255, 255, 255);
-        mes(inputlog2);
-        color(0, 0, 0);
+        mes(inputlog2, {255, 255, 255});
         redraw();
         auto action = key_check();
         if (action == "enter")
@@ -265,10 +263,8 @@ bool input_text_dialog(
         gmode(4, p(1) / 2 + 50);
         draw("input_caret", x + 34 + p(4) * 8, y + 5);
         gmode(2);
-        color(255, 255, 255);
         pos(x + 36, y + vfix + 9);
-        mes(s);
-        color(0, 0, 0);
+        mes(s, {255, 255, 255});
 
         redraw();
     }

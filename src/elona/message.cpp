@@ -193,13 +193,11 @@ void Message::_msg_write(std::string& message)
         gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
     }
 
-    elona::color(text_color.r, text_color.g, text_color.b);
     pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + vfix + 5);
     font(inf_mesfont - en * 2);
     gmode(0, 255);
-    mes(message);
-    elona::color(0, 0, 0);
+    mes(message, text_color);
 
     message_log.append(message, text_color);
 }

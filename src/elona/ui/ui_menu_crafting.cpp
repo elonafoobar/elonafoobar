@@ -185,18 +185,12 @@ static void _draw_recipe_desc(const CraftingRecipe& recipe)
     desc += u8" "s + recipe.required_skill_level + u8"("s +
         sdata(recipe.skill_used, 0) + u8")"s;
 
-    if (recipe.required_skill_level <= sdata(recipe.skill_used, 0))
-    {
-        color(30, 30, 200);
-    }
-    else
-    {
-        color(200, 30, 30);
-    }
-
     pos(wx + 37, wy + 288);
-    mes(desc + u8" "s);
-    color(0, 0, 0);
+    const auto text_color =
+        recipe.required_skill_level <= sdata(recipe.skill_used, 0)
+        ? snail::Color{30, 30, 200}
+        : snail::Color{200, 30, 30};
+    mes(desc + u8" "s, text_color);
 }
 
 static void _draw_single_recipe_required_material(
@@ -207,18 +201,11 @@ static void _draw_single_recipe_required_material(
         i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount +
         u8"("s + mat(required_mat.id) + u8")"s;
 
-    if (mat(required_mat.id) >= required_mat.amount)
-    {
-        color(30, 30, 200);
-    }
-    else
-    {
-        color(200, 30, 30);
-    }
-
     pos(wx + 37 + mat_index % 3 * 192, wy + 334 + mat_index / 3 * 16);
-    mes(mat_desc);
-    color(0, 0, 0);
+    const auto text_color = mat(required_mat.id) >= required_mat.amount
+        ? snail::Color{30, 30, 200}
+        : snail::Color{200, 30, 30};
+    mes(mat_desc, text_color);
 }
 
 static void _draw_recipe_required_materials(const CraftingRecipe& recipe)
@@ -262,9 +249,7 @@ static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
         text_color);
 
     pos(wx + 308, wy + 66 + cnt * 19 + 2);
-    color(text_color.r, text_color.g, text_color.b);
-    mes(item_make);
-    color(0, 0, 0);
+    mes(item_make, text_color);
 
     draw_item_material(ipicref(item_id), wx + 37, wy + 69 + cnt * 19 + 2);
 }

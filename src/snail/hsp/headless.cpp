@@ -13,7 +13,7 @@ int timeGetTime()
     return 0;
 }
 
-void mes(const std::string&)
+void mes(const std::string&, const snail::Color&)
 {
 }
 
@@ -54,10 +54,6 @@ void boxf(const snail::Color&)
 }
 
 void buffer(int, int, int)
-{
-}
-
-void color(int, int, int)
 {
 }
 

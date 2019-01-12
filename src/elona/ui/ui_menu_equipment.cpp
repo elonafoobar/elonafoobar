@@ -258,9 +258,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
         text_color);
 
     pos(wx + 640 - strlen_u(item_weight) * 7, wy + 60 + cnt * 19 + 2);
-    color(text_color.r, text_color.g, text_color.b);
-    mes(item_weight);
-    color(0, 0, 0);
+    mes(item_weight, text_color);
 }
 
 static void _draw_list_entries(bool show_resistances)
