@@ -1,5 +1,6 @@
 BIN_DIR := bin
-PROGRAM := $(BIN_DIR)/Elona_foobar
+ELONA_DEBUG := $(BIN_DIR)/Elona_foobar
+ELONA_RELEASE := $(BIN_DIR)/Elona_foobar-release
 TEST_RUNNER := $(BIN_DIR)/test_runner
 BENCH_RUNNER := $(BIN_DIR)/bench_runner
 APK := $(BIN_DIR)/Elona_foobar-debug.apk
@@ -23,7 +24,10 @@ all: $(BIN_DIR) # Build the most recently built target.
 		cmake --build .
 
 
-build: $(BIN_DIR) $(PROGRAM) # Build Elona foobar (debug).
+build: $(BIN_DIR) $(ELONA_DEBUG) # Build Elona foobar (debug).
+
+
+build_release: $(BIN_DIR) $(ELONA_RELEASE) # Build Elona foobar (release).
 
 
 tests: $(BIN_DIR) $(TEST_RUNNER) # Build test runner.
@@ -42,10 +46,18 @@ $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
 
-$(PROGRAM): FORCE
+$(ELONA_DEBUG): FORCE
 	cd $(BIN_DIR); \
 		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME; \
 		cmake --build . --config Debug
+
+
+$(ELONA_RELEASE): FORCE
+	cd $(BIN_DIR); \
+		cmake .. $(CMAKE_ARGS) -DELONA_BUILD_TARGET=GAME; \
+		cmake --build --config Release .
+	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
+	echo "Something is placed at $(BIN_DIR)."
 
 
 $(TEST_RUNNER):
