@@ -14,4 +14,3 @@ endif()
 
 
 add_library(nfd STATIC ${SOURCES})
-include_directories(./include)
