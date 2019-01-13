@@ -7,7 +7,7 @@ namespace elona
 namespace lua
 {
 
-namespace Chara
+namespace LuaApiChara
 {
 bool is_alive(LuaCharacterHandle);
 
@@ -33,7 +33,7 @@ int kill_count(const std::string&);
 
 
 void bind(sol::table&);
-}; // namespace Chara
+}; // namespace LuaApiChara
 
 } // namespace lua
 } // namespace elona

@@ -1,9 +1,32 @@
 #include "lua_api.hpp"
 
+#include "lua_api_animation.cpp"
+#include "lua_api_chara.cpp"
+#include "lua_api_debug.cpp"
+#include "lua_api_fov.cpp"
+#include "lua_api_gui.cpp"
+#include "lua_api_i18n.cpp"
+#include "lua_api_input.cpp"
+#include "lua_api_item.cpp"
+#include "lua_api_magic.cpp"
+#include "lua_api_map.cpp"
+#include "lua_api_math.cpp"
+#include "lua_api_pos.cpp"
+#include "lua_api_rand.cpp"
+#include "lua_api_skill.cpp"
+#include "lua_api_trait.cpp"
+#include "lua_api_world.cpp"
+
 namespace elona
 {
 namespace lua
 {
+
+#define LUA_API_BIND(core, name) \
+    { \
+        sol::table table = core.create_named(#name); \
+        LuaApi##name::bind(table); \
+    }
 
 void LuaApi::bind(sol::table& core)
 {
@@ -23,6 +46,8 @@ void LuaApi::bind(sol::table& core)
     LUA_API_BIND(core, Animation);
     LUA_API_BIND(core, Debug);
 }
+
+#undef LUA_API_BIND
 
 } // namespace lua
 } // namespace elona

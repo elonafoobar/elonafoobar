@@ -70,14 +70,14 @@ void UIMenuTownEconomy::update()
     }
 }
 
-static void _draw_window()
+void UIMenuTownEconomy::_draw_window()
 {
     std::string hint = strhint2 + strhint3b;
     showscroll(hint, wx, wy, ww, wh);
     font(14 - en * 2);
 }
 
-static void _draw_economy_info(int _city)
+void UIMenuTownEconomy::_draw_economy_info(int _city)
 {
     display_topic(
         i18n::s.get("core.locale.ui.economy.information"), wx + 65, wy + 50);
@@ -112,7 +112,7 @@ static void _draw_economy_info(int _city)
         podata(105, _city));
 }
 
-static void _draw_economy_details()
+void UIMenuTownEconomy::_draw_economy_details()
 {
     display_topic(
         i18n::s.get("core.locale.ui.economy.population_detail"),

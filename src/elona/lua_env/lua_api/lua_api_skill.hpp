@@ -6,14 +6,14 @@ namespace elona
 namespace lua
 {
 
-namespace Skill
+namespace LuaApiSkill
 {
 int level(int, LuaCharacterHandle);
 int resistance(const EnumString&, LuaCharacterHandle);
 
 
 void bind(sol::table&);
-} // namespace Skill
+} // namespace LuaApiSkill
 
 } // namespace lua
 } // namespace elona

@@ -32,6 +32,11 @@ private:
     void _draw_list_entries();
     void _draw_list_entry(int cnt, const Character& chara);
     void _draw_list_entry_cost(int cnt, const Character& chara);
+    void _draw_key(int);
+    void _draw_keys();
+    void _draw_list_entry_pic(int, const Character&);
+    void _draw_list_entry_name(int, const Character&);
+    void _draw_list_entry_info(int, const Character&);
 
     HireOperation _operation;
 };

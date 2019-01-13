@@ -92,7 +92,7 @@ static void _set_pos(int cnt, int list_item, const std::string& list_text)
     }
 }
 
-static void _draw_normal_mark(int cnt, int list_item)
+void UIMenuItemDesc::_draw_normal_mark(int cnt, int list_item)
 {
     int desc = list_item % 10000;
     int mark_pos_x = desc * 24;
@@ -100,7 +100,7 @@ static void _draw_normal_mark(int cnt, int list_item)
     gcopy(3, 72 + mark_pos_x, 336, 24, 24);
 }
 
-static void _draw_marks(int cnt, int list_item)
+void UIMenuItemDesc::_draw_marks(int cnt, int list_item)
 {
     if (list_item > static_cast<int>(ItemDescriptionType::normal))
     {
@@ -112,7 +112,10 @@ static void _draw_marks(int cnt, int list_item)
     }
 }
 
-static void _draw_message(int cnt, int list_item, const std::string& list_text)
+void UIMenuItemDesc::_draw_message(
+    int cnt,
+    int list_item,
+    const std::string& list_text)
 {
     _set_font(list_item);
     _set_pos(cnt, list_item, list_text);

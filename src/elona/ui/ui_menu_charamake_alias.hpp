@@ -23,6 +23,10 @@ protected:
         const std::string& key);
 
 private:
+    void _draw_window();
+    void _draw_alias_locked(int);
+    void _draw_alias(int, const std::string&, bool);
+
     void _reroll_aliases();
     void _lock_alias(int cs_);
 

@@ -81,7 +81,7 @@ void UIMenuTownPolitics::update()
     }
 }
 
-static void _draw_window()
+void UIMenuTownPolitics::_draw_window()
 {
     std::string hint = strhint2 + strhint3b;
     showscroll(hint, wx, wy, ww, wh);
@@ -106,7 +106,7 @@ static void _draw_window()
     gcopy(3, 288, 360, 24, 24);
 }
 
-static void _draw_key(int cnt)
+void UIMenuTownPolitics::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -115,7 +115,7 @@ static void _draw_key(int cnt)
     display_key(wx + 72, wy + 76 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuTownPolitics::_draw_keys()
 {
     font(14 - en * 2);
     keyrange = 0;
@@ -142,7 +142,7 @@ _draw_single_list_entry(int cnt, int list_item, const std::string& text)
     gcopy(3, 288 + list_item * 24, 360, 24, 24);
 }
 
-static void _draw_list_entries()
+void UIMenuTownPolitics::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();

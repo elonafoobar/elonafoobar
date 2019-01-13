@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-namespace I18N
+namespace LuaApiI18N
 {
 std::string get(const std::string&, sol::variadic_args);
 
@@ -33,7 +33,7 @@ void register_function(
 
 
 void bind(sol::table&);
-} // namespace I18N
+} // namespace LuaApiI18N
 
 } // namespace lua
 } // namespace elona

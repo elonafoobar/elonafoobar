@@ -127,7 +127,7 @@ static void _load_keybindings()
     }
 }
 
-static void _draw_background()
+void UIMenuKeybindings::_draw_background()
 {
     int bg_variant_buffer = mode == 10 ? 2 : 4;
     load_background_variants(bg_variant_buffer);
@@ -193,7 +193,7 @@ void UIMenuKeybindings::update()
     }
 }
 
-static void _draw_window()
+void UIMenuKeybindings::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.config.menu.keybindings.name"),
@@ -204,7 +204,7 @@ static void _draw_window()
         wh);
 }
 
-static void _draw_topics()
+void UIMenuKeybindings::_draw_topics()
 {
     display_topic(
         i18n::s.get("core.locale.keybind.menu.topics.name"),
@@ -224,7 +224,7 @@ static void _draw_topics()
         wy + 36);
 }
 
-static void _draw_keys()
+void UIMenuKeybindings::_draw_keys()
 {
     keyrange = 0;
     int item_count = 0;
@@ -268,7 +268,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_keybind_entry(int cnt, const std::string& text)
+void UIMenuKeybindings::_draw_keybind_entry(int cnt, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + _x_align_action_name, wy + 66 + cnt * 19 - 1);
 
@@ -279,15 +279,17 @@ static void _draw_keybind_entry(int cnt, const std::string& text)
     mes(listn(3, pagesize * page + cnt));
 }
 
-static void _draw_text_entry(int cnt, const std::string& text)
+void UIMenuKeybindings::_draw_text_entry(int cnt, const std::string& text)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     cs_list(cs == cnt, text, wx + 88, wy + 66 + cnt * 19);
     font(14 - en * 2);
 }
 
-static void
-_draw_single_list_entry(int cnt, int list_item, const std::string& text)
+void UIMenuKeybindings::_draw_single_list_entry(
+    int cnt,
+    int list_item,
+    const std::string& text)
 {
     if (list_item >= 0)
     {
@@ -299,7 +301,7 @@ _draw_single_list_entry(int cnt, int list_item, const std::string& text)
     }
 }
 
-static void _draw_list_entries()
+void UIMenuKeybindings::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();

@@ -199,7 +199,7 @@ bool UIMenuCharacterSheet::init()
     return true;
 }
 
-static void _draw_title(CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
 {
     std::string title = "";
     std::string strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
@@ -296,7 +296,7 @@ void UIMenuCharacterSheet::update()
     _draw_title(_operation);
 }
 
-static void _draw_window(bool show_bonus)
+void UIMenuCharacterSheet::_draw_window(bool show_bonus)
 {
     std::string tips;
     if (show_bonus && page != 0)
@@ -310,7 +310,7 @@ static void _draw_window(bool show_bonus)
 }
 
 
-static void _draw_first_page_topics()
+void UIMenuCharacterSheet::_draw_first_page_topics()
 {
     display_topic(
         i18n::s.get("core.locale.ui.chara_sheet.attributes"),
@@ -332,7 +332,7 @@ static void _draw_first_page_topics()
         wy + 273);
 }
 
-static void _draw_portrait_face()
+void UIMenuCharacterSheet::_draw_portrait_face()
 {
     if (cdata[cc].portrait != "")
     {
@@ -345,7 +345,7 @@ static void _draw_portrait_face()
     window2(wx + 557, wy + 23, 87, 120, 1, 10);
 }
 
-static void _draw_portrait_sprite()
+void UIMenuCharacterSheet::_draw_portrait_sprite()
 {
     if (cdata[cc].has_own_sprite() == 1)
     {
@@ -359,13 +359,13 @@ static void _draw_portrait_sprite()
     }
 }
 
-static void _draw_first_page_portrait()
+void UIMenuCharacterSheet::_draw_first_page_portrait()
 {
     _draw_portrait_face();
     _draw_portrait_sprite();
 }
 
-static void _draw_first_page_text_exp()
+void UIMenuCharacterSheet::_draw_first_page_text_exp()
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.exp.level");
@@ -380,7 +380,7 @@ static void _draw_first_page_text_exp()
     }
 }
 
-static void _draw_first_page_text_personal()
+void UIMenuCharacterSheet::_draw_first_page_text_personal()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.personal.name");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.personal.aka");
@@ -397,7 +397,7 @@ static void _draw_first_page_text_personal()
     }
 }
 
-static void _draw_first_page_text_attribute()
+void UIMenuCharacterSheet::_draw_first_page_text_attribute()
 {
     for (int cnt = 0; cnt < 8; ++cnt)
     {
@@ -409,7 +409,7 @@ static void _draw_first_page_text_attribute()
     }
 }
 
-static void _draw_first_page_text_time()
+void UIMenuCharacterSheet::_draw_first_page_text_time()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.time.turns");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.time.days");
@@ -424,7 +424,7 @@ static void _draw_first_page_text_time()
     }
 }
 
-static void _draw_first_page_text_weight()
+void UIMenuCharacterSheet::_draw_first_page_text_weight()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_weight");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_limit");
@@ -437,7 +437,7 @@ static void _draw_first_page_text_weight()
     }
 }
 
-static void _draw_first_page_text_level()
+void UIMenuCharacterSheet::_draw_first_page_text_level()
 {
     font(14 - en * 2);
     s(0) = ""s + cdata[cc].level;
@@ -452,7 +452,7 @@ static void _draw_first_page_text_level()
     }
 }
 
-static void _draw_first_page_text_name()
+void UIMenuCharacterSheet::_draw_first_page_text_name()
 {
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
@@ -479,7 +479,7 @@ static void _draw_first_page_text_name()
     }
 }
 
-static void _draw_attribute_level(int cnt)
+void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
 {
     std::string level =
         u8"("s + sdata.get(10 + cnt, cc).original_level + u8")"s;
@@ -493,7 +493,7 @@ static void _draw_attribute_level(int cnt)
     mes(level, {20, 10, 0});
 }
 
-static void _draw_attribute_potential(int cnt)
+void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
 {
     int potential = sdata.get(10 + cnt, cc).potential;
     pos(wx + 176, wy + 152 + cnt * 15);
@@ -520,13 +520,13 @@ static void _draw_attribute_potential(int cnt)
     mes(u8"Hopeless"s);
 }
 
-static void _draw_attribute(int cnt)
+void UIMenuCharacterSheet::_draw_attribute(int cnt)
 {
     _draw_attribute_level(cnt);
     _draw_attribute_potential(cnt);
 }
 
-static void _draw_first_page_attributes()
+void UIMenuCharacterSheet::_draw_first_page_attributes()
 {
     for (int cnt = 0; cnt < 8; ++cnt)
     {
@@ -534,7 +534,7 @@ static void _draw_first_page_attributes()
     }
 }
 
-static void _draw_first_page_weapon_info()
+void UIMenuCharacterSheet::_draw_first_page_weapon_info()
 {
     append_accuracy_info(0);
     tc = cc;
@@ -555,7 +555,7 @@ static void _draw_first_page_weapon_info()
     ++p(2);
 }
 
-static void _draw_first_page_text_fame()
+void UIMenuCharacterSheet::_draw_first_page_text_fame()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.attribute.life");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.attribute.mana");
@@ -580,7 +580,7 @@ static void _draw_first_page_text_fame()
     }
 }
 
-static void _draw_first_page_stats_fame()
+void UIMenuCharacterSheet::_draw_first_page_stats_fame()
 {
     s(0) =
         ""s + sdata(2, cc) + u8"("s + sdata.get(2, cc).original_level + u8")"s;
@@ -601,7 +601,7 @@ static void _draw_first_page_stats_fame()
     }
 }
 
-static void _draw_first_page_stats_time()
+void UIMenuCharacterSheet::_draw_first_page_stats_time()
 {
     s(0) = i18n::s.get(
         "core.locale.ui.chara_sheet.time.turn_counter", game_data.play_turns);
@@ -619,7 +619,7 @@ static void _draw_first_page_stats_time()
     }
 }
 
-static void _draw_first_page_stats_weight()
+void UIMenuCharacterSheet::_draw_first_page_stats_weight()
 {
     s(0) = ""s + cnvweight(game_data.cargo_weight);
     s(1) = cnvweight(game_data.current_cart_limit);
@@ -635,7 +635,9 @@ static void _draw_first_page_stats_weight()
     }
 }
 
-static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
+void UIMenuCharacterSheet::_draw_first_page_buffs(
+    int& _cs_buff,
+    int& _cs_buffmax)
 {
     _cs_buffmax = 0;
     for (int cnt = 0; cnt < 15; ++cnt)
@@ -687,7 +689,7 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
     mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":", {20, 10, 0});
 }
 
-static void _draw_first_page(int& _cs_buff, int& _cs_buffmax)
+void UIMenuCharacterSheet::_draw_first_page(int& _cs_buff, int& _cs_buffmax)
 {
     keyrange = 0;
     key_list = key_enter;
@@ -717,7 +719,7 @@ static void _draw_first_page(int& _cs_buff, int& _cs_buffmax)
     _draw_first_page_buffs(_cs_buff, _cs_buffmax);
 }
 
-static void _draw_other_pages_topics()
+void UIMenuCharacterSheet::_draw_other_pages_topics()
 {
     display_topic(
         i18n::s.get("core.locale.ui.chara_sheet.skill.name"), wx + 28, wy + 36);
@@ -732,7 +734,7 @@ static void _draw_other_pages_topics()
         wy + 36);
 }
 
-static void _draw_other_pages_keys()
+void UIMenuCharacterSheet::_draw_other_pages_keys()
 {
     keyrange = 0;
     int item_count = 0;
@@ -776,14 +778,14 @@ static void _draw_other_pages_keys()
     }
 }
 
-static void _draw_other_pages()
+void UIMenuCharacterSheet::_draw_other_pages()
 {
     _draw_other_pages_topics();
     _draw_other_pages_keys();
 }
 
 
-static void _draw_skill_icon(int cnt, int list_item)
+void UIMenuCharacterSheet::_draw_skill_icon(int cnt, int list_item)
 {
     int icon;
 
@@ -808,7 +810,7 @@ static bool _is_resistance(int skill)
     return skill >= 50 && skill < 100;
 }
 
-static void _draw_skill_name(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
 {
     std::string skill_name = i18n::s.get_m(
         "locale.ability",
@@ -835,7 +837,7 @@ static void _draw_skill_name(int cnt, int skill_id)
     cs_list(cs == cnt, skill_name, wx + x, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_skill_power(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
 {
     int power;
     std::string desc = "";
@@ -862,7 +864,7 @@ static void _draw_skill_power(int cnt, int skill_id)
     mes(desc);
 }
 
-static void _draw_skill_desc(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
 {
     pos(wx + 330, wy + 66 + cnt * 19 + 2);
     mes(i18n::s
@@ -873,7 +875,10 @@ static void _draw_skill_desc(int cnt, int skill_id)
             .get_value_or(""));
 }
 
-static void _draw_skill_train_cost(int cnt, int skill_id, bool is_training)
+void UIMenuCharacterSheet::_draw_skill_train_cost(
+    int cnt,
+    int skill_id,
+    bool is_training)
 {
     std::string train_cost;
 
@@ -894,7 +899,7 @@ static bool _has_enchantment(int cc, int skill_id)
     return sdata.get(skill_id, cc).original_level != sdata(skill_id, cc);
 }
 
-static void _draw_skill_enchantment_power(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)
 {
     const auto bonus =
         sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
@@ -912,7 +917,10 @@ static void _draw_skill_enchantment_power(int cnt, int skill_id)
     mes(enchantment_level);
 }
 
-static void _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_skill_entry(
+    int cnt,
+    int skill_id,
+    CharacterSheetOperation op)
 {
     _draw_skill_icon(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);
@@ -931,14 +939,14 @@ static void _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
     }
 }
 
-static void _draw_text_entry(int cnt, const std::string& text)
+void UIMenuCharacterSheet::_draw_text_entry(int cnt, const std::string& text)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     cs_list(cs == cnt, text, wx + 88, wy + 66 + cnt * 19);
     font(14 - en * 2);
 }
 
-static void _draw_other_page_single_list_entry(
+void UIMenuCharacterSheet::_draw_other_page_single_list_entry(
     int cnt,
     int list_item,
     const std::string& text,
@@ -954,7 +962,8 @@ static void _draw_other_page_single_list_entry(
     }
 }
 
-static void _draw_other_page_list_entries(CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_other_page_list_entries(
+    CharacterSheetOperation op)
 {
     font(14 - en * 2);
     cs_listbk();

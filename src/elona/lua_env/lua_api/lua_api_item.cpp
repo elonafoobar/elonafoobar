@@ -1,3 +1,4 @@
+#include "lua_api_item.hpp"
 #include "../../calc.hpp"
 #include "../../character.hpp"
 #include "../../data/types/type_item.hpp"
@@ -7,10 +8,6 @@
 #include "../../lua_env/enums/enums.hpp"
 #include "../interface.hpp"
 
-// You must include lua_api_item.hpp at the end because "namespace Item"
-// defined in lua_api_item.hpp conflicts with "struct Item".
-#include "lua_api_item.hpp"
-
 
 
 namespace elona
@@ -18,64 +15,68 @@ namespace elona
 namespace lua
 {
 
-int Item::count()
+int LuaApiItem::count()
 {
     return inv_sum(-1);
 }
 
-bool Item::has_enchantment(const LuaItemHandle handle, int id)
+bool LuaApiItem::has_enchantment(const LuaItemHandle handle, int id)
 {
-    auto& item_ref =
-        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
     return encfindspec(item_ref.index, id);
 }
 
-std::string Item::itemname(LuaItemHandle handle, int number, bool needs_article)
+std::string
+LuaApiItem::itemname(LuaItemHandle handle, int number, bool needs_article)
 {
-    auto& item_ref =
-        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
     return elona::itemname(item_ref.index, number, needs_article ? 0 : 1);
 }
 
-sol::optional<LuaItemHandle> Item::create_with_id(
+sol::optional<LuaItemHandle> LuaApiItem::create_with_id(
     const Position& position,
     const std::string& id)
 {
-    return Item::create_with_id_xy(position.x, position.y, id);
+    return LuaApiItem::create_with_id_xy(position.x, position.y, id);
 }
 
 sol::optional<LuaItemHandle>
-Item::create_with_id_xy(int x, int y, const std::string& id)
+LuaApiItem::create_with_id_xy(int x, int y, const std::string& id)
 {
-    return Item::create_xy(
+    return LuaApiItem::create_xy(
         x, y, lua::lua->get_state()->create_table_with("id", id));
 }
 
-sol::optional<LuaItemHandle> Item::create_with_number(
+sol::optional<LuaItemHandle> LuaApiItem::create_with_number(
     const Position& position,
     const std::string& id,
     int number)
 {
-    return Item::create_with_number_xy(position.x, position.y, id, number);
+    return LuaApiItem::create_with_number_xy(
+        position.x, position.y, id, number);
 }
 
-sol::optional<LuaItemHandle>
-Item::create_with_number_xy(int x, int y, const std::string& id, int number)
+sol::optional<LuaItemHandle> LuaApiItem::create_with_number_xy(
+    int x,
+    int y,
+    const std::string& id,
+    int number)
 {
-    return Item::create_xy(
+    return LuaApiItem::create_xy(
         x,
         y,
         lua::lua->get_state()->create_table_with("id", id, "number", number));
 }
 
-sol::optional<LuaItemHandle> Item::create(
+sol::optional<LuaItemHandle> LuaApiItem::create(
     const Position& position,
     sol::table args)
 {
-    return Item::create_xy(position.x, position.y, args);
+    return LuaApiItem::create_xy(position.x, position.y, args);
 }
 
-sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
+sol::optional<LuaItemHandle>
+LuaApiItem::create_xy(int x, int y, sol::table args)
 {
     int id = 0;
     int slot = -1;
@@ -167,7 +168,7 @@ sol::optional<LuaItemHandle> Item::create_xy(int x, int y, sol::table args)
     }
 }
 
-int Item::memory(int type, const std::string& id)
+int LuaApiItem::memory(int type, const std::string& id)
 {
     if (type < 0 || type > 2)
     {
@@ -183,15 +184,16 @@ int Item::memory(int type, const std::string& id)
     return itemmemory(type, data->id);
 }
 
-sol::optional<LuaItemHandle> Item::stack(int inventory_id, LuaItemHandle handle)
+sol::optional<LuaItemHandle> LuaApiItem::stack(
+    int inventory_id,
+    LuaItemHandle handle)
 {
     if (inventory_id < -1 || inventory_id > ELONA_MAX_CHARACTERS)
     {
         return sol::nullopt;
     }
 
-    auto& item_ref =
-        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
 
     int tibk = ti;
     item_stack(inventory_id, item_ref.index);
@@ -206,10 +208,9 @@ sol::optional<LuaItemHandle> Item::stack(int inventory_id, LuaItemHandle handle)
     return lua::handle(item);
 }
 
-int Item::trade_rate(LuaItemHandle handle)
+int LuaApiItem::trade_rate(LuaItemHandle handle)
 {
-    auto& item_ref =
-        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
 
     // Item must be in the cargo category.
     if (the_item_db[item_ref.id]->category != 92000)
@@ -220,23 +221,23 @@ int Item::trade_rate(LuaItemHandle handle)
     return trate(item_ref.param1);
 }
 
-void Item::bind(sol::table& api_table)
+void LuaApiItem::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, Item, count);
-    LUA_API_BIND_FUNCTION(api_table, Item, has_enchantment);
-    LUA_API_BIND_FUNCTION(api_table, Item, itemname);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, count);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, has_enchantment);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, itemname);
     api_table.set_function(
         "create",
         sol::overload(
-            Item::create,
-            Item::create_xy,
-            Item::create_with_id,
-            Item::create_with_id_xy,
-            Item::create_with_number,
-            Item::create_with_number_xy));
-    LUA_API_BIND_FUNCTION(api_table, Item, memory);
-    LUA_API_BIND_FUNCTION(api_table, Item, stack);
-    LUA_API_BIND_FUNCTION(api_table, Item, trade_rate);
+            LuaApiItem::create,
+            LuaApiItem::create_xy,
+            LuaApiItem::create_with_id,
+            LuaApiItem::create_with_id_xy,
+            LuaApiItem::create_with_number,
+            LuaApiItem::create_with_number_xy));
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, memory);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, stack);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, trade_rate);
 }
 
 } // namespace lua

@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-namespace World
+namespace LuaApiWorld
 {
 int time();
 
@@ -14,7 +14,7 @@ bool belongs_to_guild(const std::string&);
 
 
 void bind(sol::table&);
-} // namespace World
+} // namespace LuaApiWorld
 
 } // namespace lua
 } // namespace elona

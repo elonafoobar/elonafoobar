@@ -8,7 +8,7 @@ enum class TileKind;
 namespace lua
 {
 
-namespace Map
+namespace LuaApiMap
 {
 int width();
 
@@ -38,7 +38,7 @@ void set_tile_memory_xy(int, int, int);
 
 
 void bind(sol::table&);
-} // namespace Map
+} // namespace LuaApiMap
 
 } // namespace lua
 } // namespace elona
