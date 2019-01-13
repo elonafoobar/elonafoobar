@@ -17,6 +17,7 @@ matrix:
             - g++-7
             - cmake
             - zlib1g-dev
+            - gtk+-3.0
             # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
     - os: osx
       env: BUILD_TYPE=osx

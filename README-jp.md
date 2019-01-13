@@ -50,11 +50,11 @@ brew install cmake boost sdl2 sdl2_ttf sdl2_mixer sdl2_image lua
 
 1. 依存ライブラリをインストールしてください。Arch Linux用:
 ```
-sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer smpeg lua boost timidity++
+sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer gtk3 smpeg lua boost timidity++
 ```
 `apt`のあるLinux用:
 ```
-sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev smpeg timidity
+sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev gtk+-3.0 smpeg timidity
 ```
 2. `cd path/to/Elona_foobar; make build`
 
