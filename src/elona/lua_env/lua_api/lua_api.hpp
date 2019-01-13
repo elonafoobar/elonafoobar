@@ -18,12 +18,6 @@
 #include "lua_api_trait.hpp"
 #include "lua_api_world.hpp"
 
-#define LUA_API_BIND(core, name) \
-    { \
-        sol::table table = core.create_named(#name); \
-        name::bind(table); \
-    }
-
 /***
  * See doc/api for the API documentation.
  * Be sure to update it if you change anything in the API bindings.

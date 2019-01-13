@@ -7,19 +7,20 @@ namespace lua
 {
 
 
-int Pos::dist(const Position& from, const Position& to)
+int LuaApiPos::dist(const Position& from, const Position& to)
 {
-    return Pos::dist_xy(from.x, from.y, to.x, to.y);
+    return LuaApiPos::dist_xy(from.x, from.y, to.x, to.y);
 }
 
-int Pos::dist_xy(int fx, int fy, int tx, int ty)
+int LuaApiPos::dist_xy(int fx, int fy, int tx, int ty)
 {
     return elona::dist(fx, fy, tx, ty);
 }
 
-void Pos::bind(sol::table& api_table)
+void LuaApiPos::bind(sol::table& api_table)
 {
-    api_table.set_function("dist", sol::overload(Pos::dist, Pos::dist_xy));
+    api_table.set_function(
+        "dist", sol::overload(LuaApiPos::dist, LuaApiPos::dist_xy));
 }
 
 } // namespace lua

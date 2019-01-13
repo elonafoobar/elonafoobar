@@ -129,7 +129,7 @@ void UIMenuHire::_draw_window()
     _draw_topic();
 }
 
-static void _draw_key(int cnt)
+void UIMenuHire::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -138,7 +138,7 @@ static void _draw_key(int cnt)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuHire::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -154,12 +154,12 @@ static void _draw_keys()
     }
 }
 
-static void _draw_list_entry_pic(int cnt, const Character& chara)
+void UIMenuHire::_draw_list_entry_pic(int cnt, const Character& chara)
 {
     draw_chara_scale_height(chara, wx + 40, wy + 74 + cnt * 19 - 8);
 }
 
-static void _draw_list_entry_name(int cnt, const Character& chara)
+void UIMenuHire::_draw_list_entry_name(int cnt, const Character& chara)
 {
     std::string chara_name = cdatan(0, chara.index);
     cutname(chara_name, 36);
@@ -167,7 +167,7 @@ static void _draw_list_entry_name(int cnt, const Character& chara)
     cs_list(cs == cnt, chara_name, wx + 84, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_list_entry_info(int cnt, const Character& chara)
+void UIMenuHire::_draw_list_entry_info(int cnt, const Character& chara)
 {
     std::string level = u8"Lv."s + chara.level + u8" "s;
 

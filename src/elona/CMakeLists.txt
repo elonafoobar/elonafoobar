@@ -91,6 +91,7 @@ set(ELONA_SOURCES
   turn_sequence.cpp
   turn_sequence_pc_actions.cpp
   ui.cpp
+  ui_menus.cpp
   variables.cpp
   wish.cpp
 
@@ -112,23 +113,7 @@ set(ELONA_SOURCES
 
   lua_env/enums/enums.cpp
 
-  lua_env/lua_api/lua_api_animation.cpp
-  lua_env/lua_api/lua_api_chara.cpp
   lua_env/lua_api/lua_api.cpp
-  lua_env/lua_api/lua_api_debug.cpp
-  lua_env/lua_api/lua_api_fov.cpp
-  lua_env/lua_api/lua_api_gui.cpp
-  lua_env/lua_api/lua_api_i18n.cpp
-  lua_env/lua_api/lua_api_input.cpp
-  lua_env/lua_api/lua_api_item.cpp
-  lua_env/lua_api/lua_api_magic.cpp
-  lua_env/lua_api/lua_api_map.cpp
-  lua_env/lua_api/lua_api_math.cpp
-  lua_env/lua_api/lua_api_pos.cpp
-  lua_env/lua_api/lua_api_rand.cpp
-  lua_env/lua_api/lua_api_skill.cpp
-  lua_env/lua_api/lua_api_trait.cpp
-  lua_env/lua_api/lua_api_world.cpp
 
   lua_env/lua_class/lua_class.cpp
   lua_env/lua_class/lua_class_ability.cpp
@@ -154,44 +139,6 @@ set(ELONA_SOURCES
   keybind/keybind_serializer.cpp
 
   pic_loader/pic_loader.cpp
-
-  ui/ui_menu_adventurers.cpp
-  ui/ui_menu_alias.cpp
-  ui/ui_menu_book.cpp
-  ui/ui_menu_character_sheet.cpp
-  ui/ui_menu_charamake_alias.cpp
-  ui/ui_menu_charamake_attributes.cpp
-  ui/ui_menu_charamake_class.cpp
-  ui/ui_menu_charamake_gender.cpp
-  ui/ui_menu_charamake_race.cpp
-  ui/ui_menu_chat_history.cpp
-  ui/ui_menu_config.cpp
-  ui/ui_menu_crafting.cpp
-  ui/ui_menu_ctrl_ally.cpp
-  ui/ui_menu_dialog.cpp
-  ui/ui_menu_equipment.cpp
-  ui/ui_menu_feats.cpp
-  ui/ui_menu_game_help.cpp
-  ui/ui_menu_god.cpp
-  ui/ui_menu_hire.cpp
-  ui/ui_menu_item_desc.cpp
-  ui/ui_menu_journal.cpp
-  ui/ui_menu_keybindings.cpp
-  ui/ui_menu_materials.cpp
-  ui/ui_menu_message_log.cpp
-  ui/ui_menu_npc_tone.cpp
-  ui/ui_menu_quest_board.cpp
-  ui/ui_menu_scene.cpp
-  ui/ui_menu_skills.cpp
-  ui/ui_menu_spell_writer.cpp
-  ui/ui_menu_spells.cpp
-  ui/ui_menu_town_chart.cpp
-  ui/ui_menu_town_economy.cpp
-  ui/ui_menu_town_politics.cpp
-  ui/ui_menu_composite_character.cpp
-  ui/ui_menu_composite_message.cpp
-  ui/ui_menu_composite_skills.cpp
-  ui/ui_menu_composite_town.cpp
   )
 
 add_library(elona STATIC ${ELONA_SOURCES})

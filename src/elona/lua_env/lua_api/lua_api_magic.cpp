@@ -10,7 +10,7 @@ namespace elona
 namespace lua
 {
 
-void Magic::cast_self(
+void LuaApiMagic::cast_self(
     LuaCharacterHandle caster_handle,
     int effect_id,
     int effect_power,
@@ -18,10 +18,10 @@ void Magic::cast_self(
 {
     elona::tlocx = target_location.x;
     elona::tlocy = target_location.y;
-    Magic::cast(caster_handle, caster_handle, effect_id, effect_power);
+    LuaApiMagic::cast(caster_handle, caster_handle, effect_id, effect_power);
 }
 
-void Magic::cast(
+void LuaApiMagic::cast(
     LuaCharacterHandle caster_handle,
     LuaCharacterHandle target_handle,
     int effect_id,
@@ -55,10 +55,10 @@ void Magic::cast(
     }
 }
 
-void Magic::bind(sol::table& api_table)
+void LuaApiMagic::bind(sol::table& api_table)
 {
     api_table.set_function(
-        "cast", sol::overload(Magic::cast_self, Magic::cast));
+        "cast", sol::overload(LuaApiMagic::cast_self, LuaApiMagic::cast));
 }
 
 } // namespace lua

@@ -27,7 +27,7 @@ void UIMenuCharamakeGender::update()
 {
 }
 
-static void _draw_window()
+void UIMenuCharamakeGender::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.chara_making.select_gender.title"),
@@ -49,14 +49,14 @@ static void _draw_window()
         wy + 30);
 }
 
-static void _draw_choice(int cnt, const std::string& text)
+void UIMenuCharamakeGender::_draw_choice(int cnt, const std::string& text)
 {
     pos(wx + 38, wy + 66 + cnt * 19 - 2);
     gcopy(3, cnt * 24 + 72, 30, 24, 18);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_choices()
+void UIMenuCharamakeGender::_draw_choices()
 {
     listn(0, 0) = cnven(i18n::s.get("core.locale.ui.sex3.male"));
     listn(0, 1) = cnven(i18n::s.get("core.locale.ui.sex3.female"));

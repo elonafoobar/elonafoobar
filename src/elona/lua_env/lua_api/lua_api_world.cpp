@@ -6,12 +6,12 @@ namespace elona
 namespace lua
 {
 
-int World::time()
+int LuaApiWorld::time()
 {
     return game_data.date.hours();
 }
 
-bool World::belongs_to_guild(const std::string& guild_name)
+bool LuaApiWorld::belongs_to_guild(const std::string& guild_name)
 {
     if (guild_name == "mages")
     {
@@ -29,10 +29,10 @@ bool World::belongs_to_guild(const std::string& guild_name)
     return false;
 }
 
-void World::bind(sol::table& api_table)
+void LuaApiWorld::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, World, time);
-    LUA_API_BIND_FUNCTION(api_table, World, belongs_to_guild);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, time);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, belongs_to_guild);
 }
 
 } // namespace lua

@@ -250,7 +250,9 @@ void UIMenuCtrlAlly::update()
     }
 }
 
-static void _draw_info_pet_arena(const Character& chara, std::string& _s)
+void UIMenuCtrlAlly::_draw_info_pet_arena(
+    const Character& chara,
+    std::string& _s)
 {
     if (followerin(chara.index) == 1)
     {

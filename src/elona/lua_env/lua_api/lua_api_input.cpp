@@ -9,26 +9,28 @@ namespace elona
 namespace lua
 {
 
-bool Input::yes_no(const std::string& message)
+bool LuaApiInput::yes_no(const std::string& message)
 {
     txt(message + " ");
     rtval = yes_or_no(promptx, prompty, 160);
     return rtval == 0;
 }
 
-sol::optional<int> Input::prompt_number(const std::string& message, int max)
+sol::optional<int> LuaApiInput::prompt_number(
+    const std::string& message,
+    int max)
 {
-    return Input::prompt_number_with_initial(message, max, 0);
+    return LuaApiInput::prompt_number_with_initial(message, max, 0);
 }
 
-sol::optional<int> Input::prompt_number_with_initial(
+sol::optional<int> LuaApiInput::prompt_number_with_initial(
     const std::string& message,
     int max,
     int initial)
 {
     if (max < 1)
     {
-        throw sol::error("Input.prompt_number called with max < 1");
+        throw sol::error("LuaApiInput.prompt_number called with max < 1");
     }
 
     txt(message + " ");
@@ -43,7 +45,7 @@ sol::optional<int> Input::prompt_number_with_initial(
     return elona::stoi(elona::inputlog(0));
 }
 
-sol::optional<std::string> Input::prompt_text(
+sol::optional<std::string> LuaApiInput::prompt_text(
     const std::string& message,
     bool is_cancelable)
 {
@@ -62,7 +64,7 @@ sol::optional<std::string> Input::prompt_text(
     return elona::inputlog(0);
 }
 
-sol::optional<int> Input::prompt_choice(sol::table choices)
+sol::optional<int> LuaApiInput::prompt_choice(sol::table choices)
 {
     Prompt prompt;
 
@@ -83,14 +85,16 @@ sol::optional<int> Input::prompt_choice(sol::table choices)
     return rtval + 1;
 }
 
-void Input::bind(sol::table& api_table)
+void LuaApiInput::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, Input, yes_no);
-    LUA_API_BIND_FUNCTION(api_table, Input, prompt_choice);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, yes_no);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, prompt_choice);
     api_table.set_function(
         "prompt_number",
-        sol::overload(Input::prompt_number, Input::prompt_number_with_initial));
-    LUA_API_BIND_FUNCTION(api_table, Input, prompt_text);
+        sol::overload(
+            LuaApiInput::prompt_number,
+            LuaApiInput::prompt_number_with_initial));
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, prompt_text);
 }
 
 } // namespace lua

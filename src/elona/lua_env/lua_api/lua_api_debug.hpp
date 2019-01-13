@@ -6,7 +6,7 @@ namespace elona
 {
 namespace lua
 {
-namespace Debug
+namespace LuaApiDebug
 {
 void log(const std::string&);
 
@@ -18,6 +18,6 @@ void dump_items();
 
 
 void bind(sol::table&);
-} // namespace Debug
+} // namespace LuaApiDebug
 } // namespace lua
 } // namespace elona

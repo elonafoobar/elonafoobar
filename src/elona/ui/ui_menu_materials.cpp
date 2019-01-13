@@ -58,7 +58,7 @@ void UIMenuMaterials::update()
     }
 }
 
-static void _draw_window()
+void UIMenuMaterials::_draw_window()
 {
     std::string hints = strhint2 + strhint3b;
     showscroll(hints, wx, wy, ww, wh);
@@ -68,7 +68,7 @@ static void _draw_window()
         i18n::s.get("core.locale.ui.material.detail"), wx + 296, wy + 36);
 }
 
-static void _draw_key(int cnt)
+void UIMenuMaterials::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -77,7 +77,7 @@ static void _draw_key(int cnt)
     display_key(wx + 68, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuMaterials::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -93,21 +93,21 @@ static void _draw_keys()
     }
 }
 
-static void _draw_single_list_entry_name(int cnt, int list_item)
+void UIMenuMaterials::_draw_single_list_entry_name(int cnt, int list_item)
 {
     std::string mat_name = ""s + matname(list_item) + " " +
         i18n::s.get("core.locale.crafting.menu.x") + " " + mat(list_item);
     cs_list(cs == cnt, mat_name, wx + 96, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_single_list_entry_desc(int cnt, int list_item)
+void UIMenuMaterials::_draw_single_list_entry_desc(int cnt, int list_item)
 {
     std::string mat_desc = matdesc(list_item);
     pos(wx + 308, wy + 66 + cnt * 19 + 2);
     mes(mat_desc);
 }
 
-static void _draw_single_list_entry(int cnt, int list_item)
+void UIMenuMaterials::_draw_single_list_entry(int cnt, int list_item)
 {
     _draw_single_list_entry_name(cnt, list_item);
     _draw_single_list_entry_desc(cnt, list_item);
@@ -115,7 +115,7 @@ static void _draw_single_list_entry(int cnt, int list_item)
     draw_item_material(matref(2, list_item), wx + 47, wy + 69 + cnt * 19 + 2);
 }
 
-static void _draw_list_entries()
+void UIMenuMaterials::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();

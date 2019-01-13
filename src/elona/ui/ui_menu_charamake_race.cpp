@@ -70,7 +70,7 @@ void UIMenuCharamakeRace::update()
     }
 }
 
-static void _draw_race_info(int chip_male, int chip_female)
+void UIMenuCharamakeRace::_draw_race_info(int chip_male, int chip_female)
 {
     {
         // male
@@ -85,7 +85,7 @@ static void _draw_race_info(int chip_male, int chip_female)
     draw_race_or_class_info();
 }
 
-static void _draw_window()
+void UIMenuCharamakeRace::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.chara_making.select_race.title"),
@@ -111,13 +111,13 @@ static void _draw_window()
         wy + 30);
 }
 
-static void _draw_choice(int cnt, const std::string& text)
+void UIMenuCharamakeRace::_draw_choice(int cnt, const std::string& text)
 {
     display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_choices()
+void UIMenuCharamakeRace::_draw_choices()
 {
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

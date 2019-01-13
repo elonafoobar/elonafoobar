@@ -29,6 +29,14 @@ protected:
         const std::string& key);
 
 private:
+    void _draw_window_background();
+    void _draw_window_topic();
+    void _draw_window_desc(int);
+    void _draw_window(int);
+    void _draw_attribute_locked(int);
+    void _draw_attribute_value(int, int, bool);
+    void _draw_attribute(int, int, const std::string&, bool);
+
     void _reroll_attributes();
 
     std::string _race;

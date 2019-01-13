@@ -104,7 +104,7 @@ static std::string _get_god_description(int god_id)
     return buff;
 }
 
-static void _draw_window()
+void UIMenuGod::_draw_window()
 {
     gmode(0);
     pos(0, 0);
@@ -118,7 +118,7 @@ static void _draw_window()
     wy = winposy(dy);
 }
 
-static void _draw_title(int god_id)
+void UIMenuGod::_draw_title(int god_id)
 {
     font(18 - en * 2, snail::Font::Style::bold);
     bmes(
@@ -127,19 +127,19 @@ static void _draw_title(int god_id)
         wy + 20);
 }
 
-static void _draw_desc(int god_id)
+void UIMenuGod::_draw_desc(int god_id)
 {
     std::string _buff = _get_god_description(god_id);
     gmes(_buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
 }
 
-static void _draw_choice(int cnt, const std::string& text)
+void UIMenuGod::_draw_choice(int cnt, const std::string& text)
 {
     display_key(wx + 50, wy + dy + cnt * 20 - listmax * 20 - 18, cnt);
     cs_list(cs == cnt, text, wx + 80, wy + dy + cnt * 20 - listmax * 20 - 18);
 }
 
-static void _draw_choices()
+void UIMenuGod::_draw_choices()
 {
     font(14 - en * 2);
     cs_listbk();
