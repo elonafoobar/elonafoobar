@@ -79,25 +79,23 @@ void UIMenuConfig::update()
 
 void UIMenuConfig::_draw_window(const std::string& title, int width, int height)
 {
-    s(0) = title;
-    s(1) = strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help");
     pagesize = 0;
+    int y;
     if (mode == 1)
     {
-        display_window(
-            (windoww - width) / 2 + inf_screenx,
-            winposy(height, 1),
-            width,
-            height);
+        y = winposy(height, 1);
     }
     else
     {
-        display_window(
-            (windoww - width) / 2 + inf_screenx,
-            winposy(height) - 12,
-            width,
-            height);
+        y = winposy(height) - 12;
     }
+    ui_display_window(
+        title,
+        strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help"),
+        (windoww - width) / 2 + inf_screenx,
+        y,
+        width,
+        height);
 }
 
 void UIMenuConfig::_draw_deco()
@@ -189,7 +187,7 @@ void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)
         //         }
         //     }
         // }
-        cs_list(cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1, 0);
+        cs_list(cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1);
         if ((true || cnt <= 0) && !is_root_menu)
         {
             _draw_arrows(item_pos);

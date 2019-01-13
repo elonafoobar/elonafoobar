@@ -11,6 +11,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "lua_env/lua_console.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mdata.hpp"
@@ -338,7 +339,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -365,7 +365,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -408,7 +407,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -435,7 +433,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -454,7 +451,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -487,7 +483,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -502,7 +497,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -526,7 +520,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -555,7 +548,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -577,7 +569,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -592,7 +583,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -641,7 +631,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -660,7 +649,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }
@@ -675,7 +663,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return none;
         }

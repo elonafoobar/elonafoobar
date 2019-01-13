@@ -13,7 +13,7 @@ namespace elona
 struct MessageLogSpan
 {
     std::string text;
-    snail::Color color;
+    snail::Color color{0, 0, 0};
 
 
     MessageLogSpan(const std::string& text, const snail::Color& color)

@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "mef.hpp"
 #include "message.hpp"

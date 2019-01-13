@@ -97,20 +97,21 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
 MIT License. See LICENSE for details. This license is applied for the
 contents in this repository. Note that images, sounds and fonts are not included.
-For files under [graphics](graphics/) folder of the repository, see
-[graphics/LICENSE](graphics/LICENSE).
+For files under [runtime/graphic](runtime/graphic/) folder of the repository, see
+[runtime/graphic/LICENSE](runtime/graphic/LICENSE).
 
 
 ## Thirdparty libraries
 
-* microhcl: see src/thirdparty/microhcl/LICENSE.
-* microhil: see src/thirdparty/microhil/LICENSE.
-* Catch2: see src/thirdparty/catch2/LICENSE.
-* hayai: see src/thirdparty/hayai/LICENSE.
-* sol2: see src/thirdparty/sol2/LICENSE.
-* ordered_map: see src/thirdparty/ordered_map/LICENSE.
-* boostrandom: see src/thirdparty/LICENSE_1_0.txt.
-* cmake/FindXXX.cmake: see cmake/LICENSE.
+* microhcl: see [src/thirdparty/microhcl/LICENSE](src/thirdparty/microhcl/LICENSE).
+* microhil: see [src/thirdparty/microhil/LICENSE](src/thirdparty/microhil/LICENSE).
+* Catch2: see [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE).
+* hayai: see [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE).
+* sol2: see [src/thirdparty/sol2/LICENSE](src/thirdparty/sol2/LICENSE).
+* ordered_map: see [src/thirdparty/ordered_map/LICENSE](src/thirdparty/ordered_map/LICENSE).
+* boostrandom: see [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt).
+* cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
+* nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
 
 ## Lua libraries
 

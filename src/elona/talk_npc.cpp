@@ -14,6 +14,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"

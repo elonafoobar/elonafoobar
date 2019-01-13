@@ -57,8 +57,7 @@ void _draw_single_message(size_t cnt, int message_offset)
     {
         pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
             inf_msgy - cnt * inf_msgspace + vfix);
-        color(span.color.r, span.color.g, span.color.b);
-        mes(span.text);
+        mes(span.text, span.color);
 
         message_width += strlen_u(span.text);
     }

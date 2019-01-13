@@ -224,9 +224,6 @@ function Handle.relocate_handle(cpp_ref, dest_cpp_ref, new_index, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
    if Handle.is_valid(handle) then
-      -- Move the handle into the new slot. The new slot must be empty
-      -- by now.
-      assert(not Handle.is_valid(handles_by_index[kind][new_index]))
       handle.__index = new_index
       handles_by_index[kind][new_index] = handle
       Handle.set_ref(handle, dest_cpp_ref)

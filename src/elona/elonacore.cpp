@@ -44,6 +44,7 @@
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -6248,7 +6249,6 @@ void try_to_return()
         return;
     }
     txt(i18n::s.get("core.locale.misc.return.where_do_you_want_to_go"));
-    display_msg(inf_screeny + inf_tiles);
     rtval = prompt.query(promptx, prompty, 240);
     update_screen();
     if (rtval >= 0)
@@ -8823,7 +8823,6 @@ int pick_up_item(bool play_sound)
             ti = ci;
             in = inv[ci].number();
             inv[ci].remove();
-            msgkeep = 1;
             txt(i18n::s.get(
                 "core.locale.action.pick_up.execute",
                 cdata[cc],
@@ -9018,7 +9017,6 @@ int pick_up_item(bool play_sound)
         }
         if (invctrl == 11)
         {
-            msgkeep = 1;
             txt(i18n::s.get(
                 "core.locale.action.pick_up.you_buy", itemname(ti, in)));
             sellgold = calcitemvalue(ti, 0) * in;
@@ -9032,7 +9030,6 @@ int pick_up_item(bool play_sound)
         }
         if (invctrl == 12)
         {
-            msgkeep = 1;
             sellgold = calcitemvalue(ci, 1) * in;
             if (!inv[ti].is_stolen())
             {
@@ -9069,7 +9066,6 @@ int pick_up_item(bool play_sound)
         if (invctrl == 22 || invctrl == 24)
         {
             sound_pick_up();
-            msgkeep = 1;
             if (invctrl == 22)
             {
                 txt(i18n::s.get(
@@ -9097,7 +9093,6 @@ int pick_up_item(bool play_sound)
             cell_data.at(inv[ci].position.x, inv[ci].position.y)
                 .item_appearances_actual;
         sound_pick_up();
-        msgkeep = 1;
         txt(i18n::s.get(
             "core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
     }
@@ -12490,23 +12485,43 @@ optional<TurnResult> check_angband()
 
 
 
+std::string ask_win_comment()
+{
+    std::vector<std::string> choices;
+    {
+        const auto choices_ =
+            i18n::s.get_list("core.locale.scenario.win_words");
+        if (choices_.empty())
+        {
+            choices.push_back("I can't sleep tonight.");
+        }
+        else
+        {
+            choices = sampled(choices_, std::min(choices_.size(), size_t(3)));
+        }
+    }
+
+    Prompt prompt(Prompt::Type::cannot_cancel);
+    for (const auto& choice : choices)
+    {
+        prompt.append(choice);
+    }
+    const auto selected_index = prompt.query(promptx, prompty, 310);
+
+    return choices[selected_index];
+}
+
+
+
 void conquer_lesimas()
 {
-    std::string wincomment;
     snd("core.complete1");
     stop_music();
     txt(i18n::s.get("core.locale.win.conquer_lesimas"));
     update_screen();
-    const auto win_words = txtsetwinword(3);
 
-    Prompt prompt(Prompt::Type::cannot_cancel);
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        prompt.append(win_words[cnt]);
-    }
-    rtval = prompt.query(promptx, prompty, 310);
+    const auto win_comment = ask_win_comment();
 
-    wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
     update_screen();
@@ -12564,16 +12579,19 @@ void conquer_lesimas()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"g1.bmp", 1);
     gsel(0);
-    s = i18n::s.get(
-        "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0));
-    draw_caption();
-    s(0) = i18n::s.get("core.locale.win.window.title");
-    s(1) = ""s + strhint3;
+    ui_draw_caption(i18n::s.get(
+        "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0)));
     windowshadow = 1;
     ww = 680;
     wh = 488;
     pagesize = 0;
-    display_window(windoww / 2 - ww / 2, windowh / 2 - wh / 2, ww, wh);
+    ui_display_window(
+        i18n::s.get("core.locale.win.window.title"),
+        ""s + strhint3,
+        windoww / 2 - ww / 2,
+        windowh / 2 - wh / 2,
+        ww,
+        wh);
     cmbg = 0;
     x = ww / 3 - 20;
     y = wh - 140;
@@ -12600,7 +12618,7 @@ void conquer_lesimas()
         game_data.date.month,
         game_data.date.day));
     pos(wx + 40, wy + 206);
-    mes(i18n::s.get("core.locale.win.window.comment", wincomment));
+    mes(i18n::s.get("core.locale.win.window.comment", win_comment));
     pos(wx + 40, wy + 246);
     mes(i18n::s.get("core.locale.win.window.your_journey_continues"));
     redraw();
@@ -12744,8 +12762,8 @@ TurnResult pc_died()
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gsel(0);
     show_game_score_ranking();
-    s = i18n::s.get("core.locale.misc.death.you_are_about_to_be_buried");
-    draw_caption();
+    ui_draw_caption(
+        i18n::s.get("core.locale.misc.death.you_are_about_to_be_buried"));
 
     Prompt prompt("core.locale.misc.death");
     prompt.append("crawl_up", snail::Key::key_a);
@@ -12755,8 +12773,8 @@ TurnResult pc_died()
     if (rtval == 1)
     {
         show_game_score_ranking();
-        s = i18n::s.get("core.locale.misc.death.you_have_been_buried");
-        draw_caption();
+        ui_draw_caption(
+            i18n::s.get("core.locale.misc.death.you_have_been_buried"));
         redraw();
         wait_key_pressed();
         return TurnResult::finish_elona;
@@ -12796,7 +12814,7 @@ void show_game_score_ranking()
     {
         p = 0;
     }
-    color(138, 131, 100);
+
     for (int cnt = p, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
         p = cnt * 4;
@@ -12810,9 +12828,7 @@ void show_game_score_ranking()
             s = " "s + i18n::s.get("core.locale.misc.score.rank", cnt + 1);
         }
         pos(x - 80, y + 10);
-        color(10, 10, 10);
-        mes(s);
-        color(0, 0, 0);
+        mes(s, {10, 10, 10});
         bool no_entry = false;
         if (p >= noteinfo())
         {
@@ -12827,28 +12843,23 @@ void show_game_score_ranking()
             }
         }
         pos(x, y);
-        color(10, 10, 10);
         if (no_entry)
         {
-            mes(u8"no entry");
-            color(0, 0, 0);
+            mes(u8"no entry", {10, 10, 10});
             continue;
         }
-        mes(s);
+        mes(s, {10, 10, 10});
         noteget(s, p + 2);
         pos(x, y + 20);
-        mes(s);
+        mes(s, {10, 10, 10});
         noteget(s(10), p + 3);
         csvsort(s, s(10), 44);
         pos(x + 480, y + 20);
-        mes(i18n::s.get("core.locale.misc.score.score", s(0)));
+        mes(i18n::s.get("core.locale.misc.score.score", s(0)), {10, 10, 10});
         p = elona::stoi(s(1)) % 1000;
 
         draw_chara_scale_height(elona::stoi(s(1)), x - 22, y + 12);
-
-        color(0, 0, 0);
     }
-    color(0, 0, 0);
 }
 
 

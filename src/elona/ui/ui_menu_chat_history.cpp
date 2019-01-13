@@ -22,9 +22,7 @@ void _draw_messages()
     s = u8"No new messages received."s;
     i += talk_conv(s, (ww - 110 - en * 50) / 7);
     pos(wx + 48, (19 - i) * 16 + wy + 48);
-    color(30, 20, 10);
-    mes(s);
-    color(0, 0, 0);
+    mes(s, {30, 20, 10});
 }
 
 } // namespace

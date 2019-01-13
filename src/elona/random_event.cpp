@@ -15,6 +15,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "message.hpp"
 #include "optional.hpp"
@@ -657,10 +658,8 @@ int show_random_event_window(
             wy + vfix + 16,
             {245, 235, 225},
             {30, 20, 10});
-        color(30, 30, 30);
         pos(wx + 24, wy + ty + vfix + 20);
-        mes(buff);
-        color(0, 0, 0);
+        mes(buff, {30, 30, 30});
         keyrange = 0;
         cs_listbk();
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

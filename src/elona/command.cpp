@@ -28,6 +28,7 @@
 #include "itemgen.hpp"
 #include "lua_env/interface.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
@@ -1263,7 +1264,6 @@ label_1953_internal:
                 y * inf_tiles + inf_screeny - 12,
                 cnt);
         }
-        color(0, 0, 0);
         txttargetnpc(
             cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
         cs_bk = cs;
@@ -3627,7 +3627,6 @@ TurnResult do_short_cut_command(int sc_)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return TurnResult::pc_turn_user_error;
         }
@@ -3649,7 +3648,6 @@ TurnResult do_short_cut_command(int sc_)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
-            display_msg();
             redraw();
             return TurnResult::pc_turn_user_error;
         }

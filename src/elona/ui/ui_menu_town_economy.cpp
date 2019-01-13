@@ -21,19 +21,11 @@ static void _show_economy_info(
     pos(x + 130, y);
     mes(""s + value);
 
-    int diff = value - prev_value;
-    if (diff >= 0)
-    {
-        color(0, 0, 150);
-    }
-    else
-    {
-        color(150, 0, 0);
-    }
-
+    const auto diff = value - prev_value;
     pos(x + 130 + ginfo(14) + 12, y);
-    mes(u8"("s + diff + u8")"s);
-    color(0, 0, 0);
+    const auto text_color =
+        diff >= 0 ? snail::Color{0, 0, 150} : snail::Color{150, 0, 0};
+    mes(u8"("s + diff + u8")"s, text_color);
 }
 
 bool UIMenuTownEconomy::init()

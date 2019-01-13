@@ -7,12 +7,12 @@ namespace elona
 {
 
 struct Position;
+struct Item;
 
 Position gmes(const std::string&, int, int, int, const snail::Color&, bool);
 void initialize_ui_constants();
 void display_customkey(const std::string&, int, int);
 void display_key(int = 0, int = 0, int = 0);
-void display_msg(int = 0, int = 0);
 void display_note(const std::string&, int = 0);
 
 
@@ -21,8 +21,21 @@ void display_topic(const std::string& topic, int x, int y);
 
 
 
-void display_window(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void display_window2(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+void ui_display_window(
+    const std::string& title,
+    const std::string& key_help,
+    int x,
+    int y,
+    int width,
+    int height,
+    int x_offset = 0,
+    int y_offset = 0);
+void ui_display_window2(
+    const std::string& tips,
+    int x,
+    int y,
+    int width,
+    int height);
 
 
 
@@ -43,7 +56,7 @@ void update_minimap();
 void ui_render_from_screensync();
 void render_hud();
 void load_continuous_action_animation();
-void draw_caption();
+void ui_draw_caption(const std::string& text);
 void update_scrolling_info();
 void update_slight();
 void ui_render_non_hud();
@@ -67,8 +80,8 @@ void cs_list(
     int x,
     int y,
     int x_offset = 0,
-    int color_mode = 0,
-    int ci = 0);
+    const snail::Color& text_color = {10, 10, 10});
+snail::Color cs_list_get_item_color(const Item& item);
 void showscroll(const std::string& title, int x, int y, int width, int height);
 
 

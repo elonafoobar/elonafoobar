@@ -29,10 +29,13 @@ void UIMenuCharamakeGender::update()
 
 void UIMenuCharamakeGender::_draw_window()
 {
-    s(0) = i18n::s.get("core.locale.chara_making.select_gender.title");
-    s(1) = strhint3b;
-    display_window(
-        (windoww - 370) / 2 + inf_screenx, winposy(168, 1) - 20, 370, 168);
+    ui_display_window(
+        i18n::s.get("core.locale.chara_making.select_gender.title"),
+        strhint3b,
+        (windoww - 370) / 2 + inf_screenx,
+        winposy(168, 1) - 20,
+        370,
+        168);
     x = ww / 2;
     y = wh - 60;
     pos(wx + ww / 2, wy + wh / 2);

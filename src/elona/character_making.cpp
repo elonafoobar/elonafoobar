@@ -43,8 +43,7 @@ static void _draw_background_and_caption(const I18NKey& key)
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    s = i18n::s.get(key);
-    draw_caption();
+    ui_draw_caption(i18n::s.get(key));
 }
 
 void character_making_draw_background(const I18NKey& key)
@@ -286,9 +285,8 @@ static int _prompt_satisfied()
     gcopy(0, 0, 100, windoww, windowh - 100);
     gsel(0);
     clear_background_in_character_making();
-    s = i18n::s.get(
-        "core.locale.chara_making.final_screen.are_you_satisfied.prompt");
-    draw_caption();
+    ui_draw_caption(i18n::s.get(
+        "core.locale.chara_making.final_screen.are_you_satisfied.prompt"));
 
     Prompt prompt("core.locale.chara_making.final_screen.are_you_satisfied");
     prompt.append("yes", snail::Key::key_a);
@@ -370,8 +368,8 @@ MainMenuResult character_making_final_phase()
     pos(0, 100);
     gcopy(2, 0, 0, windoww, windowh - 100);
     gmode(2);
-    s = i18n::s.get("core.locale.chara_making.final_screen.what_is_your_name");
-    draw_caption();
+    ui_draw_caption(
+        i18n::s.get("core.locale.chara_making.final_screen.what_is_your_name"));
 
     while (true)
     {
@@ -401,10 +399,9 @@ MainMenuResult character_making_final_phase()
             pos(0, 100);
             gcopy(2, 0, 0, windoww, windowh - 100);
             gmode(2);
-            s = i18n::s.get(
+            ui_draw_caption(i18n::s.get(
                 "core.locale.chara_making.final_screen.name_is_already_"
-                "taken");
-            draw_caption();
+                "taken"));
         }
     }
 
@@ -470,52 +467,46 @@ void draw_race_or_class_info()
                 }
             }
             r = cnt2 * 3 + cnt + 10;
-            p = 0;
-            for (int cnt = 0; cnt < 1; ++cnt)
+            snail::Color text_color{0, 0, 0};
+            if (sdata.get(r, 0).original_level > 13)
             {
-                if (sdata.get(r, 0).original_level > 13)
-                {
-                    p = 1;
-                    color(0, 0, 200);
-                    break;
-                }
-                if (sdata.get(r, 0).original_level > 11)
-                {
-                    p = 2;
-                    color(0, 0, 200);
-                    break;
-                }
-                if (sdata.get(r, 0).original_level > 9)
-                {
-                    p = 3;
-                    color(0, 0, 150);
-                    break;
-                }
-                if (sdata.get(r, 0).original_level > 7)
-                {
-                    p = 4;
-                    color(0, 0, 150);
-                    break;
-                }
-                if (sdata.get(r, 0).original_level > 5)
-                {
-                    p = 5;
-                    color(0, 0, 0);
-                    break;
-                }
-                if (sdata.get(r, 0).original_level > 3)
-                {
-                    p = 6;
-                    color(150, 0, 0);
-                    break;
-                }
-                if (sdata.get(r, 0).original_level > 0)
-                {
-                    p = 7;
-                    color(200, 0, 0);
-                    break;
-                }
-                color(120, 120, 120);
+                p = 1;
+                text_color = snail::Color{0, 0, 200};
+            }
+            else if (sdata.get(r, 0).original_level > 11)
+            {
+                p = 2;
+                text_color = snail::Color{0, 0, 200};
+            }
+            else if (sdata.get(r, 0).original_level > 9)
+            {
+                p = 3;
+                text_color = snail::Color{0, 0, 150};
+            }
+            else if (sdata.get(r, 0).original_level > 7)
+            {
+                p = 4;
+                text_color = snail::Color{0, 0, 150};
+            }
+            else if (sdata.get(r, 0).original_level > 5)
+            {
+                p = 5;
+                text_color = snail::Color{0, 0, 0};
+            }
+            else if (sdata.get(r, 0).original_level > 3)
+            {
+                p = 6;
+                text_color = snail::Color{150, 0, 0};
+            }
+            else if (sdata.get(r, 0).original_level > 0)
+            {
+                p = 7;
+                text_color = snail::Color{200, 0, 0};
+            }
+            else
+            {
+                p = 0;
+                text_color = snail::Color{120, 120, 120};
             }
             pos(cnt * 150 + tx + 13, ty + 7);
             gmode(2);
@@ -528,8 +519,8 @@ void draw_race_or_class_info()
                         "name"),
                     0,
                     jp ? 6 : 3) +
-                u8": "s + s(p));
-            color(0, 0, 0);
+                    u8": "s + s(p),
+                text_color);
         }
         ty += 16;
     }

@@ -19,6 +19,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "menu.hpp"
 #include "message.hpp"
 #include "network.hpp"
@@ -294,8 +295,9 @@ void text_set()
         _melee(1, 7) = u8"attack"s;
         _melee(2, 7) = u8"spore"s;
     }
-    homepage = i18n::s.get("core.locale.system.lafrontier_homepage");
 }
+
+
 
 bool maybe_show_ex_help(int id, bool should_update_screen)
 {
@@ -397,9 +399,7 @@ void show_ex_help()
                 {
                     break;
                 }
-                color(30, 30, 30);
                 const auto ny = gmes(s, tx, y, 330, {30, 30, 30}, true).y;
-                color(0, 0, 0);
                 y = ny;
             }
         }
@@ -741,10 +741,13 @@ label_2040_internal:
     }
 label_2041_internal:
     pagesize = 0;
-    s(0) = i18n::s.get("core.locale.ui.appearance.basic.title");
-    s(1) = i18n::s.get("core.locale.ui.appearance.hint");
-    display_window(
-        (windoww - 380) / 2 + inf_screenx, winposy(340) - 12, 380, 340);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.appearance.basic.title"),
+        i18n::s.get("core.locale.ui.appearance.hint"),
+        (windoww - 380) / 2 + inf_screenx,
+        winposy(340) - 12,
+        380,
+        340);
     pagesize = listmax;
     display_topic(
         i18n::s.get("core.locale.ui.appearance.basic.category"),
@@ -816,7 +819,7 @@ label_2041_internal:
                 s += " " + rtvaln;
             }
         }
-        cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
+        cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         if (rtval != -2)
         {
             pos(wx + 30, wy + 66 + cnt * 21 - 5);
@@ -983,10 +986,13 @@ int change_appearance_equipment()
     while (1)
     {
         pagesize = 0;
-        s(0) = i18n::s.get("core.locale.ui.appearance.equipment.title");
-        s(1) = i18n::s.get("core.locale.ui.appearance.hint");
-        display_window(
-            (windoww - 360) / 2 + inf_screenx, winposy(289) - 12, 360, 289);
+        ui_display_window(
+            i18n::s.get("core.locale.ui.appearance.equipment.title"),
+            i18n::s.get("core.locale.ui.appearance.hint"),
+            (windoww - 360) / 2 + inf_screenx,
+            winposy(289) - 12,
+            360,
+            289);
         s = i18n::s.get("core.locale.ui.appearance.equipment.part");
         pagesize = listmax;
         display_topic(s, wx + 34, wy + 36);
@@ -1029,7 +1035,7 @@ int change_appearance_equipment()
                 pos(wx + 175, wy + 66 + cnt * 21 - 5);
                 gcopy(3, 336, 336, 24, 24);
             }
-            cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
+            cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         }
         if (keyrange != 0)
         {
@@ -1117,15 +1123,13 @@ void show_weapon_dice(int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    color(20, 10, 0);
     if (val0 == 0)
     {
         pos(wx + 590, wy + 281 + p(2) * 16);
-        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.hit"));
+        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.hit"), {20, 10, 0});
         pos(wx + 417, wy + 281 + p(2) * 16);
-        mes(s(1));
+        mes(s(1), {20, 10, 0});
     }
-    color(0, 0, 0);
     attackrange = 0;
     if (the_item_db[inv[cw].id]->category == 24000) // TODO coupling
     {
@@ -1349,9 +1353,13 @@ label_1965_internal:
     {
         page = 0;
     }
-    s(0) = i18n::s.get("core.locale.ui.analysis.title");
-    s(1) = strhint2 + strhint3b;
-    display_window((windoww - 400) / 2 + inf_screenx, winposy(448), 400, 448);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.analysis.title"),
+        strhint2 + strhint3b,
+        (windoww - 400) / 2 + inf_screenx,
+        winposy(448),
+        400,
+        448);
     s = i18n::s.get("core.locale.ui.analysis.result");
     display_topic(s, wx + 28, wy + 36);
     font(14 - en * 2);

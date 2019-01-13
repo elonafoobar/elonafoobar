@@ -10,6 +10,34 @@
 #include "random.hpp"
 #include "variables.hpp"
 
+
+
+namespace
+{
+
+snail::Color _get_element_color(int element)
+{
+    switch (element)
+    {
+    case 50: return {150, 0, 0};
+    case 51: return {0, 0, 150};
+    case 52: return {150, 150, 0};
+    case 59: return {150, 0, 150};
+    case 53: return {100, 80, 80};
+    case 55: return {0, 150, 0};
+    case 60: return {150, 100, 100};
+    case 57: return {50, 100, 150};
+    case 58: return {100, 150, 50};
+    case 54: return {150, 100, 50};
+    case 56: return {150, 50, 0};
+    default: return {0, 0, 0};
+    }
+}
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -48,34 +76,23 @@ void equipinfo(int item_index, int x, int y)
         {
             s_at_m66 = ""s + p_at_m66;
         }
+        const auto element_color = _get_element_color(i_at_m66);
         if (jp)
         {
-            colorres();
-            if (inv[item_index].enchantments[cnt].power >= 0)
-            {
-                mes(u8"●"s);
-            }
-            else
-            {
-                mes(u8"▼"s);
-            }
+            const auto glyph =
+                inv[item_index].enchantments[cnt].power >= 0 ? u8"●" : u8"▼";
+            mes(glyph, element_color);
             pos(x + (i_at_m66 - 50) * 20 + 5, y + 1);
-            mes(s_at_m66);
+            mes(s_at_m66, element_color);
             pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            color(255, 255, 255);
-            mes(s_at_m66);
-            color(0, 0, 0);
+            mes(s_at_m66, {255, 255, 255});
         }
         else
         {
-            color(80, 60, 40);
             pos(x + (i_at_m66 - 50) * 20 + 5, y);
-            mes(""s + p_at_m66);
-            color(0, 0, 0);
-            colorres();
+            mes(""s + p_at_m66, {80, 60, 40});
             pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            mes(""s + p_at_m66);
-            color(0, 0, 0);
+            mes(""s + p_at_m66, element_color);
         }
     }
 }
@@ -1170,55 +1187,6 @@ void supply_initial_equipments()
     eqtwohand = 0;
     eqtwowield = 0;
     eqmultiweapon = 0;
-}
-
-void colorres(int)
-{
-    color(0, 0, 0);
-    if (i_at_m66 == 50)
-    {
-        color(150, 0, 0);
-    }
-    if (i_at_m66 == 51)
-    {
-        color(0, 0, 150);
-    }
-    if (i_at_m66 == 52)
-    {
-        color(150, 150, 0);
-    }
-    if (i_at_m66 == 59)
-    {
-        color(150, 0, 150);
-    }
-    if (i_at_m66 == 53)
-    {
-        color(100, 80, 80);
-    }
-    if (i_at_m66 == 55)
-    {
-        color(0, 150, 0);
-    }
-    if (i_at_m66 == 60)
-    {
-        color(150, 100, 100);
-    }
-    if (i_at_m66 == 57)
-    {
-        color(50, 100, 150);
-    }
-    if (i_at_m66 == 58)
-    {
-        color(100, 150, 50);
-    }
-    if (i_at_m66 == 54)
-    {
-        color(150, 100, 50);
-    }
-    if (i_at_m66 == 56)
-    {
-        color(150, 50, 0);
-    }
 }
 
 } // namespace elona

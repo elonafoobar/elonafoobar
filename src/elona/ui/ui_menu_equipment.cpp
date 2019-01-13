@@ -119,10 +119,14 @@ void UIMenuEquipment::update()
 
 void UIMenuEquipment::_draw_window_background()
 {
-    s(0) = i18n::s.get("core.locale.ui.equip.title");
-    s(1) = strhint5 + strhint5b + strhint3;
-    display_window(
-        (windoww - 690) / 2 + inf_screenx, winposy(428), 690, 428, 64);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.equip.title"),
+        strhint5 + strhint5b + strhint3,
+        (windoww - 690) / 2 + inf_screenx,
+        winposy(428),
+        690,
+        428,
+        64);
     display_topic(
         i18n::s.get("core.locale.ui.equip.category") + "/" +
             i18n::s.get("core.locale.ui.equip.name"),
@@ -242,17 +246,19 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
         equipped_item = -1;
     }
 
+    const auto text_color = equipped_item == -1
+        ? snail::Color{10, 10, 10}
+        : cs_list_get_item_color(inv[equipped_item]);
     cs_list(
         cs == cnt,
         item_name,
         wx + 140 - 26,
         wy + 60 + cnt * 19 - 1,
         30,
-        equipped_item != -1,
-        equipped_item);
+        text_color);
 
     pos(wx + 640 - strlen_u(item_weight) * 7, wy + 60 + cnt * 19 + 2);
-    mes(item_weight);
+    mes(item_weight, text_color);
 }
 
 void UIMenuEquipment::_draw_list_entries(bool show_resistances)

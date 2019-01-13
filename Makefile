@@ -15,7 +15,7 @@ MKDIR := mkdir
 
 
 all: $(BIN_DIR)
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make -j8
 
 
 build: $(BIN_DIR) $(PROGRAM)
@@ -38,7 +38,7 @@ $(BIN_DIR):
 
 
 $(PROGRAM): FORCE
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF; make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF; make -j8
 
 
 $(TEST_RUNNER):
@@ -74,13 +74,15 @@ format: FORCE
 	test -z "$$(git status --short)"
 
 ldoc:
+	rm -rf $(BIN_DIR)/doc
+	rm -rf docs
 	mkdir -p $(BIN_DIR)/doc
 	cp doc/README.md $(BIN_DIR)/doc/readme.md
 	cp doc/ldoc.css $(BIN_DIR)/doc/ldoc.css
 	cp -r doc/topics $(BIN_DIR)/doc
-	cp -r doc/examples $(BIN_DIR)/doc/examples
+	cp -r doc/examples $(BIN_DIR)/doc
 	cp doc/uikit.min.css $(BIN_DIR)/doc/uikit.min.css
-	cp doc/red_putit.png $(BIN_DIR)/doc/red_putit.png
+	cp doc/putit.png $(BIN_DIR)/doc/putit.png
 	cd $(BIN_DIR) && ldoc -c ../doc/config.ld -l ../doc -s ../doc ../doc/api/
 	cp -r $(BIN_DIR)/doc docs
 
@@ -90,15 +92,11 @@ luacheck:
 	luacheck src/tests/lua
 
 i18n-check:
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) en
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) jp
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp
 
 i18n-check-err:
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) en --no-warnings
-	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
-	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) jp --no-warnings
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en --no-warnings
+	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp --no-warnings
 
 rebuild: clean build

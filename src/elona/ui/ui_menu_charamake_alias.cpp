@@ -66,11 +66,15 @@ void UIMenuCharamakeAlias::update()
 
 void UIMenuCharamakeAlias::_draw_window()
 {
-    s(0) = i18n::s.get("core.locale.chara_making.select_alias.title");
-    s(1) = strhint3b + key_mode2 + " [" +
-        i18n::s.get("core.locale.chara_making.select_alias.lock_alias") + "]";
-    display_window(
-        (windoww - 400) / 2 + inf_screenx, winposy(458, 1) + 20, 400, 458);
+    ui_display_window(
+        i18n::s.get("core.locale.chara_making.select_alias.title"),
+        strhint3b + key_mode2 + " [" +
+            i18n::s.get("core.locale.chara_making.select_alias.lock_alias") +
+            "]",
+        (windoww - 400) / 2 + inf_screenx,
+        winposy(458, 1) + 20,
+        400,
+        458);
     ++cmbg;
     x = ww / 3 * 2;
     y = wh - 80;
@@ -88,9 +92,7 @@ void UIMenuCharamakeAlias::_draw_alias_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 280, wy + 66 + cnt * 19 + 2);
-    color(20, 20, 140);
-    mes(u8"Locked!"s);
-    color(0, 0, 0);
+    mes(u8"Locked!"s, {20, 20, 140});
 }
 
 void UIMenuCharamakeAlias::_draw_alias(

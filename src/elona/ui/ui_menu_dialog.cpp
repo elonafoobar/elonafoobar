@@ -54,20 +54,11 @@ void UIMenuDialog::draw()
     cs_listbk();
     for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
-        if (cs == cnt)
-        {
-            color(100, 160, 250);
-        }
-        else
-        {
-            color(255, 255, 255);
-        }
         noteget(s, cnt);
         x = wx + 136;
         y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
         display_key(x, y, cnt);
-        cs_list(cs == cnt, _choice_text.at(cnt), x + 30, y, 4, 0);
-        color(0, 0, 0);
+        cs_list(cs == cnt, _choice_text.at(cnt), x + 30, y, 4);
     }
     cs_bk = cs;
 }

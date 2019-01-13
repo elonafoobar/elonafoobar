@@ -260,20 +260,22 @@ void UIMenuCtrlAlly::_draw_info_pet_arena(
     }
 }
 
-int UIMenuCtrlAlly::_draw_get_color_mode(const Character& chara)
-{
-    int n = 0;
 
+
+snail::Color UIMenuCtrlAlly::_draw_get_color(const Character& chara)
+{
     if (_operation == ControlAllyOperation::gene_engineer)
     {
         if (chara.level > sdata(151, 0) + 5)
         {
-            n = 3;
+            return {160, 10, 10};
         }
     }
 
-    return n;
+    return {10, 10, 10};
 }
+
+
 
 std::string UIMenuCtrlAlly::_get_ally_name(const Character& chara)
 {
@@ -436,10 +438,13 @@ void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 void UIMenuCtrlAlly::_draw_ally_name(int cnt, const Character& chara)
 {
     std::string ally_name = _get_ally_name(chara);
-    int color_mode = _draw_get_color_mode(chara);
-
     cs_list(
-        cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1, 0, color_mode);
+        cs == cnt,
+        ally_name,
+        wx + 84,
+        wy + 66 + cnt * 19 - 1,
+        0,
+        _draw_get_color(chara));
 }
 
 void UIMenuCtrlAlly::_draw_ally_info(int cnt, const Character& chara)
@@ -452,7 +457,8 @@ void UIMenuCtrlAlly::_draw_ally_info(int cnt, const Character& chara)
     }
 
     pos(wx + 370, wy + 66 + cnt * 19 + 2);
-    mes(ally_info);
+    const auto text_color = _draw_get_color(chara);
+    mes(ally_info, text_color);
 }
 
 void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const Character& chara)
@@ -470,9 +476,13 @@ void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const Character& chara)
 
 void UIMenuCtrlAlly::draw()
 {
-    s(0) = s(10);
-    s(1) = s(11);
-    display_window((windoww - 620) / 2 + inf_screenx, winposy(400), 620, 400);
+    ui_display_window(
+        s(10),
+        s(11),
+        (windoww - 620) / 2 + inf_screenx,
+        winposy(400),
+        620,
+        400);
     display_topic(s(12), wx + 28, wy + 36);
     display_topic(s(13), wx + 350 + x, wy + 36);
     keyrange = 0;

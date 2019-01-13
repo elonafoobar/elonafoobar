@@ -140,6 +140,14 @@ void Prompt::_draw_entries()
 }
 
 
+
+PromptWithNumber::Result PromptWithNumber::query(int x, int y, int width)
+{
+    const auto index = Prompt::query(x, y, width);
+    return {index, _show_prompt_val};
+}
+
+
 void PromptWithNumber::_draw_box()
 {
     dx(0) = 200;
@@ -166,9 +174,7 @@ void PromptWithNumber::_draw_window()
     const auto inputlog2 =
         ""s + elona::stoi(inputlog(0)) + u8"("s + _max + u8")"s;
     pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
-    color(255, 255, 255);
-    mes(inputlog2);
-    color(0, 0, 0);
+    mes(inputlog2, {255, 255, 255});
     inputlog = ""s + _number;
 }
 

@@ -259,7 +259,7 @@ void UIMenuGameHelp::_draw_navigation_menu()
         }
         i = list(0, p);
         s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1, 0);
+        cs_list(cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1);
     }
     if (keyrange != 0)
     {
@@ -287,19 +287,22 @@ void UIMenuGameHelp::update()
     else if (page > pagemax)
         page = 0;
 
-    s(0) = u8"Elona In-Game Help"s;
-    s(1) = strhint2 + strhint3b;
-
+    int y;
     if (mode == 1)
     {
-        display_window(
-            (windoww - 780) / 2 + inf_screenx, winposy(496, 1), 780, 496);
+        y = winposy(496, 1);
     }
     else
     {
-        display_window(
-            (windoww - 780) / 2 + inf_screenx, winposy(496) - 24, 780, 496);
+        y = winposy(496) - 24;
     }
+    ui_display_window(
+        u8"Elona In-Game Help",
+        strhint2 + strhint3b,
+        (windoww - 780) / 2 + inf_screenx,
+        y,
+        780,
+        496);
     display_topic(i18n::s.get("core.locale.ui.manual.topic"), wx + 34, wy + 36);
 
     _draw_background_vignette(page % 5, mode == 1 ? 2 : 4);

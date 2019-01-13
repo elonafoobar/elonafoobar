@@ -97,7 +97,7 @@ void UIMenuMaterials::_draw_single_list_entry_name(int cnt, int list_item)
 {
     std::string mat_name = ""s + matname(list_item) + " " +
         i18n::s.get("core.locale.crafting.menu.x") + " " + mat(list_item);
-    cs_list(cs == cnt, mat_name, wx + 96, wy + 66 + cnt * 19 - 1, 0, 0);
+    cs_list(cs == cnt, mat_name, wx + 96, wy + 66 + cnt * 19 - 1);
 }
 
 void UIMenuMaterials::_draw_single_list_entry_desc(int cnt, int list_item)

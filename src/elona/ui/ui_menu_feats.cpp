@@ -149,11 +149,6 @@ void UIMenuFeats::update()
 
 void UIMenuFeats::_draw_window_background(bool is_chara_making)
 {
-    s(0) = i18n::s.get("core.locale.trait.window.title");
-    s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
-        strhint3 + u8"z,x ["s + i18n::s.get("core.locale.trait.window.ally") +
-        u8"]"s;
-
     int y_adjust;
     if (is_chara_making)
     {
@@ -165,7 +160,11 @@ void UIMenuFeats::_draw_window_background(bool is_chara_making)
         y_adjust = 0;
     }
 
-    display_window(
+    ui_display_window(
+        i18n::s.get("core.locale.trait.window.title"),
+        i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
+            strhint3 + u8"z,x [" +
+            i18n::s.get("core.locale.trait.window.ally") + u8"]",
         (windoww - 730) / 2 + inf_screenx,
         winposy(430, y_adjust) + y_adjust * 15,
         730,
@@ -259,9 +258,7 @@ void UIMenuFeats::_draw_single_list_entry_name(
 {
     pos(wx + 270, wy + 66 + cnt * 19 + 2);
 
-    color(text_color.r, text_color.g, text_color.b);
-    mes(traitrefn(2));
-    color(0, 0, 0);
+    mes(traitrefn(2), text_color);
 }
 
 void UIMenuFeats::_draw_single_list_entry_text(
@@ -282,15 +279,15 @@ void UIMenuFeats::_draw_single_list_entry_text(
     }
     gcopy(3, 384 + traitref * 24, 336, 24, 24);
 
-    color(text_color.r, text_color.g, text_color.b);
-    cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
-    color(0, 0, 0);
+    cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, text_color);
 
     if (draw_name)
     {
         _draw_single_list_entry_name(cnt, text_color);
     }
 }
+
+
 
 static snail::Color _get_trait_color(int trait_value)
 {
@@ -307,6 +304,8 @@ static snail::Color _get_trait_color(int trait_value)
         return {200, 0, 0};
     }
 }
+
+
 
 void UIMenuFeats::_draw_single_list_entry(
     int cnt,

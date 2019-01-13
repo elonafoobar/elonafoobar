@@ -1,12 +1,12 @@
-# CMake v2.8 or later
+# CMake v3.0 or later
 cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(Elona_foobar VERSION 0.3.1)
+project(Elona_foobar VERSION 0.3.3)
 
 # Android version code. Increment on every distinct release.
-set(PROJECT_VERSION_CODE 2)
+set(PROJECT_VERSION_CODE 4)
 
 
 # Options
@@ -425,6 +425,11 @@ else()
   # My libraries: elona
   add_subdirectory(src/elona)
   target_link_libraries(${PROJECT_NAME} elona)
+
+  if(WITH_TESTS STREQUAL "OFF")
+    add_subdirectory(src/thirdparty/nfd)
+    target_link_libraries(nfd)
+  endif()
 
   INSTALL(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime

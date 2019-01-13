@@ -56,9 +56,13 @@ void UIMenuSpellWriter::update()
 
 void UIMenuSpellWriter::_draw_window()
 {
-    s(0) = i18n::s.get("core.locale.ui.reserve.title");
-    s(1) = strhint2 + strhint3;
-    display_window((windoww - 540) / 2 + inf_screenx, winposy(448), 540, 448);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.reserve.title"),
+        strhint2 + strhint3,
+        (windoww - 540) / 2 + inf_screenx,
+        winposy(448),
+        540,
+        448);
     display_topic(i18n::s.get("core.locale.ui.reserve.name"), wx + 28, wy + 36);
     display_topic(
         i18n::s.get("core.locale.ui.reserve.status"), wx + 390, wy + 36);
@@ -106,15 +110,12 @@ void UIMenuSpellWriter::_draw_list_entry_reserve_status(int cnt, int item_index)
     pos(wx + 400, wy + 66 + cnt * 19 + 2);
     if (itemmemory(2, item_index) == 1)
     {
-        color(120, 120, 120);
-        mes(i18n::s.get("core.locale.ui.reserve.not_reserved"));
-        color(0, 0, 0);
+        mes(i18n::s.get("core.locale.ui.reserve.not_reserved"),
+            {120, 120, 120});
     }
     else
     {
-        color(55, 55, 255);
-        mes(i18n::s.get("core.locale.ui.reserve.reserved"));
-        color(0, 0, 0);
+        mes(i18n::s.get("core.locale.ui.reserve.reserved"), {55, 55, 255});
     }
 }
 

@@ -46,8 +46,7 @@ void get_random_npc_id()
             bool ok = true;
             for (int i = 0; i < filtermax; ++i)
             {
-                if (filter_creature(data.id).find(filtern(i)) ==
-                    std::string::npos)
+                if (data.filter.find(filtern(i)) == std::string::npos)
                 {
                     ok = false;
                     break;

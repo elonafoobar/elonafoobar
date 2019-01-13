@@ -195,10 +195,13 @@ void UIMenuKeybindings::update()
 
 void UIMenuKeybindings::_draw_window()
 {
-    s(0) = i18n::s.get("core.locale.config.menu.keybindings.name");
-    s(1) = i18n::s.get("core.locale.keybind.menu.hint") + strhint2 + strhint3b;
-
-    display_window(wx, wy, ww, wh);
+    ui_display_window(
+        i18n::s.get("core.locale.config.menu.keybindings.name"),
+        i18n::s.get("core.locale.keybind.menu.hint") + strhint2 + strhint3b,
+        wx,
+        wy,
+        ww,
+        wh);
 }
 
 void UIMenuKeybindings::_draw_topics()

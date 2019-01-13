@@ -114,9 +114,13 @@ void UIMenuHire::_draw_topic()
 
 void UIMenuHire::_draw_window()
 {
-    s(0) = i18n::s.get("core.locale.ui.npc_list.title");
-    s(1) = strhint2 + strhint3;
-    display_window((windoww - 700) / 2 + inf_screenx, winposy(448), 700, 448);
+    ui_display_window(
+        i18n::s.get("core.locale.ui.npc_list.title"),
+        strhint2 + strhint3,
+        (windoww - 700) / 2 + inf_screenx,
+        winposy(448),
+        700,
+        448);
     display_topic(
         i18n::s.get("core.locale.ui.npc_list.name"), wx + 28, wy + 36);
     display_topic(

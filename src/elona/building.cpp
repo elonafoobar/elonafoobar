@@ -17,6 +17,7 @@
 #include "itemgen.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
@@ -706,11 +707,15 @@ void show_home_value()
     keyrange = 0;
     key_list = key_cancel;
 
-    s(0) = i18n::s.get("core.locale.building.home.rank.title");
-    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key") +
-        i18n::s.get("core.locale.ui.hint.close");
     windowshadow = 1;
-    display_window((windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
+    ui_display_window(
+        i18n::s.get("core.locale.building.home.rank.title"),
+        i18n::s.get("core.locale.building.home.rank.enter_key") +
+            i18n::s.get("core.locale.ui.hint.close"),
+        (windoww - 440) / 2 + inf_screenx,
+        winposy(360),
+        440,
+        360);
     display_topic(
         i18n::s.get("core.locale.building.home.rank.value"), wx + 28, wy + 36);
     display_topic(
@@ -757,7 +762,7 @@ void show_home_value()
     sort_list_by_column1();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        p = list(0, cnt);
+        p = list(0, 10 - cnt - 1);
         if (p == 0)
         {
             continue;
@@ -768,7 +773,7 @@ void show_home_value()
 
         pos(wx + 68, cnt * 16 + wy + 138);
         mes(i18n::s.get(
-            "core.locale.building.home.rank.place", cnvrank(10 - cnt)));
+            "core.locale.building.home.rank.place", cnvrank(cnt + 1)));
         pos(wx + 110, cnt * 16 + wy + 138);
         mes(itemname(p));
     }

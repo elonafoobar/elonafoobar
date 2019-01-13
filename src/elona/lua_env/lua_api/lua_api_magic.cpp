@@ -1,5 +1,6 @@
 #include "lua_api_magic.hpp"
 #include "../../character.hpp"
+#include "../../magic.hpp"
 #include "../handle_manager.hpp"
 
 

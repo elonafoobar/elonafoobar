@@ -268,7 +268,6 @@ void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
         }
     }
 
-    color(0, 0, 0);
     show_title(title);
 }
 
@@ -276,7 +275,6 @@ void UIMenuCharacterSheet::update()
 {
     if (_operation != CharacterSheetOperation::character_making)
     {
-        display_msg(inf_tiles + inf_screeny);
     }
 
     pagemax = (listmax - 1) / pagesize + 1;
@@ -300,15 +298,15 @@ void UIMenuCharacterSheet::update()
 
 void UIMenuCharacterSheet::_draw_window(bool show_bonus)
 {
-    s = "";
+    std::string tips;
     if (show_bonus && page != 0)
     {
-        s = i18n::s.get(
+        tips = i18n::s.get(
             "core.locale.ui.chara_sheet.you_can_spend_bonus",
             cdata[cc].skill_bonus);
     }
-    display_window2(
-        (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400, 7);
+    ui_display_window2(
+        tips, (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400);
 }
 
 
@@ -378,9 +376,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_exp()
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         pos(wx + 355, wy + 46 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -397,9 +393,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_personal()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(wx + 30 + cnt / 4 * 190, wy + 61 + cnt % 4 * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -411,9 +405,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_attribute()
         gmode(2);
         gcopy_c(1, cnt * inf_tiles, 672, inf_tiles, inf_tiles);
         pos(wx + 54, wy + 151 + cnt * 15);
-        color(20, 10, 0);
-        mes(i18n::s.get_enum("core.locale.ui.attribute", cnt));
-        color(0, 0, 0);
+        mes(i18n::s.get_enum("core.locale.ui.attribute", cnt), {20, 10, 0});
     }
 }
 
@@ -428,9 +420,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_time()
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         pos(wx + 32, wy + 301 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -443,9 +433,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_weight()
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         pos(wx + 224, wy + 301 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -460,9 +448,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_level()
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         pos(wx + 410 + en * 5, wy + 45 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -489,9 +475,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     {
         pos(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
             wy + 60 + cnt % 4 * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -504,13 +488,9 @@ void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
         level += u8"*"s;
     }
     pos(wx + 92, wy + 151 + cnt * 15);
-    color(20, 10, 0);
-    mes(""s + sdata((10 + cnt), cc));
-    color(0, 0, 0);
+    mes(""s + sdata((10 + cnt), cc), {20, 10, 0});
     pos(wx + 124, wy + 151 + cnt * 15);
-    color(20, 10, 0);
-    mes(level);
-    color(0, 0, 0);
+    mes(level, {20, 10, 0});
 }
 
 void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
@@ -519,34 +499,25 @@ void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
     pos(wx + 176, wy + 152 + cnt * 15);
     if (potential >= 200)
     {
-        color(20, 10, 0);
-        mes(u8"Superb"s);
-        color(0, 0, 0);
+        mes(u8"Superb"s, {20, 10, 0});
         return;
     }
     if (potential >= 150)
     {
-        color(20, 10, 0);
-        mes(u8"Great"s);
-        color(0, 0, 0);
+        mes(u8"Great"s, {20, 10, 0});
         return;
     }
     if (potential >= 100)
     {
-        color(20, 10, 0);
-        mes(u8"Good"s);
-        color(0, 0, 0);
+        mes(u8"Good"s, {20, 10, 0});
         return;
     }
     if (potential >= 50)
     {
-        color(20, 10, 0);
-        mes(u8"Bad"s);
-        color(0, 0, 0);
+        mes(u8"Bad"s, {20, 10, 0});
         return;
     }
     mes(u8"Hopeless"s);
-    color(0, 0, 0);
 }
 
 void UIMenuCharacterSheet::_draw_attribute(int cnt)
@@ -568,14 +539,10 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
     append_accuracy_info(0);
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    color(20, 10, 0);
     pos(wx + 417, wy + 281 + p(2) * 16);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.protect"));
-    color(0, 0, 0);
-    color(20, 10, 0);
+    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.protect"), {20, 10, 0});
     pos(wx + 590 - en * 16, wy + 281 + p(2) * 16);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.evade"));
-    color(0, 0, 0);
+    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.evade"), {20, 10, 0});
     attackskill = 106;
     int evade = calc_evasion(tc);
     prot = calcattackdmg(AttackDamageCalculationMode::defense);
@@ -609,9 +576,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_fame()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(wx + 255, wy + 151 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -631,10 +596,8 @@ void UIMenuCharacterSheet::_draw_first_page_stats_fame()
     s(8) = "";
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        color(20, 10, 0);
         pos(wx + 310, wy + 151 + cnt * 15);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(s(cnt), {20, 10, 0});
     }
 }
 
@@ -722,10 +685,8 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
     pos(wx + 108, wy + 366);
     mes(buff_desc);
     font(11 + sizefix * 2 - en * 2, snail::Font::Style::bold);
-    color(20, 10, 0);
     pos(wx + 70, wy + 369 - en * 3);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":");
-    color(0, 0, 0);
+    mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":", {20, 10, 0});
 }
 
 void UIMenuCharacterSheet::_draw_first_page(int& _cs_buff, int& _cs_buffmax)
@@ -940,16 +901,18 @@ static bool _has_enchantment(int cc, int skill_id)
 
 void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)
 {
-    skill_id = sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+    const auto bonus =
+        sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+    int star_count;
     if (skill_id >= 50)
     {
-        skill_id = skill_id / 50;
+        star_count = bonus / 50;
     }
     else
     {
-        skill_id = skill_id / 5;
+        star_count = bonus / 5;
     }
-    std::string enchantment_level = enchantment_print_level(skill_id);
+    std::string enchantment_level = enchantment_print_level(star_count);
     pos(wx + 282, wy + 66 + cnt * 19 + 2);
     mes(enchantment_level);
 }

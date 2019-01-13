@@ -32,7 +32,7 @@ struct DamagePopup
     int frame;
     std::string text;
     int character;
-    snail::Color color;
+    snail::Color color{0, 0, 0};
 
     DamagePopup()
         : frame(-1)
@@ -1019,19 +1019,16 @@ void bmes(
     const snail::Color& text_color,
     const snail::Color& shadow_color)
 {
-    color(shadow_color.r, shadow_color.g, shadow_color.b);
     for (int dy = -1; dy <= 1; ++dy)
     {
         for (int dx = -1; dx <= 1; ++dx)
         {
             pos(x + dx, y + dy);
-            mes(message);
+            mes(message, shadow_color);
         }
     }
-    color(text_color.r, text_color.g, text_color.b);
     pos(x, y);
-    mes(message);
-    color(0, 0, 0);
+    mes(message, text_color);
 }
 
 

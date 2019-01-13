@@ -393,14 +393,8 @@ void boxl(int x, int y, int width, int height, const snail::Color& color);
 void buffer(int window_id, int width = 0, int heihgt = 0);
 
 
-void color(int r, int g, int b);
-
-
 int dialog(const std::string& message, int = 0);
 
-
-
-void exec(const std::string&, int);
 
 
 void font(int size, snail::Font::Style style = snail::Font::Style::regular);
@@ -483,9 +477,7 @@ void line(
 
 
 
-void mes(const std::string& text);
-
-void mes(int n);
+void mes(const std::string& text, const snail::Color& color = {0, 0, 0});
 
 void mesbox(std::string& buffer, bool text = false);
 

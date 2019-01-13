@@ -136,7 +136,7 @@ void UIMenuTownPolitics::_draw_keys()
 static void
 _draw_single_list_entry(int cnt, int list_item, const std::string& text)
 {
-    cs_list(cs == cnt, text, wx + 100, wy + 76 + cnt * 19 - 1, 0, 0);
+    cs_list(cs == cnt, text, wx + 100, wy + 76 + cnt * 19 - 1);
     pos(wx + 42, wy + 68 + cnt * 19 + 2);
     gmode(2);
     gcopy(3, 288 + list_item * 24, 360, 24, 24);

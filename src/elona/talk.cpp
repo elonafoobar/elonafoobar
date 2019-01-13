@@ -556,20 +556,11 @@ int talk_window_query()
         cs_listbk();
         for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
         {
-            if (cs == cnt)
-            {
-                color(100, 160, 250);
-            }
-            else
-            {
-                color(255, 255, 255);
-            }
             noteget(s, cnt);
             x = wx + 136;
             y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
             display_key(x, y, cnt);
-            cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
-            color(0, 0, 0);
+            cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4);
         }
         cs_bk = cs;
         redraw();
@@ -717,9 +708,7 @@ void talk_window_show()
         s = actor(0, rc);
     }
     pos(wx + 120, wy + 16);
-    color(20, 10, 5);
-    mes(s);
-    color(0, 0, 0);
+    mes(s, {20, 10, 5});
     font(13 - en * 2);
     if (chatval_show_impress)
     {
@@ -735,9 +724,7 @@ void talk_window_show()
             s(1) = u8"???"s;
         }
         pos(wx + 32, wy + 198);
-        color(20, 10, 5);
-        mes(u8"("s + s(1) + u8")"s + s);
-        color(0, 0, 0);
+        mes(u8"("s + s(1) + u8")"s + s, {20, 10, 5});
         if (cdata[tc].interest >= 0)
         {
             for (int cnt = 0, cnt_end = (cdata[tc].interest / 5 + 1);
@@ -756,7 +743,6 @@ void talk_window_show()
         mes(u8"-"s);
     }
     font(14 - en * 2);
-    color(20, 10, 5);
     notesel(buff);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
@@ -765,9 +751,8 @@ void talk_window_show()
         y = wy + 43 + cnt * 19;
         noteget(s, p);
         pos(x, y);
-        mes(s);
+        mes(s, {20, 10, 5});
     }
-    color(0, 0, 0);
 }
 
 

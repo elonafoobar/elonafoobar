@@ -57,11 +57,10 @@ static snail::Color _desc_to_color(int desc)
     }
 }
 
-static void _set_color(int list_item)
+static snail::Color _get_color(int list_item)
 {
     int desc = list_item % 10000;
-    auto col = _desc_to_color(desc);
-    color(col.r, col.g, col.b);
+    return _desc_to_color(desc);
 }
 
 static void _set_font(int list_item)
@@ -118,21 +117,23 @@ void UIMenuItemDesc::_draw_message(
     int list_item,
     const std::string& list_text)
 {
-    _set_color(list_item);
     _set_font(list_item);
     _set_pos(cnt, list_item, list_text);
 
-    mes(list_text);
-    color(0, 0, 0);
+    mes(list_text, _get_color(list_item));
 
     _draw_marks(cnt, list_item);
 }
 
 void UIMenuItemDesc::draw()
 {
-    s(0) = i18n::s.get("core.locale.item.desc.window.title");
-    s(1) = strhint4 + strhint3;
-    display_window((windoww - 600) / 2 + inf_screenx, winposy(408), 600, 408);
+    ui_display_window(
+        i18n::s.get("core.locale.item.desc.window.title"),
+        strhint4 + strhint3,
+        (windoww - 600) / 2 + inf_screenx,
+        winposy(408),
+        600,
+        408);
     display_topic(itemname(ci), wx + 28, wy + 34);
 
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

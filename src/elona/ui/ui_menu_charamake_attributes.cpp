@@ -85,12 +85,16 @@ void UIMenuCharamakeAttributes::update()
 
 void UIMenuCharamakeAttributes::_draw_window_background()
 {
-    s(0) = i18n::s.get(
-        "core.locale.chara_making.roll_attributes.attribute_reroll");
-    s(1) = strhint3b + key_mode2 + " [" +
-        i18n::s.get("core.locale.chara_making.roll_attributes.min_roll") + "]";
-    display_window(
-        (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
+    ui_display_window(
+        i18n::s.get(
+            "core.locale.chara_making.roll_attributes.attribute_reroll"),
+        strhint3b + key_mode2 + " [" +
+            i18n::s.get("core.locale.chara_making.roll_attributes.min_roll") +
+            "]",
+        (windoww - 360) / 2 + inf_screenx,
+        winposy(352, 1) - 20,
+        360,
+        352);
 }
 
 void UIMenuCharamakeAttributes::_draw_window_topic()
@@ -130,9 +134,7 @@ void UIMenuCharamakeAttributes::_draw_attribute_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 240, wy + 66 + cnt * 23 + 2);
-    color(20, 20, 140);
-    mes(u8"Locked!"s);
-    color(0, 0, 0);
+    mes(u8"Locked!"s, {20, 20, 140});
 }
 
 void UIMenuCharamakeAttributes::_draw_attribute_value(

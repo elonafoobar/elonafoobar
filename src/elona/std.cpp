@@ -257,13 +257,6 @@ void buffer(int window_id, int width, int height)
 
 
 
-void color(int r, int g, int b)
-{
-    snail::hsp::color(r, g, b);
-}
-
-
-
 #if defined(ELONA_OS_WINDOWS)
 std::wstring get_utf16(const std::string& str)
 {
@@ -329,12 +322,6 @@ int dialog(const std::string& message, int option)
     std::cout << message << std::endl;
     return 0;
 #endif
-}
-
-
-
-void exec(const std::string&, int)
-{
 }
 
 
@@ -530,16 +517,9 @@ void line(int x1, int y1, int x2, int y2, const snail::Color& color)
 
 
 
-void mes(const std::string& text)
+void mes(const std::string& text, const snail::Color& color)
 {
-    snail::hsp::mes(text);
-}
-
-
-
-void mes(int n)
-{
-    mes(std::to_string(n));
+    snail::hsp::mes(text, color);
 }
 
 
@@ -763,10 +743,7 @@ static void _draw_fps()
         fps_str = _make_fps_string();
     }
 
-    // Global font/color is modified, so it has to be restored directly after.
-    const auto colorbk_r = ginfo(16);
-    const auto colorbk_g = ginfo(17);
-    const auto colorbk_b = ginfo(18);
+    // Global font is modified, so it has to be restored directly after.
     const auto& fontbk = snail::Application::instance().get_renderer().font();
     const auto fontbk_size = fontbk.size();
     const auto fontbk_style = fontbk.style();
@@ -777,12 +754,10 @@ static void _draw_fps()
     // cleared between each redraw.
     boxf(4, 4, strlen_u(fps_str) * 7 + 2, 14 - en * 2 + 2, {0, 0, 0, 255});
     font(13 - en * 2);
-    color(255, 255, 255);
     pos(5, 5);
-    mes(fps_str);
+    mes(fps_str, {255, 255, 255});
 
     font(fontbk_size, fontbk_style);
-    color(colorbk_r, colorbk_g, colorbk_b);
 
     lib::g_fps_counter.count();
 }
