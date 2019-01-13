@@ -14,7 +14,7 @@
 ## Requirements
 
 * `make`
-* CMake
+* CMake 3.2 or later
 * C++ compiler which supports C++14
 * Boost
 * Lua 5.3

@@ -1,5 +1,5 @@
-# CMake v3.0 or later
-cmake_minimum_required(VERSION 3.0)
+# CMake v3.2 or later
+cmake_minimum_required(VERSION 3.2)
 
 
 # Project
