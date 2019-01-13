@@ -1,5 +1,6 @@
 #include "lua_api_map.hpp"
 #include "../../area.hpp"
+#include "../../character.hpp"
 #include "../../data/types/type_map.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"
@@ -123,7 +124,7 @@ bool LuaApiMap::valid_xy(int x, int y)
         return false;
     }
 
-    return elona::cell_data.at(x, y).chip_id_actual != 0;
+    return true;
 }
 
 /**
@@ -322,9 +323,6 @@ void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
         throw sol::error{"No such map '"s + map_id + "'."s};
     }
 
-    std::cerr << "prev: " << game_data.previous_map2
-              << " cur: " << game_data.current_map << std::endl;
-
     game_data.player_x_on_map_leave = cdata.player().position.x;
     game_data.player_y_on_map_leave = cdata.player().position.y;
     game_data.previous_x = cdata.player().position.x;
@@ -355,8 +353,6 @@ void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
     map_prepare_for_travel(map->id, level);
     exit_map();
     initialize_map();
-    std::cerr << "prevnow: " << game_data.previous_map2
-              << " cur: " << game_data.current_map << std::endl;
 }
 
 void LuaApiMap::bind(sol::table& api_table)

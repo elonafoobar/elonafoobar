@@ -165,25 +165,28 @@ static void _init_map_your_home()
         {
             // Move existing characters/items to the center of the
             // map if the home was upgraded.
-            ctrl_file(
-                FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
-            for (const auto& cnt : items(-1))
+            auto inv_filename = u8"inv_"s + mid + u8".s2";
+            if (fs::exists(filesystem::dir::tmp() / inv_filename))
             {
-                if (inv[cnt].number() == 0)
+                ctrl_file(FileOperation2::map_items_read, inv_filename);
+                for (const auto& cnt : items(-1))
                 {
-                    continue;
+                    if (inv[cnt].number() == 0)
+                    {
+                        continue;
+                    }
+                    inv[cnt].position.x = map_data.width / 2;
+                    inv[cnt].position.y = map_data.height / 2;
+                    cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
-                inv[cnt].position.x = map_data.width / 2;
-                inv[cnt].position.y = map_data.height / 2;
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
-            }
-            ctrl_file(FileOperation::map_home_upgrade);
-            for (auto&& cnt : cdata.others())
-            {
-                cnt.position.x = map_data.width / 2;
-                cnt.position.y = map_data.height / 2;
-                cnt.initial_position.x = map_data.width / 2;
-                cnt.initial_position.y = map_data.height / 2;
+                ctrl_file(FileOperation::map_home_upgrade);
+                for (auto&& cnt : cdata.others())
+                {
+                    cnt.position.x = map_data.width / 2;
+                    cnt.position.y = map_data.height / 2;
+                    cnt.initial_position.x = map_data.width / 2;
+                    cnt.initial_position.y = map_data.height / 2;
+                }
             }
         }
     }
@@ -524,8 +527,6 @@ void initialize_map_from_map_type()
     // game_data.current_map. However, multiple player-owned areas can share
     // the same map ID.
     int map_id = area_data[game_data.current_map].id;
-    std::cerr << "area: " << map_id << " gamedata:" << game_data.current_map
-              << std::endl;
     auto map = the_mapdef_db[map_id];
 
     if (!map)
@@ -534,8 +535,6 @@ void initialize_map_from_map_type()
         return;
     }
 
-    std::cerr << "wb: " << map_data.width << " hb: " << map_data.height
-              << std::endl;
     _generate_map_from_lua(**map);
 
     MapId map_id_b = static_cast<MapId>(area_data[game_data.current_map].id);
@@ -562,14 +561,11 @@ void initialize_map_from_map_type()
     case MapId::puppy_cave:                 _init_map_puppy_cave();                break;
     case MapId::minotaurs_nest:             _init_map_minotaurs_nest();            break;
     case MapId::yeeks_nest:                 _init_map_yeeks_nest();                break;
-    case MapId::mountain_pass:              generate_random_nefia();               break;
     case MapId::show_house:
     case MapId::none:
     default: break;
         // clang-format on
     }
-    std::cerr << "wn: " << map_data.width << " hn: " << map_data.height
-              << std::endl;
 }
 
 } // namespace elona

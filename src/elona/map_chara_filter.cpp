@@ -25,6 +25,11 @@ static void _chara_filter_quest()
     }
 }
 
+static void _chara_filter_nefia()
+{
+    flt(calcobjlv(game_data.current_dungeon_level), calcfixlv(Quality::bad));
+}
+
 static void _process_chara_filter(const lua::WrappedFunction& chara_filter)
 {
     sol::optional<sol::table> result = chara_filter.call_with_result(
@@ -108,11 +113,18 @@ void map_set_chara_generation_filter()
         return;
     }
 
-    auto mapdef_data = the_mapdef_db[game_data.current_map];
+    int map_id = area_data[game_data.current_map].id;
+    auto mapdef_data = the_mapdef_db[map_id];
     if (mapdef_data && mapdef_data->chara_filter)
     {
         auto& chara_filter = *mapdef_data->chara_filter;
         _process_chara_filter(chara_filter);
+        return;
+    }
+
+    if (mdata_t::is_nefia(map_data.type))
+    {
+        _chara_filter_nefia();
         return;
     }
 

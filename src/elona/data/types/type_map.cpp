@@ -42,6 +42,7 @@ MapDefData MapDefDB::convert(
     DATA_OPT_OR(prevents_building_shelter, bool, false);
     DATA_OPT_OR(prevents_random_events, bool, false);
     DATA_OPT_OR(villagers_make_snowmen, bool, false);
+    DATA_OPT_OR(is_hidden_in_world_map, bool, false);
 
     DATA_REQ_FUNC(generator);
     DATA_OPT_FUNC(chara_filter);
@@ -90,6 +91,7 @@ MapDefData MapDefDB::convert(
                       prevents_building_shelter,
                       prevents_random_events,
                       villagers_make_snowmen,
+                      is_hidden_in_world_map,
 
                       generator,
                       chara_filter};

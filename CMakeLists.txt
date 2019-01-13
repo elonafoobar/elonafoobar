@@ -302,7 +302,16 @@ else()
 
   if(LINUX)
     target_link_libraries(${PROJECT_NAME} dl)
+    if(NOT DEFINED GTK3_INCLUDE_DIR OR NOT DEFINED GTK3_LIBRARIES)
+      find_package(PkgConfig REQUIRED)
+      pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+    endif()
+    include_directories(${GTK3_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARY_DIRS})
   endif()
+
+  # Compiler options
+  target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
   set(GENERAL_OPTIONS)
   set(DEBUG_OPTIONS)

@@ -145,6 +145,11 @@ bool Area::can_return_to_if_wizard()
     return type == mdata_t::MapType::town || type == mdata_t::MapType::guild;
 }
 
+bool Area::is_hidden_in_world_map()
+{
+    return the_mapdef_db[id]->is_hidden_in_world_map;
+}
+
 
 bool Area::is_museum_or_shop()
 {

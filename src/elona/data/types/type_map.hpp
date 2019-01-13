@@ -38,6 +38,7 @@ struct MapDefData
     bool prevents_building_shelter{};
     bool prevents_random_events{};
     bool villagers_make_snowmen{};
+    bool is_hidden_in_world_map{};
 
     lua::WrappedFunction generator{};
     optional<lua::WrappedFunction> chara_filter{};

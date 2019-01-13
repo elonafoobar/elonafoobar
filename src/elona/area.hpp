@@ -49,6 +49,7 @@ struct Area
     bool can_return_to();
     bool can_return_to_if_wizard();
     bool is_museum_or_shop();
+    bool is_hidden_in_world_map();
 
 
     /**

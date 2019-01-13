@@ -366,8 +366,6 @@ bool chara_place_internal(
     // Do place character.
     cc.initial_position = cc.position = {x, y};
     cell_data.at(x, y).chara_index_plus_one = cc.index + 1;
-    std::cerr << "chara " << (int)can_place_character_at({x, y}, true) << x
-              << "," << y << std::endl;
 
     return true; // placed successfully.
 }

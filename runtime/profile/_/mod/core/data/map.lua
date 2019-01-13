@@ -24,6 +24,10 @@ local function chara_filter_town(callbacks)
    return function()
       local opts = { level = 10, quality = "Bad", fltselect = 5 }
 
+      if callbacks == nil then
+         return opts
+      end
+
       local result = {}
       local level = Map.current_dungeon_level()
       local callback = callbacks[level]
@@ -96,6 +100,7 @@ data:add_multi(
          default_ai_calm = 1,
 
          generator = maps.test_world_north_border,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "south_tyris",
@@ -134,6 +139,7 @@ data:add_multi(
          default_ai_calm = 1,
 
          generator = maps.south_tyris_north_border,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "the_smoke_and_pipe",
@@ -153,6 +159,7 @@ data:add_multi(
          default_ai_calm = 1,
 
          generator = maps.the_smoke_and_pipe,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "north_tyris",
@@ -393,7 +400,7 @@ data:add_multi(
          generator = generator_town {
             [1] = maps.lumiest,
             [3] = maps.mages_guild,
-            [20] = maps.sewer,
+            [20] = maps.lumiest_sewer,
          },
          chara_filter = chara_filter_town {
             [1] = function()
@@ -912,6 +919,7 @@ data:add_multi(
 
          generator = maps.larna,
          can_return_to = true,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "miral_and_garoks_workshop",
@@ -932,6 +940,7 @@ data:add_multi(
 
          generator = maps.miral_and_garoks_workshop,
          reveals_fog = true,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "mansion_of_younger_sister",
@@ -953,6 +962,7 @@ data:add_multi(
          generator = maps.mansion_of_younger_sister,
          can_return_to = true,
          villagers_make_snowmen = true,
+         is_hidden_in_world_map = true,
       },
       {
          name = "embassy",
@@ -973,6 +983,7 @@ data:add_multi(
 
          generator = maps.embassy,
          reveals_fog = true,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "north_tyris_south_border",
@@ -992,6 +1003,7 @@ data:add_multi(
          default_ai_calm = 1,
 
          generator = maps.north_tyris_south_border,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "fort_of_chaos_beast",
@@ -1011,6 +1023,7 @@ data:add_multi(
          default_ai_calm = 1,
 
          generator = maps.fort_of_chaos_beast,
+         chara_filter = chara_filter_town(),
       },
       {
          name = "fort_of_chaos_machine",

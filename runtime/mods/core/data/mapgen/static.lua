@@ -8,8 +8,6 @@ local table = Elona.require("table")
 
 local maps = {}
 
-local TILE_DEFAULT = 396
-
 local function create_items(items)
    for _, data in ipairs(items) do
       local x, y, id, opts = table.unpack(data)
@@ -63,12 +61,6 @@ function maps.shelter(generator)
    Map.data.bgm = "core.mcLonely"
 
    generator.place_player()
-end
-
--- Hardcoded behavior:
--- - handling of dungeon lord at lowest level
-function maps.nefia(generator)
-   generator.generate_nefia()
 end
 
 function maps.museum(generator)
@@ -167,10 +159,9 @@ function maps.test_site(generator)
 
    Map.data.max_crowd_density = 0
 
-   for j=0, Map.height() do
-      for i=0, Map.width() do
-         -- TODO
-         Map.set_tile(i, j, TILE_DEFAULT)
+   for j=0, Map.height()-1 do
+      for i=0, Map.width()-1 do
+         Map.set_tile(i, j, Map.generate_tile("Normal"))
       end
    end
 
@@ -210,6 +201,7 @@ function maps.truce_ground(generator)
    generator.load_custom("shrine_1")
 
    Map.data.max_crowd_density = 10
+   Map.data.bgm = "core.mcRuin"
 
    local items = {
       { 10, 8, "core.altar", { param1 = 1, own_state = 1} },
@@ -223,6 +215,8 @@ function maps.truce_ground(generator)
    }
 
    create_items(items)
+
+   generator.place_player()
 
    for i=0, Map.data.max_crowd_density do
       Chara.generate_from_map()
@@ -249,6 +243,8 @@ function maps.embassy(generator)
    }
 
    create_charas(charas)
+
+   generator.place_player()
 end
 
 local function generate_tyris_border(generator)
@@ -356,6 +352,7 @@ function maps.mansion_of_younger_sister(generator)
    end
 
    local charas = {
+      { 12, 6, "core.younger_sister_of_mansion", { role = 1019 } },
       { -3, 0, "core.young_lady", { _count = 6, role = 3 } },
       { -3, 0, "core.silver_cat", { _count = 8, role = 3 } },
    }
@@ -369,6 +366,7 @@ function maps.cyber_dome(generator)
    generator.load_custom("cyberdome")
 
    Map.data.max_crowd_density = 10
+   Map.data.bgm = "core.mcRuin"
 
    local items = {
       { 19, 5, "core.altar", { param1 = 1, own_state = 1 } },
@@ -389,6 +387,8 @@ function maps.cyber_dome(generator)
    for i=0, Map.data.max_crowd_density do
       Chara.generate_from_map()
    end
+
+   generator.place_player()
 end
 
 function maps.larna(generator)
@@ -762,7 +762,7 @@ function maps.lumiest_sewer(generator)
    Map.data.is_indoors = true
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
-   Map.data.bgm = 61
+   Map.data.bgm = "core.mcPuti"
    Map.data.should_regenerate = false
    generator.set_name(I18N.get("core.locale.map.unique.the_sewer.name"))
 
@@ -846,8 +846,8 @@ function maps.battle_field(generator)
 
    local enemies = {}
 
-   for chara in Chara.iter(57, 245) do
-      if Chara.is_alive(chara) and chara:get_flag("IsQuestTarget") then
+   for _, chara in Chara.iter(57, 245) do
+      if Chara.is_alive(chara) and Chara.flag(chara, "IsQuestTarget") then
          enemies[#enemies+1] = chara
       end
    end
@@ -998,7 +998,7 @@ function maps.fighters_guild(generator)
       { 28, 10, "core.healer", { role = 12 } },
       { 15, 10, "core.trainer", { role = 7, _name = "core.locale.chara.job.trainer" } },
       { 14, 18, "core.wizard", { role = 5 } },
-      { 29, 15, "core.shopkeeper", { role = 1001, shop_rank = 12, "core.locale.chara.job.blacksmith" } },
+      { 29, 15, "core.shopkeeper", { role = 1001, shop_rank = 12, _name = "core.locale.chara.job.blacksmith" } },
       { -3, 0, "core.fighter_guild_member", { _count = 16 } },
    }
 
@@ -1116,7 +1116,7 @@ function maps.test_site_vernis(generator)
    Map.data.is_indoors = true
    Map.data.type = "Dungeon"
    Map.data.max_crowd_density = 0
-   Map.data.bgm = 61
+   Map.data.bgm = "core.mcPuti"
    Map.data.should_regenerate = false
    generator.set_name(I18N.get("core.locale.map.unique.test_site.name"))
 
@@ -1207,10 +1207,9 @@ function maps.fields(generator)
    Map.data.is_user_map = false
    generator.create(34, 22)
 
-   for i=0, Map.height() do
-      for j=0, Map.width() do
-         -- TODO
-         Map.set_tile(i, j, TILE_DEFAULT)
+   for j=0, Map.height()-1 do
+      for i=0, Map.width()-1 do
+         Map.set_tile(i, j, Map.generate_tile("Normal"))
       end
    end
 
@@ -1257,13 +1256,13 @@ function maps.lesimas(generator)
    if generator.is_deepest_level() then
       generator.load_custom("lesimas_1")
 
-      Map.data.max_crowd_density = 0;
-      Map.data.is_temporary = true;
-      Map.data.bgm = "core.mcLastBoss";
+      Map.data.max_crowd_density = 0
+      Map.data.is_temporary = true
+      Map.data.bgm = "core.mcLastBoss"
       generator.set_name(I18N.get_enum_property("core.locale.map.unique", "the_depth", 3))
 
       generator.set_stair_up_pos(16, 13)
-      generator.place_player();
+      generator.place_player()
 
       if Chara.kill_count("core.zeome") == 0 then
          Chara.create(16, 6, "core.zeome")
@@ -1348,6 +1347,8 @@ function maps.quest(generator)
    generator.generate_nefia()
 end
 
+-- Hardcoded behavior:
+-- - handling of dungeon lord at lowest level
 function maps.random_dungeon(generator)
    generator.generate_nefia()
 end
