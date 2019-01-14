@@ -28,7 +28,7 @@ MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
     DATA_OPT_OR(quest_town_id, int, 0);
 
     DATA_OPT_OR(can_return_to, bool, false);
-    DATA_OPT_OR(is_home, bool, false);
+    DATA_OPT_OR(is_fixed, bool, true);
     DATA_OPT_OR(reveals_fog, bool, false);
     DATA_OPT_OR(shows_floor_count_in_name, bool, false);
     DATA_OPT_OR(prevents_teleport, bool, false);
@@ -59,7 +59,7 @@ MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
                       quest_town_id,
 
                       can_return_to,
-                      is_home,
+                      is_fixed,
                       reveals_fog,
                       shows_floor_count_in_name,
                       prevents_teleport,
