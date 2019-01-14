@@ -25,7 +25,7 @@ struct MapDefData
     int quest_town_id{};
 
     bool can_return_to{};
-    bool is_home{};
+    bool is_fixed{};
     bool reveals_fog{};
     bool shows_floor_count_in_name{};
     bool prevents_teleport{};

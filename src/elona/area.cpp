@@ -172,7 +172,7 @@ void initialize_adata()
 
         // Only set position/tiles of Your Home if it has not been upgraded. All
         // other maps all have fixed positions/tiles.
-        bool is_fixed_in_place = !map.is_home ||
+        bool is_fixed_in_place = map.is_fixed ||
             (map_id == static_cast<int>(mdata_t::MapId::your_home) &&
              game_data.home_scale == 0);
         if (is_fixed_in_place)

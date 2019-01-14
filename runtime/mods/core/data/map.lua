@@ -271,7 +271,7 @@ data:add_multi(
          -- Special case due to Your Home being able to change
          -- position/appearance, so those properties shouldn't be
          -- overwritten when all areas are refreshed.
-         is_home = true,
+         is_fixed = false,
       },
       {
          name = "show_house",
@@ -810,7 +810,7 @@ data:add_multi(
       {
          name = "museum",
          id = 101,
-         is_home = true,
+         is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
          is_indoor = true,
@@ -830,7 +830,7 @@ data:add_multi(
       {
          name = "shop",
          id = 102,
-         is_home = true,
+         is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
          is_indoor = true,
@@ -850,7 +850,7 @@ data:add_multi(
       {
          name = "crop",
          id = 103,
-         is_home = true,
+         is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
          is_indoor = true,
@@ -870,7 +870,7 @@ data:add_multi(
       {
          name = "storage_house",
          id = 104,
-         is_home = true,
+         is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
          is_indoor = true,
@@ -890,7 +890,7 @@ data:add_multi(
       {
          name = "ranch",
          id = 31,
-         is_home = true,
+         is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
          is_indoor = true,
@@ -910,9 +910,29 @@ data:add_multi(
       {
          name = "your_dungeon",
          id = 39,
-         is_home = true,
+         is_fixed = false,
 
          -- Dummy; they are overwritten when you build the building.
+         is_indoor = true,
+         appearance = 138,
+         base_turn_cost = 10000,
+         map_type = "PlayerOwned",
+         outer_map_position = { x = 0, y = 0 },
+         deepest_level = 1,
+         entrance_type = "South",
+         is_generated_every_time = false,
+         default_ai_calm = 1,
+         danger_level = 1,
+         tile_type = 3,
+         tile_set = "Normal",
+         outer_map = 4,
+      },
+      {
+         name = "random_dungeon",
+         id = 8,
+         is_fixed = false,
+
+         -- Dummy; they are overwritten when a dungeon is generated.
          is_indoor = true,
          appearance = 138,
          base_turn_cost = 10000,
