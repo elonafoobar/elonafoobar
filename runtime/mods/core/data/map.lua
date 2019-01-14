@@ -927,4 +927,24 @@ data:add_multi(
          tile_set = "Normal",
          outer_map = 4,
       },
+      {
+         name = "random_dungeon",
+         id = 8,
+         is_home = true,
+
+         -- Dummy; they are overwritten when a dungeon is generated.
+         is_indoor = true,
+         appearance = 138,
+         base_turn_cost = 10000,
+         map_type = "PlayerOwned",
+         outer_map_position = { x = 0, y = 0 },
+         deepest_level = 1,
+         entrance_type = "South",
+         is_generated_every_time = false,
+         default_ai_calm = 1,
+         danger_level = 1,
+         tile_type = 3,
+         tile_set = "Normal",
+         outer_map = 4,
+      },
 })
