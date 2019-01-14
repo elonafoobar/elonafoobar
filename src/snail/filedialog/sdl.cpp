@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <type_traits>
-#include <nfd.h>
+#include "../../thirdparty/nfd/nfd.h"
 #include "../../util/scope_guard.hpp"
 
 

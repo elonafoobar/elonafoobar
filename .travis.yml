@@ -1,36 +1,37 @@
 language: cpp
 
 matrix:
-    include:
-        - os: linux
-          env: BUILD_TYPE=linux
-          sudo: required
-          compiler: gcc-7
-          addons:
-              apt:
-                  config:
-                    retries: true
-                  update: true
-                  sources:
-                    - ubuntu-toolchain-r-test
-                  packages:
-                    - g++-7
-                    - cmake
-                    - zlib1g-dev
-                      # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
-        - os: osx
-          env: BUILD_TYPE=osx
-          compiler: clang
-        - os: linux
-          env: BUILD_TYPE=android
-          language: android
-          jdk: oraclejdk8
-          android:
-            components:
-              - tools
-              - platform-tools
-              - extra-google-m2repository
-              - extra-android-m2repository
+  include:
+    - os: linux
+      env: BUILD_TYPE=linux
+      sudo: required
+      compiler: gcc-7
+      addons:
+        apt:
+          config:
+            retries: true
+          update: true
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - cmake
+            - zlib1g-dev
+            - gtk+-3.0
+            # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
+    - os: osx
+      env: BUILD_TYPE=osx
+      compiler: clang
+    - os: linux
+      env: BUILD_TYPE=android
+      language: android
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - platform-tools
+          - extra-google-m2repository
+          - extra-android-m2repository
 
 env:
   global:
@@ -39,9 +40,9 @@ env:
     - MAKEFLAGS=-j8
 
 cache:
-    directories:
-        - $HOME/.ccache
-        - $HOME/download
+  directories:
+    - $HOME/.ccache
+    - $HOME/download
 
 before_install:
   - if [[ "$BUILD_TYPE" == "osx" ]]; then
@@ -50,29 +51,29 @@ before_install:
       brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua clang-format;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
-       export CC="gcc-7";
-       export CXX="g++-7";
-       gcc -v && g++ -v;
+      export CC="gcc-7";
+      export CXX="g++-7";
+      gcc -v && g++ -v;
     fi
   - if [[ "$BUILD_TYPE" == "android" ]]; then
-       yes | sdkmanager "ndk-bundle";
-       yes | sdkmanager "cmake;3.6.4111459";
-       yes | sdkmanager "lldb;3.1";
+      yes | sdkmanager "ndk-bundle";
+      yes | sdkmanager "cmake;3.6.4111459";
+      yes | sdkmanager "lldb;3.1";
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/before_install.sh"; fi
 
 install:
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
-       export CC="gcc-7";
-       export CXX="g++-7";
-       gcc -v && g++ -v;
+      export CC="gcc-7";
+      export CXX="g++-7";
+      gcc -v && g++ -v;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/install.sh"; fi
 
 before_script:
   - if [[ "$BUILD_TYPE" == "android" ]]; then
-       export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle;
-       (echo -e "ndk.dir=$ANDROID_NDK_HOME\nsdk.dir=$ANDROID_HOME" > "$TRAVIS_BUILD_DIR/android/local.properties");
+      export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle;
+      (echo -e "ndk.dir=$ANDROID_NDK_HOME\nsdk.dir=$ANDROID_HOME" > "$TRAVIS_BUILD_DIR/android/local.properties");
     fi
 
 script:
@@ -80,13 +81,13 @@ script:
       make format;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
-       export CC="gcc-7";
-       export CXX="g++-7";
-       export LD_LIBRARY_PATH="/usr/lib:$LD_LIBRARY_PATH";
-       export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
-       export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";
-       gcc -v && g++ -v;
-       export AUDIODEV=null;
+      export CC="gcc-7";
+      export CXX="g++-7";
+      export LD_LIBRARY_PATH="/usr/lib:$LD_LIBRARY_PATH";
+      export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
+      export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";
+      gcc -v && g++ -v;
+      export AUDIODEV=null;
     fi
   - env
   - cd "$TRAVIS_BUILD_DIR/deps"
@@ -95,19 +96,14 @@ script:
   - rm elona122.zip
   - cd "$TRAVIS_BUILD_DIR"
   - make clean
-  - mkdir -p "$TRAVIS_BUILD_DIR/bin";
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
-       make tests VERBOSE=1;
-       cd bin;
-       ./Elona_foobar --durations=yes;
+      make tests VERBOSE=1;
     elif [[ "$BUILD_TYPE" == "osx" ]]; then
-       make tests VERBOSE=1;
-       cd bin;
-       ./Elona_foobar --durations=yes;
+      make tests VERBOSE=1;
     elif [[ "$BUILD_TYPE" == "android" ]]; then
-       make android;
+      make android;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then ccache --show-stats; fi
 
 notifications:
-    email: false
+  email: false

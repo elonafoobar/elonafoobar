@@ -14,7 +14,7 @@
 ## Requirements
 
 * `make`
-* CMake
+* CMake 3.2 or later
 * C++ compiler which supports C++14
 * Boost
 * Lua 5.3
@@ -44,20 +44,20 @@
 ```
 brew install cmake boost sdl2 sdl2_ttf sdl2_mixer sdl2_image lua
 ```
-2. `cd path/to/Elona_foobar; make`
+2. `cd path/to/Elona_foobar; make build`
 
 
 ### Linux
 
 1. Install the required dependencies. For Arch Linux:
 ```
-sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer smpeg lua boost timidity++
+sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer gtk3 smpeg lua boost timidity++
 ```
 For systems with `apt`:
 ```
-sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-def smpeg timidity
+sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev gtk+-3.0 smpeg timidity
 ```
-2. `cd path/to/Elona_foobar; make`
+2. `cd path/to/Elona_foobar; make build`
 
 
 ### Windows
@@ -66,7 +66,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 2. Edit `Makefile.win` to point to your Boost install directory.
 3. Run `download.bat` inside the `deps` folder to download and extract the other dependencies to `deps\include`, `deps\lib` and `thirdparty\lib` (you have to have `7z.exe` and `patch.exe` on your `PATH`). This will also patch Lua for UTF-16 filename support.
 4. Open the `Developer Command Prompt for VS 2017`.
-5. `cd path/to/Elona_foobar & nmake -f Makefile.win`
+5. `cd path/to/Elona_foobar & nmake build -f Makefile.win`
 
 To debug with Visual Studio, open `bin\Elona_foobar.sln`.
 

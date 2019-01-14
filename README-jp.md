@@ -14,7 +14,7 @@
 ## 必要なもの
 
 * `make`
-* CMake
+* CMake 3.2以降
 * C++14をサポートするC++コンパイラ
 * Boost
 * Lua 5.3
@@ -43,20 +43,20 @@
 ```
 brew install cmake boost sdl2 sdl2_ttf sdl2_mixer sdl2_image lua
 ```
-2. `cd path/to/Elona_foobar; make`
+2. `cd path/to/Elona_foobar; make build`
 
 
 ### Linux
 
 1. 依存ライブラリをインストールしてください。Arch Linux用:
 ```
-sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer smpeg lua boost timidity++
+sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer gtk3 smpeg lua boost timidity++
 ```
 `apt`のあるLinux用:
 ```
-sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-def smpeg timidity
+sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev gtk+-3.0 smpeg timidity
 ```
-2. `cd path/to/Elona_foobar; make`
+2. `cd path/to/Elona_foobar; make build`
 
 
 ### Windows
@@ -65,7 +65,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 2. `Makefile.win`を編集し、Boostをインストールしたフォルダを指定してください。
 3. `deps\include`と`deps\lib`内に依存ライブラリを展開するために`deps`内にある`download.bat`を実行してください。(`7z.exe`を`PATH`が通ったフォルダに置いておく必要があります)
 4. `Developer Command Prompt for VS 2017`を開いてください。
-5. `cd path/to/Elona_foobar & nmake -f Makefile.win`
+5. `cd path/to/Elona_foobar & nmake build -f Makefile.win`
 
 Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を開いてください。
 
