@@ -337,9 +337,7 @@ else()
     list(APPEND DEBUG_OPTIONS
       "g"
       "O0"
-      )
-    list(APPEND EXTRA_DEFINES
-      "DEBUG"
+      "DDEBUG"
       )
     if(ELONA_BUILD_TARGET STREQUAL "BENCH")
       list(APPEND GENERAL_OPTIONS "g1")
