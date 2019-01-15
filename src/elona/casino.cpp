@@ -101,8 +101,7 @@ label_18671_internal:
             font(16 - en * 2);
             text_color = snail::Color{250, 240, 230};
         }
-        pos(170, cnt * 20 + 120 + txtadvmsgfix);
-        mes(s, text_color);
+        mes(170, cnt * 20 + 120 + txtadvmsgfix, s, text_color);
     }
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -1004,11 +1003,13 @@ bool casino_blackjack()
             cardplayeradd(1, 220, 240);
         }
         font(14 - en * 2, snail::Font::Style::bold);
-        pos(152, 154);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"),
+        mes(152,
+            154,
+            i18n::s.get("core.locale.casino.blackjack.game.dealer"),
             {255, 255, 255});
-        pos(152, 270);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.you"),
+        mes(152,
+            270,
+            i18n::s.get("core.locale.casino.blackjack.game.you"),
             {255, 255, 255});
         showcardpile();
         showcardholder();

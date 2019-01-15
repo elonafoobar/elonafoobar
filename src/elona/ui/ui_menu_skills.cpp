@@ -159,15 +159,15 @@ void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)
 void UIMenuSkills::_draw_spell_cost(int cnt, int skill_id)
 {
     std::string spell_cost = ""s + the_ability_db[skill_id]->cost + u8" Sp"s;
-    pos(wx + 288 - strlen_u(spell_cost) * 7, wy + 66 + cnt * 19 + 2);
-    mes(spell_cost);
+    mes(wx + 288 - strlen_u(spell_cost) * 7,
+        wy + 66 + cnt * 19 + 2,
+        spell_cost);
 }
 
 void UIMenuSkills::_draw_spell_desc_and_power(int cnt, int skill_id)
 {
     std::string spell_power_raw = make_spell_description(skill_id);
-    pos(wx + 325, wy + 66 + cnt * 19 + 2);
-    mes(strmid(spell_power_raw, 0, 34));
+    mes(wx + 325, wy + 66 + cnt * 19 + 2, strmid(spell_power_raw, 0, 34));
 }
 
 void UIMenuSkills::_draw_single_list_entry(int cnt, int skill_id)

@@ -29,7 +29,7 @@ inline T clamp(const T& x, const T& min, const T& max)
 }
 
 int timeGetTime();
-void mes(const std::string& text, const snail::Color& color);
+void mes(int x, int y, const std::string& text, const snail::Color& color);
 void mesbox(std::string& buffer, int keywait, bool text);
 void picload(BasicImage& img, int mode);
 void pos(int x, int y);

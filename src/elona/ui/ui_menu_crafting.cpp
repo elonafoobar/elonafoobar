@@ -185,12 +185,11 @@ void UIMenuCrafting::_draw_recipe_desc(const CraftingRecipe& recipe)
     desc += u8" "s + recipe.required_skill_level + u8"("s +
         sdata(recipe.skill_used, 0) + u8")"s;
 
-    pos(wx + 37, wy + 288);
     const auto text_color =
         recipe.required_skill_level <= sdata(recipe.skill_used, 0)
         ? snail::Color{30, 30, 200}
         : snail::Color{200, 30, 30};
-    mes(desc + u8" "s, text_color);
+    mes(wx + 37, wy + 288, desc + u8" "s, text_color);
 }
 
 void UIMenuCrafting::_draw_single_recipe_required_material(
@@ -201,11 +200,13 @@ void UIMenuCrafting::_draw_single_recipe_required_material(
         i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount +
         u8"("s + mat(required_mat.id) + u8")"s;
 
-    pos(wx + 37 + mat_index % 3 * 192, wy + 334 + mat_index / 3 * 16);
     const auto text_color = mat(required_mat.id) >= required_mat.amount
         ? snail::Color{30, 30, 200}
         : snail::Color{200, 30, 30};
-    mes(mat_desc, text_color);
+    mes(wx + 37 + mat_index % 3 * 192,
+        wy + 334 + mat_index / 3 * 16,
+        mat_desc,
+        text_color);
 }
 
 void UIMenuCrafting::_draw_recipe_required_materials(
@@ -252,8 +253,7 @@ void UIMenuCrafting::_draw_single_list_entry(
         0,
         text_color);
 
-    pos(wx + 308, wy + 66 + cnt * 19 + 2);
-    mes(item_make, text_color);
+    mes(wx + 308, wy + 66 + cnt * 19 + 2, item_make, text_color);
 
     draw_item_material(ipicref(item_id), wx + 37, wy + 69 + cnt * 19 + 2);
 }

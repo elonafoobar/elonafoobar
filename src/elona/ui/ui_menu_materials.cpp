@@ -103,8 +103,7 @@ void UIMenuMaterials::_draw_single_list_entry_name(int cnt, int list_item)
 void UIMenuMaterials::_draw_single_list_entry_desc(int cnt, int list_item)
 {
     std::string mat_desc = matdesc(list_item);
-    pos(wx + 308, wy + 66 + cnt * 19 + 2);
-    mes(mat_desc);
+    mes(wx + 308, wy + 66 + cnt * 19 + 2, mat_desc);
 }
 
 void UIMenuMaterials::_draw_single_list_entry(int cnt, int list_item)

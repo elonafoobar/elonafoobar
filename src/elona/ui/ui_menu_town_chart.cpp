@@ -64,8 +64,9 @@ void UIMenuTownChart::draw()
         game_data.current_dungeon_level != 1)
     {
         font(14 - en * 2);
-        pos(wx + 40, wy + 50);
-        mes(i18n::s.get("core.locale.ui.town_chart.no_economy"));
+        mes(wx + 40,
+            wy + 50,
+            i18n::s.get("core.locale.ui.town_chart.no_economy"));
     }
     else
     {

@@ -192,9 +192,7 @@ void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)
         {
             _draw_arrows(item_pos);
         }
-        pos(wx + 250, wy + 66 + cnt * 19);
-
-        mes(item->get_message());
+        mes(wx + 250, wy + 66 + cnt * 19, item->get_message());
 
         item_pos++;
     }

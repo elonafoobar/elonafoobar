@@ -154,19 +154,20 @@ void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
 {
     std::string spell_cost = ""s + calcspellcostmp(spell_id, cc) + u8" ("s +
         spell((spell_id - 400)) + u8")"s;
-    pos(wx + 328 - strlen_u(spell_cost) * 7, wy + 66 + cnt * 19 + 2);
-    mes(spell_cost);
+    mes(wx + 328 - strlen_u(spell_cost) * 7,
+        wy + 66 + cnt * 19 + 2,
+        spell_cost);
 }
 
 void UIMenuSpells::_draw_spell_power(int cnt, int spell_id)
 {
     std::string spell_power_raw = make_spell_description(spell_id);
     std::string spell_power = strmid(spell_power_raw, 0, 40);
-    pos(wx + 340, wy + 66 + cnt * 19 + 2);
-    mes(""s + sdata(spell_id, cc) + u8"/"s + calcspellfail(spell_id, cc) +
-        u8"%"s);
-    pos(wx + 420, wy + 66 + cnt * 19 + 2);
-    mes(spell_power);
+    mes(wx + 340,
+        wy + 66 + cnt * 19 + 2,
+        ""s + sdata(spell_id, cc) + u8"/"s + calcspellfail(spell_id, cc) +
+            u8"%"s);
+    mes(wx + 420, wy + 66 + cnt * 19 + 2, spell_power);
 }
 
 void UIMenuSpells::_draw_single_list_entry(int cnt, int spell_id)

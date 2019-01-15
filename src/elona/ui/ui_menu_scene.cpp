@@ -119,11 +119,9 @@ void UIMenuScene::_draw_title()
     font(
         12 - en * 2,
         snail::Font::Style::italic | snail::Font::Style::underline);
-    pos(wx + 90, wy + 50);
-    mes(u8"Elona - Scene playback"s);
+    mes(wx + 90, wy + 50, u8"Elona - Scene playback"s);
     font(12 - en * 2);
-    pos(wx + 390, wy + 50);
-    mes(i18n::s.get("core.locale.ui.scene.you_can_play"));
+    mes(wx + 390, wy + 50, i18n::s.get("core.locale.ui.scene.you_can_play"));
 }
 
 void UIMenuScene::_draw_list_entry(int cnt, int list_item)
@@ -154,12 +152,10 @@ void UIMenuScene::_draw_list_entries()
 void UIMenuScene::_draw_more()
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(wx + 500, wy + 375);
-    mes(u8"- "s + (page + 1) + u8" -"s);
+    mes(wx + 500, wy + 375, u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)
     {
-        pos(wx + 590, wy + 375);
-        mes(u8"(more)"s);
+        mes(wx + 590, wy + 375, u8"(more)"s);
     }
 }
 

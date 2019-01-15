@@ -76,17 +76,17 @@ void update_screen_hud()
         gcopy(3, cnt * 16, 376, 16, 16);
     }
     font(12 + sizefix - en * 2);
-    pos(inf_radarw + 24, inf_bary + 3 + vfix - en);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
-        mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
+        mes(inf_radarw + 24,
+            inf_bary + 3 + vfix - en,
+            cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
     }
     else
     {
-        mes(cnven(mdatan(0)));
+        mes(inf_radarw + 24, inf_bary + 3 + vfix - en, cnven(mdatan(0)));
     }
-    pos(inf_radarw + 114, inf_bary + 3 + vfix - en);
-    mes(maplevel());
+    mes(inf_radarw + 114, inf_bary + 3 + vfix - en, maplevel());
 }
 
 
@@ -419,7 +419,7 @@ void render_basic_attributes_and_pv_dv()
             const auto text_color = cdata.player().attr_adjs[i] < 0
                 ? snail::Color{200, 0, 0}
                 : snail::Color{0, 0, 0};
-            mes(std::to_string(sdata(10 + i, 0)), text_color);
+            mes(x, y, std::to_string(sdata(10 + i, 0)), text_color);
         }
         else if (i == 8)
         {
@@ -439,14 +439,16 @@ void render_basic_attributes_and_pv_dv()
             {
                 text_color = snail::Color{0, 0, 0};
             }
-            mes(std::to_string(gspd), text_color);
+            mes(x + 8, y, std::to_string(gspd), text_color);
         }
         else
         {
             // PV/DV
             pos(x + 14, y);
             gcopy(3, 0, 440, 64, 16);
-            mes(""s + cdata.player().dv + u8"/"s + cdata.player().pv);
+            mes(x + 14,
+                y,
+                ""s + cdata.player().dv + u8"/"s + cdata.player().pv);
         }
     }
 }
@@ -521,11 +523,9 @@ void render_buffs()
         pos(x, y);
         gcopy(5, buff.id * 32, 1120, 32, 32);
         // Turns
-        pos(x + 3, y + 19);
-        mes(std::to_string(buff.turns));
+        mes(x + 3, y + 19, std::to_string(buff.turns));
         // Turns
-        pos(x + 2, y + 18);
-        mes(std::to_string(buff.turns), {255, 255, 255});
+        mes(x + 2, y + 18, std::to_string(buff.turns), {255, 255, 255});
 
         y -= 32;
     }
@@ -552,9 +552,10 @@ void render_clock()
         info.height,
         game_data.date.minute * 6);
 
-    pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
-        game_data.date.day);
+    mes(inf_clockw - 3,
+        inf_clocky + 17 + vfix,
+        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
+            game_data.date.day);
     bmes(
         i18n::s.get_enum("core.locale.ui.time", game_data.date.hour / 4) +
             u8" "s +
@@ -650,9 +651,8 @@ int render_one_status_ailment(
 
     pos(x, y);
     gcopy(3, 0, 416, 50 + en * 30, 15);
-    pos(x + 6, y + vfix + 1);
     const auto text_color = get_color(value);
-    mes(get_text(value), text_color);
+    mes(x + 6, y + vfix + 1, get_text(value), text_color);
 
     return y - 20;
 }
@@ -1225,11 +1225,9 @@ Position gmes(
         }
         if (shadow)
         {
-            elona::pos(x + 1, y + 1);
-            mes(m_, {180, 160, 140});
+            elona::mes(x + 1, y + 1, m_, {180, 160, 140});
         }
-        elona::pos(x, y);
-        mes(m_, text_color);
+        elona::mes(x, y, m_, text_color);
         x += font_size / 2 * (byte == 1 ? 1 : 2);
     }
 
@@ -1374,8 +1372,7 @@ void screen_txtadv()
             sx = 220;
             sy = 10 + i * 14;
         }
-        pos(sx, sy);
-        mes(atxinfon(i), {250, 250, 250});
+        mes(sx, sy, atxinfon(i), {250, 250, 250});
     }
     txtadvscreenupdate = 1;
 }
@@ -1547,8 +1544,7 @@ void ui_draw_caption(const std::string& text)
         pos(cnt * 128 + msgx, msgy + 22);
         gcopy(3, 672, 477, ap, 2);
     }
-    pos(msgx + 18, msgy + vfix + 4);
-    mes(text, {245, 245, 245});
+    mes(msgx + 18, msgy + vfix + 4, text, {245, 245, 245});
     gmode(2);
 
     // __s__
@@ -2172,15 +2168,14 @@ void ui_display_window(
         {255, 255, 255},
         {20, 10, 0});
     font(12 + sizefix - en * 2);
-    pos(x + 58 + x_offset, y + height - 43 - height % 8);
-    mes(key_help);
+    mes(x + 58 + x_offset, y + height - 43 - height % 8, key_help);
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
-            y + height - 65 - height % 8);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
+            y + height - 65 - height % 8,
+            page_str);
 
         // __s__
         elona::s(0) = title;
@@ -2213,16 +2208,16 @@ void ui_display_window2(
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (tips != ""s)
     {
-        pos(x + width - strlen_u(tips) * 7 - 140,
-            y + height - 24 - height % 8 + 0);
-        mes(tips);
+        mes(x + width - strlen_u(tips) * 7 - 140,
+            y + height - 24 - height % 8 + 0,
+            tips);
     }
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        pos(x + width - strlen_u(page_str) * 7 - 40,
-            y + height - 24 - height % 8 + 0);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 24 - height % 8 + 0,
+            page_str);
 
         // __s__
         elona::s(0) = page_str;
@@ -2239,8 +2234,9 @@ void ui_display_window2(
 void display_note(const std::string& text, int x_offset)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(wx + ww - strlen_u(text) * 7 - 140 - x_offset, wy + wh - 65 - wh % 8);
-    mes(text);
+    mes(wx + ww - strlen_u(text) * 7 - 140 - x_offset,
+        wy + wh - 65 - wh % 8,
+        text);
 }
 
 
@@ -2249,8 +2245,7 @@ void display_topic(const std::string& topic, int x, int y)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     draw("topic_icon", x, y + 7);
-    pos(x + 26, y + vfix + 8);
-    mes(topic);
+    mes(x + 26, y + vfix + 8, topic);
     line(x + 22, y + 21, x + strlen_u(topic) * 7 + 36, y + 21);
 }
 
@@ -2440,8 +2435,7 @@ void cs_list(
         cs_posbk_h = 19;
     }
 
-    pos(x + 4 + x_offset, y + vfix + 3);
-    mes(text, text_color);
+    mes(x + 4 + x_offset, y + vfix + 3, text, text_color);
 }
 
 
@@ -2500,15 +2494,14 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
         y + height - 69 - height % 8,
         {224, 213, 191});
     font(12 + sizefix - en * 2);
-    pos(x + 68, y + height - 63 - height % 8);
-    mes(hint);
+    mes(x + 68, y + height - 63 - height % 8, hint);
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(x + width - strlen_u(page_str) * 7 - 40,
-            y + height - 63 - height % 8);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 63 - height % 8,
+            page_str);
 
         // __s__
         elona::s(0) = page_str;

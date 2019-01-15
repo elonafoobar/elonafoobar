@@ -15,17 +15,14 @@ static void _show_economy_info(
     int value,
     int prev_value)
 {
-    pos(x, y);
-    mes(text);
+    mes(x, y, text);
 
-    pos(x + 130, y);
-    mes(""s + value);
+    mes(x + 130, y, ""s + value);
 
     const auto diff = value - prev_value;
-    pos(x + 130 + ginfo(14) + 12, y);
     const auto text_color =
         diff >= 0 ? snail::Color{0, 0, 150} : snail::Color{150, 0, 0};
-    mes(u8"("s + diff + u8")"s, text_color);
+    mes(x + 130 + ginfo(14) + 12, y, u8"("s + diff + u8")"s, text_color);
 }
 
 bool UIMenuTownEconomy::init()
@@ -148,8 +145,9 @@ void UIMenuTownEconomy::draw()
     }
     else
     {
-        pos(wx + 40, wy + 60);
-        mes(i18n::s.get("core.locale.ui.city_chart.no_economy"));
+        mes(wx + 40,
+            wy + 60,
+            i18n::s.get("core.locale.ui.city_chart.no_economy"));
     }
 }
 

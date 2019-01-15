@@ -147,9 +147,10 @@ bool _magic_1136()
             {
                 if (y == inv[ci].param2)
                 {
-                    pos(sx, sy);
                     font(40 - en * 2, snail::Font::Style::italic);
-                    mes(i18n::s.get("core.locale.magic.map.mark"),
+                    mes(sx,
+                        sy,
+                        i18n::s.get("core.locale.magic.map.mark"),
                         {255, 20, 20});
                 }
             }

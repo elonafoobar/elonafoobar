@@ -114,13 +114,15 @@ void UIMenuCharamakeAttributes::_draw_window_topic()
 void UIMenuCharamakeAttributes::_draw_window_desc(int locks_left)
 {
     font(12 + sizefix - en * 2);
-    pos(wx + 175, wy + 52);
-    mes(i18n::s.get(
-        "core.locale.chara_making.roll_attributes.locked_items_desc"));
+    mes(wx + 175,
+        wy + 52,
+        i18n::s.get(
+            "core.locale.chara_making.roll_attributes.locked_items_desc"));
     font(13 - en * 2, snail::Font::Style::bold);
-    pos(wx + 180, wy + 84);
-    mes(i18n::s.get("core.locale.chara_making.roll_attributes.locks_left") +
-        u8": "s + locks_left);
+    mes(wx + 180,
+        wy + 84,
+        i18n::s.get("core.locale.chara_making.roll_attributes.locks_left") +
+            u8": "s + locks_left);
 }
 
 void UIMenuCharamakeAttributes::_draw_window(int locks_left)
@@ -133,8 +135,7 @@ void UIMenuCharamakeAttributes::_draw_window(int locks_left)
 void UIMenuCharamakeAttributes::_draw_attribute_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(wx + 240, wy + 66 + cnt * 23 + 2);
-    mes(u8"Locked!"s, {20, 20, 140});
+    mes(wx + 240, wy + 66 + cnt * 23 + 2, u8"Locked!"s, {20, 20, 140});
 }
 
 void UIMenuCharamakeAttributes::_draw_attribute_value(
@@ -148,8 +149,7 @@ void UIMenuCharamakeAttributes::_draw_attribute_value(
     gmode(2);
     gcopy_c(1, (cnt - 2) * inf_tiles, 672, inf_tiles, inf_tiles);
 
-    pos(wx + 210, wy + 66 + cnt * 23);
-    mes(""s + list_value / 1000000);
+    mes(wx + 210, wy + 66 + cnt * 23, ""s + list_value / 1000000);
 
     if (is_locked)
     {

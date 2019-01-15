@@ -272,11 +272,13 @@ void UIMenuKeybindings::_draw_keybind_entry(int cnt, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + _x_align_action_name, wy + 66 + cnt * 19 - 1);
 
-    pos(wx + _x_align_binding_primary, wy + 66 + cnt * 19 + 2);
-    mes(listn(2, pagesize * page + cnt));
+    mes(wx + _x_align_binding_primary,
+        wy + 66 + cnt * 19 + 2,
+        listn(2, pagesize * page + cnt));
 
-    pos(wx + _x_align_binding_alternate, wy + 66 + cnt * 19 + 2);
-    mes(listn(3, pagesize * page + cnt));
+    mes(wx + _x_align_binding_alternate,
+        wy + 66 + cnt * 19 + 2,
+        listn(3, pagesize * page + cnt));
 }
 
 void UIMenuKeybindings::_draw_text_entry(int cnt, const std::string& text)

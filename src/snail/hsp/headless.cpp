@@ -13,7 +13,7 @@ int timeGetTime()
     return 0;
 }
 
-void mes(const std::string&, const snail::Color&)
+void mes(int, int, const std::string&, const snail::Color&)
 {
 }
 

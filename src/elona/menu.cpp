@@ -1125,10 +1125,11 @@ void show_weapon_dice(int val0)
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (val0 == 0)
     {
-        pos(wx + 590, wy + 281 + p(2) * 16);
-        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.hit"), {20, 10, 0});
-        pos(wx + 417, wy + 281 + p(2) * 16);
-        mes(s(1), {20, 10, 0});
+        mes(wx + 590,
+            wy + 281 + p(2) * 16,
+            i18n::s.get("core.locale.ui.chara_sheet.damage.hit"),
+            {20, 10, 0});
+        mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
     attackrange = 0;
     if (the_item_db[inv[cw].id]->category == 24000) // TODO coupling
@@ -1143,8 +1144,7 @@ void show_weapon_dice(int val0)
     s = ""s + tohit + u8"%"s;
     if (val0 == 0)
     {
-        pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
-        mes(s);
+        mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, s);
     }
     else
     {
@@ -1157,8 +1157,7 @@ void show_weapon_dice(int val0)
             3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
     if (val0 == 0)
     {
-        pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
-        mes(s);
+        mes(wx + 460 + en * 8, wy + 279 + p(2) * 16, s);
     }
     else
     {

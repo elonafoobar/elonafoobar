@@ -127,11 +127,9 @@ void UIMenuGameHelp::_update_key_list()
     for (int cnt = 0; cnt < 12; ++cnt)
     {
         font(13 - en * 2);
-        pos(x + 38 + cnt / 6 * 290, y + 58 + cnt % 6 * 14);
-        mes(s(cnt * 2));
+        mes(x + 38 + cnt / 6 * 290, y + 58 + cnt % 6 * 14, s(cnt * 2));
         font(15 - en * 2);
-        pos(x + 248 + cnt / 6 * 290, y + 57 + cnt % 6 * 14);
-        mes(s(cnt * 2 + 1));
+        mes(x + 248 + cnt / 6 * 290, y + 57 + cnt % 6 * 14, s(cnt * 2 + 1));
     }
     s(0) = i18n::s.get("core.locale.ui.manual.keys.action.search");
     s(1) = key_search;
@@ -163,11 +161,9 @@ void UIMenuGameHelp::_update_key_list()
     for (int cnt = 0; cnt < 12; ++cnt)
     {
         font(13 - en * 2);
-        pos(x + 38 + cnt / 6 * 290, y + 170 + cnt % 6 * 14);
-        mes(s(cnt * 2));
+        mes(x + 38 + cnt / 6 * 290, y + 170 + cnt % 6 * 14, s(cnt * 2));
         font(15 - en * 2);
-        pos(x + 248 + cnt / 6 * 290, y + 169 + cnt % 6 * 14);
-        mes(s(cnt * 2 + 1));
+        mes(x + 248 + cnt / 6 * 290, y + 169 + cnt % 6 * 14, s(cnt * 2 + 1));
     }
     s(0) = i18n::s.get("core.locale.ui.manual.keys.info.chara");
     s(1) = key_charainfo;
@@ -185,11 +181,9 @@ void UIMenuGameHelp::_update_key_list()
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         font(13 - en * 2);
-        pos(x + 38 + cnt / 3 * 290, y + 284 + cnt % 3 * 14);
-        mes(s(cnt * 2));
+        mes(x + 38 + cnt / 3 * 290, y + 284 + cnt % 3 * 14, s(cnt * 2));
         font(15 - en * 2);
-        pos(x + 248 + cnt / 3 * 290, y + 283 + cnt % 3 * 14);
-        mes(s(cnt * 2 + 1));
+        mes(x + 248 + cnt / 3 * 290, y + 283 + cnt % 3 * 14, s(cnt * 2 + 1));
     }
     s(0) = i18n::s.get("core.locale.ui.manual.keys.other.save");
     s(1) = key_save;
@@ -208,19 +202,19 @@ void UIMenuGameHelp::_update_key_list()
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         font(13 - en * 2);
-        pos(x + 38 + cnt / 3 * 290, y + 356 + cnt % 3 * 14);
-        mes(s(cnt * 2));
+        mes(x + 38 + cnt / 3 * 290, y + 356 + cnt % 3 * 14, s(cnt * 2));
         font(15 - en * 2);
-        pos(x + 248 + cnt / 3 * 290, y + 355 + cnt % 3 * 14);
-        mes(s(cnt * 2 + 1));
+        mes(x + 248 + cnt / 3 * 290, y + 355 + cnt % 3 * 14, s(cnt * 2 + 1));
     }
     font(13 - en * 2);
-    pos(x + 38, y + 408);
-    mes(u8"F9 "s +
-        i18n::s.get("core.locale.ui.manual.keys.other.hide_interface") +
-        u8"F11  " +
-        i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet") +
-        u8"F12  " + i18n::s.get("core.locale.ui.manual.keys.other.console"));
+    mes(x + 38,
+        y + 408,
+        u8"F9 "s +
+            i18n::s.get("core.locale.ui.manual.keys.other.hide_interface") +
+            u8"F11  " +
+            i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet") +
+            u8"F12  " +
+            i18n::s.get("core.locale.ui.manual.keys.other.console"));
 }
 
 void UIMenuGameHelp::_update_regular_pages()

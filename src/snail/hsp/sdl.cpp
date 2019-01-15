@@ -311,7 +311,7 @@ int timeGetTime()
 
 
 
-void mes(const std::string& text, const snail::Color& color)
+void mes(int x, int y, const std::string& text, const snail::Color& color)
 {
     constexpr size_t tab_width = 4;
 
@@ -325,19 +325,11 @@ void mes(const std::string& text, const snail::Color& color)
 
     if (copy.size() >= 25 /* TODO */)
     {
-        renderer.render_multiline_text(
-            copy,
-            detail::current_tex_buffer().x,
-            detail::current_tex_buffer().y,
-            color);
+        renderer.render_multiline_text(copy, x, y, color);
     }
     else
     {
-        renderer.render_text(
-            copy,
-            detail::current_tex_buffer().x,
-            detail::current_tex_buffer().y,
-            color);
+        renderer.render_text(copy, x, y, color);
     }
 }
 

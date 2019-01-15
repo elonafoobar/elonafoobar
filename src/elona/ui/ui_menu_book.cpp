@@ -88,13 +88,11 @@ void UIMenuBook::draw()
         {
             font(12 + sizefix - en * 2);
         }
-        pos(x, y);
-        mes(s);
+        mes(x, y, s);
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);
-            pos(x + 90, y + 330);
-            mes(u8"- "s + (p / 20 + 1) + u8" -"s);
+            mes(x + 90, y + 330, u8"- "s + (p / 20 + 1) + u8" -"s);
         }
     }
 }

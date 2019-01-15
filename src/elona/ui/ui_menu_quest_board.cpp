@@ -180,16 +180,14 @@ void UIMenuQuestBoard::_draw_list_entry_title(int cnt, const std::string& title)
 void UIMenuQuestBoard::_draw_list_entry_date(const std::string& date_text)
 {
     std::string quest_date = u8"("s + date_text + u8")"s;
-    pos(wx + 344, y + 2);
-    mes(quest_date);
+    mes(wx + 344, y + 2, quest_date);
 }
 
 void UIMenuQuestBoard::_draw_list_entry_giver_name(int chara_index)
 {
     std::string name = cdatan(0, chara_index);
     cutname(name, 20);
-    pos(wx + 392, y + 2);
-    mes(name);
+    mes(wx + 392, y + 2, name);
 }
 
 void UIMenuQuestBoard::_draw_list_entry_difficulty(
@@ -209,14 +207,17 @@ void UIMenuQuestBoard::_draw_list_entry_difficulty(
         }
         for (int cnt = 0, cnt_end = (difficulty_stars); cnt < cnt_end; ++cnt)
         {
-            pos(wx + 270 + cnt % 5 * 13, y + dy + cnt / 5 * 8 + 2);
-            mes(i18n::s.get("core.locale.ui.board.difficulty"), col);
+            mes(wx + 270 + cnt % 5 * 13,
+                y + dy + cnt / 5 * 8 + 2,
+                i18n::s.get("core.locale.ui.board.difficulty"),
+                col);
         }
     }
     else
     {
-        pos(wx + 270, y + 2);
-        mes(i18n::s.get(
+        mes(wx + 270,
+            y + 2,
+            i18n::s.get(
                 "core.locale.ui.board.difficulty_counter", difficulty_stars),
             col);
     }
@@ -226,8 +227,7 @@ void UIMenuQuestBoard::_draw_list_entry_desc()
 {
     talk_conv(buff, 70);
     font(13 - en * 2);
-    pos(wx + 20, y + 20);
-    mes(buff);
+    mes(wx + 20, y + 20, buff);
 }
 
 void UIMenuQuestBoard::_draw_list_entry(int cnt, int rq, int tc)

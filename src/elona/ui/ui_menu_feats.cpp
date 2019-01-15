@@ -256,9 +256,7 @@ void UIMenuFeats::_draw_single_list_entry_name(
     int cnt,
     const snail::Color& text_color)
 {
-    pos(wx + 270, wy + 66 + cnt * 19 + 2);
-
-    mes(traitrefn(2), text_color);
+    mes(wx + 270, wy + 66 + cnt * 19 + 2, traitrefn(2), text_color);
 }
 
 void UIMenuFeats::_draw_single_list_entry_text(

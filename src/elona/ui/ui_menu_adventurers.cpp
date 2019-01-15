@@ -96,9 +96,10 @@ _draw_list_entry_pic_and_rank(int cnt, const Character& chara, int _p)
 {
     draw_chara_scale_height(chara, wx + 40, wy + 74 + cnt * 19 - 8);
 
-    pos(wx + 84, wy + 66 + cnt * 19 + 2);
-    mes(cnvrank(_p + 1) +
-        i18n::s.get("core.locale.ui.adventurers.rank_counter"));
+    mes(wx + 84,
+        wy + 66 + cnt * 19 + 2,
+        cnvrank(_p + 1) +
+            i18n::s.get("core.locale.ui.adventurers.rank_counter"));
 }
 
 void UIMenuAdventurers::_draw_list_entry_name(int cnt, const Character& chara)
@@ -113,8 +114,7 @@ void UIMenuAdventurers::_draw_list_entry_name(int cnt, const Character& chara)
 void UIMenuAdventurers::_draw_list_entry_level(int cnt, const Character& chara)
 {
     std::string level = ""s + chara.fame + u8"("s + chara.level + u8")"s;
-    pos(wx + 402 - strlen_u(level) * 7, wy + 66 + cnt * 19 + 2);
-    mes(level);
+    mes(wx + 402 - strlen_u(level) * 7, wy + 66 + cnt * 19 + 2, level);
 }
 
 void UIMenuAdventurers::_draw_list_entry_map_name(
@@ -132,8 +132,7 @@ void UIMenuAdventurers::_draw_list_entry_map_name(
         map_name = i18n::s.get("core.locale.ui.adventurers.hospital");
     }
 
-    pos(wx + 435, wy + 66 + cnt * 19 + 2);
-    mes(map_name);
+    mes(wx + 435, wy + 66 + cnt * 19 + 2, map_name);
 }
 
 void UIMenuAdventurers::_draw_list_entry(

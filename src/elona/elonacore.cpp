@@ -12602,25 +12602,31 @@ void conquer_lesimas()
     display_topic(
         i18n::s.get("core.locale.win.window.caption"), wx + 28, wy + 40);
     font(14 - en * 2);
-    pos(wx + 40, wy + 76);
-    mes(i18n::s.get("core.locale.win.window.arrived_at_tyris", 517, 8, 12));
-    pos(wx + 40, wy + 116);
-    mes(i18n::s.get(
-        "core.locale.win.window.have_killed",
-        game_data.deepest_dungeon_level,
-        game_data.kill_count));
-    pos(wx + 40, wy + 146);
-    mes(i18n::s.get("core.locale.win.window.score", calcscore()));
-    pos(wx + 40, wy + 186);
-    mes(i18n::s.get(
-        "core.locale.win.window.lesimas",
-        game_data.date.year,
-        game_data.date.month,
-        game_data.date.day));
-    pos(wx + 40, wy + 206);
-    mes(i18n::s.get("core.locale.win.window.comment", win_comment));
-    pos(wx + 40, wy + 246);
-    mes(i18n::s.get("core.locale.win.window.your_journey_continues"));
+    mes(wx + 40,
+        wy + 76,
+        i18n::s.get("core.locale.win.window.arrived_at_tyris", 517, 8, 12));
+    mes(wx + 40,
+        wy + 116,
+        i18n::s.get(
+            "core.locale.win.window.have_killed",
+            game_data.deepest_dungeon_level,
+            game_data.kill_count));
+    mes(wx + 40,
+        wy + 146,
+        i18n::s.get("core.locale.win.window.score", calcscore()));
+    mes(wx + 40,
+        wy + 186,
+        i18n::s.get(
+            "core.locale.win.window.lesimas",
+            game_data.date.year,
+            game_data.date.month,
+            game_data.date.day));
+    mes(wx + 40,
+        wy + 206,
+        i18n::s.get("core.locale.win.window.comment", win_comment));
+    mes(wx + 40,
+        wy + 246,
+        i18n::s.get("core.locale.win.window.your_journey_continues"));
     redraw();
     key_list = key_enter;
     keyrange = 0;
@@ -12827,8 +12833,7 @@ void show_game_score_ranking()
         {
             s = " "s + i18n::s.get("core.locale.misc.score.rank", cnt + 1);
         }
-        pos(x - 80, y + 10);
-        mes(s, {10, 10, 10});
+        mes(x - 80, y + 10, s, {10, 10, 10});
         bool no_entry = false;
         if (p >= noteinfo())
         {
@@ -12842,20 +12847,20 @@ void show_game_score_ranking()
                 no_entry = true;
             }
         }
-        pos(x, y);
         if (no_entry)
         {
-            mes(u8"no entry", {10, 10, 10});
+            mes(x, y, u8"no entry", {10, 10, 10});
             continue;
         }
-        mes(s, {10, 10, 10});
+        mes(x, y, s, {10, 10, 10});
         noteget(s, p + 2);
-        pos(x, y + 20);
-        mes(s, {10, 10, 10});
+        mes(x, y + 20, s, {10, 10, 10});
         noteget(s(10), p + 3);
         csvsort(s, s(10), 44);
-        pos(x + 480, y + 20);
-        mes(i18n::s.get("core.locale.misc.score.score", s(0)), {10, 10, 10});
+        mes(x + 480,
+            y + 20,
+            i18n::s.get("core.locale.misc.score.score", s(0)),
+            {10, 10, 10});
         p = elona::stoi(s(1)) % 1000;
 
         draw_chara_scale_height(elona::stoi(s(1)), x - 22, y + 12);

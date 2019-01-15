@@ -477,7 +477,11 @@ void line(
 
 
 
-void mes(const std::string& text, const snail::Color& color = {0, 0, 0});
+void mes(
+    int x,
+    int y,
+    const std::string& text,
+    const snail::Color& color = {0, 0, 0});
 
 void mesbox(std::string& buffer, bool text = false);
 

@@ -131,28 +131,29 @@ MainMenuResult main_title_menu()
     gmode(2);
 
     font(13 - en * 2);
-    pos(20, 20);
-    mes(u8"Elona version 1.22  Developed by Noa"s, {255, 255, 255});
+    mes(20, 20, u8"Elona version 1.22  Developed by Noa"s, {255, 255, 255});
 
-    pos(20, 38);
-    mes(u8"  Variant foobar version "s + latest_version.short_string() +
+    mes(20,
+        38,
+        u8"  Variant foobar version "s + latest_version.short_string() +
             u8"  Developed by KI",
         {255, 255, 255});
 
     if (jp)
     {
-        pos(20, 56);
-        mes(u8"Contributor MSL / View the credits for more"s, {255, 255, 255});
+        mes(20,
+            56,
+            u8"Contributor MSL / View the credits for more"s,
+            {255, 255, 255});
     }
     else
     {
-        pos(20, 56);
-        mes(u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s,
+        mes(20,
+            56,
+            u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s,
             {255, 255, 255});
-        pos(20, 76);
-        mes(u8"Omake/OO translator: Doorknob", {255, 255, 255});
-        pos(20, 96);
-        mes(u8"Cutscenes translator: AnnaBannana", {255, 255, 255});
+        mes(20, 76, u8"Omake/OO translator: Doorknob", {255, 255, 255});
+        mes(20, 96, u8"Cutscenes translator: AnnaBannana", {255, 255, 255});
     }
 
     windowshadow = 1;
@@ -221,8 +222,7 @@ MainMenuResult main_title_menu()
             else
             {
                 font(11 - en * 2);
-                pos(x + 40, y - 4);
-                mes(items.at(cnt * 2));
+                mes(x + 40, y - 4, items.at(cnt * 2));
                 font(13 - en * 2);
                 cs_list(cs == cnt, items.at(cnt * 2 + 1), x + 40, y + 8);
             }
@@ -464,8 +464,7 @@ MainMenuResult main_menu_continue()
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
             font(11 - en * 2);
-            pos(x + 48, y - 4);
-            mes(listn(0, index));
+            mes(x + 48, y - 4, listn(0, index));
             font(13 - en * 2);
             cs_list(cs == cnt, listn(1, index), x + 48, y + 8);
             ++keyrange;
@@ -474,8 +473,9 @@ MainMenuResult main_menu_continue()
         if (save_data_count == 0)
         {
             font(14 - en * 2);
-            pos(wx + 140, wy + 120);
-            mes(i18n::s.get("core.locale.main_menu.continue.no_save"));
+            mes(wx + 140,
+                wy + 120,
+                i18n::s.get("core.locale.main_menu.continue.no_save"));
         }
         redraw();
 
@@ -610,8 +610,7 @@ MainMenuResult main_menu_incarnate()
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
             font(11 - en * 2);
-            pos(x + 48, y - 4);
-            mes(listn(0, cnt));
+            mes(x + 48, y - 4, listn(0, cnt));
             font(13 - en * 2);
             cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
         }
@@ -619,8 +618,9 @@ MainMenuResult main_menu_incarnate()
         if (listmax == 0)
         {
             font(14 - en * 2);
-            pos(wx + 140, wy + 120);
-            mes(i18n::s.get("core.locale.main_menu.incarnate.no_gene"));
+            mes(wx + 140,
+                wy + 120,
+                i18n::s.get("core.locale.main_menu.incarnate.no_gene"));
         }
         redraw();
 
@@ -836,8 +836,7 @@ void main_menu_about_one_changelog(const Release& release)
             425);
 
         font(13);
-        pos(wx + 20, wy + 30);
-        mes(changes.at(page));
+        mes(wx + 20, wy + 30, changes.at(page));
 
         redraw();
 
@@ -1101,8 +1100,7 @@ MainMenuResult main_menu_about_license()
             425);
 
         font(13);
-        pos(wx + 20, wy + 30);
-        mes(license_pages.at(page));
+        mes(wx + 20, wy + 30, license_pages.at(page));
 
         redraw();
 
@@ -1226,8 +1224,7 @@ MainMenuResult main_menu_about_credits()
             425);
 
         font(13);
-        pos(wx + 20, wy + 30);
-        mes(credits_pages.at(page));
+        mes(wx + 20, wy + 30, credits_pages.at(page));
 
         redraw();
 

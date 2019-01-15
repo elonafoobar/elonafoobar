@@ -91,8 +91,7 @@ void UIMenuCharamakeAlias::_draw_window()
 void UIMenuCharamakeAlias::_draw_alias_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(wx + 280, wy + 66 + cnt * 19 + 2);
-    mes(u8"Locked!"s, {20, 20, 140});
+    mes(wx + 280, wy + 66 + cnt * 19 + 2, u8"Locked!"s, {20, 20, 140});
 }
 
 void UIMenuCharamakeAlias::_draw_alias(

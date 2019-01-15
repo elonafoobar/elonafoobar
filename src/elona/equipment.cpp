@@ -65,7 +65,6 @@ void equipinfo(int item_index, int x, int y)
             continue;
         }
         i_at_m66 = p_at_m66 % 10000;
-        pos(x + (i_at_m66 - 50) * 20, y);
         p_at_m66 =
             std::abs(inv[item_index].enchantments[cnt].power / 2 / 50) + 1;
         if (p_at_m66 > 5)
@@ -81,18 +80,14 @@ void equipinfo(int item_index, int x, int y)
         {
             const auto glyph =
                 inv[item_index].enchantments[cnt].power >= 0 ? u8"●" : u8"▼";
-            mes(glyph, element_color);
-            pos(x + (i_at_m66 - 50) * 20 + 5, y + 1);
-            mes(s_at_m66, element_color);
-            pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            mes(s_at_m66, {255, 255, 255});
+            mes(x + (i_at_m66 - 50) * 20, y, glyph, element_color);
+            mes(x + (i_at_m66 - 50) * 20 + 5, y + 1, s_at_m66, element_color);
+            mes(x + (i_at_m66 - 50) * 20 + 4, y, s_at_m66, {255, 255, 255});
         }
         else
         {
-            pos(x + (i_at_m66 - 50) * 20 + 5, y);
-            mes(""s + p_at_m66, {80, 60, 40});
-            pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            mes(""s + p_at_m66, element_color);
+            mes(x + (i_at_m66 - 50) * 20 + 5, y, ""s + p_at_m66, {80, 60, 40});
+            mes(x + (i_at_m66 - 50) * 20 + 4, y, ""s + p_at_m66, element_color);
         }
     }
 }

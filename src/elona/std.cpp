@@ -517,9 +517,9 @@ void line(int x1, int y1, int x2, int y2, const snail::Color& color)
 
 
 
-void mes(const std::string& text, const snail::Color& color)
+void mes(int x, int y, const std::string& text, const snail::Color& color)
 {
-    snail::hsp::mes(text, color);
+    snail::hsp::mes(x, y, text, color);
 }
 
 
@@ -754,8 +754,7 @@ static void _draw_fps()
     // cleared between each redraw.
     boxf(4, 4, strlen_u(fps_str) * 7 + 2, 14 - en * 2 + 2, {0, 0, 0, 255});
     font(13 - en * 2);
-    pos(5, 5);
-    mes(fps_str, {255, 255, 255});
+    mes(5, 5, fps_str, {255, 255, 255});
 
     font(fontbk_size, fontbk_style);
 

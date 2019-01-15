@@ -707,8 +707,7 @@ void talk_window_show()
     {
         s = actor(0, rc);
     }
-    pos(wx + 120, wy + 16);
-    mes(s, {20, 10, 5});
+    mes(wx + 120, wy + 16, s, {20, 10, 5});
     font(13 - en * 2);
     if (chatval_show_impress)
     {
@@ -723,8 +722,7 @@ void talk_window_show()
         {
             s(1) = u8"???"s;
         }
-        pos(wx + 32, wy + 198);
-        mes(u8"("s + s(1) + u8")"s + s, {20, 10, 5});
+        mes(wx + 32, wy + 198, u8"("s + s(1) + u8")"s + s, {20, 10, 5});
         if (cdata[tc].interest >= 0)
         {
             for (int cnt = 0, cnt_end = (cdata[tc].interest / 5 + 1);
@@ -737,10 +735,8 @@ void talk_window_show()
     }
     else
     {
-        pos(wx + 60, wy + 198);
-        mes(u8"-"s);
-        pos(wx + 60, wy + 245);
-        mes(u8"-"s);
+        mes(wx + 60, wy + 198, u8"-"s);
+        mes(wx + 60, wy + 245, u8"-"s);
     }
     font(14 - en * 2);
     notesel(buff);
@@ -750,8 +746,7 @@ void talk_window_show()
         x = wx + 150;
         y = wy + 43 + cnt * 19;
         noteget(s, p);
-        pos(x, y);
-        mes(s, {20, 10, 5});
+        mes(x, y, s, {20, 10, 5});
     }
 }
 

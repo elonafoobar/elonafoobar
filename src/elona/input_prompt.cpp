@@ -173,8 +173,10 @@ void PromptWithNumber::_draw_window()
     gcopy(3, 336, 336, 24, 24);
     const auto inputlog2 =
         ""s + elona::stoi(inputlog(0)) + u8"("s + _max + u8")"s;
-    pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
-    mes(inputlog2, {255, 255, 255});
+    mes(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8,
+        dy + 11,
+        inputlog2,
+        {255, 255, 255});
     inputlog = ""s + _number;
 }
 

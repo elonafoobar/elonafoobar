@@ -149,8 +149,7 @@ void UIMenuEquipment::_draw_window_deco(bool show_resistances)
     gcopy(3, 960, 216, 72, 144);
     if (show_resistances)
     {
-        pos(wx + 320, wy + 40);
-        mes(i18n::s.get("core.locale.ui.equip.resist"));
+        mes(wx + 320, wy + 40, i18n::s.get("core.locale.ui.equip.resist"));
     }
 }
 
@@ -193,8 +192,7 @@ void UIMenuEquipment::_draw_key(int cnt, int p_, bool is_main_hand)
 
     pos(wx + 22, wy + 60 + cnt * 19 - 4);
     gcopy(3, 600 + (list(1, p_) - 1) * 24, 336, 24, 24);
-    pos(wx + 46, wy + 60 + cnt * 19 + 3);
-    mes(body_part_name);
+    mes(wx + 46, wy + 60 + cnt * 19 + 3, body_part_name);
 }
 
 void UIMenuEquipment::_draw_keys(int main_hand)
@@ -257,8 +255,10 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
         30,
         text_color);
 
-    pos(wx + 640 - strlen_u(item_weight) * 7, wy + 60 + cnt * 19 + 2);
-    mes(item_weight, text_color);
+    mes(wx + 640 - strlen_u(item_weight) * 7,
+        wy + 60 + cnt * 19 + 2,
+        item_weight,
+        text_color);
 }
 
 void UIMenuEquipment::_draw_list_entries(bool show_resistances)

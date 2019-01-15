@@ -88,14 +88,15 @@ void UIMenuTownPolitics::_draw_window()
     display_topic(i18n::s.get("core.locale.ui.politics.law"), wx + 65, wy + 45);
 
     font(12 + sizefix - en * 2);
-    pos(wx + 185, wy + 52);
-    mes(i18n::s.get("core.locale.ui.politics.global"));
+    mes(wx + 185, wy + 52, i18n::s.get("core.locale.ui.politics.global"));
 
     if (map_data.type == mdata_t::MapType::town)
     {
-        pos(wx + 285, wy + 52);
-        mes(i18n::s.get(
-            "core.locale.ui.politics.law_of", mapname(game_data.current_map)));
+        mes(wx + 285,
+            wy + 52,
+            i18n::s.get(
+                "core.locale.ui.politics.law_of",
+                mapname(game_data.current_map)));
     }
 
     pos(wx + 155, wy + 46);

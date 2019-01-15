@@ -1023,12 +1023,10 @@ void bmes(
     {
         for (int dx = -1; dx <= 1; ++dx)
         {
-            pos(x + dx, y + dy);
-            mes(message, shadow_color);
+            mes(x + dx, y + dy, message, shadow_color);
         }
     }
-    pos(x, y);
-    mes(message, text_color);
+    mes(x, y, message, text_color);
 }
 
 
