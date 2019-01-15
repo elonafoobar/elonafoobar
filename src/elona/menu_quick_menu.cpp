@@ -239,7 +239,7 @@ void QuickMenu::_draw()
             draw("quickmenu_action", entry.x + _pos_x, entry.y + _pos_y);
         }
 
-        gmode(4, (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
+        gmode(2, (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
 
         if (cs == cnt)
         {

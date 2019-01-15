@@ -58,7 +58,7 @@ void showcard2(int card_index, bool show_rank = true)
 
         if (show_rank)
         {
-            gmode(4, 220);
+            gmode(2, 220);
             snail::Color rank_color{0, 0, 0};
             optional_ref<Extent> rect;
             switch (suit)
@@ -87,7 +87,7 @@ void showcard2(int card_index, bool show_rank = true)
             pos(x + 32 - rect->width / 2, y + 88 - rect->height);
             gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
 
-            gmode(4, 220);
+            gmode(2, 220);
             pos(x + 8, y + 16);
             gcopy(3, 864 + static_cast<int>(suit) * 24, 533, 24, 32);
             pos(x + 32, y + 16);

@@ -126,7 +126,7 @@ bool _magic_1136()
     gmode(2);
     pos(wx, wy);
     gcopy(4, 0, 0, ww, wh);
-    gmode(1);
+    gmode(0);
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         y = cnt + inv[ci].param2 - 2;

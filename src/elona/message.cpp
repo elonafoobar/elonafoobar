@@ -194,7 +194,7 @@ void Message::_msg_write(std::string& message)
     }
 
     font(inf_mesfont - en * 2);
-    gmode(0, 255);
+    gmode(0);
     mes(message_width * inf_mesfont / 2 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + vfix + 5,
         message,
@@ -275,7 +275,7 @@ void Message::_txt_conv()
         if (Config::instance().message_transparency)
         {
             int p_at_txtfunc = (windoww - inf_msgx) / 192;
-            gmode(4, Config::instance().message_transparency * 20);
+            gmode(2, Config::instance().message_transparency * 20);
             for (int i = 0; i < p_at_txtfunc + 1; ++i)
             {
                 int x_at_txtfunc;

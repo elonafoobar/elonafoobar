@@ -90,7 +90,7 @@ void UIMenuCharamakeClass::_draw_window()
     x = ww / 5 * 2;
     y = wh - 80;
     pos(wx + ww / 4, wy + wh / 2);
-    gmode(4, 50);
+    gmode(2, 50);
     gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
     display_topic(

@@ -475,7 +475,7 @@ void BallAnimation::do_play()
             if (anidy < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
             {
                 pos(anidx, anidy);
-                gmode(4, 250 - cnt * cnt * 2);
+                gmode(2, 250 - cnt * cnt * 2);
                 gcopy_c(7, cnt * 96, 0, 96, 96);
             }
         }

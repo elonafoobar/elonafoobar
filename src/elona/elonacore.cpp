@@ -4605,7 +4605,7 @@ void map_prepare_tileset_atlas()
     set_color_mod(255 - shadow, 255 - shadow, 255 - shadow, 6);
     gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
     set_color_mod(255, 255, 255, 6);
-    gmode(4, 30);
+    gmode(2, 30);
     if (map_data.atlas_number == 0)
     {
         pos(0, 192);
@@ -6776,7 +6776,7 @@ int ask_direction()
     t = 0;
 label_2128_internal:
     ++t;
-    gmode(4, 200 - t / 2 % 20 * (t / 2 % 20));
+    gmode(2, 200 - t / 2 % 20 * (t / 2 % 20));
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
     if (!getkey(snail::Key::alt))
@@ -7221,7 +7221,7 @@ void sleep_start()
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        gmode(4, cnt * 10);
+        gmode(2, cnt * 10);
         draw_sleep_background_frame();
         await(Config::instance().animewait * 10);
     }
@@ -11974,7 +11974,7 @@ label_2682_internal:
         {
             redraw();
             pos(0, 0);
-            gmode(4, cnt * 15);
+            gmode(2, cnt * 15);
             pos(0, 0);
             gcopy(4, 0, 0, windoww, windowh);
             gmode(2);
@@ -12087,7 +12087,7 @@ label_2684_internal:
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - strlen_u(s(0)) * 4;
-        gmode(6, 255);
+        gmode(2);
         bmes(s, x, y, {240, 240, 240}, {10, 10, 10});
     }
     gsel(0);
@@ -12099,7 +12099,7 @@ label_2684_internal:
         {
             scene_cut = 1;
         }
-        gmode(4, cnt * 16);
+        gmode(2, cnt * 16);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
         redraw();
@@ -12596,7 +12596,7 @@ void conquer_lesimas()
     x = ww / 3 - 20;
     y = wh - 140;
     pos(wx + ww - 120, wy + wh / 2);
-    gmode(4, 250);
+    gmode(2, 250);
     gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
     display_topic(

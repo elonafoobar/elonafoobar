@@ -144,29 +144,16 @@ void setup_buffers()
 
 void set_blend_mode()
 {
+    auto& renderer = Application::instance().get_renderer();
+
     switch (current_tex_buffer().mode)
     {
-    case 0:
-    case 1:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::none);
-        break;
-    case 2:
-    case 3:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
-        break;
-    case 4:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
-        break;
-    case 5:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::add);
-        break;
-    case 6:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
-        break;
-    default: break;
+    case 0: renderer.set_blend_mode(BlendMode::none); break;
+    case 2: renderer.set_blend_mode(BlendMode::blend); break;
+    case 5: renderer.set_blend_mode(BlendMode::add); break;
+    default: assert(0); break;
     }
 }
-
 
 } // namespace detail
 

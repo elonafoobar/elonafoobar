@@ -634,7 +634,7 @@ void talk_window_init()
     wy = winposy(380);
     ww = 600;
     wh = 380;
-    gmode(6, 80);
+    gmode(2, 80);
     pos(wx + 4, wy - 16);
     gcopy(7, 0, 0, 600, 380);
 }

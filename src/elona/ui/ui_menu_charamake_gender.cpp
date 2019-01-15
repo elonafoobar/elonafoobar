@@ -39,7 +39,7 @@ void UIMenuCharamakeGender::_draw_window()
     x = ww / 2;
     y = wh - 60;
     pos(wx + ww / 2, wy + wh / 2);
-    gmode(4, 30);
+    gmode(2, 30);
     gcopy_c(2, 0, 0, 180, 300, x, y);
 
     gmode(2);

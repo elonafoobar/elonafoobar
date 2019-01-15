@@ -184,7 +184,7 @@ bool UIMenuCharacterSheet::init()
     gsel(0);
     if (!_returned_from_portrait)
     {
-        gmode(6, 80);
+        gmode(2, 80);
         pos(wx + 4, wy + 4);
         gcopy(7, 0, 0, 700, 400);
         gmode(2);
@@ -644,7 +644,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
         y = wy + 151 + cnt % 3 * 32;
         if (cdata[cc].buffs[cnt].id == 0)
         {
-            gmode(4, 120);
+            gmode(2, 120);
             elona::draw("buff_icon_none", x, y);
             gmode(2);
             continue;

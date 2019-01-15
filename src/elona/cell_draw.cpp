@@ -234,7 +234,7 @@ int shadowmap[] = {
 
 void render_shadow_low(int light)
 {
-    gmode(6, light);
+    gmode(2, light);
 
     for (const auto& pos : loop_xy(inf_screenw, inf_screenh))
     {
@@ -416,7 +416,7 @@ void render_shadow(int p_, int dx_, int dy_)
 
 void render_shadow_high(int light, int sxfix_, int syfix_)
 {
-    gmode(6, light);
+    gmode(2, light);
 
     if (scrollanime == 0)
     {
@@ -560,7 +560,7 @@ void draw_character_sprite_in_world_map(
 
     // Shadow
     pos(x + 24, y + 27);
-    gmode(6, 85);
+    gmode(2, 85);
     gcopy_c(3, 240, 384, 32, 16, 20, 10);
 
     // Character sprite
@@ -594,7 +594,7 @@ void draw_character_sprite_in_water(
 
     // Lower body
     pos(x + 24, y + pcc_size(36, 40));
-    gmode(4, 146);
+    gmode(2, 146);
     gcopy_c(
         texture_id,
         frame,
@@ -618,7 +618,7 @@ void draw_character_sprite(
     int texture_id = c_ + 20;
 
     // Shadow
-    gmode(6, 110);
+    gmode(2, 110);
     draw("character_shadow", x + 8, y + 20);
 
     // Character sprite
@@ -646,7 +646,7 @@ optional_ref<Extent> prepare_chara_chip(int c_, int dx, int dy)
         gmode(2, 80);
         pos(dx + 26 - 11, dy - 32 + 11);
         func_2(1, 96, 816, -80, 48, 96);
-        gmode(2, 255);
+        gmode(2);
         pos(dx, dy - 63);
         gcopy(1, 96, 816, 48, 96);
         chara_chips[p_].offset_y += 24;
@@ -673,7 +673,7 @@ void draw_chara_chip_sprite_in_world_map(
     int height)
 {
     pos(x + 24, y + 32);
-    gmode(6, 85);
+    gmode(2, 85);
     gcopy_c(3, 240, 384, 32, 16, 20, 10);
     pos(x + 24, y + 24 - chara_chips[chip_id].offset_y / 4);
     gmode(2);
@@ -691,7 +691,7 @@ void draw_chara_chip_sprite_in_water(
     int ground_)
 {
     int dy = (chipm(0, ground_) == 3) * -16;
-    gmode(4, 100);
+    gmode(2, 100);
     pos(x, y + 16 - chara_chips[chip_id].offset_y - dy);
     gcopy(texture_id, 0, 976, width, height - 16);
     gmode(2);
@@ -709,7 +709,7 @@ void draw_chara_chip_sprite(
     int ground_)
 {
     int dy = (chipm(0, ground_) == 3) * -16;
-    gmode(6, 110);
+    gmode(2, 110);
     draw("character_shadow", x + 8, y + 20);
     gmode(2);
     pos(x, y - chara_chips[chip_id].offset_y - dy);
@@ -853,7 +853,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         }
         if (mefsubref(2, p_) == 1)
         {
-            gmode(4, efmap(1, x, y) * 12 + 30);
+            gmode(2, efmap(1, x, y) * 12 + 30);
             pos(dx + 24, dy + 24);
             grotate(
                 3,
@@ -865,7 +865,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         }
         else
         {
-            gmode(4, 150);
+            gmode(2, 150);
             pos(dx + 8, dy + 8);
             gcopy(
                 3,

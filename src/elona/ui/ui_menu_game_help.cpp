@@ -267,7 +267,7 @@ void UIMenuGameHelp::_draw_background_vignette(int id, int type)
     x = ww / 5 * 2;
     y = wh - 80;
     pos(wx + ww / 4, wy + wh / 2);
-    gmode(4, 50);
+    gmode(2, 50);
     gcopy_c(type, cmbg % 4 * 180, cmbg / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
 }

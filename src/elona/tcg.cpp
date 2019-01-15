@@ -440,14 +440,14 @@ void tcgdrawcard(int card_index, int prm_995)
             }
             x_at_tcg = basex_at_tcg + 20;
             y_at_tcg = basey_at_tcg + 490;
-            gmode(6, 140);
+            gmode(2, 140);
             pos(x_at_tcg - 6, y_at_tcg - 6);
             gcopy(7, 168, 144, 82, 106);
         }
         gmode(2);
         if (card_at_tcg(6, card_index) == 2)
         {
-            gmode(4, card_at_tcg(7, card_index) * 15);
+            gmode(2, card_at_tcg(7, card_index) * 15);
         }
         pos(x_at_tcg, y_at_tcg);
         if (cdbit(1, card_index) == 1 ||
@@ -2170,12 +2170,12 @@ void tcg_draw_selection()
         snail::Color text_color{0, 0, 0};
         if (ccf_at_tcg == cnt)
         {
-            gmode(4, 255);
+            gmode(2);
             text_color = snail::Color{255, 255, 255};
         }
         else
         {
-            gmode(4, 120);
+            gmode(2, 120);
             text_color = snail::Color{200, 200, 200};
         }
         pos(x_at_tcg, y_at_tcg);
@@ -2363,7 +2363,7 @@ void tcg_draw_deck_editor()
 
 void tcg_prepare_cnt2()
 {
-    gmode(4, 180);
+    gmode(2, 180);
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         cnt2_at_tcg = cnt;
@@ -3026,10 +3026,10 @@ void tcg_update_selection()
             {
                 continue;
             }
-            gmode(4, clamp(p_at_tcg * 30 + 20, 0, 255));
+            gmode(2, clamp(p_at_tcg * 30 + 20, 0, 255));
             pos(x_at_tcg(cnt), y_at_tcg(cnt));
             gcopy(7, 192, 96, 36, 36);
-            gmode(4, 50 + i_at_tcg * 2);
+            gmode(2, 50 + i_at_tcg * 2);
             pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
             gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
         }

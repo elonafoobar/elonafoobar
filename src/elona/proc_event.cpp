@@ -694,7 +694,7 @@ void proc_event()
                 ++p;
             }
             pos(dx, dy);
-            gmode(4, 255 - p * 5);
+            gmode(2, 255 - p * 5);
             gcopy_c(
                 7,
                 i / 2 % 2 * 192,
@@ -731,7 +731,7 @@ void proc_event()
                 ++p(3);
             }
             pos(dx, dy - clamp(p(2) * 2, 0, 40));
-            gmode(4, clamp(p(2) * 6, 0, 100));
+            gmode(2, clamp(p(2) * 6, 0, 100));
             gcopy_c(
                 7,
                 0,
@@ -741,7 +741,7 @@ void proc_event()
                 clamp(p(2) * 8, 0, 240),
                 clamp(p(2) * 5, 0, 96));
             pos(dx, dy - clamp(p(3) * 2, 0, 160) - 6);
-            gmode(4, p(3) * 10);
+            gmode(2, p(3) * 10);
             gcopy_c(
                 7,
                 96,
@@ -751,7 +751,7 @@ void proc_event()
                 clamp(p(3) * 10, 0, 96),
                 clamp(p(3) * 10, 0, 96));
             pos(dx, dy - 4);
-            gmode(4, clamp(p(3) * 5, 0, 100));
+            gmode(2, clamp(p(3) * 5, 0, 100));
             gcopy_c(
                 7,
                 i / 4 % 2 * 192,
@@ -761,7 +761,7 @@ void proc_event()
                 clamp(p(2) * 8, 0, 400),
                 clamp(p(2), 0, 48));
             pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
-            gmode(4, p(3) * 10);
+            gmode(2, p(3) * 10);
             gcopy_c(7, i / 3 % 2 * 192, 192, 96, 96, 192, 96);
             redraw();
             await(Config::instance().animewait * 3.5);

@@ -265,7 +265,7 @@ optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
             rect->height - 8);
         set_color_mod(255, 255, 255, rect->buffer);
 
-        gmode(4, 192);
+        gmode(2, 192);
         pos(0, 960 + (rect->height == inf_tiles) * 48);
 
         // Modify color and restore it afterwards.
@@ -527,7 +527,7 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     pos(128, 0);
     picload(filepath, 1);
     boxf(256, 0, 128, 198);
-    gmode(4, 256);
+    gmode(2);
     pget(128, 0);
     pos(256, 0);
     gcopy(20 + cc, 128, 0, 128, 198);
@@ -1150,7 +1150,7 @@ void draw_chara(int image_id, int x, int y, int scale, int alpha)
     pos(x, y);
     if (alpha != 0)
     {
-        gmode(4, alpha);
+        gmode(2, alpha);
     }
     else
     {

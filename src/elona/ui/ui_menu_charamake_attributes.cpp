@@ -102,7 +102,7 @@ void UIMenuCharamakeAttributes::_draw_window_topic()
     x = 150;
     y = 240;
     pos(wx + 85, wy + wh / 2);
-    gmode(4, 30);
+    gmode(2, 30);
     gcopy_c(2, 0, 0, 180, 300, x, y);
     gmode(2);
     display_topic(

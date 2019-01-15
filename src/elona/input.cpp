@@ -262,7 +262,7 @@ bool input_text_dialog(
             }
         }
 
-        gmode(4, p(1) / 2 + 50);
+        gmode(2, p(1) / 2 + 50);
         draw("input_caret", x + 34 + p(4) * 8, y + 5);
         gmode(2);
         mes(x + 36, y + vfix + 9, s, {255, 255, 255});

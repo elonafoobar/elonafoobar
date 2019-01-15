@@ -224,7 +224,7 @@ void casino_adv_draw_mat()
             break;
         }
         pos(x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
-        gmode(4, cnt * 25);
+        gmode(2, cnt * 25);
         gcopy_c(2, 0, 0, x(1), y(1));
         if (atxpic != 0)
         {
@@ -304,7 +304,7 @@ void casino_fade_in_choices()
         pos(x - 50, y - 50);
         gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
         pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
-        gmode(4, 250 - cnt * 25);
+        gmode(2, 250 - cnt * 25);
         gcopy_c(2, 0, 0, x(1), y(1));
         await(15);
         redraw();

@@ -168,7 +168,7 @@ MainMenuResult main_title_menu()
     x = ww / 5 * 4;
     y = wh - 80;
     pos(wx + 160, wy + wh / 2);
-    gmode(4, 50);
+    gmode(2, 50);
     gcopy_c(2, cmbg / 2 * 180, cmbg % 2 * 300, 180, 300, x, y);
     gmode(2);
 

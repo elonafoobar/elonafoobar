@@ -194,7 +194,7 @@ void render_weather_effect_snow()
         auto&& particle = particles[i];
         if (i % 30 == 0)
         {
-            gmode(4, 100 + i % 150);
+            gmode(2, 100 + i % 150);
         }
         pos(particle.x, particle.y);
         gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
@@ -233,7 +233,7 @@ void render_weather_effect_etherwind()
         auto&& particle = particles[i];
         if (i % 20 == 0)
         {
-            gmode(4, 100 + i % 150);
+            gmode(2, 100 + i % 150);
         }
         pos(particle.x, particle.y);
         gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
@@ -323,7 +323,7 @@ void highlight_characters_in_pet_arena()
                 color);
             if (cc.index == camera)
             {
-                gmode(4, 120);
+                gmode(2, 120);
                 draw("camera", x + 36, y + 32);
                 gmode(2);
             }
@@ -1441,7 +1441,7 @@ void render_hud()
             {
                 if (!cdata.player().continuous_action)
                 {
-                    gmode(4, 150);
+                    gmode(2, 150);
                 }
             }
         }
@@ -1454,7 +1454,7 @@ void render_hud()
     render_date_label();
 
     // Buffs
-    gmode(4, 180);
+    gmode(2, 180);
     render_buffs();
     gmode(2);
 
@@ -1917,7 +1917,7 @@ void fade_out()
     }
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 10 + cnt * 5);
+        gmode(2, 10 + cnt * 5);
         await(20);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -1944,7 +1944,7 @@ void animation_fade_in()
 {
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 10 + cnt * 5);
+        gmode(2, 10 + cnt * 5);
         await(20);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -2470,7 +2470,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
 {
     if (windowshadow != 0)
     {
-        gmode(6, 80);
+        gmode(2, 80);
         draw_scroll(x + 3, y + 3, width, height);
         windowshadow = 0;
         gmode(2);
@@ -2632,7 +2632,7 @@ void window2(
     case 5: break;
     case 6:
         pos(x + width / 2, y + height / 2);
-        gmode(4, 180);
+        gmode(2, 180);
         gcopy_c(3, 24, 72, 228, 144, width - 4, height - 4);
         break;
     default: break;

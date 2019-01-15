@@ -88,7 +88,7 @@ void UIMenuScene::_draw_window()
     x = 240;
     y = 320;
     pos(wx + 190, wy + 220);
-    gmode(4, 100);
+    gmode(2, 100);
     gcopy_c(7, 0, 0, 180, 300, x, y);
     gmode(2);
 }
