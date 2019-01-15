@@ -268,11 +268,10 @@ bool LuaConsole::lua_error_handler(const sol::protected_function_result& pfr)
 }
 
 
-/// Returns true if the Lua input is incomplete, and multiline input should
-/// be used.
+/// Returns true if the Lua input is complete and was executed.
 bool LuaConsole::interpret_lua(const std::string& input)
 {
-    if (input == ""s)
+    if (input.empty())
     {
         return _is_multiline;
     }
