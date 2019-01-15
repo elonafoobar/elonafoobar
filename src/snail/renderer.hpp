@@ -148,15 +148,15 @@ public:
         const Color& text_color = palette::black);
     Size calculate_text_size(const std::string& text);
     void render_line(int start_x, int start_y, int end_x, int end_y);
-    void render_image(ImageBase& image, int dst_x, int dst_y);
+    void render_image(Image& image, int dst_x, int dst_y);
     void render_image(
-        ImageBase& image,
+        Image& image,
         int dst_x,
         int dst_y,
         int dst_width,
         int dst_height);
     void render_image(
-        ImageBase& image,
+        Image& image,
         int src_x,
         int src_y,
         int src_width,
@@ -164,7 +164,7 @@ public:
         int dst_x,
         int dst_y);
     void render_image(
-        ImageBase& image,
+        Image& image,
         int src_x,
         int src_y,
         int src_width,
@@ -201,7 +201,7 @@ public:
 
 
     void render_image_crop(
-        ImageBase& image,
+        Image& image,
         int src_x,
         int src_y,
         int src_width,

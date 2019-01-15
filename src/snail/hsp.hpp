@@ -31,7 +31,7 @@ inline T clamp(const T& x, const T& min, const T& max)
 int timeGetTime();
 void mes(int x, int y, const std::string& text, const snail::Color& color);
 void mesbox(std::string& buffer, int keywait, bool text);
-void picload(BasicImage& img, int mode);
+void picload(Image& img, int mode);
 void pos(int x, int y);
 void redraw();
 void set_color_mod(int r, int g, int b, int window_id);

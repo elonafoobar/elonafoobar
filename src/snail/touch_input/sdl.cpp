@@ -23,7 +23,7 @@ int TouchInput::quick_action_size() const noexcept
 void TouchInput::initialize(const fs::path& asset_path)
 {
     _quick_action_image =
-        std::make_unique<BasicImage>(asset_path / "quick_action.png");
+        std::make_unique<Image>(asset_path / "quick_action.png");
 
     initialize_quick_actions();
 

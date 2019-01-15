@@ -346,7 +346,7 @@ void mesbox(std::string& buffer, int keywait, bool text)
     }
 }
 
-void picload(BasicImage& img, int mode)
+void picload(Image& img, int mode)
 {
     if (mode == 0)
     {

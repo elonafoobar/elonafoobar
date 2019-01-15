@@ -706,7 +706,7 @@ void picload(const fs::path& filepath, int mode)
     {
         keycolor = none;
     }
-    snail::BasicImage img{filepath, keycolor};
+    snail::Image img{filepath, keycolor};
     snail::hsp::picload(img, mode);
 }
 

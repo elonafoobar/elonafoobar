@@ -94,22 +94,22 @@ void Renderer::render_line(int, int, int, int)
 }
 
 
-void Renderer::render_image(ImageBase&, int, int)
+void Renderer::render_image(Image&, int, int)
 {
 }
 
 
-void Renderer::render_image(ImageBase&, int, int, int, int)
+void Renderer::render_image(Image&, int, int, int, int)
 {
 }
 
 
-void Renderer::render_image(ImageBase&, int, int, int, int, int, int)
+void Renderer::render_image(Image&, int, int, int, int, int, int)
 {
 }
 
 
-void Renderer::render_image(ImageBase&, int, int, int, int, int, int, int, int)
+void Renderer::render_image(Image&, int, int, int, int, int, int, int, int)
 {
 }
 
@@ -143,7 +143,7 @@ void Renderer::render_image(
 }
 
 
-void Renderer::render_image_crop(ImageBase&, int, int, int, int, int, int)
+void Renderer::render_image_crop(Image&, int, int, int, int, int, int)
 {
 }
 

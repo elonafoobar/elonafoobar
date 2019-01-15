@@ -21,7 +21,7 @@ void mesbox(std::string&, int, bool)
 {
 }
 
-void picload(BasicImage&, int)
+void picload(Image&, int)
 {
 }
 

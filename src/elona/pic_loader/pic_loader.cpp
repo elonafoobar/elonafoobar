@@ -16,7 +16,7 @@ constexpr int _portrait_grid_row = 8;
 
 
 
-static void copy_image(snail::BasicImage& img, const Extent& ext)
+static void copy_image(snail::Image& img, const Extent& ext)
 {
     const auto save =
         snail::Application::instance().get_renderer().blend_mode();
@@ -29,10 +29,8 @@ static void copy_image(snail::BasicImage& img, const Extent& ext)
 
 
 
-static void copy_image_cropped(
-    snail::BasicImage& img,
-    const Extent& source,
-    const Extent& dest)
+static void
+copy_image_cropped(snail::Image& img, const Extent& source, const Extent& dest)
 {
     const auto save =
         snail::Application::instance().get_renderer().blend_mode();
@@ -46,10 +44,8 @@ static void copy_image_cropped(
 
 
 // FIXME: refactor this dirty hack.
-static void copy_image_portrait(
-    snail::BasicImage& img,
-    const Extent& source,
-    const Extent& dest)
+static void
+copy_image_portrait(snail::Image& img, const Extent& source, const Extent& dest)
 {
     auto& renderer = snail::Application::instance().get_renderer();
     const auto save = renderer.blend_mode();
@@ -92,7 +88,7 @@ void PicLoader::load(
     const IdType& id,
     PageType type)
 {
-    snail::BasicImage img{image_file, snail::Color{0, 0, 0}};
+    snail::Image img{image_file, snail::Color{0, 0, 0}};
     Extent ext{0, 0, 0, 0};
 
     size_t i = 0;
@@ -141,7 +137,7 @@ void PicLoader::add_predefined_extents(
     const MapType& extents,
     PageType type)
 {
-    snail::BasicImage img{atlas_file, snail::Color{0, 0, 0}};
+    snail::Image img{atlas_file, snail::Color{0, 0, 0}};
 
     // Add a new buffer for this atlas. The assumption is that all the
     // defined sprites will fit on this buffer. This assumption might

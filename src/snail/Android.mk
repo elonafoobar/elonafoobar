@@ -21,13 +21,11 @@ application/sdl.cpp \
 audio/sdl.cpp \
 detail/sdl_impl.cpp \
 font.cpp \
-fpsmanager.cpp \
 hsp/sdl.cpp \
 image.cpp \
 input.cpp \
 messagebox.cpp \
 renderer/sdl.cpp \
-scene.cpp \
 touch_input/sdl.cpp \
 window/sdl.cpp \
 
