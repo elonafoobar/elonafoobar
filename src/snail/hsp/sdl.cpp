@@ -1,6 +1,7 @@
 #include "../detail/sdl.hpp"
 #include <iostream>
 #include <unordered_map>
+#include "../../util/strutil.hpp"
 #include "../application.hpp"
 #include "../color.hpp"
 #include "../font.hpp"
@@ -49,42 +50,7 @@ struct hash<FontCacheKey>
 
 } // namespace std
 
-namespace strutil
-{
 
-inline size_t byte_count(uint8_t c)
-{
-    if (c <= 0x7F)
-        return 1;
-    else if (c >= 0xc2 && c <= 0xdf)
-        return 2;
-    else if (c >= 0xe0 && c <= 0xef)
-        return 3;
-    else if (c >= 0xf0 && c <= 0xf7)
-        return 4;
-    else if (c >= 0xf8 && c <= 0xfb)
-        return 5;
-    else if (c >= 0xfc && c <= 0xfd)
-        return 6;
-    else
-        return 1;
-}
-
-inline std::string
-replace(const std::string& str, const std::string& from, const std::string& to)
-{
-    auto ret{str};
-    std::string::size_type pos{};
-    while ((pos = ret.find(from, pos)) != std::string::npos)
-    {
-        ret.replace(pos, from.size(), to);
-        pos += to.size();
-    }
-
-    return ret;
-}
-
-} // namespace strutil
 
 namespace elona
 {
