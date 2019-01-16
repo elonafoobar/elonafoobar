@@ -28,8 +28,7 @@ bool UIMenuMaterials::init()
     cs_bk = -1;
 
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
     gsel(0);
     snd("core.scroll");
     wx = (windoww - 600) / 2 + inf_screenx;

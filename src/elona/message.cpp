@@ -68,8 +68,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     keylog = "";
     gmode(0);
     gsel(3);
-    pos(672, 504);
-    gcopy(0, x_at_txtfunc, y_at_txtfunc, 120, 24);
+    gcopy(0, x_at_txtfunc, y_at_txtfunc, 120, 24, 672, 504);
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
@@ -87,8 +86,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     for (int cnt = 0; cnt < 7; ++cnt)
     {
         await(Config::instance().wait1 / 3);
-        pos(x_at_txtfunc, y_at_txtfunc);
-        gcopy(3, 672, 504, 120, 24);
+        gcopy(3, 672, 504, 120, 24, x_at_txtfunc, y_at_txtfunc);
         if (cnt != 6)
         {
             draw(
@@ -185,12 +183,16 @@ void Message::_msg_write(std::string& message)
         message = message.substr(0, bytewise_pos) + u8"  " +
             message.substr(
                 bytewise_pos + std::strlen(musical_note) + (symbol_type != 0));
-        elona::pos(
+        gmode(2);
+        elona::gcopy(
+            3,
+            600 + symbol_type * 24,
+            360,
+            16,
+            16,
             (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7 +
                 en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
-        gmode(2);
-        gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
     }
 
     font(inf_mesfont - en * 2);
@@ -218,13 +220,14 @@ void Message::_msg_newline()
     msg[msgline % inf_maxlog] = "";
 
     gmode(0);
-    pos(inf_msgx, inf_msgy + 5);
     gcopy(
         0,
         inf_msgx,
         inf_msgy + 5 + inf_msgspace,
         windoww - inf_msgx,
-        inf_msgspace * 3 + en * 3);
+        inf_msgspace * 3 + en * 3,
+        inf_msgx,
+        inf_msgy + 5);
 
     int p_at_txtfunc = (windoww - inf_msgx) / 192;
     for (int cnt = 0, cnt_end = (p_at_txtfunc + 1); cnt < cnt_end; ++cnt)
@@ -238,13 +241,14 @@ void Message::_msg_newline()
         {
             x_at_txtfunc = 192;
         }
-        pos(cnt * 192 + inf_msgx, inf_msgy + 5 + inf_msgspace * 3 + en * 2);
         gcopy(
             3,
             496,
             536 + msgline % 4 * inf_msgspace,
             x_at_txtfunc,
-            inf_msgspace);
+            inf_msgspace,
+            cnt * 192 + inf_msgx,
+            inf_msgy + 5 + inf_msgspace * 3 + en * 2);
     }
 
     gmode(2);
@@ -287,8 +291,14 @@ void Message::_txt_conv()
                 {
                     x_at_txtfunc = 192;
                 }
-                pos(i * 192 + inf_msgx, inf_msgy + 5);
-                gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
+                gcopy(
+                    3,
+                    496,
+                    536,
+                    x_at_txtfunc,
+                    inf_msgspace * 3,
+                    i * 192 + inf_msgx,
+                    inf_msgy + 5);
             }
         }
         if (Config::instance().message_add_timestamps)

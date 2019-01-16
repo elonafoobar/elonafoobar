@@ -160,7 +160,7 @@ bool UIMenuCharacterSheet::init()
     _load_list(_operation);
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp", 0, 0, true);
     gsel(0);
     wx = (windoww - 700) / 2 + inf_screenx;
     wy = winposy(400) - 10;
@@ -185,8 +185,7 @@ bool UIMenuCharacterSheet::init()
     if (!_returned_from_portrait)
     {
         gmode(2, 80);
-        pos(wx + 4, wy + 4);
-        gcopy(7, 0, 0, 700, 400);
+        gcopy(7, 0, 0, 700, 400, wx + 4, wy + 4);
         gmode(2);
     }
     if (_operation == CharacterSheetOperation::train_skill)
@@ -338,8 +337,14 @@ void UIMenuCharacterSheet::_draw_portrait_face()
     {
         if (const auto rect = draw_get_rect_portrait(cdata[cc].portrait))
         {
-            pos(wx + 560, wy + 27);
-            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+            gcopy(
+                rect->buffer,
+                rect->x,
+                rect->y,
+                rect->width,
+                rect->height,
+                wx + 560,
+                wy + 27);
         }
     }
     window2(wx + 557, wy + 23, 87, 120, 1, 10);
@@ -349,9 +354,8 @@ void UIMenuCharacterSheet::_draw_portrait_sprite()
 {
     if (cdata[cc].has_own_sprite() == 1)
     {
-        pos(wx + 596 + 22, wy + 86 + 24);
         gmode(2);
-        gcopy_c(20 + cc, 32, 0, 32, 48, 24, 40);
+        gcopy_c(20 + cc, 32, 0, 32, 48, wx + 596 + 22, wy + 86 + 24, 24, 40);
     }
     else
     {
@@ -402,9 +406,15 @@ void UIMenuCharacterSheet::_draw_first_page_text_attribute()
 {
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 37, wy + 157 + cnt * 15);
         gmode(2);
-        gcopy_c(1, cnt * inf_tiles, 672, inf_tiles, inf_tiles);
+        gcopy_c(
+            1,
+            cnt * inf_tiles,
+            672,
+            inf_tiles,
+            inf_tiles,
+            wx + 37,
+            wy + 157 + cnt * 15);
         mes(wx + 54,
             wy + 151 + cnt * 15,
             i18n::s.get_enum("core.locale.ui.attribute", cnt),
@@ -650,8 +660,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
             continue;
         }
         ++_cs_buffmax;
-        pos(x, y);
-        gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32);
+        gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32, x, y);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});
@@ -799,9 +808,15 @@ void UIMenuCharacterSheet::_draw_skill_icon(int cnt, int list_item)
         icon = the_ability_db[list_item]->related_basic_attribute - 10;
     }
 
-    pos(wx + 38, wy + 75 + cnt * 19);
     gmode(2);
-    gcopy_c(1, icon * inf_tiles, 672, inf_tiles, inf_tiles);
+    gcopy_c(
+        1,
+        icon * inf_tiles,
+        672,
+        inf_tiles,
+        inf_tiles,
+        wx + 38,
+        wy + 75 + cnt * 19);
 }
 
 static bool _is_resistance(int skill)

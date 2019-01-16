@@ -45,11 +45,9 @@ bool UIMenuScene::init()
 {
     snd("core.book1");
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"book.bmp", 0, 0, false);
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"g1.bmp", 0);
+    picload(filesystem::dir::graphic() / u8"g1.bmp", 0, 0, true);
     gsel(0);
     listmax = 0;
     page = 0;
@@ -83,13 +81,11 @@ void UIMenuScene::update()
 void UIMenuScene::_draw_window()
 {
     gmode(2);
-    pos(wx, wy);
-    gcopy(4, 0, 0, 736, 448);
+    gcopy(4, 0, 0, 736, 448, wx, wy);
     x = 240;
     y = 320;
-    pos(wx + 190, wy + 220);
     gmode(2, 100);
-    gcopy_c(7, 0, 0, 180, 300, x, y);
+    gcopy_c(7, 0, 0, 180, 300, wx + 190, wy + 220, x, y);
     gmode(2);
 }
 

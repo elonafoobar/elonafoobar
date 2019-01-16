@@ -125,9 +125,8 @@ MainMenuResult main_title_menu()
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"title.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"title.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gmode(2);
 
     font(13 - en * 2);
@@ -167,9 +166,17 @@ MainMenuResult main_title_menu()
     cmbg = 4;
     x = ww / 5 * 4;
     y = wh - 80;
-    pos(wx + 160, wy + wh / 2);
     gmode(2, 50);
-    gcopy_c(2, cmbg / 2 * 180, cmbg % 2 * 300, 180, 300, x, y);
+    gcopy_c(
+        2,
+        cmbg / 2 * 180,
+        cmbg % 2 * 300,
+        180,
+        300,
+        wx + 160,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
 
     std::vector<std::string> items = {
@@ -188,12 +195,10 @@ MainMenuResult main_title_menu()
     };
 
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_title.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_title.bmp", 960, 96, false);
     gsel(0);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
 
     while (true)
@@ -204,8 +209,7 @@ MainMenuResult main_title_menu()
         }
 
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
         cs_listbk();
@@ -378,13 +382,11 @@ MainMenuResult main_menu_new_game()
     mode = 1;
     cm = 1;
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     load_background_variants(2);
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 960, 96, false);
     gsel(0);
     return MainMenuResult::character_making_select_race;
 }
@@ -563,13 +565,11 @@ MainMenuResult main_menu_incarnate()
     cs = 0;
     cs_bk = -1;
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
     ui_draw_caption(i18n::s.get("core.locale.main_menu.incarnate.which_gene"));
     keyrange = 0;
@@ -662,9 +662,8 @@ MainMenuResult main_menu_about()
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gmode(2);
 
     ui_draw_caption("Elona foobar " + latest_version.short_string());
@@ -689,8 +688,7 @@ MainMenuResult main_menu_about()
     while (true)
     {
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
         cs_listbk();
@@ -799,9 +797,8 @@ void main_menu_about_one_changelog(const Release& release)
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -811,8 +808,7 @@ void main_menu_about_one_changelog(const Release& release)
     {
     savegame_change_page:
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
         cs_bk = -1;
@@ -883,9 +879,8 @@ MainMenuResult main_menu_about_changelogs()
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -914,8 +909,7 @@ MainMenuResult main_menu_about_changelogs()
     {
     savegame_change_page:
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
         cs_bk = -1;
@@ -1063,9 +1057,8 @@ MainMenuResult main_menu_about_license()
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1075,8 +1068,7 @@ MainMenuResult main_menu_about_license()
     {
     savegame_change_page:
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
         cs_bk = -1;
@@ -1187,9 +1179,8 @@ MainMenuResult main_menu_about_credits()
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1199,8 +1190,7 @@ MainMenuResult main_menu_about_credits()
     {
     savegame_change_page:
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
         cs_bk = -1;

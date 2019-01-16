@@ -30,8 +30,7 @@ bool UIMenuFeats::init()
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 960, 96, false);
     gsel(0);
     windowshadow = 1;
 
@@ -180,16 +179,11 @@ void UIMenuFeats::_draw_window_deco()
     s(2) = i18n::s.get("core.locale.trait.window.detail");
     display_topic(s, wx + 46, wy + 36);
     display_topic(s(2), wx + 255, wy + 36);
-    pos(wx + 46, wy - 16);
-    gcopy(3, 816, 48, 48, 48);
-    pos(wx + ww - 56, wy + wh - 198);
-    gcopy(3, 960, 96, 48, 192);
-    pos(wx, wy);
-    gcopy(3, 1008, 96, 48, 144);
-    pos(wx + ww - 108, wy);
-    gcopy(3, 960, 288, 96, 72);
-    pos(wx, wy + wh - 70);
-    gcopy(3, 1008, 240, 96, 48);
+    gcopy(3, 816, 48, 48, 48, wx + 46, wy - 16);
+    gcopy(3, 960, 96, 48, 192, wx + ww - 56, wy + wh - 198);
+    gcopy(3, 1008, 96, 48, 144, wx, wy);
+    gcopy(3, 960, 288, 96, 72, wx + ww - 108, wy);
+    gcopy(3, 1008, 240, 96, 48, wx, wy + wh - 70);
 }
 
 void UIMenuFeats::_draw_window(bool is_chara_making)
@@ -267,15 +261,20 @@ void UIMenuFeats::_draw_single_list_entry_text(
 {
     if (draw_name)
     {
-        pos(wx + 30, wy + 61 + cnt * 19);
         x = 84;
     }
     else
     {
-        pos(wx + 45, wy + 61 + cnt * 19);
         x = 70;
     }
-    gcopy(3, 384 + traitref * 24, 336, 24, 24);
+    gcopy(
+        3,
+        384 + traitref * 24,
+        336,
+        24,
+        24,
+        wx + (draw_name ? 30 : 45),
+        wy + 61 + cnt * 19);
 
     cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, text_color);
 

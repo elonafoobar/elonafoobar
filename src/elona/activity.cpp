@@ -1421,8 +1421,7 @@ void spot_fishing()
         racount = 0;
         fishstat = 0;
         gsel(9);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"fishing.bmp");
+        picload(filesystem::dir::graphic() / u8"fishing.bmp", 0, 0, true);
         gsel(0);
         return;
     }

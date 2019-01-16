@@ -76,9 +76,17 @@ void UIMenuNPCTone::draw()
 
     x = ww / 5 * 3;
     y = wh - 80;
-    pos(wx + ww / 3 * 2, wy + wh / 2);
     gmode(2, 50);
-    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gcopy_c(
+        4,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 3 * 2,
+        wy + wh / 2,
+        x,
+        y);
 
     gmode(2);
     display_topic(

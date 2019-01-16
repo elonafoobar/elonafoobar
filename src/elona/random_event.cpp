@@ -623,8 +623,11 @@ int show_random_event_window(
     }
     gsel(7);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / (background_filename + u8".bmp"), 0);
+    picload(
+        filesystem::dir::graphic() / (background_filename + u8".bmp"),
+        0,
+        0,
+        true);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
@@ -647,8 +650,7 @@ int show_random_event_window(
         wx = (windoww - dx) / 2 + inf_screenx;
         wy = winposy(dy);
         gmode(0);
-        pos(wx + 12, wy + 6);
-        gcopy(7, 0, 0, tx, ty);
+        gcopy(7, 0, 0, tx, ty, wx + 12, wy + 6);
         gmode(2);
         boxl(wx + 12, wy + 6, tx, ty, {240, 230, 220});
         font(14 - en * 2);

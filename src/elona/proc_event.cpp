@@ -653,14 +653,21 @@ void proc_event()
             Message::color{ColorIndex::red});
         msg_halt();
         gsel(7);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"bg22.bmp");
+        picload(filesystem::dir::graphic() / u8"bg22.bmp", 0, 0, true);
         gsel(4);
-        pos(windoww / 2 - 1, windowh / 2 - 1);
         gmode(0);
-        gcopy_c(7, 0, 0, 640, 480, windoww + 4, windowh + 4);
+        gcopy_c(
+            7,
+            0,
+            0,
+            640,
+            480,
+            windoww / 2 - 1,
+            windowh / 2 - 1,
+            windoww + 4,
+            windowh + 4);
         gsel(7);
-        picload(filesystem::dir::graphic() / u8"anime9.bmp");
+        picload(filesystem::dir::graphic() / u8"anime9.bmp", 0, 0, true);
         gsel(0);
         dx = windoww / 2;
         dy = (windowh - inf_verh) / 2;
@@ -675,16 +682,14 @@ void proc_event()
             {
                 snd("core.atk_fire");
             }
-            if (i < 16)
+            int x = 0, y = 0;
+            if (i >= 16)
             {
-                pos(0, 0);
-            }
-            else
-            {
-                pos(5 - rnd(10), 5 - rnd(10));
+                x = 5 - rnd(10);
+                y = 5 - rnd(10);
             }
             gmode(0);
-            gcopy(4, 0, 0, windoww, windowh);
+            gcopy(4, 0, 0, windoww, windowh, x, y);
             if (i > 8)
             {
                 --p;
@@ -693,13 +698,14 @@ void proc_event()
             {
                 ++p;
             }
-            pos(dx, dy);
             gmode(2, 255 - p * 5);
             gcopy_c(
                 7,
                 i / 2 % 2 * 192,
                 408,
                 192,
+                dx,
+                dy,
                 48,
                 clamp(p * 32, 0, 192),
                 clamp(p * 8, 0, 48));
@@ -715,7 +721,6 @@ void proc_event()
             {
                 p(1) = i % 3;
             }
-            pos(dx, dy - clamp(i * 3 / 2, 0, 18) - 16);
             gmode(2);
             gcopy_c(
                 7,
@@ -723,6 +728,8 @@ void proc_event()
                 288,
                 96,
                 48,
+                dx,
+                dy - clamp(i * 3 / 2, 0, 18) - 16,
                 clamp(i * 12, 0, 144),
                 clamp(i * 6, 0, 72));
             if (i > 4)
@@ -730,7 +737,6 @@ void proc_event()
                 ++p(2);
                 ++p(3);
             }
-            pos(dx, dy - clamp(p(2) * 2, 0, 40));
             gmode(2, clamp(p(2) * 6, 0, 100));
             gcopy_c(
                 7,
@@ -738,9 +744,10 @@ void proc_event()
                 0,
                 96,
                 96,
+                dx,
+                dy - clamp(p(2) * 2, 0, 40),
                 clamp(p(2) * 8, 0, 240),
                 clamp(p(2) * 5, 0, 96));
-            pos(dx, dy - clamp(p(3) * 2, 0, 160) - 6);
             gmode(2, p(3) * 10);
             gcopy_c(
                 7,
@@ -748,9 +755,10 @@ void proc_event()
                 0,
                 96,
                 96,
+                dx,
+                dy - clamp(p(3) * 2, 0, 160) - 6,
                 clamp(p(3) * 10, 0, 96),
                 clamp(p(3) * 10, 0, 96));
-            pos(dx, dy - 4);
             gmode(2, clamp(p(3) * 5, 0, 100));
             gcopy_c(
                 7,
@@ -758,11 +766,21 @@ void proc_event()
                 96,
                 192,
                 80,
+                dx,
+                dy - 4,
                 clamp(p(2) * 8, 0, 400),
                 clamp(p(2), 0, 48));
-            pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
             gmode(2, p(3) * 10);
-            gcopy_c(7, i / 3 % 2 * 192, 192, 96, 96, 192, 96);
+            gcopy_c(
+                7,
+                i / 3 % 2 * 192,
+                192,
+                96,
+                96,
+                dx,
+                dy - 48 - clamp(p(3) * 2, 0, 148),
+                192,
+                96);
             redraw();
             await(Config::instance().animewait * 3.5);
         }

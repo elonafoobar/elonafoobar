@@ -25,8 +25,7 @@ void UIMenuTownChart::update()
     snd("core.chat");
 
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 960, 96, false);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
@@ -100,8 +99,7 @@ void UIMenuTownChart::draw()
                 y = wy + 70 + n * 55;
             }
             x = wx + (ww - 70) / (i + 1) * (j0 + 1);
-            pos(x - 26, y - 3);
-            gcopy(3, 960, 288, 144, 24);
+            gcopy(3, 960, 288, 144, 24, x - 26, y - 3);
             p = pochart(j0, n, lv);
             key_list(cnt) = key_select(cnt);
             ++keyrange;

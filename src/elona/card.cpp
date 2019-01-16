@@ -33,8 +33,7 @@ void show_card_collection()
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 960, 96, false);
     gsel(0);
     windowshadow = 1;
 

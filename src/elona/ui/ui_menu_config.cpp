@@ -27,13 +27,11 @@ void UIMenuConfig::_draw_background()
     {
         gsel(4);
         gmode(0);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"title.bmp", 1);
-        gcopy(4, 0, 0, 800, 600, windoww, windowh);
+        picload(filesystem::dir::graphic() / u8"title.bmp", 0, 0, false);
+        gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
     }
 }
@@ -114,9 +112,17 @@ void UIMenuConfig::_draw_deco()
 
     x = ww / 5 * 3;
     y = wh - 80;
-    pos(wx + ww / 3, wy + wh / 2);
     gmode(2, 50);
-    gcopy_c(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gcopy_c(
+        p,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 3,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
 }
 
@@ -146,10 +152,8 @@ void UIMenuConfig::_draw_keys(bool is_root_menu)
 
 void UIMenuConfig::_draw_arrows(int item_pos)
 {
-    pos(wx + 220, wy + 66 + item_pos * 19 - 5);
-    gcopy(3, 312, 336, 24, 24);
-    pos(wx + 358, wy + 66 + item_pos * 19 - 5);
-    gcopy(3, 336, 336, 24, 24);
+    gcopy(3, 312, 336, 24, 24, wx + 220, wy + 66 + item_pos * 19 - 5);
+    gcopy(3, 336, 336, 24, 24, wx + 358, wy + 66 + item_pos * 19 - 5);
 }
 
 void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)

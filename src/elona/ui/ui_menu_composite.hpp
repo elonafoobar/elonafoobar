@@ -155,8 +155,7 @@ private:
     {
         font(12 + sizefix - en * 2);
         window2(x, y, width, 22, 5, 5);
-        pos(x - 28, y - 8);
-        gcopy(3, 64, 288, 50, 32);
+        gcopy(3, 64, 288, 50, 32, x - 28, y - 8);
     }
 
     void _draw_single_menu_item(
@@ -165,14 +164,26 @@ private:
         int x,
         int y)
     {
-        pos(x + menu_index * 50 + 20, y - 24);
-        gcopy(3, 288 + menu.image * 48, 48, 48, 48);
+        gcopy(
+            3,
+            288 + menu.image * 48,
+            48,
+            48,
+            48,
+            x + menu_index * 50 + 20,
+            y - 24);
 
         if (_selected == menu_index)
         {
             gmode(5, 70);
-            pos(x + menu_index * 50 + 20, y - 24);
-            gcopy(3, 288 + menu.image * 48, 48, 48, 48);
+            gcopy(
+                3,
+                288 + menu.image * 48,
+                48,
+                48,
+                48,
+                x + menu_index * 50 + 20,
+                y - 24);
             gmode(2);
         }
 

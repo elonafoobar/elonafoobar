@@ -48,10 +48,8 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
     {
         window2(x + 20, y, dx - 40, 36, 0, 2);
         draw("label_input", x + dx / 2 - 56, y - 32);
-        pos(x + 28, y + 4);
-        gcopy(3, 312, 336, 24, 24);
-        pos(x + dx - 51, y + 4);
-        gcopy(3, 336, 336, 24, 24);
+        gcopy(3, 312, 336, 24, 24, x + 28, y + 4);
+        gcopy(3, 336, 336, 24, 24, x + dx - 51, y + 4);
         const std::string inputlog2 = inputlog + u8"(" + max_number + u8")";
         mes(x + dx - 70 - strlen_u(inputlog2) * 8 + 8,
             y + vfix + 11,
@@ -160,7 +158,6 @@ bool input_text_dialog(
     dx = val2 * 16 + 60;
     font(16 - en * 2);
 
-    pos(x, y);
     inputlog = "";
     mesbox(inputlog, true);
     boxf(x + 4, y + 4, dx - 1, 35, {0, 0, 0, 127});
@@ -186,8 +183,7 @@ bool input_text_dialog(
         apledit(p(2), 2, 0);
         if (p(2) > val2 * (1 + en) - 2)
         {
-            pos(x + 8, y + 4);
-            gcopy(3, 72, 336, 24, 24);
+            gcopy(3, 72, 336, 24, 24, x + 8, y + 4);
         }
         if (cnt % 20 < 10)
         {

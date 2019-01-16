@@ -97,9 +97,17 @@ void UIMenuCharamakeRace::_draw_window()
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
-    pos(wx + ww / 4, wy + wh / 2);
     gmode(2, 50);
-    gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gcopy_c(
+        2,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 4,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.chara_making.select_race.race"),
@@ -156,7 +164,6 @@ void UIMenuCharamakeRace::draw()
     const std::string& selected_race = listn(1, page * pagesize + cs);
     _reload_selected_race(selected_race);
 
-    pos(wx + 200, wy + 66);
     _draw_race_info(ref1, ref2);
 }
 

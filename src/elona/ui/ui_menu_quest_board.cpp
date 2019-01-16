@@ -56,8 +56,7 @@ static void _populate_quest_list()
 void UIMenuQuestBoard::_draw_background()
 {
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_board.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_board.bmp", 960, 96, false);
     gsel(0);
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
@@ -71,8 +70,7 @@ void UIMenuQuestBoard::_draw_background()
         y = wy + cnt * 120;
         window(wx + 4, y + 4, ww, h, true);
         window(wx, y, ww, h);
-        pos(wx + 20, y + 8);
-        gcopy(3, 960, 240, 48, 84);
+        gcopy(3, 960, 240, 48, 84, wx + 20, y + 8);
     }
     render_hud();
     gsel(0);
@@ -119,8 +117,7 @@ void UIMenuQuestBoard::_draw_window()
     s(0) = i18n::s.get("core.locale.ui.board.title");
     s(1) = strhint2 + strhint3b;
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, inf_ver);
+    gcopy(4, 0, 0, windoww, inf_ver, 0, 0);
     gmode(2);
     font(16 - en * 2);
     bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), wx + ww + 20, wy);

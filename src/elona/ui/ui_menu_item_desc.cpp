@@ -97,8 +97,7 @@ void UIMenuItemDesc::_draw_normal_mark(int cnt, int list_item)
 {
     int desc = list_item % 10000;
     int mark_pos_x = desc * 24;
-    pos(wx + 40, wy + 61 + cnt * 18);
-    gcopy(3, 72 + mark_pos_x, 336, 24, 24);
+    gcopy(3, 72 + mark_pos_x, 336, 24, 24, wx + 40, wy + 61 + cnt * 18);
 }
 
 void UIMenuItemDesc::_draw_marks(int cnt, int list_item)

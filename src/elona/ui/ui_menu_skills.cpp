@@ -49,8 +49,7 @@ bool UIMenuSkills::init()
 
     snd("core.skill");
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 960, 96, false);
     gsel(0);
     windowshadow = 1;
 
@@ -89,12 +88,9 @@ void UIMenuSkills::_draw_window()
     display_topic(
         i18n::s.get("core.locale.ui.skill.detail"), wx + 320, wy + 36);
 
-    pos(wx + 46, wy - 16);
-    gcopy(3, 960, 48, 48, 48);
-    pos(wx + ww - 78, wy + wh - 165);
-    gcopy(3, 960, 96, 72, 144);
-    pos(wx + ww - 168, wy);
-    gcopy(3, 1032, 96, 102, 48);
+    gcopy(3, 960, 48, 48, 48, wx + 46, wy - 16);
+    gcopy(3, 960, 96, 72, 144, wx + ww - 78, wy + wh - 165);
+    gcopy(3, 1032, 96, 102, 48, wx + ww - 168, wy);
 }
 
 void UIMenuSkills::_draw_key(int cnt)
@@ -124,14 +120,15 @@ void UIMenuSkills::_draw_keys()
 
 void UIMenuSkills::_draw_skill_attribute(int cnt, int skill_id)
 {
-    pos(wx + 40, wy + 74 + cnt * 19);
     gmode(2);
     gcopy_c(
         1,
         (the_ability_db[skill_id]->related_basic_attribute - 10) * inf_tiles,
         672,
         inf_tiles,
-        inf_tiles);
+        inf_tiles,
+        wx + 40,
+        wy + 74 + cnt * 19);
 }
 
 void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)

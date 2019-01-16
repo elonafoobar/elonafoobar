@@ -169,11 +169,9 @@ void UIMenuJournal::update()
         page = 0;
     }
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"book.bmp", 0, 0, false);
     gsel(0);
-    pos(wx, wy);
-    gcopy(4, 0, 0, 736, 448);
+    gcopy(4, 0, 0, 736, 448, wx, wy);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;

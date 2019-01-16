@@ -32,6 +32,14 @@ struct FontCacheKey
     }
 };
 
+
+
+template <typename T>
+constexpr T rad2deg(T rad)
+{
+    return rad * 180.0 / 3.14159265358979323846264;
+}
+
 } // namespace
 
 
@@ -299,25 +307,24 @@ void mesbox(std::string& buffer, int keywait, bool text)
     }
 }
 
-void picload(Image& img, int mode)
+
+
+void picload(Image& img, int x, int y, bool create_buffer)
 {
-    if (mode == 0)
+    auto& renderer = Application::instance().get_renderer();
+
+    if (create_buffer)
     {
         buffer(detail::current_buffer, img.width(), img.height());
     }
-    const auto save = Application::instance().get_renderer().blend_mode();
-    Application::instance().get_renderer().set_blend_mode(BlendMode::none);
-    Application::instance().get_renderer().render_image(
-        img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
+    const auto save = renderer.blend_mode();
+    renderer.set_blend_mode(BlendMode::none);
+    renderer.render_image(img, x, y);
 
-    Application::instance().get_renderer().set_blend_mode(save);
+    renderer.set_blend_mode(save);
 }
 
-void pos(int x, int y)
-{
-    detail::current_tex_buffer().x = x;
-    detail::current_tex_buffer().y = y;
-}
+
 
 static void redraw_android()
 {
@@ -525,6 +532,8 @@ void gcopy(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height)
 {
@@ -535,8 +544,6 @@ void gcopy(
         detail::tex_buffers[window_id].texture,
         detail::current_tex_buffer().alpha));
 
-    int dst_x = detail::current_tex_buffer().x;
-    int dst_y = detail::current_tex_buffer().y;
     dst_width = dst_width == -1 ? src_width : dst_width;
     dst_height = dst_height == -1 ? src_height : dst_height;
 
@@ -657,6 +664,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     double angle)
 {
     grotate(
@@ -665,6 +674,8 @@ void grotate(
         src_y,
         src_width,
         src_height,
+        dst_x,
+        dst_y,
         src_width,
         src_height,
         angle);
@@ -678,6 +689,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height,
     double angle)
@@ -696,8 +709,8 @@ void grotate(
         src_height,
     };
     ::SDL_Rect dst_rect{
-        detail::current_tex_buffer().x - dst_width / 2,
-        detail::current_tex_buffer().y - dst_height / 2,
+        dst_x - dst_width / 2,
+        dst_y - dst_height / 2,
         dst_width,
         dst_height,
     };

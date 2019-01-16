@@ -410,8 +410,7 @@ void god_proc_switching_penalty()
     if (rtval == 0)
     {
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh - inf_verh);
+        gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
         gmode(2);
         render_hud();
         redraw();

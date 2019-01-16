@@ -124,7 +124,6 @@ void PicLoader::load(
 
     // Render the sprite to the region of the buffer that was found.
     gsel(ext.buffer);
-    pos(ext.x, ext.y);
 
     copy_image(img, ext);
 

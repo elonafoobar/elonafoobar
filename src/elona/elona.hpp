@@ -405,15 +405,18 @@ void gcopy(
     int src_y,
     int src_width,
     int src_height,
-    int dst_width = -1,
-    int dst_height = -1);
-
-void gcopy_c(
+    int dst_x,
+    int dst_y);
+void gcopy(
     int window_id,
     int src_x,
     int src_y,
     int src_width,
-    int src_height);
+    int src_height,
+    int dst_x,
+    int dst_y,
+    int dst_width,
+    int dst_height);
 
 void gcopy_c(
     int window_id,
@@ -421,6 +424,17 @@ void gcopy_c(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y);
+
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height);
 
@@ -448,6 +462,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     double angle);
 
 void grotate(
@@ -456,6 +472,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height,
     double angle);
@@ -510,10 +528,7 @@ void objprm(int, const std::string&);
 
 void pget(int x, int y);
 
-void picload(const fs::path& file, int immediately = 0);
-
-void pos(int x, int y = 0);
-
+void picload(const fs::path& file, int x, int y, bool create_buffer);
 
 
 void redraw();

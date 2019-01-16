@@ -116,16 +116,14 @@ bool _magic_1136()
     txt(i18n::s.get("core.locale.magic.map.apply"));
     snd("core.book1");
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"paper.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"paper.bmp", 0, 0, false);
     gsel(0);
     ww = 400;
     wh = 300;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     gmode(2);
-    pos(wx, wy);
-    gcopy(4, 0, 0, ww, wh);
+    gcopy(4, 0, 0, ww, wh, wx, wy);
     gmode(0);
     for (int cnt = 0; cnt < 5; ++cnt)
     {
@@ -136,13 +134,14 @@ bool _magic_1136()
             x = cnt + inv[ci].param1 - 3;
             sx = cnt * inf_tiles + wx + 46;
             p = cell_data.at(x, y).chip_id_actual;
-            pos(sx + 1, sy + 1);
             gcopy(
                 2,
                 p % 33 * inf_tiles,
                 p / 33 * inf_tiles,
                 inf_tiles,
-                inf_tiles);
+                inf_tiles,
+                sx + 1,
+                sy + 1);
             if (x == inv[ci].param1)
             {
                 if (y == inv[ci].param2)
@@ -157,8 +156,7 @@ bool _magic_1136()
         }
     }
     gmode(2);
-    pos(wx, wy);
-    gcopy(4, 400, 0, ww, wh);
+    gcopy(4, 400, 0, ww, wh, wx, wy);
     redraw();
     wait_key_pressed();
     snd("core.card1");

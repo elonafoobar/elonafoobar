@@ -39,8 +39,7 @@ bool UIMenuChatHistory::init()
     keyrange = 0;
     pagesize = 0;
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

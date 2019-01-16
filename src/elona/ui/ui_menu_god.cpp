@@ -55,10 +55,8 @@ bool UIMenuGod::init()
     snd("core.pop4");
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"bg_altar.bmp", 1);
-    pos(0, 0);
-    gcopy(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
+    picload(filesystem::dir::graphic() / u8"bg_altar.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 600, 400, 0, 0, windoww, windowh - inf_verh);
     gsel(0);
 
     return true;
@@ -107,8 +105,7 @@ static std::string _get_god_description(int god_id)
 void UIMenuGod::_draw_window()
 {
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh - inf_verh);
+    gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
     gmode(2);
     render_hud();
     dx = 520;

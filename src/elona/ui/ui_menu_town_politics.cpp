@@ -48,14 +48,12 @@ bool UIMenuTownPolitics::init()
     _load_politics_list(is_town);
 
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 960, 96, false);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");
@@ -99,12 +97,10 @@ void UIMenuTownPolitics::_draw_window()
                 mapname(game_data.current_map)));
     }
 
-    pos(wx + 155, wy + 46);
     gmode(2);
-    gcopy(3, 312, 360, 24, 24);
-    pos(wx + 255, wy + 46);
+    gcopy(3, 312, 360, 24, 24, wx + 155, wy + 46);
     gmode(2);
-    gcopy(3, 288, 360, 24, 24);
+    gcopy(3, 288, 360, 24, 24, wx + 255, wy + 46);
 }
 
 void UIMenuTownPolitics::_draw_key(int cnt)
@@ -138,9 +134,9 @@ static void
 _draw_single_list_entry(int cnt, int list_item, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + 100, wy + 76 + cnt * 19 - 1);
-    pos(wx + 42, wy + 68 + cnt * 19 + 2);
     gmode(2);
-    gcopy(3, 288 + list_item * 24, 360, 24, 24);
+    gcopy(
+        3, 288 + list_item * 24, 360, 24, 24, wx + 42, wy + 68 + cnt * 19 + 2);
 }
 
 void UIMenuTownPolitics::_draw_list_entries()

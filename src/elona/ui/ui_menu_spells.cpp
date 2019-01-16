@@ -40,8 +40,7 @@ bool UIMenuSpells::init()
 
     snd("core.spell");
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_spell.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_spell.bmp", 960, 96, false);
     gsel(0);
     windowshadow = 1;
 
@@ -83,12 +82,9 @@ void UIMenuSpells::_draw_window()
     display_topic(
         i18n::s.get("core.locale.ui.spell.effect"), wx + 400, wy + 36);
 
-    pos(wx + 46, wy - 16);
-    gcopy(3, 912, 48, 48, 48);
-    pos(wx + ww - 78, wy);
-    gcopy(3, 960, 96, 72, 144);
-    pos(wx + ww - 180, wy);
-    gcopy(3, 1032, 96, 72, 96);
+    gcopy(3, 912, 48, 48, 48, wx + 46, wy - 16);
+    gcopy(3, 960, 96, 72, 144, wx + ww - 78, wy);
+    gcopy(3, 1032, 96, 72, 96, wx + ww - 180, wy);
 }
 
 void UIMenuSpells::_draw_key(int cnt)
@@ -118,14 +114,15 @@ void UIMenuSpells::_draw_keys()
 
 void UIMenuSpells::_draw_spell_attribute(int cnt, int spell_id)
 {
-    pos(wx + 40, wy + 74 + cnt * 19);
     gmode(2);
     gcopy_c(
         1,
         (the_ability_db[spell_id]->related_basic_attribute - 10) * inf_tiles,
         672,
         inf_tiles,
-        inf_tiles);
+        inf_tiles,
+        wx + 40,
+        wy + 74 + cnt * 19);
 }
 
 void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)

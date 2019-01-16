@@ -33,14 +33,12 @@ bool UIMenuTownEconomy::init()
     pagesize = 1;
     listmax = 2;
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 960, 96, false);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

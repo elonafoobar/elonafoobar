@@ -31,7 +31,7 @@ int p_at_m193 = 0;
 void talk_start()
 {
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_chat.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_chat.bmp", 0, 0, true);
     gsel(0);
 }
 
@@ -635,8 +635,7 @@ void talk_window_init()
     ww = 600;
     wh = 380;
     gmode(2, 80);
-    pos(wx + 4, wy - 16);
-    gcopy(7, 0, 0, 600, 380);
+    gcopy(7, 0, 0, 600, 380, wx + 4, wy - 16);
 }
 
 
@@ -644,15 +643,20 @@ void talk_window_init()
 void talk_window_show()
 {
     gmode(2);
-    pos(wx, wy - 20);
-    gcopy(7, 0, 0, 600, 380);
+    gcopy(7, 0, 0, 600, 380, wx, wy - 20);
     if (cdata[tc].portrait != "" || scenemode)
     {
         const auto id = scenemode ? actor(1, rc) : cdata[tc].portrait;
         if (const auto rect = draw_get_rect_portrait(id))
         {
-            pos(wx + 42, wy + 42);
-            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+            gcopy(
+                rect->buffer,
+                rect->x,
+                rect->y,
+                rect->width,
+                rect->height,
+                wx + 42,
+                wy + 42);
         }
     }
     else

@@ -840,12 +840,10 @@ void trait_load_desc()
                     i18n::s.get("core.locale.trait.window.requirement") +
                     u8")"s;
             }
-            pos(wx + 30, wy + 61 + cnt * 19);
             x = 84;
         }
         else
         {
-            pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
             if (traitref == 0)
             {

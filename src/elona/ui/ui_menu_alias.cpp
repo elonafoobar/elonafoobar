@@ -69,8 +69,7 @@ void UIMenuAlias::draw()
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
 
-        pos(wx + 38, wy + 66 + cnt * 19 - 2);
-        gcopy(3, cnt * 24 + 72, 30, 24, 18);
+        gcopy(3, cnt * 24 + 72, 30, 24, 18, wx + 38, wy + 66 + cnt * 19 - 2);
         cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
     }
 }

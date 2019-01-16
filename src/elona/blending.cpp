@@ -344,8 +344,7 @@ void window_recipe2(int val0)
     x_at_m183 = wx + ww;
     w_at_m183 = 400;
     gmode(2);
-    pos(x_at_m183 + w_at_m183 - 520, 0);
-    gcopy(3, 960, 288, 480, 68);
+    gcopy(3, 960, 288, 480, 68, x_at_m183 + w_at_m183 - 520, 0);
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
     font(15 - en * 2, snail::Font::Style::bold);
@@ -443,7 +442,6 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     dy_at_m184 = dy_at_m184 + 18;
     font(13 - en * 2);
     i_at_m184 = 1;
-    pos(dx_at_m184 - 10, dy_at_m184 - 2);
     if (step == i_at_m184 - 2)
     {
         boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
@@ -476,7 +474,6 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         {
             break;
         }
-        pos(dx_at_m184 - 10, dy_at_m184 - 2);
         if (step == i_at_m184 - 2)
         {
             boxf(
@@ -513,9 +510,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         dy_at_m184 += 17;
         ++i_at_m184;
     }
-    pos(wx + ww + 243, wy - 4);
-    gcopy(3, 1040, 96, 160, 70);
-    pos(dx_at_m184 - 10, dy_at_m184 - 2);
+    gcopy(3, 1040, 96, 160, 70, wx + ww + 243, wy - 4);
     if (step == i_at_m184 - 2)
     {
         boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
@@ -629,8 +624,7 @@ TurnResult blending_menu()
     step = -1;
     rpid = 0;
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_blend.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_blend.bmp", 960, 96, false);
     gsel(0);
     clear_rprefmat();
 label_1923:
@@ -780,14 +774,19 @@ label_1925_internal:
 
         draw_item_material(550, wx + 37, wy + 70 + cnt * 19); // Recipe image
 
-        pos(wx + 330, wy + 53 + cnt * 19);
         if (blendchecklist(cnt) == 1)
         {
-            gcopy(3, 336, 360, 24, 24);
+            gcopy(3, 336, 360, 24, 24, wx + 330, wy + 53 + cnt * 19);
         }
         rpid = list(0, p);
-        pos(wx + 317, wy + 60 + cnt * 19);
-        gcopy(3, 64 + (4 - rpdiff(rpid, -1, -1) / 25) * 16, 624, 16, 16);
+        gcopy(
+            3,
+            64 + (4 - rpdiff(rpid, -1, -1) / 25) * 16,
+            624,
+            16,
+            16,
+            wx + 317,
+            wy + 60 + cnt * 19);
     }
     font(14 - en * 2);
     cs_listbk();
@@ -815,8 +814,7 @@ label_1925_internal:
         cs_bk = cs;
     }
     windowshadow(1) = 0;
-    pos(wx + 10, wy + wh - 100);
-    gcopy(3, 960, 96, 80, 90);
+    gcopy(3, 960, 96, 80, 90, wx + 10, wy + wh - 100);
     redraw();
 
     action = get_selected_item(p(0));
@@ -950,8 +948,7 @@ label_1928_internal:
         cs_bk = cs;
     }
     windowshadow(1) = 0;
-    pos(wx + 10, wy + wh - 100);
-    gcopy(3, 960, 96, 80, 90);
+    gcopy(3, 960, 96, 80, 90, wx + 10, wy + wh - 100);
     redraw();
 
     action = get_selected_item(p(0));

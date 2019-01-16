@@ -343,19 +343,36 @@ void gcopy(
     int src_y,
     int src_width,
     int src_height,
-    int dst_width,
-    int dst_height)
+    int dst_x,
+    int dst_y)
 {
     snail::hsp::gcopy(
-        window_id, src_x, src_y, src_width, src_height, dst_width, dst_height);
+        window_id, src_x, src_y, src_width, src_height, dst_x, dst_y, -1, -1);
 }
 
 
 
-void gcopy_c(int window_id, int src_x, int src_y, int src_width, int src_height)
+void gcopy(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
+    int dst_width,
+    int dst_height)
 {
-    gcopy_c(
-        window_id, src_x, src_y, src_width, src_height, src_width, src_height);
+    snail::hsp::gcopy(
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_x,
+        dst_y,
+        dst_width,
+        dst_height);
 }
 
 
@@ -366,12 +383,44 @@ void gcopy_c(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y)
+{
+    gcopy_c(
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_x,
+        dst_y,
+        src_width,
+        src_height);
+}
+
+
+
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height)
 {
-    pos(ginfo(22) - dst_width / 2, ginfo(23) - dst_height / 2);
     snail::hsp::gcopy(
-        window_id, src_x, src_y, src_width, src_height, dst_width, dst_height);
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_x - dst_width / 2,
+        dst_y - dst_height / 2,
+        dst_width,
+        dst_height);
 }
 
 
@@ -429,10 +478,18 @@ void gmode(int mode, int alpha)
 
 
 
-template <typename T>
-constexpr T rad2deg(T rad)
+void grotate(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
+    double angle)
 {
-    return rad * 180.0 / 3.14159265358979323846264;
+    snail::hsp::grotate(
+        window_id, src_x, src_y, src_width, src_height, dst_x, dst_y, angle);
 }
 
 
@@ -443,6 +500,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height,
     double angle)
@@ -453,22 +512,11 @@ void grotate(
         src_y,
         src_width,
         src_height,
+        dst_x,
+        dst_y,
         dst_width,
         dst_height,
         angle);
-}
-
-
-
-void grotate(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    double angle)
-{
-    snail::hsp::grotate(window_id, src_x, src_y, src_width, src_height, angle);
 }
 
 
@@ -695,7 +743,7 @@ void pget(int x, int y)
 
 
 
-void picload(const fs::path& filepath, int mode)
+void picload(const fs::path& filepath, int x, int y, bool create_buffeer)
 {
     optional<snail::Color> keycolor = snail::Color{0, 0, 0};
     if (filepathutil::to_utf8_path(filepath).find(u8"pcc") != std::string::npos)
@@ -707,14 +755,7 @@ void picload(const fs::path& filepath, int mode)
         keycolor = none;
     }
     snail::Image img{filepath, keycolor};
-    snail::hsp::picload(img, mode);
-}
-
-
-
-void pos(int x, int y)
-{
-    snail::hsp::pos(x, y);
+    snail::hsp::picload(img, x, y, create_buffeer);
 }
 
 

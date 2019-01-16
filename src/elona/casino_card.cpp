@@ -47,14 +47,12 @@ void showcard2(int card_index, bool show_rank = true)
     if (is_closed)
     {
         // Card's back.
-        pos(x, y);
-        gcopy(3, 736, 216, 64, 96);
+        gcopy(3, 736, 216, 64, 96, x, y);
     }
     else
     {
         // Card's face.
-        pos(x, y);
-        gcopy(3, 672, 216, 64, 96);
+        gcopy(3, 672, 216, 64, 96, x, y);
 
         if (show_rank)
         {
@@ -84,14 +82,25 @@ void showcard2(int card_index, bool show_rank = true)
                 rank_color = {250, 250, 105, 255};
                 break;
             }
-            pos(x + 32 - rect->width / 2, y + 88 - rect->height);
-            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+            gcopy(
+                rect->buffer,
+                rect->x,
+                rect->y,
+                rect->width,
+                rect->height,
+                x + 32 - rect->width / 2,
+                y + 88 - rect->height);
 
             gmode(2, 220);
-            pos(x + 8, y + 16);
-            gcopy(3, 864 + static_cast<int>(suit) * 24, 533, 24, 32);
-            pos(x + 32, y + 16);
-            gcopy(3, 864 + (rank - 1) * 24, 565, 24, 32);
+            gcopy(
+                3,
+                864 + static_cast<int>(suit) * 24,
+                533,
+                24,
+                32,
+                x + 8,
+                y + 16);
+            gcopy(3, 864 + (rank - 1) * 24, 565, 24, 32, x + 32, y + 16);
             gmode(2);
         }
         else
@@ -167,8 +176,14 @@ void initcard(int x, int y, int)
 void showcardpile()
 {
     int pilestack_at_cardcontrol = 0;
-    pos(pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
-    gcopy(3, 528, 216, 80, 112);
+    gcopy(
+        3,
+        528,
+        216,
+        80,
+        112,
+        pilex_at_cardcontrol - 8,
+        piley_at_cardcontrol - 8);
     pilestack_at_cardcontrol = 0;
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
     {
@@ -248,9 +263,14 @@ int servecard(int player_id)
     {
         if (cnt != 0)
         {
-            pos(card_at_cardcontrol(3, cardid_at_cardcontrol),
+            gcopy(
+                3,
+                608,
+                216,
+                64,
+                96,
+                card_at_cardcontrol(3, cardid_at_cardcontrol),
                 card_at_cardcontrol(4, cardid_at_cardcontrol));
-            gcopy(3, 608, 216, 64, 96);
         }
         card_at_cardcontrol(3, cardid_at_cardcontrol) =
             pilex_at_cardcontrol - dx_at_cardcontrol / 10 * cnt;
@@ -268,13 +288,14 @@ int servecard(int player_id)
         }
         gmode(0);
         gsel(3);
-        pos(608, 216);
         gcopy(
             0,
             card_at_cardcontrol(3, cardid_at_cardcontrol),
             card_at_cardcontrol(4, cardid_at_cardcontrol),
             64,
-            96);
+            96,
+            608,
+            216);
         gsel(0);
         gmode(2);
         showcard2(cardid_at_cardcontrol);
@@ -300,8 +321,14 @@ void showcardholder()
             dx_at_cardcontrol =
                 cardplayer_at_cardcontrol(1, p_at_cardcontrol) + cnt * 88;
             dy_at_cardcontrol = cardplayer_at_cardcontrol(2, p_at_cardcontrol);
-            pos(dx_at_cardcontrol - 8, dy_at_cardcontrol - 8);
-            gcopy(3, 528, 216, 80, 112);
+            gcopy(
+                3,
+                528,
+                216,
+                80,
+                112,
+                dx_at_cardcontrol - 8,
+                dy_at_cardcontrol - 8);
         }
     }
 }
@@ -322,25 +349,37 @@ int opencard2(int card_index, int player_id)
     {
         if (player_id == 0)
         {
-            pos(card_at_cardcontrol(3, card_index) - 8,
+            gcopy(
+                3,
+                528,
+                216,
+                80,
+                112,
+                card_at_cardcontrol(3, card_index) - 8,
                 card_at_cardcontrol(4, card_index) - 8);
-            gcopy(3, 528, 216, 80, 112);
         }
         else
         {
-            pos(card_at_cardcontrol(3, card_index),
-                card_at_cardcontrol(4, card_index));
             gcopy(
                 4,
                 card_at_cardcontrol(3, card_index) - wx - 4,
                 card_at_cardcontrol(4, card_index) - wy - 4,
                 80,
-                112);
+                112,
+                card_at_cardcontrol(3, card_index),
+                card_at_cardcontrol(4, card_index));
         }
-        pos(card_at_cardcontrol(3, card_index) + 32,
-            card_at_cardcontrol(4, card_index) + 48);
         gmode(2);
-        gcopy_c(3, 736, 216, 64, 96, 64 - cnt * 14, 96);
+        gcopy_c(
+            3,
+            736,
+            216,
+            64,
+            96,
+            card_at_cardcontrol(3, card_index) + 32,
+            card_at_cardcontrol(4, card_index) + 48,
+            64 - cnt * 14,
+            96);
         await(10);
         redraw();
     }
@@ -356,19 +395,31 @@ int trashcard(int card_index)
 {
     for (int cnt = 0; cnt < 21; ++cnt)
     {
-        pos(card_at_cardcontrol(3, card_index) - 8,
+        gcopy(
+            3,
+            528,
+            216,
+            80,
+            112,
+            card_at_cardcontrol(3, card_index) - 8,
             card_at_cardcontrol(4, card_index) - 8);
-        gcopy(3, 528, 216, 80, 112);
         gmode(2);
         if (cnt == 20)
         {
             redraw();
             break;
         }
-        pos(card_at_cardcontrol(3, card_index) + 32,
-            card_at_cardcontrol(4, card_index) + 48);
         grotate(
-            3, 736, 216, 64, 96, 64 - cnt * 3, 96 - cnt * 4, 0.015 * cnt * cnt);
+            3,
+            736,
+            216,
+            64,
+            96,
+            card_at_cardcontrol(3, card_index) + 32,
+            card_at_cardcontrol(4, card_index) + 48,
+            64 - cnt * 3,
+            96 - cnt * 4,
+            0.015 * cnt * cnt);
         await(10);
         redraw();
     }

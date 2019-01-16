@@ -78,9 +78,17 @@ void UIMenuCharamakeAlias::_draw_window()
     ++cmbg;
     x = ww / 3 * 2;
     y = wh - 80;
-    pos(wx + ww / 2, wy + wh / 2);
     gmode(2, 40);
-    gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gcopy_c(
+        2,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 2,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.chara_making.select_alias.alias_list"),
@@ -100,8 +108,7 @@ void UIMenuCharamakeAlias::_draw_alias(
     bool is_locked)
 {
     font(14 - en * 2);
-    pos(wx + 38, wy + 66 + cnt * 19 - 2);
-    gcopy(3, cnt * 24 + 72, 30, 24, 18);
+    gcopy(3, cnt * 24 + 72, 30, 24, 18, wx + 38, wy + 66 + cnt * 19 - 2);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 
     if (is_locked)
