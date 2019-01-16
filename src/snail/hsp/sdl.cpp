@@ -1,9 +1,12 @@
-#include "../detail/sdl.hpp"
+#ifdef ANDROID
+#include "../hsp.hpp"
+#endif
 #include <iostream>
 #include <unordered_map>
 #include "../../util/strutil.hpp"
 #include "../application.hpp"
 #include "../color.hpp"
+#include "../detail/sdl.hpp"
 #include "../font.hpp"
 #include "../input.hpp"
 #include "../touch_input.hpp"
