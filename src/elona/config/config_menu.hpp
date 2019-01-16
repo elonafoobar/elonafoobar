@@ -298,9 +298,10 @@ public:
 
     void draw() const override
     {
-        pos(wx + 40, wy + wh - 70);
         font(12 + sizefix - en * 2);
-        mes(i18n::s.get("core.locale.config.common.require_restart"));
+        mes(wx + 40,
+            wy + wh - 70,
+            i18n::s.get("core.locale.config.common.require_restart"));
     }
 };
 

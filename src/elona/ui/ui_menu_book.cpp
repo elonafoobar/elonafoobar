@@ -12,8 +12,7 @@ bool UIMenuBook::init()
 {
     snd("core.book1");
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"book.bmp", 0, 0, false);
     gsel(0);
     notesel(buff);
     {
@@ -64,8 +63,7 @@ void UIMenuBook::draw()
 {
     wx = (windoww - 720) / 2 + inf_screenx;
     wy = winposy(468);
-    pos(wx, wy);
-    gcopy(4, 0, 0, 736, 448);
+    gcopy(4, 0, 0, 736, 448, wx, wy);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -88,13 +86,11 @@ void UIMenuBook::draw()
         {
             font(12 + sizefix - en * 2);
         }
-        pos(x, y);
-        mes(s);
+        mes(x, y, s);
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);
-            pos(x + 90, y + 330);
-            mes(u8"- "s + (p / 20 + 1) + u8" -"s);
+            mes(x + 90, y + 330, u8"- "s + (p / 20 + 1) + u8" -"s);
         }
     }
 }

@@ -14,13 +14,11 @@ set(SNAIL_SOURCES
   detail/sdl.cpp
   font.cpp
   filedialog.cpp
-  fpsmanager.cpp
   hsp.cpp
   image.cpp
   input.cpp
   messagebox.cpp
   renderer.cpp
-  scene.cpp
   touch_input.cpp
   window.cpp
   android.cpp

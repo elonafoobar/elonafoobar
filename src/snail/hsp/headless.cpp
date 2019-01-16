@@ -13,7 +13,7 @@ int timeGetTime()
     return 0;
 }
 
-void mes(const std::string&, const snail::Color&)
+void mes(int, int, const std::string&, const snail::Color&)
 {
 }
 
@@ -21,13 +21,11 @@ void mesbox(std::string&, int, bool)
 {
 }
 
-void picload(BasicImage&, int)
+void picload(Image&, int, int, bool)
 {
 }
 
-void pos(int, int)
-{
-}
+
 
 void redraw()
 {
@@ -61,7 +59,7 @@ void font(int, snail::Font::Style, const fs::path&)
 {
 }
 
-void gcopy(int, int, int, int, int, int, int)
+void gcopy(int, int, int, int, int, int, int, int, int)
 {
 }
 
@@ -82,7 +80,7 @@ void grotate(int, int, int, int, int, int, int, double)
 
 
 
-void grotate(int, int, int, int, int, double)
+void grotate(int, int, int, int, int, int, int, int, int, double)
 {
 }
 

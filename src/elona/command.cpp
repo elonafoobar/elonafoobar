@@ -1217,7 +1217,6 @@ label_1953_internal:
                         sy = (dy - scy) * inf_tiles + inf_screeny;
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
-                            pos(sx, sy * (sy > 0));
                             snail::Application::instance()
                                 .get_renderer()
                                 .set_blend_mode(snail::BlendMode::blend);
@@ -1243,7 +1242,6 @@ label_1953_internal:
                 sy = y * inf_tiles + inf_screeny;
                 if (sy + inf_tiles <= windowh - inf_verh)
                 {
-                    pos(sx, sy * (sy > 0));
                     snail::Application::instance()
                         .get_renderer()
                         .set_blend_mode(snail::BlendMode::blend);

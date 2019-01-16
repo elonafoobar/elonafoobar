@@ -98,13 +98,14 @@ void select_house_board_tile()
             {
                 if (p < listmax)
                 {
-                    pos(x * 24, y * 24);
                     gcopy(
                         2,
                         list(0, p) % 33 * 48,
                         list(0, p) / 33 * 48,
                         48,
                         48,
+                        x * 24,
+                        y * 24,
                         24,
                         24);
                     if (chipm(7, list(0, p)) & 4)
@@ -1575,11 +1576,13 @@ void animeload(int animation_type, int chara_index)
         (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(
-        filesystem::dir::graphic() / (u8"anime"s + animation_type + u8".bmp"));
+        filesystem::dir::graphic() / (u8"anime"s + animation_type + u8".bmp"),
+        0,
+        0,
+        true);
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, dx_at_m133 - 24, dy_at_m133 - 40, 96, 96);
+    gcopy(0, dx_at_m133 - 24, dy_at_m133 - 40, 96, 96, 0, 0);
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
@@ -1611,12 +1614,18 @@ void animeload(int animation_type, int chara_index)
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
         gmode(2);
-        pos(dx_at_m133 + 24, dy_at_m133 + 8);
-        grotate(7, cnt * 96, 0, 96, 96, r_at_m133 * cnt);
+        grotate(
+            7,
+            cnt * 96,
+            0,
+            96,
+            96,
+            dx_at_m133 + 24,
+            dy_at_m133 + 8,
+            r_at_m133 * cnt);
         gmode(0);
         redraw();
-        pos(dx_at_m133 - 24, dy_at_m133 - 40);
-        gcopy(4, 0, 0, 96, 96);
+        gcopy(4, 0, 0, 96, 96, dx_at_m133 - 24, dy_at_m133 - 40);
         await(i_at_m133(1));
     }
     gmode(2);
@@ -1649,52 +1658,51 @@ void animeblood(int cc, int animation_type, int element)
     dy_at_m133(1) = 0;
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, dx_at_m133 - 48, dy_at_m133 - 56, 144, 160);
+    gcopy(0, dx_at_m133 - 48, dy_at_m133 - 56, 144, 160, 0, 0);
 
     int ele2_at_m133 = 1;
     gsel(7);
     switch (element)
     {
     case 52:
-        picload(filesystem::dir::graphic() / u8"anime18.bmp");
+        picload(filesystem::dir::graphic() / u8"anime18.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 51:
-        picload(filesystem::dir::graphic() / u8"anime19.bmp");
+        picload(filesystem::dir::graphic() / u8"anime19.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 50:
-        picload(filesystem::dir::graphic() / u8"anime20.bmp");
+        picload(filesystem::dir::graphic() / u8"anime20.bmp", 0, 0, true);
         dy_at_m133(1) = -20;
         break;
     case 56:
-        picload(filesystem::dir::graphic() / u8"anime22.bmp");
+        picload(filesystem::dir::graphic() / u8"anime22.bmp", 0, 0, true);
         dy_at_m133(1) = -24;
         break;
     case 53:
-        picload(filesystem::dir::graphic() / u8"anime21.bmp");
+        picload(filesystem::dir::graphic() / u8"anime21.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 54:
-        picload(filesystem::dir::graphic() / u8"anime23.bmp");
+        picload(filesystem::dir::graphic() / u8"anime23.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 57:
-        picload(filesystem::dir::graphic() / u8"anime24.bmp");
+        picload(filesystem::dir::graphic() / u8"anime24.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 59:
-        picload(filesystem::dir::graphic() / u8"anime25.bmp");
+        picload(filesystem::dir::graphic() / u8"anime25.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 58:
-        picload(filesystem::dir::graphic() / u8"anime26.bmp");
+        picload(filesystem::dir::graphic() / u8"anime26.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 55:
     case 63:
-        picload(filesystem::dir::graphic() / u8"anime27.bmp");
+        picload(filesystem::dir::graphic() / u8"anime27.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     default: ele2_at_m133 = 0; break;
@@ -1717,31 +1725,36 @@ void animeblood(int cc, int animation_type, int element)
         gmode(2);
         if (ele2_at_m133)
         {
-            pos(dx_at_m133 - 24, dy_at_m133 - 32 + dy_at_m133(1));
-            gcopy(7, cnt * 96, 0, 96, 96);
+            gcopy(
+                7,
+                cnt * 96,
+                0,
+                96,
+                96,
+                dx_at_m133 - 24,
+                dy_at_m133 - 32 + dy_at_m133(1));
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            pos(dx_at_m133 + 24 + x_at_m133(cnt) +
-                    (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1) *
-                        cnt2_at_m133 +
-                    (x_at_m133(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2_at_m133,
-                dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2 -
-                    12 + cnt);
             grotate(
                 1,
                 0,
                 960,
                 inf_tiles,
                 inf_tiles,
+                dx_at_m133 + 24 + x_at_m133(cnt) +
+                    (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1) *
+                        cnt2_at_m133 +
+                    (x_at_m133(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2_at_m133,
+                dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2 -
+                    12 + cnt,
                 24 - cnt2_at_m133 * 2,
                 24 - cnt2_at_m133 * 2,
                 0.2 * cnt);
         }
         gmode(0);
         redraw();
-        pos(dx_at_m133 - 48, dy_at_m133 - 56);
-        gcopy(4, 0, 0, 144, 160);
+        gcopy(4, 0, 0, 144, 160, dx_at_m133 - 48, dy_at_m133 - 56);
         await(Config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
 
@@ -4543,19 +4556,17 @@ void map_prepare_tileset_atlas()
     gsel(6);
     if (map_data.atlas_number != mtilefilecur)
     {
-        pos(0, 0);
         picload(
             filesystem::dir::graphic() /
                 (u8"map"s + map_data.atlas_number + u8".bmp"),
-            1);
+            0,
+            0,
+            false);
         mtilefilecur = map_data.atlas_number;
         initialize_map_chip();
     }
     map_tileset(map_data.tileset);
     gsel(2);
-    gmode(0);
-    pos(0, 0);
-    // gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
 
     int shadow = 5;
     if (map_data.indoors_flag == 2)
@@ -4600,26 +4611,22 @@ void map_prepare_tileset_atlas()
         }
     }
 
-    pos(0, 0);
     gmode(0);
     set_color_mod(255 - shadow, 255 - shadow, 255 - shadow, 6);
-    gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
+    gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles, 0, 0);
     set_color_mod(255, 255, 255, 6);
-    gmode(4, 30);
+    gmode(2, 30);
     if (map_data.atlas_number == 0)
     {
-        pos(0, 192);
-        gcopy(6, 0, 192, 1360, 48);
+        gcopy(6, 0, 192, 1360, 48, 0, 192);
     }
     if (map_data.atlas_number == 1)
     {
-        pos(0, 1056);
-        gcopy(6, 0, 1056, 1360, 48);
+        gcopy(6, 0, 1056, 1360, 48, 0, 1056);
     }
     if (map_data.atlas_number != 2)
     {
-        pos(0, 336);
-        gcopy(6, 0, 336, 1360, 48);
+        gcopy(6, 0, 336, 1360, 48, 0, 336);
     }
     gmode(0);
     gsel(0);
@@ -4933,10 +4940,17 @@ void atxinit()
         atxbgbk = atxbg;
         gsel(4);
         gmode(0);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / (atxbg + u8".bmp"s), 1);
-        pos(0, inf_msgh);
-        gcopy(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
+        picload(filesystem::dir::graphic() / (atxbg + u8".bmp"s), 0, 0, false);
+        gcopy(
+            4,
+            0,
+            0,
+            240,
+            160,
+            0,
+            inf_msgh,
+            windoww,
+            windowh - inf_verh - inf_msgh);
         gmode(2);
         p = windoww / 192;
         for (int cnt = 0, cnt_end = (p + 1); cnt < cnt_end; ++cnt)
@@ -4949,12 +4963,19 @@ void atxinit()
             {
                 sx = 192;
             }
-            pos(cnt * 192, 0);
-            gcopy(3, 496, 528, sx, inf_msgh);
+            gcopy(3, 496, 528, sx, inf_msgh, cnt * 192, 0);
         }
         window2(windoww - 208, 0, 208, 98, 0, 0);
-        pos(windoww - 204, 4);
-        gcopy(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
+        gcopy(
+            0,
+            120,
+            88,
+            windoww - 120,
+            windowh - inf_verh - 112,
+            windoww - 204,
+            4,
+            200,
+            90);
         gsel(0);
     }
 }
@@ -5482,7 +5503,6 @@ int target_position()
         dy = (tlocy - scy) * inf_tiles + inf_screeny;
         if (dy + inf_tiles <= windowh - inf_verh)
         {
-            pos(dx, dy * (dy > 0));
             snail::Application::instance().get_renderer().set_blend_mode(
                 snail::BlendMode::blend);
             snail::Application::instance().get_renderer().set_draw_color(
@@ -5498,13 +5518,14 @@ int target_position()
         }
         if (homemapmode == 1)
         {
-            pos(windoww - 80, 20);
             gcopy(
                 2,
                 tile % 33 * inf_tiles,
                 tile / 33 * inf_tiles,
                 inf_tiles,
-                inf_tiles);
+                inf_tiles,
+                windoww - 80,
+                20);
         }
         else
         {
@@ -5559,7 +5580,6 @@ int target_position()
                         sy = (dy - scy) * inf_tiles + inf_screeny;
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
-                            pos(sx, sy * (sy > 0));
                             snail::Application::instance()
                                 .get_renderer()
                                 .set_blend_mode(snail::BlendMode::blend);
@@ -6770,13 +6790,12 @@ int ask_direction()
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx - 48;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny - 48;
     gmode(0);
-    pos(0, 0);
-    gcopy(0, x, y, 144, 144);
+    gcopy(0, x, y, 144, 144, 0, 0);
     gsel(0);
     t = 0;
 label_2128_internal:
     ++t;
-    gmode(4, 200 - t / 2 % 20 * (t / 2 % 20));
+    gmode(2, 200 - t / 2 % 20 * (t / 2 % 20));
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
     if (!getkey(snail::Key::alt))
@@ -6792,8 +6811,7 @@ label_2128_internal:
     draw_rotated("direction_arrow", x - 48, y + 48, 225);
     redraw();
     gmode(0);
-    pos(x - 48 - 24, y - 48 - 24);
-    gcopy(4, 0, 0, 144, 144);
+    gcopy(4, 0, 0, 144, 144, x - 48 - 24, y - 48 - 24);
     gmode(2);
     auto action = key_check(KeyWaitDelay::walk_run);
     x = cdata.player().position.x;
@@ -7176,8 +7194,7 @@ label_21451_internal:
 
 void draw_sleep_background_frame()
 {
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh - inf_verh);
+    gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
     gmode(2);
     render_hud();
     if (screenupdate == 0)
@@ -7193,10 +7210,8 @@ void load_sleep_background()
 {
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"bg_night.bmp", 1);
-    pos(0, 0);
-    gcopy(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
+    picload(filesystem::dir::graphic() / u8"bg_night.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 640, 480, 0, 0, windoww, windowh - inf_verh);
     gsel(0);
 }
 
@@ -7221,7 +7236,7 @@ void sleep_start()
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        gmode(4, cnt * 10);
+        gmode(2, cnt * 10);
         draw_sleep_background_frame();
         await(Config::instance().animewait * 10);
     }
@@ -11973,10 +11988,8 @@ label_2682_internal:
         for (int cnt = 0; cnt < 25; ++cnt)
         {
             redraw();
-            pos(0, 0);
-            gmode(4, cnt * 15);
-            pos(0, 0);
-            gcopy(4, 0, 0, windoww, windowh);
+            gmode(2, cnt * 15);
+            gcopy(4, 0, 0, windoww, windowh, 0, 0);
             gmode(2);
             await(10);
         }
@@ -12036,10 +12049,9 @@ label_2684_internal:
     }
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 1);
-    pos(0, y1);
-    gcopy(4, 0, 0, 640, 480, windoww, y2 - y1);
+    picload(
+        filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 0, 0, false);
+    gcopy(4, 0, 0, 640, 480, 0, y1, windoww, y2 - y1);
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
@@ -12047,8 +12059,7 @@ label_2684_internal:
     {
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
         tc = 0;
         talk_to_npc();
@@ -12058,8 +12069,7 @@ label_2684_internal:
     {
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
         redraw();
         await(1000);
@@ -12077,9 +12087,8 @@ label_2684_internal:
         {
             dx = 0;
         }
-        pos(windoww / 2, y + 4);
         gmode(2, 95);
-        gcopy_c(3, 456, 144, 344, 72, dx, 72);
+        gcopy_c(3, 456, 144, 344, 72, windoww / 2, y + 4, dx, 72);
     }
     x = 40;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -12087,7 +12096,7 @@ label_2684_internal:
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - strlen_u(s(0)) * 4;
-        gmode(6, 255);
+        gmode(2);
         bmes(s, x, y, {240, 240, 240}, {10, 10, 10});
     }
     gsel(0);
@@ -12099,15 +12108,13 @@ label_2684_internal:
         {
             scene_cut = 1;
         }
-        gmode(4, cnt * 16);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2, cnt * 16);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         redraw();
     }
     gmode(2);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
     anime_halt(windoww - 120, windowh - 60);
     boxf(0, 0, windoww, y1, {5, 5, 5});
@@ -12567,17 +12574,13 @@ void conquer_lesimas()
     play_music("core.mcMarch2");
     ui_win_screen_fade();
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    pos(0, 0);
-    gcopy(4, 0, 0, 640, 480, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 640, 480, 0, 0, windoww, windowh);
     gsel(0);
     animation_fade_in();
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"g1.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"g1.bmp", 0, 0, false);
     gsel(0);
     ui_draw_caption(i18n::s.get(
         "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0)));
@@ -12595,32 +12598,46 @@ void conquer_lesimas()
     cmbg = 0;
     x = ww / 3 - 20;
     y = wh - 140;
-    pos(wx + ww - 120, wy + wh / 2);
-    gmode(4, 250);
-    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2, 250);
+    gcopy_c(
+        4,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww - 120,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.win.window.caption"), wx + 28, wy + 40);
     font(14 - en * 2);
-    pos(wx + 40, wy + 76);
-    mes(i18n::s.get("core.locale.win.window.arrived_at_tyris", 517, 8, 12));
-    pos(wx + 40, wy + 116);
-    mes(i18n::s.get(
-        "core.locale.win.window.have_killed",
-        game_data.deepest_dungeon_level,
-        game_data.kill_count));
-    pos(wx + 40, wy + 146);
-    mes(i18n::s.get("core.locale.win.window.score", calcscore()));
-    pos(wx + 40, wy + 186);
-    mes(i18n::s.get(
-        "core.locale.win.window.lesimas",
-        game_data.date.year,
-        game_data.date.month,
-        game_data.date.day));
-    pos(wx + 40, wy + 206);
-    mes(i18n::s.get("core.locale.win.window.comment", win_comment));
-    pos(wx + 40, wy + 246);
-    mes(i18n::s.get("core.locale.win.window.your_journey_continues"));
+    mes(wx + 40,
+        wy + 76,
+        i18n::s.get("core.locale.win.window.arrived_at_tyris", 517, 8, 12));
+    mes(wx + 40,
+        wy + 116,
+        i18n::s.get(
+            "core.locale.win.window.have_killed",
+            game_data.deepest_dungeon_level,
+            game_data.kill_count));
+    mes(wx + 40,
+        wy + 146,
+        i18n::s.get("core.locale.win.window.score", calcscore()));
+    mes(wx + 40,
+        wy + 186,
+        i18n::s.get(
+            "core.locale.win.window.lesimas",
+            game_data.date.year,
+            game_data.date.month,
+            game_data.date.day));
+    mes(wx + 40,
+        wy + 206,
+        i18n::s.get("core.locale.win.window.comment", win_comment));
+    mes(wx + 40,
+        wy + 246,
+        i18n::s.get("core.locale.win.window.your_journey_continues"));
     redraw();
     key_list = key_enter;
     keyrange = 0;
@@ -12758,8 +12775,7 @@ TurnResult pc_died()
         out << buff(0) << std::endl;
     }
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
     gsel(0);
     show_game_score_ranking();
     ui_draw_caption(
@@ -12799,8 +12815,7 @@ void show_game_score_ranking()
 {
     notesel(buff);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gmode(2);
     x = 135;
     y = 134;
@@ -12827,8 +12842,7 @@ void show_game_score_ranking()
         {
             s = " "s + i18n::s.get("core.locale.misc.score.rank", cnt + 1);
         }
-        pos(x - 80, y + 10);
-        mes(s, {10, 10, 10});
+        mes(x - 80, y + 10, s, {10, 10, 10});
         bool no_entry = false;
         if (p >= noteinfo())
         {
@@ -12842,20 +12856,20 @@ void show_game_score_ranking()
                 no_entry = true;
             }
         }
-        pos(x, y);
         if (no_entry)
         {
-            mes(u8"no entry", {10, 10, 10});
+            mes(x, y, u8"no entry", {10, 10, 10});
             continue;
         }
-        mes(s, {10, 10, 10});
+        mes(x, y, s, {10, 10, 10});
         noteget(s, p + 2);
-        pos(x, y + 20);
-        mes(s, {10, 10, 10});
+        mes(x, y + 20, s, {10, 10, 10});
         noteget(s(10), p + 3);
         csvsort(s, s(10), 44);
-        pos(x + 480, y + 20);
-        mes(i18n::s.get("core.locale.misc.score.score", s(0)), {10, 10, 10});
+        mes(x + 480,
+            y + 20,
+            i18n::s.get("core.locale.misc.score.score", s(0)),
+            {10, 10, 10});
         p = elona::stoi(s(1)) % 1000;
 
         draw_chara_scale_height(elona::stoi(s(1)), x - 22, y + 12);

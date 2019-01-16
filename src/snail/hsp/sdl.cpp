@@ -1,8 +1,12 @@
-#include "../detail/sdl.hpp"
+#ifdef ANDROID
+#include "../hsp.hpp"
+#endif
 #include <iostream>
 #include <unordered_map>
+#include "../../util/strutil.hpp"
 #include "../application.hpp"
 #include "../color.hpp"
+#include "../detail/sdl.hpp"
 #include "../font.hpp"
 #include "../input.hpp"
 #include "../touch_input.hpp"
@@ -31,6 +35,14 @@ struct FontCacheKey
     }
 };
 
+
+
+template <typename T>
+constexpr T rad2deg(T rad)
+{
+    return rad * 180.0 / 3.14159265358979323846264;
+}
+
 } // namespace
 
 
@@ -49,42 +61,7 @@ struct hash<FontCacheKey>
 
 } // namespace std
 
-namespace strutil
-{
 
-inline size_t byte_count(uint8_t c)
-{
-    if (c <= 0x7F)
-        return 1;
-    else if (c >= 0xc2 && c <= 0xdf)
-        return 2;
-    else if (c >= 0xe0 && c <= 0xef)
-        return 3;
-    else if (c >= 0xf0 && c <= 0xf7)
-        return 4;
-    else if (c >= 0xf8 && c <= 0xfb)
-        return 5;
-    else if (c >= 0xfc && c <= 0xfd)
-        return 6;
-    else
-        return 1;
-}
-
-inline std::string
-replace(const std::string& str, const std::string& from, const std::string& to)
-{
-    auto ret{str};
-    std::string::size_type pos{};
-    while ((pos = ret.find(from, pos)) != std::string::npos)
-    {
-        ret.replace(pos, from.size(), to);
-        pos += to.size();
-    }
-
-    return ret;
-}
-
-} // namespace strutil
 
 namespace elona
 {
@@ -178,29 +155,16 @@ void setup_buffers()
 
 void set_blend_mode()
 {
+    auto& renderer = Application::instance().get_renderer();
+
     switch (current_tex_buffer().mode)
     {
-    case 0:
-    case 1:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::none);
-        break;
-    case 2:
-    case 3:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
-        break;
-    case 4:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
-        break;
-    case 5:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::add);
-        break;
-    case 6:
-        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
-        break;
-    default: break;
+    case 0: renderer.set_blend_mode(BlendMode::none); break;
+    case 2: renderer.set_blend_mode(BlendMode::blend); break;
+    case 5: renderer.set_blend_mode(BlendMode::add); break;
+    default: assert(0); break;
     }
 }
-
 
 } // namespace detail
 
@@ -311,7 +275,7 @@ int timeGetTime()
 
 
 
-void mes(const std::string& text, const snail::Color& color)
+void mes(int x, int y, const std::string& text, const snail::Color& color)
 {
     constexpr size_t tab_width = 4;
 
@@ -325,19 +289,11 @@ void mes(const std::string& text, const snail::Color& color)
 
     if (copy.size() >= 25 /* TODO */)
     {
-        renderer.render_multiline_text(
-            copy,
-            detail::current_tex_buffer().x,
-            detail::current_tex_buffer().y,
-            color);
+        renderer.render_multiline_text(copy, x, y, color);
     }
     else
     {
-        renderer.render_text(
-            copy,
-            detail::current_tex_buffer().x,
-            detail::current_tex_buffer().y,
-            color);
+        renderer.render_text(copy, x, y, color);
     }
 }
 
@@ -354,25 +310,24 @@ void mesbox(std::string& buffer, int keywait, bool text)
     }
 }
 
-void picload(BasicImage& img, int mode)
+
+
+void picload(Image& img, int x, int y, bool create_buffer)
 {
-    if (mode == 0)
+    auto& renderer = Application::instance().get_renderer();
+
+    if (create_buffer)
     {
         buffer(detail::current_buffer, img.width(), img.height());
     }
-    const auto save = Application::instance().get_renderer().blend_mode();
-    Application::instance().get_renderer().set_blend_mode(BlendMode::none);
-    Application::instance().get_renderer().render_image(
-        img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
+    const auto save = renderer.blend_mode();
+    renderer.set_blend_mode(BlendMode::none);
+    renderer.render_image(img, x, y);
 
-    Application::instance().get_renderer().set_blend_mode(save);
+    renderer.set_blend_mode(save);
 }
 
-void pos(int x, int y)
-{
-    detail::current_tex_buffer().x = x;
-    detail::current_tex_buffer().y = y;
-}
+
 
 static void redraw_android()
 {
@@ -580,6 +535,8 @@ void gcopy(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height)
 {
@@ -590,8 +547,6 @@ void gcopy(
         detail::tex_buffers[window_id].texture,
         detail::current_tex_buffer().alpha));
 
-    int dst_x = detail::current_tex_buffer().x;
-    int dst_y = detail::current_tex_buffer().y;
     dst_width = dst_width == -1 ? src_width : dst_width;
     dst_height = dst_height == -1 ? src_height : dst_height;
 
@@ -712,6 +667,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     double angle)
 {
     grotate(
@@ -720,6 +677,8 @@ void grotate(
         src_y,
         src_width,
         src_height,
+        dst_x,
+        dst_y,
         src_width,
         src_height,
         angle);
@@ -733,6 +692,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height,
     double angle)
@@ -751,8 +712,8 @@ void grotate(
         src_height,
     };
     ::SDL_Rect dst_rect{
-        detail::current_tex_buffer().x - dst_width / 2,
-        detail::current_tex_buffer().y - dst_height / 2,
+        dst_x - dst_width / 2,
+        dst_y - dst_height / 2,
         dst_width,
         dst_height,
     };

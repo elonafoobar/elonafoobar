@@ -38,9 +38,8 @@ void UIMenuCharamakeGender::_draw_window()
         168);
     x = ww / 2;
     y = wh - 60;
-    pos(wx + ww / 2, wy + wh / 2);
-    gmode(4, 30);
-    gcopy_c(2, 0, 0, 180, 300, x, y);
+    gmode(2, 30);
+    gcopy_c(2, 0, 0, 180, 300, wx + ww / 2, wy + wh / 2, x, y);
 
     gmode(2);
     display_topic(
@@ -51,8 +50,7 @@ void UIMenuCharamakeGender::_draw_window()
 
 void UIMenuCharamakeGender::_draw_choice(int cnt, const std::string& text)
 {
-    pos(wx + 38, wy + 66 + cnt * 19 - 2);
-    gcopy(3, cnt * 24 + 72, 30, 24, 18);
+    gcopy(3, cnt * 24 + 72, 30, 24, 18, wx + 38, wy + 66 + cnt * 19 - 2);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 

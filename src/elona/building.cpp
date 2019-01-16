@@ -725,9 +725,17 @@ void show_home_value()
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
-    pos(wx + ww / 4, wy + wh / 2);
-    gmode(4, 50);
-    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2, 50);
+    gcopy_c(
+        4,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 4,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
     calc_home_rank();
     s(0) = i18n::s.get("core.locale.building.home.rank.type.base");
@@ -743,8 +751,7 @@ void show_home_value()
         x = wx + 45 + cnt / 2 * 190;
         y = wy + 68 + cnt % 2 * 18;
         font(12 + sizefix - en * 2);
-        pos(x, y);
-        mes(s(cnt));
+        mes(x, y, s(cnt));
         font(14 - en * 2);
         for (int cnt = 0, cnt_end = cnt + (clamp(p(cnt) / 1000, 1, 10));
              cnt < cnt_end;
@@ -771,11 +778,11 @@ void show_home_value()
         draw_item_with_portrait_scale_height(
             inv[p], wx + 37, cnt * 16 + wy + 138);
 
-        pos(wx + 68, cnt * 16 + wy + 138);
-        mes(i18n::s.get(
-            "core.locale.building.home.rank.place", cnvrank(cnt + 1)));
-        pos(wx + 110, cnt * 16 + wy + 138);
-        mes(itemname(p));
+        mes(wx + 68,
+            cnt * 16 + wy + 138,
+            i18n::s.get(
+                "core.locale.building.home.rank.place", cnvrank(cnt + 1)));
+        mes(wx + 110, cnt * 16 + wy + 138, itemname(p));
     }
 
     while (1)

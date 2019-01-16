@@ -28,8 +28,7 @@ bool UIMenuMaterials::init()
     cs_bk = -1;
 
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
     gsel(0);
     snd("core.scroll");
     wx = (windoww - 600) / 2 + inf_screenx;
@@ -103,8 +102,7 @@ void UIMenuMaterials::_draw_single_list_entry_name(int cnt, int list_item)
 void UIMenuMaterials::_draw_single_list_entry_desc(int cnt, int list_item)
 {
     std::string mat_desc = matdesc(list_item);
-    pos(wx + 308, wy + 66 + cnt * 19 + 2);
-    mes(mat_desc);
+    mes(wx + 308, wy + 66 + cnt * 19 + 2, mat_desc);
 }
 
 void UIMenuMaterials::_draw_single_list_entry(int cnt, int list_item)

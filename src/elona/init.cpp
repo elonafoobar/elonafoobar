@@ -146,10 +146,8 @@ void load_character_sprite()
     SDIM1(untaglist);
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
 
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"character.bmp", 1);
-    pos(640, 1120);
-    picload(filesystem::dir::graphic() / u8"bufficon.png", 1);
+    picload(filesystem::dir::graphic() / u8"character.bmp", 0, 0, false);
+    picload(filesystem::dir::graphic() / u8"bufficon.png", 640, 1120, false);
 
     gmode(0);
     gsel(5);
@@ -160,8 +158,7 @@ void load_character_sprite()
     {
         const auto file = filepathutil::to_utf8_path(entry.path().filename());
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
-        pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
-        picload(entry.path(), 1);
+        picload(entry.path(), p % 33 * inf_tiles, p / 33 * inf_tiles, false);
     }
     gsel(0);
 }
@@ -311,37 +308,35 @@ void initialize_elona()
     boxf();
     redraw();
     buffer(3, 1440, 800);
-    picload(filesystem::dir::graphic() / u8"interface.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"interface.bmp", 0, 0, false);
 
     mesbox(keylog);
 
-    pos(0, 656);
-    picload(filesystem::dir::graphic() / u8"interface_ex1.png", 1);
-    pos(144, 656);
-    picload(filesystem::dir::graphic() / u8"interface_ex2.png", 1);
-    pos(144, 752);
-    picload(filesystem::dir::graphic() / u8"interface_ex3.png", 1);
-    pos(456, 144);
-    picload(filesystem::dir::graphic() / u8"interface_ex4.png", 1);
+    picload(filesystem::dir::graphic() / u8"interface_ex1.png", 0, 656, false);
+    picload(
+        filesystem::dir::graphic() / u8"interface_ex2.png", 144, 656, false);
+    picload(
+        filesystem::dir::graphic() / u8"interface_ex3.png", 144, 752, false);
+    picload(
+        filesystem::dir::graphic() / u8"interface_ex4.png", 456, 144, false);
 
-    pos(528, 216);
-    picload(filesystem::dir::graphic() / u8"interface_ex5.png", 1);
-    pos(672, 216);
-    picload(filesystem::dir::graphic() / u8"interface_ex6.png", 1);
-    pos(864, 533);
-    picload(filesystem::dir::graphic() / u8"interface_ex7.png", 1);
-    pos(864, 565);
-    picload(filesystem::dir::graphic() / u8"interface_ex8.png", 1);
+    picload(
+        filesystem::dir::graphic() / u8"interface_ex5.png", 528, 216, false);
+    picload(
+        filesystem::dir::graphic() / u8"interface_ex6.png", 672, 216, false);
+    picload(
+        filesystem::dir::graphic() / u8"interface_ex7.png", 864, 533, false);
+    picload(
+        filesystem::dir::graphic() / u8"interface_ex8.png", 864, 565, false);
 
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
     buffer(1, 1584, 1200);
-    picload(filesystem::dir::graphic() / u8"item.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"item.bmp", 0, 0, false);
     if (inf_tiles != 48)
     {
-        pos(0, 0);
-        gcopy(1, 0, 0, 1584, 1200, 33 * inf_tiles, 25 * inf_tiles);
+        gcopy(1, 0, 0, 1584, 1200, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
     }
     buffer(2, 33 * inf_tiles, 25 * inf_tiles);
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);
@@ -508,7 +503,6 @@ void initialize_elona()
     tc = 0;
     invctrl(0) = 0;
     invctrl(1) = 0;
-    pos(-40, -40);
     SDIM1(buffboard);
     notesel(buffboard);
     {

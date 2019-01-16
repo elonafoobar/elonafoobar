@@ -23,17 +23,21 @@ void _draw_window()
         {
             const auto x =
                 dx == p ? log_window_width % chunk_width : chunk_width;
-            pos(dx * chunk_width + inf_msgx,
+            gcopy(
+                3,
+                496,
+                536 + dy % 4 * inf_msgspace,
+                x,
+                inf_msgspace,
+                dx * chunk_width + inf_msgx,
                 inf_msgy - (dy + 1) * inf_msgspace);
-            gcopy(3, 496, 536 + dy % 4 * inf_msgspace, x, inf_msgspace);
         }
     }
 
     for (int dx = 0; dx < p + 1; ++dx)
     {
         const auto x = dx == p ? log_window_width % chunk_width : chunk_width;
-        pos(dx * chunk_width + inf_msgx, inf_msgy);
-        gcopy(3, 496, 528, x, 6);
+        gcopy(3, 496, 528, x, 6, dx * chunk_width + inf_msgx, inf_msgy);
     }
 }
 
@@ -55,9 +59,10 @@ void _draw_single_message(size_t cnt, int message_offset)
     font(inf_mesfont - en * 2);
     for (const auto& span : message_log.at(n - cnt - 4 + message_offset))
     {
-        pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
-            inf_msgy - cnt * inf_msgspace + vfix);
-        mes(span.text, span.color);
+        mes(message_width * inf_mesfont / 2 + inf_msgx + 6,
+            inf_msgy - cnt * inf_msgspace + vfix,
+            span.text,
+            span.color);
 
         message_width += strlen_u(span.text);
     }
@@ -76,8 +81,7 @@ void _draw_messages(int message_offset)
     }
     gsel(0);
     gmode(2);
-    pos(0, -3);
-    gcopy(4, 0, 0, windoww, inf_msgy);
+    gcopy(4, 0, 0, windoww, inf_msgy, 0, -3);
 }
 
 } // namespace

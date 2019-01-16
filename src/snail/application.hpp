@@ -7,10 +7,7 @@
 #include "../util/noncopyable.hpp"
 #include "../util/scope_guard.hpp"
 #include "detail/sdl.hpp"
-#include "effect.hpp"
-#include "fpsmanager.hpp"
 #include "renderer.hpp"
-#include "scene.hpp"
 #include "window.hpp"
 
 
@@ -101,34 +98,9 @@ public:
 
 
     void initialize(const std::string& title);
-    void run(std::shared_ptr<SceneBase> initial_scene);
 
     void quit();
-    void add_effect(std::unique_ptr<EffectBase> effect);
 
-
-    void push(std::shared_ptr<SceneBase> new_scene)
-    {
-        _scene_manager.push(new_scene);
-    }
-
-
-    void pop()
-    {
-        _scene_manager.pop();
-    }
-
-
-    void pop_all()
-    {
-        _scene_manager.pop_all();
-    }
-
-
-    void replace(std::shared_ptr<SceneBase> new_scene)
-    {
-        _scene_manager.replace(new_scene);
-    }
 
 
     // NOTE: Do not depend on the order of finalization.
@@ -188,9 +160,6 @@ private:
     bool _focus_lost_just_now = false;
     std::unique_ptr<Window> _window;
     std::unique_ptr<Renderer> _renderer;
-    SceneManager _scene_manager;
-    FPSManager _fps_manager;
-    std::vector<std::unique_ptr<EffectBase>> _effects;
     std::vector<lib::scope_guard> _finalizers;
     Window::FullscreenMode _fullscreen_mode = Window::FullscreenMode::windowed;
 
@@ -198,8 +167,6 @@ private:
 
     void initialize_dpi();
 
-    void main_loop();
-    void render_scene(std::shared_ptr<SceneBase> scene);
     void update_orientation();
     void handle_event(const ::SDL_Event& event);
 

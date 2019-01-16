@@ -53,13 +53,10 @@ void update_screen_hud()
         {
             sx = 192;
         }
-        pos(cnt * 192, inf_bary);
-        gcopy(3, 0, 464 - inf_barh, sx, inf_barh);
-        pos(cnt * 192, inf_msgy);
-        gcopy(3, 496, 528, sx, inf_msgh);
+        gcopy(3, 0, 464 - inf_barh, sx, inf_barh, cnt * 192, inf_bary);
+        gcopy(3, 496, 528, sx, inf_msgh, cnt * 192, inf_msgy);
     }
-    pos(0, inf_msgy);
-    gcopy(3, 120, 504, inf_msgx, inf_verh);
+    gcopy(3, 120, 504, inf_msgx, inf_verh, 0, inf_msgy);
     draw("map_name_icon", inf_radarw + 6, inf_bary);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -72,21 +69,27 @@ void update_screen_hud()
         {
             sx = 14;
         }
-        pos(inf_radarw + cnt * 47 + 148 + sx, inf_bary + 1);
-        gcopy(3, cnt * 16, 376, 16, 16);
+        gcopy(
+            3,
+            cnt * 16,
+            376,
+            16,
+            16,
+            inf_radarw + cnt * 47 + 148 + sx,
+            inf_bary + 1);
     }
     font(12 + sizefix - en * 2);
-    pos(inf_radarw + 24, inf_bary + 3 + vfix - en);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
-        mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
+        mes(inf_radarw + 24,
+            inf_bary + 3 + vfix - en,
+            cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
     }
     else
     {
-        mes(cnven(mdatan(0)));
+        mes(inf_radarw + 24, inf_bary + 3 + vfix - en, cnven(mdatan(0)));
     }
-    pos(inf_radarw + 114, inf_bary + 3 + vfix - en);
-    mes(maplevel());
+    mes(inf_radarw + 114, inf_bary + 3 + vfix - en, maplevel());
 }
 
 
@@ -194,10 +197,16 @@ void render_weather_effect_snow()
         auto&& particle = particles[i];
         if (i % 30 == 0)
         {
-            gmode(4, 100 + i % 150);
+            gmode(2, 100 + i % 150);
         }
-        pos(particle.x, particle.y);
-        gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
+        gcopy(
+            3,
+            particle.x % 2 * 8,
+            600 + i % 6 * 8,
+            8,
+            8,
+            particle.x,
+            particle.y);
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
@@ -233,10 +242,16 @@ void render_weather_effect_etherwind()
         auto&& particle = particles[i];
         if (i % 20 == 0)
         {
-            gmode(4, 100 + i % 150);
+            gmode(2, 100 + i % 150);
         }
-        pos(particle.x, particle.y);
-        gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
+        gcopy(
+            3,
+            16 + particle.x % 2 * 8,
+            600 + i % 6 * 8,
+            8,
+            8,
+            particle.x,
+            particle.y);
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
@@ -283,8 +298,14 @@ void draw_minimap_pixel(int x, int y)
 {
     const auto x2 = 120 * x / map_data.width;
     const auto y2 = 84 * y / map_data.height;
-    pos(inf_radarx + x2, inf_radary + y2);
-    gcopy(3, 688 + x2, 528 + y2, raderw, raderh);
+    gcopy(
+        3,
+        688 + x2,
+        528 + y2,
+        raderw,
+        raderh,
+        inf_radarx + x2,
+        inf_radary + y2);
 }
 
 
@@ -323,7 +344,7 @@ void highlight_characters_in_pet_arena()
                 color);
             if (cc.index == camera)
             {
-                gmode(4, 120);
+                gmode(2, 120);
                 draw("camera", x + 36, y + 32);
                 gmode(2);
             }
@@ -379,8 +400,7 @@ void _render_hp_or_mp_bar(
     if (value > 0)
     {
         const auto width = std::min(value * 84 / max, 100);
-        pos(x + 16, y + 5);
-        gcopy(3, bar_offset_x - width, 520, width, 6);
+        gcopy(3, bar_offset_x - width, 520, width, 6, x + 16, y + 5);
     }
 
     if (show_digit)
@@ -414,18 +434,16 @@ void render_basic_attributes_and_pv_dv()
         if (i < 8)
         {
             // Basic attributes except for Speed
-            pos(x, y);
-            gcopy(3, 0, 440, 28, 16);
+            gcopy(3, 0, 440, 28, 16, x, y);
             const auto text_color = cdata.player().attr_adjs[i] < 0
                 ? snail::Color{200, 0, 0}
                 : snail::Color{0, 0, 0};
-            mes(std::to_string(sdata(10 + i, 0)), text_color);
+            mes(x, y, std::to_string(sdata(10 + i, 0)), text_color);
         }
         else if (i == 8)
         {
             // Speed
-            pos(x + 8, y);
-            gcopy(3, 0, 440, 34, 16);
+            gcopy(3, 0, 440, 34, 16, x + 8, y);
             snail::Color text_color{0, 0, 0};
             if (gspdorg > gspd)
             {
@@ -439,14 +457,15 @@ void render_basic_attributes_and_pv_dv()
             {
                 text_color = snail::Color{0, 0, 0};
             }
-            mes(std::to_string(gspd), text_color);
+            mes(x + 8, y, std::to_string(gspd), text_color);
         }
         else
         {
             // PV/DV
-            pos(x + 14, y);
-            gcopy(3, 0, 440, 64, 16);
-            mes(""s + cdata.player().dv + u8"/"s + cdata.player().pv);
+            gcopy(3, 0, 440, 64, 16, x + 14, y);
+            mes(x + 14,
+                y,
+                ""s + cdata.player().dv + u8"/"s + cdata.player().pv);
         }
     }
 }
@@ -500,8 +519,7 @@ void render_character_level()
 
 void render_date_label()
 {
-    pos(inf_clockx, inf_clocky);
-    gcopy(3, 448, 408, inf_clockw, inf_clockh);
+    gcopy(3, 448, 408, inf_clockw, inf_clockh, inf_clockx, inf_clocky);
     draw("date_label_frame", inf_clockx + 78, inf_clocky + 8);
 }
 
@@ -518,14 +536,11 @@ void render_buffs()
             break;
 
         // Icon
-        pos(x, y);
-        gcopy(5, buff.id * 32, 1120, 32, 32);
+        gcopy(5, buff.id * 32, 1120, 32, 32, x, y);
         // Turns
-        pos(x + 3, y + 19);
-        mes(std::to_string(buff.turns));
+        mes(x + 3, y + 19, std::to_string(buff.turns));
         // Turns
-        pos(x + 2, y + 18);
-        mes(std::to_string(buff.turns), {255, 255, 255});
+        mes(x + 2, y + 18, std::to_string(buff.turns), {255, 255, 255});
 
         y -= 32;
     }
@@ -552,9 +567,10 @@ void render_clock()
         info.height,
         game_data.date.minute * 6);
 
-    pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
-        game_data.date.day);
+    mes(inf_clockw - 3,
+        inf_clocky + 17 + vfix,
+        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
+            game_data.date.day);
     bmes(
         i18n::s.get_enum("core.locale.ui.time", game_data.date.hour / 4) +
             u8" "s +
@@ -648,11 +664,9 @@ int render_one_status_ailment(
     if (!do_render(value))
         return y;
 
-    pos(x, y);
-    gcopy(3, 0, 416, 50 + en * 30, 15);
-    pos(x + 6, y + vfix + 1);
+    gcopy(3, 0, 416, 50 + en * 30, 15, x, y);
     const auto text_color = get_color(value);
-    mes(get_text(value), text_color);
+    mes(x + 6, y + vfix + 1, get_text(value), text_color);
 
     return y - 20;
 }
@@ -1032,7 +1046,6 @@ void render_autoturn_animation()
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     gmode(0);
-                    pos(sx + 2, sy - 102);
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::dig_wall)
                     {
@@ -1040,7 +1053,8 @@ void render_autoturn_animation()
                         {
                             snd("core.dig1");
                         }
-                        gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
+                        gcopy(
+                            9, cnt / 2 % 5 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(Config::instance().animewait * 2);
                     }
                     if (cdata.player().continuous_action.type ==
@@ -1053,7 +1067,8 @@ void render_autoturn_animation()
                                 snd("core.water");
                             }
                         }
-                        gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
+                        gcopy(
+                            9, cnt / 3 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(Config::instance().animewait * 2.5);
                     }
                     if (cdata.player().continuous_action.type ==
@@ -1063,7 +1078,8 @@ void render_autoturn_animation()
                         {
                             snd("core.bush1");
                         }
-                        gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
+                        gcopy(
+                            9, cnt / 2 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(Config::instance().animewait * 2.75);
                     }
                     if (cdata.player().continuous_action.type ==
@@ -1073,7 +1089,8 @@ void render_autoturn_animation()
                         {
                             snd("core.dig2");
                         }
-                        gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
+                        gcopy(
+                            9, cnt / 2 % 4 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(Config::instance().animewait * 3);
                     }
                     redraw();
@@ -1081,7 +1098,7 @@ void render_autoturn_animation()
             }
             else
             {
-                gcopy(9, 0, 0, 144, 96);
+                gcopy(9, 0, 0, 144, 96, sx + 2, sy - 102);
             }
         }
         ++racount;
@@ -1225,11 +1242,9 @@ Position gmes(
         }
         if (shadow)
         {
-            elona::pos(x + 1, y + 1);
-            mes(m_, {180, 160, 140});
+            elona::mes(x + 1, y + 1, m_, {180, 160, 140});
         }
-        elona::pos(x, y);
-        mes(m_, text_color);
+        elona::mes(x, y, m_, text_color);
         x += font_size / 2 * (byte == 1 ? 1 : 2);
     }
 
@@ -1346,14 +1361,13 @@ void update_screen()
 void screen_txtadv()
 {
     gmode(0);
-    pos(0, 0);
     if (txtadvscreenupdate == 1)
     {
-        gcopy(4, 0, 0, windoww, windowh - inf_verh);
+        gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
     }
     else
     {
-        gcopy(4, 0, 0, windoww, 100);
+        gcopy(4, 0, 0, windoww, 100, 0, 0);
     }
     gmode(2);
     for (int i = 0; i < 4; ++i)
@@ -1374,8 +1388,7 @@ void screen_txtadv()
             sx = 220;
             sy = 10 + i * 14;
         }
-        pos(sx, sy);
-        mes(atxinfon(i), {250, 250, 250});
+        mes(sx, sy, atxinfon(i), {250, 250, 250});
     }
     txtadvscreenupdate = 1;
 }
@@ -1444,7 +1457,7 @@ void render_hud()
             {
                 if (!cdata.player().continuous_action)
                 {
-                    gmode(4, 150);
+                    gmode(2, 150);
                 }
             }
         }
@@ -1457,7 +1470,7 @@ void render_hud()
     render_date_label();
 
     // Buffs
-    gmode(4, 180);
+    gmode(2, 180);
     render_buffs();
     gmode(2);
 
@@ -1488,28 +1501,27 @@ void render_hud()
 void load_continuous_action_animation()
 {
     gsel(9);
-    pos(0, 0);
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_wall)
     {
-        picload(filesystem::dir::graphic() / u8"anime1.bmp");
+        picload(filesystem::dir::graphic() / u8"anime1.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre)
         {
-            picload(filesystem::dir::graphic() / u8"anime2.bmp");
+            picload(filesystem::dir::graphic() / u8"anime2.bmp", 0, 0, true);
         }
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::search_material)
     {
-        picload(filesystem::dir::graphic() / u8"anime3.bmp");
+        picload(filesystem::dir::graphic() / u8"anime3.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_ground)
     {
-        picload(filesystem::dir::graphic() / u8"anime4.bmp");
+        picload(filesystem::dir::graphic() / u8"anime4.bmp", 0, 0, true);
     }
     gsel(0);
 }
@@ -1540,15 +1552,11 @@ void ui_draw_caption(const std::string& text)
         {
             ap = 128;
         }
-        pos(cnt * 128 + msgx, msgy);
-        gcopy(3, 672, 477, ap, 3);
-        pos(cnt * 128 + msgx, msgy + 2);
-        gcopy(3, 672, 480, ap, 22);
-        pos(cnt * 128 + msgx, msgy + 22);
-        gcopy(3, 672, 477, ap, 2);
+        gcopy(3, 672, 477, ap, 3, cnt * 128 + msgx, msgy);
+        gcopy(3, 672, 480, ap, 22, cnt * 128 + msgx, msgy + 2);
+        gcopy(3, 672, 477, ap, 2, cnt * 128 + msgx, msgy + 22);
     }
-    pos(msgx + 18, msgy + vfix + 4);
-    mes(text, {245, 245, 245});
+    mes(msgx + 18, msgy + vfix + 4, text, {245, 245, 245});
     gmode(2);
 
     // __s__
@@ -1772,8 +1780,14 @@ void ui_render_non_hud()
 
     if (raderx != -1)
     {
-        pos(inf_radarx + raderx, inf_radary + radery);
-        gcopy(3, 688 + raderx, 528 + radery, 6, 6);
+        gcopy(
+            3,
+            688 + raderx,
+            528 + radery,
+            6,
+            6,
+            inf_radarx + raderx,
+            inf_radary + radery);
     }
 
     render_pc_position_in_minimap();
@@ -1849,15 +1863,13 @@ void ui_scroll_screen()
         syfix = (cdata.player().next_position.y - cdata.player().position.y) *
             cnt * inf_tiles / scrollp * -1;
         gsel(4);
-        pos(0, 0);
         gmode(0);
-        gcopy(0, 0, windowh - inf_verh, windoww, inf_tiles);
+        gcopy(0, 0, windowh - inf_verh, windoww, inf_tiles, 0, 0);
         gsel(0);
         gmode(2);
         ui_render_non_hud();
         gmode(0);
-        pos(0, windowh - inf_verh);
-        gcopy(4, 0, 0, windoww, inf_tiles);
+        gcopy(4, 0, 0, windoww, inf_tiles, 0, windowh - inf_verh);
         gmode(2);
         render_hud();
         gmode(2);
@@ -1880,14 +1892,14 @@ void ui_initialize_minimap()
             sx = cnt;
             sy(1) = 84 * sy / map_data.height;
             sx(1) = 120 * sx / map_data.width;
-            pos(688 + sx(1), 528 + sy(1));
             gcopy(
                 2,
                 cell_data.at(sx, sy).chip_id_actual % 33 * inf_tiles + sx % 16,
                 cell_data.at(sx, sy).chip_id_actual / 33 * inf_tiles + sy % 12,
                 raderw,
-                raderh);
-            pos(688 + sx(1), 528 + sy(1));
+                raderh,
+                688 + sx(1),
+                528 + sy(1));
             if (chipm(7, cell_data.at(sx, sy).chip_id_actual) & 4)
             {
                 boxf(688 + sx(1), 528 + sy(1), raderw, raderh, {0, 0, 0, 100});
@@ -1909,8 +1921,7 @@ void fade_out()
 {
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
     gmode(0);
     for (int cnt = 0; cnt < 50; ++cnt)
@@ -1921,10 +1932,9 @@ void fade_out()
     }
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 10 + cnt * 5);
+        gmode(2, 10 + cnt * 5);
         await(20);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         redraw();
     }
     gmode(2);
@@ -1948,10 +1958,9 @@ void animation_fade_in()
 {
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 10 + cnt * 5);
+        gmode(2, 10 + cnt * 5);
         await(20);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         redraw();
     }
     gmode(2);
@@ -1992,7 +2001,6 @@ void event_7_modify_screen()
                 dx = map_data.width;
             }
             ap = cell_data.at(dx, dy).chip_id_actual;
-            pos(x * evtiles, y * evtiles);
             gmode(0);
             gcopy_c(
                 2,
@@ -2000,6 +2008,8 @@ void event_7_modify_screen()
                 ap / 33 * inf_tiles,
                 inf_tiles,
                 inf_tiles,
+                x * evtiles,
+                y * evtiles,
                 evtiles,
                 evtiles);
         }
@@ -2030,18 +2040,18 @@ void render_fishing_animation()
             sy +=
                 (cdata.player().position.y - fishy) * 8 * (fishanime(1) - 15) +
                 fishanime(1);
-            pos(sx, sy - 44);
-            gcopy(9, 144 + fishanime(1) / 2 % 2 * 48, 0, 48, 48);
+            gcopy(9, 144 + fishanime(1) / 2 % 2 * 48, 0, 48, 48, sx, sy - 44);
         }
         else
         {
-            pos(sx, sy - fishanime(1) * 3 + 14);
             gcopy(
                 9,
                 144 + fishanime(1) % 2 * 48,
                 0,
                 48,
-                clamp(fishanime(1) * 5, 1, 48));
+                clamp(fishanime(1) * 5, 1, 48),
+                sx,
+                sy - fishanime(1) * 3 + 14);
         }
         return;
     }
@@ -2072,8 +2082,7 @@ void render_fishing_animation()
     {
         ap = 10;
     }
-    pos(sx, sy - 5 + ap);
-    gcopy(9, 116, 18, 14, 10 - ap);
+    gcopy(9, 116, 18, 14, 10 - ap, sx, sy - 5 + ap);
     sx = (cdata.player().position.x - scx) * inf_tiles + inf_screenx;
     sy = (cdata.player().position.y - scy) * inf_tiles + inf_screeny;
     gmode(2);
@@ -2081,17 +2090,15 @@ void render_fishing_animation()
     {
         sx2 = inf_tiles / 2 + rnd(3) - 1;
         sy2 = inf_tiles / 2 + 12;
-        pos(sx + sx2 + 1, sy + sy2 + 40);
         gmode(2);
-        gcopy_c(9, 48, 0, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48, sx + sx2 + 1, sy + sy2 + 40);
     }
     if (fishdir == 1)
     {
         sx2 = inf_tiles / 2 - 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
-        pos(sx + sx2 - 16, sy + sy2 + 25);
         gmode(2);
-        gcopy_c(9, 48, 0, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48, sx + sx2 - 16, sy + sy2 + 25);
     }
     if (fishdir == 2)
     {
@@ -2102,21 +2109,18 @@ void render_fishing_animation()
     {
         sx2 = inf_tiles / 2 + 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
-        pos(sx + sx2 + 14, sy + sy2 + 25);
         gmode(2);
-        gcopy_c(9, 48, 0, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48, sx + sx2 + 14, sy + sy2 + 25);
     }
     if (fishdir == 2)
     {
         gmode(2);
-        pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 24, 48, 24, 0.5 * fishdir * 3.14);
+        grotate(9, 0, 24, 48, 24, sx + sx2, sy + sy2, 0.5 * fishdir * 3.14);
     }
     else
     {
         gmode(2);
-        pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 0, 48, 48, 0.5 * fishdir * 3.14);
+        grotate(9, 0, 0, 48, 48, sx + sx2, sy + sy2, 0.5 * fishdir * 3.14);
     }
     randomize();
 }
@@ -2172,15 +2176,14 @@ void ui_display_window(
         {255, 255, 255},
         {20, 10, 0});
     font(12 + sizefix - en * 2);
-    pos(x + 58 + x_offset, y + height - 43 - height % 8);
-    mes(key_help);
+    mes(x + 58 + x_offset, y + height - 43 - height % 8, key_help);
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
-            y + height - 65 - height % 8);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
+            y + height - 65 - height % 8,
+            page_str);
 
         // __s__
         elona::s(0) = title;
@@ -2208,21 +2211,20 @@ void ui_display_window2(
     int height)
 {
     gmode(2);
-    pos(x, y);
-    gcopy(7, 0, 0, width, height);
+    gcopy(7, 0, 0, width, height, x, y);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (tips != ""s)
     {
-        pos(x + width - strlen_u(tips) * 7 - 140,
-            y + height - 24 - height % 8 + 0);
-        mes(tips);
+        mes(x + width - strlen_u(tips) * 7 - 140,
+            y + height - 24 - height % 8 + 0,
+            tips);
     }
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        pos(x + width - strlen_u(page_str) * 7 - 40,
-            y + height - 24 - height % 8 + 0);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 24 - height % 8 + 0,
+            page_str);
 
         // __s__
         elona::s(0) = page_str;
@@ -2239,8 +2241,9 @@ void ui_display_window2(
 void display_note(const std::string& text, int x_offset)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(wx + ww - strlen_u(text) * 7 - 140 - x_offset, wy + wh - 65 - wh % 8);
-    mes(text);
+    mes(wx + ww - strlen_u(text) * 7 - 140 - x_offset,
+        wy + wh - 65 - wh % 8,
+        text);
 }
 
 
@@ -2249,8 +2252,7 @@ void display_topic(const std::string& topic, int x, int y)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     draw("topic_icon", x, y + 7);
-    pos(x + 26, y + vfix + 8);
-    mes(topic);
+    mes(x + 26, y + vfix + 8, topic);
     line(x + 22, y + 21, x + strlen_u(topic) * 7 + 36, y + 21);
 }
 
@@ -2261,16 +2263,14 @@ void display_customkey(const std::string& key, int x, int y)
     gsel(3);
     draw_select_key(key, 624, 30);
     gsel(0);
-    pos(x, y);
-    gcopy(3, 624, 30, 24, 18);
+    gcopy(3, 624, 30, 24, 18, x, y);
 }
 
 
 
 void display_key(int x, int y, int nth)
 {
-    pos(x, y);
-    gcopy(3, nth * 24 + 72, 30, 24, 18);
+    gcopy(3, nth * 24 + 72, 30, 24, 18, x, y);
 }
 
 
@@ -2288,9 +2288,14 @@ void fillbg(
     {
         for (int dx = 0; dx < windoww / tile_width + 1; ++dx)
         {
-            pos(windoww - (dx + 1) * tile_width,
+            gcopy(
+                tile_window_id,
+                tile_x,
+                tile_y,
+                tile_width,
+                tile_height,
+                windoww - (dx + 1) * tile_width,
                 inf_ver - (dy + 1) * tile_height);
-            gcopy(tile_window_id, tile_x, tile_y, tile_width, tile_height);
         }
     }
 
@@ -2305,9 +2310,11 @@ void load_background_variants(int buffer)
     gsel(buffer);
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+            cnt % 4 * 180,
+            cnt / 4 * 300,
+            false);
     }
     gsel(buffer_bk);
 }
@@ -2317,13 +2324,11 @@ void load_background_variants(int buffer)
 void clear_background_in_character_making()
 {
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, 64);
+    gcopy(4, 0, 0, windoww, 64, 0, 0);
     gmode(2);
 }
 
@@ -2332,13 +2337,11 @@ void clear_background_in_character_making()
 void clear_background_in_continue()
 {
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
 }
 
@@ -2355,25 +2358,19 @@ void draw_scroll(int x, int y, int width, int height)
         {
             if (i == 0)
             {
-                pos(x, y);
-                gcopy(7, 0, 0, 64, 48);
-                pos(x, y3);
-                gcopy(7, 0, 144, 64, 48);
+                gcopy(7, 0, 0, 64, 48, x, y);
+                gcopy(7, 0, 144, 64, 48, x, y3);
             }
             continue;
         }
         if (i < width / 8 - 8)
         {
-            pos(i * 8 + x, y);
-            gcopy(7, (i - 8) % 18 * 8 + 64, 0, 8, 48);
-            pos(i * 8 + x, y3);
-            gcopy(7, (i - 8) % 18 * 8 + 64, 144, 8, 48);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 0, 8, 48, i * 8 + x, y);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 144, 8, 48, i * 8 + x, y3);
             continue;
         }
-        pos(x3, y);
-        gcopy(7, 208, 0, 64, 48);
-        pos(x3, y3);
-        gcopy(7, 208, 144, 64, 48);
+        gcopy(7, 208, 0, 64, 48, x3, y);
+        gcopy(7, 208, 144, 64, 48, x3, y3);
         break;
     }
 
@@ -2383,18 +2380,22 @@ void draw_scroll(int x, int y, int width, int height)
         {
             if (j == 0)
             {
-                pos(x, i * 8 + y + 48);
-                gcopy(7, 0, i % 12 * 8 + 48, 64, 8);
+                gcopy(7, 0, i % 12 * 8 + 48, 64, 8, x, i * 8 + y + 48);
                 continue;
             }
             if (j < width / 8 - 15)
             {
-                pos(j * 8 + x + 56, i * 8 + y + 48);
-                gcopy(7, j % 18 * 8 + 64, i % 12 * 8 + 48, 8, 8);
+                gcopy(
+                    7,
+                    j % 18 * 8 + 64,
+                    i % 12 * 8 + 48,
+                    8,
+                    8,
+                    j * 8 + x + 56,
+                    i * 8 + y + 48);
                 continue;
             }
-            pos(x3, i * 8 + y + 48);
-            gcopy(7, 208, i % 12 * 8 + 48, 64, 8);
+            gcopy(7, 208, i % 12 * 8 + 48, 64, 8, x3, i * 8 + y + 48);
             break;
         }
     }
@@ -2406,8 +2407,7 @@ void cs_listbk()
 {
     if (cs_bk == -1)
         return;
-    pos(cs_posbk_x, cs_posbk_y);
-    gcopy(3, 264, 96, cs_posbk_w, cs_posbk_h);
+    gcopy(3, 264, 96, cs_posbk_w, cs_posbk_h, cs_posbk_x, cs_posbk_y);
 }
 
 
@@ -2426,13 +2426,11 @@ void cs_list(
             clamp(int(strlen_u(text)) * 7 + 32 + x_offset, 10, 480);
 
         gsel(3);
-        pos(264, 96);
-        gcopy(0, x, y, width, 19);
+        gcopy(0, x, y, width, 19, 264, 96);
         gsel(0);
 
         boxf(x, y, width, 19, {127, 191, 255, 63});
-        pos(x + width - 20, y + 4);
-        gcopy(3, 48, 360, 16, 16);
+        gcopy(3, 48, 360, 16, 16, x + width - 20, y + 4);
 
         cs_posbk_x = x;
         cs_posbk_y = y;
@@ -2440,8 +2438,7 @@ void cs_list(
         cs_posbk_h = 19;
     }
 
-    pos(x + 4 + x_offset, y + vfix + 3);
-    mes(text, text_color);
+    mes(x + 4 + x_offset, y + vfix + 3, text, text_color);
 }
 
 
@@ -2476,7 +2473,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
 {
     if (windowshadow != 0)
     {
-        gmode(6, 80);
+        gmode(2, 80);
         draw_scroll(x + 3, y + 3, width, height);
         windowshadow = 0;
         gmode(2);
@@ -2500,15 +2497,14 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
         y + height - 69 - height % 8,
         {224, 213, 191});
     font(12 + sizefix - en * 2);
-    pos(x + 68, y + height - 63 - height % 8);
-    mes(hint);
+    mes(x + 68, y + height - 63 - height % 8, hint);
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(x + width - strlen_u(page_str) * 7 - 40,
-            y + height - 63 - height % 8);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 63 - height % 8,
+            page_str);
 
         // __s__
         elona::s(0) = page_str;
@@ -2539,30 +2535,24 @@ void window(int x, int y, int width, int height, bool shadow)
     if (!shadow)
     {
         // Top left
-        pos(x, y);
-        gcopy(3, 0, 48, 64, 48);
+        gcopy(3, 0, 48, 64, 48, x, y);
     }
     // Top right
-    pos(x3, y);
-    gcopy(3, 208, 48, 56, 48);
+    gcopy(3, 208, 48, 56, 48, x3, y);
     // Bottom left
-    pos(x, y3);
-    gcopy(3, 0, 48 + 144, 64, 48);
+    gcopy(3, 0, 48 + 144, 64, 48, x, y3);
     // Bottom right
-    pos(x3, y3);
-    gcopy(3, 208, 48 + 144, 56, 48);
+    gcopy(3, 208, 48 + 144, 56, 48, x3, y3);
 
     for (int dx = 8; dx < width / 8 - 8; ++dx)
     {
         if (!shadow)
         {
             // Top middle
-            pos(dx * 8 + x, y);
-            gcopy(3, (dx - 8) % 18 * 8 + 36, 48, 8, 48);
+            gcopy(3, (dx - 8) % 18 * 8 + 36, 48, 8, 48, dx * 8 + x, y);
         }
         // Bottom middle
-        pos(dx * 8 + x, y3);
-        gcopy(3, (dx - 8) % 18 * 8 + 54, 48 + 144, 8, 48);
+        gcopy(3, (dx - 8) % 18 * 8 + 54, 48 + 144, 8, 48, dx * 8 + x, y3);
     }
 
     for (int dy = 0; dy < height / 8 - 14; ++dy)
@@ -2570,18 +2560,22 @@ void window(int x, int y, int width, int height, bool shadow)
         if (!shadow)
         {
             // Middle left
-            pos(x, dy * 8 + y + 48);
-            gcopy(3, 0, dy % 12 * 8 + 48 + 48, 64, 8);
+            gcopy(3, 0, dy % 12 * 8 + 48 + 48, 64, 8, x, dy * 8 + y + 48);
             // Middle middle
             for (int dx = 1; dx < width / 8 - 15; ++dx)
             {
-                pos(dx * 8 + x + 56, dy * 8 + y + 48);
-                gcopy(3, dx % 18 * 8 + 64, dy % 12 * 8 + 48 + 48, 8, 8);
+                gcopy(
+                    3,
+                    dx % 18 * 8 + 64,
+                    dy % 12 * 8 + 48 + 48,
+                    8,
+                    8,
+                    dx * 8 + x + 56,
+                    dy * 8 + y + 48);
             }
         }
         // Middle right
-        pos(x3, dy * 8 + y + 48);
-        gcopy(3, 208, dy % 12 * 8 + 48 + 48, 56, 8);
+        gcopy(3, 208, dy % 12 * 8 + 48 + 48, 56, 8, x3, dy * 8 + y + 48);
     }
 
     gmode(2);
@@ -2613,34 +2607,37 @@ void window2(
     switch (fill_style)
     {
     case 0:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
         break;
     case 1:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 2:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 210});
         break;
     case 3:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 10});
         break;
     case 4:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 5: break;
     case 6:
-        pos(x + width / 2, y + height / 2);
-        gmode(4, 180);
-        gcopy_c(3, 24, 72, 228, 144, width - 4, height - 4);
+        gmode(2, 180);
+        gcopy_c(
+            3,
+            24,
+            72,
+            228,
+            144,
+            x + width / 2,
+            y + height / 2,
+            width - 4,
+            height - 4);
         break;
     default: break;
     }
@@ -2648,44 +2645,66 @@ void window2(
     gmode(2);
     for (int cnt = 0, cnt_end = (width / 16 - 2); cnt < cnt_end; ++cnt)
     {
-        pos(cnt * 16 + x + 16, y);
-        gcopy(3, frame_style * 48 + 16, 240, 16, 16);
-        pos(cnt * 16 + x + 16, y + height - 16);
-        gcopy(3, frame_style * 48 + 16, 240 + 32, 16, 16);
+        gcopy(3, frame_style * 48 + 16, 240, 16, 16, cnt * 16 + x + 16, y);
+        gcopy(
+            3,
+            frame_style * 48 + 16,
+            240 + 32,
+            16,
+            16,
+            cnt * 16 + x + 16,
+            y + height - 16);
     }
 
     const auto x2 = x + width / 16 * 16 - 16;
     const auto y2 = y + height / 16 * 16 - 16;
 
-    pos(x2, y);
-    gcopy(3, frame_style * 48 + 16, 240, width % 16, 16);
-    pos(x2, y + height - 16);
-    gcopy(3, frame_style * 48 + 16, 240 + 32, width % 16, 16);
+    gcopy(3, frame_style * 48 + 16, 240, width % 16, 16, x2, y);
+    gcopy(
+        3,
+        frame_style * 48 + 16,
+        240 + 32,
+        width % 16,
+        16,
+        x2,
+        y + height - 16);
 
     for (int i = 0; i < height / 16 - 2; ++i)
     {
-        pos(x, i * 16 + y + 16);
-        gcopy(3, frame_style * 48, 240 + 16, 16, 16);
-        pos(x + width - 16, i * 16 + y + 16);
-        gcopy(3, frame_style * 48 + 32, 240 + 16, 16, 16);
+        gcopy(3, frame_style * 48, 240 + 16, 16, 16, x, i * 16 + y + 16);
+        gcopy(
+            3,
+            frame_style * 48 + 32,
+            240 + 16,
+            16,
+            16,
+            x + width - 16,
+            i * 16 + y + 16);
     }
-    pos(x, y2);
-    gcopy(3, frame_style * 48, 240 + 16, 16, height % 16);
-    pos(x + width - 16, y2);
-    gcopy(3, frame_style * 48 + 32, 240 + 16, 16, height % 16);
-    pos(x, y);
-    gcopy(3, frame_style * 48, 240, 16, 16);
-    pos(x, y + height - 16);
-    gcopy(3, frame_style * 48, 240 + 32, 16, 16);
-    pos(x + width - 16, y);
-    gcopy(3, frame_style * 48 + 32, 240, 16, 16);
-    pos(x + width - 16, y + height - 16);
-    gcopy(3, frame_style * 48 + 32, 240 + 32, 16, 16);
+    gcopy(3, frame_style * 48, 240 + 16, 16, height % 16, x, y2);
+    gcopy(
+        3,
+        frame_style * 48 + 32,
+        240 + 16,
+        16,
+        height % 16,
+        x + width - 16,
+        y2);
+    gcopy(3, frame_style * 48, 240, 16, 16, x, y);
+    gcopy(3, frame_style * 48, 240 + 32, 16, 16, x, y + height - 16);
+    gcopy(3, frame_style * 48 + 32, 240, 16, 16, x + width - 16, y);
+    gcopy(
+        3,
+        frame_style * 48 + 32,
+        240 + 32,
+        16,
+        16,
+        x + width - 16,
+        y + height - 16);
 
     if (fill_style == 5)
     {
-        pos(x + 2, y + 2);
-        gcopy(3, 24, 72, 228, 144, width - 4, height - 5);
+        gcopy(3, 24, 72, 228, 144, x + 2, y + 2, width - 4, height - 5);
         boxf(x + 2, y + 2, width - 4, height - 4, {0, 0, 0, 195});
     }
 }
@@ -2712,8 +2731,7 @@ void window_animation(
 
     gsel(temporary_window_id);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, x, y, width, height);
+    gcopy(0, x, y, width, height, 0, 0);
     gsel(0);
     gmode(0);
 
@@ -2740,8 +2758,7 @@ void window_animation(
         {
             await(Config::instance().animewait * 0.75);
         }
-        pos(x, y);
-        gcopy(temporary_window_id, 0, 0, width, height);
+        gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }
 
     gmode(2);
@@ -2764,8 +2781,7 @@ void window_animation_corner(
 
     gsel(temporary_window_id);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, x, y, width, height);
+    gcopy(0, x, y, width, height, 0, 0);
     gsel(0);
     gmode(0);
 
@@ -2788,8 +2804,7 @@ void window_animation_corner(
         {
             await(Config::instance().animewait * 0.75);
         }
-        pos(x, y);
-        gcopy(temporary_window_id, 0, 0, width, height);
+        gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }
 
     gmode(2);

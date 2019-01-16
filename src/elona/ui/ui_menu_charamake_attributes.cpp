@@ -101,9 +101,8 @@ void UIMenuCharamakeAttributes::_draw_window_topic()
 {
     x = 150;
     y = 240;
-    pos(wx + 85, wy + wh / 2);
-    gmode(4, 30);
-    gcopy_c(2, 0, 0, 180, 300, x, y);
+    gmode(2, 30);
+    gcopy_c(2, 0, 0, 180, 300, wx + 85, wy + wh / 2, x, y);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.chara_making.roll_attributes.title"),
@@ -114,13 +113,15 @@ void UIMenuCharamakeAttributes::_draw_window_topic()
 void UIMenuCharamakeAttributes::_draw_window_desc(int locks_left)
 {
     font(12 + sizefix - en * 2);
-    pos(wx + 175, wy + 52);
-    mes(i18n::s.get(
-        "core.locale.chara_making.roll_attributes.locked_items_desc"));
+    mes(wx + 175,
+        wy + 52,
+        i18n::s.get(
+            "core.locale.chara_making.roll_attributes.locked_items_desc"));
     font(13 - en * 2, snail::Font::Style::bold);
-    pos(wx + 180, wy + 84);
-    mes(i18n::s.get("core.locale.chara_making.roll_attributes.locks_left") +
-        u8": "s + locks_left);
+    mes(wx + 180,
+        wy + 84,
+        i18n::s.get("core.locale.chara_making.roll_attributes.locks_left") +
+            u8": "s + locks_left);
 }
 
 void UIMenuCharamakeAttributes::_draw_window(int locks_left)
@@ -133,8 +134,7 @@ void UIMenuCharamakeAttributes::_draw_window(int locks_left)
 void UIMenuCharamakeAttributes::_draw_attribute_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(wx + 240, wy + 66 + cnt * 23 + 2);
-    mes(u8"Locked!"s, {20, 20, 140});
+    mes(wx + 240, wy + 66 + cnt * 23 + 2, u8"Locked!"s, {20, 20, 140});
 }
 
 void UIMenuCharamakeAttributes::_draw_attribute_value(
@@ -144,12 +144,17 @@ void UIMenuCharamakeAttributes::_draw_attribute_value(
 {
     // Copy image from item sheet.
     // TODO: migrate to PicLoader
-    pos(wx + 198, wy + 76 + cnt * 23);
     gmode(2);
-    gcopy_c(1, (cnt - 2) * inf_tiles, 672, inf_tiles, inf_tiles);
+    gcopy_c(
+        1,
+        (cnt - 2) * inf_tiles,
+        672,
+        inf_tiles,
+        inf_tiles,
+        wx + 198,
+        wy + 76 + cnt * 23);
 
-    pos(wx + 210, wy + 66 + cnt * 23);
-    mes(""s + list_value / 1000000);
+    mes(wx + 210, wy + 66 + cnt * 23, ""s + list_value / 1000000);
 
     if (is_locked)
     {
@@ -163,8 +168,7 @@ void UIMenuCharamakeAttributes::_draw_attribute(
     const std::string& text,
     bool is_locked)
 {
-    pos(wx + 38, wy + 66 + cnt * 23 - 2);
-    gcopy(3, cnt * 24 + 72, 30, 24, 18);
+    gcopy(3, cnt * 24 + 72, 30, 24, 18, wx + 38, wy + 66 + cnt * 23 - 2);
     font(14 - en * 2);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 23 - 1);
 

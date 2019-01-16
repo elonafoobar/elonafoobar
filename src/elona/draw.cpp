@@ -157,8 +157,6 @@ optional_ref<Extent> prepare_item_image(int id, int color)
     gsel(1);
     boxf(0, 960, rect->width, rect->height);
 
-    pos(0, 960);
-
     // The color modifier is applied to the source buffer before
     // copying it to the scratch region. It is restored after copying.
     set_color_mod(
@@ -166,7 +164,7 @@ optional_ref<Extent> prepare_item_image(int id, int color)
         255 - c_col(1, color),
         255 - c_col(2, color),
         rect->buffer);
-    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
     set_color_mod(255, 255, 255, rect->buffer);
 
     gsel(0);
@@ -194,7 +192,6 @@ optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
         const auto character_color = character_image / 1000;
         auto rect = draw_get_rect_chara(character_id);
         gmode(2);
-        pos(0, 960);
 
         // Modify color and restore it afterwards.
         set_color_mod(
@@ -207,10 +204,10 @@ optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
             item_rect->x,
             item_rect->y,
             item_rect->width,
-            item_rect->height);
+            item_rect->height,
+            0,
+            960);
         set_color_mod(255, 255, 255, item_rect->buffer);
-
-        pos(0, 1008);
 
         // Modify color and restore it afterwards.
         set_color_mod(
@@ -224,12 +221,13 @@ optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
             rect->y + 4 + (rect->height > inf_tiles) * 8,
             rect->width - 16,
             rect->height - 8 - (rect->height > inf_tiles) * 10,
+            0,
+            1008,
             22,
             20);
         set_color_mod(255, 255, 255, rect->buffer);
 
-        pos(6, 974);
-        gcopy(1, 0, 1008, 22, 20);
+        gcopy(1, 0, 1008, 22, 20, 6, 974);
         gsel(0);
     }
     else // Figures
@@ -249,8 +247,6 @@ optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
         gsel(1);
         boxf(0, 960, item_rect->width, item_rect->height);
 
-        pos(8, 1058 - rect->height);
-
         // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, character_color),
@@ -262,12 +258,12 @@ optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
             rect->x + 8,
             rect->y + 2,
             rect->width - 16,
-            rect->height - 8);
+            rect->height - 8,
+            8,
+            1058 - rect->height);
         set_color_mod(255, 255, 255, rect->buffer);
 
-        gmode(4, 192);
-        pos(0, 960 + (rect->height == inf_tiles) * 48);
-
+        gmode(2, 192);
         // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, color),
@@ -279,7 +275,9 @@ optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
             item_rect->x,
             item_rect->y,
             inf_tiles,
-            rect->height + (rect->height > inf_tiles) * 48);
+            rect->height + (rect->height > inf_tiles) * 48,
+            0,
+            960 + (rect->height == inf_tiles) * 48);
         set_color_mod(255, 255, 255, item_rect->buffer);
 
         gmode(2);
@@ -332,8 +330,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
                 const int y_ = y + 17;
-                pos(x_, y_);
-                gcopy(3, 480 - width, 517, width, 3, width * 3, 9);
+                gcopy(3, 480 - width, 517, width, 3, x_, y_, width * 3, 9);
 
                 // Show leash icon.
                 if (Config::instance().leash_icon && cdata[i].is_leashed())
@@ -343,15 +340,15 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                     const int icon_width = rect->frame_width;
                     const int icon_height = rect->height;
 
-                    pos(right ? std::min(x, x_) - icon_width / 2
-                              : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
-                        y);
                     gcopy(
                         1,
                         0,
                         960,
                         icon_width,
                         icon_height,
+                        right ? std::min(x, x_) - icon_width / 2
+                              : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
+                        y,
                         icon_width / 2,
                         icon_height / 2);
                     gmode(5);
@@ -361,6 +358,9 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                         960,
                         icon_width,
                         icon_height,
+                        right ? std::min(x, x_) - icon_width / 2
+                              : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
+                        y,
                         icon_width / 2,
                         icon_height / 2);
                     gmode(2);
@@ -511,8 +511,7 @@ void show_damage_popups()
 void draw_emo(int cc, int x, int y)
 {
     gmode(2);
-    pos(x + 16, y);
-    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608, 16, 16);
+    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608, 16, 16, x + 16, y);
 }
 
 
@@ -524,22 +523,18 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     if (!fs::exists(filepath))
         return;
 
-    pos(128, 0);
-    picload(filepath, 1);
+    picload(filepath, 128, 0, false);
     boxf(256, 0, 128, 198);
-    gmode(4, 256);
-    pget(128, 0);
-    pos(256, 0);
-    gcopy(20 + cc, 128, 0, 128, 198);
-    pos(256, 0);
     gmode(2);
-    pos(0, 0);
+    pget(128, 0);
+    gcopy(20 + cc, 128, 0, 128, 198, 256, 0);
+    gmode(2);
     set_color_mod(
         255 - c_col(0, pcc(body_part, cc) / 1000),
         255 - c_col(1, pcc(body_part, cc) / 1000),
         255 - c_col(2, pcc(body_part, cc) / 1000),
         20 + cc);
-    gcopy(20 + cc, 256, 0, 128, 198);
+    gcopy(20 + cc, 256, 0, 128, 198, 0, 0);
     set_color_mod(255, 255, 255, 20 + cc);
 }
 
@@ -584,12 +579,11 @@ optional_ref<Extent> chara_preparepic(int image_id)
 
     gsel(rect->buffer);
     boxf(0, 960, rect->width, rect->height);
-    pos(0, 960);
     set_color_mod(
         255 - c_col(0, color_id),
         255 - c_col(1, color_id),
         255 - c_col(2, color_id));
-    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
     set_color_mod(255, 255, 255);
     gsel(0);
     return rect;
@@ -1023,12 +1017,10 @@ void bmes(
     {
         for (int dx = -1; dx <= 1; ++dx)
         {
-            pos(x + dx, y + dy);
-            mes(message, shadow_color);
+            mes(x + dx, y + dy, message, shadow_color);
         }
     }
-    pos(x, y);
-    mes(message, text_color);
+    mes(x, y, message, text_color);
 }
 
 
@@ -1072,8 +1064,7 @@ void draw(const std::string& key, int x, int y)
 {
     const auto& info = get_image_info(key);
 
-    pos(x, y);
-    gcopy(info.window_id, info.x, info.y, info.width, info.height);
+    gcopy(info.window_id, info.x, info.y, info.width, info.height, x, y);
 }
 
 
@@ -1082,9 +1073,16 @@ void draw(const std::string& key, int x, int y, int width, int height)
 {
     const auto& info = get_image_info(key);
 
-    pos(x, y);
     gcopy(
-        info.window_id, info.x, info.y, info.width, info.height, width, height);
+        info.window_id,
+        info.x,
+        info.y,
+        info.width,
+        info.height,
+        x,
+        y,
+        width,
+        height);
 }
 
 
@@ -1097,13 +1095,14 @@ void draw_rotated(
 {
     const auto& info = get_image_info(key);
 
-    pos(center_x, center_y);
     grotate(
         info.window_id,
         info.x,
         info.y,
         info.width,
         info.height,
+        center_x,
+        center_y,
         3.14159265 / 180 * angle);
 }
 
@@ -1119,13 +1118,14 @@ void draw_rotated(
 {
     const auto& info = get_image_info(key);
 
-    pos(center_x, center_y);
     grotate(
         info.window_id,
         info.x,
         info.y,
         info.width,
         info.height,
+        center_x,
+        center_y,
         width,
         height,
         3.14159265 / 180 * angle);
@@ -1149,10 +1149,9 @@ void draw_chara(const Character& chara, int x, int y, int scale, int alpha)
 void draw_chara(int image_id, int x, int y, int scale, int alpha)
 {
     auto rect = chara_preparepic(image_id);
-    pos(x, y);
     if (alpha != 0)
     {
-        gmode(4, alpha);
+        gmode(2, alpha);
     }
     else
     {
@@ -1165,6 +1164,8 @@ void draw_chara(int image_id, int x, int y, int scale, int alpha)
         960,
         rect->width,
         rect->height,
+        x,
+        y,
         rect->width * scale,
         rect->height * scale);
 }
@@ -1177,7 +1178,6 @@ void draw_chara_scale_height(const Character& chara, int x, int y)
 void draw_chara_scale_height(int image_id, int x, int y)
 {
     auto rect = chara_preparepic(image_id);
-    pos(x, y);
     gmode(2);
 
     gcopy_c(
@@ -1186,6 +1186,8 @@ void draw_chara_scale_height(int image_id, int x, int y)
         960,
         rect->width,
         rect->height,
+        x,
+        y,
         rect->width / (1 + (rect->height > inf_tiles)),
         inf_tiles);
 }
@@ -1195,10 +1197,10 @@ void draw_item_material(int image_id, int x, int y)
 {
     auto rect = prepare_item_image(image_id, 0);
 
-    pos(x, y);
     gmode(2);
 
-    gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
+    gcopy_c(
+        1, 0, 960, inf_tiles, inf_tiles, x, y, rect->frame_width, rect->height);
 }
 
 void draw_item_with_portrait(const Item& item, int x, int y)
@@ -1224,10 +1226,10 @@ void draw_item_with_portrait(
         rect = prepare_item_image(image_id, color);
     }
 
-    pos(x, y);
     gmode(2);
 
-    gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
+    gcopy_c(
+        1, 0, 960, inf_tiles, inf_tiles, x, y, rect->frame_width, rect->height);
 }
 
 void draw_item_with_portrait_scale_height(const Item& item, int x, int y)
@@ -1254,7 +1256,6 @@ void draw_item_with_portrait_scale_height(
         rect = prepare_item_image(image_id, color);
     }
 
-    pos(x, y);
     gmode(2);
 
     gcopy_c(
@@ -1263,6 +1264,8 @@ void draw_item_with_portrait_scale_height(
         960,
         rect->frame_width,
         rect->height,
+        x,
+        y,
         rect->frame_width * inf_tiles / rect->height,
         inf_tiles);
 }

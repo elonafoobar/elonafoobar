@@ -244,7 +244,7 @@ namespace elona
 void config_query_language()
 {
     buffer(4);
-    picload(filesystem::dir::graphic() / u8"lang.bmp");
+    picload(filesystem::dir::graphic() / u8"lang.bmp", 0, 0, true);
     gsel(0);
     gmode(0);
     p = 0;
@@ -252,10 +252,8 @@ void config_query_language()
     while (1)
     {
         boxf();
-        pos(160, 170);
-        gcopy(4, 0, 0, 340, 100);
-        pos(180, 220 + p * 20);
-        gcopy(4, 360, 6, 20, 18);
+        gcopy(4, 0, 0, 340, 100, 160, 170);
+        gcopy(4, 360, 6, 20, 18, 180, 220 + p * 20);
         redraw();
         await(30);
         if (getkey(snail::Key::down))

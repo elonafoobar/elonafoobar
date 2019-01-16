@@ -19,6 +19,7 @@ Application& Application::instance()
 }
 
 
+
 void Application::set_title(const std::string&)
 {
 }
@@ -49,17 +50,6 @@ void Application::quit()
 
 void Application::register_finalizer(std::function<void()>)
 {
-}
-
-
-
-void Application::main_loop()
-{
-    while (1)
-    {
-        if (_will_quit)
-            return;
-    }
 }
 
 
@@ -123,12 +113,6 @@ void Application::set_subwindow_display_mode(const std::string&)
 
 
 void Application::initialize_dpi()
-{
-}
-
-
-
-void Application::render_scene(std::shared_ptr<SceneBase>)
 {
 }
 

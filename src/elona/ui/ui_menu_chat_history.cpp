@@ -21,8 +21,7 @@ void _draw_messages()
     i = 0;
     s = u8"No new messages received."s;
     i += talk_conv(s, (ww - 110 - en * 50) / 7);
-    pos(wx + 48, (19 - i) * 16 + wy + 48);
-    mes(s, {30, 20, 10});
+    mes(wx + 48, (19 - i) * 16 + wy + 48, s, {30, 20, 10});
 }
 
 } // namespace
@@ -40,8 +39,7 @@ bool UIMenuChatHistory::init()
     keyrange = 0;
     pagesize = 0;
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

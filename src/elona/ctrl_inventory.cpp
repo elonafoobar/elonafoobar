@@ -696,8 +696,7 @@ label_20591:
         }
     }
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_inv.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_inv.bmp", 960, 96, false);
     gsel(0);
     if (returnfromidentify == 0)
     {
@@ -773,8 +772,7 @@ label_2060_internal:
         y = 34;
         x = windoww - 650 + 156;
         window2(x, y, 475, 22, 5, 5);
-        pos(x - 28, y - 8);
-        gcopy(3, 64, 288, 50, 32);
+        gcopy(3, 64, 288, 50, 32, x - 28, y - 8);
         if (dropcontinue)
         {
             i = 4;
@@ -802,13 +800,25 @@ label_2060_internal:
                 break;
             }
             p = cycle(cnt, i);
-            pos(x + cnt * 44 + 20, y - 24);
-            gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
+            gcopy(
+                3,
+                288 + invicon(p) * 48,
+                48,
+                48,
+                48,
+                x + cnt * 44 + 20,
+                y - 24);
             if (invctrl == p)
             {
                 gmode(5, 70);
-                pos(x + cnt * 44 + 20, y - 24);
-                gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
+                gcopy(
+                    3,
+                    288 + invicon(p) * 48,
+                    48,
+                    48,
+                    48,
+                    x + cnt * 44 + 20,
+                    y - 24);
                 gmode(2);
             }
             std::string inv_command_txt =
@@ -867,8 +877,7 @@ label_2061_internal:
 }
     if (invicon(invctrl) != -1)
     {
-        pos(wx + 46, wy - 14);
-        gcopy(3, 288 + invicon(invctrl) * 48, 48, 48, 48);
+        gcopy(3, 288 + invicon(invctrl) * 48, 48, 48, 48, wx + 46, wy - 14);
     }
     s = i18n::s.get("core.locale.ui.inv.window.weight");
     if (invctrl == 11 || invctrl == 12)
@@ -884,20 +893,15 @@ label_2061_internal:
     display_topic(s, wx + 526, wy + 30);
     if (showresist)
     {
-        pos(wx + 300, wy + 40);
-        mes(i18n::s.get("core.locale.ui.inv.window.resist"));
+        mes(wx + 300, wy + 40, i18n::s.get("core.locale.ui.inv.window.resist"));
     }
-    pos(wx + ww - 136, wy - 6);
-    gcopy(3, 960, 96, 144, 48);
+    gcopy(3, 960, 96, 144, 48, wx + ww - 136, wy - 6);
     if (showresist == 0)
     {
-        pos(wx + ww - 186, wy - 6);
-        gcopy(3, 960, 144, 48, 72);
+        gcopy(3, 960, 144, 48, 72, wx + ww - 186, wy - 6);
     }
-    pos(wx + ww - 246, wy - 6);
-    gcopy(3, 1008, 144, 48, 72);
-    pos(wx - 6, wy - 6);
-    gcopy(3, 960, 216, 48, 72);
+    gcopy(3, 1008, 144, 48, 72, wx + ww - 246, wy - 6);
+    gcopy(3, 960, 216, 48, 72, wx - 6, wy - 6);
     s = ""s + listmax + u8" items"s;
     s += "  ("s +
         i18n::s.get(
@@ -920,16 +924,15 @@ label_2061_internal:
         window(x + 4, y + 4, w, h - h % 8, true);
         window(x, y, w, h - h % 8);
         font(12 + en - en * 2);
-        pos(x + 16, y + 17);
-        mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
-        pos(x + 16, y + 35);
-        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight") +
-            ":" + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s +
-            cnveqweight(tc));
+        mes(x + 16, y + 17, u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
+        mes(x + 16,
+            y + 35,
+            i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight") +
+                ":" + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s +
+                cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
-        pos(x, y);
-        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip"));
+        mes(x, y, i18n::s.get("core.locale.ui.inv.take_ally.window.equip"));
         x += 60;
         for (int cnt = 0; cnt < 30; ++cnt)
         {
@@ -938,13 +941,12 @@ label_2061_internal:
                 continue;
             }
             p = cdata[tc].body_parts[cnt];
-            pos(x, y);
             std::string body_part_desc =
                 i18n::s.get_enum("core.locale.ui.body_part", p / 10000);
             const auto text_color = p % 10000 != 0
                 ? snail::Color{50, 50, 200}
                 : snail::Color{100, 100, 100};
-            mes(body_part_desc, text_color);
+            mes(x, y, body_part_desc, text_color);
             x += (body_part_desc.size() + 1) * 6;
         }
     }
@@ -1030,8 +1032,10 @@ label_2061_internal:
         }
         const auto text_color = cs_list_get_item_color(inv[p]);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);
-        pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
-        mes(s(1), text_color);
+        mes(wx + 600 - strlen_u(s(1)) * 7,
+            wy + 60 + cnt * 19 + 2,
+            s(1),
+            text_color);
     }
     if (keyrange != 0)
     {
@@ -1044,8 +1048,7 @@ label_2061_internal:
             font(13 - en * 2);
             gmode(2);
             draw("gold_coin", wx + 340, wy + 32);
-            pos(wx + 368, wy + 37 - en * 2);
-            mes(""s + cdata[tc].gold + u8" gp"s);
+            mes(wx + 368, wy + 37 - en * 2, ""s + cdata[tc].gold + u8" gp"s);
         }
     }
     redraw();

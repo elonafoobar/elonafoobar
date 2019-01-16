@@ -142,8 +142,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             {
                 sx = 192;
             }
-            pos(i * 192, inf_msgy);
-            gcopy(3, 496, 528, sx, 5);
+            gcopy(3, 496, 528, sx, 5, i * 192, inf_msgy);
         }
         redraw();
         wait_key_pressed();

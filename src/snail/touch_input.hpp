@@ -95,7 +95,7 @@ private:
 
     static const constexpr float _base_font_size = 0.0089f;
 
-    std::unique_ptr<BasicImage> _quick_action_image;
+    std::unique_ptr<Image> _quick_action_image;
 };
 
 } // namespace snail

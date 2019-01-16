@@ -169,11 +169,9 @@ void UIMenuJournal::update()
         page = 0;
     }
     gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"book.bmp", 0, 0, false);
     gsel(0);
-    pos(wx, wy);
-    gcopy(4, 0, 0, 736, 448);
+    gcopy(4, 0, 0, 736, 448, wx, wy);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -221,19 +219,16 @@ void UIMenuJournal::update()
         {
             font(12 + sizefix - en * 2);
         }
-        pos(x, y);
-        mes(s, text_color);
+        mes(x, y, s, text_color);
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);
-            pos(x + 90, y + 330);
-            mes(u8"- "s + (p / 20 + 1) + u8" -"s);
+            mes(x + 90, y + 330, u8"- "s + (p / 20 + 1) + u8" -"s);
             if (p % 40 == 20)
             {
                 if (page < pagemax)
                 {
-                    pos(x + 200, y + 330);
-                    mes(u8"(more)"s);
+                    mes(x + 200, y + 330, u8"(more)"s);
                 }
             }
         }

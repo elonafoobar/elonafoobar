@@ -107,15 +107,19 @@ void UIMenuSpellWriter::_draw_list_entry_name(int cnt, int item_index)
 
 void UIMenuSpellWriter::_draw_list_entry_reserve_status(int cnt, int item_index)
 {
-    pos(wx + 400, wy + 66 + cnt * 19 + 2);
     if (itemmemory(2, item_index) == 1)
     {
-        mes(i18n::s.get("core.locale.ui.reserve.not_reserved"),
+        mes(wx + 400,
+            wy + 66 + cnt * 19 + 2,
+            i18n::s.get("core.locale.ui.reserve.not_reserved"),
             {120, 120, 120});
     }
     else
     {
-        mes(i18n::s.get("core.locale.ui.reserve.reserved"), {55, 55, 255});
+        mes(wx + 400,
+            wy + 66 + cnt * 19 + 2,
+            i18n::s.get("core.locale.ui.reserve.reserved"),
+            {55, 55, 255});
     }
 }
 

@@ -101,8 +101,7 @@ label_18671_internal:
             font(16 - en * 2);
             text_color = snail::Color{250, 240, 230};
         }
-        pos(170, cnt * 20 + 120 + txtadvmsgfix);
-        mes(s, text_color);
+        mes(170, cnt * 20 + 120 + txtadvmsgfix, s, text_color);
     }
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -116,8 +115,7 @@ label_18671_internal:
     }
     gsel(2);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
     gmode(2);
     keyrange = 0;
@@ -138,8 +136,7 @@ label_1868_internal:
     y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
     y(1) = 20 * listmax;
     gmode(0);
-    pos(x, y);
-    gcopy(2, x, y, x(1), y(1));
+    gcopy(2, x, y, x(1), y(1), x, y);
     gmode(2);
     font(14 - en * 2);
     cs_listbk();
@@ -218,15 +215,13 @@ void casino_adv_draw_mat()
         y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
         gmode(0);
-        pos(x - 50, y - 50);
-        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
+        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100, x - 50, y - 50);
         if (cnt == 11)
         {
             break;
         }
-        pos(x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
-        gmode(4, cnt * 25);
-        gcopy_c(2, 0, 0, x(1), y(1));
+        gmode(2, cnt * 25);
+        gcopy_c(2, 0, 0, x(1), y(1), x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
         if (atxpic != 0)
         {
             x(0) = 345;
@@ -234,9 +229,14 @@ void casino_adv_draw_mat()
             y(0) = 170;
             y(1) = atxpic(3);
             gmode(0);
-            pos(x - atxpic(2) / 2, y - atxpic(3) / 2);
-            gcopy(2, x - atxpic(2) / 2, y - atxpic(3) / 2, x(1), y(1));
-            pos(x, y);
+            gcopy(
+                2,
+                x - atxpic(2) / 2,
+                y - atxpic(3) / 2,
+                x(1),
+                y(1),
+                x - atxpic(2) / 2,
+                y - atxpic(3) / 2);
             gmode(2);
             double p_double;
             if (cnt == 10)
@@ -258,6 +258,8 @@ void casino_adv_draw_mat()
                 atxpic(1) / 33 * 32,
                 inf_tiles,
                 inf_tiles,
+                x,
+                y,
                 cnt * (atxpic(2) / 10),
                 cnt * (atxpic(3) / 10),
                 p_double);
@@ -272,9 +274,7 @@ void casino_adv_draw_mat()
                 y(0) = 120;
                 y(1) = 96;
                 gmode(0);
-                pos(x, y);
-                gcopy(2, x, y, x(1), y(1));
-                pos(x + x(1) / 2, y + y(1) / 2);
+                gcopy(2, x, y, x(1), y(1), x, y);
                 gmode(2);
                 gcopy_c(
                     1,
@@ -282,6 +282,8 @@ void casino_adv_draw_mat()
                     mattile / 33 * 32,
                     inf_tiles,
                     inf_tiles,
+                    x + x(1) / 2,
+                    y + y(1) / 2,
                     cnt2 * 9,
                     cnt2 * 9);
             }
@@ -302,11 +304,9 @@ void casino_fade_in_choices()
         y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
         gmode(0);
-        pos(x - 50, y - 50);
-        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
-        pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
-        gmode(4, 250 - cnt * 25);
-        gcopy_c(2, 0, 0, x(1), y(1));
+        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100, x - 50, y - 50);
+        gmode(2, 250 - cnt * 25);
+        gcopy_c(2, 0, 0, x(1), y(1), x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
         await(15);
         redraw();
     }
@@ -345,9 +345,14 @@ void casino_prepare_choice_graphic()
     }
     gsel(2);
     gmode(0);
-    pos(0, 0);
     gcopy(
-        0, 170, noteinfo() * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax);
+        0,
+        170,
+        noteinfo() * 20 + 120 + txtadvmsgfix + 16,
+        x(1),
+        20 * listmax,
+        0,
+        0);
     gsel(0);
     gmode(2);
     cs = 0;
@@ -1004,11 +1009,13 @@ bool casino_blackjack()
             cardplayeradd(1, 220, 240);
         }
         font(14 - en * 2, snail::Font::Style::bold);
-        pos(152, 154);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"),
+        mes(152,
+            154,
+            i18n::s.get("core.locale.casino.blackjack.game.dealer"),
             {255, 255, 255});
-        pos(152, 270);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.you"),
+        mes(152,
+            270,
+            i18n::s.get("core.locale.casino.blackjack.game.you"),
             {255, 255, 255});
         showcardpile();
         showcardholder();

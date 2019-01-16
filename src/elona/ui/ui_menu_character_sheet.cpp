@@ -160,7 +160,7 @@ bool UIMenuCharacterSheet::init()
     _load_list(_operation);
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp", 0, 0, true);
     gsel(0);
     wx = (windoww - 700) / 2 + inf_screenx;
     wy = winposy(400) - 10;
@@ -184,9 +184,8 @@ bool UIMenuCharacterSheet::init()
     gsel(0);
     if (!_returned_from_portrait)
     {
-        gmode(6, 80);
-        pos(wx + 4, wy + 4);
-        gcopy(7, 0, 0, 700, 400);
+        gmode(2, 80);
+        gcopy(7, 0, 0, 700, 400, wx + 4, wy + 4);
         gmode(2);
     }
     if (_operation == CharacterSheetOperation::train_skill)
@@ -338,8 +337,14 @@ void UIMenuCharacterSheet::_draw_portrait_face()
     {
         if (const auto rect = draw_get_rect_portrait(cdata[cc].portrait))
         {
-            pos(wx + 560, wy + 27);
-            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+            gcopy(
+                rect->buffer,
+                rect->x,
+                rect->y,
+                rect->width,
+                rect->height,
+                wx + 560,
+                wy + 27);
         }
     }
     window2(wx + 557, wy + 23, 87, 120, 1, 10);
@@ -349,9 +354,8 @@ void UIMenuCharacterSheet::_draw_portrait_sprite()
 {
     if (cdata[cc].has_own_sprite() == 1)
     {
-        pos(wx + 596 + 22, wy + 86 + 24);
         gmode(2);
-        gcopy_c(20 + cc, 32, 0, 32, 48, 24, 40);
+        gcopy_c(20 + cc, 32, 0, 32, 48, wx + 596 + 22, wy + 86 + 24, 24, 40);
     }
     else
     {
@@ -375,8 +379,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_exp()
     s(4) = i18n::s.get("core.locale.ui.chara_sheet.exp.guild");
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 355, wy + 46 + cnt * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 355, wy + 46 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
@@ -392,8 +395,10 @@ void UIMenuCharacterSheet::_draw_first_page_text_personal()
     s(7) = i18n::s.get("core.locale.ui.chara_sheet.personal.weight");
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 30 + cnt / 4 * 190, wy + 61 + cnt % 4 * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 30 + cnt / 4 * 190,
+            wy + 61 + cnt % 4 * 15,
+            s(cnt),
+            {20, 10, 0});
     }
 }
 
@@ -401,11 +406,19 @@ void UIMenuCharacterSheet::_draw_first_page_text_attribute()
 {
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 37, wy + 157 + cnt * 15);
         gmode(2);
-        gcopy_c(1, cnt * inf_tiles, 672, inf_tiles, inf_tiles);
-        pos(wx + 54, wy + 151 + cnt * 15);
-        mes(i18n::s.get_enum("core.locale.ui.attribute", cnt), {20, 10, 0});
+        gcopy_c(
+            1,
+            cnt * inf_tiles,
+            672,
+            inf_tiles,
+            inf_tiles,
+            wx + 37,
+            wy + 157 + cnt * 15);
+        mes(wx + 54,
+            wy + 151 + cnt * 15,
+            i18n::s.get_enum("core.locale.ui.attribute", cnt),
+            {20, 10, 0});
     }
 }
 
@@ -419,8 +432,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_time()
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 32, wy + 301 + cnt * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 32, wy + 301 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
@@ -432,8 +444,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_weight()
     s(3) = i18n::s.get("core.locale.ui.chara_sheet.weight.deepest_level");
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        pos(wx + 224, wy + 301 + cnt * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 224, wy + 301 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
@@ -447,8 +458,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_level()
     s(4) = guildname();
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 410 + en * 5, wy + 45 + cnt * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 410 + en * 5, wy + 45 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
@@ -473,9 +483,10 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     s(7) = ""s + cdata[cc].weight + u8" kg"s;
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
-            wy + 60 + cnt % 4 * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
+            wy + 60 + cnt % 4 * 15,
+            s(cnt),
+            {20, 10, 0});
     }
 }
 
@@ -487,37 +498,34 @@ void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
     {
         level += u8"*"s;
     }
-    pos(wx + 92, wy + 151 + cnt * 15);
-    mes(""s + sdata((10 + cnt), cc), {20, 10, 0});
-    pos(wx + 124, wy + 151 + cnt * 15);
-    mes(level, {20, 10, 0});
+    mes(wx + 92, wy + 151 + cnt * 15, ""s + sdata((10 + cnt), cc), {20, 10, 0});
+    mes(wx + 124, wy + 151 + cnt * 15, level, {20, 10, 0});
 }
 
 void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
 {
     int potential = sdata.get(10 + cnt, cc).potential;
-    pos(wx + 176, wy + 152 + cnt * 15);
     if (potential >= 200)
     {
-        mes(u8"Superb"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Superb"s, {20, 10, 0});
         return;
     }
     if (potential >= 150)
     {
-        mes(u8"Great"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Great"s, {20, 10, 0});
         return;
     }
     if (potential >= 100)
     {
-        mes(u8"Good"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Good"s, {20, 10, 0});
         return;
     }
     if (potential >= 50)
     {
-        mes(u8"Bad"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Bad"s, {20, 10, 0});
         return;
     }
-    mes(u8"Hopeless"s);
+    mes(wx + 176, wy + 152 + cnt * 15, u8"Hopeless"s);
 }
 
 void UIMenuCharacterSheet::_draw_attribute(int cnt)
@@ -539,19 +547,23 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
     append_accuracy_info(0);
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(wx + 417, wy + 281 + p(2) * 16);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.protect"), {20, 10, 0});
-    pos(wx + 590 - en * 16, wy + 281 + p(2) * 16);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.evade"), {20, 10, 0});
+    mes(wx + 417,
+        wy + 281 + p(2) * 16,
+        i18n::s.get("core.locale.ui.chara_sheet.damage.protect"),
+        {20, 10, 0});
+    mes(wx + 590 - en * 16,
+        wy + 281 + p(2) * 16,
+        i18n::s.get("core.locale.ui.chara_sheet.damage.evade"),
+        {20, 10, 0});
     attackskill = 106;
     int evade = calc_evasion(tc);
     prot = calcattackdmg(AttackDamageCalculationMode::defense);
     font(14 - en * 2);
-    pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
-    mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s +
-        protdice2);
-    pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
-    mes(""s + evade + u8"%"s);
+    mes(wx + 460 + en * 8,
+        wy + 279 + p(2) * 16,
+        ""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s +
+            protdice2);
+    mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, ""s + evade + u8"%"s);
     ++p(2);
 }
 
@@ -575,8 +587,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_fame()
     s(15) = "";
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 255, wy + 151 + cnt * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 255, wy + 151 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
@@ -596,8 +607,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_fame()
     s(8) = "";
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 310, wy + 151 + cnt * 15);
-        mes(s(cnt), {20, 10, 0});
+        mes(wx + 310, wy + 151 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
@@ -614,8 +624,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_time()
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 80, wy + 299 + cnt * 15);
-        mes(s(cnt));
+        mes(wx + 80, wy + 299 + cnt * 15, s(cnt));
     }
 }
 
@@ -630,8 +639,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
         cnvrank(game_data.deepest_dungeon_level));
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        pos(wx + 287 + en * 14, wy + 299 + cnt * 15);
-        mes(s(cnt));
+        mes(wx + 287 + en * 14, wy + 299 + cnt * 15, s(cnt));
     }
 }
 
@@ -646,14 +654,13 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
         y = wy + 151 + cnt % 3 * 32;
         if (cdata[cc].buffs[cnt].id == 0)
         {
-            gmode(4, 120);
+            gmode(2, 120);
             elona::draw("buff_icon_none", x, y);
             gmode(2);
             continue;
         }
         ++_cs_buffmax;
-        pos(x, y);
-        gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32);
+        gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32, x, y);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});
@@ -682,11 +689,12 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
     }
 
     font(13 - en * 2);
-    pos(wx + 108, wy + 366);
-    mes(buff_desc);
+    mes(wx + 108, wy + 366, buff_desc);
     font(11 + sizefix * 2 - en * 2, snail::Font::Style::bold);
-    pos(wx + 70, wy + 369 - en * 3);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":", {20, 10, 0});
+    mes(wx + 70,
+        wy + 369 - en * 3,
+        i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":",
+        {20, 10, 0});
 }
 
 void UIMenuCharacterSheet::_draw_first_page(int& _cs_buff, int& _cs_buffmax)
@@ -800,9 +808,15 @@ void UIMenuCharacterSheet::_draw_skill_icon(int cnt, int list_item)
         icon = the_ability_db[list_item]->related_basic_attribute - 10;
     }
 
-    pos(wx + 38, wy + 75 + cnt * 19);
     gmode(2);
-    gcopy_c(1, icon * inf_tiles, 672, inf_tiles, inf_tiles);
+    gcopy_c(
+        1,
+        icon * inf_tiles,
+        672,
+        inf_tiles,
+        inf_tiles,
+        wx + 38,
+        wy + 75 + cnt * 19);
 }
 
 static bool _is_resistance(int skill)
@@ -860,14 +874,14 @@ void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
         desc += u8"("s + sdata.get(skill_id, cc).potential + u8"%)"s;
     }
 
-    pos(wx + 280 - strlen_u(desc) * 7, wy + 66 + cnt * 19 + 2);
-    mes(desc);
+    mes(wx + 280 - strlen_u(desc) * 7, wy + 66 + cnt * 19 + 2, desc);
 }
 
 void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
 {
-    pos(wx + 330, wy + 66 + cnt * 19 + 2);
-    mes(i18n::s
+    mes(wx + 330,
+        wy + 66 + cnt * 19 + 2,
+        i18n::s
             .get_m_optional(
                 "locale.ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
@@ -890,8 +904,9 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
     {
         train_cost = ""s + calclearncost(skill_id, cc) + u8"p "s;
     }
-    pos(wx + 322 - strlen_u(train_cost) * 7, wy + 66 + cnt * 19 + 2);
-    mes(train_cost);
+    mes(wx + 322 - strlen_u(train_cost) * 7,
+        wy + 66 + cnt * 19 + 2,
+        train_cost);
 }
 
 static bool _has_enchantment(int cc, int skill_id)
@@ -913,8 +928,7 @@ void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)
         star_count = bonus / 5;
     }
     std::string enchantment_level = enchantment_print_level(star_count);
-    pos(wx + 282, wy + 66 + cnt * 19 + 2);
-    mes(enchantment_level);
+    mes(wx + 282, wy + 66 + cnt * 19 + 2, enchantment_level);
 }
 
 void UIMenuCharacterSheet::_draw_skill_entry(

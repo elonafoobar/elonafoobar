@@ -183,8 +183,7 @@ void UIMenuHire::_draw_list_entry_info(int cnt, const Character& chara)
     level += i18n::s.get(
         "core.locale.ui.npc_list.age_counter", calcage(chara.index));
 
-    pos(wx + 372, wy + 66 + cnt * 19 + 2);
-    mes(level);
+    mes(wx + 372, wy + 66 + cnt * 19 + 2, level);
 }
 
 void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
@@ -203,8 +202,9 @@ void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
             text = ""s + cost;
         }
 
-        pos(wx + 512, wy + 66 + cnt * 19 + 2);
-        mes(i18n::s.get("core.locale.ui.npc_list.gold_counter", text));
+        mes(wx + 512,
+            wy + 66 + cnt * 19 + 2,
+            i18n::s.get("core.locale.ui.npc_list.gold_counter", text));
     }
 }
 

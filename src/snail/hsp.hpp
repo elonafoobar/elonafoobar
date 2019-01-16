@@ -17,22 +17,15 @@ namespace hsp
 {
 
 template <typename T>
-constexpr T rad2deg(T rad)
-{
-    return rad * 180.0 / 3.14159265358979323846264;
-}
-
-template <typename T>
 inline T clamp(const T& x, const T& min, const T& max)
 {
     return std::min(std::max(x, min), max);
 }
 
 int timeGetTime();
-void mes(const std::string& text, const snail::Color& color);
+void mes(int x, int y, const std::string& text, const snail::Color& color);
 void mesbox(std::string& buffer, int keywait, bool text);
-void picload(BasicImage& img, int mode);
-void pos(int x, int y);
+void picload(Image& img, int x, int y, bool create_buffer);
 void redraw();
 void set_color_mod(int r, int g, int b, int window_id);
 void onkey_0();
@@ -47,6 +40,8 @@ void gcopy(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height);
 int ginfo(int type);
@@ -57,6 +52,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     double angle);
 void grotate(
     int window_id,
@@ -64,6 +61,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height,
     double angle);

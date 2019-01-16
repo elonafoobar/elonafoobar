@@ -80,15 +80,16 @@ static void _set_font(int list_item)
     }
 }
 
-static void _set_pos(int cnt, int list_item, const std::string& list_text)
+static std::pair<int, int>
+_get_pos(int cnt, int list_item, const std::string& list_text)
 {
     if (list_item == static_cast<int>(ItemDescriptionType::small_font_italic))
     {
-        pos(wx + ww - strlen_u(list_text) * 6 - 80, wy + 68 + cnt * 18);
+        return {wx + ww - strlen_u(list_text) * 6 - 80, wy + 68 + cnt * 18};
     }
     else
     {
-        pos(wx + 68, wy + 68 + cnt * 18);
+        return {wx + 68, wy + 68 + cnt * 18};
     }
 }
 
@@ -96,8 +97,7 @@ void UIMenuItemDesc::_draw_normal_mark(int cnt, int list_item)
 {
     int desc = list_item % 10000;
     int mark_pos_x = desc * 24;
-    pos(wx + 40, wy + 61 + cnt * 18);
-    gcopy(3, 72 + mark_pos_x, 336, 24, 24);
+    gcopy(3, 72 + mark_pos_x, 336, 24, 24, wx + 40, wy + 61 + cnt * 18);
 }
 
 void UIMenuItemDesc::_draw_marks(int cnt, int list_item)
@@ -118,9 +118,9 @@ void UIMenuItemDesc::_draw_message(
     const std::string& list_text)
 {
     _set_font(list_item);
-    _set_pos(cnt, list_item, list_text);
-
-    mes(list_text, _get_color(list_item));
+    int x, y;
+    std::tie(x, y) = _get_pos(cnt, list_item, list_text);
+    mes(x, y, list_text, _get_color(list_item));
 
     _draw_marks(cnt, list_item);
 }

@@ -5,6 +5,7 @@
 #include <map>
 #include <sstream>
 #include <boost/lexical_cast.hpp>
+#include "../hsp.hpp"
 #include "../input.hpp"
 #include "../touch_input.hpp"
 
@@ -88,14 +89,6 @@ void Application::initialize(const std::string& title)
 
 
 
-void Application::run(std::shared_ptr<SceneBase> initial_scene)
-{
-    _scene_manager.push(initial_scene);
-    main_loop();
-}
-
-
-
 void Application::quit()
 {
     _will_quit = true;
@@ -103,84 +96,9 @@ void Application::quit()
 
 
 
-void Application::add_effect(std::unique_ptr<EffectBase> effect)
-{
-    _effects.push_back(std::move(effect));
-}
-
-
-
 void Application::register_finalizer(std::function<void()> finalizer)
 {
     _finalizers.emplace_back(finalizer);
-}
-
-
-
-void Application::main_loop()
-{
-    while (1)
-    {
-        ::SDL_Event event;
-        while (::SDL_PollEvent(&event))
-        {
-            handle_event(event);
-        }
-
-        Input::instance()._update();
-
-        bool user_input_blocked = false;
-        for (auto&& effect : _effects)
-        {
-            effect->update();
-            effect->_increase_frame();
-            if (effect->blocks_user_input())
-            {
-                user_input_blocked = true;
-            }
-        }
-
-        // Even if the current scene was popped from the scene stack in
-        // updating, it will be rendered.
-        auto current_scene = _scene_manager.current_scene();
-        if (!user_input_blocked)
-        {
-            current_scene->update();
-            current_scene->_increase_frame();
-        }
-
-        if (_will_quit)
-            return;
-
-        _renderer->clear();
-        render_scene(current_scene);
-        for (auto&& effect : _effects)
-        {
-            if (effect->alive())
-            {
-                effect->render(*_renderer);
-            }
-        }
-        std::remove_if(
-            std::begin(_effects), std::end(_effects), [](const auto& effect) {
-                return !effect->alive();
-            });
-        _renderer->present();
-
-        _fps_manager.wait();
-        ++_frame;
-    }
-}
-
-
-
-void Application::render_scene(std::shared_ptr<SceneBase> scene)
-{
-    if (scene->parent())
-    {
-        render_scene(scene->parent());
-    }
-    scene->render(*_renderer);
 }
 
 
@@ -267,11 +185,15 @@ void Application::proc_event()
     }
 }
 
+
+
 void Application::set_fullscreen_mode(Window::FullscreenMode fullscreen_mode)
 {
     (*_window).set_fullscreen_mode(fullscreen_mode);
     _fullscreen_mode = fullscreen_mode;
 }
+
+
 
 std::map<std::string, ::SDL_DisplayMode> Application::get_display_modes()
 {

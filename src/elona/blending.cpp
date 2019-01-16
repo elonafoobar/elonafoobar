@@ -344,8 +344,7 @@ void window_recipe2(int val0)
     x_at_m183 = wx + ww;
     w_at_m183 = 400;
     gmode(2);
-    pos(x_at_m183 + w_at_m183 - 520, 0);
-    gcopy(3, 960, 288, 480, 68);
+    gcopy(3, 960, 288, 480, 68, x_at_m183 + w_at_m183 - 520, 0);
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
     font(15 - en * 2, snail::Font::Style::bold);
@@ -429,21 +428,20 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         s_at_m184(1) += strhint3b;
     }
     font(12 + sizefix - en * 2);
-    pos(x + 25 + 0, y + height - 43 - height % 8);
-    mes(s_at_m184(1));
+    mes(x + 25 + 0, y + height - 43 - height % 8, s_at_m184(1));
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(x + width - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
-        y + height - 65 - height % 8);
-    mes(s_at_m184);
+    mes(x + width - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
+        y + height - 65 - height % 8,
+        s_at_m184);
     dx_at_m184 = x + 35;
     dy_at_m184 = y + 48;
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(dx_at_m184 - 10, dy_at_m184);
-    mes(i18n::s.get("core.locale.blending.window.procedure"));
+    mes(dx_at_m184 - 10,
+        dy_at_m184,
+        i18n::s.get("core.locale.blending.window.procedure"));
     dy_at_m184 = dy_at_m184 + 18;
     font(13 - en * 2);
     i_at_m184 = 1;
-    pos(dx_at_m184 - 10, dy_at_m184 - 2);
     if (step == i_at_m184 - 2)
     {
         boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
@@ -454,17 +452,19 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     }
     if (step == -1)
     {
-        pos(dx_at_m184, dy_at_m184);
-        mes(""s + i_at_m184 + u8"."s +
-            i18n::s.get("core.locale.blending.window.choose_a_recipe"));
+        mes(dx_at_m184,
+            dy_at_m184,
+            ""s + i_at_m184 + u8"."s +
+                i18n::s.get("core.locale.blending.window.choose_a_recipe"));
     }
     else
     {
-        pos(dx_at_m184, dy_at_m184);
-        mes(""s + i_at_m184 + u8"."s +
-            i18n::s.get(
-                "core.locale.blending.window.chose_the_recipe_of",
-                rpname(rpid)));
+        mes(dx_at_m184,
+            dy_at_m184,
+            ""s + i_at_m184 + u8"."s +
+                i18n::s.get(
+                    "core.locale.blending.window.chose_the_recipe_of",
+                    rpname(rpid)));
     }
     dy_at_m184 += 17;
     ++i_at_m184;
@@ -474,7 +474,6 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         {
             break;
         }
-        pos(dx_at_m184 - 10, dy_at_m184 - 2);
         if (step == i_at_m184 - 2)
         {
             boxf(
@@ -507,14 +506,11 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
                 inv[rpref(10 + cnt * 2)]);
             s_at_m184 = strmid(s_at_m184, 0, 44);
         }
-        pos(dx_at_m184, dy_at_m184);
-        mes(""s + i_at_m184 + u8"."s + s_at_m184);
+        mes(dx_at_m184, dy_at_m184, ""s + i_at_m184 + u8"."s + s_at_m184);
         dy_at_m184 += 17;
         ++i_at_m184;
     }
-    pos(wx + ww + 243, wy - 4);
-    gcopy(3, 1040, 96, 160, 70);
-    pos(dx_at_m184 - 10, dy_at_m184 - 2);
+    gcopy(3, 1040, 96, 160, 70, wx + ww + 243, wy - 4);
     if (step == i_at_m184 - 2)
     {
         boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
@@ -523,19 +519,22 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     {
         boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {20, 20, 20, 32});
     }
-    pos(dx_at_m184, dy_at_m184);
-    mes(""s + i_at_m184 + u8"."s +
-        i18n::s.get("core.locale.blending.window.start"));
+    mes(dx_at_m184,
+        dy_at_m184,
+        ""s + i_at_m184 + u8"."s +
+            i18n::s.get("core.locale.blending.window.start"));
     dy_at_m184 += 30;
     if (rppage == 0)
     {
         font(12 - en * 2, snail::Font::Style::bold);
-        pos(dx_at_m184 - 10, dy_at_m184);
-        mes(i18n::s.get(
-            "core.locale.blending.window.the_recipe_of", rpname(rpid)));
+        mes(dx_at_m184 - 10,
+            dy_at_m184,
+            i18n::s.get(
+                "core.locale.blending.window.the_recipe_of", rpname(rpid)));
         dy_at_m184 += 20;
-        pos(dx_at_m184 - 10, dy_at_m184);
-        mes(i18n::s.get("core.locale.blending.window.required_skills"));
+        mes(dx_at_m184 - 10,
+            dy_at_m184,
+            i18n::s.get("core.locale.blending.window.required_skills"));
         dy_at_m184 = dy_at_m184 + 18;
         font(13 - en * 2);
         for (int cnt = 0; cnt < 5; ++cnt)
@@ -544,12 +543,13 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
             {
                 break;
             }
-            pos(dx_at_m184 + cnt % 2 * 140, dy_at_m184 + cnt / 2 * 17);
             const auto text_color = (rpdata(11 + cnt * 2, rpid) >
                                      sdata(rpdata(10 + cnt * 2, rpid), 0))
                 ? snail::Color{150, 0, 0}
                 : snail::Color{0, 120, 0};
-            mes(i18n::s.get_m(
+            mes(dx_at_m184 + cnt % 2 * 140,
+                dy_at_m184 + cnt / 2 * 17,
+                i18n::s.get_m(
                     "locale.ability",
                     the_ability_db
                         .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
@@ -561,8 +561,9 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         }
         dy_at_m184 += 50;
         font(12 - en * 2, snail::Font::Style::bold);
-        pos(dx_at_m184 - 10, dy_at_m184);
-        mes(i18n::s.get("core.locale.blending.window.required_equipment"));
+        mes(dx_at_m184 - 10,
+            dy_at_m184,
+            i18n::s.get("core.locale.blending.window.required_equipment"));
         return;
     }
     if (item_index == -1)
@@ -570,15 +571,15 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         return;
     }
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(dx_at_m184 - 10, dy_at_m184);
-    mes(itemname(item_index));
+    mes(dx_at_m184 - 10, dy_at_m184, itemname(item_index));
     dy_at_m184 += 20;
     font(13 - en * 2);
     if (inv[item_index].identification_state <=
         IdentifyState::partly_identified)
     {
-        pos(dx_at_m184, dy_at_m184);
-        mes(i18n::s.get("core.locale.blending.window.havent_identified"));
+        mes(dx_at_m184,
+            dy_at_m184,
+            i18n::s.get("core.locale.blending.window.havent_identified"));
         dy_at_m184 += 16;
         return;
     }
@@ -596,19 +597,19 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
                 inv[item_index].enchantments[cnt2_at_m184].id,
                 inv[item_index].enchantments[cnt2_at_m184].power,
                 the_item_db[inv[item_index].id]->category);
-            pos(dx_at_m184, dy_at_m184);
             const auto text_color =
                 inv[item_index].enchantments[cnt2_at_m184].power < 0
                 ? snail::Color{180, 0, 0}
                 : snail::Color{0, 0, 100};
-            mes(cnven(s), text_color);
+            mes(dx_at_m184, dy_at_m184, cnven(s), text_color);
             dy_at_m184 += 16;
         }
     }
     else
     {
-        pos(dx_at_m184, dy_at_m184);
-        mes(i18n::s.get("core.locale.blending.window.no_inherited_effects"));
+        mes(dx_at_m184,
+            dy_at_m184,
+            i18n::s.get("core.locale.blending.window.no_inherited_effects"));
         dy_at_m184 += 16;
         ++p_at_m184;
     }
@@ -623,8 +624,7 @@ TurnResult blending_menu()
     step = -1;
     rpid = 0;
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_blend.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_blend.bmp", 960, 96, false);
     gsel(0);
     clear_rprefmat();
 label_1923:
@@ -755,8 +755,7 @@ label_1925_internal:
         i18n::s.get("core.locale.blending.recipe.name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.recipe.counter", listmax);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(wx + 130, wy + wh - 65 - wh % 8);
-    mes(s);
+    mes(wx + 130, wy + wh - 65 - wh % 8, s);
     keyrange = 0;
     gmode(2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -775,14 +774,19 @@ label_1925_internal:
 
         draw_item_material(550, wx + 37, wy + 70 + cnt * 19); // Recipe image
 
-        pos(wx + 330, wy + 53 + cnt * 19);
         if (blendchecklist(cnt) == 1)
         {
-            gcopy(3, 336, 360, 24, 24);
+            gcopy(3, 336, 360, 24, 24, wx + 330, wy + 53 + cnt * 19);
         }
         rpid = list(0, p);
-        pos(wx + 317, wy + 60 + cnt * 19);
-        gcopy(3, 64 + (4 - rpdiff(rpid, -1, -1) / 25) * 16, 624, 16, 16);
+        gcopy(
+            3,
+            64 + (4 - rpdiff(rpid, -1, -1) / 25) * 16,
+            624,
+            16,
+            16,
+            wx + 317,
+            wy + 60 + cnt * 19);
     }
     font(14 - en * 2);
     cs_listbk();
@@ -810,8 +814,7 @@ label_1925_internal:
         cs_bk = cs;
     }
     windowshadow(1) = 0;
-    pos(wx + 10, wy + wh - 100);
-    gcopy(3, 960, 96, 80, 90);
+    gcopy(3, 960, 96, 80, 90, wx + 10, wy + wh - 100);
     redraw();
 
     action = get_selected_item(p(0));
@@ -881,8 +884,7 @@ label_1928_internal:
         i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.steps.item_counter", listmax);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(wx + 130, wy + wh - 65 - wh % 8);
-    mes(s);
+    mes(wx + 130, wy + wh - 65 - wh % 8, s);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -946,8 +948,7 @@ label_1928_internal:
         cs_bk = cs;
     }
     windowshadow(1) = 0;
-    pos(wx + 10, wy + wh - 100);
-    gcopy(3, 960, 96, 80, 90);
+    gcopy(3, 960, 96, 80, 90, wx + 10, wy + wh - 100);
     redraw();
 
     action = get_selected_item(p(0));

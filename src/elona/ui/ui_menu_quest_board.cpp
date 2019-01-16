@@ -56,8 +56,7 @@ static void _populate_quest_list()
 void UIMenuQuestBoard::_draw_background()
 {
     gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_board.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_board.bmp", 960, 96, false);
     gsel(0);
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
@@ -71,8 +70,7 @@ void UIMenuQuestBoard::_draw_background()
         y = wy + cnt * 120;
         window(wx + 4, y + 4, ww, h, true);
         window(wx, y, ww, h);
-        pos(wx + 20, y + 8);
-        gcopy(3, 960, 240, 48, 84);
+        gcopy(3, 960, 240, 48, 84, wx + 20, y + 8);
     }
     render_hud();
     gsel(0);
@@ -119,8 +117,7 @@ void UIMenuQuestBoard::_draw_window()
     s(0) = i18n::s.get("core.locale.ui.board.title");
     s(1) = strhint2 + strhint3b;
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, inf_ver);
+    gcopy(4, 0, 0, windoww, inf_ver, 0, 0);
     gmode(2);
     font(16 - en * 2);
     bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), wx + ww + 20, wy);
@@ -180,16 +177,14 @@ void UIMenuQuestBoard::_draw_list_entry_title(int cnt, const std::string& title)
 void UIMenuQuestBoard::_draw_list_entry_date(const std::string& date_text)
 {
     std::string quest_date = u8"("s + date_text + u8")"s;
-    pos(wx + 344, y + 2);
-    mes(quest_date);
+    mes(wx + 344, y + 2, quest_date);
 }
 
 void UIMenuQuestBoard::_draw_list_entry_giver_name(int chara_index)
 {
     std::string name = cdatan(0, chara_index);
     cutname(name, 20);
-    pos(wx + 392, y + 2);
-    mes(name);
+    mes(wx + 392, y + 2, name);
 }
 
 void UIMenuQuestBoard::_draw_list_entry_difficulty(
@@ -209,14 +204,17 @@ void UIMenuQuestBoard::_draw_list_entry_difficulty(
         }
         for (int cnt = 0, cnt_end = (difficulty_stars); cnt < cnt_end; ++cnt)
         {
-            pos(wx + 270 + cnt % 5 * 13, y + dy + cnt / 5 * 8 + 2);
-            mes(i18n::s.get("core.locale.ui.board.difficulty"), col);
+            mes(wx + 270 + cnt % 5 * 13,
+                y + dy + cnt / 5 * 8 + 2,
+                i18n::s.get("core.locale.ui.board.difficulty"),
+                col);
         }
     }
     else
     {
-        pos(wx + 270, y + 2);
-        mes(i18n::s.get(
+        mes(wx + 270,
+            y + 2,
+            i18n::s.get(
                 "core.locale.ui.board.difficulty_counter", difficulty_stars),
             col);
     }
@@ -226,8 +224,7 @@ void UIMenuQuestBoard::_draw_list_entry_desc()
 {
     talk_conv(buff, 70);
     font(13 - en * 2);
-    pos(wx + 20, y + 20);
-    mes(buff);
+    mes(wx + 20, y + 20, buff);
 }
 
 void UIMenuQuestBoard::_draw_list_entry(int cnt, int rq, int tc)

@@ -40,8 +40,7 @@ namespace elona
 static void _draw_background_and_caption(const I18NKey& key)
 {
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
     ui_draw_caption(i18n::s.get(key));
 }
@@ -51,12 +50,10 @@ void character_making_draw_background(const I18NKey& key)
     _draw_background_and_caption(key);
 
     font(13 - en * 2, snail::Font::Style::bold);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
+    mes(20, windowh - 20, u8"Press F1 to show help."s);
     if (geneuse != ""s)
     {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
+        mes(20, windowh - 36, u8"Gene from "s + geneuse);
     }
 }
 
@@ -280,9 +277,8 @@ static void _reroll_character()
 static int _prompt_satisfied()
 {
     gsel(2);
-    pos(0, 0);
     gmode(0);
-    gcopy(0, 0, 100, windoww, windowh - 100);
+    gcopy(0, 0, 100, windoww, windowh - 100, 0, 0);
     gsel(0);
     clear_background_in_character_making();
     ui_draw_caption(i18n::s.get(
@@ -365,8 +361,7 @@ MainMenuResult character_making_final_phase()
         return MainMenuResult::character_making_customize_appearance;
     }
     gmode(0);
-    pos(0, 100);
-    gcopy(2, 0, 0, windoww, windowh - 100);
+    gcopy(2, 0, 0, windoww, windowh - 100, 0, 100);
     gmode(2);
     ui_draw_caption(
         i18n::s.get("core.locale.chara_making.final_screen.what_is_your_name"));
@@ -396,8 +391,7 @@ MainMenuResult character_making_final_phase()
         else
         {
             gmode(0);
-            pos(0, 100);
-            gcopy(2, 0, 0, windoww, windowh - 100);
+            gcopy(2, 0, 0, windoww, windowh - 100, 0, 100);
             gmode(2);
             ui_draw_caption(i18n::s.get(
                 "core.locale.chara_making.final_screen.name_is_already_"
@@ -435,8 +429,7 @@ void draw_race_or_class_info()
     tx = wx + 230;
     ty = wy + 62;
     talk_conv(buff, 60 + en * 2);
-    pos(tx - 20, ty);
-    mes(buff);
+    mes(tx - 20, ty, buff);
     font(14 - en * 2);
     tx = wx + 200;
     ty = wy + 166;
@@ -508,11 +501,18 @@ void draw_race_or_class_info()
                 p = 0;
                 text_color = snail::Color{120, 120, 120};
             }
-            pos(cnt * 150 + tx + 13, ty + 7);
             gmode(2);
-            gcopy_c(1, (cnt2 * 3 + cnt) * inf_tiles, 672, inf_tiles, inf_tiles);
-            pos(cnt * 150 + tx + 32, ty);
-            mes(strmid(
+            gcopy_c(
+                1,
+                (cnt2 * 3 + cnt) * inf_tiles,
+                672,
+                inf_tiles,
+                inf_tiles,
+                cnt * 150 + tx + 13,
+                ty + 7);
+            mes(cnt * 150 + tx + 32,
+                ty,
+                strmid(
                     i18n::s.get_m(
                         "locale.ability",
                         the_ability_db.get_id_from_legacy(r)->get(),
@@ -553,11 +553,9 @@ void draw_race_or_class_info()
     }
     if (r != 0)
     {
-        pos(tx + 13, ty + 6);
         gmode(2);
-        gcopy_c(1, 0, 672, inf_tiles, inf_tiles);
-        pos(tx + 32, ty);
-        mes(s);
+        gcopy_c(1, 0, 672, inf_tiles, inf_tiles, tx + 13, ty + 6);
+        mes(tx + 32, ty, s);
         ty += 14;
     }
     for (int cnt = 150; cnt < 600; ++cnt)
@@ -576,14 +574,15 @@ void draw_race_or_class_info()
             {
                 lenfix(s, 16);
             }
-            pos(tx + 13, ty + 6);
             gmode(2);
             gcopy_c(
                 1,
                 (the_ability_db[cnt]->related_basic_attribute - 10) * inf_tiles,
                 672,
                 inf_tiles,
-                inf_tiles);
+                inf_tiles,
+                tx + 13,
+                ty + 6);
             s(1) = i18n::s
                        .get_m_optional(
                            "locale.ability",
@@ -597,8 +596,7 @@ void draw_race_or_class_info()
                     s(1) = strmid(s(1), 0, 42) + u8"..."s;
                 }
             }
-            pos(tx + 32, ty);
-            mes(s + s(1));
+            mes(tx + 32, ty, s + s(1));
             ty += 14;
         }
     }

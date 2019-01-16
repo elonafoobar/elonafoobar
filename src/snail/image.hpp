@@ -9,15 +9,20 @@
 #include "filesystem.hpp"
 
 
+
 namespace elona
 {
 namespace snail
 {
 
-
-class ImageBase
+class Image
 {
 public:
+    explicit Image(const fs::path& filepath, optional<Color> keycolor = none);
+
+    explicit Image(::SDL_Texture* ptr);
+
+
     int width() const noexcept
     {
         return _width;
@@ -48,7 +53,7 @@ public:
     }
 
 
-    virtual void _render(
+    void _render(
         ::SDL_Renderer* renderer,
         BlendMode blend_mode,
         int src_x,
@@ -58,7 +63,7 @@ public:
         int dst_x,
         int dst_y,
         int dst_width,
-        int dst_height) = 0;
+        int dst_height);
 
 
 protected:
@@ -66,93 +71,6 @@ protected:
     int _height = 0;
     std::shared_ptr<::SDL_Texture> _ptr;
 };
-
-
-
-class NullImage : public ImageBase
-{
-public:
-    NullImage()
-    {
-    }
-
-
-    virtual void
-    _render(::SDL_Renderer*, BlendMode, int, int, int, int, int, int, int, int)
-        override
-    {
-    }
-};
-
-
-
-class BasicImage : public ImageBase
-{
-public:
-    explicit BasicImage(
-        const fs::path& filepath,
-        const optional<Color>& keycolor = none);
-
-    explicit BasicImage(::SDL_Texture* ptr);
-
-    virtual ~BasicImage() = default;
-
-
-    virtual void _render(
-        ::SDL_Renderer* renderer,
-        BlendMode blend_mode,
-        int src_x,
-        int src_y,
-        int src_width,
-        int src_height,
-        int dst_x,
-        int dst_y,
-        int dst_width,
-        int dst_height) override;
-};
-
-
-
-class FrameImage : public ImageBase
-{
-    int offset_x() const noexcept
-    {
-        return _offset_x;
-    }
-
-
-    int offset_y() const noexcept
-    {
-        return _offset_y;
-    }
-
-
-    FrameImage(
-        BasicImage& source,
-        int offset_x,
-        int offset_y,
-        int width,
-        int height);
-
-
-    virtual void _render(
-        ::SDL_Renderer* renderer,
-        BlendMode blend_mode,
-        int src_x,
-        int src_y,
-        int src_width,
-        int src_height,
-        int dst_x,
-        int dst_y,
-        int dst_width,
-        int dst_height) override;
-
-
-private:
-    int _offset_x;
-    int _offset_y;
-};
-
 
 } // namespace snail
 } // namespace elona

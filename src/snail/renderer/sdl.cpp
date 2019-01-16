@@ -206,7 +206,7 @@ void Renderer::render_line(int start_x, int start_y, int end_x, int end_y)
 }
 
 
-void Renderer::render_image(ImageBase& image, int dst_x, int dst_y)
+void Renderer::render_image(Image& image, int dst_x, int dst_y)
 {
     render_image(
         image,
@@ -222,7 +222,7 @@ void Renderer::render_image(ImageBase& image, int dst_x, int dst_y)
 
 
 void Renderer::render_image(
-    ImageBase& image,
+    Image& image,
     int dst_x,
     int dst_y,
     int dst_width,
@@ -242,7 +242,7 @@ void Renderer::render_image(
 
 
 void Renderer::render_image(
-    ImageBase& image,
+    Image& image,
     int src_x,
     int src_y,
     int src_width,
@@ -264,7 +264,7 @@ void Renderer::render_image(
 
 
 void Renderer::render_image(
-    ImageBase& image,
+    Image& image,
     int src_x,
     int src_y,
     int src_width,
@@ -387,7 +387,7 @@ void Renderer::render_image(
 
 
 void Renderer::render_image_crop(
-    ImageBase& image,
+    Image& image,
     int src_x,
     int src_y,
     int src_width,

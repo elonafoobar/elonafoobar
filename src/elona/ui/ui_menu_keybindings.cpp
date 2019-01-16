@@ -142,13 +142,11 @@ void UIMenuKeybindings::_draw_background()
     {
         gsel(4);
         gmode(0);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"title.bmp", 1);
-        gcopy(4, 0, 0, 800, 600, windoww, windowh);
+        picload(filesystem::dir::graphic() / u8"title.bmp", 0, 0, false);
+        gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
     }
 }
@@ -168,7 +166,7 @@ bool UIMenuKeybindings::init()
     _draw_background();
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
+    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp", 0, 0, true);
     gsel(0);
 
     _load_keybindings();
@@ -272,11 +270,13 @@ void UIMenuKeybindings::_draw_keybind_entry(int cnt, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + _x_align_action_name, wy + 66 + cnt * 19 - 1);
 
-    pos(wx + _x_align_binding_primary, wy + 66 + cnt * 19 + 2);
-    mes(listn(2, pagesize * page + cnt));
+    mes(wx + _x_align_binding_primary,
+        wy + 66 + cnt * 19 + 2,
+        listn(2, pagesize * page + cnt));
 
-    pos(wx + _x_align_binding_alternate, wy + 66 + cnt * 19 + 2);
-    mes(listn(3, pagesize * page + cnt));
+    mes(wx + _x_align_binding_alternate,
+        wy + 66 + cnt * 19 + 2,
+        listn(3, pagesize * page + cnt));
 }
 
 void UIMenuKeybindings::_draw_text_entry(int cnt, const std::string& text)
