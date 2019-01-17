@@ -58,6 +58,8 @@ private:
     int _page;
     bool _reupdate;
 
+    int _t = 0;
+
     std::vector<Entry> _entries;
 };
 
@@ -214,23 +216,22 @@ void QuickMenu::_update()
     _add_pagination_to_entries();
     _set_entry_positions();
 
-    t = 0;
+    _t = 0;
 }
 
 void QuickMenu::_draw()
 {
     font(12 + sizefix - en * 2);
-    s = u8"○コマンド"s;
     gmode(2);
     for (const auto& entry : _entries)
     {
-        int cnt = entry.index;
+        const auto index = entry.index;
         if (entry.text == "null")
         {
             continue;
         }
 
-        if (cnt == 0 || cnt == 4 || cnt == 8)
+        if (index == 0 || index == 4 || index == 8)
         {
             draw("quickmenu_submenu", entry.x + _pos_x, entry.y + _pos_y);
         }
@@ -239,13 +240,26 @@ void QuickMenu::_draw()
             draw("quickmenu_action", entry.x + _pos_x, entry.y + _pos_y);
         }
 
-        gmode(2, (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
-
-        if (cs == cnt)
+        uint8_t alpha;
+        if (cs == index)
         {
-            gmode(5, 140);
+            alpha = 140;
         }
-        if (cnt == 0 || cnt == 4 || cnt == 8)
+        else
+        {
+            const auto n = _t + index;
+            if (n % 50 < 10)
+            {
+                alpha = n % 10 * n % 10 * 12;
+            }
+            else
+            {
+                alpha = 0;
+            }
+        }
+        gmode(5, alpha);
+
+        if (index == 0 || index == 4 || index == 8)
         {
             draw("quickmenu_submenu", entry.x + _pos_x, entry.y + _pos_y);
         }
@@ -260,7 +274,7 @@ void QuickMenu::_draw()
             entry.x + _pos_x + 25 - strlen_u(entry.text) * 3,
             entry.y + _pos_y + 19);
     }
-    ++t;
+    ++_t;
     redraw();
 }
 
