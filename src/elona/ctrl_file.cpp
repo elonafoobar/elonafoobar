@@ -197,7 +197,7 @@ void arrayfile(
 {
     if (!fread)
     {
-        ELONA_LOG("arrayfile_write: " << filepath);
+        ELONA_LOG() << "arrayfile_write: " << filepath;
         arrayfile_write(fmode_str, filepath);
     }
     else
@@ -220,7 +220,7 @@ void load_v1(
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
     {
-        ELONA_LOG("error:could not open file at");
+        ELONA_LOG() << "error:could not open file at";
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
@@ -769,7 +769,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         }
     }
 
-    ELONA_LOG("dir:" << dir);
+    ELONA_LOG() << "dir:" << dir;
 
     arrayfile(read, u8"cdatan1", dir / u8"cdatan.s1");
     arrayfile(read, u8"qname", dir / u8"qname.s1");
@@ -800,7 +800,7 @@ void fmode_7_8(bool read, const fs::path& dir)
             bload(dir / u8"evlist.s1", evlist);
         }
     }
-    ELONA_LOG("ctrlfile7:end");
+    ELONA_LOG() << "ctrlfile7:end";
 }
 
 
@@ -1482,7 +1482,7 @@ void Save::clear()
 
 void Save::add(const fs::path& filename)
 {
-    ELONA_LOG("add:" << filename);
+    ELONA_LOG() << "add:" << filename;
     saved_files[filename] = true;
 }
 
@@ -1490,7 +1490,7 @@ void Save::add(const fs::path& filename)
 
 void Save::remove(const fs::path& filename)
 {
-    ELONA_LOG("remove:" << filename);
+    ELONA_LOG() << "remove:" << filename;
     saved_files[filename] = false;
 }
 
@@ -1583,7 +1583,7 @@ void tmpload(const fs::path& filename)
     const auto already_exists = writeloadedbuff(filename);
     if (already_exists)
     {
-        ELONA_LOG("tmpload:tmp:" << filename);
+        ELONA_LOG() << "tmpload:tmp:" << filename;
         return;
     }
 
@@ -1591,7 +1591,7 @@ void tmpload(const fs::path& filename)
     const auto original_file = filesystem::dir::save(playerid) / filename;
     if (fs::exists(original_file))
     {
-        ELONA_LOG("tmpload:copy:" << filename);
+        ELONA_LOG() << "tmpload:copy:" << filename;
         fs::copy_file(
             original_file,
             filesystem::dir::tmp() / filename,
@@ -1599,7 +1599,7 @@ void tmpload(const fs::path& filename)
     }
     else
     {
-        ELONA_LOG("tmpload:not found:" << original_file);
+        ELONA_LOG() << "tmpload:not found:" << original_file;
     }
 }
 

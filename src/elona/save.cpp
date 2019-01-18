@@ -16,7 +16,7 @@ namespace elona
 
 void load_save_data()
 {
-    ELONA_LOG("Load save data: " << playerid);
+    ELONA_LOG() << "Load save data: " << playerid;
 
     // TODO instead serialize/deserialize data
     lua::lua->get_handle_manager().clear_map_local_handles();
@@ -76,7 +76,7 @@ void load_save_data()
     }
     refresh_speed(cdata.player());
     time_begin = timeGetTime() / 1000;
-    ELONA_LOG("Load save data end: " << playerid);
+    ELONA_LOG() << "Load save data end: " << playerid;
 }
 
 
@@ -92,7 +92,7 @@ void do_save_game()
 
 void save_game()
 {
-    ELONA_LOG("Save game: " << playerid);
+    ELONA_LOG() << "Save game: " << playerid;
 
     int save_f = 0;
     if (game_data.current_map == mdata_t::MapId::show_house)
@@ -122,7 +122,7 @@ void save_game()
     Save::instance().save(save_dir);
     ctrl_file(FileOperation2::global_write, save_dir);
     Save::instance().clear();
-    ELONA_LOG("Save game: finish");
+    ELONA_LOG() << "Save game: finish";
 }
 
 } // namespace elona

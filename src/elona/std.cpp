@@ -118,7 +118,7 @@ void await(int msec)
             Config::instance().get<bool>("core.config.android.quicksave") &&
             !std::uncaught_exception())
         {
-            ELONA_LOG("Focus lost, quicksaving game.");
+            ELONA_LOG() << "Focus lost, quicksaving game.";
             snail::android::toast(
                 i18n::s.get("core.locale.ui.save_on_suspend"),
                 snail::android::ToastLength::long_length);

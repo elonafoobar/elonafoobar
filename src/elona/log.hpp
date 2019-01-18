@@ -45,7 +45,12 @@ public:
 
 
 
-    static Logger& instance();
+    static Logger& instance()
+    {
+        static Logger instance;
+        return instance;
+    }
+
 
     /// Initialize the logger with the default output file.
     void init();
@@ -68,8 +73,4 @@ private:
 
 
 
-#define ELONA_LOG(x) \
-    do \
-    { \
-        ::elona::log::Logger::instance()._get_one_line_logger() << x; \
-    } while (0)
+#define ELONA_LOG(x) ::elona::log::Logger::instance()._get_one_line_logger()
