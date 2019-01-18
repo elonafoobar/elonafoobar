@@ -76,7 +76,7 @@ void ModManager::load_mods(
 void report_error(sol::error err)
 {
     std::string what = err.what();
-    ELONA_LOG() << what;
+    ELONA_ERROR() << what;
 }
 
 

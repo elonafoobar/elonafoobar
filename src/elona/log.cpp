@@ -21,8 +21,9 @@ void Logger::init(std::ofstream&& out)
 
 
 
-Logger::_OneLineLogger Logger::_get_one_line_logger()
+Logger::_OneLineLogger Logger::_get_one_line_logger(Level level)
 {
+    (void)level;
     return {_out};
 }
 

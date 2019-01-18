@@ -29,7 +29,7 @@ void LuaApiDebug::report_error(const std::string& message)
         txt(line + "  ", Message::color{ColorIndex::red});
     }
 
-    ELONA_LOG() << "Script error: " << message;
+    ELONA_ERROR() << "Script error: " << message;
     std::cerr << "Script error: " << message << std::endl;
 }
 

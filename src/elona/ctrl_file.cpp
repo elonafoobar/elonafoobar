@@ -220,7 +220,7 @@ void load_v1(
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
     {
-        ELONA_LOG() << "error:could not open file at";
+        ELONA_FATAL() << "error:could not open file at";
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }

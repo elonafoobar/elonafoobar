@@ -575,7 +575,7 @@ public:
         {
             if (unknown_keys.find(key) == unknown_keys.end())
             {
-                ELONA_LOG() << "Unknown I18N ID: " << key;
+                ELONA_ERROR() << "Unknown I18N ID: " << key;
                 unknown_keys.insert(key);
             }
             return u8"<Unknown ID: " + key + ">";
@@ -593,7 +593,7 @@ public:
         {
             if (unknown_keys.find(key) == unknown_keys.end())
             {
-                ELONA_LOG() << "Unknown I18N ID: " << key;
+                ELONA_ERROR() << "Unknown I18N ID: " << key;
                 unknown_keys.insert(key);
             }
             return u8"<Unknown ID: " + key + ">";
