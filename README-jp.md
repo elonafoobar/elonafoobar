@@ -71,7 +71,7 @@ Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を
 
 # How To Play
 
-1. `data`、`graphic`、`map`、`original`、`sound`、`user`フォルダを本家開発版(v1.22)から実行ファイルのあるフォルダへとコピーしてください。このとき、foobarに存在するファイルは上書きしないようにしてください。本家と同名のファイルはfoobarで更新されています。
+1. `data`、`graphic`、`original`、`sound`、`user`フォルダを本家開発版(v1.22)から実行ファイルのあるフォルダへとコピーしてください。このとき、foobarに存在するファイルは上書きしないようにしてください。本家と同名のファイルはfoobarで更新されています。
 2. `bin/Elona_foobar`(Linux)、`bin/Elona_foobar.app`(macOS)、`bin\Debug\Elona_foobar.exe`(Windows)を実行してください
 
 
