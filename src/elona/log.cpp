@@ -7,18 +7,24 @@ namespace elona
 namespace log
 {
 
-namespace detail
+void Logger::init()
 {
-std::ofstream out;
+    init(std::ofstream((filesystem::dir::exe() / u8"log.txt").native()));
 }
 
 
 
-void initialize()
+void Logger::init(std::ofstream&& out)
 {
-    detail::out.open((filesystem::dir::exe() / u8"log.txt").native());
+    _out = std::move(out);
 }
 
+
+
+Logger::_OneLineLogger Logger::_get_one_line_logger()
+{
+    return {_out};
+}
 
 } // namespace log
 } // namespace elona

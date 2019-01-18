@@ -1,8 +1,9 @@
 #pragma once
 
 #include <fstream>
+#include <iostream>
+#include "../util/noncopyable.hpp"
 
-#define ELONA_LOG(msg) elona::log::detail::out << msg << std::endl;
 
 
 namespace elona
@@ -10,12 +11,65 @@ namespace elona
 namespace log
 {
 
-namespace detail
+class Logger : lib::noncopyable
 {
-extern std::ofstream out;
-}
+public:
+    // It is public, but DO NOT use this type directly!
+    class _OneLineLogger
+    {
+    public:
+        _OneLineLogger(std::ofstream& out, bool output_stdout)
+            : _out(out)
+        {
+        }
 
-void initialize();
+
+        ~_OneLineLogger()
+        {
+            _out << std::endl;
+        }
+
+
+        template <typename T>
+        _OneLineLogger& operator<<(T&& value)
+        {
+            _out << value;
+
+            return *this;
+        }
+
+
+    private:
+        std::ofstream& _out;
+    };
+
+
+
+    static Logger& instance();
+
+    /// Initialize the logger with the default output file.
+    void init();
+
+    /// Initialize the logger with the passed output file.
+    void init(std::ofstream&& out);
+
+    // It is public, but DO NOT call this function directly!
+    _OneLineLogger _get_one_line_logger();
+
+
+private:
+    std::ofstream _out;
+
+    Logger() = default;
+};
 
 } // namespace log
 } // namespace elona
+
+
+
+#define ELONA_LOG(x) \
+    do \
+    { \
+        ::elona::log::Logger::instance()._get_one_line_logger() << x; \
+    } while (0)

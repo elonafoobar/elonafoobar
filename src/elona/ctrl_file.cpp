@@ -800,7 +800,7 @@ void fmode_7_8(bool read, const fs::path& dir)
             bload(dir / u8"evlist.s1", evlist);
         }
     }
-    ELONA_LOG("ctrlfile7:end")
+    ELONA_LOG("ctrlfile7:end");
 }
 
 
