@@ -159,10 +159,11 @@ public:
             std::string current = get<std::string>(key);
             if (!EnumDef.get_index_of(current))
             {
-                ELONA_WARN() << "Config key "s << key
-                             << " had invalid variant "s << current << ". "s
-                             << "("s << def.type_to_string(key) << ")"s
-                             << "Setting to "s << EnumDef.get_default() << "."s;
+                ELONA_WARN("Config")
+                    << "Config key "s << key << " had invalid variant "s
+                    << current << ". "s
+                    << "("s << def.type_to_string(key) << ")"s
+                    << "Setting to "s << EnumDef.get_default() << "."s;
                 set(key, EnumDef.get_default());
             }
         }
@@ -208,7 +209,7 @@ public:
 
     void set(const std::string& key, const hcl::Value value)
     {
-        ELONA_LOG() << "Set config option: " << key << " to " << value;
+        ELONA_LOG("Config") << "Set: " << key << " to " << value;
 
         if (!def.exists(key))
         {

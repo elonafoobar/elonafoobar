@@ -2,6 +2,7 @@
 #include "filesystem.hpp"
 
 
+
 namespace elona
 {
 namespace log
@@ -17,14 +18,6 @@ void Logger::init()
 void Logger::init(std::ofstream&& out)
 {
     _out = std::move(out);
-}
-
-
-
-Logger::_OneLineLogger Logger::_get_one_line_logger(Level level)
-{
-    (void)level;
-    return {_out};
 }
 
 } // namespace log

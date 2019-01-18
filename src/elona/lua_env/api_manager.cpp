@@ -95,7 +95,7 @@ void APIManager::load_lua_support_libraries(LuaEnv& lua)
     {
         sol::error err = result;
         std::string what = err.what();
-        ELONA_FATAL() << what;
+        ELONA_FATAL("Lua.Core") << what;
         throw std::runtime_error("Failed initializing Lua support libraries.");
     }
 }

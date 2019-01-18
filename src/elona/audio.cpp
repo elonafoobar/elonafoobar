@@ -158,13 +158,13 @@ void play_music_inner(const SharedId& music_id, int musicloop)
         auto music = the_music_db[music_id];
         if (!music)
         {
-            ELONA_ERROR() << "Cannot load music " << music_id.get();
+            ELONA_ERROR("Audio") << "Cannot load music " << music_id.get();
             return;
         }
         if (!fs::exists(music->file))
         {
-            ELONA_ERROR() << "Cannot load file " << music->file.string()
-                          << " for music " << music_id.get();
+            ELONA_ERROR("Audio") << "Cannot load file " << music->file.string()
+                                 << " for music " << music_id.get();
             return;
         }
 
@@ -554,7 +554,7 @@ void snd_at(
 
     if (!sound)
     {
-        ELONA_ERROR() << "Cannot load sound " << sound_id;
+        ELONA_ERROR("Audio") << "Cannot load sound " << sound_id;
         return;
     }
 
@@ -576,7 +576,7 @@ void snd(SharedId sound_id, bool loop, bool allow_duplicate)
 
     if (!sound)
     {
-        ELONA_ERROR() << "Cannot load sound " << sound_id;
+        ELONA_ERROR("Audio") << "Cannot load sound " << sound_id;
         return;
     }
 

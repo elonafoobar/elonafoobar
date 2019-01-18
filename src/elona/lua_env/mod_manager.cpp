@@ -76,7 +76,7 @@ void ModManager::load_mods(
 void report_error(sol::error err)
 {
     std::string what = err.what();
-    ELONA_ERROR() << what;
+    ELONA_ERROR("Lua.Mod") << what;
 }
 
 
@@ -150,7 +150,7 @@ void ModManager::scan_mod(const fs::path& mod_dir)
     ModManifest manifest = ModManifest::load(manifest_path);
 
     const std::string mod_name = mod_dir.filename().string();
-    ELONA_LOG() << "Found mod " << mod_name;
+    ELONA_LOG("Lua.Mod") << "Found mod " << mod_name;
 
     if (!_is_alnum_only(mod_name))
     {
@@ -224,7 +224,7 @@ void ModManager::load_scanned_mods()
         {
             load_mod(*mod);
         }
-        ELONA_LOG() << "Loaded mod " << mod->manifest.name;
+        ELONA_LOG("Lua.Mod") << "Loaded mod " << mod->manifest.name;
     }
 
     lua_->get_event_manager().run_callbacks<EventKind::all_mods_loaded>();
@@ -253,7 +253,7 @@ void ModManager::run_startup_script(const std::string& name)
     // Bypass read-only metatable
     script_mod->env.raw_set("data", lua_->get_data_manager().get().storage);
 
-    ELONA_LOG() << "Loaded startup script " << name;
+    ELONA_LOG("Lua.Mod") << "Loaded startup script " << name;
     txt(i18n::s.get("core.locale.mod.loaded_script", name),
         Message::color{ColorIndex::purple});
     Message::instance().linebreak();

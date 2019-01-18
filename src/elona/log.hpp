@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cassert>
 #include <fstream>
 #include <iostream>
+#include <type_traits>
 #include "../util/noncopyable.hpp"
 
 
@@ -11,6 +13,8 @@ namespace elona
 namespace log
 {
 
+// Log format: Level [Tag] Message
+// Example: ERROR [Mod] Failed to load mod "api_nuts".
 class Logger : lib::noncopyable
 {
 public:
@@ -46,15 +50,26 @@ public:
     class _OneLineLogger
     {
     public:
-        _OneLineLogger(std::ofstream& out, bool output_stdout)
+        _OneLineLogger(std::ofstream& out, const std::string& tag, Level level)
             : _out(out)
         {
+            *this << _to_string(level) << u8"[" << tag << u8"] ";
         }
 
 
         ~_OneLineLogger()
         {
-            _out << std::endl;
+            // Need to explicit the template parameters of `std::endl` here
+            // because a compiler cannot infer `T` of the below template
+            // function (`operator<<`). Normal output stream classes like
+            // `std::basic_ostream` have overloads of `operator<<()` which take
+            // manipulators so that we usually don't have to specify
+            // `std::endl`'s template parameters.
+            using StreamT = std::remove_reference_t<decltype(_out)>;
+            using CharT = StreamT::char_type;
+            using CharTraitsT = StreamT::traits_type;
+
+            *this << std::endl<CharT, CharTraitsT>;
         }
 
 
@@ -69,10 +84,24 @@ public:
 
     private:
         std::ofstream& _out;
+
+
+        std::string _to_string(Logger::Level level)
+        {
+            switch (level)
+            {
+            case Logger::Level::log: return "INFO  ";
+            case Logger::Level::warn: return "WARN  ";
+            case Logger::Level::error: return "ERROR ";
+            case Logger::Level::fatal: return "FATAL ";
+            default: assert(0); return "";
+            }
+        }
     };
 
 
 
+    /// Get the singleton instance.
     static Logger& instance()
     {
         static Logger instance;
@@ -87,7 +116,10 @@ public:
     void init(std::ofstream&& out);
 
     // It is public, but DO NOT call this function directly!
-    _OneLineLogger _get_one_line_logger(Level level);
+    _OneLineLogger _get_one_line_logger(const std::string& tag, Level level)
+    {
+        return {_out, tag, level};
+    }
 
 
 
@@ -102,18 +134,18 @@ private:
 
 
 
-#define ELONA_LOG() \
+#define ELONA_LOG(tag) \
     ::elona::log::Logger::instance()._get_one_line_logger( \
-        ::elona::log::Logger::Level::log)
+        tag, ::elona::log::Logger::Level::log)
 
-#define ELONA_WARN() \
+#define ELONA_WARN(tag) \
     ::elona::log::Logger::instance()._get_one_line_logger( \
-        ::elona::log::Logger::Level::warn)
+        tag, ::elona::log::Logger::Level::warn)
 
-#define ELONA_ERROR() \
+#define ELONA_ERROR(tag) \
     ::elona::log::Logger::instance()._get_one_line_logger( \
-        ::elona::log::Logger::Level::error)
+        tag, ::elona::log::Logger::Level::error)
 
-#define ELONA_FATAL() \
+#define ELONA_FATAL(tag) \
     ::elona::log::Logger::instance()._get_one_line_logger( \
-        ::elona::log::Logger::Level::fatal)
+        tag, ::elona::log::Logger::Level::fatal)

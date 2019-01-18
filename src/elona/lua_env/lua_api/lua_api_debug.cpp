@@ -15,7 +15,7 @@ namespace lua
 
 void LuaApiDebug::log(const std::string& message)
 {
-    ELONA_LOG() << message;
+    ELONA_LOG("Lua.Debug") << message;
 }
 
 void LuaApiDebug::report_error(const std::string& message)
@@ -29,36 +29,35 @@ void LuaApiDebug::report_error(const std::string& message)
         txt(line + "  ", Message::color{ColorIndex::red});
     }
 
-    ELONA_ERROR() << "Script error: " << message;
+    ELONA_ERROR("Lua.Debug") << "Script error: " << message;
     std::cerr << "Script error: " << message << std::endl;
 }
 
 void LuaApiDebug::dump_characters()
 {
-    ELONA_LOG() << "===== Charas =====";
+    ELONA_LOG("Lua.Debug") << "===== Charas =====";
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (elona::cdata[cnt].state() != Character::State::empty)
-            ELONA_LOG() << elona::cdata[cnt].index
-                        << ") Name: " << elona::name(cnt)
-                        << ", Pos: " << elona::cdata[cnt].position;
+            ELONA_LOG("Lua.Debug")
+                << elona::cdata[cnt].index << ") Name: " << elona::name(cnt)
+                << ", Pos: " << elona::cdata[cnt].position;
     }
 }
 
 void LuaApiDebug::dump_items()
 {
-    ELONA_LOG() << "===== Items  =====";
+    ELONA_LOG("Lua.Debug") << "===== Items  =====";
     for (const auto& cnt : items(-1))
     {
         if (elona::inv[cnt].number() != 0)
-            ELONA_LOG() << elona::inv[cnt].index
-                        << ") Name: " << elona::itemname(cnt)
-                        << ", Pos: " << elona::inv[cnt].position << ", Curse: "
-                        << static_cast<int>(elona::inv[cnt].curse_state)
-                        << ", Ident: "
-                        << static_cast<int>(
-                               elona::inv[cnt].identification_state)
-                        << ", Count: " << elona::inv[cnt].count;
+            ELONA_LOG("Lua.Debug")
+                << elona::inv[cnt].index << ") Name: " << elona::itemname(cnt)
+                << ", Pos: " << elona::inv[cnt].position
+                << ", Curse: " << static_cast<int>(elona::inv[cnt].curse_state)
+                << ", Ident: "
+                << static_cast<int>(elona::inv[cnt].identification_state)
+                << ", Count: " << elona::inv[cnt].count;
     }
 }
 
