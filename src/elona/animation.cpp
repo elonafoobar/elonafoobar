@@ -670,7 +670,7 @@ void RangedAttackAnimation::do_play()
     }
     if (type == Type::crossbow)
     {
-        prepare_item_image(2, anicol);
+        prepare_item_image(1, anicol);
         snd_at("core.bow1", attacker_pos);
     }
     if (type == Type::firearm)
