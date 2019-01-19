@@ -127,7 +127,7 @@ void run_in_temporary_map(int map, int level, std::function<void()> f)
 
 void pre_init()
 {
-    log::initialize();
+    log::Logger::instance().init();
 
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;

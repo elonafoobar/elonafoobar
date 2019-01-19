@@ -2,23 +2,23 @@
 #include "filesystem.hpp"
 
 
+
 namespace elona
 {
 namespace log
 {
 
-namespace detail
+void Logger::init()
 {
-std::ofstream out;
+    init(std::ofstream((filesystem::dir::exe() / u8"log.txt").native()));
 }
 
 
 
-void initialize()
+void Logger::init(std::ofstream&& out)
 {
-    detail::out.open((filesystem::dir::exe() / u8"log.txt").native());
+    _out = std::move(out);
 }
-
 
 } // namespace log
 } // namespace elona

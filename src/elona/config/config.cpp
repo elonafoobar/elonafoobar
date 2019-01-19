@@ -207,8 +207,7 @@ void convert_and_set_requested_font_quality(std::string variant)
         if (variant != "high")
         {
             // Unknown font quality; fallback to the default value, "high".
-            ELONA_LOG(
-                "[Config] Warning: Unsupported font quality: " << variant);
+            ELONA_WARN("Config") << "Unsupported font quality: " << variant;
         }
         snail::Application::instance()
             .get_renderer()

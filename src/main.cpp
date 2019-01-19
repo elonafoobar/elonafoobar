@@ -5,11 +5,14 @@
 #include "elona/init.hpp"
 #include "elona/log.hpp"
 #include "version.hpp"
+
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA
 #endif
 
-namespace elona
+
+
+namespace
 {
 
 void report_error(const char* what)
@@ -20,10 +23,12 @@ void report_error(const char* what)
 #elif defined(ELONA_OS_ANDROID)
     LOGD("Error: %s", what);
 #endif
-    ELONA_LOG("Error: " << what);
+
+    ELONA_FATAL("System") << what;
     std::cerr << "Error: " << what << std::endl;
 }
-} // namespace elona
+
+} // namespace
 
 
 
@@ -32,9 +37,9 @@ int main(int argc, char** argv)
     using namespace elona;
     (void)argc, (void)argv;
 
-    log::initialize();
+    log::Logger::instance().init();
 
-    ELONA_LOG(latest_version.long_string());
+    ELONA_LOG("System") << latest_version.long_string();
 
 #if DEBUG
     return run();

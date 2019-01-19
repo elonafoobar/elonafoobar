@@ -8,7 +8,6 @@
 #include "../elona/init.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
-#include "../elona/log.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
 #include "tests.hpp"
@@ -91,9 +90,7 @@ TEST_CASE("Test item index preservation", "[C++: Serialization]")
 TEST_CASE("Test character data compatibility", "[C++: Serialization]")
 {
     int player_idx = 0;
-    ELONA_LOG("test begin");
     load_previous_savefile();
-    ELONA_LOG("test end");
     REQUIRE(elona::cdata[player_idx].index == player_idx);
     REQUIRE(elona::cdatan(0, player_idx) == u8"foobar_test");
 }
@@ -101,9 +98,7 @@ TEST_CASE("Test character data compatibility", "[C++: Serialization]")
 TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
 {
     int chara_idx = 57;
-    ELONA_LOG("test begin2");
     load_previous_savefile();
-    ELONA_LOG("test end2");
     REQUIRE(elona::cdata[chara_idx].index == chara_idx);
     REQUIRE(elona::cdatan(0, chara_idx) == u8"風を聴く者『ラーネイレ』");
 }
@@ -111,9 +106,7 @@ TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
 TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 {
     int item_idx = 0;
-    ELONA_LOG("test begin3");
     load_previous_savefile();
-    ELONA_LOG("test end3");
     REQUIRE(elona::inv[item_idx].index == item_idx);
     REQUIRE(elona::itemname(item_idx) == u8"ブロンズの兜 [0,1]");
 }
@@ -121,9 +114,7 @@ TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 TEST_CASE("Test item data compatibility (on ground)", "[C++: Serialization]")
 {
     int item_idx = 5080;
-    ELONA_LOG("test begin4");
     load_previous_savefile();
-    ELONA_LOG("test end4");
     REQUIRE(elona::inv[item_idx].index == item_idx);
     REQUIRE(elona::itemname(item_idx) == u8"割れたつぼ");
 }
@@ -132,9 +123,7 @@ TEST_CASE("Test ability data compatibility", "[C++: Serialization]")
 {
     int ability_idx = 170; // Medium Armor
     int chara_idx = 57;
-    ELONA_LOG("test begin5");
     load_previous_savefile();
-    ELONA_LOG("test end5");
     REQUIRE(elona::sdata.get(ability_idx, chara_idx).current_level == 28);
     REQUIRE(elona::sdata.get(ability_idx, chara_idx).original_level == 28);
     REQUIRE(elona::sdata.get(ability_idx, chara_idx).experience == 0);
