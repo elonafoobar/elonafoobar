@@ -10,6 +10,7 @@ namespace elona
 {
 namespace ui
 {
+
 bool UIMenuGameHelp::init()
 {
     // pre - notesel init
@@ -67,6 +68,8 @@ bool UIMenuGameHelp::init()
     return true;
 }
 
+
+
 void UIMenuGameHelp::_remove_parenthesis_around_keys()
 {
     if (jp)
@@ -85,7 +88,9 @@ void UIMenuGameHelp::_remove_parenthesis_around_keys()
     }
 }
 
-void UIMenuGameHelp::_update_key_list()
+
+
+void UIMenuGameHelp::_draw_key_list()
 {
     x = wx + 188;
     y = wy + 6;
@@ -217,7 +222,9 @@ void UIMenuGameHelp::_update_key_list()
             i18n::s.get("core.locale.ui.manual.keys.other.console"));
 }
 
-void UIMenuGameHelp::_update_regular_pages()
+
+
+void UIMenuGameHelp::_draw_regular_pages()
 {
     s(1) = listn(0, pagesize * page_bk + cs_bk2);
     display_topic(s(1), wx + 206, wy + 36);
@@ -240,6 +247,8 @@ void UIMenuGameHelp::_update_regular_pages()
     }
 }
 
+
+
 void UIMenuGameHelp::_draw_navigation_menu()
 {
     font(14 - en * 2);
@@ -255,11 +264,14 @@ void UIMenuGameHelp::_draw_navigation_menu()
         s = listn(0, p);
         cs_list(cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1);
     }
+
     if (keyrange != 0)
     {
         cs_bk = cs;
     }
 }
+
+
 
 void UIMenuGameHelp::_draw_background_vignette(int id, int type)
 {
@@ -280,6 +292,8 @@ void UIMenuGameHelp::_draw_background_vignette(int id, int type)
     gmode(2);
 }
 
+
+
 void UIMenuGameHelp::update()
 {
     cs_bk = -1;
@@ -288,7 +302,11 @@ void UIMenuGameHelp::update()
         page = pagemax;
     else if (page > pagemax)
         page = 0;
+}
 
+
+void UIMenuGameHelp::_draw_window()
+{
     int y;
     if (mode == 1)
     {
@@ -323,17 +341,19 @@ void UIMenuGameHelp::update()
 
     // Draws the first page, key lists, in a specific way
     if (cs_bk2 == 0 && page_bk == 0)
-        _update_key_list();
+        _draw_key_list();
     else
-        _update_regular_pages();
+        _draw_regular_pages();
 }
+
 
 
 void UIMenuGameHelp::draw()
 {
-    // Draws the left part of the window continuously, ensuring key refreshing
+    _draw_window();
     _draw_navigation_menu();
 }
+
 
 
 optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
@@ -376,5 +396,6 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     }
     return none;
 }
+
 } // namespace ui
 } // namespace elona
