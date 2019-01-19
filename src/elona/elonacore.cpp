@@ -6034,8 +6034,7 @@ int prompt_really_attack()
     s = txttargetlevel(cc, tc);
     txt(s);
     txt(i18n::s.get("core.locale.action.really_attack", cdata[tc]));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval == 0)
+    if (yes_no())
     {
         update_screen();
         return 1;
@@ -6203,7 +6202,7 @@ void try_to_return()
     if (stat == 1)
     {
         txt(i18n::s.get("core.locale.misc.return.forbidden"));
-        if (yes_or_no(promptx, prompty, 160) != 0)
+        if (!yes_no())
         {
             update_screen();
             return;
@@ -6313,8 +6312,7 @@ TurnResult do_gatcha()
         tmat = 41;
     }
     txt(i18n::s.get("core.locale.action.gatcha.prompt", matname(tmat)));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval == 0)
+    if (yes_no())
     {
         if (mat(tmat) > 0)
         {
@@ -6356,8 +6354,7 @@ int read_textbook()
         if (sdata.get(inv[ci].param1, 0).original_level == 0)
         {
             txt(i18n::s.get("core.locale.action.read.book.not_interested"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 return 0;
             }
@@ -7867,8 +7864,7 @@ int do_cast_magic_attempt()
             if (!Config::instance().skip_overcasting_warning)
             {
                 txt(i18n::s.get("core.locale.action.cast.overcast_warning"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     update_screen();
                     efsource = 0;
@@ -8893,8 +8889,7 @@ int pick_up_item(bool play_sound)
         {
             txt(i18n::s.get(
                 "core.locale.action.pick_up.do_you_want_to_remove", inv[ci]));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval == 0)
+            if (yes_no())
             {
                 snd_("core.build1");
                 if (inv[ci].id == 555)
@@ -9750,8 +9745,7 @@ void proc_autopick()
             {
                 txt(i18n::s.get(
                     "core.locale.ui.autopick.do_you_really_pick_up", inv[ci]));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     did_something = false;
                     break;
@@ -9780,8 +9774,7 @@ void proc_autopick()
             {
                 txt(i18n::s.get(
                     "core.locale.ui.autopick.do_you_really_destroy", inv[ci]));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     did_something = false;
                     break;
@@ -9803,8 +9796,7 @@ void proc_autopick()
             {
                 txt(i18n::s.get(
                     "core.locale.ui.autopick.do_you_really_open", inv[ci]));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     did_something = false;
                     break;
@@ -10076,8 +10068,7 @@ int unlock_box(int difficulty)
         }
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.action.unlock.try_again"));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval == 0)
+        if (yes_no())
         {
             unlock_box(difficulty);
             return 0;
@@ -12661,8 +12652,7 @@ void play_the_last_scene_again()
 {
     update_entire_screen();
     txt(i18n::s.get("core.locale.win.watch_event_again"));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval == 0)
+    if (yes_no())
     {
         conquer_lesimas();
         return;

@@ -404,13 +404,22 @@ optional<int> get_shortcut(const std::string& action)
 }
 
 
-int yes_or_no(int x, int y, int width)
+
+YesNo yes_no()
 {
-    Prompt result;
-    result.append(i18n::s.get("core.locale.ui.yes"), snail::Key::key_y, 0);
-    result.append(i18n::s.get("core.locale.ui.no"), snail::Key::key_n, 1);
-    return result.query(x, y, width);
+    Prompt prompt;
+    prompt.append(i18n::s.get("core.locale.ui.yes"), snail::Key::key_y, 0);
+    prompt.append(i18n::s.get("core.locale.ui.no"), snail::Key::key_n, 1);
+
+    const auto result = prompt.query(promptx, prompty, 160);
+    if (result == 0)
+        return YesNo::yes;
+    else if (result == 1)
+        return YesNo::no;
+    else
+        return YesNo::canceled;
 }
+
 
 
 bool is_modifier_pressed(snail::ModKey modifier)

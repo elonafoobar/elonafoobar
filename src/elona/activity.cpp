@@ -25,6 +25,24 @@
 
 
 
+namespace
+{
+
+// Returns true if stop.
+bool _prompt_stop_continuous_action(const Character& doer)
+{
+    txt(i18n::s.get(
+        "core.locale.activity.cancel.prompt",
+        i18n::s.get_enum(
+            "core.locale.ui.action",
+            static_cast<int>(doer.continuous_action.type))));
+    return static_cast<bool>(yes_no());
+}
+
+} // namespace
+
+
+
 namespace elona
 {
 int digx = 0;
@@ -72,22 +90,23 @@ void rowact_item(int item_index)
 
 void activity_handle_damage(Character& chara)
 {
+    bool stop = false;
     if (chara.index == 0)
     {
         if (chara.continuous_action.type != ContinuousAction::Type::eat &&
             chara.continuous_action.type != ContinuousAction::Type::read &&
             chara.continuous_action.type != ContinuousAction::Type::travel)
         {
-            rtval = 0;
+            stop = true;
         }
         else
         {
             screenupdate = -1;
             update_screen();
-            prompt_stop_continuous_action();
+            stop = _prompt_stop_continuous_action(chara);
         }
     }
-    if (chara.index != 0 || rtval == 0)
+    if (stop)
     {
         if (is_in_fov(chara))
         {
@@ -104,6 +123,8 @@ void activity_handle_damage(Character& chara)
     update_screen();
     chara.stops_continuous_action_if_damaged = 0;
 }
+
+
 
 optional<TurnResult> activity_proc(Character& chara)
 {
@@ -199,16 +220,6 @@ optional<TurnResult> activity_proc(Character& chara)
     }
 
     return none;
-}
-
-void prompt_stop_continuous_action()
-{
-    txt(i18n::s.get(
-        "core.locale.activity.cancel.prompt",
-        i18n::s.get_enum(
-            "core.locale.ui.action",
-            static_cast<int>(cdata[cc].continuous_action.type))));
-    rtval = yes_or_no(promptx, prompty, 160);
 }
 
 

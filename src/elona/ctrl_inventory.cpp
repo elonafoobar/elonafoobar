@@ -1292,8 +1292,7 @@ label_2061_internal:
                             itemname(ci, in),
                             (in * calcitemvalue(ci, 1))));
                     }
-                    rtval = yes_or_no(promptx, prompty, 160);
-                    if (rtval != 0)
+                    if (!yes_no())
                     {
                         screenupdate = -1;
                         update_screen();
@@ -2177,8 +2176,7 @@ label_2061_internal:
                 if (listmax > 0)
                 {
                     txt(i18n::s.get("core.locale.ui.inv.take.really_leave"));
-                    rtval = yes_or_no(promptx, prompty, 160);
-                    if (rtval != 0)
+                    if (!yes_no())
                     {
                         goto label_2060_internal;
                     }

@@ -2173,8 +2173,7 @@ TurnResult do_use_command()
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use.shelter.during_quest"));
-                    rtval = yes_or_no(promptx, prompty, 160);
-                    if (rtval != 0)
+                    if (!yes_no())
                     {
                         update_screen();
                         return TurnResult::pc_turn_user_error;
@@ -2322,8 +2321,7 @@ TurnResult do_use_command()
             if (game_data.quest_flags.red_blossom_in_palmia == 1)
             {
                 txt(i18n::s.get("core.locale.action.use.nuke.not_quest_goal"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     update_screen();
                     return TurnResult::pc_turn_user_error;
@@ -2399,8 +2397,7 @@ TurnResult do_use_command()
     case 46:
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.action.use.rope.prompt"));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval != 0)
+        if (!yes_no())
         {
             return TurnResult::turn_end;
         }
@@ -2501,8 +2498,7 @@ TurnResult do_use_command()
             "core.locale.action.use.gene_machine.prompt",
             cdata[tc],
             cdata[rc]));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval != 0)
+        if (!yes_no())
         {
             return TurnResult::turn_end;
         }
@@ -2850,8 +2846,7 @@ TurnResult do_use_stairs_command(int val0)
         if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
         {
             txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.prompt"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 update_screen();
                 return TurnResult::pc_turn_user_error;
@@ -3005,8 +3000,7 @@ TurnResult do_use_stairs_command(int val0)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_quest"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     update_screen();
                     return TurnResult::pc_turn_user_error;
@@ -3260,9 +3254,9 @@ TurnResult do_movement_command()
                         "core.locale.action.move.leave.abandoning_quest"));
                 }
             }
-            rtval = yes_or_no(promptx, prompty, 160);
+            const auto yesno_result = yes_no();
             update_screen();
-            if (rtval == 0)
+            if (yesno_result)
             {
                 game_data.player_x_on_map_leave = cdata.player().position.x;
                 game_data.player_y_on_map_leave = cdata.player().position.y;
@@ -3490,8 +3484,7 @@ TurnResult do_get_command()
             feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 update_screen();
                 return TurnResult::pc_turn_user_error;

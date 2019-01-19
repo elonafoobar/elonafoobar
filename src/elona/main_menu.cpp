@@ -515,15 +515,13 @@ MainMenuResult main_menu_continue()
                     playerid = listn(0, p);
                     ui_draw_caption(i18n::s.get(
                         "core.locale.main_menu.continue.delete", playerid));
-                    rtval = yes_or_no(promptx, prompty, 200);
-                    if (rtval != 0)
+                    if (!yes_no())
                     {
                         return MainMenuResult::main_menu_continue;
                     }
                     ui_draw_caption(i18n::s.get(
                         "core.locale.main_menu.continue.delete2", playerid));
-                    rtval = yes_or_no(promptx, prompty, 200);
-                    if (rtval == 0)
+                    if (yes_no())
                     {
                         snd("core.ok1");
                         ctrl_file(FileOperation::save_game_delete);

@@ -12,8 +12,7 @@ namespace lua
 bool LuaApiInput::yes_no(const std::string& message)
 {
     txt(message + " ");
-    rtval = yes_or_no(promptx, prompty, 160);
-    return rtval == 0;
+    return static_cast<bool>(yes_no());
 }
 
 sol::optional<int> LuaApiInput::prompt_number(

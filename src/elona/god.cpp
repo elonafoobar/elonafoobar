@@ -488,8 +488,7 @@ TurnResult do_pray()
     }
     Message::instance().linebreak();
     txt(i18n::s.get("core.locale.god.pray.prompt"));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval != 0)
+    if (!yes_no())
     {
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -552,8 +551,7 @@ TurnResult do_pray()
             if (f)
             {
                 txt(i18n::s.get("core.locale.god.pray.servant.prompt_decline"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval == 0)
+                if (yes_no())
                 {
                     ++game_data.god_rank;
                 }
