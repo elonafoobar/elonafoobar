@@ -183,7 +183,7 @@ void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)
         }
         // if (submenu == 3)
         // {
-        //     if (Config::instance().net == 0)
+        //     if (!Config::instance().net)
         //     {
         //         if (cnt >= 1)
         //         {

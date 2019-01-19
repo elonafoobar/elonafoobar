@@ -305,7 +305,7 @@ std::string InputContext::_delay_movement_action(
                 return ""s;
             }
         }
-        else if (Config::instance().scroll == 0)
+        else if (!Config::instance().scroll)
         {
             if (keybd_wait < Config::instance().walk_wait *
                     Config::instance().start_run_wait)
@@ -340,7 +340,7 @@ std::string InputContext::_delay_movement_action(
         }
         else if (keybd_wait > Config::instance().start_run_wait)
         {
-            if (Config::instance().scroll_when_run == 0)
+            if (!Config::instance().scroll_when_run)
             {
                 if (keybd_wait % Config::instance().run_wait != 0)
                 {

@@ -551,12 +551,12 @@ void initialize_elona()
         }
     }
     DSINIT();
-    if (Config::instance().joypad == 1)
+    if (Config::instance().joypad)
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            Config::instance().joypad = 0;
+            Config::instance().joypad = false;
         }
     }
     initialize_sound_file();

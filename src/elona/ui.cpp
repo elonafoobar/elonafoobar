@@ -1658,11 +1658,11 @@ void update_slight()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = 1 + (Config::instance().scroll == 0);
+    ly = Config::instance().scroll ? 1 : 2;
     for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        lx = 1 + (Config::instance().scroll == 0);
+        lx = Config::instance().scroll ? 1 : 2;
         if (sy < 0 || sy >= map_data.height)
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
@@ -1823,7 +1823,7 @@ void ui_scroll_screen()
     else if (keybd_wait > Config::instance().start_run_wait)
     {
         scrollp = 3;
-        if (Config::instance().scroll_when_run == 0)
+        if (!Config::instance().scroll_when_run)
         {
             return;
         }
