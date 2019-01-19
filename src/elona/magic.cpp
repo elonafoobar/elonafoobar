@@ -3457,7 +3457,7 @@ bool _magic_651()
 
 bool _magic_464()
 {
-    bool fastest = Config::instance().animewait == 0;
+    bool fastest = Config::instance().animation_wait == 0;
     std::string messages;
 
     animeload(10, tc);
@@ -3494,7 +3494,7 @@ bool _magic_464()
         else
         {
             txt(message);
-            await(Config::instance().animewait * 4);
+            await(Config::instance().animation_wait * 4);
             redraw();
         }
     }

@@ -203,7 +203,7 @@ MainMenuResult main_title_menu()
 
     while (true)
     {
-        if (Config::instance().autonumlock)
+        if (Config::instance().autodisable_numlock)
         {
             snail::Input::instance().disable_numlock();
         }

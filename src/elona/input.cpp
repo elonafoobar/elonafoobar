@@ -175,7 +175,7 @@ bool input_text_dialog(
             --cnt;
             continue;
         }
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         window2(x, y, dx, 36, 0, 2);
         draw("label_input", x + dx / 2 - 60, y - 32);
 
@@ -290,13 +290,13 @@ static void _proc_android_vibrate()
 
 static void _handle_msgalert()
 {
-    if (Config::instance().alert > 1)
+    if (Config::instance().alert_wait > 1)
     {
         _proc_android_vibrate();
 
-        for (int i = 0; i < Config::instance().alert; ++i)
+        for (int i = 0; i < Config::instance().alert_wait; ++i)
         {
-            await(Config::instance().wait1);
+            await(Config::instance().general_wait);
         }
         keylog = "";
     }
@@ -328,7 +328,7 @@ std::string key_check(KeyWaitDelay delay_type)
 
     _update_pressed_key_name();
 
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     return InputContext::for_menu().check_for_command(delay_type);
 }
 
@@ -343,7 +343,7 @@ std::string key_check_pc_turn(KeyWaitDelay delay_type)
 
     _update_pressed_key_name();
 
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     return InputContext::instance().check_for_command(delay_type);
 }
 
@@ -358,7 +358,7 @@ std::string cursor_check_ex(int& index)
 
     _update_pressed_key_name();
 
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     return InputContext::for_menu().check_for_command_with_list(index);
 }
 
@@ -380,7 +380,7 @@ std::string get_selected_item(int& p_)
     _update_pressed_key_name();
 
     int index{};
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     auto command = InputContext::for_menu().check_for_command_with_list(index);
 
     p_ = -1;
@@ -423,11 +423,11 @@ void wait_key_released()
 {
     while (1)
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         const auto input = stick(StickKey::mouse_left | StickKey::mouse_right);
         if (input == StickKey::none)
         {
-            await(Config::instance().wait1);
+            await(Config::instance().general_wait);
             auto action = key_check();
             if (action == "")
             {
@@ -446,7 +446,7 @@ void wait_key_pressed(bool only_enter_or_cancel)
 
     while (1)
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         auto action = key_check();
         if (only_enter_or_cancel)
         {

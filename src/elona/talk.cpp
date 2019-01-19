@@ -40,10 +40,7 @@ void talk_to_npc()
     keyhalt = 1;
     if (cdata[tc].character_role == 1005)
     {
-        if (Config::instance().extrahelp)
-        {
-            maybe_show_ex_help(7, true);
-        }
+        maybe_show_ex_help(7, true);
     }
     if (cdata[tc].character_role == 7)
     {

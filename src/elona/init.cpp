@@ -542,17 +542,21 @@ void initialize_elona()
     initialize_home_adata();
     initialize_damage_popups();
     load_character_sprite();
-    if (Config::instance().music == "direct_music" && DMINIT() == 0)
+    if (Config::instance().music)
     {
-        Config::instance().music = "mci";
+        bool err = DMINIT() == 0;
+        if (err)
+        {
+            Config::instance().music = false;
+        }
     }
     DSINIT();
-    if (Config::instance().joypad == 1)
+    if (Config::instance().joypad)
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            Config::instance().joypad = 0;
+            Config::instance().joypad = false;
         }
     }
     initialize_sound_file();
@@ -648,7 +652,7 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (Config::instance().autonumlock)
+    if (Config::instance().autodisable_numlock)
     {
         snail::Input::instance().disable_numlock();
     }
@@ -683,6 +687,7 @@ int run()
 
     Config::instance().init(config_def_file);
     initialize_config_preload(config_file);
+
     initialize_screen();
 
     filesystem::dir::set_base_save_directory(filesystem::path("save"));

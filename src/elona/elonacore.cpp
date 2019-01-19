@@ -119,7 +119,7 @@ void select_house_board_tile()
 
         gmode(2);
         redraw();
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         const auto input = stick();
         if (input == StickKey::mouse_left)
         {
@@ -538,17 +538,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (Config::instance().autoturn == "normal")
+    if (Config::instance().auto_turn_speed == "normal")
     {
         await(delay);
         ++scrturn;
     }
-    if (Config::instance().autoturn != "highest" || firstautoturn == 1)
+    if (Config::instance().auto_turn_speed != "highest" || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (Config::instance().autoturn == "normal")
+    if (Config::instance().auto_turn_speed == "normal")
     {
         redraw();
     }
@@ -701,7 +701,7 @@ void initialize_picfood()
 
 void finish_elona()
 {
-    if (Config::instance().autonumlock)
+    if (Config::instance().autodisable_numlock)
     {
         snail::Input::instance().restore_numlock();
     }
@@ -1564,7 +1564,7 @@ void animeload(int animation_type, int chara_index)
     {
         return;
     }
-    if (Config::instance().animewait == 0)
+    if (Config::instance().animation_wait == 0)
     {
         return;
     }
@@ -1586,7 +1586,7 @@ void animeload(int animation_type, int chara_index)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = Config::instance().animewait * 3.5;
+    i_at_m133(1) = Config::instance().animation_wait * 3.5;
     r_at_m133 = 0;
     if (animation_type == 8)
     {
@@ -1595,21 +1595,21 @@ void animeload(int animation_type, int chara_index)
     if (animation_type == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = Config::instance().animewait * 2.5;
+        i_at_m133(1) = Config::instance().animation_wait * 2.5;
         r_at_m133 = 0.2;
         snd("core.enc2");
     }
     if (animation_type == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = Config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animation_wait * 3.5;
         r_at_m133 = 0;
         snd("core.enc");
     }
     if (animation_type == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = Config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animation_wait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -1637,7 +1637,7 @@ void animeblood(int cc, int animation_type, int element)
 {
     if (is_in_fov(cdata[cc]) == 0)
         return;
-    if (Config::instance().animewait == 0)
+    if (Config::instance().animation_wait == 0)
         return;
 
     int cnt2_at_m133 = 0;
@@ -1755,7 +1755,9 @@ void animeblood(int cc, int animation_type, int element)
         gmode(0);
         redraw();
         gcopy(4, 0, 0, 144, 160, dx_at_m133 - 48, dy_at_m133 - 56);
-        await(Config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
+        await(
+            Config::instance().animation_wait *
+            (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
 
     gmode(2);
@@ -3932,7 +3934,7 @@ void auto_identify()
             s = itemname(ci);
             item_identify(inv[ci], IdentifyState::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
-            if (!Config::instance().hideautoidentify)
+            if (!Config::instance().hide_autoidentify)
             {
                 txt(i18n::s.get(
                     "core.locale.misc.identify.fully_identified",
@@ -3945,7 +3947,7 @@ void auto_identify()
         {
             if (p > rnd(p(1)))
             {
-                if (!Config::instance().hideautoidentify)
+                if (!Config::instance().hide_autoidentify)
                 {
                     txt(i18n::s.get(
                         "core.locale.misc.identify.almost_identified",
@@ -7238,7 +7240,7 @@ void sleep_start()
     {
         gmode(2, cnt * 10);
         draw_sleep_background_frame();
-        await(Config::instance().animewait * 10);
+        await(Config::instance().animation_wait * 10);
     }
     gmode(2);
     cc = 0;
@@ -7293,7 +7295,7 @@ void sleep_start()
         game_data.date.minute = 0;
         cc = 0;
         draw_sleep_background_frame();
-        await(Config::instance().animewait * 25);
+        await(Config::instance().animation_wait * 25);
     }
     if (game_data.character_and_status_for_gene != 0)
     {
@@ -9707,7 +9709,7 @@ TurnResult proc_movement_event()
 
 void proc_autopick()
 {
-    if (!Config::instance().use_autopick)
+    if (!Config::instance().autopick)
         return;
     if (is_modifier_pressed(snail::ModKey::ctrl))
         return;
@@ -9878,8 +9880,8 @@ void sense_map_feats_on_move()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= Config::instance().walkwait *
-                            Config::instance().startrun ||
+                if (keybd_wait <= Config::instance().walk_wait *
+                            Config::instance().start_run_wait ||
                     cdata.player().turn % 2 == 0 ||
                     map_data.type == mdata_t::MapType::world_map)
                 {
@@ -10431,7 +10433,7 @@ TurnResult try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(Config::instance().animewait * 5);
+                await(Config::instance().animation_wait * 5);
                 return TurnResult::turn_end;
             }
             feat(2) = 0;
@@ -10492,7 +10494,7 @@ TurnResult try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(Config::instance().animewait * 5);
+        await(Config::instance().animation_wait * 5);
     }
     return TurnResult::turn_end;
 }
@@ -10773,7 +10775,7 @@ label_22191_internal:
         attackdmg = dmg;
         if (cc == 0)
         {
-            if (Config::instance().attackanime)
+            if (Config::instance().attack_animation)
             {
                 int damage_percent = dmg * 100 / cdata[tc].max_hp;
                 MeleeAttackAnimation(

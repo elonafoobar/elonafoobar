@@ -657,7 +657,7 @@ int damage_hp(
         {
             if (Config::instance().sound)
             {
-                if (Config::instance().heart)
+                if (Config::instance().heartbeat)
                 {
                     int threshold = Config::instance().get<int>(
                         "core.config.screen.heartbeat_threshold");

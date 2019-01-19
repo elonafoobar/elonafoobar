@@ -300,17 +300,17 @@ std::string InputContext::_delay_movement_action(
     {
         if (keybd_attacking != 0)
         {
-            if (keybd_wait % Config::instance().attackwait != 0)
+            if (keybd_wait % Config::instance().attack_wait != 0)
             {
                 return ""s;
             }
         }
-        else if (Config::instance().scroll == 0)
+        else if (!Config::instance().scroll)
         {
-            if (keybd_wait <
-                Config::instance().walkwait * Config::instance().startrun)
+            if (keybd_wait < Config::instance().walk_wait *
+                    Config::instance().start_run_wait)
             {
-                if (keybd_wait % Config::instance().walkwait != 0)
+                if (keybd_wait % Config::instance().walk_wait != 0)
                 {
                     return ""s;
                 }
@@ -320,7 +320,7 @@ std::string InputContext::_delay_movement_action(
                 running = 1;
                 if (keybd_wait < 100000)
                 {
-                    if (keybd_wait % Config::instance().runwait != 0)
+                    if (keybd_wait % Config::instance().run_wait != 0)
                     {
                         return ""s;
                     }
@@ -338,11 +338,11 @@ std::string InputContext::_delay_movement_action(
                 }
             }
         }
-        else if (keybd_wait > Config::instance().startrun)
+        else if (keybd_wait > Config::instance().start_run_wait)
         {
-            if (Config::instance().runscroll == 0)
+            if (!Config::instance().scroll_when_run)
             {
-                if (keybd_wait % Config::instance().runwait != 0)
+                if (keybd_wait % Config::instance().run_wait != 0)
                 {
                     return ""s;
                 }
@@ -351,8 +351,8 @@ std::string InputContext::_delay_movement_action(
         }
     }
     else if (
-        keybd_wait <
-        Config::instance().select_fast_start * Config::instance().select_wait)
+        keybd_wait < Config::instance().select_fast_start_wait *
+            Config::instance().select_wait)
     {
         if (keybd_wait % Config::instance().select_wait != 0)
         {

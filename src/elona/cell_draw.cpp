@@ -1090,7 +1090,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 }
                 else
                 {
-                    if (Config::instance().objectshadow &&
+                    if (Config::instance().object_shadow &&
                         item_chips[p_].shadow)
                     {
                         draw_item_chip_shadow(
@@ -1129,7 +1129,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             }
             else
             {
-                if (Config::instance().objectshadow && item_chips[p_].shadow)
+                if (Config::instance().object_shadow && item_chips[p_].shadow)
                 {
                     draw_item_chip_shadow(dx, dy, **rect, p_, 80);
                 }
@@ -1498,7 +1498,7 @@ void cell_draw()
     // Work around
     light_ *= 1.3;
 
-    if (Config::instance().shadow)
+    if (Config::instance().high_quality_shadow)
     {
         render_shadow_high(light_, sxfix_, syfix_);
     }

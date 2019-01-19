@@ -183,7 +183,7 @@ void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)
         }
         // if (submenu == 3)
         // {
-        //     if (Config::instance().net == 0)
+        //     if (!Config::instance().net)
         //     {
         //         if (cnt >= 1)
         //         {
@@ -231,7 +231,7 @@ public:
 protected:
     optional<DummyResult> update() override
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         auto action = key_check();
 
         if (action != ""s)

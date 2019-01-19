@@ -76,7 +76,7 @@ label_19341_internal:
                     Message::color{ColorIndex::blue});
             }
             redraw();
-            await(Config::instance().animewait * 5);
+            await(Config::instance().animation_wait * 5);
             game_data.date.minute = 0;
             cc = 0;
             --cdata[cc].continuous_action.turn;

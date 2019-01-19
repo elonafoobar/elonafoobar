@@ -428,7 +428,7 @@ void god_proc_switching_penalty()
             magic();
             snd("core.punish1");
             mode = 0;
-            await(Config::instance().animewait * 20);
+            await(Config::instance().animation_wait * 20);
         }
         cdata.player().god_id = core_god::int2godid(inv[ci].param1);
         switch_religion();

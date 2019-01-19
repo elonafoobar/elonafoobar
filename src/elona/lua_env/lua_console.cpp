@@ -194,7 +194,7 @@ void LuaConsole::draw()
     int i = 0;
     for (auto it = _buf.end() - n; it < _buf.end() - _pos; it++)
     {
-        font(inf_mesfont - en * 2);
+        font(14 - en * 2);
         mes(4, _char_height * i, *it, {255, 255, 255});
 
         i++;
@@ -203,7 +203,7 @@ void LuaConsole::draw()
     // Cursor
     if (_focused)
     {
-        font(inf_mesfont - en * 2);
+        font(14 - en * 2);
         mes(4,
             _char_height * (_max_lines - 1),
             prompt() + _input + (_cursor_visible ? u8"|" : ""),
@@ -215,7 +215,7 @@ void LuaConsole::draw()
     {
         const auto line_count = std::to_string(_pos + _max_lines) + "/" +
             std::to_string(_buf.size());
-        font(inf_mesfont - en * 2);
+        font(14 - en * 2);
         mes(windoww - (line_count.size() * _char_width),
             0,
             line_count,
@@ -358,12 +358,12 @@ void LuaConsole::grab_input()
         if (modifiers == ModKey::none)
         {
             return Input::instance().is_pressed(
-                key, Config::instance().keywait);
+                key, Config::instance().key_wait);
         }
         else
         {
             return Input::instance().is_pressed(
-                       key, Config::instance().keywait) &&
+                       key, Config::instance().key_wait) &&
                 (Input::instance().modifiers() & modifiers) != ModKey::none;
         }
     };
@@ -371,8 +371,8 @@ void LuaConsole::grab_input()
     while (_focused)
     {
         ++frame;
-        if (Config::instance().scrsync > 0 &&
-            frame % Config::instance().scrsync == 0)
+        if (Config::instance().screen_refresh_wait > 0 &&
+            frame % Config::instance().screen_refresh_wait == 0)
         {
             ++scrturn;
             ui_render_from_screensync();

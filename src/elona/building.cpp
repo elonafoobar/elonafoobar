@@ -600,7 +600,7 @@ void prompt_hiring()
         {
             snd("core.paygold1");
             cdata.player().gold -= calchirecost(tc) * 20;
-            await(Config::instance().animewait * 10);
+            await(Config::instance().animation_wait * 10);
             cdata[tc].set_state(Character::State::alive);
             txt(i18n::s.get(
                     "core.locale.building.home.hire.you_hire", cdata[tc]),
@@ -660,7 +660,7 @@ void start_home_map_mode()
     tile = 0;
     while (1)
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         int stat = target_position();
         if (stat == -1)
         {
@@ -1163,7 +1163,7 @@ void show_shop_log()
     }
     if (sold == 0)
     {
-        if (!Config::instance().hideshopresult)
+        if (!Config::instance().hide_shop_updates)
         {
             txt(shop_mark +
                 i18n::s.get(
@@ -1174,7 +1174,7 @@ void show_shop_log()
     }
     else
     {
-        if (!Config::instance().hideshopresult)
+        if (!Config::instance().hide_shop_updates)
         {
             s = i18n::s.get("core.locale.building.shop.log.gold", income(0));
             if (income(1) != 0)

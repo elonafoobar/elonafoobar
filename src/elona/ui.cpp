@@ -37,6 +37,9 @@ int cs_posbk_y;
 int cs_posbk_w;
 int cs_posbk_h;
 
+constexpr int inf_clockw = 120;
+constexpr int inf_clockh = 96;
+
 
 
 void update_screen_hud()
@@ -274,7 +277,7 @@ void render_weather_effect_etherwind()
 
 void render_weather_effect()
 {
-    if (!Config::instance().env)
+    if (!Config::instance().weather_effect)
         return;
     if (map_data.indoors_flag != 2)
         return;
@@ -519,8 +522,8 @@ void render_character_level()
 
 void render_date_label()
 {
-    gcopy(3, 448, 408, inf_clockw, inf_clockh, inf_clockx, inf_clocky);
-    draw("date_label_frame", inf_clockx + 78, inf_clocky + 8);
+    gcopy(3, 448, 408, inf_clockw, inf_clockh, 0, inf_clocky);
+    draw("date_label_frame", 78, inf_clocky + 8);
 }
 
 
@@ -995,7 +998,7 @@ void render_status_ailments()
 
 void render_autoturn_animation()
 {
-    if (racount == 0 && Config::instance().animewait != 0)
+    if (racount == 0 && Config::instance().animation_wait != 0)
     {
         load_continuous_action_animation();
     }
@@ -1011,7 +1014,7 @@ void render_autoturn_animation()
 
     if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
-        if (rowactre == 0 && Config::instance().animewait != 0)
+        if (rowactre == 0 && Config::instance().animation_wait != 0)
         {
             render_fishing_animation();
         }
@@ -1038,7 +1041,7 @@ void render_autoturn_animation()
              ContinuousAction::Type::fish &&
          rowactre != 0))
     {
-        if (Config::instance().animewait != 0)
+        if (Config::instance().animation_wait != 0)
         {
             window2(sx, sy - 104, 148, 101, 0, 5);
             if (racount % 15 == 0)
@@ -1055,7 +1058,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 5 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 2);
+                        await(Config::instance().animation_wait * 2);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::fish)
@@ -1069,7 +1072,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 3 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 2.5);
+                        await(Config::instance().animation_wait * 2.5);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::search_material)
@@ -1080,7 +1083,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 2.75);
+                        await(Config::instance().animation_wait * 2.75);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::dig_ground)
@@ -1091,7 +1094,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 4 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 3);
+                        await(Config::instance().animation_wait * 3);
                     }
                     redraw();
                 }
@@ -1255,12 +1258,11 @@ Position gmes(
 
 void initialize_ui_constants()
 {
-    inf_clockarrowx = inf_clockx + 62;
+    inf_clockarrowx = 62;
     inf_clockarrowy = inf_clocky + 48;
     inf_barh = 16;
     inf_msgh = 72;
     inf_verh = inf_barh + inf_msgh;
-    inf_msgline = 4;
     inf_radarx = 1;
     inf_radarw = 136;
     inf_screenw = windoww / inf_tiles + (windoww % inf_tiles != 0);
@@ -1273,28 +1275,16 @@ void initialize_ui_constants()
     {
         ++inf_screenh;
     }
-    if (inf_vertype == 0)
+    inf_screeny = 0;
+    if ((windowh - inf_verh) % inf_tiles != 0)
     {
-        inf_ver = 0;
-        inf_bary = 0;
-        inf_msgy = inf_ver + inf_barh;
-        inf_screeny = inf_verh;
-        inf_clocky = windowh - inf_clockh;
-        inf_radary = 1;
+        inf_screeny = 0 - inf_tiles + (windowh - inf_verh) % inf_tiles;
     }
-    else
-    {
-        inf_screeny = 0;
-        if ((windowh - inf_verh) % inf_tiles != 0)
-        {
-            inf_screeny = 0 - inf_tiles + (windowh - inf_verh) % inf_tiles;
-        }
-        inf_ver = windowh - inf_verh;
-        inf_bary = windowh - inf_barh;
-        inf_msgy = inf_ver;
-        inf_clocky = 0;
-        inf_radary = windowh - 86;
-    }
+    inf_ver = windowh - inf_verh;
+    inf_bary = windowh - inf_barh;
+    inf_msgy = inf_ver;
+    inf_clocky = 0;
+    inf_radary = windowh - 86;
     scposy = inf_screenh / 2 - 1;
     inf_hpx = (windoww - 84) / 2 - 100;
     inf_hpy = inf_ver - 12;
@@ -1302,8 +1292,7 @@ void initialize_ui_constants()
     inf_mpy = inf_ver - 12;
     inf_msgx = inf_radarw;
     inf_msgspace = 15;
-    int inf_maxmsglen_i =
-        std::max((windoww - inf_msgx - 28) / inf_mesfont * 2 - 1, 0);
+    int inf_maxmsglen_i = std::max((windoww - inf_msgx - 28) / 14 * 2 - 1, 0);
     inf_maxmsglen = static_cast<size_t>(inf_maxmsglen_i);
     inf_maxlog = (inf_msgy - 100) / inf_msgspace + 3;
     inf_very = windowh - inf_verh;
@@ -1481,11 +1470,12 @@ void render_hud()
     render_skill_trackers();
 
     // HP bars(pets)
-    if (Config::instance().hp_bar != "hide")
+    if (Config::instance().hp_bar_position != "hide")
     {
         show_hp_bar(
-            Config::instance().hp_bar == "left" ? HPBarSide::left_side
-                                                : HPBarSide::right_side,
+            Config::instance().hp_bar_position == "left"
+                ? HPBarSide::left_side
+                : HPBarSide::right_side,
             inf_clocky);
     }
 
@@ -1598,7 +1588,7 @@ void update_scrolling_info()
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (Config::instance().alwayscenter)
+    if (Config::instance().always_center)
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -1668,11 +1658,11 @@ void update_slight()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = 1 + (Config::instance().scroll == 0);
+    ly = Config::instance().scroll ? 1 : 2;
     for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        lx = 1 + (Config::instance().scroll == 0);
+        lx = Config::instance().scroll ? 1 : 2;
         if (sy < 0 || sy >= map_data.height)
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
@@ -1816,7 +1806,7 @@ void ui_scroll_screen()
     {
         return;
     }
-    scrollp = Config::instance().walkwait;
+    scrollp = Config::instance().walk_wait;
     if (map_data.type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
@@ -1830,10 +1820,10 @@ void ui_scroll_screen()
             scrollp = 9;
         }
     }
-    else if (keybd_wait > Config::instance().startrun)
+    else if (keybd_wait > Config::instance().start_run_wait)
     {
         scrollp = 3;
-        if (Config::instance().runscroll == 0)
+        if (!Config::instance().scroll_when_run)
         {
             return;
         }
@@ -2724,7 +2714,7 @@ void window_animation(
         nowindowanime = 0;
         return;
     }
-    if (!Config::instance().windowanime)
+    if (!Config::instance().window_animation)
         return;
     if (duration == 0)
         return;
@@ -2756,7 +2746,7 @@ void window_animation(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animewait * 0.75);
+            await(Config::instance().animation_wait * 0.75);
         }
         gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }
@@ -2774,7 +2764,7 @@ void window_animation_corner(
     int duration,
     int temporary_window_id)
 {
-    if (!Config::instance().windowanime)
+    if (!Config::instance().window_animation)
         return;
     if (duration == 0)
         return;
@@ -2802,7 +2792,7 @@ void window_animation_corner(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animewait * 0.75);
+            await(Config::instance().animation_wait * 0.75);
         }
         gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }

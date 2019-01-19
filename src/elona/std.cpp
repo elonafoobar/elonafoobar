@@ -574,7 +574,7 @@ void mes(int x, int y, const std::string& text, const snail::Color& color)
 
 void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer, Config::instance().keywait, text);
+    snail::hsp::mesbox(buffer, Config::instance().key_wait, text);
 }
 
 

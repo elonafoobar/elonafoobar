@@ -20,6 +20,15 @@
 
 
 
+namespace
+{
+
+constexpr int inf_msgline = 4;
+
+}
+
+
+
 namespace elona
 {
 
@@ -72,7 +81,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
-        await(Config::instance().wait1 / 3);
+        await(Config::instance().general_wait / 3);
         draw(
             "label_more",
             x_at_txtfunc,
@@ -85,7 +94,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     snd("core.ok1");
     for (int cnt = 0; cnt < 7; ++cnt)
     {
-        await(Config::instance().wait1 / 3);
+        await(Config::instance().general_wait / 3);
         gcopy(3, 672, 504, 120, 24, x_at_txtfunc, y_at_txtfunc);
         if (cnt != 6)
         {
@@ -190,14 +199,13 @@ void Message::_msg_write(std::string& message)
             360,
             16,
             16,
-            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7 +
-                en * 3,
+            (message_width + widthwise_pos) * 7 + inf_msgx + 7 + en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
     }
 
-    font(inf_mesfont - en * 2);
+    font(14 - en * 2);
     gmode(0);
-    mes(message_width * inf_mesfont / 2 + inf_msgx + 6,
+    mes(message_width * 7 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + vfix + 5,
         message,
         text_color);

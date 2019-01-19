@@ -56,10 +56,10 @@ void _draw_single_message(size_t cnt, int message_offset)
     }
 
     int message_width = 0;
-    font(inf_mesfont - en * 2);
+    font(14 - en * 2);
     for (const auto& span : message_log.at(n - cnt - 4 + message_offset))
     {
-        mes(message_width * inf_mesfont / 2 + inf_msgx + 6,
+        mes(message_width * 7 + inf_msgx + 6,
             inf_msgy - cnt * inf_msgspace + vfix,
             span.text,
             span.color);
