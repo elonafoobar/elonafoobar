@@ -22,6 +22,31 @@ protected:
     void _draw_window();
     void _draw_navigation_menu();
     void _draw_background_vignette(int id, int type);
+
+private:
+    struct GameHelp
+    {
+        void load(const fs::path& filepath);
+
+
+        const std::vector<std::string>& section_headings() const
+        {
+            return _section_headings;
+        }
+
+
+        const std::vector<std::string> get_section(size_t index) const
+        {
+            return _sections.at(index);
+        }
+
+
+    private:
+        std::vector<std::vector<std::string>> _sections;
+        std::vector<std::string> _section_headings;
+    };
+
+    GameHelp _help;
 };
 } // namespace ui
 } // namespace elona

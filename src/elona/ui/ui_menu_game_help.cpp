@@ -1,4 +1,5 @@
 #include "ui_menu_game_help.hpp"
+#include "../../util/fileutil.hpp"
 #include "../../util/strutil.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
@@ -34,33 +35,19 @@ bool UIMenuGameHelp::init()
         cs_bk2 = cs;
     }
 
-    // notesel
-    notesel(buff);
-    {
-        buff(0).clear();
-        std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "manual.txt").native(),
-            std::ios::binary};
-        std::string tmp;
-        while (std::getline(in, tmp))
-        {
-            buff(0) += tmp + '\n';
-        }
-    }
-    list(0, 0) = 0;
+    list(0, 0) = 0 /* dummy */;
     listn(0, 0) = i18n::s.get("core.locale.ui.manual.keys.list");
     ++listmax;
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+
+    _help.load(i18n::s.get_locale_dir("core") / "lazy" / "manual.txt");
+
+    for (const auto& section : _help.section_headings())
     {
-        noteget(q, cnt);
-        p = instr(q, 0, u8"{}"s);
-        if (p != -1)
-        {
-            list(0, listmax) = cnt + 1;
-            listn(0, listmax) = strmid(q, instr(q, 0, u8"}"s) + 2, 999);
-            ++listmax;
-        }
+        list(0, listmax) = listmax - 1;
+        listn(0, listmax) = section;
+        ++listmax;
     }
+
     windowshadow = 1;
 
     update();
@@ -226,24 +213,16 @@ void UIMenuGameHelp::_draw_key_list()
 
 void UIMenuGameHelp::_draw_regular_pages()
 {
-    s(1) = listn(0, pagesize * page_bk + cs_bk2);
-    display_topic(s(1), wx + 206, wy + 36);
+    const auto& topic = listn(0, pagesize * page_bk + cs_bk2);
+    display_topic(topic, wx + 206, wy + 36);
+
     font(14 - en * 2);
-    p = list(0, pagesize * page_bk + cs_bk2);
+    const auto section_index = list(0, pagesize * page_bk + cs_bk2);
+    int y = wy + 60;
+    for (const auto& line : _help.get_section(section_index))
     {
-        int y = wy + 60;
-        int cnt = p;
-        for (int cnt_end = cnt + (noteinfo() - p); cnt < cnt_end; ++cnt)
-        {
-            noteget(s1, cnt);
-            i = instr(s1, 0, u8"{"s);
-            if (i != -1)
-            {
-                break;
-            }
-            const auto ny = gmes(s1, wx + 216, y, 510, {30, 30, 30}, false).y;
-            y = ny;
-        }
+        const auto ny = gmes(line, wx + 216, y, 510, {30, 30, 30}, false).y;
+        y = ny;
     }
 }
 
@@ -260,9 +239,8 @@ void UIMenuGameHelp::_draw_navigation_menu()
         {
             break;
         }
-        i = list(0, p);
-        s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1);
+        const auto& section = listn(0, p);
+        cs_list(cs == cnt, section, wx + 66, wy + 66 + cnt * 19 - 1);
     }
 
     if (keyrange != 0)
@@ -395,6 +373,31 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
         return UIMenuGameHelp::ResultType::finish();
     }
     return none;
+}
+
+
+
+void UIMenuGameHelp::GameHelp::load(const fs::path& filepath)
+{
+    constexpr const char* section_marker = u8"{}";
+
+    for (const auto& line : fileutil::read_by_line(filepath))
+    {
+        const auto section_marker_pos = line.find(section_marker);
+        if (section_marker_pos != std::string::npos)
+        {
+            _section_headings.emplace_back(line, section_marker_pos + 3);
+            _sections.emplace_back();
+        }
+        else
+        {
+            if (_sections.empty())
+            {
+                continue; // Skip this line.
+            }
+            _sections.back().push_back(line);
+        }
+    }
 }
 
 } // namespace ui
