@@ -102,17 +102,6 @@ public:
     bool window_animation;
     bool wizard;
 
-    bool use_autopick_in_home;
-    bool use_autopick_in_dungeon;
-    bool use_autopick_in_shop;
-    bool use_autopick_in_ranch;
-    bool use_autopick_in_crop;
-    bool use_autopick_in_storage_house;
-    bool use_autopick_in_shelter;
-    bool use_autopick_in_town;
-    bool use_autopick_in_conquered_nefia;
-    bool use_autopick_in_conquered_quest_map;
-
     bool is_test = false; // testing use only
 
     bool is_visible(const std::string& key) const
