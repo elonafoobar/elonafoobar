@@ -426,15 +426,6 @@ void initialize_config_preload(const fs::path& hcl_file)
     CONFIG_OPTION("balance.extra_class"s, bool, Config::instance().extra_class);
     CONFIG_OPTION("input.joypad"s, bool, Config::instance().joypad);
     CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
-    CONFIG_OPTION("ui.msg_line"s, int, inf_msgline);
-    CONFIG_OPTION("ui.tile_size"s, int, inf_tiles);
-    CONFIG_OPTION("ui.font_size"s, int, inf_mesfont);
-    CONFIG_OPTION("ui.inf_ver_type"s, int, inf_vertype);
-    CONFIG_OPTION("ui.window_x"s, int, windowx);
-    CONFIG_OPTION("ui.window_y"s, int, windowy);
-    CONFIG_OPTION("ui.clock_x"s, int, inf_clockx);
-    CONFIG_OPTION("ui.clock_w"s, int, inf_clockw);
-    CONFIG_OPTION("ui.clock_h"s, int, inf_clockh);
     CONFIG_OPTION("game.default_save"s, std::string, defload); // TODO runtime enum
     CONFIG_OPTION("debug.wizard"s, bool, Config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, Config::instance().display_mode);
@@ -458,6 +449,11 @@ void initialize_config_preload(const fs::path& hcl_file)
 
     snail::android::set_navigation_bar_visibility(
         !conf.get<bool>("core.config.android.hide_navigation"));
+
+    // TODO: move it somewhere else or make it constant. "inf_tiles" is too
+    // frequently used to find out where it should be initialized. Thus, it is
+    // initialized as close to the previous position as possilbe.
+    inf_tiles = 48;
 }
 
 #undef CONFIG_OPTION

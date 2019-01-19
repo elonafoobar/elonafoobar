@@ -49,7 +49,7 @@ tests: test_runner FORCE # Run all tests.
 
 
 test_runner: $(BIN_DIR) FORCE # Build test runner.
-	# -@$(RM) -rf ./$(BIN_DIR)/tests
+	-@$(RM) -rf ./$(BIN_DIR)/tests
 	cd $(BIN_DIR); \
 		cmake .. -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug $(CMAKE_ARGS); \
 		cmake --build . --config Debug

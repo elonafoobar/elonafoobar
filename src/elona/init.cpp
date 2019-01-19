@@ -683,6 +683,7 @@ int run()
 
     Config::instance().init(config_def_file);
     initialize_config_preload(config_file);
+
     initialize_screen();
 
     filesystem::dir::set_base_save_directory(filesystem::path("save"));

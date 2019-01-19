@@ -37,6 +37,9 @@ int cs_posbk_y;
 int cs_posbk_w;
 int cs_posbk_h;
 
+constexpr int inf_clockw = 120;
+constexpr int inf_clockh = 96;
+
 
 
 void update_screen_hud()
@@ -519,8 +522,8 @@ void render_character_level()
 
 void render_date_label()
 {
-    gcopy(3, 448, 408, inf_clockw, inf_clockh, inf_clockx, inf_clocky);
-    draw("date_label_frame", inf_clockx + 78, inf_clocky + 8);
+    gcopy(3, 448, 408, inf_clockw, inf_clockh, 0, inf_clocky);
+    draw("date_label_frame", 78, inf_clocky + 8);
 }
 
 
@@ -1255,12 +1258,11 @@ Position gmes(
 
 void initialize_ui_constants()
 {
-    inf_clockarrowx = inf_clockx + 62;
+    inf_clockarrowx = 62;
     inf_clockarrowy = inf_clocky + 48;
     inf_barh = 16;
     inf_msgh = 72;
     inf_verh = inf_barh + inf_msgh;
-    inf_msgline = 4;
     inf_radarx = 1;
     inf_radarw = 136;
     inf_screenw = windoww / inf_tiles + (windoww % inf_tiles != 0);
@@ -1273,28 +1275,16 @@ void initialize_ui_constants()
     {
         ++inf_screenh;
     }
-    if (inf_vertype == 0)
+    inf_screeny = 0;
+    if ((windowh - inf_verh) % inf_tiles != 0)
     {
-        inf_ver = 0;
-        inf_bary = 0;
-        inf_msgy = inf_ver + inf_barh;
-        inf_screeny = inf_verh;
-        inf_clocky = windowh - inf_clockh;
-        inf_radary = 1;
+        inf_screeny = 0 - inf_tiles + (windowh - inf_verh) % inf_tiles;
     }
-    else
-    {
-        inf_screeny = 0;
-        if ((windowh - inf_verh) % inf_tiles != 0)
-        {
-            inf_screeny = 0 - inf_tiles + (windowh - inf_verh) % inf_tiles;
-        }
-        inf_ver = windowh - inf_verh;
-        inf_bary = windowh - inf_barh;
-        inf_msgy = inf_ver;
-        inf_clocky = 0;
-        inf_radary = windowh - 86;
-    }
+    inf_ver = windowh - inf_verh;
+    inf_bary = windowh - inf_barh;
+    inf_msgy = inf_ver;
+    inf_clocky = 0;
+    inf_radary = windowh - 86;
     scposy = inf_screenh / 2 - 1;
     inf_hpx = (windoww - 84) / 2 - 100;
     inf_hpy = inf_ver - 12;
@@ -1302,8 +1292,7 @@ void initialize_ui_constants()
     inf_mpy = inf_ver - 12;
     inf_msgx = inf_radarw;
     inf_msgspace = 15;
-    int inf_maxmsglen_i =
-        std::max((windoww - inf_msgx - 28) / inf_mesfont * 2 - 1, 0);
+    int inf_maxmsglen_i = std::max((windoww - inf_msgx - 28) / 14 * 2 - 1, 0);
     inf_maxmsglen = static_cast<size_t>(inf_maxmsglen_i);
     inf_maxlog = (inf_msgy - 100) / inf_msgspace + 3;
     inf_very = windowh - inf_verh;
