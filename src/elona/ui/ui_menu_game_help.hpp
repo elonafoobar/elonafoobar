@@ -17,7 +17,6 @@ protected:
     virtual void draw();
     virtual optional<UIMenuGameHelp::ResultType> on_key(const std::string& key);
 
-    void _remove_parenthesis_around_keys();
     void _draw_key_list();
     void _draw_regular_pages();
     void _draw_window();

@@ -70,26 +70,6 @@ bool UIMenuGameHelp::init()
 
 
 
-void UIMenuGameHelp::_remove_parenthesis_around_keys()
-{
-    if (jp)
-        return;
-
-    for (int cnt = 0; cnt < 24; ++cnt)
-    {
-        if (!strutil::contains(s(cnt), u8"("))
-        {
-            continue;
-        }
-        s(cnt) = cnven(strmid(
-            s(cnt),
-            instr(s(cnt), 0, u8"("s) + 1,
-            instr(s(cnt), 0, u8")"s) - instr(s(cnt), 0, u8"("s) - 1));
-    }
-}
-
-
-
 void UIMenuGameHelp::_draw_key_list()
 {
     x = wx + 188;
@@ -128,7 +108,7 @@ void UIMenuGameHelp::_draw_key_list()
     s(21) = key_throw;
     s(22) = i18n::s.get("core.locale.ui.manual.keys.item.ammo");
     s(23) = key_ammo;
-    _remove_parenthesis_around_keys();
+
     for (int cnt = 0; cnt < 12; ++cnt)
     {
         font(13 - en * 2);
@@ -162,7 +142,7 @@ void UIMenuGameHelp::_draw_key_list()
     s(23) = key_open;
     s(24) = "";
     s(25) = "";
-    _remove_parenthesis_around_keys();
+
     for (int cnt = 0; cnt < 12; ++cnt)
     {
         font(13 - en * 2);
@@ -182,7 +162,7 @@ void UIMenuGameHelp::_draw_key_list()
     s(9) = key_material;
     s(10) = i18n::s.get("core.locale.ui.manual.keys.info.feat");
     s(11) = key_trait;
-    _remove_parenthesis_around_keys();
+
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         font(13 - en * 2);
@@ -203,7 +183,7 @@ void UIMenuGameHelp::_draw_key_list()
     s(10) = "";
     s(11) = "";
     s(12) = "";
-    _remove_parenthesis_around_keys();
+
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         font(13 - en * 2);
