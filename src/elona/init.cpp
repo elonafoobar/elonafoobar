@@ -648,7 +648,7 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (Config::instance().autonumlock)
+    if (Config::instance().autodisable_numlock)
     {
         snail::Input::instance().disable_numlock();
     }

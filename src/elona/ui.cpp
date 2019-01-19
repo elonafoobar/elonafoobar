@@ -274,7 +274,7 @@ void render_weather_effect_etherwind()
 
 void render_weather_effect()
 {
-    if (!Config::instance().env)
+    if (!Config::instance().weather_effect)
         return;
     if (map_data.indoors_flag != 2)
         return;
@@ -995,7 +995,7 @@ void render_status_ailments()
 
 void render_autoturn_animation()
 {
-    if (racount == 0 && Config::instance().animewait != 0)
+    if (racount == 0 && Config::instance().animation_wait != 0)
     {
         load_continuous_action_animation();
     }
@@ -1011,7 +1011,7 @@ void render_autoturn_animation()
 
     if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
-        if (rowactre == 0 && Config::instance().animewait != 0)
+        if (rowactre == 0 && Config::instance().animation_wait != 0)
         {
             render_fishing_animation();
         }
@@ -1038,7 +1038,7 @@ void render_autoturn_animation()
              ContinuousAction::Type::fish &&
          rowactre != 0))
     {
-        if (Config::instance().animewait != 0)
+        if (Config::instance().animation_wait != 0)
         {
             window2(sx, sy - 104, 148, 101, 0, 5);
             if (racount % 15 == 0)
@@ -1055,7 +1055,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 5 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 2);
+                        await(Config::instance().animation_wait * 2);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::fish)
@@ -1069,7 +1069,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 3 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 2.5);
+                        await(Config::instance().animation_wait * 2.5);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::search_material)
@@ -1080,7 +1080,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 2.75);
+                        await(Config::instance().animation_wait * 2.75);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::dig_ground)
@@ -1091,7 +1091,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 4 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animewait * 3);
+                        await(Config::instance().animation_wait * 3);
                     }
                     redraw();
                 }
@@ -1481,11 +1481,12 @@ void render_hud()
     render_skill_trackers();
 
     // HP bars(pets)
-    if (Config::instance().hp_bar != "hide")
+    if (Config::instance().hp_bar_position != "hide")
     {
         show_hp_bar(
-            Config::instance().hp_bar == "left" ? HPBarSide::left_side
-                                                : HPBarSide::right_side,
+            Config::instance().hp_bar_position == "left"
+                ? HPBarSide::left_side
+                : HPBarSide::right_side,
             inf_clocky);
     }
 
@@ -1598,7 +1599,7 @@ void update_scrolling_info()
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (Config::instance().alwayscenter)
+    if (Config::instance().always_center)
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -1816,7 +1817,7 @@ void ui_scroll_screen()
     {
         return;
     }
-    scrollp = Config::instance().walkwait;
+    scrollp = Config::instance().walk_wait;
     if (map_data.type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
@@ -1830,10 +1831,10 @@ void ui_scroll_screen()
             scrollp = 9;
         }
     }
-    else if (keybd_wait > Config::instance().startrun)
+    else if (keybd_wait > Config::instance().start_run_wait)
     {
         scrollp = 3;
-        if (Config::instance().runscroll == 0)
+        if (Config::instance().scroll_when_run == 0)
         {
             return;
         }
@@ -2724,7 +2725,7 @@ void window_animation(
         nowindowanime = 0;
         return;
     }
-    if (!Config::instance().windowanime)
+    if (!Config::instance().window_animation)
         return;
     if (duration == 0)
         return;
@@ -2756,7 +2757,7 @@ void window_animation(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animewait * 0.75);
+            await(Config::instance().animation_wait * 0.75);
         }
         gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }
@@ -2774,7 +2775,7 @@ void window_animation_corner(
     int duration,
     int temporary_window_id)
 {
-    if (!Config::instance().windowanime)
+    if (!Config::instance().window_animation)
         return;
     if (duration == 0)
         return;
@@ -2802,7 +2803,7 @@ void window_animation_corner(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animewait * 0.75);
+            await(Config::instance().animation_wait * 0.75);
         }
         gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }

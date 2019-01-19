@@ -111,72 +111,72 @@ optional<TurnResult> activity_proc(Character& chara)
     --chara.continuous_action.turn;
     if (chara.continuous_action.type == ContinuousAction::Type::fish)
     {
-        auto_turn(Config::instance().animewait * 2);
+        auto_turn(Config::instance().animation_wait * 2);
         spot_fishing();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::dig_wall)
     {
-        auto_turn(Config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animation_wait * 0.75);
         spot_mining_or_wall();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::search_material)
     {
-        auto_turn(Config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animation_wait * 0.75);
         spot_material();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::dig_ground)
     {
-        auto_turn(Config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animation_wait * 0.75);
         spot_digging();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::sleep)
     {
-        auto_turn(Config::instance().animewait / 4);
+        auto_turn(Config::instance().animation_wait / 4);
         do_rest();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::eat)
     {
-        auto_turn(Config::instance().animewait * 5);
+        auto_turn(Config::instance().animation_wait * 5);
         return do_eat_command();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::read)
     {
-        auto_turn(Config::instance().animewait * 1.25);
+        auto_turn(Config::instance().animation_wait * 1.25);
         return do_read_command();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::sex)
     {
-        auto_turn(Config::instance().animewait * 2.5);
+        auto_turn(Config::instance().animation_wait * 2.5);
         continuous_action_sex();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::others)
     {
         if (game_data.continuous_action_about_to_start == 103)
         {
-            auto_turn(Config::instance().animewait * 2);
+            auto_turn(Config::instance().animation_wait * 2);
         }
         else if (game_data.continuous_action_about_to_start == 104)
         {
-            auto_turn(Config::instance().animewait * 2);
+            auto_turn(Config::instance().animation_wait * 2);
         }
         else if (game_data.continuous_action_about_to_start == 105)
         {
-            auto_turn(Config::instance().animewait * 2.5);
+            auto_turn(Config::instance().animation_wait * 2.5);
         }
         else
         {
-            auto_turn(Config::instance().animewait);
+            auto_turn(Config::instance().animation_wait);
         }
         continuous_action_others();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::blend)
     {
-        auto_turn(Config::instance().animewait);
+        auto_turn(Config::instance().animation_wait);
         continuous_action_blending();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::perform)
     {
-        auto_turn(Config::instance().animewait * 2);
+        auto_turn(Config::instance().animation_wait * 2);
         continuous_action_perform();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::travel)
@@ -1441,7 +1441,7 @@ void spot_fishing()
         {
             if (rnd(5) == 0)
             {
-                if (Config::instance().animewait != 0)
+                if (Config::instance().animation_wait != 0)
                 {
                     for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end;
                          ++cnt)
@@ -1452,7 +1452,7 @@ void spot_fishing()
                         ++scrturn;
                         update_screen();
                         redraw();
-                        await(Config::instance().animewait * 2);
+                        await(Config::instance().animation_wait * 2);
                     }
                 }
                 if (rnd(3) == 0)
@@ -1471,14 +1471,14 @@ void spot_fishing()
             fishanime = 2;
             snd("core.water2");
             cdata.player().emotion_icon = 220;
-            if (Config::instance().animewait != 0)
+            if (Config::instance().animation_wait != 0)
             {
                 for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
                 {
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(Config::instance().animewait * 2);
+                    await(Config::instance().animation_wait * 2);
                 }
             }
             if (rnd(10))
@@ -1494,7 +1494,7 @@ void spot_fishing()
         if (fishstat == 3)
         {
             fishanime = 3;
-            if (Config::instance().animewait != 0)
+            if (Config::instance().animation_wait != 0)
             {
                 for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end;
                      ++cnt)
@@ -1508,7 +1508,7 @@ void spot_fishing()
                     update_screen();
                     addefmap(fishx, fishy, 5, 2);
                     redraw();
-                    await(Config::instance().animewait * 2);
+                    await(Config::instance().animation_wait * 2);
                 }
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
@@ -1525,7 +1525,7 @@ void spot_fishing()
         {
             fishanime = 4;
             snd("core.fish_get");
-            if (Config::instance().animewait != 0)
+            if (Config::instance().animation_wait != 0)
             {
                 for (int cnt = 0; cnt < 21; ++cnt)
                 {
@@ -1537,7 +1537,7 @@ void spot_fishing()
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(Config::instance().animewait * 2);
+                    await(Config::instance().animation_wait * 2);
                 }
             }
             sound_pick_up();

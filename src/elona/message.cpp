@@ -72,7 +72,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
-        await(Config::instance().wait1 / 3);
+        await(Config::instance().general_wait / 3);
         draw(
             "label_more",
             x_at_txtfunc,
@@ -85,7 +85,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     snd("core.ok1");
     for (int cnt = 0; cnt < 7; ++cnt)
     {
-        await(Config::instance().wait1 / 3);
+        await(Config::instance().general_wait / 3);
         gcopy(3, 672, 504, 120, 24, x_at_txtfunc, y_at_txtfunc);
         if (cnt != 6)
         {

@@ -231,7 +231,7 @@ public:
 protected:
     optional<DummyResult> update() override
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         auto action = key_check();
 
         if (action != ""s)

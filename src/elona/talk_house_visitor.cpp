@@ -145,7 +145,7 @@ void _adventurer_hate_action()
             itemcreate(-1, 704, -1, -1, 0);
             txt(i18n::s.get("core.locale.food.vomits", cdata[tc]));
             snd("core.vomit");
-            await(Config::instance().animewait / 2);
+            await(Config::instance().animation_wait / 2);
             update_screen();
         }
     }

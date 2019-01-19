@@ -782,7 +782,7 @@ void proc_event()
                 192,
                 96);
             redraw();
-            await(Config::instance().animewait * 3.5);
+            await(Config::instance().animation_wait * 3.5);
         }
         gmode(2);
         update_entire_screen();
@@ -908,7 +908,7 @@ void proc_event()
                 {
                     snd("core.crush1");
                 }
-                await(Config::instance().animewait);
+                await(Config::instance().animation_wait);
             }
         }
         break;

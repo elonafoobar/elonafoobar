@@ -312,25 +312,25 @@ void load_config(const fs::path& hcl_file)
 
     // TODO do inversions
     // clang-format off
-    CONFIG_OPTION("anime.alert_wait"s, int, Config::instance().alert);
-    CONFIG_OPTION("anime.anime_wait"s, int, Config::instance().animewait);
-    CONFIG_OPTION("anime.attack_anime"s, bool, Config::instance().attackanime);
-    CONFIG_OPTION("anime.auto_turn_speed"s, std::string, Config::instance().autoturn);
-    CONFIG_OPTION("anime.general_wait"s, int, Config::instance().wait1);
-    CONFIG_OPTION("anime.screen_refresh"s, int, Config::instance().scrsync);
+    CONFIG_OPTION("anime.alert_wait"s, int, Config::instance().alert_wait);
+    CONFIG_OPTION("anime.anime_wait"s, int, Config::instance().animation_wait);
+    CONFIG_OPTION("anime.attack_anime"s, bool, Config::instance().attack_animation);
+    CONFIG_OPTION("anime.auto_turn_speed"s, std::string, Config::instance().auto_turn_speed);
+    CONFIG_OPTION("anime.general_wait"s, int, Config::instance().general_wait);
+    CONFIG_OPTION("anime.screen_refresh"s, int, Config::instance().screen_refresh_wait);
     CONFIG_OPTION("anime.scroll"s, bool, Config::instance().scroll);
-    CONFIG_OPTION("anime.scroll_when_run"s, bool, Config::instance().runscroll);
-    CONFIG_OPTION("anime.title_effect"s, bool, Config::instance().titleanime);
-    CONFIG_OPTION("anime.weather_effect"s, bool, Config::instance().env);
-    CONFIG_OPTION("anime.window_anime"s, bool, Config::instance().windowanime);
+    CONFIG_OPTION("anime.scroll_when_run"s, bool, Config::instance().scroll_when_run);
+    CONFIG_OPTION("anime.title_effect"s, bool, Config::instance().title_effect);
+    CONFIG_OPTION("anime.weather_effect"s, bool, Config::instance().weather_effect);
+    CONFIG_OPTION("anime.window_anime"s, bool, Config::instance().window_animation);
     CONFIG_OPTION("balance.restock_interval"s, int, Config::instance().restock_interval);
     CONFIG_OPTION("font.file"s, std::string, Config::instance().font_filename);
     CONFIG_OPTION("font.size_adjustment"s, int, sizefix);
     CONFIG_OPTION("font.vertical_offset"s, int, vfix);
-    CONFIG_OPTION("foobar.autopick"s, bool, Config::instance().use_autopick);
+    CONFIG_OPTION("foobar.autopick"s, bool, Config::instance().autopick);
     CONFIG_OPTION("foobar.autosave"s, bool, Config::instance().autosave);
     CONFIG_OPTION("foobar.damage_popup"s, bool, Config::instance().damage_popup);
-    CONFIG_OPTION("foobar.hp_bar_position"s, std::string, Config::instance().hp_bar);
+    CONFIG_OPTION("foobar.hp_bar_position"s, std::string, Config::instance().hp_bar_position);
     CONFIG_OPTION("foobar.leash_icon"s, bool, Config::instance().leash_icon);
     CONFIG_OPTION("foobar.max_damage_popup"s, int, Config::instance().max_damage_popup);
     CONFIG_OPTION("foobar.allow_enhanced_skill_tracking"s, bool, Config::instance().allow_enhanced_skill);
@@ -341,32 +341,32 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("foobar.skip_confirm_at_shop"s, bool, Config::instance().skip_confirm_at_shop);
     CONFIG_OPTION("foobar.skip_overcasting_warning"s, bool, Config::instance().skip_overcasting_warning);
     CONFIG_OPTION("game.attack_neutral_npcs"s, bool, Config::instance().attack_neutral_npcs);
-    CONFIG_OPTION("game.extra_help"s, bool, Config::instance().extrahelp);
-    CONFIG_OPTION("game.hide_autoidentify"s, bool, Config::instance().hideautoidentify);
-    CONFIG_OPTION("game.hide_shop_updates"s, bool, Config::instance().hideshopresult);
+    CONFIG_OPTION("game.extra_help"s, bool, Config::instance().extra_help);
+    CONFIG_OPTION("game.hide_autoidentify"s, bool, Config::instance().hide_autoidentify);
+    CONFIG_OPTION("game.hide_shop_updates"s, bool, Config::instance().hide_shop_updates);
     CONFIG_OPTION("game.story"s, bool, Config::instance().story);
-    CONFIG_OPTION("input.attack_wait"s, int, Config::instance().attackwait);
-    CONFIG_OPTION("input.autodisable_numlock"s, bool, Config::instance().autonumlock);
-    CONFIG_OPTION("input.key_wait"s, int, Config::instance().keywait);
-    CONFIG_OPTION("input.walk_wait"s, int, Config::instance().walkwait);
-    CONFIG_OPTION("input.run_wait"s, int, Config::instance().runwait);
-    CONFIG_OPTION("input.start_run_wait"s, int, Config::instance().startrun);
+    CONFIG_OPTION("input.attack_wait"s, int, Config::instance().attack_wait);
+    CONFIG_OPTION("input.autodisable_numlock"s, bool, Config::instance().autodisable_numlock);
+    CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
+    CONFIG_OPTION("input.walk_wait"s, int, Config::instance().walk_wait);
+    CONFIG_OPTION("input.run_wait"s, int, Config::instance().run_wait);
+    CONFIG_OPTION("input.start_run_wait"s, int, Config::instance().start_run_wait);
     CONFIG_OPTION("input.select_wait"s, int, Config::instance().select_wait);
-    CONFIG_OPTION("input.select_fast_start_wait"s, int, Config::instance().select_fast_start);
+    CONFIG_OPTION("input.select_fast_start_wait"s, int, Config::instance().select_fast_start_wait);
     CONFIG_OPTION("input.select_fast_wait"s, int, Config::instance().select_fast_wait);
     CONFIG_OPTION("message.add_timestamps"s, bool, Config::instance().message_add_timestamps);
     CONFIG_OPTION("message.transparency"s, int, Config::instance().message_transparency);
-    CONFIG_OPTION("net.chat"s, bool, Config::instance().netchat);
+    CONFIG_OPTION("net.chat"s, bool, Config::instance().net_chat);
     CONFIG_OPTION("net.enabled"s, bool, Config::instance().net);
-    CONFIG_OPTION("net.server_list"s, bool, Config::instance().serverlist);
-    CONFIG_OPTION("net.wish"s, bool, Config::instance().netwish);
-    CONFIG_OPTION("anime.always_center"s, bool, Config::instance().alwayscenter);
+    CONFIG_OPTION("net.server_list"s, bool, Config::instance().server_list);
+    CONFIG_OPTION("net.wish"s, bool, Config::instance().net_wish);
+    CONFIG_OPTION("anime.always_center"s, bool, Config::instance().always_center);
     CONFIG_OPTION("screen.music"s, std::string, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
-    CONFIG_OPTION("screen.heartbeat"s, bool, Config::instance().heart);
-    CONFIG_OPTION("screen.high_quality_shadows"s, bool, Config::instance().shadow);
-    CONFIG_OPTION("screen.object_shadows"s, bool, Config::instance().objectshadow);
-    CONFIG_OPTION("screen.skip_random_event_popups"s, bool, Config::instance().skiprandevents);
+    CONFIG_OPTION("screen.heartbeat"s, bool, Config::instance().heartbeat);
+    CONFIG_OPTION("screen.high_quality_shadows"s, bool, Config::instance().high_quality_shadow);
+    CONFIG_OPTION("screen.object_shadows"s, bool, Config::instance().object_shadow);
+    CONFIG_OPTION("screen.skip_random_event_popups"s, bool, Config::instance().skip_random_event_popups);
     // clang-format on
 
     conf.bind_setter<std::string>(
@@ -383,17 +383,17 @@ void load_config(const fs::path& hcl_file)
     std::ifstream ifs{hcl_file.native()};
     conf.load(ifs, hcl_file.string(), false);
 
-    if (Config::instance().runwait < 1)
+    if (Config::instance().run_wait < 1)
     {
-        Config::instance().runwait = 1;
+        Config::instance().run_wait = 1;
     }
-    if (Config::instance().attackwait < 1)
+    if (Config::instance().attack_wait < 1)
     {
-        Config::instance().attackwait = 1;
+        Config::instance().attack_wait = 1;
     }
-    if (Config::instance().startrun >= 20)
+    if (Config::instance().start_run_wait >= 20)
     {
-        Config::instance().startrun = 1000;
+        Config::instance().start_run_wait = 1000;
     }
     if (Config::instance().language == spec::unknown_enum_variant)
     {
@@ -422,10 +422,10 @@ void initialize_config_preload(const fs::path& hcl_file)
     CONFIG_OPTION("screen.fullscreen"s, std::string, Config::instance().fullscreen);
     CONFIG_OPTION("screen.music"s, std::string, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
-    CONFIG_OPTION("balance.extra_race"s, bool, Config::instance().extrarace);
-    CONFIG_OPTION("balance.extra_class"s, bool, Config::instance().extraclass);
+    CONFIG_OPTION("balance.extra_race"s, bool, Config::instance().extra_race);
+    CONFIG_OPTION("balance.extra_class"s, bool, Config::instance().extra_class);
     CONFIG_OPTION("input.joypad"s, bool, Config::instance().joypad);
-    CONFIG_OPTION("input.key_wait"s, int, Config::instance().keywait);
+    CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
     CONFIG_OPTION("ui.msg_line"s, int, inf_msgline);
     CONFIG_OPTION("ui.tile_size"s, int, inf_tiles);
     CONFIG_OPTION("ui.font_size"s, int, inf_mesfont);

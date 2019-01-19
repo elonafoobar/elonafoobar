@@ -349,7 +349,7 @@ public:
 protected:
     optional<bool> update() override
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
 
         const auto& keys = snail::Input::instance().pressed_keys();
 
@@ -455,7 +455,7 @@ public:
 protected:
     optional<KeyPromptResult> update() override
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
 
         const auto& keys = snail::Input::instance().pressed_keys();
         auto modifiers = snail::Input::instance().modifiers();

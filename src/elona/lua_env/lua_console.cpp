@@ -358,12 +358,12 @@ void LuaConsole::grab_input()
         if (modifiers == ModKey::none)
         {
             return Input::instance().is_pressed(
-                key, Config::instance().keywait);
+                key, Config::instance().key_wait);
         }
         else
         {
             return Input::instance().is_pressed(
-                       key, Config::instance().keywait) &&
+                       key, Config::instance().key_wait) &&
                 (Input::instance().modifiers() & modifiers) != ModKey::none;
         }
     };
@@ -371,8 +371,8 @@ void LuaConsole::grab_input()
     while (_focused)
     {
         ++frame;
-        if (Config::instance().scrsync > 0 &&
-            frame % Config::instance().scrsync == 0)
+        if (Config::instance().screen_refresh_wait > 0 &&
+            frame % Config::instance().screen_refresh_wait == 0)
         {
             ++scrturn;
             ui_render_from_screensync();

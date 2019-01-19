@@ -584,7 +584,7 @@ int show_random_event_window(
 {
     assert(!choices.empty());
 
-    if (Config::instance().skiprandevents && choices.size() == 1)
+    if (Config::instance().skip_random_event_popups && choices.size() == 1)
     {
         // Skip this event.
         snd("core.pop4");

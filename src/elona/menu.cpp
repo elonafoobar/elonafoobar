@@ -301,7 +301,7 @@ void text_set()
 
 bool maybe_show_ex_help(int id, bool should_update_screen)
 {
-    if (Config::instance().extrahelp)
+    if (Config::instance().extra_help)
     {
         if (game_data.exhelp_flags.at(id) == 0)
         {

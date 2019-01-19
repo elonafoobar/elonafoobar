@@ -1015,9 +1015,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(Config::instance().animewait * 6);
+                await(Config::instance().animation_wait * 6);
             }
-            await(Config::instance().animewait * 3);
+            await(Config::instance().animation_wait * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
@@ -1234,7 +1234,7 @@ TurnResult turn_end()
             if (cc != 0)
             {
                 update_screen();
-                await(Config::instance().animewait * 10);
+                await(Config::instance().animation_wait * 10);
             }
             txt(u8" *tick* "s, Message::color{ColorIndex::cyan});
             return TurnResult::pass_one_turn_freeze_time;
@@ -1279,7 +1279,7 @@ TurnResult pc_turn(bool advance_time)
         }
         if (game_data.player_cellaccess_check_flag)
         {
-            await(Config::instance().wait1 / 3);
+            await(Config::instance().general_wait / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata.player().position.y + dy;
@@ -1547,7 +1547,8 @@ label_2747:
         return TurnResult::turn_end;
     }
     ++t;
-    if (Config::instance().scrsync > 0 && t % Config::instance().scrsync == 0)
+    if (Config::instance().screen_refresh_wait > 0 &&
+        t % Config::instance().screen_refresh_wait == 0)
     {
         ++scrturn;
         ui_render_from_screensync();
@@ -1569,7 +1570,7 @@ label_2747:
     // queried, but it would probably be dangerous to allow the game
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
