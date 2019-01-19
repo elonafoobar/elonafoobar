@@ -40,35 +40,38 @@ public:
         setters.clear();
     }
 
+    // If your are vimmer, ex command ":sort /\w\+;/ r" can sort the list well.
     int alert_wait;
+    bool allow_enhanced_skill;
     bool always_center;
     int animation_wait;
     bool attack_animation;
+    bool attack_neutral_npcs;
     int attack_wait;
-    bool autodisable_numlock;
-    bool autosave;
     std::string auto_turn_speed;
+    bool autodisable_numlock;
+    bool autopick;
+    bool autosave;
     bool damage_popup;
     std::string display_mode;
-    bool weather_effect;
+    int enhanced_skill_lowerbound;
+    int enhanced_skill_upperbound;
     bool extra_class;
     bool extra_help;
     bool extra_race;
     std::string font_filename;
     std::string fullscreen;
+    int general_wait;
     bool heartbeat;
     bool hide_autoidentify;
     bool hide_shop_updates;
+    bool high_quality_shadow;
     std::string hp_bar_position;
-    bool attack_neutral_npcs;
     bool joypad;
     int key_wait;
     std::string language;
     bool leash_icon;
     int max_damage_popup;
-    bool allow_enhanced_skill;
-    int enhanced_skill_lowerbound;
-    int enhanced_skill_upperbound;
     bool message_add_timestamps;
     int message_transparency;
     std::string music;
@@ -78,15 +81,14 @@ public:
     bool object_shadow;
     std::string pcc_graphic_scale;
     int restock_interval;
-    bool scroll_when_run;
     int run_wait;
-    bool scroll;
     int screen_refresh_wait;
+    bool scroll;
+    bool scroll_when_run;
     int select_fast_start_wait;
-    int select_wait;
     int select_fast_wait;
+    int select_wait;
     bool server_list;
-    bool high_quality_shadow;
     bool skip_confirm_at_shop;
     bool skip_overcasting_warning;
     bool skip_random_event_popups;
@@ -95,12 +97,11 @@ public:
     std::string startup_script;
     bool story;
     bool title_effect;
-    int general_wait;
     int walk_wait;
+    bool weather_effect;
     bool window_animation;
     bool wizard;
 
-    bool autopick;
     bool use_autopick_in_home;
     bool use_autopick_in_dungeon;
     bool use_autopick_in_shop;
