@@ -811,7 +811,7 @@ std::string replace_tag(const std::string source)
     }
     if (source == u8"sex"s)
     {
-        return i18n::s.get_enum("core.locale.ui.sex2", 0);
+        return i18n::s.get_enum("core.locale.ui.sex2", cdata.player().sex);
     }
     if (source == u8"player"s)
     {
