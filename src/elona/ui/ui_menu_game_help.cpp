@@ -72,134 +72,154 @@ bool UIMenuGameHelp::init()
 
 void UIMenuGameHelp::_draw_key_list()
 {
-    x = wx + 188;
-    y = wy + 6;
-    display_topic(
-        i18n::s.get("core.locale.ui.manual.keys.item.title"), x + 18, y + 30);
-    display_topic(
-        i18n::s.get("core.locale.ui.manual.keys.action.title"),
-        x + 18,
-        y + 142);
-    display_topic(
-        i18n::s.get("core.locale.ui.manual.keys.info.title"), x + 18, y + 256);
-    display_topic(
-        i18n::s.get("core.locale.ui.manual.keys.other.title"), x + 18, y + 328);
-    s(0) = i18n::s.get("core.locale.ui.manual.keys.item.get");
-    s(1) = key_get;
-    s(2) = i18n::s.get("core.locale.ui.manual.keys.item.drop");
-    s(3) = key_drop;
-    s(4) = i18n::s.get("core.locale.ui.manual.keys.item.examine");
-    s(5) = key_inventory;
-    s(6) = i18n::s.get("core.locale.ui.manual.keys.item.wear_wield");
-    s(7) = key_wear;
-    s(8) = i18n::s.get("core.locale.ui.manual.keys.item.eat");
-    s(9) = key_eat;
-    s(10) = i18n::s.get("core.locale.ui.manual.keys.item.quaff");
-    s(11) = key_drink;
-    s(12) = i18n::s.get("core.locale.ui.manual.keys.item.read");
-    s(13) = key_read;
-    s(14) = i18n::s.get("core.locale.ui.manual.keys.item.zap");
-    s(15) = key_zap;
-    s(16) = i18n::s.get("core.locale.ui.manual.keys.item.tool");
-    s(17) = key_use;
-    s(18) = i18n::s.get("core.locale.ui.manual.keys.item.blend");
-    s(19) = key_dip;
-    s(20) = i18n::s.get("core.locale.ui.manual.keys.item.throw");
-    s(21) = key_throw;
-    s(22) = i18n::s.get("core.locale.ui.manual.keys.item.ammo");
-    s(23) = key_ammo;
+    const auto x = wx + 188;
+    const auto y = wy + 6;
+    const auto desc_font_size = 13 - en * 2;
+    const auto key_font_size = 15 - en * 2;
 
-    for (int cnt = 0; cnt < 12; ++cnt)
+    struct KeyDescPair
     {
-        font(13 - en * 2);
-        mes(x + 38 + cnt / 6 * 290, y + 58 + cnt % 6 * 14, s(cnt * 2));
-        font(15 - en * 2);
-        mes(x + 248 + cnt / 6 * 290, y + 57 + cnt % 6 * 14, s(cnt * 2 + 1));
-    }
-    s(0) = i18n::s.get("core.locale.ui.manual.keys.action.search");
-    s(1) = key_search;
-    s(2) = i18n::s.get("core.locale.ui.manual.keys.action.cast");
-    s(3) = key_cast;
-    s(4) = i18n::s.get("core.locale.ui.manual.keys.action.interact");
-    s(5) = key_interact;
-    s(6) = i18n::s.get("core.locale.ui.manual.keys.action.go_down");
-    s(7) = key_godown;
-    s(8) = i18n::s.get("core.locale.ui.manual.keys.action.go_up");
-    s(9) = key_goup;
-    s(10) = i18n::s.get("core.locale.ui.manual.keys.action.wait");
-    s(11) = key_wait;
-    s(12) = i18n::s.get("core.locale.ui.manual.keys.action.target");
-    s(13) = key_target;
-    s(14) = i18n::s.get("core.locale.ui.manual.keys.action.fire");
-    s(15) = key_fire;
-    s(16) = i18n::s.get("core.locale.ui.manual.keys.action.apply");
-    s(17) = key_skill;
-    s(18) = i18n::s.get("core.locale.ui.manual.keys.action.bash");
-    s(19) = key_bash;
-    s(20) = i18n::s.get("core.locale.ui.manual.keys.action.dig");
-    s(21) = key_dig;
-    s(22) = i18n::s.get("core.locale.ui.manual.keys.action.open");
-    s(23) = key_open;
-    s(24) = "";
-    s(25) = "";
+        std::string key;
+        std::string desc;
+    };
 
-    for (int cnt = 0; cnt < 12; ++cnt)
     {
-        font(13 - en * 2);
-        mes(x + 38 + cnt / 6 * 290, y + 170 + cnt % 6 * 14, s(cnt * 2));
-        font(15 - en * 2);
-        mes(x + 248 + cnt / 6 * 290, y + 169 + cnt % 6 * 14, s(cnt * 2 + 1));
-    }
-    s(0) = i18n::s.get("core.locale.ui.manual.keys.info.chara");
-    s(1) = key_charainfo;
-    s(2) = i18n::s.get("core.locale.ui.manual.keys.info.journal");
-    s(3) = key_journal;
-    s(4) = i18n::s.get("core.locale.ui.manual.keys.info.help");
-    s(5) = key_help;
-    s(6) = i18n::s.get("core.locale.ui.manual.keys.info.log");
-    s(7) = key_msglog;
-    s(8) = i18n::s.get("core.locale.ui.manual.keys.info.material");
-    s(9) = key_material;
-    s(10) = i18n::s.get("core.locale.ui.manual.keys.info.feat");
-    s(11) = key_trait;
+        // Section "Item"
+        display_topic(
+            i18n::s.get("core.locale.ui.manual.keys.item.title"),
+            x + 18,
+            y + 30);
 
-    for (int cnt = 0; cnt < 6; ++cnt)
-    {
-        font(13 - en * 2);
-        mes(x + 38 + cnt / 3 * 290, y + 284 + cnt % 3 * 14, s(cnt * 2));
-        font(15 - en * 2);
-        mes(x + 248 + cnt / 3 * 290, y + 283 + cnt % 3 * 14, s(cnt * 2 + 1));
-    }
-    s(0) = i18n::s.get("core.locale.ui.manual.keys.other.save");
-    s(1) = key_save;
-    s(2) = i18n::s.get("core.locale.ui.manual.keys.other.pray");
-    s(3) = key_pray;
-    s(4) = i18n::s.get("core.locale.ui.manual.keys.other.offer");
-    s(5) = key_offer;
-    s(6) = i18n::s.get("core.locale.ui.manual.keys.other.close");
-    s(7) = key_close;
-    s(8) = i18n::s.get("core.locale.ui.manual.keys.other.give");
-    s(9) = key_give;
-    s(10) = "";
-    s(11) = "";
-    s(12) = "";
+        std::vector<KeyDescPair> keys{
+            {key_get, i18n::s.get("core.locale.ui.manual.keys.item.get")},
+            {key_read, i18n::s.get("core.locale.ui.manual.keys.item.read")},
+            {key_drop, i18n::s.get("core.locale.ui.manual.keys.item.drop")},
+            {key_zap, i18n::s.get("core.locale.ui.manual.keys.item.zap")},
+            {key_inventory,
+             i18n::s.get("core.locale.ui.manual.keys.item.examine")},
+            {key_use, i18n::s.get("core.locale.ui.manual.keys.item.tool")},
+            {key_wear,
+             i18n::s.get("core.locale.ui.manual.keys.item.wear_wield")},
+            {key_dip, i18n::s.get("core.locale.ui.manual.keys.item.blend")},
+            {key_eat, i18n::s.get("core.locale.ui.manual.keys.item.eat")},
+            {key_throw, i18n::s.get("core.locale.ui.manual.keys.item.throw")},
+            {key_drink, i18n::s.get("core.locale.ui.manual.keys.item.quaff")},
+            {key_ammo, i18n::s.get("core.locale.ui.manual.keys.item.ammo")},
+        };
 
-    for (int cnt = 0; cnt < 6; ++cnt)
-    {
-        font(13 - en * 2);
-        mes(x + 38 + cnt / 3 * 290, y + 356 + cnt % 3 * 14, s(cnt * 2));
-        font(15 - en * 2);
-        mes(x + 248 + cnt / 3 * 290, y + 355 + cnt % 3 * 14, s(cnt * 2 + 1));
+        int index = 0;
+        for (const auto& pair : keys)
+        {
+            font(desc_font_size);
+            mes(x + 38 + index % 2 * 290, y + 58 + index / 2 * 14, pair.desc);
+            font(key_font_size);
+            mes(x + 248 + index % 2 * 290, y + 57 + index / 2 * 14, pair.key);
+            ++index;
+        }
     }
-    font(13 - en * 2);
-    mes(x + 38,
-        y + 408,
-        u8"F9 "s +
-            i18n::s.get("core.locale.ui.manual.keys.other.hide_interface") +
-            u8"F11  " +
-            i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet") +
-            u8"F12  " +
-            i18n::s.get("core.locale.ui.manual.keys.other.console"));
+
+    // Section "Action"
+    {
+        display_topic(
+            i18n::s.get("core.locale.ui.manual.keys.action.title"),
+            x + 18,
+            y + 142);
+
+        std::vector<KeyDescPair> keys{
+            {key_search,
+             i18n::s.get("core.locale.ui.manual.keys.action.search")},
+            {key_target,
+             i18n::s.get("core.locale.ui.manual.keys.action.target")},
+            {key_cast, i18n::s.get("core.locale.ui.manual.keys.action.cast")},
+            {key_fire, i18n::s.get("core.locale.ui.manual.keys.action.fire")},
+            {key_interact,
+             i18n::s.get("core.locale.ui.manual.keys.action.interact")},
+            {key_skill, i18n::s.get("core.locale.ui.manual.keys.action.apply")},
+            {key_godown,
+             i18n::s.get("core.locale.ui.manual.keys.action.go_down")},
+            {key_bash, i18n::s.get("core.locale.ui.manual.keys.action.bash")},
+            {key_goup, i18n::s.get("core.locale.ui.manual.keys.action.go_up")},
+            {key_dig, i18n::s.get("core.locale.ui.manual.keys.action.dig")},
+            {key_wait, i18n::s.get("core.locale.ui.manual.keys.action.wait")},
+            {key_open, i18n::s.get("core.locale.ui.manual.keys.action.open")},
+        };
+
+        int index = 0;
+        for (const auto& pair : keys)
+        {
+            font(desc_font_size);
+            mes(x + 38 + index % 2 * 290, y + 170 + index / 2 * 14, pair.desc);
+            font(key_font_size);
+            mes(x + 248 + index % 2 * 290, y + 169 + index / 2 * 14, pair.key);
+            ++index;
+        }
+    }
+
+    // Section "Info"
+    {
+        display_topic(
+            i18n::s.get("core.locale.ui.manual.keys.info.title"),
+            x + 18,
+            y + 256);
+
+        std::vector<KeyDescPair> keys{
+            {key_charainfo,
+             i18n::s.get("core.locale.ui.manual.keys.info.chara")},
+            {key_msglog, i18n::s.get("core.locale.ui.manual.keys.info.log")},
+            {key_journal,
+             i18n::s.get("core.locale.ui.manual.keys.info.journal")},
+            {key_material,
+             i18n::s.get("core.locale.ui.manual.keys.info.material")},
+            {key_help, i18n::s.get("core.locale.ui.manual.keys.info.help")},
+            {key_trait, i18n::s.get("core.locale.ui.manual.keys.info.feat")},
+        };
+
+        int index = 0;
+        for (const auto& pair : keys)
+        {
+            font(desc_font_size);
+            mes(x + 38 + index % 2 * 290, y + 284 + index / 2 * 14, pair.desc);
+            font(key_font_size);
+            mes(x + 248 + index % 2 * 290, y + 283 + index / 2 * 14, pair.key);
+            ++index;
+        }
+    }
+
+    // Section "Other"
+    {
+        display_topic(
+            i18n::s.get("core.locale.ui.manual.keys.other.title"),
+            x + 18,
+            y + 328);
+
+        std::vector<KeyDescPair> keys{
+            {key_save, i18n::s.get("core.locale.ui.manual.keys.other.save")},
+            {key_close, i18n::s.get("core.locale.ui.manual.keys.other.close")},
+            {key_pray, i18n::s.get("core.locale.ui.manual.keys.other.pray")},
+            {key_give, i18n::s.get("core.locale.ui.manual.keys.other.give")},
+            {key_offer, i18n::s.get("core.locale.ui.manual.keys.other.offer")},
+        };
+
+        int index = 0;
+        for (const auto& pair : keys)
+        {
+            font(desc_font_size);
+            mes(x + 38 + index % 2 * 290, y + 356 + index / 2 * 14, pair.desc);
+            font(key_font_size);
+            mes(x + 248 + index % 2 * 290, y + 355 + index / 2 * 14, pair.key);
+            ++index;
+        }
+    }
+
+    // Misc.
+    // TODO: support key bindings!
+    const auto misc_keys = u8"F9 "s +
+        i18n::s.get("core.locale.ui.manual.keys.other.hide_interface") +
+        u8"  F11 " +
+        i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet") +
+        u8"  F12 " + i18n::s.get("core.locale.ui.manual.keys.other.console");
+    font(desc_font_size);
+    mes(x + 38, y + 408, misc_keys);
 }
 
 
