@@ -1133,6 +1133,8 @@ int evtiles = 0;
 int evscrh = 0;
 int evscrw = 0;
 
+
+
 Position gmes(
     const std::string& text,
     int x_base,
@@ -1144,42 +1146,35 @@ Position gmes(
     int font_size = 14;
     font(font_size - en * 2);
 
-    const auto message = text + u8"$end";
     int x = x_base;
     int y = y_base;
     size_t pos = 0;
     snail::Color text_color = text_color_base;
 
-    while (message.find(u8"$end", pos) != pos)
+    while (pos < text.size())
     {
         bool wait_to_break_line = false;
-        uint8_t first = message[pos];
-        size_t byte;
-        if (first <= 0x7F)
-            byte = 1;
-        else if (first >= 0xc2 && first <= 0xdf)
-            byte = 2;
-        else if (first >= 0xe0 && first <= 0xef)
-            byte = 3;
-        else if (first >= 0xf0 && first <= 0xf7)
-            byte = 4;
-        else if (first >= 0xf8 && first <= 0xfb)
-            byte = 5;
-        else if (first >= 0xfc && first <= 0xfd)
-            byte = 6;
-        else
-            byte = 1;
-        std::string m_ = strmid(message, pos, byte);
+        const auto byte = strutil::byte_count(text[pos]);
+        std::string one_char = text.substr(pos, byte);
         pos += byte;
-        if (m_ == u8"。" || m_ == u8"、" || m_ == u8"」" || m_ == u8"』" ||
-            m_ == u8"！" || m_ == u8"？" || m_ == u8"…")
+
+        if (one_char == u8"。" || one_char == u8"、" || one_char == u8"」" ||
+            one_char == u8"』" || one_char == u8"！" || one_char == u8"？" ||
+            one_char == u8"…")
         {
             wait_to_break_line = true;
         }
-        else if (m_ == u8"<")
+        else if (one_char == u8"<")
         {
-            const auto tag = strmid(message, pos, instr(message, pos, u8">"));
-            pos += instr(message, pos, u8">") + 1;
+            const auto closing_tag_pos = text.find(u8">", pos);
+            if (closing_tag_pos == std::string::npos)
+            {
+                ELONA_ERROR("Text") << "Invalid notation: missing '>'";
+                // Stop processing, return immediately.
+                return {x_base, y + font_size + 4};
+            }
+            const auto tag = text.substr(pos, closing_tag_pos - pos);
+            pos = closing_tag_pos + 1;
             if (tag == u8"emp1")
             {
                 font(font_size - en * 2, snail::Font::Style::underline);
@@ -1230,11 +1225,13 @@ Position gmes(
             }
             continue;
         }
-        if (m_ == u8"^")
+        else if (one_char == u8"^")
         {
-            m_ = strmid(message, pos, 1);
+            // Escape
+            one_char = text.substr(pos, 1);
             ++pos;
         }
+
         if (!wait_to_break_line)
         {
             if (x >= x_base + width)
@@ -1245,9 +1242,9 @@ Position gmes(
         }
         if (shadow)
         {
-            elona::mes(x + 1, y + 1, m_, {180, 160, 140});
+            mes(x + 1, y + 1, one_char, {180, 160, 140});
         }
-        elona::mes(x, y, m_, text_color);
+        mes(x, y, one_char, text_color);
         x += font_size / 2 * (byte == 1 ? 1 : 2);
     }
 
