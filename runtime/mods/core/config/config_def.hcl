@@ -27,9 +27,7 @@ config def {
             }
 
             music = {
-                type = "enum"
-                variants = ["none", "direct_music", "mci"]
-                default = "direct_music"
+                default = true
                 preload = true
             }
 

@@ -4,7 +4,7 @@ config {
             # Fullscreen mode.
             fullscreen = "windowed"
 
-            music = "direct_music"
+            music = true
             sound = true
 
             # Render shadows at higher quality.

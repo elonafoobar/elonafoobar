@@ -107,15 +107,8 @@ DOC
                 }
                 music {
                     name = "Music*"
-                    variants {
-                        none = "None"
-                        direct_music = "Direct music"
-                        mci = "MCI"
-                    }
-                    doc = <<DOC
-Music mode to use.
-Currently there is no difference between Direct music and MCI.
-DOC
+                    yes_no = core.locale.config.common.yes_no.on_off
+                    doc = "Enable or disable music."
                 }
                 stereo_sound {
                     name = "Stereo Sound"

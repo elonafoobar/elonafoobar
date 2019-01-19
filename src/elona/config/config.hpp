@@ -74,7 +74,7 @@ public:
     int max_damage_popup;
     bool message_add_timestamps;
     int message_transparency;
-    std::string music;
+    bool music;
     bool net;
     bool net_chat;
     bool net_wish;

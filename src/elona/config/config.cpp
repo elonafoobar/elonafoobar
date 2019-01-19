@@ -361,7 +361,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("net.server_list"s, bool, Config::instance().server_list);
     CONFIG_OPTION("net.wish"s, bool, Config::instance().net_wish);
     CONFIG_OPTION("anime.always_center"s, bool, Config::instance().always_center);
-    CONFIG_OPTION("screen.music"s, std::string, Config::instance().music);
+    CONFIG_OPTION("screen.music"s, bool, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
     CONFIG_OPTION("screen.heartbeat"s, bool, Config::instance().heartbeat);
     CONFIG_OPTION("screen.high_quality_shadows"s, bool, Config::instance().high_quality_shadow);
@@ -420,7 +420,7 @@ void initialize_config_preload(const fs::path& hcl_file)
     // clang-format off
     CONFIG_OPTION("language.language"s, std::string, Config::instance().language);
     CONFIG_OPTION("screen.fullscreen"s, std::string, Config::instance().fullscreen);
-    CONFIG_OPTION("screen.music"s, std::string, Config::instance().music);
+    CONFIG_OPTION("screen.music"s, bool, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
     CONFIG_OPTION("balance.extra_race"s, bool, Config::instance().extra_race);
     CONFIG_OPTION("balance.extra_class"s, bool, Config::instance().extra_class);

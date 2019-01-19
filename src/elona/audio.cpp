@@ -397,12 +397,9 @@ std::pair<short, unsigned char> sound_calculate_position(const Position& p)
 void stop_music()
 {
     mmstop();
-    if (Config::instance().music == "direct_music")
-    {
-        DMSTOP();
-        DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
-        DMPLAY(1, 0);
-    }
+    DMSTOP();
+    DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
+    DMPLAY(1, 0);
 }
 
 
@@ -599,10 +596,8 @@ void play_music(optional<SharedId> music_id)
 {
     sound_play_environmental();
 
-    if (Config::instance().music == "none")
-    {
+    if (!Config::instance().music)
         return;
-    }
 
     if (!music_id)
     {

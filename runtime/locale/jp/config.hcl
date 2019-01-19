@@ -111,12 +111,8 @@ DOC
                     doc = "SEを再生します。"
                 }
                 music {
-                    name = "midiの再生*"
-                    variants {
-                        none = "なし"
-                        direct_music = "direct music"
-                        mci = "MCI"
-                    }
+                    name = "BGMの再生*"
+                    yes_no = core.locale.config.common.yes_no.ari_nashi
                     doc = "BGMを再生します。"
                 }
                 stereo_sound {

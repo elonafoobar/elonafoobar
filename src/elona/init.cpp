@@ -542,9 +542,13 @@ void initialize_elona()
     initialize_home_adata();
     initialize_damage_popups();
     load_character_sprite();
-    if (Config::instance().music == "direct_music" && DMINIT() == 0)
+    if (Config::instance().music)
     {
-        Config::instance().music = "mci";
+        bool err = DMINIT() == 0;
+        if (err)
+        {
+            Config::instance().music = false;
+        }
     }
     DSINIT();
     if (Config::instance().joypad == 1)
