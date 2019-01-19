@@ -2308,7 +2308,8 @@ void tcg_draw_deck_editor()
             s_at_tcg = ""s + cpdata_at_tcg(4, cnt);
             mes(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3,
                 y_at_tcg + 9 - en,
-                s_at_tcg);
+                s_at_tcg,
+                {255, 255, 255});
             if (cnt != player_at_tcg)
             {
                 s_at_tcg = u8"?/"s + cpdata_at_tcg(6, cnt);
@@ -2320,7 +2321,8 @@ void tcg_draw_deck_editor()
             }
             mes(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3,
                 y_at_tcg + 95 - en,
-                s_at_tcg);
+                s_at_tcg,
+                {255, 255, 255});
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
@@ -2402,7 +2404,10 @@ void tcg_draw_deck_editor()
         mes(basex_at_tcg + 24, basey_at_tcg + 240, s_at_tcg);
     }
     font(12 + en - en * 2);
-    mes(basex_at_tcg + 146, basey_at_tcg + 545, helpmsg_at_tcg);
+    mes(basex_at_tcg + 146,
+        basey_at_tcg + 545,
+        helpmsg_at_tcg,
+        {215, 215, 215});
 }
 
 
