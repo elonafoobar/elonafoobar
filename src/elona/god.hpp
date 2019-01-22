@@ -11,6 +11,7 @@ namespace elona
 
 using GodId = std::string;
 
+struct Item;
 
 
 namespace core_god
@@ -28,41 +29,25 @@ constexpr const char* kumiromi = "core.kumiromi"; // 7
 
 inline GodId int2godid(int n)
 {
-    switch (n)
+    auto id = the_god_db.get_id_from_legacy(n);
+    if (!id)
     {
-    case 0: return eyth;
-    case 1: return mani;
-    case 2: return lulwy;
-    case 3: return itzpalt;
-    case 4: return ehekatl;
-    case 5: return opatos;
-    case 6: return jure;
-    case 7: return kumiromi;
-    default: return "";
+        return "";
     }
+
+    return id->get();
 }
 
 
 inline int godid2int(const GodId& id)
 {
-    if (id == eyth)
+    auto god_data = the_god_db[id];
+    if (!god_data)
+    {
         return 0;
-    if (id == mani)
-        return 1;
-    if (id == lulwy)
-        return 2;
-    if (id == itzpalt)
-        return 3;
-    if (id == ehekatl)
-        return 4;
-    if (id == opatos)
-        return 5;
-    if (id == jure)
-        return 6;
-    if (id == kumiromi)
-        return 7;
-    else
-        return 0;
+    }
+
+    return god_data->id;
 }
 
 } // namespace core_god
@@ -80,5 +65,6 @@ TurnResult do_pray();
 TurnResult do_offer();
 std::string god_name(const GodId& id);
 std::string god_name(int legacy_god_id);
+bool god_is_offerable(const Item& item);
 
 } // namespace elona

@@ -1,4 +1,5 @@
 #pragma once
+#include "../../lua_env/wrapped_function.hpp"
 #include "../lua_lazy_cache.hpp"
 
 
@@ -9,6 +10,11 @@ namespace elona
 struct GodData
 {
     int id;
+    sol::table items;
+    SharedId servant_id;
+    std::unordered_map<int, lua::WrappedFunction> skills;
+    SharedId artifact_id;
+    std::unordered_set<SharedId> offerings;
 };
 
 

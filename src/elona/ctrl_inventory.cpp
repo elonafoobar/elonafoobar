@@ -13,6 +13,7 @@
 #include "enums.hpp"
 #include "equipment.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -351,10 +352,7 @@ label_20591:
             }
             if (invctrl == 19)
             {
-                dbid = inv[cnt].id;
-                dbspec = 12;
-                int is_offerable = access_item_db(16);
-                if (is_offerable == 0)
+                if (!god_is_offerable(inv[cnt]))
                 {
                     continue;
                 }
