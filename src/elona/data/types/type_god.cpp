@@ -22,7 +22,7 @@ static std::unordered_map<int, lua::WrappedFunction> _convert_skills(
             int k = kvp.first.as<int>();
             sol::protected_function v =
                 kvp.second.as<sol::protected_function>();
-            skills.emplace(k, lua::WrappedFunction(v));
+            skills.emplace(k, lua::WrappedFunction("core.god", v));
         }
     }
 
@@ -58,10 +58,10 @@ GodData GodDB::convert(const lua::ConfigTable& data, const std::string&)
     auto offerings = _convert_offerings(data, "offerings");
 
     return GodData{legacy_id,
-                   SharedId(servant),
                    items,
-                   SharedId(artifact),
+                   SharedId(servant),
                    skills,
+                   SharedId(artifact),
                    offerings};
 }
 

@@ -5,11 +5,13 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_api/lua_api_item.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
@@ -253,7 +255,7 @@ void switch_religion()
 }
 
 
-static void _create_faith_reward_servant()
+static optional<TurnResult> _create_faith_reward_servant()
 {
     bool no_more_servants = false;
     int servant_count = 0;
@@ -293,15 +295,23 @@ static void _create_faith_reward_servant()
         return TurnResult::turn_end;
     }
 
-    auto god_data = the_god_db[cdata[cc].god_id];
+    auto god_id = cdata[cc].god_id;
+    auto god_data = the_god_db[god_id];
     assert(god_data);
 
-    auto chara = the_chara_db[god_data->servant];
+    if (!god_data)
+    {
+        txt("Cannot find god ID '"s + god_id + "'."s,
+            Message::color(ColorIndex::red));
+        return TurnResult::turn_end;
+    }
+
+    auto chara = the_character_db[god_data->servant_id];
     if (!chara)
     {
-        txt("Cannot find character ID '"s + god_data->servant.get() + "'."s,
+        txt("Cannot find character ID '"s + god_data->servant_id.get() + "'."s,
             Message::color(ColorIndex::red));
-        return;
+        return TurnResult::turn_end;
     }
 
     txt(i18n::s.get("core.locale.god.pray.servant.desc"),
@@ -314,17 +324,26 @@ static void _create_faith_reward_servant()
     chara_create(56, dbid, -3, 0);
     rc = 56;
     new_ally_joins();
+
+    return none;
 }
 
-static void _create_faith_reward_gemstone()
+static optional<TurnResult> _create_faith_reward_gemstone()
 {
-    auto god_data = the_god_db[cdata[cc].god_id];
+    auto god_id = cdata[cc].god_id;
+    auto god_data = the_god_db[god_id];
     assert(god_data);
 
-    for (int i = 0; i < god_data->items.size(); i++)
+    if (!god_data)
+    {
+        lua::print_data_error("god", god_id);
+        return TurnResult::turn_end;
+    }
+
+    for (size_t i = 0; i < god_data->items.size(); i++)
     {
         sol::object item_proto_obj = god_data->items[i];
-        if (sol::object != sol::lua_nil && item_proto.is<sol::table>)
+        if (item_proto_obj != sol::lua_nil && item_proto_obj.is<sol::table>())
         {
             lua::ConfigTable item_proto = item_proto_obj.as<lua::ConfigTable>();
 
@@ -341,10 +360,9 @@ static void _create_faith_reward_gemstone()
                         continue;
                     }
                 }
-                else
+                else if (id)
                 {
-                    txt("Cannot find item ID '"s + *id + "'."s,
-                        Message::color(ColorIndex::red));
+                    lua::print_data_error("item", *id);
                 }
             }
 
@@ -354,19 +372,27 @@ static void _create_faith_reward_gemstone()
     }
 
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+
+    return none;
 }
 
-static void _create_faith_reward_artifact()
+static optional<TurnResult> _create_faith_reward_artifact()
 {
-    auto god_data = the_god_db[cdata[cc].god_id];
+    auto god_id = cdata[cc].god_id;
+    auto god_data = the_god_db[god_id];
     assert(god_data);
 
-    auto item = the_item_db[god_data->artifact];
+    if (!god_data)
+    {
+        lua::print_data_error("god", god_id);
+        return TurnResult::turn_end;
+    }
+
+    auto item = the_item_db[god_data->artifact_id];
     if (!item)
     {
-        txt("Cannot find item ID '"s + god_data->artifact.get() + "'."s,
-            Message::color(ColorIndex::red));
-        return;
+        lua::print_data_error("item", god_data->artifact_id.get());
+        return TurnResult::turn_end;
     }
 
     flt();
@@ -380,6 +406,8 @@ static void _create_faith_reward_artifact()
         -1, dbid, cdata.player().position.x, cdata.player().position.y, 0);
 
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+
+    return none;
 }
 
 TurnResult do_pray()
@@ -423,15 +451,24 @@ TurnResult do_pray()
         txtgod(cdata.player().god_id, 6);
         if (game_data.god_rank == 1)
         {
-            _create_faith_reward_servant();
+            if (auto result = _create_faith_reward_servant())
+            {
+                return *result;
+            }
         }
         if (game_data.god_rank == 3)
         {
-            _create_faith_reward_gemstone();
+            if (auto result = _create_faith_reward_gemstone())
+            {
+                return *result;
+            }
         }
         if (game_data.god_rank == 5)
         {
-            _create_faith_reward_artifact();
+            if (auto result = _create_faith_reward_artifact())
+            {
+                return *result;
+            }
         }
         ++game_data.god_rank;
     }
@@ -475,7 +512,7 @@ bool god_is_offerable(const Item& item)
         return false;
     }
 
-    return god_data->offerings.find(id) != god_data->offerings.end();
+    return god_data->offerings.find(*id) != god_data->offerings.end();
 }
 
 } // namespace elona

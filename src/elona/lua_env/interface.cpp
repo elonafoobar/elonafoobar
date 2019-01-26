@@ -1,4 +1,5 @@
 #include "interface.hpp"
+#include "../i18n.hpp"
 #include "config_table.hpp"
 #include "data_manager.hpp"
 
@@ -28,6 +29,15 @@ optional<ConfigTable> data(const char* type, int legacy_id)
     }
 
     return none;
+}
+
+
+
+void print_data_error(const std::string& data_type, const SharedId& id)
+{
+    txt(i18n::s.get(
+            "core.locale.ui.data_error", "core."s + id.get(), data_type),
+        Message::color(ColorIndex::red));
 }
 
 } // namespace lua

@@ -23,6 +23,8 @@ locale {
 
         assign_shortcut = "{${_1}}キーにショートカットを割り当てた。"
 
+        data_error = "「${_2}」式のデータエントリ「${_1}」が見つかりません。"
+
         curse_state {
             cursed = "呪われた"
             blessed = "祝福された"

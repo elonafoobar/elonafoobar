@@ -23,6 +23,8 @@ locale {
 
         assign_shortcut = "You have assigned the shortcut to {${_1}} key."
 
+        data_error = "Can't find data entry '${_1}' of type '${_2}'."
+
         curse_state {
             cursed = "cursed"
             blessed = "blessed"

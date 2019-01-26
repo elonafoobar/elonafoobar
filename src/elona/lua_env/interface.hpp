@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../shared_id.hpp"
+#include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_env.hpp"
@@ -78,6 +80,12 @@ optional<ConfigTable> data(const char* type, const std::string& id);
  * Obtains a Lua table reference to a data member in the global data table.
  */
 optional<ConfigTable> data(const char* type, int legacy_id);
+
+/**
+ * Prints an error related to a missing entry in the global data table using
+ * txt().
+ */
+void print_data_error(const std::string& data_type, const std::string& id);
 
 } // namespace lua
 } // namespace elona

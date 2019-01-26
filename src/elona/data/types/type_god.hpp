@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_set>
 #include "../../lua_env/wrapped_function.hpp"
 #include "../lua_lazy_cache.hpp"
 
