@@ -122,10 +122,6 @@ int access_item_db(int dbmode)
         {
             inv[ci].skill = 108;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::lulwy;
-        }
         break;
     case 787:
         if (dbmode == 3)
@@ -1483,10 +1479,6 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
-        }
         break;
     case 616:
         if (dbmode == 3)
@@ -1798,19 +1790,11 @@ int access_item_db(int dbmode)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 553:
         if (dbmode == 3)
         {
             inv[ci].param2 = 1;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 552:
@@ -2040,10 +2024,6 @@ int access_item_db(int dbmode)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
         break;
     case 511:
         if (dbmode == 3)
@@ -2157,67 +2137,11 @@ int access_item_db(int dbmode)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 495:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 494:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 492:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 491:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 490:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 489:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
         break;
     case 488:
         if (dbmode == 3)
         {
             inv[ci].function = 9;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 487:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
-        break;
-    case 486:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 485:
@@ -2257,10 +2181,6 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].skill = 109;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::lulwy;
         }
         break;
     case 481:
@@ -2447,19 +2367,11 @@ int access_item_db(int dbmode)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 420:
         if (dbmode == 3)
         {
             inv[ci].param2 = 1;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 419:
@@ -2467,29 +2379,17 @@ int access_item_db(int dbmode)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 418:
         if (dbmode == 3)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 417:
         if (dbmode == 3)
         {
             inv[ci].param2 = 1;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 412:
@@ -3138,20 +3038,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
-        }
         break;
     case 353:
         if (dbmode == 3)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 352:
@@ -3160,20 +3052,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
-        }
         break;
     case 351:
         if (dbmode == 3)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 350:
@@ -3182,20 +3066,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
-        }
         break;
     case 349:
         if (dbmode == 3)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 348:
@@ -3204,20 +3080,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
-        }
         break;
     case 347:
         if (dbmode == 3)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 346:
@@ -3226,20 +3094,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
-        }
         break;
     case 345:
         if (dbmode == 3)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 344:
@@ -3580,10 +3440,6 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 6000;
             inv[ci].param3 = 6;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::ehekatl;
-        }
         break;
     case 260:
         if (dbmode == 3)
@@ -3822,29 +3678,17 @@ int access_item_db(int dbmode)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
         break;
     case 230:
         if (dbmode == 3)
         {
             inv[ci].skill = 108;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::lulwy;
-        }
         break;
     case 229:
         if (dbmode == 3)
         {
             inv[ci].skill = 105;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::itzpalt;
         }
         break;
     case 228:
@@ -3900,10 +3744,6 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].skill = 105;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::itzpalt;
         }
         break;
     case 211:
@@ -3985,10 +3825,6 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 1000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return 1;
-        }
         break;
     case 203:
         if (dbmode == 3)
@@ -4022,20 +3858,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 2000;
             inv[ci].param3 = 2;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 200:
         if (dbmode == 3)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 199:
@@ -4044,20 +3872,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 198:
         if (dbmode == 3)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 197:
@@ -4093,10 +3913,6 @@ int access_item_db(int dbmode)
         {
             inv[ci].param1 = 2000;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 192:
         if (dbmode == 3)
@@ -4116,10 +3932,6 @@ int access_item_db(int dbmode)
         {
             inv[ci].param1 = 2000;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 188:
         if (dbmode == 3)
@@ -4127,19 +3939,11 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 187:
         if (dbmode == 3)
         {
             inv[ci].param1 = 2000;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 186:
@@ -4148,20 +3952,12 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
-        }
         break;
     case 185:
         if (dbmode == 3)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 184:
@@ -4204,10 +4000,6 @@ int access_item_db(int dbmode)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 48;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 178:
@@ -4624,10 +4416,6 @@ int access_item_db(int dbmode)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::mani;
-        }
         break;
     case 59:
         if (dbmode == 3)
@@ -4639,10 +4427,6 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].skill = 108;
-        }
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::lulwy;
         }
         break;
     case 57:
@@ -4679,69 +4463,6 @@ int access_item_db(int dbmode)
             inv[ci].is_precious() = true;
             inv[ci].difficulty_of_identification = 500;
             fixlv = Quality::special;
-        }
-        break;
-    case 44:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 42:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 41:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 40:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 39:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 38:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 37:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 36:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
-        }
-        break;
-    case 35:
-        if (dbmode == 16 && dbspec == 12)
-        {
-            return cdata.player().god_id == core_god::jure ||
-                cdata.player().god_id == core_god::opatos;
         }
         break;
     case 34:
