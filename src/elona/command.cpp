@@ -601,9 +601,10 @@ TurnResult do_pray_command()
     {
         ci = stat;
         int god_id_int = inv[ci].param1;
-        if (core_god::int2godid(god_id_int) != cdata.player().god_id)
+        std::string god_id = core_god::int2godid(god_id_int);
+        if (god_id != cdata.player().god_id)
         {
-            begin_to_believe_god(god_id_int);
+            begin_to_believe_god(god_id);
             return TurnResult::turn_end;
         }
     }

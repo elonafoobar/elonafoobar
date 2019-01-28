@@ -33,10 +33,9 @@ optional<ConfigTable> data(const char* type, int legacy_id)
 
 
 
-void print_data_error(const std::string& data_type, const SharedId& id)
+void print_data_error(const std::string& data_type, const std::string& id)
 {
-    txt(i18n::s.get(
-            "core.locale.ui.data_error", "core."s + id.get(), data_type),
+    txt(i18n::s.get("core.locale.ui.data_error", "core."s + id, data_type),
         Message::color(ColorIndex::red));
 }
 

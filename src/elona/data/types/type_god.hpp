@@ -11,6 +11,8 @@ namespace elona
 struct GodData
 {
     int id;
+    optional<std::string> wish_name;
+    optional<SharedId> summon_id;
     sol::table items;
     SharedId servant_id;
     std::unordered_map<int, lua::WrappedFunction> skills;

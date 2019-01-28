@@ -1270,7 +1270,7 @@ void show_city_chart()
 
 
 
-void begin_to_believe_god(int god_id)
+void begin_to_believe_god(const std::string& god_id)
 {
     bool already_believing = cdata.player().god_id != core_god::eyth;
 

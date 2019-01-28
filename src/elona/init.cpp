@@ -34,6 +34,7 @@
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include "wish.hpp"
 
 using namespace elona;
 
@@ -436,6 +437,7 @@ void initialize_elona()
     initialize_nefia_names();
     initialize_home_adata();
     initialize_damage_popups();
+    initialize_wish_god_summon_keywords();
     load_character_sprite();
     if (Config::instance().music)
     {

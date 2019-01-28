@@ -1,11 +1,3 @@
-local Math = Elona.require("Math")
-
-local function blessing(factor, max)
-   return function(piety_point, faith)
-      return Math.clamp(piety_point / factor, 1, max + faith / 10)
-   end
-end
-
 local function secret_treasure(id)
    return { id = "core.secret_treasure", param1 = id, nostack = true }
 end
@@ -17,20 +9,22 @@ data:add_multi(
       {
          name = "mani",
          id = 1,
+         wish_name = "mani",
+         summon = "core.mani",
          servant = "core.android",
          items = {
             { id = "core.gemstone_of_mani", _only_once = true }
          },
          artifact = "core.winchester_premium",
          skills = {
-            [12]  = blessing(400, 8),
-            [13]  = blessing(300, 14),
-            [154] = blessing(500, 8),
-            [110] = blessing(250, 18),
-            [159] = blessing(350, 8),
-            [158] = blessing(250, 16),
-            [176] = blessing(300, 10),
-            [179] = blessing(350, 12),
+            [12]  = { factor = 400, max = 8  },
+            [13]  = { factor = 300, max = 14 },
+            [154] = { factor = 500, max = 8  },
+            [110] = { factor = 250, max = 18 },
+            [159] = { factor = 350, max = 8  },
+            [158] = { factor = 250, max = 16 },
+            [176] = { factor = 300, max = 10 },
+            [179] = { factor = 350, max = 12 },
          },
          offerings = {
             "core.laser_gun",
@@ -51,18 +45,20 @@ data:add_multi(
       {
          name = "lulwy",
          id = 2,
+         wish_name = "lulwy",
+         summon = "core.lulwy",
          servant = "core.black_angel",
          items = {
             { id = "core.lulwys_gem_stone_of_god_speed", _only_once = true }
          },
          artifact = "core.wind_bow",
          skills = {
-            [13]  = blessing(450, 10),
-            [18]  = blessing(350, 30),
-            [108] = blessing(350, 16),
-            [109] = blessing(450, 12),
-            [157] = blessing(450, 12),
-            [174] = blessing(550, 8),
+            [13]  = { factor = 450, max = 10 },
+            [18]  = { factor = 350, max = 30 },
+            [108] = { factor = 350, max = 16 },
+            [109] = { factor = 450, max = 12 },
+            [157] = { factor = 450, max = 12 },
+            [174] = { factor = 550, max = 8  },
          },
          offerings = {
             "core.skull_bow",
@@ -70,44 +66,45 @@ data:add_multi(
             "core.short_bow",
             "core.long_bow",
          },
-         special_actions = { 25 }
       },
       {
          name = "itzpalt",
          id = 3,
+         wish_name = "itzpalt",
          servant = "core.exile",
          items = {
             secret_treasure(165),
          },
          artifact = "core.elemental_staff",
          skills = {
-            [16]  = blessing(300, 18),
-            [155] = blessing(350, 15),
-            [50]  = blessing(50, 200),
-            [51]  = blessing(50, 200),
-            [52]  = blessing(50, 200),
+            [16]  = { factor = 300, max = 18 },
+            [155] = { factor = 350, max = 15 },
+            [50]  = { factor = 50, max = 200 },
+            [51]  = { factor = 50, max = 200 },
+            [52]  = { factor = 50, max = 200 },
          },
          offerings = {
             "core.long_staff",
             "core.staff",
          },
-         special_actions = { 24 }
       },
       {
          name = "ehekatl",
          id = 4,
+         wish_name = "ehekatl",
+         summon = "core.ehekatl",
          servant = "core.black_cat",
          items = {
             secret_treasure(163),
          },
          artifact = "core.lucky_dagger",
          skills = {
-            [17]  = blessing(250, 20),
-            [19]  = blessing(100, 50),
-            [173] = blessing(300, 15),
-            [164] = blessing(350, 17),
-            [185] = blessing(300, 12),
-            [158] = blessing(450, 8),
+            [17]  = { factor = 250, max = 20 },
+            [19]  = { factor = 100, max = 50 },
+            [173] = { factor = 300, max = 15 },
+            [164] = { factor = 350, max = 17 },
+            [185] = { factor = 300, max = 12 },
+            [158] = { factor = 450, max = 8  },
          },
          offerings = {
             "core.fish_a",
@@ -127,18 +124,20 @@ data:add_multi(
       {
          name = "opatos",
          id = 5,
+         wish_name = "opatos",
+         summon = "core.opatos",
          servant = "core.golden_knight",
          items = {
             secret_treasure(164),
          },
          artifact = "core.gaia_hammer",
          skills = {
-            [10]  = blessing(450, 11),
-            [11]  = blessing(350, 16),
-            [168] = blessing(350, 15),
-            [153] = blessing(300, 16),
-            [163] = blessing(350, 12),
-            [174] = blessing(450, 8),
+            [10]  = { factor = 450, max = 11 },
+            [11]  = { factor = 350, max = 16 },
+            [168] = { factor = 350, max = 15 },
+            [153] = { factor = 300, max = 16 },
+            [163] = { factor = 350, max = 12 },
+            [174] = { factor = 450, max = 8  },
          },
          offerings = {
             "core.junk_stone",
@@ -155,6 +154,7 @@ data:add_multi(
       {
          name = "jure",
          id = 6,
+         wish_name = "jure",
          servant = "core.defender",
          items = {
             { id = "core.jures_gem_stone_of_holy_rain", _only_once = true },
@@ -162,13 +162,13 @@ data:add_multi(
          },
          artifact = "core.holy_lance",
          skills = {
-            [15]  = blessing(300, 16),
-            [154] = blessing(250, 18),
-            [155] = blessing(400, 10),
-            [161] = blessing(400, 9),
-            [184] = blessing(450, 8),
-            [174] = blessing(400, 10),
-            [164] = blessing(400, 12),
+            [15]  = { factor = 300, max = 16 },
+            [154] = { factor = 250, max = 18 },
+            [155] = { factor = 400, max = 10 },
+            [161] = { factor = 400, max = 9  },
+            [184] = { factor = 450, max = 8  },
+            [174] = { factor = 400, max = 10 },
+            [164] = { factor = 400, max = 12 },
          },
          offerings = {
             "core.junk_stone",
@@ -181,24 +181,25 @@ data:add_multi(
             "core.mana_crystal",
             "core.earth_crystal",
          },
-         special_actions = { 23 }
       },
       {
          name = "kumiromi",
          id = 7,
+         wish_name = "kumiromi",
+         summon = "core.kumiromi",
          servant = "core.cute_fairy",
          items = {
             { id = "core.kumiromis_gem_stone_of_rejuvenation", _only_once = true },
          },
          artifact = "core.kumiromi_scythe",
          skills = {
-            [13]  = blessing(400, 8),
-            [12]  = blessing(350, 12),
-            [14]  = blessing(250, 16),
-            [180] = blessing(300, 12),
-            [178] = blessing(350, 10),
-            [177] = blessing(350, 9),
-            [150] = blessing(350, 8),
+            [13]  = { factor = 400, max = 8  },
+            [12]  = { factor = 350, max = 12 },
+            [14]  = { factor = 250, max = 16 },
+            [180] = { factor = 300, max = 12 },
+            [178] = { factor = 350, max = 10 },
+            [177] = { factor = 350, max = 9  },
+            [150] = { factor = 350, max = 8  },
          },
          offerings = {
             "core.magical_seed",

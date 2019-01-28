@@ -50,6 +50,8 @@ static std::unordered_set<SharedId> _convert_offerings(
 GodData GodDB::convert(const lua::ConfigTable& data, const std::string&)
 {
     auto legacy_id = data.required<int>("id");
+    DATA_OPT(wish_name, std::string);
+    DATA_OPT(summon_id, std::string);
     DATA_REQ(servant, std::string);
     DATA_REQ(items, sol::table);
     DATA_REQ(artifact, std::string);
@@ -57,7 +59,15 @@ GodData GodDB::convert(const lua::ConfigTable& data, const std::string&)
     auto skills = _convert_skills(data, "skills");
     auto offerings = _convert_offerings(data, "offerings");
 
+    optional<SharedId> summon_id_ = none;
+    if (summon_id)
+    {
+        summon_id_ = SharedId(*summon_id);
+    }
+
     return GodData{legacy_id,
+                   wish_name,
+                   summon_id_,
                    items,
                    SharedId(servant),
                    skills,

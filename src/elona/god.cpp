@@ -314,7 +314,7 @@ static optional<TurnResult> _create_faith_reward_servant()
         return TurnResult::turn_end;
     }
 
-    txt(i18n::s.get("core.locale.god.pray.servant.desc"),
+    txt(i18n::s.get_m("locale.god.text", god_id, "servant"),
         Message::color{ColorIndex::blue});
 
     flt();
@@ -481,11 +481,11 @@ std::string god_name(const GodId& id)
 {
     if (id == core_god::eyth)
     {
-        return i18n::s.get_m("locale.god", "core.eyth", "name");
+        return i18n::s.get_m("locale.god.text", "core.eyth", "name");
     }
     else
     {
-        return i18n::s.get_m("locale.god", id, "name");
+        return i18n::s.get_m("locale.god.text", id, "name");
     }
 }
 

@@ -119,6 +119,8 @@ private:
 
 std::unique_ptr<LogCopyObserver> log_copy_observer;
 
+/// Map of short god name to god ID, in English and current language.
+std::unordered_map<std::string, SharedId> god_summon_ids;
 
 
 std::string fix_wish(const std::string& text)
@@ -316,6 +318,30 @@ bool match_special_wish(
 }
 
 
+/// Returns a god's ID and the character ID of a god's summoned form if the wish
+/// matches the short_name property of the god's localized text or the wish_name
+/// property of the god's data, and the god has a summonable form. In English,
+/// the names are lowercased.
+optional<std::pair<SharedId, int>> match_god_summon_wish(
+    const std::string& wish)
+{
+    auto it = god_summon_ids.find(wish);
+
+    if (it != god_summon_ids.end())
+    {
+        auto god_id = it->second;
+
+        // This was precomputed to skip any missing fields, so it should
+        // succeed.
+        auto chara_id = *the_god_db[god_id]->summon_id;
+        auto legacy_chara_id = the_character_db[chara_id]->id;
+
+        return std::make_pair(god_id, legacy_chara_id);
+    }
+
+    return none;
+}
+
 
 /// Returns true if `wish` equals one of the special words. English words are
 /// available in all languages.
@@ -344,12 +370,14 @@ bool grant_special_wishing(const std::string& wish)
     {
         txt(i18n::s.get("core.locale.wish.wish_man_inside"));
     }
-    else if (match_special_wish(wish, "ehekatl", {"ehekatl"}))
+    else if (auto pair = match_god_summon_wish(wish))
     {
-        txt(i18n::s.get("core.locale.wish.wish_ehekatl"));
+        auto god_id = pair->first.get();
+        auto chara_id = pair->second;
+        txt(i18n::s.get("core.locale.god.text." + god_id + ".summon"));
         flt();
         chara_create(
-            -1, 331, cdata.player().position.x, cdata.player().position.y);
+            -1, chara_id, cdata.player().position.x, cdata.player().position.y);
     }
     else if (match_special_wish(wish, "lulwy", {"lulwy"}))
     {
@@ -856,6 +884,57 @@ void what_do_you_wish_for()
         wish_end();
     }
 }
+
+
+
+/// Precomputes the wish strings that can summon a god character. The list is
+/// dynamic, based on how many entries there are of type core.god, so it is
+/// loaded after the_god_db is initialized.
+void initialize_wish_god_summon_keywords()
+{
+    using namespace strutil;
+
+    god_summon_ids.clear();
+
+    for (const auto& data : the_god_db)
+    {
+        if (!data.summon_id)
+        {
+            continue;
+        }
+
+        auto chara_data = the_character_db[*data.summon_id];
+        if (!chara_data)
+        {
+            continue;
+        }
+
+        auto god_id = the_god_db.get_id_from_legacy(data.id);
+        assert(god_id);
+
+        // English keyword. Will always be available regardless of language.
+        if (data.wish_name)
+        {
+            auto wish = to_lower(*data.wish_name);
+            god_summon_ids[wish] = *god_id;
+        }
+
+        // Translated short name of god in the current language.
+        if (auto text = i18n::s.get_m_optional(
+                "locale.god.text", god_id->get(), "short_name"))
+        {
+            auto wish = *text;
+
+            if (en)
+            {
+                wish = to_lower(wish);
+            }
+
+            god_summon_ids[wish] = *god_id;
+        }
+    }
+}
+
 
 
 } // namespace elona

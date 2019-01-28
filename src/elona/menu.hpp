@@ -77,7 +77,7 @@ int show_hire_menu(HireOperation);
 int show_spell_writer_menu();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void show_city_chart();
-void begin_to_believe_god(int);
+void begin_to_believe_god(const std::string&);
 void screen_analyze_self();
 int ctrl_ally(ControlAllyOperation);
 void show_book_window();
