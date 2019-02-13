@@ -180,7 +180,7 @@ locale {
         no_target_around = "You look around and find nothing."
 
         return {
-            forbidden = "Returning while taking a quest if forbidden. Are you sure you want to return?"
+            forbidden = "Returning while taking a quest is forbidden. Are you sure you want to return?"
             no_location = "You don't know any location you can return to"
             where_do_you_want_to_go = "Where do you want to go?"
             air_becomes_charged = "The air around you becomes charged."

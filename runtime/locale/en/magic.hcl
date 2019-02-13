@@ -329,7 +329,7 @@ locale {
 
         escape {
             cancel = "The air around you gradually loses power."
-            during_quest = "Returning while taking a quest if forbidden. Are you sure you want to return?"
+            during_quest = "Returning while taking a quest is forbidden. Are you sure you want to return?"
             begin = "The air around you becomes charged."
             lord_may_disappear = "The lord of the dungeon might disappear if you escape now."
         }
