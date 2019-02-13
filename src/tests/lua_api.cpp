@@ -59,10 +59,28 @@ TEST_CASE("test loading of non-ASCII filepaths", "[Lua: Misc]")
     lua_testcase(u8"Windowsファイル名.lua");
 }
 
-
 TEST_CASE("Core API: Chara", "[Lua: API]")
 {
     lua_testcase("chara.lua");
+}
+
+TEST_CASE("Core API: Env", "[Lua: API]")
+{
+    const auto foobar_ver = latest_version.short_string();
+
+    elona::lua::LuaEnv lua;
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
+        "test_env",
+        "local foobar_ver = '" + foobar_ver + "'\n" +
+            R"(
+local Env = Elona.require("Env")
+
+assert(Env.LUA_VERSION, "5.3") -- _VERSION is not available.
+assert(Env.ELONA_VERSION, "1.22")
+assert(Env.ELONA_FOOBAR_VERSION, foobar_ver)
+assert(Env.MOD_API_VERSION, "0.1")
+)"));
 }
 
 TEST_CASE("Core API: FOV", "[Lua: API]")
@@ -90,12 +108,10 @@ TEST_CASE("Core API: Trait", "[Lua: API]")
     lua_testcase("trait.lua");
 }
 
-
 TEST_CASE("Core API: LuaCharacter", "[Lua: API]")
 {
     lua_testcase("classes/LuaCharacter.lua");
 }
-
 
 TEST_CASE("Exports: eating_effect", "[Lua: Exports]")
 {
