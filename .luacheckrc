@@ -142,6 +142,11 @@ stds.elona = {
                     "cast"
                  },
               },
+              Env = {
+                 fields = {
+                    "LUA_VERSION", "ELONA_VERSION", "ELONA_FOOBAR_VERSION", "MOD_API_VERSION"
+                 },
+              },
               FOV = {
                  fields = {
                     "los", "you_see"
