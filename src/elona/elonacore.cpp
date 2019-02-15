@@ -6203,7 +6203,7 @@ void try_to_return()
     if (stat == 1)
     {
         txt(i18n::s.get("core.locale.misc.return.forbidden"));
-        if (yes_or_no(promptx, prompty, 160) == 0)
+        if (yes_or_no(promptx, prompty, 160) != 0)
         {
             update_screen();
             return;
