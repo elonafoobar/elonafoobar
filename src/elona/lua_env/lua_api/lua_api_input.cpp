@@ -9,11 +9,21 @@ namespace elona
 namespace lua
 {
 
-bool LuaApiInput::yes_no(const std::string& message)
+sol::optional<bool> LuaApiInput::yes_no(const std::string& message)
 {
     txt(message + " ");
-    return static_cast<bool>(yes_no());
+    const auto result = elona::yes_no();
+    if (result == YesNo::canceled)
+    {
+        return sol::nullopt;
+    }
+    else
+    {
+        return result == YesNo::yes;
+    }
 }
+
+
 
 sol::optional<int> LuaApiInput::prompt_number(
     const std::string& message,

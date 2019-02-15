@@ -4,10 +4,13 @@ module "Input"
 
 --- Prompts the player to select "yes" or "no".
 -- @tparam string message a message to display
--- @treturn bool true if "yes" was selected.
+-- @treturn[1] bool true if "yes" was selected.
+-- @treturn[2] nil if canceled.
 -- @usage local result = Input.yes_no("Yes or no?")
 --
--- if result then
+-- if result == nil then
+--    GUI.txt("You canceled. ")
+-- elseif result then
 --    GUI.txt("You chose yes. ")
 -- else
 --    GUI.txt("You chose no. ")
