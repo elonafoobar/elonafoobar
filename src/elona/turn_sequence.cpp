@@ -583,7 +583,7 @@ label_2689_internal:
                 {
                     if (cdata[c].relationship > -3)
                     {
-                        if (cdata[c].does_not_search_enemy() == 0)
+                        if (!cdata[c].is_not_attacked_by_enemy())
                         {
                             f = 1;
                             break;
@@ -594,7 +594,7 @@ label_2689_internal:
                 {
                     if (cdata[c].original_relationship <= -3)
                     {
-                        if (cdata[c].does_not_search_enemy() == 0)
+                        if (!cdata[c].is_not_attacked_by_enemy())
                         {
                             f = 1;
                             break;
@@ -604,7 +604,7 @@ label_2689_internal:
             }
             if (f)
             {
-                if (cdata[cc].does_not_search_enemy() == 0)
+                if (!cdata[cc].is_not_attacked_by_enemy())
                 {
                     cdata[cc].enemy_id = c;
                     cdata[cc].hate = 30;

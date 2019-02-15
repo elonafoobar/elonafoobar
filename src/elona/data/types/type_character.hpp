@@ -66,7 +66,7 @@
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_lord_of_dungeon, 976) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(has_own_name, 977) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_pregnant, 978) \
-    ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(does_not_search_enemy, 979) \
+    ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_not_attacked_by_enemy, 979) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_contracting_with_reaper, 980) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(needs_refreshing_status, 981) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(visited_just_now, 982) \
