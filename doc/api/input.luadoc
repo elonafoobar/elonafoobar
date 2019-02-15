@@ -12,7 +12,7 @@ module "Input"
 -- else
 --    GUI.txt("You chose no. ")
 -- end
-function yes_or_no(message) end
+function yes_no(message) end
 
 --- Prompts the player to select from a list of choices. Raises an
 --- error if no arguments are provided.
