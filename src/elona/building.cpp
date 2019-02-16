@@ -227,8 +227,7 @@ TurnResult build_new_building()
         return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get("core.locale.building.really_build_it_here"));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval != 0)
+    if (!yes_no())
     {
         update_screen();
         return TurnResult::pc_turn_user_error;

@@ -8,7 +8,8 @@ namespace lua
 
 namespace LuaApiInput
 {
-bool yes_no(const std::string&);
+
+sol::optional<bool> yes_no(const std::string&);
 
 sol::optional<int> prompt_number(const std::string&, int);
 sol::optional<int> prompt_number_with_initial(const std::string&, int, int);

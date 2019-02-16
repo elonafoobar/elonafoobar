@@ -279,8 +279,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     {
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval != 0)
+        if (!yes_no())
         {
             set_reupdate();
             return none;

@@ -1878,8 +1878,7 @@ bool _magic_1141()
         if (stat == 1)
         {
             txt(i18n::s.get("core.locale.magic.escape.during_quest"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 return true;
             }
