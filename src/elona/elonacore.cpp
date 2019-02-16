@@ -11864,7 +11864,7 @@ int new_ally_joins()
     cdata[rc].original_relationship = 10;
     cdata[rc].character_role = 0;
     cdata[rc].is_quest_target() = false;
-    cdata[rc].does_not_search_enemy() = false;
+    cdata[rc].is_not_attacked_by_enemy() = false;
     cdata[rc].is_hung_on_sand_bag() = false;
     cdata[rc].is_temporary() = false;
     cdata[rc].only_christmas() = false;

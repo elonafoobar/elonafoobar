@@ -605,7 +605,7 @@ void _lomias_release_putits()
         flt();
         chara_create(
             -1, 3, cdata.player().position.x, cdata.player().position.y);
-        cdata[rc].does_not_search_enemy() = true;
+        cdata[rc].is_not_attacked_by_enemy() = true;
     }
     flt();
     itemcreate(-1, 68, cdata.player().position.x, cdata.player().position.y, 0);

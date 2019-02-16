@@ -2453,7 +2453,7 @@ static void _init_map_puppy_cave()
             {
                 flt();
                 chara_create(-1, 225, -3, 0);
-                cdata[rc].does_not_search_enemy() = true;
+                cdata[rc].is_not_attacked_by_enemy() = true;
             }
         }
     }
