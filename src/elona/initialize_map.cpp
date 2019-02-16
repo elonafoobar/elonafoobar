@@ -30,11 +30,15 @@
 
 namespace
 {
+
+int medit;
 int maxnpcbk = 0;
 elona_vector2<int> rolebk;
 int maxmedal = 0;
 elona_vector2<int> medalbk;
+
 } // namespace
+
 
 
 namespace elona

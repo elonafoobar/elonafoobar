@@ -44,8 +44,12 @@
 
 namespace
 {
+
+int hour_played;
 int ct = 0;
-}
+
+} // namespace
+
 
 
 namespace elona

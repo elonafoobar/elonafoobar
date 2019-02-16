@@ -18,6 +18,9 @@
 namespace
 {
 
+int initnum;
+
+
 
 int calculate_original_value(const Item& ci)
 {
@@ -31,7 +34,6 @@ int calculate_original_value(const Item& ci)
         return ci.value * 100 / the_item_material_db[ci.material]->value;
     }
 }
-
 
 } // namespace
 

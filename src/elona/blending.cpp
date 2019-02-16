@@ -21,6 +21,17 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+
+
+namespace
+{
+
+int step;
+
+}
+
+
+
 namespace elona
 {
 

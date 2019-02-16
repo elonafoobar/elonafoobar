@@ -21,6 +21,8 @@ using namespace elona;
 namespace
 {
 
+int am;
+
 
 
 void set_color_modulator(int color_id, int window_id = -1)

@@ -24,6 +24,17 @@
 #include "variables.hpp"
 #include "wish.hpp"
 
+
+
+namespace
+{
+
+int mousel;
+
+}
+
+
+
 namespace elona
 {
 

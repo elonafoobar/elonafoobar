@@ -5,6 +5,17 @@
 #include "input.hpp"
 #include "ui.hpp"
 
+
+
+namespace
+{
+
+int quickkeywait;
+
+}
+
+
+
 namespace elona
 {
 

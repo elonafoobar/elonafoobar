@@ -24,6 +24,9 @@ namespace
 {
 
 
+
+elona_vector2<std::string> cdatan2;
+int elona_export;
 std::set<fs::path> loaded_files;
 
 

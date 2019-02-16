@@ -21,6 +21,17 @@
 
 #include "dialog/dialog.hpp"
 
+
+
+namespace
+{
+
+bool chatval_show_impress;
+
+}
+
+
+
 namespace elona
 {
 
