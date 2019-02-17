@@ -32,63 +32,43 @@ void txtgod(const GodId& id, int type)
         return;
     }
 
-    std::string message;
+    optional<std::string> message;
     switch (type)
     {
     case 12:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "random").get_value_or("");
+        message = i18n::s.get_m_optional("locale.god", id, "random");
         break;
-    case 9:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "kill").get_value_or("");
-        break;
-    case 10:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "night").get_value_or("");
-        break;
+    case 9: message = i18n::s.get_m_optional("locale.god", id, "kill"); break;
+    case 10: message = i18n::s.get_m_optional("locale.god", id, "night"); break;
     case 11:
-        message = i18n::s.get_m_optional("locale.god", id, "welcome")
-                      .get_value_or("");
+        message = i18n::s.get_m_optional("locale.god", id, "welcome");
         break;
     case 5:
-        message = i18n::s.get_m_optional("locale.god", id, "believe")
-                      .get_value_or("");
+        message = i18n::s.get_m_optional("locale.god", id, "believe");
         break;
-    case 1:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "betray").get_value_or("");
-        break;
+    case 1: message = i18n::s.get_m_optional("locale.god", id, "betray"); break;
     case 2:
-        message = i18n::s.get_m_optional("locale.god", id, "take_over")
-                      .get_value_or("");
+        message = i18n::s.get_m_optional("locale.god", id, "take_over");
         break;
     case 3:
-        message = i18n::s.get_m_optional("locale.god", id, "fail_to_take_over")
-                      .get_value_or("");
+        message = i18n::s.get_m_optional("locale.god", id, "fail_to_take_over");
         break;
-    case 4:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "offer").get_value_or("");
-        break;
+    case 4: message = i18n::s.get_m_optional("locale.god", id, "offer"); break;
     case 6:
-        message = i18n::s.get_m_optional("locale.god", id, "receive_gift")
-                      .get_value_or("");
+        message = i18n::s.get_m_optional("locale.god", id, "receive_gift");
         break;
     case 7:
         message =
-            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift")
-                .get_value_or("");
+            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift");
         break;
     case 8:
         message =
-            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift2")
-                .get_value_or("");
+            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift2");
         break;
     default: assert(0);
     }
 
-    txt(message, Message::color{ColorIndex::orange});
+    txt(message.get_value_or(""), Message::color{ColorIndex::orange});
 }
 
 
@@ -170,12 +150,12 @@ void apply_god_blessing(int cc)
     for (const auto& pair : god_data->skills)
     {
         int skill_id = pair.first;
-        lua::WrappedFunction func = pair.second;
+        GodSkillBonus bonus = pair.second;
 
         if (sdata(skill_id, cc) > 0)
         {
-            sdata(skill_id, cc) +=
-                func.call_with_result(0, piety_point, faith_level);
+            sdata(skill_id, cc) += clamp(
+                piety_point / bonus.factor, 1, bonus.max + faith_level / 10);
         }
     }
 }
@@ -287,8 +267,7 @@ static optional<TurnResult> _create_faith_reward_servant()
     if (no_more_servants)
     {
         txt(i18n::s.get("core.locale.god.pray.servant.prompt_decline"));
-        rtval = yes_no(promptx, prompty, 160);
-        if (rtval == 0)
+        if (yes_no())
         {
             ++game_data.god_rank;
         }
@@ -314,7 +293,7 @@ static optional<TurnResult> _create_faith_reward_servant()
         return TurnResult::turn_end;
     }
 
-    txt(i18n::s.get_m("locale.god.text", god_id, "servant"),
+    txt(i18n::s.get_m("locale.god", god_id, "servant"),
         Message::color{ColorIndex::blue});
 
     flt();
@@ -340,12 +319,12 @@ static optional<TurnResult> _create_faith_reward_gemstone()
         return TurnResult::turn_end;
     }
 
-    for (size_t i = 0; i < god_data->items.size(); i++)
+    for (size_t i = 1; i <= god_data->items.size(); i++)
     {
         sol::object item_proto_obj = god_data->items[i];
         if (item_proto_obj != sol::lua_nil && item_proto_obj.is<sol::table>())
         {
-            lua::ConfigTable item_proto = item_proto_obj.as<lua::ConfigTable>();
+            lua::ConfigTable item_proto = item_proto_obj.as<sol::table>();
 
             auto only_once = item_proto.optional_or<bool>("_only_once", false);
 
@@ -481,11 +460,11 @@ std::string god_name(const GodId& id)
 {
     if (id == core_god::eyth)
     {
-        return i18n::s.get_m("locale.god.text", "core.eyth", "name");
+        return i18n::s.get_m("locale.god", "core.eyth", "name");
     }
     else
     {
-        return i18n::s.get_m("locale.god.text", id, "name");
+        return i18n::s.get_m("locale.god", id, "name");
     }
 }
 
@@ -510,6 +489,11 @@ bool god_is_offerable(const Item& item)
     if (!id)
     {
         return false;
+    }
+
+    if (*id == "core.corpse")
+    {
+        return true;
     }
 
     return god_data->offerings.find(*id) != god_data->offerings.end();

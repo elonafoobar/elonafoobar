@@ -374,7 +374,7 @@ bool grant_special_wishing(const std::string& wish)
     {
         auto god_id = pair->first.get();
         auto chara_id = pair->second;
-        txt(i18n::s.get("core.locale.god.text." + god_id + ".summon"));
+        txt(i18n::s.get("core.locale.god." + god_id + ".summon"));
         flt();
         chara_create(
             -1, chara_id, cdata.player().position.x, cdata.player().position.y);
@@ -896,7 +896,7 @@ void initialize_wish_god_summon_keywords()
 
     god_summon_ids.clear();
 
-    for (const auto& data : the_god_db)
+    for (const auto& data : the_god_db.values())
     {
         if (!data.summon_id)
         {
@@ -920,8 +920,8 @@ void initialize_wish_god_summon_keywords()
         }
 
         // Translated short name of god in the current language.
-        if (auto text = i18n::s.get_m_optional(
-                "locale.god.text", god_id->get(), "short_name"))
+        if (auto text =
+                i18n::s.get_m_optional("locale.god", *god_id, "short_name"))
         {
             auto wish = *text;
 

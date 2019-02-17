@@ -37,5 +37,11 @@ locale {
             bonus    = "   Bonus"
             ability  = " Ability"
         }
+
+        text {
+            eyth {
+                name = "Eyth of Infidel",
+            }
+        }
     }
 }

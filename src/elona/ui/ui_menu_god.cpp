@@ -83,16 +83,16 @@ static std::string _get_god_description(const std::string& god_id)
 
     if (god_id != ""s)
     {
-        buff = i18n::s.get_m("locale.god.text", god_id, "desc") + u8"<p>";
+        buff = i18n::s.get_m("locale.god", god_id, "description") + u8"<p>";
 
         buff += i18n::s.get("core.locale.god.window.offering") + u8": ";
-        buff += i18n::s.get_m("locale.god.text", god_id, "offering") + u8"<p>";
+        buff += i18n::s.get_m("locale.god", god_id, "offering") + u8"<p>";
 
         buff += i18n::s.get("core.locale.god.window.bonus") + u8": ";
-        buff += i18n::s.get_m("locale.god.text", god_id, "bonus") + u8"<p>";
+        buff += i18n::s.get_m("locale.god", god_id, "bonus") + u8"<p>";
 
         buff += i18n::s.get("core.locale.god.window.ability") + u8": ";
-        buff += i18n::s.get_m("locale.god.text", god_id, "ability") + u8"<p>";
+        buff += i18n::s.get_m("locale.god", god_id, "ability") + u8"<p>";
     }
 
     return buff;

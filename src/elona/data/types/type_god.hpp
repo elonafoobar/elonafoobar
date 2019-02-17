@@ -1,12 +1,17 @@
 #pragma once
 #include <unordered_set>
-#include "../../lua_env/wrapped_function.hpp"
 #include "../lua_lazy_cache.hpp"
 
 
 
 namespace elona
 {
+
+struct GodSkillBonus
+{
+    int factor;
+    int max;
+};
 
 struct GodData
 {
@@ -15,7 +20,7 @@ struct GodData
     optional<SharedId> summon_id;
     sol::table items;
     SharedId servant_id;
-    std::unordered_map<int, lua::WrappedFunction> skills;
+    std::unordered_map<int, GodSkillBonus> skills;
     SharedId artifact_id;
     std::unordered_set<SharedId> offerings;
 };

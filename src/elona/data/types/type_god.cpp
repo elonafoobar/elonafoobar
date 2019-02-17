@@ -9,20 +9,24 @@ GodDB the_god_db;
 const constexpr char* data::LuaLazyCacheTraits<GodDB>::type_id;
 
 
-static std::unordered_map<int, lua::WrappedFunction> _convert_skills(
+static std::unordered_map<int, GodSkillBonus> _convert_skills(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    std::unordered_map<int, lua::WrappedFunction> skills;
+    std::unordered_map<int, GodSkillBonus> skills;
 
     if (auto it = data.optional<sol::table>(id))
     {
         for (const auto& kvp : *it)
         {
             int k = kvp.first.as<int>();
-            sol::protected_function v =
-                kvp.second.as<sol::protected_function>();
-            skills.emplace(k, lua::WrappedFunction("core.god", v));
+            lua::ConfigTable v = kvp.second.as<sol::table>();
+
+
+            int factor = v.required<int>("factor");
+            int max = v.required<int>("max");
+
+            skills.emplace(k, GodSkillBonus{factor, max});
         }
     }
 

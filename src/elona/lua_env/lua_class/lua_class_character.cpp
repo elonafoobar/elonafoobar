@@ -494,7 +494,11 @@ void LuaCharacter::move_to_xy(Character& self, int x, int y)
  */
 void LuaCharacter::switch_religion(Character& self, const std::string& god_id)
 {
-    the_god_db.ensure(god_id);
+    // Blank is Eyth.
+    if (god_id != "")
+    {
+        the_god_db.ensure(god_id);
+    }
 
     self.god_id = god_id;
     elona::switch_religion();
@@ -569,6 +573,21 @@ void LuaCharacter::bind(sol::state& lua)
      * [RW] The character's worshipped god.
      */
     LuaCharacter.set("god_id", &Character::god_id);
+
+    /**
+     * @luadoc piety_point field num
+     *
+     * [RW] The character's piety points.
+     */
+    LuaCharacter.set("piety_point", &Character::piety_point);
+
+    /**
+     * @luadoc praying_point field num
+     *
+     * [RW] The character's praying points. In order to pray, they must be at or
+     * above 1000.
+     */
+    LuaCharacter.set("praying_point", &Character::praying_point);
 
     /**
      * @luadoc position field LuaPosition

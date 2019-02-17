@@ -35,5 +35,9 @@ locale {
             bonus    = "ボーナス"
             ability  = "特殊能力"
         }
+
+        eyth {
+            name = "無のエイス",
+        }
     }
 }

@@ -64,6 +64,13 @@ void LuaItem::bind(sol::state& lua)
     LuaItem.set("position", &Item::position);
 
     /**
+     * @luadoc weight field num
+     *
+     * [RW] The item's weight. One weight unit is 1000.
+     */
+    LuaItem.set("weight", &Item::weight);
+
+    /**
      * @luadoc count field num
      *
      * [RW] The number of charges this item holds (for rods, bait, etc.)
