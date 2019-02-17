@@ -52,7 +52,7 @@ function data:add(array)
 
       local ok, err = pcall(validator, v)
       if not ok then
-         error(data_type .. ":" .. instance_id .. " validation error: " .. err)
+         error(data_type .. "#" .. instance_id .. " validation error: " .. err)
       end
 
       local dt = self.raw[data_type]
@@ -63,11 +63,11 @@ function data:add(array)
       end
 
       if dt[instance_id] then
-         error("duplicate definition of " .. data_type .. ":" .. instance_id)
+         error("duplicate definition of " .. data_type .. "#" .. instance_id)
       end
 
       if v._id then
-         error(data_type .. ":" .. instance_id .. ": _id is a reserved field")
+         error(data_type .. "#" .. instance_id .. ": _id is a reserved field")
       end
 
       dt[instance_id] = v

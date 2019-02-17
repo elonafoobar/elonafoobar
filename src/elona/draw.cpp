@@ -138,7 +138,7 @@ optional_ref<Extent> draw_get_rect_item(int id)
 
 optional_ref<Extent> draw_get_rect_portrait(const std::string& key)
 {
-    return loader["core.portrait:" + key];
+    return loader["core.portrait"s + data_id_separator + key];
 }
 
 

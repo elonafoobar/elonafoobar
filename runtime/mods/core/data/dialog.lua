@@ -6,7 +6,7 @@ data:add_multi(
          name = "whom_dwell_in_the_vanity",
 
          -- TODO legacy field that needs removal.
-         _full_id = "core.dialog:core.whom_dwell_in_the_vanity",
+         _full_id = "core.dialog#core.whom_dwell_in_the_vanity",
 
          nodes = {
             _start = {
