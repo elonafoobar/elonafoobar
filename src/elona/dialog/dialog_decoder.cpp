@@ -1,5 +1,6 @@
 #include "dialog_decoder.hpp"
 #include "../../util/strutil.hpp"
+#include "../data/common.hpp"
 #include "../enums.hpp"
 #include "../lua_env/config_table.hpp"
 #include "../lua_env/data_manager.hpp"
@@ -21,13 +22,13 @@ optional<DialogData> DialogDecoder::decode(const std::string& id)
 }
 
 /**
- * Parse an id of the format "core.dialog:test.some_dialog".
+ * Parse an id of the format "core.dialog#test.some_dialog".
  *
  * @param datatype_mod_name Expected originating mod ("core")
  * @param datatype_name Expected data kind ("dialog")
- * @param id "core.dialog:test.some_dialog"
+ * @param id "core.dialog#test.some_dialog"
  *
- * @throws if the ID is not of the form "1.2:3.4"
+ * @throws if the ID is not of the form "1.2#3.4"
  * @return ("test", "some_dialog")
  */
 static std::pair<std::string, std::string> parse_id(
@@ -36,7 +37,8 @@ static std::pair<std::string, std::string> parse_id(
     const std::string& id)
 {
     std::string datatype_fqn, datatype_id;
-    std::tie(datatype_fqn, datatype_id) = strutil::split_on_string(id, ":");
+    std::tie(datatype_fqn, datatype_id) =
+        strutil::split_on_string(id, data_id_separator);
 
     std::string mod_name, data_name;
     std::tie(mod_name, data_name) = strutil::split_on_string(datatype_fqn, ".");

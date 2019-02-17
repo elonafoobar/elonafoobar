@@ -44,11 +44,11 @@ public:
      *   text = {"mod.locale.1", "mod.locale.2", "mod.locale.3"},
      *
      *   choices = {
-     *     {text = "mod.locale.4", node = "core.dialog:dialog.node1},
-     *     {text = "mod.locale.5", node = "core.dialog:dialog.node2},
+     *     {text = "mod.locale.4", node = "core.dialog#dialog.node1},
+     *     {text = "mod.locale.5", node = "core.dialog#dialog.node2},
      *   }
      *   -- or alternatively
-     *   choices = "core.dialog:dialog.node3"
+     *   choices = "core.dialog#dialog.node3"
      * }
      *
      * Choices and text can be left out at the decoding stage. The reason is to

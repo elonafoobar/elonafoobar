@@ -54,10 +54,11 @@ PortraitData _PortraitDBBase::convert(
         }
     }
 
-    return PortraitData{id,
-                        SharedId{Traits::type_id + ":"s + id},
-                        Extent{x, y, width, height},
-                        filepath};
+    return PortraitData{
+        id,
+        SharedId{std::string(Traits::type_id) + data_id_separator + id},
+        Extent{x, y, width, height},
+        filepath};
 }
 
 

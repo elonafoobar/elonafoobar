@@ -48,7 +48,9 @@ CharaChipData CharaChipDB::convert(
     return CharaChipData{
         legacy_id,
         Extent{x, y, width, height},
-        CharaChip{SharedId(std::string(Traits::type_id) + ":" + id_), offset_y},
+        CharaChip{
+            SharedId(std::string(Traits::type_id) + data_id_separator + id_),
+            offset_y},
         filepath};
 }
 

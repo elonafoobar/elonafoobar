@@ -96,7 +96,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         dialog_id = "core.dialog:dialog.redirect",
+         dialog_id = "core.dialog#dialog.redirect",
       },
       {
          name = "bartender",
@@ -544,7 +544,7 @@ data:add_multi(
          category = 0,
          rarity = 1000,
          coefficient = 400,
-         dialog_id = "core.dialog:core.whom_dwell_in_the_vanity",
+         dialog_id = "core.dialog#core.whom_dwell_in_the_vanity",
       },
       {
          name = "loyter",

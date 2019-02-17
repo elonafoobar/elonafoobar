@@ -10,6 +10,7 @@
 #include "../lua_env/data_table.hpp"
 #include "../optional.hpp"
 #include "../shared_id.hpp"
+#include "common.hpp"
 
 using namespace std::literals::string_literals;
 
@@ -217,7 +218,7 @@ private:
         catch (const std::exception& e)
         {
             std::string message = "Error initializing "s + Traits::type_id +
-                ":" + id.get() + ": " + e.what();
+                data_id_separator + id.get() + ": " + e.what();
             ELONA_WARN("Lua.Data") << message;
             std::cerr << message << std::endl;
 
