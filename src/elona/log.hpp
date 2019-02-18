@@ -1,5 +1,22 @@
 #pragma once
 
+/*
+ * Elona foobar's log library
+ *
+ * Log format: elapsedtime LEVEL [tag] Message
+ * - The elapsed time is recorded in second.
+ * - There are 4 severity level: log, warn, error and fatal. See Logger::Level
+ *   for details.
+ * - Tag shows the module which outputs the log line. E.g., "system", "lua.mod".
+ *
+ * Example: 1.234 ERROR [Mod] Failed to load mod "api_nuts".
+ *
+ * Log files are saved in "/path/to/elonafoobar/log". These files are rotated
+ * (https://en.wikipedia.org/wiki/Log_rotation) on every launching, and
+ * "log/0.log" is the latest. The larger the digit is, the older the log file
+ * is. Currently, Elona foobar stores up to 10 logs, including the latest.
+ */
+
 #include <cassert>
 #include <chrono>
 #include <fstream>
@@ -14,8 +31,7 @@ namespace elona
 namespace log
 {
 
-// Log format: elapsedtime LEVEL [tag] Message
-// Example: ERROR [Mod] Failed to load mod "api_nuts".
+/// The logger class
 class Logger : lib::noncopyable
 {
 private:
@@ -121,9 +137,6 @@ public:
 
     /// Initialize the logger with the default output file.
     void init();
-
-    /// Initialize the logger with the passed output file.
-    void init(std::ofstream&& out);
 
     // It is public, but DO NOT call this function directly!
     _OneLineLogger _get_one_line_logger(const std::string& tag, Level level);
