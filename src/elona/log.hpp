@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <type_traits>
@@ -13,10 +14,14 @@ namespace elona
 namespace log
 {
 
-// Log format: Level [Tag] Message
+// Log format: elapsedtime LEVEL [tag] Message
 // Example: ERROR [Mod] Failed to load mod "api_nuts".
 class Logger : lib::noncopyable
 {
+private:
+    using duration = std::chrono::duration<double>;
+
+
 public:
     /// Log severity level
     enum class Level
@@ -50,10 +55,15 @@ public:
     class _OneLineLogger
     {
     public:
-        _OneLineLogger(std::ofstream& out, const std::string& tag, Level level)
+        _OneLineLogger(
+            std::ofstream& out,
+            duration elapsed_time,
+            const std::string& tag,
+            Level level)
             : _out(out)
         {
-            *this << _to_string(level) << u8"[" << tag << u8"] ";
+            *this << elapsed_time.count() << " " << _to_string(level) << u8"["
+                  << tag << u8"] ";
         }
 
 
@@ -116,15 +126,13 @@ public:
     void init(std::ofstream&& out);
 
     // It is public, but DO NOT call this function directly!
-    _OneLineLogger _get_one_line_logger(const std::string& tag, Level level)
-    {
-        return {_out, tag, level};
-    }
+    _OneLineLogger _get_one_line_logger(const std::string& tag, Level level);
 
 
 
 private:
     std::ofstream _out;
+    std::chrono::steady_clock::time_point _start_time;
 
     Logger() = default;
 };
