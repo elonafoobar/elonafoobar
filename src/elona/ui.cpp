@@ -1169,7 +1169,7 @@ Position gmes(
             const auto closing_tag_pos = text.find(u8">", pos);
             if (closing_tag_pos == std::string::npos)
             {
-                ELONA_ERROR("Text") << "Invalid notation: missing '>'";
+                ELONA_ERROR("text") << "Invalid notation: missing '>'";
                 // Stop processing, return immediately.
                 return {x_base, y + font_size + 4};
             }

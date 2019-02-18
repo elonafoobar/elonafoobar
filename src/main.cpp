@@ -24,7 +24,7 @@ void report_error(const char* what)
     LOGD("Error: %s", what);
 #endif
 
-    ELONA_FATAL("System") << what;
+    ELONA_FATAL("system") << what;
     std::cerr << "Error: " << what << std::endl;
 }
 
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 
     log::Logger::instance().init();
 
-    ELONA_LOG("System") << latest_version.long_string();
+    ELONA_LOG("system") << latest_version.long_string();
 
 #if DEBUG
     return run();
