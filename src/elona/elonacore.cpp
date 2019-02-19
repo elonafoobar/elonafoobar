@@ -52,7 +52,6 @@
 #include "menu.hpp"
 #include "message.hpp"
 #include "network.hpp"
-#include "putit.hpp"
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
