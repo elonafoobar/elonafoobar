@@ -21,19 +21,19 @@ void _update_save_data_0(const fs::path& save_dir, int serial_id)
         std::ifstream in{(save_dir / "foobar_data.s1").native(),
                          std::ios::binary};
         putit::BinaryIArchive ar{in};
-        ar.load(dummy_i);
-        ar.load(dummy_i);
-        ar.load(dummy_i);
-        ar.load(dummy_s);
-        ar.load(dummy_s);
-        ar.load(dummy_s);
-        ar.load(is_autodig_enabled);
+        ar(dummy_i);
+        ar(dummy_i);
+        ar(dummy_i);
+        ar(dummy_s);
+        ar(dummy_s);
+        ar(dummy_s);
+        ar(is_autodig_enabled);
     }
     {
         std::ofstream out{(save_dir / "foobar_data.s1").native(),
                           std::ios::binary};
         putit::BinaryOArchive ar{out};
-        ar.save(is_autodig_enabled);
+        ar(is_autodig_enabled);
     }
 }
 
@@ -1325,7 +1325,7 @@ void _update_save_data_6(const fs::path& save_dir, int serial_id)
         {
             for (size_t i = 0; i < 40; ++i)
             {
-                iar.load(data.at(j * 40 + i));
+                iar(data.at(j * 40 + i));
             }
         }
     }
@@ -1353,7 +1353,7 @@ void _update_save_data_6(const fs::path& save_dir, int serial_id)
         {
             for (size_t i = 0; i < 40; ++i)
             {
-                oar.save(data.at(j * 40 + i));
+                oar(data.at(j * 40 + i));
             }
         }
     }

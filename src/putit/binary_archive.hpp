@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -13,6 +14,36 @@ namespace elona
 {
 namespace putit
 {
+
+#define PUTIT_EMPTY_TOKEN
+
+#define PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(type) \
+    void operator()(type& data) \
+    { \
+        _primitive(data); \
+    }
+
+#define PUTIT_DEFINE_PRIMITIVE_TYPES_BASE(const_or_empty) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty bool) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty char) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty int8_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty uint8_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty int16_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty uint16_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty int32_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty uint32_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty int64_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty uint64_t) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty float) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty double) \
+    PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(const_or_empty long double)
+
+#define PUTIT_DEFINE_PRIMITIVE_TYPES \
+    PUTIT_DEFINE_PRIMITIVE_TYPES_BASE(PUTIT_EMPTY_TOKEN)
+#define PUTIT_DEFINE_PRIMITIVE_TYPES_CONST \
+    PUTIT_DEFINE_PRIMITIVE_TYPES_BASE(const)
+
+
 
 class BinaryIArchive : public IArchiveBase
 {
@@ -28,32 +59,17 @@ public:
     {
         std::ifstream in{filepath.native(), std::ios::binary};
         BinaryIArchive ar{in};
-        ar.load(data);
+        ar(data);
     }
 
 
-    template <typename T>
-    void load(T& data)
-    {
-        serialize(*this, data);
-    }
+    PUTIT_DEFINE_PRIMITIVE_TYPES
 
 
     template <typename T>
     void operator()(T& data)
     {
-        load(data);
-    }
-
-
-
-    template <typename T>
-    void primitive(T& data)
-    {
-        static_assert(memory_size >= sizeof(T), "T's size is too big.");
-
-        in.read(memory, sizeof(T));
-        data = detail::byte_swap_if_needed(*reinterpret_cast<T*>(memory));
+        serialize(*this, data);
     }
 
 
@@ -77,10 +93,20 @@ public:
 
 
 private:
-    static constexpr auto memory_size = sizeof(long long);
+    static constexpr auto memory_size = sizeof(long double);
 
     std::istream& in;
     char memory[memory_size];
+
+
+    template <typename T>
+    void _primitive(T& data)
+    {
+        static_assert(memory_size >= sizeof(T), "T's size is too big.");
+
+        in.read(memory, sizeof(T));
+        data = detail::byte_swap_if_needed(*reinterpret_cast<T*>(memory));
+    }
 };
 
 
@@ -99,29 +125,18 @@ public:
     {
         std::ofstream out{filepath.native(), std::ios::binary};
         BinaryOArchive ar{out};
-        ar.save(data);
+        ar(data);
     }
 
 
-    template <typename T>
-    void save(T& data)
-    {
-        serialize(*this, data);
-    }
+    PUTIT_DEFINE_PRIMITIVE_TYPES
+    PUTIT_DEFINE_PRIMITIVE_TYPES_CONST
 
 
     template <typename T>
     void operator()(T& data)
     {
-        save(data);
-    }
-
-
-    template <typename T>
-    void primitive(const T& data)
-    {
-        T tmp = detail::byte_swap_if_needed(data);
-        out.write(reinterpret_cast<const char*>(&tmp), sizeof(data));
+        serialize(*this, data);
     }
 
 
@@ -145,6 +160,14 @@ public:
 
 private:
     std::ostream& out;
+
+
+    template <typename T>
+    void _primitive(const T& data)
+    {
+        T tmp = detail::byte_swap_if_needed(data);
+        out.write(reinterpret_cast<const char*>(&tmp), sizeof(data));
+    }
 };
 
 
@@ -153,87 +176,51 @@ private:
 #define PUTIT_ENABLE_IF(condition) \
     std::enable_if_t<(condition), std::nullptr_t> = nullptr
 
-// Double parens are necessary to make cpp (c preprocessor) pass arguments as
-// one argument to PUTIT_ENABLE_IF.
-#define PUTIT_IARCHIVE \
-    PUTIT_ENABLE_IF((std::is_base_of<IArchiveBase, Archive>::value))
-#define PUTIT_OARCHIVE \
-    PUTIT_ENABLE_IF((std::is_base_of<OArchiveBase, Archive>::value))
 
 
-
-template <
-    typename Archive,
-    typename T,
-    PUTIT_ENABLE_IF(!std::is_enum<T>::value)>
-void serialize(Archive& ar, T& data)
+template <typename T, PUTIT_ENABLE_IF(!std::is_enum<T>::value)>
+void serialize(BinaryIArchive& ar, T& data)
 {
     data.serialize(ar);
 }
 
 
-#define PUTIT_PRIMITIVE_TYPES(T) \
-    template <typename Archive> \
-    void serialize(Archive& ar, T& data) \
-    { \
-        ar.primitive(data); \
-    }
 
-PUTIT_PRIMITIVE_TYPES(bool)
-PUTIT_PRIMITIVE_TYPES(char)
-PUTIT_PRIMITIVE_TYPES(unsigned char)
-PUTIT_PRIMITIVE_TYPES(short)
-PUTIT_PRIMITIVE_TYPES(unsigned short)
-PUTIT_PRIMITIVE_TYPES(int)
-PUTIT_PRIMITIVE_TYPES(unsigned int)
-PUTIT_PRIMITIVE_TYPES(long)
-PUTIT_PRIMITIVE_TYPES(unsigned long)
-PUTIT_PRIMITIVE_TYPES(long long)
-PUTIT_PRIMITIVE_TYPES(unsigned long long)
-PUTIT_PRIMITIVE_TYPES(float)
-PUTIT_PRIMITIVE_TYPES(double)
-PUTIT_PRIMITIVE_TYPES(long double)
-
-#undef PUTIT_PRIMITIVE_TYPES
+template <typename T, PUTIT_ENABLE_IF(!std::is_enum<T>::value)>
+void serialize(BinaryOArchive& ar, T& data)
+{
+    data.serialize(ar);
+}
 
 
 
-template <
-    typename Archive,
-    typename E,
-    PUTIT_ENABLE_IF(std::is_enum<E>::value),
-    PUTIT_IARCHIVE>
-void serialize(Archive& ar, E& data)
+template <typename E, PUTIT_ENABLE_IF(std::is_enum<E>::value)>
+void serialize(BinaryIArchive& ar, E& data)
 {
     using PrimitiveType = std::underlying_type_t<E>;
 
     PrimitiveType tmp;
-    ar.primitive(tmp);
+    ar(tmp);
     data = static_cast<E>(tmp);
 }
 
 
 
-template <
-    typename Archive,
-    typename E,
-    PUTIT_ENABLE_IF(std::is_enum<E>::value),
-    PUTIT_OARCHIVE>
-void serialize(Archive& ar, E& data)
+template <typename E, PUTIT_ENABLE_IF(std::is_enum<E>::value)>
+void serialize(BinaryOArchive& ar, E& data)
 {
     using PrimitiveType = std::underlying_type_t<E>;
 
     PrimitiveType tmp = static_cast<PrimitiveType>(data);
-    ar.primitive(tmp);
+    ar(tmp);
 }
 
 
 
-template <typename Archive, PUTIT_IARCHIVE>
-void serialize(Archive& ar, std::string& data)
+inline void serialize(BinaryIArchive& ar, std::string& data)
 {
     uint64_t length;
-    ar.primitive(length);
+    ar(length);
     std::unique_ptr<char[]> buf{new char[length]};
     ar.primitive_array(buf.get(), length);
     data = std::string(buf.get(), length);
@@ -241,21 +228,20 @@ void serialize(Archive& ar, std::string& data)
 
 
 
-template <typename Archive, PUTIT_OARCHIVE>
-void serialize(Archive& ar, std::string& data)
+inline void serialize(BinaryOArchive& ar, std::string& data)
 {
     const uint64_t length = data.size();
-    ar.primitive(length);
+    ar(length);
     ar.primitive_array(data.c_str(), length);
 }
 
 
 
-template <typename Archive, typename T, PUTIT_IARCHIVE>
-void serialize(Archive& ar, std::vector<T>& data)
+template <typename T>
+void serialize(BinaryIArchive& ar, std::vector<T>& data)
 {
     uint64_t length;
-    ar.primitive(length);
+    ar(length);
     std::unique_ptr<T[]> buf{new T[length]};
     ar.primitive_array(buf.get(), length);
     data = std::vector<T>(buf.get(), buf.get() + length);
@@ -263,64 +249,56 @@ void serialize(Archive& ar, std::vector<T>& data)
 
 
 
-template <typename Archive, typename T, PUTIT_OARCHIVE>
-void serialize(Archive& ar, std::vector<T>& data)
+template <typename T>
+void serialize(BinaryOArchive& ar, std::vector<T>& data)
 {
     const uint64_t length = data.size();
-    ar.primitive(length);
+    ar(length);
     ar.primitive_array(data.data(), length);
 }
 
 
 
-template <typename Archive, size_t N, PUTIT_ENABLE_IF(N <= 32), PUTIT_IARCHIVE>
-void serialize(Archive& ar, std::bitset<N>& data)
+template <size_t N, PUTIT_ENABLE_IF(N <= 32)>
+void serialize(BinaryIArchive& ar, std::bitset<N>& data)
 {
     uint32_t tmp;
-    ar.primitive(tmp);
+    ar(tmp);
     data = tmp;
 }
 
 
 
-template <typename Archive, size_t N, PUTIT_ENABLE_IF(N <= 32), PUTIT_OARCHIVE>
-void serialize(Archive& ar, std::bitset<N>& data)
+template <size_t N, PUTIT_ENABLE_IF(N <= 32)>
+void serialize(BinaryOArchive& ar, std::bitset<N>& data)
 {
     const auto tmp = static_cast<uint32_t>(data.to_ulong());
-    ar.primitive(tmp);
+    ar(tmp);
 }
 
 
 
-template <
-    typename Archive,
-    size_t N,
-    PUTIT_ENABLE_IF(32 < N && N <= 64),
-    PUTIT_IARCHIVE>
-void serialize(Archive& ar, std::bitset<N>& data)
+template <size_t N, PUTIT_ENABLE_IF(32 < N && N <= 64)>
+void serialize(BinaryIArchive& ar, std::bitset<N>& data)
 {
     uint64_t tmp;
-    ar.primitive(tmp);
+    ar(tmp);
     data = tmp;
 }
 
 
 
-template <
-    typename Archive,
-    size_t N,
-    PUTIT_ENABLE_IF(32 < N && N <= 64),
-    PUTIT_OARCHIVE>
-void serialize(Archive& ar, std::bitset<N>& data)
+template <size_t N, PUTIT_ENABLE_IF(32 < N && N <= 64)>
+void serialize(BinaryOArchive& ar, std::bitset<N>& data)
 {
     const auto tmp = static_cast<uint64_t>(data.to_ulong());
-    ar.primitive(tmp);
+    ar(tmp);
 }
 
 
 
-template <typename Archive, size_t N, PUTIT_ENABLE_IF(64 < N), PUTIT_IARCHIVE>
-void serialize(Archive& ar, std::bitset<N>& data)
+template <size_t N, PUTIT_ENABLE_IF(64 < N)>
+void serialize(BinaryIArchive& ar, std::bitset<N>& data)
 {
     std::string buf;
     serialize(ar, buf);
@@ -329,8 +307,8 @@ void serialize(Archive& ar, std::bitset<N>& data)
 
 
 
-template <typename Archive, size_t N, PUTIT_ENABLE_IF(64 < N), PUTIT_OARCHIVE>
-void serialize(Archive& ar, std::bitset<N>& data)
+template <size_t N, PUTIT_ENABLE_IF(64 < N)>
+void serialize(BinaryOArchive& ar, std::bitset<N>& data)
 {
     auto buf = data.to_string();
     serialize(ar, buf);
@@ -339,8 +317,11 @@ void serialize(Archive& ar, std::bitset<N>& data)
 
 
 #undef PUTIT_ENABLE_IF
-#undef PUTIT_IARCHIVE
-#undef PUTIT_OARCHIVE
+#undef PUTIT_DEFINE_PRIMITIVE_TYPES_CONST
+#undef PUTIT_DEFINE_PRIMITIVE_TYPES
+#undef PUTIT_DEFINE_PRIMITIVE_TYPES_BASE
+#undef PUTIT_DEFINE_ONE_PRIMITIVE_TYPE
+#undef PUTIT_EMPTY_TOKEN
 
 } // namespace putit
 } // namespace elona
