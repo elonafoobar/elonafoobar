@@ -83,7 +83,7 @@ By default, assets from vanilla Elona in `deps/` are not bundled with the APK, t
 
 # How To Play
 
-1. Copy the `data`, `graphic`, `original`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.
+1. Copy the `data`, `graphic`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.
 2. Execute `bin/Elona_foobar`, `bin/Elona_foobar.app` or `bin/Debug/Elona_foobar.exe`.
 
 

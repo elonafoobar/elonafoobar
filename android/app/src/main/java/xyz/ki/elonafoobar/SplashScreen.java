@@ -235,7 +235,6 @@ public class SplashScreen extends Activity {
                 new FolderInfo("data"),
                 new FolderInfo("graphic"),
                 new FolderInfo("map"),
-                new FolderInfo("original"),
                 new FolderInfo("runtime", ".", false),
                 new FolderInfo("sound"),
                 new FolderInfo("tmp"),
