@@ -77,6 +77,9 @@ before_script:
     fi
 
 script:
+  - if [[ "$BUILD_TYPE" != "android" ]]; then
+      make putit;
+    fi
   - if [[ "$BUILD_TYPE" == "osx" ]]; then
       make format;
     fi

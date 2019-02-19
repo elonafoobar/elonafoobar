@@ -61,10 +61,10 @@ void serialize(Archive& _putit_archive_)
 
 
 def iterate_all_headers():
-    # /path/to/elonafoobar/src/putit
+    # /path/to/elonafoobar/src/putit/bin
     this_file_dir = Path(__file__).parent.resolve()
     # /path/to/elonafoobar/src/elona
-    source_root_dir = this_file_dir.parent / "elona"
+    source_root_dir = this_file_dir.parent.parent / "elona"
     # Iterate all C++ header files under elona folder.
     for filepath in source_root_dir.glob("**/*.hpp"):
         yield filepath
