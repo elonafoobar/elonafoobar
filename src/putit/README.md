@@ -43,7 +43,7 @@ Finally, when you newly add fields to any existing structures, do not remember a
 Then, execute `putit.py`.
 
 ```sh
-$ src/putit/putit.py
+$ src/putit/bin/putit.py
 Processing /Users/keik/src/ki-elonafoobar/src/elona/keybind/input_context.hpp...Done
 Processing /Users/keik/src/ki-elonafoobar/src/elona/keybind/keybind.hpp...Done
 Processing /Users/keik/src/ki-elonafoobar/src/elona/keybind/keybind_deserializer.hpp...Done
