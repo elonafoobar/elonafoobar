@@ -18,7 +18,6 @@
     }
 
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS \
-    std::bitset<sizeof(int) * 8 * 50> _flags; \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_floating, 5) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_invisible, 6) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(can_see_invisible, 7) \
@@ -129,6 +128,8 @@ struct CharacterData
     int coefficient;
     optional<std::string> corpse_eating_callback;
     optional<std::string> dialog_id;
+
+    std::bitset<sizeof(int) * 8 * 50> _flags;
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };

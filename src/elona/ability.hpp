@@ -9,24 +9,26 @@
 namespace elona
 {
 
+/// @putit
 struct Ability
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
+
+    /// @putit
     int current_level = 0;
+
+    /// @putit
     int original_level = 0;
+
+    /// @putit
     int experience = 0;
+
+    /// @putit
     int potential = 0;
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        ar(current_level);
-        ar(original_level);
-        ar(experience);
-        ar(potential);
-    }
+#include "_putit/ability.cpp"
 };
 
 

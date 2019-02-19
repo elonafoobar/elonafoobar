@@ -223,19 +223,16 @@ struct GameData
 
 extern GameData game_data;
 
+
+
+/// @putit
 struct FoobarData
 {
-    // NOTE: Don't add new fields unless you add them to serialization,
-    // which will break save compatibility.
+    /// @putit
     bool is_autodig_enabled{};
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        // WARNING: Changing this will break save compatibility!
-        ar(is_autodig_enabled);
-    }
+#include "_putit/foobar_data.cpp"
 };
 
 

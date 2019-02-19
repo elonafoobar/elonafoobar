@@ -13,12 +13,13 @@ namespace elona
 {
 
 
-// FIXME
+/// @putit
 struct Enchantment
 {
-    // NOTE: Don't add new fields unless you add them to serialization, which
-    // will break save compatibility.
+    /// @putit
     int id = 0;
+
+    /// @putit
     int power = 0;
 
     bool operator==(const Enchantment& other) const noexcept
@@ -27,17 +28,12 @@ struct Enchantment
     }
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        // WARNING: Changing this will break save compatibility!
-        ar(id);
-        ar(power);
-    }
+#include "_putit/enchantment.cpp"
 };
 
 
 
+/// @putit
 struct Item
 {
 private:
@@ -47,45 +43,110 @@ private:
 public:
     Item();
 
-    // NOTE: Don't add new fields unless you add them to serialization, which
-    // will break save compatibility.
-
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
     // arguments. New code should pass Item& instead. Not serialized; set on
     // creation and load.
     int index = -1;
 
+private:
+    /// @putit
+    int number_ = 0;
+
+public:
+    /// @putit
     int value = 0;
+
+    /// @putit
     int image = 0;
+
+    /// @putit
     int id = 0;
+
+    /// @putit
     Quality quality = Quality::none;
+
+    /// @putit
     Position position;
+
+    /// @putit
     int weight = 0;
+
+    /// @putit
     IdentifyState identification_state = IdentifyState::unidentified;
+
+    /// @putit
     int count = 0;
+
+    /// @putit
     int dice_x = 0;
+
+    /// @putit
     int dice_y = 0;
+
+    /// @putit
     int damage_bonus = 0;
+
+    /// @putit
     int hit_bonus = 0;
+
+    /// @putit
     int dv = 0;
+
+    /// @putit
     int pv = 0;
+
+    /// @putit
     int skill = 0;
+
+    /// @putit
     CurseState curse_state = CurseState::none;
+
+    /// @putit
     int body_part = 0;
+
+    /// @putit
     int function = 0;
+
+    /// @putit
     int enhancement = 0;
+
+    /// @putit
     int own_state = 0;
+
+    /// @putit
     int color = 0;
+
+    /// @putit
     int subname = 0;
+
+    /// @putit
     int material = 0;
+
+    /// @putit
     int param1 = 0;
+
+    /// @putit
     int param2 = 0;
+
+    /// @putit
     int param3 = 0;
+
+    /// @putit
     int param4 = 0;
+
+    /// @putit
     int difficulty_of_identification = 0;
+
+    /// @putit
     int turn = 0;
 
+private:
+    /// @putit
+    FlagSet _flags;
+
+public:
+    /// @putit
     std::vector<Enchantment> enchantments;
 
 
@@ -138,44 +199,7 @@ public:
 #undef ELONA_ITEM_DEFINE_FLAG_ACCESSOR
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        // WARNING: Changing this will break save compatibility!
-        ar(number_);
-        ar(value);
-        ar(image);
-        ar(id);
-        ar(quality);
-        ar(position);
-        ar(weight);
-        ar(identification_state);
-        ar(count);
-        ar(dice_x);
-        ar(dice_y);
-        ar(damage_bonus);
-        ar(hit_bonus);
-        ar(dv);
-        ar(pv);
-        ar(skill);
-        ar(curse_state);
-        ar(body_part);
-        ar(function);
-        ar(enhancement);
-        ar(own_state);
-        ar(color);
-        ar(subname);
-        ar(material);
-        ar(param1);
-        ar(param2);
-        ar(param3);
-        ar(param4);
-        ar(difficulty_of_identification);
-        ar(turn);
-        ar(_flags);
-        range::for_each(
-            enchantments, [&](auto&& enchantment) { ar(enchantment); });
-    }
+#include "_putit/item.cpp"
 
 
     static void copy(const Item& from, Item& to)
@@ -188,9 +212,6 @@ public:
 
 private:
     static void refresh();
-    int number_ = 0;
-
-    FlagSet _flags;
 
     Item(const Item&) = default;
     Item(Item&&) = default;
