@@ -26,7 +26,7 @@ public:
     {
         int x = i % 50;
         int y = i / 50;
-        assert(chara_create(-1, 3, x, y) == 1);
+        chara_create(-1, 3, x, y);
         i++;
     }
 
