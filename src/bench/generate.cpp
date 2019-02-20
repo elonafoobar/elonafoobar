@@ -1,11 +1,11 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
 #include <cassert>
-#include "../ability.hpp"
-#include "../character.hpp"
-#include "../debug.hpp"
-#include "../testing.hpp"
-#include "../variables.hpp"
+#include "../elona/ability.hpp"
+#include "../elona/character.hpp"
+#include "../elona/debug.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/variables.hpp"
 #include "util.hpp"
 
 class GenerateCharacterFixture : public ::hayai::Fixture

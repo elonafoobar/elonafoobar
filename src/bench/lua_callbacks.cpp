@@ -1,13 +1,14 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
 #include <cassert>
-#include "../ability.hpp"
-#include "../character.hpp"
-#include "../debug.hpp"
-#include "../lua_env/lua_env.hpp"
-#include "../testing.hpp"
-#include "../variables.hpp"
-#include "message.hpp"
+#include "../elona/ability.hpp"
+#include "../elona/character.hpp"
+#include "../elona/debug.hpp"
+#include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
+#include "../elona/message.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/variables.hpp"
 #include "util.hpp"
 
 class LuaCallbacksWanderFixture : public ::hayai::Fixture
