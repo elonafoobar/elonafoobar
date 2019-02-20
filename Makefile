@@ -126,7 +126,7 @@ i18n-check-err: FORCE # Run i18n-checker with --no-warnings.
 
 
 putit: FORCE # Generate serializers for save data.
-	./src/putit/bin/putit.py
+	python3 ./src/putit/bin/putit.py
 	test -z "$$(git status --short)"
 
 
