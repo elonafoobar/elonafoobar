@@ -197,6 +197,7 @@ else()
       src/bench/i18n.cpp
       src/bench/lua_callbacks.cpp
       src/bench/magic.cpp
+      src/bench/serialization.cpp
       src/bench/util.cpp
       )
 
