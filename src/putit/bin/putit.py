@@ -37,23 +37,19 @@ class StructInfo:
     def include_filename(self, filename):
         self.filename = (Path(self._original_filepath).parent / filename).resolve()
 
-    def __str__(self):
-        return f"struct {self.name} {{ {', '.join(self.fields)} }} {self.filename}"
-
     def dump(self):
         parent_dir = self.filename.parent
         if not parent_dir.exists():
             parent_dir.mkdir(parents=True)
 
         with open(self.filename, "w") as file:
-            file.write(f"""/* clang-format off */
+            file.write("""/* clang-format off */
 template <typename Archive>
 void serialize(Archive& _putit_archive_)
-{{
+{
 """)
             for field in self.fields:
-                file.write(f"    _putit_archive_(this->{field});")
-                file.write("\n")
+                file.write("    _putit_archive_(this->{});\n".format(field))
             file.write("""}
 /* clang-format on */
 """)
@@ -84,7 +80,7 @@ def main():
     struct_table = []
     for filepath in iterate_all_headers():
         # Open the header file.
-        print(f"Processing {filepath}...", end="")
+        print("Processing {}...".format(filepath), end="")
         with open(filepath, 'r') as file:
             # Iterate each line.
             will_define_struct = False
@@ -115,7 +111,7 @@ def main():
 
     for struct in struct_table:
         struct.dump()
-        print(f"{struct.name}'s serializer has successfully been generated.")
+        print("{}'s serializer has successfully been generated.".format(struct.name))
 
 
 
