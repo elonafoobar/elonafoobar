@@ -61,7 +61,6 @@ namespace
 {
 
 elona_vector1<std::string> jkey;
-elona_vector1<std::string> musicfile;
 elona_vector1<std::string> untaglist;
 
 
@@ -77,50 +76,6 @@ void main_loop()
         if (finished)
         {
             break;
-        }
-    }
-}
-
-
-
-void load_musiclist()
-{
-    const auto filepath = filesystem::dir::user() / u8"music/musiclist.txt";
-    if (!fs::exists(filepath))
-        return;
-
-    size_t i = 0;
-    for (auto&& line : fileutil::read_by_line(filepath))
-    {
-        if (line.empty())
-            continue;
-        musicfile(i + 50) = strmid(line, 0, instr(line, 0, u8"\t"));
-        ++i;
-    }
-}
-
-
-
-void backup_config_files()
-{
-    std::pair<const char*, const char*> files[] = {
-        {u8"./original/export.txt", u8"./user/export.txt"},
-        {u8"./original/musiclist.txt", u8"./user/music/musiclist.txt"},
-    };
-
-    for (const auto& from_to : files)
-    {
-        const auto from_path = filesystem::path(from_to.first);
-        const auto to_path = filesystem::path(from_to.second);
-        if (!fs::exists(to_path))
-        {
-            if (!fs::exists(from_path))
-            {
-                throw std::runtime_error(
-                    "Original config file " + from_path.string() +
-                    " didn't exist.");
-            }
-            fs::copy_file(from_path, to_path);
         }
     }
 }
@@ -264,8 +219,6 @@ void initialize_config(const fs::path& config_file)
     time_begin = timeGetTime() / 1000;
 
     mesbox(keylog);
-
-    backup_config_files();
 
     initialize_directories();
 
@@ -495,7 +448,6 @@ void initialize_elona()
     SDIM2(playerheader, 100);
     artifactlocation.clear();
     SDIM1(newsbuff);
-    SDIM3(musicfile, 30, 97);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
     keybind_regenerate_key_select();
@@ -565,7 +517,6 @@ void initialize_elona()
         }
     }
     initialize_sound_file();
-    load_musiclist();
     mainskill(0) = 173;
     mainskill(1) = 106;
     mainskill(2) = 108;
