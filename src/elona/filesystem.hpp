@@ -43,6 +43,7 @@ fs::path data();
 fs::path for_mod(const std::string& mod_id);
 fs::path graphic();
 fs::path locale();
+fs::path log();
 fs::path map();
 fs::path mods();
 fs::path save();

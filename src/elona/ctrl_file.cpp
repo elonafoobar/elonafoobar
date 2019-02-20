@@ -222,7 +222,7 @@ void load_v1(
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
     {
-        ELONA_FATAL("Save")
+        ELONA_FATAL("save")
             << "Could not open file at "
             << filepathutil::make_preferred_path_in_utf8(filepath);
         throw std::runtime_error(

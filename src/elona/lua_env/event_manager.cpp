@@ -182,7 +182,7 @@ void EventManager::trigger_event(EventKind event, sol::table data)
     }
     else
     {
-        ELONA_LOG("Lua.Event") << "No callbacks registered for event "
+        ELONA_LOG("lua.event") << "No callbacks registered for event "
                                << static_cast<int>(event) << ", skipping.";
     }
 }

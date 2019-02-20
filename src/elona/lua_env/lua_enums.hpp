@@ -44,7 +44,7 @@ public:
         auto it = storage.find(key);
         if (it == storage.end())
         {
-            ELONA_WARN("Lua.Enum") << "Enum value " << key << " for " << name
+            ELONA_WARN("lua.enum") << "Enum value " << key << " for " << name
                                    << " not found, using default";
             return default_val;
         }

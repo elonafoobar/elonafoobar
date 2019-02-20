@@ -75,7 +75,7 @@ void _update_save_data_1(const fs::path& save_dir, int serial_id)
             if (!old_race_id.empty() &&
                 !strutil::starts_with(old_race_id, "core."))
             {
-                ELONA_LOG("Save.Update") << "Prepend \"core\" prefix to "
+                ELONA_LOG("save.update") << "Prepend \"core\" prefix to "
                                          << chara.at(0) << ": " << old_race_id;
                 chara.at(2) = "core." + old_race_id;
             }
@@ -137,7 +137,7 @@ void _update_save_data_2(const fs::path& save_dir, int serial_id)
             if (!old_class_id.empty() &&
                 !strutil::starts_with(old_class_id, "core."))
             {
-                ELONA_LOG("Save.Update") << "Prepend \"core\" prefix to "
+                ELONA_LOG("save.update") << "Prepend \"core\" prefix to "
                                          << chara.at(0) << ": " << old_class_id;
                 chara.at(3) = "core." + old_class_id;
             }
@@ -464,7 +464,7 @@ void _update_save_data_3(const fs::path& save_dir, int serial_id)
             if (god_id != core_god::eyth &&
                 !strutil::starts_with(god_id, "core."))
             {
-                ELONA_LOG("Save.Update")
+                ELONA_LOG("save.update")
                     << "Prepend \"core\" prefix to character(" << idx
                     << "): " << god_id;
                 god_id = "core." + god_id;
@@ -721,7 +721,7 @@ void _update_save_data_4(const fs::path& save_dir, int serial_id)
             // Prepend "core" prefix to old god IDs.
             if (image == 649)
             {
-                ELONA_LOG("Save.Update") << "Change item chip 649 to 261.";
+                ELONA_LOG("save.update") << "Change item chip 649 to 261.";
                 image = 261;
             }
             // Dump item data to the memory stream.
@@ -1154,7 +1154,7 @@ void _update_save_data_5(const fs::path& save_dir, int serial_id)
                 {
                     portrait_ = sex ? "core.woman1" : "core.man1";
                 }
-                ELONA_LOG("Save.Update")
+                ELONA_LOG("save.update")
                     << "Convert portrait ID of "
                     << "character(" << idx << "): " << portrait << " => "
                     << portrait_;
@@ -1334,7 +1334,7 @@ void _update_save_data_6(const fs::path& save_dir, int serial_id)
         // Modify indoor flags.
 
         const auto modify_indoor_flag = [&data](int map_id) {
-            ELONA_LOG("Save.Update")
+            ELONA_LOG("save.update")
                 << "Make the map(" << map_id << ") outdoor.";
             data.at(map_id * 40 + 21) = 2;
         };
@@ -1440,7 +1440,7 @@ void _update_save_data_7(const fs::path& save_dir, int serial_id)
             Position new_downstairs_pos{actual_stair_down_pos % 1000,
                                         actual_stair_down_pos / 1000};
 
-            ELONA_LOG("Save.Update")
+            ELONA_LOG("save.update")
                 << "Correct downstairs position in " << entry.path().filename()
                 << ": " << old_downstairs_pos << " -> " << new_downstairs_pos
                 << ".";
@@ -1454,7 +1454,7 @@ void _update_save_data_7(const fs::path& save_dir, int serial_id)
             Position new_upstairs_pos{actual_stair_up_pos % 1000,
                                       actual_stair_up_pos / 1000};
 
-            ELONA_LOG("Save.Update")
+            ELONA_LOG("save.update")
                 << "Correct upstairs position in " << entry.path().filename()
                 << ": " << old_upstairs_pos << " -> " << new_upstairs_pos
                 << ".";
@@ -1530,7 +1530,7 @@ void update_save_data(const fs::path& save_dir)
          serial_id != latest_version.serial_id;
          ++serial_id)
     {
-        ELONA_LOG("Save.Update") << "Update save data from #" << serial_id
+        ELONA_LOG("save.update") << "Update save data from #" << serial_id
                                  << " to #" << (serial_id + 1) << ".";
         _update_save_data(save_dir, serial_id);
     }

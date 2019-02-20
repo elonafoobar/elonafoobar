@@ -149,7 +149,7 @@ public:
             std::string current = get<std::string>(key);
             if (!EnumDef.get_index_of(current))
             {
-                ELONA_WARN("Config")
+                ELONA_WARN("config")
                     << "Config key "s << key << " had invalid variant "s
                     << current << ". "s
                     << "("s << def.type_to_string(key) << ")"s
@@ -199,7 +199,7 @@ public:
 
     void set(const std::string& key, const hcl::Value value)
     {
-        ELONA_LOG("Config") << "Set: " << key << " to " << value;
+        ELONA_LOG("config") << "Set: " << key << " to " << value;
 
         if (!def.exists(key))
         {

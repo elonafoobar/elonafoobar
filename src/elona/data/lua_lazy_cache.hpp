@@ -219,7 +219,7 @@ private:
         {
             std::string message = "Error initializing "s + Traits::type_id +
                 data_id_separator + id.get() + ": " + e.what();
-            ELONA_WARN("Lua.Data") << message;
+            ELONA_WARN("lua.data") << message;
             std::cerr << message << std::endl;
 
             _errors.emplace(id, e.what());
