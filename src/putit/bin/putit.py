@@ -42,7 +42,7 @@ class StructInfo:
         if not parent_dir.exists():
             parent_dir.mkdir(parents=True)
 
-        with open(self.filename, "w") as file:
+        with open(str(self.filename), "w") as file:
             file.write("""/* clang-format off */
 template <typename Archive>
 void serialize(Archive& _putit_archive_)
@@ -81,7 +81,7 @@ def main():
     for filepath in iterate_all_headers():
         # Open the header file.
         print("Processing {}...".format(filepath), end="")
-        with open(filepath, 'r') as file:
+        with open(str(filepath), 'r') as file:
             # Iterate each line.
             will_define_struct = False
             will_define_field = False
