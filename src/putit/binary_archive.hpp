@@ -55,11 +55,18 @@ public:
 
 
     template <typename T>
+    static void load(std::istream& in, T& data)
+    {
+        BinaryIArchive ar{in};
+        ar(data);
+    }
+
+
+    template <typename T>
     static void load(const boost::filesystem::path& filepath, T& data)
     {
         std::ifstream in{filepath.native(), std::ios::binary};
-        BinaryIArchive ar{in};
-        ar(data);
+        load(in, data);
     }
 
 
@@ -121,11 +128,18 @@ public:
 
 
     template <typename T>
+    static void save(std::ostream& out, T& data)
+    {
+        BinaryOArchive ar{out};
+        ar(data);
+    }
+
+
+    template <typename T>
     static void save(const boost::filesystem::path& filepath, T& data)
     {
         std::ofstream out{filepath.native(), std::ios::binary};
-        BinaryOArchive ar{out};
-        ar(data);
+        save(out, data);
     }
 
 
