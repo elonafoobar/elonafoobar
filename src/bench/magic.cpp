@@ -38,8 +38,8 @@ public:
         {
             int x = i % 50;
             int y = i / 50;
-            assert(chara_create(-1, 328, x, y));
-            assert(new_ally_joins() == 1);
+            chara_create(-1, 328, x, y);
+            new_ally_joins();
             cdata[rc].will_explode_soon() = true;
         }
 
@@ -47,7 +47,7 @@ public:
         {
             int x = i % 50;
             int y = i / 50;
-            assert(chara_create(-1, 245, x, y));
+            chara_create(-1, 245, x, y);
             cdata[rc].will_explode_soon() = true;
         }
     }

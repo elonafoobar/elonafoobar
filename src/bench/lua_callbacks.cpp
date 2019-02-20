@@ -34,7 +34,7 @@ public:
         {
             int x = i % 50;
             int y = i / 50;
-            assert(chara_create(-1, 328, x, y));
+            chara_create(-1, 328, x, y);
         }
     }
 
@@ -85,7 +85,7 @@ public:
         {
             int x = i % 50;
             int y = i / 50;
-            assert(chara_create(-1, 328, x, y));
+            chara_create(-1, 328, x, y);
         }
     }
 };
