@@ -465,9 +465,9 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& action)
             set_reupdate();
         }
     }
-    else if (action == "switch_mode" || action == "switch_mode_2")
+    else if (action == "switch_mode" || action == "identify")
     {
-        bool is_forwards = action == "switch_mode_2";
+        bool is_forwards = action == "identify";
         _switch_target(is_forwards);
         set_reupdate();
     }
