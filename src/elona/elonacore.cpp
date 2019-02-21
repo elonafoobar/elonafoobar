@@ -766,7 +766,8 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line(filesystem::dir::data() / u8"name.csv"),
+        fileutil::read_by_line(
+            i18n::s.get_locale_dir("core") / "lazy" / "name.csv"),
         std::back_inserter(lines));
 
     SDIM3(rn1, 15, lines.size());
@@ -775,8 +776,8 @@ void load_random_title_table()
     for (size_t i = 0; i < lines.size(); ++i)
     {
         csvsort(randn1, lines[i], 44);
-        rn1(i) = lang(randn1(0), randn1(1));
-        rn2(i) = lang(randn1(2), randn1(3));
+        rn1(i) = randn1(0);
+        rn2(i) = randn1(1);
     }
 }
 
