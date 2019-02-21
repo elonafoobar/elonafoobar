@@ -231,7 +231,7 @@ void load_v1(
     putit::BinaryIArchive ar(in);
     for (size_t i = begin; i < end; ++i)
     {
-        ar.load(data(i));
+        ar(data(i));
     }
 }
 
@@ -252,7 +252,7 @@ void save_v1(
     putit::BinaryOArchive ar(out);
     for (size_t i = begin; i < end; ++i)
     {
-        ar.save(data(i));
+        ar(data(i));
     }
 }
 
@@ -277,7 +277,7 @@ void load_v2(
     {
         for (size_t i = i_begin; i < i_end; ++i)
         {
-            ar.load(data(i, j));
+            ar(data(i, j));
         }
     }
 }
@@ -303,7 +303,7 @@ void save_v2(
     {
         for (size_t i = i_begin; i < i_end; ++i)
         {
-            ar.save(data(i, j));
+            ar(data(i, j));
         }
     }
 }
@@ -333,7 +333,7 @@ void load_v3(
         {
             for (size_t i = i_begin; i < i_end; ++i)
             {
-                ar.load(data(i, j, k));
+                ar(data(i, j, k));
             }
         }
     }
@@ -364,7 +364,7 @@ void save_v3(
         {
             for (size_t i = i_begin; i < i_end; ++i)
             {
-                ar.save(data(i, j, k));
+                ar(data(i, j, k));
             }
         }
     }
@@ -383,7 +383,7 @@ void load(const fs::path& filepath, T& data, size_t begin, size_t end)
     putit::BinaryIArchive ar{in};
     for (size_t i = begin; i < end; ++i)
     {
-        ar.load(data[i]);
+        ar(data[i]);
     }
 }
 
@@ -400,7 +400,7 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
     putit::BinaryOArchive ar{out};
     for (size_t i = begin; i < end; ++i)
     {
-        ar.save(data[i]);
+        ar(data[i]);
     }
 }
 
@@ -518,7 +518,7 @@ void fmode_7_8(bool read, const fs::path& dir)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar.load(sdata.get(i, cc));
+                        ar(sdata.get(i, cc));
                     }
                 }
             }
@@ -531,7 +531,7 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar.save(sdata.get(i, cc));
+                    ar(sdata.get(i, cc));
                 }
             }
         }
@@ -858,7 +858,7 @@ void fmode_14_15(bool read)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar.load(sdata.get(i, cc));
+                        ar(sdata.get(i, cc));
                     }
                 }
             }
@@ -872,7 +872,7 @@ void fmode_14_15(bool read)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar.save(sdata.get(i, cc));
+                    ar(sdata.get(i, cc));
                 }
             }
         }
@@ -1083,7 +1083,7 @@ void fmode_1_2(bool read)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar.load(sdata.get(i, cc));
+                    ar(sdata.get(i, cc));
                 }
             }
         }
@@ -1098,7 +1098,7 @@ void fmode_1_2(bool read)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar.save(sdata.get(i, cc));
+                    ar(sdata.get(i, cc));
                 }
             }
         }
@@ -1306,7 +1306,7 @@ void fmode_17()
         {
             for (int i = 0; i < 600; ++i)
             {
-                ar.load(sdata.get(i, cc));
+                ar(sdata.get(i, cc));
             }
         }
     }

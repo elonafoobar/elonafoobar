@@ -19,25 +19,25 @@
 namespace elona
 {
 
-
+/// @putit
 struct Buff
 {
+    /// @putit
     int id = 0;
+
+    /// @putit
     int power = 0;
+
+    /// @putit
     int turns = 0;
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        ar(id);
-        ar(power);
-        ar(turns);
-    }
+#include "_putit/buff.cpp"
 };
 
 
 
+/// @putit
 struct ContinuousAction
 {
     enum class Type : int
@@ -57,8 +57,13 @@ struct ContinuousAction
         blend,
     };
 
+    /// @putit
     Type type = ContinuousAction::Type::none;
+
+    /// @putit
     int turn = 0;
+
+    /// @putit
     int item = 0;
 
 
@@ -88,17 +93,12 @@ struct ContinuousAction
     }
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        ar(type);
-        ar(turn);
-        ar(item);
-    }
+#include "_putit/continuous_action.cpp"
 };
 
 
 
+/// @putit
 struct Character
 {
     enum class State : int
@@ -129,131 +129,384 @@ struct Character
     // on creation and load.
     int index = -1;
 
+private:
+    /// @putit
+    Character::State state_ = Character::State::empty;
+
+public:
+    /// @putit
     Position position;
+
+    /// @putit
     Position next_position;
+
+    /// @putit
     int time_to_revive = 0;
+
+    /// @putit
     int vision_flag = 0;
+
+    /// @putit
     int image = 0;
+
+    /// @putit
     int sex = 0;
+
+    /// @putit
     int relationship = 0;
+
+    /// @putit
     int turn_cost = 0;
+
+    /// @putit
     int current_speed = 0;
+
+    /// @putit
     int item_which_will_be_used = 0;
+
+    /// @putit
     std::string portrait;
+
+    /// @putit
     int interest = 0;
+
+    /// @putit
     int time_interest_revive = 0;
+
+    /// @putit
     int personality = 0;
+
+    /// @putit
     int impression = 0;
+
+    /// @putit
     int talk_type = 0;
+
+    /// @putit
     int height = 0;
+
+    /// @putit
     int weight = 0;
+
+    /// @putit
     int birth_year = 0;
+
+    /// @putit
     int nutrition = 0;
+
+    /// @putit
     int can_talk = 0;
+
+    /// @putit
     Quality quality = Quality::none;
+
+    /// @putit
     int turn = 0;
+
+    /// @putit
     int id = 0;
+
+    /// @putit
     int vision_distance = 0;
+
+    /// @putit
     int enemy_id = 0;
+
+    /// @putit
     int gold = 0;
+
+    /// @putit
     int platinum_coin = 0;
+
+    /// @putit
     int equipment_type = 0;
+
+    /// @putit
     int melee_attack_type = 0;
+
+    /// @putit
     int fame = 0;
+
+    /// @putit
     int experience = 0;
+
+    /// @putit
     int required_experience = 0;
+
+    /// @putit
     int speed_percentage = 0;
+
+    /// @putit
     int level = 0;
+
+    /// @putit
     int speed_percentage_in_next_turn = 0;
+
+    /// @putit
     int skill_bonus = 0;
+
+    /// @putit
     int total_skill_bonus = 0;
+
+    /// @putit
     int inventory_weight = 0;
+
+    /// @putit
     int max_inventory_weight = 0;
+
+    /// @putit
     int inventory_weight_type = 0;
+
+    /// @putit
     int max_level = 0;
+
+    /// @putit
     int karma = 0;
+
+    /// @putit
     int hp = 0;
+
+    /// @putit
     int max_hp = 0;
+
+    /// @putit
     int sp = 0;
+
+    /// @putit
     int max_sp = 0;
+
+    /// @putit
     int mp = 0;
+
+    /// @putit
     int max_mp = 0;
+
+    /// @putit
     int heal_value_per_nether_attack = 0;
+
+    /// @putit
     GodId god_id;
+
+    /// @putit
     int piety_point = 0;
+
+    /// @putit
     int praying_point = 0;
+
+    /// @putit
     int sum_of_equipment_weight = 0;
+
+    /// @putit
     int special_attack_type = 0;
+
+    /// @putit
     int rate_to_pierce = 0;
+
+    /// @putit
     int rate_of_critical_hit = 0;
+
+    /// @putit
     int speed_correction_value = 0;
+
+    /// @putit
     int original_relationship = 0;
+
+    /// @putit
     int pv = 0;
+
+    /// @putit
     int dv = 0;
+
+    /// @putit
     int hit_bonus = 0;
+
+    /// @putit
     int damage_bonus = 0;
+
+    /// @putit
     int pv_correction_value = 0;
+
+    /// @putit
     int dv_correction_value = 0;
+
+    /// @putit
     int damage_reaction_info = 0;
+
+    /// @putit
     int emotion_icon = 0;
+
+    /// @putit
     int current_map = 0;
+
+    /// @putit
     int current_dungeon_level = 0;
+
+    /// @putit
     int related_quest_id = 0;
+
+    /// @putit
     int direction = 0;
+
+    /// @putit
     int period_of_contract = 0;
+
+    /// @putit
     int hire_count = 0;
+
+    /// @putit
     int insanity = 0;
+
+    /// @putit
     int curse_power = 0;
+
+    /// @putit
     int extra_attack = 0;
+
+    /// @putit
     int extra_shot = 0;
+
+    /// @putit
     int decrease_physical_damage = 0;
+
+    /// @putit
     int nullify_damage = 0;
+
+    /// @putit
     int cut_counterattack = 0;
+
+    /// @putit
     int anorexia_count = 0;
+
+    /// @putit
     ContinuousAction continuous_action;
+
+    /// @putit
     int stops_continuous_action_if_damaged = 0;
+
+    /// @putit
     int quality_of_performance = 0;
+
+    /// @putit
     int tip_gold = 0;
+
+    /// @putit
     int character_role = 0;
+
+    /// @putit
     int shop_rank = 0;
+
+    /// @putit
     int continuous_action_target = 0;
+
+    /// @putit
     int shop_store_id = 0;
+
+    /// @putit
     int time_to_restore = 0;
+
+    /// @putit
     int cnpc_id = 0;
+
+    /// @putit
     Position initial_position;
+
+    /// @putit
     int hate = 0;
+
+    /// @putit
     int ai_calm = 0;
+
+    /// @putit
     int ai_move = 0;
+
+    /// @putit
     int ai_dist = 0;
+
+    /// @putit
     int ai_act_sub_freq = 0;
+
+    /// @putit
     int ai_heal = 0;
+
+    /// @putit
     int element_of_unarmed_attack = 0;
+
+    /// @putit
     int poisoned = 0;
+
+    /// @putit
     int sleep = 0;
+
+    /// @putit
     int paralyzed = 0;
+
+    /// @putit
     int blind = 0;
+
+    /// @putit
     int confused = 0;
+
+    /// @putit
     int fear = 0;
+
+    /// @putit
     int dimmed = 0;
+
+    /// @putit
     int drunk = 0;
+
+    /// @putit
     int bleeding = 0;
+
+    /// @putit
     int wet = 0;
+
+    /// @putit
     int insane = 0;
+
+    /// @putit
     int sick = 0;
+
+    /// @putit
     int gravity = 0;
+
+    /// @putit
     int choked = 0;
+
+    /// @putit
     int furious = 0;
 
+    /// @putit
     std::vector<int> growth_buffs;
+
+    /// @putit
     std::vector<int> body_parts;
+
+    /// @putit
     std::vector<int> normal_actions;
+
+    /// @putit
     std::vector<int> special_actions;
+
+    /// @putit
     std::vector<Buff> buffs;
+
+    /// @putit
     std::vector<int> attr_adjs;
 
+    /// @putit
+    std::bitset<sizeof(int) * 8 * 50> _flags;
+
+    /// @putit
     int _156 = 0;
+
+    /// @putit
     int _203 = 0;
+
+    /// @putit
     int _205 = 0;
+
+    /// @putit
     int _206 = 0;
 
     void clear();
@@ -300,139 +553,6 @@ struct Character
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        ar(state_);
-        ar(position);
-        ar(next_position);
-        ar(time_to_revive);
-        ar(vision_flag);
-        ar(image);
-        ar(sex);
-        ar(relationship);
-        ar(turn_cost);
-        ar(current_speed);
-        ar(item_which_will_be_used);
-        ar(portrait);
-        ar(interest);
-        ar(time_interest_revive);
-        ar(personality);
-        ar(impression);
-        ar(talk_type);
-        ar(height);
-        ar(weight);
-        ar(birth_year);
-        ar(nutrition);
-        ar(can_talk);
-        ar(quality);
-        ar(turn);
-        ar(id);
-        ar(vision_distance);
-        ar(enemy_id);
-        ar(gold);
-        ar(platinum_coin);
-        ar(equipment_type);
-        ar(melee_attack_type);
-        ar(fame);
-        ar(experience);
-        ar(required_experience);
-        ar(speed_percentage);
-        ar(level);
-        ar(speed_percentage_in_next_turn);
-        ar(skill_bonus);
-        ar(total_skill_bonus);
-        ar(inventory_weight);
-        ar(max_inventory_weight);
-        ar(inventory_weight_type);
-        ar(max_level);
-        ar(karma);
-        ar(hp);
-        ar(max_hp);
-        ar(sp);
-        ar(max_sp);
-        ar(mp);
-        ar(max_mp);
-        ar(heal_value_per_nether_attack);
-        ar(god_id);
-        ar(piety_point);
-        ar(praying_point);
-        ar(sum_of_equipment_weight);
-        ar(special_attack_type);
-        ar(rate_to_pierce);
-        ar(rate_of_critical_hit);
-        ar(speed_correction_value);
-        ar(original_relationship);
-        ar(pv);
-        ar(dv);
-        ar(hit_bonus);
-        ar(damage_bonus);
-        ar(pv_correction_value);
-        ar(dv_correction_value);
-        ar(damage_reaction_info);
-        ar(emotion_icon);
-        ar(current_map);
-        ar(current_dungeon_level);
-        ar(related_quest_id);
-        ar(direction);
-        ar(period_of_contract);
-        ar(hire_count);
-        ar(insanity);
-        ar(curse_power);
-        ar(extra_attack);
-        ar(extra_shot);
-        ar(decrease_physical_damage);
-        ar(nullify_damage);
-        ar(cut_counterattack);
-        ar(anorexia_count);
-        ar(continuous_action);
-        ar(stops_continuous_action_if_damaged);
-        ar(quality_of_performance);
-        ar(tip_gold);
-        ar(character_role);
-        ar(shop_rank);
-        ar(continuous_action_target);
-        ar(shop_store_id);
-        ar(time_to_restore);
-        ar(cnpc_id);
-        ar(initial_position);
-        ar(hate);
-        ar(ai_calm);
-        ar(ai_move);
-        ar(ai_dist);
-        ar(ai_act_sub_freq);
-        ar(ai_heal);
-        ar(element_of_unarmed_attack);
-        ar(poisoned);
-        ar(sleep);
-        ar(paralyzed);
-        ar(blind);
-        ar(confused);
-        ar(fear);
-        ar(dimmed);
-        ar(drunk);
-        ar(bleeding);
-        ar(wet);
-        ar(insane);
-        ar(sick);
-        ar(gravity);
-        ar(choked);
-        ar(furious);
-        range::for_each(
-            growth_buffs, [&](auto&& growth_buff) { ar(growth_buff); });
-        range::for_each(body_parts, [&](auto&& body_part) { ar(body_part); });
-        ar(normal_actions);
-        ar(special_actions);
-        range::for_each(buffs, [&](auto&& buff) { ar(buff); });
-        range::for_each(attr_adjs, [&](auto&& attr_adj) { ar(attr_adj); });
-        ar(_flags);
-        ar(_156);
-        ar(_203);
-        ar(_205);
-        ar(_206);
-    }
-
-
     static void copy(const Character& from, Character& to)
     {
         const auto index_save = to.index;
@@ -441,10 +561,11 @@ struct Character
     }
 
 
+
+#include "_putit/character.cpp"
+
+
 private:
-    Character::State state_ = Character::State::empty;
-
-
     Character(const Character&) = default;
     Character(Character&&) = default;
     Character& operator=(const Character&) = default;

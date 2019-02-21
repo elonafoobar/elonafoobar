@@ -43,9 +43,9 @@ void load_save_data()
             std::ifstream in{(save_dir / "foobar_data.s1").native(),
                              std::ios::binary};
             putit::BinaryIArchive ar{in};
-            ar.load(major);
-            ar.load(minor);
-            ar.load(patch);
+            ar(major);
+            ar(minor);
+            ar(patch);
         }
 
         if (!(major == 0 && minor == 2 && patch == 7))
