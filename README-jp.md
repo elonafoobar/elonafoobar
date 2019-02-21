@@ -85,8 +85,8 @@ Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を
 
 **注意:ここに書かれた日本語でのライセンス表記と英語でのライセンス表記が矛盾する場合、常に英語版が優先されます。あくまで参考程度であり、厳密なライセンスは\*必ず\*英語版のREADME.mdをご覧ください。**
 
-MIT Licenseです。詳細はLICENSEを参照してください。このライセンスはこのリポジトリ内にあるものにのみ適用されます。
-画像や音声は含まれないことに注意してください。このリポジトリの[runtime/graphic](runtime/graphic/)フォルダ以下にあるファイルについては、[runtime/graphic/LICENSE](runtime/graphic/LICENSE)を参照してください。
+MIT Licenseです。詳細は[LICENSE.txt](LICENSE.txt)を参照してください。このライセンスはこのリポジトリ内にあるものにのみ適用されます。
+画像や音声は含まれないことに注意してください。このリポジトリの[runtime/graphic](runtime/graphic/)フォルダ以下にあるファイルについては、[runtime/graphic/LICENSE.txt](runtime/graphic/LICENSE.txt)を参照してください。
 
 ## サードパーティーライブラリ
 
