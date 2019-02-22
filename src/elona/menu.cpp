@@ -338,8 +338,9 @@ void show_ex_help(int id)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"exhelp.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "exhelp.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
