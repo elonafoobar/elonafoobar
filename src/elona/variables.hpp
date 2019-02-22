@@ -291,9 +291,6 @@ ELONA_EXTERN(elona_vector1<std::string> newsbuff);
 ELONA_EXTERN(elona_vector1<std::string> playerheader);
 ELONA_EXTERN(elona_vector1<std::string> q);
 ELONA_EXTERN(elona_vector1<std::string> qname);
-ELONA_EXTERN(elona_vector1<std::string> randn1);
-ELONA_EXTERN(elona_vector1<std::string> rn1);
-ELONA_EXTERN(elona_vector1<std::string> rn2);
 ELONA_EXTERN(elona_vector1<std::string> rtvaln);
 ELONA_EXTERN(elona_vector1<std::string> s1);
 ELONA_EXTERN(elona_vector1<std::string> s);
@@ -328,7 +325,6 @@ ELONA_EXTERN(elona_vector2<std::string> cdatan);
 ELONA_EXTERN(elona_vector2<std::string> listn);
 ELONA_EXTERN(elona_vector2<std::string> mapnamerd);
 ELONA_EXTERN(elona_vector2<std::string> promptl);
-ELONA_EXTERN(elona_vector2<std::string> rnlist);
 ELONA_EXTERN(elona_vector2<std::string> userdatan);
 ELONA_EXTERN(elona_vector3<int> bddata);
 ELONA_EXTERN(elona_vector3<int> efmap);
@@ -689,8 +685,6 @@ void initialize_building_data();
 void initialize_nefia_names();
 void initialize_picfood();
 void initialize_cloud_data();
-void load_random_name_table();
-void load_random_title_table();
 void initialize_item_material_data();
 void initialize_set_of_random_generation();
 void initialize_economy();
@@ -1019,16 +1013,6 @@ void fix_input_chat(std::string&);
 void fix_input_chat2(std::string&);
 
 
-// Text generation
-std::string randomname();
-enum class RandomTitleType
-{
-    character,
-    weapon,
-    party,
-    living_weapon,
-};
-std::string random_title(RandomTitleType type = RandomTitleType::character);
 
 // Text fragments
 std::string cnvarticle(const std::string&);

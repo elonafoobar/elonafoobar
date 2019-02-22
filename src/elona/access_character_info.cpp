@@ -11,6 +11,7 @@
 #include "message.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 
@@ -62,7 +63,7 @@ int access_character_info()
         if (data->has_random_name)
         {
             cdatan(0, rc) = i18n::s.get(
-                "core.locale.chara.job.own_name", cdatan(0, rc), randomname());
+                "core.locale.chara.job.own_name", cdatan(0, rc), random_name());
             cdata[rc].has_own_name() = true;
         }
         cdata[rc].original_relationship = cdata[rc].relationship =

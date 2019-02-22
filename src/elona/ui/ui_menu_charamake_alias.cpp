@@ -3,6 +3,7 @@
 #include "../character_making.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
+#include "../text.hpp"
 
 namespace elona
 {
@@ -42,7 +43,7 @@ void UIMenuCharamakeAlias::_reroll_aliases()
             }
             else
             {
-                listn(0, cnt) = random_title();
+                listn(0, cnt) = random_title(RandomTitleType::character);
             }
         }
         if (cnt == 0)

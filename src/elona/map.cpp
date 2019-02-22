@@ -14,6 +14,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "position.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 
@@ -1100,7 +1101,7 @@ void map_reload_noyel()
                 cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
                     "core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
             }
@@ -1116,7 +1117,7 @@ void map_reload_noyel()
                 cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
                     "core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
             }
@@ -1144,7 +1145,7 @@ void map_reload_noyel()
                 cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
                     "core.locale.chara.job.street_vendor", cdatan(0, rc));
             }
@@ -1160,7 +1161,7 @@ void map_reload_noyel()
                 cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
                     "core.locale.chara.job.street_vendor2", cdatan(0, rc));
             }

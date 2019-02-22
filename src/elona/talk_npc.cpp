@@ -23,6 +23,7 @@
 #include "random.hpp"
 #include "shop.hpp"
 #include "talk.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -878,7 +879,7 @@ TalkResult talk_servant_fire()
 
 TalkResult talk_maid_think_of_house_name()
 {
-    mdatan(0) = random_title();
+    mdatan(0) = random_title(RandomTitleType::character);
     if (rnd(5))
     {
         mdatan(0) = i18n::s.get(

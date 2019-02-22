@@ -14,6 +14,7 @@
 #include "menu.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -379,7 +380,7 @@ MainMenuResult character_making_final_phase()
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
         {
-            cmname = randomname();
+            cmname = random_name();
         }
 
         playerid = fs::unique_path().string();
