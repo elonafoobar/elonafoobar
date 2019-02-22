@@ -60,11 +60,6 @@ using namespace elona;
 namespace
 {
 
-elona_vector1<std::string> jkey;
-elona_vector1<std::string> untaglist;
-
-
-
 void main_loop()
 {
     lua::lua->get_event_manager()
@@ -103,7 +98,6 @@ void load_character_sprite()
     usernpcmax = 0;
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
-    SDIM1(untaglist);
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
 
     picload(filesystem::dir::graphic() / u8"character.bmp", 0, 0, false);
@@ -200,10 +194,6 @@ void initialize_lua()
     lua::lua->get_console().run_userscript();
 }
 
-static void _initialize_jkey()
-{
-    SDIM3(jkey, 2, 12);
-}
 
 void initialize_config(const fs::path& config_file)
 {
@@ -230,7 +220,6 @@ void initialize_config(const fs::path& config_file)
     SDIM3(rtvaln, 50, 10);
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
-    _initialize_jkey();
 
     load_config(config_file);
 }
