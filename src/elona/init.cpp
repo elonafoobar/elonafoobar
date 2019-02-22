@@ -18,6 +18,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "keybind/keybind.hpp"
+#include "loading_screen.hpp"
 #include "lua_env/api_manager.hpp"
 #include "lua_env/data_manager.hpp"
 #include "lua_env/event_manager.hpp"
@@ -769,6 +770,8 @@ void init()
     game_data.date.minute = 10;
 
     quickpage = 1;
+
+    show_loading_screen();
 }
 
 } // namespace elona
