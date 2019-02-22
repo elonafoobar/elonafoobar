@@ -60,23 +60,6 @@ using namespace elona;
 namespace
 {
 
-void main_loop()
-{
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::game_initialized>();
-
-    while (true)
-    {
-        bool finished = turn_wrapper();
-        if (finished)
-        {
-            break;
-        }
-    }
-}
-
-
-
 void initialize_directories()
 {
     const boost::filesystem::path paths[] = {filesystem::dir::save(),
@@ -117,63 +100,12 @@ void load_character_sprite()
     gsel(0);
 }
 
-
-
-void start_elona()
-{
-    game_data.date.year = 517;
-    game_data.date.month = 8;
-    game_data.date.day = 12;
-    game_data.date.hour = 16;
-    game_data.date.minute = 10;
-    quickpage = 1;
-    if (Config::instance().startup_script != ""s &&
-        !Config::instance().get<bool>("core.config.foobar.run_script_in_save"))
-    {
-        mode = 6;
-        initialize_game();
-        main_loop();
-        return;
-    }
-    else if (defload != ""s)
-    {
-        if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
-        {
-            if (fs::exists(
-                    filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
-            {
-                // TODO: Delete it when v1.0.0 stable is released.
-                defload = u8"sav_"s + defload;
-            }
-            else
-            {
-                defload = "";
-            }
-        }
-        if (defload == ""s)
-        {
-            dialog(u8"Invalid defLoadFolder. name"s);
-        }
-        else
-        {
-            playerid = defload;
-            mode = 3;
-            initialize_game();
-            main_loop();
-            return;
-        }
-    }
-    main_title_loop();
-}
-
-
-
 } // namespace
+
 
 
 namespace elona
 {
-
 
 void initialize_lua()
 {
@@ -622,55 +554,6 @@ static void initialize_screen()
         config_get_fullscreen_mode());
 }
 
-int run()
-{
-    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
-    const fs::path config_def_file =
-        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
-
-    lua::lua = std::make_unique<lua::LuaEnv>();
-
-    Config::instance().init(config_def_file);
-    initialize_config_preload(config_file);
-
-    initialize_screen();
-
-    filesystem::dir::set_base_save_directory(filesystem::path("save"));
-
-    initialize_config(config_file);
-    init_assets();
-
-    // Scan all mods and load mod script code.
-    initialize_lua();
-    // Load translations from scanned mods.
-    initialize_i18n();
-
-    lua::lua->get_api_manager().lock();
-
-    if (Config::instance().font_filename.empty())
-    {
-        // If no font is specified in `config.hcl`, use a pre-defined font
-        // depending on each language.
-        Config::instance().font_filename =
-            i18n::s.get("core.locale.meta.default_font");
-        if (jp)
-        {
-            // TODO: work around
-            Config::instance().set("core.config.font.vertical_offset", -3);
-        }
-    }
-
-    initialize_keybindings();
-
-    initialize_elona();
-
-    Config::instance().save();
-
-    start_elona();
-
-    return 0;
-}
-
 
 
 void initialize_debug_globals()
@@ -836,35 +719,59 @@ void initialize_game()
     }
 }
 
-void main_title_loop()
+
+
+void init()
 {
-    MainMenuResult result = main_menu_wrapper();
-    bool finished = false;
-    while (!finished)
+    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
+    const fs::path config_def_file =
+        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+
+    lua::lua = std::make_unique<lua::LuaEnv>();
+
+    Config::instance().init(config_def_file);
+    initialize_config_preload(config_file);
+
+    initialize_screen();
+
+    filesystem::dir::set_base_save_directory(filesystem::path("save"));
+
+    initialize_config(config_file);
+    init_assets();
+
+    // Scan all mods and load mod script code.
+    initialize_lua();
+    // Load translations from scanned mods.
+    initialize_i18n();
+
+    lua::lua->get_api_manager().lock();
+
+    if (Config::instance().font_filename.empty())
     {
-        switch (result)
+        // If no font is specified in `config.hcl`, use a pre-defined font
+        // depending on each language.
+        Config::instance().font_filename =
+            i18n::s.get("core.locale.meta.default_font");
+        if (jp)
         {
-        case MainMenuResult::main_title_menu:
-            result = main_menu_wrapper();
-            break;
-        case MainMenuResult::initialize_game:
-            initialize_game();
-            finished = true;
-            break;
-        case MainMenuResult::finish_elona:
-            finish_elona();
-            finished = true;
-            break;
-        default: assert(0); break;
+            // TODO: work around
+            Config::instance().set("core.config.font.vertical_offset", -3);
         }
     }
 
-    if (result == MainMenuResult::initialize_game)
-    {
-        main_loop();
-    }
+    initialize_keybindings();
+
+    initialize_elona();
+
+    Config::instance().save();
+
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 16;
+    game_data.date.minute = 10;
+
+    quickpage = 1;
 }
-
-
 
 } // namespace elona

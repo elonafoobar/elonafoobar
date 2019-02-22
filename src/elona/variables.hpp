@@ -824,7 +824,6 @@ TurnResult try_to_open_locked_door();
 void build_target_list();
 void equip_melee_weapon();
 void get_inheritance();
-void main_title_loop();
 void remove_card_and_figures();
 
 void try_to_melee_attack();

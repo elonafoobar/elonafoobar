@@ -55,6 +55,7 @@ set(ELONA_SOURCES
   itemgen.cpp
   log.cpp
   magic.cpp
+  main.cpp
   main_menu.cpp
   map.cpp
   map_cell.cpp
