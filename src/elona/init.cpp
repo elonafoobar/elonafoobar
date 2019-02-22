@@ -79,6 +79,66 @@ void load_character_sprite()
     gsel(0);
 }
 
+
+
+void initialize_screen()
+{
+    std::string display_mode = Config::instance().display_mode;
+
+    if (defines::is_android)
+    {
+        display_mode = Config::instance().get<std::string>(
+            "core.config.screen.window_mode");
+    }
+
+    title(
+        u8"Elona foobar version "s + latest_version.short_string(),
+        display_mode,
+        config_get_fullscreen_mode());
+}
+
+
+
+void initialize_world()
+{
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 1;
+    game_data.date.minute = 10;
+
+    game_data.pc_x_in_world_map = 22;
+    game_data.pc_y_in_world_map = 21;
+
+    game_data.previous_map = -1;
+    game_data.destination_outer_map = 4;
+    game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
+    game_data.current_dungeon_level = 1;
+    game_data.entrance_type = 4;
+
+    game_data.version = 1220;
+
+    game_data.home_scale = 0;
+
+    initialize_adata();
+
+    game_data.weather = 3;
+    game_data.hours_until_weather_changes = 6;
+
+    for (int cnt = 0; cnt < 9; ++cnt)
+    {
+        game_data.ranks.at(cnt) = 10000;
+    }
+}
+
+
+
+void initialize_testbed()
+{
+    game_data.current_map = 499;
+    game_data.current_dungeon_level = 2;
+}
+
 } // namespace
 
 
@@ -104,6 +164,7 @@ void initialize_lua()
     // Run user/console.lua.
     lua::lua->get_console().run_userscript();
 }
+
 
 
 void initialize_config(const fs::path& config_file)
@@ -135,6 +196,8 @@ void initialize_config(const fs::path& config_file)
     load_config(config_file);
 }
 
+
+
 void initialize_i18n()
 {
     const std::string language = jp ? "jp" : "en";
@@ -158,6 +221,8 @@ void initialize_i18n()
     }
     i18n::s.init(locations);
 }
+
+
 
 void initialize_elona()
 {
@@ -517,22 +582,6 @@ void initialize_elona()
     lua::lua->get_console().init_constants();
 }
 
-static void initialize_screen()
-{
-    std::string display_mode = Config::instance().display_mode;
-
-    if (defines::is_android)
-    {
-        display_mode = Config::instance().get<std::string>(
-            "core.config.screen.window_mode");
-    }
-
-    title(
-        u8"Elona foobar version "s + latest_version.short_string(),
-        display_mode,
-        config_get_fullscreen_mode());
-}
-
 
 
 void initialize_debug_globals()
@@ -604,38 +653,6 @@ void initialize_debug_globals()
 
 
 
-void initialize_world()
-{
-    game_data.date.year = 517;
-    game_data.date.month = 8;
-    game_data.date.day = 12;
-    game_data.date.hour = 1;
-    game_data.date.minute = 10;
-    game_data.pc_x_in_world_map = 22;
-    game_data.pc_y_in_world_map = 21;
-    game_data.previous_map = -1;
-    game_data.destination_outer_map = 4;
-    ghelp = 1;
-    game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-    game_data.current_dungeon_level = 1;
-    game_data.entrance_type = 4;
-    game_data.version = 1220;
-    game_data.home_scale = 0;
-    initialize_adata();
-    game_data.weather = 3;
-    game_data.hours_until_weather_changes = 6;
-    for (int cnt = 0; cnt < 9; ++cnt)
-    {
-        game_data.ranks.at(cnt) = 10000;
-    }
-}
-
-void initialize_testbed()
-{
-    game_data.current_map = 499;
-    game_data.current_dungeon_level = 2;
-}
-
 void initialize_game()
 {
     bool script_loaded = false;
@@ -646,6 +663,7 @@ void initialize_game()
     firstturn = 1;
     Message::instance().buffered_message_begin(
         "  Lafrontier presents Elona ver 1.22. Welcome traveler! ");
+
     if (mode == 5)
     {
         initialize_world();

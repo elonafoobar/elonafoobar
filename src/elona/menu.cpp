@@ -310,8 +310,7 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
                 if (cdata.player().continuous_action.turn == 0)
                 {
                     game_data.exhelp_flags.at(id) = 1;
-                    ghelp = id;
-                    show_ex_help();
+                    show_ex_help(id);
 
                     if (should_update_screen)
                     {
@@ -328,7 +327,9 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
     return false;
 }
 
-void show_ex_help()
+
+
+void show_ex_help(int id)
 {
     gsel(3);
     picload(filesystem::dir::graphic() / u8"deco_help.bmp", 960, 96, false);
@@ -346,11 +347,11 @@ void show_ex_help()
         }
     }
     p = instr(
-        buff, 0, u8"%"s + ghelp + u8","s + i18n::s.get("core.locale.meta.tag"));
+        buff, 0, u8"%"s + id + u8","s + i18n::s.get("core.locale.meta.tag"));
     if (p == -1)
     {
         dialog(
-            u8"help index not found %"s + ghelp + u8","s +
+            u8"help index not found %"s + id + u8","s +
             i18n::s.get("core.locale.meta.tag"));
         return;
     }

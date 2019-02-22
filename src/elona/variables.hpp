@@ -428,7 +428,6 @@ ELONA_EXTERN(int fltselect);
 ELONA_EXTERN(int flttypemajor);
 ELONA_EXTERN(int flttypeminor);
 ELONA_EXTERN(int foot);
-ELONA_EXTERN(int ghelp);
 ELONA_EXTERN(int gold);
 ELONA_EXTERN(int grown);
 ELONA_EXTERN(int hire);
