@@ -1,55 +1,35 @@
 #include "init.hpp"
 #include "../snail/touch_input.hpp"
-#include "../util/fileutil.hpp"
-#include "../util/range.hpp"
-#include "../version.hpp"
-#include "ability.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "blending.hpp"
-#include "buff.hpp"
 #include "building.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "class.hpp"
 #include "config/config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/init.hpp"
-#include "defines.hpp"
 #include "draw.hpp"
-#include "elona.hpp"
 #include "enchantment.hpp"
 #include "event.hpp"
-#include "filesystem.hpp"
-#include "fish.hpp"
-#include "fov.hpp"
 #include "i18n.hpp"
-#include "input.hpp"
 #include "item.hpp"
-#include "itemgen.hpp"
 #include "keybind/keybind.hpp"
-#include "log.hpp"
+#include "loading_screen.hpp"
 #include "lua_env/api_manager.hpp"
 #include "lua_env/data_manager.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_console.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_manager.hpp"
-#include "macro.hpp"
-#include "main_menu.hpp"
 #include "map.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
-#include "network.hpp"
 #include "quest.hpp"
-#include "race.hpp"
-#include "random.hpp"
 #include "save.hpp"
-#include "trait.hpp"
-#include "turn_sequence.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -59,28 +39,6 @@ using namespace elona;
 
 namespace
 {
-
-elona_vector1<std::string> jkey;
-elona_vector1<std::string> untaglist;
-
-
-
-void main_loop()
-{
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::game_initialized>();
-
-    while (true)
-    {
-        bool finished = turn_wrapper();
-        if (finished)
-        {
-            break;
-        }
-    }
-}
-
-
 
 void initialize_directories()
 {
@@ -103,7 +61,6 @@ void load_character_sprite()
     usernpcmax = 0;
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
-    SDIM1(untaglist);
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
 
     picload(filesystem::dir::graphic() / u8"character.bmp", 0, 0, false);
@@ -125,61 +82,70 @@ void load_character_sprite()
 
 
 
-void start_elona()
+void initialize_screen()
 {
-    game_data.date.year = 517;
-    game_data.date.month = 8;
-    game_data.date.day = 12;
-    game_data.date.hour = 16;
-    game_data.date.minute = 10;
-    quickpage = 1;
-    if (Config::instance().startup_script != ""s &&
-        !Config::instance().get<bool>("core.config.foobar.run_script_in_save"))
+    std::string display_mode = Config::instance().display_mode;
+
+    if (defines::is_android)
     {
-        mode = 6;
-        initialize_game();
-        main_loop();
-        return;
+        display_mode = Config::instance().get<std::string>(
+            "core.config.screen.window_mode");
     }
-    else if (defload != ""s)
-    {
-        if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
-        {
-            if (fs::exists(
-                    filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
-            {
-                // TODO: Delete it when v1.0.0 stable is released.
-                defload = u8"sav_"s + defload;
-            }
-            else
-            {
-                defload = "";
-            }
-        }
-        if (defload == ""s)
-        {
-            dialog(u8"Invalid defLoadFolder. name"s);
-        }
-        else
-        {
-            playerid = defload;
-            mode = 3;
-            initialize_game();
-            main_loop();
-            return;
-        }
-    }
-    main_title_loop();
+
+    title(
+        u8"Elona foobar version "s + latest_version.short_string(),
+        display_mode,
+        config_get_fullscreen_mode());
 }
 
 
 
+void initialize_world()
+{
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 1;
+    game_data.date.minute = 10;
+
+    game_data.pc_x_in_world_map = 22;
+    game_data.pc_y_in_world_map = 21;
+
+    game_data.previous_map = -1;
+    game_data.destination_outer_map = 4;
+    game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
+    game_data.current_dungeon_level = 1;
+    game_data.entrance_type = 4;
+
+    game_data.version = 1220;
+
+    game_data.home_scale = 0;
+
+    initialize_adata();
+
+    game_data.weather = 3;
+    game_data.hours_until_weather_changes = 6;
+
+    for (int cnt = 0; cnt < 9; ++cnt)
+    {
+        game_data.ranks.at(cnt) = 10000;
+    }
+}
+
+
+
+void initialize_testbed()
+{
+    game_data.current_map = 499;
+    game_data.current_dungeon_level = 2;
+}
+
 } // namespace
+
 
 
 namespace elona
 {
-
 
 void initialize_lua()
 {
@@ -200,10 +166,7 @@ void initialize_lua()
     lua::lua->get_console().run_userscript();
 }
 
-static void _initialize_jkey()
-{
-    SDIM3(jkey, 2, 12);
-}
+
 
 void initialize_config(const fs::path& config_file)
 {
@@ -230,10 +193,11 @@ void initialize_config(const fs::path& config_file)
     SDIM3(rtvaln, 50, 10);
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
-    _initialize_jkey();
 
     load_config(config_file);
 }
+
+
 
 void initialize_i18n()
 {
@@ -258,6 +222,8 @@ void initialize_i18n()
     }
     i18n::s.init(locations);
 }
+
+
 
 void initialize_elona()
 {
@@ -617,71 +583,6 @@ void initialize_elona()
     lua::lua->get_console().init_constants();
 }
 
-static void initialize_screen()
-{
-    std::string display_mode = Config::instance().display_mode;
-
-    if (defines::is_android)
-    {
-        display_mode = Config::instance().get<std::string>(
-            "core.config.screen.window_mode");
-    }
-
-    title(
-        u8"Elona foobar version "s + latest_version.short_string(),
-        display_mode,
-        config_get_fullscreen_mode());
-}
-
-int run()
-{
-    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
-    const fs::path config_def_file =
-        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
-
-    lua::lua = std::make_unique<lua::LuaEnv>();
-
-    Config::instance().init(config_def_file);
-    initialize_config_preload(config_file);
-
-    initialize_screen();
-
-    filesystem::dir::set_base_save_directory(filesystem::path("save"));
-
-    initialize_config(config_file);
-    init_assets();
-
-    // Scan all mods and load mod script code.
-    initialize_lua();
-    // Load translations from scanned mods.
-    initialize_i18n();
-
-    lua::lua->get_api_manager().lock();
-
-    if (Config::instance().font_filename.empty())
-    {
-        // If no font is specified in `config.hcl`, use a pre-defined font
-        // depending on each language.
-        Config::instance().font_filename =
-            i18n::s.get("core.locale.meta.default_font");
-        if (jp)
-        {
-            // TODO: work around
-            Config::instance().set("core.config.font.vertical_offset", -3);
-        }
-    }
-
-    initialize_keybindings();
-
-    initialize_elona();
-
-    Config::instance().save();
-
-    start_elona();
-
-    return 0;
-}
-
 
 
 void initialize_debug_globals()
@@ -753,38 +654,6 @@ void initialize_debug_globals()
 
 
 
-void initialize_world()
-{
-    game_data.date.year = 517;
-    game_data.date.month = 8;
-    game_data.date.day = 12;
-    game_data.date.hour = 1;
-    game_data.date.minute = 10;
-    game_data.pc_x_in_world_map = 22;
-    game_data.pc_y_in_world_map = 21;
-    game_data.previous_map = -1;
-    game_data.destination_outer_map = 4;
-    ghelp = 1;
-    game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-    game_data.current_dungeon_level = 1;
-    game_data.entrance_type = 4;
-    game_data.version = 1220;
-    game_data.home_scale = 0;
-    initialize_adata();
-    game_data.weather = 3;
-    game_data.hours_until_weather_changes = 6;
-    for (int cnt = 0; cnt < 9; ++cnt)
-    {
-        game_data.ranks.at(cnt) = 10000;
-    }
-}
-
-void initialize_testbed()
-{
-    game_data.current_map = 499;
-    game_data.current_dungeon_level = 2;
-}
-
 void initialize_game()
 {
     bool script_loaded = false;
@@ -795,6 +664,7 @@ void initialize_game()
     firstturn = 1;
     Message::instance().buffered_message_begin(
         "  Lafrontier presents Elona ver 1.22. Welcome traveler! ");
+
     if (mode == 5)
     {
         initialize_world();
@@ -847,35 +717,61 @@ void initialize_game()
     }
 }
 
-void main_title_loop()
+
+
+void init()
 {
-    MainMenuResult result = main_menu_wrapper();
-    bool finished = false;
-    while (!finished)
+    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
+    const fs::path config_def_file =
+        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+
+    lua::lua = std::make_unique<lua::LuaEnv>();
+
+    Config::instance().init(config_def_file);
+    initialize_config_preload(config_file);
+
+    initialize_screen();
+
+    filesystem::dir::set_base_save_directory(filesystem::path("save"));
+
+    initialize_config(config_file);
+    init_assets();
+
+    // Scan all mods and load mod script code.
+    initialize_lua();
+    // Load translations from scanned mods.
+    initialize_i18n();
+
+    lua::lua->get_api_manager().lock();
+
+    if (Config::instance().font_filename.empty())
     {
-        switch (result)
+        // If no font is specified in `config.hcl`, use a pre-defined font
+        // depending on each language.
+        Config::instance().font_filename =
+            i18n::s.get("core.locale.meta.default_font");
+        if (jp)
         {
-        case MainMenuResult::main_title_menu:
-            result = main_menu_wrapper();
-            break;
-        case MainMenuResult::initialize_game:
-            initialize_game();
-            finished = true;
-            break;
-        case MainMenuResult::finish_elona:
-            finish_elona();
-            finished = true;
-            break;
-        default: assert(0); break;
+            // TODO: work around
+            Config::instance().set("core.config.font.vertical_offset", -3);
         }
     }
 
-    if (result == MainMenuResult::initialize_game)
-    {
-        main_loop();
-    }
+    initialize_keybindings();
+
+    initialize_elona();
+
+    Config::instance().save();
+
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 16;
+    game_data.date.minute = 10;
+
+    quickpage = 1;
+
+    show_loading_screen();
 }
-
-
 
 } // namespace elona

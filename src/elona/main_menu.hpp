@@ -29,6 +29,8 @@ enum class MainMenuResult
     finish_elona,
 };
 
+/// @return True if the game is about to start; false if Exit was selected.
+bool main_menu_loop();
 MainMenuResult main_menu_wrapper();
 MainMenuResult main_menu_new_game();
 MainMenuResult main_title_menu();

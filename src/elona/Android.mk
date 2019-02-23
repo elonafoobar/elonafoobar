@@ -70,8 +70,10 @@ item.cpp \
 item_load_desc.cpp \
 item_material.cpp \
 itemgen.cpp \
+loading_screen.cpp \
 log.cpp \
 magic.cpp \
+main.cpp \
 main_menu.cpp \
 map.cpp \
 map_cell.cpp \

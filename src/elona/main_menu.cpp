@@ -109,6 +109,31 @@ private:
 
 
 
+bool main_menu_loop()
+{
+    MainMenuResult result = main_menu_wrapper();
+    bool finished = false;
+    while (!finished)
+    {
+        switch (result)
+        {
+        case MainMenuResult::main_title_menu:
+            result = main_menu_wrapper();
+            break;
+        case MainMenuResult::initialize_game: finished = true; break;
+        case MainMenuResult::finish_elona:
+            finish_elona();
+            finished = true;
+            break;
+        default: assert(0); break;
+        }
+    }
+
+    return result == MainMenuResult::initialize_game;
+}
+
+
+
 MainMenuResult main_title_menu()
 {
     mode = 10;
