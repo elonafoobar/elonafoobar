@@ -108,6 +108,13 @@ fs::path save(const std::string& player_id)
 
 
 
+fs::path user_script()
+{
+    return user() / u8"script";
+}
+
+
+
 fs::path for_mod(const std::string& mod_id)
 {
     return mods() / filepathutil::u8path(mod_id);

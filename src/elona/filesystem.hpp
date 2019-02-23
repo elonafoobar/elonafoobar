@@ -51,6 +51,7 @@ fs::path save(const std::string& player_id);
 fs::path sound();
 fs::path tmp();
 fs::path user();
+fs::path user_script();
 
 void set_base_save_directory(const fs::path& base_save_dir);
 
