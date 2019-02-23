@@ -1033,7 +1033,7 @@ MainMenuResult main_menu_about_license()
 {
     std::vector<std::string> license_text_lines;
     range::copy(
-        fileutil::read_by_line(filesystem::path("../LICENSE")),
+        fileutil::read_by_line(filesystem::path("../LICENSE.txt")),
         std::back_inserter(license_text_lines));
 
     std::vector<std::string> license_pages;
@@ -1155,7 +1155,7 @@ MainMenuResult main_menu_about_credits()
 {
     std::vector<std::string> credits_text_lines;
     range::copy(
-        fileutil::read_by_line(filesystem::path("../CREDITS")),
+        fileutil::read_by_line(filesystem::path("../CREDITS.txt")),
         std::back_inserter(credits_text_lines));
 
     std::vector<std::string> credits_pages;

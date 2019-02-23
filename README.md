@@ -95,10 +95,10 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
 # License
 
-MIT License. See LICENSE for details. This license is applied for the
+MIT License. See [LICENSE.txt](LICENSE.txt) for details. This license is applied for the
 contents in this repository. Note that images, sounds and fonts are not included.
 For files under [runtime/graphic](runtime/graphic/) folder of the repository, see
-[runtime/graphic/LICENSE](runtime/graphic/LICENSE).
+[runtime/graphic/LICENSE.txt](runtime/graphic/LICENSE.txt).
 
 
 ## Thirdparty libraries

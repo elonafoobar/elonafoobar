@@ -96,9 +96,8 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mv bin\%CONFIGURATION% bin\Elona_foobar
   - mv CHANGELOG*.md bin\Elona_foobar
-  - mv README*.md bin\Elona_foobar
-  - mv LICENSE bin\Elona_foobar
-  - mv CREDITS bin\Elona_foobar
+  - mv LICENSE.txt bin\Elona_foobar
+  - mv CREDITS.txt bin\Elona_foobar
   - del bin\Elona_foobar\*.ilk
   - del bin\Elona_foobar\*.pdb
   - rd /q /s bin\Elona_foobar\graphic
