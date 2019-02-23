@@ -101,12 +101,12 @@ after_build:
   - del bin\Elona_foobar\*.ilk
   - del bin\Elona_foobar\*.pdb
   - rd /q /s bin\Elona_foobar\graphic
+  - rd /q /s bin\Elona_foobar\log
+  - rd /q /s bin\Elona_foobar\save
   - rd /q /s bin\Elona_foobar\sound
   - rd /q /s bin\Elona_foobar\tests
   - rd /q /s bin\Elona_foobar\tmp
   - rd /q /s bin\Elona_foobar\user
-  - rd /q /s bin\Elona_foobar\save
-  - del bin\Elona_foobar\log.txt
   - xcopy /s /e /y runtime\* bin\Elona_foobar
   - cd bin
   - 7z a -y Elona_foobar_windows.zip Elona_foobar
