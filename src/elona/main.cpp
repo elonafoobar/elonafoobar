@@ -1,4 +1,5 @@
 #include "main.hpp"
+#include "../util/tinyargparser.hpp"
 #include "config/config.hpp"
 #include "init.hpp"
 #include "lua_env/event_manager.hpp"
@@ -13,7 +14,16 @@ using namespace elona;
 namespace
 {
 
-void main_loop()
+tinyargparser::ArgParser _make_argparser()
+{
+    return tinyargparser::ArgParser("Elona foobar")
+        .add('v', "version", "Show version.")
+        .add('p', "profile", "Specify profile.");
+}
+
+
+
+void _main_loop()
 {
     lua::lua->get_event_manager()
         .run_callbacks<lua::EventKind::game_initialized>();
@@ -30,14 +40,14 @@ void main_loop()
 
 
 
-void start_elona()
+void _start_elona()
 {
     if (Config::instance().startup_script != ""s &&
         !Config::instance().get<bool>("core.config.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();
-        main_loop();
+        _main_loop();
         return;
     }
     else if (defload != ""s)
@@ -64,7 +74,7 @@ void start_elona()
             playerid = defload;
             mode = 3;
             initialize_game();
-            main_loop();
+            _main_loop();
             return;
         }
     }
@@ -73,7 +83,7 @@ void start_elona()
     if (start)
     {
         initialize_game();
-        main_loop();
+        _main_loop();
     }
 }
 
@@ -84,10 +94,27 @@ void start_elona()
 namespace elona
 {
 
-int run()
+int run(int argc, const char* const argv)
 {
+    const auto parser = _make_argparser();
+    const auto args = parser.parse(argc, argv);
+
+    if (args.has("help"))
+    {
+        std::cout << parser.help() << std::endl;
+        return 0;
+    }
+    if (args.has("version"))
+    {
+        std::cout << "Elona foobar v" << latest_version.short_string()
+                  << std::endl;
+        return 0;
+    }
+    const auto profile = args.get_or("profile", "default");
+    ELONA_LOG("system") << "Profile: " << profile;
+
     init();
-    start_elona();
+    _start_elona();
 
     return 0;
 }
