@@ -1,28 +1,21 @@
-     +-----------------------------+
-+----|      Known Information      |-------------------------------------------------+
-|    +-----------------------------+                                                 |
-|                                                                                    |
-|   (*) <Elona foobar>                                                               |
-|     ------------------------------                                                 |
-|     (*) One of the Elona variants. It can be used.                                 |
-|     (*) It is derived from Elona v1.22.                                            |
-|     (*) It is alpha version yet.                                                   |
-|     (*) It will have the highest extensibility with mod system. [####+]            |
-|     (*) It will truly support multiple languages. [####+]                          |
-|     (*) It works on Windows, Linux, macOS, Android. [####+]                        |
-|                                                                                    |
-|         The Elona variant that has mod system. With its high extensibility,        |
-|         you can build your own Elona.                                              |
-|                                                  ~Ylva Fantasy Encyclopedia~       |
-|                                                                                    |
-|                                                                                    |
-|                                                                                    |
-|                                                                                    |
-|                                                                                    |
-|                                                                      Page.1/1      |
-|     ---------------------------------------------------------------------------    |
-|   (*) Enter,Shift,Esc [Close]                                                      |
-+------------------------------------------------------------------------------------+
+================
+ <Elona foobar>
+================
+
+* One of the Elona variants. It can be used.
+* It is derived from Elona v1.22.
+* It is alpha version yet.
+* It will have the highest extensibility with mod system. [####+]
+* It will truly support multiple languages. [####+]
+* It works on Windows, Linux, macOS, Android. [####+]
+
+
+
+The Elona variant that has mod system. With its high extensibility,
+you can build your own Elona.
+                                           ~Ylva Fantasy Encyclopedia~
+
+
 
 
 
@@ -66,7 +59,7 @@ See CREDITS.txt.
  Contact
 ---------
 
-Twitter: https://twitter.com/ElonaFoobar
-Discord: https://discordapp.com/invite/6HktEKh
-GitHub: https://github.com/ElonaFoobar/ElonaFoobar/issues/new/choose
-Gmail: elonafoobar@gmail.com
+- Twitter: https://twitter.com/ElonaFoobar
+- Discord: https://discordapp.com/invite/6HktEKh
+- GitHub: https://github.com/ElonaFoobar/ElonaFoobar/issues/new/choose
+- Gmail: elonafoobar@gmail.com
