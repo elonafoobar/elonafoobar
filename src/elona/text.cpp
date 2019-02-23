@@ -1,3 +1,5 @@
+#include "text.hpp"
+#include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "area.hpp"
 #include "character.hpp"
@@ -9,6 +11,76 @@
 #include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"
+
+
+
+namespace
+{
+
+using RandomNameTable =
+    std::pair<std::vector<std::string>, std::vector<std::string>>;
+RandomNameTable _random_name_table;
+
+
+
+elona_vector2<std::string> _rnlist;
+
+
+
+optional<std::string> _random_name_internal()
+{
+    auto ret = choice(_random_name_table.first);
+
+    if (ret.empty())
+    {
+        return none;
+    }
+    if (jp)
+    {
+        if (rnd(8) == 0)
+        {
+            ret += u8"ー";
+        }
+    }
+    if (rnd(5))
+    {
+        ret += choice(_random_name_table.second);
+    }
+
+    const auto length = ret.size();
+    if (length < 4)
+    {
+        return none;
+    }
+    if (length < 6)
+    {
+        if (rnd(3))
+        {
+            return none;
+        }
+    }
+    if (length < 8)
+    {
+        if (rnd(2))
+        {
+            return none;
+        }
+    }
+
+    if (jp)
+    {
+        if (strutil::starts_with(ret, u8"ー") ||
+            strutil::contains(ret, u8"ーッ"))
+        {
+            return none;
+        }
+    }
+
+    return ret;
+}
+
+} // namespace
+
 
 
 namespace elona
@@ -884,8 +956,9 @@ void parse_talk_file()
     if (noteinfo() <= 1)
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"talk.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -910,8 +983,9 @@ void read_talk_file(const std::string& valn)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"talk.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -930,8 +1004,9 @@ void get_npc_talk()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"talk.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -2102,59 +2177,66 @@ void parse_quest_board_text(int val0)
 
 
 
-std::string randomname()
+void load_random_name_table()
 {
-    std::string ret;
+    std::vector<std::string> lines;
+    range::copy(
+        fileutil::read_by_line(
+            i18n::s.get_locale_dir("core") / "lazy" / "name.csv"),
+        std::back_inserter(lines));
 
-    while (1)
+    const auto rows = lines.size();
+    _random_name_table.first.resize(rows);
+    _random_name_table.second.resize(rows);
+
+    for (size_t i = 0; i < rows; ++i)
     {
-        ret = choice(rn1);
-        if (ret.empty())
-        {
+        if (lines[i].empty())
             continue;
-        }
-        if (jp)
-        {
-            if (rnd(8) == 0)
-            {
-                ret += u8"ー";
-            }
-        }
-        if (rnd(5))
-        {
-            ret += choice(rn2);
-        }
-        const auto length = ret.size();
-        if (length < 4)
-        {
-            continue;
-        }
-        if (length < 6)
-        {
-            if (rnd(3))
-            {
-                continue;
-            }
-        }
-        if (length < 8)
-        {
-            if (rnd(2))
-            {
-                continue;
-            }
-        }
-        if (jp)
-        {
-            if (strutil::starts_with(ret, u8"ー") ||
-                strutil::contains(ret, u8"ーッ"))
-            {
-                continue;
-            }
-        }
-        break;
+        const auto pair = strutil::split_on_string(lines[i], ",");
+        _random_name_table.first[i] = pair.first;
+        _random_name_table.second[i] = pair.second;
     }
+}
 
-    return cnven(ret);
+
+
+std::string random_name()
+{
+    while (true)
+    {
+        if (const auto name = _random_name_internal())
+        {
+            return cnven(*name);
+        }
+    }
+}
+
+
+
+void load_random_title_table()
+{
+    std::vector<std::string> lines;
+    range::copy(
+        fileutil::read_by_line(
+            i18n::s.get_locale_dir("core") / "lazy" / "ndata.csv"),
+        std::back_inserter(lines));
+
+    for (size_t i = 0; i < lines.size(); ++i)
+    {
+        const auto columns = strutil::split(lines[i], ',');
+        for (size_t j = 0; j < 15; ++j)
+        {
+            if (j < columns.size())
+            {
+                _rnlist(j, i) = columns[j];
+            }
+            else
+            {
+                _rnlist(j, i) = "";
+            }
+        }
+    }
 }
 
 
@@ -2168,9 +2250,9 @@ std::string random_title(RandomTitleType type)
 redo:
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        p_at_m41(2) = rnd(rnlist.j_size());
+        p_at_m41(2) = rnd(_rnlist.j_size());
         p_at_m41(1) = rnd(14);
-        if (rnlist(p_at_m41(1), p_at_m41(2)) == ""s)
+        if (_rnlist(p_at_m41(1), p_at_m41(2)) == ""s)
         {
             --cnt;
             continue;
@@ -2180,13 +2262,13 @@ redo:
     if (type == RandomTitleType::weapon ||
         type == RandomTitleType::living_weapon)
     {
-        if (rnlist(14, p_at_m41(2)) == u8"具"s)
+        if (_rnlist(14, p_at_m41(2)) == u8"具"s)
         {
             goto redo;
         }
     }
-    randn2_at_m41(0) = rnlist(p_at_m41(1), p_at_m41(2));
-    randn2_at_m41(1) = rnlist(14, p_at_m41(2));
+    randn2_at_m41(0) = _rnlist(p_at_m41(1), p_at_m41(2));
+    randn2_at_m41(1) = _rnlist(14, p_at_m41(2));
     rtval_at_m41 = -1;
     if (jp)
     {
@@ -2263,14 +2345,14 @@ redo:
 
     for (int cnt = 0; cnt < 100; ++cnt)
     {
-        p_at_m41(4) = rnd(rnlist.j_size());
+        p_at_m41(4) = rnd(_rnlist.j_size());
         if (p_at_m41(4) == p_at_m41(2))
         {
             continue;
         }
-        if (rnlist(14, p_at_m41(4)) == randn2_at_m41(1))
+        if (_rnlist(14, p_at_m41(4)) == randn2_at_m41(1))
         {
-            if (rnlist(14, p_at_m41(4)) != u8"万能"s)
+            if (_rnlist(14, p_at_m41(4)) != u8"万能"s)
             {
                 if (randn2_at_m41(1) != u8"万能"s)
                 {
@@ -2287,7 +2369,7 @@ redo:
             p_at_m41(1) = rnd(2);
             p_at_m41(1) += 10;
         }
-        if (rnlist(p_at_m41(1), p_at_m41(4)) == ""s)
+        if (_rnlist(p_at_m41(1), p_at_m41(4)) == ""s)
         {
             continue;
         }
@@ -2300,10 +2382,10 @@ redo:
     }
     if (en)
     {
-        rnlist(p_at_m41(1), p_at_m41(4)) =
-            cnven(rnlist(p_at_m41(1), p_at_m41(4)));
+        _rnlist(p_at_m41(1), p_at_m41(4)) =
+            cnven(_rnlist(p_at_m41(1), p_at_m41(4)));
     }
-    randn2_at_m41 += rnlist(p_at_m41(1), p_at_m41(4));
+    randn2_at_m41 += _rnlist(p_at_m41(1), p_at_m41(4));
     ret = randn2_at_m41;
     if (strlen_u(ret) >= 28)
     {

@@ -12,6 +12,7 @@
 #include "map.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -44,8 +45,8 @@ void create_adventurer()
     cdata[rc]._156 = 100;
     cdata[rc].set_state(Character::State::adventurer_in_other_map);
     cdata[rc].image = rnd(33) * 2 + 1 + cdata[rc].sex;
-    cdatan(0, rc) = randomname();
-    cdatan(1, rc) = random_title();
+    cdatan(0, rc) = random_name();
+    cdatan(1, rc) = random_title(RandomTitleType::character);
     cdata[rc].character_role = 13;
     p = rnd(450);
     if (area_data[p].id == mdata_t::MapId::none ||

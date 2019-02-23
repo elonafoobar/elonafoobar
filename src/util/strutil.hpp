@@ -76,6 +76,29 @@ inline std::pair<std::string, std::string> split_on_string(
 
 
 
+template <typename T>
+std::vector<std::string> split(const std::string& str, const T& separator)
+{
+    std::vector<std::string> ret;
+
+    std::string::size_type pos = 0;
+    while (true)
+    {
+        const auto separator_pos = str.find(separator, pos);
+        if (separator_pos == std::string::npos)
+        {
+            break;
+        }
+        ret.push_back(str.substr(pos, separator_pos - pos));
+        pos = separator_pos + 1;
+    }
+
+    ret.push_back(str.substr(pos));
+    return ret;
+}
+
+
+
 inline std::string remove_str(
     const std::string& str,
     const std::string& pattern)

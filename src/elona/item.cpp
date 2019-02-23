@@ -23,6 +23,7 @@
 #include "mef.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

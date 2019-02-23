@@ -11,6 +11,7 @@
 #include "map_cell.hpp"
 #include "mapgen.hpp"
 #include "quest.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 namespace elona

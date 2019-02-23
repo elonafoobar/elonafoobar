@@ -15,34 +15,6 @@ Putting an empty line will pause the conversation and ask players to hit a key.
 他にも、野菜やハーブを栽培したり、詠唱の練習をしたり、色々と活用できる。
 %END
 
-%1,EN
-Hi there, you must be the new face my folks were
-talking about. 
-Welcome to Irva, the era of Sierra Terre.
-I'm Norne known as a guide. 
-Helping you travelers is my job.
-
-Here's my first tip for you.
-Having too much stuff in your inventory burdens
-you and <emp1>slows your actions.<def>
-Use your home as a safe storage since the items 
-dropped in your home won't disappear.
-
-I heard some lazy guides are telling novices to 
-read spellbooks in your home because <emp1>reading
-a difficult book sometimes results in nasty
-errors <def>which put you in danger like draining
-your MPs or confusing you for a while.
-
-...Don't trust them! 
-
-Sometimes failure of reading also leads
-devastating monsters to appear.
-You don't want them smashing and breath-firing
-on your valuable stuff in your house, don't you?
-%END
-
-
 
 #####################################
 %2,JP
@@ -59,25 +31,6 @@ on your valuable stuff in your house, don't you?
 街道では遭遇する敵も弱いし、その機会も少ないんだ。たまに行商人と出会うこともあるけど、彼らの売り物は高いから、まだまだ無縁だね。
 %END
 
-%2,EN
-In the world map, time passes at a lot faster
-rate. And you can't use certain items and
-skills in the world map. If you want to use
-them, you need to enter the local map mode
-<emp1>by pressing the space bar.<def>
-
-If you want to know more about the world map,
-press ? to read the in-game help. The help
-contains variety of useful information
-throughout your journey.
-
-Remember to stay on road as monsters are
-weaker than those in the wilderness. And
-occasionally, you will encounter wandering
-merchants who will sell you quality but
-expensive wears.
-%END
-
 
 #####################################
 %3,JP
@@ -90,19 +43,6 @@ expensive wears.
 もしお金や装備が必要なら、<emp1>依頼掲示板<def>を覗いて見るといいよ。でっかい掲示板だから、すぐにわかるさ。
 %END
 
-%3,EN
-It's a town! The streets are crowded with
-people. Don't worry, they won't bite if you
-don't bother them.
-
-Towns offer many services such as training,
-trading, gambling, quests, etc...
-If you are in need of money or equipment, <emp1>go<def>
-<emp1>check the town board.<def>
-It's a big board, you won't miss it.
-%END
-
-
 
 #####################################
 %4,JP
@@ -112,17 +52,6 @@ It's a big board, you won't miss it.
 依頼の★マークと左の数値は、<emp1>依頼の難易度<def>を表しているよ。
 依頼の難易度は、だいたい<emp1>君のレベルと同じもの<def>を選ぶといい。もし、難易度が高いものしかなかったら、日数が経ってから覗くと、また違う依頼が掲載されているはずだ。
 %END
-
-%4,EN
-You can view sub quests here. Think
-carefully before accepting any of them.
-Some can be quite dangerous.
-
-The $ mark and its color indicates how
-difficult the task is. <emp1>Green is easy.<def>
-<emp1>Blue, harder and red is risky.<def>
-%END
-
 
 
 #####################################
@@ -136,20 +65,6 @@ difficult the task is. <emp1>Green is easy.<def>
 探索中は<emp1>自動的に時間が進む<def>から、自分の状態や周りの状況をよく確認してから探索したほうがいいね。
 %END
 
-%5,EN
-You are standing on the <emp1>material spot.<def>
-<emp1>By pressing the space bar<def>, you will
-automatically collects materials here.
-
-Materials are mainly used for producting
-items. Some materials like casino chips can be
-used for gambling.
-
-Be careful as while collecting the materials,
-you can't move.
-%END
-
-
 
 #####################################
 %6,JP
@@ -159,19 +74,6 @@ you can't move.
 エリアの最深部には主がいて、倒すと褒章がもらえるんだ。もちろん簡単にはいかないけど、慣れてくれば腕を磨くにはもってこいの場所だよ。
 %END
 
-%6,EN
-You are standing on a <emp1>random area icon.<def>
-Before entering a random area, watch for the
-<emp1>approximate danger level.<def>
-You might want to avoid areas with higher level
-than you.
-
-At the bottom of each random area, a lord of
-the dungeon awaits you. They are powerful but
-posess greater loot.
-%END
-
-
 
 #####################################
 %7,JP
@@ -180,36 +82,12 @@ posess greater loot.
 悪天候やエーテル風の時には、<emp1>シェルター<def>を無料で開放しているよ。遠慮なく利用しよう。
 %END
 
-%7,EN
-You can have a square meal at the inns.
-If you don't have a source of food,
-you should regularly visit the inns and
-save your valuable food for your journey.  
-
-Inns also offer <emp1>shelter service<def> during
-bad weather and Etherwind for free. 
-Just ask the innkeepers.
-%END
-
-
 
 #####################################
 %8,JP
 トレイナーからは、新しいスキルを学んだり、知っているスキルを鍛えたりできる。
 訓練を受けるには<emp1>プラチナ硬貨<def>が必要だよ。<emp1>プラチナ硬貨<def>はなかなか手に入らないから、どのスキルを学んで鍛えるか、十分に考えてね。
 %END
-
-%8,EN
-The trainer is where you go to learn
-new skills, and improve your knowledge
-in existing skills. For training, 
-<emp1>platinum coins are required.<def>
-
-These coins are hard to come by,
-but without them it is impossible to
-learn new skills!
-%END
-
 
 
 #####################################
@@ -224,20 +102,6 @@ learn new skills!
 それ以外にも、睡眠中には色んなことが起こるんだ。ただし、ちゃんと寝具を使って寝ないと、良い効果は半減しちゃうかもね。
 %END
 
-%9,EN
-Hey, you look sleepy!
-Of course, <emp1>you need to sleep regularly.<def>
-When you are sleepy, you can use beds to
-sleep. Or simply resting may draw you into
-a dream.
-
-When you gain enough experiences and sleep,
-your potentials of primary attributes
-will increase. You might also encounter
-several events during your sleep.
-%END
-
-
 
 #####################################
 %10,JP
@@ -247,22 +111,6 @@ several events during your sleep.
 食べ物の種類によって、君の能力値が少し鍛えられる。ほとんどの場合それはほんのちょっとだけど、塵も積もればなんとやら。
 倒した生物の肉を食べることもできる。中には能力値を大幅に鍛えたり、耐性を得られたりするものもあるけど、その逆の効果をもつものもあるから、注意して食べよう。
 %END
-
-%10,EN
-You are hungry huh?
-If you don't eat, you'll be worn out and
-eventually <emp1>die of hunger.<def>
-So always keep your stomach full!
-
-Various types of food result in different
-effects. In most cases, the effect is
-paltry but many small make a great. 
-
-You can also eat corpses.
-Some will greatly increase your stats or
-even grant you certain resistance.
-%END
-
 
 
 #####################################
@@ -276,17 +124,6 @@ even grant you certain resistance.
 そうそう、悪天候の時は、<emp1>街の宿屋の主に話しかければシェルターに移動できるよ。<def>上手く利用するといいね。
 %END
 
-%11,EN
-What a downpour! You shouldn't go outside
-in bad weather. It will take you more time to
-travel and even you may lose your way.
-
-And did I tell you that you can seek shelter
-in inns when in bad weather? Use the
-opportunity wisely!
-%END
-
-
 
 #####################################
 %12,JP
@@ -298,27 +135,6 @@ opportunity wisely!
 
 そうそう、悪天候の時は、<emp1>街の宿屋の主に話しかければシェルターに移動できるよ。<def>上手く利用するといいね。
 %END
-
-%12,EN
-It's snowing outside! I'm excited!
-But...Snow is tricky stuff for 
-ravelers. Deep snow is difficult to walk
-through. While there is snow on the
-world map, it takes extra time to move
-from place to place.
-
-Fortunately, snow in North Tyris
-doesn't last that long. You can usually
-wait in one place and take it easy, and
-eventually it will melt and you can
-continue travel.
-
-During poor weather conditions such
-as this, the city inkeepers can bring
-you to the town shelter. 
-You should make good use of it.
-%END
-
 
 
 #####################################
@@ -333,33 +149,6 @@ You should make good use of it.
 そうそう、悪天候の時は、<emp1>街の宿屋の主に話しかければシェルターに移動できるよ。<def>上手く利用するといいね。
 %END
 
-%13,EN
-Etherwind...
-The wind is a serious problem. 
-Exposed to the wind for a certain time,
-you will mutate, and more importantly you
-will start to be affected by the erosive
-ether disease. 
-
-The wilderness will be more dangerous
-during the wind too. However, it is known
-when this wind blows. It only spawns
-<emp1>in a month multiples of 3 and<def>
-<emp1>in days between 1-10. <def>
-You really need to remember it.
-
-Unlike with other bad weather, if the
-ether wind is blowing when on the world map,
-you can move faster than normal. If you can
-somehow control mutation and the Ether Disease,
-this wind might be actually useful to you.
-
-During poor weather conditions such as this,
-the city inkeepers can bring you to the
-town shelter. You should make good use of it.
-%END
-
-
 
 #####################################
 %14,JP
@@ -369,22 +158,6 @@ town shelter. You should make good use of it.
 シェルター内では、<emp1>外が悪天候の時に限り<def>、時間が通常の数十倍の速さで進み、食事を自動的に取るよ。
 天候が回復したら、時間は通常通り進みだし、食事も供給されないから注意しよう。
 %END
-
-%14,EN
-Here's a little explanation of shelters.
-The town shelter is a safe place from
-the ether wind. It's also a safe place
-during thunderstorms and snow, too.
-
-In the shelter time progresses dozens
-of times faster than normal, and you will
-automatically eat food supplies. 
-
-Once the weather is back to normal,
-time progresses normally again, and you
-won't be able to eat food supplies.
-%END
-
 
 
 #####################################
@@ -399,26 +172,6 @@ won't be able to eat food supplies.
 エーテルの風が吹いた時は、すぐに屋内に避難すればいい。<emp1>各街には無料のシェルターがあり、宿屋の主人に話しかければ中に入れてもらえるよ。<def>覚えておこう。
 %END
 
-%15,EN
-At last, you are taken with the disease...
-Don't be surprised, the corruption of
-ether slowly advances over time si it
-is very common in Irva.
-Your symptom is still negligible small.
-
-Disease progression is divided into
-20 stages. As it progresses, your
-condition becomes more fatal and may even
-leads you to death eventually.
-
-Don't worry! You have enough time to
-deal with. Be warned though, Ether Wind
-is different. It will significantly
-worsen your disease. You should evacuate
-when the wind spawns.
-%END
-
-
 
 #####################################
 %16,JP
@@ -429,24 +182,6 @@ when the wind spawns.
 
 給料のほかに、毎月1日には<emp1>請求書<def>が送られてくるよ。請求書は、パルミアのすぐ北にある建物の中の納税箱に収めることができる。すぐに払う必要はないけど、4ヶ月も5ヶ月も滞納すると、犯罪者になってしまうから気をつけよう。
 %END
-
-%16,EN
-Long-awaited payday!
-The 1st and 15th of every month is payday.
-Depending on your rank and fame,
-you will get paid in gold and goods.
-
-This salary can be picked up from your
-salary box in your house. You can also check
-your rank and  salary in your journal.
-
-In addition to salary, on the first day of
-each month a tax invoice is sent. You need
-to pay this invoice at the embassy north of
-Palmia. You have 4 or 5 months to pay it
-before you'll be labeled a criminal. 
-%END
-
 
 
 #####################################
@@ -459,16 +194,5 @@ before you'll be labeled a criminal.
 ふふ、なんてね。おどかしてごめんごめん！悪い人なんてめったにいないから、暇ができたら覗いてみるのもいいかもね。
 %END
 
-%17,EN
-Oh, it's a moongate!
-Moongate is used by expericed wizards to
-travel distance. You can follow them if
-you want...
-%END
-
-
 
 #####################################
-
-
-

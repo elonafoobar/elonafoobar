@@ -30,6 +30,7 @@
 #include "menu.hpp"
 #include "quest.hpp"
 #include "save.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -274,7 +275,6 @@ void initialize_elona()
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
     SDIM2(keylog, 20);
-    SDIM3(randn1, 30, 20);
     DIM2(rtval, 10);
     DIM3(list, 3, 500);
     SDIM4(listn, 40, 2, 500);
@@ -430,8 +430,9 @@ void initialize_elona()
     notesel(buffboard);
     {
         buffboard(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"board.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "board.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -449,8 +450,8 @@ void initialize_elona()
     initialize_building_data();
     initialize_adata();
     initialize_cell_object_data();
-    load_random_name_table();
     load_random_title_table();
+    load_random_name_table();
     game_data.random_seed = rnd(800) + 2;
     set_item_info();
     clear_trait_data();
@@ -648,8 +649,8 @@ void initialize_debug_globals()
     }
     create_all_adventurers();
     create_pcpic(0);
-    cdatan(1, 0) = random_title();
-    cdatan(0, 0) = randomname();
+    cdatan(1, 0) = random_title(RandomTitleType::character);
+    cdatan(0, 0) = random_name();
 }
 
 

@@ -60,6 +60,7 @@
 #include "save_update.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "turn_sequence.hpp"
 #include "ui.hpp"
@@ -734,49 +735,6 @@ void csvsort(
             break;
         }
         p_at_m40(0) += strsize;
-    }
-}
-
-
-
-void load_random_name_table()
-{
-    std::vector<std::string> lines;
-    range::copy(
-        fileutil::read_by_line(
-            i18n::s.get_locale_dir("core") / "lazy" / "ndata.csv"),
-        std::back_inserter(lines));
-
-    SDIM3(randn1, 30, 20);
-    SDIM4(rnlist, 20, 15, lines.size());
-
-    for (size_t i = 0; i < lines.size(); ++i)
-    {
-        csvsort(randn1, lines[i], 44);
-        for (size_t j = 0; j < 15; ++j)
-        {
-            rnlist(j, i) = randn1(j);
-        }
-    }
-}
-
-
-
-void load_random_title_table()
-{
-    std::vector<std::string> lines;
-    range::copy(
-        fileutil::read_by_line(filesystem::dir::data() / u8"name.csv"),
-        std::back_inserter(lines));
-
-    SDIM3(rn1, 15, lines.size());
-    SDIM3(rn2, 15, lines.size());
-
-    for (size_t i = 0; i < lines.size(); ++i)
-    {
-        csvsort(randn1, lines[i], 44);
-        rn1(i) = lang(randn1(0), randn1(1));
-        rn2(i) = lang(randn1(2), randn1(3));
     }
 }
 
@@ -2976,8 +2934,9 @@ void initialize_set_of_random_generation()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"book.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "book.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
