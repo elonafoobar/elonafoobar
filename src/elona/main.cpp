@@ -4,6 +4,7 @@
 #include "init.hpp"
 #include "lua_env/event_manager.hpp"
 #include "main_menu.hpp"
+#include "profile/profile_manager.hpp"
 #include "turn_sequence.hpp"
 #include "variables.hpp"
 
@@ -94,7 +95,7 @@ void _start_elona()
 namespace elona
 {
 
-int run(int argc, const char* const argv)
+int run(int argc, const char* const* argv)
 {
     const auto parser = _make_argparser();
     const auto args = parser.parse(argc, argv);
@@ -110,8 +111,8 @@ int run(int argc, const char* const argv)
                   << std::endl;
         return 0;
     }
-    const auto profile = args.get_or("profile", "default");
-    ELONA_LOG("system") << "Profile: " << profile;
+    const auto profile = args.get_or("profile", profile::default_profile_id);
+    profile::ProfileManager::instance().init(profile);
 
     init();
     _start_elona();

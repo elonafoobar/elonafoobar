@@ -141,6 +141,8 @@ set(ELONA_SOURCES
   keybind/keybind_serializer.cpp
 
   pic_loader/pic_loader.cpp
+
+  profile/profile_manager.cpp
   )
 
 add_library(elona STATIC ${ELONA_SOURCES})
