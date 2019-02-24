@@ -42,6 +42,7 @@ set(ELONA_SOURCES
   gdata.cpp
   get_card_info.cpp
   get_random_npc_id.cpp
+  globals.cpp
   god.cpp
   i18n.cpp
   init.cpp

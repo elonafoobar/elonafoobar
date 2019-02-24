@@ -32,8 +32,6 @@ private:
 
     int _cs_prev = 0;
     int _mainhand = 0;
-
-    bool _show_resistances = false;
 };
 
 } // namespace ui
