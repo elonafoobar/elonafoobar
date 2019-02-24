@@ -5,6 +5,6 @@
 namespace elona
 {
 
-int run();
+int run(int argc, const char* const* argv);
 
 }

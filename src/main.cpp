@@ -35,18 +35,16 @@ void report_error(const char* what)
 int main(int argc, char** argv)
 {
     using namespace elona;
-    (void)argc, (void)argv;
 
     log::Logger::instance().init();
-
     ELONA_LOG("system") << latest_version.long_string();
 
 #if DEBUG
-    return run();
+    return run(argc, argv);
 #else
     try
     {
-        return run();
+        return run(argc, argv);
     }
     catch (std::exception& e)
     {

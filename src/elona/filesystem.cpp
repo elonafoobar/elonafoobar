@@ -87,6 +87,7 @@ ELONA_DEFINE_PREDEFINED_DIR(locale, "locale")
 ELONA_DEFINE_PREDEFINED_DIR(log, "log")
 ELONA_DEFINE_PREDEFINED_DIR(map, "map")
 ELONA_DEFINE_PREDEFINED_DIR(mods, "mods")
+ELONA_DEFINE_PREDEFINED_DIR(profiles, "profiles")
 ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
 ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
 ELONA_DEFINE_PREDEFINED_DIR(user, "user")
@@ -104,6 +105,13 @@ fs::path save()
 fs::path save(const std::string& player_id)
 {
     return save() / filepathutil::u8path(player_id);
+}
+
+
+
+fs::path user_script()
+{
+    return user() / u8"script";
 }
 
 
@@ -156,6 +164,39 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
     else
     {
         return dir::for_mod(mod_name) / rest;
+    }
+}
+
+
+
+void copy_recursively(const fs::path& source, const fs::path& destination)
+{
+    // Check pre-conditions.
+    assert(fs::exists(source) && fs::is_directory(source));
+    assert(!fs::exists(destination));
+
+    // mkdir destination
+    if (!fs::create_directories(destination))
+    {
+        throw std::runtime_error{
+            "Failed to create directory: " +
+            filepathutil::make_preferred_path_in_utf8(destination)};
+    }
+
+    // Iterate all files under source.
+    for (const auto& entry : fs::directory_iterator{source})
+    {
+        const auto from = entry.path();
+        const auto to = destination / from.filename();
+        if (fs::is_directory(from))
+        {
+            // Call itself recursively.
+            copy_recursively(from, to);
+        }
+        else
+        {
+            fs::copy_file(from, to);
+        }
     }
 }
 

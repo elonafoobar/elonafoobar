@@ -247,7 +247,7 @@ void ModManager::run_startup_script(const std::string& name)
     ModInfo* script_mod = create_mod("script", none, true);
 
     lua_->get_state()->safe_script_file(
-        filepathutil::to_utf8_path(filesystem::dir::data() / "script"s / name),
+        filepathutil::to_utf8_path(filesystem::dir::user_script() / name),
         script_mod->env);
 
     // Bypass read-only metatable

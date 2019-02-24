@@ -46,11 +46,13 @@ fs::path locale();
 fs::path log();
 fs::path map();
 fs::path mods();
+fs::path profiles();
 fs::path save();
 fs::path save(const std::string& player_id);
 fs::path sound();
 fs::path tmp();
 fs::path user();
+fs::path user_script();
 
 void set_base_save_directory(const fs::path& base_save_dir);
 
@@ -195,6 +197,7 @@ private:
 };
 
 
+
 inline DirEntryRange dir_entries(
     const fs::path& base_dir,
     DirEntryRange::Type entry_type,
@@ -204,6 +207,9 @@ inline DirEntryRange dir_entries(
 }
 
 
+
+// Emulates std::filesystem::copy_options::recursive in C++17.
+void copy_recursively(const fs::path& source, const fs::path& destination);
 
 } // namespace filesystem
 } // namespace elona

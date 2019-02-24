@@ -40,12 +40,10 @@ before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
   - cd C:\projects\ElonaFoobar
   - if exist %PREFIX% set NEEDDEPENDS=rem
-
   - |-
     %NEEDDEPENDS% mkdir %PREFIX%\include\SDL2
     %NEEDDEPENDS% mkdir %PREFIX%\lib
     %NEEDDEPENDS% cd %TEMP%
-
   - |-
     %NEEDDEPENDS% appveyor DownloadFile http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip
     %NEEDDEPENDS% 7z x -y SDL2-devel-2.0.8-VC.zip > nul
@@ -101,16 +99,19 @@ after_build:
   - del bin\Elona_foobar\*.ilk
   - del bin\Elona_foobar\*.pdb
   - rd /q /s bin\Elona_foobar\graphic
+  - rd /q /s bin\Elona_foobar\log
+  - rd /q /s bin\Elona_foobar\save
   - rd /q /s bin\Elona_foobar\sound
   - rd /q /s bin\Elona_foobar\tests
   - rd /q /s bin\Elona_foobar\tmp
   - rd /q /s bin\Elona_foobar\user
-  - rd /q /s bin\Elona_foobar\save
-  - del bin\Elona_foobar\log.txt
   - xcopy /s /e /y runtime\* bin\Elona_foobar
+  - ps: "$env:ELONAFOOBAR_VERSION=(Select-String 'project\\(Elona_foobar VERSION (.*)\\)' CMakeLists.txt).Matches.Groups[1].Value"
   - cd bin
-  - 7z a -y Elona_foobar_windows.zip Elona_foobar
+  - ren Elona_foobar\Elona_foobar.exe "Elona foobar.exe"
+  - ren Elona_foobar "Elona foobar v%ELONAFOOBAR_VERSION%"
+  - 7z a -y "Elona foobar v%ELONAFOOBAR_VERSION% (Windows).zip" "Elona foobar v%ELONAFOOBAR_VERSION%"
 
 artifacts:
-  - path: bin\Elona_foobar_windows.zip
+  - path: 'bin\Elona foobar v* (Windows).zip'
 
