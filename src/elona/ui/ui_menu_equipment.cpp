@@ -1,6 +1,7 @@
 #include "ui_menu_equipment.hpp"
 #include "../character.hpp"
 #include "../equipment.hpp"
+#include "../globals.hpp"
 #include "../item.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
@@ -283,9 +284,9 @@ void UIMenuEquipment::_draw_list_entries(bool show_resistances)
 
 void UIMenuEquipment::draw()
 {
-    _draw_window(_show_resistances);
+    _draw_window(g_show_resistances);
     _draw_keys(_mainhand);
-    _draw_list_entries(_show_resistances);
+    _draw_list_entries(g_show_resistances);
 }
 
 static void _unequip_item()
@@ -379,7 +380,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     }
     else if (action == "switch_mode")
     {
-        _show_resistances = !_show_resistances;
+        g_show_resistances = !g_show_resistances;
         snd("core.pop1");
         set_reupdate();
     }
