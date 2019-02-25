@@ -71,7 +71,10 @@ namespace filesystem
 namespace dir
 {
 
+fs::path current_profile_dir;
+fs::path base_mod_dir;
 fs::path base_save_dir;
+fs::path base_user_dir;
 
 
 #define ELONA_DEFINE_PREDEFINED_DIR(func_name, path_name) \
@@ -86,18 +89,73 @@ ELONA_DEFINE_PREDEFINED_DIR(graphic, "graphic")
 ELONA_DEFINE_PREDEFINED_DIR(locale, "locale")
 ELONA_DEFINE_PREDEFINED_DIR(log, "log")
 ELONA_DEFINE_PREDEFINED_DIR(map, "map")
-ELONA_DEFINE_PREDEFINED_DIR(mods, "mods")
 ELONA_DEFINE_PREDEFINED_DIR(profiles, "profiles")
 ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
 ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
-ELONA_DEFINE_PREDEFINED_DIR(user, "user")
 
 #undef ELONA_DEFINE_PREDEFINED_DIR
+
+
+
+fs::path current_profile()
+{
+    return current_profile_dir;
+}
+
+
+
+fs::path mods()
+{
+    return base_mod_dir;
+}
+
 
 
 fs::path save()
 {
     return base_save_dir;
+}
+
+
+
+fs::path user()
+{
+    return base_user_dir;
+}
+
+
+
+void set_current_profile_directory(const fs::path& current_profile_dir)
+{
+    dir::current_profile_dir = current_profile_dir;
+}
+
+
+
+void set_base_mod_directory(const fs::path& base_mod_dir)
+{
+    dir::base_mod_dir = base_mod_dir;
+}
+
+
+
+void set_base_save_directory(const fs::path& base_save_dir)
+{
+    dir::base_save_dir = base_save_dir;
+}
+
+
+
+void set_base_user_directory(const fs::path& base_user_dir)
+{
+    dir::base_user_dir = base_user_dir;
+}
+
+
+
+fs::path for_mod(const std::string& mod_id)
+{
+    return mods() / filepathutil::u8path(mod_id);
 }
 
 
@@ -116,16 +174,12 @@ fs::path user_script()
 
 
 
-fs::path for_mod(const std::string& mod_id)
+void set_profile_directory(const fs::path& profile_dir)
 {
-    return mods() / filepathutil::u8path(mod_id);
-}
-
-
-
-void set_base_save_directory(const fs::path& base_save_dir)
-{
-    dir::base_save_dir = base_save_dir;
+    set_current_profile_directory(profile_dir);
+    set_base_mod_directory(profile_dir / u8"mods");
+    set_base_save_directory(profile_dir / u8"save");
+    set_base_user_directory(profile_dir / u8"user");
 }
 
 } // namespace dir

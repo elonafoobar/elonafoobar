@@ -12,8 +12,11 @@
 #include "log.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "profile/profile_manager.hpp"
 #include "save.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -128,6 +131,7 @@ void run_in_temporary_map(int map, int level, std::function<void()> f)
 void pre_init()
 {
     log::Logger::instance().init();
+    profile::ProfileManager::instance().init(u8"testing");
 
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
