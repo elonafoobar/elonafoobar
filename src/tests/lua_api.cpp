@@ -29,7 +29,7 @@ void lua_testcase(const std::string& filename)
 TEST_CASE("test Elona.require", "[Lua: API]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Rand = Elona.require("Rand")
@@ -42,7 +42,7 @@ TEST_CASE("test Elona.require from other mods", "[Lua: API]")
 {
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(),
+        filesystem::dir::mod(),
         {filesystem::dir::exe() / u8"tests/data/mods/test_require"});
 
     REQUIRE_NOTHROW(
@@ -69,7 +69,7 @@ TEST_CASE("Core API: Env", "[Lua: API]")
     const auto foobar_ver = latest_version.short_string();
 
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
         "test_env",
         "local foobar_ver = '" + foobar_ver + "'\n" +

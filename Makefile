@@ -111,7 +111,7 @@ ldoc: FORCE # Generate LDoc.
 
 luacheck: FORCE # Run luacheck.
 	luacheck --version
-	luacheck runtime/mods/
+	luacheck runtime/profile/_/mod/
 	luacheck src/tests/lua
 
 

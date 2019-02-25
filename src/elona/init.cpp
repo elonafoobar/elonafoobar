@@ -156,7 +156,7 @@ namespace elona
 void initialize_lua()
 {
     // Scan mods under "mods/" folder.
-    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mod());
 
     // Initialize "console" mod.
     lua::lua->get_console().init_environment();
@@ -729,7 +729,7 @@ void init()
 {
     const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
     const fs::path config_def_file =
-        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+        filesystem::dir::mod() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
 
     lua::lua = std::make_unique<lua::LuaEnv>();
 

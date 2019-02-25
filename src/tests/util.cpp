@@ -112,7 +112,7 @@ void register_lua_function(
     std::string callback_signature,
     std::string callback_body)
 {
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
         mod_name,
