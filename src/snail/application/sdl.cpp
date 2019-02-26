@@ -162,7 +162,12 @@ void Application::handle_window_event(const ::SDL_WindowEvent& event)
         break;
     case SDL_WINDOWEVENT_SHOWN:
     case SDL_WINDOWEVENT_EXPOSED:
-    case SDL_WINDOWEVENT_RESTORED: hsp::redraw(); break;
+    case SDL_WINDOWEVENT_RESTORED:
+        if (_call_redraw)
+        {
+            hsp::redraw();
+        }
+        break;
     default: break;
     }
 }
@@ -183,6 +188,23 @@ void Application::proc_event()
     {
         std::exit(0);
     }
+}
+
+
+
+void Application::wait(size_t msec)
+{
+    const auto now = ::SDL_GetTicks();
+    if (_last_wait_time == 0)
+    {
+        _last_wait_time = now;
+    }
+    const auto delta = now - _last_wait_time;
+    if (msec > delta)
+    {
+        ::SDL_Delay(msec - delta);
+    }
+    _last_wait_time = now;
 }
 
 
@@ -413,6 +435,12 @@ Rect Application::calculate_android_window_pos()
     }
 }
 
+
+
+void Application::set_window_size(int width, int height)
+{
+    _window->set_size(width, height);
+}
 
 } // namespace snail
 } // namespace elona

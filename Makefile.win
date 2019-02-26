@@ -46,6 +46,18 @@ build_release: $(BIN_DIR) FORCE # Build Elona foobar (release).
 		cmake --build . --config Release
 
 
+launcher: FORCE # Build Elona foobar Launcher (debug)
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=LAUNCHER -DCMAKE_BUILD_TYPE=Debug $(CMAKE_ARGS) & \
+		cmake --build . --config Debug
+
+
+launcher_release: FORCE # Build Elona foobar Launcher (release)
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=LAUNCHER -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS) & \
+		cmake --build . --config Release
+
+
 tests: test_runner FORCE # Run all tests.
 	cd $(BIN_DIR)\Debug & \
 		.\Elona_foobar.exe --durations=yes

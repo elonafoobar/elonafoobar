@@ -42,13 +42,11 @@ ProfileManager& ProfileManager::instance()
 
 
 void ProfileManager::create(
-    const ProfileName& new_profile_name,
     const ProfileId& new_profile_id,
     const ProfileId& base_profile_id)
 {
-    ELONA_LOG("profile") << "Create '" << new_profile_name << "' ("
-                         << new_profile_id << ") from '" << base_profile_id
-                         << "'.";
+    ELONA_LOG("profile") << "Create '" << new_profile_id << "' "
+                         << " from '" << base_profile_id << "'.";
 
     const auto from = get_dir_for(base_profile_id);
     const auto to = get_dir_for(new_profile_id);
@@ -57,11 +55,17 @@ void ProfileManager::create(
 
 
 
-void ProfileManager::create(
-    const ProfileId& new_profile_id,
-    const ProfileId& base_profile_id)
+ProfileId ProfileManager::generate_new_id()
 {
-    create(new_profile_id, new_profile_id, base_profile_id);
+    for (int i = 1;; ++i)
+    {
+        const auto id = "profile_" + std::to_string(i);
+        const auto dir = get_dir_for(id);
+        if (!fs::exists(dir))
+        {
+            return id;
+        }
+    }
 }
 
 

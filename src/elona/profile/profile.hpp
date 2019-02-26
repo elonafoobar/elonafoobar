@@ -10,7 +10,6 @@ namespace elona
 namespace profile
 {
 
-using ProfileName = std::string;
 using ProfileId = std::string;
 
 

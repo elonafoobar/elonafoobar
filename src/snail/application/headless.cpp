@@ -60,6 +60,12 @@ void Application::proc_event()
 
 
 
+void Application::wait(size_t)
+{
+}
+
+
+
 void Application::set_fullscreen_mode(Window::FullscreenMode)
 {
 }
@@ -145,6 +151,12 @@ void Application::on_size_changed(const ::SDL_WindowEvent&)
 Rect Application::calculate_android_window_pos()
 {
     return {};
+}
+
+
+
+void Application::set_window_size(int, int)
+{
 }
 
 } // namespace snail
