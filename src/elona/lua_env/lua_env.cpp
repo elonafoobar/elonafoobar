@@ -30,7 +30,7 @@ LuaEnv::LuaEnv()
         sol::lib::os);
 
     // Add executable directory to package.path
-    fs::path exe_path = filesystem::dir::data() / "lua";
+    fs::path exe_path = filesystem::dir::data() / "script" / "kernel";
     std::string normalized = filepathutil::to_forward_slashes(exe_path);
     lua_->safe_script(
         u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
