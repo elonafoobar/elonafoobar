@@ -2,37 +2,39 @@
 template <typename Archive>
 void serialize(Archive& _putit_archive_)
 {
-    _putit_archive_(this->number_);
-    _putit_archive_(this->value);
-    _putit_archive_(this->image);
-    _putit_archive_(this->id);
-    _putit_archive_(this->quality);
-    _putit_archive_(this->position);
-    _putit_archive_(this->weight);
-    _putit_archive_(this->identification_state);
-    _putit_archive_(this->count);
-    _putit_archive_(this->dice_x);
-    _putit_archive_(this->dice_y);
-    _putit_archive_(this->damage_bonus);
-    _putit_archive_(this->hit_bonus);
-    _putit_archive_(this->dv);
-    _putit_archive_(this->pv);
-    _putit_archive_(this->skill);
-    _putit_archive_(this->curse_state);
-    _putit_archive_(this->body_part);
-    _putit_archive_(this->function);
-    _putit_archive_(this->enhancement);
-    _putit_archive_(this->own_state);
-    _putit_archive_(this->color);
-    _putit_archive_(this->subname);
-    _putit_archive_(this->material);
-    _putit_archive_(this->param1);
-    _putit_archive_(this->param2);
-    _putit_archive_(this->param3);
-    _putit_archive_(this->param4);
-    _putit_archive_(this->difficulty_of_identification);
-    _putit_archive_(this->turn);
-    _putit_archive_(this->_flags);
-    _putit_archive_(this->enchantments);
+#define PUTIT_SERIALIZE_FIELD(field_name) _putit_archive_(this->field_name, #field_name)
+    PUTIT_SERIALIZE_FIELD(number_);
+    PUTIT_SERIALIZE_FIELD(value);
+    PUTIT_SERIALIZE_FIELD(image);
+    PUTIT_SERIALIZE_FIELD(id);
+    PUTIT_SERIALIZE_FIELD(quality);
+    PUTIT_SERIALIZE_FIELD(position);
+    PUTIT_SERIALIZE_FIELD(weight);
+    PUTIT_SERIALIZE_FIELD(identification_state);
+    PUTIT_SERIALIZE_FIELD(count);
+    PUTIT_SERIALIZE_FIELD(dice_x);
+    PUTIT_SERIALIZE_FIELD(dice_y);
+    PUTIT_SERIALIZE_FIELD(damage_bonus);
+    PUTIT_SERIALIZE_FIELD(hit_bonus);
+    PUTIT_SERIALIZE_FIELD(dv);
+    PUTIT_SERIALIZE_FIELD(pv);
+    PUTIT_SERIALIZE_FIELD(skill);
+    PUTIT_SERIALIZE_FIELD(curse_state);
+    PUTIT_SERIALIZE_FIELD(body_part);
+    PUTIT_SERIALIZE_FIELD(function);
+    PUTIT_SERIALIZE_FIELD(enhancement);
+    PUTIT_SERIALIZE_FIELD(own_state);
+    PUTIT_SERIALIZE_FIELD(color);
+    PUTIT_SERIALIZE_FIELD(subname);
+    PUTIT_SERIALIZE_FIELD(material);
+    PUTIT_SERIALIZE_FIELD(param1);
+    PUTIT_SERIALIZE_FIELD(param2);
+    PUTIT_SERIALIZE_FIELD(param3);
+    PUTIT_SERIALIZE_FIELD(param4);
+    PUTIT_SERIALIZE_FIELD(difficulty_of_identification);
+    PUTIT_SERIALIZE_FIELD(turn);
+    PUTIT_SERIALIZE_FIELD(_flags);
+    PUTIT_SERIALIZE_FIELD(enchantments);
 }
+#undef PUTIT_SERIALIZE_FIELD
 /* clang-format on */

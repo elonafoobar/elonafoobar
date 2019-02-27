@@ -18,8 +18,9 @@ namespace putit
 #define PUTIT_EMPTY_TOKEN
 
 #define PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(type) \
-    void operator()(type& data) \
+    void operator()(type& data, const char* field_name = nullptr) \
     { \
+        (void)field_name; \
         _primitive(data); \
     }
 
@@ -74,11 +75,11 @@ public:
 
 
     template <typename T>
-    void operator()(T& data)
+    void operator()(T& data, const char* field_name = nullptr)
     {
+        (void)field_name; // just ignore
         serialize(*this, data);
     }
-
 
 
     template <typename T>
@@ -148,8 +149,9 @@ public:
 
 
     template <typename T>
-    void operator()(T& data)
+    void operator()(T& data, const char* field_name = nullptr)
     {
+        (void)field_name; // just ignore
         serialize(*this, data);
     }
 
