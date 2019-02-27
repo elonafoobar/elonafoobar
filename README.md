@@ -112,6 +112,7 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * boostrandom: see [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt).
 * cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
 * nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
+* nlohmann/json: seee [src/thirdparty/nlohmannjson/LICENSE.MIT](src/thirdparty/nlohmannjson/LICENSE.MIT).
 
 ## Lua libraries
 
