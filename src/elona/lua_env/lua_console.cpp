@@ -1,4 +1,5 @@
 #include "lua_console.hpp"
+#include <sstream>
 #include <boost/algorithm/string/predicate.hpp>
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
@@ -8,6 +9,7 @@
 #include "../filesystem.hpp"
 #include "../input.hpp"
 #include "../macro.hpp"
+#include "../putit.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
 #include "api_manager.hpp"
@@ -93,6 +95,13 @@ void LuaConsole::init_environment()
         {
             print("Reloaded console environment.");
         }
+    });
+    _console_mod->env.raw_set("dump", [this]() {
+        std::stringstream ss;
+        putit::JsonOArchive::save(ss, cdata.player());
+        ss << std::endl;
+        putit::JsonOArchive::save(ss, inv[0]);
+        print(ss.str());
     });
 }
 
