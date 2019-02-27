@@ -19,7 +19,7 @@ TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
@@ -31,7 +31,7 @@ TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", "", true));
 
@@ -48,7 +48,7 @@ TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
@@ -83,7 +83,7 @@ TEST_CASE("Test no access to os/io", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
@@ -95,7 +95,7 @@ TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(
         mod_mgr.load_mod_from_script("test", "Store.global.thing = 1"));
@@ -110,7 +110,7 @@ TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(
         mod_mgr.load_mod_from_script("test", "Store.global.thing = 1"));
@@ -124,7 +124,7 @@ TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
@@ -158,7 +158,7 @@ TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(
         mod_mgr.load_mod_from_script("first", R"(Store.global.thing = 42)"));
@@ -185,7 +185,7 @@ TEST_CASE("Test complex nested table assignment", "[Lua: Mods]")
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
     ;
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
@@ -225,7 +225,7 @@ TEST_CASE("Test requiring Lua chunk multiple times", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(),
+        filesystem::dir::mod(),
         {filesystem::dir::exe() / u8"tests/data/mods/test_require_chunks"});
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require_chunks", R"(
@@ -248,7 +248,7 @@ TEST_CASE(
 {
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(),
+        filesystem::dir::mod(),
         {filesystem::dir::exe() / u8"tests/data/mods/test_require"});
 
     // Attempts to load a file outside the mod's directory.

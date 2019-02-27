@@ -13,7 +13,7 @@
 TEST_CASE("test registering Lua functions", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Exports = {}
@@ -119,7 +119,7 @@ TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
 
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
     lua.get_export_manager().register_all_exports();
 
     bool result = lua.get_export_manager().call_with_result("dood", false);

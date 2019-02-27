@@ -114,6 +114,7 @@ public:
 
 
     void proc_event();
+    void wait(size_t msec);
 
     bool is_fullscreen()
     {
@@ -139,6 +140,13 @@ public:
     // For Android
     void set_subwindow_display_mode(const std::string&);
 
+    void set_window_size(int width, int height);
+
+    void set_call_redraw(bool call_redraw)
+    {
+        _call_redraw = call_redraw;
+    }
+
 
 private:
     std::unique_ptr<detail::SDLCore> _sdl_core;
@@ -154,6 +162,9 @@ private:
     std::string _title;
     Orientation _orientation = Orientation::landscape;
     Rect _window_pos; // Window draw position for Android
+
+    uint32_t _last_wait_time = 0;
+    bool _call_redraw = true;
 
     size_t _frame = 0;
     bool _will_quit = false;

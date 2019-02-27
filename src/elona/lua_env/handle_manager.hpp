@@ -34,7 +34,7 @@ class LuaEnv;
  * acts as the interface for providing handles to other Lua
  * environments.
  *
- * See data/lua/handle.lua for more information.
+ * See data/script/kernel/handle.lua for more information.
  */
 class HandleManager : public lib::noncopyable
 {

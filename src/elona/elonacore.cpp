@@ -3645,7 +3645,7 @@ void character_drops_item()
         }
     }
 
-    // ../runtime/mods/core/exports/impl/chara_drop.lua
+    // ../runtime/profile/_/mod/core/exports/impl/chara_drop.lua
     lua::call(
         "exports:core.impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
 

@@ -69,14 +69,19 @@ void load_character_sprite()
 
     gmode(0);
     gsel(5);
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::user() / u8"graphic",
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(chara_.*\.bmp)"}))
+    if (fs::exists(filesystem::dir::user() / u8"graphic"))
     {
-        const auto file = filepathutil::to_utf8_path(entry.path().filename());
-        p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
-        picload(entry.path(), p % 33 * inf_tiles, p / 33 * inf_tiles, false);
+        for (const auto& entry : filesystem::dir_entries(
+                 filesystem::dir::user() / u8"graphic",
+                 filesystem::DirEntryRange::Type::file,
+                 std::regex{u8R"(chara_.*\.bmp)"}))
+        {
+            const auto file =
+                filepathutil::to_utf8_path(entry.path().filename());
+            p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
+            picload(
+                entry.path(), p % 33 * inf_tiles, p / 33 * inf_tiles, false);
+        }
     }
     gsel(0);
 }
@@ -151,7 +156,7 @@ namespace elona
 void initialize_lua()
 {
     // Scan mods under "mods/" folder.
-    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mod());
 
     // Initialize "console" mod.
     lua::lua->get_console().init_environment();
@@ -724,7 +729,7 @@ void init()
 {
     const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
     const fs::path config_def_file =
-        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+        filesystem::dir::mod() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
 
     lua::lua = std::make_unique<lua::LuaEnv>();
 
@@ -732,8 +737,6 @@ void init()
     initialize_config_preload(config_file);
 
     initialize_screen();
-
-    filesystem::dir::set_base_save_directory(filesystem::path("save"));
 
     initialize_config(config_file);
     init_assets();

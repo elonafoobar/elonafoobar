@@ -160,6 +160,7 @@ keybind/keybind_serializer.cpp \
  \
 pic_loader/pic_loader.cpp \
  \
+profile/profile.cpp \
 profile/profile_manager.cpp \
  \
 ../version.cpp

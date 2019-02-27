@@ -69,9 +69,9 @@ exclude_files = {
 --[Base]--
 -------------------------------------------------------------------------------
 
-files['**/runtime/mods'] = {std = STD_ELONA}
-files['**/runtime/mods/core'] = {std = "+core"}
-files['**/runtime/user/console.lua'] = {std = "+core+console"}
+files['**/runtime/profile/_/mod'] = {std = STD_ELONA}
+files['**/runtime/profile/_/mod/core'] = {std = "+core"}
+files['**/runtime/profile/_/user/script/console.lua'] = {std = "+core+console"}
 files['src/tests/lua/*.lua'] = {std = "+tests"}
 files['src/tests/lua/classes/*.lua'] = {std = "+tests"}
 files['src/tests/lua/support'] = {std = "+minctest"}

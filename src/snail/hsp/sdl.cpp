@@ -396,10 +396,7 @@ void onkey_0()
     }
 }
 
-namespace await_detail
-{
-uint32_t last_await;
-}
+
 
 void await(int msec)
 {
@@ -407,17 +404,7 @@ void await(int msec)
     if (mesbox_detail::message_boxes.back())
         mesbox_detail::message_boxes.back()->update();
 
-    const auto now = ::SDL_GetTicks();
-    if (await_detail::last_await == 0)
-    {
-        await_detail::last_await = now;
-    }
-    const auto delta = now - await_detail::last_await;
-    if (size_t(msec) > delta)
-    {
-        ::SDL_Delay(msec - delta);
-    }
-    await_detail::last_await = now;
+    Application::instance().wait(static_cast<size_t>(msec));
 }
 
 

@@ -84,7 +84,7 @@ void LuaConsole::init_environment()
 
     // inspect = require("inspect")
     auto inspect = lua->get_state()->script_file(filepathutil::to_utf8_path(
-        filesystem::dir::data() / "lua"s / "inspect.lua"));
+        filesystem::dir::data() / "script" / "kernel" / "inspect.lua"));
     _console_mod->env.raw_set("inspect", inspect);
 
     // Add ability to reload user/script/console.lua.

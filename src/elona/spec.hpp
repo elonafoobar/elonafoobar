@@ -129,7 +129,8 @@ static const constexpr char* unknown_enum_variant = "__unknown__";
 /***
  * A schema-like object that holds a definition of valid values for an
  * HCL document. Used for validating the correctness of user-inputted
- * HCL files. For an example, see runtime/mods/core/config/config_def.hcl.
+ * HCL files. For an example, see
+ * runtime/profile/_/mod/core/config/config_def.hcl.
  */
 class Object
 {

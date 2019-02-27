@@ -40,13 +40,14 @@ namespace dir
 
 fs::path exe();
 fs::path data();
-fs::path for_mod(const std::string& mod_id);
 fs::path graphic();
 fs::path locale();
 fs::path log();
 fs::path map();
-fs::path mods();
-fs::path profiles();
+fs::path mod();
+fs::path for_mod(const std::string& mod_id);
+fs::path profile_root();
+fs::path current_profile();
 fs::path save();
 fs::path save(const std::string& player_id);
 fs::path sound();
@@ -54,7 +55,11 @@ fs::path tmp();
 fs::path user();
 fs::path user_script();
 
+void set_current_profile_directory(const fs::path& current_profile_dir);
 void set_base_save_directory(const fs::path& base_save_dir);
+void set_base_mod_directory(const fs::path& base_mod_dir);
+void set_base_user_directory(const fs::path& base_user_dir);
+void set_profile_directory(const fs::path& profile_dir);
 
 } // namespace dir
 
