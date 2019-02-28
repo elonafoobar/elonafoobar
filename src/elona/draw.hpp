@@ -8,6 +8,17 @@
 #include "shared_id.hpp"
 
 
+namespace
+{
+
+template <typename T>
+constexpr T rad2deg(T rad)
+{
+    return rad * 180.0 / 3.14159265358979323846264;
+}
+
+} // namespace
+
 namespace elona
 {
 

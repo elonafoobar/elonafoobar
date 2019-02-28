@@ -121,7 +121,10 @@ std::vector<ItemChip> item_chips{825};
 std::vector<CharaChip> chara_chips{925};
 
 
-
+/**
+ * Obtains the window buffer and region where the character sprite with ID @a id
+ * is located, for use with @ref gcopy.
+ */
 optional_ref<Extent> draw_get_rect_chara(int id)
 {
     return draw_get_rect(chara_chips[id].key);
@@ -129,6 +132,10 @@ optional_ref<Extent> draw_get_rect_chara(int id)
 
 
 
+/**
+ * Obtains the window buffer and region where the item sprite with ID @a id
+ * is located, for use with @ref gcopy.
+ */
 optional_ref<Extent> draw_get_rect_item(int id)
 {
     return draw_get_rect(item_chips[id].key);
@@ -136,6 +143,10 @@ optional_ref<Extent> draw_get_rect_item(int id)
 
 
 
+/**
+ * Obtains the window buffer and region where the portrait with ID @a key
+ * is located, for use with @ref gcopy.
+ */
 optional_ref<Extent> draw_get_rect_portrait(const std::string& key)
 {
     return loader["core.portrait"s + data_id_separator + key];
@@ -149,7 +160,10 @@ optional_ref<Extent> draw_get_rect(const std::string& key)
 }
 
 
-
+/**
+ * Applies a color to the item sprite of ID @a id and copies it to the scratch
+ * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
+ */
 optional_ref<Extent> prepare_item_image(int id, int color)
 {
     const auto rect = draw_get_rect_item(id);
@@ -173,6 +187,13 @@ optional_ref<Extent> prepare_item_image(int id, int color)
 
 
 
+/**
+ * Applies a color to the item sprite of ID @a id and copies it to the scratch
+ * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
+ *
+ * This variant is intended for use with cards/figures and copies the character
+ * sprite indicated by @a character_image to the appropriate location for each.
+ */
 optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
 {
     if (id != 528 && id != 531)
@@ -1005,7 +1026,9 @@ void draw_select_key(const std::string& key, int x, int y)
 }
 
 
-
+/**
+ * Draws text with a shadow.
+ */
 void bmes(
     const std::string& message,
     int x,
@@ -1059,7 +1082,9 @@ void init_assets()
 }
 
 
-
+/**
+ * Draws an asset.
+ */
 void draw(const std::string& key, int x, int y)
 {
     const auto& info = get_image_info(key);
@@ -1069,6 +1094,9 @@ void draw(const std::string& key, int x, int y)
 
 
 
+/**
+ * Draws an asset with stretching.
+ */
 void draw(const std::string& key, int x, int y, int width, int height)
 {
     const auto& info = get_image_info(key);
@@ -1087,6 +1115,9 @@ void draw(const std::string& key, int x, int y, int width, int height)
 
 
 
+/**
+ * Draws an asset with rotation.
+ */
 void draw_rotated(
     const std::string& key,
     int center_x,
@@ -1103,11 +1134,14 @@ void draw_rotated(
         info.height,
         center_x,
         center_y,
-        3.14159265 / 180 * angle);
+        angle);
 }
 
 
 
+/**
+ * Draws an asset with stretching and rotation.
+ */
 void draw_rotated(
     const std::string& key,
     int center_x,
@@ -1128,7 +1162,7 @@ void draw_rotated(
         center_y,
         width,
         height,
-        3.14159265 / 180 * angle);
+        angle);
 }
 
 
@@ -1141,11 +1175,17 @@ const ImageInfo& get_image_info(const std::string& key)
     return itr->second;
 }
 
+/**
+ * Draws a character using its @a image field.
+ */
 void draw_chara(const Character& chara, int x, int y, int scale, int alpha)
 {
     draw_chara(chara.image, x, y, scale, alpha);
 }
 
+/**
+ * Draws a character sprite.
+ */
 void draw_chara(int image_id, int x, int y, int scale, int alpha)
 {
     auto rect = chara_preparepic(image_id);
@@ -1170,11 +1210,19 @@ void draw_chara(int image_id, int x, int y, int scale, int alpha)
         rect->height * scale);
 }
 
+/**
+ * Draws a character using its @a image field. Fits the sprite to @ref inf_tiles
+ * height if it is tall.
+ */
 void draw_chara_scale_height(const Character& chara, int x, int y)
 {
     draw_chara_scale_height(chara.image, x, y);
 }
 
+/**
+ * Draws a character sprite. Fits the sprite to @ref inf_tiles height if it is
+ * tall.
+ */
 void draw_chara_scale_height(int image_id, int x, int y)
 {
     auto rect = chara_preparepic(image_id);
@@ -1192,7 +1240,9 @@ void draw_chara_scale_height(int image_id, int x, int y)
         inf_tiles);
 }
 
-
+/**
+ * Draws an item sprite. For use inside the materials menu.
+ */
 void draw_item_material(int image_id, int x, int y)
 {
     auto rect = prepare_item_image(image_id, 0);
@@ -1203,11 +1253,17 @@ void draw_item_material(int image_id, int x, int y)
         1, 0, 960, inf_tiles, inf_tiles, x, y, rect->frame_width, rect->height);
 }
 
+/**
+ * Draws an item with a character sprite on top, for cards/figures.
+ */
 void draw_item_with_portrait(const Item& item, int x, int y)
 {
     draw_item_with_portrait(item.image, item.color, item.param1, x, y);
 }
 
+/**
+ * Draws an item with a character sprite on top, for cards/figures.
+ */
 void draw_item_with_portrait(
     int image_id,
     int color,
@@ -1232,12 +1288,20 @@ void draw_item_with_portrait(
         1, 0, 960, inf_tiles, inf_tiles, x, y, rect->frame_width, rect->height);
 }
 
+/**
+ * Draws an item sprite with a character sprite on top, for cards/figures. Fits
+ * the sprite to @ref inf_tiles height if it is tall.
+ */
 void draw_item_with_portrait_scale_height(const Item& item, int x, int y)
 {
     draw_item_with_portrait_scale_height(
         item.image, item.color, item.param1, x, y);
 }
 
+/**
+ * Draws an item sprite with a character sprite on top, for cards/figures. Fits
+ * the sprite to @ref inf_tiles height if it is tall.
+ */
 void draw_item_with_portrait_scale_height(
     int image_id,
     int color,
