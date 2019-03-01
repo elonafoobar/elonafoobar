@@ -3,6 +3,7 @@
 #include <vector>
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../thirdparty/sol2/sol.hpp"
+#include "../../util/map_value_iterator.hpp"
 #include "../../util/noncopyable.hpp"
 #include "../filesystem.hpp"
 #include "../log.hpp"
@@ -35,6 +36,7 @@ public:
     using MapType = std::unordered_map<IdType, DataType>;
     using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
     using ErrorMapType = std::unordered_map<IdType, std::string>;
+    using ValuesIterator = lib::map_value_iterator<MapType, DataType>;
 
     LuaLazyCache()
     {
@@ -47,59 +49,20 @@ public:
 
     // NOTE: To iterate all values, they all have to be loaded from Lua first by
     // calling load_all().
-    struct iterator
+
+    typename MapType::const_iterator begin() const
     {
-    private:
-        using base_iterator_type = typename MapType::const_iterator;
-
-    public:
-        using value_type = const DataType;
-        using difference_type = typename base_iterator_type::difference_type;
-        using pointer = value_type*;
-        using reference = value_type&;
-        using iterator_category =
-            typename base_iterator_type::iterator_category;
-
-
-        iterator(const typename MapType::const_iterator& itr)
-            : itr(itr)
-        {
-        }
-
-        reference operator*() const
-        {
-            return itr->second;
-        }
-
-        pointer operator->() const
-        {
-            return itr.operator->();
-        }
-
-        void operator++()
-        {
-            ++itr;
-        }
-
-        bool operator!=(const iterator& other) const
-        {
-            return itr != other.itr;
-        }
-
-    private:
-        typename MapType::const_iterator itr;
-    };
-
-
-
-    iterator begin() const
-    {
-        return iterator{std::begin(_storage)};
+        return std::begin(_storage);
     }
 
-    iterator end() const
+    typename MapType::const_iterator end() const
     {
-        return iterator{std::end(_storage)};
+        return std::end(_storage);
+    }
+
+    ValuesIterator values() const
+    {
+        return ValuesIterator(_storage);
     }
 
     void load_all()

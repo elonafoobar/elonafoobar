@@ -15,7 +15,7 @@ std::vector<std::reference_wrapper<const RaceData>> race_get_available(
     bool is_extra_race)
 {
     std::vector<std::reference_wrapper<const RaceData>> ret;
-    for (const auto& race : the_race_db)
+    for (const auto& race : the_race_db.values())
     {
         if (race.is_extra == is_extra_race)
         {

@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "element.hpp"

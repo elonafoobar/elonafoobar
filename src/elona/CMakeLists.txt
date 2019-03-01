@@ -30,6 +30,7 @@ set(ELONA_SOURCES
   debug.cpp
   dmgheal.cpp
   draw.cpp
+  draw_asset.cpp
   element.cpp
   elonacore.cpp
   enchantment.cpp

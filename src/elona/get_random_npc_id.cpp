@@ -28,7 +28,7 @@ void get_random_npc_id()
 {
     WeightedRandomSampler<CharacterId> sampler;
 
-    for (const auto& data : the_character_db)
+    for (const auto& data : the_character_db.values())
     {
         if (data.level > objlv)
             continue;

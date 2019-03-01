@@ -70,6 +70,12 @@ void _initialize_chip_dbs(lua::DataTable& data)
         the_portrait_db.load_all();
         initialize_portraits(the_portrait_db);
     }
+
+    {
+        the_asset_db.initialize(data);
+        the_asset_db.load_all();
+        init_assets();
+    }
 }
 
 

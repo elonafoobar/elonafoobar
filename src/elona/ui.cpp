@@ -4,6 +4,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "data/types/type_asset.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
@@ -2416,7 +2417,7 @@ void cs_list(
 
         gsel(3);
         gcopy(0, x, y, width, 19, 264, 96);
-        draw_copy_from(0, x, y, width, 19, "list_scratch");
+        asset_copy_from(0, x, y, width, 19, "list_scratch");
         gsel(0);
 
         boxf(x, y, width, 19, {127, 191, 255, 63});

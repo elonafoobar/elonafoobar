@@ -39,7 +39,7 @@ void show_card_collection()
 
 reset_page:
     listmax = 0;
-    for (const auto& data : the_character_db)
+    for (const auto& data : the_character_db.values())
     {
         list(0, listmax) = data.id;
         list(1, listmax) = 1000 * data.level + data.id;
