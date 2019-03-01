@@ -774,7 +774,7 @@ label_2060_internal:
         y = 34;
         x = windoww - 650 + 156;
         window2(x, y, 475, 22, 5, 5);
-        gcopy(3, 64, 288, 50, 32, x - 28, y - 8);
+        draw("radar_deco", x - 28, y - 8);
         if (dropcontinue)
         {
             i = 4;
@@ -802,25 +802,13 @@ label_2060_internal:
                 break;
             }
             p = cycle(cnt, i);
-            gcopy(
-                3,
-                288 + invicon(p) * 48,
-                48,
-                48,
-                48,
-                x + cnt * 44 + 20,
-                y - 24);
+            draw_indexed(
+                "inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
             if (invctrl == p)
             {
                 gmode(5, 70);
-                gcopy(
-                    3,
-                    288 + invicon(p) * 48,
-                    48,
-                    48,
-                    48,
-                    x + cnt * 44 + 20,
-                    y - 24);
+                draw_indexed(
+                    "inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
                 gmode(2);
             }
             std::string inv_command_txt =
@@ -879,7 +867,7 @@ label_2061_internal:
 }
     if (invicon(invctrl) != -1)
     {
-        gcopy(3, 288 + invicon(invctrl) * 48, 48, 48, 48, wx + 46, wy - 14);
+        draw_indexed("inventory_icon", wx + 46, wy - 14, invicon(invctrl));
     }
     s = i18n::s.get("core.locale.ui.inv.window.weight");
     if (invctrl == 11 || invctrl == 12)
@@ -897,13 +885,13 @@ label_2061_internal:
     {
         mes(wx + 300, wy + 40, i18n::s.get("core.locale.ui.inv.window.resist"));
     }
-    gcopy(3, 960, 96, 144, 48, wx + ww - 136, wy - 6);
+    draw("deco_inv_a", wx + ww - 136, wy - 6);
     if (!g_show_resistances)
     {
-        gcopy(3, 960, 144, 48, 72, wx + ww - 186, wy - 6);
+        draw("deco_inv_b", wx + ww - 186, wy - 6);
     }
-    gcopy(3, 1008, 144, 48, 72, wx + ww - 246, wy - 6);
-    gcopy(3, 960, 216, 48, 72, wx - 6, wy - 6);
+    draw("deco_inv_c", wx + ww - 246, wy - 6);
+    draw("deco_inv_d", wx - 6, wy - 6);
     s = ""s + listmax + u8" items"s;
     s += "  ("s +
         i18n::s.get(

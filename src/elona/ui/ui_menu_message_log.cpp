@@ -1,5 +1,6 @@
 #include "ui_menu_message_log.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../message_log.hpp"
 
@@ -23,21 +24,22 @@ void _draw_window()
         {
             const auto x =
                 dx == p ? log_window_width % chunk_width : chunk_width;
-            gcopy(
-                3,
-                496,
-                536 + dy % 4 * inf_msgspace,
-                x,
-                inf_msgspace,
+            draw_region(
+                "message_window_contents",
                 dx * chunk_width + inf_msgx,
-                inf_msgy - (dy + 1) * inf_msgspace);
+                inf_msgy - (dy + 1) * inf_msgspace,
+                0,
+                dy % 4 * inf_msgspace,
+                x,
+                inf_msgspace);
         }
     }
 
     for (int dx = 0; dx < p + 1; ++dx)
     {
         const auto x = dx == p ? log_window_width % chunk_width : chunk_width;
-        gcopy(3, 496, 528, x, 6, dx * chunk_width + inf_msgx, inf_msgy);
+        draw_region(
+            "message_window_border", dx * chunk_width + inf_msgx, inf_msgy, x);
     }
 }
 

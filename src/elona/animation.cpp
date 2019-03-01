@@ -851,11 +851,11 @@ void MeleeAttackAnimation::do_play()
         }
         if (ap == 1)
         {
-            gcopy(3, 1008 + cnt * 48, 432, 48, 48, anidx, anidy);
+            draw_indexed("anim_slash", anidx, anidy, cnt);
         }
         if (ap == 2)
         {
-            gcopy(3, 816 + cnt * 48, 432, 48, 48, anidx, anidy);
+            draw_indexed("anim_bash", anidx, anidy, cnt);
         }
         redraw();
         gmode(0);

@@ -88,9 +88,9 @@ void UIMenuSkills::_draw_window()
     display_topic(
         i18n::s.get("core.locale.ui.skill.detail"), wx + 320, wy + 36);
 
-    gcopy(3, 960, 48, 48, 48, wx + 46, wy - 16);
-    gcopy(3, 960, 96, 72, 144, wx + ww - 78, wy + wh - 165);
-    gcopy(3, 1032, 96, 102, 48, wx + ww - 168, wy);
+    draw_indexed("inventory_icon", wx + 46, wy - 16, 14);
+    elona::draw("deco_skill_a", wx + ww - 78, wy + wh - 165);
+    elona::draw("deco_skill_b", wx + ww - 168, wy);
 }
 
 void UIMenuSkills::_draw_key(int cnt)

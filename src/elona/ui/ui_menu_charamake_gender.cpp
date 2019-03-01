@@ -1,6 +1,7 @@
 #include "ui_menu_charamake_gender.hpp"
 #include "../audio.hpp"
 #include "../character_making.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
 
@@ -51,6 +52,7 @@ void UIMenuCharamakeGender::_draw_window()
 void UIMenuCharamakeGender::_draw_choice(int cnt, const std::string& text)
 {
     gcopy(3, cnt * 24 + 72, 30, 24, 18, wx + 38, wy + 66 + cnt * 19 - 2);
+    display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 

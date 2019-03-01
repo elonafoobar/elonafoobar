@@ -2,6 +2,7 @@
 #include "../audio.hpp"
 #include "../config/config.hpp"
 #include "../config/config_menu.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../network.hpp"
@@ -152,8 +153,8 @@ void UIMenuConfig::_draw_keys(bool is_root_menu)
 
 void UIMenuConfig::_draw_arrows(int item_pos)
 {
-    gcopy(3, 312, 336, 24, 24, wx + 220, wy + 66 + item_pos * 19 - 5);
-    gcopy(3, 336, 336, 24, 24, wx + 358, wy + 66 + item_pos * 19 - 5);
+    elona::draw("arrow_left", wx + 220, wy + 66 + item_pos * 19 - 5);
+    elona::draw("arrow_right", wx + 358, wy + 66 + item_pos * 19 - 5);
 }
 
 void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)

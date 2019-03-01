@@ -871,7 +871,7 @@ void picload(const fs::path& filepath, int x, int y, bool create_buffer)
         keycolor = none;
     }
     snail::Image img{filepath, keycolor};
-    snail::hsp::picload(img, x, y, create_buffeer);
+    snail::hsp::picload(img, x, y, create_buffer);
 }
 
 

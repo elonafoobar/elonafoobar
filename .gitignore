@@ -7,6 +7,7 @@ bak/
 *.a
 bin/
 src/version.cpp
+src/elona/version.cpp
 /*.vcxproj
 /*.sln
 /*.filters
@@ -20,6 +21,7 @@ CMakeFiles/
 snail/Debug
 snail/snail.dir
 snail/snail.vcxproj*
+docs/doc/
 cmake_install.cmake
 GPATH
 GRTAGS
@@ -46,3 +48,5 @@ android/external/SDL2_ttf/
 android/external/SDL2_image/
 android/external/lua/
 android/external/boost/
+.ccls-cache
+compile_commands.json

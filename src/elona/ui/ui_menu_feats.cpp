@@ -179,11 +179,11 @@ void UIMenuFeats::_draw_window_deco()
     s(2) = i18n::s.get("core.locale.trait.window.detail");
     display_topic(s, wx + 46, wy + 36);
     display_topic(s(2), wx + 255, wy + 36);
-    gcopy(3, 816, 48, 48, 48, wx + 46, wy - 16);
-    gcopy(3, 960, 96, 48, 192, wx + ww - 56, wy + wh - 198);
-    gcopy(3, 1008, 96, 48, 144, wx, wy);
-    gcopy(3, 960, 288, 96, 72, wx + ww - 108, wy);
-    gcopy(3, 1008, 240, 96, 48, wx, wy + wh - 70);
+    draw_indexed("inventory_icon", wx + 46, wy - 16, 11);
+    elona::draw("deco_feat_a", wx + ww - 56, wy + wh - 198);
+    elona::draw("deco_feat_b", wx, wy);
+    elona::draw("deco_feat_c", wx + ww - 108, wy);
+    elona::draw("deco_feat_d", wx, wy + wh - 70);
 }
 
 void UIMenuFeats::_draw_window(bool is_chara_making)
@@ -267,14 +267,8 @@ void UIMenuFeats::_draw_single_list_entry_text(
     {
         x = 70;
     }
-    gcopy(
-        3,
-        384 + traitref * 24,
-        336,
-        24,
-        24,
-        wx + (draw_name ? 30 : 45),
-        wy + 61 + cnt * 19);
+    draw_indexed(
+        "trait_icon", wx + (draw_name ? 30 : 45), wy + 61 + cnt * 19, traitref);
 
     cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, text_color);
 

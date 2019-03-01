@@ -70,7 +70,7 @@ void UIMenuQuestBoard::_draw_background()
         y = wy + cnt * 120;
         window(wx + 4, y + 4, ww, h, true);
         window(wx, y, ww, h);
-        gcopy(3, 960, 240, 48, 84, wx + 20, y + 8);
+        elona::draw("deco_board_a", wx + 20, y + 8);
     }
     render_hud();
     gsel(0);
