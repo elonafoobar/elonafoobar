@@ -210,6 +210,7 @@ void draw_indexed_region(
     int index_y,
     int count_x,
     int count_y);
+void draw_bg(const std::string& key);
 void asset_copy_from(int window_id, int x, int y, const std::string& key);
 void asset_copy_from(
     int window_id,

@@ -1,6 +1,7 @@
 #include "data/types/type_asset.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "ui.hpp"
 
 namespace elona
 {
@@ -32,10 +33,13 @@ void init_assets()
     {
         const auto& name = pair.first;
         const auto& data = pair.second;
-        if (data.file && data.load_type == AssetLoadType::Buffer)
+        if (data.load_type == AssetLoadType::Buffer)
         {
             buffer(data.window_id, data.width, data.height);
-            asset_load(name);
+            if (data.file)
+            {
+                asset_load(name);
+            }
         }
     }
 
@@ -413,6 +417,19 @@ void draw_rotated(
         width,
         height,
         3.14159265 / 180 * angle);
+}
+
+
+
+/**
+ * Fills the background of the currently selected window with the asset in @a
+ * key.
+ */
+void draw_bg(const std::string& key)
+{
+    const auto& info = get_image_info(key);
+
+    fillbg(info.window_id, info.x, info.y, info.width, info.height);
 }
 
 

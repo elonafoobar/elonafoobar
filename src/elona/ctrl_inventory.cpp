@@ -697,8 +697,7 @@ label_20591:
             }
         }
     }
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_inv.bmp", 960, 96, false);
+    asset_load("deco_inv");
     gsel(0);
     if (returnfromidentify == 0)
     {

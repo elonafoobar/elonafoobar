@@ -660,7 +660,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
             continue;
         }
         ++_cs_buffmax;
-        gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32, x, y);
+        draw_indexed("buff_icon", x, y, cdata[cc].buffs[cnt].id);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});

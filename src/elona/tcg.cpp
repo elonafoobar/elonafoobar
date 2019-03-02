@@ -1,6 +1,7 @@
 #include "audio.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
+#include "data/types/type_asset.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -1548,27 +1549,24 @@ int putcard(int card_index, int player_index)
 
 void tcgdrawbg()
 {
-    int w_at_tcg = 0;
-    int h_at_tcg = 0;
-    x_at_tcg = 960;
-    y_at_tcg = 96;
-    w_at_tcg = 128;
-    h_at_tcg = 128;
+    const auto& info = get_image_info("deco_card_a");
+
     gmode(0);
-    for (int cnt = 0, cnt_end = (windowh / h_at_tcg + 1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (windowh / info.height + 1); cnt < cnt_end;
+         ++cnt)
     {
         cnt2_at_tcg = cnt;
-        for (int cnt = 0, cnt_end = (windoww / w_at_tcg + 1); cnt < cnt_end;
+        for (int cnt = 0, cnt_end = (windoww / info.width + 1); cnt < cnt_end;
              ++cnt)
         {
             gcopy(
-                3,
-                x_at_tcg,
-                y_at_tcg,
-                w_at_tcg,
-                h_at_tcg,
-                windoww - (cnt + 1) * w_at_tcg,
-                windowh - (cnt2_at_tcg + 1) * h_at_tcg);
+                info.window_id,
+                info.x,
+                info.y,
+                info.width,
+                info.height,
+                windoww - (cnt + 1) * info.width,
+                windowh - (cnt2_at_tcg + 1) * info.height);
         }
     }
     gmode(2);
@@ -1640,8 +1638,7 @@ void tcginit()
     deckiy_at_tcg(0) = basey_at_tcg + 420;
     deckiy_at_tcg(1) = basey_at_tcg + 20;
     selectmode_at_tcg = -1;
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_card.bmp", 960, 96, false);
+    asset_load("deco_card");
     gsel(7);
     picload(filesystem::dir::graphic() / u8"interface2.bmp", 0, 0, true);
     gsel(2);

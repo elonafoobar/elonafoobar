@@ -537,7 +537,7 @@ void render_buffs()
             break;
 
         // Icon
-        gcopy(5, buff.id * 32, 1120, 32, 32, x, y);
+        draw_indexed("buff_icon", x, y, buff.id);
         // Turns
         mes(x + 3, y + 19, std::to_string(buff.turns));
         // Turns

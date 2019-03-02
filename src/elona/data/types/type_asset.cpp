@@ -4,10 +4,9 @@
 namespace
 {
 
-std::unordered_map<std::string, int> window_id_table = {
-    {"item.bmp", 1},
-    {"interface.bmp", 3},
-};
+std::unordered_map<std::string, int> window_id_table = {{"item.bmp", 1},
+                                                        {"interface.bmp", 3},
+                                                        {"character.bmp", 5}};
 
 }
 
@@ -46,7 +45,6 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
     DATA_OPT_OR(count_x, int, 1);
     DATA_OPT_OR(count_y, int, 1);
     DATA_OPT(file, std::string);
-    DATA_OPT_OR(load_on_startup, bool, true);
     DATA_ENUM(
         load_type, AssetLoadType, AssetLoadTypeTable, AssetLoadType::None);
 

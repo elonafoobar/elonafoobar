@@ -9,6 +9,8 @@ data:add_multi(
          y = 0,
          width = 1440,
          height = 800,
+         file = "__BUILTIN__/graphic/interface.bmp",
+         load_type = "Buffer",
       },
       {
          name = "select_key",
@@ -339,6 +341,8 @@ data:add_multi(
          y = 216,
          width = 64,
          height = 96,
+         file = "__core__/graphic/interface_ex6.png",
+         load_type = "Startup"
       },
       {
          name = "card_back",
@@ -364,6 +368,8 @@ data:add_multi(
          width = 24,
          height = 32,
          count_x = 5,
+         file = "__core__/graphic/interface_ex7.png",
+         load_type = "Startup"
       },
       {
          name = "card_rank",
@@ -373,6 +379,8 @@ data:add_multi(
          width = 24,
          height = 32,
          count_x = 13,
+         file = "__core__/graphic/interface_ex8.png",
+         load_type = "Startup"
       },
       {
          name = "card_pile",
@@ -381,6 +389,8 @@ data:add_multi(
          y = 216,
          width = 80,
          height = 112,
+         file = "__core__/graphic/interface_ex5.png",
+         load_type = "Startup"
       },
       {
          name = "anim_bash",
@@ -451,6 +461,8 @@ data:add_multi(
          height = 24,
          count_x = 8,
          count_y = 6,
+         file = "__core__/graphic/interface_ex1.png",
+         load_type = "Startup"
       },
       {
          name = "shadow_spot",
@@ -461,6 +473,8 @@ data:add_multi(
          height = 24,
          count_x = 2,
          count_y = 6,
+         file = "__core__/graphic/interface_ex2.png",
+         load_type = "Startup"
       },
       {
          name = "shadow_edges",
@@ -470,6 +484,8 @@ data:add_multi(
          width = 48,
          height = 48,
          count_x = 18,
+         file = "__core__/graphic/interface_ex3.png",
+         load_type = "Startup"
       },
       {
          name = "politics_law",
@@ -729,6 +745,18 @@ data:add_multi(
          y = 144,
          width = 344,
          height = 72,
+         file = "__core__/graphic/interface_ex4.png",
+         load_type = "Startup"
+      },
+
+      {
+         name = "deco_cm",
+         source = "interface.bmp",
+         x = 960,
+         y = 96,
+         width = 240,
+         height = 264,
+         file = "__BUILTIN__/graphic/deco_cm.bmp",
       },
 
       -- Blending menu
@@ -739,6 +767,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_blend.bmp",
       },
       {
          name = "deco_blend_a",
@@ -773,6 +802,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_inv.bmp",
       },
       {
          name = "deco_inv_a",
@@ -815,6 +845,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_help.bmp",
       },
       {
          name = "deco_help_a",
@@ -841,6 +872,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_mirror.bmp",
       },
       {
          name = "deco_mirror_a",
@@ -864,6 +896,14 @@ data:add_multi(
          name = "deco_politics_a",
          source = "interface.bmp",
          x = 960,
+         y = 96,
+         width = 128,
+         height = 128,
+      },
+      {
+         name = "deco_politics_b",
+         source = "interface.bmp",
+         x = 960,
          y = 288,
          width = 144,
          height = 24,
@@ -877,9 +917,18 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_board.bmp",
       },
       {
          name = "deco_board_a",
+         source = "interface.bmp",
+         x = 960,
+         y = 96,
+         width = 128,
+         height = 128,
+      },
+      {
+         name = "deco_board_b",
          source = "interface.bmp",
          x = 960,
          y = 240,
@@ -895,6 +944,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_wear.bmp",
       },
       {
          name = "deco_wear_a",
@@ -921,6 +971,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_feat.bmp",
       },
       {
          name = "deco_feat_a",
@@ -963,6 +1014,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_skill.bmp",
       },
       {
          name = "deco_skill_a",
@@ -989,6 +1041,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_spell.bmp",
       },
       {
          name = "deco_spell_a",
@@ -1005,6 +1058,46 @@ data:add_multi(
          y = 96,
          width = 72,
          height = 96,
+      },
+
+      {
+         name = "atlas_character",
+         source = "character.bmp",
+         x = 0,
+         y = 0,
+         width = 1584,
+         height = 1200,
+         load_type = "Buffer",
+      },
+      {
+         name = "buff_icon",
+         source = "character.bmp",
+         x = 0,
+         y = 0,
+         width = 32,
+         height = 32,
+         count_x = 10,
+         file = "__core__/graphic/bufficon.png",
+         load_type = "Startup",
+      },
+
+      -- Card menu
+      {
+         name = "deco_card",
+         source = "interface.bmp",
+         x = 960,
+         y = 96,
+         width = 240,
+         height = 264,
+         file = "__BUILTIN__/graphic/deco_card.bmp",
+      },
+      {
+         name = "deco_card_a",
+         source = "interface.bmp",
+         x = 960,
+         y = 96,
+         width = 128,
+         height = 128,
       },
    }
 )

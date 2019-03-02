@@ -62,28 +62,10 @@ void load_character_sprite()
     usernpcmax = 0;
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
-    buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
 
-    picload(filesystem::dir::graphic() / u8"character.bmp", 0, 0, false);
-    picload(filesystem::dir::graphic() / u8"bufficon.png", 640, 1120, false);
-
-    gmode(0);
-    gsel(5);
-    if (fs::exists(filesystem::dir::user() / u8"graphic"))
-    {
-        for (const auto& entry : filesystem::dir_entries(
-                 filesystem::dir::user() / u8"graphic",
-                 filesystem::DirEntryRange::Type::file,
-                 std::regex{u8R"(chara_.*\.bmp)"}))
-        {
-            const auto file =
-                filepathutil::to_utf8_path(entry.path().filename());
-            p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
-            picload(
-                entry.path(), p % 33 * inf_tiles, p / 33 * inf_tiles, false);
-        }
-    }
-    gsel(0);
+    // buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
+    // picload(filesystem::dir::graphic() / u8"character.bmp", 0, 0, false);
+    // picload(filesystem::dir::graphic() / u8"bufficon.png", 640, 1120, false);
 }
 
 
@@ -237,27 +219,8 @@ void initialize_elona()
     gsel(0);
     boxf();
     redraw();
-    buffer(3, 1440, 800);
-    picload(filesystem::dir::graphic() / u8"interface.bmp", 0, 0, false);
 
     mesbox(keylog);
-
-    picload(filesystem::dir::graphic() / u8"interface_ex1.png", 0, 656, false);
-    picload(
-        filesystem::dir::graphic() / u8"interface_ex2.png", 144, 656, false);
-    picload(
-        filesystem::dir::graphic() / u8"interface_ex3.png", 144, 752, false);
-    picload(
-        filesystem::dir::graphic() / u8"interface_ex4.png", 456, 144, false);
-
-    picload(
-        filesystem::dir::graphic() / u8"interface_ex5.png", 528, 216, false);
-    picload(
-        filesystem::dir::graphic() / u8"interface_ex6.png", 672, 216, false);
-    picload(
-        filesystem::dir::graphic() / u8"interface_ex7.png", 864, 533, false);
-    picload(
-        filesystem::dir::graphic() / u8"interface_ex8.png", 864, 565, false);
 
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);

@@ -93,8 +93,7 @@ bool UIMenuEquipment::init()
     }
 
     window_animation(wx, wy, ww, wh, 9, 4);
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_wear.bmp", 960, 96, false);
+    asset_load("deco_wear");
     gsel(0);
     windowshadow = 1;
 

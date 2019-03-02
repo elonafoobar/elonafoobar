@@ -634,8 +634,7 @@ TurnResult blending_menu()
     elona_vector1<int> blendchecklist;
     step = -1;
     rpid = 0;
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_blend.bmp", 960, 96, false);
+    asset_load("deco_blend");
     gsel(0);
     clear_rprefmat();
 label_1923:

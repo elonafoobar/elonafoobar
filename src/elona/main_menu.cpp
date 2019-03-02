@@ -7,6 +7,7 @@
 #include "character_making.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
+#include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "keybind/keybind.hpp"
@@ -219,8 +220,7 @@ MainMenuResult main_title_menu()
         i18n::s.get("core.locale.main_menu.title_menu.exit"),
     };
 
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_title.bmp", 960, 96, false);
+    asset_load("deco_blend");
     gsel(0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -410,8 +410,7 @@ MainMenuResult main_menu_new_game()
     picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
     gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     load_background_variants(2);
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 960, 96, false);
+    asset_load("deco_cm.bmp");
     gsel(0);
     return MainMenuResult::character_making_select_race;
 }

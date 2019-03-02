@@ -29,8 +29,7 @@ bool UIMenuFeats::init()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 960, 96, false);
+    asset_load("deco_feat");
     gsel(0);
     windowshadow = 1;
 
