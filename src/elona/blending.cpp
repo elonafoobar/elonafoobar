@@ -355,7 +355,7 @@ void window_recipe2(int val0)
     x_at_m183 = wx + ww;
     w_at_m183 = 400;
     gmode(2);
-    gcopy(3, 960, 288, 480, 68, x_at_m183 + w_at_m183 - 520, 0);
+    draw("deco_blend_a", x_at_m183 + w_at_m183 - 520, 0);
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
     font(15 - en * 2, snail::Font::Style::bold);
@@ -521,7 +521,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         dy_at_m184 += 17;
         ++i_at_m184;
     }
-    gcopy(3, 1040, 96, 160, 70, wx + ww + 243, wy - 4);
+    draw("deco_blend_b", wx + ww + 243, wy - 4);
     if (step == i_at_m184 - 2)
     {
         boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
@@ -787,17 +787,13 @@ label_1925_internal:
 
         if (blendchecklist(cnt) == 1)
         {
-            gcopy(3, 336, 360, 24, 24, wx + 330, wy + 53 + cnt * 19);
+            draw("blend_ingredient", wx + 330, wy + 53 + cnt * 19);
         }
         rpid = list(0, p);
-        gcopy(
-            3,
-            64 + (4 - rpdiff(rpid, -1, -1) / 25) * 16,
-            624,
-            16,
-            16,
-            wx + 317,
-            wy + 60 + cnt * 19);
+
+        int difficulty = (4 - rpdiff(rpid, -1, -1) / 25);
+        draw_indexed(
+            "recipe_difficulty", wx + 317, wy + 60 + cnt * 19, difficulty);
     }
     font(14 - en * 2);
     cs_listbk();
@@ -825,7 +821,7 @@ label_1925_internal:
         cs_bk = cs;
     }
     windowshadow(1) = 0;
-    gcopy(3, 960, 96, 80, 90, wx + 10, wy + wh - 100);
+    draw("deco_blend_c", wx + 10, wy + wh - 100);
     redraw();
 
     action = get_selected_item(p(0));
@@ -959,7 +955,7 @@ label_1928_internal:
         cs_bk = cs;
     }
     windowshadow(1) = 0;
-    gcopy(3, 960, 96, 80, 90, wx + 10, wy + wh - 100);
+    draw("deco_blend_c", wx + 10, wy + wh - 100);
     redraw();
 
     action = get_selected_item(p(0));

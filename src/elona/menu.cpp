@@ -373,9 +373,9 @@ void show_ex_help(int id)
         wy = winposy(dy);
         window2(
             (windoww - 325) / 2 + inf_screenx, winposy(dy) + 6, 325, 32, 0, 1);
-        gcopy(3, 960, 96, 48, 48, wx + 5, wy + 4);
-        gcopy(3, 960, 96, 48, 48, wx + dx - 55, wy + 4);
-        gcopy(3, 960, 144, 96, 120, wx + 10, wy + 42);
+        draw("deco_help_a", wx + 5, wy + 4);
+        draw("deco_help_a", wx + dx - 55, wy + 4);
+        draw("deco_help_b", wx + 10, wy + 42);
         font(16 - en * 2, snail::Font::Style::bold);
         bmes(
             i18n::s.get("core.locale.ui.exhelp.title"),
@@ -750,7 +750,7 @@ label_2041_internal:
         i18n::s.get("core.locale.ui.appearance.basic.category"),
         wx + 34,
         wy + 36);
-    gcopy(3, 960, 96, 48, 120, wx + ww - 40, wy);
+    draw("deco_mirror_a", wx + ww - 40, wy);
     ++i;
     if (i % 100 < 45)
     {
@@ -830,8 +830,8 @@ label_2041_internal:
         cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         if (rtval != -2)
         {
-            gcopy(3, 312, 336, 24, 24, wx + 30, wy + 66 + cnt * 21 - 5);
-            gcopy(3, 336, 336, 24, 24, wx + 175, wy + 66 + cnt * 21 - 5);
+            draw("arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
+            draw("arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
         }
     }
     if (keyrange != 0)
@@ -1044,8 +1044,8 @@ int change_appearance_equipment()
                 {
                     s += u8"Off"s;
                 }
-                gcopy(3, 312, 336, 24, 24, wx + 30, wy + 66 + cnt * 21 - 5);
-                gcopy(3, 336, 336, 24, 24, wx + 175, wy + 66 + cnt * 21 - 5);
+                draw("arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
+                draw("arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
             }
             cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         }

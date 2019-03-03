@@ -78,7 +78,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     keylog = "";
     gmode(0);
     gsel(3);
-    gcopy(0, x_at_txtfunc, y_at_txtfunc, 120, 24, 672, 504);
+    draw_copy_from(0, x_at_txtfunc, y_at_txtfunc, "label_more_scratch");
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
@@ -96,7 +96,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     for (int cnt = 0; cnt < 7; ++cnt)
     {
         await(Config::instance().general_wait / 3);
-        gcopy(3, 672, 504, 120, 24, x_at_txtfunc, y_at_txtfunc);
+        draw("label_more_scratch", x_at_txtfunc, y_at_txtfunc);
         if (cnt != 6)
         {
             draw(
@@ -193,15 +193,13 @@ void Message::_msg_write(std::string& message)
         message = message.substr(0, bytewise_pos) + u8"  " +
             message.substr(
                 bytewise_pos + std::strlen(musical_note) + (symbol_type != 0));
+
         gmode(2);
-        elona::gcopy(
-            3,
-            600 + symbol_type * 24,
-            360,
-            16,
-            16,
+        draw_indexed(
+            "message_symbol",
             (message_width + widthwise_pos) * 7 + inf_msgx + 7 + en * 3,
-            (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
+            (inf_msgline - 1) * inf_msgspace + inf_msgy + 5,
+            symbol_type * 2);
     }
 
     font(14 - en * 2);
@@ -250,14 +248,14 @@ void Message::_msg_newline()
         {
             x_at_txtfunc = 192;
         }
-        gcopy(
-            3,
-            496,
-            536 + msgline % 4 * inf_msgspace,
-            x_at_txtfunc,
-            inf_msgspace,
+        draw_region(
+            "message_window_contents",
             cnt * 192 + inf_msgx,
-            inf_msgy + 5 + inf_msgspace * 3 + en * 2);
+            inf_msgy + 5 + inf_msgspace * 3 + en * 2,
+            0,
+            msgline % 4 * inf_msgspace,
+            x_at_txtfunc,
+            inf_msgspace);
     }
 
     gmode(2);
@@ -300,14 +298,12 @@ void Message::_txt_conv()
                 {
                     x_at_txtfunc = 192;
                 }
-                gcopy(
-                    3,
-                    496,
-                    536,
-                    x_at_txtfunc,
-                    inf_msgspace * 3,
+                draw_region(
+                    "message_window_contents",
                     i * 192 + inf_msgx,
-                    inf_msgy + 5);
+                    inf_msgy + 5,
+                    x_at_txtfunc,
+                    inf_msgspace * 3);
             }
         }
         if (Config::instance().message_add_timestamps)

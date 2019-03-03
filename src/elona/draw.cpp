@@ -121,7 +121,10 @@ std::vector<ItemChip> item_chips{825};
 std::vector<CharaChip> chara_chips{925};
 
 
-
+/**
+ * Obtains the window buffer and region where the character sprite with ID @a id
+ * is located, for use with @ref gcopy.
+ */
 optional_ref<Extent> draw_get_rect_chara(int id)
 {
     return draw_get_rect(chara_chips[id].key);
@@ -129,6 +132,10 @@ optional_ref<Extent> draw_get_rect_chara(int id)
 
 
 
+/**
+ * Obtains the window buffer and region where the item sprite with ID @a id
+ * is located, for use with @ref gcopy.
+ */
 optional_ref<Extent> draw_get_rect_item(int id)
 {
     return draw_get_rect(item_chips[id].key);
@@ -136,6 +143,10 @@ optional_ref<Extent> draw_get_rect_item(int id)
 
 
 
+/**
+ * Obtains the window buffer and region where the portrait with ID @a key
+ * is located, for use with @ref gcopy.
+ */
 optional_ref<Extent> draw_get_rect_portrait(const std::string& key)
 {
     return loader["core.portrait"s + data_id_separator + key];
@@ -149,7 +160,10 @@ optional_ref<Extent> draw_get_rect(const std::string& key)
 }
 
 
-
+/**
+ * Applies a color to the item sprite of ID @a id and copies it to the scratch
+ * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
+ */
 optional_ref<Extent> prepare_item_image(int id, int color)
 {
     const auto rect = draw_get_rect_item(id);
@@ -173,6 +187,13 @@ optional_ref<Extent> prepare_item_image(int id, int color)
 
 
 
+/**
+ * Applies a color to the item sprite of ID @a id and copies it to the scratch
+ * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
+ *
+ * This variant is intended for use with cards/figures and copies the character
+ * sprite indicated by @a character_image to the appropriate location for each.
+ */
 optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
 {
     if (id != 528 && id != 531)
@@ -330,7 +351,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
                 const int y_ = y + 17;
-                gcopy(3, 480 - width, 517, width, 3, x_, y_, width * 3, 9);
+                draw_bar("ally_health_bar", x_, y_, width * 3, 9, width);
 
                 // Show leash icon.
                 if (Config::instance().leash_icon && cdata[i].is_leashed())
@@ -511,7 +532,7 @@ void show_damage_popups()
 void draw_emo(int cc, int x, int y)
 {
     gmode(2);
-    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608, 16, 16, x + 16, y);
+    draw_indexed("emotion_icons", x + 16, y, cdata[cc].emotion_icon);
 }
 
 
@@ -974,6 +995,10 @@ void initialize_all_chips()
 }
 
 
+
+/**
+ * Prepares a buffer of selection key sprites at [72, 30] in window 3.
+ */
 void draw_init_key_select_buffer()
 {
     int buffer_bk = ginfo(3);
@@ -1006,6 +1031,9 @@ void draw_select_key(const std::string& key, int x, int y)
 
 
 
+/**
+ * Draws text with a shadow.
+ */
 void bmes(
     const std::string& message,
     int x,
@@ -1048,18 +1076,31 @@ void init_assets()
 
     for (const auto& pair : value.get<hcl::Object>("images"))
     {
+        int count_x = 1;
+        int count_y = 1;
+        if (pair.second.has("count_x"))
+        {
+            count_x = pair.second.get<int>("count_x");
+        }
+        if (pair.second.has("count_y"))
+        {
+            count_y = pair.second.get<int>("count_y");
+        }
         images[pair.first] = {
             window_id_table[pair.second.get<std::string>("source")],
             pair.second.get<int>("x"),
             pair.second.get<int>("y"),
             pair.second.get<int>("width"),
             pair.second.get<int>("height"),
-        };
+            count_x,
+            count_y};
     }
 }
 
 
-
+/**
+ * Draws an asset.
+ */
 void draw(const std::string& key, int x, int y)
 {
     const auto& info = get_image_info(key);
@@ -1069,6 +1110,9 @@ void draw(const std::string& key, int x, int y)
 
 
 
+/**
+ * Draws an asset with stretching.
+ */
 void draw(const std::string& key, int x, int y, int width, int height)
 {
     const auto& info = get_image_info(key);
@@ -1087,6 +1131,263 @@ void draw(const std::string& key, int x, int y, int width, int height)
 
 
 
+/**
+ * Draws an asset, centered, with stretching.
+ */
+void draw_centered(const std::string& key, int x, int y, int width, int height)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy_c(
+        info.window_id,
+        info.x,
+        info.y,
+        info.width,
+        info.height,
+        x,
+        y,
+        width,
+        height);
+}
+
+
+
+/**
+ * Draws an asset with variant @a index out of multiple parts aligned
+ * horizontally.
+ */
+void draw_indexed(const std::string& key, int x, int y, int index_x)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(
+        info.window_id,
+        info.x + info.width * (index_x % info.count_x),
+        info.y,
+        info.width,
+        info.height,
+        x,
+        y);
+}
+
+
+
+/**
+ * Draws an asset with variant @a index out of multiple parts aligned
+ * horizontally and vertically.
+ */
+void draw_indexed(
+    const std::string& key,
+    int x,
+    int y,
+    int index_x,
+    int index_y)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(
+        info.window_id,
+        info.x + info.width * (index_x % info.count_x),
+        info.y + info.height * (index_y % info.count_y),
+        info.width,
+        info.height,
+        x,
+        y);
+}
+
+
+
+/**
+ * Draws a region of an asset.
+ */
+void draw_region(const std::string& key, int x, int y, int width)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(info.window_id, info.x, info.y, width, info.height, x, y);
+}
+
+
+
+/**
+ * Draws a region of an asset.
+ */
+void draw_region(const std::string& key, int x, int y, int width, int height)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(info.window_id, info.x, info.y, width, height, x, y);
+}
+
+
+
+/**
+ * Draws a region of an asset.
+ */
+void draw_region(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(
+        info.window_id,
+        info.x + offset_x,
+        info.y + offset_y,
+        width,
+        height,
+        x,
+        y);
+}
+
+
+
+/**
+ * Draws a region of an asset with stretching.
+ */
+void draw_region(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height,
+    int dst_width,
+    int dst_height)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(
+        info.window_id,
+        info.x + offset_x,
+        info.y + offset_y,
+        width,
+        height,
+        x,
+        y,
+        dst_width,
+        dst_height);
+}
+
+
+
+/**
+ * Draws a region of an asset rotated.
+ */
+void draw_region_rotated(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height,
+    double angle)
+{
+    const auto& info = get_image_info(key);
+
+    grotate(
+        info.window_id,
+        info.x + offset_x,
+        info.y + offset_y,
+        width,
+        height,
+        x,
+        y,
+        angle);
+}
+
+
+
+/**
+ * Draws an asset with variable width starting from the right.
+ */
+void draw_bar(
+    const std::string& key,
+    int x,
+    int y,
+    int dst_width,
+    int dst_height,
+    int width)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(
+        info.window_id,
+        info.x + info.width - width,
+        info.y,
+        width % info.width,
+        info.height,
+        x,
+        y,
+        dst_width,
+        dst_height);
+}
+
+
+
+/**
+ * Draws an asset with variable width starting from the top.
+ */
+void draw_bar_vert(
+    const std::string& key,
+    int x,
+    int y,
+    int dst_width,
+    int dst_height,
+    int height)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(
+        info.window_id,
+        info.x,
+        info.y + info.height - height,
+        info.width,
+        height % info.height,
+        x,
+        y,
+        dst_width,
+        dst_height);
+}
+
+
+
+/**
+ * Draws an indexed region of an asset in units of tile width/height.
+ */
+void draw_indexed_region(
+    const std::string& key,
+    int x,
+    int y,
+    int index_x,
+    int index_y,
+    int count_x,
+    int count_y)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy(
+        info.window_id,
+        info.x + index_x * info.width,
+        info.y + index_y * info.height,
+        count_x * info.width,
+        count_y * info.height,
+        x,
+        y);
+}
+
+
+
+/**
+ * Draws an asset with rotation.
+ */
 void draw_rotated(
     const std::string& key,
     int center_x,
@@ -1108,6 +1409,9 @@ void draw_rotated(
 
 
 
+/**
+ * Draws an asset with stretching and rotation.
+ */
 void draw_rotated(
     const std::string& key,
     int center_x,
@@ -1133,6 +1437,44 @@ void draw_rotated(
 
 
 
+/**
+ * Copies the image at @a window_id, [@a x, @a y] into the region defined by the
+ * asset at @a key.
+ *
+ * Typically used when editing scratch regions of a window.
+ */
+void draw_copy_from(int window_id, int x, int y, const std::string& key)
+{
+    const auto& info = get_image_info(key);
+
+    gsel(info.window_id);
+    gcopy(window_id, x, y, info.width, info.height, info.x, info.y);
+}
+
+
+
+/**
+ * Copies the image at @a window_id, [@a x, @a y] into the region defined by the
+ * asset at @a key.
+ *
+ * Typically used when editing scratch regions of a window.
+ */
+void draw_copy_from(
+    int window_id,
+    int x,
+    int y,
+    int width,
+    int height,
+    const std::string& key)
+{
+    const auto& info = get_image_info(key);
+
+    gsel(info.window_id);
+    gcopy(window_id, x, y, width, height, info.x, info.y);
+}
+
+
+
 const ImageInfo& get_image_info(const std::string& key)
 {
     const auto itr = images.find(key);
@@ -1141,11 +1483,17 @@ const ImageInfo& get_image_info(const std::string& key)
     return itr->second;
 }
 
+/**
+ * Draws a character using its @a image field.
+ */
 void draw_chara(const Character& chara, int x, int y, int scale, int alpha)
 {
     draw_chara(chara.image, x, y, scale, alpha);
 }
 
+/**
+ * Draws a character sprite.
+ */
 void draw_chara(int image_id, int x, int y, int scale, int alpha)
 {
     auto rect = chara_preparepic(image_id);
@@ -1170,11 +1518,19 @@ void draw_chara(int image_id, int x, int y, int scale, int alpha)
         rect->height * scale);
 }
 
+/**
+ * Draws a character using its @a image field. Fits the sprite to @ref
+ * inf_tiles height if it is tall.
+ */
 void draw_chara_scale_height(const Character& chara, int x, int y)
 {
     draw_chara_scale_height(chara.image, x, y);
 }
 
+/**
+ * Draws a character sprite. Fits the sprite to @ref inf_tiles height if it
+ * is tall.
+ */
 void draw_chara_scale_height(int image_id, int x, int y)
 {
     auto rect = chara_preparepic(image_id);
@@ -1192,7 +1548,9 @@ void draw_chara_scale_height(int image_id, int x, int y)
         inf_tiles);
 }
 
-
+/**
+ * Draws an item sprite. For use inside the materials menu.
+ */
 void draw_item_material(int image_id, int x, int y)
 {
     auto rect = prepare_item_image(image_id, 0);
@@ -1203,11 +1561,17 @@ void draw_item_material(int image_id, int x, int y)
         1, 0, 960, inf_tiles, inf_tiles, x, y, rect->frame_width, rect->height);
 }
 
+/**
+ * Draws an item with a character sprite on top, for cards/figures.
+ */
 void draw_item_with_portrait(const Item& item, int x, int y)
 {
     draw_item_with_portrait(item.image, item.color, item.param1, x, y);
 }
 
+/**
+ * Draws an item with a character sprite on top, for cards/figures.
+ */
 void draw_item_with_portrait(
     int image_id,
     int color,
@@ -1232,12 +1596,20 @@ void draw_item_with_portrait(
         1, 0, 960, inf_tiles, inf_tiles, x, y, rect->frame_width, rect->height);
 }
 
+/**
+ * Draws an item sprite with a character sprite on top, for cards/figures.
+ * Fits the sprite to @ref inf_tiles height if it is tall.
+ */
 void draw_item_with_portrait_scale_height(const Item& item, int x, int y)
 {
     draw_item_with_portrait_scale_height(
         item.image, item.color, item.param1, x, y);
 }
 
+/**
+ * Draws an item sprite with a character sprite on top, for cards/figures.
+ * Fits the sprite to @ref inf_tiles height if it is tall.
+ */
 void draw_item_with_portrait_scale_height(
     int image_id,
     int color,

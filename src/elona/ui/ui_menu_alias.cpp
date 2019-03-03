@@ -1,5 +1,6 @@
 #include "ui_menu_alias.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../macro.hpp"
 #include "../text.hpp"
@@ -70,7 +71,7 @@ void UIMenuAlias::draw()
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
 
-        gcopy(3, cnt * 24 + 72, 30, 24, 18, wx + 38, wy + 66 + cnt * 19 - 2);
+        display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
         cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
     }
 }

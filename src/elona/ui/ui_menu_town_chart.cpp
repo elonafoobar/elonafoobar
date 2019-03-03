@@ -99,7 +99,7 @@ void UIMenuTownChart::draw()
                 y = wy + 70 + n * 55;
             }
             x = wx + (ww - 70) / (i + 1) * (j0 + 1);
-            gcopy(3, 960, 288, 144, 24, x - 26, y - 3);
+            elona::draw("deco_politics_a", x - 26, y - 3);
             p = pochart(j0, n, lv);
             key_list(cnt) = key_select(cnt);
             ++keyrange;

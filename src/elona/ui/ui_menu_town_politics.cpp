@@ -1,6 +1,7 @@
 #include "ui_menu_town_politics.hpp"
 #include "../area.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../map.hpp"
 
@@ -98,9 +99,9 @@ void UIMenuTownPolitics::_draw_window()
     }
 
     gmode(2);
-    gcopy(3, 312, 360, 24, 24, wx + 155, wy + 46);
+    draw_indexed("politics_law", wx + 155, wy + 46, 1);
     gmode(2);
-    gcopy(3, 288, 360, 24, 24, wx + 255, wy + 46);
+    draw_indexed("politics_law", wx + 255, wy + 46, 0);
 }
 
 void UIMenuTownPolitics::_draw_key(int cnt)
@@ -135,8 +136,7 @@ _draw_single_list_entry(int cnt, int list_item, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + 100, wy + 76 + cnt * 19 - 1);
     gmode(2);
-    gcopy(
-        3, 288 + list_item * 24, 360, 24, 24, wx + 42, wy + 68 + cnt * 19 + 2);
+    draw_indexed("politics_law", wx + 42, wy + 68 + cnt * 19 + 2, list_item);
 }
 
 void UIMenuTownPolitics::_draw_list_entries()

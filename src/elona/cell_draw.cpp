@@ -242,14 +242,14 @@ void render_shadow_low(int light)
         const auto y = pos.second;
         if (slight(x + 2, y + 2) >= 1000)
         {
-            elona::gcopy(
-                3,
-                144,
-                752,
-                inf_tiles,
-                inf_tiles,
+            draw_indexed_region(
+                "shadow",
                 x * inf_tiles + inf_screenx,
-                y * inf_tiles + inf_screeny);
+                y * inf_tiles + inf_screeny,
+                6,
+                4,
+                inf_tiles / 24,
+                inf_tiles / 24);
         }
     }
 }
@@ -277,71 +277,76 @@ void render_shadow(int p_, int dx_, int dy_)
                 }
                 switch (deco2)
                 {
-                case 1: gcopy(3, 168, 680, 24, 24, dx_, dy_); break;
-                case 2: gcopy(3, 144, 656, 24, 24, dx_ + 24, dy_ + 24); break;
-                case 3: gcopy(3, 168, 656, 24, 24, dx_, dy_ + 24); break;
-                case 4: gcopy(3, 144, 680, 24, 24, dx_ + 24, dy_); break;
+                case 1:
+                    draw_indexed_region("shadow", dx_, dy_, 7, 1, 1, 1);
+                    break;
+                case 2:
+                    draw_indexed_region(
+                        "shadow", dx_ + 24, dy_ + 24, 6, 0, 1, 1);
+                    break;
+                case 3:
+                    draw_indexed_region("shadow", dx_, dy_ + 24, 7, 0, 1, 1);
+                    break;
+                case 4:
+                    draw_indexed_region("shadow", dx_ + 24, dy_, 6, 1, 1, 1);
+                    break;
                 case 5:
-                    gcopy(3, 144, 656, 24, 24, dx_ + 24, dy_ + 24);
-                    gcopy(3, 168, 680, 24, 24, dx_, dy_);
+                    draw_indexed_region(
+                        "shadow", dx_ + 24, dy_ + 24, 6, 0, 1, 1);
+                    draw_indexed_region("shadow", dx_, dy_, 7, 1, 1, 1);
                     break;
                 case 6:
-                    gcopy(3, 168, 656, 24, 24, dx_, dy_ + 24);
-                    gcopy(3, 144, 680, 24, 24, dx_ + 24, dy_);
+                    draw_indexed_region("shadow", dx_, dy_ + 24, 7, 0, 1, 1);
+                    draw_indexed_region("shadow", dx_ + 24, dy_, 6, 1, 1, 1);
                     break;
                 case 7:
-                    gcopy(3, 168, 656, 24, 24, dx_, dy_ + 24);
-                    gcopy(3, 144, 656, 24, 24, dx_ + 24, dy_ + 24);
+                    draw_indexed_region("shadow", dx_, dy_ + 24, 7, 0, 1, 1);
+                    draw_indexed_region(
+                        "shadow", dx_ + 24, dy_ + 24, 6, 0, 1, 1);
                     break;
                 case 8:
-                    gcopy(3, 168, 680, 24, 24, dx_, dy_);
-                    gcopy(3, 144, 680, 24, 24, dx_ + 24, dy_);
+                    draw_indexed_region("shadow", dx_, dy_, 7, 1, 1, 1);
+                    draw_indexed_region("shadow", dx_ + 24, dy_, 6, 1, 1, 1);
                     break;
                 case 9:
-                    gcopy(3, 168, 680, 24, 24, dx_, dy_);
-                    gcopy(3, 168, 656, 24, 24, dx_, dy_ + 24);
+                    draw_indexed_region("shadow", dx_, dy_, 7, 1, 1, 1);
+                    draw_indexed_region("shadow", dx_, dy_ + 24, 7, 0, 1, 1);
                     break;
                 case 10:
-                    gcopy(3, 144, 680, 24, 24, dx_ + 24, dy_);
-                    gcopy(3, 144, 656, 24, 24, dx_ + 24, dy_ + 24);
+                    draw_indexed_region("shadow", dx_ + 24, dy_, 6, 1, 1, 1);
+                    draw_indexed_region(
+                        "shadow", dx_ + 24, dy_ + 24, 6, 0, 1, 1);
                     break;
                 case 20:
-                    gcopy(3, 0, 704, 24, 48, dx_, dy_);
-                    gcopy(3, 120, 704, 24, 48, dx_ + 24, dy_);
+                    draw_indexed_region("shadow", dx_, dy_, 0, 2, 1, 2);
+                    draw_indexed_region("shadow", dx_ + 24, dy_, 5, 2, 1, 2);
                     break;
                 case 21:
-                    gcopy(3, 48, 656, 48, 24, dx_, dy_);
-                    gcopy(3, 48, 776, 48, 24, dx_, dy_ + 24);
+                    draw_indexed_region("shadow", dx_, dy_, 2, 0, 2, 1);
+                    draw_indexed_region("shadow", dx_, dy_ + 24, 2, 5, 2, 1);
                     break;
                 case 30:
-                    gcopy(3, 0, 656, 48, 24, dx_, dy_);
-                    gcopy(3, 0, 776, 48, 24, dx_, dy_ + 24);
+                    draw_indexed_region("shadow", dx_, dy_, 0, 0, 2, 1);
+                    draw_indexed_region("shadow", dx_, dy_ + 24, 0, 5, 2, 1);
                     break;
                 case 31:
-                    gcopy(3, 96, 656, 48, 24, dx_, dy_);
-                    gcopy(3, 96, 776, 48, 24, dx_, dy_ + 24);
+                    draw_indexed_region("shadow", dx_, dy_, 4, 0, 2, 1);
+                    draw_indexed_region("shadow", dx_, dy_ + 24, 4, 5, 2, 1);
                     break;
                 case 32:
-                    gcopy(3, 0, 656, 24, 48, dx_, dy_);
-                    gcopy(3, 120, 656, 24, 48, dx_ + 24, dy_);
+                    draw_indexed_region("shadow", dx_, dy_, 0, 0, 1, 2);
+                    draw_indexed_region("shadow", dx_ + 24, dy_, 5, 0, 1, 2);
                     break;
                 case 33:
-                    gcopy(3, 0, 752, 24, 48, dx_, dy_);
-                    gcopy(3, 120, 752, 24, 48, dx_ + 24, dy_);
+                    draw_indexed_region("shadow", dx_, dy_, 0, 4, 1, 2);
+                    draw_indexed_region("shadow", dx_ + 24, dy_, 5, 4, 1, 2);
                     break;
                 default: break;
                 }
             }
             else
             {
-                gcopy(
-                    3,
-                    0 + deco[p_]._0 * inf_tiles,
-                    656 + deco[p_]._1 * inf_tiles,
-                    inf_tiles,
-                    inf_tiles,
-                    dx_,
-                    dy_);
+                draw_indexed("shadow_deco", dx_, dy_, deco[p_]._0, deco[p_]._1);
             }
         }
     }
@@ -377,7 +382,7 @@ void render_shadow(int p_, int dx_, int dy_)
         {
             i_ = shadowmap[p2_];
         }
-        gcopy(3, 144 + i_ * inf_tiles, 752, inf_tiles, inf_tiles, dx_, dy_);
+        draw_indexed("shadow_edges", dx_, dy_, i_);
     }
 }
 
@@ -504,12 +509,12 @@ void draw_hp_bar(int cc, int x, int y)
     {
         if (map_data.type != mdata_t::MapType::world_map)
         {
-            gcopy(3, 480 - ratio, 517, ratio, 3, x + 9, y + 32);
+            draw_bar("hp_bar_ally", x + 9, y + 32, ratio, 3, ratio);
         }
     }
     else
     {
-        gcopy(3, 480 - ratio, 513, ratio, 3, x + 9, y + 32);
+        draw_bar("hp_bar_other", x + 9, y + 32, ratio, 3, ratio);
     }
 }
 
@@ -526,7 +531,7 @@ void draw_character_sprite_in_world_map(
 
     // Shadow
     gmode(2, 85);
-    gcopy_c(3, 240, 384, 32, 16, x + 24, y + 27, 20, 10);
+    draw_centered("character_shadow", x + 24, y + 27, 20, 10);
 
     // Character sprite
     gmode(2);
@@ -637,7 +642,7 @@ void draw_chara_chip_sprite_in_world_map(
     int height)
 {
     gmode(2, 85);
-    gcopy_c(3, 240, 384, 32, 16, x + 24, y + 32, 20, 10);
+    draw_centered("character_shadow", x + 24, y + 32, 20, 10);
     gmode(2);
     gcopy_c(
         texture_id,
@@ -856,27 +861,27 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         if (mefsubref(2, p_) == 1)
         {
             gmode(2, efmap(1, x, y) * 12 + 30);
-            grotate(
-                3,
-                mefsubref(0, p_) + efmap(3, x, y) * 32,
-                mefsubref(1, p_),
-                32,
-                32,
+            draw_region_rotated(
+                "mef_subref",
                 dx + 24,
                 dy + 24,
+                (mefsubref(0, p_) - 144) + efmap(3, x, y) * 32,
+                (mefsubref(1, p_) - 624),
+                32,
+                32,
                 0.785 * efmap(2, x, y));
         }
         else
         {
             gmode(2, 150);
-            gcopy(
-                3,
-                mefsubref(0, p_) + efmap(1, x, y) * 32,
-                mefsubref(1, p_),
-                32,
-                32,
+            draw_region(
+                "mef_subref",
                 dx + 8,
-                dy + 8);
+                dy + 8,
+                (mefsubref(0, p_) - 144) + efmap(1, x, y) * 32,
+                (mefsubref(1, p_) - 624),
+                32,
+                32);
         }
         gmode(2);
     }
@@ -1282,7 +1287,7 @@ void cell_draw()
                     py_ -= syfix;
                 }
                 gmode(5, 50 + flick_);
-                gcopy(3, 800, 208, 144, 48, px_, py_);
+                draw_region("spot_light", px_, py_, 0, 96, 144, 48);
             }
 
             if (reph(2) == y && x_ == repw(2) &&
@@ -1307,7 +1312,7 @@ void cell_draw()
 
                 // Spot light for PC (top 2 thirds)
                 gmode(5, 50 + flick_);
-                gcopy(3, 800, 112, 144, 96, px_ - 48, py_ - 48);
+                draw_region("spot_light", px_ - 48, py_ - 48, 0, 0, 144, 96);
 
                 if (py_ < windowh - inf_verh - 24)
                 {
@@ -1423,14 +1428,11 @@ void cell_draw()
                                    6)) *
                         light.brightness;
                     gmode(5, light.alpha_base + rnd(light.alpha_random + 1));
-                    gcopy(
-                        3,
-                        192 + light.x * 48 + rnd(light.frame + 1) * inf_tiles,
-                        704,
-                        inf_tiles,
-                        inf_tiles,
+                    draw_indexed(
+                        "light",
                         dx_,
-                        dy_ - light.dy);
+                        dy_ - light.dy,
+                        light.x + rnd(light.frame + 1));
                 }
             }
 

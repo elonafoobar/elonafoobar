@@ -56,10 +56,10 @@ void update_screen_hud()
         {
             sx = 192;
         }
-        gcopy(3, 0, 464 - inf_barh, sx, inf_barh, cnt * 192, inf_bary);
-        gcopy(3, 496, 528, sx, inf_msgh, cnt * 192, inf_msgy);
+        draw_bar_vert("hud_bar", cnt * 192, inf_bary, sx, inf_barh, inf_barh);
+        draw_region("message_window", cnt * 192, inf_msgy, sx, inf_msgh);
     }
-    gcopy(3, 120, 504, inf_msgx, inf_verh, 0, inf_msgy);
+    draw_region("hud_minimap", 0, inf_msgy, inf_msgx, inf_verh);
     draw("map_name_icon", inf_radarw + 6, inf_bary);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -72,14 +72,11 @@ void update_screen_hud()
         {
             sx = 14;
         }
-        gcopy(
-            3,
-            cnt * 16,
-            376,
-            16,
-            16,
+        draw_indexed(
+            "attribute_icon",
             inf_radarw + cnt * 47 + 148 + sx,
-            inf_bary + 1);
+            inf_bary + 1,
+            cnt);
     }
     font(12 + sizefix - en * 2);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
@@ -202,14 +199,14 @@ void render_weather_effect_snow()
         {
             gmode(2, 100 + i % 150);
         }
-        gcopy(
-            3,
-            particle.x % 2 * 8,
-            600 + i % 6 * 8,
-            8,
-            8,
+        draw_indexed_region(
+            "weather_particle",
             particle.x,
-            particle.y);
+            particle.y,
+            particle.x % 2,
+            i % 6,
+            1,
+            1);
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
@@ -247,14 +244,14 @@ void render_weather_effect_etherwind()
         {
             gmode(2, 100 + i % 150);
         }
-        gcopy(
-            3,
-            16 + particle.x % 2 * 8,
-            600 + i % 6 * 8,
-            8,
-            8,
+        draw_indexed_region(
+            "weather_particle",
             particle.x,
-            particle.y);
+            particle.y,
+            2 + particle.x % 2,
+            i % 6,
+            1,
+            1);
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
@@ -301,14 +298,14 @@ void draw_minimap_pixel(int x, int y)
 {
     const auto x2 = 120 * x / map_data.width;
     const auto y2 = 84 * y / map_data.height;
-    gcopy(
-        3,
-        688 + x2,
-        528 + y2,
-        raderw,
-        raderh,
+    draw_region(
+        "minimap_scratch",
         inf_radarx + x2,
-        inf_radary + y2);
+        inf_radary + y2,
+        x2,
+        y2,
+        raderw,
+        raderh);
 }
 
 
@@ -395,7 +392,7 @@ void _render_hp_or_mp_bar(
     int max,
     int x,
     int y,
-    int bar_offset_x,
+    const std::string& bar_id,
     bool show_digit = false)
 {
     draw("hp_bar_frame", x, y);
@@ -403,7 +400,7 @@ void _render_hp_or_mp_bar(
     if (value > 0)
     {
         const auto width = std::min(value * 84 / max, 100);
-        gcopy(3, bar_offset_x - width, 520, width, 6, x + 16, y + 5);
+        draw_bar(bar_id, x + 16, y + 5, width, 6, width);
     }
 
     if (show_digit)
@@ -416,14 +413,14 @@ void _render_hp_or_mp_bar(
 
 void render_hp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
-    _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, 412, show_digit);
+    _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, "hud_hp_bar", show_digit);
 }
 
 
 
 void render_mp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
-    _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, 532, show_digit);
+    _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, "hud_mp_bar", show_digit);
 }
 
 
@@ -437,7 +434,7 @@ void render_basic_attributes_and_pv_dv()
         if (i < 8)
         {
             // Basic attributes except for Speed
-            gcopy(3, 0, 440, 28, 16, x, y);
+            draw_region("attributes_bar", x, y, 28);
             const auto text_color = cdata.player().attr_adjs[i] < 0
                 ? snail::Color{200, 0, 0}
                 : snail::Color{0, 0, 0};
@@ -446,7 +443,7 @@ void render_basic_attributes_and_pv_dv()
         else if (i == 8)
         {
             // Speed
-            gcopy(3, 0, 440, 34, 16, x + 8, y);
+            draw_region("attributes_bar", x + 8, y, 34);
             snail::Color text_color{0, 0, 0};
             if (gspdorg > gspd)
             {
@@ -465,7 +462,7 @@ void render_basic_attributes_and_pv_dv()
         else
         {
             // PV/DV
-            gcopy(3, 0, 440, 64, 16, x + 14, y);
+            draw_region("attributes_bar", x + 14, y, 64);
             mes(x + 14,
                 y,
                 ""s + cdata.player().dv + u8"/"s + cdata.player().pv);
@@ -522,7 +519,7 @@ void render_character_level()
 
 void render_date_label()
 {
-    gcopy(3, 448, 408, inf_clockw, inf_clockh, 0, inf_clocky);
+    draw("clock", 0, inf_clocky);
     draw("date_label_frame", 78, inf_clocky + 8);
 }
 
@@ -667,7 +664,7 @@ int render_one_status_ailment(
     if (!do_render(value))
         return y;
 
-    gcopy(3, 0, 416, 50 + en * 30, 15, x, y);
+    draw_region("status_ailment_bar", x, y, 50 + en * 30);
     const auto text_color = get_color(value);
     mes(x + 6, y + vfix + 1, get_text(value), text_color);
 
@@ -1523,7 +1520,7 @@ void ui_draw_caption(const std::string& text)
     msgx = 20;
     msgy = 30;
     sx = 760;
-    sx = text.size() * 8 + 45;
+    sx = strlen_u(text) * 8 + 45;
     if (sx > 760)
     {
         sx = 760;
@@ -1539,9 +1536,10 @@ void ui_draw_caption(const std::string& text)
         {
             ap = 128;
         }
-        gcopy(3, 672, 477, ap, 3, cnt * 128 + msgx, msgy);
-        gcopy(3, 672, 480, ap, 22, cnt * 128 + msgx, msgy + 2);
-        gcopy(3, 672, 477, ap, 2, cnt * 128 + msgx, msgy + 22);
+
+        draw_region("caption", cnt * 128 + msgx, msgy, 0, 0, ap, 3);
+        draw_region("caption", cnt * 128 + msgx, msgy + 2, 0, 3, ap, 22);
+        draw_region("caption", cnt * 128 + msgx, msgy + 22, 0, 0, ap, 2);
     }
     mes(msgx + 18, msgy + vfix + 4, text, {245, 245, 245});
     gmode(2);
@@ -1767,14 +1765,14 @@ void ui_render_non_hud()
 
     if (raderx != -1)
     {
-        gcopy(
-            3,
-            688 + raderx,
-            528 + radery,
-            6,
-            6,
+        draw_region(
+            "minimap_scratch",
             inf_radarx + raderx,
-            inf_radary + radery);
+            inf_radary + radery,
+            raderx,
+            radery,
+            6,
+            6);
     }
 
     render_pc_position_in_minimap();
@@ -2255,6 +2253,10 @@ void display_customkey(const std::string& key, int x, int y)
 
 
 
+/**
+ * Draws a selection key sprite that was previously buffered by @ref
+ * draw_init_key_select_buffer.
+ */
 void display_key(int x, int y, int nth)
 {
     gcopy(3, nth * 24 + 72, 30, 24, 18, x, y);
@@ -2394,7 +2396,7 @@ void cs_listbk()
 {
     if (cs_bk == -1)
         return;
-    gcopy(3, 264, 96, cs_posbk_w, cs_posbk_h, cs_posbk_x, cs_posbk_y);
+    draw_region("list_scratch", cs_posbk_x, cs_posbk_y, cs_posbk_w, cs_posbk_h);
 }
 
 
@@ -2414,10 +2416,11 @@ void cs_list(
 
         gsel(3);
         gcopy(0, x, y, width, 19, 264, 96);
+        draw_copy_from(0, x, y, width, 19, "list_scratch");
         gsel(0);
 
         boxf(x, y, width, 19, {127, 191, 255, 63});
-        gcopy(3, 48, 360, 16, 16, x + width - 20, y + 4);
+        draw("list_bullet", x + width - 20, y + 4);
 
         cs_posbk_x = x;
         cs_posbk_y = y;
@@ -2522,24 +2525,26 @@ void window(int x, int y, int width, int height, bool shadow)
     if (!shadow)
     {
         // Top left
-        gcopy(3, 0, 48, 64, 48, x, y);
+        draw_region("window", x, y, 0, 0, 64, 48);
     }
     // Top right
-    gcopy(3, 208, 48, 56, 48, x3, y);
+    draw_region("window", x3, y, 208, 0, 56, 48);
     // Bottom left
-    gcopy(3, 0, 48 + 144, 64, 48, x, y3);
+    draw_region("window", x, y3, 0, 144, 64, 48);
     // Bottom right
-    gcopy(3, 208, 48 + 144, 56, 48, x3, y3);
+    draw_region("window", x3, y3, 208, 144, 56, 48);
 
     for (int dx = 8; dx < width / 8 - 8; ++dx)
     {
         if (!shadow)
         {
             // Top middle
-            gcopy(3, (dx - 8) % 18 * 8 + 36, 48, 8, 48, dx * 8 + x, y);
+            draw_region(
+                "window", dx * 8 + x, y, (dx - 8) % 18 * 8 + 36, 0, 8, 48);
         }
         // Bottom middle
-        gcopy(3, (dx - 8) % 18 * 8 + 54, 48 + 144, 8, 48, dx * 8 + x, y3);
+        draw_region(
+            "window", dx * 8 + x, y3, (dx - 8) % 18 * 8 + 54, 144, 8, 48);
     }
 
     for (int dy = 0; dy < height / 8 - 14; ++dy)
@@ -2547,22 +2552,24 @@ void window(int x, int y, int width, int height, bool shadow)
         if (!shadow)
         {
             // Middle left
-            gcopy(3, 0, dy % 12 * 8 + 48 + 48, 64, 8, x, dy * 8 + y + 48);
+            draw_region(
+                "window", x, dy * 8 + y + 48, 0, dy % 12 * 8 + 48, 64, 8);
             // Middle middle
             for (int dx = 1; dx < width / 8 - 15; ++dx)
             {
-                gcopy(
-                    3,
-                    dx % 18 * 8 + 64,
-                    dy % 12 * 8 + 48 + 48,
-                    8,
-                    8,
+                draw_region(
+                    "window",
                     dx * 8 + x + 56,
-                    dy * 8 + y + 48);
+                    dy * 8 + y + 48,
+                    dx % 18 * 8 + 64,
+                    dy % 12 * 8 + 48,
+                    8,
+                    8);
             }
         }
         // Middle right
-        gcopy(3, 208, dy % 12 * 8 + 48 + 48, 56, 8, x3, dy * 8 + y + 48);
+        draw_region(
+            "window", x3, dy * 8 + y + 48, 208, dy % 12 * 8 + 48, 56, 8);
     }
 
     gmode(2);
@@ -2594,35 +2601,40 @@ void window2(
     switch (fill_style)
     {
     case 0:
-        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         break;
     case 1:
-        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 2:
-        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 210});
         break;
     case 3:
-        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 10});
         break;
     case 4:
-        gcopy(3, 24, 72, 228, 144, x + 4, y + 4, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 5: break;
     case 6:
         gmode(2, 180);
-        gcopy_c(
-            3,
+        draw_region(
+            "window",
+            x + width / 2,
+            y + width / 2,
             24,
-            72,
+            24,
             228,
             144,
-            x + width / 2,
-            y + height / 2,
             width - 4,
             height - 4);
         break;
@@ -2632,66 +2644,78 @@ void window2(
     gmode(2);
     for (int cnt = 0, cnt_end = (width / 16 - 2); cnt < cnt_end; ++cnt)
     {
-        gcopy(3, frame_style * 48 + 16, 240, 16, 16, cnt * 16 + x + 16, y);
-        gcopy(
-            3,
-            frame_style * 48 + 16,
-            240 + 32,
-            16,
-            16,
+        draw_region(
+            "window_frame",
             cnt * 16 + x + 16,
-            y + height - 16);
+            y,
+            frame_style * 48 + 16,
+            0,
+            16,
+            16);
+        draw_region(
+            "window_frame",
+            cnt * 16 + x + 16,
+            y + height - 16,
+            frame_style * 48 + 16,
+            32,
+            16,
+            16);
     }
 
     const auto x2 = x + width / 16 * 16 - 16;
     const auto y2 = y + height / 16 * 16 - 16;
 
-    gcopy(3, frame_style * 48 + 16, 240, width % 16, 16, x2, y);
-    gcopy(
-        3,
-        frame_style * 48 + 16,
-        240 + 32,
-        width % 16,
-        16,
+    draw_region(
+        "window_frame", x2, y, frame_style * 48 + 16, 0, width % 16, 16);
+    draw_region(
+        "window_frame",
         x2,
-        y + height - 16);
+        y + height - 16,
+        frame_style * 48 + 16,
+        32,
+        width % 16,
+        16);
 
     for (int i = 0; i < height / 16 - 2; ++i)
     {
-        gcopy(3, frame_style * 48, 240 + 16, 16, 16, x, i * 16 + y + 16);
-        gcopy(
-            3,
-            frame_style * 48 + 32,
-            240 + 16,
-            16,
-            16,
+        draw_region(
+            "window_frame", x, i * 16 + y + 16, frame_style * 48, 16, 16, 16);
+        draw_region(
+            "window_frame",
             x + width - 16,
-            i * 16 + y + 16);
+            i * 16 + y + 16,
+            frame_style * 48 + 32,
+            16,
+            16,
+            16);
     }
-    gcopy(3, frame_style * 48, 240 + 16, 16, height % 16, x, y2);
-    gcopy(
-        3,
-        frame_style * 48 + 32,
-        240 + 16,
-        16,
-        height % 16,
+    draw_region("window_frame", x, y2, frame_style * 48, 16, 16, height % 16);
+    draw_region(
+        "window_frame",
         x + width - 16,
-        y2);
-    gcopy(3, frame_style * 48, 240, 16, 16, x, y);
-    gcopy(3, frame_style * 48, 240 + 32, 16, 16, x, y + height - 16);
-    gcopy(3, frame_style * 48 + 32, 240, 16, 16, x + width - 16, y);
-    gcopy(
-        3,
+        y2,
         frame_style * 48 + 32,
-        240 + 32,
         16,
         16,
+        height % 16);
+    draw_region("window_frame", x, y, frame_style * 48, 0, 16, 16);
+    draw_region(
+        "window_frame", x, y + height - 16, frame_style * 48, 32, 16, 16);
+    draw_region(
+        "window_frame", x + width - 16, y, frame_style * 48 + 32, 0, 16, 16);
+    draw_region(
+        "window_frame",
         x + width - 16,
-        y + height - 16);
+        y + height - 16,
+        frame_style * 48 + 32,
+        32,
+        16,
+        16);
 
     if (fill_style == 5)
     {
-        gcopy(3, 24, 72, 228, 144, x + 2, y + 2, width - 4, height - 5);
+        draw_region(
+            "window", x + 2, y + 2, 24, 24, 228, 144, width - 4, height - 5);
         boxf(x + 2, y + 2, width - 4, height - 4, {0, 0, 0, 195});
     }
 }

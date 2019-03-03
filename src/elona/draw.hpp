@@ -105,6 +105,8 @@ struct ImageInfo
     int y;
     int width;
     int height;
+    int count_x;
+    int count_y;
 };
 
 
@@ -112,6 +114,7 @@ void init_assets();
 
 void draw(const std::string& key, int x, int y);
 void draw(const std::string& key, int x, int y, int width, int height);
+void draw_centered(const std::string& key, int x, int y, int width, int height);
 void draw_rotated(
     const std::string& key,
     int center_x,
@@ -124,6 +127,72 @@ void draw_rotated(
     int width,
     int height,
     double angle);
+void draw_indexed(const std::string& key, int x, int y, int index);
+void draw_indexed(
+    const std::string& key,
+    int x,
+    int y,
+    int index_x,
+    int index_y);
+void draw_region(const std::string& key, int x, int y, int width);
+void draw_region(const std::string& key, int x, int y, int width, int height);
+void draw_region(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height);
+void draw_region(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height,
+    int dst_width,
+    int dst_height);
+void draw_region_rotated(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height,
+    double angle);
+void draw_bar(
+    const std::string& key,
+    int x,
+    int y,
+    int dst_width,
+    int dst_height,
+    int width);
+void draw_bar_vert(
+    const std::string& key,
+    int x,
+    int y,
+    int dst_width,
+    int dst_height,
+    int height);
+void draw_indexed_region(
+    const std::string& key,
+    int x,
+    int y,
+    int index_x,
+    int index_y,
+    int count_x,
+    int count_y);
+void draw_copy_from(int window_id, int x, int y, const std::string& key);
+void draw_copy_from(
+    int window_id,
+    int x,
+    int y,
+    int width,
+    int height,
+    const std::string& key);
 
 const ImageInfo& get_image_info(const std::string& key);
 

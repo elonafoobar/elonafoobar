@@ -46,13 +46,11 @@ void showcard2(int card_index, bool show_rank = true)
     gmode(2);
     if (is_closed)
     {
-        // Card's back.
-        gcopy(3, 736, 216, 64, 96, x, y);
+        draw("card_back", x, y);
     }
     else
     {
-        // Card's face.
-        gcopy(3, 672, 216, 64, 96, x, y);
+        draw("card_front", x, y);
 
         if (show_rank)
         {
@@ -82,6 +80,8 @@ void showcard2(int card_index, bool show_rank = true)
                 rank_color = {250, 250, 105, 255};
                 break;
             }
+            set_color_mod(
+                rank_color.r, rank_color.g, rank_color.b, rect->buffer);
             gcopy(
                 rect->buffer,
                 rect->x,
@@ -90,17 +90,11 @@ void showcard2(int card_index, bool show_rank = true)
                 rect->height,
                 x + 32 - rect->width / 2,
                 y + 88 - rect->height);
+            set_color_mod(255, 255, 255, rect->buffer);
 
             gmode(2, 220);
-            gcopy(
-                3,
-                864 + static_cast<int>(suit) * 24,
-                533,
-                24,
-                32,
-                x + 8,
-                y + 16);
-            gcopy(3, 864 + (rank - 1) * 24, 565, 24, 32, x + 32, y + 16);
+            draw_indexed("card_suit", x + 8, y + 16, static_cast<int>(suit));
+            draw_indexed("card_rank", x + 32, y + 16, rank - 1);
             gmode(2);
         }
         else
@@ -176,14 +170,7 @@ void initcard(int x, int y, int)
 void showcardpile()
 {
     int pilestack_at_cardcontrol = 0;
-    gcopy(
-        3,
-        528,
-        216,
-        80,
-        112,
-        pilex_at_cardcontrol - 8,
-        piley_at_cardcontrol - 8);
+    draw("card_pile", pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
     pilestack_at_cardcontrol = 0;
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
     {
@@ -263,12 +250,8 @@ int servecard(int player_id)
     {
         if (cnt != 0)
         {
-            gcopy(
-                3,
-                608,
-                216,
-                64,
-                96,
+            draw(
+                "card_scratch",
                 card_at_cardcontrol(3, cardid_at_cardcontrol),
                 card_at_cardcontrol(4, cardid_at_cardcontrol));
         }
@@ -286,16 +269,14 @@ int servecard(int player_id)
             card_at_cardcontrol(4, cardid_at_cardcontrol) =
                 piley_at_cardcontrol - dy_at_cardcontrol;
         }
+
         gmode(0);
-        gsel(3);
-        gcopy(
+        draw_copy_from(
             0,
             card_at_cardcontrol(3, cardid_at_cardcontrol),
             card_at_cardcontrol(4, cardid_at_cardcontrol),
-            64,
-            96,
-            608,
-            216);
+            "card_scratch");
+
         gsel(0);
         gmode(2);
         showcard2(cardid_at_cardcontrol);
@@ -321,14 +302,7 @@ void showcardholder()
             dx_at_cardcontrol =
                 cardplayer_at_cardcontrol(1, p_at_cardcontrol) + cnt * 88;
             dy_at_cardcontrol = cardplayer_at_cardcontrol(2, p_at_cardcontrol);
-            gcopy(
-                3,
-                528,
-                216,
-                80,
-                112,
-                dx_at_cardcontrol - 8,
-                dy_at_cardcontrol - 8);
+            draw("card_pile", dx_at_cardcontrol - 8, dy_at_cardcontrol - 8);
         }
     }
 }
@@ -349,12 +323,8 @@ int opencard2(int card_index, int player_id)
     {
         if (player_id == 0)
         {
-            gcopy(
-                3,
-                528,
-                216,
-                80,
-                112,
+            draw(
+                "card_pile",
                 card_at_cardcontrol(3, card_index) - 8,
                 card_at_cardcontrol(4, card_index) - 8);
         }
@@ -370,12 +340,8 @@ int opencard2(int card_index, int player_id)
                 card_at_cardcontrol(4, card_index));
         }
         gmode(2);
-        gcopy_c(
-            3,
-            736,
-            216,
-            64,
-            96,
+        draw_centered(
+            "card_back",
             card_at_cardcontrol(3, card_index) + 32,
             card_at_cardcontrol(4, card_index) + 48,
             64 - cnt * 14,
@@ -395,12 +361,8 @@ int trashcard(int card_index)
 {
     for (int cnt = 0; cnt < 21; ++cnt)
     {
-        gcopy(
-            3,
-            528,
-            216,
-            80,
-            112,
+        draw(
+            "card_pile",
             card_at_cardcontrol(3, card_index) - 8,
             card_at_cardcontrol(4, card_index) - 8);
         gmode(2);
@@ -409,12 +371,8 @@ int trashcard(int card_index)
             redraw();
             break;
         }
-        grotate(
-            3,
-            736,
-            216,
-            64,
-            96,
+        draw_rotated(
+            "card_back",
             card_at_cardcontrol(3, card_index) + 32,
             card_at_cardcontrol(4, card_index) + 48,
             64 - cnt * 3,

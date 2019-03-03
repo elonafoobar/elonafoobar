@@ -6,6 +6,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
+#include "draw.hpp"
 #include "enums.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
@@ -153,7 +154,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             {
                 sx = 192;
             }
-            gcopy(3, 496, 528, sx, 5, i * 192, inf_msgy);
+            draw_region("message_window", i * 192, inf_msgy, sx);
         }
         redraw();
         wait_key_pressed();

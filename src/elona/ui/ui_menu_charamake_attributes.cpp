@@ -3,6 +3,7 @@
 #include "../audio.hpp"
 #include "../character_making.hpp"
 #include "../class.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../race.hpp"
@@ -168,7 +169,8 @@ void UIMenuCharamakeAttributes::_draw_attribute(
     const std::string& text,
     bool is_locked)
 {
-    gcopy(3, cnt * 24 + 72, 30, 24, 18, wx + 38, wy + 66 + cnt * 23 - 2);
+    display_key(wx + 38, wy + 66 + cnt * 23 - 2, cnt);
+
     font(14 - en * 2);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 23 - 1);
 

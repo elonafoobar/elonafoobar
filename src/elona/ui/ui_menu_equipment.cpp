@@ -141,9 +141,9 @@ void UIMenuEquipment::_draw_window_deco(bool show_resistances)
         display_topic(
             i18n::s.get("core.locale.ui.equip.weight"), wx + 524, wy + 30);
     }
-    gcopy(3, 768, 48, 48, 48, wx + 46, wy - 16);
-    gcopy(3, 960, 96, 96, 120, wx + ww - 106, wy);
-    gcopy(3, 960, 216, 72, 144, wx, wy + wh - 164);
+    draw_indexed("inventory_icon", wx + 46, wy - 16, 10);
+    elona::draw("deco_wear_a", wx + ww - 106, wy);
+    elona::draw("deco_wear_b", wx, wy + wh - 164);
     if (show_resistances)
     {
         mes(wx + 320, wy + 40, i18n::s.get("core.locale.ui.equip.resist"));
@@ -187,14 +187,8 @@ void UIMenuEquipment::_draw_key(int cnt, int p_, bool is_main_hand)
             i18n::s.get_enum("core.locale.ui.body_part", list(1, p_));
     }
 
-    gcopy(
-        3,
-        600 + (list(1, p_) - 1) * 24,
-        336,
-        24,
-        24,
-        wx + 22,
-        wy + 60 + cnt * 19 - 4);
+    draw_indexed(
+        "body_part_icon", wx + 22, wy + 60 + cnt * 19 - 4, list(1, p_) - 1);
     mes(wx + 46, wy + 60 + cnt * 19 + 3, body_part_name);
 }
 

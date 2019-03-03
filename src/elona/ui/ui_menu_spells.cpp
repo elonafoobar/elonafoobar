@@ -82,9 +82,9 @@ void UIMenuSpells::_draw_window()
     display_topic(
         i18n::s.get("core.locale.ui.spell.effect"), wx + 400, wy + 36);
 
-    gcopy(3, 912, 48, 48, 48, wx + 46, wy - 16);
-    gcopy(3, 960, 96, 72, 144, wx + ww - 78, wy);
-    gcopy(3, 1032, 96, 72, 96, wx + ww - 180, wy);
+    draw_indexed("inventory_icon", wx + 46, wy - 16, 13);
+    elona::draw("deco_spell_a", wx + ww - 78, wy);
+    elona::draw("deco_spell_b", wx + ww - 180, wy);
 }
 
 void UIMenuSpells::_draw_key(int cnt)
