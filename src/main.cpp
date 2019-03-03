@@ -11,6 +11,8 @@
 #endif
 
 
+#include "backtrace.cpp"
+
 
 namespace
 {
@@ -35,6 +37,8 @@ void report_error(const char* what)
 int main(int argc, char** argv)
 {
     using namespace elona;
+
+    setup_backtrace();
 
     log::Logger::instance().init();
     ELONA_LOG("system") << latest_version.long_string();
