@@ -1,6 +1,6 @@
-#include "elona/defines.hpp"
+#include <boost/predef.h>
 
-#ifdef ELONA_OS_LINUX
+#if BOOST_OS_LINUX
 #include <execinfo.h>
 #include <signal.h>
 #include <stdio.h>
@@ -12,7 +12,7 @@
 namespace
 {
 
-#ifdef ELONA_OS_LINUX
+#ifdef BOOST_OS_LINUX
 constexpr int max_backtrace_frames = 100;
 char stack_memory[SIGSTKSZ] = {};
 
@@ -62,10 +62,10 @@ void signal_handler(int signal)
 
 } // namespace
 
-namespace elona
+namespace lib
 {
 
-#ifdef ELONA_OS_LINUX
+#ifdef BOOST_OS_LINUX
 void setup_backtrace()
 {
     stack_t signal_stack;
@@ -89,4 +89,4 @@ void setup_backtrace()
 }
 #endif
 
-} // namespace elona
+} // namespace lib
