@@ -6,10 +6,17 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Represents an item.
+ */
 namespace LuaItem
 {
+void remove(Item&);
+
 void bind(sol::state&);
-}
+} // namespace LuaItem
 
 } // namespace lua
 } // namespace elona

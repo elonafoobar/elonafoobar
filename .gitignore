@@ -16,6 +16,7 @@ deps/lib/
 deps/elona/
 deps/*.zip
 deps/*.tar.gz
+doc/generated/
 thirdparty/lib/lua/src/
 CMakeFiles/
 snail/Debug
@@ -50,3 +51,5 @@ android/external/lua/
 android/external/boost/
 .ccls-cache
 compile_commands.json
+target/
+**/*.rs.bk

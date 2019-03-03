@@ -8,45 +8,80 @@ namespace elona
 namespace lua
 {
 
-bool LuaApiChara::is_alive(LuaCharacterHandle handle)
+/**
+ * @luadoc
+ *
+ * Checks if a character is alive.
+ * @tparam LuaCharacter chara (const) a character
+ * @treturn bool true if the character is alive
+ */
+bool LuaApiChara::is_alive(LuaCharacterHandle chara)
 {
-    if (!lua::lua->get_handle_manager().handle_is_valid(handle))
+    if (!lua::lua->get_handle_manager().handle_is_valid(chara))
     {
         return false;
     }
 
-    auto& LuaApiChara =
-        lua::lua->get_handle_manager().get_ref<Character>(handle);
-    return LuaApiChara.state() == Character::State::alive;
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    return chara_ref.state() == Character::State::alive;
 }
 
-bool LuaApiChara::is_player(LuaCharacterHandle handle)
+/**
+ * @luadoc
+ *
+ * Checks if a character is the player (has index 0).
+ * @tparam LuaCharacter chara (const) a character
+ * @treturn bool true if the character is the player
+ */
+bool LuaApiChara::is_player(LuaCharacterHandle chara)
 {
-    auto& LuaApiChara =
-        lua::lua->get_handle_manager().get_ref<Character>(handle);
-    return LuaApiChara.index == 0;
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    return chara_ref.index == 0;
 }
 
-bool LuaApiChara::is_ally(LuaCharacterHandle handle)
+/**
+ * @luadoc
+ *
+ * Checks if a character is a member of the player's party (has index < 16 and
+ * @tparam LuaCharacter chara (const) a character
+ * @treturn bool true if the character is in the player's party
+ */
+bool LuaApiChara::is_ally(LuaCharacterHandle chara)
 {
-    auto& LuaApiChara =
-        lua::lua->get_handle_manager().get_ref<Character>(handle);
-    return !LuaApiChara::is_player(handle) && LuaApiChara.index <= 16;
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    return !LuaApiChara::is_player(chara) && chara_ref.index <= 16;
 }
 
+/**
+ * @luadoc
+ *
+ * Returns the number of other characters in the current map.
+ */
 int LuaApiChara::count()
 {
     return game_data.crowd_density;
 }
 
-bool LuaApiChara::flag(LuaCharacterHandle handle, const EnumString& flag_name)
+/**
+ * @luadoc
+ *
+ * Gets a flag on a character.
+ * @tparam LuaCharacter chara (const) the character to get the flag from
+ * @tparam Enums.CharaFlag flag the flag to get
+ */
+bool LuaApiChara::flag(LuaCharacterHandle chara, const EnumString& flag)
 {
-    auto& LuaApiChara =
-        lua::lua->get_handle_manager().get_ref<Character>(handle);
-    int flag = LuaEnums::CharaFlagTable.ensure_from_string(flag_name);
-    return LuaApiChara._flags[flag] == 1;
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    int flag_value = LuaEnums::CharaFlagTable.ensure_from_string(flag);
+    return chara_ref._flags[flag_value] == 1;
 }
 
+/**
+ * @luadoc
+ *
+ * Returns a reference to the player. They might not be alive.
+ * @treturn LuaCharacter (mut) a reference to the player
+ */
 sol::optional<LuaCharacterHandle> LuaApiChara::player()
 {
     if (elona::cdata.player().state() == Character::State::empty)
@@ -79,6 +114,16 @@ sol::optional<LuaCharacterHandle> LuaApiChara::create_xy(int x, int y, int id)
     }
 }
 
+/**
+ * @luadoc create
+ *
+ * Attempts to create a character at a given position.
+ * Returns the character if creation succeeded, nil otherwise.
+ * @tparam LuaPosition position (const) position to create the character at
+ * @tparam string id the character prototype ID
+ * @treturn[1] LuaCharacter the created character
+ * @treturn[2] nil
+ */
 sol::optional<LuaCharacterHandle> LuaApiChara::create_from_id(
     const Position& position,
     const std::string& id)
@@ -97,6 +142,12 @@ LuaApiChara::create_from_id_xy(int x, int y, const std::string& id)
     return LuaApiChara::create_xy(x, y, data->id);
 }
 
+/**
+ * @luadoc
+ *
+ * Obtains the number of times the character type has been killed.
+ * @tparam string id the character prototype ID
+ */
 int LuaApiChara::kill_count(const std::string& id)
 {
     auto data = the_character_db[id];

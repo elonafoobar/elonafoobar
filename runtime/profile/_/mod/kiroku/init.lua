@@ -30,8 +30,7 @@ local Exports = {}
 Exports.on_use = {}
 
 function Exports.on_use.counter(item, chara)
-   GUI.txtef(Enums.Color.Gold)
-   GUI.txt(item.name .. " : " .. chara.name)
+   GUI.txt(item.name .. " : " .. chara.name, "Gold")
    report()
    return true
 end

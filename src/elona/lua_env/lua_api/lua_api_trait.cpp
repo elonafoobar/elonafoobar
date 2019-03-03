@@ -11,6 +11,15 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Obtains the player's level in a trait. It may be negative if the
+ * trait is harmful.
+ * @tparam num trait_id the trait id
+ * @treturn[1] num the player's trait level
+ * @treturn[2] nil
+ */
 sol::optional<int> LuaApiTrait::level(int trait_id)
 {
     if (trait_get_info(0, trait_id) == 0)
@@ -20,6 +29,14 @@ sol::optional<int> LuaApiTrait::level(int trait_id)
     return elona::trait(trait_id);
 }
 
+/**
+ * @luadoc
+ *
+ * Obtains the minimum possible level of a trait.
+ * @tparam num trait_id the trait id
+ * @treturn[1] num the trait's minimum level.
+ * @treturn[2] nil
+ */
 sol::optional<int> LuaApiTrait::min(int trait_id)
 {
     if (trait_get_info(0, trait_id) == 0)
@@ -29,6 +46,14 @@ sol::optional<int> LuaApiTrait::min(int trait_id)
     return elona::traitref(1);
 }
 
+/**
+ * @luadoc
+ *
+ * Obtains the maximum possible level of a trait.
+ * @tparam num trait_id the trait id
+ * @treturn[1] num the trait's maximum level.
+ * @treturn[2] nil
+ */
 sol::optional<int> LuaApiTrait::max(int trait_id)
 {
     if (trait_get_info(0, trait_id) == 0)
@@ -38,6 +63,13 @@ sol::optional<int> LuaApiTrait::max(int trait_id)
     return elona::traitref(2);
 }
 
+/**
+ * @luadoc
+ *
+ * Sets the level of a trait, bounded within its min and max.
+ * @tparam num trait_id the trait id
+ * @tparam num level the new trait level
+ */
 void LuaApiTrait::set(int trait_id, int level)
 {
     if (trait_get_info(0, trait_id) == 0)
@@ -62,6 +94,13 @@ void LuaApiTrait::set(int trait_id, int level)
     chara_refresh(0);
 }
 
+/**
+ * @luadoc
+ *
+ * Modifies the level of a trait, bounded within its min and max.
+ * @tparam num trait_id the trait id
+ * @tparam num delta the amount to change the trait level by
+ */
 void LuaApiTrait::modify(int trait_id, int delta)
 {
     if (trait_get_info(0, trait_id) == 0)

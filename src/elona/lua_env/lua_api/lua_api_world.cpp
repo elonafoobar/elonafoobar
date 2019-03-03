@@ -6,11 +6,23 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Returns the time in hours since year 0.
+ * @treturn num the time in hours
+ */
 int LuaApiWorld::time()
 {
     return game_data.date.hours();
 }
 
+/**
+ * @luadoc
+ *
+ * Returns true if the player is part of the provided guild.
+ * @tparam string guild_name One of "mages", "fighters" or "thieves"
+ */
 bool LuaApiWorld::belongs_to_guild(const std::string& guild_name)
 {
     if (guild_name == "mages")

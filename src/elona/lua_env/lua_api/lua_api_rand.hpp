@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for working with randomness.
+ */
 namespace LuaApiRand
 {
 int rnd(int n);

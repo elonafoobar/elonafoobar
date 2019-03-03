@@ -3,5 +3,11 @@
 module "World"
 
 --- Returns the time in hours since year 0.
--- @treturn num the time in hours
+--  @treturn num the time in hours
+--  @function time
 function time() end
+
+--- Returns true if the player is part of the provided guild.
+--  @tparam string guild_name One of "mages", "fighters" or "thieves"
+--  @function belongs_to_guild
+function belongs_to_guild(guild_name) end

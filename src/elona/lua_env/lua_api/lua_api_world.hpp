@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for working with the state of the game world.
+ */
 namespace LuaApiWorld
 {
 int time();

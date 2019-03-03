@@ -6,6 +6,13 @@ namespace elona
 {
 namespace lua
 {
+
+
+/**
+ * @luadoc
+ *
+ * Functions for debugging scripts.
+ */
 namespace LuaApiDebug
 {
 void log(const std::string&);

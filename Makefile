@@ -107,18 +107,19 @@ format: FORCE # Format all C++ source files.
 	test -z "$$(git status --short)"
 
 
+docgen:
+	cargo run --release --manifest-path tools/docgen/Cargo.toml -- -f -o doc/api src/elona/lua_env
+
+
 ldoc: FORCE # Generate LDoc.
 	-@$(RM) -rf $(BIN_DIR)/doc
-	-@$(RM) -rf docs
+	-@$(RM) -rf doc/generated
 	mkdir -p $(BIN_DIR)/doc
-	cp doc/README.md $(BIN_DIR)/doc/readme.md
-	cp doc/ldoc.css $(BIN_DIR)/doc/ldoc.css
 	cp -r doc/topics $(BIN_DIR)/doc
 	cp -r doc/examples $(BIN_DIR)/doc
-	cp doc/uikit.min.css $(BIN_DIR)/doc/uikit.min.css
-	cp doc/putit.png $(BIN_DIR)/doc/putit.png
-	cd $(BIN_DIR) && ldoc -c ../doc/config.ld -l ../doc -s ../doc ../doc/api/
-	cp -r $(BIN_DIR)/doc docs
+	cp doc/static/* $(BIN_DIR)/doc/
+	cd $(BIN_DIR) && ldoc -c ../doc/config.ld -l ../doc -s ../doc/static ../doc/api/
+	cp -r $(BIN_DIR)/doc doc/generated
 
 
 luacheck: FORCE # Run luacheck.

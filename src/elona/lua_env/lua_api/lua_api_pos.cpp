@@ -7,6 +7,14 @@ namespace lua
 {
 
 
+/**
+ * @luadoc
+ *
+ * Returns the distance between two points.
+ * @tparam LuaPosition from (const) the point from
+ * @tparam LuaPosition to (const) the point to
+ * @treturn num the distance between the points in tiles
+ */
 int LuaApiPos::dist(const Position& from, const Position& to)
 {
     return LuaApiPos::dist_xy(from.x, from.y, to.x, to.y);

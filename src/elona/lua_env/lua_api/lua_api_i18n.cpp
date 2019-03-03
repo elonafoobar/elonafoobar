@@ -6,6 +6,16 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Gets a localized string and optionally formats it with arguments.
+ * This will return a string with a warning if the localization
+ * string doesn't exist.
+ * @tparam string key the ID of the localization string
+ * @treturn string the formatted string
+ * @usage I18N.get("core.locale.map.you_see", "Vernis")
+ */
 std::string LuaApiI18N::get(const std::string& key, sol::variadic_args args)
 {
     switch (args.size())
@@ -49,6 +59,15 @@ std::string LuaApiI18N::get(const std::string& key, sol::variadic_args args)
     }
 }
 
+/**
+ * @luadoc
+ *
+ * Gets a localized string and optionally formats it with arguments.
+ * This will return nil if the localization string doesn't exist.
+ * @tparam string key the ID of the localization string
+ * @treturn[1] string the formatted string
+ * @treturn[2] nil
+ */
 sol::optional<std::string> LuaApiI18N::get_optional(
     const std::string& key,
     sol::variadic_args args)
@@ -108,6 +127,16 @@ sol::optional<std::string> LuaApiI18N::get_optional(
     return sol::nullopt;
 }
 
+/**
+ * @luadoc
+ *
+ * Gets a localized string from an enum-style localization object.
+ * This will return a string with a warning if the localization
+ * string doesn't exist.
+ * @tparam string key the ID of the localization string
+ * @tparam num index the index into the enum
+ * @treturn string the formatted string
+ */
 std::string
 LuaApiI18N::get_enum(const std::string& key, int index, sol::variadic_args args)
 {
@@ -156,9 +185,20 @@ LuaApiI18N::get_enum(const std::string& key, int index, sol::variadic_args args)
     }
 }
 
+/**
+ * @luadoc
+ *
+ * Gets a localized string from an enum-style localization object
+ * where the enum's children are themselves objects. This will return
+ * a string with a warning if the localization string doesn't exist.
+ * @tparam string key_base the base ID of the localization string
+ * @tparam string key_property the property of the enum object to get
+ * @tparam num index the index into the enum
+ * @treturn string the formatted string
+ */
 std::string LuaApiI18N::get_enum_property(
-    const std::string& key_head,
-    const std::string& key_tail,
+    const std::string& key_base,
+    const std::string& key_property,
     int index,
     sol::variadic_args args)
 {
@@ -166,29 +206,29 @@ std::string LuaApiI18N::get_enum_property(
 
     switch (args.size())
     {
-    case 0: return i18n::s.get_enum_property(key_head, key_tail, index);
+    case 0: return i18n::s.get_enum_property(key_base, key_property, index);
     case 1:
         return i18n::s.get_enum_property(
-            key_head, key_tail, index, args[0].get<sol::object>());
+            key_base, key_property, index, args[0].get<sol::object>());
     case 2:
         return i18n::s.get_enum_property(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>());
     case 3:
         return i18n::s.get_enum_property(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
             args[2].get<sol::object>());
     case 4:
         return i18n::s.get_enum_property(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
@@ -196,8 +236,8 @@ std::string LuaApiI18N::get_enum_property(
             args[3].get<sol::object>());
     case 5:
         return i18n::s.get_enum_property(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
@@ -207,8 +247,8 @@ std::string LuaApiI18N::get_enum_property(
     case 6:
     default:
         return i18n::s.get_enum_property(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
@@ -219,9 +259,21 @@ std::string LuaApiI18N::get_enum_property(
     }
 }
 
+/**
+ * @luadoc
+ *
+ * Gets a localized string from an enum-style localization object
+ * where the enum's children are themselves objects. This will return
+ * nil if the localization string doesn't exist.
+ * @tparam string key_base the base ID of the localization string
+ * @tparam string key_property the property of the enum object to get
+ * @tparam num index the index into the enum
+ * @treturn[1] string the formatted string
+ * @treturn[2] nil
+ */
 sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
-    const std::string& key_head,
-    const std::string& key_tail,
+    const std::string& key_base,
+    const std::string& key_property,
     int index,
     sol::variadic_args args)
 {
@@ -230,24 +282,24 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
     switch (args.size())
     {
     case 0:
-        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index);
+        opt = i18n::s.get_enum_property_opt(key_base, key_property, index);
         break;
     case 1:
         opt = i18n::s.get_enum_property_opt(
-            key_head, key_tail, index, args[0].get<sol::object>());
+            key_base, key_property, index, args[0].get<sol::object>());
         break;
     case 2:
         opt = i18n::s.get_enum_property_opt(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>());
         break;
     case 3:
         opt = i18n::s.get_enum_property_opt(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
@@ -255,8 +307,8 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
         break;
     case 4:
         opt = i18n::s.get_enum_property_opt(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
@@ -265,8 +317,8 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
         break;
     case 5:
         opt = i18n::s.get_enum_property_opt(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
@@ -277,8 +329,8 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
     case 6:
     default:
         opt = i18n::s.get_enum_property_opt(
-            key_head,
-            key_tail,
+            key_base,
+            key_property,
             index,
             args[0].get<sol::object>(),
             args[1].get<sol::object>(),
@@ -296,6 +348,14 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
     return sol::nullopt;
 }
 
+/**
+ * @luadoc
+ *
+ * Registers a new function for use inside localization files.
+ * @tparam string language Localized language the function is valid in
+ * @tparam string name The function's name
+ * @tparam function function A function taking arguments and returning a string
+ */
 void LuaApiI18N::register_function(
     const std::string& language,
     const std::string& name,

@@ -3,43 +3,48 @@
 module "Chara"
 
 --- Checks if a character is alive.
--- @tparam LuaCharacter character (const) a character
--- @treturn bool true if the character is alive
-function is_alive(character) end
+--  @tparam LuaCharacter chara (const) a character
+--  @treturn bool true if the character is alive
+--  @function is_alive
+function is_alive(chara) end
 
 --- Checks if a character is the player (has index 0).
--- @tparam LuaCharacter character (const) a character
--- @treturn bool true if the character is the player
-function is_player(character) end
+--  @tparam LuaCharacter chara (const) a character
+--  @treturn bool true if the character is the player
+--  @function is_player
+function is_player(chara) end
 
---- Checks if a character is a member of the player's party (has index < 16 and != 0).
--- @tparam LuaCharacter character (const) a character
--- @treturn bool true if the character is in the player's party
-function is_ally(character) end
-
---- Returns a reference to the player. They might not be alive.
--- @treturn LuaCharacter (mut) a reference to the player
-function player() end
+--- Checks if a character is a member of the player's party (has index < 16 and
+--  @tparam LuaCharacter chara (const) a character
+--  @treturn bool true if the character is in the player's party
+--  @function is_ally
+function is_ally(chara) end
 
 --- Returns the number of other characters in the current map.
--- @treturn num the character count
+--  @function count
 function count() end
 
 --- Gets a flag on a character.
--- @tparam LuaCharacter chara (const) the character to get the flag from
--- @tparam Enums.CharaFlag flag the flag to get
+--  @tparam LuaCharacter chara (const) the character to get the flag from
+--  @tparam Enums.CharaFlag flag the flag to get
+--  @function flag
 function flag(chara, flag) end
 
+--- Returns a reference to the player. They might not be alive.
+--  @treturn LuaCharacter (mut) a reference to the player
+--  @function player
+function player() end
+
 --- Attempts to create a character at a given position.
---- Returns the character if creation succeeded, nil otherwise.
--- @tparam LuaPosition position (const) position to create the character at
--- @tparam num id the character prototype ID
--- @treturn[1] LuaCharacter the created character
--- @treturn[2] nil
+--  Returns the character if creation succeeded, nil otherwise.
+--  @tparam LuaPosition position (const) position to create the character at
+--  @tparam string id the character prototype ID
+--  @treturn[1] LuaCharacter the created character
+--  @treturn[2] nil
+--  @function create
 function create(position, id) end
 
---- Iterates between two character indices.
--- @tparam num from the starting index
--- @tparam num to the ending index
--- @treturn iterator a character iterator
-function iter(from, to) end
+--- Obtains the number of times the character type has been killed.
+--  @tparam string id the character prototype ID
+--  @function kill_count
+function kill_count(id) end

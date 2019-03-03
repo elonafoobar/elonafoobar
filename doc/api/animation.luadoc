@@ -1,91 +1,48 @@
---- Functions for playing each of the game's animations.
+--- Functions for rendering the built-in animations.
 --  @usage local Animation = Elona.require("Animation")
-
 module "Animation"
 
----
--- @tparam LuaPosition caster_pos
+--  @function play_failure_to_cast
 function play_failure_to_cast(caster_pos) end
 
----
--- @tparam LuaPosition target_pos
--- @tparam num kind
+--  @function play_bright_aura
 function play_bright_aura(target_pos, kind) end
 
----
--- @tparam LuaPosition attacker_pos
--- @tparam LuaPosition target_pos
--- @tparam num element
-function play_breath(attacker_pos, target_pos, element) end
+--  @function play_breath
+function play_breath(attacker_pos, target_pos, element_name) end
 
----
--- @tparam LuaPosition pos
--- @tparam num range
+--  @function play_ball_atomic_bomb
 function play_ball_atomic_bomb(pos, range) end
 
----
--- @tparam LuaPosition pos
--- @tparam num range
--- @tparam num element
+--  @function play_ball_magic
 function play_ball_magic(pos, range, element) end
 
----
--- @tparam LuaPosition attacker_pos
--- @tparam LuaPosition target_pos
--- @tparam num element
--- @tparam num distance
-function play_bolt(attacker_pos, target_pos, element, distance) end
+--  @function play_bolt
+function play_bolt(attacker_pos, target_pos, element_name, distance) end
 
----
--- @tparam LuaPosition attacker_pos
--- @tparam LuaPosition target_pos
--- @tparam num item_chip
--- @tparam num item_color
+--  @function play_throwing_object
 function play_throwing_object(attacker_pos, target_pos, item_chip, item_color) end
 
----
--- @tparam LuaPosition target_pos
+--  @function play_swarm
 function play_swarm(target_pos) end
 
----
--- @tparam LuaPosition attacker_pos
--- @tparam LuaPosition target_pos
--- @tparam num kind
--- @tparam num fired_item_subcategory
--- @tparam num fired_item_image
--- @tparam num fired_item_color
-function play_ranged_attack(attacker_pos,
-                            target_pos,
-                            kind,
-                            fired_item_subcategory,
-                            fired_item_image,
-                            fired_item_color) end
+--  @function play_ranged_attack
+function play_ranged_attack(attacker_pos, target_pos, kind, fired_item_subcategory, fired_item_image, fired_item_color) end
 
----
--- @tparam LuaPosition target_pos
--- @tparam bool debris
--- @tparam int attack_skill
--- @tparam int damage_percent
--- @tparam bool is_critical
-function play_melee_attack(target_pos,
-                           debris,
-                           attack_skill,
-                           damage_percent,
-                           is_critical) end
+--  @function play_melee_attack
+function play_melee_attack(target_pos, debris, attack_skill, damage_percent, is_critical) end
 
----
--- @tparam LuaPosition pos
+--  @function play_gene_engineering
 function play_gene_engineering(pos) end
 
----
+--  @function play_miracle
 function play_miracle() end
 
----
+--  @function play_meteor
 function play_meteor() end
 
----
+--  @function play_ragnarok
 function play_ragnarok() end
 
----
--- @tparam LuaPosition pos
+--  @function play_breaking
 function play_breaking(pos) end

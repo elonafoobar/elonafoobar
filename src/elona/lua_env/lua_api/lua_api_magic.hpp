@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for working with magic.
+ */
 namespace LuaApiMagic
 {
 void cast_self(LuaCharacterHandle, int, int, const Position&);

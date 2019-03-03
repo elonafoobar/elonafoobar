@@ -9,6 +9,11 @@ namespace lua
 
 struct LuaAbility;
 
+/**
+ * @luadoc
+ *
+ * Represents a character.
+ */
 namespace LuaCharacter
 {
 void damage_hp(Character&, int);

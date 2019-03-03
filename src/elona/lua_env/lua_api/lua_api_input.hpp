@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for prompting the player for input.
+ */
 namespace LuaApiInput
 {
 

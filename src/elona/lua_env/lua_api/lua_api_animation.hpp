@@ -7,6 +7,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for rendering the built-in animations.
+ */
 namespace LuaApiAnimation
 {
 void play_failure_to_cast(const Position&);

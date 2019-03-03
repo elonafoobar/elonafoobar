@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Math utility functions.
+ */
 namespace LuaApiMath
 {
 int clamp(int, int, int);

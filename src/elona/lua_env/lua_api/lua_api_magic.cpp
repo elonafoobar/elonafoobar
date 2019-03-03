@@ -9,21 +9,43 @@ namespace elona
 {
 namespace lua
 {
-
+/**
+ * @luadoc cast
+ *
+ * Makes a character cast a spell targeting themselves or a position.
+ * @tparam LuaCharacter caster (mut) the casting character
+ * @tparam num effect_id the spell ID
+ * @tparam num effect_power the power of the spell
+ * @tparam LuaPosition target_location (const) the position the spell targets
+ * @usage local pos = Map.random_pos()
+ * Magic.cast(Chara.player(), 432, 100, pos) -- Ball magic
+ */
 void LuaApiMagic::cast_self(
-    LuaCharacterHandle caster_handle,
+    LuaCharacterHandle caster,
     int effect_id,
     int effect_power,
     const Position& target_location)
 {
     elona::tlocx = target_location.x;
     elona::tlocy = target_location.y;
-    LuaApiMagic::cast(caster_handle, caster_handle, effect_id, effect_power);
+    LuaApiMagic::cast(caster, caster, effect_id, effect_power);
 }
 
+/**
+ * @luadoc
+ *
+ * Makes a character cast a spell targeting another character.
+ * @tparam LuaCharacter caster (mut) the casting character
+ * @tparam LuaCharacter target (mut) the target character
+ * @tparam num effect_id the spell ID
+ * @tparam num effect_power the power of the spell
+ * @usage local caster = Chara.player()
+ * local target = Chara.create(0, 0, "core.putit")
+ * Magic.cast(caster, target, 414, 100) -- Magic missile
+ */
 void LuaApiMagic::cast(
-    LuaCharacterHandle caster_handle,
-    LuaCharacterHandle target_handle,
+    LuaCharacterHandle caster,
+    LuaCharacterHandle target,
     int effect_id,
     int effect_power)
 {
@@ -32,12 +54,12 @@ void LuaApiMagic::cast(
 
     try
     {
-        auto& caster =
-            lua::lua->get_handle_manager().get_ref<Character>(caster_handle);
-        auto& target =
-            lua::lua->get_handle_manager().get_ref<Character>(target_handle);
-        elona::cc = caster.index;
-        elona::tc = target.index;
+        auto& caster_ref =
+            lua::lua->get_handle_manager().get_ref<Character>(caster);
+        auto& target_ref =
+            lua::lua->get_handle_manager().get_ref<Character>(target);
+        elona::cc = caster_ref.index;
+        elona::tc = target_ref.index;
         elona::efid = effect_id;
         elona::efp = effect_power;
         elona::magic();

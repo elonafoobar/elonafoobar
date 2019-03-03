@@ -7,17 +7,26 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_failure_to_cast(const Position& caster_pos)
 {
     FailureToCastAnimation(caster_pos).play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_bright_aura(const Position& target_pos, int kind)
 {
     auto anim_type = static_cast<BrightAuraAnimation::Type>(kind);
     BrightAuraAnimation(target_pos, anim_type).play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_breath(
     const Position& attacker_pos,
     const Position& target_pos,
@@ -27,11 +36,17 @@ void LuaApiAnimation::play_breath(
     BreathAnimation(attacker_pos, target_pos, static_cast<int>(element)).play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_ball_atomic_bomb(const Position& pos, int range)
 {
     BallAnimation(pos, range, BallAnimation::Type::atomic_bomb).play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_ball_magic(
     const Position& pos,
     int range,
@@ -40,6 +55,9 @@ void LuaApiAnimation::play_ball_magic(
     BallAnimation(pos, range, BallAnimation::Type::ball, element).play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_bolt(
     const Position& attacker_pos,
     const Position& target_pos,
@@ -51,6 +69,9 @@ void LuaApiAnimation::play_bolt(
         .play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_throwing_object(
     const Position& attacker_pos,
     const Position& target_pos,
@@ -61,11 +82,17 @@ void LuaApiAnimation::play_throwing_object(
         .play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_swarm(const Position& target_pos)
 {
     SwarmAnimation(target_pos).play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_ranged_attack(
     const Position& attacker_pos,
     const Position& target_pos,
@@ -85,6 +112,9 @@ void LuaApiAnimation::play_ranged_attack(
         .play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_melee_attack(
     const Position& target_pos,
     bool debris,
@@ -97,26 +127,41 @@ void LuaApiAnimation::play_melee_attack(
         .play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_gene_engineering(const Position& pos)
 {
     GeneEngineeringAnimation(pos).play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_miracle()
 {
     MiracleAnimation().play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_meteor()
 {
     MeteorAnimation().play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_ragnarok()
 {
     RagnarokAnimation().play();
 }
 
+/**
+ * @luadoc
+ */
 void LuaApiAnimation::play_breaking(const Position& pos)
 {
     BreakingAnimation(pos).play();

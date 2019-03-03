@@ -9,6 +9,12 @@ namespace elona
 {
 namespace lua
 {
+
+/**
+ * @luadoc
+ *
+ * Information about Elona foobar and mod engine environment.
+ */
 namespace LuaApiEnv
 {
 

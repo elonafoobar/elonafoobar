@@ -12,8 +12,7 @@ local eating_effect = {}
 local function eat_message(eater, locale_id, color)
    local locale_key = "core.locale.food.effect.corpse." .. locale_id
    if FOV.you_see(eater) then
-      GUI.txtef(color)
-      GUI.txt(I18N.get(locale_key, eater))
+      GUI.txt(I18N.get(locale_key, eater), color)
    end
 end
 

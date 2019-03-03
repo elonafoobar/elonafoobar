@@ -1,18 +1,20 @@
 --- Functions for working with skills or spells.
---- Both skills and spells are represented through the same experience
---- and leveling system. The only real difference is that spells have
---- an additional spell stock value.
+--  Both skills and spells are represented through the same experience
+--  and leveling system. The only real difference is that spells have
+--  an additional spell stock value.
 --  @usage local Skill = Elona.require("Skill")
 module "Skill"
 
 --- Obtains a character's skill level in a skill or spell.
--- @tparam num id the skill/spell id
--- @tparam LuaCharacter chara the character to get skill information from
--- @treturn num the character's skill/spell level
-function level(id, chara) end
+--  @tparam num skill_id the skill/spell id
+--  @tparam LuaCharacter chara the character to get skill information from
+--  @treturn num the character's skill/spell level
+--  @function level
+function level(skill_id, chara) end
 
 --- Obtains a character's resistance level for an element.
--- @tparam Enums.Element element the element
--- @tparam LuaCharacter chara the character to get resistance information from
--- @treturn num the character's resistance level
+--  @tparam Enums.Element element the element
+--  @tparam LuaCharacter chara the character to get resistance information from
+--  @treturn num the character's resistance level
+--  @function resistance
 function resistance(element, chara) end
