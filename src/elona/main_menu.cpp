@@ -1044,7 +1044,8 @@ MainMenuResult main_menu_about_license()
     }
     else
     {
-        const size_t text_width = 75 - en * 15;
+        // LICENSE.txt is always written in English
+        const size_t text_width = 75 - 15;
         constexpr size_t lines_per_page = 16;
 
         for (auto&& line : license_text_lines)
@@ -1114,7 +1115,7 @@ MainMenuResult main_menu_about_license()
             600,
             425);
 
-        font(13);
+        font(13 - 2); // LICENSE.txt is always written in English
         mes(wx + 20, wy + 30, license_pages.at(page));
 
         redraw();
@@ -1166,7 +1167,8 @@ MainMenuResult main_menu_about_credits()
     }
     else
     {
-        const size_t text_width = 75 - en * 15;
+        // CREDITS.txt is always written in English
+        const size_t text_width = 75 - 15;
         constexpr size_t lines_per_page = 16;
 
         for (auto&& line : credits_text_lines)
@@ -1236,7 +1238,7 @@ MainMenuResult main_menu_about_credits()
             600,
             425);
 
-        font(13);
+        font(13 - 2); // CREDITS.txt is always written in English
         mes(wx + 20, wy + 30, credits_pages.at(page));
 
         redraw();
