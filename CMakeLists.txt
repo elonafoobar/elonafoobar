@@ -424,7 +424,11 @@ else()
 
   # My libraries: elona
   add_subdirectory(src/elona)
-  target_link_libraries(${PROJECT_NAME} elona snail util)
+  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
+    target_link_libraries(${PROJECT_NAME} elona snail_headless util)
+  else()
+    target_link_libraries(${PROJECT_NAME} elona snail util)
+  endif()
 
   if(ELONA_BUILD_TARGET STREQUAL "GAME")
     add_subdirectory(src/thirdparty/nfd)
