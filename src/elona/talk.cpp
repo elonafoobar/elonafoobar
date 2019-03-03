@@ -35,14 +35,9 @@ bool chatval_show_impress;
 namespace elona
 {
 
-int chatpicloaded = 0;
-int j_at_m193 = 0;
-int p_at_m193 = 0;
-
 void talk_start()
 {
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_chat.bmp", 0, 0, true);
+    asset_load("ie_chat");
     gsel(0);
 }
 
@@ -637,13 +632,12 @@ void talk_window_init()
         cs = 0;
     }
     talk_conv(buff, 56 - en * 3);
-    chatpicloaded = 0;
     wx = (windoww - 600) / 2 + inf_screenx;
     wy = winposy(380);
     ww = 600;
     wh = 380;
     gmode(2, 80);
-    gcopy(7, 0, 0, 600, 380, wx + 4, wy - 16);
+    draw("ie_chat", wx + 4, wy - 16);
 }
 
 
@@ -651,7 +645,7 @@ void talk_window_init()
 void talk_window_show()
 {
     gmode(2);
-    gcopy(7, 0, 0, 600, 380, wx, wy - 20);
+    draw("ie_chat", wx, wy - 20);
     if (cdata[tc].portrait != "" || scenemode)
     {
         const auto id = scenemode ? actor(1, rc) : cdata[tc].portrait;

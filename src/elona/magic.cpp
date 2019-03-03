@@ -10,9 +10,11 @@
 #include "character_status.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
+#include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "element.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -115,11 +117,10 @@ bool _magic_1136()
     }
     txt(i18n::s.get("core.locale.magic.map.apply"));
     snd("core.book1");
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"paper.bmp", 0, 0, false);
+    const auto& info = asset_load("paper");
     gsel(0);
-    ww = 400;
-    wh = 300;
+    ww = info.width;
+    wh = info.height;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     gmode(2);

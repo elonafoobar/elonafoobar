@@ -14,6 +14,9 @@ enum class AssetLoadType
     // Loaded before all assets into a new window buffer.
     Buffer,
 
+    // Creates a new buffer when loaded, but not loaded at startup.
+    BufferDeferred,
+
     // Loaded after buffer initialization.
     Startup,
 };

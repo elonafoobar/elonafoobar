@@ -127,7 +127,10 @@ void draw_item_with_portrait_scale_height(
 
 // Asset-related functions
 
-void asset_load(const std::string& key);
+struct AssetData;
+
+const AssetData& asset_load(const std::string& key);
+const AssetData& asset_load(const std::string& key, int window_id);
 void init_assets();
 
 void draw(const std::string& key, int x, int y);
@@ -179,6 +182,16 @@ void draw_region(
     int height,
     int dst_width,
     int dst_height);
+void draw_region_centered(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height,
+    int dst_width,
+    int dst_height);
 void draw_region_rotated(
     const std::string& key,
     int x,
@@ -219,8 +232,6 @@ void asset_copy_from(
     int width,
     int height,
     const std::string& key);
-
-struct AssetData;
 
 const AssetData& get_image_info(const std::string& key);
 

@@ -39,8 +39,7 @@ bool UIMenuSpells::init()
     page = commark(1) / 1000;
 
     snd("core.spell");
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_spell.bmp", 960, 96, false);
+    asset_load("deco_spell");
     gsel(0);
     windowshadow = 1;
 

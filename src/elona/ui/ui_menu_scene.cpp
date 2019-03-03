@@ -1,5 +1,7 @@
 #include "ui_menu_scene.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_asset.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../message.hpp"
 
@@ -44,10 +46,8 @@ static void _load_scenes()
 bool UIMenuScene::init()
 {
     snd("core.book1");
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 0, 0, false);
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"g1.bmp", 0, 0, true);
+    asset_load("book");
+    asset_load("g1");
     gsel(0);
     listmax = 0;
     page = 0;
@@ -74,18 +74,17 @@ void UIMenuScene::update()
     {
         page = 0;
     }
-    wx = (windoww - 720) / 2 + inf_screenx;
-    wy = winposy(468);
+    const auto& info = get_image_info("book");
+    wx = (windoww - info.width + 16) / 2 + inf_screenx;
+    wy = winposy(info.height + 20);
 }
 
 void UIMenuScene::_draw_window()
 {
     gmode(2);
-    gcopy(4, 0, 0, 736, 448, wx, wy);
-    x = 240;
-    y = 320;
+    elona::draw("book", wx, wy);
     gmode(2, 100);
-    gcopy_c(7, 0, 0, 180, 300, wx + 190, wy + 220, x, y);
+    draw_centered("g1", wx + 190, wy + 220, 240, 320);
     gmode(2);
 }
 

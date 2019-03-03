@@ -10,19 +10,30 @@ namespace elona
  * Loads the asset in @a key to its configured window and position. The asset
  * should have a configured file path with the image file of the asset. If it
  * has no image, this function does nothing.
+ *
+ * If the file is valid, the current window is changed to the window configured
+ * in the asset.
  */
-void asset_load(const std::string& key)
+const AssetData& asset_load(const std::string& key)
 {
     const auto& info = get_image_info(key);
-    if (!info.file)
+
+    if (info.load_type == AssetLoadType::Buffer)
     {
-        return;
+        buffer(info.window_id, info.width, info.height);
     }
 
-    auto prev_window = ginfo(3);
+    if (!info.file)
+    {
+        return info;
+    }
+
+    bool new_buffer = info.load_type == AssetLoadType::BufferDeferred;
+
     gsel(info.window_id);
-    picload(*info.file, info.x, info.y, false);
-    gsel(prev_window);
+    picload(*info.file, info.x, info.y, new_buffer);
+
+    return info;
 }
 
 
@@ -35,13 +46,7 @@ void init_assets()
         const auto& data = pair.second;
         if (data.load_type == AssetLoadType::Buffer)
         {
-            std::cerr << "buffer " << name << data.window_id << " "
-                      << data.width << " " << data.height << std::endl;
-            buffer(data.window_id, data.width, data.height);
-            if (data.file)
-            {
-                asset_load(name);
-            }
+            asset_load(name);
         }
     }
 
@@ -51,7 +56,6 @@ void init_assets()
         const auto& data = pair.second;
         if (data.file && data.load_type == AssetLoadType::Startup)
         {
-            std::cerr << "startup " << name << std::endl;
             asset_load(name);
         }
     }
@@ -251,6 +255,36 @@ void draw_region(
     const auto& info = get_image_info(key);
 
     gcopy(
+        info.window_id,
+        info.x + offset_x,
+        info.y + offset_y,
+        width,
+        height,
+        x,
+        y,
+        dst_width,
+        dst_height);
+}
+
+
+
+/**
+ * Draws a region of an asset, centered, with stretching.
+ */
+void draw_region_centered(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height,
+    int dst_width,
+    int dst_height)
+{
+    const auto& info = get_image_info(key);
+
+    gcopy_c(
         info.window_id,
         info.x + offset_x,
         info.y + offset_y,

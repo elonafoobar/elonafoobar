@@ -2313,12 +2313,11 @@ void load_background_variants(int buffer)
 
 void clear_background_in_character_making()
 {
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    gcopy(4, 0, 0, windoww, 64, 0, 0);
+    draw_region("void", 0, 0, 0, 0, windoww, 64);
     gmode(2);
 }
 
@@ -2326,12 +2325,11 @@ void clear_background_in_character_making()
 
 void clear_background_in_continue()
 {
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    gcopy(4, 0, 0, windoww, windowh, 0, 0);
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
 }
 
@@ -2348,19 +2346,21 @@ void draw_scroll(int x, int y, int width, int height)
         {
             if (i == 0)
             {
-                gcopy(7, 0, 0, 64, 48, x, y);
-                gcopy(7, 0, 144, 64, 48, x, y3);
+                draw_region("ie_scroll", x, y, 0, 0, 64, 48);
+                draw_region("ie_scroll", x, y3, 0, 144, 64, 48);
             }
             continue;
         }
         if (i < width / 8 - 8)
         {
-            gcopy(7, (i - 8) % 18 * 8 + 64, 0, 8, 48, i * 8 + x, y);
-            gcopy(7, (i - 8) % 18 * 8 + 64, 144, 8, 48, i * 8 + x, y3);
+            draw_region(
+                "ie_scroll", i * 8 + x, y, (i - 8) % 18 * 8 + 64, 0, 8, 48);
+            draw_region(
+                "ie_scroll", i * 8 + x, y3, (i - 8) % 18 * 8 + 64, 144, 8, 48);
             continue;
         }
-        gcopy(7, 208, 0, 64, 48, x3, y);
-        gcopy(7, 208, 144, 64, 48, x3, y3);
+        draw_region("ie_scroll", x3, y, 208, 0, 64, 48);
+        draw_region("ie_scroll", x3, y3, 208, 144, 64, 48);
         break;
     }
 
@@ -2370,22 +2370,24 @@ void draw_scroll(int x, int y, int width, int height)
         {
             if (j == 0)
             {
-                gcopy(7, 0, i % 12 * 8 + 48, 64, 8, x, i * 8 + y + 48);
+                draw_region(
+                    "ie_scroll", x, i * 8 + y + 48, 0, i % 12 * 8 + 48, 64, 8);
                 continue;
             }
             if (j < width / 8 - 15)
             {
-                gcopy(
-                    7,
+                draw_region(
+                    "ie_scroll",
+                    j * 8 + x + 56,
+                    i * 8 + y + 48,
                     j % 18 * 8 + 64,
                     i % 12 * 8 + 48,
                     8,
-                    8,
-                    j * 8 + x + 56,
-                    i * 8 + y + 48);
+                    8);
                 continue;
             }
-            gcopy(7, 208, i % 12 * 8 + 48, 64, 8, x3, i * 8 + y + 48);
+            draw_region(
+                "ie_scroll", x3, i * 8 + y + 48, 208, i % 12 * 8 + 48, 64, 8);
             break;
         }
     }
@@ -2628,10 +2630,10 @@ void window2(
     case 5: break;
     case 6:
         gmode(2, 180);
-        draw_region(
+        draw_region_centered(
             "window",
             x + width / 2,
-            y + width / 2,
+            y + height / 2,
             24,
             24,
             228,

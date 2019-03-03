@@ -37,8 +37,7 @@ bool UIMenuTownEconomy::init()
     gsel(0);
     draw_bg("deco_politics_a");
     render_hud();
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
+    asset_load("ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

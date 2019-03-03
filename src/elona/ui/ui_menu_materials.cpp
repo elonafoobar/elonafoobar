@@ -1,5 +1,6 @@
 #include "ui_menu_materials.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_asset.hpp"
 
 namespace elona
 {
@@ -27,14 +28,13 @@ bool UIMenuMaterials::init()
     cc = 0;
     cs_bk = -1;
 
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
+    const auto& info = asset_load("ie_scroll");
     gsel(0);
     snd("core.scroll");
-    wx = (windoww - 600) / 2 + inf_screenx;
-    wy = winposy(430);
-    ww = 600;
-    wh = 430;
+    wx = (windoww - info.width) / 2 + inf_screenx;
+    wy = winposy(info.height + 50);
+    ww = info.width;
+    wh = info.height + 50;
     window_animation(wx, wy, ww, wh, 9, 4);
     windowshadow = 1;
 

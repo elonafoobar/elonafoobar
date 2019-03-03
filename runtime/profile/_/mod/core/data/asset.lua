@@ -3,8 +3,8 @@ data:add_multi(
    "core.asset",
    {
       {
-         name = "atlas_interface",
-         source = "interface.bmp",
+         name = "interface",
+         source = "interface",
          x = 0,
          y = 0,
          width = 1440,
@@ -14,7 +14,7 @@ data:add_multi(
       },
       {
          name = "select_key",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 30,
          width = 24,
@@ -22,7 +22,7 @@ data:add_multi(
       },
       {
          name = "tip_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 96,
          y = 360,
          width = 24,
@@ -30,7 +30,7 @@ data:add_multi(
       },
       {
          name = "topic_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 120,
          y = 360,
          width = 24,
@@ -38,7 +38,7 @@ data:add_multi(
       },
       {
          name = "input_caret",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 336,
          width = 12,
@@ -46,7 +46,7 @@ data:add_multi(
       },
       {
          name = "gold_coin",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 392,
          width = 24,
@@ -54,7 +54,7 @@ data:add_multi(
       },
       {
          name = "equipped",
-         source = "interface.bmp",
+         source = "interface",
          x = 12,
          y = 348,
          width = 12,
@@ -62,7 +62,7 @@ data:add_multi(
       },
       {
          name = "label_input",
-         source = "interface.bmp",
+         source = "interface",
          x = 128,
          y = 288,
          width = 128,
@@ -70,7 +70,7 @@ data:add_multi(
       },
       {
          name = "minimap_position",
-         source = "interface.bmp",
+         source = "interface",
          x = 15,
          y = 338,
          width = 6,
@@ -78,7 +78,7 @@ data:add_multi(
       },
       {
          name = "interest_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 16,
          y = 360,
          width = 16,
@@ -86,7 +86,7 @@ data:add_multi(
       },
       {
          name = "casino_title_decoration_left",
-         source = "interface.bmp",
+         source = "interface",
          x = 192,
          y = 360,
          width = 24,
@@ -94,7 +94,7 @@ data:add_multi(
       },
       {
          name = "casino_title_decoration_right",
-         source = "interface.bmp",
+         source = "interface",
          x = 216,
          y = 360,
          width = 24,
@@ -102,7 +102,7 @@ data:add_multi(
       },
       {
          name = "map_name_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 208,
          y = 376,
          width = 16,
@@ -110,7 +110,7 @@ data:add_multi(
       },
       {
          name = "ime_status_english",
-         source = "interface.bmp",
+         source = "interface",
          x = 24,
          y = 336,
          width = 24,
@@ -118,7 +118,7 @@ data:add_multi(
       },
       {
          name = "ime_status_japanese",
-         source = "interface.bmp",
+         source = "interface",
          x = 48,
          y = 336,
          width = 24,
@@ -126,7 +126,7 @@ data:add_multi(
       },
       {
          name = "character_shadow",
-         source = "interface.bmp",
+         source = "interface",
          x = 240,
          y = 384,
          width = 32,
@@ -134,7 +134,7 @@ data:add_multi(
       },
       {
          name = "camera",
-         source = "interface.bmp",
+         source = "interface",
          x = 240,
          y = 410,
          width = 24,
@@ -142,7 +142,7 @@ data:add_multi(
       },
       {
          name = "hp_bar_frame",
-         source = "interface.bmp",
+         source = "interface",
          x = 312,
          y = 504,
          width = 104,
@@ -150,7 +150,7 @@ data:add_multi(
       },
       {
          name = "furious_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 32,
          y = 608,
          width = 16,
@@ -158,7 +158,7 @@ data:add_multi(
       },
       {
          name = "conquered_nefia_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 32,
          y = 624,
          width = 16,
@@ -166,7 +166,7 @@ data:add_multi(
       },
       {
          name = "invaded_nefia_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 48,
          y = 624,
          width = 16,
@@ -174,7 +174,7 @@ data:add_multi(
       },
       {
          name = "buff_icon_none",
-         source = "interface.bmp",
+         source = "interface",
          x = 320,
          y = 160,
          width = 32,
@@ -182,7 +182,7 @@ data:add_multi(
       },
       {
          name = "quickmenu_action",
-         source = "interface.bmp",
+         source = "interface",
          x = 360,
          y = 144,
          width = 48,
@@ -190,7 +190,7 @@ data:add_multi(
       },
       {
          name = "quickmenu_submenu",
-         source = "interface.bmp",
+         source = "interface",
          x = 360,
          y = 192,
          width = 48,
@@ -198,7 +198,7 @@ data:add_multi(
       },
       {
          name = "inheritance_mark",
-         source = "interface.bmp",
+         source = "interface",
          x = 384,
          y = 360,
          width = 24,
@@ -206,7 +206,7 @@ data:add_multi(
       },
       {
          name = "date_label_frame",
-         source = "interface.bmp",
+         source = "interface",
          x = 448,
          y = 376,
          width = 128,
@@ -214,7 +214,7 @@ data:add_multi(
       },
       {
          name = "character_level_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 48,
          y = 392,
          width = 24,
@@ -222,7 +222,7 @@ data:add_multi(
       },
       {
          name = "platinum_coin",
-         source = "interface.bmp",
+         source = "interface",
          x = 24,
          y = 392,
          width = 24,
@@ -230,7 +230,7 @@ data:add_multi(
       },
       {
          name = "title_label_frame",
-         source = "interface.bmp",
+         source = "interface",
          x = 496,
          y = 581,
          width = 192,
@@ -238,7 +238,7 @@ data:add_multi(
       },
       {
          name = "label_more",
-         source = "interface.bmp",
+         source = "interface",
          x = 552,
          y = 504,
          width = 120,
@@ -246,7 +246,7 @@ data:add_multi(
       },
       {
          name = "label_more_scratch",
-         source = "interface.bmp",
+         source = "interface",
          x = 672,
          y = 504,
          width = 120,
@@ -254,7 +254,7 @@ data:add_multi(
       },
       {
          name = "direction_arrow",
-         source = "interface.bmp",
+         source = "interface",
          x = 212,
          y = 432,
          width = 28,
@@ -262,7 +262,7 @@ data:add_multi(
       },
       {
          name = "clock_hand",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 288,
          width = 48,
@@ -270,7 +270,7 @@ data:add_multi(
       },
       {
          name = "hourglass",
-         source = "interface.bmp",
+         source = "interface",
          x = 72,
          y = 392,
          width = 24,
@@ -278,7 +278,7 @@ data:add_multi(
       },
       {
          name = "failure_to_cast_effect",
-         source = "item.bmp",
+         source = "item",
          x = 480,
          y = 0,
          width = 48,
@@ -286,14 +286,14 @@ data:add_multi(
       },
       {
          name = "swarm_effect",
-         source = "item.bmp",
+         source = "item",
          x = 816,
          y = 0,
          width = 48,
          height = 48,
       },
       -- swarm_effect {
-      --    source = "item.bmp",
+      --    source = "item",
       --    x = 96,
       --    y = 96,
       --    width = 48,
@@ -301,7 +301,7 @@ data:add_multi(
       -- },
       {
          name = "breaking_effect",
-         source = "item.bmp",
+         source = "item",
          x = 864,
          y = 0,
          width = 48,
@@ -310,7 +310,7 @@ data:add_multi(
 
       {
          name = "emotion_icons",
-         source = "interface.bmp",
+         source = "interface",
          x = 32,
          y = 608,
          width = 16,
@@ -319,7 +319,7 @@ data:add_multi(
       },
       {
          name = "blend_ingredient",
-         source = "interface.bmp",
+         source = "interface",
          x = 336,
          y = 360,
          width = 24,
@@ -327,7 +327,7 @@ data:add_multi(
       },
       {
          name = "recipe_difficulty",
-         source = "interface.bmp",
+         source = "interface",
          x = 64,
          y = 624,
          width = 16,
@@ -336,7 +336,7 @@ data:add_multi(
       },
       {
          name = "card_front",
-         source = "interface.bmp",
+         source = "interface",
          x = 672,
          y = 216,
          width = 64,
@@ -346,7 +346,7 @@ data:add_multi(
       },
       {
          name = "card_back",
-         source = "interface.bmp",
+         source = "interface",
          x = 736,
          y = 216,
          width = 64,
@@ -354,7 +354,7 @@ data:add_multi(
       },
       {
          name = "card_scratch",
-         source = "interface.bmp",
+         source = "interface",
          x = 608,
          y = 216,
          width = 64,
@@ -362,7 +362,7 @@ data:add_multi(
       },
       {
          name = "card_suit",
-         source = "interface.bmp",
+         source = "interface",
          x = 864,
          y = 533,
          width = 24,
@@ -373,7 +373,7 @@ data:add_multi(
       },
       {
          name = "card_rank",
-         source = "interface.bmp",
+         source = "interface",
          x = 864,
          y = 565,
          width = 24,
@@ -384,7 +384,7 @@ data:add_multi(
       },
       {
          name = "card_pile",
-         source = "interface.bmp",
+         source = "interface",
          x = 528,
          y = 216,
          width = 80,
@@ -394,7 +394,7 @@ data:add_multi(
       },
       {
          name = "anim_bash",
-         source = "interface.bmp",
+         source = "interface",
          x = 816,
          y = 432,
          width = 48,
@@ -403,7 +403,7 @@ data:add_multi(
       },
       {
          name = "anim_slash",
-         source = "interface.bmp",
+         source = "interface",
          x = 1008,
          y = 432,
          width = 48,
@@ -412,7 +412,7 @@ data:add_multi(
       },
       {
          name = "arrow_left",
-         source = "interface.bmp",
+         source = "interface",
          x = 312,
          y = 336,
          width = 24,
@@ -420,7 +420,7 @@ data:add_multi(
       },
       {
          name = "arrow_right",
-         source = "interface.bmp",
+         source = "interface",
          x = 336,
          y = 336,
          width = 24,
@@ -428,7 +428,7 @@ data:add_multi(
       },
       {
          name = "ime_status_none",
-         source = "interface.bmp",
+         source = "interface",
          x = 72,
          y = 336,
          width = 24,
@@ -436,7 +436,7 @@ data:add_multi(
       },
       {
          name = "ally_health_bar",
-         source = "interface.bmp",
+         source = "interface",
          x = 432,
          y = 517,
          width = 48,
@@ -444,7 +444,7 @@ data:add_multi(
       },
       {
          name = "shadow_deco",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 656,
          width = 48,
@@ -454,7 +454,7 @@ data:add_multi(
       },
       {
          name = "shadow",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 656,
          width = 24,
@@ -466,7 +466,7 @@ data:add_multi(
       },
       {
          name = "shadow_spot",
-         source = "interface.bmp",
+         source = "interface",
          x = 144,
          y = 656,
          width = 24,
@@ -478,7 +478,7 @@ data:add_multi(
       },
       {
          name = "shadow_edges",
-         source = "interface.bmp",
+         source = "interface",
          x = 144,
          y = 752,
          width = 48,
@@ -489,7 +489,7 @@ data:add_multi(
       },
       {
          name = "politics_law",
-         source = "interface.bmp",
+         source = "interface",
          x = 288,
          y = 360,
          width = 24,
@@ -498,7 +498,7 @@ data:add_multi(
       },
       {
          name = "radar_deco",
-         source = "interface.bmp",
+         source = "interface",
          x = 64,
          y = 288,
          width = 50,
@@ -506,7 +506,7 @@ data:add_multi(
       },
       {
          name = "inventory_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 288,
          y = 48,
          width = 48,
@@ -515,7 +515,7 @@ data:add_multi(
       },
       {
          name = "message_symbol",
-         source = "interface.bmp",
+         source = "interface",
          x = 600,
          y = 360,
          width = 16,
@@ -524,7 +524,7 @@ data:add_multi(
       },
       {
          name = "message_window",
-         source = "interface.bmp",
+         source = "interface",
          x = 496,
          y = 528,
          width = 192,
@@ -532,7 +532,7 @@ data:add_multi(
       },
       {
          name = "message_window_contents",
-         source = "interface.bmp",
+         source = "interface",
          x = 496,
          y = 536,
          width = 192,
@@ -540,7 +540,7 @@ data:add_multi(
       },
       {
          name = "message_window_border",
-         source = "interface.bmp",
+         source = "interface",
          x = 496,
          y = 528,
          width = 192,
@@ -548,7 +548,7 @@ data:add_multi(
       },
       {
          name = "mef_subref",
-         source = "interface.bmp",
+         source = "interface",
          x = 144,
          y = 624,
          width = 32,
@@ -557,7 +557,7 @@ data:add_multi(
       },
       {
          name = "light",
-         source = "interface.bmp",
+         source = "interface",
          x = 192,
          y = 704,
          width = 48,
@@ -566,7 +566,7 @@ data:add_multi(
       },
       {
          name = "body_part_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 600,
          y = 336,
          width = 24,
@@ -575,7 +575,7 @@ data:add_multi(
       },
       {
          name = "trait_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 384,
          y = 336,
          width = 24,
@@ -584,7 +584,7 @@ data:add_multi(
       },
       {
          name = "attribute_icon",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 376,
          width = 16,
@@ -593,7 +593,7 @@ data:add_multi(
       },
       {
          name = "hud_bar",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 440,
          width = 192,
@@ -601,7 +601,7 @@ data:add_multi(
       },
       {
          name = "hud_minimap",
-         source = "interface.bmp",
+         source = "interface",
          x = 120,
          y = 504,
          width = 136,
@@ -609,7 +609,7 @@ data:add_multi(
       },
       {
          name = "weather_particle",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 600,
          width = 8,
@@ -619,7 +619,7 @@ data:add_multi(
       },
       {
          name = "minimap_scratch",
-         source = "interface.bmp",
+         source = "interface",
          x = 688,
          y = 528,
          width = 120,
@@ -627,7 +627,7 @@ data:add_multi(
       },
       {
          name = "window",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 48,
          width = 264,
@@ -635,7 +635,7 @@ data:add_multi(
       },
       {
          name = "window_frame",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 240,
          width = 16,
@@ -643,7 +643,7 @@ data:add_multi(
       },
       {
          name = "hp_bar_ally",
-         source = "interface.bmp",
+         source = "interface",
          x = 432,
          y = 517,
          width = 48,
@@ -651,7 +651,7 @@ data:add_multi(
       },
       {
          name = "hp_bar_other",
-         source = "interface.bmp",
+         source = "interface",
          x = 432,
          y = 513,
          width = 48,
@@ -659,7 +659,7 @@ data:add_multi(
       },
       {
          name = "spot_light",
-         source = "interface.bmp",
+         source = "interface",
          x = 800,
          y = 112,
          width = 144,
@@ -667,7 +667,7 @@ data:add_multi(
       },
       {
          name = "hud_hp_bar",
-         source = "interface.bmp",
+         source = "interface",
          x = 312,
          y = 520,
          width = 100,
@@ -675,7 +675,7 @@ data:add_multi(
       },
       {
          name = "hud_mp_bar",
-         source = "interface.bmp",
+         source = "interface",
          x = 432,
          y = 520,
          width = 100,
@@ -683,7 +683,7 @@ data:add_multi(
       },
       {
          name = "attributes_bar",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 440,
          width = 64,
@@ -691,7 +691,7 @@ data:add_multi(
       },
       {
          name = "clock",
-         source = "interface.bmp",
+         source = "interface",
          x = 448,
          y = 408,
          width = 120,
@@ -699,7 +699,7 @@ data:add_multi(
       },
       {
          name = "status_ailment_bar",
-         source = "interface.bmp",
+         source = "interface",
          x = 0,
          y = 416,
          width = 80,
@@ -707,7 +707,7 @@ data:add_multi(
       },
       {
          name = "caption",
-         source = "interface.bmp",
+         source = "interface",
          x = 672,
          y = 477,
          width = 128,
@@ -715,7 +715,7 @@ data:add_multi(
       },
       {
          name = "list_scratch",
-         source = "interface.bmp",
+         source = "interface",
          x = 264,
          y = 96,
          width = 480,
@@ -723,7 +723,7 @@ data:add_multi(
       },
       {
          name = "list_bullet",
-         source = "interface.bmp",
+         source = "interface",
          x = 48,
          y = 360,
          width = 16,
@@ -731,7 +731,7 @@ data:add_multi(
       },
       {
          name = "item_enchant_mark",
-         source = "interface.bmp",
+         source = "interface",
          x = 72,
          y = 336,
          width = 24,
@@ -740,7 +740,7 @@ data:add_multi(
       },
       {
          name = "scene_title",
-         source = "interface.bmp",
+         source = "interface",
          x = 456,
          y = 144,
          width = 344,
@@ -751,7 +751,7 @@ data:add_multi(
 
       {
          name = "deco_cm",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -762,7 +762,7 @@ data:add_multi(
       -- Blending menu
       {
          name = "deco_blend",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -771,7 +771,7 @@ data:add_multi(
       },
       {
          name = "deco_blend_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 288,
          width = 480,
@@ -779,7 +779,7 @@ data:add_multi(
       },
       {
          name = "deco_blend_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 1040,
          y = 96,
          width = 160,
@@ -787,7 +787,7 @@ data:add_multi(
       },
       {
          name = "deco_blend_c",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 80,
@@ -797,7 +797,7 @@ data:add_multi(
       -- Inventory menu
       {
          name = "deco_inv",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -806,7 +806,7 @@ data:add_multi(
       },
       {
          name = "deco_inv_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 144,
@@ -814,7 +814,7 @@ data:add_multi(
       },
       {
          name = "deco_inv_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 144,
          width = 48,
@@ -822,7 +822,7 @@ data:add_multi(
       },
       {
          name = "deco_inv_c",
-         source = "interface.bmp",
+         source = "interface",
          x = 1008,
          y = 144,
          width = 48,
@@ -830,7 +830,7 @@ data:add_multi(
       },
       {
          name = "deco_inv_d",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 216,
          width = 48,
@@ -840,7 +840,7 @@ data:add_multi(
       -- Help menu
       {
          name = "deco_help",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -849,7 +849,7 @@ data:add_multi(
       },
       {
          name = "deco_help_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 48,
@@ -857,7 +857,7 @@ data:add_multi(
       },
       {
          name = "deco_help_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 144,
          width = 96,
@@ -867,7 +867,7 @@ data:add_multi(
       -- Appearance menu
       {
          name = "deco_mirror",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -876,7 +876,7 @@ data:add_multi(
       },
       {
          name = "deco_mirror_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 48,
@@ -886,7 +886,7 @@ data:add_multi(
       -- Town menu
       {
          name = "deco_politics",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -894,7 +894,7 @@ data:add_multi(
       },
       {
          name = "deco_politics_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 128,
@@ -902,7 +902,7 @@ data:add_multi(
       },
       {
          name = "deco_politics_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 288,
          width = 144,
@@ -912,7 +912,7 @@ data:add_multi(
       -- Quest board menu
       {
          name = "deco_board",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -921,7 +921,7 @@ data:add_multi(
       },
       {
          name = "deco_board_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 128,
@@ -929,7 +929,7 @@ data:add_multi(
       },
       {
          name = "deco_board_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 240,
          width = 48,
@@ -939,7 +939,7 @@ data:add_multi(
       -- Equipment menu
       {
          name = "deco_wear",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -948,7 +948,7 @@ data:add_multi(
       },
       {
          name = "deco_wear_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 96,
@@ -956,7 +956,7 @@ data:add_multi(
       },
       {
          name = "deco_wear_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 216,
          width = 72,
@@ -966,7 +966,7 @@ data:add_multi(
       -- Feats menu
       {
          name = "deco_feat",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -975,7 +975,7 @@ data:add_multi(
       },
       {
          name = "deco_feat_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 48,
@@ -983,7 +983,7 @@ data:add_multi(
       },
       {
          name = "deco_feat_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 1008,
          y = 96,
          width = 48,
@@ -991,7 +991,7 @@ data:add_multi(
       },
       {
          name = "deco_feat_c",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 288,
          width = 96,
@@ -999,7 +999,7 @@ data:add_multi(
       },
       {
          name = "deco_feat_d",
-         source = "interface.bmp",
+         source = "interface",
          x = 1008,
          y = 240,
          width = 96,
@@ -1009,7 +1009,7 @@ data:add_multi(
       -- Skills menu
       {
          name = "deco_skill",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -1018,7 +1018,7 @@ data:add_multi(
       },
       {
          name = "deco_skill_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 72,
@@ -1026,7 +1026,7 @@ data:add_multi(
       },
       {
          name = "deco_skill_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 1032,
          y = 96,
          width = 102,
@@ -1036,7 +1036,7 @@ data:add_multi(
       -- Spells menu
       {
          name = "deco_spell",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -1045,7 +1045,7 @@ data:add_multi(
       },
       {
          name = "deco_spell_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 72,
@@ -1053,7 +1053,7 @@ data:add_multi(
       },
       {
          name = "deco_spell_b",
-         source = "interface.bmp",
+         source = "interface",
          x = 1032,
          y = 96,
          width = 72,
@@ -1061,8 +1061,8 @@ data:add_multi(
       },
 
       {
-         name = "atlas_character",
-         source = "character.bmp",
+         name = "character",
+         source = "character",
          x = 0,
          y = 0,
          width = 1584,
@@ -1071,7 +1071,7 @@ data:add_multi(
       },
       {
          name = "buff_icon",
-         source = "character.bmp",
+         source = "character",
          x = 0,
          y = 0,
          width = 32,
@@ -1084,7 +1084,7 @@ data:add_multi(
       -- Card menu
       {
          name = "deco_card",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 240,
@@ -1093,11 +1093,205 @@ data:add_multi(
       },
       {
          name = "deco_card_a",
-         source = "interface.bmp",
+         source = "interface",
          x = 960,
          y = 96,
          width = 128,
          height = 128,
       },
+   }
+)
+
+-- ATX backgrounds
+local function atx_background(id, width, height)
+   return {
+      name = id,
+      source = "atx_background",
+      x = 0,
+      y = 0,
+      width = width,
+      height = height,
+      file = "__BUILTIN__/graphic/" .. id .. ".bmp",
+   }
+end
+
+local function background_card(id)
+   return {
+      name = id,
+      source = "atx_background",
+      x = 0,
+      y = 0,
+      width = 180,
+      height = 300,
+      file = "__BUILTIN__/graphic/" .. id .. ".bmp",
+   }
+end
+
+data:add_multi(
+   "core.asset",
+   {
+      {
+         name = "atx_background",
+         source = "atx_background",
+         x = 0,
+         y = 0,
+         width = 240,
+         height = 160,
+      },
+
+      background_card("g1"),
+      background_card("g2"),
+      background_card("g3"),
+      background_card("g4"),
+      background_card("g5"),
+      background_card("g6"),
+      background_card("g7"),
+      background_card("g8"),
+
+      atx_background("bg21", 240, 160),
+      atx_background("bg20", 240, 160),
+      atx_background("bg19", 240, 160),
+      atx_background("bg18", 240, 160),
+      atx_background("bg13", 240, 160),
+      atx_background("bg17", 240, 160),
+      atx_background("bg15", 240, 160),
+      atx_background("bg16", 240, 160),
+      atx_background("bg14", 240, 160),
+
+      atx_background("bg1", 640, 480),
+      atx_background("bg10", 640, 480),
+      atx_background("bg11", 640, 480),
+      atx_background("bg12", 640, 480),
+      atx_background("bg2", 640, 480),
+      atx_background("bg22", 640, 480),
+      atx_background("bg23", 640, 480),
+      atx_background("bg24", 640, 480),
+      atx_background("bg25", 640, 480),
+      atx_background("bg26", 640, 480),
+      atx_background("bg27", 640, 480),
+      atx_background("bg29", 640, 480),
+      atx_background("bg3", 640, 480),
+      atx_background("bg30", 640, 480),
+      atx_background("bg31", 640, 480),
+      atx_background("bg32", 640, 480),
+      atx_background("bg33", 640, 480),
+      atx_background("bg34", 640, 480),
+      atx_background("bg35", 640, 480),
+      atx_background("bg36", 640, 480),
+      atx_background("bg4", 640, 480),
+      atx_background("bg5", 640, 480),
+      atx_background("bg6", 640, 480),
+      atx_background("bg7", 640, 480),
+      atx_background("bg8", 640, 480),
+      atx_background("bg9", 640, 480),
+
+      atx_background("bg_altar", 600, 400),
+      atx_background("bg_card", 800, 600),
+      atx_background("bg_night", 640, 480),
+      atx_background("title", 800, 600),
+      atx_background("void", 800, 600),
+      atx_background("paper", 400, 300),
+      atx_background("book", 736, 448),
+
+      {
+         name = "lang",
+         source = "atx_background",
+         x = 0,
+         y = 0,
+         width = 480,
+         height = 100,
+         file = "__BUILTIN__/graphic/lang.bmp",
+         load_type = "Buffer",
+      },
+   }
+)
+
+-- Backgrounds
+local function background(id, width, height)
+   return {
+      name = id,
+      source = "background",
+      x = 0,
+      y = 0,
+      width = width,
+      height = height,
+      file = "__BUILTIN__/graphic/" .. id .. ".bmp",
+      load_type = "BufferDeferred",
+   }
+end
+
+data:add_multi(
+   "core.asset",
+   {
+      {
+         name = "background",
+         source = "background",
+         x = 0,
+         y = 0,
+         width = 640,
+         height = 480,
+      },
+
+      background("bg_re10", 360, 200),
+      background("bg_re11", 310, 180),
+      background("bg_re12", 280, 160),
+      background("bg_re13", 360, 239),
+      background("bg_re14", 380, 245),
+      background("bg_re15", 320, 211),
+      background("bg_re1", 360, 140),
+      background("bg_re2", 260, 173),
+      background("bg_re3", 380, 195),
+      background("bg_re4", 360, 140),
+      background("bg_re5", 380, 180),
+      background("bg_re6", 360, 180),
+      background("bg_re7", 400, 200),
+      background("bg_re8", 320, 160),
+      background("bg_re9", 320, 180),
+   }
+)
+
+data:add_multi(
+   "core.asset",
+   {
+      {
+         name = "ie_sheet",
+         source = "background",
+         x = 0,
+         y = 0,
+         width = 700,
+         height = 400,
+         file = "__BUILTIN__/graphic/ie_sheet.bmp",
+         load_type = "BufferDeferred",
+      },
+      {
+         name = "ie_chat",
+         source = "background",
+         x = 0,
+         y = 0,
+         width = 600,
+         height = 380,
+         file = "__BUILTIN__/graphic/ie_chat.bmp",
+         load_type = "BufferDeferred",
+      },
+      {
+         name = "ie_scroll",
+         source = "background",
+         x = 0,
+         y = 0,
+         width = 600,
+         height = 380,
+         file = "__BUILTIN__/graphic/ie_scroll.bmp",
+         load_type = "BufferDeferred",
+      },
+      {
+         name = "interface2",
+         source = "background",
+         x = 0,
+         y = 0,
+         width = 600,
+         height = 380,
+         file = "__BUILTIN__/graphic/interface2.bmp",
+         load_type = "BufferDeferred",
+      }
    }
 )

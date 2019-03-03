@@ -48,8 +48,7 @@ bool UIMenuSkills::init()
     page = commark(0) / 1000;
 
     snd("core.skill");
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 960, 96, false);
+    asset_load("deco_skill");
     gsel(0);
     windowshadow = 1;
 

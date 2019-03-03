@@ -1,5 +1,7 @@
 #include "ui_menu_keybindings.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_asset.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../keybind/keybind_manager.hpp"
@@ -140,10 +142,9 @@ void UIMenuKeybindings::_draw_background()
     }
     if (mode == 10)
     {
-        gsel(4);
         gmode(0);
-        picload(filesystem::dir::graphic() / u8"title.bmp", 0, 0, false);
-        gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+        asset_load("title");
+        elona::draw("title", 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -158,16 +159,15 @@ bool UIMenuKeybindings::init()
     pagesize = 15;
     cs = 0;
 
-    wx = (windoww - 700) / 2 + inf_screenx;
-    wy = winposy(400) - 10;
-    ww = 700;
-    wh = 400;
-
     _draw_background();
 
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp", 0, 0, true);
+    const auto& info = asset_load("ie_sheet");
     gsel(0);
+
+    wx = (windoww - info.width) / 2 + inf_screenx;
+    wy = winposy(info.height) - 10;
+    ww = info.width;
+    wh = info.height;
 
     _load_keybindings();
 

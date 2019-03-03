@@ -62,10 +62,6 @@ void load_character_sprite()
     usernpcmax = 0;
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
-
-    // buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
-    // picload(filesystem::dir::graphic() / u8"character.bmp", 0, 0, false);
-    // picload(filesystem::dir::graphic() / u8"bufficon.png", 640, 1120, false);
 }
 
 

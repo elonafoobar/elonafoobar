@@ -4,9 +4,13 @@
 namespace
 {
 
-std::unordered_map<std::string, int> window_id_table = {{"item.bmp", 1},
-                                                        {"interface.bmp", 3},
-                                                        {"character.bmp", 5}};
+std::unordered_map<std::string, int> window_id_table = {
+    {"item", 1},
+    {"interface", 3},
+    {"atx_background", 4},
+    {"character", 5},
+    {"background", 7},
+};
 
 }
 
@@ -21,8 +25,9 @@ namespace LuaEnums
 EnumMap<AssetLoadType> AssetLoadTypeTable(
     "AssetLoadType",
     {
-        {"Buffer", AssetLoadType::Buffer},
         {"Startup", AssetLoadType::Startup},
+        {"Buffer", AssetLoadType::Buffer},
+        {"BufferDeferred", AssetLoadType::BufferDeferred},
         {"None", AssetLoadType::None},
     });
 }
@@ -35,7 +40,7 @@ const constexpr char* data::LuaLazyCacheTraits<AssetDB>::type_id;
 
 
 
-AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
+AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
 {
     DATA_REQ(source, std::string);
     DATA_REQ(x, int);
@@ -60,7 +65,6 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
     {
         file_path = filesystem::resolve_path_for_mod(*file);
     }
-    std::cerr << id << std::endl;
 
     return AssetData{
         window_id, x, y, width, height, count_x, count_y, file_path, load_type};
