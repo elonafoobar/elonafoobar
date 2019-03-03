@@ -35,7 +35,7 @@ const constexpr char* data::LuaLazyCacheTraits<AssetDB>::type_id;
 
 
 
-AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
+AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     DATA_REQ(source, std::string);
     DATA_REQ(x, int);
@@ -58,8 +58,9 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
     optional<fs::path> file_path = none;
     if (file)
     {
-        file_path = filesystem::dir::for_mod(*file);
+        file_path = filesystem::resolve_path_for_mod(*file);
     }
+    std::cerr << id << std::endl;
 
     return AssetData{
         window_id, x, y, width, height, count_x, count_y, file_path, load_type};

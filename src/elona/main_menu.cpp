@@ -410,7 +410,7 @@ MainMenuResult main_menu_new_game()
     picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
     gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
     load_background_variants(2);
-    asset_load("deco_cm.bmp");
+    asset_load("deco_cm");
     gsel(0);
     return MainMenuResult::character_making_select_race;
 }

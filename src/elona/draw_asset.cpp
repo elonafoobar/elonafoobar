@@ -35,6 +35,8 @@ void init_assets()
         const auto& data = pair.second;
         if (data.load_type == AssetLoadType::Buffer)
         {
+            std::cerr << "buffer " << name << data.window_id << " "
+                      << data.width << " " << data.height << std::endl;
             buffer(data.window_id, data.width, data.height);
             if (data.file)
             {
@@ -49,6 +51,7 @@ void init_assets()
         const auto& data = pair.second;
         if (data.file && data.load_type == AssetLoadType::Startup)
         {
+            std::cerr << "startup " << name << std::endl;
             asset_load(name);
         }
     }
