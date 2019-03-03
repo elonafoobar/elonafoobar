@@ -47,10 +47,12 @@ class StructInfo:
 template <typename Archive>
 void serialize(Archive& _putit_archive_)
 {
+#define PUTIT_SERIALIZE_FIELD(field_name) _putit_archive_(this->field_name, #field_name)
 """)
             for field in self.fields:
-                file.write("    _putit_archive_(this->{});\n".format(field))
+                file.write("    PUTIT_SERIALIZE_FIELD({});\n".format(field))
             file.write("""}
+#undef PUTIT_SERIALIZE_FIELD
 /* clang-format on */
 """)
 

@@ -2,9 +2,11 @@
 template <typename Archive>
 void serialize(Archive& _putit_archive_)
 {
-    _putit_archive_(this->current_level);
-    _putit_archive_(this->original_level);
-    _putit_archive_(this->experience);
-    _putit_archive_(this->potential);
+#define PUTIT_SERIALIZE_FIELD(field_name) _putit_archive_(this->field_name, #field_name)
+    PUTIT_SERIALIZE_FIELD(current_level);
+    PUTIT_SERIALIZE_FIELD(original_level);
+    PUTIT_SERIALIZE_FIELD(experience);
+    PUTIT_SERIALIZE_FIELD(potential);
 }
+#undef PUTIT_SERIALIZE_FIELD
 /* clang-format on */
