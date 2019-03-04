@@ -1,59 +1,20 @@
 #include "filesystem.hpp"
 #include "defines.hpp"
 
-// For get_executable_path()
-#if defined(ELONA_OS_WINDOWS)
-#include <windows.h> // GetModuleFileName
-#elif defined(ELONA_OS_MACOS)
-#include <limits.h> // PATH_MAX
-#include <mach-o/dyld.h> // _NSGetExecutablePath
-#elif defined(ELONA_OS_LINUX)
-#include <limits.h> // PATH_MAX
-#include <unistd.h> // readlink
-#elif defined(ELONA_OS_ANDROID)
-#include "SDL_system.h" // SDL_AndroidGetExternalStoragePath
-#else
-#error Unsupported OS
-#endif
-
 
 
 namespace
 {
 
-fs::path get_executable_path()
+fs::path get_executable_dir()
 {
     static auto cache = ([] {
-#if defined(ELONA_OS_WINDOWS)
-        TCHAR buf[1024 + 1];
-        size_t buf_size = sizeof(buf);
-        if (GetModuleFileName(nullptr, buf, buf_size) == 0)
+        auto exe_name = filepathutil::get_executable_path();
+        if (!exe_name)
         {
             throw std::runtime_error(u8"Error: fail to get excutable path");
         }
-#elif defined(ELONA_OS_MACOS)
-        char buf[PATH_MAX + 1];
-        uint32_t buf_size = sizeof(buf);
-        if (_NSGetExecutablePath(buf, &buf_size) != 0)
-        {
-            throw std::runtime_error(u8"Error: fail to get excutable path");
-        }
-#elif defined(ELONA_OS_LINUX)
-        char buf[PATH_MAX + 1];
-        size_t buf_size = sizeof(buf);
-        if (readlink("/proc/self/exe", buf, buf_size) == -1)
-        {
-            throw std::runtime_error(u8"Error: fail to get excutable path");
-        }
-#elif defined(ELONA_OS_ANDROID)
-        std::string external_storage_path(SDL_AndroidGetExternalStoragePath());
-        if (external_storage_path.back() != '/')
-            external_storage_path += '/';
-        const char* buf = external_storage_path.c_str();
-#else
-#error Unsupported OS
-#endif
-        return fs::canonical(fs::path{buf}.remove_filename());
+        return fs::canonical(fs::path{*exe_name}.remove_filename());
     })();
 
     return cache;
@@ -194,7 +155,7 @@ void set_profile_directory(const fs::path& profile_dir)
 
 fs::path path(const std::string& str)
 {
-    return get_executable_path() / filepathutil::u8path(str);
+    return get_executable_dir() / filepathutil::u8path(str);
 }
 
 
