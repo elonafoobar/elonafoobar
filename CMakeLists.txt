@@ -300,6 +300,10 @@ else()
   include_directories(${SDL2_MIXER_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
+  if(LINUX)
+    target_link_libraries(${PROJECT_NAME} dl)
+  endif()
+
   set(GENERAL_OPTIONS)
   set(DEBUG_OPTIONS)
   set(RELEASE_OPTIONS)
