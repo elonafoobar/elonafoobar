@@ -3,21 +3,16 @@
 module "GUI"
 
 --- Prints some text in the HUD message window.
--- @tparam string message the message to print
+--  @tparam string message the message to print
+--  @function txt
 function txt(message) end
 
---- Starts a new message line in the HUD message window.
-function txtnew() end
+--- Prints some text in the HUD message window.
+--  @tparam string message the message to print
+--  @tparam Color color of the message
+--  @function txt
+function txt(message, color) end
 
---- Sets the color of the text printed with GUI.txt.
---- Valid colors are 0 - 20.
---- 0 - white
---- 1 - green
---- 2 - red
---- 3 - purple
---- 4 - tan
---- 5 - yellow
---- 6 - gray
--- @tparam num color the color to set
--- @see GUI.txt
-function txt_color(color) end
+--- Starts a new message line in the HUD message window.
+--  @function txtnew
+function txtnew() end

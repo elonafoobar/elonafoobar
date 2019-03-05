@@ -13,11 +13,23 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Logs a message to log.txt.
+ * @tparam string message the message to log
+ */
 void LuaApiDebug::log(const std::string& message)
 {
     ELONA_LOG("lua.debug") << message;
 }
 
+/**
+ * @luadoc
+ *
+ * Reports an error to the game console and log file.
+ * @tparam string message the error message to report
+ */
 void LuaApiDebug::report_error(const std::string& message)
 {
     std::istringstream sstream(message);
@@ -33,6 +45,11 @@ void LuaApiDebug::report_error(const std::string& message)
     std::cerr << "Script error: " << message << std::endl;
 }
 
+/**
+ * @luadoc
+ *
+ * Dumps all characters to the log.
+ */
 void LuaApiDebug::dump_characters()
 {
     ELONA_LOG("lua.debug") << "===== Charas =====";
@@ -45,6 +62,12 @@ void LuaApiDebug::dump_characters()
     }
 }
 
+
+/**
+ * @luadoc
+ *
+ * Dumps all items to the log.
+ */
 void LuaApiDebug::dump_items()
 {
     ELONA_LOG("lua.debug") << "===== Items  =====";

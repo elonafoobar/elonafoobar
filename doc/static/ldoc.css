@@ -4,7 +4,7 @@ html{background-color:#FAFAF5;color:#414142;font-family:'Lucida Grande',Arial,sa
 a{text-decoration:none;border-style:none;outline:none!important}
 a:link{color:#1FA2D6;text-decoration:none}
 a:visited{color:#1FA2D6;text-decoration:none}
-a:hover{color:#FAFAFA;text-decoration:none}
+a:hover{color:#D05;text-decoration:none}
 a:active{color:#FAFAFA;text-decoration:none}
 h1{font-size:2.5rem}
 h2{font-size:2.3rem}
@@ -73,7 +73,7 @@ table,th,td{padding:2px}
 .nav .nav a{color:#1FA2D6}
 .nav .nav a:link{color:#1FA2D6}
 .nav .nav a:visited{color:#1FA2D6}
-.nav .nav a:hover{color:#FAFAFA;text-decoration:none}
+.nav .nav a:hover{color:#2FA2D6;text-decoration:none}
 .nav .nav-item.active>a:hover{color:#FAFAFA;text-decoration:none}
 .nav .nav-item.active{margin-left:0}
 .nav .nav a:active{color:#FAFAFA}
@@ -115,7 +115,6 @@ table.module_list td.summary {vertical-align: top}
 .section-title a:link{color:#575353}
 .section-title a:visited{color:#575353}
 .section-title a:hover{color:#1FA2D6}
-.section-title a:active{color:#1FA2D6}
 
 .section-body-container dd {
     margin: 1.0rem 0 1.5rem 0;

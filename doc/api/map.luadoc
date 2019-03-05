@@ -1,54 +1,71 @@
 --- Functions for working with the current map.
---- There is only ever one map loaded at a given time.
+--  There is only ever one map loaded at a given time.
 --  @usage local Map = Elona.require("Map")
 module "Map"
 
 --- Returns the current map's width. This is only valid until the map changes.
--- @treturn num the current map's width in tiles
+--  @treturn num the current map's width in tiles
+--  @function width
 function width() end
 
 --- Returns the current map's height. This is only valid until the map changes.
--- @treturn num the current map's height in tiles
+--  @treturn num the current map's height in tiles
+--  @function height
 function height() end
 
+--- Returns the current map's ID.
+--  @treturn num the current map's ID
+--  @function id
+function id() end
+
+--- Returns true if this map is the overworld.
+--  @treturn bool
+--  @function is_overworld
+function is_overworld() end
+
 --- Checks if a position is inside the map. It might be blocked by something.
--- @tparam LuaPosition position (const) the map position
--- @treturn bool true if the position is inside the map.
+--  @tparam LuaPosition position (const) the map position
+--  @treturn bool true if the position is inside the map.
+--  @function valid
 function valid(position) end
 
 --- Checks if a position is accessable by walking.
--- @tparam LuaPosition position (const) the map position
--- @treturn bool true if the position is accessable by walking
+--  @tparam LuaPosition position (const) the map position
+--  @treturn bool true if the position is accessable by walking
+--  @function can_access
 function can_access(position) end
 
 --- Given a position, returns a position that is bounded within the current map.
--- @tparam LuaPosition position (const) the map position
--- @treturn LuaPosition the bounded position
+--  @tparam LuaPosition position (const) the map position
+--  @treturn LuaPosition the bounded position
+--  @function bound_within
 function bound_within(position) end
 
---- Returns a random position in the current map. It might be blocked by something
--- @treturn LuaPosition a random position
+--- Returns a random position in the current map. It might be blocked by
+--  something.
+--  @treturn LuaPosition a random position
+--  @function random_pos
 function random_pos() end
 
 --- Generates a random tile ID from the current map's tileset.
---- Tile kinds can contain one of several different tile variations.
--- @tparam Enums.TileKind kind the tile kind to set
--- @treturn num the generated tile ID
--- @see Enums.TileKind
-function generate_tile(kind) end
+--  Tile kinds can contain one of several different tile variations.
+--  @tparam Enums.TileKind tile_kind the tile kind to set
+--  @treturn num the generated tile ID
+--  @see Enums.TileKind
+--  @function generate_tile
+function generate_tile(tile_kind) end
 
---- Sets a tile of the current map. Only checks if the position is valid, not things like blocking objects.
--- @tparam LuaPosition position (const) the map position
--- @tparam num id the tile ID to set
--- @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
+--- Sets a tile of the current map. Only checks if the position is valid, not
+--  things like blocking objects.
+--  @tparam LuaPosition position (const) the map position
+--  @tparam num id the tile ID to set
+--  @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
+--  @function set_tile
 function set_tile(position, id) end
 
 --- Sets the player's memory of a tile position to the given tile kind.
--- @tparam LuaPosition position (const) the map position
--- @tparam num id the tile ID to set
--- @usage Map.set_tile_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
-function set_memory(position, id) end
-
---- Returns true if the player is in an overworld map.
--- @treturn bool true if the player is in the overworld
-function is_overworld() end
+--  @tparam LuaPosition position (const) the map position
+--  @tparam num id the tile ID to set
+--  @usage Map.set_tile_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
+--  @function set_tile_memory
+function set_tile_memory(position, id) end

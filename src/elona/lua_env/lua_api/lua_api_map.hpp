@@ -8,6 +8,12 @@ enum class TileKind;
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for working with the current map.
+ * There is only ever one map loaded at a given time.
+ */
 namespace LuaApiMap
 {
 int width();

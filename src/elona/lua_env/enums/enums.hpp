@@ -10,6 +10,15 @@ namespace elona
 {
 namespace lua
 {
+
+/**
+ * @luadoc
+ *
+ * Enumerations for various data types. All enum variants take the
+ * name of the variant as a string for its value. This means that
+ * anywhere an enum value is required, you can pass a string with its
+ * name instead of using the <code>Enums</code> table.
+ */
 namespace LuaEnums
 {
 extern EnumMap<DamageSource> DamageSourceTable;

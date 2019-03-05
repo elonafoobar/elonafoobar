@@ -8,26 +8,57 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Returns the current map's width. This is only valid until the map changes.
+ * @treturn num the current map's width in tiles
+ */
 int LuaApiMap::width()
 {
     return map_data.width;
-}
+} // namespace lua
 
+/**
+ * @luadoc
+ *
+ * Returns the current map's height. This is only valid until the map changes.
+ * @treturn num the current map's height in tiles
+ */
 int LuaApiMap::height()
 {
     return map_data.height;
 }
 
+/**
+ * @luadoc
+ *
+ * Returns the current map's ID.
+ * @treturn num the current map's ID
+ */
 int LuaApiMap::id()
 {
     return game_data.current_map;
 }
 
+/**
+ * @luadoc
+ *
+ * Returns true if this map is the overworld.
+ * @treturn bool
+ */
 bool LuaApiMap::is_overworld()
 {
     return elona::map_data.atlas_number == 0;
 }
 
+/**
+ * @luadoc
+ *
+ * Checks if a position is inside the map. It might be blocked by something.
+ * @tparam LuaPosition position (const) the map position
+ * @treturn bool true if the position is inside the map.
+ */
 bool LuaApiMap::valid(const Position& position)
 {
     return LuaApiMap::valid_xy(position.x, position.y);
@@ -47,6 +78,13 @@ bool LuaApiMap::valid_xy(int x, int y)
     return elona::cell_data.at(x, y).chip_id_actual != 0;
 }
 
+/**
+ * @luadoc
+ *
+ * Checks if a position is accessable by walking.
+ * @tparam LuaPosition position (const) the map position
+ * @treturn bool true if the position is accessable by walking
+ */
 bool LuaApiMap::can_access(const Position& position)
 {
     return LuaApiMap::can_access_xy(position.x, position.y);
@@ -62,6 +100,13 @@ bool LuaApiMap::can_access_xy(int x, int y)
     return cellaccess != 0;
 }
 
+/**
+ * @luadoc
+ *
+ * Given a position, returns a position that is bounded within the current map.
+ * @tparam LuaPosition position (const) the map position
+ * @treturn LuaPosition the bounded position
+ */
 Position LuaApiMap::bound_within(const Position& position)
 {
     int x = clamp(position.x, 0, map_data.width - 1);
@@ -69,24 +114,50 @@ Position LuaApiMap::bound_within(const Position& position)
     return Position{x, y};
 }
 
+/**
+ * @luadoc
+ *
+ * Returns a random position in the current map. It might be blocked by
+ * something.
+ * @treturn LuaPosition a random position
+ */
 Position LuaApiMap::random_pos()
 {
     return LuaApiMap::bound_within(Position{elona::rnd(map_data.width - 1),
                                             elona::rnd(map_data.height - 1)});
 }
 
-int LuaApiMap::generate_tile(const EnumString& type_name)
+/**
+ * @luadoc
+ *
+ * Generates a random tile ID from the current map's tileset.
+ * Tile kinds can contain one of several different tile variations.
+ * @tparam Enums.TileKind tile_kind the tile kind to set
+ * @treturn num the generated tile ID
+ * @see Enums.TileKind
+ */
+int LuaApiMap::generate_tile(const EnumString& tile_kind)
 {
-    TileKind type = LuaEnums::TileKindTable.ensure_from_string(type_name);
-    return elona::cell_get_type(type);
+    TileKind tile_kind_value =
+        LuaEnums::TileKindTable.ensure_from_string(tile_kind);
+    return elona::cell_get_type(tile_kind_value);
 }
 
-void LuaApiMap::set_tile(const Position& position, int type)
+/**
+ * @luadoc
+ *
+ * Sets a tile of the current map. Only checks if the position is valid, not
+ * things like blocking objects.
+ * @tparam LuaPosition position (const) the map position
+ * @tparam num id the tile ID to set
+ * @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
+ */
+void LuaApiMap::set_tile(const Position& position, int id)
 {
-    LuaApiMap::set_tile_xy(position.x, position.y, type);
+    LuaApiMap::set_tile_xy(position.x, position.y, id);
 }
 
-void LuaApiMap::set_tile_xy(int x, int y, int type)
+void LuaApiMap::set_tile_xy(int x, int y, int id)
 {
     if (LuaApiMap::is_overworld())
     {
@@ -97,15 +168,23 @@ void LuaApiMap::set_tile_xy(int x, int y, int type)
         return;
     }
 
-    elona::cell_data.at(x, y).chip_id_actual = type;
+    elona::cell_data.at(x, y).chip_id_actual = id;
 }
 
-void LuaApiMap::set_tile_memory(const Position& position, int type)
+/**
+ * @luadoc
+ *
+ * Sets the player's memory of a tile position to the given tile kind.
+ * @tparam LuaPosition position (const) the map position
+ * @tparam num id the tile ID to set
+ * @usage Map.set_tile_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
+ */
+void LuaApiMap::set_tile_memory(const Position& position, int id)
 {
-    LuaApiMap::set_tile_memory_xy(position.x, position.y, type);
+    LuaApiMap::set_tile_memory_xy(position.x, position.y, id);
 }
 
-void LuaApiMap::set_tile_memory_xy(int x, int y, int type)
+void LuaApiMap::set_tile_memory_xy(int x, int y, int id)
 {
     if (LuaApiMap::is_overworld())
     {
@@ -116,7 +195,7 @@ void LuaApiMap::set_tile_memory_xy(int x, int y, int type)
         return;
     }
 
-    elona::cell_data.at(x, y).chip_id_memory = type;
+    elona::cell_data.at(x, y).chip_id_memory = id;
 }
 
 void LuaApiMap::bind(sol::table& api_table)

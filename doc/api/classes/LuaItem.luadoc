@@ -1,29 +1,58 @@
 --- Represents an item.
--- @classmod LuaItem
+--  @classmod LuaItem
+
+--- Removes this item. The item reference will no longer be valid for use.
+--  @function remove
+function remove() end
 
 --- [R] The index of this item in the global items array.
--- @tfield num index
+--  @tfield num index
 
 --- [R] The prototype ID of this item.
--- @tfield num id
-
---- [R] The fully qualified name of this item.
--- @tfield string name
+--  @tfield num id
 
 --- [RW] The item's position.
--- @tfield LuaPosition position
-
---- [RW] The number of items represented by this item.
--- @tfield num number
+--  @tfield num position
 
 --- [RW] The number of charges this item holds (for rods, bait, etc.)
--- @tfield num count
+--  @tfield num count
 
---- [RW] An integer used for indexing a subname of an item, like the ID for a recipe.
--- @tfield num subname
+--- [RW] The subname of this item. Controls the character index of
+--  corpses, etc.
+--  @tfield num subname
+
+--- [RW] The image ID of the item.
+--  @tfield num image
+
+--- [RW] The value of the item.
+--  @tfield num value
+
+--- [RW] A generic parameter.
+--  @tfield num param1
+
+--- [RW] A generic parameter.
+--  @tfield num param2
+
+--- [RW] A generic parameter.
+--  @tfield num param3
+
+--- [RW] A generic parameter.
+--  @tfield num param4
+
+--- [R] The new version prototype ID of the item.
+--  @tfield num new_id
+
+--- [R] The name of the item with article and number.
+--  @tfield string name
+
+--- [R] The name of the item without article and number.
+--  @tfield string basename
+
+--- [RW] The number of this item.
+--  @tfield num number
 
 --- [RW] The curse state of this item.
--- @tfield Enums.CurseState curse_state
+--  @tfield CurseState curse_state
 
---- [RW] The identification state of this item.
--- @tfield Enums.IdentifyState identify_state
+--- [RW] The identify state of this item.
+--  @tfield IdentifyState identify_state

@@ -7,6 +7,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ *@luadoc
+ *
+ * Functions for working with positions.
+ */
 namespace LuaApiPos
 {
 int dist(const Position&, const Position&);

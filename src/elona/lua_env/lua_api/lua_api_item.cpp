@@ -15,22 +15,46 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Returns the number of items on the ground.
+ * @treturn num the item count
+ */
 int LuaApiItem::count()
 {
     return inv_sum(-1);
 }
 
-bool LuaApiItem::has_enchantment(const LuaItemHandle handle, int id)
+
+/**
+ * @luadoc
+ *
+ * Checks if an item has an enchantment.
+ * @tparam LuaItem item (const) an item
+ * @tparam num enchantment_id the ID of the enchantment
+ * @treturn bool true if the item has the enchantment
+ */
+bool LuaApiItem::has_enchantment(const LuaItemHandle item, int enchantment_id)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
-    return encfindspec(item_ref.index, id);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(item);
+    return encfindspec(item_ref.index, enchantment_id);
 }
 
+/**
+ * @luadoc
+ *
+ * Returns the item's name.
+ * @tparam LuaItem item (const) the item
+ * @tparam[opt] num number Overrides the item number
+ * @tparam[opt] bool use_article Prepend articles like "the" to the item name
+ * @treturn string
+ */
 std::string
-LuaApiItem::itemname(LuaItemHandle handle, int number, bool needs_article)
+LuaApiItem::itemname(LuaItemHandle item, int number, bool use_article)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
-    return elona::itemname(item_ref.index, number, needs_article ? 0 : 1);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(item);
+    return elona::itemname(item_ref.index, number, use_article ? 0 : 1);
 }
 
 sol::optional<LuaItemHandle> LuaApiItem::create_with_id(
@@ -47,6 +71,17 @@ LuaApiItem::create_with_id_xy(int x, int y, const std::string& id)
         x, y, lua::lua->get_state()->create_table_with("id", id));
 }
 
+/**
+ * @luadoc create
+ *
+ * Attempts to create an item of the given quantity at a position.
+ * Returns the item stack if it was created, nil otherwise.
+ * @tparam LuaPosition position (const) position to create the item at
+ * @tparam num id the item prototype ID
+ * @tparam num number the number of items to create
+ * @treturn[1] LuaItem the created item stack
+ * @treturn[2] nil
+ */
 sol::optional<LuaItemHandle> LuaApiItem::create_with_number(
     const Position& position,
     const std::string& id,
@@ -168,6 +203,13 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
     }
 }
 
+/**
+ * @luadoc
+ *
+ * Retrieves the player's memory of an item type.
+ * @tparam num type
+ * @tparam string id
+ */
 int LuaApiItem::memory(int type, const std::string& id)
 {
     if (type < 0 || type > 2)
@@ -184,6 +226,16 @@ int LuaApiItem::memory(int type, const std::string& id)
     return itemmemory(type, data->id);
 }
 
+/**
+ * @luadoc
+ *
+ * Stacks an item in the inventory indicated. The item will no longer be valid
+ * for use.
+ * @tparam num inventory_id
+ * @tparam LuaItem handle
+ * @treturn[1] LuaItem The modified item stack on success
+ * @treturn[2] nil
+ */
 sol::optional<LuaItemHandle> LuaApiItem::stack(
     int inventory_id,
     LuaItemHandle handle)
@@ -208,6 +260,13 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
     return lua::handle(item);
 }
 
+/**
+ * @luadoc
+ *
+ * Returns the trading rate of a cargo item.
+ * @tparam LuaItem handle A cargo item
+ * @treturn num
+ */
 int LuaApiItem::trade_rate(LuaItemHandle handle)
 {
     auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);

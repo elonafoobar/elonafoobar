@@ -9,6 +9,23 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Prompts the player to select "yes" or "no".
+ * @tparam string message a message to display
+ * @treturn[1] bool true if "yes" was selected.
+ * @treturn[2] nil if canceled.
+ * @usage local result = Input.yes_no("Yes or no?")
+ *
+ * if result == nil then
+ *    GUI.txt("You canceled. ")
+ * elseif result then
+ *    GUI.txt("You chose yes. ")
+ * else
+ *    GUI.txt("You chose no. ")
+ * end
+ */
 sol::optional<bool> LuaApiInput::yes_no(const std::string& message)
 {
     txt(message + " ");
@@ -32,6 +49,26 @@ sol::optional<int> LuaApiInput::prompt_number(
     return LuaApiInput::prompt_number_with_initial(message, max, 0);
 }
 
+/**
+ * @luadoc prompt_number
+ *
+ * Prompts the player to choose a number. Raises an error if
+ * <code>max</code> is less than 0.
+ * @tparam string message a message to display
+ * @tparam num max the maximum number choosable
+ * @tparam[opt] num initial the initial value
+ * @treturn[1] num the number chosen
+ * @treturn[2] nil if canceled, or max < 0
+ * @usage local result = Input.prompt_number("Which character to spawn? ", 353)
+ * if result then
+ *    local chara = Chara.create(25, 25, result)
+ *    if chara then
+ *       GUI.txt("Spawned " .. chara.name .. ". ")
+ *    end
+ * else
+ *    GUI.txt("Never mind.")
+ * end
+ */
 sol::optional<int> LuaApiInput::prompt_number_with_initial(
     const std::string& message,
     int max,
@@ -54,6 +91,22 @@ sol::optional<int> LuaApiInput::prompt_number_with_initial(
     return elona::stoi(elona::inputlog(0));
 }
 
+/**
+ * @luadoc
+ *
+ * Prompts the player to enter text.
+ * @tparam string message a message to display
+ * @tparam bool is_cancelable whether or not the dialog can be canceled
+ * @treturn[1] string the text that was input
+ * @treturn[1] nil if canceled
+ * @usage local result = Input.prompt_text("What text?", true)
+ *
+ * if result then
+ *    GUI.txt("You typed \"" .. result .. "\". ")
+ * else
+ *    GUI.txt("Never mind. ")
+ * end
+ */
 sol::optional<std::string> LuaApiInput::prompt_text(
     const std::string& message,
     bool is_cancelable)
@@ -73,6 +126,24 @@ sol::optional<std::string> LuaApiInput::prompt_text(
     return elona::inputlog(0);
 }
 
+/**
+ * @luadoc
+ *
+ * Prompts the player to select from a list of choices. Raises an
+ * error if no arguments are provided.
+ * @tparam table choices a list of string choices
+ * @treturn[1] num the index of the item chosen, starting from 1
+ * @treturn[2] nil if canceled
+ * @usage GUI.txt("Which? ")
+ * local choices = {"First", "Second", "Third"}
+ * local result = Input.prompt_choice(choices)
+ *
+ * if result then
+ *    GUI.txt("You chose \"" .. choices[result] .. "\". ")
+ * else
+ *    GUI.txt("Never mind. ")
+ * end
+ */
 sol::optional<int> LuaApiInput::prompt_choice(sol::table choices)
 {
     Prompt prompt;

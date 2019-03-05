@@ -7,6 +7,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for working with characters.
+ */
 namespace LuaApiChara
 {
 bool is_alive(LuaCharacterHandle);

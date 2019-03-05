@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for working with items.
+ */
 namespace LuaApiItem
 {
 int count();

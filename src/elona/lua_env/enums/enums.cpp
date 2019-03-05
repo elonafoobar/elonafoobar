@@ -5,8 +5,18 @@ namespace elona
 namespace lua
 {
 
+/**
+ * NOTE: The declaration style of the enum tables here is important for
+ * documentation generation purposes. They must be defined as initializer lists.
+ */
 namespace LuaEnums
 {
+
+/**
+ * @luadoc
+ *
+ * A source of damage to be used with <code>LuaCharacter.damage_hp</code>.
+ */
 EnumMap<DamageSource> DamageSourceTable{
     "DamageSource",
     {
@@ -33,6 +43,12 @@ EnumMap<DamageSource> DamageSourceTable{
         {"Mochi", DamageSource::mochi},
     }};
 
+
+/**
+ * @luadoc
+ *
+ * A set of colors.
+ */
 EnumMap<ColorIndex> ColorIndexTable{
     "Color",
     {
@@ -62,6 +78,14 @@ EnumMap<ColorIndex> ColorIndexTable{
         {"RandomAny", ColorIndex::random_any},
     }};
 
+
+/**
+ * @luadoc
+ *
+ * The curse state of an item.
+ * @usage local item = Item.create(10, 10, "core.putitoro", 3)
+ * item.curse_state = "Blessed"
+ */
 EnumMap<CurseState> CurseStateTable{"CurseState",
                                     {
                                         {"Doomed", CurseState::doomed},
@@ -70,6 +94,14 @@ EnumMap<CurseState> CurseStateTable{"CurseState",
                                         {"Blessed", CurseState::blessed},
                                     }};
 
+
+/**
+ * @luadoc
+ *
+ * The identify state of an item.
+ * @usage local item = Item.create(10, 10, "core.putitoro", 3)
+ * item.identify_state = "Completely"
+ */
 EnumMap<IdentifyState> IdentifyStateTable{
     "IdentifyState",
     {
@@ -79,6 +111,13 @@ EnumMap<IdentifyState> IdentifyStateTable{
         {"Completely", IdentifyState::completely_identified},
     }};
 
+
+/**
+ * @luadoc
+ *
+ * A status effect applicable to a character.
+ * @see LuaCharacter.apply_ailment
+ */
 EnumMap<StatusAilment> StatusAilmentTable{
     "StatusAilment",
     {
@@ -95,6 +134,11 @@ EnumMap<StatusAilment> StatusAilmentTable{
         {"Sick", StatusAilment::sick},
     }};
 
+/**
+ * @luadoc
+ *
+ * A type of elemental damage.
+ */
 EnumMap<Element> ElementTable{"Element",
                               {
                                   {"Fire", Element::fire},
@@ -113,6 +157,13 @@ EnumMap<Element> ElementTable{"Element",
                                   {"Acid", Element::acid},
                               }};
 
+
+/**
+ * @luadoc
+ *
+ * A kind of tile to be used with <code>Map.generate_tile</code>.
+ * @see Map.generate_tile
+ */
 EnumMap<TileKind> TileKindTable{"TileKind",
                                 {
                                     {"Normal", TileKind::normal},
@@ -122,6 +173,11 @@ EnumMap<TileKind> TileKindTable{"TileKind",
                                     {"Fog", TileKind::fog},
                                 }};
 
+/**
+ * @luadoc
+ *
+ * The quality of randomly generated equipment.
+ */
 EnumMap<Quality> QualityTable{"Quality",
                               {
                                   {"None", Quality::none},
@@ -133,6 +189,12 @@ EnumMap<Quality> QualityTable{"Quality",
                                   {"Special", Quality::special},
                               }};
 
+/**
+ * @luadoc
+ *
+ * The type of a buff. Food buffs are lost when vomiting. Hex buffs can be
+ * removed with Holy Light/Vanquish Hex, and can be resisted.
+ */
 EnumMap<BuffType> BuffTypeTable{"Buff",
                                 {
                                     {"Buff", BuffType::buff},
@@ -140,6 +202,11 @@ EnumMap<BuffType> BuffTypeTable{"Buff",
                                     {"Food", BuffType::food},
                                 }};
 
+/**
+ * @luadoc
+ *
+ * The type of a map.
+ */
 EnumMap<mdata_t::MapType> MapTypeTable{
     "MapType",
     {
@@ -156,6 +223,12 @@ EnumMap<mdata_t::MapType> MapTypeTable{
         {"DungeonCastle", mdata_t::MapType::dungeon_castle},
     }};
 
+/**
+ * @luadoc
+ *
+ * Determines how the player should be spawned in a map when entering it for the
+ * first time.
+ */
 EnumMap<int> MapEntranceTypeTable{"MapEntranceType",
                                   {
                                       {"StairUp", 1},
@@ -168,6 +241,11 @@ EnumMap<int> MapEntranceTypeTable{"MapEntranceType",
                                       {"South", 8},
                                   }};
 
+/**
+ * @luadoc
+ *
+ * Indicates which map tile atlas to use for a map.
+ */
 EnumMap<int> MapTilesetTable{"MapTileset",
                              {
                                  {"Normal", 1},
@@ -175,6 +253,12 @@ EnumMap<int> MapTilesetTable{"MapTileset",
                              }};
 
 // TODO: convert the following to enum class.
+
+/**
+ * @luadoc
+ *
+ * Possible genders of a character.
+ */
 EnumMap<int> GenderTable{"Gender",
                          {
                              {"Random", -1},
@@ -182,6 +266,11 @@ EnumMap<int> GenderTable{"Gender",
                              {"Female", 1},
                          }};
 
+/**
+ * @luadoc
+ *
+ * Relationship of a character to the player.
+ */
 EnumMap<int> RelationTable{"Relation",
                            {
                                {"Aggressive", -3},
@@ -191,6 +280,15 @@ EnumMap<int> RelationTable{"Relation",
                                {"Friend", 10},
                            }};
 
+
+/**
+ * @luadoc
+ *
+ * A flag that can be set on a character. The first 32 flags (up to
+ * <code>IsQuickTempered</code>) are "intrinsic" and will be reset
+ * when the character is refreshed.
+ * @see LuaCharacter.set_flag
+ */
 EnumMap<int> CharaFlagTable{
     "CharaFlag",
     {
@@ -261,6 +359,11 @@ EnumMap<int> CharaFlagTable{
 
 
 
+/**
+ * @luadoc
+ *
+ * The types of traits available.
+ */
 EnumMap<int> TraitTypeTable{"TraitType",
                             {
                                 {"Feat", 0},

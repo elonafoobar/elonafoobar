@@ -3,32 +3,31 @@
 module "Item"
 
 --- Returns the number of items on the ground.
--- @treturn num the item count
+--  @treturn num the item count
+--  @function count
 function count() end
 
---- Attempts to create an item of the given quantity at a position.
---- Returns the item stack if it was created, nil otherwise.
--- @function create
--- @tparam LuaPosition position (const) position to create the item at
--- @tparam num id the item prototype ID
--- @tparam num number the number of items to create
--- @treturn[1] LuaItem the created item stack
--- @treturn[2] nil
-function create(position, id, number) end
-
 --- Checks if an item has an enchantment.
--- @tparam LuaItem item (const) an item
--- @tparam num id the ID of the enchantment
--- @treturn bool true if the item has the enchantment
-function has_enchantment(item, id) end
+--  @tparam LuaItem item (const) an item
+--  @tparam num enchantment_id the ID of the enchantment
+--  @treturn bool true if the item has the enchantment
+--  @function has_enchantment
+function has_enchantment(item, enchantment_id) end
 
---- Removes this item from the game world. The item passed in will no
---- longer be valid for use.
--- @tparam LuaItem item (mut) an item
-function remove(item) end
+--- Returns the item's name.
+--  @tparam LuaItem item (const) the item
+--  @tparam[opt] num number Overrides the item number
+--  @tparam[opt] bool use_article Prepend articles like "the" to the item name
+--  @treturn string
+--  @function itemname
+function itemname(item, number, use_article) end
 
---- Iterates between two item indices.
--- @tparam num from the starting index
--- @tparam num to the ending index
--- @treturn iterator an item iterator
-function iter(from, to) end
+--- Attempts to create an item of the given quantity at a position.
+--  Returns the item stack if it was created, nil otherwise.
+--  @tparam LuaPosition position (const) position to create the item at
+--  @tparam num id the item prototype ID
+--  @tparam num number the number of items to create
+--  @treturn[1] LuaItem the created item stack
+--  @treturn[2] nil
+--  @function create
+function create(position, id, number) end

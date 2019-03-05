@@ -55,6 +55,11 @@ struct LuaRef
     std::string uuid;
 };
 
+/**
+ * @luadoc
+ *
+ * A reference to a skill on a LuaCharacter.
+ */
 struct LuaAbility : LuaRef
 {
     LuaAbility(int skill_id_, int index, std::string type, std::string uuid)

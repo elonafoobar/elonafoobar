@@ -5,21 +5,49 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Returns a random number from 0 to n, exclusive.
+ * @tparam num n
+ * @treturn num a number in [0, n)
+ */
 int LuaApiRand::rnd(int n)
 {
     return elona::rnd(n);
 }
 
+/**
+ * @luadoc
+ *
+ * Returns true one out of every n times.
+ * @tparam num n
+ * @treturn bool true one out of every n times
+ */
 bool LuaApiRand::one_in(int n)
 {
     return LuaApiRand::rnd(n) == 0;
 }
 
+/**
+ * @luadoc
+ *
+ * Returns true 50% of the time.
+ * @treturn bool true 50% of the time
+ */
 bool LuaApiRand::coinflip()
 {
     return LuaApiRand::one_in(2);
 }
 
+
+/**
+ * @luadoc
+ *
+ * Returns a random object from a table.
+ * @tparam table table a table
+ * @treturn object an object from the table
+ */
 sol::object LuaApiRand::choice(sol::table table)
 {
     if (table.size() == 0)

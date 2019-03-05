@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/**
+ * @luadoc
+ *
+ * Functions for testing visibility.
+ */
 namespace LuaApiFOV
 {
 bool los(const Position&, const Position&);
