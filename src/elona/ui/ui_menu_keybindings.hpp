@@ -1,13 +1,14 @@
 #pragma once
 #include "../keybind/keybind.hpp"
 #include "ui_menu.hpp"
+#include "ui_menu_config.hpp"
 
 namespace elona
 {
 namespace ui
 {
 
-class UIMenuKeybindings : public UIMenu<int>
+class UIMenuKeybindings : public UIMenu<UIMenuConfigResult>
 {
 public:
     UIMenuKeybindings()

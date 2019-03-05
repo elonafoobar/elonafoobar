@@ -149,7 +149,7 @@ void ModManager::scan_mod(const fs::path& mod_dir)
 
     ModManifest manifest = ModManifest::load(manifest_path);
 
-    const std::string mod_name = mod_dir.filename().string();
+    const std::string& mod_name = manifest.name;
     ELONA_LOG("lua.mod") << "Found mod " << mod_name;
 
     if (!_is_alnum_only(mod_name))
@@ -175,12 +175,10 @@ void ModManager::scan_all_mods(const fs::path& mods_dir)
         throw std::runtime_error("Mods have already been scanned!");
     }
 
-    const std::string init_script = "init.lua";
-
     for (const auto& entry : filesystem::dir_entries(
              mods_dir, filesystem::DirEntryRange::Type::dir))
     {
-        if (fs::exists(entry.path() / init_script))
+        if (fs::exists(entry.path() / "init.lua"))
         {
             scan_mod(entry.path());
         }

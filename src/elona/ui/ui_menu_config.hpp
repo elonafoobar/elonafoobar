@@ -8,13 +8,20 @@ class ConfigMenu;
 namespace ui
 {
 
-class UIMenuConfig : public UIMenu<int>
+struct UIMenuConfigResult
+{
+    bool go_back;
+    int submenu;
+};
+
+class UIMenuConfig : public UIMenu<UIMenuConfigResult>
 {
 public:
     UIMenuConfig(ConfigMenu& menu, int submenu_index)
         : _menu(menu)
         , _submenu_index(submenu_index)
     {
+        _is_section = false;
     }
 
 protected:
@@ -33,6 +40,7 @@ private:
 
     ConfigMenu& _menu;
     int _submenu_index;
+    bool _is_section;
 };
 
 } // namespace ui

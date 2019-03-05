@@ -1,5 +1,5 @@
+#include "lua_api_config.hpp"
 #include "../../config/config.hpp"
-#include "lua_api_math.hpp"
 
 namespace elona
 {
@@ -38,7 +38,12 @@ bool LuaApiConfig::get_bool(const std::string& key)
 
 void LuaApiConfig::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, clamp);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, set_string);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, set_int);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, set_bool);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, get_string);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, get_int);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, get_bool);
 }
 
 } // namespace lua

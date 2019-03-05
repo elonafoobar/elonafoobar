@@ -58,6 +58,9 @@ bool UIMenuConfig::init()
 
     windowshadow = 1;
 
+    assert(_menu.items.size() > 0);
+    _is_section = _menu.items.at(0)->submenu() != none;
+
     return true;
 }
 
@@ -210,8 +213,8 @@ void UIMenuConfig::draw()
 
     pagesize = listmax;
 
-    _draw_keys(_submenu_index == 0);
-    _draw_items(_menu, _submenu_index == 0);
+    _draw_keys(_is_section);
+    _draw_items(_menu, _is_section);
 
     _menu.draw();
 
@@ -255,11 +258,14 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     if (auto submenu = get_selected_item())
     {
         cs = _index;
-        if (_submenu_index == 0)
+        if (_is_section)
         {
-            cs = 0;
+            auto submenu_index = _menu.items[cs]->submenu();
+            assert(submenu_index);
+
             snd("core.ok1");
-            return UIMenuConfig::Result::finish(*submenu + 1);
+            UIMenuConfigResult result = {false, *submenu_index};
+            return UIMenuConfig::Result::finish(result);
         }
     }
     else if (action == "next_page" || action == "previous_page")
@@ -286,15 +292,16 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
 
         // Restart with same index so background can be redrawn again in the
         // title screen.
-        return UIMenuConfig::Result::finish(_submenu_index);
+        UIMenuConfigResult result = {false, _submenu_index};
+        return UIMenuConfig::Result::finish(result);
     }
     if (action == "cancel")
     {
         if (_submenu_index != 0)
         {
-            // TODO nested menus
             cs = _submenu_index - 1;
-            return UIMenuConfig::Result::finish(0);
+            UIMenuConfigResult result = {true, 0};
+            return UIMenuConfig::Result::finish(result);
         }
         else
         {
@@ -304,7 +311,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     }
 
     return none;
-}
+} // namespace ui
 
 } // namespace ui
 } // namespace elona

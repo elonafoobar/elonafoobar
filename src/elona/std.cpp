@@ -117,7 +117,7 @@ void await(int msec)
         snail::Application::instance().was_focus_lost_just_now())
     {
         if (player_queried_for_input &&
-            Config::instance().get<bool>("core.config.android.quicksave") &&
+            Config::instance().get<bool>("core.android.quicksave") &&
             !std::uncaught_exception())
         {
             ELONA_LOG("gui") << "Focus lost, quicksaving game.";
@@ -923,7 +923,7 @@ static void _draw_fps()
  */
 void redraw()
 {
-    if (Config::instance().get<bool>("core.config.foobar.show_fps"))
+    if (Config::instance().get<bool>("core.foobar.show_fps"))
     {
         _draw_fps();
     }

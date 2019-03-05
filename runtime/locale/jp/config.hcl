@@ -492,6 +492,9 @@ DOC
             keybindings {
                 name = "キーの割り当て"
             }
+            mods {
+                name = "モッド設定"
+            }
         }
     }
 }

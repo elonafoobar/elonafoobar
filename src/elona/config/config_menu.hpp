@@ -15,6 +15,7 @@ public:
     std::string key;
     I18NKey locale_key;
 
+protected:
     ConfigMenuItemBase(const std::string& key, const I18NKey& locale_key)
         : key(key)
         , locale_key(locale_key)
@@ -22,6 +23,7 @@ public:
         name = i18n::s.get(locale_key + ".name");
     }
 
+public:
     virtual ~ConfigMenuItemBase() noexcept = default;
 
     virtual void change(int)
@@ -30,6 +32,10 @@ public:
     virtual std::string get_message()
     {
         return "";
+    }
+    virtual optional<int> submenu()
+    {
+        return none;
     }
 
     std::string get_desc() const
@@ -42,6 +48,28 @@ public:
         {
             return i18n::s.get("core.locale.config.common.no_desc");
         }
+    }
+};
+
+
+
+class ConfigMenuItemSection : public ConfigMenuItemBase
+{
+public:
+    int submenu_index;
+
+    ConfigMenuItemSection(
+        const std::string& key,
+        const I18NKey& locale_key,
+        int submenu_index)
+        : ConfigMenuItemBase(key, locale_key)
+        , submenu_index(submenu_index)
+    {
+    }
+
+    optional<int> submenu() override
+    {
+        return submenu_index;
     }
 };
 
@@ -67,7 +95,7 @@ public:
     {
     }
 
-    void change(int delta)
+    void change(int delta) override
     {
         if (!variable && delta == 1)
         {
@@ -80,7 +108,7 @@ public:
 
         Config::instance().set(key, variable);
     }
-    std::string get_message()
+    std::string get_message() override
     {
         return variable ? yes : no;
     }
@@ -106,7 +134,7 @@ public:
 
     virtual ~ConfigMenuItemInfo() noexcept = default;
 
-    std::string get_message()
+    std::string get_message() override
     {
         return info;
     }
@@ -137,13 +165,13 @@ public:
     {
     }
 
-    void change(int delta)
+    void change(int delta) override
     {
         variable = clamp(variable + delta, min, max);
         Config::instance().set(key, variable);
     }
 
-    std::string get_message()
+    std::string get_message() override
     {
         return i18n::fmt_hil(text, variable);
     }
@@ -209,7 +237,7 @@ public:
         }
     }
 
-    void change(int p)
+    void change(int p) override
     {
         index += p;
         if (index < 0)
@@ -229,7 +257,7 @@ public:
         Config::instance().set(key, variants.at(index).value);
     }
 
-    std::string get_message()
+    std::string get_message() override
     {
         I18NKey locale_key = variants.at(index).message_key;
         if (translate_variants)
@@ -263,11 +291,13 @@ public:
     std::vector<std::unique_ptr<ConfigMenuItemBase>> items;
     int width;
     int height;
+    int submenu;
 
-    ConfigMenu(const std::string& title, int width, int height)
+    ConfigMenu(const std::string& title, int width, int height, int submenu)
         : title(title)
         , width(width)
         , height(height)
+        , submenu(submenu)
     {
     }
 
@@ -277,7 +307,7 @@ public:
     {
     }
 
-    virtual optional<int> query(int submenu)
+    virtual optional<ui::UIMenuConfigResult> query()
     {
         auto result = ui::UIMenuConfig(*this, submenu).show();
         return result.value;
@@ -289,8 +319,12 @@ public:
 class ConfigMenuSubmenu : public ConfigMenu
 {
 public:
-    ConfigMenuSubmenu(const std::string& title, int width, int height)
-        : ConfigMenu(title, width, height)
+    ConfigMenuSubmenu(
+        const std::string& title,
+        int width,
+        int height,
+        int submenu)
+        : ConfigMenu(title, width, height, submenu)
     {
     }
 
@@ -310,16 +344,15 @@ public:
 class ConfigMenuKeybindings : public ConfigMenu
 {
 public:
-    ConfigMenuKeybindings()
-        : ConfigMenu("Keybindings", 100, 100)
+    ConfigMenuKeybindings(int submenu)
+        : ConfigMenu("Keybindings", 100, 100, submenu)
     {
     }
 
     virtual ~ConfigMenuKeybindings() = default;
 
-    optional<int> query(int submenu) override
+    optional<ui::UIMenuConfigResult> query() override
     {
-        UNUSED(submenu);
         auto result = ui::UIMenuKeybindings().show();
         return result.value;
     }

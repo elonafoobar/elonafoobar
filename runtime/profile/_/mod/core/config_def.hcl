@@ -1,4 +1,4 @@
-config def {
+config {
     game = {
         type = "section"
         options = {

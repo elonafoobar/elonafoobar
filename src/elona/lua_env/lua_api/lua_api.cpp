@@ -2,6 +2,7 @@
 
 #include "lua_api_animation.cpp"
 #include "lua_api_chara.cpp"
+#include "lua_api_config.cpp"
 #include "lua_api_debug.cpp"
 #include "lua_api_env.cpp"
 #include "lua_api_fov.cpp"
@@ -33,6 +34,7 @@ void LuaApi::bind(sol::table& core)
 {
     LUA_API_BIND(core, Animation);
     LUA_API_BIND(core, Chara);
+    LUA_API_BIND(core, Config);
     LUA_API_BIND(core, Debug);
     LUA_API_BIND(core, Env);
     LUA_API_BIND(core, FOV);
