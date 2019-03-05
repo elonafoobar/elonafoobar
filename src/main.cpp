@@ -4,12 +4,12 @@
 #include <SDL.h>
 #include "elona/defines.hpp"
 #include "elona/log.hpp"
+#include "util/backtrace.hpp"
 #include "version.hpp"
 
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA
 #endif
-
 
 
 namespace
@@ -35,6 +35,8 @@ void report_error(const char* what)
 int main(int argc, char** argv)
 {
     using namespace elona;
+
+    lib::setup_backtrace();
 
     log::Logger::instance().init();
     ELONA_LOG("system") << latest_version.long_string();
