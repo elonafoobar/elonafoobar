@@ -11,7 +11,7 @@ set(PROJECT_VERSION_CODE 4)
 
 # Options
 option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
-option(ANDROID_GENERATE_PROPERTIES "Generate android/app/gradle.properties" OFF)
+option(ANDROID_GENERATE_BUILD_FILES "Generate android/app/gradle.properties and src/{elona,snail,util}/Android.mk" OFF)
 
 
 # Platform detection
@@ -48,12 +48,27 @@ set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
 # Versioning file
 configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
 
+function(generate_android_mk target)
+  cmake_parse_arguments(ARGS "" "" "SOURCES" ${ARGN})
+  set(ANDROID_MK_TARGET ${target})
+  set(ANDROID_MK_SOURCES "LOCAL_SRC_FILES := \\\n")
+  foreach(SOURCE ${ARGS_SOURCES})
+    set(ANDROID_MK_SOURCES "${ANDROID_MK_SOURCES}${SOURCE} \\\n")
+  endforeach()
+  configure_file("${PROJECT_SOURCE_DIR}/src/${target}/Android.mk.in" "${PROJECT_SOURCE_DIR}/src/${target}/Android.mk")
+endfunction()
 
 
 # CMake is run last in the Android build process, so gradle.properties
-# has to be generated beforehand.
-if(ANDROID_GENERATE_PROPERTIES)
+# and Android.mk have to be generated beforehand.
+if(ANDROID_GENERATE_BUILD_FILES)
   configure_file("${PROJECT_SOURCE_DIR}/android/gradle.properties.in" "${PROJECT_SOURCE_DIR}/android/gradle.properties")
+
+  # Generate Android.mk
+  add_subdirectory(src/util)
+  add_subdirectory(src/snail)
+  add_subdirectory(src/elona)
+
   return()
 endif()
 

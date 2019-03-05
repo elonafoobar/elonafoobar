@@ -79,12 +79,12 @@ bench_runner: $(BIN_DIR) FORCE # Build benchmark runner.
 
 
 android: $(BIN_DIR) FORCE # Build android Elona foobar (debug).
-	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
+	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_BUILD_FILES=ON
 	export TERM=xterm-color; cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk ../$(APK)
 
 
 android_release: $(BIN_DIR) FORCE # Build android Elona foobar (release).
-	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
+	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_BUILD_FILES=ON
 	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/release/app-release-unsigned.apk ../$(APK_RELEASE)
 	@echo "\"You've been a faithful servant of me. Here, use it wisely.\""
 	@echo "Something is placed at $(BIN_DIR)."

@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := util
+LOCAL_MODULE := snail
 
 SDL_PATH := ../../android/external
 
@@ -15,18 +15,16 @@ $(LOCAL_PATH)/$(SDL_PATH)/boost/include
 LOCAL_CPP_FEATURES := exceptions rtti
 
 # Add your application source files here...
-LOCAL_SRC_FILES := \
-filepathutil.cpp \
-fps_counter.cpp \
+@ANDROID_MK_SOURCES@
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
 
-LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem boost_system
+LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem boost_system util
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 
-LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO)
+LOCAL_CFLAGS += -DSNAIL_RENDERER_SDL -Wextra -Wall -ffast-math $(LTO)
 
 LOCAL_LDFLAGS += $(LOCAL_CFLAGS) $(LTO) -fPIC
 
