@@ -255,9 +255,9 @@ static void _show_config_item_desc(const std::string& desc)
 optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     const std::string& action)
 {
-    if (auto submenu = get_selected_item())
+    if (auto index = get_selected_index_this_page())
     {
-        cs = _index;
+        cs = *index;
         if (_is_section)
         {
             auto submenu_index = _menu.items[cs]->submenu();

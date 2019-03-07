@@ -214,18 +214,21 @@ void initialize_i18n()
         {filesystem::dir::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& pair : lua::lua->get_mod_manager())
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::mod(), filesystem::DirEntryRange::Type::dir))
     {
-        const auto& mod = pair.second;
-        if (mod->manifest.path)
+        const auto manifest_path = entry.path() / "mod.hcl";
+        if (fs::exists(manifest_path))
         {
-            const auto path = *mod->manifest.path / "locale" / language;
-            if (fs::exists(path))
+            lua::ModManifest manifest = lua::ModManifest::load(manifest_path);
+            const auto locale_path = entry.path() / "locale" / language;
+            if (fs::exists(locale_path))
             {
-                locations.emplace_back(path, mod->manifest.name);
+                locations.emplace_back(locale_path, manifest.name);
             }
         }
     }
+
     i18n::s.init(locations);
 }
 

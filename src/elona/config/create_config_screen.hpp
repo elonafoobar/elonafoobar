@@ -33,7 +33,7 @@ private:
         const std::string& mod_name,
         const I18NKey& locale_key);
     bool visit_section(const SpecKey& current_key, const I18NKey& locale_key);
-    void visit_config_item(
+    bool visit_config_item(
         const SpecKey& current_key,
         const I18NKey& locale_key);
 

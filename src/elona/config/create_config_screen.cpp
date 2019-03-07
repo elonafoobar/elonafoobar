@@ -112,7 +112,6 @@ void ConfigScreenCreator::add_item_section(
 {
     // EX: "<core>.<language>"
     SpecKey section_key = key + "." + section_name;
-    std::cerr << "key" << section_key << std::endl;
 
     if (config_.get_def().get_metadata(section_key).is_visible())
     {
@@ -151,11 +150,15 @@ void ConfigScreenCreator::add_mod_configs_section()
         return;
     }
 
-    // Bypasses the config_def mechanism for config menu generation. The mod
-    // configs menu will be unconditionally added.
+    // Add the menu.
     int w = menu_width;
     int h = menu_height + (menu_item_height * (mod_names.size() - 1));
-    menu_index_ = result_.size();
+    int mod_menu_index = result_.size();
+    result_.emplace_back(std::make_unique<ConfigMenu>(
+        i18n::s.get("core.locale.config.menu.mods.name"),
+        w,
+        h,
+        mod_menu_index));
 
     bool found_mods = false;
 
@@ -174,25 +177,19 @@ void ConfigScreenCreator::add_mod_configs_section()
 
             I18NKey locale_key = mod_name + ".locale.config.menu";
             int submenu_index = config_key_to_submenu_index_[mod_name];
-            std::cerr << "For error " << mod_name << " " << submenu_index
-                      << std::endl;
 
-            result_.at(menu_index_)
+            result_.at(mod_menu_index)
                 ->items.emplace_back(std::make_unique<ConfigMenuItemSection>(
                     mod_name, locale_key, submenu_index));
         }
     }
 
+    // Only add the mods section if any mods were found.
     if (found_mods)
     {
-        result_.emplace_back(std::make_unique<ConfigMenu>(
-            i18n::s.get("core.locale.config.menu.mods.name"),
-            w,
-            h,
-            menu_index_));
         result_.at(0)->items.emplace_back(
             std::make_unique<ConfigMenuItemSection>(
-                "core.mods", "core.locale.config.menu.mods", menu_index_));
+                "core.mods", "core.locale.config.menu.mods", mod_menu_index));
     }
 }
 
@@ -227,7 +224,6 @@ bool ConfigScreenCreator::visit_section_children(
 {
     // current_key is similar to "<core.section>"
     // locale_key is similar to "<core.locale.config.menu.section>"
-    std::cerr << "children " << current_key << std::endl;
 
     I18NKey menu_name_key = locale_key + ".name";
 
@@ -237,6 +233,8 @@ bool ConfigScreenCreator::visit_section_children(
         return false;
     }
 
+    bool found_items = false;
+
     {
         int prev_index = menu_index_;
 
@@ -244,8 +242,6 @@ bool ConfigScreenCreator::visit_section_children(
         menu_index_ = result_.size();
         config_key_to_submenu_index_[current_key] = menu_index_;
         add_menu(current_key, menu_name_key, menu_width, menu_index_);
-        std::cerr << "visit section " << menu_index_ << " " << current_key
-                  << std::endl;
 
         // Add all sections and their config items. This adds all the config
         // menus so their indices are available when the corresponding section
@@ -253,12 +249,14 @@ bool ConfigScreenCreator::visit_section_children(
         for (const auto& section_name :
              config_.get_def().get_children(current_key))
         {
-            auto found_items = visit_section(
+            auto result = visit_section(
                 current_key + "." + section_name,
                 locale_key + "." + section_name);
 
-            if (found_items)
+            if (result)
             {
+                found_items = true;
+
                 int submenu_index = config_key_to_submenu_index_
                     [current_key + "." + section_name];
                 add_item_section(
@@ -269,7 +267,7 @@ bool ConfigScreenCreator::visit_section_children(
         menu_index_ = prev_index;
     }
 
-    return true;
+    return found_items;
 }
 
 bool ConfigScreenCreator::visit_section(
@@ -278,7 +276,6 @@ bool ConfigScreenCreator::visit_section(
 {
     // current_key is similar to "<core>.language"
     // locale_key is similar to "<core.locale.config.menu>.language"
-    std::cerr << "section " << current_key << std::endl;
 
     I18NKey menu_name_key = locale_key + ".name";
 
@@ -286,7 +283,7 @@ bool ConfigScreenCreator::visit_section(
     if (!config_.get_def().exists(current_key))
     {
         throw std::runtime_error(
-            "No such config option \"" + current_key + "\".");
+            "No such config option \"" + current_key + "\". ");
     }
     // Ignore this section if it is not user-visible.
     if (!config_.get_def().get_metadata(current_key).is_visible())
@@ -299,6 +296,8 @@ bool ConfigScreenCreator::visit_section(
         return false;
     }
 
+    bool found_items = false;
+
     {
         int prev_index = menu_index_;
 
@@ -306,28 +305,29 @@ bool ConfigScreenCreator::visit_section(
         menu_index_ = result_.size();
         config_key_to_submenu_index_[current_key] = menu_index_;
         add_submenu(current_key, menu_name_key, submenu_width, menu_index_);
-        std::cerr << "Section " << current_key << " " << menu_index_
-                  << std::endl;
 
         // Visit child config items of this section.
         for (const auto& child : config_.get_def().get_children(current_key))
         {
-            std::cerr << "Child " << current_key << " " << child << std::endl;
-            visit_config_item(
+            bool result = visit_config_item(
                 current_key + "." + child, locale_key + "." + child);
+
+            if (result)
+            {
+                found_items = true;
+            }
         }
 
         menu_index_ = prev_index;
     }
 
-    return true;
+    return found_items;
 }
 
-void ConfigScreenCreator::visit_config_item(
+bool ConfigScreenCreator::visit_config_item(
     const SpecKey& current_key,
     const I18NKey& locale_key)
 {
-    std::cerr << "item " << current_key << std::endl;
     if (!config_.get_def().exists(current_key))
     {
         throw std::runtime_error(
@@ -335,7 +335,7 @@ void ConfigScreenCreator::visit_config_item(
     }
     if (!config_.get_def().get_metadata(current_key).is_visible())
     {
-        return;
+        return false;
     }
 
     if (config_.get_def().is<spec::BoolDef>(current_key))
@@ -366,16 +366,19 @@ void ConfigScreenCreator::visit_config_item(
     else if (config_.get_def().is<spec::SectionDef>(current_key))
     {
         int prev_index = menu_index_;
-        std::cerr << "is_child " << current_key << std::endl;
 
-        visit_section_children(current_key, locale_key);
+        bool result = visit_section_children(current_key, locale_key);
 
         menu_index_ = prev_index;
+
+        return result;
     }
     else
     {
         throw std::runtime_error("Unknown config def item");
     }
+
+    return true;
 }
 
 
