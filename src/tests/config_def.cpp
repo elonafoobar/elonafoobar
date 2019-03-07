@@ -16,7 +16,7 @@ ConfigDef load(const std::string& str)
 
     std::stringstream ss(str);
 
-    REQUIRE_NOTHROW(def.load(ss, "spec_test.hcl"));
+    REQUIRE_NOTHROW(def.load(ss, "spec_test.hcl", "spec_test"));
     return def;
 }
 } // namespace
@@ -37,9 +37,9 @@ config {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.foo").visible == true);
-    REQUIRE(def.get_metadata("core.baz").visible == true);
-    REQUIRE(def.get_metadata("core.hoge").visible == false);
+    REQUIRE(def.get_metadata("spec_test.foo").visible == true);
+    REQUIRE(def.get_metadata("spec_test.baz").visible == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").visible == false);
 }
 
 TEST_CASE("Test metadata: preload", "[Config: Definition]")
@@ -58,9 +58,9 @@ config {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.foo").preload == false);
-    REQUIRE(def.get_metadata("core.baz").preload == true);
-    REQUIRE(def.get_metadata("core.hoge").preload == false);
+    REQUIRE(def.get_metadata("spec_test.foo").preload == false);
+    REQUIRE(def.get_metadata("spec_test.baz").preload == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").preload == false);
 }
 
 TEST_CASE("Test metadata: translate_variants", "[Config: Definition]")
@@ -79,9 +79,9 @@ config {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.foo").translate_variants == true);
-    REQUIRE(def.get_metadata("core.baz").translate_variants == true);
-    REQUIRE(def.get_metadata("core.hoge").translate_variants == false);
+    REQUIRE(def.get_metadata("spec_test.foo").translate_variants == true);
+    REQUIRE(def.get_metadata("spec_test.baz").translate_variants == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").translate_variants == false);
 }
 
 TEST_CASE("Test metadata: platform", "[Config: Definition]")
@@ -104,12 +104,17 @@ config {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.foo").platform == ConfigDef::Platform::all);
     REQUIRE(
-        def.get_metadata("core.baz").platform == ConfigDef::Platform::desktop);
+        def.get_metadata("spec_test.foo").platform == ConfigDef::Platform::all);
     REQUIRE(
-        def.get_metadata("core.hoge").platform == ConfigDef::Platform::android);
-    REQUIRE(def.get_metadata("core.fuga").platform == ConfigDef::Platform::all);
+        def.get_metadata("spec_test.baz").platform ==
+        ConfigDef::Platform::desktop);
+    REQUIRE(
+        def.get_metadata("spec_test.hoge").platform ==
+        ConfigDef::Platform::android);
+    REQUIRE(
+        def.get_metadata("spec_test.fuga").platform ==
+        ConfigDef::Platform::all);
 }
 
 TEST_CASE("Test metadata: platform_default", "[Config: Definition]")
@@ -133,12 +138,14 @@ config {
 )");
 
     REQUIRE(
-        static_cast<bool>(def.get_metadata("core.foo").default_value) == false);
+        static_cast<bool>(def.get_metadata("spec_test.foo").default_value) ==
+        false);
     REQUIRE(
-        def.get_metadata("core.bar").default_value->as<std::string>() ==
+        def.get_metadata("spec_test.bar").default_value->as<std::string>() ==
         "hoge");
     REQUIRE(
-        static_cast<bool>(def.get_metadata("core.baz").default_value) == false);
+        static_cast<bool>(def.get_metadata("spec_test.baz").default_value) ==
+        false);
 }
 
 TEST_CASE("Test metadata: is_visible()", "[Config: Definition]")
@@ -161,7 +168,7 @@ config {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.foo").is_visible() == true);
-    REQUIRE(def.get_metadata("core.hoge").is_visible() == false);
-    REQUIRE(def.get_metadata("core.baz").is_visible() == true);
+    REQUIRE(def.get_metadata("spec_test.foo").is_visible() == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").is_visible() == false);
+    REQUIRE(def.get_metadata("spec_test.baz").is_visible() == true);
 }

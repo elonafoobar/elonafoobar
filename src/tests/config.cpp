@@ -15,21 +15,19 @@ Config load(
     const std::string& config_str,
     bool preload = false)
 {
-    ConfigDef def;
-    Config conf;
+    Config config;
 
     {
         std::stringstream ss(def_str);
-        REQUIRE_NOTHROW(def.load(ss, "config_def_test.hcl"));
+        REQUIRE_NOTHROW(config.load_def(ss, "config_test"));
     }
 
     {
         std::stringstream ss(config_str);
-        REQUIRE_NOTHROW(conf.init(def));
-        REQUIRE_NOTHROW(conf.load(ss, "config_test.hcl", preload));
+        REQUIRE_NOTHROW(config.load(ss, "config_test.hcl", preload));
     }
 
-    return conf;
+    return config;
 }
 
 bool load_fails(
@@ -37,20 +35,18 @@ bool load_fails(
     const std::string& config_str,
     bool preload = false)
 {
-    ConfigDef def;
-    Config conf;
+    Config config;
 
     {
         std::stringstream ss(def_str);
-        REQUIRE_NOTHROW(def.load(ss, "config_def_test.hcl"));
+        REQUIRE_NOTHROW(config.load_def(ss, "config_test"));
     }
 
     {
         std::stringstream ss(config_str);
         try
         {
-            conf.init(def);
-            conf.load(ss, "config_test.hcl", preload);
+            config.load(ss, "config_test.hcl", preload);
         }
         catch (...)
         {
@@ -74,13 +70,13 @@ TEST_CASE("Test invalid config object name", "[Config: Loading]")
 
 TEST_CASE("Test loading blank config", "[Config: Loading]")
 {
-    REQUIRE_FALSE(load_fails(R"(config {})", R"(config core {})"));
+    REQUIRE_FALSE(load_fails(R"(config {})", R"(config config_test {})"));
 }
 
 TEST_CASE("Test loading config with differing type", "[Config: Loading]")
 {
-    REQUIRE(
-        load_fails(R"(config {foo = false})", R"(config core {foo = "bar"})"));
+    REQUIRE(load_fails(
+        R"(config {foo = false})", R"(config config_test {foo = "bar"})"));
 }
 
 TEST_CASE("Test loading config with invalid enum variant", "[Config: Loading]")
@@ -95,7 +91,7 @@ config {
     }
 }
 )",
-        R"(config core {foo = "hoge"})"));
+        R"(config config_test {foo = "hoge"})"));
 }
 
 TEST_CASE("Test fallback to default config value", "[Config: Loading]")
@@ -106,10 +102,10 @@ config {
     foo = false
     bar = "baz"
 })",
-        R"(config core {})");
+        R"(config config_test {})");
 
-    REQUIRE(conf.get<bool>("core.foo") == false);
-    REQUIRE(conf.get<std::string>("core.bar") == "baz");
+    REQUIRE(conf.get<bool>("config_test.foo") == false);
+    REQUIRE(conf.get<std::string>("config_test.bar") == "baz");
 }
 
 TEST_CASE("Test loading config with out-of-bounds value", "[Config: Loading]")
@@ -128,13 +124,13 @@ config {
         max = 100
     }
 })",
-        R"(config core {
+        R"(config config_test {
     foo = 101
     bar = -1
 })");
 
-    REQUIRE(conf.get<int>("core.foo") == 100);
-    REQUIRE(conf.get<int>("core.bar") == 0);
+    REQUIRE(conf.get<int>("config_test.foo") == 100);
+    REQUIRE(conf.get<int>("config_test.bar") == 0);
 }
 
 TEST_CASE("Test value getter", "[Config: Loading]")
@@ -144,13 +140,15 @@ TEST_CASE("Test value getter", "[Config: Loading]")
 config {
     foo = "bar"
 })",
-        R"(config core {})");
+        R"(config config_test {})");
 
-    REQUIRE_NOTHROW(conf.bind_getter("core.foo", [&]() { return "hoge"; }));
-    REQUIRE_THROWS(conf.bind_getter("core.baz", [&]() { return "hoge"; }));
+    REQUIRE_NOTHROW(
+        conf.bind_getter("config_test.foo", [&]() { return "hoge"; }));
+    REQUIRE_THROWS(
+        conf.bind_getter("config_test.baz", [&]() { return "hoge"; }));
 
-    REQUIRE(conf.get<std::string>("core.foo") == "hoge");
-    REQUIRE_THROWS(conf.get<std::string>("core.baz"));
+    REQUIRE(conf.get<std::string>("config_test.foo") == "hoge");
+    REQUIRE_THROWS(conf.get<std::string>("config_test.baz"));
 }
 
 TEST_CASE("Test value setter", "[Config: Loading]")
@@ -160,20 +158,20 @@ TEST_CASE("Test value setter", "[Config: Loading]")
 config {
     foo = "bar"
 })",
-        R"(config core {})");
+        R"(config config_test {})");
 
     std::string result = "";
 
     REQUIRE_NOTHROW(conf.bind_setter<std::string>(
-        "core.foo", [&](auto value) { result = value; }));
+        "config_test.foo", [&](auto value) { result = value; }));
     REQUIRE_THROWS(conf.bind_setter<std::string>(
-        "core.baz", [&](auto value) { result = value; }));
+        "config_test.baz", [&](auto value) { result = value; }));
 
-    REQUIRE_NOTHROW(conf.set("core.foo", "hoge"));
+    REQUIRE_NOTHROW(conf.set("config_test.foo", "hoge"));
     REQUIRE(result == "hoge");
 
     result = "";
-    REQUIRE_THROWS(conf.set("core.baz", "hoge"));
+    REQUIRE_THROWS(conf.set("config_test.baz", "hoge"));
     REQUIRE(result == "");
 }
 
@@ -187,7 +185,7 @@ config {
     }
 })",
         R"(
-config core {
+config config_test {
     foo = 42
 }
 )"));
@@ -203,11 +201,12 @@ config {
     }
 })",
         R"(
-config core {
+config config_test {
     foo = "hoge"
 }
 )");
 
-    REQUIRE_NOTHROW(conf.inject_enum("core.foo", {"foo", "bar", "baz"}, "baz"));
-    REQUIRE(conf.get<std::string>("core.foo") == "baz");
+    REQUIRE_NOTHROW(
+        conf.inject_enum("config_test.foo", {"foo", "bar", "baz"}, "baz"));
+    REQUIRE(conf.get<std::string>("config_test.foo") == "baz");
 }

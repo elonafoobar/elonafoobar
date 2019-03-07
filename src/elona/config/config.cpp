@@ -476,6 +476,12 @@ Config& Config::instance()
     return the_instance;
 }
 
+void Config::load_def(std::istream& is, const std::string& mod_name)
+{
+    def.load(is, "[input stream]", mod_name);
+    mod_names_.emplace(mod_name);
+}
+
 void Config::load_def(const fs::path& config_def_path, const std::string& mod_name)
 {
     def.load(config_def_path, mod_name);

@@ -28,6 +28,7 @@ public:
     }
     ~Config() = default;
 
+    void load_def(std::istream& is, const std::string& mod_name);
     void load_def(const fs::path& config_def_path, const std::string& mod_name);
     void load(std::istream&, const std::string&, bool);
     void save();
