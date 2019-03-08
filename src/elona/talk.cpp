@@ -158,7 +158,6 @@ void talk_to_npc()
 TalkResult talk_more()
 {
     listmax = 0;
-    buff = buff;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.locale.ui.more");
