@@ -861,27 +861,22 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         if (mefsubref(2, p_) == 1)
         {
             gmode(2, efmap(1, x, y) * 12 + 30);
-            draw_region_rotated(
+            draw_indexed_rotated(
                 "mef_subref",
                 dx + 24,
                 dy + 24,
-                (mefsubref(0, p_) - 144) + efmap(3, x, y) * 32,
-                (mefsubref(1, p_) - 624),
-                32,
-                32,
+                mefsubref(0, p_) + efmap(3, x, y),
+                mefsubref(1, p_),
                 0.785 * efmap(2, x, y));
         }
         else
         {
             gmode(2, 150);
-            draw_region(
+            draw_indexed(
                 "mef_subref",
                 dx + 8,
                 dy + 8,
-                (mefsubref(0, p_) - 144) + efmap(1, x, y) * 32,
-                (mefsubref(1, p_) - 624),
-                32,
-                32);
+                mefsubref(0, p_) + efmap(1, x, y));
         }
         gmode(2);
     }

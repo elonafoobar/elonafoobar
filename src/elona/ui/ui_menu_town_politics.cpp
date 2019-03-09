@@ -48,13 +48,11 @@ bool UIMenuTownPolitics::init()
     bool is_town = map_data.type == mdata_t::MapType::town;
     _load_politics_list(is_town);
 
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 960, 96, false);
+    asset_load("deco_politics");
     gsel(0);
-    fillbg(3, 960, 96, 128, 128);
+    draw_bg("deco_politics_a");
     render_hud();
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
+    asset_load("ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

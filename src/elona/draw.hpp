@@ -97,19 +97,40 @@ void bmes(
     const snail::Color& shadow_color = {0, 0, 0, 255});
 
 
+void draw_chara(
+    const Character& chara,
+    int x,
+    int y,
+    int scale = 1,
+    int alpha = 0);
+void draw_chara(int image_id, int x, int y, int scale = 1, int alpha = 0);
+void draw_chara_scale_height(const Character& chara, int x, int y);
+void draw_chara_scale_height(int image_id, int x, int y);
 
-struct ImageInfo
-{
-    int window_id;
-    int x;
-    int y;
-    int width;
-    int height;
-    int count_x;
-    int count_y;
-};
+void draw_item_material(int mat_id, int x, int y);
+void draw_item_with_portrait(const Item& item, int x, int y);
+void draw_item_with_portrait(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y);
+
+void draw_item_with_portrait_scale_height(const Item& item, int x, int y);
+void draw_item_with_portrait_scale_height(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y);
 
 
+// Asset-related functions
+
+struct AssetData;
+
+const AssetData& asset_load(const std::string& key);
+const AssetData& asset_load(const std::string& key, int window_id);
 void init_assets();
 
 void draw(const std::string& key, int x, int y);
@@ -134,6 +155,13 @@ void draw_indexed(
     int y,
     int index_x,
     int index_y);
+void draw_indexed_rotated(
+    const std::string& key,
+    int x,
+    int y,
+    int index_x,
+    int index_y,
+    double angle);
 void draw_region(const std::string& key, int x, int y, int width);
 void draw_region(const std::string& key, int x, int y, int width, int height);
 void draw_region(
@@ -145,6 +173,16 @@ void draw_region(
     int width,
     int height);
 void draw_region(
+    const std::string& key,
+    int x,
+    int y,
+    int offset_x,
+    int offset_y,
+    int width,
+    int height,
+    int dst_width,
+    int dst_height);
+void draw_region_centered(
     const std::string& key,
     int x,
     int y,
@@ -185,8 +223,9 @@ void draw_indexed_region(
     int index_y,
     int count_x,
     int count_y);
-void draw_copy_from(int window_id, int x, int y, const std::string& key);
-void draw_copy_from(
+void draw_bg(const std::string& key);
+void asset_copy_from(int window_id, int x, int y, const std::string& key);
+void asset_copy_from(
     int window_id,
     int x,
     int y,
@@ -194,34 +233,6 @@ void draw_copy_from(
     int height,
     const std::string& key);
 
-const ImageInfo& get_image_info(const std::string& key);
-
-void draw_chara(
-    const Character& chara,
-    int x,
-    int y,
-    int scale = 1,
-    int alpha = 0);
-void draw_chara(int image_id, int x, int y, int scale = 1, int alpha = 0);
-void draw_chara_scale_height(const Character& chara, int x, int y);
-void draw_chara_scale_height(int image_id, int x, int y);
-
-void draw_item_material(int mat_id, int x, int y);
-void draw_item_with_portrait(const Item& item, int x, int y);
-void draw_item_with_portrait(
-    int image_id,
-    int color,
-    optional<int> chara_chip_id,
-    int x,
-    int y);
-
-void draw_item_with_portrait_scale_height(const Item& item, int x, int y);
-void draw_item_with_portrait_scale_height(
-    int image_id,
-    int color,
-    optional<int> chara_chip_id,
-    int x,
-    int y);
-
+const AssetData& get_image_info(const std::string& key);
 
 } // namespace elona

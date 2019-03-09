@@ -4898,15 +4898,10 @@ void atxinit()
         update_screen();
         mode = 9;
         atxbgbk = atxbg;
-        gsel(4);
         gmode(0);
-        picload(filesystem::dir::graphic() / (atxbg + u8".bmp"s), 0, 0, false);
-        gcopy(
-            4,
-            0,
-            0,
-            240,
-            160,
+        asset_load(atxbg);
+        draw(
+            "atx_background",
             0,
             inf_msgh,
             windoww,
@@ -7165,10 +7160,9 @@ void draw_sleep_background_frame()
 
 void load_sleep_background()
 {
-    gsel(4);
     gmode(0);
-    picload(filesystem::dir::graphic() / u8"bg_night.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 640, 480, 0, 0, windoww, windowh - inf_verh);
+    asset_load("bg_night");
+    draw("bg_night", 0, 0, windoww, windowh - inf_verh);
     gsel(0);
 }
 
@@ -11998,11 +11992,9 @@ label_2684_internal:
             notedel(p - cnt - 1);
         }
     }
-    gsel(4);
     gmode(0);
-    picload(
-        filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 0, 0, false);
-    gcopy(4, 0, 0, 640, 480, 0, y1, windoww, y2 - y1);
+    asset_load(file);
+    draw(file, 0, y1, windoww, y2 - y1);
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
@@ -12524,14 +12516,12 @@ void conquer_lesimas()
     mode = 0;
     play_music("core.mcMarch2");
     ui_win_screen_fade();
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 640, 480, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw_region("void", 0, 0, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
     animation_fade_in();
-    gcopy(4, 0, 0, windoww, windowh, 0, 0);
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"g1.bmp", 0, 0, false);
+    draw_region("void", 0, 0, 0, 0, windoww, windowh);
+    asset_load("g1");
     gsel(0);
     ui_draw_caption(i18n::s.get(
         "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0)));
@@ -12546,20 +12536,8 @@ void conquer_lesimas()
         windowh / 2 - wh / 2,
         ww,
         wh);
-    cmbg = 0;
-    x = ww / 3 - 20;
-    y = wh - 140;
     gmode(2, 250);
-    gcopy_c(
-        4,
-        cmbg / 4 % 4 * 180,
-        cmbg / 4 / 4 % 2 * 300,
-        180,
-        300,
-        wx + ww - 120,
-        wy + wh / 2,
-        x,
-        y);
+    draw_centered("g1", wx + ww - 120, wy + wh / 2, ww / 3 - 20, wh - 140);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.win.window.caption"), wx + 28, wy + 40);
@@ -12724,8 +12702,7 @@ TurnResult pc_died()
         std::ofstream out{bone_filepath.native(), std::ios::binary};
         out << buff(0) << std::endl;
     }
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
+    asset_load("void");
     gsel(0);
     show_game_score_ranking();
     ui_draw_caption(
@@ -12765,7 +12742,7 @@ void show_game_score_ranking()
 {
     notesel(buff);
     gmode(0);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
     x = 135;
     y = 134;

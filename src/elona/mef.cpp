@@ -23,18 +23,18 @@ int i_at_m79 = 0;
 void initialize_mef()
 {
     DIM3(mefsubref, 6, 6);
-    mefsubref(0, 1) = 144;
-    mefsubref(1, 1) = 624;
-    mefsubref(0, 2) = 272;
-    mefsubref(1, 2) = 624;
+    mefsubref(0, 1) = 0;
+    mefsubref(1, 1) = 0;
+    mefsubref(0, 2) = 4;
+    mefsubref(1, 2) = 0;
     mefsubref(2, 2) = 1;
-    mefsubref(0, 3) = 304;
-    mefsubref(1, 3) = 624;
+    mefsubref(0, 3) = 5;
+    mefsubref(1, 3) = 0;
     mefsubref(2, 3) = 1;
-    mefsubref(0, 4) = 368;
-    mefsubref(1, 4) = 624;
-    mefsubref(0, 5) = 464;
-    mefsubref(1, 5) = 624;
+    mefsubref(0, 4) = 7;
+    mefsubref(1, 4) = 0;
+    mefsubref(0, 5) = 10;
+    mefsubref(1, 5) = 0;
 }
 
 void mef_delete(int mef_index)

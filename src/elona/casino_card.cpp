@@ -271,7 +271,7 @@ int servecard(int player_id)
         }
 
         gmode(0);
-        draw_copy_from(
+        asset_copy_from(
             0,
             card_at_cardcontrol(3, cardid_at_cardcontrol),
             card_at_cardcontrol(4, cardid_at_cardcontrol),

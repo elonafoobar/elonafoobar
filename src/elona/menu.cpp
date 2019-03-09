@@ -331,8 +331,7 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
 
 void show_ex_help(int id)
 {
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_help.bmp", 960, 96, false);
+    asset_load("deco_help");
     gsel(0);
     page = 0;
     notesel(buff);
@@ -680,8 +679,7 @@ int change_appearance()
     wy = winposy(wh);
     snd("core.port");
     window_animation(wx, wy, ww, wh, 9, 7);
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_mirror.bmp", 960, 96, false);
+    asset_load("deco_mirror");
     gsel(0);
     windowshadow = 1;
 label_2040_internal:

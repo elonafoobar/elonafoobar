@@ -341,7 +341,7 @@ void initialize_sound_file()
 {
     soundlist.resize(temporary_channels_size);
 
-    for (const auto& se : the_sound_db)
+    for (const auto& se : the_sound_db.values())
     {
         _preload_sound_if_needed(se.file, se.id);
     }

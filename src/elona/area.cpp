@@ -154,7 +154,7 @@ bool Area::is_museum_or_shop()
 
 void initialize_adata()
 {
-    for (const auto& map : the_mapdef_db)
+    for (const auto& map : the_mapdef_db.values())
     {
         int map_id = map.id;
         auto& area = area_data[map_id];

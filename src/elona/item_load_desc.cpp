@@ -236,7 +236,7 @@ static void _load_item_stat_text(int ci, int& p)
                 ++card_count;
         }
         int npc_count{};
-        for (const auto& discord : the_character_db)
+        for (const auto& discord : the_character_db.values())
         {
             UNUSED(discord);
             ++npc_count;

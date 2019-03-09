@@ -10,6 +10,7 @@
 #include "../../snail/window.hpp"
 #include "../../util/fps_counter.hpp"
 #include "../../util/range.hpp"
+#include "../draw.hpp"
 #include "../elona.hpp"
 #include "../hcl.hpp"
 #include "../variables.hpp"
@@ -241,8 +242,7 @@ namespace elona
 
 void config_query_language()
 {
-    buffer(4);
-    picload(filesystem::dir::graphic() / u8"lang.bmp", 0, 0, true);
+    asset_load("lang");
     gsel(0);
     gmode(0);
     p = 0;
@@ -250,8 +250,8 @@ void config_query_language()
     while (1)
     {
         boxf();
-        gcopy(4, 0, 0, 340, 100, 160, 170);
-        gcopy(4, 360, 6, 20, 18, 180, 220 + p * 20);
+        draw_region("lang", 160, 170, 0, 0, 340, 100);
+        draw_region("lang", 180, 220 + p * 20, 360, 6, 20, 18);
         redraw();
         await(30);
         if (getkey(snail::Key::down))

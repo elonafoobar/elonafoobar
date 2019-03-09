@@ -26,10 +26,9 @@ void UIMenuConfig::_draw_background()
     }
     if (mode == 10)
     {
-        gsel(4);
         gmode(0);
-        picload(filesystem::dir::graphic() / u8"title.bmp", 0, 0, false);
-        gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+        asset_load("title");
+        elona::draw("title", 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh, 0, 0);

@@ -7,6 +7,7 @@
 #include "character_making.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
+#include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "keybind/keybind.hpp"
@@ -148,10 +149,9 @@ MainMenuResult main_title_menu()
 
     load_background_variants(2);
 
-    gsel(4);
     gmode(0);
-    picload(filesystem::dir::graphic() / u8"title.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("title");
+    draw("title", 0, 0, windoww, windowh);
     gmode(2);
 
     font(13 - en * 2);
@@ -219,8 +219,7 @@ MainMenuResult main_title_menu()
         i18n::s.get("core.locale.main_menu.title_menu.exit"),
     };
 
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_title.bmp", 960, 96, false);
+    asset_load("deco_blend");
     gsel(0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -406,12 +405,10 @@ MainMenuResult main_menu_new_game()
     rc = 0;
     mode = 1;
     cm = 1;
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     load_background_variants(2);
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 960, 96, false);
+    asset_load("deco_cm");
     gsel(0);
     return MainMenuResult::character_making_select_race;
 }
@@ -587,9 +584,8 @@ MainMenuResult main_menu_incarnate()
 {
     cs = 0;
     cs_bk = -1;
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -683,10 +679,9 @@ MainMenuResult main_menu_about()
     keyrange = 5;
     listmax = 5;
 
-    gsel(4);
     gmode(0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
 
     ui_draw_caption("Elona foobar " + latest_version.short_string());
@@ -818,10 +813,9 @@ void main_menu_about_one_changelog(const Release& release)
 
     page = 0;
 
-    gsel(4);
     gmode(0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -900,10 +894,9 @@ MainMenuResult main_menu_about_changelogs()
     pagesize = 5;
     keyrange = 0;
 
-    gsel(4);
     gmode(0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1079,10 +1072,9 @@ MainMenuResult main_menu_about_license()
 
     page = 0;
 
-    gsel(4);
     gmode(0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1202,10 +1194,9 @@ MainMenuResult main_menu_about_credits()
 
     page = 0;
 
-    gsel(4);
     gmode(0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 0, 0, false);
-    gcopy(4, 0, 0, 800, 600, 0, 0, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 

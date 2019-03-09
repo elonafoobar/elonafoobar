@@ -7,6 +7,7 @@
 #include "character_status.hpp"
 #include "config/config.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "i18n.hpp"

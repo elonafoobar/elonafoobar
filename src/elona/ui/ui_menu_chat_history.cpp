@@ -1,5 +1,6 @@
 #include "ui_menu_chat_history.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 
 
@@ -38,8 +39,7 @@ bool UIMenuChatHistory::init()
     key_list(0) = key_enter;
     keyrange = 0;
     pagesize = 0;
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
+    asset_load("ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

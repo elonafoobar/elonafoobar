@@ -6,6 +6,7 @@
 #include "../character.hpp"
 #include "../character_status.hpp"
 #include "../class.hpp"
+#include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
 #include "../keybind/keybind.hpp"
@@ -159,13 +160,12 @@ bool UIMenuCharacterSheet::init()
 
     _load_list(_operation);
 
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp", 0, 0, true);
+    const auto& data = asset_load("ie_sheet");
     gsel(0);
-    wx = (windoww - 700) / 2 + inf_screenx;
-    wy = winposy(400) - 10;
-    ww = 700;
-    wh = 400;
+    wx = (windoww - data.width) / 2 + inf_screenx;
+    wy = winposy(data.height) - 10;
+    ww = data.width;
+    wh = data.height;
     s = i18n::s.get("core.locale.ui.chara_sheet.title.default");
     if (_operation == CharacterSheetOperation::train_skill)
     {
@@ -185,7 +185,7 @@ bool UIMenuCharacterSheet::init()
     if (!_returned_from_portrait)
     {
         gmode(2, 80);
-        gcopy(7, 0, 0, 700, 400, wx + 4, wy + 4);
+        elona::draw("ie_sheet", wx + 4, wy + 4);
         gmode(2);
     }
     if (_operation == CharacterSheetOperation::train_skill)
@@ -660,7 +660,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
             continue;
         }
         ++_cs_buffmax;
-        gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32, x, y);
+        draw_indexed("buff_icon", x, y, cdata[cc].buffs[cnt].id);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});

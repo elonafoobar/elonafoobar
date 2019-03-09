@@ -78,7 +78,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     keylog = "";
     gmode(0);
     gsel(3);
-    draw_copy_from(0, x_at_txtfunc, y_at_txtfunc, "label_more_scratch");
+    asset_copy_from(0, x_at_txtfunc, y_at_txtfunc, "label_more_scratch");
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {

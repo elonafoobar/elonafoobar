@@ -1,5 +1,6 @@
 #include "ui_menu_book.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 
@@ -11,8 +12,7 @@ namespace ui
 bool UIMenuBook::init()
 {
     snd("core.book1");
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 0, 0, false);
+    asset_load("book");
     gsel(0);
     notesel(buff);
     {
@@ -62,9 +62,11 @@ void UIMenuBook::update()
 
 void UIMenuBook::draw()
 {
-    wx = (windoww - 720) / 2 + inf_screenx;
-    wy = winposy(468);
-    gcopy(4, 0, 0, 736, 448, wx, wy);
+    const auto& info = get_image_info("book");
+    wx = (windoww - info.width + 16) / 2 + inf_screenx;
+    wy = winposy(info.height + 20);
+    elona::draw("book", wx, wy);
+
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;

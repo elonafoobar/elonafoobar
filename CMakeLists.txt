@@ -525,7 +525,6 @@ copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/profile/ "${RUNTIME_DIR}/profile/")
-copy_file(${CMAKE_SOURCE_DIR}/runtime/assets.hcl "${RUNTIME_DIR}")
 
 # Copy assets from Elona 1.22 if they are present.
 if (NOT ANDROID OR ANDROID_BUNDLE_ASSETS)

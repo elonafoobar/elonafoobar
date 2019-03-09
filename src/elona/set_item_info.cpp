@@ -20,7 +20,7 @@ bool is_randomizable(const std::string& original_name_ref)
 
 void set_item_info()
 {
-    for (const auto& data : the_item_db)
+    for (const auto& data : the_item_db.values())
     {
         ilight(data.id) = data.light;
         iorgweight(data.id) = data.weight;

@@ -2,6 +2,8 @@
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../character.hpp"
+#include "../data/types/type_asset.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../quest.hpp"
 
@@ -148,10 +150,11 @@ bool UIMenuJournal::init()
     append_subquest_journal(1);
     listmax = noteinfo();
     show_title(strhint2 + strhint3);
-    wx = (windoww - 736) / 2 + inf_screenx;
-    wy = winposy(448);
+    const auto& info = get_image_info("book");
+    wx = (windoww - info.width) / 2 + inf_screenx;
+    wy = winposy(info.height);
     snd("core.book1");
-    window_animation(wx, wy, 736, 448, 9, 4);
+    window_animation(wx, wy, info.width, info.height, 9, 4);
 
     return true;
 }
@@ -168,10 +171,9 @@ void UIMenuJournal::update()
     {
         page = 0;
     }
-    gsel(4);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 0, 0, false);
+    asset_load("book");
     gsel(0);
-    gcopy(4, 0, 0, 736, 448, wx, wy);
+    elona::draw("book", wx, wy);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;

@@ -58,7 +58,7 @@ void get_random_item_id()
 {
     WeightedRandomSampler<int> sampler;
 
-    for (const auto& data : the_item_db)
+    for (const auto& data : the_item_db.values())
     {
         if (data.level > objlv)
             continue;

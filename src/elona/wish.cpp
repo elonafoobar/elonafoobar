@@ -536,7 +536,7 @@ bool wish_for_item(const std::string& input)
 
     BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
-    for (const auto& item_data : the_item_db)
+    for (const auto& item_data : the_item_db.values())
     {
         const auto id = item_data.id;
 
@@ -678,7 +678,7 @@ bool wish_for_skill(const std::string& input)
     BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
 
-    for (const auto& ability_data : the_ability_db)
+    for (const auto& ability_data : the_ability_db.values())
     {
         const int id = ability_data.id;
         const bool is_basic_attribute_excluding_life_and_mana =

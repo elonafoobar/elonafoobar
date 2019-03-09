@@ -621,13 +621,8 @@ int show_random_event_window(
     {
         chatesc = -1;
     }
-    gsel(7);
     gmode(0);
-    picload(
-        filesystem::dir::graphic() / (background_filename + u8".bmp"),
-        0,
-        0,
-        true);
+    asset_load(background_filename);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);

@@ -1,6 +1,7 @@
 #include "ui_menu_town_economy.hpp"
 #include "../area.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 
 namespace elona
@@ -32,13 +33,11 @@ bool UIMenuTownEconomy::init()
     keyrange = 0;
     pagesize = 1;
     listmax = 2;
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 960, 96, false);
+    asset_load("deco_politics");
     gsel(0);
-    fillbg(3, 960, 96, 128, 128);
+    draw_bg("deco_politics_a");
     render_hud();
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp", 0, 0, true);
+    asset_load("ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

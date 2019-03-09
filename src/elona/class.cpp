@@ -58,7 +58,7 @@ std::vector<std::reference_wrapper<const ClassData>> class_get_available(
 {
     std::vector<std::reference_wrapper<const ClassData>> ret;
 
-    for (const auto& class_ : the_class_db)
+    for (const auto& class_ : the_class_db.values())
     {
         if (class_.is_extra == is_extra_class)
         {

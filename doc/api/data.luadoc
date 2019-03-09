@@ -1,0 +1,9 @@
+--- Functions for managing the asset system. With this module it is possible to
+--  reload built-in assets like textures and music.
+--  @usage local Data = Elona.require("Data")
+module "Data"
+
+--- Reloads the UI assets defined in the <code>core.asset</code> table. Call this
+--  if you want changes to the <code>core.asset</code> to be visible.
+--  @function reload_assets
+function reload_assets() end

@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -32,14 +33,13 @@ void show_card_collection()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
-    gsel(3);
-    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 960, 96, false);
+    asset_load("deco_feat");
     gsel(0);
     windowshadow = 1;
 
 reset_page:
     listmax = 0;
-    for (const auto& data : the_character_db)
+    for (const auto& data : the_character_db.values())
     {
         list(0, listmax) = data.id;
         list(1, listmax) = 1000 * data.level + data.id;
