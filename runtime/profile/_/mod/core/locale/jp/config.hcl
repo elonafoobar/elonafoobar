@@ -493,7 +493,7 @@ DOC
                 name = "キーの割り当て"
             }
             mods {
-                name = "モッド設定"
+                name = "MOD設定"
             }
         }
     }
