@@ -1,9 +1,9 @@
-local Chara = Elona.require("Chara")
-local Event = Elona.require("Event")
+local unique = require("data/dialog/unique")
 
 data:define_type("dialog")
 data:add_multi(
    "core.dialog",
    {
+      lomias = unique.lomias
    }
 )
