@@ -67,7 +67,8 @@ static std::unordered_set<std::string> _read_dependencies(
 ModManifest ModManifest::load(const fs::path& path)
 {
     auto parsed = hclutil::load(path);
-    const auto& value = hclutil::skip_sections(parsed, {"mod"}, path.string());
+    const auto& value = hclutil::skip_sections(
+        parsed, {"mod"}, filepathutil::to_utf8_path(path));
 
     std::string mod_name = _read_mod_name(value, path);
     fs::path mod_path = path.parent_path();
