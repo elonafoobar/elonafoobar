@@ -68,9 +68,9 @@ local function query(talk, text, choices, default_choice)
 
    local result
    if show_impress then
-      result = Input.prompt_dialog(text, image, Internal.speaker_name(talk.speaker), default_choice, the_choices, talk.speaker.impression, talk.speaker.interest)
+      result = Input.prompt_dialog(text, image, Internal.speaker_name(talk.speaker), the_choices, default_choice, talk.speaker.impression, talk.speaker.interest)
    else
-      result = Input.prompt_dialog(text, image, Internal.speaker_name(talk.speaker), default_choice, the_choices)
+      result = Input.prompt_dialog(text, image, Internal.speaker_name(talk.speaker), the_choices, default_choice)
    end
 
    return choices[result + 1][1]

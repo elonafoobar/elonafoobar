@@ -68,3 +68,38 @@ function prompt_text(message, is_cancelable) end
 --  end
 --  @function prompt_choice
 function prompt_choice(choices) end
+
+--- Creates a dialog window like the one normally shown when talking to a
+--  character.
+--
+--  @tparam string message Message to display.
+--  @tparam string portrait_id Portrait ID of the speaker.
+--  @tparam string speaker_name Name of the speaker to display.
+--  @tparam[opt] num default_index Default choice to use if canceled.
+--  @tparam {string,...} choices An array of string choices for the dialog.
+--  @tparam[opt] num impression Impression to display.
+--  @tparam[opt] num interest Interest to display.
+--  @return num index of the selected item, or the default if canceled
+--  @function prompt_dialog
+function prompt_dialog(text, portrait_id, speaker_name, choices, default_index, impression, interest) end
+
+--- Creates a dialog window like the one normally shown when talking to a
+--  character.
+--
+--  @tparam string message Message to display.
+--  @tparam num chara_image Character chip of the speaker.
+--  @tparam string speaker_name Name of the speaker to display.
+--  @tparam[opt] num default_index Default choice to use if canceled.
+--  @tparam {string,...} choices An array of string choices for the dialog.
+--  @tparam[opt] num impression Impression to display.
+--  @tparam[opt] num interest Interest to display.
+--  @return num index of the selected item, or the default if canceled
+--  @function prompt_dialog
+function prompt_dialog(text, chara_image, speaker_name, choices, default_index, impression, interest) end
+
+--- Starts a dialog with a character.
+--  @tparam LuaCharacter speaker Character who will speak.
+--  @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
+--  character's definition.
+--  @function start_dialog
+function start_dialog(speaker, dialog) end

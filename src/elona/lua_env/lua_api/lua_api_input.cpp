@@ -201,8 +201,8 @@ int LuaApiInput::prompt_dialog(
     const std::string& text,
     const std::string& portrait_id,
     const std::string& speaker_name,
-    sol::optional<int> default_index,
-    sol::table choices)
+    sol::table choices,
+    sol::optional<int> default_index)
 {
     // Copy text, as it is used mutably.
     auto text_ = text;
@@ -230,13 +230,14 @@ int LuaApiInput::prompt_dialog(
 /**
  * @luadoc prompt_dialog
  *
- * Creates a dialog window like the one normally shown in the dialog window.
+ * Creates a dialog window like the one normally shown when talking to a
+ * character.
  *
  * @tparam string message Message to display.
  * @tparam string portrait_id Portrait ID of the speaker.
  * @tparam string speaker_name Name of the speaker to display.
  * @tparam[opt] num default_index Default choice to use if canceled.
- * @tparam table choices An array of choices for the dialog.
+ * @tparam {string,...} choices An array of string choices for the dialog.
  * @tparam[opt] num impression Impression to display.
  * @tparam[opt] num interest Interest to display.
  * @return num index of the selected item, or the default if canceled
@@ -245,8 +246,8 @@ int LuaApiInput::prompt_dialog_impress(
     const std::string& text,
     const std::string& portrait_id,
     const std::string& speaker_name,
-    sol::optional<int> default_index,
     sol::table choices,
+    sol::optional<int> default_index,
     int impression,
     int interest)
 {
@@ -279,8 +280,8 @@ int LuaApiInput::prompt_dialog_with_chip(
     const std::string& text,
     int chara_image,
     const std::string& speaker_name,
-    sol::optional<int> default_index,
-    sol::table choices)
+    sol::table choices,
+    sol::optional<int> default_index)
 {
     // Copy text, as it is used mutably.
     auto text_ = text;
@@ -308,13 +309,14 @@ int LuaApiInput::prompt_dialog_with_chip(
 /**
  * @luadoc prompt_dialog
  *
- * Creates a dialog window like the one normally shown in the dialog window.
+ * Creates a dialog window like the one normally shown when talking to a
+ * character.
  *
  * @tparam string message Message to display.
  * @tparam num chara_image Character chip of the speaker.
  * @tparam string speaker_name Name of the speaker to display.
  * @tparam[opt] num default_index Default choice to use if canceled.
- * @tparam table choices An array of choices for the dialog.
+ * @tparam {string,...} choices An array of string choices for the dialog.
  * @tparam[opt] num impression Impression to display.
  * @tparam[opt] num interest Interest to display.
  * @return num index of the selected item, or the default if canceled
@@ -323,8 +325,8 @@ int LuaApiInput::prompt_dialog_with_chip_impress(
     const std::string& text,
     int chara_image,
     const std::string& speaker_name,
-    sol::optional<int> default_index,
     sol::table choices,
+    sol::optional<int> default_index,
     int impression,
     int interest)
 {

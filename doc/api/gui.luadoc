@@ -16,3 +16,8 @@ function txt(message, color) end
 --- Starts a new message line in the HUD message window.
 --  @function txtnew
 function txtnew() end
+
+--- Plays a sound.
+--  @tparam string sound_id The sound, of type core.sound
+--  @function play_sound
+function play_sound(sound_id) end
