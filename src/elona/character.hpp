@@ -549,6 +549,11 @@ public:
         state_ = new_state;
     }
 
+    SharedId new_id() const
+    {
+        return *the_character_db.get_id_from_legacy(this->id);
+    }
+
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 

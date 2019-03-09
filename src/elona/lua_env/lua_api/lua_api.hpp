@@ -9,6 +9,7 @@
 #include "lua_api_gui.hpp"
 #include "lua_api_i18n.hpp"
 #include "lua_api_input.hpp"
+#include "lua_api_internal.hpp"
 #include "lua_api_item.hpp"
 #include "lua_api_magic.hpp"
 #include "lua_api_map.hpp"

@@ -36,6 +36,8 @@ create_from_id_xy(int, int, const std::string&);
 
 int kill_count(const std::string&);
 
+sol::optional<LuaCharacterHandle> find(const std::string&);
+
 
 void bind(sol::table&);
 }; // namespace LuaApiChara

@@ -383,6 +383,32 @@ void LuaCharacter::eat_rotten_food(Character& self)
     elona::cc = cc_bk;
 }
 
+/**
+ * @luadoc
+ *
+ * Deletes this character and removes it from the map. The character will no
+ * longer be valid for use.
+ */
+void LuaCharacter::vanquish(Character& self)
+{
+    chara_vanquish(self.index);
+}
+
+/**
+ * @luadoc
+ *
+ * Applies the effects of acting hostile towards a target character.
+ * @tparam LuaCharacter target Target to act hostile towards
+ */
+void LuaCharacter::act_hostile_against(
+    Character& self,
+    LuaCharacterHandle target)
+{
+    auto& target_ref =
+        lua::lua->get_handle_manager().get_ref<Character>(target);
+    hostileaction(self.index, target_ref.index);
+}
+
 void LuaCharacter::bind(sol::state& lua)
 {
     // new_usertype generates a massive amount of code and refuses to compile
@@ -556,13 +582,45 @@ void LuaCharacter::bind(sol::state& lua)
         &Character::emotion_icon,
 
         /**
-         * @luadoc fame field karma
+         * @luadoc karma field num
          *
          * [RW] The character's current karma. Only valid if the character is
          * the player.
          */
         "karma",
         &Character::karma,
+
+        /**
+         * @luadoc portrait field string
+         *
+         * [RW] The character's current image.
+         */
+        "image",
+        &Character::image,
+
+        /**
+         * @luadoc portrait field string
+         *
+         * [RW] The character's current portrait.
+         */
+        "portrait",
+        &Character::portrait,
+
+        /**
+         * @luadoc impression field num
+         *
+         * [RW] The character's current impression.
+         */
+        "impression",
+        &Character::impression,
+
+        /**
+         * @luadoc interest field num
+         *
+         * [RW] The character's current interest.
+         */
+        "interest",
+        &Character::interest,
 
 
         /**
@@ -571,9 +629,7 @@ void LuaCharacter::bind(sol::state& lua)
          * [R] The new version prototype ID of the character.
          */
         "new_id",
-        sol::property([](Character& c) {
-            return the_character_db.get_id_from_legacy(c.id)->get();
-        }),
+        sol::property([](Character& c) { return c.new_id().get(); }),
 
         /**
          * @luadoc name field string
@@ -590,6 +646,14 @@ void LuaCharacter::bind(sol::state& lua)
          */
         "basename",
         sol::property([](Character& c) { return elona::cdatan(0, c.index); }),
+
+        /**
+         * @luadoc title field string
+         *
+         * [R] The title of the character.
+         */
+        "title",
+        sol::property([](Character& c) { return elona::cdatan(1, c.index); }),
 
         /**
          * @luadoc sex field Gender
@@ -618,6 +682,20 @@ void LuaCharacter::bind(sol::state& lua)
             },
             [](Character& c, const EnumString& s) {
                 c.relationship = LuaEnums::RelationTable.ensure_from_string(s);
+            }),
+
+        /**
+         * @luadoc quality field Quality
+         *
+         * [RW] The quality of the character.
+         */
+        "quality",
+        sol::property(
+            [](Character& c) {
+                return LuaEnums::QualityTable.convert_to_string(c.quality);
+            },
+            [](Character& c, const EnumString& s) {
+                c.quality = LuaEnums::QualityTable.ensure_from_string(s);
             }));
 
     auto key = Character::lua_type();
@@ -645,6 +723,8 @@ void LuaCharacter::bind(sol::state& lua)
     lua[key]["modify_corruption"] = &LuaCharacter::modify_corruption;
     lua[key]["make_pregnant"] = &LuaCharacter::make_pregnant;
     lua[key]["eat_rotten_food"] = &LuaCharacter::eat_rotten_food;
+    lua[key]["vanquish"] = &LuaCharacter::vanquish;
+    lua[key]["act_hostile_against"] = &LuaCharacter::act_hostile_against;
 }
 
 } // namespace lua

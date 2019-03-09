@@ -342,7 +342,7 @@ EnumMap<int> CharaFlagTable{
         {"IsLordOfDungeon", 976},
         {"HasOwnName", 977},
         {"IsPregnant", 978},
-        {"DoesNotSearchEnemy", 979},
+        {"IsNotAttackedByEnemy", 979},
         {"IsContractingWithReaper", 980},
         {"NeedsRefreshingStatus", 981},
         {"VisitedJustNow", 982},

@@ -175,7 +175,6 @@ else()
       src/tests/util.cpp
       src/tests/config.cpp
       src/tests/config_def.cpp
-      src/tests/dialog.cpp
       src/tests/filesystem.cpp
       src/tests/spec.cpp
       src/tests/lua_api.cpp

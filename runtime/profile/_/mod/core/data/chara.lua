@@ -544,7 +544,6 @@ data:add_multi(
          category = 0,
          rarity = 1000,
          coefficient = 400,
-         dialog_id = "core.dialog#core.whom_dwell_in_the_vanity",
       },
       {
          name = "loyter",
@@ -790,6 +789,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          drops = { "core.lomias" },
+         dialog_id = "core.lomias",
       },
       {
          name = "slan",

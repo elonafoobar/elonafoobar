@@ -6,6 +6,7 @@
 #include "character_status.hpp"
 #include "crafting.hpp"
 #include "data/types/type_item.hpp"
+#include "dialog.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
@@ -4929,6 +4930,16 @@ TalkResult talk_unique_part_time_worker()
 TalkResult talk_unique()
 {
     listmax = 0;
+
+    auto& chara = cdata[tc];
+    const auto& dialog_id = the_character_db[chara.id]->dialog_id;
+
+    if (dialog_id)
+    {
+        dialog_start(chara, *dialog_id);
+        return TalkResult::talk_end;
+    }
+
     switch (*chatval_unique_chara_id)
     {
     case 2: return talk_unique_zeome();

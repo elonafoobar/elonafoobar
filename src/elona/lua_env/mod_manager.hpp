@@ -289,6 +289,8 @@ private:
                                                      "ipairs",
                                                      "next",
                                                      "print",
+                                                     "pcall",
+                                                     "xpcall",
                                                      "tostring",
                                                      "error"};
 

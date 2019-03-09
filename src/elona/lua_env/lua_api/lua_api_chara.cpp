@@ -158,6 +158,32 @@ int LuaApiChara::kill_count(const std::string& id)
     return npcmemory(0, data->id);
 }
 
+
+/**
+ * @luadoc
+ *
+ * Attempts to find a character with the given protoype ID.
+ * @tparam id string Prototype ID to search
+ * @treturn[1] LuaCharacter the found character
+ * @treturn[2] nil
+ */
+sol::optional<LuaCharacterHandle> LuaApiChara::find(const std::string& id)
+{
+    auto data = the_character_db[id];
+    if (!data)
+    {
+        return sol::nullopt;
+    }
+
+    auto result = chara_find(data->id);
+    if (result == 0)
+    {
+        return sol::nullopt;
+    }
+
+    return lua::handle(elona::cdata[result]);
+}
+
 void LuaApiChara::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, is_alive);
@@ -174,6 +200,7 @@ void LuaApiChara::bind(sol::table& api_table)
             LuaApiChara::create_from_id,
             LuaApiChara::create_from_id_xy));
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, kill_count);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiChara, find);
 }
 
 } // namespace lua

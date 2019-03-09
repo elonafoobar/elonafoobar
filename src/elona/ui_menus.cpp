@@ -15,7 +15,6 @@
 #include "ui/ui_menu_config.cpp"
 #include "ui/ui_menu_crafting.cpp"
 #include "ui/ui_menu_ctrl_ally.cpp"
-#include "ui/ui_menu_dialog.cpp"
 #include "ui/ui_menu_equipment.cpp"
 #include "ui/ui_menu_feats.cpp"
 #include "ui/ui_menu_game_help.cpp"
