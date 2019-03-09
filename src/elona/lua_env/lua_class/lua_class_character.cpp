@@ -411,320 +411,280 @@ void LuaCharacter::act_hostile_against(
 
 void LuaCharacter::bind(sol::state& lua)
 {
-    // new_usertype generates a massive amount of code and refuses to compile
-    // after a certain point, due to there being so many fields. However,
-    // variables/properties have to be set on the usertype at initialization,
-    // because __index is overridden all at once, so at some point something
-    // will have to change...
+    auto LuaCharacter = lua.create_simple_usertype<Character>();
+    LuaCharacter.set("new", sol::no_constructor);
+    LuaCharacter.set("lua_type", &Character::lua_type);
 
-    sol::usertype<Character> LuaCharacter(
-        "lua_type",
-        &Character::lua_type,
+    // Properties
 
-        /**
-         * @luadoc index field num
-         *
-         * [R] The index of this character in the global characters array.
-         */
-        "index",
-        sol::readonly(&Character::index),
+    /**
+     * @luadoc index field num
+     *
+     * [R] The index of this character in the global characters array.
+     */
+    LuaCharacter.set("index", sol::readonly(&Character::index));
 
-        /**
-         * @luadoc index field id
-         *
-         * [R] The prototype ID of this character.
-         */
-        "id",
-        sol::readonly(&Character::id),
+    /**
+     * @luadoc index field id
+     *
+     * [R] The prototype ID of this character.
+     */
+    LuaCharacter.set("id", sol::readonly(&Character::id));
 
-        /**
-         * @luadoc name field string
-         * [R] The character's proper name without any qualifiers.
-         */
-        "hp",
-        sol::readonly(&Character::hp),
+    /**
+     * @luadoc name field string
+     * [R] The character's proper name without any qualifiers.
+     */
+    LuaCharacter.set("hp", sol::readonly(&Character::hp));
 
-        /**
-         * @luadoc max_hp field num
-         *
-         * [R] The character's maximum HP.
-         */
-        "max_hp",
-        sol::readonly(&Character::max_hp),
+    /**
+     * @luadoc max_hp field num
+     *
+     * [R] The character's maximum HP.
+     */
+    LuaCharacter.set("max_hp", sol::readonly(&Character::max_hp));
 
-        /**
-         * @luadoc mp field num
-         *
-         * [R] The character's current MP.
-         */
-        "mp",
-        sol::readonly(&Character::mp),
+    /**
+     * @luadoc mp field num
+     *
+     * [R] The character's current MP.
+     */
+    LuaCharacter.set("mp", sol::readonly(&Character::mp));
 
-        /**
-         * @luadoc max_mp field num
-         *
-         * [R] The character's maximum MP.
-         */
-        "max_mp",
-        sol::readonly(&Character::max_mp),
+    /**
+     * @luadoc max_mp field num
+     *
+     * [R] The character's maximum MP.
+     */
+    LuaCharacter.set("max_mp", sol::readonly(&Character::max_mp));
 
-        /**
-         * @luadoc sp field num
-         *
-         * [R] The character's current stamina.
-         */
-        "sp",
-        sol::readonly(&Character::sp),
+    /**
+     * @luadoc sp field num
+     *
+     * [R] The character's current stamina.
+     */
+    LuaCharacter.set("sp", sol::readonly(&Character::sp));
 
-        /**
-         * @luadoc max_sp field num
-         *
-         * [R] The character's maximum stamina.
-         */
-        "max_sp",
-        sol::readonly(&Character::max_sp),
+    /**
+     * @luadoc max_sp field num
+     *
+     * [R] The character's maximum stamina.
+     */
+    LuaCharacter.set("max_sp", sol::readonly(&Character::max_sp));
 
-        /**
-         * @luadoc position field LuaPosition
-         *
-         * [RW] The character's position.
-         */
-        "position",
-        &Character::position,
+    /**
+     * @luadoc position field LuaPosition
+     *
+     * [RW] The character's position.
+     */
+    LuaCharacter.set("position", &Character::position);
 
-        /**
-         * @luadoc shop_rank field num
-         *
-         * [RW] The shop rank of this character. Used only if they are a
-         * shopkeeper.
-         */
-        "shop_rank",
-        &Character::shop_rank,
+    /**
+     * @luadoc shop_rank field num
+     *
+     * [RW] The shop rank of this character. Used only if they are a
+     * shopkeeper.
+     */
+    LuaCharacter.set("shop_rank", &Character::shop_rank);
 
-        /**
-         * @luadoc role field num
-         *
-         * [RW] The role this character takes on.
-         */
-        "role",
-        &Character::character_role,
+    /**
+     * @luadoc role field num
+     *
+     * [RW] The role this character takes on.
+     */
+    LuaCharacter.set("role", &Character::character_role);
 
-        /**
-         * @luadoc experience field num
-         *
-         * [RW] The character's current experience points.
-         */
-        "experience",
-        &Character::experience,
+    /**
+     * @luadoc experience field num
+     *
+     * [RW] The character's current experience points.
+     */
+    LuaCharacter.set("experience", &Character::experience);
 
-        /**
-         * @luadoc fame field num
-         *
-         * [RW] The character's current fame.
-         */
-        "fame",
-        &Character::fame,
+    /**
+     * @luadoc fame field num
+     *
+     * [RW] The character's current fame.
+     */
+    LuaCharacter.set("fame", &Character::fame);
 
-        /**
-         * @luadoc talk_type field num
-         *
-         * [RW] The character's current talk type.
-         */
-        "talk_type",
-        &Character::talk_type,
+    /**
+     * @luadoc talk_type field num
+     *
+     * [RW] The character's current talk type.
+     */
+    LuaCharacter.set("talk_type", &Character::talk_type);
 
-        /**
-         * @luadoc pv field num
-         *
-         * [RW] The character's current PV. Reset on refresh.
-         */
-        "pv",
-        &Character::pv,
+    /**
+     * @luadoc pv field num
+     *
+     * [RW] The character's current PV. Reset on refresh.
+     */
+    LuaCharacter.set("pv", &Character::pv);
 
-        /**
-         * @luadoc dv field num
-         *
-         * [RW] The character's current DV. Reset on refresh.
-         */
-        "dv",
-        &Character::dv,
+    /**
+     * @luadoc dv field num
+     *
+     * [RW] The character's current DV. Reset on refresh.
+     */
+    LuaCharacter.set("dv", &Character::dv);
 
-        /**
-         * @luadoc hit_bonus field num
-         *
-         * [RW] The character's current hit bonus. Reset on refresh.
-         */
-        "hit_bonus",
-        &Character::hit_bonus,
+    /**
+     * @luadoc hit_bonus field num
+     *
+     * [RW] The character's current hit bonus. Reset on refresh.
+     */
+    LuaCharacter.set("hit_bonus", &Character::hit_bonus);
 
-        /**
-         * @luadoc growth_buffs field num
-         *
-         * [RW] The character's current growth buffs.
-         */
-        "growth_buffs",
-        &Character::growth_buffs,
+    /**
+     * @luadoc growth_buffs field num
+     *
+     * [RW] The character's current growth buffs.
+     */
+    LuaCharacter.set("growth_buffs", &Character::growth_buffs);
 
-        /**
-         * @luadoc hate field num
-         *
-         * [RW] The character's current hate.
-         */
-        "hate",
-        &Character::hate,
+    /**
+     * @luadoc hate field num
+     *
+     * [RW] The character's current hate.
+     */
+    LuaCharacter.set("hate", &Character::hate);
 
-        /**
-         * @luadoc fame field num
-         *
-         * [RW] The character's current emotion icon. Valid values are 0-99.
-         */
-        "emotion_icon",
-        &Character::emotion_icon,
+    /**
+     * @luadoc fame field num
+     *
+     * [RW] The character's current emotion icon. Valid values are 0-99.
+     */
+    LuaCharacter.set("emotion_icon", &Character::emotion_icon);
 
-        /**
-         * @luadoc karma field num
-         *
-         * [RW] The character's current karma. Only valid if the character is
-         * the player.
-         */
-        "karma",
-        &Character::karma,
+    /**
+     * @luadoc karma field num
+     *
+     * [RW] The character's current karma. Only valid if the character is
+     * the player.
+     */
+    LuaCharacter.set("karma", &Character::karma);
 
-        /**
-         * @luadoc portrait field string
-         *
-         * [RW] The character's current image.
-         */
-        "image",
-        &Character::image,
+    /**
+     * @luadoc portrait field string
+     *
+     * [RW] The character's current image.
+     */
+    LuaCharacter.set("image", &Character::image);
 
-        /**
-         * @luadoc portrait field string
-         *
-         * [RW] The character's current portrait.
-         */
-        "portrait",
-        &Character::portrait,
+    /**
+     * @luadoc portrait field string
+     *
+     * [RW] The character's current portrait.
+     */
+    LuaCharacter.set("portrait", &Character::portrait);
 
-        /**
-         * @luadoc impression field num
-         *
-         * [RW] The character's current impression.
-         */
-        "impression",
-        &Character::impression,
+    /**
+     * @luadoc impression field num
+     *
+     * [RW] The character's current impression.
+     */
+    LuaCharacter.set("impression", &Character::impression);
 
-        /**
-         * @luadoc interest field num
-         *
-         * [RW] The character's current interest.
-         */
-        "interest",
-        &Character::interest,
+    /**
+     * @luadoc interest field num
+     *
+     * [RW] The character's current interest.
+     */
+    LuaCharacter.set("interest", &Character::interest);
 
 
-        /**
-         * @luadoc new_id field string
-         *
-         * [R] The new version prototype ID of the character.
-         */
-        "new_id",
-        sol::property([](Character& c) { return c.new_id().get(); }),
+    /**
+     * @luadoc new_id field string
+     *
+     * [R] The new version prototype ID of the character.
+     */
+    LuaCharacter.set(
+        "new_id", sol::property([](Character& c) { return c.new_id().get(); }));
 
-        /**
-         * @luadoc name field string
-         *
-         * [R] The name of the character with article and title.
-         */
-        "name",
-        sol::property([](Character& c) { return elona::name(c.index); }),
+    /**
+     * @luadoc name field string
+     *
+     * [R] The name of the character with article and title.
+     */
+    LuaCharacter.set("name", sol::property([](Character& c) {
+                         return elona::name(c.index);
+                     }));
 
-        /**
-         * @luadoc basename field string
-         *
-         * [R] The name of the character without article and title.
-         */
-        "basename",
-        sol::property([](Character& c) { return elona::cdatan(0, c.index); }),
+    /**
+     * @luadoc basename field string
+     *
+     * [R] The name of the character without article and title.
+     */
+    LuaCharacter.set("basename", sol::property([](Character& c) {
+                         return elona::cdatan(0, c.index);
+                     }));
 
-        /**
-         * @luadoc title field string
-         *
-         * [R] The title of the character.
-         */
-        "title",
-        sol::property([](Character& c) { return elona::cdatan(1, c.index); }),
+    /**
+     * @luadoc title field string
+     *
+     * [R] The title of the character.
+     */
+    LuaCharacter.set("title", sol::property([](Character& c) {
+                         return elona::cdatan(1, c.index);
+                     }));
 
-        /**
-         * @luadoc sex field Gender
-         *
-         * [RW] The sex of the character.
-         */
-        "sex",
-        sol::property(
-            [](Character& c) {
-                return LuaEnums::GenderTable.convert_to_string(c.sex);
-            },
-            [](Character& c, const EnumString& s) {
-                c.sex = LuaEnums::GenderTable.ensure_from_string(s);
-            }),
+    /**
+     * @luadoc sex field Gender
+     *
+     * [RW] The sex of the character.
+     */
+    LuaCharacter.set("sex", LUA_API_ENUM_PROPERTY(Character, sex, Gender));
 
-        /**
-         * @luadoc relationship field Relation
-         *
-         * [RW] The relationship of the character to the player.
-         */
+    /**
+     * @luadoc relationship field Relation
+     *
+     * [RW] The relationship of the character to the player.
+     */
+    LuaCharacter.set(
         "relationship",
-        sol::property(
-            [](Character& c) {
-                return LuaEnums::RelationTable.convert_to_string(
-                    c.relationship);
-            },
-            [](Character& c, const EnumString& s) {
-                c.relationship = LuaEnums::RelationTable.ensure_from_string(s);
-            }),
+        LUA_API_ENUM_PROPERTY(Character, relationship, Relation));
 
-        /**
-         * @luadoc quality field Quality
-         *
-         * [RW] The quality of the character.
-         */
-        "quality",
-        sol::property(
-            [](Character& c) {
-                return LuaEnums::QualityTable.convert_to_string(c.quality);
-            },
-            [](Character& c, const EnumString& s) {
-                c.quality = LuaEnums::QualityTable.ensure_from_string(s);
-            }));
+    /**
+     * @luadoc quality field Quality
+     *
+     * [RW] The quality of the character.
+     */
+    LuaCharacter.set(
+        "quality", LUA_API_ENUM_PROPERTY(Character, quality, Quality));
+
+    // Methods
+    LuaCharacter.set(
+        "damage_hp",
+        sol::overload(
+            &LuaCharacter::damage_hp,
+            &LuaCharacter::damage_hp_source,
+            &LuaCharacter::damage_hp_chara));
+    LuaCharacter.set("apply_ailment", &LuaCharacter::apply_ailment);
+    LuaCharacter.set("heal_ailment", &LuaCharacter::heal_ailment);
+    LuaCharacter.set(
+        "add_buff",
+        sol::overload(&LuaCharacter::add_buff, &LuaCharacter::add_buff_doer));
+    LuaCharacter.set("set_growth_buff", &LuaCharacter::set_growth_buff);
+    LuaCharacter.set("recruit_as_ally", &LuaCharacter::recruit_as_ally);
+    LuaCharacter.set("set_flag", &LuaCharacter::set_flag);
+    LuaCharacter.set("get_skill", &LuaCharacter::get_skill);
+    LuaCharacter.set(
+        "gain_skill",
+        sol::overload(
+            &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock));
+    LuaCharacter.set("gain_skill_exp", &LuaCharacter::gain_skill_exp);
+    LuaCharacter.set("modify_resistance", &LuaCharacter::modify_resistance);
+    LuaCharacter.set("modify_sanity", &LuaCharacter::modify_sanity);
+    LuaCharacter.set("modify_karma", &LuaCharacter::modify_karma);
+    LuaCharacter.set("modify_corruption", &LuaCharacter::modify_corruption);
+    LuaCharacter.set("make_pregnant", &LuaCharacter::make_pregnant);
+    LuaCharacter.set("eat_rotten_food", &LuaCharacter::eat_rotten_food);
+    LuaCharacter.set("vanquish", &LuaCharacter::vanquish);
+    LuaCharacter.set("act_hostile_against", &LuaCharacter::act_hostile_against);
 
     auto key = Character::lua_type();
     lua.set_usertype(key, LuaCharacter);
-
-    // Methods
-    lua[key]["damage_hp"] = sol::overload(
-        &LuaCharacter::damage_hp,
-        &LuaCharacter::damage_hp_source,
-        &LuaCharacter::damage_hp_chara),
-    lua[key]["apply_ailment"] = &LuaCharacter::apply_ailment;
-    lua[key]["heal_ailment"] = &LuaCharacter::heal_ailment;
-    lua[key]["add_buff"] =
-        sol::overload(&LuaCharacter::add_buff, &LuaCharacter::add_buff_doer);
-    lua[key]["set_growth_buff"] = &LuaCharacter::set_growth_buff;
-    lua[key]["recruit_as_ally"] = &LuaCharacter::recruit_as_ally;
-    lua[key]["set_flag"] = &LuaCharacter::set_flag;
-    lua[key]["get_skill"] = &LuaCharacter::get_skill;
-    lua[key]["gain_skill"] = sol::overload(
-        &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock);
-    lua[key]["gain_skill_exp"] = &LuaCharacter::gain_skill_exp;
-    lua[key]["modify_resistance"] = &LuaCharacter::modify_resistance;
-    lua[key]["modify_sanity"] = &LuaCharacter::modify_sanity;
-    lua[key]["modify_karma"] = &LuaCharacter::modify_karma;
-    lua[key]["modify_corruption"] = &LuaCharacter::modify_corruption;
-    lua[key]["make_pregnant"] = &LuaCharacter::make_pregnant;
-    lua[key]["eat_rotten_food"] = &LuaCharacter::eat_rotten_food;
-    lua[key]["vanquish"] = &LuaCharacter::vanquish;
-    lua[key]["act_hostile_against"] = &LuaCharacter::act_hostile_against;
 }
 
 } // namespace lua

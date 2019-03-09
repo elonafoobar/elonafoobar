@@ -34,41 +34,39 @@ namespace lua
 
 void LuaAbility::bind(sol::state& lua)
 {
-    sol::usertype<lua::LuaAbility> LuaAbility(
-        /**
-         * @luadoc experience field num
-         *
-         * [R] The skill's current experience. To modify it, use
-         * LuaCharacter.gain_skill_exp, which will modify level and potential
-         * appropriately.
-         * @see LuaCharacter.gain_skill_exp
-         */
-        "experience",
-        ELONA_LUA_SKILL_PROPERTY_READONLY(experience),
+    auto LuaAbility = lua.create_simple_usertype<lua::LuaAbility>();
+    LuaAbility.set("new", sol::no_constructor);
 
-        /**
-         * @luadoc current_level field num
-         *
-         * [RW] The skill's current level.
-         */
-        "current_level",
-        ELONA_LUA_SKILL_PROPERTY(current_level),
+    /**
+     * @luadoc experience field num
+     *
+     * [R] The skill's current experience. To modify it, use
+     * LuaCharacter.gain_skill_exp, which will modify level and potential
+     * appropriately.
+     * @see LuaCharacter.gain_skill_exp
+     */
+    LuaAbility.set("experience", ELONA_LUA_SKILL_PROPERTY_READONLY(experience));
 
-        /**
-         * @luadoc original_level field num
-         *
-         * [RW] The skill's original level.
-         */
-        "original_level",
-        ELONA_LUA_SKILL_PROPERTY(original_level),
+    /**
+     * @luadoc current_level field num
+     *
+     * [RW] The skill's current level.
+     */
+    LuaAbility.set("current_level", ELONA_LUA_SKILL_PROPERTY(current_level));
 
-        /**
-         * @luadoc potential field num
-         *
-         * [RW] The skill's potential.
-         */
-        "potential",
-        ELONA_LUA_SKILL_PROPERTY(potential));
+    /**
+     * @luadoc original_level field num
+     *
+     * [RW] The skill's original level.
+     */
+    LuaAbility.set("original_level", ELONA_LUA_SKILL_PROPERTY(original_level));
+
+    /**
+     * @luadoc potential field num
+     *
+     * [RW] The skill's potential.
+     */
+    LuaAbility.set("potential", ELONA_LUA_SKILL_PROPERTY(potential));
 
     lua.set_usertype("LuaAbility", LuaAbility);
 }

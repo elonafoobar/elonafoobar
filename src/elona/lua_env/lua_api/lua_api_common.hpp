@@ -32,3 +32,12 @@ using LuaItemHandle = sol::table;
     { \
         api_table[#name] = (value); \
     } while (false)
+
+#define LUA_API_ENUM_PROPERTY(klass, field, enum_kind) \
+    sol::property( \
+        [](klass& it) { \
+            return LuaEnums::enum_kind##Table.convert_to_string(it.field); \
+        }, \
+        [](klass& it, const EnumString& s) { \
+            it.field = LuaEnums::enum_kind##Table.ensure_from_string(s); \
+        })
