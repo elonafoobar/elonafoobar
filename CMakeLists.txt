@@ -505,6 +505,12 @@ function(copy_file source target)
     ${target})
 endfunction()
 
+function(remove_dir dir)
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E remove_directory
+    ${dir})
+endfunction()
+
 if(ANDROID)
   set(ASSET_DIR "${CMAKE_SOURCE_DIR}/android/app/src/main/assets")
   file(REMOVE_RECURSE ${ASSET_DIR})
@@ -546,4 +552,7 @@ if(NOT ANDROID)
   if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     copy_dir(${CMAKE_SOURCE_DIR}/src/tests/lua "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
   endif()
+
+  remove_dir("$<TARGET_FILE_DIR:${PROJECT_NAME}>/profile/testing")
+  remove_dir("$<TARGET_FILE_DIR:${PROJECT_NAME}>/profile/default")
 endif()
