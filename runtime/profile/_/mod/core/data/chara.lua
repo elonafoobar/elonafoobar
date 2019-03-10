@@ -96,7 +96,6 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         dialog_id = "core.dialog#dialog.redirect",
       },
       {
          name = "bartender",
@@ -414,6 +413,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.zeome",
       },
       {
          name = "at",
@@ -467,6 +467,7 @@ data:add_multi(
          category = 0,
          rarity = 1000,
          coefficient = 400,
+         dialog_id = "core.orphe",
       },
       {
          name = "mad_scientist",
@@ -544,6 +545,7 @@ data:add_multi(
          category = 0,
          rarity = 1000,
          coefficient = 400,
+         dialog_id = "core.whom_dwell_in_the_vanity"
       },
       {
          name = "loyter",
@@ -570,6 +572,7 @@ data:add_multi(
          category = 0,
          rarity = 1000,
          coefficient = 400,
+         dialog_id = "core.loyter",
       },
       {
          name = "vesda",
@@ -622,6 +625,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.miches",
       },
       {
          name = "shena",
@@ -648,6 +652,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.shena",
       },
       {
          name = "the_leopard_warrior",
@@ -757,6 +762,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.larnneire",
       },
       {
          name = "lomias",
@@ -816,6 +822,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.slan",
       },
       {
          name = "karam",
@@ -842,6 +849,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.karam",
       },
       {
          name = "erystia",
@@ -868,6 +876,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.erystia",
       },
       {
          name = "issizzle",
@@ -2582,6 +2591,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.stersha",
       },
       {
          name = "xabi",
@@ -2608,6 +2618,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.xabi",
       },
       {
          name = "orc",
@@ -6008,6 +6019,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.gilbert",
       },
       {
          name = "yerles_self_propelled_gun",
@@ -6293,6 +6305,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
+         dialog_id = "core.poppy",
       },
       {
          name = "rilian",
@@ -6317,6 +6330,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.rilian",
       },
       {
          name = "tam",
@@ -6342,6 +6356,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.tam",
       },
       {
          name = "little_girl",
@@ -6667,6 +6682,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.garokk",
       },
       {
          name = "miral",
@@ -6692,6 +6708,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.miral",
       },
       {
          name = "twintail",
@@ -7513,6 +7530,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.pael",
       },
       {
          name = "lily",
@@ -7539,6 +7557,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.lily",
       },
       {
          name = "raphael",
@@ -7565,6 +7584,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.raphael",
       },
       {
          name = "ainc",
@@ -7591,6 +7611,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.ainc",
       },
       {
          name = "arnord",

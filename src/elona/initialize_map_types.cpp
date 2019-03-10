@@ -1981,7 +1981,7 @@ static void _init_map_vernis_the_mine()
 static void _init_map_vernis_robbers_hideout()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"sqrogue"s);
+    map_initcustom(u8"sqRogue"s);
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;

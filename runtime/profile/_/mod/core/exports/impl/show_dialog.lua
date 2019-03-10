@@ -155,7 +155,6 @@ local function step_dialog(dialog, node_data, talk, state)
       local texts = node.text
 
       for i, text in ipairs(texts) do
-         print("Text: " .. i)
          if texts[i+1] == nil then
             if type(text) ~= "table" then
                dialog_error(talk, "Last text entry must be table (got: " .. type(text) .. ")")
