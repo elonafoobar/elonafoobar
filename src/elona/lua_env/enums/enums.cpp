@@ -400,7 +400,6 @@ EnumMap<ItemFindLocation> ItemFindLocationTable{
          ItemFindLocation::player_inventory_and_ground},
     }};
 
-
 /**
  * @luadoc
  *

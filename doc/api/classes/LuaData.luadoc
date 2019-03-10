@@ -1,0 +1,8 @@
+--- Contains parameters for the current game save.
+--  @classmod LuaGameData
+
+--- [RW] The player's initial cargo capacity.
+--  @tfield num initial_cart_limit
+
+--- [RW] The player's maximum cargo capacity.
+--  @tfield num current_cart_limit

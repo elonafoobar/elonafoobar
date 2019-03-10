@@ -85,7 +85,7 @@ void LuaApiWorld::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, belongs_to_guild);
 
     /**
-     * @luadoc field data LuaGameData
+     * @luadoc data field LuaGameData
      *
      * [R] Data for the current game save.
      */

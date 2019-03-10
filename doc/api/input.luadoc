@@ -103,3 +103,10 @@ function prompt_dialog(text, chara_image, speaker_name, choices, default_index, 
 --  character's definition.
 --  @function start_dialog
 function start_dialog(speaker, dialog) end
+
+--- Prompts the player to choose an ally.
+--  @tparam ChooseAllyOperation operation the operation to apply
+--  @treturn[1] LuaCharacter
+--  @treturn[2] nil
+--  @function choose_ally
+function choose_ally(operation) end

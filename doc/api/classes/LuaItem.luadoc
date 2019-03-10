@@ -5,11 +5,16 @@
 --  @function remove
 function remove() end
 
+--- Changes the material of this item.
+--  @tparam string material_id ID of the item material
+--  @function change_material
+function change_material(material_id) end
+
 --- [R] The index of this item in the global items array.
 --  @tfield num index
 
---- [R] The prototype ID of this item.
---  @tfield num id
+--- [R] The legacy ID of this item.
+--  @tfield num legacy_id
 
 --- [RW] The item's position.
 --  @tfield num position
@@ -39,8 +44,12 @@ function remove() end
 --- [RW] A generic parameter.
 --  @tfield num param4
 
---- [R] The new version prototype ID of the item.
---  @tfield num new_id
+--- [R] The material ID of this item. To change it, use
+--  LuaItem.change_material.
+--  @tfield num param4
+
+--- [R] The new-style prototype ID of the item.
+--  @tfield string id
 
 --- [R] The name of the item with article and number.
 --  @tfield string name
@@ -56,3 +65,6 @@ function remove() end
 
 --- [RW] The identify state of this item.
 --  @tfield IdentifyState identify_state
+
+--- [R] The prototype data of the character.
+--  @tfield table proto

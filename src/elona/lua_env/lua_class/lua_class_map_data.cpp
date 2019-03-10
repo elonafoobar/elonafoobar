@@ -15,33 +15,33 @@ void LuaMapData::bind(sol::state& lua)
     LuaMapData.set("new", sol::no_constructor);
 
     /**
-     * @luadoc field atlas_number num
+     * @luadoc atlas_number field num
      *
      * [RW] The map tile atlas to use for this map.
      */
     LuaMapData.set("atlas_number", &MapData::atlas_number);
     /**
-     * @luadoc field next_regenerate_date num
+     * @luadoc next_regenerate_date field num
      *
      * [RW] The date in hours when this map is next regenerated.
      */
     LuaMapData.set("next_regenerate_date", &MapData::next_regenerate_date);
     /**
-     * @luadoc field turn_cost num
+     * @luadoc turn_cost field num
      *
      * [RW] The relative time it takes to pass a single turn in this map.
      */
     LuaMapData.set("turn_cost", &MapData::turn_cost);
 
     /**
-     * @luadoc field max_crowd_density num
+     * @luadoc max_crowd_density field num
      *
      * [RW] The maximum crowd density of this map.
      */
     LuaMapData.set("max_crowd_density", &MapData::max_crowd_density);
 
     /**
-     * @luadoc field current_dungeon_level num
+     * @luadoc current_dungeon_level field num
      *
      * [R] The current dungeon level of this map.
      */
@@ -49,28 +49,28 @@ void LuaMapData::bind(sol::state& lua)
         "current_dungeon_level", sol::readonly(&MapData::max_crowd_density));
 
     /**
-     * @luadoc field tileset num
+     * @luadoc tileset field num
      *
      * [RW] The tileset type to use for this map.
      */
     LuaMapData.set("tileset", &MapData::tileset);
 
     /**
-     * @luadoc field next_restock_date num
+     * @luadoc next_restock_date field num
      *
      * [RW] The date in hours when the map is next restocked.
      */
     LuaMapData.set("next_restock_date", &MapData::next_restock_date);
 
     /**
-     * @luadoc field max_item_count num
+     * @luadoc max_item_count field num
      *
      * [RW] The maximum number of items this map can hold.
      */
     LuaMapData.set("max_item_count", &MapData::max_item_count);
 
     /**
-     * @luadoc field regenerate_count num
+     * @luadoc regenerate_count field num
      *
      * [R] The number of times this map has been regenerated.
      */
@@ -78,7 +78,7 @@ void LuaMapData::bind(sol::state& lua)
         "regenerate_count", sol::readonly(&MapData::regenerate_count));
 
     /**
-     * @luadoc field designated_spawns bool
+     * @luadoc designated_spawns field bool
      *
      * [RW] If true, reset characters to their initial position on map refresh.
      */
@@ -89,7 +89,7 @@ void LuaMapData::bind(sol::state& lua)
             [](MapData& d, bool flag) { d.designated_spawns = flag ? 1 : 0; }));
 
     /**
-     * @luadoc field is_indoors bool
+     * @luadoc is_indoors field bool
      *
      * [RW] Indicates if this map is indoors.
      */
@@ -100,7 +100,7 @@ void LuaMapData::bind(sol::state& lua)
             [](MapData& d, bool flag) { d.indoors_flag = flag ? 1 : 2; }));
 
     /**
-     * @luadoc field is_user_map bool
+     * @luadoc is_user_map field bool
      *
      * [RW] Indicates if this map is a user map.
      */
@@ -111,7 +111,7 @@ void LuaMapData::bind(sol::state& lua)
             [](MapData& d, bool flag) { d.user_map_flag = flag ? 1 : 0; }));
 
     /**
-     * @luadoc field play_campfire_sound bool
+     * @luadoc play_campfire_sound field bool
      *
      * [RW] If true, play the campfire ambience.
      */
@@ -124,7 +124,7 @@ void LuaMapData::bind(sol::state& lua)
             }));
 
     /**
-     * @luadoc field should_regenerate bool
+     * @luadoc should_regenerate field bool
      *
      * [RW] If true, regenerate this map when it is refreshed. This will restock
      * shop inventories.
@@ -137,7 +137,7 @@ void LuaMapData::bind(sol::state& lua)
 
 
     /**
-     * @luadoc field is_temporary bool
+     * @luadoc is_temporary field bool
      *
      * [RW] If true, delete this map when it is exited.
      */

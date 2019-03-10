@@ -301,7 +301,7 @@ void LuaApiMap::bind(sol::table& api_table)
         sol::overload(LuaApiMap::clear_feat, LuaApiMap::clear_feat_xy));
 
     /**
-     * @luadoc field data LuaMapData
+     * @luadoc data field LuaMapData
      *
      * [R] The map data for the current map. This contains serialized values
      * controlling various aspects of the current map.
@@ -309,7 +309,7 @@ void LuaApiMap::bind(sol::table& api_table)
     api_table.set("data", sol::property(&map_data));
 
     /**
-     * @luadoc function area
+     * @luadoc area function
      *
      * Returns the area in the world map that corresponds to this map.
      */

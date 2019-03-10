@@ -24,12 +24,6 @@ function is_ally(chara) end
 --  @function count
 function count() end
 
---- Gets a flag on a character.
---  @tparam LuaCharacter chara (const) the character to get the flag from
---  @tparam Enums.CharaFlag flag the flag to get
---  @function flag
-function flag(chara, flag) end
-
 --- Returns a reference to the player. They might not be alive.
 --  @treturn LuaCharacter (mut) a reference to the player
 --  @function player
@@ -49,9 +43,15 @@ function create(position, id) end
 --  @function kill_count
 function kill_count(id) end
 
---- Attempts to find a character with the given protoype ID.
---  @tparam id string Prototype ID to search
+--- Attempts to find a character with the given prototype ID.
+--  @tparam string id Prototype ID to search
+--  @tparam CharaFindLocation location Location to search in
 --  @treturn[1] LuaCharacter the found character
 --  @treturn[2] nil
 --  @function find
-function find(id) end
+function find(id, location) end
+
+--- Returns true if the player can recruit more allies.
+--  @treturn bool
+--  @function can_recruit_allies
+function can_recruit_allies() end

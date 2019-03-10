@@ -148,7 +148,7 @@ int LuaApiChara::kill_count(const std::string& id)
 /**
  * @luadoc
  *
- * Attempts to find a character with the given protoype ID.
+ * Attempts to find a character with the given prototype ID.
  * @tparam string id Prototype ID to search
  * @tparam CharaFindLocation location Location to search in
  * @treturn[1] LuaCharacter the found character

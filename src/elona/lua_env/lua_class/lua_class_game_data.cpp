@@ -11,14 +11,14 @@ void LuaGameData::bind(sol::state& lua)
     LuaGameData.set("new", sol::no_constructor);
 
     /**
-     * @luadoc field current_cart_limit num
+     * @luadoc initial_cart_limit field num
      *
      * [RW] The player's initial cargo capacity.
      */
     LuaGameData.set("initial_cart_limit", &GameData::initial_cart_limit);
 
     /**
-     * @luadoc field current_cart_limit num
+     * @luadoc current_cart_limit field num
      *
      * [RW] The player's maximum cargo capacity.
      */
