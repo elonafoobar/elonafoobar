@@ -570,6 +570,13 @@ DOC
                 name = "Keybindings"
                 doc = "Configure game keybindings."
             }
+            mods {
+                name = "Mod Settings"
+                doc = <<DOC
+Settings provided by individual mods.
+These can be created by editing the config_def.hcl file in the mod's folder.
+DOC
+            }
         }
     }
 }

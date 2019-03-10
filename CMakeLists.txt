@@ -312,6 +312,10 @@ else()
   set(DISABLED_WARNINGS)
   set(WARNINGS_AS_ERRORS)
 
+  list(APPEND EXTRA_DEFINES
+    "BOOST_ALLOW_DEPRECATED_HEADERS" # https://github.com/boostorg/random/issues/49
+    )
+
   if(MSVC)
     list(APPEND EXTRA_DEFINES "_UNICODE")
     list(APPEND GENERAL_OPTIONS

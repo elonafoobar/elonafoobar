@@ -280,10 +280,10 @@ bool input_text_dialog(
 
 static void _proc_android_vibrate()
 {
-    if (Config::instance().get<bool>("core.config.android.vibrate"))
+    if (Config::instance().get<bool>("core.android.vibrate"))
     {
         int duration =
-            Config::instance().get<int>("core.config.android.vibrate_duration");
+            Config::instance().get<int>("core.android.vibrate_duration");
         snail::android::vibrate(static_cast<long>(duration * 25));
     }
 }

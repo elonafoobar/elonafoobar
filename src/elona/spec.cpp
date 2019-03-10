@@ -14,19 +14,19 @@ namespace elona
 namespace spec
 {
 
-void Object::init(const fs::path& path)
+void Object::load(const fs::path& path, const std::string& mod_name)
 {
-    clear();
-
-    // TODO support loading multiple files.
     std::ifstream ifs(path.native());
-    load(ifs, path.string());
+    load(ifs, path.string(), mod_name);
 }
 
-void Object::load(std::istream& is, const std::string& hcl_file)
+void Object::load(
+    std::istream& is,
+    const std::string& hcl_file,
+    const std::string& mod_name)
 {
     hcl::ParseResult parseResult = hcl::parse(is);
-    std::string top_level_key = "core." + name;
+    std::string top_level_key = mod_name;
 
     if (!parseResult.valid())
     {
@@ -37,12 +37,11 @@ void Object::load(std::istream& is, const std::string& hcl_file)
     }
 
     hcl::Value& value = parseResult.value;
-    const hcl::Value& def =
-        hclutil::skip_sections(value, {name, "def"}, hcl_file);
+    const hcl::Value& def = hclutil::skip_sections(value, {name_}, hcl_file);
     auto result = visit_object(def.as<hcl::Object>(), top_level_key, hcl_file);
 
     post_visit(top_level_key, result);
-    items.emplace(top_level_key, result);
+    items_.emplace(top_level_key, result);
 }
 
 SectionDef Object::visit_object(
@@ -74,7 +73,7 @@ void Object::visit(
     else
     {
         Item i = visit_bare_value(value, current_key, hcl_file);
-        items.emplace(current_key, i);
+        items_.emplace(current_key, i);
     }
 }
 
@@ -170,7 +169,7 @@ void Object::visit_item(
         throw SpecError(hcl_file, current_key, "Could not parse value.");
     }
 
-    items.emplace(current_key, *i);
+    items_.emplace(current_key, *i);
 }
 
 SectionDef Object::visit_section(

@@ -1,0 +1,39 @@
+--- Functions for getting and setting config values. See the topic on creating
+--  config menus for more details.
+--  @usage local Config = Elona.require("Config")
+module "Config"
+
+--- Sets a string-type config item's value.
+--  @raise if the config item does not exist or is not a string.
+--  @function set_string
+function set_string(key, value) end
+
+--- Sets an integer-type config item's value.
+--  @raise if the config item does not exist or is not an integer.
+--  @function set_int
+function set_int(key, value) end
+
+--- Sets a boolean-type config items' value.
+--  @raise if the config item does not exist or is not an integer.
+--  @function set_bool
+function set_bool(key, value) end
+
+--- Gets the value of a string-type config item.
+--  @raise if the config item does not exist or is not a string.
+--  @function get_string
+function get_string(key) end
+
+--- Gets the value of an integer-type config item.
+--  @raise if the config item does not exist or is not an integer.
+--  @function get_int
+function get_int(key) end
+
+--- Gets the value of a boolean-type config item.
+--  @raise if the config item does not exist or is not a boolean.
+--  @function get_bool
+function get_bool(key) end
+
+--- Saves the current sate of the config to the config options file. Be sure to
+--  call this when you modify the config using this API.
+--  @function save
+function save() end

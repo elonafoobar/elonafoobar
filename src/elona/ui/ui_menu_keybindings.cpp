@@ -585,8 +585,9 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     {
         KeybindManager::instance().save();
 
-        // Return to the root config menu (index 0).
-        return UIMenuKeybindings::Result::finish(0);
+        // Return to the previous menu.
+        UIMenuConfigResult result = {true, 0};
+        return UIMenuKeybindings::Result::finish(result);
     }
 
     return none;

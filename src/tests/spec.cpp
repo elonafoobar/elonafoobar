@@ -23,7 +23,7 @@ TestSpec load(const std::string& str)
 
     std::stringstream ss(str);
 
-    REQUIRE_NOTHROW(def.load(ss, "spec_test.hcl"));
+    REQUIRE_NOTHROW(def.load(ss, "spec_test.hcl", "spec_test"));
     return def;
 }
 
@@ -35,7 +35,7 @@ bool load_fails(const std::string& str)
 
     try
     {
-        def.load(ss, "spec_test.hcl");
+        def.load(ss, "spec_test.hcl", "spec_test");
     }
     catch (...)
     {
@@ -63,27 +63,27 @@ config {}
 TEST_CASE("Test loading blank spec", "[Spec: Definition]")
 {
     REQUIRE_FALSE(load_fails(R"(
-test def {}
+test {}
 )"));
 }
 
-TEST_CASE("Test defining boolean config value", "[Spec: Definition]")
+TEST_CASE("testining boolean config value", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = true
 }
 )");
 
-    REQUIRE(def.is<spec::BoolDef>("core.test.foo"));
-    REQUIRE(def.get_default("core.test.foo").is<bool>());
-    REQUIRE(def.get_default("core.test.foo").as<bool>() == true);
+    REQUIRE(def.is<spec::BoolDef>("spec_test.foo"));
+    REQUIRE(def.get_default("spec_test.foo").is<bool>());
+    REQUIRE(def.get_default("spec_test.foo").as<bool>() == true);
 }
 
-TEST_CASE("Test defining integer config value", "[Spec: Definition]")
+TEST_CASE("testining integer config value", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         default = 42
         min = 0
@@ -92,73 +92,73 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::IntDef>("core.test.foo"));
-    REQUIRE(def.get_default("core.test.foo").is<int>());
-    REQUIRE(def.get_default("core.test.foo").as<int>() == 42);
+    REQUIRE(def.is<spec::IntDef>("spec_test.foo"));
+    REQUIRE(def.get_default("spec_test.foo").is<int>());
+    REQUIRE(def.get_default("spec_test.foo").as<int>() == 42);
 }
 
-TEST_CASE("Test defining bare integer", "[Spec: Definition]")
+TEST_CASE("testining bare integer", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = 42
 }
 )"));
 }
 
-TEST_CASE("Test defining integer without min", "[Spec: Definition]")
+TEST_CASE("testining integer without min", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = 42
     max = 100
 }
 )"));
 }
 
-TEST_CASE("Test defining integer without max", "[Spec: Definition]")
+TEST_CASE("testining integer without max", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = 42
     min = 0
 }
 )"));
 }
 
-TEST_CASE("Test defining string config value", "[Spec: Definition]")
+TEST_CASE("testining string config value", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = "bar"
 }
 )");
 
-    REQUIRE(def.is<spec::StringDef>("core.test.foo"));
-    REQUIRE(def.get_default("core.test.foo").is<std::string>());
-    REQUIRE(def.get_default("core.test.foo").as<std::string>() == "bar");
+    REQUIRE(def.is<spec::StringDef>("spec_test.foo"));
+    REQUIRE(def.get_default("spec_test.foo").is<std::string>());
+    REQUIRE(def.get_default("spec_test.foo").as<std::string>() == "bar");
 }
 
-TEST_CASE("Test defining list config value", "[Spec: Definition]")
+TEST_CASE("testining list config value", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = ["bar", "baz", "quux"]
 }
 )");
 
-    REQUIRE(def.is<spec::ListDef>("core.test.foo"));
-    REQUIRE(def.get_default("core.test.foo").is<hcl::List>());
-    auto list = def.get_default("core.test.foo").as<hcl::List>();
+    REQUIRE(def.is<spec::ListDef>("spec_test.foo"));
+    REQUIRE(def.get_default("spec_test.foo").is<hcl::List>());
+    auto list = def.get_default("spec_test.foo").as<hcl::List>();
     REQUIRE(list.at(0).as<std::string>() == "bar");
     REQUIRE(list.at(1).as<std::string>() == "baz");
     REQUIRE(list.at(2).as<std::string>() == "quux");
 }
 
-TEST_CASE("Test defining enum config value", "[Spec: Definition]")
+TEST_CASE("testining enum config value", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["bar", "baz", "quux"]
@@ -167,15 +167,15 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::EnumDef>("core.test.foo"));
-    REQUIRE(def.get_default("core.test.foo").is<std::string>());
-    REQUIRE(def.get_default("core.test.foo").as<std::string>() == "baz");
+    REQUIRE(def.is<spec::EnumDef>("spec_test.foo"));
+    REQUIRE(def.get_default("spec_test.foo").is<std::string>());
+    REQUIRE(def.get_default("spec_test.foo").as<std::string>() == "baz");
 }
 
 TEST_CASE("Test not providing enum variants", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "enum"
         default = "baz"
@@ -187,7 +187,7 @@ test def {
 TEST_CASE("Test not providing enum default", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["bar", "baz", "quux"]
@@ -199,7 +199,7 @@ test def {
 TEST_CASE("Test providing non-existent enum default", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["bar", "baz", "quux"]
@@ -212,7 +212,7 @@ test def {
 TEST_CASE("Test providing non-string enum variant", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["bar", "baz", 42]
@@ -227,7 +227,7 @@ TEST_CASE(
     "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["bar", "baz", "quux"]
@@ -240,7 +240,7 @@ test def {
 TEST_CASE("Test providing non-list variants in enum", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = 42
@@ -250,10 +250,10 @@ test def {
 )"));
 }
 
-TEST_CASE("Test defining runtime enum config value", "[Spec: Definition]")
+TEST_CASE("testining runtime enum config value", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         type = "runtime_enum"
     }
@@ -261,18 +261,18 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::EnumDef>("core.test.foo"));
-    REQUIRE(def.get_default("core.test.foo").is<std::string>());
+    REQUIRE(def.is<spec::EnumDef>("spec_test.foo"));
+    REQUIRE(def.get_default("spec_test.foo").is<std::string>());
     REQUIRE(
-        def.get_default("core.test.foo").as<std::string>() == "__unknown__");
-    REQUIRE(def.get_variants("core.test.foo").size() == 1);
+        def.get_default("spec_test.foo").as<std::string>() == "__unknown__");
+    REQUIRE(def.get_variants("spec_test.foo").size() == 1);
 
     REQUIRE_NOTHROW(
-        def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, "baz"));
+        def.inject_enum("spec_test.foo", {"foo", "bar", "baz"}, "baz"));
 
-    REQUIRE(def.get_default("core.test.foo").is<std::string>());
-    REQUIRE(def.get_default("core.test.foo").as<std::string>() == "baz");
-    auto variants = def.get_variants("core.test.foo");
+    REQUIRE(def.get_default("spec_test.foo").is<std::string>());
+    REQUIRE(def.get_default("spec_test.foo").as<std::string>() == "baz");
+    auto variants = def.get_variants("spec_test.foo");
     REQUIRE(variants.size() == 4);
     REQUIRE(variants.at(0) == "__unknown__");
     REQUIRE(variants.at(1) == "foo");
@@ -280,7 +280,7 @@ test def {
     REQUIRE(variants.at(3) == "baz");
 
     REQUIRE_THROWS(
-        def.inject_enum("core.test.bar", {"foo", "bar", "baz"}, "bar"));
+        def.inject_enum("spec_test.bar", {"foo", "bar", "baz"}, "bar"));
 }
 
 TEST_CASE(
@@ -288,7 +288,7 @@ TEST_CASE(
     "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         type = "runtime_enum"
     }
@@ -296,14 +296,14 @@ test def {
 )");
 
     REQUIRE_THROWS(
-        def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, "asdfg"));
-    REQUIRE_THROWS(def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, ""));
+        def.inject_enum("spec_test.foo", {"foo", "bar", "baz"}, "asdfg"));
+    REQUIRE_THROWS(def.inject_enum("spec_test.foo", {"foo", "bar", "baz"}, ""));
 }
 
 TEST_CASE("Test error when injecting non-runtime enum", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["foo", "bar", "baz"]
@@ -312,13 +312,13 @@ test def {
 }
 )");
 
-    REQUIRE_THROWS(def.inject_enum("core.test.foo", {"quux"}, "quux"));
+    REQUIRE_THROWS(def.inject_enum("spec_test.foo", {"quux"}, "quux"));
 }
 
-TEST_CASE("Test defining config section", "[Spec: Definition]")
+TEST_CASE("testining config section", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         type = "section"
         options = {
@@ -329,13 +329,13 @@ test def {
 }
 )");
 
-    REQUIRE_THROWS(def.get_default("core.test.foo"));
+    REQUIRE_THROWS(def.get_default("spec_test.foo"));
 }
 
-TEST_CASE("Test defining config section with no options", "[Spec: Definition]")
+TEST_CASE("testining config section with no options", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "section"
     }
@@ -343,12 +343,10 @@ test def {
 )"));
 }
 
-TEST_CASE(
-    "Test defining config section with invalid options",
-    "[Spec: Definition]")
+TEST_CASE("testining config section with invalid options", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "section"
         options = "foo"
@@ -358,10 +356,10 @@ test def {
 }
 
 
-TEST_CASE("Test defining invalid type", "[Spec: Definition]")
+TEST_CASE("testining invalid type", "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
-test def {
+test {
     foo = {
         type = "bar"
         default = 42
@@ -373,7 +371,7 @@ test def {
 TEST_CASE("Test get_variants", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["bar", "baz", "quux"]
@@ -382,19 +380,19 @@ test def {
     hoge = "piyo"
 }
 )");
-    auto variants = def.get_variants("core.test.foo");
+    auto variants = def.get_variants("spec_test.foo");
     REQUIRE(variants.size() == 3);
     REQUIRE(variants.at(0) == "bar");
     REQUIRE(variants.at(1) == "baz");
     REQUIRE(variants.at(2) == "quux");
 
-    REQUIRE_THROWS(def.get_variants("core.test.hoge"));
+    REQUIRE_THROWS(def.get_variants("spec_test.hoge"));
 }
 
 TEST_CASE("Test get_children", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo {
         type = "section"
         options = {
@@ -406,20 +404,20 @@ test def {
     }
 }
 )");
-    auto children = def.get_children("core.test.foo");
+    auto children = def.get_children("spec_test.foo");
     REQUIRE(children.size() == 4);
     REQUIRE(children.at(0) == "bar");
     REQUIRE(children.at(1) == "baz");
     REQUIRE(children.at(2) == "hoge");
     REQUIRE(children.at(3) == "piyo");
 
-    REQUIRE_THROWS(def.get_children("core.test.hoge"));
+    REQUIRE_THROWS(def.get_children("spec_test.hoge"));
 }
 
 TEST_CASE("Test get_max/get_min (integer)", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         default = 42
         min = 0
@@ -428,17 +426,17 @@ test def {
     hoge = "piyo"
 }
 )");
-    REQUIRE(def.get_min("core.test.foo") == 0);
-    REQUIRE(def.get_max("core.test.foo") == 100);
+    REQUIRE(def.get_min("spec_test.foo") == 0);
+    REQUIRE(def.get_max("spec_test.foo") == 100);
 
-    REQUIRE_THROWS(def.get_min("core.test.hoge"));
-    REQUIRE_THROWS(def.get_max("core.test.hoge"));
+    REQUIRE_THROWS(def.get_min("spec_test.hoge"));
+    REQUIRE_THROWS(def.get_max("spec_test.hoge"));
 }
 
 TEST_CASE("Test get_max/get_min (enum)", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         type = "enum"
         variants = ["bar", "baz", "quux"]
@@ -447,32 +445,32 @@ test def {
 }
 )");
 
-    REQUIRE(def.get_min("core.test.foo") == 0);
-    REQUIRE(def.get_max("core.test.foo") == 2);
+    REQUIRE(def.get_min("spec_test.foo") == 0);
+    REQUIRE(def.get_max("spec_test.foo") == 2);
 }
 
-TEST_CASE("Test definition with extended syntax", "[Spec: Definition]")
+TEST_CASE("testinition with extended syntax", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = {
         default = "bar"
     }
 }
 )");
 
-    REQUIRE(def.get_default("core.test.foo").is<std::string>());
-    REQUIRE(def.get_default("core.test.foo").as<std::string>() == "bar");
+    REQUIRE(def.get_default("spec_test.foo").is<std::string>());
+    REQUIRE(def.get_default("spec_test.foo").as<std::string>() == "bar");
 }
 
 TEST_CASE("Test exists", "[Spec: Definition]")
 {
     TestSpec def = load(R"(
-test def {
+test {
     foo = "bar"
 }
 )");
 
-    REQUIRE(def.exists("core.test.foo") == true);
-    REQUIRE(def.exists("core.test.baz") == false);
+    REQUIRE(def.exists("spec_test.foo") == true);
+    REQUIRE(def.exists("spec_test.baz") == false);
 }

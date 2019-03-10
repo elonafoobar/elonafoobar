@@ -660,7 +660,7 @@ int damage_hp(
                 if (Config::instance().heartbeat)
                 {
                     int threshold = Config::instance().get<int>(
-                        "core.config.screen.heartbeat_threshold");
+                        "core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         if (!CHECKPLAY(32))
@@ -668,7 +668,7 @@ int damage_hp(
                             snd("core.Heart1");
 
                             if (Config::instance().get<bool>(
-                                    "core.config.android.vibrate"))
+                                    "core.android.vibrate"))
                             {
                                 snail::android::vibrate_pulse();
                             }

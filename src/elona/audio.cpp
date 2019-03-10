@@ -378,7 +378,7 @@ std::pair<short, unsigned char> sound_calculate_position(
 
 std::pair<short, unsigned char> sound_calculate_position(const Position& p)
 {
-    if (!Config::instance().get<bool>("core.config.screen.stereo_sound"))
+    if (!Config::instance().get<bool>("core.screen.stereo_sound"))
     {
         return {0, 0};
     }

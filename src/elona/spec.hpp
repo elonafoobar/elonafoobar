@@ -7,6 +7,7 @@
 #include <boost/variant.hpp>
 #include <boost/variant/get.hpp>
 #include "../thirdparty/ordered_map/ordered_map.h"
+#include "../util/map_key_iterator.hpp"
 #include "filesystem.hpp"
 #include "hcl.hpp"
 #include "optional.hpp"
@@ -101,7 +102,7 @@ struct EnumDef
         return ss.str();
     }
 
-    /***
+    /**
      * Given a string, return its index in the enum's variants, if
      * found.
      */
@@ -126,7 +127,7 @@ using Item =
 static const constexpr char* unknown_enum_variant = "__unknown__";
 
 
-/***
+/**
  * A schema-like object that holds a definition of valid values for an
  * HCL document. Used for validating the correctness of user-inputted
  * HCL files. For an example, see
@@ -135,36 +136,41 @@ static const constexpr char* unknown_enum_variant = "__unknown__";
 class Object
 {
 public:
-    using const_iterator = tsl::ordered_map<std::string, Item>::const_iterator;
+    using MapType = tsl::ordered_map<std::string, Item>;
+    using const_iterator = MapType::const_iterator;
+    using key_iterator = lib::map_key_iterator<MapType, std::string>;
 
     Object(std::string name_)
-        : name(name_)
+        : name_(name_)
     {
     }
     ~Object() = default;
 
-    void init(const fs::path&);
-    void load(std::istream&, const std::string&);
+    void load(const fs::path& path, const std::string& mod_name);
+    void load(
+        std::istream& is,
+        const std::string& hcl_file,
+        const std::string& mod_name);
 
     const_iterator begin() const
     {
-        return items.begin();
+        return items_.begin();
     }
     const_iterator end() const
     {
-        return items.end();
+        return items_.end();
     }
     virtual void clear()
     {
-        items.clear();
+        items_.clear();
     }
 
     bool exists(const std::string& key) const
     {
-        return items.find(key) != items.end();
+        return items_.find(key) != items_.end();
     };
 
-    /***
+    /**
      * Adds values to an enum declared with type "runtime_enum".
      *
      * In some cases, it won't be possible to validate certain HCL
@@ -214,19 +220,19 @@ public:
     template <typename T>
     bool is(const std::string& key) const
     {
-        return exists(key) && items.at(key).type() == typeid(T);
+        return exists(key) && items_.at(key).type() == typeid(T);
     };
 
     template <typename T>
     T& get(const std::string& key)
     {
-        return boost::get<T>(items.at(key));
+        return boost::get<T>(items_.at(key));
     }
 
     template <typename T>
     const T& get(const std::string& key) const
     {
-        return boost::get<T>(items.at(key));
+        return boost::get<T>(items_.at(key));
     }
 
     inline std::string type_to_string(const std::string& key) const
@@ -289,7 +295,7 @@ public:
         }
     }
 
-    /***
+    /**
      * Gets the children of a section. Only useable on section values.
      */
     std::vector<std::string> get_children(const std::string& key) const
@@ -301,7 +307,7 @@ public:
         return get<SectionDef>(key).children;
     }
 
-    /***
+    /**
      * Gets the variants of an enum. Only useable on enum values.
      */
     std::vector<std::string> get_variants(const std::string& key) const
@@ -313,7 +319,7 @@ public:
         return get<EnumDef>(key).variants;
     }
 
-    /***
+    /**
      * Gets the maximum value/index of an integer or enum.
      */
     int get_max(const std::string& key) const
@@ -330,7 +336,7 @@ public:
         return get<IntDef>(key).max;
     }
 
-    /***
+    /**
      * Gets the minumum value/index of an integer or enum.
      */
     int get_min(const std::string& key) const
@@ -386,8 +392,8 @@ private:
         const std::string&,
         const std::string&);
 
-    std::string name;
-    tsl::ordered_map<std::string, Item> items;
+    std::string name_;
+    MapType items_;
 };
 } // namespace spec
 } // namespace elona

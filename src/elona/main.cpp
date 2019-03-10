@@ -44,7 +44,7 @@ void _main_loop()
 void _start_elona()
 {
     if (Config::instance().startup_script != ""s &&
-        !Config::instance().get<bool>("core.config.foobar.run_script_in_save"))
+        !Config::instance().get<bool>("core.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();

@@ -44,7 +44,6 @@ void write_default_config(const fs::path& location)
     std::ofstream out{location.native(), std::ios::binary};
     hcl::Object object;
     object["config"] = hcl::Object();
-    object["config"]["core"] = hcl::Object();
     out << object << std::endl;
 }
 
@@ -93,14 +92,14 @@ void inject_display_modes(Config& conf)
     if (current_display_mode != "")
     {
         conf.inject_enum(
-            "core.config.screen.display_mode",
+            "core.screen.display_mode",
             display_mode_names,
             default_display_mode);
 
         if (Config::instance().display_mode == spec::unknown_enum_variant)
         {
             Config::instance().set(
-                u8"core.config.screen.display_mode", default_display_mode);
+                "core.screen.display_mode", default_display_mode);
         }
     }
 }
@@ -124,7 +123,7 @@ void inject_save_files(Config& conf)
         }
     }
 
-    conf.inject_enum("core.config.game.default_save", saves, "");
+    conf.inject_enum("core.game.default_save", saves, "");
 }
 
 /***
@@ -167,7 +166,7 @@ void inject_languages(Config& conf)
     }
 
     conf.inject_enum(
-        "core.config.language.language", locales, spec::unknown_enum_variant);
+        "core.language.language", locales, spec::unknown_enum_variant);
 }
 
 
@@ -293,13 +292,13 @@ void config_query_language()
     {
         locale = "en";
     }
-    Config::instance().set(u8"core.config.language.language", locale);
+    Config::instance().set(u8"core.language.language", locale);
 }
 
 #define CONFIG_OPTION(confkey, type, getter) \
-    conf.bind_getter("core.config."s + confkey, [&]() { return (getter); }); \
+    conf.bind_getter("core."s + confkey, [&]() { return (getter); }); \
     conf.bind_setter<type>( \
-        "core.config."s + confkey, [&](auto value) { getter = value; })
+        "core."s + confkey, [&](auto value) { getter = value; })
 
 #define CONFIG_KEY(confkey, keyname) \
     CONFIG_OPTION((confkey), std::string, keyname)
@@ -368,15 +367,13 @@ void load_config(const fs::path& hcl_file)
     // clang-format on
 
     conf.bind_setter<std::string>(
-        "core.config.screen.orientation",
-        &convert_and_set_requested_orientation);
+        "core.screen.orientation", &convert_and_set_requested_orientation);
 
-    conf.bind_setter<bool>("core.config.foobar.show_fps", [](bool) {
-        lib::g_fps_counter.clear();
-    });
+    conf.bind_setter<bool>(
+        "core.foobar.show_fps", [](bool) { lib::g_fps_counter.clear(); });
 
     conf.bind_setter<std::string>(
-        "core.config.font.quality", &convert_and_set_requested_font_quality);
+        "core.font.quality", &convert_and_set_requested_font_quality);
 
     std::ifstream ifs{hcl_file.native()};
     conf.load(ifs, hcl_file.string(), false);
@@ -430,10 +427,10 @@ void initialize_config_preload(const fs::path& hcl_file)
     //clang-format on
 
     conf.bind_setter<int>(
-        "core.config.android.quick_action_size", &set_touch_quick_action_size);
+        "core.android.quick_action_size", &set_touch_quick_action_size);
 
     conf.bind_setter<int>(
-        "core.config.android.quick_action_transparency",
+        "core.android.quick_action_transparency",
         &set_touch_quick_action_transparency);
 
     if (!fs::exists(hcl_file))
@@ -446,7 +443,7 @@ void initialize_config_preload(const fs::path& hcl_file)
     conf.load(ifs, hcl_file.string(), true);
 
     snail::android::set_navigation_bar_visibility(
-        !conf.get<bool>("core.config.android.hide_navigation"));
+        !conf.get<bool>("core.android.hide_navigation"));
 
     // TODO: move it somewhere else or make it constant. "inf_tiles" is too
     // frequently used to find out where it should be initialized. Thus, it is
@@ -479,16 +476,16 @@ Config& Config::instance()
     return the_instance;
 }
 
-void Config::init(const fs::path& config_def_file)
+void Config::load_def(std::istream& is, const std::string& mod_name)
 {
-    clear();
-    def.init(config_def_file);
+    def.load(is, "[input stream]", mod_name);
+    mod_names_.emplace(mod_name);
 }
 
-void Config::init(const ConfigDef def_)
+void Config::load_def(const fs::path& config_def_path, const std::string& mod_name)
 {
-    clear();
-    def = def_;
+    def.load(config_def_path, mod_name);
+    mod_names_.emplace(mod_name);
 }
 
 void Config::load_defaults(bool preload)
@@ -533,16 +530,24 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
     }
 
     const hcl::Value conf = value["config"];
-
-    // TODO mod support
-    if (!conf.is<hcl::Object>() || !conf.has("core"))
+    if (!conf.is<hcl::Object>())
     {
         throw ConfigLoadingError(
-            hcl_file + ": \"core\" object not found after \"config\"");
+            hcl_file + ": mod section object not found after \"config\"");
     }
 
-    const hcl::Value core = conf["core"];
-    visit_object(core.as<hcl::Object>(), "core.config", hcl_file, preload);
+    for (const auto& pair : conf.as<hcl::Object>())
+    {
+        const auto& mod_name = pair.first;
+        const auto& mod_section = pair.second;
+
+        if (!mod_section.is<hcl::Object>())
+        {
+            continue;
+        }
+
+        visit_object(mod_section.as<hcl::Object>(), mod_name, hcl_file, preload);
+    }
 }
 
 void Config::visit_object(
@@ -648,10 +653,9 @@ void Config::save()
     hcl::Value* parent = out.find("config");
     assert(parent);
 
-    // Create sections under the top-level "config" section for each
-    // mod that has config options (for now, only "core"), then write
-    // their individual config sections.
-    for (auto&& pair : storage)
+    // Create sections under the top-level "config" section for each mod that
+    // has config options, then write their individual config sections.
+    for (auto&& pair : storage_)
     {
         std::string key = pair.first;
         hcl::Value value = pair.second;
@@ -675,7 +679,7 @@ void Config::save()
         std::string token;
         hcl::Value* current = parent;
 
-        // Function to split the flat key ("core.config.some.option")
+        // Function to split the flat key ("core.some.option")
         // on the next period and set the token to the split section
         // name ("some" or "option").
         auto advance = [&pos, &key, &token]() {
@@ -712,13 +716,6 @@ void Config::save()
         }
         std::string scope = token;
         set(token);
-
-        // Skip the "config" section name in "core.<config>.some.option".
-        {
-            const auto ok = advance();
-            assert(ok);
-        }
-        assert(token == "config");
 
         // Traverse the remaining namespaces ("some.option").
         while (advance())

@@ -133,12 +133,10 @@ void pre_init()
     log::Logger::instance().init();
     profile::ProfileManager::instance().init(u8"testing");
 
-    const fs::path config_def_file =
-        filesystem::dir::mod() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
     const fs::path config_file =
         filesystem::dir::exe() / "tests/data/config.hcl";
 
-    Config::instance().init(config_def_file);
+    initialize_config_defs();
     initialize_config_preload(config_file);
 
     title(u8"Elona Foobar version "s + latest_version.short_string());

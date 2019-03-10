@@ -16,7 +16,7 @@ ConfigDef load(const std::string& str)
 
     std::stringstream ss(str);
 
-    REQUIRE_NOTHROW(def.load(ss, "spec_test.hcl"));
+    REQUIRE_NOTHROW(def.load(ss, "spec_test.hcl", "spec_test"));
     return def;
 }
 } // namespace
@@ -24,7 +24,7 @@ ConfigDef load(const std::string& str)
 TEST_CASE("Test metadata: visible", "[Config: Definition]")
 {
     ConfigDef def = load(R"(
-config def {
+config {
     foo = "bar"
     baz = {
         default = "quux"
@@ -37,15 +37,15 @@ config def {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.config.foo").visible == true);
-    REQUIRE(def.get_metadata("core.config.baz").visible == true);
-    REQUIRE(def.get_metadata("core.config.hoge").visible == false);
+    REQUIRE(def.get_metadata("spec_test.foo").visible == true);
+    REQUIRE(def.get_metadata("spec_test.baz").visible == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").visible == false);
 }
 
 TEST_CASE("Test metadata: preload", "[Config: Definition]")
 {
     ConfigDef def = load(R"(
-config def {
+config {
     foo = "bar"
     baz = {
         default = "quux"
@@ -58,15 +58,15 @@ config def {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.config.foo").preload == false);
-    REQUIRE(def.get_metadata("core.config.baz").preload == true);
-    REQUIRE(def.get_metadata("core.config.hoge").preload == false);
+    REQUIRE(def.get_metadata("spec_test.foo").preload == false);
+    REQUIRE(def.get_metadata("spec_test.baz").preload == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").preload == false);
 }
 
 TEST_CASE("Test metadata: translate_variants", "[Config: Definition]")
 {
     ConfigDef def = load(R"(
-config def {
+config {
     foo = "bar"
     baz = {
         default = "quux"
@@ -79,15 +79,15 @@ config def {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.config.foo").translate_variants == true);
-    REQUIRE(def.get_metadata("core.config.baz").translate_variants == true);
-    REQUIRE(def.get_metadata("core.config.hoge").translate_variants == false);
+    REQUIRE(def.get_metadata("spec_test.foo").translate_variants == true);
+    REQUIRE(def.get_metadata("spec_test.baz").translate_variants == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").translate_variants == false);
 }
 
 TEST_CASE("Test metadata: platform", "[Config: Definition]")
 {
     ConfigDef def = load(R"(
-config def {
+config {
     foo = "bar"
     baz = {
         default = "quux"
@@ -105,23 +105,22 @@ config def {
 )");
 
     REQUIRE(
-        def.get_metadata("core.config.foo").platform ==
-        ConfigDef::Platform::all);
+        def.get_metadata("spec_test.foo").platform == ConfigDef::Platform::all);
     REQUIRE(
-        def.get_metadata("core.config.baz").platform ==
+        def.get_metadata("spec_test.baz").platform ==
         ConfigDef::Platform::desktop);
     REQUIRE(
-        def.get_metadata("core.config.hoge").platform ==
+        def.get_metadata("spec_test.hoge").platform ==
         ConfigDef::Platform::android);
     REQUIRE(
-        def.get_metadata("core.config.fuga").platform ==
+        def.get_metadata("spec_test.fuga").platform ==
         ConfigDef::Platform::all);
 }
 
 TEST_CASE("Test metadata: platform_default", "[Config: Definition]")
 {
     ConfigDef def = load(R"(
-config def {
+config {
     foo = false
     bar = {
         default = "baz"
@@ -139,20 +138,20 @@ config def {
 )");
 
     REQUIRE(
-        static_cast<bool>(def.get_metadata("core.config.foo").default_value) ==
+        static_cast<bool>(def.get_metadata("spec_test.foo").default_value) ==
         false);
     REQUIRE(
-        def.get_metadata("core.config.bar").default_value->as<std::string>() ==
+        def.get_metadata("spec_test.bar").default_value->as<std::string>() ==
         "hoge");
     REQUIRE(
-        static_cast<bool>(def.get_metadata("core.config.baz").default_value) ==
+        static_cast<bool>(def.get_metadata("spec_test.baz").default_value) ==
         false);
 }
 
 TEST_CASE("Test metadata: is_visible()", "[Config: Definition]")
 {
     ConfigDef def = load(R"(
-config def {
+config {
     foo = "bar"
     baz = {
         default = "quux"
@@ -169,7 +168,7 @@ config def {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.config.foo").is_visible() == true);
-    REQUIRE(def.get_metadata("core.config.hoge").is_visible() == false);
-    REQUIRE(def.get_metadata("core.config.baz").is_visible() == true);
+    REQUIRE(def.get_metadata("spec_test.foo").is_visible() == true);
+    REQUIRE(def.get_metadata("spec_test.hoge").is_visible() == false);
+    REQUIRE(def.get_metadata("spec_test.baz").is_visible() == true);
 }

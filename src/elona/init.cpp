@@ -72,8 +72,8 @@ void initialize_screen()
 
     if (defines::is_android)
     {
-        display_mode = Config::instance().get<std::string>(
-            "core.config.screen.window_mode");
+        display_mode =
+            Config::instance().get<std::string>("core.screen.window_mode");
     }
 
     title(
@@ -192,18 +192,21 @@ void initialize_i18n()
         {filesystem::dir::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& pair : lua::lua->get_mod_manager())
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::mod(), filesystem::DirEntryRange::Type::dir))
     {
-        const auto& mod = pair.second;
-        if (mod->manifest.path)
+        const auto manifest_path = entry.path() / "mod.hcl";
+        if (fs::exists(manifest_path))
         {
-            const auto path = *mod->manifest.path / "locale" / language;
-            if (fs::exists(path))
+            lua::ModManifest manifest = lua::ModManifest::load(manifest_path);
+            const auto locale_path = entry.path() / "locale" / language;
+            if (fs::exists(locale_path))
             {
-                locations.emplace_back(path, mod->manifest.name);
+                locations.emplace_back(locale_path, manifest.name);
             }
         }
     }
+
     i18n::s.init(locations);
 }
 
@@ -658,8 +661,7 @@ void initialize_game()
     {
         load_save_data();
 
-        if (Config::instance().get<bool>(
-                "core.config.foobar.run_script_in_save"))
+        if (Config::instance().get<bool>("core.foobar.run_script_in_save"))
         {
             will_load_script = true;
         }
@@ -684,15 +686,37 @@ void initialize_game()
 
 
 
+void initialize_config_defs()
+{
+    Config::instance().clear();
+
+    // Somewhat convoluted as mods haven't been loaded yet by the mod manager.
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::mod(), filesystem::DirEntryRange::Type::dir))
+    {
+        const auto manifest_path = entry.path() / "mod.hcl";
+        if (fs::exists(manifest_path))
+        {
+            lua::ModManifest manifest = lua::ModManifest::load(manifest_path);
+            const auto config_def_path = entry.path() / "config_def.hcl";
+            if (fs::exists(config_def_path))
+            {
+                Config::instance().load_def(config_def_path, manifest.name);
+            }
+        }
+    }
+}
+
+
+
 void init()
 {
     const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
-    const fs::path config_def_file =
-        filesystem::dir::mod() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
 
     lua::lua = std::make_unique<lua::LuaEnv>();
 
-    Config::instance().init(config_def_file);
+    initialize_config_defs();
+
     initialize_config_preload(config_file);
 
     initialize_screen();
@@ -716,7 +740,7 @@ void init()
         if (jp)
         {
             // TODO: work around
-            Config::instance().set("core.config.font.vertical_offset", -3);
+            Config::instance().set("core.font.vertical_offset", -3);
         }
     }
 
