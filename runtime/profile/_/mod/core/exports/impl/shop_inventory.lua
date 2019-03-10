@@ -113,7 +113,7 @@ local function is_cursed(item)
 end
 
 function shop_inventory.should_remove(item, inv)
-   local tags = data.raw["core.item"][item.new_id].tags
+   local tags = data.raw["core.item"][item.id].tags
 
    if has_tag("neg", tags) then
       return true
@@ -155,7 +155,7 @@ shop_inventory.item_number_factors = {
 }
 
 function shop_inventory.calc_max_item_number(item)
-   local item_def = data.raw["core.item"][item.new_id]
+   local item_def = data.raw["core.item"][item.id]
    local category = item_def.category
    local number = 1
 
@@ -164,7 +164,7 @@ function shop_inventory.calc_max_item_number(item)
       number = f({item_def = item_def, item = item})
    end
 
-   f = shop_inventory.item_number_factors[item.new_id]
+   f = shop_inventory.item_number_factors[item.id]
    if f then
       number = f({item_def = item_def, item = item})
    end

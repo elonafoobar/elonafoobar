@@ -35,6 +35,8 @@ void set_growth_buff(Character&, int, int);
 
 bool recruit_as_ally(Character&);
 
+bool get_flag(Character&, const EnumString&);
+
 void set_flag(Character&, const EnumString&, bool);
 
 sol::optional<LuaAbility> get_skill(Character&, int);
@@ -61,6 +63,10 @@ void eat_rotten_food(Character&);
 void vanquish(Character&);
 
 void act_hostile_against(Character&, LuaCharacterHandle);
+
+void refresh(Character&);
+
+void refresh_burden_state(Character&);
 
 
 void bind(sol::state&);

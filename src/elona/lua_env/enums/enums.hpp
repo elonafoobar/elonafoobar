@@ -1,8 +1,11 @@
 #pragma once
+#include "../../character.hpp"
 #include "../../element.hpp"
 #include "../../enums.hpp"
+#include "../../item.hpp"
 #include "../../map_cell.hpp"
 #include "../../mdata.hpp"
+#include "../../menu.hpp"
 #include "../../status_ailment.hpp"
 #include "../lua_enums.hpp"
 
@@ -37,6 +40,9 @@ extern EnumMap<int> GenderTable;
 extern EnumMap<int> RelationTable;
 extern EnumMap<int> CharaFlagTable;
 extern EnumMap<int> TraitTypeTable;
+extern EnumMap<CharaFindLocation> CharaFindLocationTable;
+extern EnumMap<ItemFindLocation> ItemFindLocationTable;
+extern EnumMap<ControlAllyOperation> ControlAllyOperationTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

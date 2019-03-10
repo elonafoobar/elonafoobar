@@ -20,7 +20,11 @@ int width();
 
 int height();
 
-int id();
+sol::optional<std::string> id();
+
+int legacy_id();
+
+int instance_id();
 
 bool is_overworld();
 
@@ -41,6 +45,12 @@ void set_tile_xy(int, int, int);
 
 void set_tile_memory(const Position&, int);
 void set_tile_memory_xy(int, int, int);
+
+void set_feat(const Position&, int, int, int);
+void set_feat_xy(int, int, int, int, int);
+
+void clear_feat(const Position&);
+void clear_feat_xy(int, int);
 
 
 void bind(sol::table&);

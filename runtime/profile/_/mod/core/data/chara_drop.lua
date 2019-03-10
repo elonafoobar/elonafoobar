@@ -78,7 +78,7 @@ data:add_multi(
          name = "god_boss",
          on_generate = function(args)
             -- Kill count is 1 by now on first kill.
-            if Chara.kill_count(args.chara.new_id) == 1 then
+            if Chara.kill_count(args.chara.id) == 1 then
                return make_drops({ "core.rod_of_wishing", "core.artifact_seed" })
             else
                return make_drops({ "core.artifact_seed",  "core.artifact_seed" })

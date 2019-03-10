@@ -35,16 +35,6 @@ lrun("test Chara.is_ally", function()
         -- lequal(Chara.is_ally(putit), true)
 end)
 
-lrun("test Chara.flag", function()
-        Testing.start_in_debug_map()
-
-        local putit = Chara.create(0, 0, "core.putit")
-        lequal(Chara.flag(putit, Enums.CharaFlag.Explodes), false)
-
-        local kamikaze_yeek = Chara.create(0, 1, "core.kamikaze_yeek")
-        lequal(Chara.flag(kamikaze_yeek, Enums.CharaFlag.Explodes), true)
-end)
-
 lrun("test Chara.count", function()
         Testing.start_in_debug_map()
 

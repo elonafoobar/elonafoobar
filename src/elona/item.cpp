@@ -115,7 +115,22 @@ range::iota<int> items(int owner)
 
 
 
-int item_find(int matcher, int matcher_type, int inventory_type)
+/**
+ * Tries to find an item in the player's inventory, the ground, or both. Returns
+ * the item's index, or -1 if not found.
+ *
+ * Valid values of @ref matcher_type:
+ *   0: By category
+ *   1: By skill
+ *   2: By subcategory
+ *   3: By ID
+ *
+ * Valid values of @ref inventory_type:
+ *   -1: On ground
+ *    0: Both player's inventory and on ground
+ *    1: Player's inventory
+ */
+int item_find(int matcher, int matcher_type, ItemFindLocation location_type)
 {
     elona_vector1<int> p_at_m52;
     p_at_m52(0) = -1;
@@ -126,7 +141,7 @@ int item_find(int matcher, int matcher_type, int inventory_type)
         int invrange;
         if (cnt == 0)
         {
-            if (inventory_type > 0)
+            if (location_type == ItemFindLocation::player_inventory)
             {
                 continue;
             }
@@ -136,7 +151,7 @@ int item_find(int matcher, int matcher_type, int inventory_type)
         }
         else
         {
-            if (inventory_type < 0)
+            if (location_type == ItemFindLocation::ground)
             {
                 continue;
             }

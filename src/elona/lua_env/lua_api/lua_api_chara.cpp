@@ -65,20 +65,6 @@ int LuaApiChara::count()
 /**
  * @luadoc
  *
- * Gets a flag on a character.
- * @tparam LuaCharacter chara (const) the character to get the flag from
- * @tparam Enums.CharaFlag flag the flag to get
- */
-bool LuaApiChara::flag(LuaCharacterHandle chara, const EnumString& flag)
-{
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
-    int flag_value = LuaEnums::CharaFlagTable.ensure_from_string(flag);
-    return chara_ref._flags[flag_value] == 1;
-}
-
-/**
- * @luadoc
- *
  * Returns a reference to the player. They might not be alive.
  * @treturn LuaCharacter (mut) a reference to the player
  */
@@ -163,11 +149,14 @@ int LuaApiChara::kill_count(const std::string& id)
  * @luadoc
  *
  * Attempts to find a character with the given protoype ID.
- * @tparam id string Prototype ID to search
+ * @tparam string id Prototype ID to search
+ * @tparam CharaFindLocation location Location to search in
  * @treturn[1] LuaCharacter the found character
  * @treturn[2] nil
  */
-sol::optional<LuaCharacterHandle> LuaApiChara::find(const std::string& id)
+sol::optional<LuaCharacterHandle> LuaApiChara::find(
+    const std::string& id,
+    const EnumString& location)
 {
     auto data = the_character_db[id];
     if (!data)
@@ -175,13 +164,42 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(const std::string& id)
         return sol::nullopt;
     }
 
-    auto result = chara_find(data->id);
-    if (result == 0)
+    auto location_value =
+        LuaEnums::CharaFindLocationTable.ensure_from_string(location);
+
+    int result = 0;
+    if (location_value == CharaFindLocation::allies)
     {
-        return sol::nullopt;
+        result = chara_find_ally(data->id);
+
+        if (result == -1)
+        {
+            return sol::nullopt;
+        }
+    }
+    else
+    {
+        result = chara_find(data->id);
+
+        if (result == 0)
+        {
+            return sol::nullopt;
+        }
     }
 
     return lua::handle(elona::cdata[result]);
+}
+
+
+/**
+ * @luadoc
+ *
+ * Returns true if the player can recruit more allies.
+ * @treturn bool
+ */
+bool LuaApiChara::can_recruit_allies()
+{
+    return chara_get_free_slot_ally() != 0;
 }
 
 void LuaApiChara::bind(sol::table& api_table)
@@ -190,7 +208,6 @@ void LuaApiChara::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, is_player);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, is_ally);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, count);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiChara, flag);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, player);
     api_table.set_function(
         "create",
@@ -201,6 +218,7 @@ void LuaApiChara::bind(sol::table& api_table)
             LuaApiChara::create_from_id_xy));
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, kill_count);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, find);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiChara, can_recruit_allies);
 }
 
 } // namespace lua

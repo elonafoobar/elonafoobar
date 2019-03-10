@@ -36,6 +36,10 @@ sol::optional<LuaItemHandle> stack(int, LuaItemHandle);
 
 int trade_rate(LuaItemHandle);
 
+sol::optional<LuaItemHandle> find(const std::string&, const EnumString&);
+
+std::string weight_string(int);
+
 
 void bind(sol::table&);
 } // namespace LuaApiItem

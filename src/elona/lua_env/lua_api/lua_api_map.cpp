@@ -1,4 +1,6 @@
 #include "lua_api_map.hpp"
+#include "../../area.hpp"
+#include "../../data/types/type_map.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"
 #include "../../map_cell.hpp"
@@ -17,7 +19,7 @@ namespace lua
 int LuaApiMap::width()
 {
     return map_data.width;
-} // namespace lua
+}
 
 /**
  * @luadoc
@@ -34,9 +36,42 @@ int LuaApiMap::height()
  * @luadoc
  *
  * Returns the current map's ID.
- * @treturn num the current map's ID
+ * @treturn[1] string the current map's ID
+ * @treturn[2] nil
  */
-int LuaApiMap::id()
+sol::optional<std::string> LuaApiMap::id()
+{
+    auto legacy_id = LuaApiMap::legacy_id();
+
+    auto id = the_mapdef_db.get_id_from_legacy(legacy_id);
+    if (!legacy_id)
+    {
+        return sol::nullopt;
+    }
+
+    return id->get();
+}
+
+/**
+ * @luadoc
+ *
+ * Returns the current map's legacy ID.
+ * @treturn[1] num the current map's legacy ID
+ * @treturn[2] nil
+ */
+int LuaApiMap::legacy_id()
+{
+    return area_data[game_data.current_map].id;
+}
+
+/**
+ * @luadoc
+ *
+ * Returns the ID of the current map's instance. There can be more than one
+ * instance of a map of the same kind, like player-owned buildings.
+ * @treturn num the current map's instance ID
+ */
+int LuaApiMap::instance_id()
 {
     return game_data.current_map;
 }
@@ -198,11 +233,52 @@ void LuaApiMap::set_tile_memory_xy(int x, int y, int id)
     elona::cell_data.at(x, y).chip_id_memory = id;
 }
 
+/**
+ * @luadoc
+ *
+ * Sets a feat at the given position.
+ * @tparam LuaPosition position (const) the map position
+ * @tparam num tile the tile ID of the feat
+ * @tparam num param1 a parameter of the feat
+ * @tparam num param2 a parameter of the feat
+ */
+void LuaApiMap::set_feat(
+    const Position& position,
+    int tile,
+    int param1,
+    int param2)
+{
+    LuaApiMap::set_feat_xy(position.x, position.y, tile, param1, param2);
+}
+
+void LuaApiMap::set_feat_xy(int x, int y, int tile, int param1, int param2)
+{
+    cell_featset(x, y, tile, param1, param2);
+}
+
+/**
+ * @luadoc
+ *
+ * Clears the feat at the given position.
+ * @tparam LuaPosition position (const) the map position
+ */
+void LuaApiMap::clear_feat(const Position& position)
+{
+    LuaApiMap::clear_feat_xy(position.x, position.y);
+}
+
+void LuaApiMap::clear_feat_xy(int x, int y)
+{
+    cell_featclear(x, y);
+}
+
 void LuaApiMap::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, width);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, height);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, id);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, legacy_id);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, instance_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, is_overworld);
     api_table.set_function(
         "valid", sol::overload(LuaApiMap::valid, LuaApiMap::valid_xy));
@@ -218,6 +294,26 @@ void LuaApiMap::bind(sol::table& api_table)
         "set_tile_memory",
         sol::overload(
             LuaApiMap::set_tile_memory, LuaApiMap::set_tile_memory_xy));
+    api_table.set_function(
+        "set_feat", sol::overload(LuaApiMap::set_feat, LuaApiMap::set_feat_xy));
+    api_table.set_function(
+        "clear_feat",
+        sol::overload(LuaApiMap::clear_feat, LuaApiMap::clear_feat_xy));
+
+    /**
+     * @luadoc field data LuaMapData
+     *
+     * [R] The map data for the current map. This contains serialized values
+     * controlling various aspects of the current map.
+     */
+    api_table.set("data", sol::property(&map_data));
+
+    /**
+     * @luadoc function area
+     *
+     * Returns the area in the world map that corresponds to this map.
+     */
+    api_table.set("area", sol::property([]() { return &area_data.current(); }));
 }
 
 } // namespace lua

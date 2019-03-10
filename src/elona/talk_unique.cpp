@@ -115,8 +115,7 @@ void _loyter_receive_reward()
     nostack = 1;
     itemcreate(
         -1, 630, cdata.player().position.x, cdata.player().position.y, 0);
-    fixmaterial = 15;
-    change_item_material();
+    change_item_material(inv[ci], 15);
     flt();
     itemcreate(
         -1, 54, cdata.player().position.x, cdata.player().position.y, 100000);
@@ -1243,7 +1242,7 @@ TalkResult talk_unique_miral()
         buff = i18n::s.get(
             "core.locale.talk.unique.miral.upgrade_cart.dialog",
             calccargoupdatecost());
-        int stat = item_find(622, 3, 1);
+        int stat = item_find(622, 3, ItemFindLocation::player_inventory);
         if (stat != -1)
         {
             ci = stat;
@@ -2056,8 +2055,7 @@ void _tam_receive_reward()
     nostack = 1;
     itemcreate(
         -1, 630, cdata.player().position.x, cdata.player().position.y, 0);
-    fixmaterial = 24;
-    change_item_material();
+    change_item_material(inv[ci], 24);
     flt();
     itemcreate(
         -1, 54, cdata.player().position.x, cdata.player().position.y, 25500);
@@ -3870,8 +3868,7 @@ void _conery_receive_reward()
     nostack = 1;
     itemcreate(
         -1, 630, cdata.player().position.x, cdata.player().position.y, 0);
-    fixmaterial = 31;
-    change_item_material();
+    change_item_material(inv[ci], 31);
     flt();
     itemcreate(
         -1, 54, cdata.player().position.x, cdata.player().position.y, 50000);

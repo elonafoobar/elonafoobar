@@ -262,7 +262,18 @@ void item_set_num(Item&, int);
 void itemturn(int = 0);
 int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int, bool = false);
-int item_find(int = 0, int = 0, int = 0);
+
+enum class ItemFindLocation
+{
+    player_inventory,
+    ground,
+    player_inventory_and_ground,
+};
+int item_find(
+    int = 0,
+    int = 0,
+    ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
+
 int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
 void item_dump_desc(const Item&);

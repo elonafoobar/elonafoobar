@@ -5,19 +5,11 @@ local Internal = Elona.require("Internal")
 local table = Elona.require("table")
 
 local function dialog_error(talk, msg, err)
-   if err then
-      error("Dialog error in " .. talk.id .. ": " .. msg)
-   else
+   if err ~= nil then
       error("Dialog error in " .. talk.id .. ": " .. msg .. ":\n    " .. err)
+   else
+      error("Dialog error in " .. talk.id .. ": " .. msg)
    end
-end
-
-local function resolve_key(key, talk)
-   local get = talk.dialog.root .. "." .. key
-   if I18N.get_optional(get) == nil then
-      get = key
-   end
-   return get
 end
 
 --- Convert a response localization key to the full localization key.
@@ -26,16 +18,32 @@ end
 ---  * __BYE__                 - "Bye bye."
 ---  * key.fragment            - core.locale.dialog.root.key.fragment
 ---  * core.locale.dialog.key  - core.locale.dialog.key
-local function resolve_response(response, talk)
-   if response == nil then
-      response = "__MORE__"
+local function resolve_response(obj, talk)
+   local args = {}
+   local get
+   local key
+
+   if obj == nil then
+      key = "__MORE__"
+   elseif type(obj) == "table" then
+      key = obj[1]
+      args = obj.args
+   else
+      key = obj
    end
-   if response == "__BYE__" then
-      return "core.locale.ui.bye"
-   elseif response == "__MORE__" then
-      return "core.locale.ui.more"
+
+   if key == "__BYE__" then
+      return "core.locale.ui.bye", args
+   elseif key == "__MORE__" then
+      return "core.locale.ui.more", args
    end
-   return resolve_key(response, talk)
+
+   get = talk.dialog.root .. "." .. key
+
+   if I18N.get_optional(get) == nil then
+      get = key
+   end
+   return get, args
 end
 
 --- Opens a single talk window choice.
@@ -60,7 +68,8 @@ local function query(talk, text, choices, default_choice)
 
    local the_choices = {}
    for i, choice in ipairs(choices) do
-      the_choices[i] = I18N.get(resolve_response(choice[2], talk))
+      local response, args = resolve_response(choice[2], talk)
+      the_choices[i] = I18N.get(response, table.unpack(args))
       if default_choice == nil and choice[1] == "__END__" then
          default_choice = i - 1
       end
@@ -86,13 +95,19 @@ local function make_talk(speaker, dialog, id)
       speaker = speaker,
       dialog = dialog,
       say = function(self, key, response)
-         if response == nil then
-            response = "__MORE__"
-         end
-         local resolved = resolve_key(key, self)
-         query(self, I18N.get(resolved), {{"dummy", resolve_response(response, self)}})
+         local resolved, args = resolve_response(key, self)
+         query(self, I18N.get(resolved, table.unpack(args)), {{"dummy", resolve_response(response, self)}})
       end
    }
+end
+
+local function jump_to_dialog(talk, new_dialog_id, node)
+   local dialog = data.raw["core.dialog"][new_dialog_id]
+   if dialog == nil then
+      error("No such dialog " .. new_dialog_id)
+   end
+   talk.dialog = dialog
+   return {choice = node, opts = {}}
 end
 
 local function step_dialog(dialog, node_data, talk, state)
@@ -100,7 +115,7 @@ local function step_dialog(dialog, node_data, talk, state)
       return nil
    end
    if node_data.choice == "__IGNORED__" then
-      return nil
+      return jump_to_dialog(talk, "core.ignored", "__start")
    end
    if node_data.choice == nil then
       return nil
@@ -140,6 +155,7 @@ local function step_dialog(dialog, node_data, talk, state)
       local texts = node.text
 
       for i, text in ipairs(texts) do
+         print("Text: " .. i)
          if texts[i+1] == nil then
             if type(text) ~= "table" then
                dialog_error(talk, "Last text entry must be table (got: " .. type(text) .. ")")
@@ -169,7 +185,10 @@ local function step_dialog(dialog, node_data, talk, state)
 
             -- Change speaking character.
             if text.speaker ~= nil then
-               local found = Chara.find(text.speaker)
+               local found = Chara.find(text.speaker, "Others")
+               if found == nil then
+                  found = Chara.find(text.speaker, "Allies")
+               end
                if found ~= nil then
                   talk.speaker = found
                end
@@ -179,6 +198,12 @@ local function step_dialog(dialog, node_data, talk, state)
             local choices = node.choices
             if choices == nil then
                choices = {{"__END__", choice_key}}
+            elseif type(choices) == "function" then
+               local ok
+               ok, choices = pcall(choices, talk, state, {})
+               if not ok then
+                  dialog_error(talk, "Error running choices function", choices)
+               end
             end
 
             -- Set the default choice to select if window is
@@ -213,6 +238,8 @@ local function step_dialog(dialog, node_data, talk, state)
             if not ok then
                dialog_error(talk, "Error running text function", err)
             end
+         else
+            dialog_error(talk, "Cannot parse text entry, must be function or table (got: " .. type(text) .. ")")
          end
       end
 
@@ -240,7 +267,7 @@ local function show_dialog(chara, id)
    local next_node = {choice = "__start", opts = {}}
 
    while next_node ~= nil do
-      next_node = step_dialog(dialog, next_node, talk, state)
+      next_node = step_dialog(talk.dialog, next_node, talk, state)
    end
 end
 

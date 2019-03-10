@@ -29,15 +29,25 @@ lrun("test LuaCharacter:recruit_as_ally", function()
         lequal(putit:recruit_as_ally(), false)
 end)
 
+lrun("test LuaCharacter:get_flag", function()
+        Testing.start_in_debug_map()
+
+        local putit = Chara.create(0, 0, "core.putit")
+        lequal(putit:get_flag("Explodes"), false)
+
+        local kamikaze_yeek = Chara.create(0, 1, "core.kamikaze_yeek")
+        lequal(kamikaze_yeek:get_flag("Explodes"), true)
+end)
+
 lrun("test LuaCharacter:set_flag", function()
         Testing.start_in_debug_map()
 
         local player = Chara.player()
-        lequal(Chara.flag(player, Enums.CharaFlag.IsFloating), false)
+        lequal(player:get_flag("IsFloating"), false)
 
-        player:set_flag(Enums.CharaFlag.IsFloating, true)
+        player:set_flag("IsFloating", true)
 
-        lequal(Chara.flag(player, Enums.CharaFlag.IsFloating), true)
+        lequal(player:get_flag("IsFloating"), true)
 end)
 
 lrun("test LuaCharacter:gain_skill_exp", function()

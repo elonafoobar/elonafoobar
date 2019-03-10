@@ -280,6 +280,48 @@ int LuaApiItem::trade_rate(LuaItemHandle handle)
     return trate(item_ref.param1);
 }
 
+/**
+ * @luadoc
+ *
+ * Tries to find an item in the player's inventory, the ground, or both.
+ * @tparam string item_id The item ID to find.
+ * @tparam ItemFindLocation location Where to search for the item.
+ */
+sol::optional<LuaItemHandle> LuaApiItem::find(
+    const std::string& item_id,
+    const EnumString& location)
+{
+    auto data = the_item_db[item_id];
+    if (!data)
+    {
+        throw sol::error("No such item " + item_id);
+    }
+
+    auto location_value =
+        LuaEnums::ItemFindLocationTable.ensure_from_string(location);
+
+    auto stat = item_find(data->id, 3, location_value);
+    if (stat == -1)
+    {
+        return sol::nullopt;
+    }
+
+    return lua::handle(inv[stat]);
+}
+
+
+/**
+ * @luadoc
+ *
+ * Returns the string representation of a weight value.
+ * @tparam num weight The weight value
+ * @treturn string
+ */
+std::string LuaApiItem::weight_string(int weight)
+{
+    return cnvweight(weight);
+}
+
 void LuaApiItem::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, count);
@@ -297,6 +339,8 @@ void LuaApiItem::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, memory);
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, stack);
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, trade_rate);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, find);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, weight_string);
 }
 
 } // namespace lua

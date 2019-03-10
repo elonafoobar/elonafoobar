@@ -17,6 +17,9 @@ namespace LuaApiData
 {
 void reload_assets();
 
+void reload_charas();
+
+
 void bind(sol::table&);
 } // namespace LuaApiData
 

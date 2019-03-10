@@ -384,7 +384,7 @@ data:add_multi(
          item_number = function(args) return args.item_number / 2 end,
          item_base_value = function(args)
             local price = Math.clamp(args.item.value, 1, 1000000) * 50
-            if args.item.new_id == "core.gift" then
+            if args.item.id == "core.gift" then
                price = price * 10
             end
             return price
@@ -458,7 +458,7 @@ data:add_multi(
          on_generate_item = function(args)
             args.item.number = 1
             args.item.curse_state = "None"
-            if args.item.new_id == "core.rod_of_domination" then
+            if args.item.id == "core.rod_of_domination" then
                args.item.count = 4
             end
          end

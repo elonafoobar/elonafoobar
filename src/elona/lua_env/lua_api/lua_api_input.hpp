@@ -56,6 +56,8 @@ int prompt_dialog_with_chip_impress(
 void start_dialog(LuaCharacterHandle);
 void start_dialog_with_data(LuaCharacterHandle, const std::string&);
 
+sol::optional<LuaCharacterHandle> choose_ally(const EnumString&);
+
 void bind(sol::table&);
 }; // namespace LuaApiInput
 

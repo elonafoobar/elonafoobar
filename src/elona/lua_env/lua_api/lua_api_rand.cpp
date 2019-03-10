@@ -40,6 +40,23 @@ bool LuaApiRand::coinflip()
     return LuaApiRand::one_in(2);
 }
 
+/**
+ * @luadoc
+ *
+ * Returns a random number from min to max, exclusive.
+ * @tparam num min
+ * @tparam num max
+ * @treturn num a number in [min, max)
+ */
+int LuaApiRand::between(int min, int max)
+{
+    if (max <= min)
+    {
+        return min;
+    }
+
+    return min + elona::rnd(max - min);
+}
 
 /**
  * @luadoc
@@ -63,6 +80,7 @@ void LuaApiRand::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, rnd);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, one_in);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, coinflip);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, between);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, choice);
 }
 

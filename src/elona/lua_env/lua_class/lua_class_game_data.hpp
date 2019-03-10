@@ -9,17 +9,12 @@ namespace lua
 /**
  * @luadoc
  *
- * Represents an item.
+ * Contains parameters for the current game save.
  */
-namespace LuaItem
+namespace LuaGameData
 {
-void remove(Item&);
-
-void change_material(Item&, const std::string&);
-
-
 void bind(sol::state&);
-} // namespace LuaItem
+}
 
 } // namespace lua
 } // namespace elona

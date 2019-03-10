@@ -19,6 +19,8 @@ bool one_in(int n);
 
 bool coinflip();
 
+int between(int min, int max);
+
 sol::object choice(sol::table table);
 
 

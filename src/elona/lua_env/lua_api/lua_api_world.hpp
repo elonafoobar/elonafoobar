@@ -15,6 +15,10 @@ namespace LuaApiWorld
 {
 int time();
 
+void add_deferred_event(int, sol::optional<int>, sol::optional<int>);
+
+int deferred_event_id();
+
 bool belongs_to_guild(const std::string&);
 
 
