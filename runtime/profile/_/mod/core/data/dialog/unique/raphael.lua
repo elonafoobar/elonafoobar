@@ -120,7 +120,7 @@ return {
                GUI.play_sound("core.complete1")
                Item.create(Chara.player().position, "core.unicorn_horn", 2)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"));
+               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
             end,
             {"bring_wife.this_one.end"}
          }

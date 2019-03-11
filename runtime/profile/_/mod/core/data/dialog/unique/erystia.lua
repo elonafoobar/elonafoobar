@@ -44,10 +44,10 @@ return {
             {"all_stones.dialog._3", args = function() return {Chara.player().basename} end},
          },
          on_finish = function()
-            GUI.play_sound("core.write1");
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.all_stones.you_receive"), "Green");
-            Item.create(Chara.player().position, "core.palmia_pride", 0);
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"));
+            GUI.play_sound("core.write1")
+            GUI.txt(I18N.get("core.locale.talk.unique.erystia.all_stones.you_receive"), "Green")
+            Item.create(Chara.player().position, "core.palmia_pride", 0)
+            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("main_quest", 125)
          end
       },
@@ -62,9 +62,9 @@ return {
             {"stones.dialog._4"},
          },
          on_finish = function()
-            GUI.play_sound("core.write1");
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.stones.you_receive"), "Green");
-            Internal.set_quest_flag("main_quest", 110);
+            GUI.play_sound("core.write1")
+            GUI.txt(I18N.get("core.locale.talk.unique.erystia.stones.you_receive"), "Green")
+            Internal.set_quest_flag("main_quest", 110)
          end
       },
 
@@ -192,9 +192,9 @@ return {
             {"introduction.pledge_strength.dialog._3", args = function() return {Chara.player().basename} end},
          },
          on_finish = function()
-            GUI.play_sound("core.write1");
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green");
-            Internal.set_quest_flag("main_quest", 60);
+            GUI.play_sound("core.write1")
+            GUI.txt(I18N.get("core.locale.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green")
+            Internal.set_quest_flag("main_quest", 60)
          end
       },
    }

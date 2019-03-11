@@ -5,34 +5,36 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
 return {
-   name = "rilian",
-   root = "core.locale.talk.unique.rilian",
+   name = "conery",
+   root = "core.locale.talk.unique.conery",
    nodes = {
       __start = function()
-         local flag = Internal.get_quest_flag("puppys_cave")
+         local flag = Internal.get_quest_flag("minotaur_king")
          if flag == 1000 then
             return "quest_completed"
          elseif flag == 0 then
             return "quest_ask"
          elseif flag == 1 then
-            return "quest_check"
+            return "quest_waiting"
+         elseif flag == 2 then
+            return "quest_finish"
          end
 
          return "__IGNORED__"
       end,
       quest_completed = {
          text = {
-            {"complete"},
-         },
+            {"complete"}
+         }
       },
       quest_ask = {
          text = {
-            {"quest.dialog"},
+            {"quest.dialog"}
          },
          choices = {
             {"quest_yes", "quest.choices.do_it"},
-            {"quest_no", "__BYE__"}
-         },
+            {"quest_no", "quest.choices.bye"}
+         }
       },
       quest_yes = {
          text = {
@@ -40,24 +42,17 @@ return {
             {"quest.do_it"},
          },
          on_finish = function()
-            Internal.set_quest_flag("puppys_cave", 1)
+            Internal.set_quest_flag("minotaur_king", 1)
          end
       },
       quest_no = {
          text = {
-            {"quest.bye"},
-         },
+            {"quest.bye", args = function() return {Chara.player().basename} end},
+         }
       },
-      quest_check = function()
-         if Chara.find("core.poppy", "Allies") == nil then
-            return "quest_waiting"
-         end
-
-         return "quest_finish"
-      end,
       quest_waiting = {
          text = {
-            {"quest.waiting"}
+            {"quest.waiting"},
          }
       },
       quest_finish = {
@@ -65,20 +60,18 @@ return {
             {"quest.end"},
          },
          on_finish = function()
-            Item.create(Chara.player().position, "core.cooler_box", 0)
-            Item.create(Chara.player().position, "core.gold_piece", 2500)
-            Item.create(Chara.player().position, "core.platinum_coin", 2)
+            local material_kit = Item.create(Chara.player().position, {id = "core.material_kit", nostack = true})
+            material_kit:change_material("core.adamantium")
+            Item.create(Chara.player().position, "core.gold_piece", 50000)
+            Item.create(Chara.player().position, "core.platinum_coin", 4)
 
             GUI.txt(I18N.get("core.locale.quest.completed"))
             GUI.play_sound("core.complete1")
             GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
             GUI.show_journal_update_message()
-            Internal.set_quest_flag("puppys_cave", 1000)
 
-            Chara.find("core.poppy", "Allies"):vanquish()
-            local poppy = Chara.create(31, 4, "core.poppy")
-            poppy.role = 3
+            Internal.set_quest_flag("minotaur_king", 1000)
          end
-      }
+      },
    }
 }

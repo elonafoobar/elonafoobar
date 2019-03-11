@@ -1,16 +1,16 @@
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
-local Map = Elona.require("Map")
 local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
+local Map = Elona.require("Map")
 
 return {
-   name = "tam",
-   root = "core.locale.talk.unique.tam",
+   name = "balzak",
+   root = "core.locale.talk.unique.balzak",
    nodes = {
       __start = function()
-         local flag = Internal.get_quest_flag("cat_house")
+         local flag = Internal.get_quest_flag("sewer_sweeping")
          if flag == 1000 then
             return "quest_completed"
          elseif flag == 0 then
@@ -20,48 +20,50 @@ return {
          elseif flag == 2 then
             return "quest_finish"
          end
-
-         return "__IGNORED__"
+         return "__END__"
       end,
       quest_completed = {
          text = {
-            {"complete"},
-         },
+            {"complete"}
+         }
       },
       quest_ask = {
          text = {
-            {"quest.dialog"},
+            {"quest.dialog._0"},
+            {"quest.dialog._1"}
          },
          choices = {
             {"quest_yes", "quest.choices.yes"},
             {"quest_no", "quest.choices.no"}
-         },
+         }
       },
       quest_yes = {
          text = {
+            GUI.show_journal_update_message,
             {"quest.yes"},
          },
          on_finish = function()
-            Internal.set_quest_flag("cat_house", 1)
-            Map.set_feat(23, 22, 231, 11, 3)
+            Internal.set_quest_flag("sewer_sweeping", 1)
+            Map.set_feat(18, 45, 231, 11, 20)
          end
       },
       quest_no = {
          text = {
             {"quest.no"},
-         },
+         }
       },
       quest_waiting = {
          text = {
-            {"quest.waiting"}
+            {"quest.waiting"},
          }
       },
       quest_finish = {
          text = {
             function()
-               local item = Item.create(Chara.player().position, "core.material_kit", 0)
-               item:change_material("core.dragon_scale")
-               Item.create(Chara.player().position, "core.gold_piece", 25500)
+               Item.create(Chara.player().position, "core.statue_of_jure", 0)
+               local monster_ball = Item.create(Chara.player().position, {id = "core.monster_ball", nostack = true})
+               monster_ball.param2 = 30
+               Item.create(Chara.player().position, "core.gold_piece", 15000)
                Item.create(Chara.player().position, "core.platinum_coin", 4)
 
                GUI.txt(I18N.get("core.locale.quest.completed"))
@@ -72,8 +74,8 @@ return {
             {"quest.end"},
          },
          on_finish = function()
-            Internal.set_quest_flag("cat_house", 1000)
+            Internal.set_quest_flag("sewer_sweeping", 1000)
          end
-      }
+      },
    }
 }

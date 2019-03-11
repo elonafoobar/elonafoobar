@@ -13,7 +13,7 @@ return {
          if flag == 1000 then
             return "quest_completed"
          elseif Chara.player().fame < 5000 then
-            return "fame_too_low"
+            return "quest_fame_too_low"
          elseif flag == 0 then
             return "quest_ask"
          elseif flag == 1 or flag == 2 then
@@ -29,7 +29,7 @@ return {
             {"complete"},
          },
       },
-      fame_too_low = {
+      quest_fame_too_low = {
          text = {
             {"fame_too_low"},
          },

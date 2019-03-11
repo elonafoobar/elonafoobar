@@ -7,7 +7,7 @@ local World = Elona.require("World")
 local table = Elona.require("table")
 
 local function upgrade_cart_cost()
-   return (World.data.current_cart_limit - World.data.initial_cart_limit) / 10000 + 1;
+   return (World.data.current_cart_limit - World.data.initial_cart_limit) / 10000 + 1
 end
 
 local function upgrade_cart_amount()
@@ -23,7 +23,7 @@ local function upgrade_cargo_limit()
    GUI.txt(I18N.get(
           "core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
           Item.weight_string(amount)))
-   GUI.play_sound("core.build1");
+   GUI.play_sound("core.build1")
 
    small_medals.number = small_medals.number - cost
    World.data.current_cart_limit = World.data.current_cart_limit + amount

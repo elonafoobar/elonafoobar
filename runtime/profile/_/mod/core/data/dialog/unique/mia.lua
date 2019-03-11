@@ -5,11 +5,11 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
 return {
-   name = "rilian",
-   root = "core.locale.talk.unique.rilian",
+   name = "mia",
+   root = "core.locale.talk.unique.mia",
    nodes = {
       __start = function()
-         local flag = Internal.get_quest_flag("puppys_cave")
+         local flag = Internal.get_quest_flag("mias_dream")
          if flag == 1000 then
             return "quest_completed"
          elseif flag == 0 then
@@ -30,26 +30,26 @@ return {
             {"quest.dialog"},
          },
          choices = {
-            {"quest_yes", "quest.choices.do_it"},
-            {"quest_no", "__BYE__"}
+            {"quest_yes", "quest.choices.yes"},
+            {"quest_no", "quest.choices.no"}
          },
       },
       quest_yes = {
          text = {
             GUI.show_journal_update_message,
-            {"quest.do_it"},
+            {"quest.yes"},
          },
          on_finish = function()
-            Internal.set_quest_flag("puppys_cave", 1)
+            Internal.set_quest_flag("mias_dream", 1)
          end
       },
       quest_no = {
          text = {
-            {"quest.bye"},
+            {"quest.no"},
          },
       },
       quest_check = function()
-         if Chara.find("core.poppy", "Allies") == nil then
+         if Chara.find("core.silver_cat", "Allies") == nil then
             return "quest_waiting"
          end
 
@@ -62,22 +62,25 @@ return {
       },
       quest_finish = {
          text = {
-            {"quest.end"},
+            {"quest.end._0"},
+            {"quest.end._1"},
          },
          on_finish = function()
-            Item.create(Chara.player().position, "core.cooler_box", 0)
-            Item.create(Chara.player().position, "core.gold_piece", 2500)
-            Item.create(Chara.player().position, "core.platinum_coin", 2)
+            Item.create(Chara.player().position, "core.monster_heart", 0)
+            Item.create(Chara.player().position, "core.gold_piece", 5000)
+            Item.create(Chara.player().position, "core.platinum_coin", 3)
 
             GUI.txt(I18N.get("core.locale.quest.completed"))
             GUI.play_sound("core.complete1")
             GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
             GUI.show_journal_update_message()
-            Internal.set_quest_flag("puppys_cave", 1000)
+            Internal.set_quest_flag("mias_dream", 1000)
 
-            Chara.find("core.poppy", "Allies"):vanquish()
-            local poppy = Chara.create(31, 4, "core.poppy")
-            poppy.role = 3
+            local silver_cat = Chara.find("core.silver_cat", "Allies")
+            Chara.remove_from_party(silver_cat)
+            silver_cat.relationship = "Unconcerned"
+            silver_cat.original_relationship = "Unconcerned"
+            silver_cat.role = 3
          end
       }
    }
