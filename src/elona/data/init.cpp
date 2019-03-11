@@ -42,6 +42,9 @@ void _initialize_iterable_dbs(lua::DataTable& data)
 
     the_class_db.initialize(data);
     the_class_db.load_all();
+
+    the_god_db.initialize(data);
+    the_god_db.load_all();
 }
 
 

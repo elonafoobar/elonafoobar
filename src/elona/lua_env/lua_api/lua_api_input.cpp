@@ -360,8 +360,8 @@ void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
     auto& speaker_ref =
         lua::lua->get_handle_manager().get_ref<Character>(speaker);
 
-    auto data = the_character_db[speaker_ref.id];
-    if (!data->dialog_id)
+    auto data = the_character_db.ensure(speaker_ref.id);
+    if (!data.dialog_id)
     {
         throw sol::error(
             "Character has no dialog: "s + speaker_ref.new_id().get());
@@ -370,7 +370,7 @@ void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
     talk_setup_variables(speaker_ref);
     talk_start();
 
-    dialog_start(speaker_ref, *data->dialog_id);
+    dialog_start(speaker_ref, *data.dialog_id);
 
     talk_end();
 }

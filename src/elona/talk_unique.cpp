@@ -2203,24 +2203,6 @@ TalkResult talk_unique()
         return TalkResult::talk_end;
     }
 
-    switch (*chatval_unique_chara_id)
-    {
-    case 243: return talk_unique_arnord();
-    case 247: return talk_unique_mia();
-    case 252: return talk_unique_renton();
-    case 253: return talk_unique_marks();
-    case 259: return talk_unique_noel();
-    case 279: return talk_unique_icolle();
-    case 280: return talk_unique_balzak();
-    case 290: return talk_unique_lexus();
-    case 294: return talk_unique_abyss();
-    case 297: return talk_unique_doria();
-    case 301: return talk_unique_conery();
-    case 302: return talk_unique_rogue_boss();
-    case 322: return talk_unique_strange_scientist();
-    case 345: return talk_unique_kaneda_bike();
-    case 348: return talk_unique_part_time_worker();
-    }
     return TalkResult::talk_ignored;
 }
 

@@ -135,9 +135,50 @@ public:
     optional_ref<DataType> operator[](const LegacyIdType& legacy_id)
     {
         if (const auto id = get_id_from_legacy(legacy_id))
+        {
             return (*this)[*id];
+        }
         else
+        {
             return none;
+        }
+    }
+
+    const DataType& ensure(const IdType& id)
+    {
+        auto data = (*this)[id];
+
+        if (!data)
+        {
+            throw sol::error{"No data entry with ID \"" + id.get() +
+                             "\" of type \"" + Traits::type_id + "\" exists."};
+        }
+
+        return **data;
+    }
+
+    const DataType& ensure(const std::string& inner_id)
+    {
+        return this->ensure(IdType(inner_id));
+    }
+
+    const DataType& ensure(const char* inner_id)
+    {
+        return (*this)[IdType(std::string(inner_id))];
+    }
+
+    const DataType& ensure(const LegacyIdType& legacy_id)
+    {
+        const auto id = get_id_from_legacy(legacy_id);
+
+        if (!id)
+        {
+            throw sol::error{"No data entry with legacy ID \"" +
+                             std::to_string(legacy_id) + "\" of type \"" +
+                             Traits::type_id + "\" exists."};
+        }
+
+        return this->ensure(*id);
     }
 
 private:

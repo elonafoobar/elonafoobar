@@ -18,6 +18,7 @@ end
 ---  * __BYE__                 - "Bye bye."
 ---  * key.fragment            - core.locale.dialog.root.key.fragment
 ---  * core.locale.dialog.key  - core.locale.dialog.key
+---  * {"key.fragment", args = {"arg1", "arg2"}}  - (localized with arguments)
 local function resolve_response(obj, talk)
    local args = {}
    local get
@@ -89,6 +90,7 @@ end
 -- @tparam LuaCharacter speaker Character who is speaking.
 -- @tparam core.dialog dialog Dialog data.
 -- @tparam string id Dialog data ID.
+-- @treturn table Dialog control data.
 local function make_talk(speaker, dialog, id)
    return {
       id = id,
@@ -101,6 +103,11 @@ local function make_talk(speaker, dialog, id)
    }
 end
 
+--- Jumps to a node in a dialog outside the current dialog.
+-- @tparam table talk Current dialog control data.
+-- @tparam string new_dialog_id New dialog ID to change to.
+-- @tparam string node Node inside the dialog to jump to.
+-- @treturn table Current node data in {choice, opts} format
 local function jump_to_dialog(talk, new_dialog_id, node)
    local dialog = data.raw["core.dialog"][new_dialog_id]
    if dialog == nil then
@@ -131,7 +138,7 @@ local function step_dialog(dialog, node_data, talk, state)
    if type(node) == "function" then
       -- Run function. It is expected to return either a string or
       -- table containing the next node to jump to.
-      local ok, result = pcall(node, talk, state, {})
+      local ok, result = pcall(node, talk, state, node_data.opts)
       if ok then
          if type(result) == "string" then
             next_node = {choice = result, opts = {}}
@@ -144,7 +151,7 @@ local function step_dialog(dialog, node_data, talk, state)
    elseif type(node) == "table" then
       -- Parse table structure for dialog data.
       -- text: array of text entries, displayed in order.
-      --     text[1][1]: locale fragment or key, or function.
+      --     text[1][1]: locale fragment or key, or function
       --     text[1].args: function returning table of arguments to localization
       --     text[1].speaker: core.chara ID of speaker to display, if they are in this map
       --     text[1].choice: locale key of default choice. Defaults to "more" or "bye".
@@ -152,6 +159,7 @@ local function step_dialog(dialog, node_data, talk, state)
       --     choices[1][1]: Node ID to jump to
       --     choices[1][2]: locale key of choice. Defaults to "more" or "bye".
       -- on_finish: Function run when this node is exited.
+      -- default_choice: If provided, dialog option is cancellable with this response as the default.
       local texts = node.text
 
       for i, text in ipairs(texts) do
@@ -166,7 +174,7 @@ local function step_dialog(dialog, node_data, talk, state)
             local args = {}
             if text.args then
                local ok
-               ok, args = pcall(text.args, talk, state)
+               ok, args = pcall(text.args, talk, state, node_data.opts)
                if not ok then
                   dialog_error(talk, "Error getting I18N arguments", args)
                end
@@ -199,7 +207,7 @@ local function step_dialog(dialog, node_data, talk, state)
                choices = {{"__END__", choice_key}}
             elseif type(choices) == "function" then
                local ok
-               ok, choices = pcall(choices, talk, state, {})
+               ok, choices = pcall(choices, talk, state, node_data.opts)
                if not ok then
                   dialog_error(talk, "Error running choices function", choices)
                end
@@ -233,7 +241,7 @@ local function step_dialog(dialog, node_data, talk, state)
             end
          elseif type(text) == "function" then
             -- Call an arbitrary function. The result is ignored.
-            local ok, err = pcall(text, talk, state, {})
+            local ok, err = pcall(text, talk, state, node_data.opts)
             if not ok then
                dialog_error(talk, "Error running text function", err)
             end
@@ -244,7 +252,7 @@ local function step_dialog(dialog, node_data, talk, state)
 
       -- Run on_finish callback.
       if node.on_finish then
-         local ok, result = pcall(node.on_finish, talk, state, {})
+         local ok, result = pcall(node.on_finish, talk, state, node_data.opts)
          if not ok then
             dialog_error(talk, "Error running on_finish function", result)
          end
@@ -256,6 +264,9 @@ local function step_dialog(dialog, node_data, talk, state)
    return next_node
 end
 
+--- Starts a dialog with a character speaking.
+-- @tparam LuaCharacter chara The speaking character.
+-- @tparam string dialog_id ID of core.dialog to use.
 local function show_dialog(chara, id)
    local dialog = data.raw["core.dialog"][id]
    if dialog == nil then

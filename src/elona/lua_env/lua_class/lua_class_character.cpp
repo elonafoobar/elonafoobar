@@ -7,8 +7,10 @@
 #include "../../element.hpp"
 #include "../../enums.hpp"
 #include "../../food.hpp"
+#include "../../god.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../lua_env/interface.hpp"
+#include "../../ui.hpp"
 #include "../../variables.hpp"
 #include "../data_manager.hpp"
 #include "lua_class_ability.hpp"
@@ -114,16 +116,13 @@ void LuaCharacter::heal_ailment(
 
 void LuaCharacter::add_buff(
     Character& self,
-    const std::string& id,
+    const std::string& buff_id,
     int power,
     int turns)
 {
-    if (!the_buff_db[id])
-    {
-        throw sol::error{"No such buff \"" + id + "\""};
-    }
+    the_buff_db.ensure(buff_id);
 
-    elona::buff_add(self, id, power, turns);
+    elona::buff_add(self, buff_id, power, turns);
 }
 
 /**
@@ -142,10 +141,7 @@ void LuaCharacter::add_buff_doer(
     int turns,
     LuaCharacterHandle doer)
 {
-    if (!the_buff_db[buff_id])
-    {
-        throw sol::error{"No such buff \"" + buff_id + "\""};
-    }
+    the_buff_db.ensure(buff_id);
 
     auto& doer_ref = lua::lua->get_handle_manager().get_ref<Character>(doer);
     elona::buff_add(self, buff_id, power, turns, doer_ref);
@@ -234,12 +230,15 @@ void LuaCharacter::set_flag(Character& self, const EnumString& flag, bool value)
  * @luadoc
  *
  * Obtains the skill of the given ID.
- * @tparam num skill Skill ID, from 0 to 599
+ * @tparam string skill_id ID of type core.ability
  * @treturn LuaAbility
  */
-sol::optional<LuaAbility> LuaCharacter::get_skill(Character& self, int skill)
+sol::optional<LuaAbility> LuaCharacter::get_skill(
+    Character& self,
+    const std::string& skill_id)
 {
-    if (skill < 0 || skill >= 600)
+    auto data = the_ability_db[skill_id];
+    if (!data)
     {
         return sol::nullopt;
     }
@@ -248,12 +247,15 @@ sol::optional<LuaAbility> LuaCharacter::get_skill(Character& self, int skill)
     assert(handle != sol::lua_nil);
 
     std::string uuid = handle["__uuid"];
-    return LuaAbility(skill, self.index, Character::lua_type(), uuid);
+    return LuaAbility(data->id, self.index, Character::lua_type(), uuid);
 }
 
-void LuaCharacter::gain_skill(Character& self, int skill, int initial_level)
+void LuaCharacter::gain_skill(
+    Character& self,
+    const std::string& skill_id,
+    int initial_level)
 {
-    LuaCharacter::gain_skill_stock(self, skill, initial_level, 0);
+    LuaCharacter::gain_skill_stock(self, skill_id, initial_level, 0);
 }
 
 /**
@@ -261,21 +263,22 @@ void LuaCharacter::gain_skill(Character& self, int skill, int initial_level)
  *
  * Makes this character gain a new skill or spell. This only has an
  * effect if the character does not already know the skill/spell.
- * @tparam num skill_id the skill/spell ID
+ * @tparam string skill_id the skill/spell ID of type core.ability
  * @tparam num initial_level the intial skill/spell level
  * @tparam[opt] num initial_stock the initial spell stock for spells
  */
 void LuaCharacter::gain_skill_stock(
     Character& self,
-    int skill_id,
+    const std::string& skill_id,
     int initial_level,
     int initial_stock)
 {
-    if (skill_id < 0 || skill_id >= 600)
+    auto data = the_ability_db[skill_id];
+    if (!data)
     {
         return;
     }
-    elona::chara_gain_skill(self, skill_id, initial_level, initial_stock);
+    elona::chara_gain_skill(self, data->id, initial_level, initial_stock);
 }
 
 /**
@@ -283,16 +286,20 @@ void LuaCharacter::gain_skill_stock(
  *
  * Makes this character gain experience in a skill or spell. This only
  * has an effect if the character already knows the skill/spell.
- * @tparam num skill_id the skill/spell ID
+ * @tparam num skill_id the skill/spell ID of type core.ability
  * @tparam num amount the amount of experience
  */
-void LuaCharacter::gain_skill_exp(Character& self, int skill_id, int amount)
+void LuaCharacter::gain_skill_exp(
+    Character& self,
+    const std::string& skill_id,
+    int amount)
 {
-    if (skill_id < 0 || skill_id >= 600)
+    auto data = the_ability_db[skill_id];
+    if (!data)
     {
         return;
     }
-    elona::chara_gain_fixed_skill_exp(self, skill_id, amount);
+    elona::chara_gain_fixed_skill_exp(self, data->id, amount);
 }
 
 /**
@@ -449,6 +456,52 @@ void LuaCharacter::refresh_burden_state(Character& self)
     elona::refresh_burden_state();
 }
 
+
+/**
+ * @luadoc
+ *
+ * Moves this character to a new position.
+ * @tparam LuaPosition pos
+ */
+void LuaCharacter::move_to(Character& self, Position& pos)
+{
+    LuaCharacter::move_to_xy(self, pos.x, pos.y);
+}
+
+/**
+ * @luadoc
+ *
+ * Moves this character to a new position.
+ * @tparam num x
+ * @tparam num y
+ */
+void LuaCharacter::move_to_xy(Character& self, int x, int y)
+{
+    // NOTE: setting self.next_position may be safer if the position is changed
+    // in the middle of the current turn.
+    cell_movechara(tc, x, y);
+
+    if (self.index == 0)
+    {
+        update_screen();
+    }
+}
+
+/**
+ * @luadoc
+ *
+ * Changes the worshipped god of this character without invoking the god
+ * switching penalty.
+ * @tparam string god_id ID of type core.god.
+ */
+void LuaCharacter::switch_religion(Character& self, const std::string& god_id)
+{
+    the_god_db.ensure(god_id);
+
+    self.god_id = god_id;
+    elona::switch_religion();
+}
+
 void LuaCharacter::bind(sol::state& lua)
 {
     auto LuaCharacter = lua.create_simple_usertype<Character>();
@@ -485,20 +538,6 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("max_hp", sol::readonly(&Character::max_hp));
 
     /**
-     * @luadoc mp field num
-     *
-     * [R] The character's current MP.
-     */
-    LuaCharacter.set("mp", sol::readonly(&Character::mp));
-
-    /**
-     * @luadoc max_mp field num
-     *
-     * [R] The character's maximum MP.
-     */
-    LuaCharacter.set("max_mp", sol::readonly(&Character::max_mp));
-
-    /**
      * @luadoc sp field num
      *
      * [R] The character's current stamina.
@@ -513,11 +552,39 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("max_sp", sol::readonly(&Character::max_sp));
 
     /**
+     * @luadoc mp field num
+     *
+     * [R] The character's current MP.
+     */
+    LuaCharacter.set("mp", sol::readonly(&Character::mp));
+
+    /**
+     * @luadoc max_mp field num
+     *
+     * [R] The character's maximum MP.
+     */
+    LuaCharacter.set("max_mp", sol::readonly(&Character::max_mp));
+
+    /**
+     * @luadoc max_mp field string
+     *
+     * [RW] The character's worshipped god.
+     */
+    LuaCharacter.set("god_id", &Character::god_id);
+
+    /**
      * @luadoc position field LuaPosition
      *
      * [RW] The character's position.
      */
     LuaCharacter.set("position", &Character::position);
+
+    /**
+     * @luadoc initial_position field LuaPosition
+     *
+     * [RW] The character's initial position.
+     */
+    LuaCharacter.set("initial_position", &Character::initial_position);
 
     /**
      * @luadoc shop_rank field num
@@ -535,6 +602,13 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("role", &Character::character_role);
 
     /**
+     * @luadoc gold field num
+     *
+     * [RW] The character's current gold.
+     */
+    LuaCharacter.set("gold", &Character::gold);
+
+    /**
      * @luadoc experience field num
      *
      * [RW] The character's current experience points.
@@ -547,6 +621,13 @@ void LuaCharacter::bind(sol::state& lua)
      * [RW] The character's current fame.
      */
     LuaCharacter.set("fame", &Character::fame);
+
+    /**
+     * @luadoc level field num
+     *
+     * [RW] The character's current level.
+     */
+    LuaCharacter.set("level", &Character::level);
 
     /**
      * @luadoc talk_type field num
@@ -686,6 +767,15 @@ void LuaCharacter::bind(sol::state& lua)
         LUA_API_ENUM_PROPERTY(Character, relationship, Relation));
 
     /**
+     * @luadoc relationship field Relation
+     *
+     * [RW] The original relationship of the character to the player.
+     */
+    LuaCharacter.set(
+        "original_relationship",
+        LUA_API_ENUM_PROPERTY(Character, original_relationship, Relation));
+
+    /**
      * @luadoc quality field Quality
      *
      * [RW] The quality of the character.
@@ -737,6 +827,10 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("refresh", &LuaCharacter::refresh);
     LuaCharacter.set(
         "refresh_burden_state", &LuaCharacter::refresh_burden_state);
+    LuaCharacter.set(
+        "move_to",
+        sol::overload(&LuaCharacter::move_to, &LuaCharacter::move_to_xy));
+    LuaCharacter.set("switch_religion", &LuaCharacter::switch_religion);
 
     auto key = Character::lua_type();
     lua.set_usertype(key, LuaCharacter);

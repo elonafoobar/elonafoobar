@@ -27,6 +27,13 @@ int filter_set_dungeon();
 
 void trade_small_medals(LuaCharacterHandle);
 
+int generate_fighters_guild_target(int);
+
+void leave_map();
+
+void strange_scientist_pick_reward();
+
+
 void bind(sol::table&);
 }; // namespace LuaApiInternal
 

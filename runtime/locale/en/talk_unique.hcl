@@ -737,8 +737,11 @@ locale {
                     brought_all {
                         dialog {
                             _0 = "Oh! So these are Rachel's storybooks? I feel like I should read them soon... it's been such a long time. Give me a moment to look at them will you. These... these are! And this! And... *Renton bubbles at the mouth* "
-                            _1 = "And this... *huff* *huff* "
-                            _2 = "*A crazed look wells up in Renton's eyes* These books... only a true artistic genius could've painted like this. Effort alone is simply not enough... my sister... no matter how long or hard she tried, she never could've painted such beauty. If the goddess of luck truly exists, I should devote myself to her. I'm sorry... you do deserve a reward. I'd like to be alone for a while... if you don't mind. "
+                            _1 = "..."
+                            _2 = "... ..."
+                            _3 = "... ... ..."
+                            _4 = "And this... *huff* *huff* "
+                            _5 = "*A crazed look wells up in Renton's eyes* These books... only a true artistic genius could've painted like this. Effort alone is simply not enough... my sister... no matter how long or hard she tried, she never could've painted such beauty. If the goddess of luck truly exists, I should devote myself to her. I'm sorry... you do deserve a reward. I'd like to be alone for a while... if you don't mind. "
                         }
 
                         ehekatl = "\"Mew?\""

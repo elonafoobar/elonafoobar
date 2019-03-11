@@ -7,6 +7,7 @@
 #include "../../mdata.hpp"
 #include "../../menu.hpp"
 #include "../../status_ailment.hpp"
+#include "../../text.hpp"
 #include "../lua_enums.hpp"
 
 namespace elona
@@ -43,6 +44,7 @@ extern EnumMap<int> TraitTypeTable;
 extern EnumMap<CharaFindLocation> CharaFindLocationTable;
 extern EnumMap<ItemFindLocation> ItemFindLocationTable;
 extern EnumMap<ControlAllyOperation> ControlAllyOperationTable;
+extern EnumMap<RandomTitleType> RandomTitleTypeTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

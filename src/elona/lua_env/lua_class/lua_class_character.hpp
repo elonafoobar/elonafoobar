@@ -39,12 +39,12 @@ bool get_flag(Character&, const EnumString&);
 
 void set_flag(Character&, const EnumString&, bool);
 
-sol::optional<LuaAbility> get_skill(Character&, int);
+sol::optional<LuaAbility> get_skill(Character&, const std::string&);
 
-void gain_skill(Character&, int, int);
-void gain_skill_stock(Character&, int, int, int);
+void gain_skill(Character&, const std::string&, int);
+void gain_skill_stock(Character&, const std::string&, int, int);
 
-void gain_skill_exp(Character&, int, int);
+void gain_skill_exp(Character&, const std::string&, int);
 
 void modify_trait(Character&, int, int);
 
@@ -67,6 +67,11 @@ void act_hostile_against(Character&, LuaCharacterHandle);
 void refresh(Character&);
 
 void refresh_burden_state(Character&);
+
+void move_to(Character&, Position&);
+void move_to_xy(Character&, int, int);
+
+void switch_religion(Character&, const std::string&);
 
 
 void bind(sol::state&);

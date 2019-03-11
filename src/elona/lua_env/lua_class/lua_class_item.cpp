@@ -29,13 +29,8 @@ void LuaItem::remove(Item& self)
  */
 void LuaItem::change_material(Item& self, const std::string& material_id)
 {
-    const auto& data = the_item_material_db[material_id];
-    if (!data)
-    {
-        throw sol::error{"No such item material " + material_id};
-    }
-
-    change_item_material(self, data->id);
+    const auto& data = the_item_material_db.ensure(material_id);
+    change_item_material(self, data.id);
 }
 
 void LuaItem::bind(sol::state& lua)

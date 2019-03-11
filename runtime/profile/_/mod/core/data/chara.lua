@@ -1661,6 +1661,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
          flags = { "IsQuickTempered" },
+         dialog_id = "core.part_time_worker",
       },
       {
          name = "fanatic",
@@ -5869,6 +5870,7 @@ data:add_multi(
          rarity = 25000,
          coefficient = 400,
          drops = { "core.rogue", "core.rogue_boss" },
+         dialog_id = "core.rogue_boss",
       },
       {
          name = "rogue_warrior",
@@ -6981,6 +6983,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "IsImmuneToFear", "IsSuitableForMount" },
          corpse_eating_callback = "exports:core.eating_effect.iron",
+         dialog_id = "core.kaneda_bike",
       },
       {
          name = "cub",
@@ -7638,6 +7641,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.arnord",
       },
       {
          name = "mia",
@@ -7663,6 +7667,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.mia",
       },
       {
          name = "renton",
@@ -7689,6 +7694,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.renton",
       },
       {
          name = "marks",
@@ -7716,6 +7722,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.marks",
       },
       {
          name = "noel",
@@ -7743,6 +7750,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.noel",
       },
       {
          name = "conery",
@@ -7771,6 +7779,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsQuickTempered" },
+         dialog_id = "core.conery",
       },
       {
          name = "thief",
@@ -8337,6 +8346,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.icolle",
       },
       {
          name = "balzak",
@@ -8362,6 +8372,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.balzak",
       },
       {
          name = "revlus",
@@ -8416,6 +8427,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating", "CanCastRapidMagic" },
+         dialog_id = "core.lexus",
       },
       {
          name = "sin",
@@ -8467,6 +8479,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.abyss",
       },
       {
          name = "fray",
@@ -8518,6 +8531,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         dialog_id = "core.doria",
       },
       {
          name = "silver_eyed_witch",
@@ -8627,6 +8641,7 @@ data:add_multi(
          category = 0,
          rarity = 50000,
          coefficient = 400,
+         dialog_id = "core.strange_scientist",
       },
       {
          name = "mysterious_producer",

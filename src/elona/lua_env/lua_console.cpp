@@ -392,6 +392,7 @@ void LuaConsole::grab_input()
 
         noteget(_input, 0);
 
+        await(Config::instance().general_wait);
         key_check(KeyWaitDelay::walk_run);
 
         if (keyhalt)

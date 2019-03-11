@@ -407,7 +407,6 @@ EnumMap<ItemFindLocation> ItemFindLocationTable{
  * @see Input.choose_ally
  */
 EnumMap<ControlAllyOperation> ControlAllyOperationTable{
-
     "ControlAllyOperation",
     {
         {"CallBack", ControlAllyOperation::call_back},
@@ -416,6 +415,21 @@ EnumMap<ControlAllyOperation> ControlAllyOperationTable{
         {"Staying", ControlAllyOperation::staying},
         {"Investigate", ControlAllyOperation::investigate},
         {"GeneEngineer", ControlAllyOperation::gene_engineer},
+    }};
+
+/**
+ * @luadoc
+ *
+ * Title type to use with World.random_title.
+ * @see World.random_title
+ */
+EnumMap<RandomTitleType> RandomTitleTypeTable{
+    "RandomTitleType",
+    {
+        {"Character", RandomTitleType::character},
+        {"Weapon", RandomTitleType::weapon},
+        {"Party", RandomTitleType::party},
+        {"LivingWeapon", RandomTitleType::living_weapon},
     }};
 
 } // namespace LuaEnums
@@ -442,6 +456,7 @@ void LuaEnums::bind(sol::table& core)
     CharaFindLocationTable.bind(Enums);
     ItemFindLocationTable.bind(Enums);
     ControlAllyOperationTable.bind(Enums);
+    RandomTitleTypeTable.bind(Enums);
 }
 
 } // namespace lua

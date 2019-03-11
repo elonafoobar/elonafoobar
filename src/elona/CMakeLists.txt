@@ -124,6 +124,7 @@ set(ELONA_SOURCES
   lua_env/lua_class/lua_class_ability.cpp
   lua_env/lua_class/lua_class_area.cpp
   lua_env/lua_class/lua_class_character.cpp
+  lua_env/lua_class/lua_class_date.cpp
   lua_env/lua_class/lua_class_game_data.cpp
   lua_env/lua_class/lua_class_item.cpp
   lua_env/lua_class/lua_class_map_data.cpp
