@@ -58,6 +58,10 @@ void make_pregnant(Character&);
 
 void eat_rotten_food(Character&);
 
+void vanquish(Character&);
+
+void act_hostile_against(Character&, LuaCharacterHandle);
+
 
 void bind(sol::state&);
 } // namespace LuaCharacter

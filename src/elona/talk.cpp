@@ -19,18 +19,12 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
-#include "dialog/dialog.hpp"
-
-
-
 namespace
 {
 
 bool chatval_show_impress;
 
 }
-
-
 
 namespace elona
 {
@@ -41,14 +35,17 @@ void talk_start()
     gsel(0);
 }
 
-void talk_to_npc()
+bool talk_setup_variables(Character &chara)
 {
     keyhalt = 1;
-    if (cdata[tc].character_role == 1005)
+    if (chara.character_role == 1005)
     {
-        maybe_show_ex_help(7, true);
+        if (Config::instance().extra_help)
+        {
+            maybe_show_ex_help(7, true);
+        }
     }
-    if (cdata[tc].character_role == 7)
+    if (chara.character_role == 7)
     {
         maybe_show_ex_help(8, true);
     }
@@ -61,26 +58,39 @@ void talk_to_npc()
     cs = 0;
     chatflag = 0;
     chatesc = 1;
-    if (cdata[tc].relationship <= -1)
+    if (chara.relationship <= -1)
     {
         if (evnum == 0)
         {
-            txt(i18n::s.get("core.locale.talk.will_not_listen", cdata[tc]));
+            txt(i18n::s.get("core.locale.talk.will_not_listen", chara));
             quest_teleport = false;
             update_screen();
-            return;
+            return false;
         }
     }
-    if (game_data.date.hours() >= cdata[tc].time_interest_revive)
+    if (game_data.date.hours() >= chara.time_interest_revive)
     {
-        cdata[tc].interest = 100;
+        chara.interest = 100;
     }
-    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000) ||
-        cdata[tc].character_role == 2003)
+    if ((chara.character_role >= 1000 && chara.character_role < 2000) ||
+        chara.character_role == 2003)
     {
-        invfile = cdata[tc].shop_store_id;
+        invfile = chara.shop_store_id;
         shop_refresh_on_talk();
     }
+
+    return true;
+}
+
+void talk_to_npc()
+{
+    talk_to_npc(cdata[tc]);
+}
+
+void talk_to_npc(Character &chara)
+{
+    talk_setup_variables(chara);
+
     talk_start();
     if (scenemode == 1)
     {
@@ -89,9 +99,9 @@ void talk_to_npc()
     }
     chatval_unique_chara_id = none;
     chatval_show_impress = true;
-    if (cdata[tc].quality == Quality::special && tc >= 16)
+    if (chara.quality == Quality::special && tc >= 16)
     {
-        chatval_unique_chara_id = cdata[tc].id;
+        chatval_unique_chara_id = chara.id;
         chatval_show_impress = false;
     }
     if (event_id() == 2)
@@ -104,12 +114,12 @@ void talk_to_npc()
         talk_wrapper(TalkResult::talk_finish_escort);
         return;
     }
-    if (cdata[tc].sleep != 0)
+    if (chara.sleep != 0)
     {
         talk_wrapper(TalkResult::talk_sleeping);
         return;
     }
-    if (cdata[tc].continuous_action)
+    if (chara.continuous_action)
     {
         talk_wrapper(TalkResult::talk_busy);
         return;
@@ -119,26 +129,16 @@ void talk_to_npc()
         talk_wrapper(TalkResult::talk_end);
         return;
     }
-    if (cdata[tc].visited_just_now())
+    if (chara.visited_just_now())
     {
-        cdata[tc].visited_just_now() = false;
+        chara.visited_just_now() = false;
         talk_wrapper(TalkResult::talk_house_visitor);
     }
 
     if (chatval_unique_chara_id &&
         game_data.current_map != mdata_t::MapId::show_house && tc >= 16)
     {
-        const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
-
-        if (dialog_id)
-        {
-            dialog_start(*dialog_id);
-        }
-        else
-        {
-            talk_wrapper(TalkResult::talk_unique);
-        }
-
+        talk_wrapper(TalkResult::talk_unique);
         return;
     }
 
@@ -158,7 +158,6 @@ void talk_to_npc()
 TalkResult talk_more()
 {
     listmax = 0;
-    buff = buff;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.locale.ui.more");
@@ -536,9 +535,87 @@ void talk_end()
     }
 }
 
+std::string talk_get_speaker_name(const Character &chara)
+{
+    std::string speaker_name;
 
+    if (scenemode)
+    {
+        return actor(0, rc);
+    }
+    if (cdatan(1, chara.index) == ""s)
+    {
+        speaker_name = cdatan(0, chara.index) + u8" "s;
+    }
+    else
+    {
+        speaker_name = i18n::s.get(
+                           "core.locale.talk.window.of",
+                           cdatan(0, chara.index),
+                           cdatan(1, chara.index)) +
+            " ";
+    }
+    if (chara.sex == 0)
+    {
+        speaker_name += cnven(i18n::s.get("core.locale.ui.sex3.male"));
+    }
+    else
+    {
+        speaker_name += cnven(i18n::s.get("core.locale.ui.sex3.female"));
+    }
+    if (cdatan(1, chara.index) != ""s)
+    {
+        speaker_name +=
+            " " + i18n::s.get("core.locale.talk.window.fame", chara.fame);
+    }
+    if ((chara.character_role >= 1000 && chara.character_role < 2000) ||
+        chara.character_role == 2003)
+    {
+        speaker_name += " " +
+            i18n::s.get("core.locale.talk.window.shop_rank", chara.shop_rank);
+    }
+    if (game_data.reveals_religion)
+    {
+        speaker_name += u8" ("s + god_name(chara.god_id) + u8")"s;
+    }
+
+    return speaker_name;
+}
 
 int talk_window_query()
+{
+    return talk_window_query(cdata[tc]);
+}
+
+int talk_window_query(const Character &chara)
+{
+    const auto speaker_name = talk_get_speaker_name(chara);
+    optional<std::pair<int, int>> impress_interest = none;
+
+    if (chatval_show_impress)
+    {
+        impress_interest = std::make_pair(chara.impression, chara.interest);
+    }
+
+    if (chara.portrait != "" || scenemode)
+    {
+        const auto portrait_id = scenemode ? actor(1, rc) : chara.portrait;
+        return talk_window_query(
+            portrait_id, none, speaker_name, buff, impress_interest);
+    }
+    else
+    {
+        return talk_window_query(
+            none, chara.image, speaker_name, buff, impress_interest);
+    }
+}
+
+int talk_window_query(
+    optional<const std::string &> portrait_id,
+    optional<int> chara_image,
+    const std::string &speaker_name,
+    std::string &text,
+    optional<std::pair<int, int>> impress_interest)
 {
     cs_bk = -1;
     key_list = key_enter;
@@ -551,10 +628,12 @@ int talk_window_query()
     key = "";
     objprm(0, ""s);
     keylog = "";
-    talk_window_init_and_show();
-    while (1)
+    talk_window_init(text);
+
+    while (true)
     {
-        talk_window_show();
+        talk_window_show(
+            portrait_id, chara_image, speaker_name, text, impress_interest);
         font(14 - en * 2);
         cs_listbk();
         for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
@@ -593,18 +672,13 @@ int talk_window_query()
             talk_reset_variables();
             return p(0);
         }
-        if (action == "cancel")
+        if (action == "cancel" && chatesc != -1)
         {
-            if (chatesc == 1)
-            {
-                talk_reset_variables();
-                return -1;
-            }
+            talk_reset_variables();
+            return chatesc;
         }
     }
 }
-
-
 
 void talk_reset_variables()
 {
@@ -613,17 +687,7 @@ void talk_reset_variables()
     listmax = 0;
 }
 
-
-
-void talk_window_init_and_show()
-{
-    talk_window_init();
-    talk_window_show();
-}
-
-
-
-void talk_window_init()
+void talk_window_init(std::string &text)
 {
     if (scenemode == 0)
     {
@@ -631,7 +695,7 @@ void talk_window_init()
         update_screen();
         cs = 0;
     }
-    talk_conv(buff, 56 - en * 3);
+    talk_conv(text, 56 - en * 3);
     wx = (windoww - 600) / 2 + inf_screenx;
     wy = winposy(380);
     ww = 600;
@@ -640,16 +704,18 @@ void talk_window_init()
     draw("ie_chat", wx + 4, wy - 16);
 }
 
-
-
-void talk_window_show()
+void talk_window_show(
+    optional<const std::string &> portrait_id,
+    optional<int> chara_image,
+    const std::string &speaker_name,
+    std::string &text,
+    optional<std::pair<int, int>> impress_interest)
 {
     gmode(2);
     draw("ie_chat", wx, wy - 20);
-    if (cdata[tc].portrait != "" || scenemode)
+    if (portrait_id)
     {
-        const auto id = scenemode ? actor(1, rc) : cdata[tc].portrait;
-        if (const auto rect = draw_get_rect_portrait(id))
+        if (const auto rect = draw_get_rect_portrait(*portrait_id))
         {
             gcopy(
                 rect->buffer,
@@ -661,78 +727,54 @@ void talk_window_show()
                 wy + 42);
         }
     }
-    else
+    else if (chara_image)
     {
-        const auto chara_chip_id = cdata[tc].image % 1000;
+        const auto chara_chip_id = *chara_image % 1000;
         draw_chara(
-            cdata[tc],
+            *chara_image,
             wx + 82,
             wy + 125 - chara_chips[chara_chip_id].offset_y,
             2);
     }
+    else
+    {
+        assert(false);
+    }
+
     font(10 - en * 2);
     display_topic(
         i18n::s.get("core.locale.talk.window.impress"), wx + 28, wy + 170);
     display_topic(
         i18n::s.get("core.locale.talk.window.attract"), wx + 28, wy + 215);
+
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    if (cdatan(1, tc) == ""s)
-    {
-        s = cdatan(0, tc) + u8" "s;
-    }
-    else
-    {
-        s = i18n::s.get(
-                "core.locale.talk.window.of", cdatan(0, tc), cdatan(1, tc)) +
-            " ";
-    }
-    if (cdata[tc].sex == 0)
-    {
-        s += cnven(i18n::s.get("core.locale.ui.sex3.male"));
-    }
-    else
-    {
-        s += cnven(i18n::s.get("core.locale.ui.sex3.female"));
-    }
-    if (cdatan(1, tc) != ""s)
-    {
-        s += " " + i18n::s.get("core.locale.talk.window.fame", cdata[tc].fame);
-    }
-    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000) ||
-        cdata[tc].character_role == 2003)
-    {
-        s += " " +
-            i18n::s.get(
-                "core.locale.talk.window.shop_rank", cdata[tc].shop_rank);
-    }
-    if (game_data.reveals_religion)
-    {
-        s += u8" ("s + god_name(cdata[tc].god_id) + u8")"s;
-    }
-    if (scenemode)
-    {
-        s = actor(0, rc);
-    }
-    mes(wx + 120, wy + 16, s, {20, 10, 5});
+    mes(wx + 120, wy + 16, speaker_name, {20, 10, 5});
+
     font(13 - en * 2);
-    if (chatval_show_impress)
+    if (impress_interest)
     {
-        s = i18n::s.get_enum(
-            u8"core.locale.ui.impression",
-            chara_impression_level(cdata[tc].impression));
-        if (cdata[tc].impression < 150)
+        int impress, interest;
+        std::tie(impress, interest) = *impress_interest;
+
+        std::string impress_enum = i18n::s.get_enum(
+            u8"core.locale.ui.impression", chara_impression_level(impress));
+        std::string impress_text;
+
+        if (impress < 150)
         {
-            s(1) = ""s + cdata[tc].impression;
+            impress_text = ""s + impress;
         }
         else
         {
-            s(1) = u8"???"s;
+            impress_text = u8"???"s;
         }
-        mes(wx + 32, wy + 198, u8"("s + s(1) + u8")"s + s, {20, 10, 5});
-        if (cdata[tc].interest >= 0)
+        mes(wx + 32,
+            wy + 198,
+            u8"("s + impress_text + u8")"s + impress_enum,
+            {20, 10, 5});
+        if (interest >= 0)
         {
-            for (int cnt = 0, cnt_end = (cdata[tc].interest / 5 + 1);
-                 cnt < cnt_end;
+            for (int cnt = 0, cnt_end = (interest / 5 + 1); cnt < cnt_end;
                  ++cnt)
             {
                 draw("interest_icon", wx + 26 + cnt * 4, wy + 245);
@@ -745,7 +787,7 @@ void talk_window_show()
         mes(wx + 60, wy + 245, u8"-"s);
     }
     font(14 - en * 2);
-    notesel(buff);
+    notesel(text);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         p = cnt;
@@ -755,8 +797,6 @@ void talk_window_show()
         mes(x, y, s, {20, 10, 5});
     }
 }
-
-
 
 int talk_guide_quest_client()
 {

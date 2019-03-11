@@ -28,6 +28,7 @@ set(ELONA_SOURCES
   ctrl_file.cpp
   ctrl_inventory.cpp
   debug.cpp
+  dialog.cpp
   dmgheal.cpp
   draw.cpp
   draw_asset.cpp
@@ -129,10 +130,6 @@ set(ELONA_SOURCES
   config/config_def.cpp
   config/set_option.cpp
   config/create_config_screen.cpp
-
-  dialog/dialog.cpp
-  dialog/dialog_data.cpp
-  dialog/dialog_decoder.cpp
 
   keybind/input_context.cpp
   keybind/key_names.cpp

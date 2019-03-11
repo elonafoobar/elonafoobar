@@ -1,4 +1,5 @@
 #include "lua_api_input.hpp"
+#include "../../dialog.hpp"
 #include "../../i18n.hpp"
 #include "../../input.hpp"
 #include "../../input_prompt.hpp"
@@ -165,6 +166,238 @@ sol::optional<int> LuaApiInput::prompt_choice(sol::table choices)
     return rtval + 1;
 }
 
+static void _append_choices(sol::table& choices)
+{
+    int index = 0;
+    std::string response_id;
+    std::string text;
+
+    listmax = 0;
+
+    for (size_t i = 1; i <= choices.size(); i++)
+    {
+        sol::object value = choices[i];
+
+        if (value.is<std::string>())
+        {
+            text = value.as<std::string>();
+        }
+        else
+        {
+            throw sol::error{"Dialog choices must be a table of strings."};
+        }
+
+        ELONA_APPEND_RESPONSE(index, text);
+        index++;
+    }
+
+    if (listmax == 0)
+    {
+        throw sol::error{"No choices were provided."};
+    }
+}
+
+int LuaApiInput::prompt_dialog(
+    const std::string& text,
+    const std::string& portrait_id,
+    const std::string& speaker_name,
+    sol::table choices,
+    sol::optional<int> default_index)
+{
+    // Copy text, as it is used mutably.
+    auto text_ = text;
+
+    _append_choices(choices);
+
+    if (default_index)
+    {
+        chatesc = clamp(*default_index, 0, (int)choices.size() - 1);
+    }
+    else
+    {
+        chatesc = -1;
+    }
+
+    talk_start();
+    auto result =
+        talk_window_query(portrait_id, none, speaker_name, text_, none);
+
+    assert(result != -1);
+
+    return result;
+}
+
+/**
+ * @luadoc prompt_dialog
+ *
+ * Creates a dialog window like the one normally shown when talking to a
+ * character.
+ *
+ * @tparam string message Message to display.
+ * @tparam string portrait_id Portrait ID of the speaker.
+ * @tparam string speaker_name Name of the speaker to display.
+ * @tparam[opt] num default_index Default choice to use if canceled.
+ * @tparam {string,...} choices An array of string choices for the dialog.
+ * @tparam[opt] num impression Impression to display.
+ * @tparam[opt] num interest Interest to display.
+ * @return num index of the selected item, or the default if canceled
+ */
+int LuaApiInput::prompt_dialog_impress(
+    const std::string& text,
+    const std::string& portrait_id,
+    const std::string& speaker_name,
+    sol::table choices,
+    sol::optional<int> default_index,
+    int impression,
+    int interest)
+{
+    // Copy text, as it is used mutably.
+    auto text_ = text;
+
+    auto impress_interest = std::make_pair(impression, interest);
+
+    _append_choices(choices);
+
+    if (default_index)
+    {
+        chatesc = clamp(*default_index, 0, (int)choices.size() - 1);
+    }
+    else
+    {
+        chatesc = -1;
+    }
+
+    talk_start();
+    auto result = talk_window_query(
+        portrait_id, none, speaker_name, text_, impress_interest);
+
+    assert(result != -1);
+
+    return result;
+}
+
+int LuaApiInput::prompt_dialog_with_chip(
+    const std::string& text,
+    int chara_image,
+    const std::string& speaker_name,
+    sol::table choices,
+    sol::optional<int> default_index)
+{
+    // Copy text, as it is used mutably.
+    auto text_ = text;
+
+    _append_choices(choices);
+
+    if (default_index)
+    {
+        chatesc = clamp(*default_index, 0, (int)choices.size() - 1);
+    }
+    else
+    {
+        chatesc = -1;
+    }
+
+    talk_start();
+    auto result =
+        talk_window_query(none, chara_image, speaker_name, text_, none);
+
+    assert(result != -1);
+
+    return result;
+}
+
+/**
+ * @luadoc prompt_dialog
+ *
+ * Creates a dialog window like the one normally shown when talking to a
+ * character.
+ *
+ * @tparam string message Message to display.
+ * @tparam num chara_image Character chip of the speaker.
+ * @tparam string speaker_name Name of the speaker to display.
+ * @tparam[opt] num default_index Default choice to use if canceled.
+ * @tparam {string,...} choices An array of string choices for the dialog.
+ * @tparam[opt] num impression Impression to display.
+ * @tparam[opt] num interest Interest to display.
+ * @return num index of the selected item, or the default if canceled
+ */
+int LuaApiInput::prompt_dialog_with_chip_impress(
+    const std::string& text,
+    int chara_image,
+    const std::string& speaker_name,
+    sol::table choices,
+    sol::optional<int> default_index,
+    int impression,
+    int interest)
+{
+    // Copy text, as it is used mutably.
+    auto text_ = text;
+
+    auto impress_interest = std::make_pair(impression, interest);
+
+    if (default_index)
+    {
+        chatesc = clamp(*default_index, 0, (int)choices.size() - 1);
+    }
+    else
+    {
+        chatesc = -1;
+    }
+
+    talk_start();
+    _append_choices(choices);
+
+    auto result = talk_window_query(
+        none, chara_image, speaker_name, text_, impress_interest);
+
+    assert(result != -1);
+
+    return result;
+}
+
+void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
+{
+    auto& speaker_ref =
+        lua::lua->get_handle_manager().get_ref<Character>(speaker);
+
+    auto data = the_character_db[speaker_ref.id];
+    if (!data->dialog_id)
+    {
+        throw sol::error(
+            "Character has no dialog: "s + speaker_ref.new_id().get());
+    }
+
+    talk_setup_variables(speaker_ref);
+    talk_start();
+
+    dialog_start(speaker_ref, *data->dialog_id);
+
+    talk_end();
+}
+
+/**
+ * @luadoc start_dialog
+ *
+ * Starts a dialog with a character.
+ * @tparam LuaCharacter speaker Character who will speak.
+ * @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
+ * character's definition.
+ */
+void LuaApiInput::start_dialog_with_data(
+    LuaCharacterHandle speaker,
+    const std::string& dialog)
+{
+    auto& speaker_ref =
+        lua::lua->get_handle_manager().get_ref<Character>(speaker);
+
+    talk_setup_variables(speaker_ref);
+    talk_start();
+
+    dialog_start(speaker_ref, dialog);
+
+    talk_end();
+}
+
 void LuaApiInput::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, yes_no);
@@ -175,6 +408,17 @@ void LuaApiInput::bind(sol::table& api_table)
             LuaApiInput::prompt_number,
             LuaApiInput::prompt_number_with_initial));
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, prompt_text);
+    api_table.set_function(
+        "prompt_dialog",
+        sol::overload(
+            LuaApiInput::prompt_dialog,
+            LuaApiInput::prompt_dialog_impress,
+            LuaApiInput::prompt_dialog_with_chip,
+            LuaApiInput::prompt_dialog_with_chip_impress));
+    api_table.set_function(
+        "start_dialog",
+        sol::overload(
+            LuaApiInput::start_dialog, LuaApiInput::start_dialog_with_data));
 }
 
 } // namespace lua

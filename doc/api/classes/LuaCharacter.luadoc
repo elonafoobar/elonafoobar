@@ -135,6 +135,16 @@ function make_pregnant() end
 --  @function eat_rotten_food
 function eat_rotten_food() end
 
+--- Deletes this character and removes it from the map. The character will no
+--  longer be valid for use.
+--  @function vanquish
+function vanquish() end
+
+--- Applies the effects of acting hostile towards a target character.
+--  @tparam LuaCharacter target Target to act hostile towards
+--  @function act_hostile_against
+function act_hostile_against(target) end
+
 --- [R] The index of this character in the global characters array.
 --  @tfield num index
 
@@ -198,7 +208,19 @@ function eat_rotten_food() end
 
 --- [RW] The character's current karma. Only valid if the character is
 --  the player.
---  @tfield karma fame
+--  @tfield num karma
+
+--- [RW] The character's current image.
+--  @tfield string portrait
+
+--- [RW] The character's current portrait.
+--  @tfield string portrait
+
+--- [RW] The character's current impression.
+--  @tfield num impression
+
+--- [RW] The character's current interest.
+--  @tfield num interest
 
 --- [R] The new version prototype ID of the character.
 --  @tfield string new_id
@@ -209,8 +231,14 @@ function eat_rotten_food() end
 --- [R] The name of the character without article and title.
 --  @tfield string basename
 
+--- [R] The title of the character.
+--  @tfield string title
+
 --- [RW] The sex of the character.
 --  @tfield Gender sex
 
 --- [RW] The relationship of the character to the player.
 --  @tfield Relation relationship
+
+--- [RW] The quality of the character.
+--  @tfield Quality quality

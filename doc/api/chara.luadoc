@@ -48,3 +48,10 @@ function create(position, id) end
 --  @tparam string id the character prototype ID
 --  @function kill_count
 function kill_count(id) end
+
+--- Attempts to find a character with the given protoype ID.
+--  @tparam id string Prototype ID to search
+--  @treturn[1] LuaCharacter the found character
+--  @treturn[2] nil
+--  @function find
+function find(id) end

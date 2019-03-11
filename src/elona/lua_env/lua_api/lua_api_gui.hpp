@@ -18,6 +18,8 @@ void txt_txtef(const std::string&, const EnumString&);
 
 void txtnew();
 
+void play_sound(const std::string&);
+
 
 void bind(sol::table&);
 }; // namespace LuaApiGUI

@@ -284,7 +284,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
          item.value = inv.item_base_value({item = item, shopkeeper = shopkeeper})
       end
 
-      Item.stack(-1, item) -- invalidates "item".
+      Item.stack(-1, item, false) -- invalidates "item".
 
       ::continue::
    end

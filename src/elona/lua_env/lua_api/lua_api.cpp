@@ -9,6 +9,7 @@
 #include "lua_api_gui.cpp"
 #include "lua_api_i18n.cpp"
 #include "lua_api_input.cpp"
+#include "lua_api_internal.cpp"
 #include "lua_api_item.cpp"
 #include "lua_api_magic.cpp"
 #include "lua_api_map.cpp"
@@ -41,6 +42,7 @@ void LuaApi::bind(sol::table& core)
     LUA_API_BIND(core, GUI);
     LUA_API_BIND(core, I18N);
     LUA_API_BIND(core, Input);
+    LUA_API_BIND(core, Internal);
     LUA_API_BIND(core, Item);
     LUA_API_BIND(core, Magic);
     LUA_API_BIND(core, Map);

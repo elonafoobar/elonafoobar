@@ -243,7 +243,7 @@ RelationTable = {}
 --  @tfield Enums.CharaFlagTable IsLordOfDungeon
 --  @tfield Enums.CharaFlagTable HasOwnName
 --  @tfield Enums.CharaFlagTable IsPregnant
---  @tfield Enums.CharaFlagTable DoesNotSearchEnemy
+--  @tfield Enums.CharaFlagTable IsNotAttackedByEnemy
 --  @tfield Enums.CharaFlagTable IsContractingWithReaper
 --  @tfield Enums.CharaFlagTable NeedsRefreshingStatus
 --  @tfield Enums.CharaFlagTable VisitedJustNow
