@@ -174,7 +174,7 @@ optional<std::string> InputContext::_check_movement_action(
     {
         // Has to be modified globally, since scroll speed is determined by
         // keybd_wait. See @ref ui_scroll_screen()
-        keybd_wait = 100000;
+        keybd_wait = 100000 + keybd_wait % 100;
         if (keywait == 0)
         {
             keywait = 1;
@@ -287,7 +287,7 @@ std::string InputContext::_delay_movement_action(
     {
         if ((modifiers & snail::ModKey::shift) != snail::ModKey::shift)
         {
-            keybd_wait = 1000;
+            keybd_wait = 1000 + keybd_wait % 100;
         }
     }
 
