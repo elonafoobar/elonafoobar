@@ -1,7 +1,7 @@
 #include "lua_api_data.hpp"
+#include "../../data/types/type_character.hpp"
 #include "../../draw.hpp"
 #include "../data_manager.hpp"
-#include "../../data/types/type_character.hpp"
 
 namespace elona
 {

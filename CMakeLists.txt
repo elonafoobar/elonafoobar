@@ -328,6 +328,7 @@ else()
       "MTd"
       "ZI"
       "Od"
+      "bigobj"
       )
     list(APPEND RELEASE_OPTIONS
       "MT"
