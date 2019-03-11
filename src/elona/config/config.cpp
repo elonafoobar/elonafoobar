@@ -241,33 +241,45 @@ namespace elona
 
 void config_query_language()
 {
-    asset_load("lang");
+    constexpr snail::Color bg_color{160, 145, 128};
+    constexpr snail::Color fg_color{71, 64, 55};
+
     gsel(0);
     gmode(0);
-    p = 0;
+    int cursor = 0;
 
-    while (1)
+    const auto prev_font = Config::instance().font_filename;
+    // Because this Japanese font has more glyph than English one does, it can
+    // display language names more correctly.
+    Config::instance().font_filename =
+        "GenShinGothic/GenShinGothic-Monospace-Regular.ttf";
+    font(16);
+
+    while (true)
     {
-        boxf();
-        draw_region("lang", 160, 170, 0, 0, 340, 100);
-        draw_region("lang", 180, 220 + p * 20, 360, 6, 20, 18);
+        boxf(0, 0, windoww, windowh, bg_color);
+        mes(40, 40, u8"Choose your language and press Enter key.", fg_color);
+        mes(40, 60, u8"言語を選びENTERキーを押してください。", fg_color);
+        mes(50, 90, u8"Japanese (日本語)", fg_color);
+        mes(50, 110, u8"English", fg_color);
+        mes(35, cursor == 0 ? 90 : 110, u8">", fg_color);
         redraw();
         await(30);
         if (getkey(snail::Key::down))
         {
-            p = 1;
+            cursor = 1;
         }
         if (getkey(snail::Key::keypad_2))
         {
-            p = 1;
+            cursor = 1;
         }
         if (getkey(snail::Key::up))
         {
-            p = 0;
+            cursor = 0;
         }
         if (getkey(snail::Key::keypad_8))
         {
-            p = 0;
+            cursor = 0;
         }
         if (getkey(snail::Key::enter))
         {
@@ -284,7 +296,7 @@ void config_query_language()
     }
 
     std::string locale = spec::unknown_enum_variant;
-    if (p == 0)
+    if (cursor == 0)
     {
         locale = "jp";
     }
@@ -293,6 +305,8 @@ void config_query_language()
         locale = "en";
     }
     Config::instance().set(u8"core.language.language", locale);
+
+    Config::instance().font_filename = prev_font;
 }
 
 #define CONFIG_OPTION(confkey, type, getter) \
