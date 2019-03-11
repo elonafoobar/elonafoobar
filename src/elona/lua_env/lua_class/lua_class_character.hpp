@@ -73,6 +73,8 @@ void move_to_xy(Character&, int, int);
 
 void switch_religion(Character&, const std::string&);
 
+int get_ailment(Character&, const EnumString&);
+
 
 void bind(sol::state&);
 } // namespace LuaCharacter

@@ -4,6 +4,8 @@
 namespace elona
 {
 
+class MacroActionQueue;
+
 class InputContext
 {
 public:
@@ -55,6 +57,8 @@ private:
      */
     void _add_actions_from_category(ActionCategory category);
 
+    bool _is_valid_action(const std::string& action_id);
+
     bool _matches(
         const std::string& action_id,
         snail::Key key,
@@ -76,6 +80,9 @@ private:
         KeyWaitDelay delay_type);
 
     bool _delay_normal_action(const Keybind& keybind);
+
+    optional<std::string> _handle_macro_action(
+        MacroActionQueue& macro_action_queue);
 
 
     std::set<std::string> _available_actions;
