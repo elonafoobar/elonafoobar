@@ -4,6 +4,8 @@ local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
+local common = require("data/dialog/common")
+
 return {
    name = "mia",
    root = "core.locale.talk.unique.mia",
@@ -70,10 +72,8 @@ return {
             Item.create(Chara.player().position, "core.gold_piece", 5000)
             Item.create(Chara.player().position, "core.platinum_coin", 3)
 
-            GUI.txt(I18N.get("core.locale.quest.completed"))
-            GUI.play_sound("core.complete1")
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-            GUI.show_journal_update_message()
+            common.quest_completed()
+
             Internal.set_quest_flag("mias_dream", 1000)
 
             local silver_cat = Chara.find("core.silver_cat", "Allies")

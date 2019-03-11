@@ -7,6 +7,8 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 local table = Elona.require("table")
 
+local common = require("data/dialog/common")
+
 local function give_potion()
    local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
    potion.number = potion.number - 1
@@ -49,7 +51,7 @@ return {
 
       last = {
          text = {
-            {"progress.last._0", args = function() return {Chara.player().basename} end},
+            {"progress.last._0", args = common.args_name},
             {"progress.last._1"},
             function()
                Item.create(Chara.player().position, "core.happy_apple", 0)
@@ -57,10 +59,7 @@ return {
                Item.create(Chara.player().position, "core.platinum_coin", 4)
 
                GUI.play_sound("core.complete1")
-               GUI.txt(I18N.get("core.locale.quest.completed"))
-               GUI.play_sound("core.complete1")
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-               GUI.show_journal_update_message()
+               common.quest_completed()
             end,
             {"progress.last._2"},
          },
@@ -99,7 +98,7 @@ return {
 
       end_life = {
          text = {
-            {"progress.end_life.dialog._0", args = function() return {Chara.player().basename} end},
+            {"progress.end_life.dialog._0", args = common.args_name},
             {"progress.end_life.dialog._1"},
          },
          choices = function()
@@ -141,7 +140,7 @@ return {
       },
       late = {
          text = {
-            {"progress.late", args = function() return {Chara.player().basename} end},
+            {"progress.late", args = common.args_name},
          }
       },
       mid = {

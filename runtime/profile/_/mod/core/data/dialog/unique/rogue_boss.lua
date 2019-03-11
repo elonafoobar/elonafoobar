@@ -5,6 +5,8 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 local World = Elona.require("World")
 
+local common = require("data/dialog/common")
+
 local function surrender_cost()
    return Chara.player().gold / 5
 end
@@ -54,13 +56,13 @@ return {
       },
       try_me = {
          text = {
-            {"ambush.try_me", args = function(t) return {t.speaker} end},
+            {"ambush.try_me", args = common.args_speaker},
          },
       },
       surrender = {
          text = {
             surrender,
-            {"ambush.surrender", args = function(t) return {t.speaker} end},
+            {"ambush.surrender", args = common.args_speaker},
          },
          on_finish = function()
             Internal.leave_map()

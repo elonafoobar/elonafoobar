@@ -4,6 +4,8 @@ local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
+local common = require("data/dialog/common")
+
 return {
    name = "lomias",
    root = "core.locale.talk.unique.lomias",
@@ -206,13 +208,14 @@ return {
       end,
       get_out_1 = {
          text = {
-            {"after.get_out.dialog._0", args = function() return {Chara.player().basename} end, speaker = "core.larnneire"},
+            {"after.get_out.dialog._0", args = common.args_name, speaker = "core.larnneire"},
             {"after.get_out.dialog._1", speaker = "core.lomias"},
-            {"after.get_out.dialog._2", args = function() return {Chara.player().title} end},
+            {"after.get_out.dialog._2", args = common.args_title},
          },
          on_finish = function()
             Chara.find("core.larnneire", "Others"):vanquish()
             Chara.find("core.lomias", "Others"):vanquish()
+
             GUI.txt(I18N.get("core.locale.quest.completed"))
             GUI.play_sound("core.complete1")
             GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))

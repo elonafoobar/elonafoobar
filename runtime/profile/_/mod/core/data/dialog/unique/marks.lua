@@ -5,6 +5,8 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 local table = Elona.require("table")
 
+local common = require("data/dialog/common")
+
 return {
    name = "marks",
    root = "core.locale.talk.unique.marks",
@@ -33,7 +35,7 @@ return {
       },
       quest_ask = {
          text = {
-            {"quest.dialog._0", args = function() return {Chara.player().title} end},
+            {"quest.dialog._0", args = common.args_title},
             {"quest.dialog._1"},
          },
          choices = function()

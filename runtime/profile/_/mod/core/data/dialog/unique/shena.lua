@@ -5,6 +5,8 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 local Map = Elona.require("Map")
 
+local common = require("data/dialog/common")
+
 return {
    name = "shena",
    root = "core.locale.talk.unique.shena",
@@ -44,7 +46,7 @@ return {
          },
          on_finish = function()
             Internal.set_quest_flag("thieves_hideout", 1)
-            Map.set_feat(48, 5, 231, 11, 4)
+            common.create_downstairs(48, 5, 4)
          end
       },
       quest_no = {
@@ -67,10 +69,7 @@ return {
                Item.create(Chara.player().position, "core.gold_piece", 1500)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
 
-               GUI.txt(I18N.get("core.locale.quest.completed"))
-               GUI.play_sound("core.complete1")
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-               GUI.show_journal_update_message()
+               common.quest_completed()
             end,
             {"quest.end"},
          },

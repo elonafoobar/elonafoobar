@@ -1,9 +1,9 @@
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
-local Map = Elona.require("Map")
+
+local common = require("data/dialog/common")
 
 return {
    name = "balzak",
@@ -44,7 +44,7 @@ return {
          },
          on_finish = function()
             Internal.set_quest_flag("sewer_sweeping", 1)
-            Map.set_feat(18, 45, 231, 11, 20)
+            common.create_downstairs(18, 45, 20)
          end
       },
       quest_no = {
@@ -66,10 +66,7 @@ return {
                Item.create(Chara.player().position, "core.gold_piece", 15000)
                Item.create(Chara.player().position, "core.platinum_coin", 4)
 
-               GUI.txt(I18N.get("core.locale.quest.completed"))
-               GUI.play_sound("core.complete1")
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-               GUI.show_journal_update_message()
+               common.quest_completed()
             end,
             {"quest.end"},
          },

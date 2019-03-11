@@ -1,8 +1,9 @@
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
+
+local common = require("data/dialog/common")
 
 return {
    name = "miches",
@@ -63,10 +64,7 @@ return {
                Item.create(Chara.player().position, "core.gold_piece", 3000)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
 
-               GUI.txt(I18N.get("core.locale.quest.completed"))
-               GUI.play_sound("core.complete1")
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-               GUI.show_journal_update_message()
+               common.quest_completed()
             end,
             {"quest.end"},
          },

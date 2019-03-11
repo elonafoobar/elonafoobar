@@ -5,6 +5,8 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 local table = Elona.require("table")
 
+local common = require("data/dialog/common")
+
 local function buy_nuke()
    GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
    Chara.player().gold = Chara.player().gold - 12000
@@ -53,10 +55,8 @@ return {
                secret_treasure.param1 = 162
                Item.create(Chara.player().position, "core.platinum_coin", 6)
 
-               GUI.txt(I18N.get("core.locale.quest.completed"))
-               GUI.play_sound("core.complete1")
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-               GUI.show_journal_update_message()
+               common.quest_completed()
+
                Internal.set_quest_flag("red_blossom_in_palmia", 1000)
             end,
             {"quest.end"},

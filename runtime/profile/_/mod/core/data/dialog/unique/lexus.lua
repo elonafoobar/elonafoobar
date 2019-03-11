@@ -6,6 +6,8 @@ local Item = Elona.require("Item")
 local World = Elona.require("World")
 local table = Elona.require("table")
 
+local common = require("data/dialog/common")
+
 local function start_trial()
     World.data.joining_mages_guild = 1
     World.data.mages_guild_quota = 30
@@ -41,10 +43,7 @@ local function receive_reward()
    Item.create(Chara.player().position, "core.gold_piece", 10000 - World.data.ranks[8] + 1000)
    Item.create(Chara.player().position, "core.platinum_coin", Math.clamp(4 - World.data.ranks[8] / 2500, 1, 4))
 
-   GUI.txt(I18N.get("core.locale.quest.completed"))
-   GUI.play_sound("core.complete1")
-   GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-   GUI.show_journal_update_message()
+   common.quest_completed()
 
    World.modify_ranking(8, 500, 8)
 end
