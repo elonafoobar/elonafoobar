@@ -376,7 +376,7 @@ void load_config(const fs::path& hcl_file)
         "core.font.quality", &convert_and_set_requested_font_quality);
 
     std::ifstream ifs{hcl_file.native()};
-    conf.load(ifs, hcl_file.string(), false);
+    conf.load(ifs, filepathutil::to_utf8_path(hcl_file), false);
 
     if (Config::instance().run_wait < 1)
     {
@@ -440,7 +440,7 @@ void initialize_config_preload(const fs::path& hcl_file)
 
     std::ifstream ifs{
         hcl_file.native()};
-    conf.load(ifs, hcl_file.string(), true);
+    conf.load(ifs, filepathutil::to_utf8_path(hcl_file), true);
 
     snail::android::set_navigation_bar_visibility(
         !conf.get<bool>("core.android.hide_navigation"));
