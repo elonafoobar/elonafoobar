@@ -1192,17 +1192,6 @@ data:add_multi(
       atx_background("void", 800, 600),
       atx_background("paper", 400, 300),
       atx_background("book", 736, 448),
-
-      {
-         name = "lang",
-         source = "atx_background",
-         x = 0,
-         y = 0,
-         width = 480,
-         height = 100,
-         file = "__BUILTIN__/graphic/lang.bmp",
-         load_type = "Buffer",
-      },
    }
 )
 
