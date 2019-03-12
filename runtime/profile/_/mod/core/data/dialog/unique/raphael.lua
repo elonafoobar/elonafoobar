@@ -7,7 +7,7 @@ local Item = Elona.require("Item")
 local table = Elona.require("table")
 
 local function give_wife(raphael, wife)
-   if not table.contains(wife.proto.tags, "man") then
+   if not table.contains(wife.prototype.tags, "man") then
       raphael:apply_ailment("Insane", 1000)
       Chara.player():modify_karma(2)
       return true

@@ -259,4 +259,4 @@ function refresh_burden_state() end
 --  @tfield Quality quality
 
 --- [R] The prototype data of the character.
---  @tfield table proto
+--  @tfield table prototype

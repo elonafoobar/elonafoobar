@@ -46,7 +46,7 @@ function change_material(material_id) end
 
 --- [R] The material ID of this item. To change it, use
 --  LuaItem.change_material.
---  @tfield num param4
+--  @tfield string material
 
 --- [R] The new-style prototype ID of the item.
 --  @tfield string id
@@ -67,4 +67,4 @@ function change_material(material_id) end
 --  @tfield IdentifyState identify_state
 
 --- [R] The prototype data of the character.
---  @tfield table proto
+--  @tfield table prototype

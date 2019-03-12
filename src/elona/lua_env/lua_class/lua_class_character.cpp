@@ -694,11 +694,11 @@ void LuaCharacter::bind(sol::state& lua)
         "quality", LUA_API_ENUM_PROPERTY(Character, quality, Quality));
 
     /**
-     * @luadoc proto field table
+     * @luadoc prototype field table
      *
      * [R] The prototype data of the character.
      */
-    LuaCharacter.set("proto", sol::property([](Character& self) {
+    LuaCharacter.set("prototype", sol::property([](Character& self) {
                          auto id = the_character_db.get_id_from_legacy(self.id);
                          return *lua::lua->get_data_manager().get().raw(
                              "core.chara", id->get());

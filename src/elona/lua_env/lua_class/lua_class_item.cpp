@@ -128,7 +128,7 @@ void LuaItem::bind(sol::state& lua)
     LuaItem.set("param4", &Item::param4);
 
     /**
-     * @luadoc param4 field num
+     * @luadoc material field string
      *
      * [R] The material ID of this item. To change it, use
      * LuaItem.change_material.
@@ -193,11 +193,11 @@ void LuaItem::bind(sol::state& lua)
         LUA_API_ENUM_PROPERTY(Item, identification_state, IdentifyState));
 
     /**
-     * @luadoc proto field table
+     * @luadoc prototype field table
      *
      * [R] The prototype data of the character.
      */
-    LuaItem.set("proto", sol::property([](Item& self) {
+    LuaItem.set("prototype", sol::property([](Item& self) {
                     auto id = the_item_db.get_id_from_legacy(self.id);
                     return *lua::lua->get_data_manager().get().raw(
                         "core.item", id->get());
