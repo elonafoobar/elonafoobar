@@ -46,8 +46,8 @@ static bool _proc_autodig()
     if (foobar_data.is_autodig_enabled)
     {
         if (0 <= x && x < map_data.width && 0 <= y && y < map_data.height &&
-            (chipm(7, cell_data.at(x, y).chip_id_actual) & 4) &&
-            chipm(0, cell_data.at(x, y).chip_id_actual) != 3 &&
+            (chip_data.for_cell(x, y).effect & 4) &&
+            chip_data.for_cell(x, y).kind != 3 &&
             map_data.type != mdata_t::MapType::world_map)
         {
             refx = x;

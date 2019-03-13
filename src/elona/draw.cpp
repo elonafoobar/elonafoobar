@@ -708,164 +708,160 @@ void create_pcpic(int cc, bool with_equipments)
 
 void initialize_map_chip()
 {
-    // TODO: this could be called multiple times outside of
-    // initialize_all_chips. Add a method to clear only map chip
-    // buffers from PicLoader so they can be loaded again, or keep
-    // all chips loaded at once.
-    DIM3(chipm, 8, 825);
-    if (map_data.atlas_number == 0)
     {
-        chipm(5, 233) = 0;
-        chipm(6, 233) = 0;
+        auto& chips = chip_data.get_map(0);
+        chips[233].offset_top = 0;
+        chips[233].offset_bottom = 0;
         for (int cnt = 26; cnt < 33; ++cnt)
         {
-            chipm(0, cnt) = 4;
+            chips[cnt].kind = 4;
         }
-        chipm(0, 568) = 4;
-        chipm(0, 569) = 4;
-        chipm(0, 570) = 4;
+        chips[568].kind = 4;
+        chips[569].kind = 4;
+        chips[570].kind = 4;
         for (int cnt = 99; cnt < 132; ++cnt)
         {
-            chipm(0, cnt) = 7;
+            chips[cnt].kind = 7;
         }
         for (int cnt = 165; cnt < 198; ++cnt)
         {
-            chipm(0, cnt) = 8;
+            chips[cnt].kind = 8;
         }
         for (int cnt = 198; cnt < 231; ++cnt)
         {
-            chipm(0, cnt) = 4;
+            chips[cnt].kind = 4;
         }
         for (int cnt = 594; cnt < 599; ++cnt)
         {
-            chipm(0, cnt) = 7;
+            chips[cnt].kind = 7;
         }
         for (int cnt = 599; cnt < 604; ++cnt)
         {
-            chipm(0, cnt) = 8;
+            chips[cnt].kind = 8;
         }
         for (int cnt = 107; cnt < 119; ++cnt)
         {
-            chipm(1, cnt) = 9;
+            chips[cnt].kind2 = 9;
         }
         for (int cnt = 173; cnt < 185; ++cnt)
         {
-            chipm(1, cnt) = 9;
+            chips[cnt].kind2 = 9;
         }
         for (int cnt = 206; cnt < 218; ++cnt)
         {
-            chipm(1, cnt) = 9;
+            chips[cnt].kind2 = 9;
         }
-        chipm(0, 604) = 10;
+        chips[604].kind = 10;
         for (int cnt = 605; cnt < 617; ++cnt)
         {
-            chipm(0, cnt) = 10;
-            chipm(1, cnt) = 9;
+            chips[cnt].kind = 10;
+            chips[cnt].kind2 = 9;
         }
         for (int cnt = 396; cnt < 825; ++cnt)
         {
-            chipm(7, cnt) = 5;
+            chips[cnt].effect = 5;
         }
         for (int cnt = 264; cnt < 297; ++cnt)
         {
-            chipm(7, cnt) = 4;
+            chips[cnt].effect = 4;
         }
-        chipm(5, 135) = 8;
-        chipm(5, 137) = 16;
-        chipm(5, 140) = 6;
-        chipm(5, 145) = 16;
-        chipm(5, 149) = 16;
+        chips[135].offset_top = 8;
+        chips[137].offset_top = 16;
+        chips[140].offset_top = 6;
+        chips[145].offset_top = 16;
+        chips[149].offset_top = 16;
     }
-    if (map_data.atlas_number == 1)
+
     {
+        auto& chips = chip_data.get_map(1);
         for (int cnt = 396; cnt < 825; ++cnt)
         {
-            chipm(7, cnt) = 5;
+            chips[cnt].effect = 5;
         }
-        chipm(5, 233) = 56;
-        chipm(6, 233) = 48;
-        chipm(7, 594) = 4;
-        chipm(7, 628) = 4;
-        chipm(7, 637) = 4;
-        chipm(7, 641) = 4;
-        chipm(7, 733) = 4;
+        chips[233].offset_top = 56;
+        chips[233].offset_bottom = 48;
+        chips[594].effect = 4;
+        chips[628].effect = 4;
+        chips[637].effect = 4;
+        chips[641].effect = 4;
+        chips[733].effect = 4;
         for (int cnt = 45; cnt < 61; ++cnt)
         {
-            chipm(0, cnt) = 4;
+            chips[cnt].kind = 4;
         }
-        chipm(0, 82) = 4;
-        chipm(0, 83) = 4;
-        chipm(0, 84) = 4;
+        chips[82].kind = 4;
+        chips[83].kind = 4;
+        chips[84].kind = 4;
         for (int cnt = 462; cnt < 528; ++cnt)
         {
-            chipm(2, cnt) = 1;
-            chipm(2, cnt - 66) = 1;
+            chips[cnt].wall_kind = 1;
+            chips[cnt - 66].wall_kind = 1;
         }
         for (int cnt = 462; cnt < 495; ++cnt)
         {
-            chipm(2, cnt) = 2;
-            chipm(2, cnt - 66) = 2;
+            chips[cnt].wall_kind = 2;
+            chips[cnt - 66].wall_kind = 2;
         }
-        chipm(0, 29) = 1;
-        chipm(0, 30) = 2;
-        chipm(0, 31) = 2;
-        chipm(0, 464) = 6;
-        chipm(3, 550) = 2;
-        chipm(2, 550) = 1;
-        chipm(0, 165) = 3;
-        chipm(3, 165) = 3;
-        chipm(0, 168) = 3;
-        chipm(3, 168) = 3;
-        chipm(0, 171) = 3;
-        chipm(1, 171) = 5;
-        chipm(3, 171) = 3;
-        chipm(0, 594) = 3;
-        chipm(3, 594) = 3;
+        chips[29].kind = 1;
+        chips[30].kind = 2;
+        chips[31].kind = 2;
+        chips[464].kind = 6;
+        chips[550].anime_frame = 2;
+        chips[550].wall_kind = 1;
+        chips[165].kind = 3;
+        chips[165].anime_frame = 3;
+        chips[168].kind = 3;
+        chips[168].anime_frame = 3;
+        chips[171].kind = 3;
+        chips[171].kind2 = 5;
+        chips[171].anime_frame = 3;
+        chips[594].kind = 3;
+        chips[594].anime_frame = 3;
     }
-    if (map_data.atlas_number == 2)
     {
+        auto& chips = chip_data.get_map(2);
         for (int cnt = 0; cnt < 11; ++cnt)
         {
             int cnt2 = cnt;
             for (int cnt = 0; cnt < 13; ++cnt)
             {
-                chipm(0, cnt2 * 33 + cnt + 20) = 4;
+                chips[cnt2 * 33 + cnt + 20].kind = 4;
             }
         }
         for (int cnt = 33; cnt < 66; ++cnt)
         {
-            chipm(0, cnt) = 4;
+            chips[cnt].kind = 4;
         }
         for (int cnt = 396; cnt < 825; ++cnt)
         {
-            chipm(7, cnt) = 5;
+            chips[cnt].effect = 5;
         }
-        chipm(5, 233) = 56;
-        chipm(6, 233) = 48;
-        chipm(7, 594) = 4;
+        chips[233].offset_top = 56;
+        chips[233].offset_bottom = 48;
+        chips[594].effect = 4;
         for (int cnt = 462; cnt < 528; ++cnt)
         {
-            chipm(2, cnt) = 1;
-            chipm(2, cnt - 66) = 1;
+            chips[cnt].wall_kind = 1;
+            chips[cnt - 66].wall_kind = 1;
         }
         for (int cnt = 462; cnt < 495; ++cnt)
         {
-            chipm(2, cnt) = 2;
-            chipm(2, cnt - 66) = 2;
+            chips[cnt].wall_kind = 2;
+            chips[cnt - 66].wall_kind = 2;
         }
-        chipm(3, 550) = 2;
-        chipm(2, 550) = 1;
-        chipm(0, 165) = 3;
-        chipm(3, 165) = 3;
-        chipm(0, 168) = 3;
-        chipm(3, 168) = 3;
-        chipm(0, 171) = 3;
-        chipm(1, 171) = 5;
-        chipm(3, 171) = 3;
-        chipm(0, 594) = 3;
-        chipm(3, 594) = 3;
-        chipm(2, 476) = 0;
-        chipm(2, 509) = 0;
+        chips[550].anime_frame = 2;
+        chips[550].wall_kind = 1;
+        chips[165].kind = 3;
+        chips[165].anime_frame = 3;
+        chips[168].kind = 3;
+        chips[168].anime_frame = 3;
+        chips[171].kind = 3;
+        chips[171].kind2 = 5;
+        chips[171].anime_frame = 3;
+        chips[594].kind = 3;
+        chips[594].anime_frame = 3;
+        chips[476].wall_kind = 0;
+        chips[509].wall_kind = 0;
     }
 }
 
@@ -879,7 +875,7 @@ void initialize_item_chips(const ItemChipDB& db)
         SharedId key = chip_data.chip.key;
         int legacy_id = chip_data.id;
 
-        // Insert chip data into global vector.
+        // insert chip data into global vector.
         if (static_cast<int>(item_chips.size()) < legacy_id)
         {
             item_chips.resize(legacy_id + 1);
@@ -888,12 +884,12 @@ void initialize_item_chips(const ItemChipDB& db)
 
         if (chip_data.filepath)
         {
-            // Chip is from an external file.
+            // chip is from an external file.
             loader.load(*chip_data.filepath, key, PicLoader::PageType::item);
         }
         else
         {
-            // Chip is located in item.bmp.
+            // chip is located in item.bmp.
             predefined_extents[key] = chip_data.rect;
         }
     }

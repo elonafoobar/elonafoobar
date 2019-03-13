@@ -819,7 +819,7 @@ void proc_event()
                     if (dist(tlocx, tlocy, dx, dy) > range_)
                         continue;
                     f = 0;
-                    if (chipm(7, cell_data.at(dx, dy).chip_id_actual) & 4)
+                    if (chip_data.for_cell(dx, dy).effect & 4)
                     {
                         f = 1;
                     }

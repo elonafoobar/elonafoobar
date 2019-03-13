@@ -79,19 +79,19 @@ void prepare_house_board_tiles()
         {
             continue;
         }
-        if (chipm(0, cnt) == 2)
+        if (chip_data[cnt].kind == 2)
         {
             continue;
         }
-        if (chipm(0, cnt) == 1)
+        if (chip_data[cnt].kind == 1)
         {
             continue;
         }
-        if (chipm(1, cnt) == 5)
+        if (chip_data[cnt].kind2 == 5)
         {
             continue;
         }
-        if (chipm(0, cnt) == 3)
+        if (chip_data[cnt].kind == 3)
         {
             if (game_data.home_scale <= 3)
             {
@@ -109,9 +109,9 @@ void prepare_house_board_tiles()
         }
         list(0, p) = cnt;
         ++p;
-        if (chipm(3, cnt) != 0)
+        if (chip_data[cnt].anime_frame != 0)
         {
-            cnt = cnt + chipm(3, cnt) - 1;
+            cnt = cnt + chip_data[cnt].anime_frame - 1;
             continue;
         }
     }
@@ -632,7 +632,8 @@ void fill_tile(int x, int y, int from, int to)
     if (cell_data.at(x, y).chip_id_actual != from)
         return;
 
-    if ((chipm(7, to) & 4) != 0 && cell_data.at(x, y).chara_index_plus_one != 0)
+    if ((chip_data[to].effect & 4) != 0 &&
+        cell_data.at(x, y).chara_index_plus_one != 0)
         return;
 
     // Draw one tile.
@@ -681,7 +682,7 @@ void start_home_map_mode()
                     tile);
             }
         }
-        else if (chipm(7, tile) & 4)
+        else if (chip_data[tile].effect & 4)
         {
             efid = 438;
             magic();
@@ -834,7 +835,7 @@ void prompt_move_ally()
                 continue;
             }
         }
-        if (chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4 ||
+        if (chip_data.for_cell(tlocx, tlocy).effect & 4 ||
             cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
             txt(i18n::s.get("core.locale.building.home.move.invalid"));

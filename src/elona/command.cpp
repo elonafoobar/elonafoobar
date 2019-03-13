@@ -367,8 +367,8 @@ TurnResult do_dig_command()
             return TurnResult::turn_end;
         }
     }
-    if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0 ||
-        chipm(0, cell_data.at(x, y).chip_id_actual) == 3 ||
+    if ((chip_data.for_cell(x, y).effect & 4) == 0 ||
+        chip_data.for_cell(x, y).kind == 3 ||
         map_data.type == mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
@@ -632,8 +632,7 @@ TurnResult do_throw_command()
                 {
                     if (y < map_data.height)
                     {
-                        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) ==
-                            0)
+                        if ((chip_data.for_cell(x, y).effect & 4) == 0)
                         {
                             tlocx = x;
                             tlocy = y;
@@ -833,7 +832,7 @@ TurnResult do_throw_command()
             }
             if (inv[ci].id == 587)
             {
-                if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 4)
+                if (chip_data.for_cell(tlocx, tlocy).kind == 4)
                 {
                     return TurnResult::turn_end;
                 }
@@ -3467,12 +3466,10 @@ TurnResult do_get_command()
             }
             create_harvested_item();
             harvest_plant(
-                chipm(
-                    0,
-                    cell_data
-                        .at(cdata.player().position.x,
-                            cdata.player().position.y)
-                        .chip_id_actual) == 2
+                chip_data.for_cell(
+                             cdata.player().position.x,
+                             cdata.player().position.y)
+                            .kind == 2
                     ? 1
                     : 0);
             if (feat(2) == 40)
@@ -3508,11 +3505,10 @@ TurnResult do_get_command()
     if (number == 0)
     {
         if ((map_is_town_or_guild()) &&
-            chipm(
-                0,
-                cell_data
-                    .at(cdata.player().position.x, cdata.player().position.y)
-                    .chip_id_actual) == 4)
+            chip_data
+                    .for_cell(
+                        cdata.player().position.x, cdata.player().position.y)
+                    .kind == 4)
         {
             snd("core.foot2a");
             txt(i18n::s.get("core.locale.action.get.snow"));

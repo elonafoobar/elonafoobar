@@ -64,11 +64,11 @@ int fov_los(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).chip_id_actual) & 1)
+                if (chip_data.for_cell(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).feats % 1000) & 1)
+                if (chip_data.for_feat(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
@@ -84,11 +84,11 @@ int fov_los(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).chip_id_actual) & 1)
+                if (chip_data.for_cell(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).feats % 1000) & 1)
+                if (chip_data.for_feat(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
@@ -108,11 +108,11 @@ int fov_los(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).chip_id_actual) & 1)
+                if (chip_data.for_cell(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).feats % 1000) & 1)
+                if (chip_data.for_feat(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
@@ -128,11 +128,11 @@ int fov_los(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).chip_id_actual) & 1)
+                if (chip_data.for_cell(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).feats % 1000) & 1)
+                if (chip_data.for_feat(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
@@ -161,13 +161,10 @@ int fov_los(int x1, int y1, int x2, int y2)
     {
         if (ay_at_modfov == 2)
         {
-            if ((chipm(7, cell_data.at(x1, y1 + sy_at_modfov).chip_id_actual) &
-                 1) == 0)
+            if ((chip_data.for_cell(x1, y1 + sy_at_modfov).effect & 1) == 0)
             {
-                if ((chipm(
-                         7,
-                         cell_data.at(x1, (y1 + sy_at_modfov)).feats % 1000) &
-                     1) == 0)
+                if ((chip_data.for_feat(x1, (y1 + sy_at_modfov)).effect & 1) ==
+                    0)
                 {
                     return 1;
                 }
@@ -178,13 +175,10 @@ int fov_los(int x1, int y1, int x2, int y2)
     {
         if (ax_at_modfov == 2)
         {
-            if ((chipm(7, cell_data.at(x1 + sx_at_modfov, y1).chip_id_actual) &
-                 1) == 0)
+            if ((chip_data.for_cell(x1 + sx_at_modfov, y1).effect & 1) == 0)
             {
-                if ((chipm(
-                         7,
-                         cell_data.at((x1 + sx_at_modfov), y1).feats % 1000) &
-                     1) == 0)
+                if ((chip_data.for_feat((x1 + sx_at_modfov), y1).effect & 1) ==
+                    0)
                 {
                     return 1;
                 }
@@ -213,16 +207,11 @@ int fov_los(int x1, int y1, int x2, int y2)
             {
                 break;
             }
-            if (chipm(
-                    7,
-                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
-                1)
+            if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
-            if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                1)
+            if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
@@ -234,18 +223,11 @@ int fov_los(int x1, int y1, int x2, int y2)
             else if (qy_at_modfov > f2_at_modfov)
             {
                 ty_at_modfov += sy_at_modfov;
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov)
-                            .chip_id_actual) &
-                    1)
+                if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                    1)
+                if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
@@ -280,16 +262,11 @@ int fov_los(int x1, int y1, int x2, int y2)
             {
                 break;
             }
-            if (chipm(
-                    7,
-                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
-                1)
+            if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
-            if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                1)
+            if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
@@ -301,18 +278,11 @@ int fov_los(int x1, int y1, int x2, int y2)
             else if (qx_at_modfov > f2_at_modfov)
             {
                 tx_at_modfov += sx_at_modfov;
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov)
-                            .chip_id_actual) &
-                    1)
+                if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                    1)
+                if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
@@ -365,11 +335,11 @@ int get_route(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).chip_id_actual) & 1)
+                if (chip_data.for_cell(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).feats % 1000) & 1)
+                if (chip_data.for_feat(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
@@ -391,11 +361,11 @@ int get_route(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).chip_id_actual) & 1)
+                if (chip_data.for_cell(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(x1, ty_at_modfov).feats % 1000) & 1)
+                if (chip_data.for_feat(x1, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
@@ -422,11 +392,11 @@ int get_route(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).chip_id_actual) & 1)
+                if (chip_data.for_cell(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).feats % 1000) & 1)
+                if (chip_data.for_feat(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
@@ -448,11 +418,11 @@ int get_route(int x1, int y1, int x2, int y2)
                 {
                     break;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).chip_id_actual) & 1)
+                if (chip_data.for_cell(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, cell_data.at(tx_at_modfov, y1).feats % 1000) & 1)
+                if (chip_data.for_feat(tx_at_modfov, y1).effect & 1)
                 {
                     return 0;
                 }
@@ -485,13 +455,10 @@ int get_route(int x1, int y1, int x2, int y2)
     {
         if (ay_at_modfov == 2)
         {
-            if ((chipm(7, cell_data.at(x1, y1 + sy_at_modfov).chip_id_actual) &
-                 1) == 0)
+            if ((chip_data.for_cell(x1, y1 + sy_at_modfov).effect & 1) == 0)
             {
-                if ((chipm(
-                         7,
-                         cell_data.at(x1, (y1 + sy_at_modfov)).feats % 1000) &
-                     1) == 0)
+                if ((chip_data.for_feat(x1, (y1 + sy_at_modfov)).effect & 1) ==
+                    0)
                 {
                     p_at_modfov = 0;
                     route(0, p_at_modfov) = 2;
@@ -513,13 +480,10 @@ int get_route(int x1, int y1, int x2, int y2)
     {
         if (ax_at_modfov == 2)
         {
-            if ((chipm(7, cell_data.at(x1 + sx_at_modfov, y1).chip_id_actual) &
-                 1) == 0)
+            if ((chip_data.for_cell(x1 + sx_at_modfov, y1).effect & 1) == 0)
             {
-                if ((chipm(
-                         7,
-                         cell_data.at((x1 + sx_at_modfov), y1).feats % 1000) &
-                     1) == 0)
+                if ((chip_data.for_feat((x1 + sx_at_modfov), y1).effect & 1) ==
+                    0)
                 {
                     route(0, p_at_modfov) = 1;
                     route(1, p_at_modfov) = sx_at_modfov;
@@ -564,16 +528,11 @@ int get_route(int x1, int y1, int x2, int y2)
             {
                 break;
             }
-            if (chipm(
-                    7,
-                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
-                1)
+            if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
-            if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                1)
+            if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
@@ -591,18 +550,11 @@ int get_route(int x1, int y1, int x2, int y2)
                 route(0, p_at_modfov) = 2;
                 route(1, p_at_modfov) = sy_at_modfov;
                 ++p_at_modfov;
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov)
-                            .chip_id_actual) &
-                    1)
+                if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                    1)
+                if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
@@ -652,16 +604,11 @@ int get_route(int x1, int y1, int x2, int y2)
             {
                 break;
             }
-            if (chipm(
-                    7,
-                    cell_data.at(tx_at_modfov, ty_at_modfov).chip_id_actual) &
-                1)
+            if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
-            if (chipm(
-                    7, cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                1)
+            if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
             {
                 return 0;
             }
@@ -679,18 +626,11 @@ int get_route(int x1, int y1, int x2, int y2)
                 route(0, p_at_modfov) = 1;
                 route(1, p_at_modfov) = sx_at_modfov;
                 ++p_at_modfov;
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov)
-                            .chip_id_actual) &
-                    1)
+                if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }
-                if (chipm(
-                        7,
-                        cell_data.at(tx_at_modfov, ty_at_modfov).feats % 1000) &
-                    1)
+                if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
                 {
                     return 0;
                 }

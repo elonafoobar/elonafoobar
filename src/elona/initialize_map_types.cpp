@@ -2282,7 +2282,7 @@ static void _init_map_fields()
     {
         _init_map_fields_desert();
     }
-    if (chipm(0, game_data.stood_world_map_tile) == 4)
+    if (chip_data[game_data.stood_world_map_tile].kind == 4)
     {
         _init_map_fields_snow_field();
     }

@@ -96,7 +96,7 @@ bool _magic_1136()
                 {
                     p = cell_data.at(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt)
                             .chip_id_actual;
-                    if ((264 <= p && p < 363) || chipm(7, p) & 4)
+                    if ((264 <= p && p < 363) || chip_data[p].effect & 4)
                     {
                         f = 0;
                         break;
@@ -655,7 +655,7 @@ bool _magic_185()
         {
             continue;
         }
-        if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
+        if (chip_data.for_cell(x, y).kind == 3)
         {
             f = 1;
             break;
@@ -671,7 +671,7 @@ bool _magic_185()
             {
                 continue;
             }
-            if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
+            if (chip_data.for_cell(x, y).kind == 3)
             {
                 f = 1;
                 break;
@@ -685,10 +685,8 @@ bool _magic_185()
         update_screen();
         return false;
     }
-    if (chipm(
-            0,
-            cell_data.at(cdata.player().position.x, cdata.player().position.y)
-                .chip_id_actual) == 3)
+    if (chip_data.for_cell(cdata.player().position.x, cdata.player().position.y)
+            .kind == 3)
     {
         txt(i18n::s.get("core.locale.magic.fish.cannot_during_swim"));
         update_screen();
@@ -2303,7 +2301,7 @@ bool _magic_436_437_455_634_456()
         {
             f = 0;
         }
-        else if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+        else if (chip_data.for_cell(x, y).effect & 4)
         {
             f = 0;
         }
@@ -2959,7 +2957,7 @@ bool _magic_457_438()
     }
     else
     {
-        if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+        if (chip_data.for_cell(x, y).effect & 4)
         {
             if (homemapmode == 0)
             {
@@ -2967,7 +2965,7 @@ bool _magic_457_438()
                 {
                     f = 0;
                 }
-                else if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
+                else if (chip_data.for_cell(x, y).kind == 3)
                 {
                     f = 0;
                 }
@@ -3002,14 +3000,14 @@ bool _magic_457_438()
         if (efid == 457)
         {
             snd("core.offer1");
-            if (chipm(0, cell_data.at(x, y).chip_id_actual) == 6)
+            if (chip_data.for_cell(x, y).kind == 6)
             {
                 txt(i18n::s.get("core.locale.magic.create.door.resist"));
                 return true;
             }
             txt(i18n::s.get("core.locale.magic.create.door.apply"));
             cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
-            if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+            if (chip_data.for_cell(x, y).effect & 4)
             {
                 cell_data.at(x, y).chip_id_actual = tile_tunnel;
             }

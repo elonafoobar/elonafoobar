@@ -300,7 +300,6 @@ ELONA_EXTERN(elona_vector2<int> adata);
 ELONA_EXTERN(elona_vector2<int> breathlist);
 ELONA_EXTERN(elona_vector2<int> c_col);
 ELONA_EXTERN(elona_vector2<int> card);
-ELONA_EXTERN(elona_vector2<int> chipm);
 ELONA_EXTERN(elona_vector2<int> cmapdata);
 ELONA_EXTERN(elona_vector2<int> cycle);
 ELONA_EXTERN(elona_vector2<int> dblist);

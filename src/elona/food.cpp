@@ -51,9 +51,7 @@ void _food_gets_rotten(int chara_idx, int food_idx)
 
     // Is it corpse(s) on a dryrock?
     if (chara_idx == -1 && food.id == 204 &&
-        chipm(
-            0, cell_data.at(food.position.x, food.position.y).chip_id_actual) ==
-            1)
+        chip_data.for_cell(food.position.x, food.position.y).kind == 1)
     {
         if (game_data.weather != 0)
         {

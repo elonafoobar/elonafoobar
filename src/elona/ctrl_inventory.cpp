@@ -1965,7 +1965,7 @@ label_2061_internal:
                 result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
-            if (chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4)
+            if (chip_data.for_cell(tlocx, tlocy).effect & 4)
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.throw.location_is_blocked"));

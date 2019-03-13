@@ -108,7 +108,7 @@ void select_house_board_tile()
                         y * 24,
                         24,
                         24);
-                    if (chipm(7, list(0, p)) & 4)
+                    if (chip_data[list(0, p)].effect & 4)
                     {
                         boxl(x * 24, y * 24, 24, 24, {240, 230, 220});
                     }
@@ -1014,14 +1014,14 @@ int route_info(int& x, int& y, int n)
         {
             return 0;
         }
-        if (chipm(7, cell_data.at(x, y).chip_id_actual) & 1)
+        if (chip_data.for_cell(x, y).effect & 1)
         {
             return 0;
         }
         if (cell_data.at(x, y).feats != 0)
         {
             cell_featread(x, y);
-            if (chipm(7, feat) & 1)
+            if (chip_data[feat].effect & 1)
             {
                 return 0;
             }
@@ -1087,7 +1087,7 @@ int breath_list()
                 {
                     continue;
                 }
-                if (chipm(7, cell_data.at(tx, ty).chip_id_actual) & 1)
+                if (chip_data.for_cell(tx, ty).effect & 1)
                 {
                     continue;
                 }
@@ -1741,7 +1741,7 @@ void spillblood(int x, int y, int range)
         {
             continue;
         }
-        if (chipm(2, cell_data.at(dx_at_m136, dy_at_m136).chip_id_actual))
+        if (chip_data.for_cell(dx_at_m136, dy_at_m136).wall_kind)
         {
             continue;
         }
@@ -1773,7 +1773,7 @@ void spillfrag(int x, int y, int range)
         {
             continue;
         }
-        if (chipm(2, cell_data.at(dx_at_m136, dy_at_m136).chip_id_actual))
+        if (chip_data.for_cell(dx_at_m136, dy_at_m136).wall_kind)
         {
             continue;
         }
@@ -4737,11 +4737,10 @@ void map_global_place_entrances()
             area_data[cnt].position.y = map_data.height / 2;
         }
         p = cnt;
-        if (chipm(
-                7,
-                cell_data
-                    .at(area_data[cnt].position.x, area_data[cnt].position.y)
-                    .chip_id_actual) &
+        if (chip_data
+                    .for_cell(
+                        area_data[cnt].position.x, area_data[cnt].position.y)
+                    .effect &
                 4 ||
             cell_data.at(area_data[cnt].position.x, area_data[cnt].position.y)
                     .feats != 0)
@@ -4762,7 +4761,7 @@ void map_global_place_entrances()
                 {
                     continue;
                 }
-                if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+                if (chip_data.for_cell(x, y).effect & 4)
                 {
                     continue;
                 }
@@ -5577,8 +5576,8 @@ int target_position()
             }
             if (input == StickKey::mouse_right)
             {
-                if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 2 ||
-                    chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 1)
+                if (chip_data.for_cell(tlocx, tlocy).kind == 2 ||
+                    chip_data.for_cell(tlocx, tlocy).kind == 1)
                 {
                     snd("core.fail1");
                     wait_key_released();
@@ -5687,8 +5686,7 @@ int target_position()
         {
             if (findlocmode == 1)
             {
-                if (cansee == 0 ||
-                    chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4)
+                if (cansee == 0 || chip_data.for_cell(tlocx, tlocy).effect & 4)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.which_direction.cannot_see"));
@@ -7411,10 +7409,8 @@ void map_global_proc_travel_events()
                 cdata[cc].continuous_action.turn * 16 / 10;
         }
         if (game_data.weather == 2 ||
-            chipm(
-                0,
-                cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                    .chip_id_actual) == 4)
+            chip_data.for_cell(cdata[cc].position.x, cdata[cc].position.y)
+                    .kind == 4)
         {
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 22 / 10;
@@ -7455,10 +7451,8 @@ void map_global_proc_travel_events()
         }
     }
     if (game_data.weather == 2 ||
-        chipm(
-            0,
-            cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                .chip_id_actual) == 4)
+        chip_data.for_cell(cdata[cc].position.x, cdata[cc].position.y).kind ==
+            4)
     {
         if (game_data.protects_from_bad_weather == 0)
         {
@@ -9201,7 +9195,7 @@ TurnResult do_bash()
             }
             if (y + 1 < map_data.height)
             {
-                if ((chipm(7, cell_data.at(x, y + 1).chip_id_actual) & 4) == 0)
+                if ((chip_data.for_cell(x, y + 1).effect & 4) == 0)
                 {
                     ++y;
                 }
@@ -9455,9 +9449,9 @@ TurnResult proc_movement_event()
     }
     proc_trap();
     p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y).chip_id_actual;
-    if (chipm(0, p) == 3)
+    if (chip_data[p].kind == 3)
     {
-        if (chipm(1, p) == 5)
+        if (chip_data[p].kind2 == 5)
         {
             heal_insanity(cdata[cc], 1);
         }
@@ -9804,7 +9798,7 @@ void sense_map_feats_on_move()
                 txt(i18n::s.get("core.locale.action.move.sense_something"));
             }
         }
-        p = chipm(0, cell_data.at(x, y).chip_id_actual);
+        p = chip_data.for_cell(x, y).kind;
         if (p != 0)
         {
             if (tname(p) != ""s)
@@ -11500,10 +11494,8 @@ TurnResult do_plant()
         return TurnResult::pc_turn_user_error;
     }
     int val0;
-    if (chipm(
-            0,
-            cell_data.at(cdata.player().position.x, cdata.player().position.y)
-                .chip_id_actual) == 2)
+    if (chip_data.for_cell(cdata.player().position.x, cdata.player().position.y)
+            .kind == 2)
     {
         val0 = 1;
     }

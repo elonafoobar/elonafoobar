@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 
@@ -9,6 +10,9 @@ namespace elona
 
 template <typename T>
 struct elona_vector1;
+
+template <typename T>
+struct elona_vector2;
 
 template <typename T>
 struct elona_vector3;
@@ -55,6 +59,8 @@ struct MapData
 
     void clear();
 };
+
+extern MapData map_data;
 
 
 struct Cell
@@ -211,9 +217,100 @@ private:
     Grid<Cell> cells;
 };
 
-
 extern CellData cell_data;
-extern MapData map_data;
+
+
+enum class ChipKind : int
+{
+    none = 0,
+    rock = 1,
+    farm = 2,
+    water = 3,
+    snow = 4,
+    onsen = 5,
+    jail_wall = 6,
+    sand = 7,
+    field = 8,
+    boundary = 9,
+    shallows = 10
+};
+
+enum class ChipWallKind : int
+{
+    none = 0,
+    lower = 1,
+    inner = 2,
+};
+
+enum class ChipEffect : int
+{
+    none = 0,
+    obstructs_ranged = 1,
+    blocked_transparent = 4,
+    blocked = 5,
+};
+
+struct Chip
+{
+    int kind{};
+    int kind2{};
+    int wall_kind{};
+    int anime_frame{};
+    int unused{};
+    int offset_top{};
+    int offset_bottom{};
+    int effect{};
+};
+
+struct ChipData
+{
+    using MapType = std::unordered_map<int, Chip>;
+    static constexpr size_t chip_size = 825;
+    static constexpr int atlas_count = 3;
+
+    ChipData()
+    {
+        for (int i = 0; i < atlas_count; i++)
+        {
+            MapType map = {};
+            for (int j = 0; j < chip_size; j++)
+            {
+                map[j] = Chip{};
+            }
+            chips[i] = map;
+        }
+    }
+
+    MapType& get_map(int i)
+    {
+        return chips.at(i);
+    }
+
+    MapType& current()
+    {
+        return get_map(map_data.atlas_number);
+    }
+
+    Chip& operator[](int i)
+    {
+        return current().at(i);
+    }
+
+    Chip& for_cell(int x, int y)
+    {
+        return current().at(cell_data.at(x, y).chip_id_actual);
+    }
+
+    Chip& for_feat(int x, int y)
+    {
+        return current().at(cell_data.at(x, y).feats % 1000);
+    }
+
+private:
+    std::unordered_map<int, MapType> chips;
+};
+
+extern ChipData chip_data;
 
 
 void map_get_trainer_skills();
