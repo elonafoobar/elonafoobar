@@ -216,7 +216,7 @@ return {
             GUI.txt(I18N.get("core.locale.quest.completed"))
             GUI.play_sound("core.complete1")
             GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-            for i=0,3 do
+            for i=0,2 do
                Item.create(Chara.player().position, {flttypemajor = 60000})
             end
          end
@@ -265,7 +265,7 @@ return {
          },
          on_finish = function()
             GUI.txt(I18N.get("core.locale.talk.unique.lomias.tutorial.equip.done.lomias_releases"), "Cyan")
-            for i=0,3 do
+            for i=0,2 do
                local putit = Chara.create(Chara.player().position, "core.putit")
                putit:set_flag("IsNotAttackedByEnemy", true)
             end

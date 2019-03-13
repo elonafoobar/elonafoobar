@@ -26,7 +26,7 @@ return {
             {"dialog._2"},
          },
          on_finish = function(t)
-            for i=0,4 do
+            for i=0,3 do
                Item.create(
                   Chara.player().position,
                   {

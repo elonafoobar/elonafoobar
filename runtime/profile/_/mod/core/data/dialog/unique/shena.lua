@@ -60,8 +60,10 @@ return {
       quest_finish = {
          text = {
             function()
-               Item.create(Chara.player().position, "core.rod_of_identify", 0)
-               Item.create(Chara.player().position, "core.monster_ball", 0)
+               local rod_of_identify = Item.create(Chara.player().position, "core.rod_of_identify", 0)
+               rod_of_identify.count = 12
+               local monster_ball = Item.create(Chara.player().position, {id = "core.monster_ball", nostack = true})
+               monster_ball.param2 = 5
                Item.create(Chara.player().position, "core.gold_piece", 1500)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
 
