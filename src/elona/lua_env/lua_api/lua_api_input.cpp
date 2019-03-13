@@ -418,7 +418,7 @@ sol::optional<LuaCharacterHandle> LuaApiInput::choose_ally(
         return sol::nullopt;
     }
 
-    return lua::handle(cdata[rc]);
+    return lua::handle(cdata[stat]);
 }
 
 void LuaApiInput::bind(sol::table& api_table)

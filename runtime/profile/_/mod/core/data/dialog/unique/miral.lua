@@ -26,7 +26,7 @@ local function upgrade_cargo_limit()
    GUI.play_sound("core.build1");
 
    small_medals.number = small_medals.number - cost
-   World.data.current_cart_limit = World.data.current_cart_limit + 1
+   World.data.current_cart_limit = World.data.current_cart_limit + amount
    Chara.player():refresh_burden_state()
 end
 

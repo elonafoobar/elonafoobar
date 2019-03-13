@@ -64,9 +64,6 @@ return {
             end,
             {"progress.last._2"},
          },
-         choices = {
-            {"__END__", "__MORE__"}
-         },
          on_finish = function(t)
             Internal.set_quest_flag("pael_and_her_mom", 1000)
             t.speaker:set_flag("IsSilent", true)
@@ -156,9 +153,6 @@ return {
          text = {
             {"progress.early"},
          },
-         choices = {
-            {"__END__", "__MORE__"},
-         }
       },
    }
 }

@@ -43,7 +43,6 @@ return {
       },
       quest_no = {
          text = {
-            GUI.show_journal_update_message,
             {"quest.no"},
          },
       },
