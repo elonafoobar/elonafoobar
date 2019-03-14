@@ -131,7 +131,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     if (action == "tcg")
     {
         tcgmain();
-        map_prepare_tileset_atlas();
+        draw_prepare_map_chips();
         update_entire_screen();
         return TurnResult::turn_end;
     }

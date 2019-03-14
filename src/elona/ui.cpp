@@ -1867,6 +1867,11 @@ void ui_scroll_screen()
 
 void ui_initialize_minimap()
 {
+    raderx = -1;
+    radery = -1;
+    raderw = 120 / map_data.width + 2;
+    raderh = 84 / map_data.height + 2;
+
     gsel(3);
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
@@ -1876,10 +1881,11 @@ void ui_initialize_minimap()
             sx = cnt;
             sy(1) = 84 * sy / map_data.height;
             sx(1) = 120 * sx / map_data.width;
+            const auto rect = draw_get_rect(chip_data.for_cell(sx, sy).key);
             gcopy(
-                2,
-                cell_data.at(sx, sy).chip_id_actual % 33 * inf_tiles + sx % 16,
-                cell_data.at(sx, sy).chip_id_actual / 33 * inf_tiles + sy % 12,
+                rect->buffer,
+                rect->x + sx % 16,
+                rect->y + sy % 12,
                 raderw,
                 raderh,
                 688 + sx(1),

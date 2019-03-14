@@ -4511,90 +4511,6 @@ void save_map_local_data()
 
 
 
-void map_prepare_tileset_atlas()
-{
-    gsel(6);
-    if (map_data.atlas_number != mtilefilecur)
-    {
-        picload(
-            filesystem::dir::graphic() /
-                (u8"map"s + map_data.atlas_number + u8".bmp"),
-            0,
-            0,
-            false);
-        mtilefilecur = map_data.atlas_number;
-        initialize_map_chip();
-    }
-    map_tileset(map_data.tileset);
-    gsel(2);
-
-    int shadow = 5;
-    if (map_data.indoors_flag == 2)
-    {
-        if (game_data.date.hour >= 24 ||
-            (game_data.date.hour >= 0 && game_data.date.hour < 4))
-        {
-            shadow = 110;
-        }
-        if (game_data.date.hour >= 4 && game_data.date.hour < 10)
-        {
-            shadow = std::min(10, 70 - (game_data.date.hour - 3) * 10);
-        }
-        if (game_data.date.hour >= 10 && game_data.date.hour < 12)
-        {
-            shadow = 10;
-        }
-        if (game_data.date.hour >= 12 && game_data.date.hour < 17)
-        {
-            shadow = 1;
-        }
-        if (game_data.date.hour >= 17 && game_data.date.hour < 21)
-        {
-            shadow = (game_data.date.hour - 17) * 20;
-        }
-        if (game_data.date.hour >= 21 && game_data.date.hour < 24)
-        {
-            shadow = 80 + (game_data.date.hour - 21) * 10;
-        }
-        if (game_data.weather == 3 && shadow < 40)
-        {
-            shadow = 40;
-        }
-        if (game_data.weather == 4 && shadow < 65)
-        {
-            shadow = 65;
-        }
-        if (game_data.current_map == mdata_t::MapId::noyel &&
-            (game_data.date.hour >= 17 || game_data.date.hour < 7))
-        {
-            shadow += 35;
-        }
-    }
-
-    gmode(0);
-    set_color_mod(255 - shadow, 255 - shadow, 255 - shadow, 6);
-    gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles, 0, 0);
-    set_color_mod(255, 255, 255, 6);
-    gmode(2, 30);
-    if (map_data.atlas_number == 0)
-    {
-        gcopy(6, 0, 192, 1360, 48, 0, 192);
-    }
-    if (map_data.atlas_number == 1)
-    {
-        gcopy(6, 0, 1056, 1360, 48, 0, 1056);
-    }
-    if (map_data.atlas_number != 2)
-    {
-        gcopy(6, 0, 336, 1360, 48, 0, 336);
-    }
-    gmode(0);
-    gsel(0);
-    gmode(2);
-}
-
-
-
 int initialize_world_map()
 {
     p = 0;
@@ -4685,7 +4601,7 @@ void map_global_prepare()
 
 void map_global_place_entrances()
 {
-    initialize_map_chip();
+    draw_prepare_map_chips();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         int cnt2 = cnt;
@@ -12223,7 +12139,7 @@ void weather_changes()
             sound_play_environmental();
         }
     }
-    map_prepare_tileset_atlas();
+    draw_prepare_map_chips();
     adventurer_update();
     foods_get_rotten();
     if (map_data.type == mdata_t::MapType::world_map)

@@ -9,6 +9,7 @@
 #include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "pic_loader/pic_loader.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -527,7 +528,7 @@ void draw_character_sprite_in_world_map(
     int frame,
     int direction)
 {
-    int texture_id = c_ + 20;
+    int texture_id = c_ + PicLoader::max_buffers;
 
     // Shadow
     gmode(2, 85);
@@ -547,7 +548,7 @@ void draw_character_sprite_in_water(
     int frame,
     int direction)
 {
-    int texture_id = c_ + 20;
+    int texture_id = c_ + PicLoader::max_buffers;
 
     // Upper body
     gmode(2);
@@ -586,7 +587,7 @@ void draw_character_sprite(
     int direction,
     int dy = 0)
 {
-    int texture_id = c_ + 20;
+    int texture_id = c_ + PicLoader::max_buffers;
 
     // Shadow
     gmode(2, 110);
@@ -798,21 +799,6 @@ bool hp_bar_visible(const Character& chara)
 bool is_night()
 {
     return game_data.date.hour > 17 || game_data.date.hour < 6;
-}
-
-
-
-void draw_one_map_tile(int x, int y, int tile, int dx = 0)
-{
-    gmode(0);
-    gcopy(
-        2,
-        (tile % 33 + dx) * inf_tiles,
-        tile / 33 * inf_tiles,
-        inf_tiles,
-        inf_tiles,
-        x,
-        y);
 }
 
 
@@ -1254,7 +1240,7 @@ void cell_draw()
         {
             for (int i = 0; i < repw; ++i, dx_ -= inf_tiles)
             {
-                draw_one_map_tile(dx_, dy_, tile_fog);
+                draw_map_tile(tile_fog, dx_, dy_);
             }
             continue;
         }
@@ -1370,7 +1356,7 @@ void cell_draw()
             // Out of map
             if (x_ < 0 || x_ >= map_data.width)
             {
-                draw_one_map_tile(dx_, dy_, tile_fog);
+                draw_map_tile(tile_fog, dx_, dy_);
                 continue;
             }
 
@@ -1385,18 +1371,16 @@ void cell_draw()
             }
             if (chip_data[ground_].anime_frame != 0)
             {
-                draw_one_map_tile(
-                    dx_,
-                    dy_,
-                    ground_,
-                    scrturn_ % (chip_data[ground_].anime_frame + 1) -
-                        (scrturn_ % (chip_data[ground_].anime_frame + 1) ==
-                         chip_data[ground_].anime_frame) *
-                            2 * (chip_data[ground_].anime_frame != 0));
+                auto cur_frame =
+                    scrturn_ % (chip_data[ground_].anime_frame + 1);
+                auto anim_frame = cur_frame -
+                    (cur_frame == chip_data[ground_].anime_frame) * 2 *
+                        (chip_data[ground_].anime_frame != 0);
+                draw_map_tile(ground_, dx_, dy_, anim_frame);
             }
             else
             {
-                draw_one_map_tile(dx_, dy_, ground_);
+                draw_map_tile(ground_, dx_, dy_);
             }
 
             draw_blood_pool_and_fragments(x_, y, dx_, dy_);

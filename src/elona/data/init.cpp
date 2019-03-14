@@ -72,6 +72,13 @@ void _initialize_chip_dbs(lua::DataTable& data)
     }
 
     {
+        MapChipDB the_map_chip_db;
+        the_map_chip_db.initialize(data);
+        the_map_chip_db.load_all();
+        initialize_map_chips(the_map_chip_db);
+    }
+
+    {
         the_asset_db.initialize(data);
         the_asset_db.load_all();
         init_assets();

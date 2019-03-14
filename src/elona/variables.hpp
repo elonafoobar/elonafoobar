@@ -908,7 +908,6 @@ int mapitemfind(int = 0, int = 0, int = 0);
 
 // Map drawing
 void cell_draw();
-void map_prepare_tileset_atlas();
 void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 
 // Map animation

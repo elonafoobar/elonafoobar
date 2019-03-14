@@ -1156,14 +1156,10 @@ static void _update_aggro_and_crowd_density()
 
 static void _init_tileset_minimap_and_scroll()
 {
-    raderx = -1;
-    radery = -1;
-    raderw = 120 / map_data.width + 2;
-    raderh = 84 / map_data.height + 2;
     scx = cdata.player().position.x;
     scy = cdata.player().position.y;
     msync = 1;
-    map_prepare_tileset_atlas();
+    draw_prepare_map_chips();
     ui_initialize_minimap();
     update_scrolling_info();
 }

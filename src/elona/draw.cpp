@@ -7,6 +7,7 @@
 #include "data/types/type_chara_chip.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_chip.hpp"
+#include "data/types/type_map_chip.hpp"
 #include "data/types/type_portrait.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
@@ -14,6 +15,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "mapgen.hpp"
 #include "mef.hpp"
 #include "pic_loader/extent.hpp"
 #include "pic_loader/pic_loader.hpp"
@@ -606,7 +608,7 @@ optional_ref<Extent> chara_preparepic(int image_id)
 
 void create_pcpic(int cc, bool with_equipments)
 {
-    buffer(20 + cc, 384, 198);
+    buffer(PicLoader::max_buffers + cc, 384, 198);
     boxf();
 
     if (pcc(15, cc) == 0)
@@ -706,164 +708,135 @@ void create_pcpic(int cc, bool with_equipments)
 
 
 
-void initialize_map_chip()
+void initialize_map_chips(const MapChipDB& db)
 {
+    std::vector<PicLoader::MapType> predefined_extents;
+    predefined_extents.resize(ChipData::atlas_count);
+
+    for (const auto& data : db.values())
     {
-        auto& chips = chip_data.get_map(0);
-        chips[233].offset_top = 0;
-        chips[233].offset_bottom = 0;
-        for (int cnt = 26; cnt < 33; ++cnt)
-        {
-            chips[cnt].kind = 4;
-        }
-        chips[568].kind = 4;
-        chips[569].kind = 4;
-        chips[570].kind = 4;
-        for (int cnt = 99; cnt < 132; ++cnt)
-        {
-            chips[cnt].kind = 7;
-        }
-        for (int cnt = 165; cnt < 198; ++cnt)
-        {
-            chips[cnt].kind = 8;
-        }
-        for (int cnt = 198; cnt < 231; ++cnt)
-        {
-            chips[cnt].kind = 4;
-        }
-        for (int cnt = 594; cnt < 599; ++cnt)
-        {
-            chips[cnt].kind = 7;
-        }
-        for (int cnt = 599; cnt < 604; ++cnt)
-        {
-            chips[cnt].kind = 8;
-        }
-        for (int cnt = 107; cnt < 119; ++cnt)
-        {
-            chips[cnt].kind2 = 9;
-        }
-        for (int cnt = 173; cnt < 185; ++cnt)
-        {
-            chips[cnt].kind2 = 9;
-        }
-        for (int cnt = 206; cnt < 218; ++cnt)
-        {
-            chips[cnt].kind2 = 9;
-        }
-        chips[604].kind = 10;
-        for (int cnt = 605; cnt < 617; ++cnt)
-        {
-            chips[cnt].kind = 10;
-            chips[cnt].kind2 = 9;
-        }
-        for (int cnt = 396; cnt < 825; ++cnt)
-        {
-            chips[cnt].effect = 5;
-        }
-        for (int cnt = 264; cnt < 297; ++cnt)
-        {
-            chips[cnt].effect = 4;
-        }
-        chips[135].offset_top = 8;
-        chips[137].offset_top = 16;
-        chips[140].offset_top = 6;
-        chips[145].offset_top = 16;
-        chips[149].offset_top = 16;
+        auto& atlas = chip_data.get_map(data.atlas);
+
+        atlas[data.id] = std::move(data);
     }
 
-    {
-        auto& chips = chip_data.get_map(1);
-        for (int cnt = 396; cnt < 825; ++cnt)
-        {
-            chips[cnt].effect = 5;
-        }
-        chips[233].offset_top = 56;
-        chips[233].offset_bottom = 48;
-        chips[594].effect = 4;
-        chips[628].effect = 4;
-        chips[637].effect = 4;
-        chips[641].effect = 4;
-        chips[733].effect = 4;
-        for (int cnt = 45; cnt < 61; ++cnt)
-        {
-            chips[cnt].kind = 4;
-        }
-        chips[82].kind = 4;
-        chips[83].kind = 4;
-        chips[84].kind = 4;
-        for (int cnt = 462; cnt < 528; ++cnt)
-        {
-            chips[cnt].wall_kind = 1;
-            chips[cnt - 66].wall_kind = 1;
-        }
-        for (int cnt = 462; cnt < 495; ++cnt)
-        {
-            chips[cnt].wall_kind = 2;
-            chips[cnt - 66].wall_kind = 2;
-        }
-        chips[29].kind = 1;
-        chips[30].kind = 2;
-        chips[31].kind = 2;
-        chips[464].kind = 6;
-        chips[550].anime_frame = 2;
-        chips[550].wall_kind = 1;
-        chips[165].kind = 3;
-        chips[165].anime_frame = 3;
-        chips[168].kind = 3;
-        chips[168].anime_frame = 3;
-        chips[171].kind = 3;
-        chips[171].kind2 = 5;
-        chips[171].anime_frame = 3;
-        chips[594].kind = 3;
-        chips[594].anime_frame = 3;
-    }
-    {
-        auto& chips = chip_data.get_map(2);
-        for (int cnt = 0; cnt < 11; ++cnt)
-        {
-            int cnt2 = cnt;
-            for (int cnt = 0; cnt < 13; ++cnt)
-            {
-                chips[cnt2 * 33 + cnt + 20].kind = 4;
-            }
-        }
-        for (int cnt = 33; cnt < 66; ++cnt)
-        {
-            chips[cnt].kind = 4;
-        }
-        for (int cnt = 396; cnt < 825; ++cnt)
-        {
-            chips[cnt].effect = 5;
-        }
-        chips[233].offset_top = 56;
-        chips[233].offset_bottom = 48;
-        chips[594].effect = 4;
-        for (int cnt = 462; cnt < 528; ++cnt)
-        {
-            chips[cnt].wall_kind = 1;
-            chips[cnt - 66].wall_kind = 1;
-        }
-        for (int cnt = 462; cnt < 495; ++cnt)
-        {
-            chips[cnt].wall_kind = 2;
-            chips[cnt - 66].wall_kind = 2;
-        }
-        chips[550].anime_frame = 2;
-        chips[550].wall_kind = 1;
-        chips[165].kind = 3;
-        chips[165].anime_frame = 3;
-        chips[168].kind = 3;
-        chips[168].anime_frame = 3;
-        chips[171].kind = 3;
-        chips[171].kind2 = 5;
-        chips[171].anime_frame = 3;
-        chips[594].kind = 3;
-        chips[594].anime_frame = 3;
-        chips[476].wall_kind = 0;
-        chips[509].wall_kind = 0;
-    }
+    draw_prepare_map_chips();
 }
+
+
+
+void draw_prepare_map_chips()
+{
+    {
+        for (int i = 0; i < ChipData::atlas_count; i++)
+        {
+            PicLoader::MapType predefined_extents;
+
+            for (const auto& pair : chip_data.get_map(i))
+            {
+                const auto& chip = pair.second;
+                if (chip.filepath)
+                {
+                    // chip is from an external file.
+                    loader.load(
+                        *chip.filepath,
+                        chip.key,
+                        PicLoader::PageType::map_chip);
+                }
+                else
+                {
+                    // chip is located in item.bmp.
+                    predefined_extents[chip.key] = chip.rect;
+                }
+            }
+
+            loader.add_predefined_extents(
+                filesystem::dir::graphic() / (u8"map"s + i + ".bmp"),
+                predefined_extents,
+                PicLoader::PageType::map_chip);
+        }
+    }
+
+    // gsel(6);
+    // if (map_data.atlas_number != mtilefilecur)
+    // {
+    //     picload(
+    //         filesystem::dir::graphic() /
+    //             (u8"map"s + map_data.atlas_number + u8".bmp"),
+    //         0,
+    //         0,
+    //         false);
+    //     mtilefilecur = map_data.atlas_number;
+    //     initialize_map_chip();
+    // }
+    map_tileset(map_data.tileset);
+    // gsel(2);
+
+    // int shadow = 5;
+    // if (map_data.indoors_flag == 2)
+    // {
+    //     if (game_data.date.hour >= 24 ||
+    //         (game_data.date.hour >= 0 && game_data.date.hour < 4))
+    //     {
+    //         shadow = 110;
+    //     }
+    //     if (game_data.date.hour >= 4 && game_data.date.hour < 10)
+    //     {
+    //         shadow = std::min(10, 70 - (game_data.date.hour - 3) * 10);
+    //     }
+    //     if (game_data.date.hour >= 10 && game_data.date.hour < 12)
+    //     {
+    //         shadow = 10;
+    //     }
+    //     if (game_data.date.hour >= 12 && game_data.date.hour < 17)
+    //     {
+    //         shadow = 1;
+    //     }
+    //     if (game_data.date.hour >= 17 && game_data.date.hour < 21)
+    //     {
+    //         shadow = (game_data.date.hour - 17) * 20;
+    //     }
+    //     if (game_data.date.hour >= 21 && game_data.date.hour < 24)
+    //     {
+    //         shadow = 80 + (game_data.date.hour - 21) * 10;
+    //     }
+    //     if (game_data.weather == 3 && shadow < 40)
+    //     {
+    //         shadow = 40;
+    //     }
+    //     if (game_data.weather == 4 && shadow < 65)
+    //     {
+    //         shadow = 65;
+    //     }
+    //     if (game_data.current_map == mdata_t::MapId::noyel &&
+    //         (game_data.date.hour >= 17 || game_data.date.hour < 7))
+    //     {
+    //         shadow += 35;
+    //     }
+    // }
+
+    // gmode(0);
+    // set_color_mod(255 - shadow, 255 - shadow, 255 - shadow, 6);
+    // gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles, 0, 0);
+    // set_color_mod(255, 255, 255, 6);
+    // gmode(2, 30);
+    // if (map_data.atlas_number == 0)
+    // {
+    //     gcopy(6, 0, 192, 1360, 48, 0, 192);
+    // }
+    // if (map_data.atlas_number == 1)
+    // {
+    //     gcopy(6, 0, 1056, 1360, 48, 0, 1056);
+    // }
+    // if (map_data.atlas_number != 2)
+    // {
+    //     gcopy(6, 0, 336, 1360, 48, 0, 336);
+    // }
+    // gmode(0);
+    gsel(0);
+    gmode(2);
+}
+
 
 
 void initialize_item_chips(const ItemChipDB& db)
@@ -979,7 +952,6 @@ void initialize_all_chips()
     SDIM3(tname, 16, 11);
     tname(1) = i18n::s.get("core.locale.item.chip.dryrock");
     tname(2) = i18n::s.get("core.locale.item.chip.field");
-    initialize_map_chip();
 }
 
 
@@ -1196,6 +1168,15 @@ void draw_item_with_portrait_scale_height(
         y,
         rect->frame_width * inf_tiles / rect->height,
         inf_tiles);
+}
+
+
+void draw_map_tile(int id, int x, int y, int anim_frame)
+{
+    const auto& chip = chip_data[id];
+    auto rect = draw_get_rect(chip.key);
+    gmode(0);
+    gcopy(rect->buffer, rect->x, rect->y, inf_tiles, inf_tiles, x, y);
 }
 
 
