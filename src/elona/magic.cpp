@@ -134,15 +134,7 @@ bool _magic_1136()
         {
             x = cnt + inv[ci].param1 - 3;
             sx = cnt * inf_tiles + wx + 46;
-            p = cell_data.at(x, y).chip_id_actual;
-            gcopy(
-                2,
-                p % 33 * inf_tiles,
-                p / 33 * inf_tiles,
-                inf_tiles,
-                inf_tiles,
-                sx + 1,
-                sy + 1);
+            draw_map_tile(cell_data.at(x, y).chip_id_actual, sx + 1, sy + 1);
             if (x == inv[ci].param1)
             {
                 if (y == inv[ci].param2)

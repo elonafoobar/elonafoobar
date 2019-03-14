@@ -88,29 +88,35 @@ void select_house_board_tile()
 {
     snd("core.pop2");
 
+    auto box_size = inf_tiles / 2;
     while (1)
     {
         gmode(0);
         p = 0;
+        // TODO
         for (int y = 0; y < 20; ++y)
         {
             for (int x = 0; x < 33; ++x)
             {
                 if (p < listmax)
                 {
-                    gcopy(
-                        2,
-                        list(0, p) % 33 * 48,
-                        list(0, p) / 33 * 48,
-                        48,
-                        48,
-                        x * 24,
-                        y * 24,
-                        24,
-                        24);
-                    if (chip_data[list(0, p)].effect & 4)
+                    const auto& chip = chip_data[list(0, p)];
+                    draw_map_tile(
+                        list(0, p),
+                        x * box_size,
+                        y * box_size,
+                        inf_tiles,
+                        inf_tiles,
+                        box_size,
+                        box_size);
+                    if (chip.effect & 4)
                     {
-                        boxl(x * 24, y * 24, 24, 24, {240, 230, 220});
+                        boxl(
+                            x * box_size,
+                            y * box_size,
+                            box_size,
+                            box_size,
+                            {240, 230, 220});
                     }
                 }
                 ++p;
@@ -123,7 +129,7 @@ void select_house_board_tile()
         const auto input = stick();
         if (input == StickKey::mouse_left)
         {
-            p = mousex / 24 + mousey / 24 * 33;
+            p = mousex / box_size + mousey / box_size * 33;
             if (p >= listmax)
             {
                 snd("core.fail1");
@@ -5388,14 +5394,7 @@ int target_position()
         }
         if (homemapmode == 1)
         {
-            gcopy(
-                2,
-                tile % 33 * inf_tiles,
-                tile / 33 * inf_tiles,
-                inf_tiles,
-                inf_tiles,
-                windoww - 80,
-                20);
+            draw_map_tile(tile, windoww - 80, 20);
         }
         else
         {
@@ -5503,8 +5502,9 @@ int target_position()
                 snd("core.cursor1");
                 wait_key_released();
             }
-            tx = clamp(mousex - inf_screenx, 0, windoww) / 48;
-            ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) / 48;
+            tx = clamp(mousex - inf_screenx, 0, windoww) / inf_tiles;
+            ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) /
+                inf_tiles;
             int stat = key_direction(action);
             if (stat == 1)
             {

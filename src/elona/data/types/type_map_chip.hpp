@@ -43,8 +43,9 @@ struct MapChip
     int id{};
     int atlas{};
     SharedId key{};
-    Extent rect{};
+    Extent source{};
     optional<fs::path> filepath;
+    bool is_feat;
 
     int kind{};
     int kind2{};
@@ -56,6 +57,6 @@ struct MapChip
     int effect{};
 };
 
-ELONA_DEFINE_LUA_DB(MapChipDB, MapChip, true, "core.map_chip")
+ELONA_DEFINE_LUA_DB(MapChipDB, MapChip, false, "core.map_chip")
 
 } // namespace elona

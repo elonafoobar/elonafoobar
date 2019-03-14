@@ -140,6 +140,7 @@ set(ELONA_SOURCES
   keybind/keybind_serializer.cpp
 
   pic_loader/pic_loader.cpp
+  pic_loader/tinted_buffers.cpp
 
   profile/profile.cpp
   profile/profile_manager.cpp

@@ -79,6 +79,14 @@ do
    atlas_0[145].offset_top = 16;
    atlas_0[149].offset_top = 16;
 
+   for i=99,129 do
+      atlas_0[i].is_feat = true
+   end
+
+   for i=231,261 do
+      atlas_0[i].is_feat = true
+   end
+
    data:add_multi("core.map_chip", atlas_0)
 end
 
@@ -127,6 +135,14 @@ do
    atlas_1[171].anime_frame = 3;
    atlas_1[594].kind = 3;
    atlas_1[594].anime_frame = 3;
+
+   for i=726,756 do
+      atlas_1[i].is_feat = true
+   end
+
+   for i=231,261 do
+      atlas_1[i].is_feat = true
+   end
 
    data:add_multi("core.map_chip", atlas_1)
 end

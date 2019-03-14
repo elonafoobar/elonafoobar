@@ -39,7 +39,8 @@ namespace elona
  * - 8: message panel
  * - 9: continuous action (activity) image
  * - 10-29: this class
- * - 30+: PCC sprites (used to be 10+). Texture id is chara.index + 30
+ * - 30-39: tinted buffers for map chips based on time of day
+ * - 40+: PCC sprites (used to be 10+). Texture id is chara.index + 30
  */
 class PicLoader : public lib::noncopyable
 {
@@ -52,6 +53,7 @@ public:
         item,
         portrait,
         map_chip,
+        map_feat,
     };
 
     struct Skyline
@@ -275,6 +277,19 @@ public:
     optional_ref<Extent> operator[](const std::string& inner_id) const
     {
         return (*this)[SharedId(inner_id)];
+    }
+
+    std::vector<int> get_buffers_of_type(PageType type)
+    {
+        std::vector<int> result;
+        for (const auto& buffer : buffers)
+        {
+            if (buffer.type == type)
+            {
+                result.push_back(buffer.buffer_id);
+            }
+        }
+        return result;
     }
 
 

@@ -238,6 +238,22 @@ void asset_copy_from(
     const std::string& key);
 
 void draw_map_tile(int id, int x, int y, int anim_frame = 0);
+void draw_map_tile(
+    int id,
+    int x,
+    int y,
+    int width,
+    int height,
+    int anim_frame = 0);
+void draw_map_tile(
+    int id,
+    int x,
+    int y,
+    int width,
+    int height,
+    int dst_width,
+    int dst_height,
+    int anim_frame = 0);
 
 const AssetData& get_image_info(const std::string& key);
 

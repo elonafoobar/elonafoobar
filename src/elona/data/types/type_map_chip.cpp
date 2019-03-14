@@ -11,6 +11,7 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id_)
 {
     auto legacy_id = data.required<int>("id");
     DATA_REQ(atlas, int);
+    DATA_OPT_OR(is_feat, bool, false);
     DATA_OPT_OR(kind, int, 0);
     DATA_OPT_OR(kind2, int, 0);
     DATA_OPT_OR(wall_kind, int, 0);
@@ -19,7 +20,7 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id_)
     DATA_OPT_OR(offset_bottom, int, 0);
     DATA_OPT_OR(effect, int, 0);
 
-    int height = inf_tiles;
+    int height = inf_tiles + offset_bottom;
     int frame_width = inf_tiles;
     int width = inf_tiles;
     if (anime_frame > 0)
@@ -54,6 +55,7 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id_)
         SharedId(std::string(Traits::type_id) + data_id_separator + id_),
         Extent{x, y, width, height, frame_width},
         filepath,
+        is_feat,
         kind,
         kind2,
         wall_kind,

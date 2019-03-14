@@ -192,7 +192,6 @@ void PicLoader::add_predefined_extents(
     PageType type)
 {
     snail::Image img{atlas_file, snail::Color{0, 0, 0}};
-    int i = 0;
 
     // Add a new buffer for this atlas. The assumption is that all the
     // defined sprites will fit on this buffer. This assumption might
@@ -243,14 +242,6 @@ void PicLoader::add_predefined_extents(
         }
 
         gsel(dest.buffer);
-        // std::cerr << i << " copy " << atlas_file.native() << " " <<
-        // dest.buffer
-        //           << " " << source.x << " " << source.y << " " <<
-        //           source.width
-        //           << " " << source.height << " " << dest.x << " " << dest.y
-        //           << std::endl;
-        i++;
-
 
         // Render the defined portion of the image onto the buffer.
         if (type == PageType::portrait)
@@ -269,7 +260,6 @@ PicLoader::BufferInfo& PicLoader::add_buffer(PageType type, int w, int h)
     int new_buffer_index;
     size_t buffer_info_index = buffers.size();
 
-    std::cerr << "add buffer " << w << " " << h << std::endl;
     assert(buffer_info_index < max_buffers);
 
     new_buffer_index = max_buffers + buffer_info_index;
