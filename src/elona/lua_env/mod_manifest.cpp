@@ -19,7 +19,8 @@ static std::string _read_mod_name(const hcl::Value& value, const fs::path& path)
     else
     {
         throw std::runtime_error(
-            path.string() + ": Missing \"name\" in mod manifest");
+            filepathutil::to_utf8_path(path) +
+            ": Missing \"name\" in mod manifest");
     }
 
     return result;
@@ -47,7 +48,7 @@ static std::unordered_set<std::string> _read_dependencies(
                 else
                 {
                     throw std::runtime_error(
-                        path.string() +
+                        filepathutil::to_utf8_path(path) +
                         ": \"dependencies\" field must be a list of "
                         "strings.");
                 }
@@ -56,7 +57,7 @@ static std::unordered_set<std::string> _read_dependencies(
         else
         {
             throw std::runtime_error(
-                path.string() +
+                filepathutil::to_utf8_path(path) +
                 ": \"dependencies\" field must be a list of strings.");
         }
     }

@@ -17,7 +17,7 @@ namespace spec
 void Object::load(const fs::path& path, const std::string& mod_name)
 {
     std::ifstream ifs(path.native());
-    load(ifs, path.string(), mod_name);
+    load(ifs, filepathutil::to_utf8_path(path), mod_name);
 }
 
 void Object::load(

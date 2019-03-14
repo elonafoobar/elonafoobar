@@ -163,7 +163,8 @@ void play_music_inner(const SharedId& music_id, int musicloop)
         }
         if (!fs::exists(music->file))
         {
-            ELONA_ERROR("audio") << "Cannot load file " << music->file.string()
+            ELONA_ERROR("audio") << "Cannot load file "
+                                 << filepathutil::to_utf8_path(music->file)
                                  << " for music " << music_id.get();
             return;
         }
