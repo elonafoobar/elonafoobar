@@ -398,6 +398,29 @@ void LuaApiInput::start_dialog_with_data(
     talk_end();
 }
 
+/**
+ * @luadoc
+ *
+ * Prompts the player to choose an ally.
+ * @tparam ChooseAllyOperation operation the operation to apply
+ * @treturn[1] LuaCharacter
+ * @treturn[2] nil
+ */
+sol::optional<LuaCharacterHandle> LuaApiInput::choose_ally(
+    const EnumString& operation)
+{
+    auto operation_value =
+        LuaEnums::ControlAllyOperationTable.ensure_from_string(operation);
+
+    auto stat = ctrl_ally(operation_value);
+    if (stat == -1)
+    {
+        return sol::nullopt;
+    }
+
+    return lua::handle(cdata[stat]);
+}
+
 void LuaApiInput::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, yes_no);
@@ -419,6 +442,7 @@ void LuaApiInput::bind(sol::table& api_table)
         "start_dialog",
         sol::overload(
             LuaApiInput::start_dialog, LuaApiInput::start_dialog_with_data));
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, choose_ally);
 }
 
 } // namespace lua

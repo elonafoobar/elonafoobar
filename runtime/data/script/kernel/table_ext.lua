@@ -72,4 +72,14 @@ function table.deepcopy(object)
     return _copy(object)
 end
 
+--- Returns true if the table contains a given value.
+-- @tparam table tbl the table to search
+-- @param value the value to search for
+function table.contains(tbl, value)
+   local function predicate(v)
+      return v == value
+   end
+   return table.find(tbl, predicate)
+end
+
 return table

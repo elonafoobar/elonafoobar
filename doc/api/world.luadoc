@@ -7,7 +7,22 @@ module "World"
 --  @function time
 function time() end
 
+--- Gets the ID of the next deferred event that will run.
+--  @treturn num
+--  @function deferred_event_id
+function deferred_event_id() end
+
+--- Adds a deferred event.
+--  @tparam num event_id the event id
+--  @tparam[opt] num param1 An extra parameter.
+--  @tparam[opt] num param2 An extra parameter.
+--  @function add_deferred_event
+function add_deferred_event(event_id, param1, param2) end
+
 --- Returns true if the player is part of the provided guild.
 --  @tparam string guild_name One of "mages", "fighters" or "thieves"
 --  @function belongs_to_guild
 function belongs_to_guild(guild_name) end
+
+--- [R] Data for the current game save.
+--  @tfield LuaGameData data

@@ -673,7 +673,7 @@ label_20591:
         }
         if (invctrl == 28)
         {
-            int stat = item_find(622, 3, 1);
+            int stat = item_find(622, 3, ItemFindLocation::player_inventory);
             if (stat != -1)
             {
                 p = inv[stat].number();
@@ -1994,7 +1994,7 @@ label_2061_internal:
                 snd("core.fail1");
                 goto label_20591;
             }
-            int stat = item_find(622, 3, 1);
+            int stat = item_find(622, 3, ItemFindLocation::player_inventory);
             if (stat != -1)
             {
                 i = stat;

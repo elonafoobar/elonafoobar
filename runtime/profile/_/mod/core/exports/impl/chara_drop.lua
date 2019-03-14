@@ -43,7 +43,7 @@ function chara_drop.drop(chara, drops)
 end
 
 function chara_drop.drop_from_chara(chara)
-   local drops = data.raw["core.chara"][chara.new_id].drops
+   local drops = data.raw["core.chara"][chara.id].drops
 
    if drops then
       chara_drop.drop(chara, drops)

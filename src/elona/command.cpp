@@ -2833,7 +2833,7 @@ TurnResult do_use_stairs_command(int val0)
         txt(i18n::s.get("core.locale.action.use_stairs.cannot_during_debug"));
         return TurnResult::pc_turn_user_error;
     }
-    int stat = item_find(631, 3, -1);
+    int stat = item_find(631, 3, ItemFindLocation::ground);
     if (stat != -1)
     {
         if (map_is_town_or_guild())

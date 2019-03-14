@@ -707,6 +707,13 @@ void chara_delete(int = 0);
 void chara_remove(Character&);
 void chara_vanquish(int = 0);
 void chara_killed(Character&);
+
+enum class CharaFindLocation
+{
+    allies,
+    others
+};
+
 int chara_find(int id);
 int chara_find_ally(int id);
 int chara_get_free_slot();

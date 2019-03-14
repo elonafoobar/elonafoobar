@@ -1,7 +1,10 @@
 #include "lua_class_item.hpp"
 #include "../../data/types/type_item.hpp"
+#include "../../data/types/type_item_material.hpp"
 #include "../../item.hpp"
+#include "../../itemgen.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../data_manager.hpp"
 
 namespace elona
 {
@@ -16,6 +19,23 @@ namespace lua
 void LuaItem::remove(Item& self)
 {
     self.remove();
+}
+
+/**
+ * @luadoc
+ *
+ * Changes the material of this item.
+ * @tparam string material_id ID of the item material
+ */
+void LuaItem::change_material(Item& self, const std::string& material_id)
+{
+    const auto& data = the_item_material_db[material_id];
+    if (!data)
+    {
+        throw sol::error{"No such item material " + material_id};
+    }
+
+    change_item_material(self, data->id);
 }
 
 void LuaItem::bind(sol::state& lua)
@@ -35,11 +55,11 @@ void LuaItem::bind(sol::state& lua)
 
 
     /**
-     * @luadoc id field num
+     * @luadoc legacy_id field num
      *
-     * [R] The prototype ID of this item.
+     * [R] The legacy ID of this item.
      */
-    LuaItem.set("id", &Item::id);
+    LuaItem.set("legacy_id", &Item::id);
 
     /**
      * @luadoc position field num
@@ -107,13 +127,23 @@ void LuaItem::bind(sol::state& lua)
      */
     LuaItem.set("param4", &Item::param4);
 
+    /**
+     * @luadoc material field string
+     *
+     * [R] The material ID of this item. To change it, use
+     * LuaItem.change_material.
+     */
+    LuaItem.set(
+        "material",
+        LUA_API_DATA_PROPERTY(Item, material, the_item_material_db));
+
 
     /**
-     * @luadoc new_id field num
+     * @luadoc id field string
      *
-     * [R] The new version prototype ID of the item.
+     * [R] The new-style prototype ID of the item.
      */
-    LuaItem.set("new_id", sol::property([](Item& i) {
+    LuaItem.set("id", sol::property([](Item& i) {
                     return the_item_db.get_id_from_legacy(i.id)->get();
                 }));
     /**
@@ -162,8 +192,20 @@ void LuaItem::bind(sol::state& lua)
         "identify_state",
         LUA_API_ENUM_PROPERTY(Item, identification_state, IdentifyState));
 
+    /**
+     * @luadoc prototype field table
+     *
+     * [R] The prototype data of the character.
+     */
+    LuaItem.set("prototype", sol::property([](Item& self) {
+                    auto id = the_item_db.get_id_from_legacy(self.id);
+                    return *lua::lua->get_data_manager().get().raw(
+                        "core.item", id->get());
+                }));
+
     // Methods
     LuaItem.set("remove", &LuaItem::remove);
+    LuaItem.set("change_material", &LuaItem::change_material);
 
     auto key = Item::lua_type();
     lua.set_usertype(key, LuaItem);

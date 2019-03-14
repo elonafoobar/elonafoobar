@@ -9,6 +9,8 @@
 #include "../../food.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../lua_env/interface.hpp"
+#include "../../variables.hpp"
+#include "../data_manager.hpp"
 #include "lua_class_ability.hpp"
 
 namespace elona
@@ -185,16 +187,27 @@ bool LuaCharacter::recruit_as_ally(Character& self)
     return new_ally_joins() == 1;
 }
 
+/**
+ * @luadoc
+ *
+ * Gets the value of a flag on this character.
+ * @tparam Enums.CharaFlag flag the flag to get
+ * @treturn bool
+ */
+bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
+{
+    int flag_value = LuaEnums::CharaFlagTable.ensure_from_string(flag);
+    return chara._flags[flag_value] == 1;
+}
 
 /**
  * @luadoc
  *
- * Sets a flag on this character. <b>Note</b>: Currently, all flags up
- * to <code>IsQuickTempered</code> are "intrinsic" and are always
- * reset when this character is refreshed each turn. To change these
- * flags, you must call this function inside a handler for
- * <code>Event.EventKind.CharaRefreshed</code>, or the flag will be
- * reset later.
+ * Sets the value of a flag on this character. <b>Note</b>: Currently, all flags
+ * up to <code>IsQuickTempered</code> are "intrinsic" and are always reset when
+ * this character is refreshed each turn. To change these flags, you must call
+ * this function inside a handler for
+ * <code>Event.EventKind.CharaRefreshed</code>, or the flag will be reset later.
  * @tparam Enums.CharaFlag flag the flag to set
  * @tparam bool value the flag's new value
  * @see Event.EventKind.CharaRefreshed
@@ -409,6 +422,33 @@ void LuaCharacter::act_hostile_against(
     hostileaction(self.index, target_ref.index);
 }
 
+/**
+ * @luadoc
+ *
+ * Refreshes this character, reapplying bonuses given by equipment.
+ */
+void LuaCharacter::refresh(Character& self)
+{
+    chara_refresh(self.index);
+}
+
+/**
+ * @luadoc
+ *
+ * Refreshes the burden state of this character. Only valid if called on the
+ * player. Call this method if the character's inventory changes so the weight
+ * can be reapplied.
+ */
+void LuaCharacter::refresh_burden_state(Character& self)
+{
+    if (self.index != 0)
+    {
+        return;
+    }
+
+    elona::refresh_burden_state();
+}
+
 void LuaCharacter::bind(sol::state& lua)
 {
     auto LuaCharacter = lua.create_simple_usertype<Character>();
@@ -425,11 +465,11 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("index", sol::readonly(&Character::index));
 
     /**
-     * @luadoc index field id
+     * @luadoc index field legacy_id
      *
-     * [R] The prototype ID of this character.
+     * [R] The legacy ID of this character.
      */
-    LuaCharacter.set("id", sol::readonly(&Character::id));
+    LuaCharacter.set("legacy_id", sol::readonly(&Character::id));
 
     /**
      * @luadoc name field string
@@ -595,12 +635,12 @@ void LuaCharacter::bind(sol::state& lua)
 
 
     /**
-     * @luadoc new_id field string
+     * @luadoc id field string
      *
-     * [R] The new version prototype ID of the character.
+     * [R] The new-style version prototype ID of the character.
      */
     LuaCharacter.set(
-        "new_id", sol::property([](Character& c) { return c.new_id().get(); }));
+        "id", sol::property([](Character& c) { return c.new_id().get(); }));
 
     /**
      * @luadoc name field string
@@ -653,6 +693,17 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set(
         "quality", LUA_API_ENUM_PROPERTY(Character, quality, Quality));
 
+    /**
+     * @luadoc prototype field table
+     *
+     * [R] The prototype data of the character.
+     */
+    LuaCharacter.set("prototype", sol::property([](Character& self) {
+                         auto id = the_character_db.get_id_from_legacy(self.id);
+                         return *lua::lua->get_data_manager().get().raw(
+                             "core.chara", id->get());
+                     }));
+
     // Methods
     LuaCharacter.set(
         "damage_hp",
@@ -667,6 +718,7 @@ void LuaCharacter::bind(sol::state& lua)
         sol::overload(&LuaCharacter::add_buff, &LuaCharacter::add_buff_doer));
     LuaCharacter.set("set_growth_buff", &LuaCharacter::set_growth_buff);
     LuaCharacter.set("recruit_as_ally", &LuaCharacter::recruit_as_ally);
+    LuaCharacter.set("get_flag", &LuaCharacter::get_flag);
     LuaCharacter.set("set_flag", &LuaCharacter::set_flag);
     LuaCharacter.set("get_skill", &LuaCharacter::get_skill);
     LuaCharacter.set(
@@ -682,6 +734,9 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("eat_rotten_food", &LuaCharacter::eat_rotten_food);
     LuaCharacter.set("vanquish", &LuaCharacter::vanquish);
     LuaCharacter.set("act_hostile_against", &LuaCharacter::act_hostile_against);
+    LuaCharacter.set("refresh", &LuaCharacter::refresh);
+    LuaCharacter.set(
+        "refresh_burden_state", &LuaCharacter::refresh_burden_state);
 
     auto key = Character::lua_type();
     lua.set_usertype(key, LuaCharacter);

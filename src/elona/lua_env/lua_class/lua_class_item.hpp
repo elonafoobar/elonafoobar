@@ -15,6 +15,9 @@ namespace LuaItem
 {
 void remove(Item&);
 
+void change_material(Item&, const std::string&);
+
+
 void bind(sol::state&);
 } // namespace LuaItem
 

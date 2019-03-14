@@ -129,20 +129,20 @@ fn extract_enums<'a>(tu: &'a TranslationUnit<'a>, path: &Path) -> Vec<Comment> {
     for t in get_range(&tu, path).tokenize() {
         match state {
             EnumParseState::TypeName => {
-                if t.get_kind() == TokenKind::Identifier {
+                if t.get_kind() == TokenKind::Literal {
                     name = strip_quotes(&t);
                     state = EnumParseState::Entries;
-                    // Skip the next 3 opening braces.
+                    // Skip the next 2 opening braces.
                     // EnumMap<Type> Map { "Map", {{ "Member", Type::Member }, ...}};
-                    //                   ^        ^^ ~~~~~~~~
-                    braces_left = 3;
+                    //                            ^^ ~~~~~~~~
+                    braces_left = 2;
                 }
             }
             EnumParseState::Comment => {
                 if t.get_kind() == TokenKind::Identifier && t.get_spelling() == ENUM_MAP {
-                    // Found "EnumMap", next identifier token should be type.
-                    // EnumMap<Type> Map { ... };
-                    // ^^^^^^^ ~~~~
+                    // Found "EnumMap", next literal token should be type.
+                    // EnumMap<Type> Map { "Type", ... };
+                    // ^^^^^^^             ~~~~~~
                     state = EnumParseState::TypeName;
                 }
             }

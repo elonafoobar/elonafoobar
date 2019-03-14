@@ -4,6 +4,11 @@
 module "Data"
 
 --- Reloads the UI assets defined in the <code>core.asset</code> table. Call this
---  if you want changes to the <code>core.asset</code> to be visible.
+--  if you want changes to the <code>core.asset</code> table to be visible.
 --  @function reload_assets
 function reload_assets() end
+
+--- Reloads the UI assets defined in the <code>core.chara</code> table. Call this
+--  if you want changes to the <code>core.chara</code> table to be visible.
+--  @function reload_charas
+function reload_charas() end

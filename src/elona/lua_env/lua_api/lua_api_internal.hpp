@@ -13,12 +13,19 @@ namespace lua
 namespace LuaApiInternal
 {
 
-int get_quest_flag(const std::string& id);
+int get_quest_flag(const std::string&);
 
-void set_quest_flag(const std::string& id, int value);
+void set_quest_flag(const std::string&, int);
+
+void go_to_quest_map(const std::string&, int);
 
 std::string speaker_name(LuaCharacterHandle);
 
+void material_kit_crafting_menu();
+
+int filter_set_dungeon();
+
+void trade_small_medals(LuaCharacterHandle);
 
 void bind(sol::table&);
 }; // namespace LuaApiInternal

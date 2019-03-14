@@ -1,9 +1,13 @@
 locale {
     talk {
         unique {
-            zeome = "So you've made it this far. Evidently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"
+            zeome {
+                dialog = "So you've made it this far. Evidently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"
+            }
 
-            whom_dwell_in_the_vanity = "Leave me alone."
+            whom_dwell_in_the_vanity {
+                dialog = "Leave me alone."
+            }
 
             # TODO
             orphe {
@@ -425,7 +429,9 @@ locale {
                 dies = "${basename(_1)} kills himself..."
             }
 
-            garokk = "Don't you see I'm busy!"
+            garokk {
+                dialog = "Don't you see I'm busy!"
+            }
 
             miral {
                 dialog = "Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"
@@ -480,7 +486,7 @@ locale {
                 }
             }
 
-            paels_mom {
+            lily {
                 after_sold = "You are cruel."
 
                 progress {

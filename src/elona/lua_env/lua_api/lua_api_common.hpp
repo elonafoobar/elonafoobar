@@ -41,3 +41,22 @@ using LuaItemHandle = sol::table;
         [](klass& it, const EnumString& s) { \
             it.field = LuaEnums::enum_kind##Table.ensure_from_string(s); \
         })
+
+#define LUA_API_DATA_PROPERTY(klass, field, db) \
+    sol::property( \
+        [](klass& d) { \
+            auto id = db.get_id_from_legacy(d.field); \
+            if (!id) \
+            { \
+                return ""s; \
+            } \
+            return id->get(); \
+        }, \
+        [](klass& d, const std::string& s) { \
+            auto data = db[s]; \
+            if (!data) \
+            { \
+                return; \
+            } \
+            d.field = data->id; \
+        })

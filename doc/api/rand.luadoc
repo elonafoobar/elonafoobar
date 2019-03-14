@@ -19,6 +19,13 @@ function one_in(n) end
 --  @function coinflip
 function coinflip() end
 
+--- Returns a random number from min to max, exclusive.
+--  @tparam num min
+--  @tparam num max
+--  @treturn num a number in [min, max)
+--  @function between
+function between(min, max) end
+
 --- Returns a random object from a table.
 --  @tparam table table a table
 --  @treturn object an object from the table

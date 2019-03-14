@@ -20,6 +20,10 @@ void txtnew();
 
 void play_sound(const std::string&);
 
+void show_journal_update_message();
+
+void fade_out();
+
 
 void bind(sol::table&);
 }; // namespace LuaApiGUI

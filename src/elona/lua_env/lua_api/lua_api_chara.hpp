@@ -20,8 +20,6 @@ bool is_player(LuaCharacterHandle);
 
 bool is_ally(LuaCharacterHandle);
 
-bool flag(LuaCharacterHandle, const EnumString&);
-
 int count();
 
 sol::optional<LuaCharacterHandle> player();
@@ -36,8 +34,9 @@ create_from_id_xy(int, int, const std::string&);
 
 int kill_count(const std::string&);
 
-sol::optional<LuaCharacterHandle> find(const std::string&);
+sol::optional<LuaCharacterHandle> find(const std::string&, const EnumString&);
 
+bool can_recruit_allies();
 
 void bind(sol::table&);
 }; // namespace LuaApiChara

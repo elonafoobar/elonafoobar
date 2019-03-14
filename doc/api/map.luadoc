@@ -14,9 +14,22 @@ function width() end
 function height() end
 
 --- Returns the current map's ID.
---  @treturn num the current map's ID
+--  @treturn[1] string the current map's ID
+--  @treturn[2] nil
 --  @function id
 function id() end
+
+--- Returns the current map's legacy ID.
+--  @treturn[1] num the current map's legacy ID
+--  @treturn[2] nil
+--  @function legacy_id
+function legacy_id() end
+
+--- Returns the ID of the current map's instance. There can be more than one
+--  instance of a map of the same kind, like player-owned buildings.
+--  @treturn num the current map's instance ID
+--  @function instance_id
+function instance_id() end
 
 --- Returns true if this map is the overworld.
 --  @treturn bool
@@ -69,3 +82,24 @@ function set_tile(position, id) end
 --  @usage Map.set_tile_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
 --  @function set_tile_memory
 function set_tile_memory(position, id) end
+
+--- Sets a feat at the given position.
+--  @tparam LuaPosition position (const) the map position
+--  @tparam num tile the tile ID of the feat
+--  @tparam num param1 a parameter of the feat
+--  @tparam num param2 a parameter of the feat
+--  @function set_feat
+function set_feat(position, tile, param1, param2) end
+
+--- Clears the feat at the given position.
+--  @tparam LuaPosition position (const) the map position
+--  @function clear_feat
+function clear_feat(position) end
+
+--- [R] The map data for the current map. This contains serialized values
+--  controlling various aspects of the current map.
+--  @tfield LuaMapData data
+
+--- Returns the area in the world map that corresponds to this map.
+--  @function area
+function area() end

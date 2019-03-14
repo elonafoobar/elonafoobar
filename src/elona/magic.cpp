@@ -2419,8 +2419,7 @@ bool _magic_49(int efcibk)
     equip = inv[ci].body_part;
     animeload(8, cc);
     inv[ci].quality = Quality::miracle;
-    fixmaterial = inv[ci].material;
-    change_item_material();
+    change_item_material(inv[ci], inv[ci].material);
     randomize(inv[efcibk].param1);
     inv[ci].subname = 40000 + rnd(30000);
     p = rnd(rnd(rnd(10) + 1) + 3) + 3;
@@ -2500,19 +2499,21 @@ bool _magic_21_1127()
         }
         else
         {
+            int material = fixmaterial;
+
             animeload(8, cc);
             if (efp <= 50)
             {
                 if (rnd(3) == 0)
                 {
-                    fixmaterial = 35;
+                    material = 35;
                 }
             }
             s = itemname(ci, 1, 1);
             objlv = efp / 10;
             objfix = efp / 100;
             randomize();
-            change_item_material();
+            change_item_material(inv[ci], material);
             txt(i18n::s.get(
                 "core.locale.magic.change_material.apply",
                 cdata[cc],

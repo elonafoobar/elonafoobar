@@ -57,12 +57,17 @@ function set_growth_buff(index, power) end
 --  @function recruit_as_ally
 function recruit_as_ally() end
 
---- Sets a flag on this character. <b>Note</b>: Currently, all flags up
---  to <code>IsQuickTempered</code> are "intrinsic" and are always
---  reset when this character is refreshed each turn. To change these
---  flags, you must call this function inside a handler for
---  <code>Event.EventKind.CharaRefreshed</code>, or the flag will be
---  reset later.
+--- Gets the value of a flag on this character.
+--  @tparam Enums.CharaFlag flag the flag to get
+--  @treturn bool
+--  @function get_flag
+function get_flag(chara, flag) end
+
+--- Sets the value of a flag on this character. <b>Note</b>: Currently, all flags
+--  up to <code>IsQuickTempered</code> are "intrinsic" and are always reset when
+--  this character is refreshed each turn. To change these flags, you must call
+--  this function inside a handler for
+--  <code>Event.EventKind.CharaRefreshed</code>, or the flag will be reset later.
 --  @tparam Enums.CharaFlag flag the flag to set
 --  @tparam bool value the flag's new value
 --  @see Event.EventKind.CharaRefreshed
@@ -145,11 +150,21 @@ function vanquish() end
 --  @function act_hostile_against
 function act_hostile_against(target) end
 
+--- Refreshes this character, reapplying bonuses given by equipment.
+--  @function refresh
+function refresh() end
+
+--- Refreshes the burden state of this character. Only valid if called on the
+--  player. Call this method if the character's inventory changes so the weight
+--  can be reapplied.
+--  @function refresh_burden_state
+function refresh_burden_state() end
+
 --- [R] The index of this character in the global characters array.
 --  @tfield num index
 
---- [R] The prototype ID of this character.
---  @tfield id index
+--- [R] The legacy ID of this character.
+--  @tfield legacy_id index
 
 --- [R] The character's proper name without any qualifiers.
 --  @tfield string name
@@ -222,8 +237,8 @@ function act_hostile_against(target) end
 --- [RW] The character's current interest.
 --  @tfield num interest
 
---- [R] The new version prototype ID of the character.
---  @tfield string new_id
+--- [R] The new-style version prototype ID of the character.
+--  @tfield string id
 
 --- [R] The name of the character with article and title.
 --  @tfield string name
@@ -242,3 +257,6 @@ function act_hostile_against(target) end
 
 --- [RW] The quality of the character.
 --  @tfield Quality quality
+
+--- [R] The prototype data of the character.
+--  @tfield table prototype

@@ -31,32 +31,32 @@ module "Enums"
 DamageSource = {}
 
 --- A set of colors.
---  @enum ColorIndex
---  @tfield Enums.ColorIndex None
---  @tfield Enums.ColorIndex White
---  @tfield Enums.ColorIndex Green
---  @tfield Enums.ColorIndex Red
---  @tfield Enums.ColorIndex Blue
---  @tfield Enums.ColorIndex Orange
---  @tfield Enums.ColorIndex Yellow
---  @tfield Enums.ColorIndex Grey
---  @tfield Enums.ColorIndex Purple
---  @tfield Enums.ColorIndex Cyan
---  @tfield Enums.ColorIndex LightRed
---  @tfield Enums.ColorIndex Gold
---  @tfield Enums.ColorIndex White2
---  @tfield Enums.ColorIndex LightBrown
---  @tfield Enums.ColorIndex DarkGreen
---  @tfield Enums.ColorIndex LightGrey
---  @tfield Enums.ColorIndex PaleRed
---  @tfield Enums.ColorIndex LightBlue
---  @tfield Enums.ColorIndex LightPurple
---  @tfield Enums.ColorIndex LightGreen
---  @tfield Enums.ColorIndex YellowGreen
---  @tfield Enums.ColorIndex RandomFurniture
---  @tfield Enums.ColorIndex RandomSeeded
---  @tfield Enums.ColorIndex RandomAny
-ColorIndex = {}
+--  @enum Color
+--  @tfield Enums.Color None
+--  @tfield Enums.Color White
+--  @tfield Enums.Color Green
+--  @tfield Enums.Color Red
+--  @tfield Enums.Color Blue
+--  @tfield Enums.Color Orange
+--  @tfield Enums.Color Yellow
+--  @tfield Enums.Color Grey
+--  @tfield Enums.Color Purple
+--  @tfield Enums.Color Cyan
+--  @tfield Enums.Color LightRed
+--  @tfield Enums.Color Gold
+--  @tfield Enums.Color White2
+--  @tfield Enums.Color LightBrown
+--  @tfield Enums.Color DarkGreen
+--  @tfield Enums.Color LightGrey
+--  @tfield Enums.Color PaleRed
+--  @tfield Enums.Color LightBlue
+--  @tfield Enums.Color LightPurple
+--  @tfield Enums.Color LightGreen
+--  @tfield Enums.Color YellowGreen
+--  @tfield Enums.Color RandomFurniture
+--  @tfield Enums.Color RandomSeeded
+--  @tfield Enums.Color RandomAny
+Color = {}
 
 --- The curse state of an item.
 --  @usage local item = Item.create(10, 10, "core.putitoro", 3)
@@ -135,133 +135,159 @@ Quality = {}
 
 --- The type of a buff. Food buffs are lost when vomiting. Hex buffs can be
 --  removed with Holy Light/Vanquish Hex, and can be resisted.
---  @enum BuffType
---  @tfield Enums.BuffType Buff
---  @tfield Enums.BuffType Hex
---  @tfield Enums.BuffType Food
-BuffType = {}
+--  @enum Buff
+--  @tfield Enums.Buff Buff
+--  @tfield Enums.Buff Hex
+--  @tfield Enums.Buff Food
+Buff = {}
 
 --- The type of a map.
---  @enum mdata_t
---  @tfield Enums.mdata_t WorldMap
---  @tfield Enums.mdata_t Guild
---  @tfield Enums.mdata_t Town
---  @tfield Enums.mdata_t Field
---  @tfield Enums.mdata_t PlayerOwned
---  @tfield Enums.mdata_t Shelter
---  @tfield Enums.mdata_t Temporary
---  @tfield Enums.mdata_t Dungeon
---  @tfield Enums.mdata_t DungeonTower
---  @tfield Enums.mdata_t DungeonForest
---  @tfield Enums.mdata_t DungeonCastle
-mdata_t = {}
+--  @enum MapType
+--  @tfield Enums.MapType WorldMap
+--  @tfield Enums.MapType Guild
+--  @tfield Enums.MapType Town
+--  @tfield Enums.MapType Field
+--  @tfield Enums.MapType PlayerOwned
+--  @tfield Enums.MapType Shelter
+--  @tfield Enums.MapType Temporary
+--  @tfield Enums.MapType Dungeon
+--  @tfield Enums.MapType DungeonTower
+--  @tfield Enums.MapType DungeonForest
+--  @tfield Enums.MapType DungeonCastle
+MapType = {}
 
 --- Determines how the player should be spawned in a map when entering it for the
 --  first time.
---  @enum MapEntranceTypeTable
---  @tfield Enums.MapEntranceTypeTable StairUp
---  @tfield Enums.MapEntranceTypeTable StairDown
---  @tfield Enums.MapEntranceTypeTable Custom
---  @tfield Enums.MapEntranceTypeTable Center
---  @tfield Enums.MapEntranceTypeTable Random
---  @tfield Enums.MapEntranceTypeTable WorldMapPos
---  @tfield Enums.MapEntranceTypeTable Specified
---  @tfield Enums.MapEntranceTypeTable South
-MapEntranceTypeTable = {}
+--  @enum MapEntranceType
+--  @tfield Enums.MapEntranceType StairUp
+--  @tfield Enums.MapEntranceType StairDown
+--  @tfield Enums.MapEntranceType Custom
+--  @tfield Enums.MapEntranceType Center
+--  @tfield Enums.MapEntranceType Random
+--  @tfield Enums.MapEntranceType WorldMapPos
+--  @tfield Enums.MapEntranceType Specified
+--  @tfield Enums.MapEntranceType South
+MapEntranceType = {}
 
 --- Indicates which map tile atlas to use for a map.
---  @enum MapTilesetTable
---  @tfield Enums.MapTilesetTable Normal
---  @tfield Enums.MapTilesetTable WorldMap
-MapTilesetTable = {}
+--  @enum MapTileset
+--  @tfield Enums.MapTileset Normal
+--  @tfield Enums.MapTileset WorldMap
+MapTileset = {}
 
 --- Possible genders of a character.
---  @enum GenderTable
---  @tfield Enums.GenderTable Random
---  @tfield Enums.GenderTable Male
---  @tfield Enums.GenderTable Female
-GenderTable = {}
+--  @enum Gender
+--  @tfield Enums.Gender Random
+--  @tfield Enums.Gender Male
+--  @tfield Enums.Gender Female
+Gender = {}
 
 --- Relationship of a character to the player.
---  @enum RelationTable
---  @tfield Enums.RelationTable Aggressive
---  @tfield Enums.RelationTable Nonaggressive
---  @tfield Enums.RelationTable Unconcerned
---  @tfield Enums.RelationTable Neutral
---  @tfield Enums.RelationTable Friend
-RelationTable = {}
+--  @enum Relation
+--  @tfield Enums.Relation Aggressive
+--  @tfield Enums.Relation Nonaggressive
+--  @tfield Enums.Relation Unconcerned
+--  @tfield Enums.Relation Neutral
+--  @tfield Enums.Relation Friend
+Relation = {}
 
 --- A flag that can be set on a character. The first 32 flags (up to
 --  <code>IsQuickTempered</code>) are "intrinsic" and will be reset
 --  when the character is refreshed.
 --  @see LuaCharacter.set_flag
---  @enum CharaFlagTable
---  @tfield Enums.CharaFlagTable IsFloating
---  @tfield Enums.CharaFlagTable IsInvisible
---  @tfield Enums.CharaFlagTable CanSeeInvisible
---  @tfield Enums.CharaFlagTable IsImmuneToConfusion
---  @tfield Enums.CharaFlagTable IsImmuneToBlindness
---  @tfield Enums.CharaFlagTable IsImmuneToFear
---  @tfield Enums.CharaFlagTable IsImmuneToSleep
---  @tfield Enums.CharaFlagTable IsImmuneToParalyzation
---  @tfield Enums.CharaFlagTable IsImmuneToPoison
---  @tfield Enums.CharaFlagTable CanDigestRottenFood
---  @tfield Enums.CharaFlagTable IsProtectedFromThieves
---  @tfield Enums.CharaFlagTable IsIncognito
---  @tfield Enums.CharaFlagTable DropsGold
---  @tfield Enums.CharaFlagTable Explodes
---  @tfield Enums.CharaFlagTable IsDeathMaster
---  @tfield Enums.CharaFlagTable CanCastRapidMagic
---  @tfield Enums.CharaFlagTable HasLayHand
---  @tfield Enums.CharaFlagTable IsSuitableForMount
---  @tfield Enums.CharaFlagTable Splits
---  @tfield Enums.CharaFlagTable HasCursedEquipments
---  @tfield Enums.CharaFlagTable IsUnsuitableForMount
---  @tfield Enums.CharaFlagTable IsImmuneToElementalDamage
---  @tfield Enums.CharaFlagTable Splits2
---  @tfield Enums.CharaFlagTable IsMetal
---  @tfield Enums.CharaFlagTable CuresBleedingQuickly
---  @tfield Enums.CharaFlagTable HasPowerBash
---  @tfield Enums.CharaFlagTable IsImmuneToMine
---  @tfield Enums.CharaFlagTable IsQuickTempered
---  @tfield Enums.CharaFlagTable IsLivestock
---  @tfield Enums.CharaFlagTable IsMarried
---  @tfield Enums.CharaFlagTable HasMadeGene
---  @tfield Enums.CharaFlagTable IsEscorted
---  @tfield Enums.CharaFlagTable IsTemporary
---  @tfield Enums.CharaFlagTable IsSilent
---  @tfield Enums.CharaFlagTable HasBeenUsedStethoscope
---  @tfield Enums.CharaFlagTable HasOwnSprite
---  @tfield Enums.CharaFlagTable IsLeashed
---  @tfield Enums.CharaFlagTable IsContracting
---  @tfield Enums.CharaFlagTable IsQuestTarget
---  @tfield Enums.CharaFlagTable IsEscortedInSubQuest
---  @tfield Enums.CharaFlagTable WillExplodeSoon
---  @tfield Enums.CharaFlagTable IsSentencedDaeth
---  @tfield Enums.CharaFlagTable IsLayHandAvailable
---  @tfield Enums.CharaFlagTable IsRidden
---  @tfield Enums.CharaFlagTable IsLordOfDungeon
---  @tfield Enums.CharaFlagTable HasOwnName
---  @tfield Enums.CharaFlagTable IsPregnant
---  @tfield Enums.CharaFlagTable IsNotAttackedByEnemy
---  @tfield Enums.CharaFlagTable IsContractingWithReaper
---  @tfield Enums.CharaFlagTable NeedsRefreshingStatus
---  @tfield Enums.CharaFlagTable VisitedJustNow
---  @tfield Enums.CharaFlagTable BreaksIntoDebris
---  @tfield Enums.CharaFlagTable IsBestFriend
---  @tfield Enums.CharaFlagTable IsHungOnSandBag
---  @tfield Enums.CharaFlagTable HasAnorexia
---  @tfield Enums.CharaFlagTable WasPassedItemByYouJustNow
---  @tfield Enums.CharaFlagTable CuresMpFrequently
---  @tfield Enums.CharaFlagTable HasCustomTalk
---  @tfield Enums.CharaFlagTable HasLearnedWords
---  @tfield Enums.CharaFlagTable OnlyChristmas
-CharaFlagTable = {}
+--  @enum CharaFlag
+--  @tfield Enums.CharaFlag IsFloating
+--  @tfield Enums.CharaFlag IsInvisible
+--  @tfield Enums.CharaFlag CanSeeInvisible
+--  @tfield Enums.CharaFlag IsImmuneToConfusion
+--  @tfield Enums.CharaFlag IsImmuneToBlindness
+--  @tfield Enums.CharaFlag IsImmuneToFear
+--  @tfield Enums.CharaFlag IsImmuneToSleep
+--  @tfield Enums.CharaFlag IsImmuneToParalyzation
+--  @tfield Enums.CharaFlag IsImmuneToPoison
+--  @tfield Enums.CharaFlag CanDigestRottenFood
+--  @tfield Enums.CharaFlag IsProtectedFromThieves
+--  @tfield Enums.CharaFlag IsIncognito
+--  @tfield Enums.CharaFlag DropsGold
+--  @tfield Enums.CharaFlag Explodes
+--  @tfield Enums.CharaFlag IsDeathMaster
+--  @tfield Enums.CharaFlag CanCastRapidMagic
+--  @tfield Enums.CharaFlag HasLayHand
+--  @tfield Enums.CharaFlag IsSuitableForMount
+--  @tfield Enums.CharaFlag Splits
+--  @tfield Enums.CharaFlag HasCursedEquipments
+--  @tfield Enums.CharaFlag IsUnsuitableForMount
+--  @tfield Enums.CharaFlag IsImmuneToElementalDamage
+--  @tfield Enums.CharaFlag Splits2
+--  @tfield Enums.CharaFlag IsMetal
+--  @tfield Enums.CharaFlag CuresBleedingQuickly
+--  @tfield Enums.CharaFlag HasPowerBash
+--  @tfield Enums.CharaFlag IsImmuneToMine
+--  @tfield Enums.CharaFlag IsQuickTempered
+--  @tfield Enums.CharaFlag IsLivestock
+--  @tfield Enums.CharaFlag IsMarried
+--  @tfield Enums.CharaFlag HasMadeGene
+--  @tfield Enums.CharaFlag IsEscorted
+--  @tfield Enums.CharaFlag IsTemporary
+--  @tfield Enums.CharaFlag IsSilent
+--  @tfield Enums.CharaFlag HasBeenUsedStethoscope
+--  @tfield Enums.CharaFlag HasOwnSprite
+--  @tfield Enums.CharaFlag IsLeashed
+--  @tfield Enums.CharaFlag IsContracting
+--  @tfield Enums.CharaFlag IsQuestTarget
+--  @tfield Enums.CharaFlag IsEscortedInSubQuest
+--  @tfield Enums.CharaFlag WillExplodeSoon
+--  @tfield Enums.CharaFlag IsSentencedDaeth
+--  @tfield Enums.CharaFlag IsLayHandAvailable
+--  @tfield Enums.CharaFlag IsRidden
+--  @tfield Enums.CharaFlag IsLordOfDungeon
+--  @tfield Enums.CharaFlag HasOwnName
+--  @tfield Enums.CharaFlag IsPregnant
+--  @tfield Enums.CharaFlag IsNotAttackedByEnemy
+--  @tfield Enums.CharaFlag IsContractingWithReaper
+--  @tfield Enums.CharaFlag NeedsRefreshingStatus
+--  @tfield Enums.CharaFlag VisitedJustNow
+--  @tfield Enums.CharaFlag BreaksIntoDebris
+--  @tfield Enums.CharaFlag IsBestFriend
+--  @tfield Enums.CharaFlag IsHungOnSandBag
+--  @tfield Enums.CharaFlag HasAnorexia
+--  @tfield Enums.CharaFlag WasPassedItemByYouJustNow
+--  @tfield Enums.CharaFlag CuresMpFrequently
+--  @tfield Enums.CharaFlag HasCustomTalk
+--  @tfield Enums.CharaFlag HasLearnedWords
+--  @tfield Enums.CharaFlag OnlyChristmas
+CharaFlag = {}
 
 --- The types of traits available.
---  @enum TraitTypeTable
---  @tfield Enums.TraitTypeTable Feat
---  @tfield Enums.TraitTypeTable Mutation
---  @tfield Enums.TraitTypeTable Nature
---  @tfield Enums.TraitTypeTable EtherDisease
-TraitTypeTable = {}
+--  @enum TraitType
+--  @tfield Enums.TraitType Feat
+--  @tfield Enums.TraitType Mutation
+--  @tfield Enums.TraitType Nature
+--  @tfield Enums.TraitType EtherDisease
+TraitType = {}
+
+--- Location to search for characters using Chara.find.
+--  @see Chara.find
+--  @enum CharaFindLocation
+--  @tfield Enums.CharaFindLocation Allies
+--  @tfield Enums.CharaFindLocation Others
+CharaFindLocation = {}
+
+--- Location to search for items using Item.find.
+--  @see Item.find
+--  @enum ItemFindLocation
+--  @tfield Enums.ItemFindLocation PlayerInventory
+--  @tfield Enums.ItemFindLocation Ground
+--  @tfield Enums.ItemFindLocation PlayerInventoryAndGround
+ItemFindLocation = {}
+
+--- Operation to use with Input.choose_ally.
+--  @see Input.choose_ally
+--  @enum ControlAllyOperation
+--  @tfield Enums.ControlAllyOperation CallBack
+--  @tfield Enums.ControlAllyOperation Sell
+--  @tfield Enums.ControlAllyOperation PetArena
+--  @tfield Enums.ControlAllyOperation Staying
+--  @tfield Enums.ControlAllyOperation Investigate
+--  @tfield Enums.ControlAllyOperation GeneEngineer
+ControlAllyOperation = {}
