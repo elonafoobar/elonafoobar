@@ -349,10 +349,12 @@ impl Document {
     pub fn render<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write(to_lua_comment(&self.module_comment.text).as_bytes())?;
         writer.write(self.module_comment.import_comment().as_bytes())?;
+        writer.write("\n".as_bytes())?;
 
         for comment in self.comments.iter() {
-            writer.write("\n\n".as_bytes())?;
+            writer.write("\n".as_bytes())?;
             comment.render(writer)?;
+            writer.write("\n".as_bytes())?;
         }
 
         Ok(())
