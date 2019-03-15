@@ -47,6 +47,7 @@ private:
     };
 
     GameHelp _help;
+    bool _redraw;
 };
 } // namespace ui
 } // namespace elona

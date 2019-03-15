@@ -280,6 +280,8 @@ void UIMenuGameHelp::update()
         page = pagemax;
     else if (page > pagemax)
         page = 0;
+
+    _redraw = true;
 }
 
 
@@ -328,8 +330,12 @@ void UIMenuGameHelp::_draw_window()
 
 void UIMenuGameHelp::draw()
 {
-    _draw_window();
-    _draw_navigation_menu();
+    if (_redraw)
+    {
+        _draw_window();
+        _draw_navigation_menu();
+        _redraw = false;
+    }
 }
 
 
@@ -344,6 +350,11 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
         snd("core.ok1");
         page_bk = page;
         cs_bk2 = cs;
+        set_reupdate();
+    }
+
+    if (cs != cs_bk)
+    {
         set_reupdate();
     }
 
