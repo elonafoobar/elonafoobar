@@ -1010,8 +1010,6 @@ void fix_input_chat(std::string&);
 void fix_input_chat2(std::string&);
 
 
-// Text generation
-std::string randomname();
 
 // Text fragments
 std::string cnvarticle(const std::string&);

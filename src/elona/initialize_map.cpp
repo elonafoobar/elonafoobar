@@ -101,7 +101,7 @@ static void _prompt_initialize_map()
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
         int stat = dialog(i18n::s.get("core.locale.map.prompt_initialize"), 3);
-        if (stat == 6 || true)
+        if (stat == 6)
         {
             ctrl_file(FileOperation::map_delete);
         }

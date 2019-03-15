@@ -125,7 +125,13 @@ void LuaItem::bind(sol::state& lua)
     /**
      * @luadoc own_state field num
      *
-     * [RW] The own status of the item.
+     * [RW] Controls the ownership of this item.
+     * <code>-2</code>: Item was dropped by the player on death
+     * <code>0</code>: Normal, can be picked up by the player
+     * <code>1</code>: Not owned ("It's not your property", etc.)
+     * <code>2</code>: Not carryable (shopkeeper's trunk).
+     * <code>3</code>: Built shelter
+     * <code>4</code>: Harvestable item in harvest quests
      */
     LuaItem.set("own_state", &Item::own_state);
 

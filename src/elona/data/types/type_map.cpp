@@ -44,7 +44,7 @@ MapDefData MapDefDB::convert(
     DATA_OPT_OR(villagers_make_snowmen, bool, false);
     DATA_OPT_OR(is_hidden_in_world_map, bool, false);
 
-    DATA_REQ_FUNC(generator);
+    DATA_OPT_FUNC(generator);
     DATA_OPT_FUNC(chara_filter);
 
     Position outer_map_position_{outer_map_position.get<int>("x"),

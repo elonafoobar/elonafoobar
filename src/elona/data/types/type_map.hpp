@@ -40,7 +40,8 @@ struct MapDefData
     bool villagers_make_snowmen{};
     bool is_hidden_in_world_map{};
 
-    lua::WrappedFunction generator{};
+    // TODO: make required
+    optional<lua::WrappedFunction> generator{};
     optional<lua::WrappedFunction> chara_filter{};
 };
 

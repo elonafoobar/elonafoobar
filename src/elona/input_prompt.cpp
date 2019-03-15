@@ -39,17 +39,14 @@ int Prompt::query(int x, int y, int width)
         auto action = cursor_check_ex();
         int ret = -1;
 
-        if (keyhalt != 1)
-        {
-            auto keys = snail::Input::instance().pressed_keys();
+        auto keys = snail::Input::instance().pressed_keys();
 
-            for (const auto& entry : _entries)
+        for (const auto& entry : _entries)
+        {
+            if (keys.find(entry.key) != keys.end())
             {
-                if (keys.find(entry.key) != keys.end())
-                {
-                    ret = entry.value;
-                    break;
-                }
+                ret = entry.value;
+                break;
             }
         }
         if (action == "enter")

@@ -6,6 +6,11 @@ namespace elona
 namespace lua
 {
 
+/*A
+ * @luadoc
+ *
+ * A class used in map generation.
+ */
 struct MapGenerator
 {
 };

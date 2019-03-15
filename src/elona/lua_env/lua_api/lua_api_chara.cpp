@@ -87,6 +87,16 @@ sol::optional<LuaCharacterHandle> LuaApiChara::create_random(
     return LuaApiChara::create_random_xy(position.x, position.y);
 }
 
+
+/**
+ * @luadoc create
+ *
+ * Attempts to create a randomly generated character at a given position.
+ * Returns the character if creation succeeded, nil otherwise.
+ * @tparam LuaPosition position (const) position to create the character at
+ * @treturn[1] LuaCharacter the created character
+ * @treturn[2] nil
+ */
 sol::optional<LuaCharacterHandle> LuaApiChara::create_random_xy(int x, int y)
 {
     elona::flt();
