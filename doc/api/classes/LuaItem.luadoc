@@ -44,6 +44,15 @@ function change_material(material_id) end
 --- [RW] A generic parameter.
 --  @tfield num param4
 
+--- [RW] Controls the ownership of this item.
+--  <code>-2</code>: Item was dropped by the player on death
+--  <code>0</code>: Normal, can be picked up by the player
+--  <code>1</code>: Not owned ("It's not your property", etc.)
+--  <code>2</code>: Not carryable (shopkeeper's trunk).
+--  <code>3</code>: Built shelter
+--  <code>4</code>: Harvestable item in harvest quests
+--  @tfield num own_state
+
 --- [R] The material ID of this item. To change it, use
 --  LuaItem.change_material.
 --  @tfield string material
@@ -59,15 +68,6 @@ function change_material(material_id) end
 
 --- [RW] The number of this item.
 --  @tfield num number
-
---- [RW] Controls the ownership type of the item.
--- <code>-2</code>: Item was dropped by the player on death
--- <code>0</code>: Normal, can be picked up by the player
--- <code>1</code>: Not owned ("It's not your property", etc.)
--- <code>2</code>: Not carryable (shopkeeper's trunk). Effectively the same as <code>1</code>.
--- <code>3</code>: Built shelter
--- <code>4</code>: Harvestable item in harvest quests
--- @tfield num own_state
 
 --- [RW] The curse state of this item.
 --  @tfield CurseState curse_state

@@ -70,12 +70,11 @@ function get_flag(chara, flag) end
 --  <code>core.character_refreshed</code>, or the flag will be reset later.
 --  @tparam Enums.CharaFlag flag the flag to set
 --  @tparam bool value the flag's new value
+--  @see core.event
 --  @usage local Event = Elona.require("Event")
---  local Enums = Elona.require("Enums")
 --
 --  local function make_invisible(chara)
---  chara:set_flag(Enums.CharaFlag.IsInvisible, true) -- intrinsic, reset on
---  refresh
+--  chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
 --  end
 --
 --  -- force this flag to be overridden after this character is refreshed.
@@ -253,6 +252,9 @@ function switch_religion(god_id) end
 --  the player.
 --  @tfield num karma
 
+--- [RW] The index of a character this character is targeting..
+--  @tfield num enemy_id
+
 --- [RW] The character's current image.
 --  @tfield string portrait
 
@@ -264,6 +266,9 @@ function switch_religion(god_id) end
 
 --- [RW] The character's current interest.
 --  @tfield num interest
+
+--- [RW] The character's AI calmness.
+--  @tfield num ai_calm
 
 --- [R] The new-style version prototype ID of the character.
 --  @tfield string id

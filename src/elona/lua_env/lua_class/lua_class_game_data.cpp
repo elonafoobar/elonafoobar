@@ -22,6 +22,13 @@ void LuaGameData::bind(sol::state& lua)
     LuaGameData.set("new", sol::no_constructor);
 
     /**
+     * @luadoc home_scale field num
+     *
+     * [RW] The player's home scale.
+     */
+    LuaGameData.set("home_scale", &GameData::home_scale);
+
+    /**
      * @luadoc initial_cart_limit field num
      *
      * [RW] The player's initial cargo capacity.

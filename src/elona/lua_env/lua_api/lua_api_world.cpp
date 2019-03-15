@@ -10,30 +10,6 @@ namespace lua
 /**
  * @luadoc
  *
- * Returns the time in hours since year 0.
- * @treturn num the time in hours
- * TODO: move into World.data
- */
-int LuaApiWorld::time()
-{
-    return game_data.date.hours();
-}
-
-
-/**
- * @luadoc
- *
- * Returns the player's home scale.
- * TODO: move into World.data
- */
-int LuaApiWorld::home_scale()
-{
-    return game_data.home_scale;
-}
-
-/**
- * @luadoc
- *
  * Gets the ID of the next deferred event that will run.
  * @treturn num
  */
@@ -151,6 +127,12 @@ void LuaApiWorld::modify_ranking(int ranking_id, int amount, int min)
     modrank(ranking_id, amount, min);
 }
 
+/**
+ * @luadoc
+ *
+ * Generates a random title.
+ * @tparam Enums.RandomTitleType The type of title to generate.
+ */
 std::string LuaApiWorld::random_title(const EnumString& type)
 {
     auto type_value = LuaEnums::RandomTitleTypeTable.ensure_from_string(type);
@@ -159,8 +141,6 @@ std::string LuaApiWorld::random_title(const EnumString& type)
 
 void LuaApiWorld::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, time);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, home_scale);
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, deferred_event_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, add_deferred_event);
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, belongs_to_guild);

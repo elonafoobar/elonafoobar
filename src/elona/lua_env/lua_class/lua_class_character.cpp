@@ -206,7 +206,7 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
  * <code>core.character_refreshed</code>, or the flag will be reset later.
  * @tparam Enums.CharaFlag flag the flag to set
  * @tparam bool value the flag's new value
- * @see core.event.core.character_refreshed
+ * @see core.event
  * @usage local Event = Elona.require("Event")
  *
  * local function make_invisible(chara)
@@ -720,7 +720,7 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("interest", &Character::interest);
 
     /**
-     * @luadoc interest field num
+     * @luadoc ai_calm field num
      *
      * [RW] The character's AI calmness.
      */

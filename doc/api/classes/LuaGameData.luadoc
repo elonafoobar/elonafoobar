@@ -1,6 +1,9 @@
 --- Contains parameters for the current game save.
 --  @classmod LuaGameData
 
+--- [RW] The player's home scale.
+--  @tfield num home_scale
+
 --- [RW] The player's initial cargo capacity.
 --  @tfield num initial_cart_limit
 

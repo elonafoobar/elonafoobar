@@ -36,5 +36,10 @@ function ranking_title(ranking_id) end
 --  @function modify_ranking
 function modify_ranking(ranking_id, amount, min) end
 
+--- Generates a random title.
+--  @tparam Enums.RandomTitleType The type of title to generate.
+--  @function random_title
+function random_title(type) end
+
 --- [R] Data for the current game save.
 --  @tfield LuaGameData data
