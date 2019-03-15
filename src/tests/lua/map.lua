@@ -25,14 +25,13 @@ lrun("test Map.valid", function()
 end)
 
 lrun("test Map.is_blocked", function()
-
         Testing.start_in_debug_map()
 
         local pos = LuaPosition.new(5, 5)
-        lequal(Map.is_blocked(pos), true)
-        lequal(Map.is_blocked(pos.x, pos.y), true)
-
-        Map.set_tile(5, 5, Map.generate_tile(Enums.TileKind.Wall))
         lequal(Map.is_blocked(pos), false)
         lequal(Map.is_blocked(pos.x, pos.y), false)
+
+        Map.set_tile(5, 5, Map.generate_tile(Enums.TileKind.Wall))
+        lequal(Map.is_blocked(pos), true)
+        lequal(Map.is_blocked(pos.x, pos.y), true)
 end)

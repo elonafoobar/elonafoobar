@@ -132,7 +132,7 @@ bool LuaApiMap::is_solid_xy(int x, int y)
         return true;
     }
 
-    return elona::chipm(7, elona::cell_data.at(x, y).chip_id_actual) & 4;
+    return elona::chip_data.for_cell(x, y).effect & 4;
 }
 
 /**
