@@ -669,7 +669,7 @@ TEST_CASE("Test validity check of lua reference userdata", "[Lua: Handles]")
     REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_lua_ref", R"(
 local Chara = Elona.require("Chara")
 local chara = Chara.create(0, 0, "core.putit")
-local skill = chara:get_skill(10)
+local skill = chara:get_skill("core.attribute_strength")
 assert(skill.original_level > 0)
 
 local old_index = chara.index
