@@ -1,0 +1,19 @@
+--- Represents a date and time.
+--  @classmod LuaDate
+
+--  @tfield num year
+
+--  @tfield num month
+
+--  @tfield num day
+
+--  @tfield num hour
+
+--  @tfield num minute
+
+--  @tfield num second
+
+--- Returns the time in hours since year 0.
+--  @treturn num
+--  @function hours
+function hours() end

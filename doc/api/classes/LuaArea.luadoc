@@ -1,2 +1,52 @@
 --- Represents an area on the map.
 --  @classmod LuaArea
+
+--  @tfield num id
+
+--  @tfield num type
+
+--  @tfield num position
+
+--  @tfield num entrance
+
+--  @tfield num tile_set
+
+--  @tfield num dungeon_prefix
+
+--  @tfield num visited_deepest_level
+
+--  @tfield num turn_cost_base
+
+--  @tfield num deepest_level
+
+--  @tfield bool is_generated_every_time
+
+--  @tfield num default_ai_calm
+
+--  @tfield num appearance
+
+--  @tfield num danger_level
+
+--  @tfield num tile_type
+
+--  @tfield num has_been_conquered
+
+--  @tfield bool is_indoor
+
+--  @tfield num winning_streak_in_arena
+
+--  @tfield num winning_streak_in_pet_arena
+
+--  @tfield num arena_random_seed
+
+--  @tfield num time_of_next_update_of_arena_random_seed
+
+--  @tfield num time_of_next_arena
+
+--  @tfield num time_of_next_rumble
+
+--  @tfield num quest_town_id
+
+--  @tfield bool christmas_festival
+
+--  @tfield num outer_map

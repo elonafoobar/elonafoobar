@@ -86,14 +86,14 @@ function get_flag(chara, flag) end
 function set_flag(flag, value) end
 
 --- Obtains the skill of the given ID.
---  @tparam num skill Skill ID, from 0 to 599
+--  @tparam string skill_id ID of type core.ability
 --  @treturn LuaAbility
 --  @function get_skill
-function get_skill(skill) end
+function get_skill(skill_id) end
 
 --- Makes this character gain a new skill or spell. This only has an
 --  effect if the character does not already know the skill/spell.
---  @tparam num skill_id the skill/spell ID
+--  @tparam string skill_id the skill/spell ID of type core.ability
 --  @tparam num initial_level the intial skill/spell level
 --  @tparam[opt] num initial_stock the initial spell stock for spells
 --  @function gain_skill
@@ -101,7 +101,7 @@ function gain_skill(skill_id, initial_level, initial_stock) end
 
 --- Makes this character gain experience in a skill or spell. This only
 --  has an effect if the character already knows the skill/spell.
---  @tparam num skill_id the skill/spell ID
+--  @tparam num skill_id the skill/spell ID of type core.ability
 --  @tparam num amount the amount of experience
 --  @function gain_skill_exp
 function gain_skill_exp(skill_id, amount) end
@@ -160,6 +160,23 @@ function refresh() end
 --  @function refresh_burden_state
 function refresh_burden_state() end
 
+--- Moves this character to a new position.
+--  @tparam LuaPosition pos
+--  @function move_to
+function move_to(pos) end
+
+--- Moves this character to a new position.
+--  @tparam num x
+--  @tparam num y
+--  @function move_to_xy
+function move_to_xy(x, y) end
+
+--- Changes the worshipped god of this character without invoking the god
+--  switching penalty.
+--  @tparam string god_id ID of type core.god.
+--  @function switch_religion
+function switch_religion(god_id) end
+
 --- [R] The index of this character in the global characters array.
 --  @tfield num index
 
@@ -172,20 +189,26 @@ function refresh_burden_state() end
 --- [R] The character's maximum HP.
 --  @tfield num max_hp
 
---- [R] The character's current MP.
---  @tfield num mp
-
---- [R] The character's maximum MP.
---  @tfield num max_mp
-
 --- [R] The character's current stamina.
 --  @tfield num sp
 
 --- [R] The character's maximum stamina.
 --  @tfield num max_sp
 
+--- [R] The character's current MP.
+--  @tfield num mp
+
+--- [R] The character's maximum MP.
+--  @tfield num max_mp
+
+--- [RW] The character's worshipped god.
+--  @tfield string max_mp
+
 --- [RW] The character's position.
 --  @tfield LuaPosition position
+
+--- [RW] The character's initial position.
+--  @tfield LuaPosition initial_position
 
 --- [RW] The shop rank of this character. Used only if they are a
 --  shopkeeper.
@@ -194,11 +217,17 @@ function refresh_burden_state() end
 --- [RW] The role this character takes on.
 --  @tfield num role
 
+--- [RW] The character's current gold.
+--  @tfield num gold
+
 --- [RW] The character's current experience points.
 --  @tfield num experience
 
 --- [RW] The character's current fame.
 --  @tfield num fame
+
+--- [RW] The character's current level.
+--  @tfield num level
 
 --- [RW] The character's current talk type.
 --  @tfield num talk_type
@@ -253,6 +282,9 @@ function refresh_burden_state() end
 --  @tfield Gender sex
 
 --- [RW] The relationship of the character to the player.
+--  @tfield Relation relationship
+
+--- [RW] The original relationship of the character to the player.
 --  @tfield Relation relationship
 
 --- [RW] The quality of the character.

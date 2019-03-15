@@ -15,39 +15,39 @@ void LuaDate::bind(sol::state& lua)
     // Properties
 
     /**
-     * @luadoc field year num
+     * @luadoc year field num
      */
     LuaDate.set("year", &Date::year);
 
     /**
-     * @luadoc field month num
+     * @luadoc month field num
      */
     LuaDate.set("month", &Date::month);
 
     /**
-     * @luadoc field day num
+     * @luadoc day field num
      */
     LuaDate.set("day", &Date::day);
 
     /**
-     * @luadoc field hour num
+     * @luadoc hour field num
      */
     LuaDate.set("hour", &Date::hour);
 
     /**
-     * @luadoc field minute num
+     * @luadoc minute field num
      */
     LuaDate.set("minute", &Date::minute);
 
     /**
-     * @luadoc field second num
+     * @luadoc second field num
      */
     LuaDate.set("second", &Date::second);
 
     // Methods
 
     /**
-     * @luadoc function hours
+     * @luadoc hours function
      *
      * Returns the time in hours since year 0.
      * @treturn num

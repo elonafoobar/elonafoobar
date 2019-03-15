@@ -291,3 +291,12 @@ ItemFindLocation = {}
 --  @tfield Enums.ControlAllyOperation Investigate
 --  @tfield Enums.ControlAllyOperation GeneEngineer
 ControlAllyOperation = {}
+
+--- Title type to use with World.random_title.
+--  @see World.random_title
+--  @enum RandomTitleType
+--  @tfield Enums.RandomTitleType Character
+--  @tfield Enums.RandomTitleType Weapon
+--  @tfield Enums.RandomTitleType Party
+--  @tfield Enums.RandomTitleType LivingWeapon
+RandomTitleType = {}

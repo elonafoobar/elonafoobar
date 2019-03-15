@@ -119,8 +119,8 @@ std::string LuaApiWorld::ranking_title(int ranking_id)
  *
  * Modifies the player's rank in a given ranking.
  * @tparam num ranking_id
- * @tparam amount
- * @tparam min
+ * @tparam num amount
+ * @tparam num min
  */
 void LuaApiWorld::modify_ranking(int ranking_id, int amount, int min)
 {
