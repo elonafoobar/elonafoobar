@@ -4,7 +4,7 @@ local Math = Elona.require("Math")
 local Rand = Elona.require("Rand")
 local table = Elona.require("table")
 
-local maps = require "data/mapgen/static"
+local maps = require("data/map/static")
 
 local function generator_town(callbacks)
    return function(generator)

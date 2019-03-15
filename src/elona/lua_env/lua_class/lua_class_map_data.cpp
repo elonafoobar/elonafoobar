@@ -79,7 +79,7 @@ void LuaMapData::bind(sol::state& lua)
         "regenerate_count", sol::readonly(&MapData::regenerate_count));
 
     /**
-     * @luadoc is_gnereated_every_time field bool
+     * @luadoc is_genreated_every_time field bool
      *
      * [RW] If true, reset characters to their initial position on map
      * refresh.

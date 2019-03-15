@@ -123,6 +123,13 @@ void LuaItem::bind(sol::state& lua)
     LuaItem.set("param4", &Item::param4);
 
     /**
+     * @luadoc own_state field num
+     *
+     * [RW] The own status of the item.
+     */
+    LuaItem.set("own_state", &Item::own_state);
+
+    /**
      * @luadoc material field string
      *
      * [R] The material ID of this item. To change it, use

@@ -206,7 +206,7 @@ static optional<const MapDefData&> _find_map_from_deed(int item_id)
     auto id = the_item_db.get_id_from_legacy(item_id);
 
     optional<int> map_id;
-    for (const auto& map : the_mapdef_db)
+    for (const auto& map : the_mapdef_db.values())
     {
         if (!map.deed)
         {

@@ -84,7 +84,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::player()
 sol::optional<LuaCharacterHandle> LuaApiChara::create_random(
     const Position& position)
 {
-    return Chara::create_random_xy(position.x, position.y);
+    return LuaApiChara::create_random_xy(position.x, position.y);
 }
 
 sol::optional<LuaCharacterHandle> LuaApiChara::create_random_xy(int x, int y)

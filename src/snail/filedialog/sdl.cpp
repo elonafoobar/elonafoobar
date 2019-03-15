@@ -2,7 +2,6 @@
 #include <type_traits>
 #include "../../thirdparty/nfd/nfd.h"
 #include "../../util/scope_guard.hpp"
-#include "../util/scope_guard.hpp"
 
 
 

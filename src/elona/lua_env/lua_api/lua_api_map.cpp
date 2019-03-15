@@ -384,7 +384,7 @@ void LuaApiMap::bind(sol::table& api_table)
     api_table.set_function(
         "clear_feat",
         sol::overload(LuaApiMap::clear_feat, LuaApiMap::clear_feat_xy));
-    LUA_API_BIND_FUNCTION(api_table, Map, spray_tile);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, spray_tile);
     api_table.set_function(
         "travel_to",
         sol::overload(LuaApiMap::travel_to, LuaApiMap::travel_to_with_level));

@@ -56,12 +56,6 @@ MapDefData MapDefDB::convert(
         deed_ = SharedId(*deed);
     }
 
-    // optional<SharedId> deed_ = none;
-    // if (deed)
-    // {
-    //     deed_ = SharedId(*deed);
-    // }
-
     return MapDefData{legacy_id,
                       appearance,
                       map_type,
