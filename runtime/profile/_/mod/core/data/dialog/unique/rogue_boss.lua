@@ -16,7 +16,7 @@ local function surrender()
    Chara.player().gold = Chara.player().gold - surrender_cost()
 
    for _, item in Item.iter(0, 200) do
-      if item.number > 0 and item.proto.is_cargo then
+      if item.number > 0 and item.prototype.is_cargo then
          GUI.txt(I18N.get("core.locale.talk.npc.common.hand_over", item))
          item:remove()
       end
