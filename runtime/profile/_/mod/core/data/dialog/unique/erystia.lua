@@ -82,7 +82,7 @@ return {
             if flag >= 100 and flag <= 120 then
                table.insert(choices, {"stones_castle", "investigation.choices.stones.castle"})
                table.insert(choices, {"stones_inferno", "investigation.choices.stones.inferno"})
-               table.insert(choices, {"stones_crypt", "investigation.choices.stones.inferno"})
+               table.insert(choices, {"stones_crypt", "investigation.choices.stones.crypt"})
             end
 
             table.insert(choices, {"__END__", "__BYE__"})
