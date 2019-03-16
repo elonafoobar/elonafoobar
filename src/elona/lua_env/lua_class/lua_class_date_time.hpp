@@ -14,7 +14,7 @@ namespace lua
  *
  * Represents a date and time.
  */
-namespace LuaDate
+namespace LuaDateTime
 {
 void bind(sol::state& lua);
 }

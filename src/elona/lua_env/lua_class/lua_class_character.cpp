@@ -286,7 +286,7 @@ void LuaCharacter::gain_skill_stock(
  *
  * Makes this character gain experience in a skill or spell. This only
  * has an effect if the character already knows the skill/spell.
- * @tparam num skill_id the skill/spell ID of type core.ability
+ * @tparam string skill_id the skill/spell ID of type core.ability
  * @tparam num amount the amount of experience
  */
 void LuaCharacter::gain_skill_exp(

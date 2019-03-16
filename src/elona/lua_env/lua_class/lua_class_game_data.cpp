@@ -48,9 +48,9 @@ void LuaGameData::bind(sol::state& lua)
     LuaGameData.set("left_bill", &GameData::left_bill);
 
     /**
-     * @luadoc date field LuaDate
+     * @luadoc date field LuaDateTime
      *
-     * [R] The current date.
+     * [R] The current date and time.
      */
     LuaGameData.set("date", &GameData::date);
 

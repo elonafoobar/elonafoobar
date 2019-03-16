@@ -1,4 +1,4 @@
-#include "lua_class_date.hpp"
+#include "lua_class_date_time.hpp"
 #include "../../gdata.hpp"
 #include "../../map.hpp"
 
@@ -7,42 +7,42 @@ namespace elona
 namespace lua
 {
 
-void LuaDate::bind(sol::state& lua)
+void LuaDateTime::bind(sol::state& lua)
 {
-    auto LuaDate = lua.create_simple_usertype<Date>();
-    LuaDate.set("new", sol::no_constructor);
+    auto LuaDateTime = lua.create_simple_usertype<DateTime>();
+    LuaDateTime.set("new", sol::no_constructor);
 
     // Properties
 
     /**
      * @luadoc year field num
      */
-    LuaDate.set("year", &Date::year);
+    LuaDateTime.set("year", &DateTime::year);
 
     /**
      * @luadoc month field num
      */
-    LuaDate.set("month", &Date::month);
+    LuaDateTime.set("month", &DateTime::month);
 
     /**
      * @luadoc day field num
      */
-    LuaDate.set("day", &Date::day);
+    LuaDateTime.set("day", &DateTime::day);
 
     /**
      * @luadoc hour field num
      */
-    LuaDate.set("hour", &Date::hour);
+    LuaDateTime.set("hour", &DateTime::hour);
 
     /**
      * @luadoc minute field num
      */
-    LuaDate.set("minute", &Date::minute);
+    LuaDateTime.set("minute", &DateTime::minute);
 
     /**
      * @luadoc second field num
      */
-    LuaDate.set("second", &Date::second);
+    LuaDateTime.set("second", &DateTime::second);
 
     // Methods
 
@@ -52,10 +52,10 @@ void LuaDate::bind(sol::state& lua)
      * Returns the time in hours since year 0.
      * @treturn num
      */
-    LuaDate.set("hours", &Date::hours);
+    LuaDateTime.set("hours", &DateTime::hours);
 
 
-    lua.set_usertype("LuaDate", LuaDate);
+    lua.set_usertype("LuaDateTime", LuaDateTime);
 }
 
 } // namespace lua

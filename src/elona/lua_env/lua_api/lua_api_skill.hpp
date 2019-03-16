@@ -16,7 +16,6 @@ namespace lua
  */
 namespace LuaApiSkill
 {
-int level(int, LuaCharacterHandle);
 int resistance(const EnumString&, LuaCharacterHandle);
 
 
