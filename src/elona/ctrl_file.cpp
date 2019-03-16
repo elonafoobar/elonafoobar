@@ -226,7 +226,8 @@ void load_v1(
             << "Could not open file at "
             << filepathutil::make_preferred_path_in_utf8(filepath);
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryIArchive ar(in);
     for (size_t i = begin; i < end; ++i)
@@ -247,7 +248,8 @@ void save_v1(
     if (out.fail())
     {
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryOArchive ar(out);
     for (size_t i = begin; i < end; ++i)
@@ -270,7 +272,8 @@ void load_v2(
     if (in.fail())
     {
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryIArchive ar{in};
     for (size_t j = j_begin; j < j_end; ++j)
@@ -296,7 +299,8 @@ void save_v2(
     if (out.fail())
     {
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryOArchive ar{out};
     for (size_t j = j_begin; j < j_end; ++j)
@@ -324,7 +328,8 @@ void load_v3(
     if (in.fail())
     {
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryIArchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
@@ -355,7 +360,8 @@ void save_v3(
     if (out.fail())
     {
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryOArchive ar{out};
     for (size_t k = k_begin; k < k_end; ++k)
@@ -378,7 +384,8 @@ void load(const fs::path& filepath, T& data, size_t begin, size_t end)
     if (in.fail())
     {
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryIArchive ar{in};
     for (size_t i = begin; i < end; ++i)
@@ -395,7 +402,8 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
     if (out.fail())
     {
         throw std::runtime_error(
-            u8"Could not open file at "s + filepath.string());
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
     }
     putit::BinaryOArchive ar{out};
     for (size_t i = begin; i < end; ++i)

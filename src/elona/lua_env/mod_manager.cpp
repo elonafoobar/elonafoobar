@@ -144,7 +144,8 @@ void ModManager::scan_mod(const fs::path& mod_dir)
     if (!fs::exists(manifest_path))
     {
         throw std::runtime_error(
-            "Could not find mod manifest at " + manifest_path.string());
+            "Could not find mod manifest at " +
+            filepathutil::to_utf8_path(manifest_path));
     }
 
     ModManifest manifest = ModManifest::load(manifest_path);

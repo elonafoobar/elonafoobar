@@ -46,7 +46,7 @@ void Store::load(const fs::path& path, const std::string& mod_name)
                 filepathutil::make_preferred_path_in_utf8(entry.path())};
         }
 
-        load(ifs, entry.path().string(), mod_name);
+        load(ifs, filepathutil::to_utf8_path(entry.path()), mod_name);
     }
 }
 
