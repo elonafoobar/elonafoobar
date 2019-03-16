@@ -183,13 +183,13 @@ MapTileset = {}
 Gender = {}
 
 --- Relationship of a character to the player.
---  @enum Relation
---  @tfield Enums.Relation Aggressive
---  @tfield Enums.Relation Nonaggressive
---  @tfield Enums.Relation Unconcerned
---  @tfield Enums.Relation Neutral
---  @tfield Enums.Relation Friend
-Relation = {}
+--  @enum Relationship
+--  @tfield Enums.Relationship Aggressive
+--  @tfield Enums.Relationship Nonaggressive
+--  @tfield Enums.Relationship Unconcerned
+--  @tfield Enums.Relationship Neutral
+--  @tfield Enums.Relationship Friend
+Relationship = {}
 
 --- A flag that can be set on a character. The first 32 flags (up to
 --  <code>IsQuickTempered</code>) are "intrinsic" and will be reset

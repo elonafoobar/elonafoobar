@@ -549,9 +549,28 @@ fn uppercase(s: &str) -> String {
     }
 }
 
+fn camel_case(s: &str) -> String {
+    let mut buffer = String::new();
+    let mut under = false;
+    for c in s.chars() {
+        match c {
+            '_' => under = true,
+            _ => {
+                if under {
+                    buffer.push_str(&c.to_uppercase().to_string());
+                    under = false;
+                } else {
+                    buffer.push(c)
+                }
+            }
+        }
+    }
+    buffer
+}
+
 fn get_output_filename(source_path: &Path, is_class: bool) -> String {
     let file_name = source_path.file_name().and_then(|f| f.to_str()).unwrap();
-    let mod_name = Regex::new(r"_([^_]*)\..*$") // lua_api_<...>.cpp
+    let mod_name = Regex::new(r"lua_[^_]*_(.*)\..*$") // lua_(api|class)_<...>.cpp
         .ok()
         .and_then(|r| r.captures(file_name))
         .and_then(|c| c.get(1))
@@ -560,7 +579,7 @@ fn get_output_filename(source_path: &Path, is_class: bool) -> String {
     match mod_name {
         Some(name) => {
             if is_class {
-                format!("Lua{}.luadoc", uppercase(name))
+                format!("Lua{}.luadoc", uppercase(&camel_case(&name)))
             } else {
                 format!("{}.luadoc", name)
             }

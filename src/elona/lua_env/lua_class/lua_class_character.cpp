@@ -758,22 +758,22 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("sex", LUA_API_ENUM_PROPERTY(Character, sex, Gender));
 
     /**
-     * @luadoc relationship field Relation
+     * @luadoc relationship field Relationship
      *
      * [RW] The relationship of the character to the player.
      */
     LuaCharacter.set(
         "relationship",
-        LUA_API_ENUM_PROPERTY(Character, relationship, Relation));
+        LUA_API_ENUM_PROPERTY(Character, relationship, Relationship));
 
     /**
-     * @luadoc relationship field Relation
+     * @luadoc relationship field Relationship
      *
      * [RW] The original relationship of the character to the player.
      */
     LuaCharacter.set(
         "original_relationship",
-        LUA_API_ENUM_PROPERTY(Character, original_relationship, Relation));
+        LUA_API_ENUM_PROPERTY(Character, original_relationship, Relationship));
 
     /**
      * @luadoc quality field Quality

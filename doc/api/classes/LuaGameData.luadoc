@@ -12,8 +12,8 @@
 --- [RW] The number of unpaid bills the player owns.
 --  @tfield num left_bill
 
---- [R] The current date.
---  @tfield LuaDate date
+--- [R] The current date and time.
+--  @tfield LuaDateTime date
 
 --  @tfield num belongs_to_mages_guild
 

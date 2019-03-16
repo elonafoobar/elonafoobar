@@ -271,14 +271,14 @@ EnumMap<int> GenderTable{"Gender",
  *
  * Relationship of a character to the player.
  */
-EnumMap<int> RelationTable{"Relation",
-                           {
-                               {"Aggressive", -3},
-                               {"Nonaggressive", -2},
-                               {"Unconcerned", -1},
-                               {"Neutral", 0},
-                               {"Friend", 10},
-                           }};
+EnumMap<int> RelationshipTable{"Relationship",
+                               {
+                                   {"Aggressive", -3},
+                                   {"Nonaggressive", -2},
+                                   {"Unconcerned", -1},
+                                   {"Neutral", 0},
+                                   {"Friend", 10},
+                               }};
 
 
 /**
@@ -449,7 +449,7 @@ void LuaEnums::bind(sol::table& core)
     MapEntranceTypeTable.bind(Enums);
     MapTilesetTable.bind(Enums);
     GenderTable.bind(Enums);
-    RelationTable.bind(Enums);
+    RelationshipTable.bind(Enums);
     CharaFlagTable.bind(Enums);
     QualityTable.bind(Enums);
     TraitTypeTable.bind(Enums);

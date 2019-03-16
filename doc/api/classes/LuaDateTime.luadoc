@@ -1,5 +1,5 @@
 --- Represents a date and time.
---  @classmod LuaDate
+--  @classmod LuaDateTime
 
 --  @tfield num year
 
