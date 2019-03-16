@@ -127,7 +127,7 @@ void LuaCharacter::add_buff(
 }
 
 /**
- * @luadoc
+ * @luadoc add_buff
  *
  * Adds a buff to a character.
  * @tparam string buff_id the buff to add

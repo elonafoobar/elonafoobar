@@ -41,8 +41,8 @@ function heal_ailment(ailment, power) end
 --  @tparam num power the buff's power
 --  @tparam num turns the number of turns the buff will last
 --  @tparam[opt] LuaCharacter doer the character who applied this buff
---  @function add_buff_doer
-function add_buff_doer(buff_id, power, turns, doer) end
+--  @function add_buff
+function add_buff(buff_id, power, turns, doer) end
 
 --- Sets a growth buff of this character.
 --  @tparam num index
