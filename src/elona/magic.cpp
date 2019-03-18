@@ -4441,7 +4441,7 @@ optional<bool> _proc_general_magic()
                 cdata[cc].continuous_action.finish();
                 ccprev = cc;
                 cc = tc;
-                proc_trap();
+                move_character();
                 cc = ccprev;
                 if (tc == 0)
                 {

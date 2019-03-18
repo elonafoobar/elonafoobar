@@ -35,7 +35,7 @@ public:
             }
         }
 
-        assert(false);
+        throw std::runtime_error("Could not convert a value of type " + name);
         return "<invalid enum>";
     }
 

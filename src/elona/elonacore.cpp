@@ -40,8 +40,10 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/character_instance_event.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
@@ -4461,8 +4463,8 @@ TurnResult exit_map()
     // not change if access to it is refused (jail, pyramid, etc.).
     if (map_changed)
     {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::map_unloading>();
+        lua::lua->get_event_manager().trigger(
+            lua::BaseEvent("core.before_map_unloaded"));
 
         lua::lua->get_mod_manager().clear_map_local_data();
         lua::lua->get_handle_manager().clear_map_local_handles();
@@ -6814,7 +6816,7 @@ void disarm_trap()
 
 
 
-void proc_trap()
+void move_character()
 {
 label_21451_internal:
     if (Config::instance().scroll)
@@ -9285,9 +9287,11 @@ TurnResult do_bash()
 
 TurnResult proc_movement_event()
 {
-    if (auto handle = lua::handle_opt(cdata[cc]))
+    auto result = lua::lua->get_event_manager().trigger(
+        lua::CharacterInstanceEvent("core.character_moved", cdata[cc]));
+    if (result.blocked())
     {
-        lua::run_event<lua::EventKind::character_moved>(*handle);
+        return TurnResult::turn_end;
     }
 
     if (cdata[cc].is_ridden())
@@ -9363,7 +9367,7 @@ TurnResult proc_movement_event()
             }
         }
     }
-    proc_trap();
+    move_character();
     p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y).chip_id_actual;
     if (chip_data[p].kind == 3)
     {

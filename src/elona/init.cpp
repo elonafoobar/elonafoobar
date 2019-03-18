@@ -24,6 +24,7 @@
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_console.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/base_event.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -679,8 +680,8 @@ void initialize_game()
 
     if (script_loaded)
     {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::script_loaded>();
+        lua::lua->get_event_manager().trigger(
+            lua::BaseEvent("core.script_loaded"));
     }
 }
 

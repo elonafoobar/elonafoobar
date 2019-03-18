@@ -25,6 +25,7 @@ enum class Element
     cut = 61,
     ether = 62,
     acid = 63,
+    vorpal = 658,
 };
 
 

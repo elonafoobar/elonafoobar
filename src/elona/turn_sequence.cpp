@@ -24,6 +24,7 @@
 #include "keybind/input_context.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/base_event.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
@@ -837,8 +838,8 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         if (ct >= ELONA_MAX_CHARACTERS)
         {
-            lua::lua->get_event_manager()
-                .run_callbacks<lua::EventKind::all_turns_finished>();
+            lua::lua->get_event_manager().trigger(
+                lua::BaseEvent("core.all_turns_finished"));
             return TurnResult::all_turns_finished;
         }
     }
@@ -1253,8 +1254,6 @@ TurnResult pc_turn(bool advance_time)
 {
     if (advance_time)
     {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::player_turn>();
         if (game_data.catches_god_signal)
         {
             if (rnd(1000) == 0)
@@ -1380,6 +1379,10 @@ TurnResult pc_turn(bool advance_time)
         {
             update_screen();
         }
+
+        lua::lua->get_event_manager().trigger(
+            lua::BaseEvent("core.player_turn_started"));
+
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
             game_data.executing_immediate_quest_status = 3;

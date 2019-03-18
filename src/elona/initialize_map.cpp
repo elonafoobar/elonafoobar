@@ -17,6 +17,7 @@
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/lua_event_map_initialized.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -1224,7 +1225,7 @@ static void _proc_map_refresh()
 
 TurnResult initialize_map()
 {
-    bool loaded_from_file = true;
+    bool was_generated = true;
 
     clear_damage_popups();
 
@@ -1283,8 +1284,7 @@ init_map_begin:
 init_map_before_generate:
     _generate_new_map();
 
-    lua::lua->get_event_manager().run_callbacks<lua::EventKind::map_created>();
-    loaded_from_file = false;
+    was_generated = true;
 init_map_before_refresh:
     _proc_map_refresh();
 init_map_after_refresh:
@@ -1373,14 +1373,8 @@ init_map_after_refresh:
     // Check more main quest flags and run map-specific behaviors.
     _proc_map_hooks_2();
 
-    if (loaded_from_file)
-    {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::map_loaded>();
-    }
-
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::map_initialized>();
+    lua::lua->get_event_manager().trigger(
+        lua::MapInitializedEvent(was_generated));
 
     return TurnResult::turn_begin;
 }
