@@ -1,4 +1,5 @@
 #include "event_manager.hpp"
+#include "../data/types/type_event.hpp"
 #include "../log.hpp"
 #include "api_manager.hpp"
 #include "data_manager.hpp"

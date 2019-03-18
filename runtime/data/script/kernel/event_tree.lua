@@ -1,5 +1,3 @@
-local inspect = require "inspect"
-
 local function insert(node, k, v)
    if node.key == k then
       node.value[#node.value + 1] = v
