@@ -57,7 +57,7 @@ end
 
 function EventTree.new()
    local t = {}
-   setmetatable(t, Tree)
+   setmetatable(t, EventTree)
    return t
 end
 

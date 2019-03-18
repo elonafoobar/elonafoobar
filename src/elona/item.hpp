@@ -4,8 +4,10 @@
 #include <memory>
 #include <vector>
 #include "../util/range.hpp"
+#include "data/types/type_item.hpp"
 #include "enums.hpp"
 #include "position.hpp"
+#include "shared_id.hpp"
 
 
 
@@ -168,6 +170,11 @@ public:
     void set_number(int number_);
     void modify_number(int delta);
     void remove();
+
+    SharedId new_id() const
+    {
+        return *the_item_db.get_id_from_legacy(this->id);
+    }
 
 
 #define ELONA_ITEM_DEFINE_FLAG_ACCESSOR(name, n) \

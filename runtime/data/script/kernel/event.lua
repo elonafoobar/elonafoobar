@@ -61,18 +61,36 @@ local function get_events(event_id, instance)
    end
 end
 
+local function register(event_id, cb, priority, instance)
+   print("reg instance " .. tostring(instance))
+   if is_registered(event_id, cb, instance) then
+      error("An identical callback was registered twice for an event: " .. event_id)
+      return
+   end
+
+   local events = get_events(event_id, instance)
+   events:insert(priority, cb)
+end
+
 function Event.register(event_id, cb, opts)
    if opts == nil then
       opts = {}
    end
 
-   if is_registered(event_id, cb, opts.instance) then
-      error("An identical callback was registered twice for an event: " .. event_id)
-      return
+   local instances = opts.instances
+   if type(instances) ~= "table" or instances.__handle then
+      instances = {instances}
    end
-   local events = get_events(event_id, opts.instance)
-   local priority = opts.priority or 0
-   events:insert(priority, cb)
+
+   local priority = opts.priority or 1000
+
+   if #instances == 0 then
+      register(event_id, cb, priority)
+   else
+      for _, instance in ipairs(instances) do
+         register(event_id, cb, priority, instance)
+      end
+   end
 end
 
 local function run_event(priority, callbacks, args)
@@ -87,14 +105,19 @@ local function run_event(priority, callbacks, args)
    return true
 end
 
-function Event.trigger(event_id, args, instance)
-   local events = get_events(event_id, instance)
-   events:traverse(run_event, args)
+function Event.trigger(event_id, args, opts)
+   local instances = opts.instances
+   if type(instances) ~= "table" then
+      instances = {instances}
+   end
 
-   if instance ~= nil then
-      events = get_events(event_id)
+   for _, instance in ipairs(instances) do
+      local events = get_events(event_id, instance)
       events:traverse(run_event, args)
    end
+
+   events = get_events(event_id)
+   events:traverse(run_event, args)
 
    return args
 end

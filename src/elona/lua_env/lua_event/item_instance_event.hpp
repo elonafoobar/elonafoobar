@@ -15,6 +15,7 @@ public:
         : BaseEvent(id)
     {
         _item = lua::handle(item);
+        _item_id = item.new_id();
     }
 
     sol::table make_event_table() const override
@@ -28,13 +29,14 @@ public:
     sol::table make_event_options() const override
     {
         auto opts = lua::create_table();
-        opts["instance"] = _item;
+        opts["instances"] = lua::create_table(1, _item, 2, _item_id);
 
         return opts;
     }
 
 protected:
     LuaItemHandle _item;
+    std::string _item_id;
 };
 
 } // namespace lua
