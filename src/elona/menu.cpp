@@ -23,6 +23,8 @@
 #include "menu.hpp"
 #include "message.hpp"
 #include "network.hpp"
+#include "pic_loader/pic_loader.hpp"
+#include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "trait.hpp"
@@ -784,7 +786,7 @@ label_2041_internal:
         const auto width = is_fullscale ? (32 * 2) : (24 * 2);
         const auto height = is_fullscale ? (48 * 2) : (40 * 2);
         gcopy_c(
-            20 + cc,
+            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
             f / 4 % 4 * 32,
             f / 16 % 4 * 48,
             32,
@@ -1012,7 +1014,7 @@ int change_appearance_equipment()
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         gmode(2);
         gcopy_c(
-            20 + cc,
+            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
             f / 4 % 4 * 32,
             f / 16 % 4 * 48,
             32,

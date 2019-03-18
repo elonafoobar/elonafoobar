@@ -51,7 +51,6 @@ struct MapChip
     int kind2{};
     int wall_kind{};
     int anime_frame{};
-    int unused{};
     int offset_top{};
     int offset_bottom{};
     int effect{};

@@ -491,8 +491,6 @@ void render_cloud()
         }
         if (y < inf_very)
         {
-            std::cerr << "drawcloud " << rect.window_id << " " << rect.x << " "
-                      << rect.y << " " << height << std::endl;
             gcopy(rect.window_id, rect.x, rect.y, rect.width, height, x, y);
         }
     }

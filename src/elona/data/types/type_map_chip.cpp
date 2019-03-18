@@ -60,7 +60,6 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id_)
         kind2,
         wall_kind,
         anime_frame,
-        0,
         offset_top,
         offset_bottom,
         effect};

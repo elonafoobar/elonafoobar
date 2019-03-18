@@ -726,7 +726,7 @@ void initialize_map_chips(const MapChipDB& db)
     {
         auto& atlas = chip_data.get_map(data.atlas);
 
-        atlas[data.id] = std::move(data);
+        atlas[data.id] = data;
     }
 
     {
@@ -863,7 +863,7 @@ void draw_prepare_map_chips()
             gmode(0);
             tinted_buffers.tint(buffer, color);
             gmode(2, 30);
-            tinted_buffers.tint(buffer, color, true);
+            tinted_buffers.tint(buffer, snail::Color{255}, true);
         }
     }
 
