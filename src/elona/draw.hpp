@@ -45,13 +45,14 @@ struct CharaChip
 extern std::vector<CharaChip> chara_chips;
 
 
-optional_ref<Extent> draw_get_rect_chara(int);
-optional_ref<Extent> draw_get_rect_item(int);
-optional_ref<Extent> draw_get_rect_portrait(const std::string&);
-optional_ref<Extent> draw_get_rect(const std::string&);
+optional_ref<const Extent> draw_get_rect_chara(int);
+optional_ref<const Extent> draw_get_rect_item(int);
+optional_ref<const Extent> draw_get_rect_portrait(const std::string&);
+optional_ref<const Extent> draw_get_rect(const std::string&);
 
-optional_ref<Extent> prepare_item_image(int id, int color);
-optional_ref<Extent> prepare_item_image(int id, int color, int character_image);
+optional_ref<const Extent> prepare_item_image(int id, int color);
+optional_ref<const Extent>
+prepare_item_image(int id, int color, int character_image);
 
 void set_color_mod(int r, int g, int b, int window_id = -1);
 
@@ -76,8 +77,8 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str);
 void set_pcc_depending_on_equipments(int cc, int ci);
 
 struct Character;
-optional_ref<Extent> chara_preparepic(const Character& cc);
-optional_ref<Extent> chara_preparepic(int image_id);
+optional_ref<const Extent> chara_preparepic(const Character& cc);
+optional_ref<const Extent> chara_preparepic(int image_id);
 
 void create_pcpic(int cc, bool with_equipments = true);
 void initialize_map_chips(const MapChipDB&);

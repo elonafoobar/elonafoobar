@@ -556,7 +556,7 @@ void snd_at(
         return;
     }
 
-    snd_inner(**sound, angle, dist, loop, allow_duplicate);
+    snd_inner(*sound, angle, dist, loop, allow_duplicate);
 }
 
 void snd_at(
@@ -578,7 +578,7 @@ void snd(SharedId sound_id, bool loop, bool allow_duplicate)
         return;
     }
 
-    snd_inner(**sound, 0, 0, loop, allow_duplicate);
+    snd_inner(*sound, 0, 0, loop, allow_duplicate);
 }
 
 void snd(const char* sound_id, bool loop, bool allow_duplicate)

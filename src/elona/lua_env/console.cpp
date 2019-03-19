@@ -1,15 +1,19 @@
 #include "console.hpp"
+#include <regex>
 #include <sstream>
 #include <boost/algorithm/string/predicate.hpp>
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
 #include "../../snail/input.hpp"
 #include "../../util/strutil.hpp"
+#include "../ability.hpp"
 #include "../config/config.hpp"
+#include "../debug.hpp"
 #include "../filesystem.hpp"
 #include "../input.hpp"
 #include "../macro.hpp"
 #include "../putit.hpp"
+#include "../text.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
 #include "api_manager.hpp"
@@ -18,14 +22,42 @@
 
 
 
+namespace elona
+{
+namespace lua
+{
+
 namespace
 {
 
-constexpr const char* prompt_primary = "> ";
-constexpr const char* prompt_secondary = ">> ";
+struct CommandLineParseError : std::runtime_error
+{
+    CommandLineParseError(const std::string& msg)
+        : std::runtime_error(msg)
+    {
+    }
+};
+
+
+
+struct ParsedCommandLine
+{
+    std::vector<std::pair<std::string, std::vector<std::string>>>
+        piped_commands;
+};
+
+
+
+constexpr const char* prompt_normal = "> ";
+constexpr const char* prompt_lua_primary = "lua> ";
+constexpr const char* prompt_lua_secondary = "lua>> ";
 constexpr const char* eof_mark = "<eof>";
 
 constexpr int max_scrollback_count = 1000;
+
+constexpr const char* _lua_var_commands = u8"COMMANDS";
+constexpr const char* _namespace_builtin = u8"_BUILTIN_";
+constexpr const char* _namespace_console = u8"_CONSOLE_";
 
 
 
@@ -39,11 +71,6 @@ std::string _version_string()
 } // namespace
 
 
-
-namespace elona
-{
-namespace lua
-{
 
 Console::Console(LuaEnv* lua)
     : _buf(max_scrollback_count)
@@ -67,7 +94,7 @@ void Console::init_constants()
     set_constants(
         size.width, size.height, windoww, static_cast<int>(0.35 * windowh));
 
-    print(u8"Elona_foobar debug console");
+    print(u8"Elona foobar <Unknown Shell>");
     print(_version_string());
 }
 
@@ -76,33 +103,31 @@ void Console::init_constants()
 void Console::init_environment()
 {
     auto core = _lua->get_api_manager().get_core_api_table();
-    _console_mod = _lua->get_mod_manager().create_mod("console", none, false);
+    _console_mod =
+        _lua->get_mod_manager().create_mod(_namespace_console, none, false);
 
     // Automatically import APIs from "core" into the environment.
     for (const auto& kvp : core)
     {
-        _console_mod->env.raw_set(kvp.first, kvp.second);
+        _env().raw_set(kvp.first, kvp.second);
     }
 
-    // inspect = require("inspect")
-    auto inspect = lua->get_state()->script_file(filepathutil::to_utf8_path(
-        filesystem::dir::data() / "script" / "kernel" / "inspect.lua"));
-    _console_mod->env.raw_set("inspect", inspect);
+    _env().raw_set(
+        "__USH__",
+        _lua->get_state()->safe_script_file(filepathutil::to_utf8_path(
+            filesystem::dir::data() / "script" / "kernel" / "ush.lua")),
+        _env());
 
-    // Add ability to reload user/script/console.lua.
-    _console_mod->env.raw_set("reload", [this]() {
-        if (run_userscript())
-        {
-            print("Reloaded console environment.");
-        }
-    });
-    _console_mod->env.raw_set("dump", [this]() {
-        std::stringstream ss;
-        putit::JsonOArchive::save(ss, cdata.player());
-        ss << std::endl;
-        putit::JsonOArchive::save(ss, inv[0]);
-        print(ss.str());
-    });
+    _env().create_named(_lua_var_commands);
+
+    // Overrides print().
+    _env().raw_set("print", [this](const std::string& msg) { print(msg); });
+
+    // Inject environment.
+    _env()["__USH__"]["init"](_env());
+
+    _init_builtin_lua_functions();
+    _init_builtin_commands();
 }
 
 
@@ -129,7 +154,7 @@ bool Console::run_userscript()
     auto result = _lua->get_state()->safe_script_file(
         filepathutil::to_utf8_path(
             filesystem::dir::user_script() / "console.lua"),
-        _console_mod->env);
+        _env());
 
     if (!result.valid())
     {
@@ -242,8 +267,16 @@ bool Console::is_incomplete_lua_line(const sol::error& error)
 
 const char* Console::prompt() const
 {
-    return _is_multiline ? prompt_secondary : prompt_primary;
+    if (_in_lua_mode)
+    {
+        return _is_multiline ? prompt_lua_secondary : prompt_lua_primary;
+    }
+    else
+    {
+        return prompt_normal;
+    }
 }
+
 
 
 bool Console::lua_error_handler(const sol::protected_function_result& pfr)
@@ -275,14 +308,41 @@ bool Console::lua_error_handler(const sol::protected_function_result& pfr)
 }
 
 
-/// Returns true if the Lua input is complete and was executed.
-bool Console::interpret_lua(const std::string& input)
+
+/// Returns true if the input is complete and was executed.
+bool Console::interpret(const std::string& input)
 {
     if (input.empty())
     {
         return _is_multiline;
     }
 
+    if (_in_lua_mode)
+    {
+        return interpret_lua(input);
+    }
+    else
+    {
+        return interpret_command(input);
+    }
+}
+
+
+
+/// Returns true if the input is complete and was executed. Currently, this
+/// functin always returns true.
+bool Console::interpret_command(const std::string& input)
+{
+    _env()["__USH__"]["run"](input);
+    update_slight();
+    return true;
+}
+
+
+
+/// Returns true if the Lua input is complete and was executed.
+bool Console::interpret_lua(const std::string& input)
+{
     bool multiline_ended = true;
 
     // Print errors to the console instead of throwing.
@@ -293,20 +353,19 @@ bool Console::interpret_lua(const std::string& input)
     };
 
     // First, try prepending "return" to the statement, ignoring errors.
-    auto result = lua::lua->get_state()->safe_script(
-        u8"return " + input, _console_mod->env, sol::script_pass_on_error);
+    auto result = _lua->get_state()->safe_script(
+        u8"return " + input, _env(), sol::script_pass_on_error);
 
     // If that fails, execute the original statement.
     if (!result.valid())
     {
-        result = lua::lua->get_state()->safe_script(
-            input, _console_mod->env, handler);
+        result = _lua->get_state()->safe_script(input, _env(), handler);
     }
 
     if (result.valid())
     {
         // Bypass read-only metatable on mod environment
-        _console_mod->env.raw_set("_LAST_RESULT", result.get<sol::object>());
+        _env().raw_set("_LAST_RESULT", result.get<sol::object>());
 
         if (result.get<sol::object>() == sol::lua_nil)
         {
@@ -315,7 +374,7 @@ bool Console::interpret_lua(const std::string& input)
         else
         {
             auto as_string = _lua->get_state()->safe_script(
-                "return inspect(_LAST_RESULT)", _console_mod->env);
+                "return inspect(_LAST_RESULT)", _env());
 
             if (as_string.valid())
             {
@@ -482,7 +541,7 @@ void Console::grab_input()
             if (_input != "")
             {
                 print(prompt() + _input);
-                if (interpret_lua(_multiline_input))
+                if (interpret(_multiline_input))
                 {
                     _multiline_input = "";
                     _is_multiline = false;
@@ -510,6 +569,152 @@ void Console::grab_input()
     {
         _enabled = false;
     }
+}
+
+
+
+void Console::register_(
+    const std::string& mod_name,
+    const std::string& name,
+    sol::protected_function callback)
+{
+    _env()["__USH__"]["register"](mod_name, name, callback);
+}
+
+
+
+sol::object Console::run(const std::string& cmdline)
+{
+    return _env()["__USH__"]["run"](cmdline);
+}
+
+
+
+void Console::_init_builtin_lua_functions()
+{
+    // Table for built-in Lua functions.
+    sol::table funcs = _command_table()["_BUILTIN_"];
+
+    auto inspect = lua->get_state()->script_file(filepathutil::to_utf8_path(
+        filesystem::dir::data() / "script" / "kernel" / "inspect.lua"));
+    funcs["inspect"] = inspect;
+
+    funcs["dump"] = [this]() {
+        std::stringstream ss;
+        putit::JsonOArchive::save(ss, cdata.player());
+        ss << std::endl;
+        putit::JsonOArchive::save(ss, inv[0]);
+        print(ss.str());
+    };
+
+    funcs["hello_world"] = [this]() { print(u8"Hello, World!"); };
+
+    funcs["lua"] = [this]() {
+        _in_lua_mode = true;
+        print(u8"Lua mode activated");
+    };
+
+    funcs["exit_lua"] = [this]() {
+        _in_lua_mode = false;
+        print(u8"Lua mode inactivated.");
+    };
+
+    funcs["reload"] = [this]() {
+        if (run_userscript())
+        {
+            print("Reloaded console environment.");
+        }
+    };
+
+    funcs["ls"] = [this]() {
+        std::vector<std::string> mods;
+        range::transform(
+            _lua->get_mod_manager().calculate_loading_order(),
+            std::back_inserter(mods),
+            [](const auto& mod_name) { return mod_name; });
+        range::sort(mods);
+
+        sol::table ret = _env().create();
+        for (const auto& mod : mods)
+        {
+            ret.add(mod);
+        }
+        return ret;
+    };
+
+    funcs["wizard"] = [this]() {
+        if (game_data.wizard)
+            return;
+
+        game_data.wizard = 1;
+        cdatan(1, 0) = "*Debug*";
+        print("Wizard mode activated");
+        print("Please get on Ylva Express on Platform 9 ¾.");
+    };
+
+    funcs["voldemort"] = [this]() {
+        if (debug::voldemort)
+            return;
+
+        if (!game_data.wizard)
+        {
+            game_data.wizard = 1;
+            print("Wizard mode activated.");
+        }
+        debug::voldemort = true;
+        for (int i = 400; i < 467; ++i)
+        {
+            if (i != 426 && i != 427)
+            {
+                chara_gain_skill(cdata.player(), i, 100, 10000);
+            }
+        }
+        cdatan(1, 0) = "*You-Know-Who*";
+        print("I AM LORD VOLDEMORT.");
+    };
+
+    funcs["muggle"] = [this]() {
+        debug::voldemort = false;
+        game_data.wizard = 0;
+        cdatan(1, 0) = random_title(RandomTitleType::character);
+        print("Wizard mode inactivated");
+        print("I am perfectly normal, thank you very much.");
+    };
+
+    // Map functions stored in COMMANDS._BUILTIN_ to global.
+    for (auto&& pair : funcs)
+    {
+        _env()[pair.first] = pair.second;
+    }
+}
+
+
+
+void Console::_init_builtin_commands()
+{
+    // Map functions stored in _BUILTIN_ to commands.
+    sol::table funcs = _command_table()[_namespace_builtin];
+
+    for (auto&& kvp : funcs)
+    {
+        const auto& name = kvp.first.as<std::string>();
+        sol::protected_function callback = kvp.second;
+        register_(_namespace_builtin, name, callback);
+    }
+}
+
+
+
+sol::environment Console::_env()
+{
+    return _console_mod->env;
+}
+
+
+
+sol::table Console::_command_table()
+{
+    return _env()[_lua_var_commands];
 }
 
 } // namespace lua

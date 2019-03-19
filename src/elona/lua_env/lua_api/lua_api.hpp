@@ -4,6 +4,7 @@
 #include "lua_api_animation.hpp"
 #include "lua_api_chara.hpp"
 #include "lua_api_config.hpp"
+#include "lua_api_console.hpp"
 #include "lua_api_data.hpp"
 #include "lua_api_debug.hpp"
 #include "lua_api_env.hpp"
