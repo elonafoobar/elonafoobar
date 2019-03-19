@@ -1,4 +1,4 @@
 mod {
     name = "chara"
-    dependencies = ["core"]
+    dependencies = { core = "*" }
 }
