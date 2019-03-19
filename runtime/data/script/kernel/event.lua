@@ -17,19 +17,33 @@ function table.find(tbl, func, ...)
     return nil
 end
 
+function prune_unknown(data)
+   for k, _ in pairs(hooks) do
+      if data[k] == nil then
+         hooks[k] = nil
+         reg[k] = nil
+      end
+   end
+   for k, _ in pairs(instanced_hooks) do
+      if data[k] == nil then
+         instanced_hooks[k] = nil
+         instanced_reg[k] = nil
+      end
+   end
+end
+
 local function is_registered(event_id, cb, instance)
    if instance then
       if instanced_reg[event_id] == nil then
          instanced_reg[event_id] = {}
       end
       if instanced_reg[event_id][instance] == nil then
-         instanced_reg[event_id][instance] = {cb = true}
+         instanced_reg[event_id][instance] = {}
          return false
       end
       if instanced_reg[event_id][instance][cb] then
          return true
       end
-      instanced_reg[event_id][instance][cb] = true
       return false
    else
       if reg[event_id] == nil then
@@ -39,7 +53,6 @@ local function is_registered(event_id, cb, instance)
       if reg[event_id][cb] then
          return true
       end
-      reg[event_id][cb] = true
       return false
    end
 end
@@ -62,10 +75,15 @@ local function get_events(event_id, instance)
 end
 
 local function register(event_id, cb, priority, instance)
-   print("reg instance " .. tostring(instance))
    if is_registered(event_id, cb, instance) then
       error("An identical callback was registered twice for an event: " .. event_id)
       return
+   end
+
+   if instance then
+      instanced_reg[event_id][instance][cb] = true
+   else
+      reg[event_id][cb] = true
    end
 
    local events = get_events(event_id, instance)
@@ -90,6 +108,26 @@ function Event.register(event_id, cb, opts)
       for _, instance in ipairs(instances) do
          register(event_id, cb, priority, instance)
       end
+   end
+end
+
+function Event.unregister(event_id, cb, opts)
+   if opts == nil then
+      opts = {}
+   end
+
+   if not is_registered(event_id, cb, opts.instance) then
+      return
+   end
+
+   if opts.instance and instanced_reg[event_id][opts.instance] then
+      local events = get_events(event_id, opts.instance)
+      events:remove_value(cb)
+      instanced_reg[event_id][opts.instance][cb] = nil
+   elseif reg[event_id][cb] then
+      local events = get_events(event_id)
+      events:remove_value(cb)
+      reg[event_id][cb] = nil
    end
 end
 

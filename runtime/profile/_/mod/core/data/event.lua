@@ -1,0 +1,28 @@
+data:define_type("event")
+data:add_multi(
+   "core.event",
+   {
+      {
+         mod_loaded,
+         map_created,
+         character_created,
+         item_created,
+         map_initialized,
+         character_initialized,
+         item_initialized,
+         game_initialized,
+         before_map_unload,
+         map_loaded,
+         character_removed,
+         item_removed,
+         character_refreshed,
+         character_damaged,
+         character_killed,
+         character_moved,
+         player_action_start,
+         turn_finished,
+         all_mods_loaded,
+         script_loaded,
+      }
+   }
+)
