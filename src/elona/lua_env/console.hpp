@@ -18,12 +18,12 @@ struct ModInfo;
 
 
 
-class LuaConsole
+class Console
 {
 public:
     typedef boost::circular_buffer<std::string> buffer;
 
-    explicit LuaConsole(LuaEnv*);
+    explicit Console(LuaEnv*);
 
     void init_constants();
     void init_environment();

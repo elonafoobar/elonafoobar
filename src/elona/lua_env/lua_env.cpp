@@ -1,12 +1,12 @@
 #include "lua_env.hpp"
 #include "../config/config.hpp"
 #include "api_manager.hpp"
+#include "console.hpp"
 #include "data_manager.hpp"
 #include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "i18n_function_manager.hpp"
-#include "lua_console.hpp"
 #include "mod_manager.hpp"
 
 namespace elona
@@ -46,7 +46,7 @@ LuaEnv::LuaEnv()
     data_mgr = std::make_unique<DataManager>(this);
     export_mgr = std::make_unique<ExportManager>(this);
     i18n_function_mgr = std::make_unique<I18NFunctionManager>(this);
-    lua_console = std::make_unique<LuaConsole>(this);
+    console = std::make_unique<Console>(this);
 }
 
 

@@ -16,7 +16,7 @@ class ExportManager;
 class HandleManager;
 class I18NFunctionManager;
 class ModManager;
-class LuaConsole;
+class Console;
 
 
 
@@ -77,9 +77,9 @@ public:
         return *data_mgr;
     }
 
-    LuaConsole& get_console()
+    Console& get_console()
     {
-        return *lua_console;
+        return *console;
     }
 
     /***
@@ -114,7 +114,7 @@ private:
     std::unique_ptr<HandleManager> handle_mgr;
     std::unique_ptr<DataManager> data_mgr;
     std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
-    std::unique_ptr<LuaConsole> lua_console;
+    std::unique_ptr<Console> console;
 };
 
 

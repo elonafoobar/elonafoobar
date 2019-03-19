@@ -1,4 +1,4 @@
-#include "lua_console.hpp"
+#include "console.hpp"
 #include <sstream>
 #include <boost/algorithm/string/predicate.hpp>
 #include "../../snail/application.hpp"
@@ -45,7 +45,7 @@ namespace elona
 namespace lua
 {
 
-LuaConsole::LuaConsole(LuaEnv* lua)
+Console::Console(LuaEnv* lua)
     : _buf(max_scrollback_count)
     , _input_history(max_scrollback_count)
     , _lua(lua)
@@ -54,7 +54,7 @@ LuaConsole::LuaConsole(LuaEnv* lua)
 
 
 
-void LuaConsole::init_constants()
+void Console::init_constants()
 {
     auto size =
         snail::Application::instance().get_renderer().calculate_text_size("a");
@@ -73,7 +73,7 @@ void LuaConsole::init_constants()
 
 
 
-void LuaConsole::init_environment()
+void Console::init_environment()
 {
     auto core = _lua->get_api_manager().get_core_api_table();
     _console_mod = _lua->get_mod_manager().create_mod("console", none, false);
@@ -107,7 +107,7 @@ void LuaConsole::init_environment()
 
 
 
-void LuaConsole::set_constants(
+void Console::set_constants(
     int char_width,
     int char_height,
     int width,
@@ -124,7 +124,7 @@ void LuaConsole::set_constants(
 
 
 /// Returns true on success.
-bool LuaConsole::run_userscript()
+bool Console::run_userscript()
 {
     auto result = _lua->get_state()->safe_script_file(
         filepathutil::to_utf8_path(
@@ -143,7 +143,7 @@ bool LuaConsole::run_userscript()
 
 
 
-void LuaConsole::print_single_line(const std::string& line)
+void Console::print_single_line(const std::string& line)
 {
     if (line.empty())
     {
@@ -167,7 +167,7 @@ void LuaConsole::print_single_line(const std::string& line)
 
 
 
-void LuaConsole::print(const std::string& message)
+void Console::print(const std::string& message)
 {
     if (message.empty())
     {
@@ -182,7 +182,7 @@ void LuaConsole::print(const std::string& message)
 
 
 
-void LuaConsole::draw()
+void Console::draw()
 {
     if (!_enabled)
     {
@@ -233,20 +233,20 @@ void LuaConsole::draw()
 
 
 
-bool LuaConsole::is_incomplete_lua_line(const sol::error& error)
+bool Console::is_incomplete_lua_line(const sol::error& error)
 {
     return boost::algorithm::ends_with(error.what(), eof_mark);
 }
 
 
 
-const char* LuaConsole::prompt() const
+const char* Console::prompt() const
 {
     return _is_multiline ? prompt_secondary : prompt_primary;
 }
 
 
-bool LuaConsole::lua_error_handler(const sol::protected_function_result& pfr)
+bool Console::lua_error_handler(const sol::protected_function_result& pfr)
 {
     bool multiline_ended = true;
 
@@ -276,7 +276,7 @@ bool LuaConsole::lua_error_handler(const sol::protected_function_result& pfr)
 
 
 /// Returns true if the Lua input is complete and was executed.
-bool LuaConsole::interpret_lua(const std::string& input)
+bool Console::interpret_lua(const std::string& input)
 {
     if (input.empty())
     {
@@ -339,7 +339,7 @@ bool LuaConsole::interpret_lua(const std::string& input)
 
 
 
-void LuaConsole::grab_input()
+void Console::grab_input()
 {
     using namespace snail;
 

@@ -10,7 +10,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "lua_env/lua_console.hpp"
+#include "lua_env/console.hpp"
 #include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"
