@@ -21,7 +21,7 @@ data:add_multi(
          name = "character_refreshed"
       },
       {
-         name = "character_damaged"
+         name = "calc_character_damage"
       },
       {
          name = "character_damaged"

@@ -42,8 +42,8 @@ module "core.event"
 
 --- Fired before a character is damaged. You can change the amount of
 --- damage taken by modifying <code>amount</code>.
--- @event core.character_damaged
--- @tfield LuaCharacter target the character that was damaged
+-- @event core.calc_character_damage
+-- @tfield LuaCharacter target the character will be damaged
 -- @tfield[opt] Enums.Element element the element type of the damage
 -- @tfield Enums.DamageSource|LuaCharacter source the source of the damage
 -- @tfield num damage (<b><i>mut</i></b>) the amount of damage

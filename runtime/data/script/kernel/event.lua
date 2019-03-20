@@ -1,12 +1,13 @@
 local EventTree = require "event_tree"
 
-hooks = {}
-instanced_hooks = {}
+local hooks = {}
+local instanced_hooks = {}
 
-reg = {}
-instanced_reg = {}
+local reg = {}
+local instanced_reg = {}
 
-loaded = false
+local event_types = {}
+local loaded = false
 
 Event = {}
 
@@ -20,25 +21,32 @@ function table.find(tbl, func, ...)
 end
 
 local function check_event(event_id)
-   if hooks[event_id] == nil then
-      error("Unknown event type " .. event_id)
+   if event_types[event_id] == nil then
+      error("Unknown event type \"" .. event_id .. "\"")
    end
 end
 
 function remove_unknown_events(data)
    local event = data.raw["core.event"]
+   for k, _ in pairs(event) do
+      event_types[k] = true
+   end
+
    for k, _ in pairs(hooks) do
       if event[k] == nil then
          hooks[k] = nil
          reg[k] = nil
       end
    end
+
    for k, _ in pairs(instanced_hooks) do
       if event[k] == nil then
          instanced_hooks[k] = nil
          instanced_reg[k] = nil
       end
    end
+
+   loaded = true
 end
 
 local function get_instance(instance)
