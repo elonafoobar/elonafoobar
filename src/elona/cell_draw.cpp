@@ -1,6 +1,7 @@
 #include "area.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "data/types/type_asset.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -9,6 +10,8 @@
 #include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "pic_loader/pic_loader.hpp"
+#include "pic_loader/tinted_buffers.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -430,22 +433,16 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
 
 struct Cloud
 {
-    Cloud(int x0, int y0, int x, int y, int width, int height)
+    Cloud(int x0, int y0, SharedId asset)
         : x0(x0)
         , y0(y0)
-        , x(x)
-        , y(y)
-        , width(width)
-        , height(height)
+        , asset(asset)
     {
     }
 
     int x0;
     int y0;
-    int x;
-    int y;
-    int width;
-    int height;
+    SharedId asset;
 };
 
 std::vector<Cloud> clouds;
@@ -459,11 +456,11 @@ void initialize_cloud_data()
         int y0 = rnd(100) + i / 5 * 200 + 100000;
         if (rnd(2) == 0)
         {
-            clouds.emplace_back(x0, y0, 288, 1040, 208, 160);
+            clouds.emplace_back(x0, y0, SharedId{"cloud1"});
         }
         else
         {
-            clouds.emplace_back(x0, y0, 0, 976, 288, 224);
+            clouds.emplace_back(x0, y0, SharedId{"cloud2"});
         }
     }
 }
@@ -477,22 +474,24 @@ void render_cloud()
 
     for (size_t i = 0; i < clouds.size(); ++i)
     {
+        const auto& rect = get_image_info(clouds[i].asset);
+
         gmode(5, 7 + i * 2);
         int x = (clouds[i].x0 - cdata.player().position.x * inf_tiles + sxfix) *
                 100 / (40 + i * 5) +
             scrturn * 100 / (50 + i * 20);
         int y = (clouds[i].y0 - cdata.player().position.y * inf_tiles + syfix) *
             100 / (40 + i * 5);
-        x = x % (windoww + clouds[i].width) - clouds[i].width;
-        y = y % (inf_very + clouds[i].height) - clouds[i].height;
-        int height = clouds[i].height;
+        x = x % (windoww + rect.width) - rect.width;
+        y = y % (inf_very + rect.height) - rect.height;
+        int height = rect.height;
         if (y + height > inf_very)
         {
             height = inf_very - y;
         }
         if (y < inf_very)
         {
-            gcopy(2, clouds[i].x, clouds[i].y, clouds[i].width, height, x, y);
+            gcopy(rect.window_id, rect.x, rect.y, rect.width, height, x, y);
         }
     }
 }
@@ -527,7 +526,8 @@ void draw_character_sprite_in_world_map(
     int frame,
     int direction)
 {
-    int texture_id = c_ + 20;
+    int texture_id =
+        c_ + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers;
 
     // Shadow
     gmode(2, 85);
@@ -547,7 +547,8 @@ void draw_character_sprite_in_water(
     int frame,
     int direction)
 {
-    int texture_id = c_ + 20;
+    int texture_id =
+        c_ + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers;
 
     // Upper body
     gmode(2);
@@ -586,7 +587,8 @@ void draw_character_sprite(
     int direction,
     int dy = 0)
 {
-    int texture_id = c_ + 20;
+    int texture_id =
+        c_ + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers;
 
     // Shadow
     gmode(2, 110);
@@ -666,7 +668,7 @@ void draw_chara_chip_sprite_in_water(
     int height,
     int ground_)
 {
-    int dy = (chipm(0, ground_) == 3) * -16;
+    int dy = (chip_data[ground_].kind == 3) * -16;
     gmode(2, 100);
     gcopy(
         texture_id,
@@ -696,7 +698,7 @@ void draw_chara_chip_sprite(
     int height,
     int ground_)
 {
-    int dy = (chipm(0, ground_) == 3) * -16;
+    int dy = (chip_data[ground_].kind == 3) * -16;
     gmode(2, 110);
     draw("character_shadow", x + 8, y + 20);
     gmode(2);
@@ -717,7 +719,7 @@ void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
         draw_character_sprite_in_world_map(
             c_, dx, dy, ani_, cdata[c_].direction);
     }
-    else if (chipm(0, ground_) == 3)
+    else if (chip_data[ground_].kind == 3)
     {
         draw_character_sprite_in_water(c_, dx, dy, ani_, cdata[c_].direction);
     }
@@ -753,7 +755,7 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
     }
     else
     {
-        if (chipm(0, ground_) == 3)
+        if (chip_data[ground_].kind == 3)
         {
             draw_chara_chip_sprite_in_water(
                 rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
@@ -798,21 +800,6 @@ bool hp_bar_visible(const Character& chara)
 bool is_night()
 {
     return game_data.date.hour > 17 || game_data.date.hour < 6;
-}
-
-
-
-void draw_one_map_tile(int x, int y, int tile, int dx = 0)
-{
-    gmode(0);
-    gcopy(
-        2,
-        (tile % 33 + dx) * inf_tiles,
-        tile / 33 * inf_tiles,
-        inf_tiles,
-        inf_tiles,
-        x,
-        y);
 }
 
 
@@ -892,14 +879,13 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
         const auto p_ = cell_data.at(x, y).feats % 1000;
         if (p_ != 999 && p_ != 0)
         {
-            gcopy(
-                2,
-                p_ % 33 * inf_tiles,
-                p_ / 33 * inf_tiles,
-                inf_tiles,
-                48 + chipm(6, p_),
+            const auto& chip = chip_data[p_];
+            draw_map_tile(
+                p_,
                 dx,
-                dy - chipm(5, p_));
+                dy - chip.offset_top,
+                inf_tiles,
+                inf_tiles + chip.offset_bottom);
         }
         if (map_data.type == mdata_t::MapType::world_map)
         {
@@ -1254,7 +1240,8 @@ void cell_draw()
         {
             for (int i = 0; i < repw; ++i, dx_ -= inf_tiles)
             {
-                draw_one_map_tile(dx_, dy_, tile_fog);
+                gmode(0);
+                draw_map_tile(tile_fog, dx_, dy_);
             }
             continue;
         }
@@ -1325,7 +1312,7 @@ void cell_draw()
                         draw_character_sprite_in_world_map(
                             0, px_, py_, ani_, cdata.player().direction);
                     }
-                    else if (chipm(0, ground_) == 3)
+                    else if (chip_data[ground_].kind == 3)
                     {
                         // TODO アイコン位置が不自然(ただし本家から)
                         draw_character_sprite_in_water(
@@ -1370,32 +1357,34 @@ void cell_draw()
             // Out of map
             if (x_ < 0 || x_ >= map_data.width)
             {
-                draw_one_map_tile(dx_, dy_, tile_fog);
+                gmode(0);
+                draw_map_tile(tile_fog, dx_, dy_);
                 continue;
             }
 
             // Map tile
             ground_ = cell_data.at(x_, y).chip_id_memory;
-            if (chipm(2, ground_) == 2 && y < map_data.height - 1 &&
-                chipm(2, cell_data.at(x_, y + 1).chip_id_memory) != 2 &&
+            if (chip_data[ground_].wall_kind == 2 && y < map_data.height - 1 &&
+                chip_data[cell_data.at(x_, y + 1).chip_id_memory].wall_kind !=
+                    2 &&
                 cell_data.at(x_, y + 1).chip_id_memory != tile_fog)
             {
                 ground_ += 33;
             }
-            if (chipm(3, ground_) != 0)
+            if (chip_data[ground_].anime_frame != 0)
             {
-                draw_one_map_tile(
-                    dx_,
-                    dy_,
-                    ground_,
-                    scrturn_ % (chipm(3, ground_) + 1) -
-                        (scrturn_ % (chipm(3, ground_) + 1) ==
-                         chipm(3, ground_)) *
-                            2 * (chipm(3, ground_) != 0));
+                auto cur_frame =
+                    scrturn_ % (chip_data[ground_].anime_frame + 1);
+                auto anim_frame = cur_frame -
+                    (cur_frame == chip_data[ground_].anime_frame) * 2 *
+                        (chip_data[ground_].anime_frame != 0);
+                gmode(0);
+                draw_map_tile(ground_, dx_, dy_, anim_frame);
             }
             else
             {
-                draw_one_map_tile(dx_, dy_, ground_);
+                gmode(0);
+                draw_map_tile(ground_, dx_, dy_);
             }
 
             draw_blood_pool_and_fragments(x_, y, dx_, dy_);
@@ -1431,23 +1420,22 @@ void cell_draw()
                 }
             }
 
-            if (chipm(2, ground_))
+            if (chip_data[ground_].wall_kind)
             {
                 gmode(0);
                 if (y > 0)
                 {
                     p_ = cell_data.at(x_, y - 1).chip_id_memory;
-                    if (chipm(2, p_) != 2 && p_ != tile_fog && dy_ > 20)
+                    if (chip_data[p_].wall_kind != 2 && p_ != tile_fog &&
+                        dy_ > 20)
                     {
-                        gcopy(
-                            2,
-                            ground_ % 33 * inf_tiles,
-                            ground_ / 33 * inf_tiles,
+                        draw_map_tile(
+                            ground_,
+                            dx_,
+                            dy_ - 12,
                             inf_tiles - std::max(dx_ + inf_tiles - windoww, 0) +
                                 std::min(dx_, 0),
-                            12,
-                            dx_,
-                            dy_ - 12);
+                            12);
                         boxf(
                             std::max(dx_, 0),
                             dy_ - 20,
@@ -1461,7 +1449,7 @@ void cell_draw()
             else if (ground_ != tile_fog && y > 0 && dy_ > 48)
             {
                 ground_ = cell_data.at(x_, y - 1).chip_id_actual;
-                if (chipm(2, ground_))
+                if (chip_data[ground_].wall_kind)
                 {
                     boxf(
                         std::max(dx_, 0),

@@ -390,7 +390,7 @@ void boxf();
 void boxl(int x, int y, int width, int height, const snail::Color& color);
 
 
-void buffer(int window_id, int width = 0, int heihgt = 0);
+void buffer(int window_id, int width = 0, int height = 0);
 
 
 int dialog(const std::string& message, int = 0);

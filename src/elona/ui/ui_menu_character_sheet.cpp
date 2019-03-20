@@ -13,6 +13,8 @@
 #include "../map.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+#include "../pic_loader/pic_loader.hpp"
+#include "../pic_loader/tinted_buffers.hpp"
 
 namespace elona
 {
@@ -355,7 +357,16 @@ void UIMenuCharacterSheet::_draw_portrait_sprite()
     if (cdata[cc].has_own_sprite() == 1)
     {
         gmode(2);
-        gcopy_c(20 + cc, 32, 0, 32, 48, wx + 596 + 22, wy + 86 + 24, 24, 40);
+        gcopy_c(
+            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
+            32,
+            0,
+            32,
+            48,
+            wx + 596 + 22,
+            wy + 86 + 24,
+            24,
+            40);
     }
     else
     {

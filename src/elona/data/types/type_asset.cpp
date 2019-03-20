@@ -6,6 +6,7 @@ namespace
 
 std::unordered_map<std::string, int> window_id_table = {
     {"item", 1},
+    {"map", 2},
     {"interface", 3},
     {"atx_background", 4},
     {"character", 5},

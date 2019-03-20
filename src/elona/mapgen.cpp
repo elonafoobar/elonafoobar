@@ -1335,8 +1335,7 @@ int map_trap(int x, int y, int, int trap_type)
             dx_at_m170 = x;
             dy_at_m170 = y;
         }
-        if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) &
-             4) == 0)
+        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
         {
             if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
@@ -1402,8 +1401,7 @@ int map_web(int x, int y, int power)
             dx_at_m170 = x;
             dy_at_m170 = y;
         }
-        if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) &
-             4) == 0)
+        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
         {
             if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
@@ -1439,8 +1437,7 @@ int map_barrel(int x, int y)
             dx_at_m170 = x;
             dy_at_m170 = y;
         }
-        if ((chipm(7, cell_data.at(dx_at_m170, dy_at_m170).chip_id_actual) &
-             4) == 0)
+        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
         {
             if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
             {
@@ -2833,7 +2830,7 @@ int initialize_quest_map_party()
         x = rnd(map_data.width);
         y = rnd(map_data.height);
         if (cell_data.at(x, y).item_appearances_actual != 0 ||
-            chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+            chip_data.for_cell(x, y).effect & 4)
         {
             continue;
         }
@@ -3680,7 +3677,7 @@ void map_tileset(int tileset_type)
             tile_fog = 531;
             tile_default = 19;
         }
-        if (chipm(0, game_data.stood_world_map_tile) == 4)
+        if (chip_data[game_data.stood_world_map_tile].kind == 4)
         {
             tile_fog = 532;
             tile_default = 45;

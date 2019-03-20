@@ -7,6 +7,7 @@
 #include "data/types/type_chara_chip.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_chip.hpp"
+#include "data/types/type_map_chip.hpp"
 #include "data/types/type_portrait.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
@@ -14,9 +15,11 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "mapgen.hpp"
 #include "mef.hpp"
 #include "pic_loader/extent.hpp"
 #include "pic_loader/pic_loader.hpp"
+#include "pic_loader/tinted_buffers.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -26,6 +29,7 @@ namespace
 {
 
 PicLoader loader;
+TintedBuffers tinted_buffers;
 
 
 struct DamagePopup
@@ -39,7 +43,7 @@ struct DamagePopup
         : frame(-1)
         , text(std::string())
         , character(-1)
-        , color(snail::Color(255, 255, 255, 255))
+        , color(snail::Color(255, 255, 255, 0))
     {
     }
 };
@@ -536,19 +540,22 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     if (!fs::exists(filepath))
         return;
 
+    const auto texture_id =
+        10 + PicLoader::max_buffers + TintedBuffers::max_buffers + cc;
+
     picload(filepath, 128, 0, false);
     boxf(256, 0, 128, 198);
     gmode(2);
     pget(128, 0);
-    gcopy(20 + cc, 128, 0, 128, 198, 256, 0);
+    gcopy(texture_id, 128, 0, 128, 198, 256, 0);
     gmode(2);
     set_color_mod(
         255 - c_col(0, pcc(body_part, cc) / 1000),
         255 - c_col(1, pcc(body_part, cc) / 1000),
         255 - c_col(2, pcc(body_part, cc) / 1000),
-        20 + cc);
-    gcopy(20 + cc, 256, 0, 128, 198, 0, 0);
-    set_color_mod(255, 255, 255, 20 + cc);
+        texture_id);
+    gcopy(texture_id, 256, 0, 128, 198, 0, 0);
+    set_color_mod(255, 255, 255, texture_id);
 }
 
 
@@ -606,7 +613,10 @@ optional_ref<Extent> chara_preparepic(int image_id)
 
 void create_pcpic(int cc, bool with_equipments)
 {
-    buffer(20 + cc, 384, 198);
+    buffer(
+        10 + PicLoader::max_buffers + TintedBuffers::max_buffers + cc,
+        384,
+        198);
     boxf();
 
     if (pcc(15, cc) == 0)
@@ -706,168 +716,166 @@ void create_pcpic(int cc, bool with_equipments)
 
 
 
-void initialize_map_chip()
+void initialize_map_chips(const MapChipDB& db)
 {
-    // TODO: this could be called multiple times outside of
-    // initialize_all_chips. Add a method to clear only map chip
-    // buffers from PicLoader so they can be loaded again, or keep
-    // all chips loaded at once.
-    DIM3(chipm, 8, 825);
-    if (map_data.atlas_number == 0)
+    std::vector<PicLoader::MapType> predefined_extents;
+    predefined_extents.resize(ChipData::atlas_count);
+    tinted_buffers.clear();
+
+    for (const auto& data : db.values())
     {
-        chipm(5, 233) = 0;
-        chipm(6, 233) = 0;
-        for (int cnt = 26; cnt < 33; ++cnt)
-        {
-            chipm(0, cnt) = 4;
-        }
-        chipm(0, 568) = 4;
-        chipm(0, 569) = 4;
-        chipm(0, 570) = 4;
-        for (int cnt = 99; cnt < 132; ++cnt)
-        {
-            chipm(0, cnt) = 7;
-        }
-        for (int cnt = 165; cnt < 198; ++cnt)
-        {
-            chipm(0, cnt) = 8;
-        }
-        for (int cnt = 198; cnt < 231; ++cnt)
-        {
-            chipm(0, cnt) = 4;
-        }
-        for (int cnt = 594; cnt < 599; ++cnt)
-        {
-            chipm(0, cnt) = 7;
-        }
-        for (int cnt = 599; cnt < 604; ++cnt)
-        {
-            chipm(0, cnt) = 8;
-        }
-        for (int cnt = 107; cnt < 119; ++cnt)
-        {
-            chipm(1, cnt) = 9;
-        }
-        for (int cnt = 173; cnt < 185; ++cnt)
-        {
-            chipm(1, cnt) = 9;
-        }
-        for (int cnt = 206; cnt < 218; ++cnt)
-        {
-            chipm(1, cnt) = 9;
-        }
-        chipm(0, 604) = 10;
-        for (int cnt = 605; cnt < 617; ++cnt)
-        {
-            chipm(0, cnt) = 10;
-            chipm(1, cnt) = 9;
-        }
-        for (int cnt = 396; cnt < 825; ++cnt)
-        {
-            chipm(7, cnt) = 5;
-        }
-        for (int cnt = 264; cnt < 297; ++cnt)
-        {
-            chipm(7, cnt) = 4;
-        }
-        chipm(5, 135) = 8;
-        chipm(5, 137) = 16;
-        chipm(5, 140) = 6;
-        chipm(5, 145) = 16;
-        chipm(5, 149) = 16;
+        auto& atlas = chip_data.get_map(data.atlas);
+
+        atlas[data.id] = data;
     }
-    if (map_data.atlas_number == 1)
+
     {
-        for (int cnt = 396; cnt < 825; ++cnt)
+        for (int i = 0; i < ChipData::atlas_count; i++)
         {
-            chipm(7, cnt) = 5;
-        }
-        chipm(5, 233) = 56;
-        chipm(6, 233) = 48;
-        chipm(7, 594) = 4;
-        chipm(7, 628) = 4;
-        chipm(7, 637) = 4;
-        chipm(7, 641) = 4;
-        chipm(7, 733) = 4;
-        for (int cnt = 45; cnt < 61; ++cnt)
-        {
-            chipm(0, cnt) = 4;
-        }
-        chipm(0, 82) = 4;
-        chipm(0, 83) = 4;
-        chipm(0, 84) = 4;
-        for (int cnt = 462; cnt < 528; ++cnt)
-        {
-            chipm(2, cnt) = 1;
-            chipm(2, cnt - 66) = 1;
-        }
-        for (int cnt = 462; cnt < 495; ++cnt)
-        {
-            chipm(2, cnt) = 2;
-            chipm(2, cnt - 66) = 2;
-        }
-        chipm(0, 29) = 1;
-        chipm(0, 30) = 2;
-        chipm(0, 31) = 2;
-        chipm(0, 464) = 6;
-        chipm(3, 550) = 2;
-        chipm(2, 550) = 1;
-        chipm(0, 165) = 3;
-        chipm(3, 165) = 3;
-        chipm(0, 168) = 3;
-        chipm(3, 168) = 3;
-        chipm(0, 171) = 3;
-        chipm(1, 171) = 5;
-        chipm(3, 171) = 3;
-        chipm(0, 594) = 3;
-        chipm(3, 594) = 3;
-    }
-    if (map_data.atlas_number == 2)
-    {
-        for (int cnt = 0; cnt < 11; ++cnt)
-        {
-            int cnt2 = cnt;
-            for (int cnt = 0; cnt < 13; ++cnt)
+            PicLoader::MapType extents_chips;
+            PicLoader::MapType extents_feats;
+
+            for (const auto& pair : chip_data.get_map(i))
             {
-                chipm(0, cnt2 * 33 + cnt + 20) = 4;
+                const auto& chip = pair.second;
+                auto type = PicLoader::PageType::map_chip;
+                if (chip.is_feat)
+                {
+                    type = PicLoader::PageType::map_feat;
+                }
+
+                if (chip.filepath)
+                {
+                    // chip is from an external file.
+                    loader.load(*chip.filepath, chip.key, type);
+                }
+                else
+                {
+                    // chip is located in item.bmp.
+                    if (chip.is_feat)
+                    {
+                        extents_feats[chip.key] = chip.source;
+                    }
+                    else
+                    {
+                        extents_chips[chip.key] = chip.source;
+                    }
+                }
             }
+
+            loader.add_predefined_extents(
+                filesystem::dir::graphic() / (u8"map"s + i + ".bmp"),
+                extents_chips,
+                PicLoader::PageType::map_chip);
+
+            loader.add_predefined_extents(
+                filesystem::dir::graphic() / (u8"map"s + i + ".bmp"),
+                extents_feats,
+                PicLoader::PageType::map_feat);
         }
-        for (int cnt = 33; cnt < 66; ++cnt)
-        {
-            chipm(0, cnt) = 4;
-        }
-        for (int cnt = 396; cnt < 825; ++cnt)
-        {
-            chipm(7, cnt) = 5;
-        }
-        chipm(5, 233) = 56;
-        chipm(6, 233) = 48;
-        chipm(7, 594) = 4;
-        for (int cnt = 462; cnt < 528; ++cnt)
-        {
-            chipm(2, cnt) = 1;
-            chipm(2, cnt - 66) = 1;
-        }
-        for (int cnt = 462; cnt < 495; ++cnt)
-        {
-            chipm(2, cnt) = 2;
-            chipm(2, cnt - 66) = 2;
-        }
-        chipm(3, 550) = 2;
-        chipm(2, 550) = 1;
-        chipm(0, 165) = 3;
-        chipm(3, 165) = 3;
-        chipm(0, 168) = 3;
-        chipm(3, 168) = 3;
-        chipm(0, 171) = 3;
-        chipm(1, 171) = 5;
-        chipm(3, 171) = 3;
-        chipm(0, 594) = 3;
-        chipm(3, 594) = 3;
-        chipm(2, 476) = 0;
-        chipm(2, 509) = 0;
+    }
+    for (const auto& buffer :
+         loader.get_buffers_of_type(PicLoader::PageType::map_chip))
+    {
+        tinted_buffers.reserve_tinted_buffer(buffer);
+    }
+    for (const auto& buffer :
+         loader.get_buffers_of_type(PicLoader::PageType::map_feat))
+    {
+        tinted_buffers.reserve_tinted_buffer(buffer);
     }
 }
+
+
+
+static int _get_map_chip_shadow()
+{
+    int shadow = 5;
+
+    if (map_data.indoors_flag == 2)
+    {
+        if (game_data.date.hour >= 24 ||
+            (game_data.date.hour >= 0 && game_data.date.hour < 4))
+        {
+            shadow = 110;
+        }
+        if (game_data.date.hour >= 4 && game_data.date.hour < 10)
+        {
+            shadow = std::min(10, 70 - (game_data.date.hour - 3) * 10);
+        }
+        if (game_data.date.hour >= 10 && game_data.date.hour < 12)
+        {
+            shadow = 10;
+        }
+        if (game_data.date.hour >= 12 && game_data.date.hour < 17)
+        {
+            shadow = 1;
+        }
+        if (game_data.date.hour >= 17 && game_data.date.hour < 21)
+        {
+            shadow = (game_data.date.hour - 17) * 20;
+        }
+        if (game_data.date.hour >= 21 && game_data.date.hour < 24)
+        {
+            shadow = 80 + (game_data.date.hour - 21) * 10;
+        }
+        if (game_data.weather == 3 && shadow < 40)
+        {
+            shadow = 40;
+        }
+        if (game_data.weather == 4 && shadow < 65)
+        {
+            shadow = 65;
+        }
+        if (game_data.current_map == mdata_t::MapId::noyel &&
+            (game_data.date.hour >= 17 || game_data.date.hour < 7))
+        {
+            shadow += 35;
+        }
+    }
+
+    return shadow;
+}
+
+
+
+void draw_prepare_map_chips()
+{
+    map_tileset(map_data.tileset);
+
+    int shadow = _get_map_chip_shadow();
+    snail::Color color{(uint8_t)(255 - shadow)};
+
+    bool changed = false;
+
+    gmode(0);
+    for (const auto& buffer :
+         loader.get_buffers_of_type(PicLoader::PageType::map_chip))
+    {
+        changed |= tinted_buffers.tint(buffer, color);
+    }
+
+    if (changed)
+    {
+        for (const auto& buffer :
+             loader.get_buffers_of_type(PicLoader::PageType::map_feat))
+        {
+            gmode(0);
+            tinted_buffers.tint(buffer, color);
+            gmode(2, 30);
+            tinted_buffers.tint(buffer, snail::Color{255}, true);
+        }
+    }
+
+    gmode(0);
+
+    // Contains the sprites for world map clouds.
+    asset_load("map");
+
+    gsel(0);
+    gmode(2);
+}
+
 
 
 void initialize_item_chips(const ItemChipDB& db)
@@ -879,7 +887,7 @@ void initialize_item_chips(const ItemChipDB& db)
         SharedId key = chip_data.chip.key;
         int legacy_id = chip_data.id;
 
-        // Insert chip data into global vector.
+        // insert chip data into global vector.
         if (static_cast<int>(item_chips.size()) < legacy_id)
         {
             item_chips.resize(legacy_id + 1);
@@ -888,12 +896,12 @@ void initialize_item_chips(const ItemChipDB& db)
 
         if (chip_data.filepath)
         {
-            // Chip is from an external file.
+            // chip is from an external file.
             loader.load(*chip_data.filepath, key, PicLoader::PageType::item);
         }
         else
         {
-            // Chip is located in item.bmp.
+            // chip is located in item.bmp.
             predefined_extents[key] = chip_data.rect;
         }
     }
@@ -983,7 +991,7 @@ void initialize_all_chips()
     SDIM3(tname, 16, 11);
     tname(1) = i18n::s.get("core.locale.item.chip.dryrock");
     tname(2) = i18n::s.get("core.locale.item.chip.field");
-    initialize_map_chip();
+    draw_prepare_map_chips();
 }
 
 
@@ -1200,6 +1208,47 @@ void draw_item_with_portrait_scale_height(
         y,
         rect->frame_width * inf_tiles / rect->height,
         inf_tiles);
+}
+
+
+void draw_map_tile(int id, int x, int y, int anim_frame)
+{
+    draw_map_tile(
+        id, x, y, inf_tiles, inf_tiles, inf_tiles, inf_tiles, anim_frame);
+}
+
+
+void draw_map_tile(int id, int x, int y, int width, int height, int anim_frame)
+{
+    draw_map_tile(id, x, y, width, height, width, height, anim_frame);
+}
+
+
+void draw_map_tile(
+    int id,
+    int x,
+    int y,
+    int width,
+    int height,
+    int dst_width,
+    int dst_height,
+    int anim_frame)
+{
+    const auto& chip = chip_data[id];
+    auto rect = draw_get_rect(chip.key);
+    auto tinted_buffer = tinted_buffers.get_tinted_buffer(rect->buffer);
+    assert(tinted_buffer);
+
+    gcopy(
+        *tinted_buffer,
+        rect->x + anim_frame * width,
+        rect->y,
+        width,
+        height,
+        x,
+        y,
+        dst_width,
+        dst_height);
 }
 
 

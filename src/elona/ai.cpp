@@ -456,9 +456,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                         {
                             if (y < map_data.height)
                             {
-                                if (chipm(
-                                        7, cell_data.at(x, y).chip_id_actual) &
-                                    4)
+                                if (chip_data.for_cell(x, y).effect & 4)
                                 {
                                     if (rnd(4) == 0)
                                     {
@@ -781,12 +779,10 @@ label_2692_internal:
                 {
                     if (is_in_fov(cdata[cc]))
                     {
-                        if (chipm(
-                                0,
-                                cell_data
-                                    .at(cdata[cc].position.x,
-                                        cdata[cc].position.y)
-                                    .chip_id_actual) == 4)
+                        if (chip_data
+                                .for_cell(
+                                    cdata[cc].position.x, cdata[cc].position.y)
+                                .kind == 4)
                         {
                             if (rnd(4) == 0)
                             {

@@ -1,7 +1,11 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <vector>
+#include "data/types/type_map_chip.hpp"
+#include "pic_loader/extent.hpp"
+#include "shared_id.hpp"
 
 
 namespace elona
@@ -9,6 +13,9 @@ namespace elona
 
 template <typename T>
 struct elona_vector1;
+
+template <typename T>
+struct elona_vector2;
 
 template <typename T>
 struct elona_vector3;
@@ -55,6 +62,8 @@ struct MapData
 
     void clear();
 };
+
+extern MapData map_data;
 
 
 struct Cell
@@ -211,9 +220,58 @@ private:
     Grid<Cell> cells;
 };
 
-
 extern CellData cell_data;
-extern MapData map_data;
+
+
+struct ChipData
+{
+    using MapType = std::unordered_map<int, MapChip>;
+    static constexpr int chip_size = 825;
+    static constexpr int atlas_count = 3;
+
+    ChipData()
+    {
+        for (int i = 0; i < atlas_count; i++)
+        {
+            MapType map = {};
+            for (int j = 0; j < chip_size; j++)
+            {
+                map[j] = MapChip{};
+            }
+            chips.emplace(i, map);
+        }
+    }
+
+    MapType& get_map(int i)
+    {
+        return chips.at(i);
+    }
+
+    MapType& current()
+    {
+        return get_map(map_data.atlas_number);
+    }
+
+    MapChip& operator[](int i)
+    {
+        return current().at(i);
+    }
+
+    MapChip& for_cell(int x, int y)
+    {
+        return current().at(cell_data.at(x, y).chip_id_actual);
+    }
+
+    MapChip& for_feat(int x, int y)
+    {
+        return current().at(cell_data.at(x, y).feats % 1000);
+    }
+
+private:
+    std::unordered_map<int, MapType> chips;
+};
+
+extern ChipData chip_data;
 
 
 void map_get_trainer_skills();

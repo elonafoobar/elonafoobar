@@ -759,6 +759,34 @@ data:add_multi(
          file = "__BUILTIN__/graphic/deco_cm.bmp",
       },
 
+      -- Map 0 atlas for clouds only
+      {
+         name = "map",
+         source = "map",
+         x = 0,
+         y = 0,
+         width = 1584,
+         height = 1200,
+         file = "__BUILTIN__/graphic/map0.bmp",
+         load_type = "Buffer",
+      },
+      {
+         name = "cloud1",
+         source = "map",
+         x = 288,
+         y = 1040,
+         width = 208,
+         height = 160,
+      },
+      {
+         name = "cloud2",
+         source = "map",
+         x = 0,
+         y = 976,
+         width = 288,
+         height = 224,
+      },
+
       -- Blending menu
       {
          name = "deco_blend",
@@ -891,6 +919,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
+         file = "__BUILTIN__/graphic/deco_politics.bmp",
       },
       {
          name = "deco_politics_a",

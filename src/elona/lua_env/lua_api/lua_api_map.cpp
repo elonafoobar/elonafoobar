@@ -203,6 +203,7 @@ void LuaApiMap::set_tile_xy(int x, int y, int id)
         return;
     }
 
+    // TODO: check validity of tile ID
     elona::cell_data.at(x, y).chip_id_actual = id;
 }
 

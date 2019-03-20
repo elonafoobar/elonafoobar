@@ -29,7 +29,7 @@ void _map_randsite()
     {
         const auto x = rnd(map_data.width - 5) + 2;
         const auto y = rnd(map_data.height - 5) + 2;
-        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0)
+        if ((chip_data.for_cell(x, y).effect & 4) == 0)
         {
             if (cell_data.at(x, y).feats == 0 &&
                 cell_data.at(x, y).item_appearances_actual == 0)
@@ -153,6 +153,7 @@ namespace elona
 
 MapData map_data;
 CellData cell_data;
+ChipData chip_data;
 
 
 
@@ -821,10 +822,7 @@ static void _grow_plants()
                         {
                             break;
                         }
-                        grow_plant(
-                            chipm(0, cell_data.at(x, y).chip_id_actual) == 2
-                                ? 1
-                                : 0);
+                        grow_plant(chip_data.for_cell(x, y).kind == 2 ? 1 : 0);
                     }
                     cell_featset(cnt, y, feat, feat(1), feat(2), feat(3));
                 }

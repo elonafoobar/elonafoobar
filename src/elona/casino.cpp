@@ -7,6 +7,7 @@
 #include "character_status.hpp"
 #include "config/config.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -361,7 +362,7 @@ void casino_prepare_choice_graphic()
 void casino_acquire_items()
 {
     mtilefilecur = -1;
-    map_prepare_tileset_atlas();
+    draw_prepare_map_chips();
     f = 0;
     for (const auto& cnt : items(-1))
     {

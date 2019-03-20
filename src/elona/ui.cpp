@@ -1807,11 +1807,9 @@ void ui_scroll_screen()
     {
         scrollp = 6;
         keybd_wait = 1000;
-        if (chipm(
-                0,
-                cell_data
-                    .at(cdata.player().position.x, cdata.player().position.y)
-                    .chip_id_actual) == 4)
+        if (chip_data
+                .for_cell(cdata.player().position.x, cdata.player().position.y)
+                .kind == 4)
         {
             scrollp = 9;
         }
@@ -1869,6 +1867,11 @@ void ui_scroll_screen()
 
 void ui_initialize_minimap()
 {
+    raderx = -1;
+    radery = -1;
+    raderw = 120 / map_data.width + 2;
+    raderh = 84 / map_data.height + 2;
+
     gsel(3);
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
@@ -1878,15 +1881,16 @@ void ui_initialize_minimap()
             sx = cnt;
             sy(1) = 84 * sy / map_data.height;
             sx(1) = 120 * sx / map_data.width;
+            const auto rect = draw_get_rect(chip_data.for_cell(sx, sy).key);
             gcopy(
-                2,
-                cell_data.at(sx, sy).chip_id_actual % 33 * inf_tiles + sx % 16,
-                cell_data.at(sx, sy).chip_id_actual / 33 * inf_tiles + sy % 12,
+                rect->buffer,
+                rect->x + sx % 16,
+                rect->y + sy % 12,
                 raderw,
                 raderh,
                 688 + sx(1),
                 528 + sy(1));
-            if (chipm(7, cell_data.at(sx, sy).chip_id_actual) & 4)
+            if (chip_data.for_cell(sx, sy).effect & 4)
             {
                 boxf(688 + sx(1), 528 + sy(1), raderw, raderh, {0, 0, 0, 100});
             }
