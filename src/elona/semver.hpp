@@ -9,6 +9,19 @@
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
 
+// A GNU system header defines these two macro named "major" and "minor". To
+// avoid breackage of semver::Version's fields, save and undefine the two here.
+// cf.
+// https://stackoverflow.com/questions/22240973/major-and-minor-macros-defined-in-sys-sysmacros-h-pulled-in-by-iterator
+#if defined(major) || defined(minor)
+#define ELONA_MAJOR_AND_MINOR_MACRO_DEFINED // for restoring
+// Both Clang and GCC support this pragma
+#pragma push_macro("major")
+#pragma push_macro("minor")
+#undef major
+#undef minor
+#endif
+
 
 
 namespace elona
@@ -441,3 +454,12 @@ private:
 
 } // namespace semver
 } // namespace elona
+
+
+
+#ifdef ELONA_MAJOR_AND_MINOR_MACRO_DEFINED
+// Restore undefined macros. See also the top of this file.
+#pragma pop_macro("major")
+#pragma pop_macro("minor")
+#undef ELONA_MAJOR_AND_MINOR_MACRO_DEFINED
+#endif
