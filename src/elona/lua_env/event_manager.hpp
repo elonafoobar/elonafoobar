@@ -39,6 +39,11 @@ public:
      */
     EventResult trigger(const BaseEvent& event);
 
+    /**
+     * Removes events not registered in the data table.
+     */
+    void remove_unknown_events();
+
     void clear();
 
 private:

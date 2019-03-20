@@ -7,6 +7,8 @@
 #include "../elona/itemgen.hpp"
 #include "../elona/lua_env/event_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/lua_event/base_event.hpp"
+#include "../elona/lua_env/lua_event/lua_event_map_initialized.hpp"
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
@@ -94,11 +96,10 @@ local function my_map_init_hook()
    Store.global.val = 42
 end
 
-Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
+Event.register("core.map_initialized", my_map_init_hook)
 )"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::map_initialized>();
+    lua.get_event_manager().trigger(elona::lua::MapInitializedEvent(true));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", "assert(Store.global.val == 42)"));
 
@@ -107,8 +108,7 @@ Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", "assert(Store.global.thing == nil)"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::map_initialized>();
+    lua.get_event_manager().trigger(elona::lua::MapInitializedEvent(true));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", "assert(Store.global.val == 42)"));
 }
@@ -125,13 +125,13 @@ local function my_hook()
    Store.global.val = 42
 end
 
-Event.register(Event.EventKind.AllTurnsFinished, my_hook)
+Event.register("core.all_turns_finished", my_hook)
 )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_global", "assert(Store.global.val == nil)"));
-    elona::lua::lua->get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    elona::lua::lua->get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_global", "assert(Store.global.val == 42)"));
 
@@ -157,13 +157,13 @@ local function my_hook()
    Store.map_local.val = 42
 end
 
-Event.register(Event.EventKind.AllTurnsFinished, my_hook)
+Event.register("core.all_turns_finished", my_hook)
 )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_map_local", "assert(Store.map_local.val == nil)"));
-    elona::lua::lua->get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    elona::lua::lua->get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_map_local", "assert(Store.map_local.val == 42)"));
 

@@ -20,21 +20,9 @@ EventManager::EventManager(LuaEnv* lua)
     clear();
 }
 
-void EventManager::init_events()
+void EventManager::remove_unknown_events()
 {
-    auto init = [&](const std::string& id) {
-        env["hooks"][id] = lua::create_table();
-        env["instanced_hooks"][id] = create_table();
-    };
-
-    // EventDB db;
-    // db.initialize(lua->get_data_manager().get());
-    // db.load_all();
-
-    // for (const auto& event_id : db.keys())
-    // {
-    //     init(event_id);
-    // }
+    env["remove_unknown_events"](lua->get_data_manager().get().storage);
 }
 
 EventResult EventManager::trigger(const BaseEvent& event)

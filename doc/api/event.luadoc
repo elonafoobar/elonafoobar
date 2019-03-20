@@ -1,49 +1,52 @@
 --- Allows you to register new event callbacks when initializing mods.
--- @see Event.EventKind
+-- @see core.event
 -- @usage local Event = Elona.require("Event")
 module "Event"
 
 --- Registers a new event handler.
---- This function will append a new callback hander for the given
---- event to the end of the callback list for that event. Then, when
---- the event is fired, each callback in the list will be run in the
---- order in which they were registered. The callbacks will receive
---- the arguments specified in the documentation for the event. These
---- arguments will differ between event types. Read the documentation
---- for the event you're handling to see the available event
---- arguments for it.
--- @tparam Event.EventKind event_id the event kind to register
+--- This function will insert a new callback hander for the given
+--- event into the list of callback handlers for that event. Then,
+--- when the event is fired, each callback in the list will be run in
+--- the order in which they were registered. The callbacks will
+--- receive a single table argument containing the event's parameters.
+--- These parameters will differ between event types. Read the
+--- documentation for the event you're handling to see the available
+--- event arguments for it.
+---
+--- Optionally, a table of options can be passed. There are two
+--- parameters supported. <code>priority</code> determines the order
+--- in which the callback will run, with higher values being given
+--- priority. The default is 1000. <code>instances</code> is a table
+--- of objects that allow only running the event when certain instance
+--- parameters are received by the event, like a specific character or
+--- type. These parameters vary per event and not all events support
+--- them.
+---
+--- A given callback can only be registered once per event/instance.
+-- @tparam string event_id the event kind to register
 -- @tparam function handler the handler for this event
+-- @tparam[opt] {priority=num,instances=table} opts Event options.
 -- @usage local GUI = Elona.require("GUI")
 -- local Event = Elona.require("Event")
 -- local function my_chara_moved_handler(chara)
 --     GUI.txt("The character " .. chara.name .. " is about to move. ")
 -- end
 --
--- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
-function register(event_id, handler) end
+-- Event.register("core.character_moved", my_chara_moved_handler, { priority = 1000 })
+function register(event_id, handler, opts) end
 
 --- Unregisters an event handler that was previously registered with
 --- <code>Event.register</code>. This has no effect if the handler was
---- not already registered. <b>Note</b>: If the handler was registered
---- multiple times, only one of the registrations will be removed. In
---- this case, call <code>Event.unregister</code> multiple times to
---- remove any extra registrations.
--- @tparam Event.EventKind event_id the event kind to unregister
+--- not already registered.
+-- @tparam string event_id the event kind to unregister
 -- @tparam function handler the previously registered handler
 function unregister(event_id, handler) end
 
---- Clears all event handlers that were registered for the given event
---- kind from the current mod.
--- @tparam Event.EventKind event_id the event kind to clear handlers for
-function clear(event_id) end
-
---- Clears all event handlers that were registered from the current
---- mod.
-function clear() end
-
---- Triggers an event from a Lua script.
+--- Triggers an event from a Lua script. You can pass a table of
+--- options containing an <code>instances</code> parameter to run
+--- instanced events as well as the non-instanced version.
 --- WARNING: This does not currently prevent infinite recursion!
--- @tparam Event.EventKind event the event to trigger
+-- @tparam string event the event to trigger
 -- @tparam table data the event data
-function trigger(event, data) end
+-- @tparam {instances=table} opts Event options
+function trigger(event, data, opts) end

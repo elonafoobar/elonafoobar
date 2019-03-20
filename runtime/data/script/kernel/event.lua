@@ -6,6 +6,8 @@ instanced_hooks = {}
 reg = {}
 instanced_reg = {}
 
+loaded = false
+
 Event = {}
 
 function table.find(tbl, func, ...)
@@ -17,19 +19,36 @@ function table.find(tbl, func, ...)
     return nil
 end
 
-function prune_unknown(data)
+local function check_event(event_id)
+   if hooks[event_id] == nil then
+      error("Unknown event type " .. event_id)
+   end
+end
+
+function remove_unknown_events(data)
+   local event = data.raw["core.event"]
    for k, _ in pairs(hooks) do
-      if data[k] == nil then
+      if event[k] == nil then
          hooks[k] = nil
          reg[k] = nil
       end
    end
    for k, _ in pairs(instanced_hooks) do
-      if data[k] == nil then
+      if event[k] == nil then
          instanced_hooks[k] = nil
          instanced_reg[k] = nil
       end
    end
+end
+
+local function get_instance(instance)
+   if instance == nil then
+      return nil
+   end
+   if type(instance) == "table" and instance.__handle then
+      return instance.__uuid
+   end
+   return instance
 end
 
 local function is_registered(event_id, cb, instance)
@@ -94,6 +113,14 @@ function Event.register(event_id, cb, opts)
    if opts == nil then
       opts = {}
    end
+   if cb == nil then
+      error("No callback passed to Event.register (" .. event_id .. ")")
+      return
+   end
+
+   if loaded then
+      check_event(event_id)
+   end
 
    local instances = opts.instances
    if type(instances) ~= "table" or instances.__handle then
@@ -106,6 +133,7 @@ function Event.register(event_id, cb, opts)
       register(event_id, cb, priority)
    else
       for _, instance in ipairs(instances) do
+         local instance = get_instance(instance)
          register(event_id, cb, priority, instance)
       end
    end
@@ -115,15 +143,20 @@ function Event.unregister(event_id, cb, opts)
    if opts == nil then
       opts = {}
    end
+   if loaded then
+      check_event(event_id)
+   end
 
-   if not is_registered(event_id, cb, opts.instance) then
+   local instance = get_instance(opts.instance)
+
+   if not is_registered(event_id, cb, instance) then
       return
    end
 
-   if opts.instance and instanced_reg[event_id][opts.instance] then
-      local events = get_events(event_id, opts.instance)
+   if instance and instanced_reg[event_id][instance] then
+      local events = get_events(event_id, instance)
       events:remove_value(cb)
-      instanced_reg[event_id][opts.instance][cb] = nil
+      instanced_reg[event_id][instance][cb] = nil
    elseif reg[event_id][cb] then
       local events = get_events(event_id)
       events:remove_value(cb)
@@ -144,12 +177,20 @@ local function run_event(priority, callbacks, args)
 end
 
 function Event.trigger(event_id, args, opts)
+   if opts == nil then
+      opts = {}
+   end
+   if loaded then
+      check_event(event_id)
+   end
+
    local instances = opts.instances
    if type(instances) ~= "table" then
       instances = {instances}
    end
 
    for _, instance in ipairs(instances) do
+      local instance = get_instance(instance)
       local events = get_events(event_id, instance)
       events:traverse(run_event, args)
    end

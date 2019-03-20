@@ -4464,7 +4464,7 @@ TurnResult exit_map()
     if (map_changed)
     {
         lua::lua->get_event_manager().trigger(
-            lua::BaseEvent("core.before_map_unloaded"));
+            lua::BaseEvent("core.before_map_unload"));
 
         lua::lua->get_mod_manager().clear_map_local_data();
         lua::lua->get_handle_manager().clear_map_local_handles();

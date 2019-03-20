@@ -3,26 +3,52 @@ data:add_multi(
    "core.event",
    {
       {
-         mod_loaded,
-         map_created,
-         character_created,
-         item_created,
-         map_initialized,
-         character_initialized,
-         item_initialized,
-         game_initialized,
-         before_map_unload,
-         map_loaded,
-         character_removed,
-         item_removed,
-         character_refreshed,
-         character_damaged,
-         character_killed,
-         character_moved,
-         player_action_start,
-         turn_finished,
-         all_mods_loaded,
-         script_loaded,
-      }
+         name = "game_initialized"
+      },
+      {
+         name = "character_created"
+      },
+      {
+         name = "item_created"
+      },
+      {
+         name = "character_removed"
+      },
+      {
+         name = "item_removed"
+      },
+      {
+         name = "character_refreshed"
+      },
+      {
+         name = "character_damaged"
+      },
+      {
+         name = "character_damaged"
+      },
+      {
+         name = "character_killed"
+      },
+      {
+         name = "character_moved"
+      },
+      {
+         name = "player_turn_started"
+      },
+      {
+         name = "all_turns_finished"
+      },
+      {
+         name = "map_initialized"
+      },
+      {
+         name = "before_map_unload"
+      },
+      {
+         name = "all_mods_loaded"
+      },
+      {
+         name = "script_loaded"
+      },
    }
 )

@@ -8,6 +8,8 @@
 #include "../elona/itemgen.hpp"
 #include "../elona/lua_env/event_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/lua_event/base_event.hpp"
+#include "../elona/lua_env/lua_event/lua_event_map_initialized.hpp"
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
@@ -135,21 +137,21 @@ end
 
 Store.global.thing = 1
 
-Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
+Event.register("core.all_turns_finished", my_turn_handler)
 )"));
 
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 2)"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 4)"));
 }
@@ -209,14 +211,14 @@ end
 
 Store.global.grid = grid
 
-Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
+Event.register("core.all_turns_finished", my_turn_handler)
 )"));
 
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 0)"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 1)"));
 }

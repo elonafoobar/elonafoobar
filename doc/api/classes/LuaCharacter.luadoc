@@ -67,10 +67,9 @@ function get_flag(chara, flag) end
 --  up to <code>IsQuickTempered</code> are "intrinsic" and are always reset when
 --  this character is refreshed each turn. To change these flags, you must call
 --  this function inside a handler for
---  <code>Event.EventKind.CharaRefreshed</code>, or the flag will be reset later.
+--  <code>core.character_refreshed</code>, or the flag will be reset later.
 --  @tparam Enums.CharaFlag flag the flag to set
 --  @tparam bool value the flag's new value
---  @see Event.EventKind.CharaRefreshed
 --  @usage local Event = Elona.require("Event")
 --  local Enums = Elona.require("Enums")
 --
@@ -80,8 +79,8 @@ function get_flag(chara, flag) end
 --  end
 --
 --  -- force this flag to be overridden after this character is refreshed.
---  Event.register(Event.EventKind.CharaRefreshed, make_invisible)
---  Event.register(Event.EventKind.CharaCreated, make_invisible)
+--  Event.register("core.character_refreshed", make_invisible)
+--  Event.register("core.character_created", make_invisible)
 --  @function set_flag
 function set_flag(flag, value) end
 

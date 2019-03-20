@@ -147,6 +147,9 @@ void initialize_lua()
     // Set "data" table on all loaded mod environments.
     data::initialize(data_manager.get());
 
+    // Remove unknown event types from the event tables.
+    lua::lua->get_event_manager().remove_unknown_events();
+
     // Run user/console.lua.
     lua::lua->get_console().run_userscript();
 }

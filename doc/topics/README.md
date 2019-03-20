@@ -134,10 +134,10 @@ Lastly, we call our logic function to update the state of our life grid.
 ### Events
 
 ```
-Event.register(Event.EventKind.MapInitialized, run_life)
-Event.register(Event.EventKind.AllTurnsFinished, run_life)
+Event.register("core.map_initialized", run_life)
+Event.register("core.all_turns_finished", run_life)
 ```
 
-Finally, this is the most critical part of the script: hooking it up so it can be ran in response to in-game events. The `Event.register` function will set up a function you provide to be called when an in-game event is fired. In this case, we want to run our function `run_life` when the map is first loaded and every time all characters in the map have finished moving. There are various kinds of events you can listen for, and they are listed in the documentation for `Defines.EventKind`.
+Finally, this is the most critical part of the script: hooking it up so it can be ran in response to in-game events. The `Event.register` function will set up a function you provide to be called when an in-game event is fired. In this case, we want to run our function `run_life` when the map is first loaded and every time all characters in the map have finished moving. There are various kinds of events you can listen for, and they are listed in the documentation for `core.event`
 
 That's all for this tutorial. Go forth and find game-breaking bugs! (and preferably report them to us)

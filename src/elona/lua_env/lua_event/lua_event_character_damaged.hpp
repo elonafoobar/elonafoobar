@@ -27,7 +27,7 @@ public:
     sol::table make_event_table() const override
     {
         auto args = lua::create_table();
-        args["target"] = _chara;
+        args["chara"] = _chara;
         args["damage"] = _damage;
 
         if (_element > 0)
