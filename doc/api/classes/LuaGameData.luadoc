@@ -1,0 +1,42 @@
+--- Contains parameters for the current game save.
+--  @classmod LuaGameData
+
+--- [RW] The player's initial cargo capacity.
+--  @tfield num initial_cart_limit
+
+--- [RW] The player's maximum cargo capacity.
+--  @tfield num current_cart_limit
+
+--  @tfield table ranks
+
+--- [RW] The number of unpaid bills the player owns.
+--  @tfield num left_bill
+
+--- [R] The current date and time.
+--  @tfield LuaDateTime date
+
+--  @tfield num belongs_to_mages_guild
+
+--  @tfield num belongs_to_fighters_guild
+
+--  @tfield num belongs_to_thieves_guild
+
+--  @tfield num mages_guild_quota
+
+--  @tfield num fighters_guild_quota
+
+--  @tfield num fighters_guild_target
+
+--  @tfield num thieves_guild_quota
+
+--  @tfield num joining_mages_guild
+
+--  @tfield num joining_fighters_guild
+
+--  @tfield num joining_thieves_guild
+
+--  @tfield bool mages_guild_quota_recurring
+
+--  @tfield bool fighters_guild_quota_recurring
+
+--  @tfield bool thieves_guild_quota_recurring

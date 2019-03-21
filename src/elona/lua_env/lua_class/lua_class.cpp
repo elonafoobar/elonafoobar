@@ -3,6 +3,7 @@
 #include "lua_class_ability.hpp"
 #include "lua_class_area.hpp"
 #include "lua_class_character.hpp"
+#include "lua_class_date_time.hpp"
 #include "lua_class_game_data.hpp"
 #include "lua_class_item.hpp"
 #include "lua_class_map_data.hpp"
@@ -18,6 +19,7 @@ void LuaApiClasses::bind(sol::state& lua)
     LuaAbility::bind(lua);
     LuaArea::bind(lua);
     LuaCharacter::bind(lua);
+    LuaDateTime::bind(lua);
     LuaGameData::bind(lua);
     LuaItem::bind(lua);
     LuaMapData::bind(lua);

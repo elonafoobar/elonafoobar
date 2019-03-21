@@ -22,6 +22,21 @@ local unique = {
    rilian = require("data/dialog/unique/rilian"),
    tam = require("data/dialog/unique/tam"),
    gilbert = require("data/dialog/unique/gilbert"),
+   arnord = require("data/dialog/unique/arnord"),
+   mia = require("data/dialog/unique/mia"),
+   renton = require("data/dialog/unique/renton"),
+   marks = require("data/dialog/unique/marks"),
+   noel = require("data/dialog/unique/noel"),
+   icolle = require("data/dialog/unique/icolle"),
+   balzak = require("data/dialog/unique/balzak"),
+   lexus = require("data/dialog/unique/lexus"),
+   abyss = require("data/dialog/unique/abyss"),
+   doria = require("data/dialog/unique/doria"),
+   conery = require("data/dialog/unique/conery"),
+   rogue_boss = require("data/dialog/unique/rogue_boss"),
+   strange_scientist = require("data/dialog/unique/strange_scientist"),
+   kaneda_bike = require("data/dialog/unique/kaneda_bike"),
+   part_time_worker = require("data/dialog/unique/part_time_worker"),
 }
 
 return unique

@@ -2,11 +2,6 @@
 --  @usage local World = Elona.require("World")
 module "World"
 
---- Returns the time in hours since year 0.
---  @treturn num the time in hours
---  @function time
-function time() end
-
 --- Gets the ID of the next deferred event that will run.
 --  @treturn num
 --  @function deferred_event_id
@@ -23,6 +18,23 @@ function add_deferred_event(event_id, param1, param2) end
 --  @tparam string guild_name One of "mages", "fighters" or "thieves"
 --  @function belongs_to_guild
 function belongs_to_guild(guild_name) end
+
+--- Sets the player's guild affiliation and resets guild quotas.
+--  @tparam string guild_name One of "mages", "fighters" or "thieves"
+--  @function join_guild
+function join_guild(guild_name) end
+
+--- Returns the player's title for the given ranking.
+--  @tparam num ranking_id
+--  @function ranking_title
+function ranking_title(ranking_id) end
+
+--- Modifies the player's rank in a given ranking.
+--  @tparam num ranking_id
+--  @tparam num amount
+--  @tparam num min
+--  @function modify_ranking
+function modify_ranking(ranking_id, amount, min) end
 
 --- [R] Data for the current game save.
 --  @tfield LuaGameData data

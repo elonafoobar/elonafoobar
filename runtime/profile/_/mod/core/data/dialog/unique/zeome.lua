@@ -7,7 +7,10 @@ return {
    nodes = {
       __start = {
          text = {
-            {"dialog", choices = "__MORE__"}
+            {"dialog"}
+         },
+         choices = {
+            {"__END__", "__MORE__"}
          },
          on_finish = function()
             Internal.set_quest_flag("main_quest", 170)

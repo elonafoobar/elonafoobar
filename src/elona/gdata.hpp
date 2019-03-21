@@ -8,7 +8,7 @@ namespace elona
 template <typename T>
 struct elona_vector1;
 
-struct Date
+struct DateTime
 {
     int year;
     int month;
@@ -95,7 +95,7 @@ struct GameData
     int pc_y_in_world_map;
     int play_days;
     int random_seed;
-    Date date;
+    DateTime date;
     int next_inventory_serial_id;
     int weather;
     int hours_until_weather_changes;

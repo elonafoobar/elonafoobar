@@ -81,7 +81,7 @@ CharacterData CharacterDB::convert(
     DATA_OPT_OR(image, int, 0);
     DATA_OPT_OR(level, int, 0);
     DATA_OPT_OR(male_image, int, 0);
-    DATA_ENUM(original_relationship, int, RelationTable, 0);
+    DATA_ENUM(original_relationship, int, RelationshipTable, 0);
 
     // Portrait
     std::string portrait_male;

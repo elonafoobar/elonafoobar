@@ -4,6 +4,8 @@ local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
+local common = require("data/dialog/common")
+
 return {
    name = "xabi",
    root = "core.locale.talk.unique.xabi",
@@ -35,7 +37,7 @@ return {
             function() Internal.set_quest_flag("main_quest", 50) end,
             {"early._0"},
             GUI.fade_out,
-            {"early._1", args = function() return {Chara.player().basename} end},
+            {"early._1", args = common.args_name},
          },
          choices = {
             {"__start", "__MORE__"}

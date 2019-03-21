@@ -14,7 +14,7 @@ function is_alive(chara) end
 --  @function is_player
 function is_player(chara) end
 
---- Checks if a character is a member of the player's party (has index < 16 and
+--- Checks if a character is a member of the player's party (has index < 16)
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is in the player's party
 --  @function is_ally
@@ -45,13 +45,20 @@ function kill_count(id) end
 
 --- Attempts to find a character with the given prototype ID.
 --  @tparam string id Prototype ID to search
---  @tparam CharaFindLocation location Location to search in
+--  @tparam[opt] CharaFindLocation location Location to search in (defaults to
+--  others)
 --  @treturn[1] LuaCharacter the found character
 --  @treturn[2] nil
 --  @function find
 function find(id, location) end
 
---- Returns true if the player can recruit more allies.
+--- Returns true if the player can recruit more allies, taking Charisma into
+--  account.
 --  @treturn bool
 --  @function can_recruit_allies
 function can_recruit_allies() end
+
+--- Removes a character from the player's party, if they are an ally.
+--  @tparam LuaCharacter ally
+--  @function remove_from_party
+function remove_from_party(ally) end

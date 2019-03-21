@@ -5,6 +5,8 @@ local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 local table = Elona.require("table")
 
+local common = require("data/dialog/common")
+
 return {
    name = "erystia",
    root = "core.locale.talk.unique.erystia",
@@ -38,23 +40,23 @@ return {
 
       all_stones = {
          text = {
-            {"all_stones.dialog._0", args = function() return {Chara.player().basename} end},
+            {"all_stones.dialog._0", args = common.args_name},
             {"all_stones.dialog._1"},
             {"all_stones.dialog._2"},
-            {"all_stones.dialog._3", args = function() return {Chara.player().basename} end},
+            {"all_stones.dialog._3", args = common.args_name},
          },
          on_finish = function()
-            GUI.play_sound("core.write1");
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.all_stones.you_receive"), "Green");
-            Item.create(Chara.player().position, "core.palmia_pride", 0);
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"));
+            GUI.play_sound("core.write1")
+            GUI.txt(I18N.get("core.locale.talk.unique.erystia.all_stones.you_receive"), "Green")
+            Item.create(Chara.player().position, "core.palmia_pride", 0)
+            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("main_quest", 125)
          end
       },
 
       stones = {
          text = {
-            {"stones.dialog._0", args = function() return {Chara.player().basename} end},
+            {"stones.dialog._0", args = common.args_name},
             GUI.fade_out,
             {"stones.dialog._1"},
             {"stones.dialog._2"},
@@ -62,15 +64,15 @@ return {
             {"stones.dialog._4"},
          },
          on_finish = function()
-            GUI.play_sound("core.write1");
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.stones.you_receive"), "Green");
-            Internal.set_quest_flag("main_quest", 110);
+            GUI.play_sound("core.write1")
+            GUI.txt(I18N.get("core.locale.talk.unique.erystia.stones.you_receive"), "Green")
+            Internal.set_quest_flag("main_quest", 110)
          end
       },
 
       investigation = {
          text = {
-            {"investigation.dialog", args = function() return {Chara.player().basename} end},
+            {"investigation.dialog", args = common.args_name},
          },
          choices = function()
             local choices = {
@@ -133,7 +135,7 @@ return {
       },
       mission_stones_1 = {
          text = {
-            {"investigation.mission.stones._1", args = function() return {Chara.player().basename} end},
+            {"investigation.mission.stones._1", args = common.args_name},
          },
          choices = {
             {"__start", "__MORE__"},
@@ -172,7 +174,7 @@ return {
 
       introduction = {
          text = {
-            {"introduction.dialog", args = function() return {Chara.player().basename} end},
+            {"introduction.dialog", args = common.args_name},
          },
          choices = {
             {"pledge_strength", "introduction.choices.pledge_strength"},
@@ -189,12 +191,12 @@ return {
             {"introduction.pledge_strength.dialog._0"},
             {"introduction.pledge_strength.dialog._1"},
             {"introduction.pledge_strength.dialog._2"},
-            {"introduction.pledge_strength.dialog._3", args = function() return {Chara.player().basename} end},
+            {"introduction.pledge_strength.dialog._3", args = common.args_name},
          },
          on_finish = function()
-            GUI.play_sound("core.write1");
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green");
-            Internal.set_quest_flag("main_quest", 60);
+            GUI.play_sound("core.write1")
+            GUI.txt(I18N.get("core.locale.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green")
+            Internal.set_quest_flag("main_quest", 60)
          end
       },
    }

@@ -4,6 +4,8 @@ local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
+local common = require("data/dialog/common")
+
 return {
    name = "loyter",
    root = "core.locale.talk.unique.loyter",
@@ -11,7 +13,7 @@ return {
       __start = function()
          local flag = Internal.get_quest_flag("nightmare")
          if Chara.player().fame < 20000 then
-            return "fame_too_low"
+            return "quest_fame_too_low"
          end
          if flag == 1000 then
             return "quest_completed"
@@ -27,7 +29,7 @@ return {
          end
          return "__END__"
       end,
-      fame_too_low = {
+      quest_fame_too_low = {
          text = {
             {"fame_too_low"}
          }
@@ -39,7 +41,7 @@ return {
       },
       quest_ask = {
          text = {
-            {"quest.dialog._0", args = function() return {Chara.player().title} end},
+            {"quest.dialog._0", args = common.args_title},
             {"quest.dialog._1"},
          },
          choices = {
@@ -93,10 +95,7 @@ return {
                Item.create(Chara.player().position, "core.gold_piece", 100000)
                Item.create(Chara.player().position, "core.platinum_coin", 5)
 
-               GUI.txt(I18N.get("core.locale.quest.completed"))
-               GUI.play_sound("core.complete1")
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
-               GUI.show_journal_update_message()
+               common.quest_completed()
             end,
             {"quest.end"}
          },

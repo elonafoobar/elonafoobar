@@ -42,14 +42,14 @@ bool LuaApiChara::is_player(LuaCharacterHandle chara)
 /**
  * @luadoc
  *
- * Checks if a character is a member of the player's party (has index < 16 and
+ * Checks if a character is a member of the player's party (has index < 16)
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is in the player's party
  */
 bool LuaApiChara::is_ally(LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
-    return !LuaApiChara::is_player(chara) && chara_ref.index <= 16;
+    return !LuaApiChara::is_player(chara) && chara_ref.index < 16;
 }
 
 /**
@@ -120,12 +120,8 @@ sol::optional<LuaCharacterHandle> LuaApiChara::create_from_id(
 sol::optional<LuaCharacterHandle>
 LuaApiChara::create_from_id_xy(int x, int y, const std::string& id)
 {
-    auto data = the_character_db[id];
-    if (!data)
-    {
-        throw sol::error("No such character " + id);
-    }
-    return LuaApiChara::create_xy(x, y, data->id);
+    auto data = the_character_db.ensure(id);
+    return LuaApiChara::create_xy(x, y, data.id);
 }
 
 /**
@@ -150,13 +146,14 @@ int LuaApiChara::kill_count(const std::string& id)
  *
  * Attempts to find a character with the given prototype ID.
  * @tparam string id Prototype ID to search
- * @tparam CharaFindLocation location Location to search in
+ * @tparam[opt] CharaFindLocation location Location to search in (defaults to
+ * others)
  * @treturn[1] LuaCharacter the found character
  * @treturn[2] nil
  */
 sol::optional<LuaCharacterHandle> LuaApiChara::find(
     const std::string& id,
-    const EnumString& location)
+    sol::optional<EnumString> location)
 {
     auto data = the_character_db[id];
     if (!data)
@@ -164,8 +161,12 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(
         return sol::nullopt;
     }
 
-    auto location_value =
-        LuaEnums::CharaFindLocationTable.ensure_from_string(location);
+    auto location_value = CharaFindLocation::others;
+    if (location)
+    {
+        location_value =
+            LuaEnums::CharaFindLocationTable.ensure_from_string(*location);
+    }
 
     int result = 0;
     if (location_value == CharaFindLocation::allies)
@@ -194,12 +195,31 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(
 /**
  * @luadoc
  *
- * Returns true if the player can recruit more allies.
+ * Returns true if the player can recruit more allies, taking Charisma into
+ * account.
  * @treturn bool
  */
 bool LuaApiChara::can_recruit_allies()
 {
     return chara_get_free_slot_ally() != 0;
+}
+
+
+/**
+ * @luadoc
+ *
+ * Removes a character from the player's party, if they are an ally.
+ * @tparam LuaCharacter ally
+ */
+void LuaApiChara::remove_from_party(LuaCharacterHandle ally)
+{
+    if (!LuaApiChara::is_ally(ally))
+    {
+        return;
+    }
+
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(ally);
+    chara_relocate(chara_ref, none);
 }
 
 void LuaApiChara::bind(sol::table& api_table)
@@ -219,6 +239,7 @@ void LuaApiChara::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, kill_count);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, find);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, can_recruit_allies);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiChara, remove_from_party);
 }
 
 } // namespace lua

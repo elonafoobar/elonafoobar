@@ -1,9 +1,10 @@
-local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
 local Map = Elona.require("Map")
 local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
+
+local common = require("data/dialog/common")
 
 local function prompt_give_potion(prompt)
    return {
@@ -114,12 +115,12 @@ return {
       },
       progress_1 = {
          text = {
-            {"progress._1", args = function() return {Chara.player().basename} end},
+            {"progress._1", args = common.args_name},
          }
       },
-      progress_2 = prompt_give_potion({"progress._2", args = function() return {Chara.player().basename} end}),
+      progress_2 = prompt_give_potion({"progress._2", args = common.args_name}),
       progress_3 = prompt_give_potion({"progress._3"}),
-      progress_4 = prompt_give_potion({"progress._4", args = function() return {Chara.player().basename} end}),
+      progress_4 = prompt_give_potion({"progress._4", args = common.args_name}),
       progress_5 = {
          text = {
             {"progress._5"},
@@ -127,7 +128,7 @@ return {
       },
       progress_6 = {
          text = {
-            {"progress._6", args = function() return {Chara.player().basename} end},
+            {"progress._6", args = common.args_name},
          }
       },
    }

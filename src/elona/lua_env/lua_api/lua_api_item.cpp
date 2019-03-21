@@ -183,12 +183,8 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
 
     if (auto it = args.get<sol::optional<std::string>>("id"))
     {
-        auto data = the_item_db[*it];
-        if (!data)
-        {
-            throw sol::error("No such item " + *it);
-        }
-        id = data->id;
+        auto data = the_item_db.ensure(*it);
+        id = data.id;
     }
 
     if (itemcreate(slot, id, x, y, number) != 0)
@@ -291,16 +287,12 @@ sol::optional<LuaItemHandle> LuaApiItem::find(
     const std::string& item_id,
     const EnumString& location)
 {
-    auto data = the_item_db[item_id];
-    if (!data)
-    {
-        throw sol::error("No such item " + item_id);
-    }
+    auto data = the_item_db.ensure(item_id);
 
     auto location_value =
         LuaEnums::ItemFindLocationTable.ensure_from_string(location);
 
-    auto stat = item_find(data->id, 3, location_value);
+    auto stat = item_find(data.id, 3, location_value);
     if (stat == -1)
     {
         return sol::nullopt;

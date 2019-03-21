@@ -10,17 +10,6 @@ namespace lua
 /**
  * @luadoc
  *
- * Returns the time in hours since year 0.
- * @treturn num the time in hours
- */
-int LuaApiWorld::time()
-{
-    return game_data.date.hours();
-}
-
-/**
- * @luadoc
- *
  * Gets the ID of the next deferred event that will run.
  * @treturn num
  */
@@ -77,12 +66,82 @@ bool LuaApiWorld::belongs_to_guild(const std::string& guild_name)
     return false;
 }
 
+/**
+ * @luadoc
+ *
+ * Sets the player's guild affiliation and resets guild quotas.
+ * @tparam string guild_name One of "mages", "fighters" or "thieves"
+ */
+void LuaApiWorld::join_guild(const std::string& guild_name)
+{
+    game_data.guild.belongs_to_thieves_guild = 0;
+    game_data.guild.belongs_to_fighters_guild = 0;
+    game_data.guild.belongs_to_mages_guild = 0;
+    game_data.guild.mages_guild_quota = 0;
+    game_data.guild.thieves_guild_quota = 0;
+    game_data.guild.joining_mages_guild = 0;
+    game_data.guild.joining_thieves_guild = 0;
+    game_data.guild.joining_fighters_guild = 0;
+    game_data.guild.fighters_guild_quota_recurring = 0;
+    game_data.guild.mages_guild_quota_recurring = 0;
+    game_data.guild.thieves_guild_quota_recurring = 0;
+
+    if (guild_name == "mages")
+    {
+        game_data.guild.joining_mages_guild = 1000;
+        game_data.guild.belongs_to_mages_guild = 1;
+    }
+    else if (guild_name == "fighters")
+    {
+        game_data.guild.joining_fighters_guild = 1000;
+        game_data.guild.belongs_to_fighters_guild = 1;
+    }
+    else if (guild_name == "thieves")
+    {
+        game_data.guild.joining_thieves_guild = 1000;
+        game_data.guild.belongs_to_thieves_guild = 1;
+    }
+}
+
+/**
+ * @luadoc
+ *
+ * Returns the player's title for the given ranking.
+ * @tparam num ranking_id
+ */
+std::string LuaApiWorld::ranking_title(int ranking_id)
+{
+    return ranktitle(ranking_id);
+}
+
+/**
+ * @luadoc
+ *
+ * Modifies the player's rank in a given ranking.
+ * @tparam num ranking_id
+ * @tparam num amount
+ * @tparam num min
+ */
+void LuaApiWorld::modify_ranking(int ranking_id, int amount, int min)
+{
+    modrank(ranking_id, amount, min);
+}
+
+std::string LuaApiWorld::random_title(const EnumString& type)
+{
+    auto type_value = LuaEnums::RandomTitleTypeTable.ensure_from_string(type);
+    return random_title(type_value);
+}
+
 void LuaApiWorld::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, time);
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, deferred_event_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, add_deferred_event);
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, belongs_to_guild);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, join_guild);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, ranking_title);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, modify_ranking);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, random_title);
 
     /**
      * @luadoc data field LuaGameData

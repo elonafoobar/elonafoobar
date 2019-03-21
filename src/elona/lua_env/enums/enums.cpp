@@ -271,14 +271,14 @@ EnumMap<int> GenderTable{"Gender",
  *
  * Relationship of a character to the player.
  */
-EnumMap<int> RelationTable{"Relation",
-                           {
-                               {"Aggressive", -3},
-                               {"Nonaggressive", -2},
-                               {"Unconcerned", -1},
-                               {"Neutral", 0},
-                               {"Friend", 10},
-                           }};
+EnumMap<int> RelationshipTable{"Relationship",
+                               {
+                                   {"Aggressive", -3},
+                                   {"Nonaggressive", -2},
+                                   {"Unconcerned", -1},
+                                   {"Neutral", 0},
+                                   {"Friend", 10},
+                               }};
 
 
 /**
@@ -407,7 +407,6 @@ EnumMap<ItemFindLocation> ItemFindLocationTable{
  * @see Input.choose_ally
  */
 EnumMap<ControlAllyOperation> ControlAllyOperationTable{
-
     "ControlAllyOperation",
     {
         {"CallBack", ControlAllyOperation::call_back},
@@ -416,6 +415,21 @@ EnumMap<ControlAllyOperation> ControlAllyOperationTable{
         {"Staying", ControlAllyOperation::staying},
         {"Investigate", ControlAllyOperation::investigate},
         {"GeneEngineer", ControlAllyOperation::gene_engineer},
+    }};
+
+/**
+ * @luadoc
+ *
+ * Title type to use with World.random_title.
+ * @see World.random_title
+ */
+EnumMap<RandomTitleType> RandomTitleTypeTable{
+    "RandomTitleType",
+    {
+        {"Character", RandomTitleType::character},
+        {"Weapon", RandomTitleType::weapon},
+        {"Party", RandomTitleType::party},
+        {"LivingWeapon", RandomTitleType::living_weapon},
     }};
 
 } // namespace LuaEnums
@@ -435,13 +449,14 @@ void LuaEnums::bind(sol::table& core)
     MapEntranceTypeTable.bind(Enums);
     MapTilesetTable.bind(Enums);
     GenderTable.bind(Enums);
-    RelationTable.bind(Enums);
+    RelationshipTable.bind(Enums);
     CharaFlagTable.bind(Enums);
     QualityTable.bind(Enums);
     TraitTypeTable.bind(Enums);
     CharaFindLocationTable.bind(Enums);
     ItemFindLocationTable.bind(Enums);
     ControlAllyOperationTable.bind(Enums);
+    RandomTitleTypeTable.bind(Enums);
 }
 
 } // namespace lua

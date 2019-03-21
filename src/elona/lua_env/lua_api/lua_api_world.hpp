@@ -13,13 +13,19 @@ namespace lua
  */
 namespace LuaApiWorld
 {
-int time();
-
 void add_deferred_event(int, sol::optional<int>, sol::optional<int>);
 
 int deferred_event_id();
 
 bool belongs_to_guild(const std::string&);
+
+void join_guild(const std::string&);
+
+std::string ranking_title(int);
+
+void modify_ranking(int, int, int);
+
+std::string random_title(const EnumString&);
 
 
 void bind(sol::table&);

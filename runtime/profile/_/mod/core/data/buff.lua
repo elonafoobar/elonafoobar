@@ -109,7 +109,7 @@ data:add_multi(
             return 12 + power // 20
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 154, 40)
+            mod_skill_level(args, "core.healing", 40)
          end,
          _effect = function(power)
             return 0
@@ -124,9 +124,9 @@ data:add_multi(
             return 4 + power // 6
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 50, 100)
-            mod_skill_level(args, 51, 100)
-            mod_skill_level(args, 52, 100)
+            mod_skill_level(args, "core.element_fire", 100)
+            mod_skill_level(args, "core.element_cold", 100)
+            mod_skill_level(args, "core.element_lightning", 100)
          end,
          _effect = function(power)
             return 0
@@ -141,7 +141,7 @@ data:add_multi(
             return 8 + power // 30
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 18, self._effect(args.power))
+            mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
          end,
          _effect = function(power)
             return Math.modf(50 + Math.sqrt(power // 5))
@@ -156,8 +156,8 @@ data:add_multi(
             return 8 + power // 30
          end,
          on_refresh = function(self, args)
-            args.chara:get_skill(18).current_level =
-               args.chara:get_skill(18).current_level - self._effect(args.power)
+            args.chara:get_skill("core.attribute_speed").current_level =
+               args.chara:get_skill("core.attribute_speed").current_level - self._effect(args.power)
          end,
          _effect = function(power)
             return Math.min(20 + power // 20, 50)
@@ -174,8 +174,8 @@ data:add_multi(
             return 10 + power // 4
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 10, self._effect(args.power))
-            mod_skill_level(args, 12, self._effect(args.power))
+            mod_skill_level(args, "core.attribute_strength", self._effect(args.power))
+            mod_skill_level(args, "core.attribute_dexterity", self._effect(args.power))
             args.chara:heal_ailment("Fear", 0)
             args.chara:heal_ailment("Confused", 0)
          end,
@@ -208,9 +208,9 @@ data:add_multi(
             return 4 + power // 15
          end,
          on_refresh = function(self, args)
-            mod_skill_level_clamp(args, 50, -100)
-            mod_skill_level_clamp(args, 51, -100)
-            mod_skill_level_clamp(args, 52, -100)
+            mod_skill_level_clamp(args, "core.element_fire", -100)
+            mod_skill_level_clamp(args, "core.element_cold", -100)
+            mod_skill_level_clamp(args, "core.element_lightning", -100)
          end,
          _effect = function(power)
             return 0
@@ -242,8 +242,8 @@ data:add_multi(
             return 4 + power // 15
          end,
          on_refresh = function(self, args)
-            mod_skill_level_clamp(args, 58, -100)
-            mod_skill_level_clamp(args, 54, -100)
+            mod_skill_level_clamp(args, "core.element_nerve", -100)
+            mod_skill_level_clamp(args, "core.element_mind", -100)
          end,
          _effect = function(power)
             return 0
@@ -259,9 +259,9 @@ data:add_multi(
          end,
          on_refresh = function(self, args)
             local a, b = self._effect(args.power)
-            mod_skill_level(args, 14, a)
-            mod_skill_level(args, 16, a)
-            mod_skill_level(args, 150, b)
+            mod_skill_level(args, "core.attribute_learning", a)
+            mod_skill_level(args, "core.attribute_magic", a)
+            mod_skill_level(args, "core.literacy", b)
          end,
          _effect = function(power)
             return 6 + power // 40, 3 + power // 100
@@ -279,7 +279,7 @@ data:add_multi(
             return power
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 18, -self._effect(args.power))
+            mod_skill_level(args, "core.attribute_speed", -self._effect(args.power))
             if args.chara.pv > 1 then
                args.chara.pv = args.chara.pv // 5
             end
@@ -297,7 +297,7 @@ data:add_multi(
             return 7
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 18, self._effect(args.power))
+            mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
          end,
          _effect = function(power)
             return 155 + power // 5
@@ -369,10 +369,12 @@ data:add_multi(
             return 5
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 18, self._effect(args.power))
-            args.chara:get_skill(10).current_level = args.chara:get_skill(10).current_level * 150 // 100 + 10
-            args.chara:get_skill(12).current_level = args.chara:get_skill(12).current_level * 150 // 100 + 10
-            mod_skill_level(args, 154, 50)
+            mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
+            args.chara:get_skill("core.attribute_strength").current_level =
+               args.chara:get_skill("core.attribute_strength").current_level * 150 // 100 + 10
+            args.chara:get_skill("core.attribute_dexterity").current_level =
+               args.chara:get_skill("core.attribute_dexterity").current_level * 150 // 100 + 10
+            mod_skill_level(args, "core.healing", 50)
             args.chara.pv = args.chara.pv * 150 // 100 + 25
             args.chara.dv = args.chara.dv * 150 // 100 + 25
             args.chara.hit_bonus = args.chara.hit_bonus * 150 // 100 + 50
@@ -412,7 +414,7 @@ data:add_multi(
             return 777
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, 19, self._effect(args.power))
+            mod_skill_level(args, "core.attribute_luck", self._effect(args.power))
          end,
          _effect = function(power)
             return power

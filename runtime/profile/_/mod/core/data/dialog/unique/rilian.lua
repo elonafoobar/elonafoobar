@@ -1,8 +1,9 @@
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
+
+local common = require("data/dialog/common")
 
 return {
    name = "rilian",
@@ -69,15 +70,13 @@ return {
             Item.create(Chara.player().position, "core.gold_piece", 2500)
             Item.create(Chara.player().position, "core.platinum_coin", 2)
 
-            GUI.txt(I18N.get("core.locale.quest.completed"));
-            GUI.play_sound("core.complete1");
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"));
-            GUI.show_journal_update_message();
+            common.quest_completed()
+
             Internal.set_quest_flag("puppys_cave", 1000)
 
             Chara.find("core.poppy", "Allies"):vanquish()
-            local poppy = Chara.create(31, 4, "core.poppy");
-            poppy.role = 3;
+            local poppy = Chara.create(31, 4, "core.poppy")
+            poppy.role = 3
          end
       }
    }

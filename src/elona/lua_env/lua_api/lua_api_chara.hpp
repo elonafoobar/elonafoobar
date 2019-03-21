@@ -34,9 +34,13 @@ create_from_id_xy(int, int, const std::string&);
 
 int kill_count(const std::string&);
 
-sol::optional<LuaCharacterHandle> find(const std::string&, const EnumString&);
+sol::optional<LuaCharacterHandle> find(
+    const std::string&,
+    sol::optional<EnumString>);
 
 bool can_recruit_allies();
+
+void remove_from_party(LuaCharacterHandle);
 
 void bind(sol::table&);
 }; // namespace LuaApiChara

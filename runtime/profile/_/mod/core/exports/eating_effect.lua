@@ -36,7 +36,7 @@ end
 
 function eating_effect.horse(eater)
    eat_message(eater, "horse", Enums.Color.Green)
-   eater:gain_skill_exp(11, 100)
+   eater:gain_skill_exp("core.attribute_constitution", 100)
 end
 
 function eating_effect.holy_one(eater)
@@ -74,12 +74,12 @@ end
 
 function eating_effect.putit(eater)
    eat_message(eater, "putit", Enums.Color.Green)
-   eater:gain_skill_exp(17, 150)
+   eater:gain_skill_exp("core.attribute_charisma", 150)
 end
 
 function eating_effect.cupid_of_love(eater)
    eat_message(eater, "cupid_of_love", Enums.Color.Green)
-   eater:gain_skill_exp(17, 400)
+   eater:gain_skill_exp("core.attribute_charisma", 400)
 end
 
 
@@ -99,7 +99,7 @@ eating_effect.poisonous = eating_effect_poisonous(false)
 
 function eating_effect.troll(eater)
    eat_message(eater, "troll", Enums.Color.Green)
-   eater:gain_skill_exp(154, 200)
+   eater:gain_skill_exp("core.healing", 200)
 end
 
 function eating_effect.rotten_one(eater)
@@ -109,12 +109,12 @@ end
 
 function eating_effect.beetle(eater)
    eat_message(eater, "beetle", Enums.Color.Green)
-   eater:gain_skill_exp(10, 250)
+   eater:gain_skill_exp("core.attribute_strength", 250)
 end
 
 function eating_effect.mandrake(eater)
    eat_message(eater, "mandrake", Enums.Color.Green)
-   eater:gain_skill_exp(155, 500)
+   eater:gain_skill_exp("core.meditation", 500)
 end
 
 function eating_effect.grudge(eater)
@@ -167,7 +167,7 @@ end
 local function eating_effect_giant(amount)
    return function(eater)
       eat_message(eater, "giant", Enums.Color.Green)
-      eater:gain_skill_exp(11, amount)
+      eater:gain_skill_exp("core.attribute_constitution", amount)
    end
 end
 
@@ -177,12 +177,12 @@ eating_effect.titan = eating_effect_giant(800)
 
 function eating_effect.imp(eater)
    eat_message(eater, "imp", Enums.Color.Green)
-   eater:gain_skill_exp(16, 500)
+   eater:gain_skill_exp("core.attribute_magic", 500)
 end
 
 function eating_effect.hand(eater)
    eat_message(eater, "strength", Enums.Color.Green)
-   eater:gain_skill_exp(10, 400)
+   eater:gain_skill_exp("core.attribute_strength", 400)
 end
 
 function eating_effect.mammoth(eater)
@@ -194,7 +194,7 @@ end
 local function eating_effect_ghost(amount)
    return function(eater)
       eat_message(eater, "ghost", Enums.Color.Green)
-      eater:gain_skill_exp(15, amount);
+      eater:gain_skill_exp("core.attribute_will", amount);
    end
 end
 
@@ -205,9 +205,9 @@ eating_effect.nymph = eating_effect_ghost(400)
 function eating_effect.quickling(eater)
    eat_message(eater, "quickling", Enums.Color.Green)
 
-   local current = Skill.level(18, eater)
+   local current = eater:get_skill("core.attribute_speed").current_level
    local amount = Math.clamp(2500 - current * current / 10, 20, 2500)
-   eater:gain_skill_exp(18, amount);
+   eater:gain_skill_exp("core.attribute_speed", amount);
 end
 
 function eating_effect.alien(eater)

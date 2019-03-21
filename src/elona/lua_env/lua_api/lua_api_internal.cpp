@@ -1,10 +1,13 @@
 #include "lua_api_internal.hpp"
 #include "../../audio.hpp"
+#include "../../calc.hpp"
 #include "../../character.hpp"
 #include "../../crafting.hpp"
 #include "../../data/types/type_map.hpp"
-#include "../../item.hpp"
+#include "../../i18n.hpp"
+#include "../../itemgen.hpp"
 #include "../../map.hpp"
+#include "../../menu.hpp"
 #include "../../shop.hpp"
 #include "../../ui.hpp"
 #include "../interface.hpp"
@@ -50,6 +53,10 @@ int LuaApiInternal::get_quest_flag(const std::string& id)
     GET_QUEST_FLAG(minotaur_king);
     GET_QUEST_FLAG(little_sister);
     GET_QUEST_FLAG(blue_capsule_drug);
+    GET_QUEST_FLAG(duration_of_kamikaze_attack);
+    GET_QUEST_FLAG(kill_count_of_little_sister);
+    GET_QUEST_FLAG(save_count_of_little_sister);
+    GET_QUEST_FLAG(gift_count_of_little_sister);
 
     throw sol::error("No such quest " + id);
     return 0;
@@ -78,6 +85,11 @@ void LuaApiInternal::set_quest_flag(const std::string& id, int value)
     SET_QUEST_FLAG(minotaur_king, value);
     SET_QUEST_FLAG(little_sister, value);
     SET_QUEST_FLAG(blue_capsule_drug, value);
+    SET_QUEST_FLAG(duration_of_kamikaze_attack, value);
+    SET_QUEST_FLAG(kill_count_of_little_sister, value);
+    SET_QUEST_FLAG(save_count_of_little_sister, value);
+    SET_QUEST_FLAG(gift_count_of_little_sister, value);
+
 
     throw sol::error("No such quest " + id);
 }
@@ -130,6 +142,105 @@ void LuaApiInternal::trade_small_medals(LuaCharacterHandle chara)
     cs = 0;
 }
 
+int LuaApiInternal::generate_fighters_guild_target(int level)
+{
+    while (true)
+    {
+        flt(level);
+        chara_create(56, 0, -3, 0);
+        if (the_character_db[cdata.tmp().id]->rarity / 1000 < 70)
+        {
+            continue;
+        }
+        if (cdata.tmp().relationship != -3)
+        {
+            continue;
+        }
+        if (cdata.tmp().quality >= Quality::miracle)
+        {
+            continue;
+        }
+        break;
+    }
+
+    auto id = cdata.tmp().id;
+    chara_vanquish(56);
+
+    return id;
+}
+
+void LuaApiInternal::leave_map()
+{
+    levelexitby = 4;
+    chatteleport = 1;
+}
+
+void LuaApiInternal::strange_scientist_pick_reward()
+{
+    begintempinv();
+    mode = 6;
+    flt();
+    itemcreate(-1, 283, -1, -1, 0);
+    flt();
+    itemcreate(-1, 284, -1, -1, 0);
+    for (int cnt = 0; cnt < 800; ++cnt)
+    {
+        if (cnt == 672)
+        {
+            continue;
+        }
+        randomize(game_data.date.day + cnt);
+        f = 0;
+        if (itemmemory(0, cnt))
+        {
+            f = 1;
+        }
+        if (cnt == 662)
+        {
+            if (game_data.quest_flags.kamikaze_attack >= 1000)
+            {
+                f = 1;
+            }
+        }
+        if (cnt == 655)
+        {
+            if (game_data.quest_flags.rare_books >= 1000)
+            {
+                f = 1;
+            }
+        }
+        if (cnt == 639)
+        {
+            if (game_data.quest_flags.pael_and_her_mom >= 1000)
+            {
+                f = 1;
+            }
+        }
+        if (f)
+        {
+            flt(cdata.player().level * 3 / 2, calcfixlv(Quality::good));
+            int stat = itemcreate(-1, cnt, -1, -1, 0);
+            if (stat == 1)
+            {
+                if (inv[ci].quality < Quality::miracle)
+                {
+                    inv[ci].remove();
+                }
+            }
+        }
+        randomize();
+    }
+    txt(
+        i18n::s.get("core.locale.talk.unique.strange_scientist."
+                    "reward.choose_one"));
+    invsubroutine = 1;
+    invctrl(0) = 22;
+    invctrl(1) = 4;
+    ctrl_inventory();
+    exittempinv();
+    mode = 0;
+}
+
 void LuaApiInternal::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, get_quest_flag);
@@ -140,6 +251,11 @@ void LuaApiInternal::bind(sol::table& api_table)
         api_table, LuaApiInternal, material_kit_crafting_menu);
     LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, filter_set_dungeon);
     LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, trade_small_medals);
+    LUA_API_BIND_FUNCTION(
+        api_table, LuaApiInternal, generate_fighters_guild_target);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, leave_map);
+    LUA_API_BIND_FUNCTION(
+        api_table, LuaApiInternal, strange_scientist_pick_reward);
 }
 
 } // namespace lua

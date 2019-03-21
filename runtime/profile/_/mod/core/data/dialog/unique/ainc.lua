@@ -4,6 +4,8 @@ local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
+local common = require("data/dialog/common")
+
 return {
    name = "ainc",
    root = "core.locale.talk.unique.ainc",
@@ -24,7 +26,7 @@ return {
       end,
       quest_completed = {
          text = {
-            {"complete", args = function() return {Chara.player().basename} end}
+            {"complete", args = common.args_name}
          }
       },
       quest_ask = {
