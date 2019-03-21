@@ -22,7 +22,7 @@ struct Font
         bold = TTF_STYLE_BOLD,
         italic = TTF_STYLE_ITALIC,
         underline = TTF_STYLE_UNDERLINE,
-        strikeThrough = TTF_STYLE_STRIKETHROUGH,
+        strikethrough = TTF_STYLE_STRIKETHROUGH,
     };
 
 

@@ -45,6 +45,7 @@ extern EnumMap<CharaFindLocation> CharaFindLocationTable;
 extern EnumMap<ItemFindLocation> ItemFindLocationTable;
 extern EnumMap<ControlAllyOperation> ControlAllyOperationTable;
 extern EnumMap<RandomTitleType> RandomTitleTypeTable;
+extern EnumMap<snail::Font::Style> FontStyleTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

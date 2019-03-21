@@ -6,6 +6,7 @@
 #include "../../pic_loader/tinted_buffers.hpp"
 #include "../../ui.hpp"
 #include "../data_manager.hpp"
+#include "../enums/enums.hpp"
 
 namespace elona
 {
@@ -380,6 +381,20 @@ int LuaApiDraw::current_buffer()
 void LuaApiDraw::set_buffer(int buffer)
 {
     elona::gsel(buffer);
+}
+
+/**
+ * @luadoc set_mode
+ */
+void LuaApiDraw::set_font(int size, sol::optional<EnumString> style)
+{
+    auto style_value = snail::Font::Style::bold;
+    if (style)
+    {
+        style_value = LuaEnums::FontStyleTable.ensure_from_string(*style);
+    }
+
+    elona::font(size, style_value);
 }
 
 /**

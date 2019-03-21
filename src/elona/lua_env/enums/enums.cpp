@@ -433,6 +433,22 @@ EnumMap<RandomTitleType> RandomTitleTypeTable{
         {"LivingWeapon", RandomTitleType::living_weapon},
     }};
 
+/**
+ * @luadoc
+ *
+ * Font style to use with Draw.set_font.
+ * @see Draw.set_font
+ */
+EnumMap<snail::Font::Style> FontStyleTable{
+    "FontStyle",
+    {
+        {"Regular", snail::Font::Style::regular},
+        {"Bold", snail::Font::Style::bold},
+        {"Italic", snail::Font::Style::italic},
+        {"Underline", snail::Font::Style::underline},
+        {"Strikethrough", snail::Font::Style::strikethrough},
+    }};
+
 } // namespace LuaEnums
 
 void LuaEnums::bind(sol::table& core)
@@ -446,18 +462,20 @@ void LuaEnums::bind(sol::table& core)
     StatusAilmentTable.bind(Enums);
     ElementTable.bind(Enums);
     TileKindTable.bind(Enums);
+    QualityTable.bind(Enums);
+    BuffTypeTable.bind(Enums);
     MapTypeTable.bind(Enums);
     MapEntranceTypeTable.bind(Enums);
     MapTilesetTable.bind(Enums);
     GenderTable.bind(Enums);
     RelationshipTable.bind(Enums);
     CharaFlagTable.bind(Enums);
-    QualityTable.bind(Enums);
     TraitTypeTable.bind(Enums);
     CharaFindLocationTable.bind(Enums);
     ItemFindLocationTable.bind(Enums);
     ControlAllyOperationTable.bind(Enums);
     RandomTitleTypeTable.bind(Enums);
+    FontStyleTable.bind(Enums);
 }
 
 } // namespace lua

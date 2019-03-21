@@ -88,6 +88,8 @@ int current_buffer();
 
 void set_buffer(int);
 
+void set_font(int, sol::optional<EnumString>);
+
 int screen_width();
 
 int screen_height();
