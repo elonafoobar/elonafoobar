@@ -15,7 +15,6 @@
 #include "lua_api_item.cpp"
 #include "lua_api_magic.cpp"
 #include "lua_api_map.cpp"
-#include "lua_api_math.cpp"
 #include "lua_api_pos.cpp"
 #include "lua_api_rand.cpp"
 #include "lua_api_skill.cpp"

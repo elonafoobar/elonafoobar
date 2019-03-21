@@ -40,13 +40,18 @@ void asset(
     sol::optional<int>,
     sol::optional<int>);
 
-void chip(
-    const std::string&,
+void chip(const std::string&, int, int, sol::optional<int>, sol::optional<int>);
+
+void copy_region(
+    int,
+    int,
+    int,
+    int,
+    int,
     int,
     int,
     sol::optional<int>,
-    sol::optional<int>,
-    sol::optional<double>);
+    sol::optional<int>);
 
 void set_color_mod(sol::table);
 
@@ -66,9 +71,15 @@ int screen_bottom();
 
 void wait(int);
 
-void redraw();
+void redraw(sol::optional<bool>);
 
-void update_screen(bool);
+void update_screen(sol::optional<bool>);
+
+void update_entire_screen(sol::optional<bool>);
+
+int reserve_temp_buffer(int, int);
+
+void free_temp_buffer(int);
 
 
 void bind(sol::table&);

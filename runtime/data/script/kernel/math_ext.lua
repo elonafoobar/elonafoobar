@@ -1,11 +1,7 @@
-local math = require "math"
+local Math = require "math"
 
-local Math = {}
-
-Math.min = math.min
-Math.max = math.max
-Math.sqrt = math.sqrt
-Math.modf = math.modf
+Math.randomseed = nil
+Math.random = nil
 
 function Math.clamp(n, min, max)
   return Math.min(Math.max(n, min), max)

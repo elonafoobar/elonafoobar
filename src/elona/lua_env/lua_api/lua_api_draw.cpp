@@ -1,6 +1,9 @@
 #include "lua_api_draw.hpp"
+#include "../../character.hpp"
 #include "../../data/types/type_asset.hpp"
 #include "../../draw.hpp"
+#include "../../pic_loader/pic_loader.hpp"
+#include "../../pic_loader/tinted_buffers.hpp"
 #include "../../ui.hpp"
 
 namespace elona
@@ -10,6 +13,66 @@ namespace lua
 
 namespace
 {
+
+class TempBuffers
+{
+public:
+    int reserve(int width, int height)
+    {
+        optional<int> buffer_index = none;
+        for (int i = 0; i < static_cast<int>(_free_buffers.size()); i++)
+        {
+            bool is_free = _free_buffers[i];
+            if (is_free)
+            {
+                _free_buffers[i] = false;
+                buffer_index = i;
+                break;
+            }
+        }
+
+        if (!buffer_index)
+        {
+            _free_buffers.push_back(false);
+            buffer_index = _free_buffers.size() - 1;
+        }
+
+        int real_index = *buffer_index + buffer_start_index;
+
+        int buffer_bk = ginfo(3);
+        buffer(real_index, width, height);
+        gsel(buffer_bk);
+
+        return real_index;
+    }
+
+    void free(int real_index)
+    {
+        int index = real_index - buffer_start_index;
+        if (index < 0 || index >= static_cast<int>(_free_buffers.size()))
+        {
+            return;
+        }
+        if (_free_buffers[index] == true)
+        {
+            return;
+        }
+
+        _free_buffers[index] = true;
+
+        int buffer_bk = ginfo(3);
+        buffer(real_index, 1, 1);
+        gsel(buffer_bk);
+    }
+
+private:
+    static constexpr int buffer_start_index = 10 + PicLoader::max_buffers +
+        TintedBuffers::max_buffers + ELONA_MAX_CHARACTERS;
+
+    std::vector<bool> _free_buffers;
+};
+
+TempBuffers temp_buffers;
 
 snail::Color to_color(sol::table table)
 {
@@ -43,6 +106,9 @@ Position LuaApiDraw::screen_to_world(int x, int y)
                     clamp(y - inf_screeny, 0, (windowh - inf_verh))};
 }
 
+/**
+ * @luadoc
+ */
 bool LuaApiDraw::is_in_screen(int x, int y)
 {
     return 0 <= x && x - inf_screenx < (inf_screenw - 1) * inf_tiles &&
@@ -146,20 +212,19 @@ void LuaApiDraw::chip(
     int x,
     int y,
     sol::optional<int> width,
-    sol::optional<int> height,
-    sol::optional<double> rotation)
+    sol::optional<int> height)
 {
     const auto rect = draw_get_rect(id);
     if (!rect)
     {
+        gsel(0);
         throw sol::error("No such chip " + id);
     }
 
     int width_value = width ? *width : rect->width;
     int height_value = height ? *height : rect->height;
-    double rotation_value = rotation ? *rotation : 0.0;
 
-    grotate(
+    gcopy(
         rect->buffer,
         rect->x,
         rect->y,
@@ -168,8 +233,33 @@ void LuaApiDraw::chip(
         x,
         y,
         width_value,
-        height_value,
-        rotation_value);
+        height_value);
+}
+
+void LuaApiDraw::copy_region(
+    int window_id,
+    int x,
+    int y,
+    int width,
+    int height,
+    int dst_x,
+    int dst_y,
+    sol::optional<int> dst_width,
+    sol::optional<int> dst_height)
+{
+    int dst_width_value = dst_width ? *dst_width : width;
+    int dst_height_value = dst_height ? *dst_height : height;
+
+    gcopy(
+        window_id,
+        x,
+        y,
+        width,
+        height,
+        dst_x,
+        dst_y,
+        dst_width_value,
+        dst_height_value);
 }
 
 /**
@@ -255,22 +345,59 @@ void LuaApiDraw::wait(int msec)
 /**
  * @luadoc
  */
-void LuaApiDraw::redraw()
+void LuaApiDraw::redraw(sol::optional<bool> step_frame)
 {
+    bool step_frame_value = step_frame ? *step_frame : false;
+    if (step_frame_value)
+    {
+        elona::scrturn++;
+    }
+
     elona::redraw();
 }
 
 /**
  * @luadoc
  */
-void LuaApiDraw::update_screen(bool redraw)
+void LuaApiDraw::update_screen(sol::optional<bool> redraw)
 {
+    bool redraw_value = redraw ? *redraw : true;
     int screenupdatebk = elona::screenupdate;
-    elona::screenupdate = redraw ? 0 : -1;
+    elona::screenupdate = redraw_value ? 0 : -1;
 
     elona::update_screen();
 
     elona::screenupdate = screenupdatebk;
+}
+
+/**
+ * @luadoc
+ */
+void LuaApiDraw::update_entire_screen(sol::optional<bool> redraw)
+{
+    bool redraw_value = redraw ? *redraw : true;
+    int screenupdatebk = elona::screenupdate;
+    elona::screenupdate = redraw_value ? 0 : -1;
+
+    elona::update_entire_screen();
+
+    elona::screenupdate = screenupdatebk;
+}
+
+/**
+ * @luadoc
+ */
+int LuaApiDraw::reserve_temp_buffer(int width, int height)
+{
+    return temp_buffers.reserve(width, height);
+}
+
+/**
+ * @luadoc
+ */
+void LuaApiDraw::free_temp_buffer(int buffer)
+{
+    temp_buffers.free(buffer);
 }
 
 void LuaApiDraw::bind(sol::table& api_table)
@@ -286,6 +413,7 @@ void LuaApiDraw::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, text_shadow);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, asset);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, chip);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, copy_region);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_color_mod);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_screen_offset);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_mode);
@@ -297,6 +425,9 @@ void LuaApiDraw::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, wait);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, redraw);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, update_screen);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, update_entire_screen);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, reserve_temp_buffer);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, free_temp_buffer);
 }
 
 } // namespace lua
