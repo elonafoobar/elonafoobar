@@ -407,17 +407,34 @@ std::vector<std::string> ModManager::calculate_loading_order()
         const auto& mod = pair.second;
         sorter.add(mod->manifest.name);
 
-        for (const auto& dependency : mod->manifest.dependencies)
+        for (const auto& pair : mod->manifest.dependencies)
         {
-            if (mods.find(dependency) == mods.end())
+            const auto& mod_name = pair.first;
+            const auto& version_req = pair.second;
+
+            const auto itr = mods.find(mod_name);
+            if (itr == mods.end())
             {
                 throw std::runtime_error(
-                    "The dependency '" + dependency + "' of mod '" +
+                    "The dependency '" + mod_name + "' of mod '" +
                     mod->manifest.name +
                     "' could not be found in the list of scanned mods.");
             }
+            const auto& ver = itr->second->manifest.version;
+            if (!version_req.is_satisfied(ver))
+            {
+                // Error message example:
+                // The dependency requirement 'base' (>= 2.0.0) of mod 'derived'
+                // could not be satisfied by 'base v1.5.0'.
+                std::stringstream ss;
+                ss << "The dependency requirement '" << mod_name << "' ("
+                   << version_req.to_string() << ") of mod '"
+                   << mod->manifest.name << "'could not be satisfied by '"
+                   << mod_name << " v" << ver.to_string() << "'.";
+                throw std::runtime_error(ss.str());
+            }
 
-            sorter.add_dependency(mod->manifest.name, dependency);
+            sorter.add_dependency(mod->manifest.name, mod_name);
         }
     }
 

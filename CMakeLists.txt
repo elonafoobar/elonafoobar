@@ -196,6 +196,7 @@ else()
       src/tests/keybind_key_names.cpp
       src/tests/keybind_manager.cpp
       src/tests/keybind_serializer.cpp
+      src/tests/semver.cpp
       src/tests/serialization.cpp
       )
 
