@@ -36,6 +36,14 @@ return {
 
          return "ambush"
       end,
+      too_poor = {
+         text = {
+            {"too_poor", args = common.args_speaker}
+         },
+         choices = {
+            {"__END__", "__MORE__"}
+         },
+      },
       ambush = {
          text = {
             {

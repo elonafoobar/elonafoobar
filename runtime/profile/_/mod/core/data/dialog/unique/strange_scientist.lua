@@ -8,8 +8,8 @@ local table = Elona.require("table")
 local function can_receive_reward()
    local count = Internal.get_quest_flag("kill_count_of_little_sister")
 
-   for i=1,Internal.get_quest_flag("gift_count_of_little_sister") do
-      count = count + count
+   for i=1,Internal.get_quest_flag("gift_count_of_little_sister")+1 do
+      count = count + i
    end
 
     return Internal.get_quest_flag("save_count_of_little_sister") >= count

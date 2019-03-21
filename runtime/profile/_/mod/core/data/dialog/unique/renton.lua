@@ -65,11 +65,9 @@ return {
                end
             end
          end
-         print("total: " .. total_books)
 
          if total_books > 0 then
             if total_books ~= 4 then
-               print("go: " .. total_books)
                return {choice = "quest_brought_some", opts = {total_books}}
             else
                return "quest_finish"

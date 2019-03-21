@@ -62,6 +62,7 @@ return {
       },
       quest_begin_yes = {
          text = {
+            GUI.show_journal_update_message,
             {"quest.begin.yes"},
          },
          on_finish = function()

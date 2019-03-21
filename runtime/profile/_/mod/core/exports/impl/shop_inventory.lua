@@ -188,7 +188,7 @@ shop_inventory.cargo_amount_rates = {
 }
 
 function shop_inventory.cargo_amount_modifier(amount)
-   return amount * (100 + Chara.player():get_skill("core.negotiation").currrent_level * 10) / 100 + 1
+   return amount * (100 + Chara.player():get_skill("core.negotiation").current_level * 10) / 100 + 1
 end
 
 -- Calculate adjusted amount of cargo items to be sold based on the

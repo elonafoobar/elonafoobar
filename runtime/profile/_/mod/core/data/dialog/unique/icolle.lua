@@ -1,5 +1,6 @@
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
+local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 
@@ -16,6 +17,8 @@ local function give_monster_balls()
 
       if item.number > 0 and item.id == "core.monster_ball" and item.subname ~= 0 then
          found = true
+
+         GUI.txt(I18N.get("core.locale.talk.unique.icolle.quest.give.deliver", item));
 
          while item.number > 0 and flag < 6 do
             item.number = item.number - 1
