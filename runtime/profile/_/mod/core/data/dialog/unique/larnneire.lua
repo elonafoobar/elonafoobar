@@ -1,5 +1,5 @@
 return {
-   name = "larnneire",
+   id = "larnneire",
    root = "core.locale.talk.unique.larnneire",
    nodes = {
       __start = {

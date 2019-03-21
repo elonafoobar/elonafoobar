@@ -190,12 +190,12 @@ void snd_inner(
     if (!Config::instance().sound)
         return;
 
-    int channel = sound.id;
+    int channel = sound.legacy_id;
     if (channel > temporary_channels_head)
     {
         if (loop)
         {
-            switch (sound.id)
+            switch (sound.legacy_id)
             {
             case 78: channel = 14; break;
             case 79: channel = 15; break;
@@ -214,7 +214,8 @@ void snd_inner(
                      ++i)
                 {
                     if (CHECKPLAY(i) &&
-                        soundlist[i - temporary_channels_head] == sound.id)
+                        soundlist[i - temporary_channels_head] ==
+                            sound.legacy_id)
                     {
                         channel = i;
                         found = true;
@@ -231,7 +232,8 @@ void snd_inner(
                     if (!CHECKPLAY(i))
                     {
                         channel = i;
-                        soundlist[i - temporary_channels_head] = sound.id;
+                        soundlist[i - temporary_channels_head] =
+                            sound.legacy_id;
                     }
                 }
             }
@@ -344,7 +346,7 @@ void initialize_sound_file()
 
     for (const auto& se : the_sound_db.values())
     {
-        _preload_sound_if_needed(se.file, se.id);
+        _preload_sound_if_needed(se.file, se.legacy_id);
     }
 }
 

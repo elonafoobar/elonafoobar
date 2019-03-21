@@ -27,7 +27,7 @@ local function turn_over_little_sister()
 end
 
 return {
-   name = "strange_scientist",
+   id = "strange_scientist",
    root = "core.locale.talk.unique.strange_scientist",
    nodes = {
       __start = function()

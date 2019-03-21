@@ -5,7 +5,7 @@ data:add_multi(
    "core.dialog",
    {
       {
-         name = "ignored",
+         id = "ignored",
          root = "core.locale.talk",
          nodes = {
             __start = {

@@ -40,7 +40,7 @@ int fish_select_at_random()
         {
             continue;
         }
-        sampler.add(fish.id, fish.rarity);
+        sampler.add(fish.legacy_id, fish.rarity);
     }
 
     return sampler.get().get_value_or(1);

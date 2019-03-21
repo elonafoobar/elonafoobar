@@ -34,14 +34,14 @@ function data:add(array)
          error("not array entry")
       end
 
-      local name = v.name
+      local id = v.id
       local data_type = v.type
 
-      if not name or not data_type then
-         error("missing name or type")
+      if not id or not data_type then
+         error("missing id or type: id=" .. (id or 'nil') .. " type=" .. (data_type or 'nil'))
       end
 
-      local instance_id = _ENV["_MOD_NAME"] .. "." .. name
+      local instance_id = _ENV["_MOD_NAME"] .. "." .. id
 
 
       local validator = self.types[data_type]
@@ -73,7 +73,7 @@ function data:add(array)
       dt[instance_id] = v
       v._id = instance_id
 
-      if v.id and type(v.id) == "number" then
+      if v.legacy_id and type(v.legacy_id) == "number" then
          local by_legacy = self.by_legacy[data_type]
 
          if not by_legacy then
@@ -81,7 +81,7 @@ function data:add(array)
             self.by_legacy[data_type] = by_legacy
          end
 
-         by_legacy[v.id] = instance_id
+         by_legacy[v.legacy_id] = instance_id
       end
    end
 end

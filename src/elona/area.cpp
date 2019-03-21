@@ -156,7 +156,7 @@ void initialize_adata()
 {
     for (const auto& map : the_mapdef_db.values())
     {
-        int map_id = map.id;
+        int map_id = map.legacy_id;
         auto& area = area_data[map_id];
 
         area.id = map_id;

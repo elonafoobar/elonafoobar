@@ -19,7 +19,7 @@ local function prompt_give_potion(prompt)
 end
 
 return {
-   name = "pael",
+   id = "pael",
    root = "core.locale.talk.unique.pael",
    nodes = {
       __start = function()

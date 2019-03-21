@@ -55,6 +55,7 @@ PortraitData _PortraitDBBase::convert(
     }
 
     return PortraitData{
+        SharedId{id},
         SharedId{std::string(Traits::type_id) + data_id_separator + id},
         Extent{x, y, width, height},
         filepath};

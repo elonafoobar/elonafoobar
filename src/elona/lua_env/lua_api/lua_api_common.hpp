@@ -58,5 +58,5 @@ using LuaItemHandle = sol::table;
             { \
                 return; \
             } \
-            d.field = data->id; \
+            d.field = data->legacy_id; \
         })

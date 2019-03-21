@@ -3,9 +3,9 @@ data:add(
    {
       {
          type = "core.item",
-         name = "putitoro",
+         id = "putitoro",
 
-         id = 9999,
+         legacy_id = 9999,
          image = 695,
          value = 2000,
          weight = 200,

@@ -6,7 +6,7 @@ local Item = Elona.require("Item")
 local table = Elona.require("table")
 
 return {
-   name = "whom_dwell_in_the_vanity",
+   id = "whom_dwell_in_the_vanity",
    root = "core.locale.talk.unique.whom_dwell_in_the_vanity",
    nodes = {
       __start = {

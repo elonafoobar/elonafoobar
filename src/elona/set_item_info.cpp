@@ -22,37 +22,37 @@ void set_item_info()
 {
     for (const auto& data : the_item_db.values())
     {
-        ilight(data.id) = data.light;
-        iorgweight(data.id) = data.weight;
-        ioriginalnameref2(data.id) = data.originalnameref2;
-        ipicref(data.id) = data.image;
-        irandomname(data.id) = data.has_random_name ? 1 : 0;
+        ilight(data.legacy_id) = data.light;
+        iorgweight(data.legacy_id) = data.weight;
+        ioriginalnameref2(data.legacy_id) = data.originalnameref2;
+        ipicref(data.legacy_id) = data.image;
+        irandomname(data.legacy_id) = data.has_random_name ? 1 : 0;
 
-        ioriginalnameref(data.id) =
+        ioriginalnameref(data.legacy_id) =
             i18n::s.get(data.locale_key_prefix + ".name");
 
         if (auto text =
                 i18n::s.get_optional(data.locale_key_prefix + ".katakana_name"))
         {
-            ialphanameref(data.id) = *text;
+            ialphanameref(data.legacy_id) = *text;
         }
         else
         {
-            ialphanameref(data.id) = "";
+            ialphanameref(data.legacy_id) = "";
         }
 
         if (auto text = i18n::s.get_optional(
                 data.locale_key_prefix + ".unidentified_name"))
         {
-            iknownnameref(data.id) = *text;
+            iknownnameref(data.legacy_id) = *text;
         }
         else if (data.has_random_name && is_randomizable(data.originalnameref2))
         {
             // The choice can't be completely random - it has to be the
             // same as all other items of this type. So, base it off the
             // random seed of the current save data.
-            int p = (data.id % game_data.random_seed) % 6;
-            iknownnameref(data.id) =
+            int p = (data.legacy_id % game_data.random_seed) % 6;
+            iknownnameref(data.legacy_id) =
                 i18n::s.get_enum(
                     "core.locale.ui.random_item." + data.originalnameref2, p) +
                 i18n::space_if_needed() +
@@ -62,10 +62,10 @@ void set_item_info()
         }
         else
         {
-            iknownnameref(data.id) = ioriginalnameref(data.id);
+            iknownnameref(data.legacy_id) = ioriginalnameref(data.legacy_id);
         }
 
-        maxitemid = std::max(maxitemid, data.id + 3);
+        maxitemid = std::max(maxitemid, data.legacy_id + 3);
     }
 }
 
