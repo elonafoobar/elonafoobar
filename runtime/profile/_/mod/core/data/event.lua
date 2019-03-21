@@ -50,5 +50,8 @@ data:add_multi(
       {
          name = "script_loaded"
       },
+      {
+         name = "before_render_ui"
+      },
    }
 )

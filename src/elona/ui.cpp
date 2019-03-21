@@ -10,7 +10,9 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/lua_console.hpp"
+#include "lua_env/lua_event/base_event.hpp"
 #include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -1758,6 +1760,9 @@ void update_slight()
 void ui_render_non_hud()
 {
     cell_draw();
+
+    lua::lua->get_event_manager().trigger(
+        lua::BaseEvent("core.before_render_ui"));
 
     if (game_data.current_map == mdata_t::MapId::pet_arena)
     {

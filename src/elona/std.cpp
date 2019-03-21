@@ -140,9 +140,9 @@ void boxf(int x, int y, int width, int height, const snail::Color& color)
 
 
 
-void boxf()
+void boxf(const snail::Color& color)
 {
-    snail::hsp::boxf({0, 0, 0, 0});
+    snail::hsp::boxf(color);
 }
 
 

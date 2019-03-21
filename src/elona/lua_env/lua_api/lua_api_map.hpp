@@ -3,7 +3,7 @@
 
 namespace elona
 {
-enum class TileKind;
+enum class TileType;
 
 namespace lua
 {

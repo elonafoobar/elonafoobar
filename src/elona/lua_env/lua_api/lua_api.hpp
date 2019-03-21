@@ -6,6 +6,7 @@
 #include "lua_api_config.hpp"
 #include "lua_api_data.hpp"
 #include "lua_api_debug.hpp"
+#include "lua_api_draw.hpp"
 #include "lua_api_env.hpp"
 #include "lua_api_fov.hpp"
 #include "lua_api_gui.hpp"
@@ -24,8 +25,8 @@
 
 /***
  * See doc/api for the API documentation.
- * Be sure to update it if you change anything in the API bindings.
- * LDoc is completely broken when it comes to parsing C++.
+ * Be sure to update it using "make docgen" if you change anything in the API
+ * bindings.
  */
 namespace elona
 {

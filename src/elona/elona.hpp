@@ -385,7 +385,7 @@ void boxf(
     int width,
     int height,
     const snail::Color& color = {0, 0, 0, 0});
-void boxf();
+void boxf(const snail::Color& color = {0, 0, 0, 0});
 
 void boxl(int x, int y, int width, int height, const snail::Color& color);
 
