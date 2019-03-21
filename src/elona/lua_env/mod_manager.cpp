@@ -249,7 +249,7 @@ void ModManager::run_startup_script(const std::string& name)
         script_mod->env);
 
     // Bypass read-only metatable
-    script_mod->env.raw_set("data", lua_->get_data_manager().get().storage);
+    script_mod->env.raw_set("data", lua_->get_data_manager().get().storage());
 
     ELONA_LOG("lua.mod") << "Loaded startup script " << name;
     txt(i18n::s.get("core.locale.mod.loaded_script", name),

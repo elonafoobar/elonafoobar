@@ -1,4 +1,5 @@
 #pragma once
+
 #include <unordered_map>
 #include <vector>
 #include "../../thirdparty/ordered_map/ordered_map.h"
@@ -14,11 +15,10 @@
 #include "../shared_id.hpp"
 #include "common.hpp"
 
-using namespace std::literals::string_literals;
+
 
 namespace elona
 {
-
 namespace data
 {
 
@@ -26,7 +26,15 @@ template <typename>
 struct LuaLazyCacheTraits;
 
 
-template <class T>
+
+template <typename T>
+class LuaLazyCacheWithLegacyIdTable : public lib::noncopyable
+{
+};
+
+
+
+template <typename T>
 class LuaLazyCache : public lib::noncopyable
 {
 public:
@@ -40,14 +48,18 @@ public:
     using KeysIterator = lib::map_key_iterator<MapType, IdType>;
     using ValuesIterator = lib::map_value_iterator<MapType, DataType>;
 
-    LuaLazyCache()
-    {
-    }
+
+
+    LuaLazyCache() = default;
+
+
 
     void initialize(lua::DataTable data)
     {
         _data = data;
     }
+
+
 
     // NOTE: To iterate all values, they all have to be loaded from Lua first by
     // calling load_all().
@@ -57,38 +69,45 @@ public:
         return std::begin(_storage);
     }
 
+
     typename MapType::const_iterator end() const
     {
         return std::end(_storage);
     }
+
+
 
     KeysIterator keys() const
     {
         return KeysIterator(_storage);
     }
 
+
+
     ValuesIterator values() const
     {
         return ValuesIterator(_storage);
     }
 
+
+
     void load_all()
     {
-        sol::optional<sol::table> it = _data.storage["raw"][Traits::type_id];
+        auto it = _data.get_table(Traits::type_id);
         if (!it)
-        {
             return;
-        }
 
         for (const auto& pair : *it)
         {
-            SharedId id(pair.first.as<std::string>());
+            SharedId id(pair.first.template as<std::string>());
             if ((*this)[id])
                 continue;
 
             retrieve_from_lua(id);
         }
     }
+
+
 
     void clear()
     {
@@ -228,6 +247,8 @@ private:
         }
         catch (const std::exception& e)
         {
+            using namespace std::literals::string_literals;
+
             std::string message = "Error initializing "s + Traits::type_id +
                 data_id_separator + id.get() + ": " + e.what();
             ELONA_WARN("lua.data") << message;
@@ -246,8 +267,11 @@ protected:
     LegacyMapType _by_legacy_id;
     ErrorMapType _errors;
 };
+
 } // namespace data
 } // namespace elona
+
+
 
 #define ELONA_DEFINE_LUA_DB(ClassName, DataTypeName, legacy_id, name) \
     class ClassName; \
