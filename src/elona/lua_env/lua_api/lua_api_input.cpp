@@ -421,6 +421,20 @@ sol::optional<LuaCharacterHandle> LuaApiInput::choose_ally(
     return lua::handle(cdata[stat]);
 }
 
+/**
+ * @luadoc
+ */
+sol::optional<std::string> LuaApiInput::get_pressed_keybind()
+{
+    auto result = key_check_pc_turn();
+    if (result == "")
+    {
+        return sol::nullopt;
+    }
+
+    return result;
+}
+
 void LuaApiInput::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, yes_no);
@@ -443,6 +457,7 @@ void LuaApiInput::bind(sol::table& api_table)
         sol::overload(
             LuaApiInput::start_dialog, LuaApiInput::start_dialog_with_data));
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, choose_ally);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, get_pressed_keybind);
 }
 
 } // namespace lua

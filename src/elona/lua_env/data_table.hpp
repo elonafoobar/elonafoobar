@@ -20,22 +20,20 @@ struct DataTable
     {
     }
 
-    optional<std::string> by_legacy(const std::string& type_id, int legacy_id)
+    sol::optional<std::string> by_legacy(
+        const std::string& type_id,
+        int legacy_id)
     {
-        if (auto it = storage.get<sol::optional<std::string>>(
-                std::tie("by_legacy", type_id, legacy_id)))
-            return *it;
-
-        return none;
+        return storage.get<sol::optional<std::string>>(
+            std::tie("by_legacy", type_id, legacy_id));
     }
 
-    optional<sol::table> raw(const std::string& type_id, const std::string& id)
+    sol::optional<sol::table> raw(
+        const std::string& type_id,
+        const std::string& id)
     {
-        if (auto it = storage.get<sol::optional<sol::table>>(
-                std::tie("raw", type_id, id)))
-            return *it;
-
-        return none;
+        return storage.get<sol::optional<sol::table>>(
+            std::tie("raw", type_id, id));
     }
 
     sol::table storage;

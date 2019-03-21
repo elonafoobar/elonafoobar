@@ -43,9 +43,9 @@ const constexpr char* data::LuaLazyCacheTraits<AssetDB>::type_id;
 
 AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
 {
-    DATA_REQ(source, std::string);
-    DATA_REQ(x, int);
-    DATA_REQ(y, int);
+    DATA_OPT_OR(source, std::string, "interface");
+    DATA_OPT_OR(x, int, 0);
+    DATA_OPT_OR(y, int, 0);
     DATA_REQ(width, int);
     DATA_REQ(height, int);
     DATA_OPT_OR(count_x, int, 1);
@@ -54,7 +54,7 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
     DATA_ENUM(
         load_type, AssetLoadType, AssetLoadTypeTable, AssetLoadType::None);
 
-    auto window_id = 3; // interface.bmp window
+    auto window_id = 3;
     auto it = window_id_table.find(source);
     if (it != window_id_table.end())
     {

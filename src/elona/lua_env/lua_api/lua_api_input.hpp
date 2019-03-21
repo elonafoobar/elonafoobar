@@ -58,6 +58,9 @@ void start_dialog_with_data(LuaCharacterHandle, const std::string&);
 
 sol::optional<LuaCharacterHandle> choose_ally(const EnumString&);
 
+sol::optional<std::string> get_pressed_keybind();
+
+
 void bind(sol::table&);
 }; // namespace LuaApiInput
 

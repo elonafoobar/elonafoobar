@@ -5,6 +5,7 @@
 #include "../../pic_loader/pic_loader.hpp"
 #include "../../pic_loader/tinted_buffers.hpp"
 #include "../../ui.hpp"
+#include "../data_manager.hpp"
 
 namespace elona
 {
@@ -224,7 +225,7 @@ void LuaApiDraw::chip(
     int width_value = width ? *width : rect->width;
     int height_value = height ? *height : rect->height;
 
-    gcopy(
+    elona::gcopy(
         rect->buffer,
         rect->x,
         rect->y,
@@ -236,6 +237,26 @@ void LuaApiDraw::chip(
         height_value);
 }
 
+/**
+ * @luadoc
+ */
+sol::optional<sol::table>
+LuaApiDraw::load_asset(const std::string& id, int x, int y)
+{
+    const auto info = get_image_info(id);
+    if (!info.file)
+    {
+        return sol::nullopt;
+    }
+
+    elona::picload(*info.file, x, y, false);
+
+    return lua::lua->get_data_manager().get().raw("core.asset", id);
+}
+
+/**
+ * @luadoc
+ */
 void LuaApiDraw::copy_region(
     int window_id,
     int x,
@@ -250,7 +271,7 @@ void LuaApiDraw::copy_region(
     int dst_width_value = dst_width ? *dst_width : width;
     int dst_height_value = dst_height ? *dst_height : height;
 
-    gcopy(
+    elona::gcopy(
         window_id,
         x,
         y,
@@ -265,19 +286,70 @@ void LuaApiDraw::copy_region(
 /**
  * @luadoc
  */
-void LuaApiDraw::set_color_mod(sol::table color)
+void LuaApiDraw::copy_region_centered(
+    int window_id,
+    int center_x,
+    int center_y,
+    int width,
+    int height,
+    int dst_x,
+    int dst_y,
+    sol::optional<int> dst_width,
+    sol::optional<int> dst_height)
 {
-    auto color_value = to_color(color);
-    elona::set_color_mod(color_value.r, color_value.g, color_value.b);
+    int dst_width_value = dst_width ? *dst_width : width;
+    int dst_height_value = dst_height ? *dst_height : height;
+
+    elona::gcopy_c(
+        window_id,
+        center_x,
+        center_y,
+        width,
+        height,
+        dst_x,
+        dst_y,
+        dst_width_value,
+        dst_height_value);
 }
 
 /**
  * @luadoc
  */
-void LuaApiDraw::set_screen_offset(int x, int y)
+void LuaApiDraw::copy_region_rotated(
+    int window_id,
+    int center_x,
+    int center_y,
+    int width,
+    int height,
+    int dst_x,
+    int dst_y,
+    double angle,
+    sol::optional<int> dst_width,
+    sol::optional<int> dst_height)
 {
-    elona::sxfix = x;
-    elona::syfix = y;
+    int dst_width_value = dst_width ? *dst_width : width;
+    int dst_height_value = dst_height ? *dst_height : height;
+
+    elona::grotate(
+        window_id,
+        center_x,
+        center_y,
+        width,
+        height,
+        dst_x,
+        dst_y,
+        dst_width_value,
+        dst_height_value,
+        angle);
+}
+
+/**
+ * @luadoc
+ */
+void LuaApiDraw::set_color_mod(sol::table color)
+{
+    auto color_value = to_color(color);
+    elona::set_color_mod(color_value.r, color_value.g, color_value.b);
 }
 
 /**
@@ -315,7 +387,7 @@ void LuaApiDraw::set_buffer(int buffer)
  */
 int LuaApiDraw::screen_width()
 {
-    return windoww;
+    return elona::windoww;
 }
 
 /**
@@ -323,7 +395,7 @@ int LuaApiDraw::screen_width()
  */
 int LuaApiDraw::screen_height()
 {
-    return windowh;
+    return elona::windowh;
 }
 
 /**
@@ -331,7 +403,7 @@ int LuaApiDraw::screen_height()
  */
 int LuaApiDraw::screen_bottom()
 {
-    return windowh - inf_verh;
+    return elona::windowh - elona::inf_verh;
 }
 
 /**
@@ -413,9 +485,11 @@ void LuaApiDraw::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, text_shadow);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, asset);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, chip);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, load_asset);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, copy_region);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, copy_region_centered);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, copy_region_rotated);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_color_mod);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_screen_offset);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_mode);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, current_buffer);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_buffer);

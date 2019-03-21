@@ -42,6 +42,8 @@ void asset(
 
 void chip(const std::string&, int, int, sol::optional<int>, sol::optional<int>);
 
+sol::optional<sol::table> load_asset(const std::string&, int, int);
+
 void copy_region(
     int,
     int,
@@ -50,6 +52,29 @@ void copy_region(
     int,
     int,
     int,
+    sol::optional<int>,
+    sol::optional<int>);
+
+void copy_region_centered(
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    sol::optional<int>,
+    sol::optional<int>);
+
+void copy_region_rotated(
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    double,
     sol::optional<int>,
     sol::optional<int>);
 

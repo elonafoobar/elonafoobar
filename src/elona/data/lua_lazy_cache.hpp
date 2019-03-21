@@ -191,7 +191,8 @@ public:
 private:
     optional<IdType> retrieve_legacy_id_from_lua(const LegacyIdType& legacy_id)
     {
-        optional<std::string> it = _data.by_legacy(Traits::type_id, legacy_id);
+        sol::optional<std::string> it =
+            _data.by_legacy(Traits::type_id, legacy_id);
 
         if (it)
         {
@@ -211,7 +212,7 @@ private:
         }
 
         // Look in root "data" table for definition.
-        optional<sol::table> instance = _data.raw(Traits::type_id, id);
+        sol::optional<sol::table> instance = _data.raw(Traits::type_id, id);
         if (!instance)
         {
             return none;
