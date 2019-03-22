@@ -1189,10 +1189,10 @@ void fmode_1_2(bool read)
 
     // Mod map-local store data (Store.map_local)
     {
-        const auto filepath = dir / (u8"mod_"s + mid + u8".s2");
+        const auto filepath = dir / (u8"mod_map_"s + mid + u8".s2");
         if (read)
         {
-            tmpload(u8"mod_"s + mid + u8".s2");
+            tmpload(u8"mod_map_"s + mid + u8".s2");
 
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::BinaryIArchive ar{in};
@@ -1236,36 +1236,6 @@ void fmode_1_2(bool read)
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::BinaryOArchive ar{out};
             mod_serializer.save_handles<Character>(
-                ar, lua::ModInfo::StoreType::map_local);
-        }
-    }
-
-    // Mod handle data of map-local items
-    {
-        const auto filepath = dir / (u8"mod_inv_"s + mid + u8".s2");
-        if (read)
-        {
-            tmpload(u8"mod_inv_"s + mid + u8".s2");
-
-            std::ifstream in{filepath.native(), std::ios::binary};
-            putit::BinaryIArchive ar{in};
-            std::tie(index_start, index_end) =
-                mod_serializer.load_handles<Item>(
-                    ar, lua::ModInfo::StoreType::map_local);
-
-            auto& handle_mgr = lua::lua->get_handle_manager();
-            for (int i = index_start; i < index_end; i++)
-            {
-                handle_mgr.resolve_handle<Item>(inv[i]);
-            }
-        }
-        else
-        {
-            Save::instance().add(filepath.filename());
-
-            std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
-            mod_serializer.save_handles<Item>(
                 ar, lua::ModInfo::StoreType::map_local);
         }
     }
@@ -1380,6 +1350,36 @@ void fmode_3_4(bool read, const fs::path& filename)
         Save::instance().add(filepath.filename());
         tmpload(filename);
         save(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+    }
+
+    // Mod handle data of map-local items
+    const auto mod_filename = "mod_" + filename.native();
+    const auto mod_filepath = filesystem::dir::tmp() / mod_filename;
+    lua::ModSerializer mod_serializer(lua::lua.get());
+    int index_start, index_end;
+    if (read)
+    {
+        tmpload(mod_filename);
+
+        std::ifstream in{mod_filepath.native(), std::ios::binary};
+        putit::BinaryIArchive ar{in};
+        std::tie(index_start, index_end) = mod_serializer.load_handles<Item>(
+            ar, lua::ModInfo::StoreType::map_local);
+
+        auto& handle_mgr = lua::lua->get_handle_manager();
+        for (int i = index_start; i < index_end; i++)
+        {
+            handle_mgr.resolve_handle<Item>(inv[i]);
+        }
+    }
+    else
+    {
+        Save::instance().add(mod_filepath.filename());
+
+        std::ofstream out{mod_filepath.native(), std::ios::binary};
+        putit::BinaryOArchive ar{out};
+        mod_serializer.save_handles<Item>(
+            ar, lua::ModInfo::StoreType::map_local);
     }
 }
 
