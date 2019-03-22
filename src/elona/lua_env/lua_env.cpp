@@ -27,7 +27,8 @@ LuaEnv::LuaEnv()
         sol::lib::string,
         sol::lib::math,
         sol::lib::io,
-        sol::lib::os);
+        sol::lib::os,
+        sol::lib::coroutine);
 
     // Add executable directory to package.path
     fs::path exe_path = filesystem::dir::data() / "script" / "kernel";

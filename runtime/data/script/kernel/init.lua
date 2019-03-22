@@ -9,5 +9,6 @@ Elona.core.string = require "string"
 
 Elona.core.Math = require "math_ext"
 Elona.core.table = require "table_ext"
+Elona.core.coroutine = require "coroutine"
 
 _LOADED = true
