@@ -120,9 +120,9 @@ void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
     UNUSED(index);
     assert(cdata[index].state() != Character::State::alive);
 
-    remove_chara_handle(chara);
     lua->get_event_manager().trigger(
         lua::CharacterInstanceEvent("core.character_removed", chara));
+    remove_chara_handle(chara);
 }
 
 void HandleManager::remove_item_handle_run_callbacks(const Item& item)
@@ -140,9 +140,9 @@ void HandleManager::remove_item_handle_run_callbacks(const Item& item)
     UNUSED(index);
     assert(inv[index].number() == 0);
 
-    remove_item_handle(item);
     lua->get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_removed", item));
+    remove_item_handle(item);
 }
 
 

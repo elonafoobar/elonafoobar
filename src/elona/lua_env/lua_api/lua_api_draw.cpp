@@ -191,8 +191,8 @@ void LuaApiDraw::asset(
     sol::optional<int> height)
 {
     const auto info = get_image_info(id);
-    int width_value = width ? *width : info.width;
-    int height_value = height ? *height : info.height;
+    int width_value = width.value_or(info.width);
+    int height_value = height.value_or(info.height);
 
     elona::gcopy(
         info.window_id,
@@ -223,8 +223,8 @@ void LuaApiDraw::chip(
         throw sol::error("No such chip " + id);
     }
 
-    int width_value = width ? *width : rect->width;
-    int height_value = height ? *height : rect->height;
+    int width_value = width.value_or(rect->width);
+    int height_value = height.value_or(rect->height);
 
     elona::gcopy(
         rect->buffer,
@@ -269,8 +269,8 @@ void LuaApiDraw::copy_region(
     sol::optional<int> dst_width,
     sol::optional<int> dst_height)
 {
-    int dst_width_value = dst_width ? *dst_width : width;
-    int dst_height_value = dst_height ? *dst_height : height;
+    int dst_width_value = dst_width.value_or(width);
+    int dst_height_value = dst_height.value_or(height);
 
     elona::gcopy(
         window_id,
@@ -298,8 +298,8 @@ void LuaApiDraw::copy_region_centered(
     sol::optional<int> dst_width,
     sol::optional<int> dst_height)
 {
-    int dst_width_value = dst_width ? *dst_width : width;
-    int dst_height_value = dst_height ? *dst_height : height;
+    int dst_width_value = dst_width.value_or(width);
+    int dst_height_value = dst_height.value_or(height);
 
     elona::gcopy_c(
         window_id,
@@ -328,8 +328,8 @@ void LuaApiDraw::copy_region_rotated(
     sol::optional<int> dst_width,
     sol::optional<int> dst_height)
 {
-    int dst_width_value = dst_width ? *dst_width : width;
-    int dst_height_value = dst_height ? *dst_height : height;
+    int dst_width_value = dst_width.value_or(width);
+    int dst_height_value = dst_height.value_or(height);
 
     elona::grotate(
         window_id,
@@ -434,7 +434,7 @@ void LuaApiDraw::wait(int msec)
  */
 void LuaApiDraw::redraw(sol::optional<bool> step_frame)
 {
-    bool step_frame_value = step_frame ? *step_frame : false;
+    bool step_frame_value = step_frame.value_or(false);
     if (step_frame_value)
     {
         elona::scrturn++;
@@ -448,7 +448,7 @@ void LuaApiDraw::redraw(sol::optional<bool> step_frame)
  */
 void LuaApiDraw::update_screen(sol::optional<bool> redraw)
 {
-    bool redraw_value = redraw ? *redraw : true;
+    bool redraw_value = redraw.value_or(true);
     int screenupdatebk = elona::screenupdate;
     elona::screenupdate = redraw_value ? 0 : -1;
 
@@ -462,7 +462,7 @@ void LuaApiDraw::update_screen(sol::optional<bool> redraw)
  */
 void LuaApiDraw::update_entire_screen(sol::optional<bool> redraw)
 {
-    bool redraw_value = redraw ? *redraw : true;
+    bool redraw_value = redraw.value_or(true);
     int screenupdatebk = elona::screenupdate;
     elona::screenupdate = redraw_value ? 0 : -1;
 
@@ -508,6 +508,7 @@ void LuaApiDraw::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_mode);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, current_buffer);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_buffer);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, set_font);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, screen_width);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, screen_height);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDraw, screen_bottom);

@@ -1762,7 +1762,7 @@ void ui_render_non_hud()
     cell_draw();
 
     lua::lua->get_event_manager().trigger(
-        lua::BaseEvent("core.before_render_ui"));
+        lua::BaseEvent("core.before_ui_render"));
 
     if (game_data.current_map == mdata_t::MapId::pet_arena)
     {

@@ -51,7 +51,10 @@ data:add_multi(
          name = "script_loaded"
       },
       {
-         name = "before_render_ui"
+         name = "before_ui_render"
+      },
+      {
+         name = "before_screen_redraw"
       },
    }
 )

@@ -109,3 +109,12 @@ module "core.event"
 --- Fired when the startup script finished loading. This is only fired
 --- when the startup script config option is used.
 -- @event core.script_loaded
+
+--- Fired after the main game screen has been drawn. Use this event to
+--- draw overlays on the main game screen.
+-- @event core.before_ui_render
+
+--- Fired just before the screen has been completely redrawn. Use this
+--- if you want to draw something no matter what is underneath.
+-- @event core.before_screen_redraw
+

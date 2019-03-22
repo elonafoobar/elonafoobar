@@ -19,6 +19,8 @@
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "log.hpp"
+#include "lua_env/event_manager.hpp"
+#include "lua_env/lua_event/base_event.hpp"
 #include "macro.hpp"
 #include "save.hpp"
 #include "variables.hpp"
@@ -928,6 +930,9 @@ void redraw()
         _draw_fps();
     }
 
+    lua::lua->get_event_manager().trigger(
+        lua::BaseEvent("core.before_screen_redraw"));
+
     snail::hsp::redraw();
 }
 
@@ -1046,6 +1051,9 @@ std::string strmid(const std::string& source, int pos, int length)
 
 /**
  * Initializes the application window.
+ *
+ * @a display_mode is a string like "800x600@60", which will be parsed in order
+ * to set the window's resolution.
  */
 void title(
     const std::string& title_str,

@@ -4,7 +4,6 @@
 #include "types/type_chara_chip.cpp"
 #include "types/type_character.cpp"
 #include "types/type_class.cpp"
-#include "types/type_event.cpp"
 #include "types/type_fish.cpp"
 #include "types/type_god.cpp"
 #include "types/type_item.cpp"
