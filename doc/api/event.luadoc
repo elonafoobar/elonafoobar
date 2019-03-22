@@ -47,6 +47,6 @@ function unregister(event_id, handler) end
 --- instanced events as well as the non-instanced version.
 --- WARNING: This does not currently prevent infinite recursion!
 -- @tparam string event the event to trigger
--- @tparam table data the event data
--- @tparam {instances=table} opts Event options
+-- @tparam[opt] table data the event data
+-- @tparam[opt] {instances=table} opts Event options
 function trigger(event, data, opts) end

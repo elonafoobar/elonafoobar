@@ -176,7 +176,7 @@ local function run_event(priority, callbacks, args)
    for _, cb in ipairs(callbacks) do
       local result = cb(args)
 
-      if result == nil or args.stop then
+      if args.stop then
          return false
       end
    end
@@ -185,6 +185,12 @@ local function run_event(priority, callbacks, args)
 end
 
 function Event.trigger(event_id, args, opts)
+   if args == nil then
+      args = {}
+   end
+   if type(args) ~= "table" then
+      error("Event.register must be passed a table of event arguments as a second argument (got: " .. type(args) .. ").")
+   end
    if opts == nil then
       opts = {}
    end

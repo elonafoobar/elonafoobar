@@ -61,6 +61,37 @@ Event.register("core.all_turns_finished", my_handler)
 )"));
 }
 
+TEST_CASE(
+    "Test registering of multiple callbacks on one event type",
+    "[Lua: Events]")
+{
+    elona::lua::LuaEnv lua;
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
+local Event = Elona.require("Event")
+
+local function first()
+   Store.global.called_times = Store.global.called_times + 1
+end
+
+local function second()
+   Store.global.called_times = Store.global.called_times + 1
+end
+
+Store.global.called_times = 0
+
+Event.register("core.all_turns_finished", first)
+Event.register("core.all_turns_finished", second)
+)"));
+
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
+
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
+        "test", R"(assert(Store.global.called_times == 2))"));
+}
+
 TEST_CASE("Test unregistering of callback", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
