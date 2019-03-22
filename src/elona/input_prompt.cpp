@@ -109,6 +109,11 @@ void Prompt::_draw_main_frame(int width)
     font(14 - en * 2);
 }
 
+static void _display_prompt_key(int x, int y, int nth)
+{
+    gcopy(3, nth * 24 + 624, 30, 24, 18, x, y);
+}
+
 void Prompt::_draw_entries()
 {
     keyrange = 0;
@@ -116,7 +121,7 @@ void Prompt::_draw_entries()
     int cnt = 0;
     for (const auto& entry : _entries)
     {
-        display_key(sx + 30, cnt * 20 + sy + 22, cnt);
+        _display_prompt_key(sx + 30, cnt * 20 + sy + 22, cnt);
 
         auto text = entry.locale_key;
         if (auto text_opt =
