@@ -155,6 +155,7 @@ EnumMap<Element> ElementTable{"Element",
                                   {"Cut", Element::cut},
                                   {"Ether", Element::ether},
                                   {"Acid", Element::acid},
+                                  {"Vorpal", Element::vorpal},
                               }};
 
 

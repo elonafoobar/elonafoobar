@@ -19,6 +19,7 @@
 #include "item.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/character_instance_event.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
@@ -1058,12 +1059,8 @@ void chara_refresh(int cc)
     refresh_speed(cdata[cc]);
     cdata[cc].needs_refreshing_status() = false;
 
-    auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
-    if (handle != sol::lua_nil)
-    {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::character_refreshed>(handle);
-    }
+    lua::lua->get_event_manager().trigger(
+        lua::CharacterInstanceEvent("core.character_refreshed", cdata[cc]));
 }
 
 
@@ -1438,10 +1435,6 @@ int chara_copy(const Character& source)
 
 void chara_killed(Character& chara)
 {
-    auto handle = lua::lua->get_handle_manager().get_handle(chara);
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::character_killed>(handle);
-
     if (chara.state() == Character::State::empty)
     {
         // This character slot is invalid, and can be overwritten by newly

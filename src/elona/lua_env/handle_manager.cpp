@@ -9,6 +9,8 @@
 #include "api_manager.hpp"
 #include "event_manager.hpp"
 #include "lua_env.hpp"
+#include "lua_event/character_instance_event.hpp"
+#include "lua_event/item_instance_event.hpp"
 
 
 
@@ -82,9 +84,10 @@ void HandleManager::create_chara_handle_run_callbacks(const Character& chara)
     create_chara_handle(chara);
 
     auto handle = get_handle(chara);
+    UNUSED(handle);
     assert(handle != sol::lua_nil);
-    lua->get_event_manager().run_callbacks<EventKind::character_created>(
-        handle);
+    lua->get_event_manager().trigger(
+        lua::CharacterInstanceEvent("core.character_created", chara));
 }
 
 void HandleManager::create_item_handle_run_callbacks(const Item& item)
@@ -93,8 +96,10 @@ void HandleManager::create_item_handle_run_callbacks(const Item& item)
     create_item_handle(item);
 
     auto handle = get_handle(item);
+    UNUSED(handle);
     assert(handle != sol::lua_nil);
-    lua->get_event_manager().run_callbacks<EventKind::item_created>(handle);
+    lua->get_event_manager().trigger(
+        lua::ItemInstanceEvent("core.item_created", item));
 }
 
 
@@ -115,8 +120,8 @@ void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
     UNUSED(index);
     assert(cdata[index].state() != Character::State::alive);
 
-    lua->get_event_manager().run_callbacks<EventKind::character_removed>(
-        handle);
+    lua->get_event_manager().trigger(
+        lua::CharacterInstanceEvent("core.character_removed", chara));
     remove_chara_handle(chara);
 }
 
@@ -135,7 +140,8 @@ void HandleManager::remove_item_handle_run_callbacks(const Item& item)
     UNUSED(index);
     assert(inv[index].number() == 0);
 
-    lua->get_event_manager().run_callbacks<EventKind::item_removed>(handle);
+    lua->get_event_manager().trigger(
+        lua::ItemInstanceEvent("core.item_removed", item));
     remove_item_handle(item);
 }
 

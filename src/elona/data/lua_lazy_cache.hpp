@@ -3,6 +3,7 @@
 #include <vector>
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../thirdparty/sol2/sol.hpp"
+#include "../../util/map_key_iterator.hpp"
 #include "../../util/map_value_iterator.hpp"
 #include "../../util/noncopyable.hpp"
 #include "../filesystem.hpp"
@@ -36,6 +37,7 @@ public:
     using MapType = std::unordered_map<IdType, DataType>;
     using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
     using ErrorMapType = std::unordered_map<IdType, std::string>;
+    using KeysIterator = lib::map_key_iterator<MapType, IdType>;
     using ValuesIterator = lib::map_value_iterator<MapType, DataType>;
 
     LuaLazyCache()
@@ -58,6 +60,11 @@ public:
     typename MapType::const_iterator end() const
     {
         return std::end(_storage);
+    }
+
+    KeysIterator keys() const
+    {
+        return KeysIterator(_storage);
     }
 
     ValuesIterator values() const

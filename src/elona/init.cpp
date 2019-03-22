@@ -24,6 +24,7 @@
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_console.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/base_event.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -145,6 +146,9 @@ void initialize_lua()
 
     // Set "data" table on all loaded mod environments.
     data::initialize(data_manager.get());
+
+    // Remove unknown event types from the event tables.
+    lua::lua->get_event_manager().remove_unknown_events();
 
     // Run user/console.lua.
     lua::lua->get_console().run_userscript();
@@ -679,8 +683,8 @@ void initialize_game()
 
     if (script_loaded)
     {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::script_loaded>();
+        lua::lua->get_event_manager().trigger(
+            lua::BaseEvent("core.script_loaded"));
     }
 }
 

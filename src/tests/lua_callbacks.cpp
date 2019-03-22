@@ -22,20 +22,18 @@ TEST_CASE("Test character created callback", "[Lua: Callbacks]")
         "test_chara_created", R"(
 local Event = Elona.require("Event")
 
-local function my_chara_created_handler(chara)
-   Store.global.charas[chara.index] = chara
+local function my_chara_created_handler(e)
+   Store.global.charas[e.chara.index] = e.chara
 end
 
 Store.global.charas = {}
 
-Event.register(Event.EventKind.CharaCreated, my_chara_created_handler)
+Event.register("core.character_created", my_chara_created_handler)
 )"));
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
     int idx = elona::rc;
     REQUIRE(idx != -1);
-    elona::Character& chara = elona::cdata[idx];
-    (void)chara;
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_created")
         ->env.set("idx", idx);
@@ -53,21 +51,19 @@ TEST_CASE("Test character hurt callback", "[Lua: Callbacks]")
         "test_chara_hurt", R"(
 local Event = Elona.require("Event")
 
-local function my_chara_hurt_handler(chara, amount)
-   Store.global.hurt_idx = chara.index
-   Store.global.hurt_amount = amount
+local function my_chara_hurt_handler(e)
+   Store.global.hurt_idx = e.chara.index
+   Store.global.hurt_amount = e.damage
 end
 
 Store.global.hurt_idx = -1
 Store.global.hurt_amount = -1
 
-Event.register(Event.EventKind.CharaDamaged, my_chara_hurt_handler)
+Event.register("core.character_damaged", my_chara_hurt_handler)
 )"));
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
     int idx = elona::rc;
-    elona::Character& chara = elona::cdata[idx];
-    (void)chara;
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_hurt")
         ->env.set("idx", idx);
@@ -89,24 +85,22 @@ TEST_CASE("Test character removed callback", "[Lua: Callbacks]")
         "test_chara_removed", R"(
 local Event = Elona.require("Event")
 
-local function my_chara_removed_handler(chara)
-   Store.global.removed_idx = chara.index
+local function my_chara_removed_handler(e)
+   Store.global.removed_idx = e.chara.index
 end
 
 Store.global.removed_idx = -1
 
-Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
+Event.register("core.character_removed", my_chara_removed_handler)
 )"));
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
     int idx = elona::rc;
-    elona::Character& chara = elona::cdata[idx];
-    (void)chara;
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_removed")
         ->env.set("idx", idx);
 
-    testing::invalidate_chara(chara);
+    testing::invalidate_chara(cdata[idx]);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_removed", R"(assert(Store.global.removed_idx == idx))"));
@@ -120,13 +114,13 @@ TEST_CASE("Test character killed callback", "[Lua: Callbacks]")
         "test_chara_killed", R"(
 local Event = Elona.require("Event")
 
-local function my_chara_killed_handler(chara)
-   Store.global.killed_idx = chara.index
+local function my_chara_killed_handler(e)
+   Store.global.killed_idx = e.chara.index
 end
 
 Store.global.killed_idx = -1
 
-Event.register(Event.EventKind.CharaKilled, my_chara_killed_handler)
+Event.register("core.character_killed", my_chara_killed_handler)
 )"));
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -157,19 +151,19 @@ Store.global.townsperson = Chara.create(0, 0, "core.putit")
 Store.global.townsperson.role = 14
 Store.global.idx = Store.global.townsperson.index
 
-local function my_chara_removed_handler(chara)
-   Store.global.removed_idx = chara.index
+local function my_chara_removed_handler(e)
+   Store.global.removed_idx = e.chara.index
 end
 
-local function my_chara_killed_handler(chara)
-   Store.global.killed_idx = chara.index
+local function my_chara_killed_handler(e)
+   Store.global.killed_idx = e.chara.index
 end
 
 Store.global.removed_idx = -1
 Store.global.killed_idx = -1
 
-Event.register(Event.EventKind.CharaKilled, my_chara_killed_handler)
-Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
+Event.register("core.character_killed", my_chara_killed_handler)
+Event.register("core.character_removed", my_chara_removed_handler)
 )"));
 
 
@@ -196,19 +190,19 @@ TEST_CASE(
         "test_special_chara_killed", R"(
 local Event = Elona.require("Event")
 
-local function my_chara_removed_handler(chara)
-   Store.global.removed_idx = chara.index
+local function my_chara_removed_handler(e)
+   Store.global.removed_idx = e.chara.index
 end
 
-local function my_chara_killed_handler(chara)
-   Store.global.killed_idx = chara.index
+local function my_chara_killed_handler(e)
+   Store.global.killed_idx = e.chara.index
 end
 
 Store.global.removed_idx = -1
 Store.global.killed_idx = -1
 
-Event.register(Event.EventKind.CharaKilled, my_chara_killed_handler)
-Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
+Event.register("core.character_killed", my_chara_killed_handler)
+Event.register("core.character_removed", my_chara_removed_handler)
 )"));
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -232,6 +226,34 @@ Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
 }
 
 
+TEST_CASE("Test character refreshed callback", "[Lua: Callbacks]")
+{
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
+        "test_chara_refreshed", R"(
+local Event = Elona.require("Event")
+
+local function my_chara_refreshed_handler(e)
+   Store.global.idx = e.chara.index
+end
+
+Event.register("core.character_refreshed", my_chara_refreshed_handler)
+)"));
+
+    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    int idx = elona::rc;
+    elona::lua::lua->get_mod_manager()
+        .get_mod("test_chara_refreshed")
+        ->env.set("idx", idx);
+
+    elona::chara_refresh(idx);
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
+        "test_chara_refreshed", R"(assert(Store.global.idx == idx))"));
+}
+
+
 TEST_CASE("Test item created callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
@@ -240,20 +262,18 @@ TEST_CASE("Test item created callback", "[Lua: Callbacks]")
         "test_item_created", R"(
 local Event = Elona.require("Event")
 
-local function my_item_created_handler(item)
-   Store.global.items[item.index] = item
+local function my_item_created_handler(e)
+   Store.global.items[e.item.index] = e.item
 end
 
 Store.global.items = {}
 
-Event.register(Event.EventKind.ItemCreated, my_item_created_handler)
+Event.register("core.item_created", my_item_created_handler)
 )"));
 
     REQUIRE(elona::itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
     int idx = elona::ci;
     REQUIRE(idx != -1);
-    elona::Item& item = elona::inv[idx];
-    (void)item;
     elona::lua::lua->get_mod_manager()
         .get_mod("test_item_created")
         ->env.set("idx", idx);
@@ -277,7 +297,7 @@ end
 
 Store.global.map_unloaded = false
 
-Event.register(Event.EventKind.MapUnloading, my_map_unloading_handler)
+Event.register("core.before_map_unload", my_map_unloading_handler)
 )"));
 
     run_in_temporary_map(6, 1, []() {

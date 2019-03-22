@@ -12,6 +12,7 @@
 #include "log.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/base_event.hpp"
 #include "profile/profile_manager.hpp"
 #include "save.hpp"
 #include "variables.hpp"
@@ -152,8 +153,8 @@ void pre_init()
 
     Config::instance().is_test = true;
 
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::game_initialized>();
+    lua::lua->get_event_manager().trigger(
+        lua::BaseEvent("core.game_initialized"));
 }
 
 void post_run()
@@ -177,8 +178,8 @@ void reset_state()
 
     Config::instance().is_test = true;
 
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::game_initialized>();
+    lua::lua->get_event_manager().trigger(
+        lua::BaseEvent("core.game_initialized"));
 }
 
 } // namespace testing

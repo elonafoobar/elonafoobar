@@ -868,7 +868,7 @@ void damage_by_cursed_equipments();
 //// proc_movement_event
 TurnResult proc_movement_event();
 void map_global_proc_travel_events();
-void proc_trap();
+void move_character();
 void sense_map_feats_on_move();
 
 

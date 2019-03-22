@@ -203,21 +203,19 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
  * up to <code>IsQuickTempered</code> are "intrinsic" and are always reset when
  * this character is refreshed each turn. To change these flags, you must call
  * this function inside a handler for
- * <code>Event.EventKind.CharaRefreshed</code>, or the flag will be reset later.
+ * <code>core.character_refreshed</code>, or the flag will be reset later.
  * @tparam Enums.CharaFlag flag the flag to set
  * @tparam bool value the flag's new value
- * @see Event.EventKind.CharaRefreshed
+ * @see core.event.core.character_refreshed
  * @usage local Event = Elona.require("Event")
- * local Enums = Elona.require("Enums")
  *
  * local function make_invisible(chara)
- * chara:set_flag(Enums.CharaFlag.IsInvisible, true) -- intrinsic, reset on
- * refresh
+ * chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
  * end
  *
  * -- force this flag to be overridden after this character is refreshed.
- * Event.register(Event.EventKind.CharaRefreshed, make_invisible)
- * Event.register(Event.EventKind.CharaCreated, make_invisible)
+ * Event.register("core.character_refreshed", make_invisible)
+ * Event.register("core.character_created", make_invisible)
  */
 void LuaCharacter::set_flag(Character& self, const EnumString& flag, bool value)
 {

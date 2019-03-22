@@ -71,5 +71,5 @@ local function run_life()
    end
 end
 
-Event.register(Event.EventKind.MapInitialized, run_life)
-Event.register(Event.EventKind.AllTurnsFinished, run_life)
+Event.register("core.map_initialized", run_life)
+Event.register("core.all_turns_finished", run_life)
