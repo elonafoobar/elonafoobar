@@ -638,8 +638,8 @@ void _update_save_data_4(const fs::path& save_dir, int serial_id)
 
         const auto is_invs1 = entry.path().filename() == "inv.s1" ||
             entry.path().filename() == "g_inv.s1";
-        const auto begin = is_invs1 ? 0 : 1320;
-        const auto end = is_invs1 ? 1320 : 5480;
+        const auto begin = is_invs1 ? 0 : ELONA_OTHER_INVENTORIES_INDEX;
+        const auto end = is_invs1 ? ELONA_OTHER_INVENTORIES_INDEX : 5480;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -1939,8 +1939,9 @@ void _update_save_data_8(const fs::path& save_dir, int serial_id)
 
         const auto is_invs1 = entry.path().filename() == "inv.s1" ||
             entry.path().filename() == "g_inv.s1";
-        const auto begin = is_invs1 ? 0 : 1320;
-        const auto end = is_invs1 ? 1320 : 5480;
+        const auto begin = is_invs1 ? 0 : ELONA_OTHER_INVENTORIES_INDEX;
+        const auto end =
+            is_invs1 ? ELONA_OTHER_INVENTORIES_INDEX : ELONA_MAX_ITEMS;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data

@@ -1054,9 +1054,9 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             // Several items are stacked.
             std::array<int, 3> items;
             p_ = -cell_data.at(x, y).item_appearances_memory;
-            items[0] = p_ % 1000 + 5080;
-            items[1] = p_ / 1000 % 1000 + 5080;
-            items[2] = p_ / 1000000 % 1000 + 5080;
+            items[0] = p_ % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            items[1] = p_ / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            items[2] = p_ / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
             int stack_height{};
             for (int i = 2; i >= 0; --i)
             {

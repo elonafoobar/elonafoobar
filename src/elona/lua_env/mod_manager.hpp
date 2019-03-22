@@ -25,6 +25,12 @@ using namespace std::literals::string_literals;
  */
 struct ModInfo
 {
+    enum class StoreType
+    {
+        map_local,
+        global
+    };
+
     explicit ModInfo(
         const ModManifest& manifest_,
         std::shared_ptr<sol::state> state)
@@ -44,6 +50,33 @@ struct ModInfo
     ModInfo(const ModInfo&) = delete;
     ModInfo& operator=(const ModInfo&) = delete;
     ~ModInfo() = default;
+
+    sol::table get_store(StoreType store_type) const
+    {
+        std::string table_name;
+        switch (store_type)
+        {
+        case StoreType::map_local: table_name = "map_local"; break;
+        case StoreType::global: table_name = "global"; break;
+        }
+
+        return env["Store"][table_name].get<sol::table>();
+    }
+
+    void set_store(StoreType store_type, sol::table data)
+    {
+        std::string table_name;
+        switch (store_type)
+        {
+        case StoreType::map_local: table_name = "map_local"; break;
+        case StoreType::global: table_name = "global"; break;
+        }
+
+        // bypass metatable that forces Store table reference to be
+        // unchangeable (set in mod_manager::bind_store)
+        sol::table store = env["Store"];
+        store.raw_set(table_name, data);
+    }
 
     ModManifest manifest;
     optional<LoadedChunkCache> chunk_cache;
@@ -95,6 +128,10 @@ public:
     const_iterator end() const
     {
         return mods.end();
+    }
+    size_t count() const
+    {
+        return mods.size();
     }
 
     /***
@@ -190,16 +227,12 @@ public:
 
     /***
      * Retrieves a pointer to an instantiated mod.
-     *
-     * Will throw if the mod doesn't exist.
-     *
-     * For testing use only.
      */
-    ModInfo* get_mod(const std::string& name)
+    optional<ModInfo*> get_mod(const std::string& name)
     {
         auto val = mods.find(name);
         if (val == mods.end())
-            throw std::runtime_error("No such mod "s + name + "."s);
+            return none;
         return val->second.get();
     }
 

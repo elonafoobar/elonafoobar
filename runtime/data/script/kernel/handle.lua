@@ -34,7 +34,7 @@ local handles_by_index = {}
 local memoized_funcs = {}
 
 
-local function print_handle_error(handle, key)
+local function handle_error(handle, key)
    if _IS_TEST then
       return
    end
@@ -55,6 +55,8 @@ local function print_handle_error(handle, key)
       print("Error: handle is not valid! " .. tostring(handle))
    end
    print(debug.traceback())
+
+   error("Error: handle is not valid!", 2)
 end
 
 
@@ -80,8 +82,7 @@ local function generate_metatable(kind)
       end
 
       if not Handle.is_valid(handle)then
-         print_handle_error(handle, key)
-         error("Error: handle is not valid!", 2)
+         handle_error(handle, key)
       end
 
       -- Try to get a property out of the C++ reference.
@@ -114,8 +115,7 @@ local function generate_metatable(kind)
    end
    mt.__newindex = function(handle, key, value)
       if not Handle.is_valid(handle) then
-         print_handle_error(handle, key)
-         error("Error: handle is not valid!", 2)
+         handle_error(handle, key)
       end
 
       refs[kind][handle.__uuid][key] = value
@@ -138,8 +138,7 @@ metatables.LuaItem = generate_metatable("LuaItem")
 --- userdata reference.
 function Handle.get_ref(handle, kind)
    if not Handle.is_valid(handle) then
-      print_handle_error(handle)
-      error("Error: handle is not valid!", 2)
+      handle_error(handle)
       return nil
    end
 

@@ -144,7 +144,6 @@ struct Cell
      * In the world map, areas with "town" or "guild" type are set to emanate
      * light of level 11.
      */
-
     int light{};
 
 

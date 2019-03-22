@@ -2648,11 +2648,11 @@ int convertartifact(int item_index, int ignore_external_container)
         return item_index;
     }
     f_at_m163 = 0;
-    for (int cnt = 0; cnt < 5480; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
         if (ignore_external_container)
         {
-            if (cnt >= 5080)
+            if (cnt >= ELONA_ITEM_ON_GROUND_INDEX)
             {
                 break;
             }
@@ -5128,9 +5128,10 @@ std::string txtitemoncell(int x, int y)
             rtvaln = "";
             p_at_m185(0) = -cell_data.at(x, y).item_appearances_memory;
             p_at_m185(1) = 0;
-            i_at_m185(0) = p_at_m185 % 1000 + 5080;
-            i_at_m185(1) = p_at_m185 / 1000 % 1000 + 5080;
-            i_at_m185(2) = p_at_m185 / 1000000 % 1000 + 5080;
+            i_at_m185(0) = p_at_m185 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            i_at_m185(1) = p_at_m185 / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            i_at_m185(2) =
+                p_at_m185 / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 if (i_at_m185(cnt) == 6079)
@@ -8302,7 +8303,7 @@ label_2173_internal:
     efsource = 0;
     if (inv[ci].number() == 0)
     {
-        if (ci >= 5080)
+        if (ci >= ELONA_ITEM_ON_GROUND_INDEX)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
             return 1;

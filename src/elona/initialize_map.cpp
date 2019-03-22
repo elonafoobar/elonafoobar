@@ -115,7 +115,7 @@ static void _clear_map_and_objects()
     {
         cnt.set_state(Character::State::empty);
     }
-    for (int cnt = 1320; cnt < 5480; ++cnt)
+    for (int cnt = ELONA_OTHER_INVENTORIES_INDEX; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
         inv[cnt].remove();
     }
@@ -1241,7 +1241,6 @@ init_map_begin:
 
     if (mode == 3)
     {
-        lua::lua->get_handle_manager().clear_map_local_handles();
         ctrl_file(FileOperation::map_read);
         ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
         goto init_map_after_refresh;
@@ -1255,7 +1254,6 @@ init_map_begin:
     tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
-        lua::lua->get_handle_manager().clear_map_local_handles();
         ctrl_file(FileOperation::map_read);
         if (map_data.refresh_type == 0)
         {
