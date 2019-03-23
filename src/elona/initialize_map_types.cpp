@@ -2284,7 +2284,7 @@ static void _init_map_fields()
     {
         _init_map_fields_desert();
     }
-    if (chipm(0, game_data.stood_world_map_tile) == 4)
+    if (chip_data[game_data.stood_world_map_tile].kind == 4)
     {
         _init_map_fields_snow_field();
     }
@@ -2572,9 +2572,6 @@ void initialize_map_from_map_type()
         return;
     }
 
-    // In most cases the area's map ID will be the same as
-    // game_data.current_map. However, multiple player-owned areas can share the
-    // same map ID.
     MapId map_id_ = static_cast<mdata_t::MapId>(map_id);
     switch (map_id_)
     {

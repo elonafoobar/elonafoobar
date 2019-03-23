@@ -200,7 +200,7 @@ int LuaApiMap::generate_tile(const EnumString& tile_kind)
  */
 int LuaApiMap::chip_type(int tile_id)
 {
-    return elona::chipm(0, tile_id);
+    return elona::chip_data[tile_id].kind;
 }
 
 /**
