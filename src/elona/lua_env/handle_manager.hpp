@@ -76,10 +76,14 @@ public:
      * if the handle is invalid or of the wrong type.
      */
     template <typename T>
-    T& get_ref(sol::table handle)
+    sol::optional<T&> get_ref(sol::table handle)
     {
         sol::object obj =
             handle_env["Handle"]["get_ref"](handle, T::lua_type());
+        if (obj == sol::lua_nil)
+        {
+            return sol::nullopt;
+        }
         return obj.as<T&>();
     }
 

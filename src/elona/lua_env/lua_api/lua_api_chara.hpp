@@ -16,9 +16,9 @@ namespace LuaApiChara
 {
 bool is_alive(sol::optional<LuaCharacterHandle>);
 
-bool is_player(sol::optional<LuaCharacterHandle>);
+bool is_player(LuaCharacterHandle);
 
-bool is_ally(sol::optional<LuaCharacterHandle>);
+bool is_ally(LuaCharacterHandle);
 
 int count();
 

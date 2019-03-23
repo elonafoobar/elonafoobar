@@ -60,8 +60,7 @@ void LuaCharacter::damage_hp_chara(
     int amount,
     LuaCharacterHandle source)
 {
-    auto& source_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(source);
+    auto& source_ref = lua::ref<Character>(source);
     elona::damage_hp(self, amount, source_ref.index);
 }
 
@@ -143,7 +142,7 @@ void LuaCharacter::add_buff_doer(
 {
     the_buff_db.ensure(buff_id);
 
-    auto& doer_ref = lua::lua->get_handle_manager().get_ref<Character>(doer);
+    auto& doer_ref = lua::ref<Character>(doer);
     elona::buff_add(self, buff_id, power, turns, doer_ref);
 }
 
@@ -423,8 +422,7 @@ void LuaCharacter::act_hostile_against(
     Character& self,
     LuaCharacterHandle target)
 {
-    auto& target_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(target);
+    auto& target_ref = lua::ref<Character>(target);
     hostileaction(self.index, target_ref.index);
 }
 

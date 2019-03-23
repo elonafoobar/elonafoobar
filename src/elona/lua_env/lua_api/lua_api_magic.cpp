@@ -54,10 +54,8 @@ void LuaApiMagic::cast(
 
     try
     {
-        auto& caster_ref =
-            lua::lua->get_handle_manager().get_ref<Character>(caster);
-        auto& target_ref =
-            lua::lua->get_handle_manager().get_ref<Character>(target);
+        auto& caster_ref = lua::ref<Character>(caster);
+        auto& target_ref = lua::ref<Character>(target);
         elona::cc = caster_ref.index;
         elona::tc = target_ref.index;
         elona::efid = effect_id;

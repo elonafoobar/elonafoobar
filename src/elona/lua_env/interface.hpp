@@ -49,6 +49,30 @@ sol::table handle(T& it)
 }
 
 /**
+ * Obtains a reference to the C++ data pointed to by a handle.
+ */
+template <typename T>
+sol::optional<T&> ref_opt(sol::table handle)
+{
+    return lua::lua->get_handle_manager().get_ref<T>(handle);
+}
+
+/**
+ * Obtains a reference to the C++ data pointed to by a handle.
+ */
+template <typename T>
+T& ref(sol::table handle)
+{
+    auto result = lua::lua->get_handle_manager().get_ref<T>(handle);
+    if (!result)
+    {
+        throw sol::error(
+            "Handle reference is not valid. Was the object removed?");
+    }
+    return *result;
+}
+
+/**
  * Obtains a Lua handle to a compatible C++ object.
  */
 template <typename T>

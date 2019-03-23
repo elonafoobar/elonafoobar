@@ -22,13 +22,14 @@ bool LuaApiChara::is_alive(sol::optional<LuaCharacterHandle> chara)
     {
         return false;
     }
-    if (!lua::lua->get_handle_manager().handle_is_valid(*chara))
+
+    auto chara_ref = lua::ref_opt<Character>(*chara);
+    if (!chara_ref)
     {
         return false;
     }
 
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(*chara);
-    return chara_ref.state() == Character::State::alive;
+    return chara_ref->state() == Character::State::alive;
 }
 
 /**
@@ -38,13 +39,9 @@ bool LuaApiChara::is_alive(sol::optional<LuaCharacterHandle> chara)
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is the player
  */
-bool LuaApiChara::is_player(sol::optional<LuaCharacterHandle> chara)
+bool LuaApiChara::is_player(LuaCharacterHandle chara)
 {
-    if (!chara)
-    {
-        return false;
-    }
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(*chara);
+    auto& chara_ref = lua::ref<Character>(chara);
     return chara_ref.index == 0;
 }
 
@@ -55,13 +52,9 @@ bool LuaApiChara::is_player(sol::optional<LuaCharacterHandle> chara)
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is in the player's party
  */
-bool LuaApiChara::is_ally(sol::optional<LuaCharacterHandle> chara)
+bool LuaApiChara::is_ally(LuaCharacterHandle chara)
 {
-    if (!chara)
-    {
-        return false;
-    }
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(*chara);
+    auto& chara_ref = lua::ref<Character>(chara);
     return !LuaApiChara::is_player(chara) && chara_ref.index < 16;
 }
 
@@ -303,7 +296,7 @@ void LuaApiChara::remove_from_party(LuaCharacterHandle ally)
         return;
     }
 
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(ally);
+    auto& chara_ref = lua::ref<Character>(ally);
     chara_relocate(chara_ref, none);
 }
 

@@ -17,21 +17,7 @@ local function resolve_handles(data)
    end
 end
 
--- Serial.save = serpent.dump
-function Serial.save(data)
-   if next(data) == nil then
-      print("Save: empty")
-   end
-   for _, v in pairs(data) do
-      if not (type(v) == "table" and v.__handle) then
-         print("Save: " .. inspect(data))
-         break
-      end
-   end
-
-   local dump = serpent.dump(data)
-   return dump
-end
+Serial.save = serpent.dump
 
 function Serial.load(dump)
    local ok, data = serpent.load(dump)
@@ -39,17 +25,6 @@ function Serial.load(dump)
       error("Mod data load error: " .. data, 2)
    end
    resolve_handles(data)
-
-   if next(data) == nil then
-      print("Load: empty")
-   end
-   for _, v in pairs(data) do
-      if not (type(v) == "table" and v.__handle) then
-         print("Load: " .. inspect(data))
-         break
-      end
-   end
-
    return data
 end
 
