@@ -2150,8 +2150,7 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         std::ofstream fout{outpath.native(), std::ios::binary};
         putit::BinaryOArchive oar{fout};
 
-        mod_serializer.save_mod_store_data(
-            oar, lua::ModInfo::StoreType::map_local);
+        mod_serializer.save_mod_store_data(oar, lua::ModInfo::StoreType::map);
     }
 
     // Map local character handles
@@ -2178,7 +2177,7 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         putit::BinaryOArchive oar{fout};
 
         mod_serializer.save_handles<Character>(
-            oar, lua::ModInfo::StoreType::map_local);
+            oar, lua::ModInfo::StoreType::map);
 
         for (int index = ELONA_MAX_PARTY_CHARACTERS;
              index < ELONA_MAX_CHARACTERS;
@@ -2212,8 +2211,7 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         std::ofstream fout{outpath.native(), std::ios::binary};
         putit::BinaryOArchive oar{fout};
 
-        mod_serializer.save_handles<Item>(
-            oar, lua::ModInfo::StoreType::map_local);
+        mod_serializer.save_handles<Item>(oar, lua::ModInfo::StoreType::map);
 
         for (int index = ELONA_OTHER_INVENTORIES_INDEX; index < ELONA_MAX_ITEMS;
              index++)

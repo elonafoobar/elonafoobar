@@ -17,7 +17,7 @@ std::pair<int, int> get_start_end_indices(
         {
         case ModInfo::StoreType::global:
             return {0, ELONA_MAX_PARTY_CHARACTERS - 1};
-        case ModInfo::StoreType::map_local:
+        case ModInfo::StoreType::map:
             return {ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS};
         }
     }
@@ -27,7 +27,7 @@ std::pair<int, int> get_start_end_indices(
         {
         case ModInfo::StoreType::global:
             return {0, ELONA_OTHER_INVENTORIES_INDEX - 1};
-        case ModInfo::StoreType::map_local:
+        case ModInfo::StoreType::map:
             return {ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS};
         }
     }
@@ -40,7 +40,7 @@ std::string get_store_name(ModInfo::StoreType store_type)
 {
     switch (store_type)
     {
-    case ModInfo::StoreType::map_local: return "map local";
+    case ModInfo::StoreType::map: return "map local";
     case ModInfo::StoreType::global: return "global";
     }
 

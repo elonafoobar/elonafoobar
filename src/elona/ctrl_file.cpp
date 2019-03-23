@@ -1187,7 +1187,7 @@ void fmode_1_2(bool read)
     lua::ModSerializer mod_serializer(lua::lua.get());
     int index_start, index_end;
 
-    // Mod map-local store data (Store.map_local)
+    // Mod map-local store data (Store.map)
     {
         const auto filepath = dir / (u8"mod_map_"s + mid + u8".s2");
         if (read)
@@ -1197,7 +1197,7 @@ void fmode_1_2(bool read)
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::BinaryIArchive ar{in};
             mod_serializer.load_mod_store_data(
-                ar, lua::ModInfo::StoreType::map_local);
+                ar, lua::ModInfo::StoreType::map);
         }
         else
         {
@@ -1206,7 +1206,7 @@ void fmode_1_2(bool read)
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::BinaryOArchive ar{out};
             mod_serializer.save_mod_store_data(
-                ar, lua::ModInfo::StoreType::map_local);
+                ar, lua::ModInfo::StoreType::map);
         }
     }
 
@@ -1221,7 +1221,7 @@ void fmode_1_2(bool read)
             putit::BinaryIArchive ar{in};
             std::tie(index_start, index_end) =
                 mod_serializer.load_handles<Character>(
-                    ar, lua::ModInfo::StoreType::map_local);
+                    ar, lua::ModInfo::StoreType::map);
 
             auto& handle_mgr = lua::lua->get_handle_manager();
             for (int i = index_start; i < index_end; i++)
@@ -1236,7 +1236,7 @@ void fmode_1_2(bool read)
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::BinaryOArchive ar{out};
             mod_serializer.save_handles<Character>(
-                ar, lua::ModInfo::StoreType::map_local);
+                ar, lua::ModInfo::StoreType::map);
         }
     }
 }
@@ -1364,8 +1364,8 @@ void fmode_3_4(bool read, const fs::path& filename)
 
         std::ifstream in{mod_filepath.native(), std::ios::binary};
         putit::BinaryIArchive ar{in};
-        std::tie(index_start, index_end) = mod_serializer.load_handles<Item>(
-            ar, lua::ModInfo::StoreType::map_local);
+        std::tie(index_start, index_end) =
+            mod_serializer.load_handles<Item>(ar, lua::ModInfo::StoreType::map);
 
         auto& handle_mgr = lua::lua->get_handle_manager();
         for (int i = index_start; i < index_end; i++)
@@ -1379,8 +1379,7 @@ void fmode_3_4(bool read, const fs::path& filename)
 
         std::ofstream out{mod_filepath.native(), std::ios::binary};
         putit::BinaryOArchive ar{out};
-        mod_serializer.save_handles<Item>(
-            ar, lua::ModInfo::StoreType::map_local);
+        mod_serializer.save_handles<Item>(ar, lua::ModInfo::StoreType::map);
     }
 }
 

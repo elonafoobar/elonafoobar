@@ -27,7 +27,7 @@ struct ModInfo
 {
     enum class StoreType
     {
-        map_local,
+        map,
         global
     };
 
@@ -39,7 +39,7 @@ struct ModInfo
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
 
-        store_local = state->create_table();
+        store_map = state->create_table();
         store_global = state->create_table();
 
         if (manifest.path)
@@ -56,7 +56,7 @@ struct ModInfo
         std::string table_name;
         switch (store_type)
         {
-        case StoreType::map_local: table_name = "map_local"; break;
+        case StoreType::map: table_name = "map"; break;
         case StoreType::global: table_name = "global"; break;
         }
 
@@ -68,7 +68,7 @@ struct ModInfo
         std::string table_name;
         switch (store_type)
         {
-        case StoreType::map_local: table_name = "map_local"; break;
+        case StoreType::map: table_name = "map"; break;
         case StoreType::global: table_name = "global"; break;
         }
 
@@ -81,7 +81,7 @@ struct ModInfo
     ModManifest manifest;
     optional<LoadedChunkCache> chunk_cache;
     sol::environment env;
-    sol::table store_local;
+    sol::table store_map;
     sol::table store_global;
 };
 
