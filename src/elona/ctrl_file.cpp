@@ -1354,7 +1354,7 @@ void fmode_3_4(bool read, const fs::path& filename)
     }
 
     // Mod handle data of map-local items
-    const auto mod_filename = "mod_" + filename.native();
+    const auto mod_filename = "mod_"s + filepathutil::to_utf8_path(filename);
     const auto mod_filepath = filesystem::dir::tmp() / mod_filename;
     lua::ModSerializer mod_serializer(lua::lua.get());
     int index_start, index_end;
@@ -1633,7 +1633,7 @@ void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
 {
     ELONA_LOG("save.ctrl_file")
         << "ctrl_file2 " << static_cast<int>(file_operation) << " mid: " << mid
-        << " filepath: " << filepath.native();
+        << " filepath: " << filepath.string();
 
     game_data.play_time =
         game_data.play_time + timeGetTime() / 1000 - time_begin;

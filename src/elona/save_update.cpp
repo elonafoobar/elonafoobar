@@ -190,9 +190,8 @@ void _update_save_data_3(const fs::path& save_dir, int serial_id)
 
         const auto is_cdatas1 = entry.path().filename() == "cdata.s1" ||
             entry.path().filename() == "g_cdata.s1";
-        const auto begin = is_cdatas1 ? 0 : ELONA_MAX_PARTY_CHARACTERS;
-        const auto end =
-            is_cdatas1 ? ELONA_MAX_PARTY_CHARACTERS : ELONA_MAX_CHARACTERS;
+        const auto begin = is_cdatas1 ? 0 : 57;
+        const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -641,8 +640,8 @@ void _update_save_data_4(const fs::path& save_dir, int serial_id)
 
         const auto is_invs1 = entry.path().filename() == "inv.s1" ||
             entry.path().filename() == "g_inv.s1";
-        const auto begin = is_invs1 ? 0 : ELONA_OTHER_INVENTORIES_INDEX;
-        const auto end = is_invs1 ? ELONA_OTHER_INVENTORIES_INDEX : 5480;
+        const auto begin = is_invs1 ? 0 : 1320;
+        const auto end = is_invs1 ? 1320 : 5480;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -875,9 +874,8 @@ void _update_save_data_5(const fs::path& save_dir, int serial_id)
 
         const auto is_cdatas1 = entry.path().filename() == "cdata.s1" ||
             entry.path().filename() == "g_cdata.s1";
-        const auto begin = is_cdatas1 ? 0 : ELONA_MAX_PARTY_CHARACTERS;
-        const auto end =
-            is_cdatas1 ? ELONA_MAX_PARTY_CHARACTERS : ELONA_MAX_CHARACTERS;
+        const auto begin = is_cdatas1 ? 0 : 57;
+        const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -1512,9 +1510,8 @@ void _update_save_data_8(const fs::path& save_dir, int serial_id)
 
         const auto is_cdatas1 = entry.path().filename() == "cdata.s1" ||
             entry.path().filename() == "g_cdata.s1";
-        const auto begin = is_cdatas1 ? 0 : ELONA_MAX_PARTY_CHARACTERS;
-        const auto end =
-            is_cdatas1 ? ELONA_MAX_PARTY_CHARACTERS : ELONA_MAX_CHARACTERS;
+        const auto begin = is_cdatas1 ? 0 : 57;
+        const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -1942,9 +1939,8 @@ void _update_save_data_8(const fs::path& save_dir, int serial_id)
 
         const auto is_invs1 = entry.path().filename() == "inv.s1" ||
             entry.path().filename() == "g_inv.s1";
-        const auto begin = is_invs1 ? 0 : ELONA_OTHER_INVENTORIES_INDEX;
-        const auto end =
-            is_invs1 ? ELONA_OTHER_INVENTORIES_INDEX : ELONA_MAX_ITEMS;
+        const auto begin = is_invs1 ? 0 : 1320;
+        const auto end = is_invs1 ? 1320 : 5480;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -2092,7 +2088,7 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         std::ifstream fin{inpath.native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
 
-        for (size_t index = 0; index < ELONA_MAX_PARTY_CHARACTERS; ++index)
+        for (size_t index = 0; index < 57; ++index)
         {
             iar(cdata[index]);
             cdata[index].index = index;
@@ -2106,7 +2102,7 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         mod_serializer.save_handles<Character>(
             oar, lua::ModInfo::StoreType::global);
 
-        for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
+        for (int index = 0; index < 57; index++)
         {
             cdata[index].set_state(Character::State::empty);
             lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
@@ -2119,7 +2115,7 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         std::ifstream fin{inpath.native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
 
-        for (size_t index = 0; index < ELONA_OTHER_INVENTORIES_INDEX; ++index)
+        for (size_t index = 0; index < 1320; ++index)
         {
             iar(inv[index]);
             inv[index].index = index;
@@ -2132,7 +2128,7 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
 
         mod_serializer.save_handles<Item>(oar, lua::ModInfo::StoreType::global);
 
-        for (int index = 0; index < ELONA_OTHER_INVENTORIES_INDEX; index++)
+        for (int index = 0; index < 1320; index++)
         {
             inv[index].set_number(0);
             lua::lua->get_handle_manager().remove_item_handle(inv[index]);
@@ -2145,8 +2141,8 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
              filesystem::DirEntryRange::Type::file,
              std::regex{u8R"(map(_.*)?\.s2)"}))
     {
-        fs::path outpath =
-            save_dir / ("mod_"s + entry.path().filename().native());
+        fs::path outpath = save_dir /
+            ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
         std::ofstream fout{outpath.native(), std::ios::binary};
         putit::BinaryOArchive oar{fout};
 
@@ -2162,26 +2158,22 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
 
-        for (size_t index = ELONA_MAX_PARTY_CHARACTERS;
-             index < ELONA_MAX_CHARACTERS;
-             ++index)
+        for (size_t index = 57; index < 245; ++index)
         {
             iar(cdata[index]);
             cdata[index].index = index;
             lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
         }
 
-        fs::path outpath =
-            save_dir / ("mod_"s + entry.path().filename().native());
+        fs::path outpath = save_dir /
+            ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
         std::ofstream fout{outpath.native(), std::ios::binary};
         putit::BinaryOArchive oar{fout};
 
         mod_serializer.save_handles<Character>(
             oar, lua::ModInfo::StoreType::map);
 
-        for (int index = ELONA_MAX_PARTY_CHARACTERS;
-             index < ELONA_MAX_CHARACTERS;
-             index++)
+        for (int index = 57; index < 245; index++)
         {
             cdata[index].set_state(Character::State::empty);
             lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
@@ -2197,24 +2189,21 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
 
-        for (size_t index = ELONA_OTHER_INVENTORIES_INDEX;
-             index < ELONA_MAX_ITEMS;
-             ++index)
+        for (size_t index = 1320; index < 5480; ++index)
         {
             iar(inv[index]);
             inv[index].index = index;
             lua::lua->get_handle_manager().create_item_handle(inv[index]);
         }
 
-        fs::path outpath =
-            save_dir / ("mod_"s + entry.path().filename().native());
+        fs::path outpath = save_dir /
+            ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
         std::ofstream fout{outpath.native(), std::ios::binary};
         putit::BinaryOArchive oar{fout};
 
         mod_serializer.save_handles<Item>(oar, lua::ModInfo::StoreType::map);
 
-        for (int index = ELONA_OTHER_INVENTORIES_INDEX; index < ELONA_MAX_ITEMS;
-             index++)
+        for (int index = 1320; index < 5480; index++)
         {
             inv[index].set_number(0);
             lua::lua->get_handle_manager().remove_item_handle(inv[index]);

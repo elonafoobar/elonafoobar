@@ -328,3 +328,25 @@ assert(Store.map.chara:is_valid())
 assert(Store.map.item:is_valid())
             )"));
 }
+
+
+TEST_CASE("Test serialization of recursive table", "[Lua: Serialization]")
+{
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
+        "test_serial_recursive", R"(
+local t = {}
+t[1] = t
+
+Store.global.t = t
+)"));
+
+    save_and_reload();
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
+        "test_serial_recursive", R"(
+            assert(type(Store.global.t) == "table")
+            assert(type(Store.global.t[1]) == "table")
+            )"));
+}

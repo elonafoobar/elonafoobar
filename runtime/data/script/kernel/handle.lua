@@ -280,13 +280,14 @@ end
 function Handle.get_handle_range(kind, index_start, index_end)
    local ret = {}
    for index, handle in Handle.iter(kind, index_start, index_end) do
-      ret[index] = handle
+      -- Lua tables are 1-indexed, so convert to 0-indexed.
+      ret[index-1] = handle
    end
    return ret
 end
 
 function Handle.clear_handle_range(kind, index_start, index_end)
-   for index=index_start, index_end do
+   for index=index_start, index_end-1 do
       local handle = handles_by_index[kind][index]
       if handle ~= nil then
          refs[kind][handle.__uuid] = nil
@@ -298,17 +299,11 @@ end
 function Handle.merge_handles(kind, handles_)
    for index, handle in pairs(handles_) do
 
-      -- Lua tables index from 1, but the underlying C++ arrays index
-      -- from 0. The handles_by_index table is serialized as-is with
-      -- the 0th index potentially occupied, but serpent seems to
-      -- shift the index by 1 when deserializing.
-      local adjusted_index = index - 1
-
       if handle ~= nil then
-         if handles_by_index[kind][adjusted_index] ~= nil then
+         if handles_by_index[kind][index] ~= nil then
             error("Attempt to overwrite handle " .. kind .. ":" .. adjusted_index, 2)
          end
-         handles_by_index[kind][adjusted_index] = handle
+         handles_by_index[kind][index] = handle
       end
    end
 end
@@ -326,14 +321,17 @@ end
 
 
 local function iter(a, i)
+   if i >= a.to then
+      return nil
+   end
    local v = a.handles[i]
+   -- Skip over indices that point to invalid handles.
    while not (v and Handle.is_valid(v)) do
-      -- Skip over indices that point to invalid handles.
+      i = i + 1
+      v = a.handles[i]
       if i >= a.to then
          return nil
       end
-      i = i + 1
-      v = a.handles[i]
    end
    i = i + 1
    return i, v
