@@ -165,6 +165,7 @@ private:
         std::smatch match;
         if (const auto matched = std::regex_match(str, match, pattern))
         {
+            (void)matched;
             int major, minor, patch;
             try
             {

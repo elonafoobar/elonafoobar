@@ -15,6 +15,7 @@ std::pair<int, int> get_start_end_indices(
     const std::string& kind,
     ModInfo::StoreType store_type);
 
+std::string get_store_name(ModInfo::StoreType store_type);
 
 class LuaEnv;
 
@@ -43,6 +44,10 @@ public:
             T::lua_type(), index_start, index_end);
         save(handles, putit_archive);
 
+        ELONA_LOG("lua.mod")
+            << "Saved handle data for " << T::lua_type() << " in ["
+            << index_start << "," << index_end << "]";
+
         handles = sol::lua_nil;
     }
 
@@ -61,6 +66,10 @@ public:
         auto& handle_mgr = _lua->get_handle_manager();
         handle_mgr.clear_handle_range(T::lua_type(), index_start, index_end);
         handle_mgr.merge_handles(T::lua_type(), handles);
+
+        ELONA_LOG("lua.mod")
+            << "Loaded handle data for " << T::lua_type() << " in ["
+            << index_start << "," << index_end << "]";
 
         handles = sol::lua_nil;
         return {index_start, index_end};
@@ -83,6 +92,9 @@ public:
 
             sol::table data = pair.second->get_store(store_type);
             save(data, putit_archive);
+
+            ELONA_LOG("lua.mod") << "Saved " << get_store_name(store_type)
+                                 << " store data for " << mod_name;
         }
     }
 
@@ -101,7 +113,7 @@ public:
             std::string mod_name;
             putit_archive(mod_name);
 
-            auto mod = mod_mgr.get_mod(mod_name);
+            auto mod = mod_mgr.get_mod_optional(mod_name);
             if (!mod)
             {
                 // Skip this piece of data.
@@ -115,6 +127,8 @@ public:
 
                 continue;
             }
+            ELONA_LOG("lua.mod") << "Loaded " << get_store_name(store_type)
+                                 << " store data for " << mod_name;
 
             sol::table data = _lua->get_state()->create_table();
             load(data, putit_archive);

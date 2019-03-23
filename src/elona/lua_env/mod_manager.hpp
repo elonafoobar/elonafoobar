@@ -155,7 +155,7 @@ public:
     /***
      * Clears all map-local mod storages.
      */
-    void clear_map_local_data();
+    void clear_map_local_stores();
 
     /***
      * Clears the internal storage for each loaded mod. This is used
@@ -228,11 +228,26 @@ public:
     /***
      * Retrieves a pointer to an instantiated mod.
      */
-    optional<ModInfo*> get_mod(const std::string& name)
+    optional<ModInfo*> get_mod_optional(const std::string& name)
     {
         auto val = mods.find(name);
         if (val == mods.end())
             return none;
+        return val->second.get();
+    }
+
+    /***
+     * Retrieves a pointer to an instantiated mod.
+     *
+     * Will throw if the mod doesn't exist.
+     *
+     * For testing use only.
+     */
+    ModInfo* get_mod(const std::string& name)
+    {
+        auto val = mods.find(name);
+        if (val == mods.end())
+            throw std::runtime_error("No such mod "s + name + "."s);
         return val->second.get();
     }
 

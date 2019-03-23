@@ -21,6 +21,7 @@ void post_run();
  */
 void reset_state();
 
+void save_reset_and_reload();
 void save_and_reload();
 
 /***

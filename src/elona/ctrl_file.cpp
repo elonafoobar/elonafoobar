@@ -1261,7 +1261,8 @@ void fmode_16()
 
 
 // reads or writes a custom map.
-// this is currently never called to write anything.
+// this is currently never called to write anything, as the built-in map editor
+// from 1.22 was removed.
 void fmode_5_6(bool read)
 {
     if (read)
@@ -1477,82 +1478,34 @@ void fmode_11_12(FileOperation file_operation)
     if (!fs::exists(filepath))
         return;
 
+    auto delete_file = [](const fs::path& tmpfile) {
+        auto filepath = filesystem::dir::tmp() / tmpfile;
+        if (fs::exists(filepath))
+        {
+            fs::remove_all(filepath);
+        }
+        else
+        {
+            writeloadedbuff(filepath.filename());
+        }
+        Save::instance().remove(filepath.filename());
+    };
+
     fs::remove_all(filepath);
     Save::instance().remove(filepath.filename());
     if (file_operation == FileOperation::map_delete)
     {
-        filepath = filesystem::dir::tmp() / (u8"cdata_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
-        filepath = filesystem::dir::tmp() / (u8"sdata_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
-        filepath = filesystem::dir::tmp() / (u8"cdatan_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
-        filepath = filesystem::dir::tmp() / (u8"inv_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
+        delete_file("cdata_"s + mid + ".s2");
+        delete_file("sdata_"s + mid + ".s2");
+        delete_file("cdatan_"s + mid + ".s2");
+        delete_file("inv_"s + mid + ".s2");
+        delete_file("mod_map_"s + mid + ".s2");
+        delete_file("mod_cdata_"s + mid + ".s2");
+        delete_file("mod_inv_"s + mid + ".s2");
     }
-    filepath = filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2");
-    if (fs::exists(filepath))
-    {
-        fs::remove_all(filepath);
-    }
-    else
-    {
-        writeloadedbuff(filepath.filename());
-    }
-    Save::instance().remove(filepath.filename());
-    filepath = filesystem::dir::tmp() / (u8"mdatan_"s + mid + u8".s2");
-    if (fs::exists(filepath))
-    {
-        fs::remove_all(filepath);
-    }
-    else
-    {
-        writeloadedbuff(filepath.filename());
-    }
-    Save::instance().remove(filepath.filename());
-    filepath = filesystem::dir::tmp() / (u8"mef_"s + mid + u8".s2");
-    if (fs::exists(filepath))
-    {
-        fs::remove_all(filepath);
-    }
-    else
-    {
-        writeloadedbuff(filepath.filename());
-    }
-
-    Save::instance().remove(filepath.filename());
+    delete_file("mdata_"s + mid + ".s2");
+    delete_file("mdatan_"s + mid + ".s2");
+    delete_file("mef_"s + mid + ".s2");
 }
 
 
@@ -1642,6 +1595,9 @@ void Save::save(const fs::path& save_dir)
 
 void ctrl_file(FileOperation file_operation)
 {
+    ELONA_LOG("save.ctrl_file")
+        << "ctrl_file " << static_cast<int>(file_operation) << " mid: " << mid;
+
     game_data.play_time =
         game_data.play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
@@ -1676,6 +1632,10 @@ void ctrl_file(FileOperation file_operation)
 
 void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
 {
+    ELONA_LOG("save.ctrl_file")
+        << "ctrl_file2 " << static_cast<int>(file_operation) << " mid: " << mid
+        << " filepath: " << filepath.native();
+
     game_data.play_time =
         game_data.play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;

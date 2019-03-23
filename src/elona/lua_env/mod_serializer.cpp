@@ -36,5 +36,17 @@ std::pair<int, int> get_start_end_indices(
     return {0, 0};
 }
 
+std::string get_store_name(ModInfo::StoreType store_type)
+{
+    switch (store_type)
+    {
+    case ModInfo::StoreType::map_local: return "map local";
+    case ModInfo::StoreType::global: return "global";
+    }
+
+    assert(false);
+    return "";
+}
+
 } // namespace lua
 } // namespace elona

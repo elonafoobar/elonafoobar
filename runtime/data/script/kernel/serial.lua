@@ -19,11 +19,14 @@ end
 
 -- Serial.save = serpent.dump
 function Serial.save(data)
+   if next(data) == nil then
+      print("Save: empty")
+   end
    for _, v in pairs(data) do
-      if type(v) ~= "table" or not v.__handle then
+      if not (type(v) == "table" and v.__handle) then
          print("Save: " .. inspect(data))
+         break
       end
-      break
    end
 
    local dump = serpent.dump(data)
@@ -37,11 +40,14 @@ function Serial.load(dump)
    end
    resolve_handles(data)
 
+   if next(data) == nil then
+      print("Load: empty")
+   end
    for _, v in pairs(data) do
-      if type(v) ~= "table" or not v.__handle then
+      if not (type(v) == "table" and v.__handle) then
          print("Load: " .. inspect(data))
+         break
       end
-      break
    end
 
    return data

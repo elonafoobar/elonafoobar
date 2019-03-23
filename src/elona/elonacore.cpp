@@ -4272,7 +4272,8 @@ TurnResult exit_map()
         game_data.current_dungeon_level = game_data.destination_dungeon_level;
         if (game_data.executing_immediate_quest_type == 0)
         {
-            if (game_data.previous_map != 2)
+            if (game_data.previous_map !=
+                static_cast<int>(mdata_t::MapId::fields))
             {
                 game_data.pc_x_in_world_map =
                     area_data[game_data.current_map].position.x;
@@ -4460,15 +4461,18 @@ TurnResult exit_map()
     bool map_changed = game_data.current_map != previous_map ||
         game_data.current_dungeon_level != previous_dungeon_level;
 
-    // Only clear map-local data if the map was changed. The map might
+    ELONA_LOG("map") << "exit_map levelexitby " << levelexitby << " cur "
+                     << game_data.current_map << " cur_level "
+                     << game_data.current_dungeon_level << " prev "
+                     << previous_map << " prev_level "
+                     << previous_dungeon_level;
+
+    // Only trigger the map unload event if the map was changed. The map might
     // not change if access to it is refused (jail, pyramid, etc.).
     if (map_changed)
     {
         lua::lua->get_event_manager().trigger(
             lua::BaseEvent("core.before_map_unload"));
-
-        lua::lua->get_mod_manager().clear_map_local_data();
-        lua::lua->get_handle_manager().clear_map_local_handles();
     }
 
     mode = 2;

@@ -80,7 +80,7 @@ void report_error(sol::error err)
 }
 
 
-void ModManager::clear_map_local_data()
+void ModManager::clear_map_local_stores()
 {
     for (auto&& pair : mods)
     {
@@ -213,7 +213,7 @@ void ModManager::load_scanned_mods()
     // depended on are loaded before their dependent mods.
     for (const auto& mod_name : calculate_loading_order())
     {
-        ModInfo* mod = *get_mod(mod_name);
+        ModInfo* mod = get_mod(mod_name);
         if (_mod_name_is_reserved(mod_name))
         {
             // TODO warn about reserved mod names.

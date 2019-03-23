@@ -185,7 +185,7 @@ function Handle.create_handle(cpp_ref, kind, uuid)
       return nil
    end
 
-   --print("CREATE " .. cpp_ref.index .. " " .. uuid)
+   -- print("CREATE " .. cpp_ref.index .. " " .. uuid)
 
    local handle = {
       __uuid = uuid,
@@ -211,7 +211,7 @@ function Handle.remove_handle(cpp_ref, kind)
       return
    end
 
-   --print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
+   -- print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
 
    assert(handle.__kind == kind)
 

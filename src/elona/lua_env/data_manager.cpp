@@ -165,7 +165,7 @@ void DataManager::init_from_mods()
          _lua->get_mod_manager().calculate_loading_order())
     {
         const auto& mod = _lua->get_mod_manager().get_mod(mod_name);
-        _init_from_mod(**mod);
+        _init_from_mod(*mod);
     }
 
     // Prevent modifications to the 'Registry' table.

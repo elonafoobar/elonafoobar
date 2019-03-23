@@ -16,14 +16,18 @@ namespace lua
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is alive
  */
-bool LuaApiChara::is_alive(LuaCharacterHandle chara)
+bool LuaApiChara::is_alive(sol::optional<LuaCharacterHandle> chara)
 {
-    if (!lua::lua->get_handle_manager().handle_is_valid(chara))
+    if (!chara)
+    {
+        return false;
+    }
+    if (!lua::lua->get_handle_manager().handle_is_valid(*chara))
     {
         return false;
     }
 
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(*chara);
     return chara_ref.state() == Character::State::alive;
 }
 
@@ -34,9 +38,13 @@ bool LuaApiChara::is_alive(LuaCharacterHandle chara)
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is the player
  */
-bool LuaApiChara::is_player(LuaCharacterHandle chara)
+bool LuaApiChara::is_player(sol::optional<LuaCharacterHandle> chara)
 {
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    if (!chara)
+    {
+        return false;
+    }
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(*chara);
     return chara_ref.index == 0;
 }
 
@@ -47,9 +55,13 @@ bool LuaApiChara::is_player(LuaCharacterHandle chara)
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is in the player's party
  */
-bool LuaApiChara::is_ally(LuaCharacterHandle chara)
+bool LuaApiChara::is_ally(sol::optional<LuaCharacterHandle> chara)
 {
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    if (!chara)
+    {
+        return false;
+    }
+    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(*chara);
     return !LuaApiChara::is_player(chara) && chara_ref.index < 16;
 }
 
@@ -71,14 +83,24 @@ int LuaApiChara::count()
  */
 sol::optional<LuaCharacterHandle> LuaApiChara::player()
 {
-    if (elona::cdata.player().state() == Character::State::empty)
+    return LuaApiChara::get(0);
+}
+
+/**
+ * @luadoc
+ *
+ * Returns the character at the given index.
+ * @treturn[1] LuaCharacter
+ * @treturn[2] nil
+ */
+sol::optional<LuaCharacterHandle> LuaApiChara::get(int index)
+{
+    if (index < 0 || index >= ELONA_MAX_CHARACTERS)
     {
         return sol::nullopt;
     }
-    else
-    {
-        return lua::handle(elona::cdata.player());
-    }
+
+    return lua::handle(elona::cdata[index]);
 }
 
 sol::optional<LuaCharacterHandle> LuaApiChara::create_random(
@@ -291,6 +313,7 @@ void LuaApiChara::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, is_player);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, is_ally);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, count);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiChara, get);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, player);
     api_table.set_function(
         "create",

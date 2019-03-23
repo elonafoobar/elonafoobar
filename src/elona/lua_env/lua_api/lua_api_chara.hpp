@@ -14,13 +14,15 @@ namespace lua
  */
 namespace LuaApiChara
 {
-bool is_alive(LuaCharacterHandle);
+bool is_alive(sol::optional<LuaCharacterHandle>);
 
-bool is_player(LuaCharacterHandle);
+bool is_player(sol::optional<LuaCharacterHandle>);
 
-bool is_ally(LuaCharacterHandle);
+bool is_ally(sol::optional<LuaCharacterHandle>);
 
 int count();
+
+sol::optional<LuaCharacterHandle> get(int index);
 
 sol::optional<LuaCharacterHandle> player();
 
