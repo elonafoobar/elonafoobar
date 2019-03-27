@@ -610,7 +610,7 @@ void draw_character_sprite(
 
 
 
-optional_ref<Extent> prepare_chara_chip(int c_, int dx, int dy)
+optional_ref<const Extent> prepare_chara_chip(int c_, int dx, int dy)
 {
     const int col_ = cdata[c_].image / 1000;
     const int p_ = cdata[c_].image % 1000;
@@ -1072,7 +1072,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                     draw_item_chip_in_world_map(
                         dx + (inf_tiles / 2),
                         dy + (inf_tiles / 2) - (stack_height / 2),
-                        **rect);
+                        *rect);
                 }
                 else
                 {
@@ -1080,12 +1080,12 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                         item_chips[p_].shadow)
                     {
                         draw_item_chip_shadow(
-                            dx, dy - stack_height, **rect, p_, 70);
+                            dx, dy - stack_height, *rect, p_, 70);
                     }
                     draw_item_chip_on_ground(
                         dx,
                         dy - item_chips[p_].offset_y - stack_height,
-                        **rect,
+                        *rect,
                         p_,
                         scrturn_);
                 }
@@ -1098,7 +1098,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
         }
         else
         {
-            optional_ref<Extent> rect;
+            optional_ref<const Extent> rect;
             if (p_ == 528 || p_ == 531)
             {
                 rect = prepare_item_image(
@@ -1111,16 +1111,16 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             if (map_data.type == mdata_t::MapType::world_map)
             {
                 draw_item_chip_in_world_map(
-                    dx + (inf_tiles / 2), dy + (inf_tiles / 2), **rect);
+                    dx + (inf_tiles / 2), dy + (inf_tiles / 2), *rect);
             }
             else
             {
                 if (Config::instance().object_shadow && item_chips[p_].shadow)
                 {
-                    draw_item_chip_shadow(dx, dy, **rect, p_, 80);
+                    draw_item_chip_shadow(dx, dy, *rect, p_, 80);
                 }
                 draw_item_chip_on_ground(
-                    dx, dy - item_chips[p_].offset_y, **rect, p_, scrturn_);
+                    dx, dy - item_chips[p_].offset_y, *rect, p_, scrturn_);
             }
         }
     }

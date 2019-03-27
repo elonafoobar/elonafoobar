@@ -27,6 +27,13 @@ using LuaItemHandle = sol::table;
         api_table.set_function(#function, api_name::function); \
     } while (false)
 
+// To avoid conflict with C++ keyword. See also LuaApiConsole::register_.
+#define LUA_API_BIND_FUNCTION_WITH_NAME(api_table, api_name, function, name) \
+    do \
+    { \
+        api_table.set_function(name, api_name::function); \
+    } while (false)
+
 #define LUA_API_BIND_CONSTANT(api_table, name, value) \
     do \
     { \

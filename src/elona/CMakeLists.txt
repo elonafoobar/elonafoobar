@@ -105,13 +105,13 @@ set(ELONA_SOURCES
   data/util.cpp
 
   lua_env/api_manager.cpp
+  lua_env/console.cpp
   lua_env/data_manager.cpp
   lua_env/event_manager.cpp
   lua_env/export_manager.cpp
   lua_env/handle_manager.cpp
   lua_env/i18n_function_manager.cpp
   lua_env/interface.cpp
-  lua_env/lua_console.cpp
   lua_env/lua_env.cpp
   lua_env/mod_manager.cpp
   lua_env/mod_manifest.cpp

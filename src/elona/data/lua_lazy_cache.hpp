@@ -180,7 +180,7 @@ public:
                              "\" of type \"" + Traits::type_id + "\" exists."};
         }
 
-        return **data;
+        return *data;
     }
 
     const DataType& ensure(const std::string& inner_id)

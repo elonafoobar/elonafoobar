@@ -110,6 +110,7 @@ StatusAilment = {}
 --  @tfield Enums.Element Cut
 --  @tfield Enums.Element Ether
 --  @tfield Enums.Element Acid
+--  @tfield Enums.Element Vorpal
 Element = {}
 
 --- A kind of tile to be used with <code>Map.generate_tile</code>.
