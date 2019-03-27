@@ -5331,7 +5331,7 @@ TurnResult step_into_gate()
 
 int target_position(bool target_chara)
 {
-    if (tlocinitx != 0 || tlocinity != 0)
+    if (tlocinitx != 0 || tlocinity != 0 || homemapmode == 1)
     {
         tlocx = tlocinitx;
         tlocy = tlocinity;
@@ -5634,7 +5634,7 @@ int target_position(bool target_chara)
                 snd("core.cursor1");
             }
             scposval = 0;
-            if (tlocinitx == 0 && tlocinity == 0)
+            if (tlocinitx == 0 && tlocinity == 0 && homemapmode != 1)
             {
                 update_screen();
             }
