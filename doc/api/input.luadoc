@@ -110,3 +110,25 @@ function start_dialog(speaker, dialog) end
 --  @treturn[2] nil
 --  @function choose_ally
 function choose_ally(operation) end
+
+--- Enqueues an action or a list of actions into the macro action queue. It will
+--  be run in order of insertion the next time input is queried.
+--  @tparam[1] string action the action to run.
+--  @tparam[2] table actions an array of actions to run.
+--  @usage Macro.enqueue("north")
+--  Macro.enqueue({"east", "wait", "northwest"})
+--  @function enqueue_macro
+function enqueue_macro(action_id) end
+
+--- Clears any actions that haven't been run yet in the macro action queue.
+--  @function clear_macro_queue
+function clear_macro_queue() end
+
+--- Disables input/macro keywait for this frame.
+--  @function ignore_keywait
+function ignore_keywait() end
+
+--- Returns true if any key is pressed.
+--  @treturn bool
+--  @function any_key_pressed
+function any_key_pressed() end

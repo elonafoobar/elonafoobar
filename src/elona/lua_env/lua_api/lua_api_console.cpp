@@ -13,6 +13,10 @@ namespace lua
  * @luadoc
  *
  * Registers a new console command.
+ *
+ * @tparam string mod_name the mod's name where the command is defined.
+ * @tparam string name the command name.
+ * @tparam function callback the command itself.
  */
 void LuaApiConsole::register_(
     const std::string& mod_name,
