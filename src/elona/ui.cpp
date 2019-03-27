@@ -39,7 +39,6 @@ int cs_posbk_w;
 int cs_posbk_h;
 
 constexpr int inf_clockw = 120;
-constexpr int inf_clockh = 96;
 
 
 
