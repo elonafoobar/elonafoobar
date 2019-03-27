@@ -19,9 +19,10 @@ sol::optional<bool> yes_no(const std::string&);
 sol::optional<int> prompt_number(const std::string&, int);
 sol::optional<int> prompt_number_with_initial(const std::string&, int, int);
 
-sol::optional<std::string> prompt_text(const std::string&, bool);
+sol::optional<std::string>
+prompt_text(sol::optional<int>, sol::optional<int>, sol::optional<bool>);
 
-sol::optional<int> prompt_choice(sol::table);
+sol::optional<int> prompt_choice(sol::table, sol::optional<int>);
 
 int prompt_dialog(
     const std::string&,
@@ -52,9 +53,6 @@ int prompt_dialog_with_chip_impress(
     sol::optional<int>,
     int,
     int);
-
-void start_dialog(LuaCharacterHandle);
-void start_dialog_with_data(LuaCharacterHandle, const std::string&);
 
 sol::optional<LuaCharacterHandle> choose_ally(const EnumString&);
 

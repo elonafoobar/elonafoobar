@@ -1,9 +1,10 @@
 #include "lua_api_gui.hpp"
 #include "../../audio.hpp"
-#include "../../lua_env/enums/enums.hpp"
 #include "../../message.hpp"
 #include "../../quest.hpp"
 #include "../../ui.hpp"
+#include "../enums/enums.hpp"
+#include "../handle_manager.hpp"
 
 namespace elona
 {
@@ -73,9 +74,20 @@ void LuaApiGUI::show_journal_update_message()
  */
 void LuaApiGUI::fade_out()
 {
-    update_screen();
+    elona::update_screen();
     elona::fade_out();
     gsel(0);
+}
+
+void LuaApiGUI::update_screen(sol::optional<bool> redraw)
+{
+    bool redraw_value = redraw.value_or(true);
+    int screenupdatebk = elona::screenupdate;
+    elona::screenupdate = redraw_value ? 0 : -1;
+
+    elona::update_screen();
+
+    elona::screenupdate = screenupdatebk;
 }
 
 void LuaApiGUI::bind(sol::table& api_table)
@@ -86,6 +98,7 @@ void LuaApiGUI::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiGUI, play_sound);
     LUA_API_BIND_FUNCTION(api_table, LuaApiGUI, show_journal_update_message);
     LUA_API_BIND_FUNCTION(api_table, LuaApiGUI, fade_out);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiGUI, update_screen);
 }
 
 } // namespace lua

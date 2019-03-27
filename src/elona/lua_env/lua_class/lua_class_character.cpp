@@ -761,39 +761,57 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [R] The new-style version prototype ID of the character.
      */
-    LuaCharacter.set(
-        "id", sol::property([](Character& c) { return c.new_id().get(); }));
+    LuaCharacter.set("id", sol::property([](Character& self) {
+                         return self.new_id().get();
+                     }));
 
     /**
      * @luadoc name field string
      *
      * [R] The name of the character with article and title.
      */
-    LuaCharacter.set("name", sol::property([](Character& c) {
-                         return elona::name(c.index);
+    LuaCharacter.set("name", sol::property([](Character& self) {
+                         return elona::name(self.index);
                      }));
 
     /**
      * @luadoc basename field string
      *
-     * [R] The name of the character without article and title.
+     * [RW] The name of the character without article and title.
      */
     LuaCharacter.set(
         "basename",
         sol::property(
-            [](Character& c) { return elona::cdatan(0, c.index); },
-            [](Character& c, const std::string& s) {
-                elona::cdatan(0, c.index) = s;
+            [](Character& self) { return elona::cdatan(0, self.index); },
+            [](Character& self, std::string basename) {
+                elona::cdatan(0, self.index) = basename;
             }));
 
     /**
      * @luadoc title field string
      *
-     * [R] The title of the character.
+     * [RW] The title of the character.
      */
-    LuaCharacter.set("title", sol::property([](Character& c) {
-                         return elona::cdatan(1, c.index);
-                     }));
+    LuaCharacter.set(
+        "title",
+        sol::property(
+            [](Character& c) { return elona::cdatan(1, c.index); },
+            [](Character& self, std::string title) {
+                elona::cdatan(1, self.index) = title;
+            }));
+
+    /**
+     * @luadoc tone field string
+     *
+     * [RW] The tone of the character.
+     */
+    LuaCharacter.set(
+        "tone",
+        sol::property(
+            [](Character& c) { return elona::cdatan(4, c.index); },
+            [](Character& self, std::string title) {
+                elona::cdatan(4, self.index) = title;
+            }));
 
     /**
      * @luadoc sex field Gender

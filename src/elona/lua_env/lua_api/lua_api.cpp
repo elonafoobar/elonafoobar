@@ -1,6 +1,7 @@
 // @noluadoc
 #include "lua_api.hpp"
 
+#include "lua_api_action.cpp"
 #include "lua_api_animation.cpp"
 #include "lua_api_chara.cpp"
 #include "lua_api_config.cpp"
@@ -36,6 +37,7 @@ namespace lua
 
 void LuaApi::bind(sol::table& core)
 {
+    LUA_API_BIND(core, Action);
     LUA_API_BIND(core, Animation);
     LUA_API_BIND(core, Chara);
     LUA_API_BIND(core, Config);

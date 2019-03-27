@@ -115,3 +115,11 @@ module "core.event"
 --- Fired when a nefia is created.
 -- @tfield LuaArea nefia the created nefia
 -- @event core.script_loaded
+
+--- Fired when building the list of interaction choices.
+-- @tfield LuaCharacter target (mut) the interaction target
+-- @tfield {{string,function},...} choices (mut) the list of choices.
+-- First entry is localization key, second is callback. The callback
+-- will receive a table with "target" set to the target character. To
+-- add new choices, insert them into this table.
+-- @event core.before_interact_menu

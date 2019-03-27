@@ -433,6 +433,18 @@ EnumMap<RandomTitleType> RandomTitleTypeTable{
         {"LivingWeapon", RandomTitleType::living_weapon},
     }};
 
+/**
+ * @luadoc
+ *
+ * The outcome of a turn, used to determine if the turn should end or not.
+ */
+EnumMap<TurnResult> TurnResultTable{
+    "TurnResult",
+    {
+        {"TurnEnd", TurnResult::turn_end},
+        {"TurnContinue", TurnResult::pc_turn_user_error},
+    }};
+
 } // namespace LuaEnums
 
 void LuaEnums::bind(sol::table& core)
@@ -458,6 +470,7 @@ void LuaEnums::bind(sol::table& core)
     ItemFindLocationTable.bind(Enums);
     ControlAllyOperationTable.bind(Enums);
     RandomTitleTypeTable.bind(Enums);
+    TurnResultTable.bind(Enums);
 }
 
 } // namespace lua

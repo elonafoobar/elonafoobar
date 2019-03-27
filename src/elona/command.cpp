@@ -26,6 +26,8 @@
 #include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/enums/enums.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/interface.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
@@ -154,158 +156,11 @@ TurnResult do_interact_command()
     txt(i18n::s.get("core.locale.action.interact.prompt", cdata[tc]));
     p = 0;
 
-    Prompt prompt("core.locale.action.interact.choices");
-    if (tc != 0)
-    {
-        if (cdata.player().confused == 0)
-        {
-            prompt.append("talk", 0);
-            prompt.append("attack", 1);
-        }
-        if (cdata[tc].is_escorted() == 0)
-        {
-            if (cdata[tc].is_escorted_in_sub_quest() == 0)
-            {
-                if (tc < 16)
-                {
-                    prompt.append("inventory", 4);
-                }
-                else
-                {
-                    prompt.append("give", 2);
-                }
-                if (cdata[tc].is_livestock() == 1)
-                {
-                    prompt.append("bring_out", 5);
-                }
-                if (tc < 16)
-                {
-                    prompt.append("appearance", 8);
-                }
-            }
-        }
-        prompt.append("teach_words", 7);
-        prompt.append("change_tone", 10);
-        if (game_data.current_map != mdata_t::MapId::show_house)
-        {
-            if (cdata[tc].is_hung_on_sand_bag())
-            {
-                prompt.append("release", 9);
-            }
-        }
-    }
-    prompt.append("name", 3);
-    if (0 || game_data.wizard)
-    {
-        prompt.append("info", 6);
-    }
-    {
-        int stat = prompt.query(promptx, prompty, 200);
-        if (stat == -1)
-        {
-            update_screen();
-            return TurnResult::pc_turn_user_error;
-        }
-        rtval = stat;
-    }
-    screenupdate = -1;
-    p = rtval;
-    if (p == 0)
-    {
-        update_screen();
-        talk_to_npc();
-        if (chatteleport == 1)
-        {
-            chatteleport = 0;
-            return TurnResult::exit_map;
-        }
-        else
-        {
-            return TurnResult::turn_end;
-        }
-    }
-    if (p == 1)
-    {
-        update_screen();
-        try_to_melee_attack();
-        return TurnResult::turn_end;
-    }
-    if (p == 2)
-    {
-        update_screen();
-        invctrl = 10;
-        snd("core.inv");
-        MenuResult mr = ctrl_inventory();
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
-    }
-    if (p == 3)
-    {
-        update_screen();
-        return call_npc();
-    }
-    if (p == 4)
-    {
-        return try_interact_with_npc();
-    }
-    if (p == 5)
-    {
-        rc = tc;
-        new_ally_joins();
-        update_screen();
-        return TurnResult::turn_end;
-    }
-    if (p == 6)
-    {
-        snd("core.pop2");
-        cc = tc;
-        menu_character_sheet_investigate();
-        cc = 0;
-        return TurnResult::pc_turn_user_error;
-    }
-    if (p == 7)
-    {
-        txt(i18n::s.get(
-            "core.locale.action.interact.change_tone.prompt", cdata[tc]));
-        inputlog = "";
-        input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20);
-        cdata[tc].has_custom_talk() = false;
-        if (inputlog == ""s)
-        {
-            cdatan(4, tc) = "";
-        }
-        else
-        {
-            cdatan(4, tc) = inputlog;
-            txt(""s + cdatan(4, tc), Message::color{ColorIndex::cyan});
-        }
-        update_screen();
-        return TurnResult::pc_turn_user_error;
-    }
-    if (p == 8)
-    {
-        gsel(0);
-        ccbk = cc;
-        cc = tc;
-        change_appearance();
-        cc = ccbk;
-        update_screen();
-        return TurnResult::pc_turn_user_error;
-    }
-    if (p == 9)
-    {
-        snd("core.build1");
-        cdata[tc].is_hung_on_sand_bag() = false;
-        txt(i18n::s.get("core.locale.action.interact.release", cdata[tc]));
-        flt();
-        itemcreate(-1, 733, cdata[tc].position.x, cdata[tc].position.y, 0);
-    }
-    if (p == 10)
-    {
-        change_npc_tone();
-    }
-    update_screen();
-    return TurnResult::pc_turn_user_error;
+    auto result = lua::call_with_result<lua::EnumString>(
+        "exports:core.impl.interact.start", "", lua::handle(cdata[tc]));
+
+    return lua::LuaEnums::TurnResultTable.get_from_string(
+        result, TurnResult::pc_turn_user_error);
 }
 
 

@@ -24,6 +24,8 @@ void show_journal_update_message();
 
 void fade_out();
 
+void update_screen(sol::optional<bool>);
+
 
 void bind(sol::table&);
 }; // namespace LuaApiGUI

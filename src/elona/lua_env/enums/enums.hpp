@@ -45,6 +45,7 @@ extern EnumMap<CharaFindLocation> CharaFindLocationTable;
 extern EnumMap<ItemFindLocation> ItemFindLocationTable;
 extern EnumMap<ControlAllyOperation> ControlAllyOperationTable;
 extern EnumMap<RandomTitleType> RandomTitleTypeTable;
+extern EnumMap<TurnResult> TurnResultTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

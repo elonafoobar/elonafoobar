@@ -89,7 +89,10 @@ void talk_to_npc()
 
 void talk_to_npc(Character &chara)
 {
-    talk_setup_variables(chara);
+    if (!talk_setup_variables(chara))
+    {
+        return;
+    }
 
     talk_start();
     if (scenemode == 1)

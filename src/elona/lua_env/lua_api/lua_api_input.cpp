@@ -1,10 +1,12 @@
 #include "lua_api_input.hpp"
+#include "../../audio.hpp"
 #include "../../dialog.hpp"
 #include "../../i18n.hpp"
 #include "../../input.hpp"
 #include "../../input_prompt.hpp"
 #include "../../keybind/macro_action_queue.hpp"
 #include "../../message.hpp"
+#include "../../ui.hpp"
 
 namespace elona
 {
@@ -98,10 +100,11 @@ sol::optional<int> LuaApiInput::prompt_number_with_initial(
  * @luadoc
  *
  * Prompts the player to enter text.
- * @tparam string message a message to display
+ * @tparam num max_length maximum length of the string
+ * @tparam num width width of the choice box
  * @tparam bool is_cancelable whether or not the dialog can be canceled
  * @treturn[1] string the text that was input
- * @treturn[1] nil if canceled
+ * @treturn[2] nil if canceled
  * @usage local result = Input.prompt_text("What text?", true)
  *
  * if result then
@@ -111,16 +114,17 @@ sol::optional<int> LuaApiInput::prompt_number_with_initial(
  * end
  */
 sol::optional<std::string> LuaApiInput::prompt_text(
-    const std::string& message,
-    bool is_cancelable)
+    sol::optional<int> max_length,
+    sol::optional<int> width,
+    sol::optional<bool> is_cancelable)
 {
-    txt(message + i18n::space_if_needed());
     bool canceled = input_text_dialog(
-        (windoww - 360) / 2 + inf_screenx,
+        (windoww - width.value_or(360)) / 2 + inf_screenx,
         winposy(90),
-        20,
-        is_cancelable,
+        max_length.value_or(20),
+        is_cancelable.value_or(false),
         true);
+
     if (canceled)
     {
         return sol::nullopt;
@@ -135,6 +139,7 @@ sol::optional<std::string> LuaApiInput::prompt_text(
  * Prompts the player to select from a list of choices. Raises an
  * error if no arguments are provided.
  * @tparam table choices a list of string choices
+ * @tparam[opt] num width width of the choice box
  * @treturn[1] num the index of the item chosen, starting from 1
  * @treturn[2] nil if canceled
  * @usage GUI.txt("Which? ")
@@ -147,10 +152,17 @@ sol::optional<std::string> LuaApiInput::prompt_text(
  *    GUI.txt("Never mind. ")
  * end
  */
-sol::optional<int> LuaApiInput::prompt_choice(sol::table choices)
+sol::optional<int> LuaApiInput::prompt_choice(
+    sol::table choices,
+    sol::optional<int> width)
 {
     Prompt prompt;
-    size_t width = 160;
+    size_t width_value = 160;
+
+    if (width)
+    {
+        width_value = *width;
+    }
 
     // Lua tables are 1-indexed, but the prompt is 0-indexed.
     for (size_t i = 1; i <= choices.size(); i++)
@@ -158,12 +170,16 @@ sol::optional<int> LuaApiInput::prompt_choice(sol::table choices)
         sol::optional<std::string> choice = choices[i];
         if (choice)
         {
-            width = std::max(width, strlen_u(*choice) * (13 - en * 2));
+            if (!width)
+            {
+                width_value =
+                    std::max(width_value, strlen_u(*choice) * (13 - en * 2));
+            }
             prompt.append(std::move(*choice), i);
         }
     }
 
-    int rtval = prompt.query(promptx, prompty, (int)width);
+    int rtval = prompt.query(promptx, prompty, width_value);
     if (rtval == -1)
     {
         return sol::nullopt;
@@ -545,10 +561,6 @@ void LuaApiInput::bind(sol::table& api_table)
             LuaApiInput::prompt_dialog_impress,
             LuaApiInput::prompt_dialog_with_chip,
             LuaApiInput::prompt_dialog_with_chip_impress));
-    api_table.set_function(
-        "start_dialog",
-        sol::overload(
-            LuaApiInput::start_dialog, LuaApiInput::start_dialog_with_data));
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, choose_ally);
     api_table.set_function(
         "enqueue_macro",
