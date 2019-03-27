@@ -245,7 +245,7 @@ sol::optional<LuaAbility> LuaCharacter::get_skill(
     assert(handle != sol::lua_nil);
 
     std::string uuid = handle["__uuid"];
-    return LuaAbility(data->id, self.index, Character::lua_type(), uuid);
+    return LuaAbility(data->legacy_id, self.index, Character::lua_type(), uuid);
 }
 
 void LuaCharacter::gain_skill(
@@ -276,7 +276,8 @@ void LuaCharacter::gain_skill_stock(
     {
         return;
     }
-    elona::chara_gain_skill(self, data->id, initial_level, initial_stock);
+    elona::chara_gain_skill(
+        self, data->legacy_id, initial_level, initial_stock);
 }
 
 /**
@@ -297,7 +298,7 @@ void LuaCharacter::gain_skill_exp(
     {
         return;
     }
-    elona::chara_gain_fixed_skill_exp(self, data->id, amount);
+    elona::chara_gain_fixed_skill_exp(self, data->legacy_id, amount);
 }
 
 /**

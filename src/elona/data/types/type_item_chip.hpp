@@ -9,11 +9,14 @@ namespace elona
 
 struct ItemChipData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     Extent rect;
     ItemChip chip;
     optional<fs::path> filepath;
 };
+
+
 
 ELONA_DEFINE_LUA_DB(ItemChipDB, ItemChipData, true, "core.item_chip")
 

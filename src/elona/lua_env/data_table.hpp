@@ -10,35 +10,88 @@ namespace lua
 
 struct DataTable
 {
+    /// Initialize with an empty storage.
     DataTable()
+        : _storage(sol::lua_nil)
     {
-        storage = sol::lua_nil;
     }
 
+
+
+    /// Initialize with @a data.
     DataTable(sol::table data)
-        : storage(data)
+        : _storage(data)
     {
     }
 
-    optional<std::string> by_legacy(const std::string& type_id, int legacy_id)
+
+
+    /**
+     * Get a new ID by a legacy ID.
+     *
+     * @param prototype_id the namespaced prototype ID.
+     * @param legacy_data_id the legacy data ID.
+     * @return the corresponding new ID or none if not found.
+     */
+    optional<std::string> by_legacy(
+        const std::string& prototype_id,
+        int legacy_data_id)
     {
-        if (auto it = storage.get<sol::optional<std::string>>(
-                std::tie("by_legacy", type_id, legacy_id)))
+        if (auto it = _storage.get<sol::optional<std::string>>(
+                std::tie("by_legacy", prototype_id, legacy_data_id)))
             return *it;
 
         return none;
     }
 
-    optional<sol::table> raw(const std::string& type_id, const std::string& id)
+
+
+    /**
+     * Get the data from the raw table.
+     *
+     * @param prototype_id the namespaced prototype ID.
+     * @param data_id the namespaced data ID.
+     * @return the data or none if not found.
+     */
+    optional<sol::table> raw(
+        const std::string& prototype_id,
+        const std::string& data_id)
     {
-        if (auto it = storage.get<sol::optional<sol::table>>(
-                std::tie("raw", type_id, id)))
+        if (auto it = _storage.get<sol::optional<sol::table>>(
+                std::tie("raw", prototype_id, data_id)))
             return *it;
 
         return none;
     }
 
-    sol::table storage;
+
+
+    /**
+     * Get data table for @a prototype_id.
+     *
+     * @param prototype_id the namespaced prototype ID.
+     * @return the data table or none if not found.
+     */
+    optional<sol::table> get_table(const std::string& prototype_id)
+    {
+        if (auto it = _storage.get<sol::optional<sol::table>>(
+                std::tie("raw", prototype_id)))
+            return *it;
+
+        return none;
+    }
+
+
+
+    sol::table& storage()
+    {
+        return _storage;
+    }
+
+
+
+private:
+    sol::table _storage;
 };
 
 } // namespace lua

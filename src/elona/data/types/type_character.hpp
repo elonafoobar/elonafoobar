@@ -7,6 +7,7 @@
 #include "../lua_lazy_cache.hpp"
 
 
+
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(name, n) \
     bool name() const \
     { \
@@ -16,6 +17,7 @@
     { \
         return _flags[n]; \
     }
+
 
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_floating, 5) \
@@ -80,12 +82,14 @@
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(only_christmas, 991)
 
 
+
 namespace elona
 {
 
 struct CharacterData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
     int ai_act_sub_freq;
@@ -134,7 +138,11 @@ struct CharacterData
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };
 
+
+
 ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, true, "core.chara")
+
+
 
 extern CharacterDB the_character_db;
 

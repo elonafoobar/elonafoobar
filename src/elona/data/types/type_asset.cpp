@@ -41,7 +41,7 @@ const constexpr char* data::LuaLazyCacheTraits<AssetDB>::type_id;
 
 
 
-AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
+AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     DATA_REQ(source, std::string);
     DATA_REQ(x, int);
@@ -67,8 +67,16 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string&)
         file_path = filesystem::resolve_path_for_mod(*file);
     }
 
-    return AssetData{
-        window_id, x, y, width, height, count_x, count_y, file_path, load_type};
+    return AssetData{SharedId{id},
+                     window_id,
+                     x,
+                     y,
+                     width,
+                     height,
+                     count_x,
+                     count_y,
+                     file_path,
+                     load_type};
 }
 
 } // namespace elona

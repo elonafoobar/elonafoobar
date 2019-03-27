@@ -7,7 +7,7 @@ local Map = Elona.require("Map")
 local Rand = Elona.require("Rand")
 
 return {
-   name = "karam",
+   id = "karam",
    root = "core.locale.talk.unique.karam",
    nodes = {
       __start = function()

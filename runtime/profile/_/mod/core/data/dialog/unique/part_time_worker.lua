@@ -3,7 +3,7 @@ local Map = Elona.require("Map")
 local Item = Elona.require("Item")
 
 return {
-   name = "part_time_worker",
+   id = "part_time_worker",
    root = "core.locale.talk.unique.part_time_worker",
    nodes = {
       __start = function()

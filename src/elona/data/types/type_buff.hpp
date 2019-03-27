@@ -7,7 +7,8 @@ namespace elona
 
 struct BuffData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     sol::table self;
     BuffType type;
     lua::WrappedFunction duration;
@@ -16,7 +17,11 @@ struct BuffData
     lua::WrappedFunction description;
 };
 
+
+
 ELONA_DEFINE_LUA_DB(BuffDB, BuffData, true, "core.buff")
+
+
 
 extern BuffDB the_buff_db;
 

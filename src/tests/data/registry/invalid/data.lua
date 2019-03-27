@@ -1,8 +1,8 @@
 data:add(
    {
       type = "core.chara",
-      name = "spiral_putit",
+      id = "spiral_putit",
       fltselect = 1,
-      -- missing 'id'
+      -- missing 'legacy_id'
    }
 )

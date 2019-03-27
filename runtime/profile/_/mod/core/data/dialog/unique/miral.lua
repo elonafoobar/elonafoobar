@@ -31,7 +31,7 @@ local function upgrade_cargo_limit()
 end
 
 return {
-   name = "miral",
+   id = "miral",
    root = "core.locale.talk.unique.miral",
    nodes = {
       __start = {

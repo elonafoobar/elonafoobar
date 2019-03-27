@@ -49,7 +49,7 @@ local function receive_reward()
 end
 
 return {
-   name = "lexus",
+   id = "lexus",
    root = "core.locale.talk.unique.lexus",
    nodes = {
       __start = function()

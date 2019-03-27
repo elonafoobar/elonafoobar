@@ -726,7 +726,7 @@ void initialize_map_chips(const MapChipDB& db)
     {
         auto& atlas = chip_data.get_map(data.atlas);
 
-        atlas[data.id] = data;
+        atlas[data.legacy_id] = data;
     }
 
     {
@@ -885,7 +885,7 @@ void initialize_item_chips(const ItemChipDB& db)
     for (const auto& chip_data : db.values())
     {
         SharedId key = chip_data.chip.key;
-        int legacy_id = chip_data.id;
+        int legacy_id = chip_data.legacy_id;
 
         // insert chip data into global vector.
         if (static_cast<int>(item_chips.size()) < legacy_id)
@@ -950,7 +950,7 @@ void initialize_chara_chips(const CharaChipDB& db)
     for (const auto& chip_data : db.values())
     {
         SharedId key = chip_data.chip.key;
-        int legacy_id = chip_data.id;
+        int legacy_id = chip_data.legacy_id;
 
         // Insert chip data into global vector.
         if (static_cast<int>(chara_chips.size()) < legacy_id)

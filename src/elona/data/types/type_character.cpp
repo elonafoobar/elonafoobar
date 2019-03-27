@@ -9,6 +9,7 @@ CharacterDB the_character_db;
 const constexpr char* data::LuaLazyCacheTraits<CharacterDB>::type_id;
 
 
+
 static std::unordered_map<int, int> _convert_resistances(
     const lua::ConfigTable& data,
     const std::string& id)
@@ -28,6 +29,8 @@ static std::unordered_map<int, int> _convert_resistances(
 
     return resistances;
 }
+
+
 
 static std::vector<int> _convert_chara_flags(
     const lua::ConfigTable& data,
@@ -50,11 +53,12 @@ static std::vector<int> _convert_chara_flags(
 }
 
 
+
 CharacterData CharacterDB::convert(
     const lua::ConfigTable& data,
-    const std::string&)
+    const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_OPT_OR(ai_act_sub_freq, int, 0);
     DATA_OPT_OR(ai_calm, int, 0);
     DATA_OPT_OR(ai_dist, int, 0);
@@ -134,6 +138,7 @@ CharacterData CharacterDB::convert(
     std::string filter = data::convert_tags(data, "tags");
 
     return CharacterData{
+        SharedId{id},
         legacy_id,
         normal_actions,
         special_actions,

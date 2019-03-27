@@ -11,11 +11,14 @@
 namespace elona
 {
 
-typedef std::string I18NKey;
+using I18NKey = std::string;
+
+
 
 struct ItemData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     int image;
     int value;
     int weight;
@@ -50,9 +53,12 @@ struct ItemData
     optional<std::string> on_use_callback;
 };
 
+
+
 ELONA_DEFINE_LUA_DB(ItemDB, ItemData, true, "core.item")
 
-extern ItemDB the_item_db;
 
+
+extern ItemDB the_item_db;
 
 } // namespace elona

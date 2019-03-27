@@ -2,18 +2,18 @@ data:add(
    {
       {
          type = "core.chara",
-         name = "dragon",
-         id = 10000,
+         id = "dragon",
+         legacy_id = 10000,
       },
       {
          type = "core.chara",
-         name = "nothing",
-         id = 10001,
+         id = "nothing",
+         legacy_id = 10001,
       },
       {
          type = "core.chara",
-         name = "nothing",
-         id = 10002,
+         id = "nothing",
+         legacy_id = 10002,
       }
    }
 )

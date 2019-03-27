@@ -58,7 +58,7 @@ TEST_CASE("test registering character", "[Lua: Data]")
     auto data = db["chara.spiral_putit"];
 
     REQUIRE(data);
-    REQUIRE(data->id == 9999);
+    REQUIRE(data->legacy_id == 9999);
     REQUIRE(data->item_type == 2);
     REQUIRE(data->filter == "/slime/ether/");
     REQUIRE(data->level == 2);
@@ -148,7 +148,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
     auto data = db["chara_defaults.nothing"];
 
     REQUIRE(data);
-    REQUIRE(data->id == 9999);
+    REQUIRE(data->legacy_id == 9999);
     REQUIRE(data->item_type == 0);
     REQUIRE(data->filter == "");
     REQUIRE(data->level == 0);
@@ -189,7 +189,7 @@ TEST_CASE("test usage of legacy ID", "[Lua: Data]")
     auto data = db[9999];
 
     REQUIRE(data);
-    REQUIRE(data->id == 9999);
+    REQUIRE(data->legacy_id == 9999);
 }
 
 TEST_CASE("test character flags", "[Lua: Data]")

@@ -19,14 +19,14 @@ void DataManager::clear()
 {
     sol::table data = _lua->get_state()->script_file(filepathutil::to_utf8_path(
         filesystem::dir::data() / "script" / "kernel" / "data.lua"));
-    _data.storage = data;
+    _data.storage() = data;
 }
 
 void DataManager::_init_from_mod(ModInfo& mod)
 {
     // Bypass the metatable on the mod's environment preventing creation of
     // new global variables.
-    mod.env.raw_set("data", _data.storage);
+    mod.env.raw_set("data", _data.storage());
 
     if (mod.manifest.path)
     {
@@ -67,13 +67,13 @@ void DataManager::init_from_mods()
     _lua->get_state()->set("_MOD_NAME", sol::lua_nil);
 
     // Prevent modifications to the 'data' table.
-    sol::table metatable = _data.storage.create_with(
+    sol::table metatable = _data.storage().create_with(
         sol::meta_function::new_index,
         sol::detail::fail_on_newindex,
         sol::meta_function::index,
-        _data.storage);
+        _data.storage());
 
-    _data.storage[sol::metatable_key] = metatable;
+    _data.storage()[sol::metatable_key] = metatable;
 }
 
 } // namespace lua

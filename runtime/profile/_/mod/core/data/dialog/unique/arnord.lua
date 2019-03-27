@@ -6,7 +6,7 @@ local Item = Elona.require("Item")
 local common = require("data/dialog/common")
 
 return {
-   name = "arnord",
+   id = "arnord",
    root = "core.locale.talk.unique.arnord",
    nodes = {
       __start = function()

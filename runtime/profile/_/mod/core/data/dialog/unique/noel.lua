@@ -15,7 +15,7 @@ local function buy_nuke()
 end
 
 return {
-   name = "noel",
+   id = "noel",
    root = "core.locale.talk.unique.noel",
    nodes = {
       __start = function()

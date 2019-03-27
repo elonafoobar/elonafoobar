@@ -26,7 +26,7 @@ local function surrender()
 end
 
 return {
-   name = "rogue_boss",
+   id = "rogue_boss",
    root = "core.locale.talk.unique.rogue_boss",
    nodes = {
       __start = function()
