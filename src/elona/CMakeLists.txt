@@ -142,6 +142,7 @@ set(ELONA_SOURCES
   keybind/keybind_deserializer.cpp
   keybind/keybind_manager.cpp
   keybind/keybind_serializer.cpp
+  keybind/macro_action_queue.cpp
 
   pic_loader/pic_loader.cpp
   pic_loader/tinted_buffers.cpp

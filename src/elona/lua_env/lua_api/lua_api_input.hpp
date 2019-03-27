@@ -58,6 +58,23 @@ void start_dialog_with_data(LuaCharacterHandle, const std::string&);
 
 sol::optional<LuaCharacterHandle> choose_ally(const EnumString&);
 
+void enqueue_macro(const std::string&);
+void enqueue_macro_table(sol::table);
+
+void clear_macro_queue();
+
+void ignore_keywait();
+
+sol::optional<Position> prompt_position(const std::string&);
+sol::optional<Position> prompt_position_with_initial(
+    const std::string&,
+    const Position&);
+sol::optional<Position>
+prompt_position_with_initial_xy(const std::string&, int, int);
+
+bool any_key_pressed();
+
+
 void bind(sol::table&);
 }; // namespace LuaApiInput
 
