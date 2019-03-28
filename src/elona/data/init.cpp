@@ -95,6 +95,7 @@ void _initialize_lazy_dbs(lua::DataTable& data)
     the_music_db.initialize(data);
     the_sound_db.initialize(data);
     the_buff_db.initialize(data);
+    the_magic_db.initialize(data);
 }
 
 } // namespace

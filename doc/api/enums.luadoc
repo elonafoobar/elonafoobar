@@ -301,3 +301,13 @@ ControlAllyOperation = {}
 --  @tfield Enums.RandomTitleType Party
 --  @tfield Enums.RandomTitleType LivingWeapon
 RandomTitleType = {}
+
+--- Source of a magic casting attempt.
+--  @enum MagicSource
+--  @tfield Enums.MagicSource None
+--  @tfield Enums.MagicSource Rod
+--  @tfield Enums.MagicSource Scroll
+--  @tfield Enums.MagicSource Ability
+--  @tfield Enums.MagicSource Potion
+--  @tfield Enums.MagicSource Trap
+MagicSource = {}

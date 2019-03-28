@@ -6917,7 +6917,7 @@ label_21451_internal:
                     discover_trap();
                     snd("core.trap1");
                 }
-                efsource = 5;
+                efsource = MagicSource::trap;
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
@@ -7057,7 +7057,7 @@ label_21451_internal:
                     cell_featset(movx, movy, 0);
                     damage_hp(cdata[cc], 100 + rnd(200), -1);
                 }
-                efsource = 0;
+                efsource = MagicSource::none;
             }
         }
     }
@@ -7723,7 +7723,7 @@ int do_cast_magic()
 int do_cast_magic_attempt()
 {
     int mp = 0;
-    efsource = 3;
+    efsource = MagicSource::ability;
     efstatus = CurseState::none;
     efp = calcspellpower(efid, cc);
     if (cc == 0)
@@ -7736,7 +7736,7 @@ int do_cast_magic_attempt()
                 if (!yes_no())
                 {
                     update_screen();
-                    efsource = 0;
+                    efsource = MagicSource::none;
                     return 0;
                 }
             }
@@ -7747,7 +7747,7 @@ int do_cast_magic_attempt()
     int stat = prompt_magic_location();
     if (stat == 0)
     {
-        efsource = 0;
+        efsource = MagicSource::none;
         return 0;
     }
     if (cc != 0)
@@ -7757,12 +7757,12 @@ int do_cast_magic_attempt()
             if (cdata[cc].relationship == 10 ||
                 game_data.current_map == mdata_t::MapId::pet_arena)
             {
-                efsource = 0;
+                efsource = MagicSource::none;
                 return 0;
             }
             if (game_data.play_turns % 10 > 4)
             {
-                efsource = 0;
+                efsource = MagicSource::none;
                 return 0;
             }
         }
@@ -7787,7 +7787,7 @@ int do_cast_magic_attempt()
     damage_mp(cdata[cc], mp);
     if (cdata[cc].state() != Character::State::alive)
     {
-        efsource = 0;
+        efsource = MagicSource::none;
         return 1;
     }
 
@@ -7802,7 +7802,7 @@ int do_cast_magic_attempt()
         tc = tcbk;
         if (stat == 0)
         {
-            efsource = 0;
+            efsource = MagicSource::none;
             return 1;
         }
     }
@@ -7837,7 +7837,7 @@ int do_cast_magic_attempt()
         {
             txt(i18n::s.get("core.locale.action.cast.silenced"));
         }
-        efsource = 0;
+        efsource = MagicSource::none;
         return 1;
     }
     if (rnd(100) >= calcspellfail(efid, cc))
@@ -7847,13 +7847,13 @@ int do_cast_magic_attempt()
             txt(i18n::s.get("core.locale.action.cast.fail", cdata[cc]));
             FailureToCastAnimation(cdata[cc].position).play();
         }
-        efsource = 0;
+        efsource = MagicSource::none;
         return 1;
     }
     if (noeffect == 1)
     {
         txt(i18n::s.get("core.locale.common.nothing_happens"));
-        efsource = 0;
+        efsource = MagicSource::none;
         return 1;
     }
     efp = calcspellpower(efid, cc);
@@ -7903,7 +7903,7 @@ int do_cast_magic_attempt()
 int drink_potion()
 {
     tc = cc;
-    efsource = 4;
+    efsource = MagicSource::potion;
     if (potionspill || potionthrow)
     {
         if (potionthrow)
@@ -8167,14 +8167,14 @@ int read_scroll()
     tlocx = cdata[cc].position.x;
     tlocy = cdata[cc].position.y;
     efstatus = inv[ci].curse_state;
-    efsource = 2;
+    efsource = MagicSource::scroll;
     if (cdata[cc].blind != 0)
     {
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.read.cannot_see", cdata[cc]));
         }
-        efsource = 0;
+        efsource = MagicSource::none;
         return 0;
     }
     if (cdata[cc].dimmed != 0 || cdata[cc].confused != 0)
@@ -8187,7 +8187,7 @@ int read_scroll()
                     "core.locale.action.read.scroll.dimmed_or_confused",
                     cdata[cc]));
             }
-            efsource = 0;
+            efsource = MagicSource::none;
             return 0;
         }
     }
@@ -8230,11 +8230,11 @@ int do_zap()
     {
         efstatus = CurseState::none;
     }
-    efsource = 1;
+    efsource = MagicSource::rod;
     int stat = prompt_magic_location();
     if (stat == 0)
     {
-        efsource = 0;
+        efsource = MagicSource::none;
         return 0;
     }
     if (efid >= 400 && efid < 467)
@@ -8303,7 +8303,7 @@ int do_zap()
         txt(i18n::s.get("core.locale.action.zap.fail", cdata[cc]));
     }
 label_2173_internal:
-    efsource = 0;
+    efsource = MagicSource::none;
     if (inv[ci].number() == 0)
     {
         if (ci >= ELONA_ITEM_ON_GROUND_INDEX)
@@ -8416,7 +8416,7 @@ int prompt_magic_location()
         return 1;
     }
     tg = the_ability_db[efid]->range / 1000 * 1000;
-    if (efsource == 1)
+    if (efsource == MagicSource::rod)
     {
         if (tg == 3000)
         {
@@ -8606,7 +8606,7 @@ int prompt_magic_location()
     {
         if (cc == 0)
         {
-            if (efsource == 3)
+            if (efsource == MagicSource::ability)
             {
                 txt(i18n::s.get("core.locale.action.which_direction.spell"));
             }

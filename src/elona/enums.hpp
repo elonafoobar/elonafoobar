@@ -201,4 +201,14 @@ ENUMUTIL_DEFINE_NEXT_PREV_FUNCTIONS_LOOPED_EXCLUSIVE_RANGE(
     none,
     _size)
 
+enum class MagicSource
+{
+    none = 0,
+    rod = 1,
+    scroll = 2,
+    ability = 3,
+    potion = 4,
+    trap = 5,
+};
+
 } // namespace elona

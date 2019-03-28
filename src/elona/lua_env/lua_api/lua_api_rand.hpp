@@ -23,6 +23,8 @@ int between(int min, int max);
 
 sol::object choice(sol::table table);
 
+int roll(int dice_x, int dice_y, int bonus);
+
 
 void bind(sol::table&);
 }; // namespace LuaApiRand

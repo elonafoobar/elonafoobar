@@ -12,6 +12,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_magic.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -24,6 +25,8 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/enums/enums.hpp"
+#include "lua_env/interface.hpp"
 #include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -42,14 +45,6 @@
 
 namespace
 {
-
-bool _magic_636()
-{
-    txt(i18n::s.get("core.locale.magic.insanity", cdata[cc], cdata[tc]),
-        Message::color{ColorIndex::purple});
-    damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
-    return true;
-}
 
 
 
@@ -4548,7 +4543,6 @@ bool _proc_magic(int efid, int efcibk, int& fltbk, int& valuebk)
 {
     switch (efid)
     {
-    case 636: return _magic_636();
     case 1136: return _magic_1136();
     case 1135: return _magic_1135();
     case 654: return _magic_654();
@@ -4649,6 +4643,40 @@ bool _proc_magic(int efid, int efcibk, int& fltbk, int& valuebk)
     }
 }
 
+bool _cast_magic_from_lua(MagicData& data, MagicSource efsource)
+{
+    lua::ConfigTable args = lua::create_table(
+        "id",
+        the_magic_db.get_id_from_legacy(efid)->get(),
+        "power",
+        efp,
+        "caster",
+        lua::handle(cdata[cc]),
+        "target",
+        lua::handle(cdata[tc]),
+        "item",
+        lua::handle(inv[ci]),
+        "curse_state",
+        lua::LuaEnums::CurseStateTable.convert_to_string(efstatus),
+        "source",
+        lua::LuaEnums::MagicSourceTable.convert_to_string(efsource),
+        "potion_spilled",
+        potionspill,
+        "potion_thrown",
+        potionthrow,
+        "dice_x",
+        dice1,
+        "dice_y",
+        dice2,
+        "dice_bonus",
+        bonus);
+
+    bool success = data.callback.call_with_result(false, args.storage);
+    obvious = args.optional_or("obvious", true);
+
+    return success;
+}
+
 } // namespace
 
 
@@ -4663,16 +4691,20 @@ bool magic()
     int valuebk = 0;
     efcancel = 0;
     obvious = 1;
-    if (efsource != 4 && efsource != 1 && efsource != 2)
+
+    if (efsource != MagicSource::potion && efsource != MagicSource::rod &&
+        efsource != MagicSource::scroll)
     {
         efstatus = CurseState::none;
     }
-    efsource = 0;
+
+    auto efsource_save = efsource;
+    efsource = MagicSource::none;
 
     lib::scope_guard restore([&]() {
         ci = efcibk;
         efstatus = CurseState::none;
-        efsource = 0;
+        efsource = MagicSource::none;
     });
 
     if (efid >= 300)
@@ -4695,6 +4727,11 @@ bool magic()
                 efp = 50;
             }
         }
+    }
+
+    if (auto data = the_magic_db[efid])
+    {
+        return _cast_magic_from_lua(*data, efsource_save);
     }
 
     return _proc_magic(efid, efcibk, fltbk, valuebk);

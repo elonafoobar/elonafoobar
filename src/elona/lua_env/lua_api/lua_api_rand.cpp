@@ -75,6 +75,19 @@ sol::object LuaApiRand::choice(sol::table table)
     return table[elona::rnd(table.size()) + 1];
 }
 
+/**
+ * @luadoc
+ *
+ * Simulates a dice roll like <dice_x>d<dice_y>+<bonus>.
+ * @tparam num dice_x
+ * @tparam num dice_y
+ * @tparam num bonus
+ */
+int LuaApiRand::roll(int dice_x, int dice_y, int bonus)
+{
+    return elona::roll(dice_x, dice_y, bonus);
+}
+
 void LuaApiRand::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, rnd);
@@ -82,6 +95,7 @@ void LuaApiRand::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, coinflip);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, between);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, choice);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, roll);
 }
 
 } // namespace lua

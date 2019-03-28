@@ -10,6 +10,7 @@
 #include "types/type_item.hpp"
 #include "types/type_item_chip.hpp"
 #include "types/type_item_material.hpp"
+#include "types/type_magic.hpp"
 #include "types/type_map.hpp"
 #include "types/type_map_chip.hpp"
 #include "types/type_music.hpp"

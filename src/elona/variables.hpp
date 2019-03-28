@@ -393,7 +393,7 @@ ELONA_EXTERN(int dy);
 ELONA_EXTERN(int efcancel);
 ELONA_EXTERN(int efid);
 ELONA_EXTERN(int efp);
-ELONA_EXTERN(int efsource);
+ELONA_EXTERN(MagicSource efsource);
 ELONA_EXTERN(CurseState efstatus);
 ELONA_EXTERN(int egolv);
 ELONA_EXTERN(int ele);

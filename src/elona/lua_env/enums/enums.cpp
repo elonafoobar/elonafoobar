@@ -433,6 +433,21 @@ EnumMap<RandomTitleType> RandomTitleTypeTable{
         {"LivingWeapon", RandomTitleType::living_weapon},
     }};
 
+/**
+ * @luadoc
+ *
+ * Source of a magic casting attempt.
+ */
+EnumMap<MagicSource> MagicSourceTable{"MagicSource",
+                                      {
+                                          {"None", MagicSource::none},
+                                          {"Rod", MagicSource::rod},
+                                          {"Scroll", MagicSource::scroll},
+                                          {"Ability", MagicSource::ability},
+                                          {"Potion", MagicSource::potion},
+                                          {"Trap", MagicSource::trap},
+                                      }};
+
 } // namespace LuaEnums
 
 void LuaEnums::bind(sol::table& core)
@@ -458,6 +473,7 @@ void LuaEnums::bind(sol::table& core)
     ItemFindLocationTable.bind(Enums);
     ControlAllyOperationTable.bind(Enums);
     RandomTitleTypeTable.bind(Enums);
+    MagicSourceTable.bind(Enums);
 }
 
 } // namespace lua

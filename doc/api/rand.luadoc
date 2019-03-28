@@ -31,3 +31,10 @@ function between(min, max) end
 --  @treturn object an object from the table
 --  @function choice
 function choice(table) end
+
+--- Simulates a dice roll like <dice_x>d<dice_y>+<bonus>.
+--  @tparam num dice_x
+--  @tparam num dice_y
+--  @tparam num bonus
+--  @function roll
+function roll(dice_x, dice_y, bonus) end

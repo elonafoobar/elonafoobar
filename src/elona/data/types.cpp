@@ -9,6 +9,7 @@
 #include "types/type_item.cpp"
 #include "types/type_item_chip.cpp"
 #include "types/type_item_material.cpp"
+#include "types/type_magic.cpp"
 #include "types/type_map.cpp"
 #include "types/type_map_chip.cpp"
 #include "types/type_music.cpp"
