@@ -70,7 +70,7 @@ function get_flag(chara, flag) end
 --  <code>core.character_refreshed</code>, or the flag will be reset later.
 --  @tparam Enums.CharaFlag flag the flag to set
 --  @tparam bool value the flag's new value
---  @see core.event.core.character_refreshed
+--  @see core.event
 --  @usage local Event = Elona.require("Event")
 --
 --  local function make_invisible(chara)
@@ -258,6 +258,9 @@ function get_ailment(ailment) end
 --  the player.
 --  @tfield num karma
 
+--- [RW] The index of a character this character is targeting..
+--  @tfield num enemy_id
+
 --- [RW] The character's current image.
 --  @tfield string portrait
 
@@ -269,6 +272,9 @@ function get_ailment(ailment) end
 
 --- [RW] The character's current interest.
 --  @tfield num interest
+
+--- [RW] The character's AI calmness.
+--  @tfield num ai_calm
 
 --- [R] The new-style version prototype ID of the character.
 --  @tfield string id

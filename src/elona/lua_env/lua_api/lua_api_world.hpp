@@ -17,6 +17,8 @@ void add_deferred_event(int, sol::optional<int>, sol::optional<int>);
 
 int deferred_event_id();
 
+int home_scale();
+
 bool belongs_to_guild(const std::string&);
 
 void join_guild(const std::string&);

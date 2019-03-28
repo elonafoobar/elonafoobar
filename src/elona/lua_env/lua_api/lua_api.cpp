@@ -49,6 +49,7 @@ void LuaApi::bind(sol::table& core)
     LUA_API_BIND(core, Internal);
     LUA_API_BIND(core, Item);
     LUA_API_BIND(core, Magic);
+    LUA_API_BIND(core, Math);
     LUA_API_BIND(core, Map);
     LUA_API_BIND(core, Pos);
     LUA_API_BIND(core, Rand);

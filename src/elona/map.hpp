@@ -299,6 +299,9 @@ void map_reload_noyel();
 
 void map_proc_special_events();
 
+void map_prepare_for_travel(int id, int level = 1);
+void map_prepare_for_travel_with_prev(int id, int level = 1);
+
 int map_global_place_random_nefias();
 
 } // namespace elona

@@ -109,3 +109,7 @@ module "core.event"
 --- Fired when the startup script finished loading. This is only fired
 --- when the startup script config option is used.
 -- @event core.script_loaded
+
+--- Fired when a nefia is created.
+-- @tfield LuaArea nefia the created nefia
+-- @event core.script_loaded

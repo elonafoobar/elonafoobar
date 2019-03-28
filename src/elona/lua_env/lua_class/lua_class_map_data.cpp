@@ -46,7 +46,8 @@ void LuaMapData::bind(sol::state& lua)
      * [R] The current dungeon level of this map.
      */
     LuaMapData.set(
-        "current_dungeon_level", sol::readonly(&MapData::max_crowd_density));
+        "current_dungeon_level",
+        sol::readonly(&MapData::current_dungeon_level));
 
     /**
      * @luadoc tileset field num
@@ -78,14 +79,15 @@ void LuaMapData::bind(sol::state& lua)
         "regenerate_count", sol::readonly(&MapData::regenerate_count));
 
     /**
-     * @luadoc designated_spawns field bool
+     * @luadoc is_genreated_every_time field bool
      *
-     * [RW] If true, reset characters to their initial position on map refresh.
+     * [RW] If true, reset characters to their initial position on map
+     * refresh.
      */
     LuaMapData.set(
-        "designated_spawns",
+        "is_generated_every_time",
         sol::property(
-            [](MapData& d) { return d.designated_spawns == 1; },
+            [](MapData& d) { return d.designated_spawns ? true : false; },
             [](MapData& d, bool flag) { d.designated_spawns = flag ? 1 : 0; }));
 
     /**
@@ -126,8 +128,8 @@ void LuaMapData::bind(sol::state& lua)
     /**
      * @luadoc should_regenerate field bool
      *
-     * [RW] If true, regenerate this map when it is refreshed. This will restock
-     * shop inventories.
+     * [RW] If true, regenerate this map when it is refreshed. This will
+     * restock shop inventories.
      */
     LuaMapData.set(
         "should_regenerate",

@@ -941,7 +941,6 @@ void initialize_random_nefia_rdtype8();
 void initialize_random_nefia_rdtype9();
 void mapgen_dig_maze();
 void initialize_random_nefia_rdtype10();
-void initialize_home_mdata();
 
 
 //// weather_changes

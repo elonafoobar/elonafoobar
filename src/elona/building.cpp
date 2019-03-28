@@ -9,6 +9,7 @@
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_map.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -200,6 +201,90 @@ void initialize_home_adata()
     area_data[p].outer_map = game_data.destination_outer_map;
 }
 
+static optional<const MapDefData&> _find_map_from_deed(int item_id)
+{
+    auto id = the_item_db.get_id_from_legacy(item_id);
+
+    optional<int> map_id;
+    for (const auto& map : the_mapdef_db.values())
+    {
+        if (!map.deed)
+        {
+            continue;
+        }
+
+        if (id && *map.deed == *id)
+        {
+            map_id = map.legacy_id;
+            break;
+        }
+    }
+
+    if (!map_id)
+    {
+        txt("Cannot find map which is created by item '"s + inv[ci].id + "'."s,
+            Message::color(ColorIndex::red));
+        return none;
+    }
+
+    auto map = the_mapdef_db[*map_id];
+
+    if (!map)
+    {
+        txt("No such map '"s + *map_id + "'."s,
+            Message::color(ColorIndex::red));
+        return none;
+    }
+
+    return *map;
+}
+
+static TurnResult _build_new_home(int home_scale)
+{
+    game_data.home_scale = home_scale;
+    initialize_home_adata();
+
+    std::string midbk = mid;
+    mid = ""s + static_cast<int>(mdata_t::MapId::your_home) + u8"_"s + 101;
+    ctrl_file(FileOperation::map_delete_preserve_items);
+    mid = midbk;
+
+    map_global_prepare();
+
+    levelexitby = 2;
+    game_data.destination_map = static_cast<int>(mdata_t::MapId::your_home);
+    game_data.destination_dungeon_level = 1;
+    game_data.pc_x_in_world_map =
+        area_data[static_cast<int>(mdata_t::MapId::your_home)].position.x;
+    game_data.pc_y_in_world_map =
+        area_data[static_cast<int>(mdata_t::MapId::your_home)].position.y;
+
+    snd("core.build1");
+    txt(i18n::s.get("core.locale.building.built_new_house"),
+        Message::color{ColorIndex::green});
+    msg_halt();
+
+    snd("core.exitmap1");
+
+    return TurnResult::exit_map;
+}
+
+static int _find_free_area_slot()
+{
+    int area_ = -1;
+
+    for (int cnt = 300; cnt < 450; ++cnt)
+    {
+        if (area_data[cnt].id == mdata_t::MapId::none)
+        {
+            area_ = cnt;
+            break;
+        }
+    }
+
+    return area_;
+}
+
 TurnResult build_new_building()
 {
     if (map_data.type != mdata_t::MapType::world_map)
@@ -208,6 +293,7 @@ TurnResult build_new_building()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
+
     cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(0) != 0)
     {
@@ -215,107 +301,55 @@ TurnResult build_new_building()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    area = -1;
-    for (int cnt = 300; cnt < 450; ++cnt)
-    {
-        if (area_data[cnt].id == mdata_t::MapId::none)
-        {
-            area = cnt;
-            break;
-        }
-    }
+
+    area = _find_free_area_slot();
     if (area == -1)
     {
         txt(i18n::s.get("core.locale.building.cannot_build_anymore"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
+
     txt(i18n::s.get("core.locale.building.really_build_it_here"));
     if (!yes_no())
     {
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
+
     if (inv[ci].id == 344)
     {
-        game_data.home_scale = inv[ci].param1;
+        auto home_scale = inv[ci].param1;
         inv[ci].modify_number(-1);
-        initialize_home_adata();
-        std::string midbk = mid;
-        mid = ""s + 7 + u8"_"s + 101;
-        ctrl_file(FileOperation::map_delete_preserve_items);
-        mid = midbk;
-        map_global_prepare();
-        levelexitby = 2;
-        game_data.destination_map = 7;
-        game_data.destination_dungeon_level = 1;
-        game_data.pc_x_in_world_map = area_data[7].position.x;
-        game_data.pc_y_in_world_map = area_data[7].position.y;
-        snd("core.build1");
-        txt(i18n::s.get("core.locale.building.built_new_house"),
-            Message::color{ColorIndex::green});
-        msg_halt();
-        snd("core.exitmap1");
-        return TurnResult::exit_map;
+
+        return _build_new_home(home_scale);
     }
+
     ctrl_file(FileOperation::temp_dir_delete_area);
     p = area;
-    area_data[p].position.x = cdata.player().position.x;
-    area_data[p].position.y = cdata.player().position.y;
-    area_data[p].type = static_cast<int>(mdata_t::MapType::player_owned);
-    area_data[p].is_generated_every_time = false;
-    area_data[p].default_ai_calm = 0;
-    area_data[p].tile_type = 3;
-    area_data[p].turn_cost_base = 10000;
-    area_data[p].danger_level = 1;
-    area_data[p].deepest_level = 1;
-    area_data[p].tile_set = 1;
-    area_data[p].entrance = 8;
-    area_data[p].outer_map = game_data.destination_outer_map;
-    if (inv[ci].id == 521)
+
+    // Find the map which is generated by the deed and generate the map's area
+    // from it.
+    optional<const MapDefData&> map = _find_map_from_deed(inv[ci].id);
+
+    if (!map)
     {
-        area_data[p].id = static_cast<int>(mdata_t::MapId::museum);
-        area_data[p].appearance = 151;
-        area_data[p].is_indoor = true;
+        return TurnResult::pc_turn_user_error;
     }
-    if (inv[ci].id == 522)
-    {
-        area_data[p].id = static_cast<int>(mdata_t::MapId::shop);
-        area_data[p].appearance = 150;
-        area_data[p].is_indoor = true;
-    }
-    if (inv[ci].id == 542)
-    {
-        area_data[p].id = static_cast<int>(mdata_t::MapId::crop);
-        area_data[p].appearance = 152;
-        area_data[p].is_indoor = false;
-    }
-    if (inv[ci].id == 543)
-    {
-        area_data[p].id = static_cast<int>(mdata_t::MapId::storage_house);
-        area_data[p].appearance = 153;
-        area_data[p].is_indoor = true;
-    }
-    if (inv[ci].id == 572)
-    {
-        area_data[p].id = static_cast<int>(mdata_t::MapId::ranch);
-        area_data[p].appearance = 154;
-        area_data[p].is_indoor = false;
-        area_data[p].default_ai_calm = 1;
-    }
-    if (inv[ci].id == 712)
-    {
-        area_data[p].id = static_cast<int>(mdata_t::MapId::your_dungeon);
-        area_data[p].appearance = 138;
-        area_data[p].is_indoor = true;
-        area_data[p].default_ai_calm = 1;
-    }
+
+    auto& area = area_data[p];
+    auto pos = cdata.player().position;
+    area_generate_from_mapdef(
+        area, *map, game_data.destination_outer_map, pos.x, pos.y);
+
     s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
     snd("core.build1");
     txt(i18n::s.get("core.locale.building.built_new", s(0)),
         Message::color{ColorIndex::orange});
+
     map_global_prepare();
     inv[ci].modify_number(-1);
+
     return TurnResult::turn_end;
 }
 

@@ -29,6 +29,14 @@ function count() end
 --  @function player
 function player() end
 
+--- Attempts to create a randomly generated character at a given position.
+--  Returns the character if creation succeeded, nil otherwise.
+--  @tparam LuaPosition position (const) position to create the character at
+--  @treturn[1] LuaCharacter the created character
+--  @treturn[2] nil
+--  @function create
+function create(x, y) end
+
 --- Attempts to create a character at a given position.
 --  Returns the character if creation succeeded, nil otherwise.
 --  @tparam LuaPosition position (const) position to create the character at

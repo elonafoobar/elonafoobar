@@ -397,7 +397,7 @@ std::string mapname(int id, bool description)
 
     if (description)
     {
-        if (area_data[id].id == mdata_t::MapId::mansion_of_younger_sister)
+        if (area_data[id].is_hidden_in_world_map())
         {
             return "";
         }

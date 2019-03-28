@@ -4,6 +4,7 @@
 namespace elona
 {
 enum class TileKind;
+struct MapData;
 
 namespace lua
 {
@@ -26,6 +27,8 @@ int legacy_id();
 
 int instance_id();
 
+int current_dungeon_level();
+
 bool is_overworld();
 
 bool valid(const Position&);
@@ -40,6 +43,8 @@ bool is_blocked_xy(int, int);
 Position random_pos();
 
 int generate_tile(const EnumString&);
+
+int chip_type(int);
 
 int get_tile(const Position&);
 int get_tile_xy(int, int);
@@ -67,6 +72,11 @@ void set_feat_xy(int, int, int, int, int);
 
 void clear_feat(const Position&);
 void clear_feat_xy(int, int);
+
+void spray_tile(int, int);
+
+void travel_to(const std::string&);
+void travel_to_with_level(const std::string&, int);
 
 
 void bind(sol::table&);

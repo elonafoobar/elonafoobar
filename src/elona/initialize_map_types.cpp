@@ -3,10 +3,12 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "ctrl_file.hpp"
+#include "data/types/type_map.hpp"
 #include "event.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "itemgen.hpp"
+#include "lua_env/lua_class/lua_class_map_generator.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -2555,13 +2557,23 @@ void initialize_map_from_map_type()
     {
         mdatan(0) = mapname(game_data.current_map);
     }
+
+
     // In most cases the area's map ID will be the same as
-    // game_data.current_map. However, multiple player-owned areas can share the
-    // same map ID.
-    // TODO: use only area ID here.
-    MapId map_id =
-        static_cast<mdata_t::MapId>(area_data[game_data.current_map].id);
-    switch (map_id)
+    // game_data.current_map. However, multiple player-owned areas can share
+    // the same map ID.
+    int map_id = area_data[game_data.current_map].id;
+    auto map = the_mapdef_db[map_id];
+
+    if (map && map->generator)
+    {
+        lua::MapGenerator generator{};
+        map->generator->call(generator);
+        return;
+    }
+
+    MapId map_id_ = static_cast<mdata_t::MapId>(map_id);
+    switch (map_id_)
     {
         // clang-format off
     case mdata_t::MapId::shelter_:                   _init_map_shelter();                   break;
@@ -2576,8 +2588,8 @@ void initialize_map_from_map_type()
         // clang-format on
     }
 
-    map_id = static_cast<mdata_t::MapId>(game_data.current_map);
-    switch (map_id)
+    map_id_ = static_cast<mdata_t::MapId>(game_data.current_map);
+    switch (map_id_)
     {
         // clang-format off
     case mdata_t::MapId::quest:                      generate_random_nefia();               break;
@@ -2588,9 +2600,7 @@ void initialize_map_from_map_type()
     case mdata_t::MapId::embassy:                    _init_map_embassy();                   break;
     case mdata_t::MapId::test_world_north_border:    _init_map_test_world_north_border();   break;
     case mdata_t::MapId::north_tyris_south_border:
-    case mdata_t::MapId::south_tyris_north_border:
-        _init_map_tyris_border();
-        break;
+    case mdata_t::MapId::south_tyris_north_border:   _init_map_tyris_border();              break;
     case mdata_t::MapId::the_smoke_and_pipe:         _init_map_the_smoke_and_pipe();        break;
     case mdata_t::MapId::miral_and_garoks_workshop:  _init_map_miral_and_garoks_workshop(); break;
     case mdata_t::MapId::mansion_of_younger_sister:  _init_map_mansion_of_younger_sister(); break;

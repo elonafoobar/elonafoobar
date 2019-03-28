@@ -5,6 +5,7 @@
 #include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"
 #include "../../map_cell.hpp"
+#include "../../mapgen.hpp"
 #include "../interface.hpp"
 
 namespace elona
@@ -78,6 +79,18 @@ int LuaApiMap::legacy_id()
 int LuaApiMap::instance_id()
 {
     return game_data.current_map;
+}
+
+
+/**
+ * @luadoc
+ *
+ * Returns the current dungeon level.
+ * TODO: unify with World.data or Map.data
+ */
+int LuaApiMap::current_dungeon_level()
+{
+    return game_data.current_dungeon_level;
 }
 
 /**
@@ -190,6 +203,18 @@ int LuaApiMap::generate_tile(const EnumString& tile_kind)
         LuaEnums::TileKindTable.ensure_from_string(tile_kind);
     return elona::cell_get_type(tile_kind_value);
 }
+
+
+/**
+ * @luadoc
+ *
+ * Returns the type of chip for the given tile kind.
+ */
+int LuaApiMap::chip_type(int tile_id)
+{
+    return elona::chip_data[tile_id].kind;
+}
+
 
 /**
  * @luadoc
@@ -439,6 +464,58 @@ void LuaApiMap::clear_feat_xy(int x, int y)
     cell_featclear(x, y);
 }
 
+
+/**
+ * @ luadoc
+ *
+ * Randomly sprays the map with the given tile type;
+ */
+void LuaApiMap::spray_tile(int tile, int amount)
+{
+    elona::map_randomtile(tile, amount);
+}
+
+void LuaApiMap::travel_to(const std::string& map_id)
+{
+    LuaApiMap::travel_to_with_level(map_id, 1);
+}
+
+void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
+{
+    auto map = the_mapdef_db.ensure(map_id);
+
+    game_data.player_x_on_map_leave = cdata.player().position.x;
+    game_data.player_y_on_map_leave = cdata.player().position.y;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+
+    // Set up the outer map of the map traveled to, such that the player will
+    // appear on top the map's area when they leave via the map's edge.
+    if (map.map_type != mdata_t::MapType::world_map)
+    {
+        auto outer_map = the_mapdef_db[map.outer_map];
+
+        if (outer_map)
+        {
+            game_data.previous_map2 = outer_map->legacy_id;
+            game_data.previous_dungeon_level = 1;
+            game_data.pc_x_in_world_map = map.outer_map_position.x;
+            game_data.pc_y_in_world_map = map.outer_map_position.y;
+            game_data.destination_outer_map = outer_map->legacy_id;
+        }
+    }
+    else
+    {
+        game_data.previous_map2 = map.legacy_id;
+        game_data.previous_dungeon_level = 1;
+        game_data.destination_outer_map = map.legacy_id;
+    }
+
+    map_prepare_for_travel(map.legacy_id, level);
+    exit_map();
+    initialize_map();
+}
+
 void LuaApiMap::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, width);
@@ -447,6 +524,7 @@ void LuaApiMap::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, legacy_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, instance_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, is_overworld);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, current_dungeon_level);
     api_table.set_function(
         "valid", sol::overload(LuaApiMap::valid, LuaApiMap::valid_xy));
     api_table.set_function(
@@ -456,6 +534,7 @@ void LuaApiMap::bind(sol::table& api_table)
         sol::overload(LuaApiMap::is_blocked, LuaApiMap::is_blocked_xy));
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, random_pos);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, generate_tile);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, chip_type);
     api_table.set_function(
         "get_tile", sol::overload(LuaApiMap::get_tile, LuaApiMap::get_tile_xy));
     api_table.set_function(
@@ -478,6 +557,10 @@ void LuaApiMap::bind(sol::table& api_table)
     api_table.set_function(
         "clear_feat",
         sol::overload(LuaApiMap::clear_feat, LuaApiMap::clear_feat_xy));
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, spray_tile);
+    api_table.set_function(
+        "travel_to",
+        sol::overload(LuaApiMap::travel_to, LuaApiMap::travel_to_with_level));
 
     /**
      * @luadoc data field LuaMapData

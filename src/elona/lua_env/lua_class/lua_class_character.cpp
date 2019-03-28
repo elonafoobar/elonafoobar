@@ -206,7 +206,7 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
  * <code>core.character_refreshed</code>, or the flag will be reset later.
  * @tparam Enums.CharaFlag flag the flag to set
  * @tparam bool value the flag's new value
- * @see core.event.core.character_refreshed
+ * @see core.event
  * @usage local Event = Elona.require("Event")
  *
  * local function make_invisible(chara)
@@ -716,6 +716,13 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("karma", &Character::karma);
 
     /**
+     * @luadoc enemy_id field num
+     *
+     * [RW] The index of a character this character is targeting..
+     */
+    LuaCharacter.set("enemy_id", &Character::enemy_id);
+
+    /**
      * @luadoc portrait field string
      *
      * [RW] The character's current image.
@@ -743,6 +750,13 @@ void LuaCharacter::bind(sol::state& lua)
      */
     LuaCharacter.set("interest", &Character::interest);
 
+    /**
+     * @luadoc ai_calm field num
+     *
+     * [RW] The character's AI calmness.
+     */
+    LuaCharacter.set("ai_calm", &Character::ai_calm);
+
 
     /**
      * @luadoc id field string
@@ -766,9 +780,13 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [R] The name of the character without article and title.
      */
-    LuaCharacter.set("basename", sol::property([](Character& c) {
-                         return elona::cdatan(0, c.index);
-                     }));
+    LuaCharacter.set(
+        "basename",
+        sol::property(
+            [](Character& c) { return elona::cdatan(0, c.index); },
+            [](Character& c, const std::string& s) {
+                elona::cdatan(0, c.index) = s;
+            }));
 
     /**
      * @luadoc title field string
@@ -864,7 +882,7 @@ void LuaCharacter::bind(sol::state& lua)
 
     auto key = Character::lua_type();
     lua.set_usertype(key, LuaCharacter);
-}
+} // namespace lua
 
 } // namespace lua
 } // namespace elona

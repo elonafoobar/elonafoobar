@@ -127,6 +127,12 @@ void LuaApiWorld::modify_ranking(int ranking_id, int amount, int min)
     modrank(ranking_id, amount, min);
 }
 
+/**
+ * @luadoc
+ *
+ * Generates a random title.
+ * @tparam Enums.RandomTitleType The type of title to generate.
+ */
 std::string LuaApiWorld::random_title(const EnumString& type)
 {
     auto type_value = LuaEnums::RandomTitleTypeTable.ensure_from_string(type);

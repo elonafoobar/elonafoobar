@@ -33,6 +33,11 @@ function legacy_id() end
 --  @function instance_id
 function instance_id() end
 
+--- Returns the current dungeon level.
+--  TODO: unify with World.data or Map.data
+--  @function current_dungeon_level
+function current_dungeon_level() end
+
 --- Returns true if this map is the overworld.
 --  @treturn bool
 --  @function is_overworld
@@ -69,6 +74,10 @@ function random_pos() end
 --  @see Enums.TileKind
 --  @function generate_tile
 function generate_tile(tile_kind) end
+
+--- Returns the type of chip for the given tile kind.
+--  @function chip_type
+function chip_type(tile_id) end
 
 --- Gets the tile type of a tile position.
 --  @tparam LuaPosition position

@@ -2,6 +2,7 @@
 #include "../../character.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../lua_env/interface.hpp"
+#include "../../map.hpp"
 
 namespace elona
 {
@@ -80,17 +81,26 @@ sol::optional<LuaCharacterHandle> LuaApiChara::player()
     }
 }
 
-sol::optional<LuaCharacterHandle> LuaApiChara::create(
-    const Position& position,
-    int id)
+sol::optional<LuaCharacterHandle> LuaApiChara::create_random(
+    const Position& position)
 {
-    return LuaApiChara::create_xy(position.x, position.y, id);
+    return LuaApiChara::create_random_xy(position.x, position.y);
 }
 
-sol::optional<LuaCharacterHandle> LuaApiChara::create_xy(int x, int y, int id)
+
+/**
+ * @luadoc create
+ *
+ * Attempts to create a randomly generated character at a given position.
+ * Returns the character if creation succeeded, nil otherwise.
+ * @tparam LuaPosition position (const) position to create the character at
+ * @treturn[1] LuaCharacter the created character
+ * @treturn[2] nil
+ */
+sol::optional<LuaCharacterHandle> LuaApiChara::create_random_xy(int x, int y)
 {
     elona::flt();
-    if (elona::chara_create(-1, id, x, y) != 0)
+    if (elona::chara_create(-1, 0, x, y) != 0)
     {
         return lua::handle(elona::cdata[elona::rc]);
     }
@@ -121,7 +131,60 @@ sol::optional<LuaCharacterHandle>
 LuaApiChara::create_from_id_xy(int x, int y, const std::string& id)
 {
     auto data = the_character_db.ensure(id);
-    return LuaApiChara::create_xy(x, y, data.legacy_id);
+
+    if (elona::chara_create(-1, data.legacy_id, x, y) != 0)
+    {
+        return lua::handle(elona::cdata[elona::rc]);
+    }
+    else
+    {
+        return sol::nullopt;
+    }
+}
+
+sol::optional<LuaCharacterHandle> LuaApiChara::generate_from_map()
+{
+    return LuaApiChara::generate_from_map_xy(-3, 0);
+}
+
+sol::optional<LuaCharacterHandle> LuaApiChara::generate_from_map_pos(
+    const Position& pos)
+{
+
+    return LuaApiChara::generate_from_map_xy(pos.x, pos.y);
+}
+
+sol::optional<LuaCharacterHandle> LuaApiChara::generate_from_map_xy(
+    int x,
+    int y)
+{
+    dbid = 0;
+    map_set_chara_generation_filter();
+
+    if (elona::chara_create(-1, dbid, x, y) != 0)
+    {
+        return lua::handle(elona::cdata[elona::rc]);
+    }
+    else
+    {
+        return sol::nullopt;
+    }
+}
+
+sol::optional<LuaCharacterHandle> LuaApiChara::generate_from_map_id_pos(
+    const Position& pos,
+    const std::string& id)
+{
+
+    return LuaApiChara::generate_from_map_id_xy(pos.x, pos.y, id);
+}
+
+sol::optional<LuaCharacterHandle>
+LuaApiChara::generate_from_map_id_xy(int x, int y, const std::string& id)
+{
+    map_set_chara_generation_filter();
+
+    return LuaApiChara::create_from_id_xy(x, y, id);
 }
 
 /**
@@ -232,10 +295,18 @@ void LuaApiChara::bind(sol::table& api_table)
     api_table.set_function(
         "create",
         sol::overload(
-            LuaApiChara::create,
-            LuaApiChara::create_xy,
+            LuaApiChara::create_random,
+            LuaApiChara::create_random_xy,
             LuaApiChara::create_from_id,
             LuaApiChara::create_from_id_xy));
+    api_table.set_function(
+        "generate_from_map",
+        sol::overload(
+            LuaApiChara::generate_from_map,
+            LuaApiChara::generate_from_map_pos,
+            LuaApiChara::generate_from_map_xy,
+            LuaApiChara::generate_from_map_id_pos,
+            LuaApiChara::generate_from_map_id_xy));
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, kill_count);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, find);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, can_recruit_allies);

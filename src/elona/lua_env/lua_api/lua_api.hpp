@@ -2,6 +2,7 @@
 #include "lua_api_common.hpp"
 
 #include "lua_api_animation.hpp"
+#include "lua_api_calc.hpp"
 #include "lua_api_chara.hpp"
 #include "lua_api_config.hpp"
 #include "lua_api_console.hpp"
@@ -16,7 +17,6 @@
 #include "lua_api_item.hpp"
 #include "lua_api_magic.hpp"
 #include "lua_api_map.hpp"
-#include "lua_api_math.hpp"
 #include "lua_api_pos.hpp"
 #include "lua_api_rand.hpp"
 #include "lua_api_skill.hpp"

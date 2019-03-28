@@ -1585,7 +1585,7 @@ void generate_debug_map()
     map_data.max_crowd_density = map_data.width * map_data.height / 100;
     map_data.tileset = 3;
     map_data.user_map_flag = 0;
-    map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
+    map_data.type = static_cast<int>(mdata_t::MapType::shelter);
     map_initialize();
 
     for (int y = 0; y < map_data.height; ++y)

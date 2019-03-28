@@ -592,7 +592,8 @@ void initialize_debug_globals()
     game_data.date.minute = 10;
     game_data.played_scene = 50;
     game_data.has_not_been_to_vernis = 1;
-    area_data[7].outer_map = 4;
+    area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map =
+        static_cast<int>(mdata_t::MapId::north_tyris);
     game_data.destination_outer_map =
         area_data[game_data.current_map].outer_map;
     game_data.acquirable_feat_count = 2;
