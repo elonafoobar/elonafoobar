@@ -29,6 +29,7 @@ locale {
         lequal(I18N.get("test.locale.piyo", "dood", 42), "She is nice.")
 
         local chara = Chara.create(23, 23, "core.putit")
+        chara.basename = "putit"
         FOV.refresh();
         lequal(I18N.get("test.locale.hello", chara), "Hello, the putit!")
         lequal(I18N.get("test.locale.hello_base", chara), "Hello, putit!")
