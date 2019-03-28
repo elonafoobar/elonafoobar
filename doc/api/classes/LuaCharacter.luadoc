@@ -282,11 +282,14 @@ function get_ailment(ailment) end
 --- [R] The name of the character with article and title.
 --  @tfield string name
 
---- [R] The name of the character without article and title.
+--- [RW] The name of the character without article and title.
 --  @tfield string basename
 
---- [R] The title of the character.
+--- [RW] The title of the character.
 --  @tfield string title
+
+--- [RW] The tone of the character.
+--  @tfield string tone
 
 --- [RW] The sex of the character.
 --  @tfield Gender sex

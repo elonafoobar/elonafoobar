@@ -38,10 +38,11 @@ function yes_no(message) end
 function prompt_number(message, max, initial) end
 
 --- Prompts the player to enter text.
---  @tparam string message a message to display
+--  @tparam num max_length maximum length of the string
+--  @tparam num width width of the choice box
 --  @tparam bool is_cancelable whether or not the dialog can be canceled
 --  @treturn[1] string the text that was input
---  @treturn[1] nil if canceled
+--  @treturn[2] nil if canceled
 --  @usage local result = Input.prompt_text("What text?", true)
 --
 --  if result then
@@ -50,11 +51,12 @@ function prompt_number(message, max, initial) end
 --  GUI.txt("Never mind. ")
 --  end
 --  @function prompt_text
-function prompt_text(message, is_cancelable) end
+function prompt_text(max_length, width, is_cancelable) end
 
 --- Prompts the player to select from a list of choices. Raises an
 --  error if no arguments are provided.
 --  @tparam table choices a list of string choices
+--  @tparam[opt] num width width of the choice box
 --  @treturn[1] num the index of the item chosen, starting from 1
 --  @treturn[2] nil if canceled
 --  @usage GUI.txt("Which? ")
@@ -67,7 +69,7 @@ function prompt_text(message, is_cancelable) end
 --  GUI.txt("Never mind. ")
 --  end
 --  @function prompt_choice
-function prompt_choice(choices) end
+function prompt_choice(choices, width) end
 
 --- Creates a dialog window like the one normally shown when talking to a
 --  character.
@@ -96,13 +98,6 @@ function prompt_dialog(text, portrait_id, speaker_name, choices, default_index, 
 --  @return num index of the selected item, or the default if canceled
 --  @function prompt_dialog
 function prompt_dialog(text, chara_image, speaker_name, choices, default_index, impression, interest) end
-
---- Starts a dialog with a character.
---  @tparam LuaCharacter speaker Character who will speak.
---  @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
---  character's definition.
---  @function start_dialog
-function start_dialog(speaker, dialog) end
 
 --- Prompts the player to choose an ally.
 --  @tparam ChooseAllyOperation operation the operation to apply

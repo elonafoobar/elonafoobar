@@ -43,3 +43,6 @@
 --  @tfield bool fighters_guild_quota_recurring
 
 --  @tfield bool thieves_guild_quota_recurring
+
+--- [RW] The wizard status of the game.
+--  @tfield bool wizard

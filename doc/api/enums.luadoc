@@ -301,3 +301,9 @@ ControlAllyOperation = {}
 --  @tfield Enums.RandomTitleType Party
 --  @tfield Enums.RandomTitleType LivingWeapon
 RandomTitleType = {}
+
+--- The outcome of a turn, used to determine if the turn should end or not.
+--  @enum TurnResult
+--  @tfield Enums.TurnResult TurnEnd
+--  @tfield Enums.TurnResult TurnContinue
+TurnResult = {}

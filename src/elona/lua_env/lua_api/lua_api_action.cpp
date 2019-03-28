@@ -62,6 +62,7 @@ EnumString LuaApiAction::talk_to(LuaCharacterHandle speaker)
  * @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
  * character's definition. If the character has no dialog, the normal talk
  * options will be shown instead.
+ * @treturn TurnResult
  */
 EnumString LuaApiAction::talk_to_with_data(
     LuaCharacterHandle speaker,
@@ -92,6 +93,14 @@ EnumString LuaApiAction::talk_to_with_data(
     return LuaEnums::TurnResultTable.convert_to_string(result);
 }
 
+/**
+ * @luadoc
+ *
+ * Makes a character melee attack another.
+ * @tparam LuaCharacter attacker
+ * @tparam LuaCharacter target
+ * @treturn TurnResult
+ */
 EnumString LuaApiAction::melee_attack(
     LuaCharacterHandle attacker,
     LuaCharacterHandle target)
@@ -108,6 +117,13 @@ EnumString LuaApiAction::melee_attack(
     return LuaEnums::TurnResultTable.convert_to_string(TurnResult::turn_end);
 }
 
+/**
+ * @luadoc
+ *
+ * Opens the inventory screen for a character.
+ * @tparam LuaCharacter target
+ * @treturn TurnResult
+ */
 EnumString LuaApiAction::manage_inventory(LuaCharacterHandle target)
 {
     auto& target_ref =
@@ -119,6 +135,14 @@ EnumString LuaApiAction::manage_inventory(LuaCharacterHandle target)
     return LuaEnums::TurnResultTable.convert_to_string(result);
 }
 
+/**
+ * @luadoc
+ *
+ * Opens the give screen for a character. In this menu you cannot take back
+ * items.
+ * @tparam LuaCharacter target
+ * @treturn TurnResult
+ */
 EnumString LuaApiAction::give_item(LuaCharacterHandle target)
 {
     auto& target_ref =
@@ -133,6 +157,13 @@ EnumString LuaApiAction::give_item(LuaCharacterHandle target)
     return LuaEnums::TurnResultTable.convert_to_string(mr.turn_result);
 }
 
+/**
+ * @luadoc
+ *
+ * Opens the menu for changing a character's tone.
+ * @tparam LuaCharacter target
+ * @treturn TurnResult
+ */
 EnumString LuaApiAction::change_tone(LuaCharacterHandle target)
 {
     auto& target_ref =
@@ -147,6 +178,13 @@ EnumString LuaApiAction::change_tone(LuaCharacterHandle target)
         TurnResult::pc_turn_user_error);
 }
 
+/**
+ * @luadoc
+ *
+ * Opens the menu for changing a character's appearance.
+ * @tparam LuaCharacter target
+ * @treturn TurnResult
+ */
 EnumString LuaApiAction::change_appearance(LuaCharacterHandle target)
 {
     auto& target_ref =
@@ -162,6 +200,13 @@ EnumString LuaApiAction::change_appearance(LuaCharacterHandle target)
         TurnResult::pc_turn_user_error);
 }
 
+/**
+ * @luadoc
+ *
+ * Opens the investigation screen for a character.
+ * @tparam LuaCharacter target
+ * @treturn TurnResult
+ */
 EnumString LuaApiAction::show_investigate_screen(LuaCharacterHandle target)
 {
     auto& target_ref =

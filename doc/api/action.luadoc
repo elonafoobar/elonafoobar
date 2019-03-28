@@ -1,0 +1,50 @@
+--- Functions related to game actions.
+--  @usage local Action = Elona.require("Action")
+module "Action"
+
+--- Starts a conversation with a character.
+--  @tparam LuaCharacter speaker Character who will speak.
+--  @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
+--  character's definition. If the character has no dialog, the normal talk
+--  options will be shown instead.
+--  @treturn TurnResult
+--  @function talk_to
+function talk_to(speaker, dialog) end
+
+--- Makes a character melee attack another.
+--  @tparam LuaCharacter attacker
+--  @tparam LuaCharacter target
+--  @treturn TurnResult
+--  @function melee_attack
+function melee_attack(attacker, target) end
+
+--- Opens the inventory screen for a character.
+--  @tparam LuaCharacter target
+--  @treturn TurnResult
+--  @function manage_inventory
+function manage_inventory(target) end
+
+--- Opens the give screen for a character. In this menu you cannot take back
+--  items.
+--  @tparam LuaCharacter target
+--  @treturn TurnResult
+--  @function give_item
+function give_item(target) end
+
+--- Opens the menu for changing a character's tone.
+--  @tparam LuaCharacter target
+--  @treturn TurnResult
+--  @function change_tone
+function change_tone(target) end
+
+--- Opens the menu for changing a character's appearance.
+--  @tparam LuaCharacter target
+--  @treturn TurnResult
+--  @function change_appearance
+function change_appearance(target) end
+
+--- Opens the investigation screen for a character.
+--  @tparam LuaCharacter target
+--  @treturn TurnResult
+--  @function show_investigate_screen
+function show_investigate_screen(target) end
