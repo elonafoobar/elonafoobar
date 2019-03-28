@@ -111,7 +111,7 @@ bool buff_has(const Character& cc, const std::string& id)
     auto buff_def = the_buff_db[id];
     assert(buff_def);
 
-    int legacy_id = buff_def->id;
+    int legacy_id = buff_def->legacy_id;
     return range::any_of(
         cc.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
 }
@@ -123,7 +123,7 @@ optional_ref<const Buff> buff_find(const Character& cc, const std::string& id)
     auto buff_def = the_buff_db[id];
     assert(buff_def);
 
-    int legacy_id = buff_def->id;
+    int legacy_id = buff_def->legacy_id;
     const auto itr = range::find_if(
         cc.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
     if (itr == std::end(cc.buffs))
@@ -148,7 +148,7 @@ void buff_add(
     auto buff = the_buff_db[id];
     assert(buff);
 
-    int legacy_id = buff->id;
+    int legacy_id = buff->legacy_id;
 
     if (turns <= 0)
         return;

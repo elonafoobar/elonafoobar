@@ -8,9 +8,12 @@ MapDefDB the_mapdef_db;
 const constexpr char* data::LuaLazyCacheTraits<MapDefDB>::type_id;
 
 
-MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
+
+MapDefData MapDefDB::convert(
+    const lua::ConfigTable& data,
+    const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_REQ(appearance, int);
     DATA_ENUM(
         map_type, mdata_t::MapType, MapTypeTable, mdata_t::MapType::world_map);
@@ -42,7 +45,8 @@ MapDefData MapDefDB::convert(const lua::ConfigTable& data, const std::string&)
     Position outer_map_position_{outer_map_position.get<int>("x"),
                                  outer_map_position.get<int>("y")};
 
-    return MapDefData{legacy_id,
+    return MapDefData{SharedId{id},
+                      legacy_id,
                       appearance,
                       map_type,
                       outer_map,

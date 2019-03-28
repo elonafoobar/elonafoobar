@@ -3,52 +3,52 @@ data:add_multi(
    "core.event",
    {
       {
-         name = "game_initialized"
+         id = "game_initialized"
       },
       {
-         name = "character_created"
+         id = "character_created"
       },
       {
-         name = "item_created"
+         id = "item_created"
       },
       {
-         name = "character_removed"
+         id = "character_removed"
       },
       {
-         name = "item_removed"
+         id = "item_removed"
       },
       {
-         name = "character_refreshed"
+         id = "character_refreshed"
       },
       {
-         name = "calc_character_damage"
+         id = "calc_character_damage"
       },
       {
-         name = "character_damaged"
+         id = "character_damaged"
       },
       {
-         name = "character_killed"
+         id = "character_killed"
       },
       {
-         name = "character_moved"
+         id = "character_moved"
       },
       {
-         name = "player_turn_started"
+         id = "player_turn_started"
       },
       {
-         name = "all_turns_finished"
+         id = "all_turns_finished"
       },
       {
-         name = "map_initialized"
+         id = "map_initialized"
       },
       {
-         name = "before_map_unload"
+         id = "before_map_unload"
       },
       {
-         name = "all_mods_loaded"
+         id = "all_mods_loaded"
       },
       {
-         name = "script_loaded"
+         id = "script_loaded"
       },
    }
 )

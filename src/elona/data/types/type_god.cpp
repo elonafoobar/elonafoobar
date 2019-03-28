@@ -51,9 +51,9 @@ static std::unordered_set<SharedId> _convert_offerings(
     return offerings;
 }
 
-GodData GodDB::convert(const lua::ConfigTable& data, const std::string&)
+GodData GodDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_OPT(wish_name, std::string);
     DATA_OPT(summon_id, std::string);
     DATA_REQ(servant, std::string);
@@ -69,7 +69,8 @@ GodData GodDB::convert(const lua::ConfigTable& data, const std::string&)
         summon_id_ = SharedId(*summon_id);
     }
 
-    return GodData{legacy_id,
+    return GodData{SharedId{id},
+                   legacy_id,
                    wish_name,
                    summon_id_,
                    items,

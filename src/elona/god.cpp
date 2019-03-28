@@ -297,7 +297,7 @@ static optional<TurnResult> _create_faith_reward_servant()
         Message::color{ColorIndex::blue});
 
     flt();
-    dbid = chara->id;
+    dbid = chara->legacy_id;
 
     novoidlv = 1;
     chara_create(56, dbid, -3, 0);
@@ -334,7 +334,7 @@ static optional<TurnResult> _create_faith_reward_gemstone()
                 auto item = the_item_db[*id];
                 if (item)
                 {
-                    if (only_once && itemmemory(1, item->id))
+                    if (only_once && itemmemory(1, item->legacy_id))
                     {
                         continue;
                     }
@@ -375,7 +375,7 @@ static optional<TurnResult> _create_faith_reward_artifact()
     }
 
     flt();
-    dbid = item->id;
+    dbid = item->legacy_id;
     if (itemmemory(1, dbid))
     {
         dbid = 621;

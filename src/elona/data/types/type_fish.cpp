@@ -10,9 +10,9 @@ const constexpr char* data::LuaLazyCacheTraits<FishDB>::type_id;
 
 
 
-FishData FishDB::convert(const lua::ConfigTable& data, const std::string&)
+FishData FishDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_OPT_OR(no_generate, bool, false);
     DATA_OPT_OR(rank, int, 0);
     DATA_OPT_OR(rarity, int, 0);
@@ -22,6 +22,7 @@ FishData FishDB::convert(const lua::ConfigTable& data, const std::string&)
     DATA_OPT_OR(item_id, int, 618);
 
     return FishData{
+        SharedId{id},
         legacy_id,
         no_generate,
         rank,

@@ -2,8 +2,8 @@ data:add(
    {
       {
          type = "putit.putit",
-         name = "green",
-         id = 5,
+         id = "green",
+         legacy_id = 5,
          display_name = "green putit"
       }
    }

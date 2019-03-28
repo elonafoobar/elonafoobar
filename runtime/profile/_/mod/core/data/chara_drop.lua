@@ -59,23 +59,23 @@ data:add_multi(
    "core.chara_drop",
    {
       {
-         name = "rich_person",
+         id = "rich_person",
          drops = { make_lootrich(8) }
       },
       {
-         name = "noble_child",
+         id = "noble_child",
          drops = { make_lootrich(4) }
       },
       {
-         name = "tourist",
+         id = "tourist",
          drops = { make_lootrich(2) }
       },
       {
-         name = "vesda",
+         id = "vesda",
          drops = {{ id = "core.gloves_of_vesda" }}
       },
       {
-         name = "god_boss",
+         id = "god_boss",
          on_generate = function(args)
             -- Kill count is 1 by now on first kill.
             if Chara.kill_count(args.chara.id) == 1 then
@@ -86,7 +86,7 @@ data:add_multi(
          end
       },
       {
-         name = "tuwen",
+         id = "tuwen",
          on_generate = function()
             if Map.id() == 257 then
                return make_drops({ "core.statue_of_opatos",
@@ -100,43 +100,43 @@ data:add_multi(
          end
       },
       {
-         name = "rabbit",
+         id = "rabbit",
          drops = {{ one_in = 200, id = "core.rabbits_tail" }}
       },
       {
-         name = "zombie",
+         id = "zombie",
          drops = {{ one_in = 100, id = "core.potion_of_descent" }}
       },
       {
-         name = "lomias",
+         id = "lomias",
          drops = {{ one_in = 4,   id = "core.secret_experience_of_lomias" }}
       },
       {
-         name = "mummy",
+         id = "mummy",
          drops = {{ one_in = 300, id = "core.book_of_resurrection" }}
       },
       {
-         name = "cupid_of_love",
+         id = "cupid_of_love",
          drops = {{ one_in = 140, id = "core.happy_bed" }}
       },
       {
-         name = "hermit_crab",
+         id = "hermit_crab",
          drops = {{ one_in = 100, id = "core.solemn_tomb" }}
       },
       {
-         name = "rogue",
+         id = "rogue",
          drops = {{ one_in = 90, id = "core.blue_capsule_drug" }}
       },
       {
-         name = "executioner",
+         id = "executioner",
          drops = {{ one_in = 200, id = "core.rabbits_tail" }}
       },
       {
-         name = "deformed_eye",
+         id = "deformed_eye",
          drops = {{ one_in = 150, id = "core.potion_of_evolution" }}
       },
       {
-         name = "gwen",
+         id = "gwen",
          drops = {{
                one_in = 50,
                on_create = function(args)
@@ -148,19 +148,19 @@ data:add_multi(
          }}
       },
       {
-         name = "fairy",
+         id = "fairy",
          drops = {{ one_in = 200, id = "core.secret_experience_of_kumiromi" }}
       },
       {
-         name = "mine_dog",
+         id = "mine_dog",
          drops = {{ one_in = 3, id = "core.mine" }}
       },
       {
-         name = "imp",
+         id = "imp",
          drops = {{ one_in = 600, id = "core.scroll_of_name" }}
       },
       {
-         name = "rogue_boss",
+         id = "rogue_boss",
          drops = {{
                on_create = function(args)
                   for _=0, 2 + Rand.rnd(4) do
@@ -180,7 +180,7 @@ data:add_multi(
          }}
       },
       {
-         name = "silver_bell",
+         id = "silver_bell",
          drops = {{
                on_create = function(args)
                   Item.create(args.chara.position, "core.platinum_coin", 1 + Rand.rnd(3))
@@ -191,7 +191,7 @@ data:add_multi(
          }}
       },
       {
-         name = "gold_bell",
+         id = "gold_bell",
          drops = {{
                on_create = function(args)
                   Item.create(args.chara.position, "core.gold_piece", 2500 + Rand.rnd((Chara.player().fame + 1000)))
@@ -199,7 +199,7 @@ data:add_multi(
          }}
       },
       {
-         name = "the_leopard_warrior",
+         id = "the_leopard_warrior",
          drops = {{
                on_create = function(args)
                   for _=0,12 do

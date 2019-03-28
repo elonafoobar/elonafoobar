@@ -74,7 +74,7 @@ void get_random_item_id()
             bool ok = true;
             for (int i = 0; i < filtermax; ++i)
             {
-                if (the_item_db[data.id]->filter.find(filtern(i)) ==
+                if (the_item_db[data.legacy_id]->filter.find(filtern(i)) ==
                     std::string::npos)
                 {
                     ok = false;
@@ -85,7 +85,7 @@ void get_random_item_id()
                 continue;
         }
         sampler.add(
-            data.id,
+            data.legacy_id,
             data.rarity /
                     (1000 + std::abs(data.level - objlv) * data.coefficient) +
                 1);

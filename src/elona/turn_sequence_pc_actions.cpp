@@ -11,7 +11,7 @@
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
-#include "lua_env/lua_console.hpp"
+#include "lua_env/console.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"

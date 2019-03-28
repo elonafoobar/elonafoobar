@@ -24,15 +24,14 @@ lrun("test Map.valid", function()
         lequal(Map.valid(-1, 0), false)
 end)
 
-lrun("test Map.can_access", function()
-
+lrun("test Map.is_blocked", function()
         Testing.start_in_debug_map()
 
         local pos = LuaPosition.new(5, 5)
-        lequal(Map.can_access(pos), true)
-        lequal(Map.can_access(pos.x, pos.y), true)
+        lequal(Map.is_blocked(pos), false)
+        lequal(Map.is_blocked(pos.x, pos.y), false)
 
         Map.set_tile(5, 5, Map.generate_tile(Enums.TileKind.Wall))
-        lequal(Map.can_access(pos), false)
-        lequal(Map.can_access(pos.x, pos.y), false)
+        lequal(Map.is_blocked(pos), true)
+        lequal(Map.is_blocked(pos.x, pos.y), true)
 end)

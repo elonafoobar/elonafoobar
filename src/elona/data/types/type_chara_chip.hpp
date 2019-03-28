@@ -8,11 +8,14 @@ namespace elona
 
 struct CharaChipData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     Extent rect;
     CharaChip chip;
     optional<fs::path> filepath;
 };
+
+
 
 // Used only as an intermediary between registry and initialize_chara_chips().
 ELONA_DEFINE_LUA_DB(CharaChipDB, CharaChipData, true, "core.chara_chip")

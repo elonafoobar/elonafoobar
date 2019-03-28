@@ -47,7 +47,7 @@ inline int godid2int(const GodId& id)
         return 0;
     }
 
-    return god_data->id;
+    return god_data->legacy_id;
 }
 
 } // namespace core_god

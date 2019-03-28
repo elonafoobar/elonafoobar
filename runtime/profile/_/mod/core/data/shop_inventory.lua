@@ -130,8 +130,8 @@ data:add_multi(
    "core.shop_inventory",
    {
       {
-         name = "magic_vendor",
-         id = 1004,
+         id = "magic_vendor",
+         legacy_id = 1004,
          rules = {
             {
                choices = {
@@ -146,15 +146,15 @@ data:add_multi(
          }
       },
       {
-         name = "younger_sister_of_mansion",
-         id = 1019,
+         id = "younger_sister_of_mansion",
+         legacy_id = 1019,
          rules = {
             { id = "core.sisters_love_fueled_lunch" }
          }
       },
       {
-         name = "spell_writer",
-         id = 1020,
+         id = "spell_writer",
+         legacy_id = 1020,
          rules = {
             {
                on_generate = function()
@@ -186,8 +186,8 @@ data:add_multi(
          end
       },
       {
-         name = "moyer",
-         id = 1015,
+         id = "moyer",
+         legacy_id = 1015,
          rules = {
             {
                choices = {
@@ -204,8 +204,8 @@ data:add_multi(
          end
       },
       {
-         name = "general_vendor",
-         id = 1006,
+         id = "general_vendor",
+         legacy_id = 1006,
          rules = {
             {
                choices = {
@@ -222,8 +222,8 @@ data:add_multi(
          }
       },
       {
-         name = "bakery",
-         id = 1003,
+         id = "bakery",
+         legacy_id = 1003,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
             {
@@ -236,8 +236,8 @@ data:add_multi(
          }
       },
       {
-         name = "food_vendor",
-         id = 1002,
+         id = "food_vendor",
+         legacy_id = 1002,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
             { flttypemajor = 57000 },
@@ -245,8 +245,8 @@ data:add_multi(
          }
       },
       {
-         name = "blackmarket",
-         id = 1007,
+         id = "blackmarket",
+         legacy_id = 1007,
          rules = {
             { choices = filter_set_wear },
             { one_in = 3, fixlv = "Great" },
@@ -264,8 +264,8 @@ data:add_multi(
          end
       },
       {
-         name = "wandering_merchant",
-         id = 1010,
+         id = "wandering_merchant",
+         legacy_id = 1010,
          rules = merchant_rules,
          item_number = merchant_item_number,
          item_base_value = function(args)
@@ -274,8 +274,9 @@ data:add_multi(
          is_temporary = true -- Uses shop ID 1.
       },
       {
-         name = "visiting_merchant",
-         id = 2003, -- NOTE: the only shop ID for which (id / 1000) != 1.
+         id = "visiting_merchant",
+         -- NOTE: the only shop ID for which (id / 1000) != 1.
+         legacy_id = 2003,
          rules = merchant_rules,
          item_number = merchant_item_number,
          item_base_value = function(args)
@@ -284,8 +285,8 @@ data:add_multi(
          is_temporary = true -- Uses shop ID 1.
       },
       {
-         name = "innkeeper",
-         id = 1005,
+         id = "innkeeper",
+         legacy_id = 1005,
          rules = {
             { flttypemajor = 91000 },
             { one_in = 4, flttypeminor = 52002 },
@@ -293,8 +294,8 @@ data:add_multi(
          }
       },
       {
-         name = "general_store",
-         id = 1008,
+         id = "general_store",
+         legacy_id = 1008,
          rules = {
             { flttypemajor = 56000 },
             { one_in = 3, choices = filter_set_wear },
@@ -308,8 +309,8 @@ data:add_multi(
          }
       },
       {
-         name = "blacksmith",
-         id = 1001,
+         id = "blacksmith",
+         legacy_id = 1001,
          rules = {
             {
                choices = {
@@ -339,15 +340,15 @@ data:add_multi(
          --    much money the trader has on hand.
          --  + On shop refresh, updates the buying rates of each cargo
          --    type based on the current map.
-         name = "trader",
-         id = 1009,
+         id = "trader",
+         legacy_id = 1009,
          rules = {
             { flttypemajor = 92000 },
          }
       },
       {
-         name = "the_fence",
-         id = 1021,
+         id = "the_fence",
+         legacy_id = 1021,
          rules = {
             { flttypemajor = 59000 },
             { one_in = 2, id = "core.lockpick" },
@@ -355,8 +356,8 @@ data:add_multi(
          }
       },
       {
-         name = "sales_person_a",
-         id = 1011,
+         id = "sales_person_a",
+         legacy_id = 1011,
          rules = {
             { one_in = 4, flttypemajor = 24000 },
             { one_in = 5, flttypemajor = 24000 },
@@ -365,8 +366,8 @@ data:add_multi(
          }
       },
       {
-         name = "sales_person_c",
-         id = 1013,
+         id = "sales_person_c",
+         legacy_id = 1013,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
             { flttypemajor = 55000 },
@@ -375,8 +376,8 @@ data:add_multi(
          }
       },
       {
-         name = "souvenir_vendor",
-         id = 1018,
+         id = "souvenir_vendor",
+         legacy_id = 1018,
          ignores_noshop = true,
          rules = {
             { fltn = "spshop" },
@@ -391,8 +392,8 @@ data:add_multi(
          end
       },
       {
-         name = "street_vendor",
-         id = 1022,
+         id = "street_vendor",
+         legacy_id = 1022,
          rules = {
             { fltn = "fest" },
             { one_in = 12, id = "core.upstairs" },
@@ -404,15 +405,15 @@ data:add_multi(
          }
       },
       {
-         name = "dye_vendor",
-         id = 1017,
+         id = "dye_vendor",
+         legacy_id = 1017,
          rules = {
             { id = "core.bottle_of_dye" },
          }
       },
       {
-         name = "sales_person_b",
-         id = 1012,
+         id = "sales_person_b",
+         legacy_id = 1012,
          rules = {
             { flttypemajor = 60000 },
             { index = 0, id = "core.microwave_oven" },
@@ -429,8 +430,8 @@ data:add_multi(
          },
       },
       {
-         name = "fisher",
-         id = 1014,
+         id = "fisher",
+         legacy_id = 1014,
          rules = {
             { id = "core.bait" }
          }
@@ -451,8 +452,8 @@ data:add_multi(
          --    triggered through Miral's dialog. In normal shops,
          --    items with those properties are not displayed even if
          --    they are generated successfully.
-         name = "miral",
-         id = 1016,
+         id = "miral",
+         legacy_id = 1016,
          rules = medal_items,
          item_number = function() return #medal_items end,
          on_generate_item = function(args)

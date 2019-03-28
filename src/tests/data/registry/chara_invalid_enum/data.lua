@@ -2,8 +2,8 @@ data:add(
    {
       {
          type = "core.chara",
-         name = "putit",
-         id = 9999,
+         id = "putit",
+         legacy_id = 9999,
          color = "Whatever",
       }
    }

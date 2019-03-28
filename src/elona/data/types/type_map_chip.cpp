@@ -7,9 +7,10 @@ namespace elona
 const constexpr char* data::LuaLazyCacheTraits<MapChipDB>::type_id;
 
 
-MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id_)
+
+MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_REQ(atlas, int);
     DATA_OPT_OR(is_feat, bool, false);
     DATA_OPT_OR(kind, int, 0);
@@ -45,14 +46,15 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id_)
         if (!fs::exists(*filepath))
         {
             throw std::runtime_error(
-                id_ + ": Image file doesn't exist: " + filepath->string());
+                id + ": Image file doesn't exist: " + filepath->string());
         }
     }
 
     return MapChip{
+        SharedId{id},
         legacy_id,
         atlas,
-        SharedId(std::string(Traits::type_id) + data_id_separator + id_),
+        SharedId(std::string(Traits::type_id) + data_id_separator + id),
         Extent{x, y, width, height, frame_width},
         filepath,
         is_feat,

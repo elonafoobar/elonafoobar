@@ -265,7 +265,7 @@ public:
      */
     void add_predefined_extents(const fs::path&, const MapType&, PageType);
 
-    optional_ref<Extent> operator[](const IdType& id) const
+    optional_ref<const Extent> operator[](const IdType& id) const
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
@@ -274,7 +274,7 @@ public:
             return itr->second;
     }
 
-    optional_ref<Extent> operator[](const std::string& inner_id) const
+    optional_ref<const Extent> operator[](const std::string& inner_id) const
     {
         return (*this)[SharedId(inner_id)];
     }

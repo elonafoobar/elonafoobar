@@ -15,7 +15,8 @@ struct GodSkillBonus
 
 struct GodData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     optional<std::string> wish_name;
     optional<SharedId> summon_id;
     sol::table items;

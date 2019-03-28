@@ -58,13 +58,13 @@ local function run_life()
       for y = 1, Map.width() do
          for x = 1, Map.height() do
             local tile
-            if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
+            if Store.map_local.grid[x][y] == 1 and Map.is_blocked(x, y) then
                tile = Map.generate_tile(Enums.TileKind.Wall)
             else
                tile = Map.generate_tile(Enums.TileKind.Room)
             end
             Map.set_tile(x, y, tile)
-            Map.set_tile_memory(x, y, tile)
+            Map.set_memory(x, y, tile)
          end
       end
       Store.map_local.grid = evolve(grid)

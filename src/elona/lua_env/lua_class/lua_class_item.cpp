@@ -30,7 +30,7 @@ void LuaItem::remove(Item& self)
 void LuaItem::change_material(Item& self, const std::string& material_id)
 {
     const auto& data = the_item_material_db.ensure(material_id);
-    change_item_material(self, data.id);
+    change_item_material(self, data.legacy_id);
 }
 
 void LuaItem::bind(sol::state& lua)

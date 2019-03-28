@@ -8,7 +8,7 @@ local table = Elona.require("table")
 local common = require("data/dialog/common")
 
 return {
-   name = "marks",
+   id = "marks",
    root = "core.locale.talk.unique.marks",
    nodes = {
       __start = function()

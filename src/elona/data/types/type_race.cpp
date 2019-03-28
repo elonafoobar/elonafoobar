@@ -31,7 +31,7 @@ RaceData RaceDB::convert(const lua::ConfigTable& data, const std::string& id)
     DATA_TABLE(resistances, int, int);
 
     return RaceData{
-        id,
+        SharedId{id},
         is_extra,
         ordering,
         male_image,

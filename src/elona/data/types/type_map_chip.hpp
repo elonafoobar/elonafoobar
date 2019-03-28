@@ -8,6 +8,8 @@ namespace elona
 
 struct MapChip;
 
+
+
 enum class ChipKind : int
 {
     none = 0,
@@ -23,12 +25,16 @@ enum class ChipKind : int
     shallows = 10
 };
 
+
+
 enum class ChipWallKind : int
 {
     none = 0,
     lower = 1,
     inner = 2,
 };
+
+
 
 enum class ChipEffect : int
 {
@@ -38,9 +44,12 @@ enum class ChipEffect : int
     solid = 5,
 };
 
+
+
 struct MapChip
 {
-    int id{};
+    SharedId id;
+    int legacy_id{};
     int atlas{};
     SharedId key{};
     Extent source{};
@@ -55,6 +64,8 @@ struct MapChip
     int offset_bottom{};
     int effect{};
 };
+
+
 
 ELONA_DEFINE_LUA_DB(MapChipDB, MapChip, false, "core.map_chip")
 

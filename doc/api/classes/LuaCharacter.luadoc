@@ -70,12 +70,11 @@ function get_flag(chara, flag) end
 --  <code>core.character_refreshed</code>, or the flag will be reset later.
 --  @tparam Enums.CharaFlag flag the flag to set
 --  @tparam bool value the flag's new value
+--  @see core.event.core.character_refreshed
 --  @usage local Event = Elona.require("Event")
---  local Enums = Elona.require("Enums")
 --
 --  local function make_invisible(chara)
---  chara:set_flag(Enums.CharaFlag.IsInvisible, true) -- intrinsic, reset on
---  refresh
+--  chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
 --  end
 --
 --  -- force this flag to be overridden after this character is refreshed.
@@ -175,6 +174,12 @@ function move_to_xy(x, y) end
 --  @tparam string god_id ID of type core.god.
 --  @function switch_religion
 function switch_religion(god_id) end
+
+--- Returns the duration of an ailment on this character.
+--  @tparam StatusAilment ailment
+--  @treturn num
+--  @function get_ailment
+function get_ailment(ailment) end
 
 --- [R] The index of this character in the global characters array.
 --  @tfield num index

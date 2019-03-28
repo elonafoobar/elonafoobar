@@ -41,8 +41,8 @@ reset_page:
     listmax = 0;
     for (const auto& data : the_character_db.values())
     {
-        list(0, listmax) = data.id;
-        list(1, listmax) = 1000 * data.level + data.id;
+        list(0, listmax) = data.legacy_id;
+        list(1, listmax) = 1000 * data.level + data.legacy_id;
         ++listmax;
     }
     sort_list_by_column1();

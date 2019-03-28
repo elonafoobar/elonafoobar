@@ -3,6 +3,7 @@
 #include "../../i18n.hpp"
 #include "../../input.hpp"
 #include "../../input_prompt.hpp"
+#include "../../keybind/macro_action_queue.hpp"
 #include "../../message.hpp"
 
 namespace elona
@@ -29,7 +30,8 @@ namespace lua
  */
 sol::optional<bool> LuaApiInput::yes_no(const std::string& message)
 {
-    txt(message + " ");
+    keyhalt = 1;
+    txt(message + i18n::space_if_needed());
     const auto result = elona::yes_no();
     if (result == YesNo::canceled)
     {
@@ -80,7 +82,7 @@ sol::optional<int> LuaApiInput::prompt_number_with_initial(
         throw sol::error("LuaApiInput.prompt_number called with max < 1");
     }
 
-    txt(message + " ");
+    txt(message + i18n::space_if_needed());
     input_number_dialog(
         (windoww - 200) / 2 + inf_screenx, winposy(60), max, initial);
 
@@ -112,7 +114,7 @@ sol::optional<std::string> LuaApiInput::prompt_text(
     const std::string& message,
     bool is_cancelable)
 {
-    txt(message + " ");
+    txt(message + i18n::space_if_needed());
     bool canceled = input_text_dialog(
         (windoww - 360) / 2 + inf_screenx,
         winposy(90),
@@ -148,22 +150,26 @@ sol::optional<std::string> LuaApiInput::prompt_text(
 sol::optional<int> LuaApiInput::prompt_choice(sol::table choices)
 {
     Prompt prompt;
+    size_t width = 160;
 
     // Lua tables are 1-indexed, but the prompt is 0-indexed.
     for (size_t i = 1; i <= choices.size(); i++)
     {
-        std::string choice = choices[i];
-        prompt.append(choice, i - 1);
+        sol::optional<std::string> choice = choices[i];
+        if (choice)
+        {
+            width = std::max(width, strlen_u(*choice) * (13 - en * 2));
+            prompt.append(std::move(*choice), i);
+        }
     }
 
-    int rtval = prompt.query(promptx, prompty, 240);
+    int rtval = prompt.query(promptx, prompty, (int)width);
     if (rtval == -1)
     {
         return sol::nullopt;
     }
 
-    // Lua tables are 1-indexed, so add 1 to the result.
-    return rtval + 1;
+    return rtval;
 }
 
 static void _append_choices(sol::table& choices)
@@ -421,6 +427,101 @@ sol::optional<LuaCharacterHandle> LuaApiInput::choose_ally(
     return lua::handle(cdata[stat]);
 }
 
+
+/**
+ * @luadoc
+ *
+ * Enqueues an action or a list of actions into the macro action queue. It will
+ * be run in order of insertion the next time input is queried.
+ * @tparam[1] string action the action to run.
+ * @tparam[2] table actions an array of actions to run.
+ * @usage Macro.enqueue("north")
+ * Macro.enqueue({"east", "wait", "northwest"})
+ */
+void LuaApiInput::enqueue_macro(const std::string& action_id)
+{
+    keybind::macro_action_queue.push(action_id);
+}
+
+void LuaApiInput::enqueue_macro_table(sol::table array)
+{
+    for (size_t i = 1; i <= array.size(); i++)
+    {
+        sol::optional<std::string> action = array[i];
+        if (action)
+        {
+            LuaApiInput::enqueue_macro(*action);
+        }
+    }
+}
+
+/**
+ * @luadoc
+ *
+ * Clears any actions that haven't been run yet in the macro action queue.
+ */
+void LuaApiInput::clear_macro_queue()
+{
+    keybind::macro_action_queue.clear();
+}
+
+/**
+ * @luadoc
+ *
+ * Disables input/macro keywait for this frame.
+ */
+void LuaApiInput::ignore_keywait()
+{
+    keybd_wait = 100000;
+}
+
+sol::optional<Position> LuaApiInput::prompt_position(const std::string& message)
+{
+    return LuaApiInput::prompt_position_with_initial_xy(message, 0, 0);
+}
+
+sol::optional<Position> LuaApiInput::prompt_position_with_initial(
+    const std::string& message,
+    const Position& pos)
+{
+    return LuaApiInput::prompt_position_with_initial_xy(message, pos.x, pos.y);
+}
+
+sol::optional<Position> LuaApiInput::prompt_position_with_initial_xy(
+    const std::string& message,
+    int x,
+    int y)
+{
+    elona::tlocinitx = x;
+    elona::tlocinity = y;
+
+    txt(message + i18n::space_if_needed());
+
+    int result = elona::target_position(false);
+
+    update_screen();
+
+    if (result == -1)
+    {
+        return sol::nullopt;
+    }
+
+    return Position{tlocx, tlocy};
+}
+
+/**
+ * @luadoc
+ *
+ * Returns true if any key is pressed.
+ * @treturn bool
+ */
+bool LuaApiInput::any_key_pressed()
+{
+    return snail::Input::instance().pressed_keys().size() > 0;
+}
+
+
+
 void LuaApiInput::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, yes_no);
@@ -443,6 +544,19 @@ void LuaApiInput::bind(sol::table& api_table)
         sol::overload(
             LuaApiInput::start_dialog, LuaApiInput::start_dialog_with_data));
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, choose_ally);
+    api_table.set_function(
+        "enqueue_macro",
+        sol::overload(
+            LuaApiInput::enqueue_macro, LuaApiInput::enqueue_macro_table));
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, clear_macro_queue);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, ignore_keywait);
+    api_table.set_function(
+        "prompt_position",
+        sol::overload(
+            LuaApiInput::prompt_position,
+            LuaApiInput::prompt_position_with_initial,
+            LuaApiInput::prompt_position_with_initial_xy));
+    LUA_API_BIND_FUNCTION(api_table, LuaApiInput, any_key_pressed);
 }
 
 } // namespace lua

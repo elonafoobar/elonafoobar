@@ -70,8 +70,8 @@ data:add_multi(
       {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply fear will be ignored.
-         name = "holy_shield",
-         id = 1,
+         id = "holy_shield",
+         legacy_id = 1,
          buff_type = "Buff",
          duration = function(power)
             return 10 + power // 10
@@ -88,8 +88,8 @@ data:add_multi(
       {
          -- NOTE: Has these hardcoded behaviors.
          --  + Silence behavior.
-         name = "mist_of_silence",
-         id = 2,
+         id = "mist_of_silence",
+         legacy_id = 2,
          buff_type = "Hex",
          duration = function(power)
             return 5 + power // 40
@@ -102,8 +102,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "regeneration",
-         id = 3,
+         id = "regeneration",
+         legacy_id = 3,
          buff_type = "Buff",
          duration = function(power)
             return 12 + power // 20
@@ -117,8 +117,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "elemental_shield",
-         id = 4,
+         id = "elemental_shield",
+         legacy_id = 4,
          buff_type = "Buff",
          duration = function(power)
             return 4 + power // 6
@@ -134,8 +134,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "speed",
-         id = 5,
+         id = "speed",
+         legacy_id = 5,
          buff_type = "Buff",
          duration = function(power)
             return 8 + power // 30
@@ -149,8 +149,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "slow",
-         id = 6,
+         id = "slow",
+         legacy_id = 6,
          buff_type = "Hex",
          duration = function(power)
             return 8 + power // 30
@@ -167,8 +167,8 @@ data:add_multi(
       {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply confusion or fear will be ignored.
-         name = "hero",
-         id = 7,
+         id = "hero",
+         legacy_id = 7,
          buff_type = "Buff",
          duration = function(power)
             return 10 + power // 4
@@ -185,8 +185,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "mist_of_frailness",
-         id = 8,
+         id = "mist_of_frailness",
+         legacy_id = 8,
          buff_type = "Hex",
          duration = function(power)
             return 6 + power // 10
@@ -201,8 +201,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "element_scar",
-         id = 9,
+         id = "element_scar",
+         legacy_id = 9,
          buff_type = "Hex",
          duration = function(power)
             return 4 + power // 15
@@ -221,8 +221,8 @@ data:add_multi(
          -- NOTE: Has these hardcoded behaviors.
          --  + Additional chance to resist if a hex is applied to this
          --    character.
-         name = "holy_veil",
-         id = 10,
+         id = "holy_veil",
+         legacy_id = 10,
          buff_type = "Buff",
          duration = function(power)
             return 15 + power // 5
@@ -235,8 +235,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "nightmare",
-         id = 11,
+         id = "nightmare",
+         legacy_id = 11,
          buff_type = "Hex",
          duration = function(power)
             return 4 + power // 15
@@ -251,8 +251,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "divine_wisdom",
-         id = 12,
+         id = "divine_wisdom",
+         legacy_id = 12,
          buff_type = "Buff",
          duration = function(power)
             return 10 + power // 4
@@ -272,8 +272,8 @@ data:add_multi(
          -- NOTE: Has these hardcoded behaviors.
          --  + Ignored when removing status effects on a character.
          --  + Ignored when casting Holy Light/Vanquish Hex.
-         name = "punishment",
-         id = 13,
+         id = "punishment",
+         legacy_id = 13,
          buff_type = "Hex",
          duration = function(power)
             return power
@@ -290,8 +290,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "lulwys_trick",
-         id = 14,
+         id = "lulwys_trick",
+         legacy_id = 14,
          buff_type = "Buff",
          duration = function(power)
             return 7
@@ -308,8 +308,8 @@ data:add_multi(
          -- NOTE: The initial incognito effect is applied by the
          -- incognito spell when it is cast, but the effect when the
          -- buff expires is handled by the buff itself.
-         name = "incognito",
-         id = 15,
+         id = "incognito",
+         legacy_id = 15,
          buff_type = "Buff",
          duration = function(power)
             return 4 + power // 40
@@ -344,8 +344,8 @@ data:add_multi(
          --    of "Miracle" or "Godly" quality.
          --  + Removed when a character with the "IsDeathMaster" flag
          --    is killed.
-         name = "death_word",
-         id = 16,
+         id = "death_word",
+         legacy_id = 16,
          buff_type = "Hex",
          duration = function(power)
             return 20
@@ -362,8 +362,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "boost",
-         id = 17,
+         id = "boost",
+         legacy_id = 17,
          buff_type = "Buff",
          duration = function(power)
             return 5
@@ -389,8 +389,8 @@ data:add_multi(
          --  + Check for lethal damage and chance to heal. If the
          --    "IsContractingWithReaper" flag is set then the buff is
          --    expected to be be active on the same character.
-         name = "contingency",
-         id = 18,
+         id = "contingency",
+         legacy_id = 18,
          buff_type = "Buff",
          duration = function(power)
             return 66
@@ -407,8 +407,8 @@ data:add_multi(
          description = get_description
       },
       {
-         name = "luck",
-         id = 19,
+         id = "luck",
+         legacy_id = 19,
          buff_type = "Buff",
          duration = function(power)
             return 777
@@ -424,11 +424,11 @@ data:add_multi(
    }
 )
 
-local function register_growth_buff(attribute_index, name)
+local function register_growth_buff(attribute_index, attribute_name)
    data:add({
       {
          type = "core.buff",
-         name = "grow_" .. name,
+         id = "grow_" .. attribute_name,
          id = attribute_index + 20,
          buff_type = "Food",
          duration = function(power)

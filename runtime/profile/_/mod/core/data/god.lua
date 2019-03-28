@@ -7,8 +7,8 @@ data:add_multi(
    "core.god",
    {
       {
-         name = "mani",
-         id = 1,
+         id = "mani",
+         legacy_id = 1,
          wish_name = "mani",
          summon = "core.mani",
          servant = "core.android",
@@ -43,8 +43,8 @@ data:add_multi(
          }
       },
       {
-         name = "lulwy",
-         id = 2,
+         id = "lulwy",
+         legacy_id = 2,
          wish_name = "lulwy",
          summon = "core.lulwy",
          servant = "core.black_angel",
@@ -68,8 +68,8 @@ data:add_multi(
          },
       },
       {
-         name = "itzpalt",
-         id = 3,
+         id = "itzpalt",
+         legacy_id = 3,
          wish_name = "itzpalt",
          servant = "core.exile",
          items = {
@@ -89,8 +89,8 @@ data:add_multi(
          },
       },
       {
-         name = "ehekatl",
-         id = 4,
+         id = "ehekatl",
+         legacy_id = 4,
          wish_name = "ehekatl",
          summon = "core.ehekatl",
          servant = "core.black_cat",
@@ -122,8 +122,8 @@ data:add_multi(
          }
       },
       {
-         name = "opatos",
-         id = 5,
+         id = "opatos",
+         legacy_id = 5,
          wish_name = "opatos",
          summon = "core.opatos",
          servant = "core.golden_knight",
@@ -152,8 +152,8 @@ data:add_multi(
          }
       },
       {
-         name = "jure",
-         id = 6,
+         id = "jure",
+         legacy_id = 6,
          wish_name = "jure",
          servant = "core.defender",
          items = {
@@ -183,8 +183,8 @@ data:add_multi(
          },
       },
       {
-         name = "kumiromi",
-         id = 7,
+         id = "kumiromi",
+         legacy_id = 7,
          wish_name = "kumiromi",
          summon = "core.kumiromi",
          servant = "core.cute_fairy",

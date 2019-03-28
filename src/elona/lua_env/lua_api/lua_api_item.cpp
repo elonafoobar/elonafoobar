@@ -184,7 +184,7 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
     if (auto it = args.get<sol::optional<std::string>>("id"))
     {
         auto data = the_item_db.ensure(*it);
-        id = data.id;
+        id = data.legacy_id;
     }
 
     if (itemcreate(slot, id, x, y, number) != 0)
@@ -219,7 +219,7 @@ int LuaApiItem::memory(int type, const std::string& id)
         return 0;
     }
 
-    return itemmemory(type, data->id);
+    return itemmemory(type, data->legacy_id);
 }
 
 /**
@@ -292,7 +292,7 @@ sol::optional<LuaItemHandle> LuaApiItem::find(
     auto location_value =
         LuaEnums::ItemFindLocationTable.ensure_from_string(location);
 
-    auto stat = item_find(data.id, 3, location_value);
+    auto stat = item_find(data.legacy_id, 3, location_value);
     if (stat == -1)
     {
         return sol::nullopt;

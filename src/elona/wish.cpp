@@ -334,7 +334,7 @@ optional<std::pair<SharedId, int>> match_god_summon_wish(
         // This was precomputed to skip any missing fields, so it should
         // succeed.
         auto chara_id = *the_god_db[god_id]->summon_id;
-        auto legacy_chara_id = the_character_db[chara_id]->id;
+        auto legacy_chara_id = the_character_db[chara_id]->legacy_id;
 
         return std::make_pair(god_id, legacy_chara_id);
     }
@@ -566,7 +566,7 @@ bool wish_for_item(const std::string& input)
     const auto wish = fix_wish(input);
     for (const auto& item_data : the_item_db.values())
     {
-        const auto id = item_data.id;
+        const auto id = item_data.legacy_id;
 
         if (id == 0 || id == 23 || id == 290 || id == 289 || id == 361)
             continue;
@@ -708,7 +708,7 @@ bool wish_for_skill(const std::string& input)
 
     for (const auto& ability_data : the_ability_db.values())
     {
-        const int id = ability_data.id;
+        const int id = ability_data.legacy_id;
         const bool is_basic_attribute_excluding_life_and_mana =
             10 <= id && id <= 19;
         const bool is_skill = 100 <= id && id <= 399;
@@ -909,7 +909,7 @@ void initialize_wish_god_summon_keywords()
             continue;
         }
 
-        auto god_id = the_god_db.get_id_from_legacy(data.id);
+        auto god_id = the_god_db.get_id_from_legacy(data.legacy_id);
         assert(god_id);
 
         // English keyword. Will always be available regardless of language.
