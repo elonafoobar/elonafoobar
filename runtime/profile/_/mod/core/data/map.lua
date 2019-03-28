@@ -4,7 +4,7 @@ local Math = Elona.require("Math")
 local Rand = Elona.require("Rand")
 local table = Elona.require("table")
 
-local maps = require("data/map/static")
+local map = require("data/map/static")
 
 local function chara_filter_town(callbacks)
    return function()
@@ -665,7 +665,7 @@ data:add_multi(
          is_generated_every_time = true,
          default_ai_calm = 0,
 
-         generator = maps.puppy_cave,
+         generator = map.puppy_cave,
       },
       {
          id = "minotaurs_nest",
@@ -1061,7 +1061,7 @@ data:add_multi(
    "core.map",
    {
       player_owned {
-         name = "museum",
+         id = "museum",
          legacy_id = 101,
          appearance = 151,
          is_indoor = true,
@@ -1069,7 +1069,7 @@ data:add_multi(
          deed = "core.deed_of_museum",
       },
       player_owned {
-         name = "shop",
+         id = "shop",
          legacy_id = 102,
          is_indoor = true,
          appearance = 150,
@@ -1077,21 +1077,21 @@ data:add_multi(
          deed = "core.deed_of_shop",
       },
       player_owned {
-         name = "crop",
+         id = "crop",
          legacy_id = 103,
          appearance = 152,
          is_indoor = false,
          deed = "core.deed_of_farm",
       },
       player_owned {
-         name = "storage_house",
+         id = "storage_house",
          legacy_id = 104,
          appearance = 153,
          is_indoor = true,
          deed = "core.deed_of_storage_house",
       },
       player_owned {
-         name = "ranch",
+         id = "ranch",
          legacy_id = 31,
          appearance = 154,
          is_indoor = false,
@@ -1099,7 +1099,7 @@ data:add_multi(
          deed = "core.deed_of_ranch",
       },
       player_owned {
-         name = "your_dungeon",
+         id = "your_dungeon",
          legacy_id = 39,
          appearance = 138,
          is_indoor = true,
@@ -1107,7 +1107,7 @@ data:add_multi(
          deed = "core.deed_of_dungeon",
       },
       {
-         name = "random_dungeon",
+         id = "random_dungeon",
          legacy_id = 8,
          entrance_type = "StairUp",
          tile_set = "Normal",

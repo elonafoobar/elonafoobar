@@ -5,7 +5,7 @@
 
 --  @tfield num type
 
---  @tfield num position
+--  @tfield LuaPosition position
 
 --  @tfield num entrance
 

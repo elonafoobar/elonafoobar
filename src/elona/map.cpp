@@ -11,6 +11,8 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/event_manager.hpp"
+#include "lua_env/lua_event/lua_event_nefia_created.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "position.hpp"
@@ -1241,11 +1243,9 @@ static void _create_nefia(int index, int x, int y)
     ctrl_file(FileOperation::temp_dir_delete_area);
 
     auto& area = area_data[index];
-    const auto map = the_mapdef_db["core.random_dungeon"];
-    assert(map);
+    const auto& map = the_mapdef_db.ensure("core.random_dungeon");
 
-    area_generate_from_mapdef(
-        area, **map, game_data.destination_outer_map, x, y);
+    area_generate_from_mapdef(area, map, game_data.destination_outer_map, x, y);
 
     area.type = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
     if (rnd(3))
@@ -1286,6 +1286,8 @@ static void _create_nefia(int index, int x, int y)
         area.appearance = 140;
         area.tile_type = 200;
     }
+
+    lua::lua->get_event_manager().trigger(lua::NefiaCreatedEvent(&area));
 }
 
 

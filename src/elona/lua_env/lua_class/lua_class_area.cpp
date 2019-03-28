@@ -25,7 +25,7 @@ void LuaArea::bind(sol::state& lua)
     LuaArea.set("type", &Area::type);
 
     /**
-     * @luadoc position field num
+     * @luadoc position field LuaPosition
      */
     LuaArea.set("position", &Area::position);
 

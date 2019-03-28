@@ -215,7 +215,7 @@ static optional<const MapDefData&> _find_map_from_deed(int item_id)
 
         if (id && *map.deed == *id)
         {
-            map_id = map.id;
+            map_id = map.legacy_id;
             break;
         }
     }
@@ -236,7 +236,7 @@ static optional<const MapDefData&> _find_map_from_deed(int item_id)
         return none;
     }
 
-    return **map;
+    return *map;
 }
 
 static TurnResult _build_new_home(int home_scale)

@@ -50,5 +50,8 @@ data:add_multi(
       {
          id = "script_loaded"
       },
+      {
+         id = "nefia_created"
+      },
    }
 )

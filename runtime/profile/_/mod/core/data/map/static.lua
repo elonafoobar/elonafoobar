@@ -1,10 +1,9 @@
-local maps = {}
+local map = {}
 
 -- Hardcoded behavior:
 -- - creation of character based on quest (puppy's cave)
-function maps.puppy_cave(generator)
-   print("Generating from Lua")
+function map.puppy_cave(generator)
    generator.generate_nefia()
 end
 
-return maps
+return map

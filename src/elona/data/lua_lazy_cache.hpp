@@ -190,7 +190,7 @@ public:
 
     const DataType& ensure(const char* inner_id)
     {
-        return (*this)[IdType(std::string(inner_id))];
+        return this->ensure(IdType(std::string(inner_id)));
     }
 
     const DataType& ensure(const LegacyIdType& legacy_id)
