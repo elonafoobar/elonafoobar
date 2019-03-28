@@ -522,7 +522,7 @@ const AssetData& get_image_info(const std::string& key)
         data = the_asset_db["core." + key];
     if (!data)
         throw std::runtime_error{u8"Unknown asset ID: "s + key};
-    return **data;
+    return *data;
 }
 
 } // namespace elona

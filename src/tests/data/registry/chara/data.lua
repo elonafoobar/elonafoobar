@@ -3,8 +3,8 @@ data:add(
    {
       {
          type = "core.chara",
-         name = "spiral_putit",
-         id = 9999,
+         id = "spiral_putit",
+         legacy_id = 9999,
          item_type = 2,
          tags = {"slime", "ether"},
          level = 2,

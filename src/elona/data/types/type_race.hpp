@@ -8,7 +8,7 @@ namespace elona
 
 struct RaceData
 {
-    std::string id;
+    SharedId id;
     bool is_extra;
     int ordering;
     int male_image;

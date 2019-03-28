@@ -3,7 +3,7 @@ local I18N = Elona.require("I18N")
 local World = Elona.require("World")
 
 return {
-   name = "orphe",
+   id = "orphe",
    root = "core.locale.talk.unique.orphe",
 
    nodes = {

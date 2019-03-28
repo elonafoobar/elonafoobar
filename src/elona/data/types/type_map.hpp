@@ -9,7 +9,8 @@ namespace elona
 
 struct MapDefData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     int appearance{};
     mdata_t::MapType map_type;
     SharedId outer_map{};
@@ -45,7 +46,11 @@ struct MapDefData
     optional<lua::WrappedFunction> chara_filter{};
 };
 
+
+
 ELONA_DEFINE_LUA_DB(MapDefDB, MapDefData, true, "core.map")
+
+
 
 extern MapDefDB the_mapdef_db;
 

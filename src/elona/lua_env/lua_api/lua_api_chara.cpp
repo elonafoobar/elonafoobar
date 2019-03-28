@@ -130,14 +130,9 @@ sol::optional<LuaCharacterHandle> LuaApiChara::create_from_id(
 sol::optional<LuaCharacterHandle>
 LuaApiChara::create_from_id_xy(int x, int y, const std::string& id)
 {
-    auto data = the_character_db[id];
-    if (!data)
-    {
-        throw sol::error("No such character " + id);
-    }
+    auto data = the_character_db.ensure(id);
 
-
-    if (elona::chara_create(-1, data->id, x, y) != 0)
+    if (elona::chara_create(-1, data.legacy_id, x, y) != 0)
     {
         return lua::handle(elona::cdata[elona::rc]);
     }
@@ -205,7 +200,7 @@ int LuaApiChara::kill_count(const std::string& id)
     {
         return 0;
     }
-    return npcmemory(0, data->id);
+    return npcmemory(0, data->legacy_id);
 }
 
 
@@ -239,7 +234,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(
     int result = 0;
     if (location_value == CharaFindLocation::allies)
     {
-        result = chara_find_ally(data->id);
+        result = chara_find_ally(data->legacy_id);
 
         if (result == -1)
         {
@@ -248,7 +243,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(
     }
     else
     {
-        result = chara_find(data->id);
+        result = chara_find(data->legacy_id);
 
         if (result == 0)
         {

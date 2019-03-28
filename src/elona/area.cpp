@@ -164,7 +164,7 @@ void initialize_adata()
         auto outer_map = the_mapdef_db[map.outer_map];
         if (!outer_map)
         {
-            auto id = the_mapdef_db.get_id_from_legacy(map.id)->get();
+            auto id = the_mapdef_db.get_id_from_legacy(map.legacy_id)->get();
             throw std::runtime_error{
                 "Error when initializing area data. Can't find outer map '"s +
                 map.outer_map.get() + "' for map '" + id + "'."};
@@ -176,7 +176,7 @@ void initialize_adata()
             continue;
         }
 
-        int map_id = map.id;
+        int map_id = map.legacy_id;
         auto& area = area_data[map_id];
 
         area.id = map_id;
@@ -201,7 +201,7 @@ void initialize_adata()
             area.appearance = map.appearance;
             area.tile_set = map.tile_set;
             area.tile_type = map.tile_type;
-            area.outer_map = outer_map->id;
+            area.outer_map = outer_map->legacy_id;
         }
     }
 }
@@ -213,7 +213,7 @@ void area_generate_from_mapdef(
     int x,
     int y)
 {
-    area.id = map.id;
+    area.id = map.legacy_id;
     area.appearance = map.appearance;
     area.is_indoor = map.is_indoor;
     area.position.x = x;

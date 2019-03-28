@@ -18,7 +18,7 @@ local function give_potion()
 end
 
 return {
-   name = "lily",
+   id = "lily",
    root = "core.locale.talk.unique.lily",
    nodes = {
       __start = function()

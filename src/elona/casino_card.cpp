@@ -56,7 +56,7 @@ void showcard2(int card_index, bool show_rank = true)
         {
             gmode(2, 220);
             snail::Color rank_color{0, 0, 0};
-            optional_ref<Extent> rect;
+            optional_ref<const Extent> rect;
             switch (suit)
             {
             case Suit::spades:
@@ -80,6 +80,7 @@ void showcard2(int card_index, bool show_rank = true)
                 rank_color = {250, 250, 105, 255};
                 break;
             }
+            assert(rect);
             set_color_mod(
                 rank_color.r, rank_color.g, rank_color.b, rect->buffer);
             gcopy(

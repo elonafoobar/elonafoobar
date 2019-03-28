@@ -21,7 +21,7 @@ EventManager::EventManager(LuaEnv* lua)
 
 void EventManager::remove_unknown_events()
 {
-    env["remove_unknown_events"](lua->get_data_manager().get().storage);
+    env["remove_unknown_events"](lua->get_data_manager().get().storage());
 }
 
 EventResult EventManager::trigger(const BaseEvent& event)

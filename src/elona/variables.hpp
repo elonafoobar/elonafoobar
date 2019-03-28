@@ -770,7 +770,7 @@ int key_direction(const std::string& action);
 
 // Querying input
 int ask_direction();
-int target_position();
+int target_position(bool target_chara = true);
 int prompt_magic_location();
 int prompt_really_attack();
 

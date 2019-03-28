@@ -1,18 +1,18 @@
-local function make_atlas(index)
+local function make_atlas(atlas_index)
    local atlas = {}
    for y=0,24 do
       for x=0,33 do
-         local id = x + y * 33
-         atlas[id] = {
-            id = id,
-            name = tostring(index) .. "_" .. tostring(id),
-            atlas = index,
+         local chip_index = x + y * 33
+         atlas[chip_index] = {
+            id = tostring(atlas_index) .. "_" .. tostring(chip_index),
+            legacy_id = chip_index,
+            atlas = atlas_index,
             source = {
                x = x * 48,
                y = y * 48
             }
          }
-         if id == 824 then
+         if chip_index == 824 then
             break
          end
       end

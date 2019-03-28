@@ -121,7 +121,7 @@ std::vector<CharaChip> chara_chips{925};
  * Obtains the window buffer and region where the character sprite with ID @a id
  * is located, for use with @ref gcopy.
  */
-optional_ref<Extent> draw_get_rect_chara(int id)
+optional_ref<const Extent> draw_get_rect_chara(int id)
 {
     return draw_get_rect(chara_chips[id].key);
 }
@@ -132,7 +132,7 @@ optional_ref<Extent> draw_get_rect_chara(int id)
  * Obtains the window buffer and region where the item sprite with ID @a id
  * is located, for use with @ref gcopy.
  */
-optional_ref<Extent> draw_get_rect_item(int id)
+optional_ref<const Extent> draw_get_rect_item(int id)
 {
     return draw_get_rect(item_chips[id].key);
 }
@@ -143,14 +143,14 @@ optional_ref<Extent> draw_get_rect_item(int id)
  * Obtains the window buffer and region where the portrait with ID @a key
  * is located, for use with @ref gcopy.
  */
-optional_ref<Extent> draw_get_rect_portrait(const std::string& key)
+optional_ref<const Extent> draw_get_rect_portrait(const std::string& key)
 {
     return loader["core.portrait"s + data_id_separator + key];
 }
 
 
 
-optional_ref<Extent> draw_get_rect(const std::string& key)
+optional_ref<const Extent> draw_get_rect(const std::string& key)
 {
     return loader[key];
 }
@@ -160,7 +160,7 @@ optional_ref<Extent> draw_get_rect(const std::string& key)
  * Applies a color to the item sprite of ID @a id and copies it to the scratch
  * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
  */
-optional_ref<Extent> prepare_item_image(int id, int color)
+optional_ref<const Extent> prepare_item_image(int id, int color)
 {
     const auto rect = draw_get_rect_item(id);
 
@@ -190,14 +190,15 @@ optional_ref<Extent> prepare_item_image(int id, int color)
  * This variant is intended for use with cards/figures and copies the character
  * sprite indicated by @a character_image to the appropriate location for each.
  */
-optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
+optional_ref<const Extent>
+prepare_item_image(int id, int color, int character_image)
 {
     if (id != 528 && id != 531)
     {
         return prepare_item_image(id, color);
     }
 
-    optional_ref<Extent> item_rect;
+    optional_ref<const Extent> item_rect;
 
     if (id == 528) // Cards
     {
@@ -580,14 +581,14 @@ void set_pcc_depending_on_equipments(int cc, int ci)
 
 
 
-optional_ref<Extent> chara_preparepic(const Character& cc)
+optional_ref<const Extent> chara_preparepic(const Character& cc)
 {
     return chara_preparepic(cc.image);
 }
 
 
 
-optional_ref<Extent> chara_preparepic(int image_id)
+optional_ref<const Extent> chara_preparepic(int image_id)
 {
     const auto chip_id = image_id % 1000;
     const auto color_id = image_id / 1000;
@@ -726,7 +727,7 @@ void initialize_map_chips(const MapChipDB& db)
     {
         auto& atlas = chip_data.get_map(data.atlas);
 
-        atlas[data.id] = data;
+        atlas[data.legacy_id] = data;
     }
 
     {
@@ -885,7 +886,7 @@ void initialize_item_chips(const ItemChipDB& db)
     for (const auto& chip_data : db.values())
     {
         SharedId key = chip_data.chip.key;
-        int legacy_id = chip_data.id;
+        int legacy_id = chip_data.legacy_id;
 
         // insert chip data into global vector.
         if (static_cast<int>(item_chips.size()) < legacy_id)
@@ -950,7 +951,7 @@ void initialize_chara_chips(const CharaChipDB& db)
     for (const auto& chip_data : db.values())
     {
         SharedId key = chip_data.chip.key;
-        int legacy_id = chip_data.id;
+        int legacy_id = chip_data.legacy_id;
 
         // Insert chip data into global vector.
         if (static_cast<int>(chara_chips.size()) < legacy_id)
@@ -1147,7 +1148,7 @@ void draw_item_with_portrait(
     int x,
     int y)
 {
-    optional_ref<Extent> rect;
+    optional_ref<const Extent> rect;
 
     if (chara_chip_id)
     {
@@ -1185,7 +1186,7 @@ void draw_item_with_portrait_scale_height(
     int x,
     int y)
 {
-    optional_ref<Extent> rect;
+    optional_ref<const Extent> rect;
 
     if (chara_chip_id)
     {

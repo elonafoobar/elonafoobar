@@ -62,7 +62,7 @@ local function run_life()
       for y = 1, Map.width() do
          for x = 1, Map.height() do
             local tile
-            if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
+            if Store.map_local.grid[x][y] == 1 and Map.is_blocked(x, y) then
                tile = Map.generate_tile("Wall")
             else
                tile = Map.generate_tile("Room")
@@ -112,16 +112,16 @@ Next we iterate over every x-y pair in the map. Since there is only ever one map
 
 ```
             local tile
-            if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
+            if Store.map_local.grid[x][y] == 1 and Map.is_blocked(x, y) then
                tile = Map.generate_tile(Enums.TileKind.Wall)
             else
                tile = Map.generate_tile(Enums.TileKind.Room)
             end
             Map.set_tile(x, y, tile)
-            Map.set_tile_memory(x, y, tile)
+            Map.set_memory(x, y, tile)
 ```
 
-Here is where we make use of the `Map` module to modify the map. You can read the documentation for `Map.can_access`, `Map.generate_tile` and `Map.set_tile` elsewhere in the docs. Essentially, if the simulation reports a cell with value 1, we set that square to a wall tile, else to a floor tile. We also make sure to set the player's memory of that tile so they can see it even if it's out of field of view.
+Here is where we make use of the `Map` module to modify the map. You can read the documentation for `Map.is_blocked`, `Map.generate_tile` and `Map.set_tile` elsewhere in the docs. Essentially, if the simulation reports a cell with value 1, we set that square to a wall tile, else to a floor tile. We also make sure to set the player's memory of that tile so they can see it even if it's out of field of view.
 
 We also use the enum type `TileKind` here. Some functions take enums to denote one of several different states an object can be in, like the curse state of an object (`Blessed`, `None`, `Cursed`, or `Doomed`). These will typically be found inside the `Enum` module. You also can pass the name of the enum itself without using the `Enums` table (like `Map.generate_tile("Wall")`), to avoid having to `require` `Enums` all the time.
 

@@ -3,1416 +3,1416 @@ data:add_multi(
    "core.chara_chip",
    {
       {
-         name = "_0",
-         id = 0,
+         id = "_0",
+         legacy_id = 0,
          source = {
             x = 0,
             y = 0,
          }
       },
       {
-         name = "human_male",
-         id = 1,
+         id = "human_male",
+         legacy_id = 1,
          source = {
             x = 48,
             y = 0,
          }
       },
       {
-         name = "human_female",
-         id = 2,
+         id = "human_female",
+         legacy_id = 2,
          source = {
             x = 96,
             y = 0,
          }
       },
       {
-         name = "elea_male",
-         id = 3,
+         id = "elea_male",
+         legacy_id = 3,
          source = {
             x = 144,
             y = 0,
          }
       },
       {
-         name = "elea_female",
-         id = 4,
+         id = "elea_female",
+         legacy_id = 4,
          source = {
             x = 192,
             y = 0,
          }
       },
       {
-         name = "eulderna_male",
-         id = 5,
+         id = "eulderna_male",
+         legacy_id = 5,
          source = {
             x = 240,
             y = 0,
          }
       },
       {
-         name = "eulderna_female",
-         id = 6,
+         id = "eulderna_female",
+         legacy_id = 6,
          source = {
             x = 288,
             y = 0,
          }
       },
       {
-         name = "trainer_male",
-         id = 7,
+         id = "trainer_male",
+         legacy_id = 7,
          source = {
             x = 336,
             y = 0,
          }
       },
       {
-         name = "miches",
-         id = 8,
+         id = "miches",
+         legacy_id = 8,
          source = {
             x = 384,
             y = 0,
          }
       },
       {
-         name = "juere_male",
-         id = 9,
+         id = "juere_male",
+         legacy_id = 9,
          source = {
             x = 432,
             y = 0,
          }
       },
       {
-         name = "juere_female",
-         id = 10,
+         id = "juere_female",
+         legacy_id = 10,
          source = {
             x = 480,
             y = 0,
          }
       },
       {
-         name = "_11",
-         id = 11,
+         id = "_11",
+         legacy_id = 11,
          source = {
             x = 528,
             y = 0,
          }
       },
       {
-         name = "_12",
-         id = 12,
+         id = "_12",
+         legacy_id = 12,
          source = {
             x = 576,
             y = 0,
          }
       },
       {
-         name = "wizard_male",
-         id = 13,
+         id = "wizard_male",
+         legacy_id = 13,
          source = {
             x = 624,
             y = 0,
          }
       },
       {
-         name = "wizard_female",
-         id = 14,
+         id = "wizard_female",
+         legacy_id = 14,
          source = {
             x = 672,
             y = 0,
          }
       },
       {
-         name = "informer_male",
-         id = 15,
+         id = "informer_male",
+         legacy_id = 15,
          source = {
             x = 720,
             y = 0,
          }
       },
       {
-         name = "informer_female",
-         id = 16,
+         id = "informer_female",
+         legacy_id = 16,
          source = {
             x = 768,
             y = 0,
          }
       },
       {
-         name = "_17",
-         id = 17,
+         id = "_17",
+         legacy_id = 17,
          source = {
             x = 816,
             y = 0,
          }
       },
       {
-         name = "_18",
-         id = 18,
+         id = "_18",
+         legacy_id = 18,
          source = {
             x = 864,
             y = 0,
          }
       },
       {
-         name = "_19",
-         id = 19,
+         id = "_19",
+         legacy_id = 19,
          source = {
             x = 912,
             y = 0,
          }
       },
       {
-         name = "warrior_female",
-         id = 20,
+         id = "warrior_female",
+         legacy_id = 20,
          source = {
             x = 960,
             y = 0,
          }
       },
       {
-         name = "warrior_male",
-         id = 21,
+         id = "warrior_male",
+         legacy_id = 21,
          source = {
             x = 1008,
             y = 0,
          }
       },
       {
-         name = "_22",
-         id = 22,
+         id = "_22",
+         legacy_id = 22,
          source = {
             x = 1056,
             y = 0,
          }
       },
       {
-         name = "moyer_the_crooked",
-         id = 23,
+         id = "moyer_the_crooked",
+         legacy_id = 23,
          source = {
             x = 1104,
             y = 0,
          }
       },
       {
-         name = "_24",
-         id = 24,
+         id = "_24",
+         legacy_id = 24,
          source = {
             x = 1152,
             y = 0,
          }
       },
       {
-         name = "guard",
-         id = 25,
+         id = "guard",
+         legacy_id = 25,
          source = {
             x = 1200,
             y = 0,
          }
       },
       {
-         name = "_26",
-         id = 26,
+         id = "_26",
+         legacy_id = 26,
          source = {
             x = 1248,
             y = 0,
          }
       },
       {
-         name = "punk_female",
-         id = 27,
+         id = "punk_female",
+         legacy_id = 27,
          source = {
             x = 1296,
             y = 0,
          }
       },
       {
-         name = "_28",
-         id = 28,
+         id = "_28",
+         legacy_id = 28,
          source = {
             x = 1344,
             y = 0,
          }
       },
       {
-         name = "_29",
-         id = 29,
+         id = "_29",
+         legacy_id = 29,
          source = {
             x = 1392,
             y = 0,
          }
       },
       {
-         name = "_30",
-         id = 30,
+         id = "_30",
+         legacy_id = 30,
          source = {
             x = 1440,
             y = 0,
          }
       },
       {
-         name = "gangster_male",
-         id = 31,
+         id = "gangster_male",
+         legacy_id = 31,
          source = {
             x = 1488,
             y = 0,
          }
       },
       {
-         name = "_32",
-         id = 32,
+         id = "_32",
+         legacy_id = 32,
          source = {
             x = 1536,
             y = 0,
          }
       },
       {
-         name = "_33",
-         id = 33,
+         id = "_33",
+         legacy_id = 33,
          source = {
             x = 0,
             y = 48,
          }
       },
       {
-         name = "warrior_of_elea_female",
-         id = 34,
+         id = "warrior_of_elea_female",
+         legacy_id = 34,
          source = {
             x = 48,
             y = 48,
          }
       },
       {
-         name = "_35",
-         id = 35,
+         id = "_35",
+         legacy_id = 35,
          source = {
             x = 96,
             y = 48,
          }
       },
       {
-         name = "gangster_female",
-         id = 36,
+         id = "gangster_female",
+         legacy_id = 36,
          source = {
             x = 144,
             y = 48,
          }
       },
       {
-         name = "fallen_soldier",
-         id = 37,
+         id = "fallen_soldier",
+         legacy_id = 37,
          source = {
             x = 192,
             y = 48,
          }
       },
       {
-         name = "_38",
-         id = 38,
+         id = "_38",
+         legacy_id = 38,
          source = {
             x = 240,
             y = 48,
          }
       },
       {
-         name = "_39",
-         id = 39,
+         id = "_39",
+         legacy_id = 39,
          source = {
             x = 288,
             y = 48,
          }
       },
       {
-         name = "_40",
-         id = 40,
+         id = "_40",
+         legacy_id = 40,
          source = {
             x = 336,
             y = 48,
          }
       },
       {
-         name = "arena_master",
-         id = 41,
+         id = "arena_master",
+         legacy_id = 41,
          source = {
             x = 384,
             y = 48,
          }
       },
       {
-         name = "wizard_of_elea_female",
-         id = 42,
+         id = "wizard_of_elea_female",
+         legacy_id = 42,
          source = {
             x = 432,
             y = 48,
          }
       },
       {
-         name = "_43",
-         id = 43,
+         id = "_43",
+         legacy_id = 43,
          source = {
             x = 480,
             y = 48,
          }
       },
       {
-         name = "_44",
-         id = 44,
+         id = "_44",
+         legacy_id = 44,
          source = {
             x = 528,
             y = 48,
          }
       },
       {
-         name = "_45",
-         id = 45,
+         id = "_45",
+         legacy_id = 45,
          source = {
             x = 576,
             y = 48,
          }
       },
       {
-         name = "_46",
-         id = 46,
+         id = "_46",
+         legacy_id = 46,
          source = {
             x = 624,
             y = 48,
          }
       },
       {
-         name = "wizard_of_elea_male",
-         id = 47,
+         id = "wizard_of_elea_male",
+         legacy_id = 47,
          source = {
             x = 672,
             y = 48,
          }
       },
       {
-         name = "_48",
-         id = 48,
+         id = "_48",
+         legacy_id = 48,
          source = {
             x = 720,
             y = 48,
          }
       },
       {
-         name = "_49",
-         id = 49,
+         id = "_49",
+         legacy_id = 49,
          source = {
             x = 768,
             y = 48,
          }
       },
       {
-         name = "_50",
-         id = 50,
+         id = "_50",
+         legacy_id = 50,
          source = {
             x = 816,
             y = 48,
          }
       },
       {
-         name = "_51",
-         id = 51,
+         id = "_51",
+         legacy_id = 51,
          source = {
             x = 864,
             y = 48,
          }
       },
       {
-         name = "_52",
-         id = 52,
+         id = "_52",
+         legacy_id = 52,
          source = {
             x = 912,
             y = 48,
          }
       },
       {
-         name = "_53",
-         id = 53,
+         id = "_53",
+         legacy_id = 53,
          source = {
             x = 960,
             y = 48,
          }
       },
       {
-         name = "_54",
-         id = 54,
+         id = "_54",
+         legacy_id = 54,
          source = {
             x = 1008,
             y = 48,
          }
       },
       {
-         name = "_55",
-         id = 55,
+         id = "_55",
+         legacy_id = 55,
          source = {
             x = 1056,
             y = 48,
          }
       },
       {
-         name = "_56",
-         id = 56,
+         id = "_56",
+         legacy_id = 56,
          source = {
             x = 1104,
             y = 48,
          }
       },
       {
-         name = "mercenary_archer",
-         id = 57,
+         id = "mercenary_archer",
+         legacy_id = 57,
          source = {
             x = 1152,
             y = 48,
          }
       },
       {
-         name = "_58",
-         id = 58,
+         id = "_58",
+         legacy_id = 58,
          source = {
             x = 1200,
             y = 48,
          }
       },
       {
-         name = "_59",
-         id = 59,
+         id = "_59",
+         legacy_id = 59,
          source = {
             x = 1248,
             y = 48,
          }
       },
       {
-         name = "_60",
-         id = 60,
+         id = "_60",
+         legacy_id = 60,
          source = {
             x = 1296,
             y = 48,
          }
       },
       {
-         name = "_61",
-         id = 61,
+         id = "_61",
+         legacy_id = 61,
          source = {
             x = 1344,
             y = 48,
          }
       },
       {
-         name = "_62",
-         id = 62,
+         id = "_62",
+         legacy_id = 62,
          source = {
             x = 1392,
             y = 48,
          }
       },
       {
-         name = "_63",
-         id = 63,
+         id = "_63",
+         legacy_id = 63,
          source = {
             x = 1440,
             y = 48,
          }
       },
       {
-         name = "_64",
-         id = 64,
+         id = "_64",
+         legacy_id = 64,
          source = {
             x = 1488,
             y = 48,
          }
       },
       {
-         name = "_65",
-         id = 65,
+         id = "_65",
+         legacy_id = 65,
          source = {
             x = 1536,
             y = 48,
          }
       },
       {
-         name = "dwarf",
-         id = 66,
+         id = "dwarf",
+         legacy_id = 66,
          source = {
             x = 0,
             y = 96,
          }
       },
       {
-         name = "_67",
-         id = 67,
+         id = "_67",
+         legacy_id = 67,
          source = {
             x = 48,
             y = 96,
          }
       },
       {
-         name = "_68",
-         id = 68,
+         id = "_68",
+         legacy_id = 68,
          source = {
             x = 96,
             y = 96,
          }
       },
       {
-         name = "healer",
-         id = 69,
+         id = "healer",
+         legacy_id = 69,
          source = {
             x = 144,
             y = 96,
          }
       },
       {
-         name = "rich_person_female",
-         id = 70,
+         id = "rich_person_female",
+         legacy_id = 70,
          source = {
             x = 192,
             y = 96,
          }
       },
       {
-         name = "rich_person_male",
-         id = 71,
+         id = "rich_person_male",
+         legacy_id = 71,
          source = {
             x = 240,
             y = 96,
          }
       },
       {
-         name = "noble_child_female",
-         id = 72,
+         id = "noble_child_female",
+         legacy_id = 72,
          source = {
             x = 288,
             y = 96,
          }
       },
       {
-         name = "noble_child_male",
-         id = 73,
+         id = "noble_child_male",
+         legacy_id = 73,
          source = {
             x = 336,
             y = 96,
          }
       },
       {
-         name = "palmian_elite_soldier_male",
-         id = 74,
+         id = "palmian_elite_soldier_male",
+         legacy_id = 74,
          source = {
             x = 384,
             y = 96,
          }
       },
       {
-         name = "palmian_elite_soldier_female",
-         id = 75,
+         id = "palmian_elite_soldier_female",
+         legacy_id = 75,
          source = {
             x = 432,
             y = 96,
          }
       },
       {
-         name = "thief_guild_member_male",
-         id = 76,
+         id = "thief_guild_member_male",
+         legacy_id = 76,
          source = {
             x = 480,
             y = 96,
          }
       },
       {
-         name = "thief_guild_member_female",
-         id = 77,
+         id = "thief_guild_member_female",
+         legacy_id = 77,
          source = {
             x = 528,
             y = 96,
          }
       },
       {
-         name = "fighter_guild_member_male",
-         id = 78,
+         id = "fighter_guild_member_male",
+         legacy_id = 78,
          source = {
             x = 576,
             y = 96,
          }
       },
       {
-         name = "fighter_guild_member_female",
-         id = 79,
+         id = "fighter_guild_member_female",
+         legacy_id = 79,
          source = {
             x = 624,
             y = 96,
          }
       },
       {
-         name = "fray",
-         id = 80,
+         id = "fray",
+         legacy_id = 80,
          source = {
             x = 672,
             y = 96,
          }
       },
       {
-         name = "_81",
-         id = 81,
+         id = "_81",
+         legacy_id = 81,
          source = {
             x = 720,
             y = 96,
          }
       },
       {
-         name = "_82",
-         id = 82,
+         id = "_82",
+         legacy_id = 82,
          source = {
             x = 768,
             y = 96,
          }
       },
       {
-         name = "_83",
-         id = 83,
+         id = "_83",
+         legacy_id = 83,
          source = {
             x = 816,
             y = 96,
          }
       },
       {
-         name = "_84",
-         id = 84,
+         id = "_84",
+         legacy_id = 84,
          source = {
             x = 864,
             y = 96,
          }
       },
       {
-         name = "_85",
-         id = 85,
+         id = "_85",
+         legacy_id = 85,
          source = {
             x = 912,
             y = 96,
          }
       },
       {
-         name = "_86",
-         id = 86,
+         id = "_86",
+         legacy_id = 86,
          source = {
             x = 960,
             y = 96,
          }
       },
       {
-         name = "_87",
-         id = 87,
+         id = "_87",
+         legacy_id = 87,
          source = {
             x = 1008,
             y = 96,
          }
       },
       {
-         name = "_88",
-         id = 88,
+         id = "_88",
+         legacy_id = 88,
          source = {
             x = 1056,
             y = 96,
          }
       },
       {
-         name = "_89",
-         id = 89,
+         id = "_89",
+         legacy_id = 89,
          source = {
             x = 1104,
             y = 96,
          }
       },
       {
-         name = "_90",
-         id = 90,
+         id = "_90",
+         legacy_id = 90,
          source = {
             x = 1152,
             y = 96,
          }
       },
       {
-         name = "_91",
-         id = 91,
+         id = "_91",
+         legacy_id = 91,
          source = {
             x = 1200,
             y = 96,
          }
       },
       {
-         name = "_92",
-         id = 92,
+         id = "_92",
+         legacy_id = 92,
          source = {
             x = 1248,
             y = 96,
          }
       },
       {
-         name = "_93",
-         id = 93,
+         id = "_93",
+         legacy_id = 93,
          source = {
             x = 1296,
             y = 96,
          }
       },
       {
-         name = "_94",
-         id = 94,
+         id = "_94",
+         legacy_id = 94,
          source = {
             x = 1344,
             y = 96,
          }
       },
       {
-         name = "_95",
-         id = 95,
+         id = "_95",
+         legacy_id = 95,
          source = {
             x = 1392,
             y = 96,
          }
       },
       {
-         name = "_96",
-         id = 96,
+         id = "_96",
+         legacy_id = 96,
          source = {
             x = 1440,
             y = 96,
          }
       },
       {
-         name = "_97",
-         id = 97,
+         id = "_97",
+         legacy_id = 97,
          source = {
             x = 1488,
             y = 96,
          }
       },
       {
-         name = "_98",
-         id = 98,
+         id = "_98",
+         legacy_id = 98,
          source = {
             x = 1536,
             y = 96,
          }
       },
       {
-         name = "karam",
-         id = 99,
+         id = "karam",
+         legacy_id = 99,
          source = {
             x = 0,
             y = 144,
          }
       },
       {
-         name = "mercenary_wizard",
-         id = 100,
+         id = "mercenary_wizard",
+         legacy_id = 100,
          source = {
             x = 48,
             y = 144,
          }
       },
       {
-         name = "_101",
-         id = 101,
+         id = "_101",
+         legacy_id = 101,
          source = {
             x = 96,
             y = 144,
          }
       },
       {
-         name = "beggar_male",
-         id = 102,
+         id = "beggar_male",
+         legacy_id = 102,
          source = {
             x = 144,
             y = 144,
          }
       },
       {
-         name = "beggar_female",
-         id = 103,
+         id = "beggar_female",
+         legacy_id = 103,
          source = {
             x = 192,
             y = 144,
          }
       },
       {
-         name = "maid_male",
-         id = 104,
+         id = "maid_male",
+         legacy_id = 104,
          source = {
             x = 240,
             y = 144,
          }
       },
       {
-         name = "maid_female",
-         id = 105,
+         id = "maid_female",
+         legacy_id = 105,
          source = {
             x = 288,
             y = 144,
          }
       },
       {
-         name = "old_person_male",
-         id = 106,
+         id = "old_person_male",
+         legacy_id = 106,
          source = {
             x = 336,
             y = 144,
          }
       },
       {
-         name = "old_person_female",
-         id = 107,
+         id = "old_person_female",
+         legacy_id = 107,
          source = {
             x = 384,
             y = 144,
          }
       },
       {
-         name = "_108",
-         id = 108,
+         id = "_108",
+         legacy_id = 108,
          source = {
             x = 432,
             y = 144,
          }
       },
       {
-         name = "shena",
-         id = 109,
+         id = "shena",
+         legacy_id = 109,
          source = {
             x = 480,
             y = 144,
          }
       },
       {
-         name = "_110",
-         id = 110,
+         id = "_110",
+         legacy_id = 110,
          source = {
             x = 528,
             y = 144,
          }
       },
       {
-         name = "_111",
-         id = 111,
+         id = "_111",
+         legacy_id = 111,
          source = {
             x = 576,
             y = 144,
          }
       },
       {
-         name = "punk_male",
-         id = 112,
+         id = "punk_male",
+         legacy_id = 112,
          source = {
             x = 624,
             y = 144,
          }
       },
       {
-         name = "_113",
-         id = 113,
+         id = "_113",
+         legacy_id = 113,
          source = {
             x = 672,
             y = 144,
          }
       },
       {
-         name = "_114",
-         id = 114,
+         id = "_114",
+         legacy_id = 114,
          source = {
             x = 720,
             y = 144,
          }
       },
       {
-         name = "_115",
-         id = 115,
+         id = "_115",
+         legacy_id = 115,
          source = {
             x = 768,
             y = 144,
          }
       },
       {
-         name = "xabi",
-         id = 116,
+         id = "xabi",
+         legacy_id = 116,
          source = {
             x = 816,
             y = 144,
          }
       },
       {
-         name = "test_subject",
-         id = 117,
+         id = "test_subject",
+         legacy_id = 117,
          source = {
             x = 864,
             y = 144,
          }
       },
       {
-         name = "_118",
-         id = 118,
+         id = "_118",
+         legacy_id = 118,
          source = {
             x = 912,
             y = 144,
          }
       },
       {
-         name = "captain",
-         id = 119,
+         id = "captain",
+         legacy_id = 119,
          source = {
             x = 960,
             y = 144,
          }
       },
       {
-         name = "sailor_male",
-         id = 120,
+         id = "sailor_male",
+         legacy_id = 120,
          source = {
             x = 1008,
             y = 144,
          }
       },
       {
-         name = "sailor_female",
-         id = 121,
+         id = "sailor_female",
+         legacy_id = 121,
          source = {
             x = 1056,
             y = 144,
          }
       },
       {
-         name = "tourist_male",
-         id = 122,
+         id = "tourist_male",
+         legacy_id = 122,
          source = {
             x = 1104,
             y = 144,
          }
       },
       {
-         name = "_123",
-         id = 123,
+         id = "_123",
+         legacy_id = 123,
          source = {
             x = 1152,
             y = 144,
          }
       },
       {
-         name = "_124",
-         id = 124,
+         id = "_124",
+         legacy_id = 124,
          source = {
             x = 1200,
             y = 144,
          }
       },
       {
-         name = "_125",
-         id = 125,
+         id = "_125",
+         legacy_id = 125,
          source = {
             x = 1248,
             y = 144,
          }
       },
       {
-         name = "_126",
-         id = 126,
+         id = "_126",
+         legacy_id = 126,
          source = {
             x = 1296,
             y = 144,
          }
       },
       {
-         name = "citizen_of_cyber_dome2_male",
-         id = 127,
+         id = "citizen_of_cyber_dome2_male",
+         legacy_id = 127,
          source = {
             x = 1344,
             y = 144,
          }
       },
       {
-         name = "citizen_of_cyber_dome_male",
-         id = 128,
+         id = "citizen_of_cyber_dome_male",
+         legacy_id = 128,
          source = {
             x = 1392,
             y = 144,
          }
       },
       {
-         name = "citizen_of_cyber_dome_female",
-         id = 129,
+         id = "citizen_of_cyber_dome_female",
+         legacy_id = 129,
          source = {
             x = 1440,
             y = 144,
          }
       },
       {
-         name = "_130",
-         id = 130,
+         id = "_130",
+         legacy_id = 130,
          source = {
             x = 1488,
             y = 144,
          }
       },
       {
-         name = "citizen_of_cyber_dome2_female",
-         id = 131,
+         id = "citizen_of_cyber_dome2_female",
+         legacy_id = 131,
          source = {
             x = 1536,
             y = 144,
          }
       },
       {
-         name = "_132",
-         id = 132,
+         id = "_132",
+         legacy_id = 132,
          source = {
             x = 0,
             y = 192,
          }
       },
       {
-         name = "_133",
-         id = 133,
+         id = "_133",
+         legacy_id = 133,
          source = {
             x = 48,
             y = 192,
          }
       },
       {
-         name = "citizen2_male",
-         id = 134,
+         id = "citizen2_male",
+         legacy_id = 134,
          source = {
             x = 96,
             y = 192,
          }
       },
       {
-         name = "citizen2_female",
-         id = 135,
+         id = "citizen2_female",
+         legacy_id = 135,
          source = {
             x = 144,
             y = 192,
          }
       },
       {
-         name = "citizen_male",
-         id = 136,
+         id = "citizen_male",
+         legacy_id = 136,
          source = {
             x = 192,
             y = 192,
          }
       },
       {
-         name = "citizen_female",
-         id = 137,
+         id = "citizen_female",
+         legacy_id = 137,
          source = {
             x = 240,
             y = 192,
          }
       },
       {
-         name = "_138",
-         id = 138,
+         id = "_138",
+         legacy_id = 138,
          source = {
             x = 288,
             y = 192,
          }
       },
       {
-         name = "mercenary_male",
-         id = 139,
+         id = "mercenary_male",
+         legacy_id = 139,
          source = {
             x = 336,
             y = 192,
          }
       },
       {
-         name = "shopkeeper_male",
-         id = 140,
+         id = "shopkeeper_male",
+         legacy_id = 140,
          source = {
             x = 384,
             y = 192,
          }
       },
       {
-         name = "shopkeeper_female",
-         id = 141,
+         id = "shopkeeper_female",
+         legacy_id = 141,
          source = {
             x = 432,
             y = 192,
          }
       },
       {
-         name = "elder_male",
-         id = 142,
+         id = "elder_male",
+         legacy_id = 142,
          source = {
             x = 480,
             y = 192,
          }
       },
       {
-         name = "elder_female",
-         id = 143,
+         id = "elder_female",
+         legacy_id = 143,
          source = {
             x = 528,
             y = 192,
          }
       },
       {
-         name = "bartender_male",
-         id = 144,
+         id = "bartender_male",
+         legacy_id = 144,
          source = {
             x = 576,
             y = 192,
          }
       },
       {
-         name = "bartender_female",
-         id = 145,
+         id = "bartender_female",
+         legacy_id = 145,
          source = {
             x = 624,
             y = 192,
          }
       },
       {
-         name = "sales_person_male",
-         id = 146,
+         id = "sales_person_male",
+         legacy_id = 146,
          source = {
             x = 672,
             y = 192,
          }
       },
       {
-         name = "sales_person_female",
-         id = 147,
+         id = "sales_person_female",
+         legacy_id = 147,
          source = {
             x = 720,
             y = 192,
          }
       },
       {
-         name = "bard",
-         id = 148,
+         id = "bard",
+         legacy_id = 148,
          source = {
             x = 768,
             y = 192,
          }
       },
       {
-         name = "_149",
-         id = 149,
+         id = "_149",
+         legacy_id = 149,
          source = {
             x = 816,
             y = 192,
          }
       },
       {
-         name = "rogue_boss",
-         id = 150,
+         id = "rogue_boss",
+         legacy_id = 150,
          source = {
             x = 864,
             y = 192,
          }
       },
       {
-         name = "_151",
-         id = 151,
+         id = "_151",
+         legacy_id = 151,
          source = {
             x = 912,
             y = 192,
          }
       },
       {
-         name = "_152",
-         id = 152,
+         id = "_152",
+         legacy_id = 152,
          source = {
             x = 960,
             y = 192,
          }
       },
       {
-         name = "_153",
-         id = 153,
+         id = "_153",
+         legacy_id = 153,
          source = {
             x = 1008,
             y = 192,
          }
       },
       {
-         name = "_154",
-         id = 154,
+         id = "_154",
+         legacy_id = 154,
          source = {
             x = 1056,
             y = 192,
          }
       },
       {
-         name = "_155",
-         id = 155,
+         id = "_155",
+         legacy_id = 155,
          source = {
             x = 1104,
             y = 192,
          }
       },
       {
-         name = "_156",
-         id = 156,
+         id = "_156",
+         legacy_id = 156,
          source = {
             x = 1152,
             y = 192,
          }
       },
       {
-         name = "rogue_wizard",
-         id = 157,
+         id = "rogue_wizard",
+         legacy_id = 157,
          source = {
             x = 1200,
             y = 192,
          }
       },
       {
-         name = "rogue_archer",
-         id = 158,
+         id = "rogue_archer",
+         legacy_id = 158,
          source = {
             x = 1248,
             y = 192,
          }
       },
       {
-         name = "mercenary_warrior",
-         id = 159,
+         id = "mercenary_warrior",
+         legacy_id = 159,
          source = {
             x = 1296,
             y = 192,
          }
       },
       {
-         name = "_160",
-         id = 160,
+         id = "_160",
+         legacy_id = 160,
          source = {
             x = 1344,
             y = 192,
          }
       },
       {
-         name = "_161",
-         id = 161,
+         id = "_161",
+         legacy_id = 161,
          source = {
             x = 1392,
             y = 192,
          }
       },
       {
-         name = "_162",
-         id = 162,
+         id = "_162",
+         legacy_id = 162,
          source = {
             x = 1440,
             y = 192,
          }
       },
       {
-         name = "nun",
-         id = 163,
+         id = "nun",
+         legacy_id = 163,
          source = {
             x = 1488,
             y = 192,
          }
       },
       {
-         name = "_164",
-         id = 164,
+         id = "_164",
+         legacy_id = 164,
          source = {
             x = 1536,
             y = 192,
          }
       },
       {
-         name = "orc",
-         id = 165,
+         id = "orc",
+         legacy_id = 165,
          source = {
             x = 0,
             y = 240,
          }
       },
       {
-         name = "master_thief",
-         id = 166,
+         id = "master_thief",
+         legacy_id = 166,
          source = {
             x = 48,
             y = 240,
          }
       },
       {
-         name = "zombie",
-         id = 167,
+         id = "zombie",
+         legacy_id = 167,
          source = {
             x = 96,
             y = 240,
          }
       },
       {
-         name = "race_slime",
-         id = 168,
+         id = "race_slime",
+         legacy_id = 168,
          source = {
             x = 144,
             y = 240,
          }
       },
       {
-         name = "rabbit",
-         id = 169,
+         id = "rabbit",
+         legacy_id = 169,
          source = {
             x = 192,
             y = 240,
          }
       },
       {
-         name = "sheep",
-         id = 170,
+         id = "sheep",
+         legacy_id = 170,
          source = {
             x = 240,
             y = 240,
          }
       },
       {
-         name = "kobold",
-         id = 171,
+         id = "kobold",
+         legacy_id = 171,
          source = {
             x = 288,
             y = 240,
          }
       },
       {
-         name = "frog",
-         id = 172,
+         id = "frog",
+         legacy_id = 172,
          source = {
             x = 336,
             y = 240,
          }
       },
       {
-         name = "centipede",
-         id = 173,
+         id = "centipede",
+         legacy_id = 173,
          source = {
             x = 384,
             y = 240,
          }
       },
       {
-         name = "snail",
-         id = 174,
+         id = "snail",
+         legacy_id = 174,
          source = {
             x = 432,
             y = 240,
          }
       },
       {
-         name = "mandrake",
-         id = 175,
+         id = "mandrake",
+         legacy_id = 175,
          source = {
             x = 480,
             y = 240,
          }
       },
       {
-         name = "beetle",
-         id = 176,
+         id = "beetle",
+         legacy_id = 176,
          offset_y = 8,
          source = {
             x = 528,
@@ -1420,200 +1420,200 @@ data:add_multi(
          }
       },
       {
-         name = "mushroom",
-         id = 177,
+         id = "mushroom",
+         legacy_id = 177,
          source = {
             x = 576,
             y = 240,
          }
       },
       {
-         name = "mercenary_female",
-         id = 178,
+         id = "mercenary_female",
+         legacy_id = 178,
          source = {
             x = 624,
             y = 240,
          }
       },
       {
-         name = "farmer_male",
-         id = 179,
+         id = "farmer_male",
+         legacy_id = 179,
          source = {
             x = 672,
             y = 240,
          }
       },
       {
-         name = "farmer_female",
-         id = 180,
+         id = "farmer_female",
+         legacy_id = 180,
          source = {
             x = 720,
             y = 240,
          }
       },
       {
-         name = "sister_male",
-         id = 181,
+         id = "sister_male",
+         legacy_id = 181,
          source = {
             x = 768,
             y = 240,
          }
       },
       {
-         name = "sister_female",
-         id = 182,
+         id = "sister_female",
+         legacy_id = 182,
          source = {
             x = 816,
             y = 240,
          }
       },
       {
-         name = "rogue_male",
-         id = 183,
+         id = "rogue_male",
+         legacy_id = 183,
          source = {
             x = 864,
             y = 240,
          }
       },
       {
-         name = "rogue_female",
-         id = 184,
+         id = "rogue_female",
+         legacy_id = 184,
          source = {
             x = 912,
             y = 240,
          }
       },
       {
-         name = "artist_male",
-         id = 185,
+         id = "artist_male",
+         legacy_id = 185,
          source = {
             x = 960,
             y = 240,
          }
       },
       {
-         name = "artist_female",
-         id = 186,
+         id = "artist_female",
+         legacy_id = 186,
          source = {
             x = 1008,
             y = 240,
          }
       },
       {
-         name = "miner_male",
-         id = 187,
+         id = "miner_male",
+         legacy_id = 187,
          source = {
             x = 1056,
             y = 240,
          }
       },
       {
-         name = "miner_female",
-         id = 188,
+         id = "miner_female",
+         legacy_id = 188,
          source = {
             x = 1104,
             y = 240,
          }
       },
       {
-         name = "noble_male",
-         id = 189,
+         id = "noble_male",
+         legacy_id = 189,
          source = {
             x = 1152,
             y = 240,
          }
       },
       {
-         name = "noble_female",
-         id = 190,
+         id = "noble_female",
+         legacy_id = 190,
          source = {
             x = 1200,
             y = 240,
          }
       },
       {
-         name = "mutant",
-         id = 191,
+         id = "mutant",
+         legacy_id = 191,
          source = {
             x = 1248,
             y = 240,
          }
       },
       {
-         name = "balzak",
-         id = 192,
+         id = "balzak",
+         legacy_id = 192,
          source = {
             x = 1296,
             y = 240,
          }
       },
       {
-         name = "revlus",
-         id = 193,
+         id = "revlus",
+         legacy_id = 193,
          source = {
             x = 1344,
             y = 240,
          }
       },
       {
-         name = "mage_guild_member_female",
-         id = 194,
+         id = "mage_guild_member_female",
+         legacy_id = 194,
          source = {
             x = 1392,
             y = 240,
          }
       },
       {
-         name = "mage_guild_member_male",
-         id = 195,
+         id = "mage_guild_member_male",
+         legacy_id = 195,
          source = {
             x = 1440,
             y = 240,
          }
       },
       {
-         name = "doria",
-         id = 196,
+         id = "doria",
+         legacy_id = 196,
          source = {
             x = 1488,
             y = 240,
          }
       },
       {
-         name = "sin",
-         id = 197,
+         id = "sin",
+         legacy_id = 197,
          source = {
             x = 1536,
             y = 240,
          }
       },
       {
-         name = "iron_maiden",
-         id = 198,
+         id = "iron_maiden",
+         legacy_id = 198,
          source = {
             x = 0,
             y = 288,
          }
       },
       {
-         name = "catgod",
-         id = 199,
+         id = "catgod",
+         legacy_id = 199,
          source = {
             x = 48,
             y = 288,
          }
       },
       {
-         name = "bat",
-         id = 200,
+         id = "bat",
+         legacy_id = 200,
          source = {
             x = 96,
             y = 288,
          }
       },
       {
-         name = "ent",
-         id = 201,
+         id = "ent",
+         legacy_id = 201,
          tall = true,
          offset_y = 16,
          source = {
@@ -1622,192 +1622,192 @@ data:add_multi(
          }
       },
       {
-         name = "lich",
-         id = 202,
+         id = "lich",
+         legacy_id = 202,
          source = {
             x = 192,
             y = 288,
          }
       },
       {
-         name = "hound",
-         id = 203,
+         id = "hound",
+         legacy_id = 203,
          source = {
             x = 240,
             y = 288,
          }
       },
       {
-         name = "giant_squirrel",
-         id = 204,
+         id = "giant_squirrel",
+         legacy_id = 204,
          source = {
             x = 288,
             y = 288,
          }
       },
       {
-         name = "ghost",
-         id = 205,
+         id = "ghost",
+         legacy_id = 205,
          source = {
             x = 336,
             y = 288,
          }
       },
       {
-         name = "spirit",
-         id = 206,
+         id = "spirit",
+         legacy_id = 206,
          source = {
             x = 384,
             y = 288,
          }
       },
       {
-         name = "eye",
-         id = 207,
+         id = "eye",
+         legacy_id = 207,
          source = {
             x = 432,
             y = 288,
          }
       },
       {
-         name = "nurse",
-         id = 208,
+         id = "nurse",
+         legacy_id = 208,
          source = {
             x = 480,
             y = 288,
          }
       },
       {
-         name = "puppet",
-         id = 209,
+         id = "puppet",
+         legacy_id = 209,
          source = {
             x = 528,
             y = 288,
          }
       },
       {
-         name = "wasp",
-         id = 210,
+         id = "wasp",
+         legacy_id = 210,
          source = {
             x = 576,
             y = 288,
          }
       },
       {
-         name = "black_cat",
-         id = 211,
+         id = "black_cat",
+         legacy_id = 211,
          source = {
             x = 624,
             y = 288,
          }
       },
       {
-         name = "imp",
-         id = 212,
+         id = "imp",
+         legacy_id = 212,
          source = {
             x = 672,
             y = 288,
          }
       },
       {
-         name = "hand",
-         id = 213,
+         id = "hand",
+         legacy_id = 213,
          source = {
             x = 720,
             y = 288,
          }
       },
       {
-         name = "nymph",
-         id = 214,
+         id = "nymph",
+         legacy_id = 214,
          source = {
             x = 768,
             y = 288,
          }
       },
       {
-         name = "chaos_flower",
-         id = 215,
+         id = "chaos_flower",
+         legacy_id = 215,
          source = {
             x = 816,
             y = 288,
          }
       },
       {
-         name = "snake",
-         id = 216,
+         id = "snake",
+         legacy_id = 216,
          source = {
             x = 864,
             y = 288,
          }
       },
       {
-         name = "cute_fairy",
-         id = 217,
+         id = "cute_fairy",
+         legacy_id = 217,
          source = {
             x = 912,
             y = 288,
          }
       },
       {
-         name = "android",
-         id = 218,
+         id = "android",
+         legacy_id = 218,
          source = {
             x = 960,
             y = 288,
          }
       },
       {
-         name = "tuwen",
-         id = 219,
+         id = "tuwen",
+         legacy_id = 219,
          source = {
             x = 1008,
             y = 288,
          }
       },
       {
-         name = "goblin",
-         id = 220,
+         id = "goblin",
+         legacy_id = 220,
          source = {
             x = 1056,
             y = 288,
          }
       },
       {
-         name = "baptist",
-         id = 221,
+         id = "baptist",
+         legacy_id = 221,
          source = {
             x = 1104,
             y = 288,
          }
       },
       {
-         name = "bear",
-         id = 222,
+         id = "bear",
+         legacy_id = 222,
          source = {
             x = 1152,
             y = 288,
          }
       },
       {
-         name = "armor",
-         id = 223,
+         id = "armor",
+         legacy_id = 223,
          source = {
             x = 1200,
             y = 288,
          }
       },
       {
-         name = "medusa",
-         id = 224,
+         id = "medusa",
+         legacy_id = 224,
          source = {
             x = 1248,
             y = 288,
          }
       },
       {
-         name = "cupid",
-         id = 225,
+         id = "cupid",
+         legacy_id = 225,
          offset_y = 29,
          source = {
             x = 1296,
@@ -1815,24 +1815,24 @@ data:add_multi(
          }
       },
       {
-         name = "phantom",
-         id = 226,
+         id = "phantom",
+         legacy_id = 226,
          source = {
             x = 1344,
             y = 288,
          }
       },
       {
-         name = "harpy",
-         id = 227,
+         id = "harpy",
+         legacy_id = 227,
          source = {
             x = 1392,
             y = 288,
          }
       },
       {
-         name = "dragon",
-         id = 228,
+         id = "dragon",
+         legacy_id = 228,
          offset_y = 8,
          tall = true,
          source = {
@@ -1841,16 +1841,16 @@ data:add_multi(
          }
       },
       {
-         name = "cerberus",
-         id = 229,
+         id = "cerberus",
+         legacy_id = 229,
          source = {
             x = 1488,
             y = 288,
          }
       },
       {
-         name = "spider",
-         id = 230,
+         id = "spider",
+         legacy_id = 230,
          offset_y = 12,
          source = {
             x = 1536,
@@ -1858,8 +1858,8 @@ data:add_multi(
          }
       },
       {
-         name = "golem",
-         id = 231,
+         id = "golem",
+         legacy_id = 231,
          offset_y = 16,
          tall = true,
          source = {
@@ -1868,8 +1868,8 @@ data:add_multi(
          }
       },
       {
-         name = "giant",
-         id = 232,
+         id = "giant",
+         legacy_id = 232,
          tall = true,
          offset_y = 16,
          source = {
@@ -1878,8 +1878,8 @@ data:add_multi(
          }
       },
       {
-         name = "drake",
-         id = 233,
+         id = "drake",
+         legacy_id = 233,
          tall = true,
          offset_y = 8,
          source = {
@@ -1888,8 +1888,8 @@ data:add_multi(
          }
       },
       {
-         name = "wyvern",
-         id = 235,
+         id = "wyvern",
+         legacy_id = 235,
          tall = true,
          offset_y = 16,
          source = {
@@ -1898,168 +1898,168 @@ data:add_multi(
          }
       },
       {
-         name = "black_angel",
-         id = 236,
+         id = "black_angel",
+         legacy_id = 236,
          source = {
             x = 240,
             y = 336,
          }
       },
       {
-         name = "crab",
-         id = 237,
+         id = "crab",
+         legacy_id = 237,
          source = {
             x = 288,
             y = 336,
          }
       },
       {
-         name = "_238",
-         id = 238,
+         id = "_238",
+         legacy_id = 238,
          source = {
             x = 336,
             y = 336,
          }
       },
       {
-         name = "fire_centipede",
-         id = 239,
+         id = "fire_centipede",
+         legacy_id = 239,
          source = {
             x = 384,
             y = 336,
          }
       },
       {
-         name = "cultist_of_fire",
-         id = 240,
+         id = "cultist_of_fire",
+         legacy_id = 240,
          source = {
             x = 432,
             y = 336,
          }
       },
       {
-         name = "skeleton",
-         id = 241,
+         id = "skeleton",
+         legacy_id = 241,
          source = {
             x = 480,
             y = 336,
          }
       },
       {
-         name = "defender",
-         id = 242,
+         id = "defender",
+         legacy_id = 242,
          source = {
             x = 528,
             y = 336,
          }
       },
       {
-         name = "missionary_of_darkness",
-         id = 243,
+         id = "missionary_of_darkness",
+         legacy_id = 243,
          source = {
             x = 576,
             y = 336,
          }
       },
       {
-         name = "piece",
-         id = 244,
+         id = "piece",
+         legacy_id = 244,
          source = {
             x = 624,
             y = 336,
          }
       },
       {
-         name = "rook",
-         id = 245,
+         id = "rook",
+         legacy_id = 245,
          source = {
             x = 672,
             y = 336,
          }
       },
       {
-         name = "bishop",
-         id = 246,
+         id = "bishop",
+         legacy_id = 246,
          source = {
             x = 720,
             y = 336,
          }
       },
       {
-         name = "knight",
-         id = 247,
+         id = "knight",
+         legacy_id = 247,
          source = {
             x = 768,
             y = 336,
          }
       },
       {
-         name = "queen",
-         id = 248,
+         id = "queen",
+         legacy_id = 248,
          source = {
             x = 816,
             y = 336,
          }
       },
       {
-         name = "king",
-         id = 249,
+         id = "king",
+         legacy_id = 249,
          source = {
             x = 864,
             y = 336,
          }
       },
       {
-         name = "yerles_machine_infantry",
-         id = 250,
+         id = "yerles_machine_infantry",
+         legacy_id = 250,
          source = {
             x = 912,
             y = 336,
          }
       },
       {
-         name = "rock_thrower",
-         id = 251,
+         id = "rock_thrower",
+         legacy_id = 251,
          source = {
             x = 960,
             y = 336,
          }
       },
       {
-         name = "metal",
-         id = 252,
+         id = "metal",
+         legacy_id = 252,
          source = {
             x = 1008,
             y = 336,
          }
       },
       {
-         name = "cat",
-         id = 253,
+         id = "cat",
+         legacy_id = 253,
          source = {
             x = 1056,
             y = 336,
          }
       },
       {
-         name = "dog",
-         id = 254,
+         id = "dog",
+         legacy_id = 254,
          source = {
             x = 1104,
             y = 336,
          }
       },
       {
-         name = "catsister",
-         id = 255,
+         id = "catsister",
+         legacy_id = 255,
          source = {
             x = 1152,
             y = 336,
          }
       },
       {
-         name = "shell",
-         id = 256,
+         id = "shell",
+         legacy_id = 256,
          offset_y = 16,
          source = {
             x = 1200,
@@ -2067,136 +2067,136 @@ data:add_multi(
          }
       },
       {
-         name = "slime",
-         id = 257,
+         id = "slime",
+         legacy_id = 257,
          source = {
             x = 1248,
             y = 336,
          }
       },
       {
-         name = "public_performer",
-         id = 258,
+         id = "public_performer",
+         legacy_id = 258,
          source = {
             x = 1296,
             y = 336,
          }
       },
       {
-         name = "twintail",
-         id = 259,
+         id = "twintail",
+         legacy_id = 259,
          source = {
             x = 1344,
             y = 336,
          }
       },
       {
-         name = "silver_wolf",
-         id = 260,
+         id = "silver_wolf",
+         legacy_id = 260,
          source = {
             x = 1392,
             y = 336,
          }
       },
       {
-         name = "horse",
-         id = 262,
+         id = "horse",
+         legacy_id = 262,
          source = {
             x = 1488,
             y = 336,
          }
       },
       {
-         name = "icolle",
-         id = 263,
+         id = "icolle",
+         legacy_id = 263,
          source = {
             x = 1536,
             y = 336,
          }
       },
       {
-         name = "golden_knight",
-         id = 267,
+         id = "golden_knight",
+         legacy_id = 267,
          source = {
             x = 144,
             y = 384,
          }
       },
       {
-         name = "_268",
-         id = 268,
+         id = "_268",
+         legacy_id = 268,
          source = {
             x = 192,
             y = 384,
          }
       },
       {
-         name = "exile",
-         id = 269,
+         id = "exile",
+         legacy_id = 269,
          source = {
             x = 240,
             y = 384,
          }
       },
       {
-         name = "machine",
-         id = 270,
+         id = "machine",
+         legacy_id = 270,
          source = {
             x = 288,
             y = 384,
          }
       },
       {
-         name = "deformed_eye",
-         id = 271,
+         id = "deformed_eye",
+         legacy_id = 271,
          source = {
             x = 336,
             y = 384,
          }
       },
       {
-         name = "wisp",
-         id = 272,
+         id = "wisp",
+         legacy_id = 272,
          source = {
             x = 384,
             y = 384,
          }
       },
       {
-         name = "shining_hedgehog",
-         id = 273,
+         id = "shining_hedgehog",
+         legacy_id = 273,
          source = {
             x = 432,
             y = 384,
          }
       },
       {
-         name = "chicken",
-         id = 274,
+         id = "chicken",
+         legacy_id = 274,
          source = {
             x = 480,
             y = 384,
          }
       },
       {
-         name = "pumpkin",
-         id = 275,
+         id = "pumpkin",
+         legacy_id = 275,
          source = {
             x = 528,
             y = 384,
          }
       },
       {
-         name = "stalker",
-         id = 276,
+         id = "stalker",
+         legacy_id = 276,
          source = {
             x = 576,
             y = 384,
          }
       },
       {
-         name = "shub_niggurath",
-         id = 277,
+         id = "shub_niggurath",
+         legacy_id = 277,
          offset_y = 29,
          source = {
             x = 624,
@@ -2204,24 +2204,24 @@ data:add_multi(
          }
       },
       {
-         name = "gagu",
-         id = 278,
+         id = "gagu",
+         legacy_id = 278,
          source = {
             x = 672,
             y = 384,
          }
       },
       {
-         name = "silver_eyed_witch",
-         id = 279,
+         id = "silver_eyed_witch",
+         legacy_id = 279,
          source = {
             x = 720,
             y = 384,
          }
       },
       {
-         name = "shade",
-         id = 280,
+         id = "shade",
+         legacy_id = 280,
          tall = true,
          offset_y = 32,
          source = {
@@ -2230,136 +2230,136 @@ data:add_multi(
          }
       },
       {
-         name = "quickling",
-         id = 281,
+         id = "quickling",
+         legacy_id = 281,
          source = {
             x = 816,
             y = 384,
          }
       },
       {
-         name = "cube",
-         id = 282,
+         id = "cube",
+         legacy_id = 282,
          source = {
             x = 864,
             y = 384,
          }
       },
       {
-         name = "alien",
-         id = 283,
+         id = "alien",
+         legacy_id = 283,
          source = {
             x = 912,
             y = 384,
          }
       },
       {
-         name = "fanatic_female",
-         id = 284,
+         id = "fanatic_female",
+         legacy_id = 284,
          source = {
             x = 960,
             y = 384,
          }
       },
       {
-         name = "fanatic_male",
-         id = 285,
+         id = "fanatic_male",
+         legacy_id = 285,
          source = {
             x = 1008,
             y = 384,
          }
       },
       {
-         name = "_286",
-         id = 286,
+         id = "_286",
+         legacy_id = 286,
          source = {
             x = 1056,
             y = 384,
          }
       },
       {
-         name = "_287",
-         id = 287,
+         id = "_287",
+         legacy_id = 287,
          source = {
             x = 1104,
             y = 384,
          }
       },
       {
-         name = "_288",
-         id = 288,
+         id = "_288",
+         legacy_id = 288,
          source = {
             x = 1152,
             y = 384,
          }
       },
       {
-         name = "_289",
-         id = 289,
+         id = "_289",
+         legacy_id = 289,
          source = {
             x = 1200,
             y = 384,
          }
       },
       {
-         name = "_290",
-         id = 290,
+         id = "_290",
+         legacy_id = 290,
          source = {
             x = 1248,
             y = 384,
          }
       },
       {
-         name = "_291",
-         id = 291,
+         id = "_291",
+         legacy_id = 291,
          source = {
             x = 1296,
             y = 384,
          }
       },
       {
-         name = "_292",
-         id = 292,
+         id = "_292",
+         legacy_id = 292,
          source = {
             x = 1344,
             y = 384,
          }
       },
       {
-         name = "_293",
-         id = 293,
+         id = "_293",
+         legacy_id = 293,
          source = {
             x = 1392,
             y = 384,
          }
       },
       {
-         name = "_294",
-         id = 294,
+         id = "_294",
+         legacy_id = 294,
          source = {
             x = 1440,
             y = 384,
          }
       },
       {
-         name = "_295",
-         id = 295,
+         id = "_295",
+         legacy_id = 295,
          source = {
             x = 1488,
             y = 384,
          }
       },
       {
-         name = "_296",
-         id = 296,
+         id = "_296",
+         legacy_id = 296,
          source = {
             x = 1536,
             y = 384,
          }
       },
       {
-         name = "zeome",
-         id = 297,
+         id = "zeome",
+         legacy_id = 297,
          tall = true,
          offset_y = 16,
          source = {
@@ -2368,72 +2368,72 @@ data:add_multi(
          }
       },
       {
-         name = "_307",
-         id = 307,
+         id = "_307",
+         legacy_id = 307,
          source = {
             x = 480,
             y = 432,
          }
       },
       {
-         name = "orphe",
-         id = 331,
+         id = "orphe",
+         legacy_id = 331,
          source = {
             x = 48,
             y = 480,
          }
       },
       {
-         name = "mad_scientist",
-         id = 332,
+         id = "mad_scientist",
+         legacy_id = 332,
          source = {
             x = 96,
             y = 480,
          }
       },
       {
-         name = "isca",
-         id = 333,
+         id = "isca",
+         legacy_id = 333,
          source = {
             x = 144,
             y = 480,
          }
       },
       {
-         name = "whom_dwell_in_the_vanity",
-         id = 334,
+         id = "whom_dwell_in_the_vanity",
+         legacy_id = 334,
          source = {
             x = 192,
             y = 480,
          }
       },
       {
-         name = "_335",
-         id = 335,
+         id = "_335",
+         legacy_id = 335,
          source = {
             x = 240,
             y = 480,
          }
       },
       {
-         name = "_336",
-         id = 336,
+         id = "_336",
+         legacy_id = 336,
          source = {
             x = 288,
             y = 480,
          }
       },
       {
-         name = "loyter",
-         id = 337,
+         id = "loyter",
+         legacy_id = 337,
          source = {
             x = 336,
             y = 480,
          }
       },
       {
-         name = "vesda",
-         id = 338,
+         id = "vesda",
+         legacy_id = 338,
          tall = true,
          offset_y = 32,
          source = {
@@ -2442,8 +2442,8 @@ data:add_multi(
          }
       },
       {
-         name = "issizzle",
-         id = 339,
+         id = "issizzle",
+         legacy_id = 339,
          tall = true,
          offset_y = 16,
          source = {
@@ -2452,16 +2452,16 @@ data:add_multi(
          }
       },
       {
-         name = "erystia",
-         id = 340,
+         id = "erystia",
+         legacy_id = 340,
          source = {
             x = 480,
             y = 480,
          }
       },
       {
-         name = "wynan",
-         id = 341,
+         id = "wynan",
+         legacy_id = 341,
          tall = true,
          offset_y = 16,
          source = {
@@ -2470,8 +2470,8 @@ data:add_multi(
          }
       },
       {
-         name = "corgon",
-         id = 342,
+         id = "corgon",
+         legacy_id = 342,
          tall = true,
          offset_y = 12,
          source = {
@@ -2480,8 +2480,8 @@ data:add_multi(
          }
       },
       {
-         name = "quruiza",
-         id = 343,
+         id = "quruiza",
+         legacy_id = 343,
          tall = true,
          offset_y = 16,
          source = {
@@ -2490,48 +2490,48 @@ data:add_multi(
          }
       },
       {
-         name = "dungeon_cleaner",
-         id = 344,
+         id = "dungeon_cleaner",
+         legacy_id = 344,
          source = {
             x = 672,
             y = 480,
          }
       },
       {
-         name = "larnneire",
-         id = 345,
+         id = "larnneire",
+         legacy_id = 345,
          source = {
             x = 720,
             y = 480,
          }
       },
       {
-         name = "lomias",
-         id = 346,
+         id = "lomias",
+         legacy_id = 346,
          source = {
             x = 768,
             y = 480,
          }
       },
       {
-         name = "at",
-         id = 347,
+         id = "at",
+         legacy_id = 347,
          source = {
             x = 816,
             y = 480,
          }
       },
       {
-         name = "frisia",
-         id = 348,
+         id = "frisia",
+         legacy_id = 348,
          source = {
             x = 864,
             y = 480,
          }
       },
       {
-         name = "machinegod",
-         id = 349,
+         id = "machinegod",
+         legacy_id = 349,
          tall = true,
          offset_y = 8,
          source = {
@@ -2540,16 +2540,16 @@ data:add_multi(
          }
       },
       {
-         name = "undeadgod",
-         id = 350,
+         id = "undeadgod",
+         legacy_id = 350,
          source = {
             x = 960,
             y = 480,
          }
       },
       {
-         name = "ebon2",
-         id = 351,
+         id = "ebon2",
+         legacy_id = 351,
          tall = true,
          offset_y = 8,
          source = {
@@ -2558,248 +2558,248 @@ data:add_multi(
          }
       },
       {
-         name = "garokk",
-         id = 352,
+         id = "garokk",
+         legacy_id = 352,
          source = {
             x = 1056,
             y = 480,
          }
       },
       {
-         name = "miral",
-         id = 353,
+         id = "miral",
+         legacy_id = 353,
          source = {
             x = 1104,
             y = 480,
          }
       },
       {
-         name = "_354",
-         id = 354,
+         id = "_354",
+         legacy_id = 354,
          source = {
             x = 1152,
             y = 480,
          }
       },
       {
-         name = "young_lady",
-         id = 355,
+         id = "young_lady",
+         legacy_id = 355,
          source = {
             x = 1200,
             y = 480,
          }
       },
       {
-         name = "gwen",
-         id = 356,
+         id = "gwen",
+         legacy_id = 356,
          source = {
             x = 1248,
             y = 480,
          }
       },
       {
-         name = "town_child_female",
-         id = 357,
+         id = "town_child_female",
+         legacy_id = 357,
          source = {
             x = 1296,
             y = 480,
          }
       },
       {
-         name = "pael",
-         id = 358,
+         id = "pael",
+         legacy_id = 358,
          source = {
             x = 1344,
             y = 480,
          }
       },
       {
-         name = "lily",
-         id = 359,
+         id = "lily",
+         legacy_id = 359,
          source = {
             x = 1392,
             y = 480,
          }
       },
       {
-         name = "_360",
-         id = 360,
+         id = "_360",
+         legacy_id = 360,
          source = {
             x = 1440,
             y = 480,
          }
       },
       {
-         name = "raphael",
-         id = 361,
+         id = "raphael",
+         legacy_id = 361,
          source = {
             x = 1488,
             y = 480,
          }
       },
       {
-         name = "ainc",
-         id = 362,
+         id = "ainc",
+         legacy_id = 362,
          source = {
             x = 1536,
             y = 480,
          }
       },
       {
-         name = "guard_port_kapul",
-         id = 363,
+         id = "guard_port_kapul",
+         legacy_id = 363,
          source = {
             x = 0,
             y = 528,
          }
       },
       {
-         name = "poppy",
-         id = 364,
+         id = "poppy",
+         legacy_id = 364,
          source = {
             x = 48,
             y = 528,
          }
       },
       {
-         name = "rilian",
-         id = 365,
+         id = "rilian",
+         legacy_id = 365,
          source = {
             x = 96,
             y = 528,
          }
       },
       {
-         name = "tam",
-         id = 366,
+         id = "tam",
+         legacy_id = 366,
          source = {
             x = 144,
             y = 528,
          }
       },
       {
-         name = "carbuncle",
-         id = 367,
+         id = "carbuncle",
+         legacy_id = 367,
          source = {
             x = 192,
             y = 528,
          }
       },
       {
-         name = "lion",
-         id = 368,
+         id = "lion",
+         legacy_id = 368,
          source = {
             x = 240,
             y = 528,
          }
       },
       {
-         name = "cacy",
-         id = 369,
+         id = "cacy",
+         legacy_id = 369,
          source = {
             x = 288,
             y = 528,
          }
       },
       {
-         name = "gilbert_the_colonel",
-         id = 370,
+         id = "gilbert_the_colonel",
+         legacy_id = 370,
          source = {
             x = 336,
             y = 528,
          }
       },
       {
-         name = "yerles_self_propelled_gun",
-         id = 373,
+         id = "yerles_self_propelled_gun",
+         legacy_id = 373,
          source = {
             x = 480,
             y = 528,
          }
       },
       {
-         name = "juere_swordman",
-         id = 377,
+         id = "juere_swordman",
+         legacy_id = 377,
          source = {
             x = 672,
             y = 528,
          }
       },
       {
-         name = "yeek",
-         id = 378,
+         id = "yeek",
+         legacy_id = 378,
          source = {
             x = 720,
             y = 528,
          }
       },
       {
-         name = "hot_spring_maniac_male",
-         id = 379,
+         id = "hot_spring_maniac_male",
+         legacy_id = 379,
          source = {
             x = 768,
             y = 528,
          }
       },
       {
-         name = "hot_spring_maniac_female",
-         id = 380,
+         id = "hot_spring_maniac_female",
+         legacy_id = 380,
          source = {
             x = 816,
             y = 528,
          }
       },
       {
-         name = "rodlob",
-         id = 381,
+         id = "rodlob",
+         legacy_id = 381,
          source = {
             x = 864,
             y = 528,
          }
       },
       {
-         name = "arnord",
-         id = 383,
+         id = "arnord",
+         legacy_id = 383,
          source = {
             x = 960,
             y = 528,
          }
       },
       {
-         name = "kamikaze_samurai",
-         id = 385,
+         id = "kamikaze_samurai",
+         legacy_id = 385,
          source = {
             x = 1056,
             y = 528,
          }
       },
       {
-         name = "rock",
-         id = 386,
+         id = "rock",
+         legacy_id = 386,
          source = {
             x = 1104,
             y = 528,
          }
       },
       {
-         name = "stray_cat",
-         id = 387,
+         id = "stray_cat",
+         legacy_id = 387,
          source = {
             x = 1152,
             y = 528,
          }
       },
       {
-         name = "mia",
-         id = 388,
+         id = "mia",
+         legacy_id = 388,
          source = {
             x = 1200,
             y = 528,
          }
       },
       {
-         name = "dinosaur",
-         id = 389,
+         id = "dinosaur",
+         legacy_id = 389,
          tall = true,
          offset_y = 16,
          source = {
@@ -2808,16 +2808,16 @@ data:add_multi(
          }
       },
       {
-         name = "fairy",
-         id = 390,
+         id = "fairy",
+         legacy_id = 390,
          source = {
             x = 1296,
             y = 528,
          }
       },
       {
-         name = "troll",
-         id = 391,
+         id = "troll",
+         legacy_id = 391,
          tall = true,
          offset_y = 16,
          source = {
@@ -2826,16 +2826,16 @@ data:add_multi(
          }
       },
       {
-         name = "renton",
-         id = 392,
+         id = "renton",
+         legacy_id = 392,
          source = {
             x = 1392,
             y = 528,
          }
       },
       {
-         name = "lulwy",
-         id = 393,
+         id = "lulwy",
+         legacy_id = 393,
          tall = true,
          offset_y = 16,
          source = {
@@ -2844,40 +2844,40 @@ data:add_multi(
          }
       },
       {
-         name = "marks",
-         id = 394,
+         id = "marks",
+         legacy_id = 394,
          source = {
             x = 1488,
             y = 528,
          }
       },
       {
-         name = "ancient_coffin",
-         id = 395,
+         id = "ancient_coffin",
+         legacy_id = 395,
          source = {
             x = 1536,
             y = 528,
          }
       },
       {
-         name = "scorpion",
-         id = 396,
+         id = "scorpion",
+         legacy_id = 396,
          source = {
             x = 0,
             y = 576,
          }
       },
       {
-         name = "lizardman",
-         id = 397,
+         id = "lizardman",
+         legacy_id = 397,
          source = {
             x = 48,
             y = 576,
          }
       },
       {
-         name = "minotaur",
-         id = 398,
+         id = "minotaur",
+         legacy_id = 398,
          tall = true,
          offset_y = 16,
          source = {
@@ -2886,48 +2886,48 @@ data:add_multi(
          }
       },
       {
-         name = "spore_mushroom",
-         id = 399,
+         id = "spore_mushroom",
+         legacy_id = 399,
          source = {
             x = 144,
             y = 576,
          }
       },
       {
-         name = "bubble",
-         id = 400,
+         id = "bubble",
+         legacy_id = 400,
          source = {
             x = 192,
             y = 576,
          }
       },
       {
-         name = "mass_monster",
-         id = 401,
+         id = "mass_monster",
+         legacy_id = 401,
          source = {
             x = 240,
             y = 576,
          }
       },
       {
-         name = "_402",
-         id = 402,
+         id = "_402",
+         legacy_id = 402,
          source = {
             x = 288,
             y = 576,
          }
       },
       {
-         name = "conery",
-         id = 403,
+         id = "conery",
+         legacy_id = 403,
          source = {
             x = 336,
             y = 576,
          }
       },
       {
-         name = "executioner",
-         id = 404,
+         id = "executioner",
+         legacy_id = 404,
          tall = true,
          offset_y = 16,
          source = {
@@ -2936,8 +2936,8 @@ data:add_multi(
          }
       },
       {
-         name = "asura",
-         id = 405,
+         id = "asura",
+         legacy_id = 405,
          tall = true,
          offset_y = 16,
          source = {
@@ -2946,24 +2946,24 @@ data:add_multi(
          }
       },
       {
-         name = "hungry_sea_lion",
-         id = 406,
+         id = "hungry_sea_lion",
+         legacy_id = 406,
          source = {
             x = 480,
             y = 576,
          }
       },
       {
-         name = "mad_gaze",
-         id = 407,
+         id = "mad_gaze",
+         legacy_id = 407,
          source = {
             x = 528,
             y = 576,
          }
       },
       {
-         name = "big_daddy",
-         id = 408,
+         id = "big_daddy",
+         legacy_id = 408,
          tall = true,
          offset_y = 16,
          source = {
@@ -2972,40 +2972,40 @@ data:add_multi(
          }
       },
       {
-         name = "little_sister",
-         id = 409,
+         id = "little_sister",
+         legacy_id = 409,
          source = {
             x = 624,
             y = 576,
          }
       },
       {
-         name = "cleaner",
-         id = 410,
+         id = "cleaner",
+         legacy_id = 410,
          source = {
             x = 672,
             y = 576,
          }
       },
       {
-         name = "hard_gay",
-         id = 411,
+         id = "hard_gay",
+         legacy_id = 411,
          source = {
             x = 720,
             y = 576,
          }
       },
       {
-         name = "strange_scientist",
-         id = 412,
+         id = "strange_scientist",
+         legacy_id = 412,
          source = {
             x = 768,
             y = 576,
          }
       },
       {
-         name = "ehekatl",
-         id = 413,
+         id = "ehekatl",
+         legacy_id = 413,
          tall = true,
          offset_y = 16,
          source = {
@@ -3014,64 +3014,64 @@ data:add_multi(
          }
       },
       {
-         name = "guild_trainer_female",
-         id = 414,
+         id = "guild_trainer_female",
+         legacy_id = 414,
          source = {
             x = 864,
             y = 576,
          }
       },
       {
-         name = "guild_trainer_male",
-         id = 415,
+         id = "guild_trainer_male",
+         legacy_id = 415,
          source = {
             x = 912,
             y = 576,
          }
       },
       {
-         name = "mysterious_producer",
-         id = 416,
+         id = "mysterious_producer",
+         legacy_id = 416,
          source = {
             x = 960,
             y = 576,
          }
       },
       {
-         name = "prostitute_female",
-         id = 417,
+         id = "prostitute_female",
+         legacy_id = 417,
          source = {
             x = 1008,
             y = 576,
          }
       },
       {
-         name = "prostitute_male",
-         id = 418,
+         id = "prostitute_male",
+         legacy_id = 418,
          source = {
             x = 1056,
             y = 576,
          }
       },
       {
-         name = "prisoner_male",
-         id = 419,
+         id = "prisoner_male",
+         legacy_id = 419,
          source = {
             x = 1104,
             y = 576,
          }
       },
       {
-         name = "prisoner_female",
-         id = 420,
+         id = "prisoner_female",
+         legacy_id = 420,
          source = {
             x = 1152,
             y = 576,
          }
       },
       {
-         name = "yith",
-         id = 429,
+         id = "yith",
+         legacy_id = 429,
          tall = true,
          offset_y = 8,
          source = {
@@ -3080,8 +3080,8 @@ data:add_multi(
          }
       },
       {
-         name = "spiral_king",
-         id = 430,
+         id = "spiral_king",
+         legacy_id = 430,
          tall = true,
          offset_y = 8,
          source = {
@@ -3090,8 +3090,8 @@ data:add_multi(
          }
       },
       {
-         name = "opatos",
-         id = 432,
+         id = "opatos",
+         legacy_id = 432,
          tall = true,
          offset_y = 8,
          source = {
@@ -3100,8 +3100,8 @@ data:add_multi(
          }
       },
       {
-         name = "kumiromi",
-         id = 433,
+         id = "kumiromi",
+         legacy_id = 433,
          tall = true,
          offset_y = 8,
          source = {
@@ -3110,24 +3110,24 @@ data:add_multi(
          }
       },
       {
-         name = "mine_dog",
-         id = 434,
+         id = "mine_dog",
+         legacy_id = 434,
          source = {
             x = 240,
             y = 624,
          }
       },
       {
-         name = "_436",
-         id = 436,
+         id = "_436",
+         legacy_id = 436,
          source = {
             x = 0,
             y = 0,
          }
       },
       {
-         name = "mammoth",
-         id = 439,
+         id = "mammoth",
+         legacy_id = 439,
          tall = true,
          offset_y = 8,
          source = {
@@ -3136,8 +3136,8 @@ data:add_multi(
          }
       },
       {
-         name = "holy_beast",
-         id = 442,
+         id = "holy_beast",
+         legacy_id = 442,
          tall = true,
          offset_y = 8,
          source = {
@@ -3146,24 +3146,24 @@ data:add_multi(
          }
       },
       {
-         name = "caravan_master",
-         id = 443,
+         id = "caravan_master",
+         legacy_id = 443,
          source = {
             x = 672,
             y = 624,
          }
       },
       {
-         name = "_446",
-         id = 446,
+         id = "_446",
+         legacy_id = 446,
          source = {
             x = 816,
             y = 624,
          }
       },
       {
-         name = "mani",
-         id = 447,
+         id = "mani",
+         legacy_id = 447,
          tall = true,
          offset_y = 16,
          source = {
@@ -3172,120 +3172,120 @@ data:add_multi(
          }
       },
       {
-         name = "_448",
-         id = 448,
+         id = "_448",
+         legacy_id = 448,
          source = {
             x = 912,
             y = 624,
          }
       },
       {
-         name = "_449",
-         id = 449,
+         id = "_449",
+         legacy_id = 449,
          source = {
             x = 960,
             y = 624,
          }
       },
       {
-         name = "_450",
-         id = 450,
+         id = "_450",
+         legacy_id = 450,
          source = {
             x = 1008,
             y = 624,
          }
       },
       {
-         name = "_451",
-         id = 451,
+         id = "_451",
+         legacy_id = 451,
          source = {
             x = 1056,
             y = 624,
          }
       },
       {
-         name = "_452",
-         id = 452,
+         id = "_452",
+         legacy_id = 452,
          source = {
             x = 1104,
             y = 624,
          }
       },
       {
-         name = "_467",
-         id = 467,
+         id = "_467",
+         legacy_id = 467,
          source = {
             x = 240,
             y = 672,
          }
       },
       {
-         name = "_468",
-         id = 468,
+         id = "_468",
+         legacy_id = 468,
          source = {
             x = 288,
             y = 672,
          }
       },
       {
-         name = "kaneda_bike",
-         id = 470,
+         id = "kaneda_bike",
+         legacy_id = 470,
          source = {
             x = 384,
             y = 672,
          }
       },
       {
-         name = "bike",
-         id = 471,
+         id = "bike",
+         legacy_id = 471,
          source = {
             x = 432,
             y = 672,
          }
       },
       {
-         name = "part_time_worker",
-         id = 473,
+         id = "part_time_worker",
+         legacy_id = 473,
          source = {
             x = 528,
             y = 672,
          }
       },
       {
-         name = "festival_tourist_female",
-         id = 476,
+         id = "festival_tourist_female",
+         legacy_id = 476,
          source = {
             x = 672,
             y = 672,
          }
       },
       {
-         name = "festival_tourist_male",
-         id = 477,
+         id = "festival_tourist_male",
+         legacy_id = 477,
          source = {
             x = 720,
             y = 672,
          }
       },
       {
-         name = "the_leopard_warrior",
-         id = 478,
+         id = "the_leopard_warrior",
+         legacy_id = 478,
          source = {
             x = 768,
             y = 672,
          }
       },
       {
-         name = "silvia",
-         id = 479,
+         id = "silvia",
+         legacy_id = 479,
          source = {
             x = 816,
             y = 672,
          }
       },
       {
-         name = "_660",
-         id = 660,
+         id = "_660",
+         legacy_id = 660,
          source = {
             x = 0,
             y = 960,

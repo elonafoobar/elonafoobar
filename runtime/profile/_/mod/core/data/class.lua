@@ -3,7 +3,7 @@ data:add_multi(
    "core.class",
    {
       {
-         name = "warrior",
+         id = "warrior",
          ordering = 10010,
          item_type = 1,
          is_extra = false,
@@ -34,7 +34,7 @@ data:add_multi(
          },
       },
       {
-         name = "thief",
+         id = "thief",
          ordering = 10020,
          item_type = 7,
          is_extra = false,
@@ -62,7 +62,7 @@ data:add_multi(
          },
       },
       {
-         name = "wizard",
+         id = "wizard",
          ordering = 10030,
          item_type = 2,
          is_extra = false,
@@ -89,7 +89,7 @@ data:add_multi(
          },
       },
       {
-         name = "farmer",
+         id = "farmer",
          ordering = 10040,
          item_type = 1,
          is_extra = false,
@@ -116,7 +116,7 @@ data:add_multi(
          },
       },
       {
-         name = "predator",
+         id = "predator",
          ordering = 20010,
          item_type = 0,
          is_extra = true,
@@ -135,7 +135,7 @@ data:add_multi(
          },
       },
       {
-         name = "archer",
+         id = "archer",
          ordering = 10050,
          item_type = 3,
          is_extra = false,
@@ -163,7 +163,7 @@ data:add_multi(
          },
       },
       {
-         name = "warmage",
+         id = "warmage",
          ordering = 10060,
          item_type = 5,
          is_extra = false,
@@ -190,7 +190,7 @@ data:add_multi(
          },
       },
       {
-         name = "tourist",
+         id = "tourist",
          ordering = 10070,
          item_type = 0,
          is_extra = false,
@@ -210,7 +210,7 @@ data:add_multi(
          },
       },
       {
-         name = "pianist",
+         id = "pianist",
          ordering = 10080,
          item_type = 3,
          is_extra = false,
@@ -236,7 +236,7 @@ data:add_multi(
          },
       },
       {
-         name = "gunner",
+         id = "gunner",
          ordering = 20020,
          item_type = 4,
          is_extra = true,
@@ -259,7 +259,7 @@ data:add_multi(
          },
       },
       {
-         name = "priest",
+         id = "priest",
          ordering = 10090,
          item_type = 6,
          is_extra = false,
@@ -286,7 +286,7 @@ data:add_multi(
          },
       },
       {
-         name = "claymore",
+         id = "claymore",
          ordering = 10100,
          item_type = 8,
          is_extra = false,
@@ -313,7 +313,7 @@ data:add_multi(
       },
       -- For debug
       {
-         name = "debugger",
+         id = "debugger",
          ordering = 0,
          item_type = 1,
          is_extra = true,

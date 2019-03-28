@@ -21,8 +21,11 @@ enum class AssetLoadType
     Startup,
 };
 
+
+
 struct AssetData
 {
+    SharedId id;
     int window_id;
     int x;
     int y;

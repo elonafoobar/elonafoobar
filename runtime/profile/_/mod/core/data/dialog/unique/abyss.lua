@@ -48,7 +48,7 @@ local function receive_reward()
 end
 
 return {
-   name = "abyss",
+   id = "abyss",
    root = "core.locale.talk.unique.abyss",
    nodes = {
       __start = function()

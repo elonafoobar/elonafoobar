@@ -8,7 +8,7 @@ namespace elona
 
 struct ClassData
 {
-    std::string id;
+    SharedId id;
     int ordering;
     bool is_extra;
     int item_type;

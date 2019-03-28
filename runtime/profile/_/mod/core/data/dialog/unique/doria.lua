@@ -65,7 +65,7 @@ local function quota_args()
 end
 
 return {
-   name = "doria",
+   id = "doria",
    root = "core.locale.talk.unique.doria",
    nodes = {
       __start = function()

@@ -11,8 +11,6 @@ namespace
 
 constexpr int _displayed_portrait_width = 80;
 constexpr int _displayed_portrait_height = 112;
-constexpr int _portrait_grid_column = 16;
-constexpr int _portrait_grid_row = 8;
 
 
 

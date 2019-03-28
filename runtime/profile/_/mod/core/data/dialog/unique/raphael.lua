@@ -18,7 +18,7 @@ local function give_wife(raphael, wife)
 end
 
 return {
-   name = "raphael",
+   id = "raphael",
    root = "core.locale.talk.unique.raphael",
    nodes = {
       __start = function()

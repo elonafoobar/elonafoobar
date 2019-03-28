@@ -19,7 +19,7 @@ ClassData ClassDB::convert(const lua::ConfigTable& data, const std::string& id)
     DATA_TABLE(skills, int, int);
 
     return ClassData{
-        id,
+        SharedId{id},
         ordering,
         is_extra,
         item_type,

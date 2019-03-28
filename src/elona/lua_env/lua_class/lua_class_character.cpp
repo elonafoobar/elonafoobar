@@ -245,7 +245,7 @@ sol::optional<LuaAbility> LuaCharacter::get_skill(
     assert(handle != sol::lua_nil);
 
     std::string uuid = handle["__uuid"];
-    return LuaAbility(data->id, self.index, Character::lua_type(), uuid);
+    return LuaAbility(data->legacy_id, self.index, Character::lua_type(), uuid);
 }
 
 void LuaCharacter::gain_skill(
@@ -276,7 +276,8 @@ void LuaCharacter::gain_skill_stock(
     {
         return;
     }
-    elona::chara_gain_skill(self, data->id, initial_level, initial_stock);
+    elona::chara_gain_skill(
+        self, data->legacy_id, initial_level, initial_stock);
 }
 
 /**
@@ -297,7 +298,7 @@ void LuaCharacter::gain_skill_exp(
     {
         return;
     }
-    elona::chara_gain_fixed_skill_exp(self, data->id, amount);
+    elona::chara_gain_fixed_skill_exp(self, data->legacy_id, amount);
 }
 
 /**
@@ -498,6 +499,36 @@ void LuaCharacter::switch_religion(Character& self, const std::string& god_id)
 
     self.god_id = god_id;
     elona::switch_religion();
+}
+
+/**
+ * @luadoc
+ *
+ * Returns the duration of an ailment on this character.
+ * @tparam StatusAilment ailment
+ * @treturn num
+ */
+int LuaCharacter::get_ailment(Character& self, const EnumString& ailment)
+{
+    StatusAilment ailment_value =
+        LuaEnums::StatusAilmentTable.ensure_from_string(ailment);
+
+    switch (ailment_value)
+    {
+    case StatusAilment::blinded: return self.blind;
+    case StatusAilment::confused: return self.confused;
+    case StatusAilment::paralyzed: return self.paralyzed;
+    case StatusAilment::poisoned: return self.poisoned;
+    case StatusAilment::sleep: return self.sleep;
+    case StatusAilment::fear: return self.fear;
+    case StatusAilment::dimmed: return self.dimmed;
+    case StatusAilment::bleeding: return self.bleeding;
+    case StatusAilment::drunk: return self.drunk;
+    case StatusAilment::insane: return self.insane;
+    case StatusAilment::sick: return self.sick;
+    }
+
+    return 0;
 }
 
 void LuaCharacter::bind(sol::state& lua)
@@ -847,6 +878,7 @@ void LuaCharacter::bind(sol::state& lua)
         "move_to",
         sol::overload(&LuaCharacter::move_to, &LuaCharacter::move_to_xy));
     LuaCharacter.set("switch_religion", &LuaCharacter::switch_religion);
+    LuaCharacter.set("get_ailment", &LuaCharacter::get_ailment);
 
     auto key = Character::lua_type();
     lua.set_usertype(key, LuaCharacter);

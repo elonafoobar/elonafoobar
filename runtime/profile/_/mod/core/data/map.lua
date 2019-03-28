@@ -50,8 +50,8 @@ data:add_multi(
    "core.map",
    {
       {
-         name = "test_world",
-         id = 47,
+         id = "test_world",
+         legacy_id = 47,
          appearance = 0,
          map_type = "WorldMap",
          outer_map = "core.test_world",
@@ -67,8 +67,8 @@ data:add_multi(
          default_ai_calm = 0,
       },
       {
-         name = "test_world_north_border",
-         id = 48,
+         id = "test_world_north_border",
+         legacy_id = 48,
          appearance = 158,
          map_type = "Guild",
          outer_map = "core.test_world",
@@ -86,8 +86,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "south_tyris",
-         id = 44,
+         id = "south_tyris",
+         legacy_id = 44,
          appearance = 0,
          map_type = "WorldMap",
          outer_map = "core.south_tyris",
@@ -103,8 +103,8 @@ data:add_multi(
          default_ai_calm = 0,
       },
       {
-         name = "south_tyris_north_border",
-         id = 45,
+         id = "south_tyris_north_border",
+         legacy_id = 45,
          appearance = 158,
          map_type = "Guild",
          outer_map = "core.south_tyris",
@@ -122,8 +122,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "the_smoke_and_pipe",
-         id = 46,
+         id = "the_smoke_and_pipe",
+         legacy_id = 46,
          appearance = 159,
          map_type = "Guild",
          outer_map = "core.south_tyris",
@@ -141,8 +141,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "north_tyris",
-         id = 4,
+         id = "north_tyris",
+         legacy_id = 4,
          appearance = 0,
          map_type = "WorldMap",
          outer_map = "core.north_tyris",
@@ -158,8 +158,8 @@ data:add_multi(
          default_ai_calm = 0,
       },
       {
-         name = "vernis",
-         id = 5,
+         id = "vernis",
+         legacy_id = 5,
          appearance = 132,
          map_type = "Town",
          outer_map_position = { x = 26, y = 23 },
@@ -187,8 +187,8 @@ data:add_multi(
          }
       },
       {
-         name = "yowyn",
-         id = 12,
+         id = "yowyn",
+         legacy_id = 12,
          appearance = 142,
          map_type = "Town",
          outer_map_position = { x = 43, y = 32 },
@@ -216,8 +216,8 @@ data:add_multi(
          }
       },
       {
-         name = "palmia",
-         id = 15,
+         id = "palmia",
+         legacy_id = 15,
          appearance = 136,
          map_type = "Town",
          outer_map_position = { x = 53, y = 24 },
@@ -245,8 +245,8 @@ data:add_multi(
          }
       },
       {
-         name = "derphy",
-         id = 14,
+         id = "derphy",
+         legacy_id = 14,
          appearance = 142,
          map_type = "Town",
          outer_map_position = { x = 14, y = 35 },
@@ -280,8 +280,8 @@ data:add_multi(
 
       },
       {
-         name = "port_kapul",
-         id = 11,
+         id = "port_kapul",
+         legacy_id = 11,
          appearance = 132,
          map_type = "Town",
          outer_map_position = { x = 3, y = 15 },
@@ -306,8 +306,8 @@ data:add_multi(
          }
       },
       {
-         name = "noyel",
-         id = 33,
+         id = "noyel",
+         legacy_id = 33,
          appearance = 156,
          map_type = "Town",
          outer_map_position = { x = 89, y = 14 },
@@ -334,8 +334,8 @@ data:add_multi(
          }
       },
       {
-         name = "lumiest",
-         id = 36,
+         id = "lumiest",
+         legacy_id = 36,
          appearance = 132,
          map_type = "Town",
          outer_map_position = { x = 61, y = 32 },
@@ -366,8 +366,8 @@ data:add_multi(
          }
       },
       {
-         name = "fields",
-         id = 2,
+         id = "fields",
+         legacy_id = 2,
          appearance = 0,
          map_type = "Field",
          outer_map = "core.north_tyris",
@@ -383,8 +383,8 @@ data:add_multi(
          default_ai_calm = 0,
       },
       {
-         name = "your_home",
-         id = 7,
+         id = "your_home",
+         legacy_id = 7,
          map_type = "PlayerOwned",
          entrance_type = "South",
          base_turn_cost = 10000,
@@ -407,8 +407,8 @@ data:add_multi(
          is_fixed = false,
       },
       {
-         name = "show_house",
-         id = 35,
+         id = "show_house",
+         legacy_id = 35,
          map_type = "Temporary",
          outer_map = "core.north_tyris",
          outer_map_position = { x = 35, y = 27 },
@@ -427,8 +427,8 @@ data:add_multi(
          prevents_monster_ball = true,
       },
       {
-         name = "arena",
-         id = 6,
+         id = "arena",
+         legacy_id = 6,
          appearance = 0,
          map_type = "Temporary",
          outer_map = "core.north_tyris",
@@ -448,8 +448,8 @@ data:add_multi(
          prevents_monster_ball = true,
       },
       {
-         name = "pet_arena",
-         id = 40,
+         id = "pet_arena",
+         legacy_id = 40,
          appearance = 0,
          map_type = "Temporary",
          outer_map = "core.north_tyris",
@@ -470,8 +470,8 @@ data:add_multi(
          prevents_monster_ball = true,
       },
       {
-         name = "quest",
-         id = 13,
+         id = "quest",
+         legacy_id = 13,
          appearance = 0,
          map_type = "Temporary",
          outer_map = "core.north_tyris",
@@ -490,8 +490,8 @@ data:add_multi(
          prevents_building_shelter = true,
       },
       {
-         name = "lesimas",
-         id = 3,
+         id = "lesimas",
+         legacy_id = 3,
          appearance = 139,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -519,8 +519,8 @@ data:add_multi(
          end
       },
       {
-         name = "the_void",
-         id = 42,
+         id = "the_void",
+         legacy_id = 42,
          appearance = 139,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -542,8 +542,8 @@ data:add_multi(
          end
       },
       {
-         name = "tower_of_fire",
-         id = 16,
+         id = "tower_of_fire",
+         legacy_id = 16,
          appearance = 145,
          map_type = "DungeonTower",
          outer_map = "core.north_tyris",
@@ -563,8 +563,8 @@ data:add_multi(
          end
       },
       {
-         name = "crypt_of_the_damned",
-         id = 17,
+         id = "crypt_of_the_damned",
+         legacy_id = 17,
          appearance = 141,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -584,8 +584,8 @@ data:add_multi(
          end
       },
       {
-         name = "ancient_castle",
-         id = 18,
+         id = "ancient_castle",
+         legacy_id = 18,
          appearance = 144,
          map_type = "DungeonCastle",
          outer_map = "core.north_tyris",
@@ -611,8 +611,8 @@ data:add_multi(
          end
       },
       {
-         name = "dragons_nest",
-         id = 19,
+         id = "dragons_nest",
+         legacy_id = 19,
          appearance = 146,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -632,8 +632,8 @@ data:add_multi(
          end
       },
       {
-         name = "mountain_pass",
-         id = 26,
+         id = "mountain_pass",
+         legacy_id = 26,
          appearance = 146,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -649,8 +649,8 @@ data:add_multi(
          default_ai_calm = 0,
       },
       {
-         name = "puppy_cave",
-         id = 27,
+         id = "puppy_cave",
+         legacy_id = 27,
          appearance = 146,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -668,8 +668,8 @@ data:add_multi(
          generator = maps.puppy_cave,
       },
       {
-         name = "minotaurs_nest",
-         id = 38,
+         id = "minotaurs_nest",
+         legacy_id = 38,
          appearance = 146,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -695,8 +695,8 @@ data:add_multi(
          end
       },
       {
-         name = "yeeks_nest",
-         id = 28,
+         id = "yeeks_nest",
+         legacy_id = 28,
          appearance = 146,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -722,8 +722,8 @@ data:add_multi(
          end
       },
       {
-         name = "pyramid",
-         id = 37,
+         id = "pyramid",
+         legacy_id = 37,
          appearance = 160,
          map_type = "Dungeon",
          outer_map = "core.north_tyris",
@@ -744,8 +744,8 @@ data:add_multi(
          end
       },
       {
-         name = "lumiest_graveyard",
-         id = 10,
+         id = "lumiest_graveyard",
+         legacy_id = 10,
          appearance = 141,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -765,8 +765,8 @@ data:add_multi(
          end
       },
       {
-         name = "truce_ground",
-         id = 20,
+         id = "truce_ground",
+         legacy_id = 20,
          appearance = 147,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -786,8 +786,8 @@ data:add_multi(
          end
       },
       {
-         name = "jail",
-         id = 41,
+         id = "jail",
+         legacy_id = 41,
          appearance = 161,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -807,8 +807,8 @@ data:add_multi(
          prevents_random_events = true,
       },
       {
-         name = "cyber_dome",
-         id = 21,
+         id = "cyber_dome",
+         legacy_id = 21,
          appearance = 148,
          map_type = "Guild",
          outer_map = "core.north_tyris",
@@ -828,8 +828,8 @@ data:add_multi(
          end
       },
       {
-         name = "larna",
-         id = 25,
+         id = "larna",
+         legacy_id = 25,
          appearance = 142,
          map_type = "Guild",
          outer_map = "core.north_tyris",
@@ -848,8 +848,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "miral_and_garoks_workshop",
-         id = 34,
+         id = "miral_and_garoks_workshop",
+         legacy_id = 34,
          appearance = 157,
          map_type = "Guild",
          outer_map_position = { x = 88, y = 25 },
@@ -868,8 +868,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "mansion_of_younger_sister",
-         id = 29,
+         id = "mansion_of_younger_sister",
+         legacy_id = 29,
          appearance = 162,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -889,8 +889,8 @@ data:add_multi(
          is_hidden_in_world_map = true,
       },
       {
-         name = "embassy",
-         id = 32,
+         id = "embassy",
+         legacy_id = 32,
          appearance = 155,
          map_type = "Guild",
          outer_map = "core.north_tyris",
@@ -909,8 +909,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "north_tyris_south_border",
-         id = 43,
+         id = "north_tyris_south_border",
+         legacy_id = 43,
          appearance = 158,
          map_type = "Guild",
          outer_map = "core.north_tyris",
@@ -928,8 +928,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "fort_of_chaos_beast",
-         id = 22,
+         id = "fort_of_chaos_beast",
+         legacy_id = 22,
          appearance = 149,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -947,8 +947,8 @@ data:add_multi(
          chara_filter = chara_filter_town(),
       },
       {
-         name = "fort_of_chaos_machine",
-         id = 23,
+         id = "fort_of_chaos_machine",
+         legacy_id = 23,
          appearance = 149,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -964,8 +964,8 @@ data:add_multi(
          default_ai_calm = 1,
       },
       {
-         name = "fort_of_chaos_collapsed",
-         id = 24,
+         id = "fort_of_chaos_collapsed",
+         legacy_id = 24,
          appearance = 149,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -981,8 +981,8 @@ data:add_multi(
          default_ai_calm = 1,
       },
       {
-         name = "shelter",
-         id = 30,
+         id = "shelter",
+         legacy_id = 30,
          appearance = 0,
          map_type = "PlayerOwned",
          outer_map = "core.north_tyris",
@@ -1003,8 +1003,8 @@ data:add_multi(
          prevents_random_events = true,
       },
       {
-         name = "test_site",
-         id = 9,
+         id = "test_site",
+         legacy_id = 9,
          appearance = 0,
          map_type = "Shelter",
          outer_map = "core.north_tyris",
@@ -1062,7 +1062,7 @@ data:add_multi(
    {
       player_owned {
          name = "museum",
-         id = 101,
+         legacy_id = 101,
          appearance = 151,
          is_indoor = true,
          chara_filter = chara_filter_museum_shop,
@@ -1070,7 +1070,7 @@ data:add_multi(
       },
       player_owned {
          name = "shop",
-         id = 102,
+         legacy_id = 102,
          is_indoor = true,
          appearance = 150,
          chara_filter = chara_filter_museum_shop,
@@ -1078,21 +1078,21 @@ data:add_multi(
       },
       player_owned {
          name = "crop",
-         id = 103,
+         legacy_id = 103,
          appearance = 152,
          is_indoor = false,
          deed = "core.deed_of_farm",
       },
       player_owned {
          name = "storage_house",
-         id = 104,
+         legacy_id = 104,
          appearance = 153,
          is_indoor = true,
          deed = "core.deed_of_storage_house",
       },
       player_owned {
          name = "ranch",
-         id = 31,
+         legacy_id = 31,
          appearance = 154,
          is_indoor = false,
          default_ai_calm = 1,
@@ -1100,7 +1100,7 @@ data:add_multi(
       },
       player_owned {
          name = "your_dungeon",
-         id = 39,
+         legacy_id = 39,
          appearance = 138,
          is_indoor = true,
          default_ai_calm = 1,
@@ -1108,9 +1108,10 @@ data:add_multi(
       },
       {
          name = "random_dungeon",
-         id = 8,
+         legacy_id = 8,
          entrance_type = "StairUp",
          tile_set = "Normal",
+         appearance = 138,
          base_turn_cost = 10000,
          is_indoor = true,
          is_generated_every_time = false,

@@ -5330,9 +5330,9 @@ TurnResult step_into_gate()
 
 
 
-int target_position()
+int target_position(bool target_chara)
 {
-    if (tlocinitx != 0 || tlocinity != 0)
+    if (tlocinitx != 0 || tlocinity != 0 || homemapmode == 1)
     {
         tlocx = tlocinitx;
         tlocy = tlocinity;
@@ -5350,26 +5350,30 @@ int target_position()
     else
     {
         scposval = 1;
-        if (cdata.player().enemy_id == 0)
+
+        if (target_chara)
         {
-            find_enemy_target();
-        }
-        build_target_list();
-        if (listmax == 0)
-        {
-            txt(i18n::s.get("core.locale.misc.no_target_around"));
-        }
-        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-        {
-            if (list(0, cnt) == 0)
+            if (cdata.player().enemy_id == 0)
             {
-                continue;
+                find_enemy_target();
             }
-            if (list(0, cnt) == cdata.player().enemy_id)
+            build_target_list();
+            if (listmax == 0)
             {
-                tlocx = cdata[list(0, cnt)].position.x;
-                tlocy = cdata[list(0, cnt)].position.y;
-                break;
+                txt(i18n::s.get("core.locale.misc.no_target_around"));
+            }
+            for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+            {
+                if (list(0, cnt) == 0)
+                {
+                    continue;
+                }
+                if (list(0, cnt) == cdata.player().enemy_id)
+                {
+                    tlocx = cdata[list(0, cnt)].position.x;
+                    tlocy = cdata[list(0, cnt)].position.y;
+                    break;
+                }
             }
         }
     }
@@ -5631,7 +5635,7 @@ int target_position()
                 snd("core.cursor1");
             }
             scposval = 0;
-            if (tlocinitx == 0 && tlocinity == 0)
+            if (tlocinitx == 0 && tlocinity == 0 && homemapmode != 1)
             {
                 update_screen();
             }

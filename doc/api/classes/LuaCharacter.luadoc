@@ -175,6 +175,12 @@ function move_to_xy(x, y) end
 --  @function switch_religion
 function switch_religion(god_id) end
 
+--- Returns the duration of an ailment on this character.
+--  @tparam StatusAilment ailment
+--  @treturn num
+--  @function get_ailment
+function get_ailment(ailment) end
+
 --- [R] The index of this character in the global characters array.
 --  @tfield num index
 

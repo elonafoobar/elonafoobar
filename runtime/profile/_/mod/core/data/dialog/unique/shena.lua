@@ -8,7 +8,7 @@ local Map = Elona.require("Map")
 local common = require("data/dialog/common")
 
 return {
-   name = "shena",
+   id = "shena",
    root = "core.locale.talk.unique.shena",
    nodes = {
       __start = function()

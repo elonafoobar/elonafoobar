@@ -3,31 +3,31 @@ data:add_multi(
    "core.god",
    {
       {
-         name = "mani",
-         id = 1,
+         id = "mani",
+         legacy_id = 1,
       },
       {
-         name = "lulwy",
-         id = 2,
+         id = "lulwy",
+         legacy_id = 2,
       },
       {
-         name = "itzpalt",
-         id = 3,
+         id = "itzpalt",
+         legacy_id = 3,
       },
       {
-         name = "ehekatl",
-         id = 4,
+         id = "ehekatl",
+         legacy_id = 4,
       },
       {
-         name = "opatos",
-         id = 5,
+         id = "opatos",
+         legacy_id = 5,
       },
       {
-         name = "jure",
-         id = 6,
+         id = "jure",
+         legacy_id = 6,
       },
       {
-         name = "kumiromi",
-         id = 7,
+         id = "kumiromi",
+         legacy_id = 7,
       },
 })
