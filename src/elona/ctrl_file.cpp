@@ -1633,7 +1633,7 @@ void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
 {
     ELONA_LOG("save.ctrl_file")
         << "ctrl_file2 " << static_cast<int>(file_operation) << " mid: " << mid
-        << " filepath: " << filepath.string();
+        << " filepath: " << filepathutil::to_utf8_path(filepath);
 
     game_data.play_time =
         game_data.play_time + timeGetTime() / 1000 - time_begin;

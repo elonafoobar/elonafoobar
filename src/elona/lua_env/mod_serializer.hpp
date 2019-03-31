@@ -88,13 +88,17 @@ public:
         for (const auto& pair : mod_mgr)
         {
             std::string mod_name = pair.first;
+            semver::Version mod_version = pair.second->manifest.version;
+
             putit_archive(mod_name);
+            putit_archive(mod_version);
 
             sol::table data = pair.second->get_store(store_type);
             save(data, putit_archive);
 
-            ELONA_LOG("lua.mod") << "Saved " << get_store_name(store_type)
-                                 << " store data for " << mod_name;
+            ELONA_LOG("lua.mod")
+                << "Saved " << get_store_name(store_type) << " store data for "
+                << mod_name << " " << mod_version.to_string();
         }
     }
 
@@ -111,7 +115,10 @@ public:
         for (unsigned i = 0; i < mod_count; i++)
         {
             std::string mod_name;
+            semver::Version mod_version;
+
             putit_archive(mod_name);
+            putit_archive(mod_version);
 
             auto mod = mod_mgr.get_mod_optional(mod_name);
             if (!mod)
@@ -127,8 +134,9 @@ public:
 
                 continue;
             }
-            ELONA_LOG("lua.mod") << "Loaded " << get_store_name(store_type)
-                                 << " store data for " << mod_name;
+            ELONA_LOG("lua.mod")
+                << "Loaded " << get_store_name(store_type) << " store data for "
+                << mod_name << " " << mod_version.to_string();
 
             sol::table data = _lua->get_state()->create_table();
             load(data, putit_archive);
