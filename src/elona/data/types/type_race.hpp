@@ -24,8 +24,8 @@ struct RaceData
     int dv_multiplier;
     int pv_multiplier;
     std::vector<int> body_parts;
-    std::unordered_map<int, int> skills;
-    std::unordered_map<int, int> resistances;
+    std::unordered_map<SharedId, int> skills;
+    std::unordered_map<SharedId, int> resistances;
 };
 
 
