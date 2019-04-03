@@ -79,7 +79,8 @@ TEST_CASE("test registering character", "[Lua: Data]")
         REQUIRE(data->special_actions == expected);
     }
     {
-        std::unordered_map<int, int> expected = {{54, 500}};
+        std::unordered_map<SharedId, int> expected = {
+            {SharedId{"core.mind"}, 500}};
         REQUIRE(data->resistances == expected);
     }
 
@@ -167,7 +168,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
         REQUIRE(data->special_actions == expected);
     }
     {
-        std::unordered_map<int, int> expected = {};
+        std::unordered_map<SharedId, int> expected = {};
         REQUIRE(data->resistances == expected);
     }
 

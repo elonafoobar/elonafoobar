@@ -45,7 +45,16 @@ int access_class_info(int dbmode, const std::string& class_id)
     cequipment = data->equipment_type;
     for (const auto& pair : data->skills)
     {
-        chara_init_skill(cdata[rc], pair.first, pair.second);
+        if (const auto ability_data = the_ability_db[pair.first])
+        {
+            chara_init_skill(cdata[rc], ability_data->legacy_id, pair.second);
+        }
+        else
+        {
+            // Skip the skill if undefined.
+            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first
+                                   << " (class " << class_id << ")";
+        }
     }
 
     return 0;

@@ -19,7 +19,7 @@ data:add(
          special_actions = {636},
          race = "slime",
          class_ = "wizard",
-         resistances = {[54] = 500},
+         resistances = {["core.mind"] = 500},
          image = 430,
          female_image = 431,
          male_image = 432,

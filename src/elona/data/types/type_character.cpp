@@ -10,17 +10,17 @@ const constexpr char* data::LuaLazyCacheTraits<CharacterDB>::type_id;
 
 
 
-static std::unordered_map<int, int> _convert_resistances(
+static std::unordered_map<SharedId, int> _convert_resistances(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    std::unordered_map<int, int> resistances;
+    std::unordered_map<SharedId, int> resistances;
 
     if (auto it = data.optional<sol::table>(id))
     {
         for (const auto& kvp : *it)
         {
-            int k = kvp.first.as<int>();
+            SharedId k{kvp.first.as<std::string>()};
             int v = kvp.second.as<int>();
             resistances.emplace(k, v);
         }
@@ -117,8 +117,7 @@ CharacterData CharacterDB::convert(
     DATA_VEC(normal_actions, int);
     DATA_VEC(special_actions, int);
 
-    std::unordered_map<int, int> resistances =
-        _convert_resistances(data, "resistances");
+    const auto resistances = _convert_resistances(data, "resistances");
 
     if (normal_actions.empty())
     {
