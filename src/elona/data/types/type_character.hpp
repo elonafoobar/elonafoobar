@@ -125,7 +125,7 @@ struct CharacterData
     std::string portrait_female;
     std::string race;
     int sex;
-    std::unordered_map<int, int> resistances;
+    std::unordered_map<SharedId, int> resistances;
     int fltselect;
     int category;
     int rarity;

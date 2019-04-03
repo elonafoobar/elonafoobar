@@ -77,10 +77,22 @@ int access_character_info()
             access_class_info(3, data->class_);
         }
         cdata[rc].element_of_unarmed_attack = data->element_of_unarmed_attack;
+
         for (const auto& pair : data->resistances)
         {
-            sdata(pair.first, rc) = pair.second;
+            if (const auto ability_data = the_ability_db[pair.first])
+            {
+                sdata(ability_data->legacy_id, rc) = pair.second;
+            }
+            else
+            {
+                // Skip the resistance if undefined.
+                ELONA_WARN("lua.data")
+                    << "Undefined resistance ID: " << pair.first
+                    << " (character " << data->id << ")";
+            }
         }
+
         if (data->sex != -1)
         {
             cdata[rc].sex = data->sex;
