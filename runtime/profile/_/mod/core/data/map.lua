@@ -1,3 +1,15 @@
+local data = { _table = {} }
+function data:add_multi(tbl)
+   for _, v in ipairs(tbl) do
+      self:add(v)
+   end
+end
+function data:add(data)
+   self._table[data.id] = data
+end
+
+
+
 local Calc = Elona.require("Calc")
 local Map = Elona.require("Map")
 local Math = Elona.require("Math")
@@ -45,9 +57,7 @@ end
     generates the map. See the mapgen/ folder for examples.
 
 ]]
-data:define_type("map")
 data:add_multi(
-   "core.map",
    {
       {
          id = "test_world",
@@ -1058,7 +1068,6 @@ end
 
 -- These maps are player-created.
 data:add_multi(
-   "core.map",
    {
       player_owned {
          id = "museum",
@@ -1132,3 +1141,7 @@ data:add_multi(
          deepest_level = 1,
       },
 })
+
+
+
+return { ["core.map"] = data._table }

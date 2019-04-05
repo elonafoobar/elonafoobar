@@ -1,3 +1,15 @@
+local data = { _table = {} }
+function data:add_multi(tbl)
+   for _, v in ipairs(tbl) do
+      self:add(v)
+   end
+end
+function data:add(data)
+   self._table[data.id] = data
+end
+
+
+
 local Rand = Elona.require("Rand")
 local Item = Elona.require("Item")
 local Math = Elona.require("Math")
@@ -125,9 +137,7 @@ Available properties:
 
 -- NOTE: "id" must be the same as a character role, and between
 -- [1000,1999]. (2003 is special-cased.)
-data:define_type("shop_inventory")
 data:add_multi(
-   "core.shop_inventory",
    {
       {
          id = "magic_vendor",
@@ -465,3 +475,7 @@ data:add_multi(
          end
       }
 })
+
+
+
+return { ["core.shop_inventory"] = data._table }
