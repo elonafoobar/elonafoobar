@@ -19,6 +19,7 @@
 #include "lua_api_map.hpp"
 #include "lua_api_pos.hpp"
 #include "lua_api_rand.hpp"
+#include "lua_api_registry.hpp"
 #include "lua_api_skill.hpp"
 #include "lua_api_trait.hpp"
 #include "lua_api_world.hpp"
