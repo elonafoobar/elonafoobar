@@ -1,3 +1,15 @@
+local data = { _table = {} }
+function data:add_multi(tbl)
+   for _, v in ipairs(tbl) do
+      self:add(v)
+   end
+end
+function data:add(data)
+   self._table[data.id] = data
+end
+
+
+
 local Chara = Elona.require("Chara")
 local Item = Elona.require("Item")
 local Map = Elona.require("Map")
@@ -54,9 +66,7 @@ Each item of "drops" can have these properties.
     chara: character that was killed.
 --]]
 
-data:define_type("chara_drop")
 data:add_multi(
-   "core.chara_drop",
    {
       {
          id = "rich_person",
@@ -219,3 +229,7 @@ data:add_multi(
          }}
       }
 })
+
+
+
+return { ["core.chara_drop"] = data._table }

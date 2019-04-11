@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
-#include <vector>
-#include "../filesystem.hpp"
+
+#include "../../thirdparty/sol2/sol.hpp"
 #include "data_table.hpp"
-#include "lua_env.hpp"
+
+
 
 namespace elona
 {
@@ -11,6 +11,9 @@ namespace lua
 {
 
 struct ModInfo;
+class LuaEnv;
+
+
 
 /***
  * Stores arbitrary data as Lua tables in a naive object database
@@ -40,7 +43,9 @@ private:
     void _init_from_mod(ModInfo& mod);
 
     DataTable _data;
+    sol::table _registry;
     LuaEnv* _lua;
+    sol::environment _env;
 };
 
 } // namespace lua

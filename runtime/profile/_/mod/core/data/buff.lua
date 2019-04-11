@@ -1,3 +1,15 @@
+local data = { _table = {} }
+function data:add_multi(tbl)
+   for _, v in ipairs(tbl) do
+      self:add(v)
+   end
+end
+function data:add(data)
+   self._table[data.id] = data
+end
+
+
+
 local Chara = Elona.require("Chara")
 local Math = Elona.require("Math")
 local I18N = Elona.require("I18N")
@@ -63,9 +75,7 @@ in the description.
 ]]
 
 -- TODO: buff icons
-data:define_type("buff")
 data:add_multi(
-   "core.buff",
    {
       {
          -- NOTE: Has these hardcoded behaviors.
@@ -425,11 +435,10 @@ data:add_multi(
 )
 
 local function register_growth_buff(attribute_index, attribute_name)
-   data:add({
+   data:add(
       {
-         type = "core.buff",
          id = "grow_" .. attribute_name,
-         id = attribute_index + 20,
+         legacy_id = attribute_index + 20,
          buff_type = "Food",
          duration = function(power)
             return 10 + power // 10
@@ -442,7 +451,7 @@ local function register_growth_buff(attribute_index, attribute_name)
          end,
          description = get_description
       }
-   })
+   )
 end
 
 
@@ -460,3 +469,7 @@ register_growth_buff(6, "magic")
 register_growth_buff(7, "charisma")
 register_growth_buff(8, "speed")
 register_growth_buff(9, "luck")
+
+
+
+return { ["core.buff"] = data._table }

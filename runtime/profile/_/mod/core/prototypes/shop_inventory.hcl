@@ -1,0 +1,2 @@
+shop_inventory {
+}
