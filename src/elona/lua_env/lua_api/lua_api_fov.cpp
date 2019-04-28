@@ -39,7 +39,7 @@ bool LuaApiFOV::los_xy(int fx, int fy, int tx, int ty)
  */
 bool LuaApiFOV::you_see(LuaCharacterHandle chara)
 {
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    auto& chara_ref = lua::ref<Character>(chara);
     return elona::is_in_fov(chara_ref);
 }
 

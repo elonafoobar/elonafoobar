@@ -985,7 +985,7 @@ label_2061_internal:
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
         {
-            if (p >= 5080)
+            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.locale.ui.inv.window.ground") + ")";

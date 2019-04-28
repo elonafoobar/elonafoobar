@@ -60,7 +60,7 @@ LuaEnv::~LuaEnv() = default;
 
 void LuaEnv::clear()
 {
-    for (int i = 0; i < 5480; i++)
+    for (int i = 0; i < ELONA_MAX_ITEMS; i++)
     {
         if (inv[i].number() != 0)
         {

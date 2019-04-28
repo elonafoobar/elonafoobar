@@ -25,6 +25,12 @@ using namespace std::literals::string_literals;
  */
 struct ModInfo
 {
+    enum class StoreType
+    {
+        map,
+        global
+    };
+
     explicit ModInfo(
         const ModManifest& manifest_,
         std::shared_ptr<sol::state> state)
@@ -33,7 +39,7 @@ struct ModInfo
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
 
-        store_local = state->create_table();
+        store_map = state->create_table();
         store_global = state->create_table();
 
         if (manifest.path)
@@ -45,10 +51,37 @@ struct ModInfo
     ModInfo& operator=(const ModInfo&) = delete;
     ~ModInfo() = default;
 
+    sol::table get_store(StoreType store_type) const
+    {
+        std::string table_name;
+        switch (store_type)
+        {
+        case StoreType::map: table_name = "map"; break;
+        case StoreType::global: table_name = "global"; break;
+        }
+
+        return env["Store"][table_name].get<sol::table>();
+    }
+
+    void set_store(StoreType store_type, sol::table data)
+    {
+        std::string table_name;
+        switch (store_type)
+        {
+        case StoreType::map: table_name = "map"; break;
+        case StoreType::global: table_name = "global"; break;
+        }
+
+        // bypass metatable that forces Store table reference to be
+        // unchangeable (set in mod_manager::bind_store)
+        sol::table store = env["Store"];
+        store.raw_set(table_name, data);
+    }
+
     ModManifest manifest;
     optional<LoadedChunkCache> chunk_cache;
     sol::environment env;
-    sol::table store_local;
+    sol::table store_map;
     sol::table store_global;
 };
 
@@ -96,6 +129,10 @@ public:
     {
         return mods.end();
     }
+    size_t count() const
+    {
+        return mods.size();
+    }
 
     /***
      * Scans and loads all mods at the the given mods/ root directory,
@@ -118,7 +155,7 @@ public:
     /***
      * Clears all map-local mod storages.
      */
-    void clear_map_local_data();
+    void clear_map_local_stores();
 
     /***
      * Clears the internal storage for each loaded mod. This is used
@@ -187,6 +224,17 @@ public:
         const std::string& name,
         optional<fs::path> mod_dir = none,
         bool readonly = false);
+
+    /***
+     * Retrieves a pointer to an instantiated mod.
+     */
+    optional<ModInfo*> get_mod_optional(const std::string& name)
+    {
+        auto val = mods.find(name);
+        if (val == mods.end())
+            return none;
+        return val->second.get();
+    }
 
     /***
      * Retrieves a pointer to an instantiated mod.

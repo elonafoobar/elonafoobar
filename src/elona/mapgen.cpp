@@ -1586,6 +1586,7 @@ void generate_debug_map()
     map_data.tileset = 3;
     map_data.user_map_flag = 0;
     map_data.type = static_cast<int>(mdata_t::MapType::shelter);
+    map_data.refresh_type = 1;
     map_initialize();
 
     for (int y = 0; y < map_data.height; ++y)

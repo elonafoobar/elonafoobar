@@ -11,6 +11,7 @@
 #include "log.hpp"
 #include "lua_env/handle_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/mod_serializer.hpp"
 #include "map.hpp"
 #include "mef.hpp"
 #include "putit.hpp"
@@ -494,17 +495,10 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
-                {
-                    lua::lua->get_handle_manager().remove_chara_handle(
-                        cdata[index]);
-                }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
                     cdata[index].index = index;
-                    lua::lua->get_handle_manager().create_chara_handle(
-                        cdata[index]);
                 }
             }
         }
@@ -566,23 +560,17 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < 1320; index++)
-                {
-                    lua::lua->get_handle_manager().remove_item_handle(
-                        inv[index]);
-                }
-                load(filepath, inv, 0, 1320);
-                for (int index = 0; index < 1320; index++)
+                load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+                for (int index = 0; index < ELONA_OTHER_INVENTORIES_INDEX;
+                     index++)
                 {
                     inv[index].index = index;
-                    lua::lua->get_handle_manager().create_item_handle(
-                        inv[index]);
                 }
             }
         }
         else
         {
-            save(filepath, inv, 0, 1320);
+            save(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
         }
     }
 
@@ -810,6 +798,80 @@ void fmode_7_8(bool read, const fs::path& dir)
             bload(dir / u8"evlist.s1", evlist);
         }
     }
+
+    lua::ModSerializer mod_serializer(lua::lua.get());
+    int index_start, index_end;
+
+    {
+        const auto filepath = dir / u8"mod.s1";
+        if (read)
+        {
+            if (fs::exists(filepath))
+            {
+                std::ifstream in{filepath.native(), std::ios::binary};
+                putit::BinaryIArchive ar{in};
+                mod_serializer.load_mod_store_data(
+                    ar, lua::ModInfo::StoreType::global);
+            }
+        }
+        else
+        {
+            std::ofstream out{filepath.native(), std::ios::binary};
+            putit::BinaryOArchive ar{out};
+            mod_serializer.save_mod_store_data(
+                ar, lua::ModInfo::StoreType::global);
+        }
+    }
+
+    {
+        const auto filepath = dir / u8"mod_cdata.s1";
+        if (read)
+        {
+            std::ifstream in{filepath.native(), std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            std::tie(index_start, index_end) =
+                mod_serializer.load_handles<Character>(
+                    ar, lua::ModInfo::StoreType::global);
+
+            auto& handle_mgr = lua::lua->get_handle_manager();
+            for (int i = index_start; i < index_end; i++)
+            {
+                handle_mgr.resolve_handle<Character>(cdata[i]);
+            }
+        }
+        else
+        {
+            std::ofstream out{filepath.native(), std::ios::binary};
+            putit::BinaryOArchive ar{out};
+            mod_serializer.save_handles<Character>(
+                ar, lua::ModInfo::StoreType::global);
+        }
+    }
+
+    {
+        const auto filepath = dir / u8"mod_inv.s1";
+        if (read)
+        {
+            std::ifstream in{filepath.native(), std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            std::tie(index_start, index_end) =
+                mod_serializer.load_handles<Item>(
+                    ar, lua::ModInfo::StoreType::global);
+
+            auto& handle_mgr = lua::lua->get_handle_manager();
+            for (int i = index_start; i < index_end; i++)
+            {
+                handle_mgr.resolve_handle<Item>(inv[i]);
+            }
+        }
+        else
+        {
+            std::ofstream out{filepath.native(), std::ios::binary};
+            putit::BinaryOArchive ar{out};
+            mod_serializer.save_handles<Item>(
+                ar, lua::ModInfo::StoreType::global);
+        }
+    }
 }
 
 
@@ -833,17 +895,10 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
-                {
-                    lua::lua->get_handle_manager().remove_chara_handle(
-                        cdata[index]);
-                }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
                     cdata[index].index = index;
-                    lua::lua->get_handle_manager().create_chara_handle(
-                        cdata[index]);
                 }
             }
         }
@@ -908,24 +963,18 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < 1320; index++)
-                {
-                    lua::lua->get_handle_manager().remove_item_handle(
-                        inv[index]);
-                }
-                load(filepath, inv, 0, 1320);
-                for (int index = 0; index < 1320; index++)
+                load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+                for (int index = 0; index < ELONA_OTHER_INVENTORIES_INDEX;
+                     index++)
                 {
                     inv[index].index = index;
-                    lua::lua->get_handle_manager().create_item_handle(
-                        inv[index]);
                 }
             }
         }
         else
         {
             Save::instance().add(filepath.filename());
-            save(filepath, inv, 0, 1320);
+            save(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
         }
     }
 
@@ -1045,13 +1094,6 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (read)
         {
-            for (int index = ELONA_MAX_PARTY_CHARACTERS;
-                 index < ELONA_MAX_CHARACTERS;
-                 index++)
-            {
-                lua::lua->get_handle_manager().remove_chara_handle(
-                    cdata[index]);
-            }
             tmpload(u8"cdata_"s + mid + u8".s2");
             load(
                 filepath,
@@ -1063,8 +1105,6 @@ void fmode_1_2(bool read)
                  index++)
             {
                 cdata[index].index = index;
-                lua::lua->get_handle_manager().create_chara_handle(
-                    cdata[index]);
             }
         }
         else
@@ -1143,6 +1183,62 @@ void fmode_1_2(bool read)
 
     arrayfile(read, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
     arrayfile(read, u8"mdatan", dir / (u8"mdatan_"s + mid + u8".s2"));
+
+    lua::ModSerializer mod_serializer(lua::lua.get());
+    int index_start, index_end;
+
+    // Mod map-local store data (Store.map)
+    {
+        const auto filepath = dir / (u8"mod_map_"s + mid + u8".s2");
+        if (read)
+        {
+            tmpload(u8"mod_map_"s + mid + u8".s2");
+
+            std::ifstream in{filepath.native(), std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            mod_serializer.load_mod_store_data(
+                ar, lua::ModInfo::StoreType::map);
+        }
+        else
+        {
+            Save::instance().add(filepath.filename());
+
+            std::ofstream out{filepath.native(), std::ios::binary};
+            putit::BinaryOArchive ar{out};
+            mod_serializer.save_mod_store_data(
+                ar, lua::ModInfo::StoreType::map);
+        }
+    }
+
+    // Mod handle data of map-local characters
+    {
+        const auto filepath = dir / (u8"mod_cdata_"s + mid + u8".s2");
+        if (read)
+        {
+            tmpload(u8"mod_cdata_"s + mid + u8".s2");
+
+            std::ifstream in{filepath.native(), std::ios::binary};
+            putit::BinaryIArchive ar{in};
+            std::tie(index_start, index_end) =
+                mod_serializer.load_handles<Character>(
+                    ar, lua::ModInfo::StoreType::map);
+
+            auto& handle_mgr = lua::lua->get_handle_manager();
+            for (int i = index_start; i < index_end; i++)
+            {
+                handle_mgr.resolve_handle<Character>(cdata[i]);
+            }
+        }
+        else
+        {
+            Save::instance().add(filepath.filename());
+
+            std::ofstream out{filepath.native(), std::ios::binary};
+            putit::BinaryOArchive ar{out};
+            mod_serializer.save_handles<Character>(
+                ar, lua::ModInfo::StoreType::map);
+        }
+    }
 }
 
 
@@ -1165,7 +1261,8 @@ void fmode_16()
 
 
 // reads or writes a custom map.
-// this is currently never called to write anything.
+// this is currently never called to write anything, as the built-in map editor
+// from 1.22 was removed.
 void fmode_5_6(bool read)
 {
     if (read)
@@ -1241,23 +1338,48 @@ void fmode_3_4(bool read, const fs::path& filename)
     const auto filepath = filesystem::dir::tmp() / filename;
     if (read)
     {
-        for (int index = 1320; index < 5480; index++)
-        {
-            lua::lua->get_handle_manager().remove_item_handle(inv[index]);
-        }
         tmpload(filename);
-        load(filepath, inv, 1320, 5480);
-        for (int index = 1320; index < 5480; index++)
+        load(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+        for (int index = ELONA_OTHER_INVENTORIES_INDEX; index < ELONA_MAX_ITEMS;
+             index++)
         {
             inv[index].index = index;
-            lua::lua->get_handle_manager().create_item_handle(inv[index]);
         }
     }
     else
     {
         Save::instance().add(filepath.filename());
         tmpload(filename);
-        save(filepath, inv, 1320, 5480);
+        save(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+    }
+
+    // Mod handle data of map-local items
+    const auto mod_filename = "mod_"s + filepathutil::to_utf8_path(filename);
+    const auto mod_filepath = filesystem::dir::tmp() / mod_filename;
+    lua::ModSerializer mod_serializer(lua::lua.get());
+    int index_start, index_end;
+    if (read)
+    {
+        tmpload(mod_filename);
+
+        std::ifstream in{mod_filepath.native(), std::ios::binary};
+        putit::BinaryIArchive ar{in};
+        std::tie(index_start, index_end) =
+            mod_serializer.load_handles<Item>(ar, lua::ModInfo::StoreType::map);
+
+        auto& handle_mgr = lua::lua->get_handle_manager();
+        for (int i = index_start; i < index_end; i++)
+        {
+            handle_mgr.resolve_handle<Item>(inv[i]);
+        }
+    }
+    else
+    {
+        Save::instance().add(mod_filepath.filename());
+
+        std::ofstream out{mod_filepath.native(), std::ios::binary};
+        putit::BinaryOArchive ar{out};
+        mod_serializer.save_handles<Item>(ar, lua::ModInfo::StoreType::map);
     }
 }
 
@@ -1287,12 +1409,6 @@ void fmode_17()
 
     {
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
-        for (int index = ELONA_MAX_PARTY_CHARACTERS;
-             index < ELONA_MAX_CHARACTERS;
-             index++)
-        {
-            lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
-        }
         tmpload(u8"cdata_"s + mid + u8".s2");
         load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         for (int index = ELONA_MAX_PARTY_CHARACTERS;
@@ -1300,7 +1416,6 @@ void fmode_17()
              index++)
         {
             cdata[index].index = index;
-            lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
         }
     }
 
@@ -1362,82 +1477,34 @@ void fmode_11_12(FileOperation file_operation)
     if (!fs::exists(filepath))
         return;
 
+    auto delete_file = [](const fs::path& tmpfile) {
+        auto filepath = filesystem::dir::tmp() / tmpfile;
+        if (fs::exists(filepath))
+        {
+            fs::remove_all(filepath);
+        }
+        else
+        {
+            writeloadedbuff(filepath.filename());
+        }
+        Save::instance().remove(filepath.filename());
+    };
+
     fs::remove_all(filepath);
     Save::instance().remove(filepath.filename());
     if (file_operation == FileOperation::map_delete)
     {
-        filepath = filesystem::dir::tmp() / (u8"cdata_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
-        filepath = filesystem::dir::tmp() / (u8"sdata_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
-        filepath = filesystem::dir::tmp() / (u8"cdatan_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
-        filepath = filesystem::dir::tmp() / (u8"inv_"s + mid + u8".s2");
-        if (fs::exists(filepath))
-        {
-            fs::remove_all(filepath);
-        }
-        else
-        {
-            writeloadedbuff(filepath.filename());
-        }
-        Save::instance().remove(filepath.filename());
+        delete_file("cdata_"s + mid + ".s2");
+        delete_file("sdata_"s + mid + ".s2");
+        delete_file("cdatan_"s + mid + ".s2");
+        delete_file("inv_"s + mid + ".s2");
+        delete_file("mod_map_"s + mid + ".s2");
+        delete_file("mod_cdata_"s + mid + ".s2");
+        delete_file("mod_inv_"s + mid + ".s2");
     }
-    filepath = filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2");
-    if (fs::exists(filepath))
-    {
-        fs::remove_all(filepath);
-    }
-    else
-    {
-        writeloadedbuff(filepath.filename());
-    }
-    Save::instance().remove(filepath.filename());
-    filepath = filesystem::dir::tmp() / (u8"mdatan_"s + mid + u8".s2");
-    if (fs::exists(filepath))
-    {
-        fs::remove_all(filepath);
-    }
-    else
-    {
-        writeloadedbuff(filepath.filename());
-    }
-    Save::instance().remove(filepath.filename());
-    filepath = filesystem::dir::tmp() / (u8"mef_"s + mid + u8".s2");
-    if (fs::exists(filepath))
-    {
-        fs::remove_all(filepath);
-    }
-    else
-    {
-        writeloadedbuff(filepath.filename());
-    }
-
-    Save::instance().remove(filepath.filename());
+    delete_file("mdata_"s + mid + ".s2");
+    delete_file("mdatan_"s + mid + ".s2");
+    delete_file("mef_"s + mid + ".s2");
 }
 
 
@@ -1527,6 +1594,9 @@ void Save::save(const fs::path& save_dir)
 
 void ctrl_file(FileOperation file_operation)
 {
+    ELONA_LOG("save.ctrl_file")
+        << "ctrl_file " << static_cast<int>(file_operation) << " mid: " << mid;
+
     game_data.play_time =
         game_data.play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
@@ -1561,6 +1631,10 @@ void ctrl_file(FileOperation file_operation)
 
 void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
 {
+    ELONA_LOG("save.ctrl_file")
+        << "ctrl_file2 " << static_cast<int>(file_operation) << " mid: " << mid
+        << " filepath: " << filepathutil::to_utf8_path(filepath);
+
     game_data.play_time =
         game_data.play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;

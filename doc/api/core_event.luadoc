@@ -86,6 +86,8 @@ module "core.event"
 --- Fired after a map has been initialized.
 -- @event core.map_initialized
 -- @tfield bool regenerated true if this map was reset to its initial
+-- @tfield string id ID of the map
+-- @tfield num index the instance index of the map
 -- state on load
 -- @usage local Chara = Elona.require("Chara")
 -- local Event = Elona.require("Event")

@@ -115,7 +115,7 @@ void LuaApiInternal::go_to_quest_map(
  */
 std::string LuaApiInternal::speaker_name(LuaCharacterHandle chara)
 {
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    auto& chara_ref = lua::ref<Character>(chara);
     return talk_get_speaker_name(chara_ref);
 }
 
@@ -133,7 +133,7 @@ int LuaApiInternal::filter_set_dungeon()
 
 void LuaApiInternal::trade_small_medals(LuaCharacterHandle chara)
 {
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    auto& chara_ref = lua::ref<Character>(chara);
     invctrl = 28;
     invfile = chara_ref.shop_store_id;
     shop_sell_item();

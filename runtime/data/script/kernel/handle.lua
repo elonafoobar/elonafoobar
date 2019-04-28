@@ -34,7 +34,7 @@ local handles_by_index = {}
 local memoized_funcs = {}
 
 
-local function print_handle_error(handle, key)
+local function handle_error(handle, key)
    if _IS_TEST then
       return
    end
@@ -55,6 +55,8 @@ local function print_handle_error(handle, key)
       print("Error: handle is not valid! " .. tostring(handle))
    end
    print(debug.traceback())
+
+   error("Error: handle is not valid!", 2)
 end
 
 
@@ -80,8 +82,7 @@ local function generate_metatable(kind)
       end
 
       if not Handle.is_valid(handle)then
-         print_handle_error(handle, key)
-         error("Error: handle is not valid!", 2)
+         handle_error(handle, key)
       end
 
       -- Try to get a property out of the C++ reference.
@@ -114,8 +115,7 @@ local function generate_metatable(kind)
    end
    mt.__newindex = function(handle, key, value)
       if not Handle.is_valid(handle) then
-         print_handle_error(handle, key)
-         error("Error: handle is not valid!", 2)
+         handle_error(handle, key)
       end
 
       refs[kind][handle.__uuid][key] = value
@@ -138,8 +138,7 @@ metatables.LuaItem = generate_metatable("LuaItem")
 --- userdata reference.
 function Handle.get_ref(handle, kind)
    if not Handle.is_valid(handle) then
-      print_handle_error(handle)
-      error("Error: handle is not valid!", 2)
+      handle_error(handle)
       return nil
    end
 
@@ -186,7 +185,7 @@ function Handle.create_handle(cpp_ref, kind, uuid)
       return nil
    end
 
-   --print("CREATE " .. cpp_ref.index .. " " .. uuid)
+   -- print("CREATE " .. cpp_ref.index .. " " .. uuid)
 
    local handle = {
       __uuid = uuid,
@@ -212,7 +211,7 @@ function Handle.remove_handle(cpp_ref, kind)
       return
    end
 
-   --print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
+   -- print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
 
    assert(handle.__kind == kind)
 
@@ -281,13 +280,14 @@ end
 function Handle.get_handle_range(kind, index_start, index_end)
    local ret = {}
    for index, handle in Handle.iter(kind, index_start, index_end) do
-      ret[index] = handle
+      -- Lua tables are 1-indexed, so convert to 0-indexed.
+      ret[index-1] = handle
    end
    return ret
 end
 
 function Handle.clear_handle_range(kind, index_start, index_end)
-   for index=index_start, index_end do
+   for index=index_start, index_end-1 do
       local handle = handles_by_index[kind][index]
       if handle ~= nil then
          refs[kind][handle.__uuid] = nil
@@ -299,17 +299,11 @@ end
 function Handle.merge_handles(kind, handles_)
    for index, handle in pairs(handles_) do
 
-      -- Lua tables index from 1, but the underlying C++ arrays index
-      -- from 0. The handles_by_index table is serialized as-is with
-      -- the 0th index potentially occupied, but serpent seems to
-      -- shift the index by 1 when deserializing.
-      local adjusted_index = index - 1
-
       if handle ~= nil then
-         if handles_by_index[kind][adjusted_index] ~= nil then
+         if handles_by_index[kind][index] ~= nil then
             error("Attempt to overwrite handle " .. kind .. ":" .. adjusted_index, 2)
          end
-         handles_by_index[kind][adjusted_index] = handle
+         handles_by_index[kind][index] = handle
       end
    end
 end
@@ -327,14 +321,17 @@ end
 
 
 local function iter(a, i)
+   if i >= a.to then
+      return nil
+   end
    local v = a.handles[i]
+   -- Skip over indices that point to invalid handles.
    while not (v and Handle.is_valid(v)) do
-      -- Skip over indices that point to invalid handles.
+      i = i + 1
+      v = a.handles[i]
       if i >= a.to then
          return nil
       end
-      i = i + 1
-      v = a.handles[i]
    end
    i = i + 1
    return i, v

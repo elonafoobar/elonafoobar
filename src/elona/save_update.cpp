@@ -3,6 +3,9 @@
 #include "../util/strutil.hpp"
 #include "character.hpp"
 #include "item.hpp"
+#include "lua_env/handle_manager.hpp"
+#include "lua_env/lua_env.hpp"
+#include "lua_env/mod_serializer.hpp"
 #include "putit.hpp"
 
 
@@ -187,9 +190,8 @@ void _update_save_data_3(const fs::path& save_dir, int serial_id)
 
         const auto is_cdatas1 = entry.path().filename() == "cdata.s1" ||
             entry.path().filename() == "g_cdata.s1";
-        const auto begin = is_cdatas1 ? 0 : ELONA_MAX_PARTY_CHARACTERS;
-        const auto end =
-            is_cdatas1 ? ELONA_MAX_PARTY_CHARACTERS : ELONA_MAX_CHARACTERS;
+        const auto begin = is_cdatas1 ? 0 : 57;
+        const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -872,9 +874,8 @@ void _update_save_data_5(const fs::path& save_dir, int serial_id)
 
         const auto is_cdatas1 = entry.path().filename() == "cdata.s1" ||
             entry.path().filename() == "g_cdata.s1";
-        const auto begin = is_cdatas1 ? 0 : ELONA_MAX_PARTY_CHARACTERS;
-        const auto end =
-            is_cdatas1 ? ELONA_MAX_PARTY_CHARACTERS : ELONA_MAX_CHARACTERS;
+        const auto begin = is_cdatas1 ? 0 : 57;
+        const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -1509,9 +1510,8 @@ void _update_save_data_8(const fs::path& save_dir, int serial_id)
 
         const auto is_cdatas1 = entry.path().filename() == "cdata.s1" ||
             entry.path().filename() == "g_cdata.s1";
-        const auto begin = is_cdatas1 ? 0 : ELONA_MAX_PARTY_CHARACTERS;
-        const auto end =
-            is_cdatas1 ? ELONA_MAX_PARTY_CHARACTERS : ELONA_MAX_CHARACTERS;
+        const auto begin = is_cdatas1 ? 0 : 57;
+        const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -2066,6 +2066,153 @@ void _update_save_data_8(const fs::path& save_dir, int serial_id)
 
 
 
+/// Create new mod save data for saves without it.
+void _update_save_data_9(const fs::path& save_dir, int serial_id)
+{
+    assert(serial_id == 9);
+
+    lua::ModSerializer mod_serializer(lua::lua.get());
+
+    // Global mod data
+    {
+        fs::path outpath = save_dir / "mod.s1";
+        std::ofstream out{outpath.native(), std::ios::binary};
+        putit::BinaryOArchive oar{out};
+        mod_serializer.save_mod_store_data(
+            oar, lua::ModInfo::StoreType::global);
+    }
+
+    // Global character handles
+    {
+        fs::path inpath = save_dir / "cdata.s1";
+        std::ifstream fin{inpath.native(), std::ios::binary};
+        putit::BinaryIArchive iar{fin};
+
+        for (size_t index = 0; index < 57; ++index)
+        {
+            iar(cdata[index]);
+            cdata[index].index = index;
+            lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
+        }
+
+        fs::path outpath = save_dir / "mod_cdata.s1";
+        std::ofstream fout{outpath.native(), std::ios::binary};
+        putit::BinaryOArchive oar{fout};
+
+        mod_serializer.save_handles<Character>(
+            oar, lua::ModInfo::StoreType::global);
+
+        for (int index = 0; index < 57; index++)
+        {
+            cdata[index].set_state(Character::State::empty);
+            lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
+        }
+    }
+
+    // Global item handles
+    {
+        fs::path inpath = save_dir / "inv.s1";
+        std::ifstream fin{inpath.native(), std::ios::binary};
+        putit::BinaryIArchive iar{fin};
+
+        for (size_t index = 0; index < 1320; ++index)
+        {
+            iar(inv[index]);
+            inv[index].index = index;
+            lua::lua->get_handle_manager().create_item_handle(inv[index]);
+        }
+
+        fs::path outpath = save_dir / "mod_inv.s1";
+        std::ofstream fout{outpath.native(), std::ios::binary};
+        putit::BinaryOArchive oar{fout};
+
+        mod_serializer.save_handles<Item>(oar, lua::ModInfo::StoreType::global);
+
+        for (int index = 0; index < 1320; index++)
+        {
+            inv[index].set_number(0);
+            lua::lua->get_handle_manager().remove_item_handle(inv[index]);
+        }
+    }
+
+    // Map local mod data
+    for (const auto& entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(map(_.*)?\.s2)"}))
+    {
+        fs::path outpath = save_dir /
+            ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
+        std::ofstream fout{outpath.native(), std::ios::binary};
+        putit::BinaryOArchive oar{fout};
+
+        mod_serializer.save_mod_store_data(oar, lua::ModInfo::StoreType::map);
+    }
+
+    // Map local character handles
+    for (const auto& entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(cdata(_.*)?\.s2)"}))
+    {
+        std::ifstream fin{entry.path().native(), std::ios::binary};
+        putit::BinaryIArchive iar{fin};
+
+        for (size_t index = 57; index < 245; ++index)
+        {
+            iar(cdata[index]);
+            cdata[index].index = index;
+            lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
+        }
+
+        fs::path outpath = save_dir /
+            ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
+        std::ofstream fout{outpath.native(), std::ios::binary};
+        putit::BinaryOArchive oar{fout};
+
+        mod_serializer.save_handles<Character>(
+            oar, lua::ModInfo::StoreType::map);
+
+        for (int index = 57; index < 245; index++)
+        {
+            cdata[index].set_state(Character::State::empty);
+            lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
+        }
+    }
+
+    // Map local item handles
+    for (const auto& entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(inv(_.*)?\.s2)"}))
+    {
+        std::ifstream fin{entry.path().native(), std::ios::binary};
+        putit::BinaryIArchive iar{fin};
+
+        for (size_t index = 1320; index < 5480; ++index)
+        {
+            iar(inv[index]);
+            inv[index].index = index;
+            lua::lua->get_handle_manager().create_item_handle(inv[index]);
+        }
+
+        fs::path outpath = save_dir /
+            ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
+        std::ofstream fout{outpath.native(), std::ios::binary};
+        putit::BinaryOArchive oar{fout};
+
+        mod_serializer.save_handles<Item>(oar, lua::ModInfo::StoreType::map);
+
+        for (int index = 1320; index < 5480; index++)
+        {
+            inv[index].set_number(0);
+            lua::lua->get_handle_manager().remove_item_handle(inv[index]);
+        }
+    }
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
 #define ELONA_CASE(n) \
@@ -2082,6 +2229,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(6)
         ELONA_CASE(7)
         ELONA_CASE(8)
+        ELONA_CASE(9)
     default: assert(0); break;
     }
 #undef ELONA_CASE

@@ -36,14 +36,20 @@ struct VersionRequirement;
 
 
 
+/// @putit
 struct Version
 {
     static constexpr int unspecified = -1;
 
 
 
+    /// @putit
     int major;
+
+    /// @putit
     int minor;
+
+    /// @putit
     int patch;
 
 
@@ -149,6 +155,8 @@ struct Version
 #undef ELONA_SEMVER_DEFINE_COMPARATOR
 
 
+#include "_putit/version.hpp"
+
 
 private:
     friend VersionRequirement;
@@ -165,6 +173,7 @@ private:
         std::smatch match;
         if (const auto matched = std::regex_match(str, match, pattern))
         {
+            (void)matched;
             int major, minor, patch;
             try
             {

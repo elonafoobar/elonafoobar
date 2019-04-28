@@ -8,6 +8,7 @@
 #include "character_status.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
+#include "data/types/type_map.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "event.hpp"
@@ -18,6 +19,7 @@
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/lua_event_map_initialized.hpp"
+#include "lua_env/mod_manager.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -115,7 +117,7 @@ static void _clear_map_and_objects()
     {
         cnt.set_state(Character::State::empty);
     }
-    for (int cnt = 1320; cnt < 5480; ++cnt)
+    for (int cnt = ELONA_OTHER_INVENTORIES_INDEX; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
         inv[cnt].remove();
     }
@@ -1165,6 +1167,19 @@ static void _init_tileset_minimap_and_scroll()
     update_scrolling_info();
 }
 
+static void _initialize_map_local_handles()
+{
+    lua::lua->get_mod_manager().clear_map_local_stores();
+
+    auto& handle_mgr = lua::lua->get_handle_manager();
+    handle_mgr.clear_handle_range(
+        Character::lua_type(),
+        ELONA_MAX_PARTY_CHARACTERS,
+        ELONA_MAX_CHARACTERS);
+    handle_mgr.clear_handle_range(
+        Item::lua_type(), ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+}
+
 static void _generate_new_map()
 {
     noaggrorefresh = 0;
@@ -1175,6 +1190,11 @@ static void _generate_new_map()
         // map from a template.
         _prepare_mapupdate();
     }
+
+    // Since a new map is about to be created, clear any Lua handles left over
+    // from the previous map. If the map were loaded from a save file, they
+    // would have been already cleared by ctrl_file.
+    _initialize_map_local_handles();
 
     _clear_map_and_objects();
     _init_map_data();
@@ -1225,7 +1245,7 @@ static void _proc_map_refresh()
 
 TurnResult initialize_map()
 {
-    bool was_generated = true;
+    bool was_generated = false;
 
     clear_damage_popups();
 
@@ -1241,7 +1261,6 @@ init_map_begin:
 
     if (mode == 3)
     {
-        lua::lua->get_handle_manager().clear_map_local_handles();
         ctrl_file(FileOperation::map_read);
         ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
         goto init_map_after_refresh;
@@ -1255,7 +1274,6 @@ init_map_begin:
     tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
-        lua::lua->get_handle_manager().clear_map_local_handles();
         ctrl_file(FileOperation::map_read);
         if (map_data.refresh_type == 0)
         {
@@ -1322,9 +1340,17 @@ init_map_after_refresh:
         quest_refresh_list();
     }
 
+    auto legacy_id = area_data[game_data.current_map].id;
+    auto map_id = the_mapdef_db.get_id_from_legacy(legacy_id)
+                      .value_or(SharedId{""})
+                      .get();
+    auto event =
+        lua::MapInitializedEvent(was_generated, map_id, game_data.current_map);
+
     if (mode == 11)
     {
         // This result will be ignored by the caller.
+        lua::lua->get_event_manager().trigger(event);
         return TurnResult::turn_begin;
     }
 
@@ -1349,6 +1375,7 @@ init_map_after_refresh:
             Message::instance().buffered_message_end();
             screenupdate = -1;
             update_screen();
+            lua::lua->get_event_manager().trigger(event);
             if (evnum == 0)
             {
                 return TurnResult::pc_turn_user_error;
@@ -1361,6 +1388,7 @@ init_map_after_refresh:
         else
         {
             mapsubroutine = 0;
+            lua::lua->get_event_manager().trigger(event);
             // This result will be ignored by the caller.
             return TurnResult::turn_begin;
         }
@@ -1377,8 +1405,7 @@ init_map_after_refresh:
     // Check more main quest flags and run map-specific behaviors.
     _proc_map_hooks_2();
 
-    lua::lua->get_event_manager().trigger(
-        lua::MapInitializedEvent(was_generated));
+    lua::lua->get_event_manager().trigger(event);
 
     return TurnResult::turn_begin;
 }

@@ -21,7 +21,7 @@ namespace lua
  */
 int LuaApiSkill::resistance(const EnumString& element, LuaCharacterHandle chara)
 {
-    auto& chara_ref = lua::lua->get_handle_manager().get_ref<Character>(chara);
+    auto& chara_ref = lua::ref<Character>(chara);
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
     return elona::sdata(static_cast<int>(element_value), chara_ref.index);
 }

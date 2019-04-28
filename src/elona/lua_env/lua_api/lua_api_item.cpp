@@ -37,7 +37,7 @@ int LuaApiItem::count()
  */
 bool LuaApiItem::has_enchantment(const LuaItemHandle item, int enchantment_id)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(item);
+    auto& item_ref = lua::ref<Item>(item);
     return encfindspec(item_ref.index, enchantment_id);
 }
 
@@ -53,7 +53,7 @@ bool LuaApiItem::has_enchantment(const LuaItemHandle item, int enchantment_id)
 std::string
 LuaApiItem::itemname(LuaItemHandle item, int number, bool use_article)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(item);
+    auto& item_ref = lua::ref<Item>(item);
     return elona::itemname(item_ref.index, number, use_article ? 0 : 1);
 }
 
@@ -246,7 +246,7 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
         return sol::nullopt;
     }
 
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
+    auto& item_ref = lua::ref<Item>(handle);
 
     int tibk = ti;
     item_stack(inventory_id, item_ref.index);
@@ -270,7 +270,7 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
  */
 int LuaApiItem::trade_rate(LuaItemHandle handle)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<Item>(handle);
+    auto& item_ref = lua::ref<Item>(handle);
 
     // Item must be in the cargo category.
     if (the_item_db[item_ref.id]->category != 92000)

@@ -918,7 +918,7 @@ label_1928_internal:
         p = list(0, p);
         s = itemname(p, inv[p].number());
         s = strmid(s, 0, 28);
-        if (p >= 5080)
+        if (p >= ELONA_ITEM_ON_GROUND_INDEX)
         {
             s += i18n::s.get("core.locale.blending.steps.ground");
         }

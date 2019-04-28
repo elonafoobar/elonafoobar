@@ -80,7 +80,7 @@ void report_error(sol::error err)
 }
 
 
-void ModManager::clear_map_local_data()
+void ModManager::clear_map_local_stores()
 {
     for (auto&& pair : mods)
     {
@@ -93,7 +93,7 @@ local function clear(t)
     end
 end
 if Store then
-    clear(Store.map_local)
+    clear(Store.map)
 end
 )",
             mod->env);
@@ -270,7 +270,7 @@ local function clear(t)
     end
 end
 if Store then
-    clear(Store.map_local)
+    clear(Store.map)
     clear(Store.global)
 end
 )",
@@ -312,9 +312,9 @@ void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
     sol::table Store = lua.create_table();
     sol::table metatable = lua.create_table();
 
-    // Bind Store.global and Store.map_local.
+    // Bind Store.global and Store.map.
     metatable["global"] = mod.store_global;
-    metatable["map_local"] = mod.store_local;
+    metatable["map"] = mod.store_map;
 
     // Prevent creating new variables in the Store table.
     metatable[sol::meta_function::new_index] = deny;

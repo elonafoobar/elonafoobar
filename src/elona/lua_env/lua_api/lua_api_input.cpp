@@ -363,8 +363,7 @@ int LuaApiInput::prompt_dialog_with_chip_impress(
 
 void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
 {
-    auto& speaker_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(speaker);
+    auto& speaker_ref = lua::ref<Character>(speaker);
 
     auto data = the_character_db.ensure(speaker_ref.id);
     if (!data.dialog_id)
@@ -393,8 +392,7 @@ void LuaApiInput::start_dialog_with_data(
     LuaCharacterHandle speaker,
     const std::string& dialog)
 {
-    auto& speaker_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(speaker);
+    auto& speaker_ref = lua::ref<Character>(speaker);
 
     talk_setup_variables(speaker_ref);
     talk_start();

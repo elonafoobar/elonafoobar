@@ -2648,11 +2648,11 @@ int convertartifact(int item_index, int ignore_external_container)
         return item_index;
     }
     f_at_m163 = 0;
-    for (int cnt = 0; cnt < 5480; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
         if (ignore_external_container)
         {
-            if (cnt >= 5080)
+            if (cnt >= ELONA_ITEM_ON_GROUND_INDEX)
             {
                 break;
             }
@@ -4272,7 +4272,8 @@ TurnResult exit_map()
         game_data.current_dungeon_level = game_data.destination_dungeon_level;
         if (game_data.executing_immediate_quest_type == 0)
         {
-            if (game_data.previous_map != 2)
+            if (game_data.previous_map !=
+                static_cast<int>(mdata_t::MapId::fields))
             {
                 game_data.pc_x_in_world_map =
                     area_data[game_data.current_map].position.x;
@@ -4460,15 +4461,18 @@ TurnResult exit_map()
     bool map_changed = game_data.current_map != previous_map ||
         game_data.current_dungeon_level != previous_dungeon_level;
 
-    // Only clear map-local data if the map was changed. The map might
+    ELONA_LOG("map") << "exit_map levelexitby " << levelexitby << " cur "
+                     << game_data.current_map << " cur_level "
+                     << game_data.current_dungeon_level << " prev "
+                     << previous_map << " prev_level "
+                     << previous_dungeon_level;
+
+    // Only trigger the map unload event if the map was changed. The map might
     // not change if access to it is refused (jail, pyramid, etc.).
     if (map_changed)
     {
         lua::lua->get_event_manager().trigger(
             lua::BaseEvent("core.before_map_unload"));
-
-        lua::lua->get_mod_manager().clear_map_local_data();
-        lua::lua->get_handle_manager().clear_map_local_handles();
     }
 
     mode = 2;
@@ -5128,9 +5132,10 @@ std::string txtitemoncell(int x, int y)
             rtvaln = "";
             p_at_m185(0) = -cell_data.at(x, y).item_appearances_memory;
             p_at_m185(1) = 0;
-            i_at_m185(0) = p_at_m185 % 1000 + 5080;
-            i_at_m185(1) = p_at_m185 / 1000 % 1000 + 5080;
-            i_at_m185(2) = p_at_m185 / 1000000 % 1000 + 5080;
+            i_at_m185(0) = p_at_m185 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            i_at_m185(1) = p_at_m185 / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            i_at_m185(2) =
+                p_at_m185 / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 if (i_at_m185(cnt) == 6079)
@@ -8302,7 +8307,7 @@ label_2173_internal:
     efsource = 0;
     if (inv[ci].number() == 0)
     {
-        if (ci >= 5080)
+        if (ci >= ELONA_ITEM_ON_GROUND_INDEX)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
             return 1;

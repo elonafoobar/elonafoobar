@@ -89,7 +89,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position)
 }
 
 Inventory::Inventory()
-    : storage(5480)
+    : storage(ELONA_MAX_ITEMS)
 {
     for (size_t i = 0; i < storage.size(); ++i)
     {
@@ -445,13 +445,14 @@ void cell_refresh(int x, int y)
             }
         }
         cell_data.at(x, y).item_appearances_actual =
-            floorstack(n_at_m55(0)) - 5080;
+            floorstack(n_at_m55(0)) - ELONA_ITEM_ON_GROUND_INDEX;
         cell_data.at(x, y).item_appearances_actual +=
-            (floorstack(n_at_m55(1)) - 5080) * 1000;
+            (floorstack(n_at_m55(1)) - ELONA_ITEM_ON_GROUND_INDEX) * 1000;
         if (p_at_m55 > 2)
         {
             cell_data.at(x, y).item_appearances_actual +=
-                (floorstack(n_at_m55(2)) - 5080) * 1000000;
+                (floorstack(n_at_m55(2)) - ELONA_ITEM_ON_GROUND_INDEX) *
+                1000000;
         }
         else
         {
@@ -536,7 +537,7 @@ void item_refresh(Item& i)
     {
         i.remove();
     }
-    if (i.index >= 5080 && mode != 6)
+    if (i.index >= ELONA_ITEM_ON_GROUND_INDEX && mode != 6)
     {
         // Refresh the cell the item is on if it's on the ground.
         cell_refresh(i.position.x, i.position.y);
@@ -2086,7 +2087,7 @@ std::pair<int, int> inv_getheader(int owner)
     }
     else if (owner == -1)
     {
-        return {5080, 400};
+        return {ELONA_ITEM_ON_GROUND_INDEX, 400};
     }
     else
     {
@@ -2102,7 +2103,7 @@ int inv_getowner(int inv_id)
     {
         return 0;
     }
-    if (inv_id >= 5080)
+    if (inv_id >= ELONA_ITEM_ON_GROUND_INDEX)
     {
         return -1;
     }
