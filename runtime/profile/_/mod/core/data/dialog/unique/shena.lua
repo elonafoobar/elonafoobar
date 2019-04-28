@@ -37,7 +37,8 @@ return {
          choices = {
             {"quest_yes", "quest.choices.yes"},
             {"quest_no", "quest.choices.no"}
-         }
+         },
+         default_choice = "quest_no"
       },
       quest_yes = {
          text = {

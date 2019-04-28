@@ -73,7 +73,8 @@ return {
          choices = {
             {"quest_yes", "quest.choices.of_course"},
             {"quest_no", "__BYE__"},
-         }
+         },
+         default_choice = "quest_no"
       },
       quest_yes = {
          text = {
@@ -105,6 +106,7 @@ return {
 
             return choices
          end,
+         default_choice = "buy_nuke_no"
       },
       buy_nuke_yes = {
          text = {

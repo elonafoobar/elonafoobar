@@ -25,6 +25,7 @@ return {
             {"query_join_yes", "after_drug.choices.yes"},
             {"query_join_no", "after_drug.choices.no"}
          },
+         default_choice = "query_join_no"
       },
       query_join_yes = function()
          if not Chara.can_recruit_allies() then
@@ -67,7 +68,8 @@ return {
          choices = {
             {"give_drug", "before_drug.choices.yes"},
             {"do_not_have_drug", "before_drug.choices.no"}
-         }
+         },
+         default_choice = "do_not_have_drug"
       },
       give_drug = {
          text = {

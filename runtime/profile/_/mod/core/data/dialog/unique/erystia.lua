@@ -179,7 +179,8 @@ return {
          choices = {
             {"pledge_strength", "introduction.choices.pledge_strength"},
             {"not_interested", "introduction.choices.not_interested"},
-         }
+         },
+         default_choice = "not_interested"
       },
       not_interested = {
          text = {

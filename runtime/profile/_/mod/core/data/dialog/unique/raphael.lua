@@ -39,7 +39,8 @@ return {
          choices = {
             {"quest_yes", "quest.choices.yes"},
             {"quest_no", "quest.choices.no"},
-         }
+         },
+         default_choice = "quest_no"
       },
       quest_no = {
          text = {
@@ -63,7 +64,8 @@ return {
          choices = {
             {"bring_wife_choose", "bring_wife.choices.this_one"},
             {"bring_wife_go_back", "bring_wife.choices.go_back"},
-         }
+         },
+         default_choice = "bring_wife_go_back"
       },
       bring_wife_go_back = {
          text = {

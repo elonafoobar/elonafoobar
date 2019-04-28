@@ -64,6 +64,7 @@ return {
             {"quest_yes", "quest.choices.alright"},
             {"quest_no", "__BYE__"}
          },
+         default_choice = "quest_no"
       },
       quest_yes = {
          text = {

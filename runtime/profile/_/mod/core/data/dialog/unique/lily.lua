@@ -82,7 +82,8 @@ return {
             table.insert(choices, {"festival_take_care", "progress.festival.choices.take_care"})
 
             return choices
-         end
+         end,
+         default_choice = "festival_take_care"
       },
       festival_give = {
          text = {
@@ -111,7 +112,8 @@ return {
             table.insert(choices, {"end_life_leave", "progress.end_life.choices.leave"})
 
             return choices
-         end
+         end,
+         default_choice = "end_life_leave"
       },
       end_life_give = {
          text = {

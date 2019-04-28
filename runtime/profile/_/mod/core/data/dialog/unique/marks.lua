@@ -46,7 +46,8 @@ return {
             table.insert(choices, {"quest_no", "__BYE__"})
 
             return choices
-         end
+         end,
+         default_choice = "quest_no"
       },
       quest_yes = {
          text = {

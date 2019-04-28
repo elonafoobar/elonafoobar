@@ -675,7 +675,7 @@ int talk_window_query(
         if (action == "cancel" && chatesc != -1)
         {
             talk_reset_variables();
-            return chatesc;
+            return -1;
         }
     }
 }
