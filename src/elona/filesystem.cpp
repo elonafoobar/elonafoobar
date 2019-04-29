@@ -53,15 +53,9 @@ ELONA_DEFINE_PREDEFINED_DIR(map, "map")
 ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
 ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
 ELONA_DEFINE_PREDEFINED_DIR(mod, "mod")
+ELONA_DEFINE_PREDEFINED_DIR(profile_root, "profile")
 
 #undef ELONA_DEFINE_PREDEFINED_DIR
-
-
-
-fs::path profile_root()
-{
-    return filesystem::path("profile");
-}
 
 
 

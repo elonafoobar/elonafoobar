@@ -35,7 +35,7 @@ std::vector<std::string> list_profiles()
              filesystem::DirEntryRange::Type::dir))
     {
         const auto id = filepathutil::to_utf8_path(entry.path().filename());
-        if (profile::is_valid_id(id) && id != profile::default_base_profile_id)
+        if (profile::is_valid_id(id))
         {
             result.push_back(id);
         }
@@ -122,7 +122,7 @@ bool handle_event()
         {
             profile::ProfileManager::instance().create(
                 profile::ProfileManager::instance().generate_new_id(),
-                profile::default_base_profile_id);
+                profile::default_profile_id);
             profiles = list_profiles();
             cursor = static_cast<int>(profiles.size()) - 1;
         }
