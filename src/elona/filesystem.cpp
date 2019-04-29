@@ -52,6 +52,7 @@ ELONA_DEFINE_PREDEFINED_DIR(log, "log")
 ELONA_DEFINE_PREDEFINED_DIR(map, "map")
 ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
 ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
+ELONA_DEFINE_PREDEFINED_DIR(mod, "mod")
 
 #undef ELONA_DEFINE_PREDEFINED_DIR
 
@@ -67,13 +68,6 @@ fs::path profile_root()
 fs::path current_profile()
 {
     return current_profile_dir;
-}
-
-
-
-fs::path mod()
-{
-    return base_mod_dir;
 }
 
 
@@ -95,13 +89,6 @@ fs::path user()
 void set_current_profile_directory(const fs::path& current_profile_dir)
 {
     dir::current_profile_dir = current_profile_dir;
-}
-
-
-
-void set_base_mod_directory(const fs::path& base_mod_dir)
-{
-    dir::base_mod_dir = base_mod_dir;
 }
 
 
@@ -144,7 +131,6 @@ fs::path user_script()
 void set_profile_directory(const fs::path& profile_dir)
 {
     set_current_profile_directory(profile_dir);
-    set_base_mod_directory(profile_dir / u8"mod");
     set_base_save_directory(profile_dir / u8"save");
     set_base_user_directory(profile_dir / u8"user");
 }
