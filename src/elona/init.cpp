@@ -724,6 +724,8 @@ void init()
 
     initialize_screen();
 
+    initialize_config();
+
     initialize_lua();
     // Load translations from scanned mods.
     initialize_i18n();

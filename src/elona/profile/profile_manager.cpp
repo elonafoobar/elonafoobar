@@ -3,6 +3,17 @@
 #include "../log.hpp"
 
 
+namespace
+{
+
+void write_default_config(const fs::path& location)
+{
+    std::ofstream out{location.native(), std::ios::binary};
+    out << "config {\n}" << std::endl;
+}
+
+} // namespace
+
 
 namespace elona
 {
@@ -41,16 +52,20 @@ ProfileManager& ProfileManager::instance()
 
 
 
-void ProfileManager::create(
-    const ProfileId& new_profile_id,
-    const ProfileId& base_profile_id)
+void ProfileManager::create(const ProfileId& new_profile_id)
 {
-    ELONA_LOG("profile") << "Create '" << new_profile_id << "' "
-                         << " from '" << base_profile_id << "'.";
+    ELONA_LOG("profile") << "Create '" << new_profile_id << "'.";
 
-    const auto from = get_dir_for(base_profile_id);
     const auto to = get_dir_for(new_profile_id);
-    filesystem::copy_recursively(from, to);
+    fs::create_directory(to);
+
+    auto script_dir = to / "script";
+    fs::create_directory(script_dir.native());
+
+    auto console_script = script_dir / "console.lua";
+    std::ofstream out(console_script.native());
+    out << "-- Code here will be executed in the console on startup.\n";
+    out.close();
 }
 
 

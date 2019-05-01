@@ -121,8 +121,7 @@ bool handle_event()
         if (cursor == static_cast<int>(profiles.size()) - 1)
         {
             profile::ProfileManager::instance().create(
-                profile::ProfileManager::instance().generate_new_id(),
-                profile::default_profile_id);
+                profile::ProfileManager::instance().generate_new_id());
             profiles = list_profiles();
             cursor = static_cast<int>(profiles.size()) - 1;
         }

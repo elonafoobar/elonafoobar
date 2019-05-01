@@ -117,7 +117,7 @@ fs::path save(const std::string& player_id)
 
 fs::path user_script()
 {
-    return user() / u8"script";
+    return current_profile() / u8"script";
 }
 
 
