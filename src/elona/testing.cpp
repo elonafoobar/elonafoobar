@@ -151,17 +151,20 @@ void pre_init()
     log::Logger::instance().init();
     profile::ProfileManager::instance().init(u8"testing");
 
+    const fs::path source_config_file = get_test_data_path() / "config.hcl";
     const fs::path config_file =
-        filesystem::dir::exe() / "tests/data/config.hcl";
+        filesystem::dir::current_profile() / "config.hcl";
+    fs::copy_file(
+        source_config_file, config_file, fs::copy_option::overwrite_if_exists);
 
     initialize_config_defs();
-    initialize_config_preload(config_file);
+    initialize_config_preload();
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
     init_assets();
     filesystem::dir::set_base_save_directory(fs::path("save"));
-    initialize_config(config_file);
+    initialize_config();
 
     configure_lua();
     initialize_i18n();

@@ -535,6 +535,7 @@ copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/mod/ "${RUNTIME_DIR}/mod/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/profile/ "${RUNTIME_DIR}/profile/")
 
 # Copy assets from Elona 1.22 if they are present.
@@ -559,5 +560,4 @@ if(NOT ANDROID)
   endif()
 
   remove_dir("$<TARGET_FILE_DIR:${PROJECT_NAME}>/profile/testing")
-  remove_dir("$<TARGET_FILE_DIR:${PROJECT_NAME}>/profile/default")
 endif()

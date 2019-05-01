@@ -173,8 +173,18 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
 void copy_recursively(const fs::path& source, const fs::path& destination)
 {
     // Check pre-conditions.
-    assert(fs::exists(source) && fs::is_directory(source));
-    assert(!fs::exists(destination));
+    if (!fs::exists(source) || !fs::is_directory(source))
+    {
+        throw std::runtime_error(
+            "Source must be an existing directory: " +
+            filepathutil::to_utf8_path(source));
+    }
+    if (fs::exists(destination))
+    {
+        throw std::runtime_error(
+            "Destination must not exist: " +
+            filepathutil::to_utf8_path(source));
+    }
 
     // mkdir destination
     if (!fs::create_directories(destination))

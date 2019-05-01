@@ -6,7 +6,7 @@ namespace elona
 {
 
 void init();
-void initialize_config(const fs::path&);
+void initialize_config();
 void initialize_i18n();
 void initialize_lua();
 void initialize_elona();

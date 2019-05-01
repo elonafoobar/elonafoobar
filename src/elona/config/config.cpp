@@ -317,8 +317,10 @@ void config_query_language()
 #define CONFIG_KEY(confkey, keyname) \
     CONFIG_OPTION((confkey), std::string, keyname)
 
-void load_config(const fs::path& hcl_file)
+void load_config()
 {
+    const fs::path config_file =
+        filesystem::dir::current_profile() / "config.hcl";
     auto& conf = Config::instance();
 
     // TODO do inversions
@@ -389,8 +391,8 @@ void load_config(const fs::path& hcl_file)
     conf.bind_setter<std::string>(
         "core.font.quality", &convert_and_set_requested_font_quality);
 
-    std::ifstream ifs{hcl_file.native()};
-    conf.load(ifs, filepathutil::to_utf8_path(hcl_file), false);
+    std::ifstream ifs{config_file.native()};
+    conf.load(ifs, filepathutil::to_utf8_path(config_file), false);
 
     if (Config::instance().run_wait < 1)
     {
@@ -418,8 +420,11 @@ void load_config(const fs::path& hcl_file)
     }
 }
 
-void initialize_config_preload(const fs::path& hcl_file)
+void initialize_config_preload()
 {
+    const fs::path config_file =
+        filesystem::dir::current_profile() / "config.hcl";
+
     auto& conf = Config::instance();
 
     inject_display_modes(conf);
@@ -447,14 +452,14 @@ void initialize_config_preload(const fs::path& hcl_file)
         "core.android.quick_action_transparency",
         &set_touch_quick_action_transparency);
 
-    if (!fs::exists(hcl_file))
+    if (!fs::exists(config_file))
     {
-        write_default_config(hcl_file);
+        write_default_config(config_file);
     }
 
     std::ifstream ifs{
-        hcl_file.native()};
-    conf.load(ifs, filepathutil::to_utf8_path(hcl_file), true);
+        config_file.native()};
+    conf.load(ifs, filepathutil::to_utf8_path(config_file), true);
 
     snail::android::set_navigation_bar_visibility(
         !conf.get<bool>("core.android.hide_navigation"));
@@ -651,14 +656,14 @@ bool Config::verify_types(
 
 void Config::save()
 {
-    std::ofstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
+    std::ofstream file{(filesystem::dir::current_profile() / u8"config.hcl").native(),
                        std::ios::binary};
     if (!file)
     {
         throw ConfigLoadingError{
             u8"Failed to open: "s
             + filepathutil::make_preferred_path_in_utf8(
-                  filesystem::dir::exe() / u8"config.hcl")};
+                  filesystem::dir::current_profile() / u8"config.hcl")};
     }
 
     // Create a top level "config" section.

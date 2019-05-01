@@ -156,7 +156,7 @@ void initialize_lua()
 
 
 
-void initialize_config(const fs::path& config_file)
+void initialize_config()
 {
     windoww = snail::Application::instance().width();
     windowh = snail::Application::instance().height();
@@ -182,7 +182,7 @@ void initialize_config(const fs::path& config_file)
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
 
-    load_config(config_file);
+    load_config();
 }
 
 
@@ -716,20 +716,14 @@ void initialize_config_defs()
 
 void init()
 {
-    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
-
     lua::lua = std::make_unique<lua::LuaEnv>();
 
     initialize_config_defs();
 
-    initialize_config_preload(config_file);
+    initialize_config_preload();
 
     initialize_screen();
 
-    initialize_config(config_file);
-    init_assets();
-
-    // Scan all mods and load mod script code.
     initialize_lua();
     // Load translations from scanned mods.
     initialize_i18n();
