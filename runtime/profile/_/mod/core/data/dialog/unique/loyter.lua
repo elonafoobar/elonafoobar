@@ -47,7 +47,8 @@ return {
          choices = {
             {"quest_yes", "quest.choices.yes"},
             {"quest_no", "quest.choices.no"}
-         }
+         },
+         default_choice = "quest_no"
       },
       quest_yes = {
          text = {
@@ -70,7 +71,8 @@ return {
          choices = {
             {"quest_begin_yes", "quest.begin.choices.yes"},
             {"quest_begin_no", "quest.begin.choices.no"}
-         }
+         },
+         default_choice = "quest_begin_no"
       },
       quest_begin_yes = {
          text = {

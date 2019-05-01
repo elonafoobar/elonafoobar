@@ -217,7 +217,7 @@ int LuaApiInput::prompt_dialog(
 
     if (default_index)
     {
-        chatesc = clamp(*default_index, 0, (int)choices.size() - 1);
+        chatesc = 1;
     }
     else
     {
@@ -228,7 +228,11 @@ int LuaApiInput::prompt_dialog(
     auto result =
         talk_window_query(portrait_id, none, speaker_name, text_, none);
 
-    assert(result != -1);
+    if (result == -1)
+    {
+        auto default_choice = clamp(*default_index, 0, (int)choices.size() - 1);
+        return default_choice;
+    }
 
     return result;
 }
@@ -266,7 +270,7 @@ int LuaApiInput::prompt_dialog_impress(
 
     if (default_index)
     {
-        chatesc = clamp(*default_index, 0, (int)choices.size() - 1);
+        chatesc = 1;
     }
     else
     {
@@ -277,7 +281,11 @@ int LuaApiInput::prompt_dialog_impress(
     auto result = talk_window_query(
         portrait_id, none, speaker_name, text_, impress_interest);
 
-    assert(result != -1);
+    if (result == -1)
+    {
+        auto default_choice = clamp(*default_index, 0, (int)choices.size() - 1);
+        return default_choice;
+    }
 
     return result;
 }

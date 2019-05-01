@@ -12,20 +12,19 @@ end
 
 local unique = require("data/dialog/unique")
 
-data:add_multi(
+data:add(
    {
-      {
-         id = "ignored",
-         root = "core.locale.talk",
-         nodes = {
-            __start = {
-               text = {
-                  {"ignores_you", args = function(t) return {t.speaker} end},
-               }
-            },
-         }
+      id = "ignored",
+      root = "core.locale.talk",
+      nodes = {
+         __start = {
+            text = {
+               {"ignores_you", args = function(t) return {t.speaker} end},
+            }
+         },
       }
    }
+
 )
 data:add_multi(unique)
 

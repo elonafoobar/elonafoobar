@@ -217,11 +217,14 @@ local function step_dialog(dialog, node_data, talk, state)
             -- Set the default choice to select if window is
             -- cancelled. If nil, prevent cancellation.
             local default_choice = nil
-            if text.default_choice ~= nil then
+            if node.default_choice ~= nil then
                for j, choice in ipairs(choices) do
-                  if choice[1] == text.default_choice then
+                  if choice[1] == node.default_choice then
                      default_choice = j - 1
                   end
+               end
+               if default_choice == nil then
+                  dialog_error(talk, "Could not find default choice \"" .. node.default_choice .. "\"")
                end
             end
 

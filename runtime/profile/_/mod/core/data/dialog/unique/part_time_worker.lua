@@ -28,7 +28,8 @@ return {
          choices = {
             {"confirm", "choices.yes"},
             {"no", "choices.no"}
-         }
+         },
+         default_choice = "no"
       },
       confirm = {
          text = {
@@ -37,7 +38,8 @@ return {
          choices = {
             {"convert_to_jure", "yes.choices.yes"},
             {"no", "yes.choices.no"}
-         }
+         },
+         default_choice = "no"
       },
       convert_to_jure = {
          text = {
