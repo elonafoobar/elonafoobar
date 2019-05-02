@@ -82,12 +82,12 @@ public:
     {
         const auto& mod_mgr = _lua->get_mod_manager();
 
-        unsigned mod_count = static_cast<unsigned>(mod_mgr.count());
+        unsigned mod_count = static_cast<unsigned>(mod_mgr.enabled_mod_count());
         putit_archive(mod_count);
 
-        for (const auto& pair : mod_mgr)
+        for (const auto& pair : mod_mgr.enabled_mods())
         {
-            std::string mod_name = pair.first;
+            std::string mod_name = pair.second->manifest.name;
             semver::Version mod_version = pair.second->manifest.version;
 
             putit_archive(mod_name);
@@ -120,7 +120,7 @@ public:
             putit_archive(mod_name);
             putit_archive(mod_version);
 
-            auto mod = mod_mgr.get_mod_optional(mod_name);
+            auto mod = mod_mgr.get_enabled_mod_optional(mod_name);
             if (!mod)
             {
                 // Skip this piece of data.

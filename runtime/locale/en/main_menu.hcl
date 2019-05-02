@@ -6,6 +6,7 @@ locale {
             incarnate = "Incarnate an Adventurer"
             about = "About"
             options = "Options"
+            mods = "Mods"
             exit = "Exit"
         }
 
@@ -35,6 +36,9 @@ locale {
 
         about_changelog {
             title = "Changelogs"
+        }
+
+        mods {
         }
     }
 }

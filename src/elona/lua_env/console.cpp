@@ -1,7 +1,10 @@
 #include "console.hpp"
+
 #include <regex>
 #include <sstream>
+
 #include <boost/algorithm/string/predicate.hpp>
+
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
 #include "../../snail/input.hpp"
@@ -105,6 +108,7 @@ void Console::init_environment()
     auto core = _lua->get_api_manager().get_core_api_table();
     _console_mod =
         _lua->get_mod_manager().create_mod(_namespace_console, none, false);
+    _console_mod->enabled = true;
 
     // Automatically import APIs from "core" into the environment.
     for (const auto& kvp : core)

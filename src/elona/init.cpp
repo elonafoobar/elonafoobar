@@ -1,4 +1,5 @@
 #include "init.hpp"
+
 #include "../snail/touch_input.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"

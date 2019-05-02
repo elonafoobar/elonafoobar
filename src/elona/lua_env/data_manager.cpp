@@ -1,4 +1,8 @@
 #include "data_manager.hpp"
+
+#include "../../util/natural_order_comparator.hpp"
+#include "../log.hpp"
+#include "api_manager.hpp"
 #include "mod_manager.hpp"
 
 
@@ -60,7 +64,7 @@ void DataManager::init_from_mods()
     for (const auto& mod_name :
          _lua->get_mod_manager().calculate_loading_order())
     {
-        const auto& mod = _lua->get_mod_manager().get_mod(mod_name);
+        const auto& mod = _lua->get_mod_manager().get_enabled_mod(mod_name);
         _init_from_mod(*mod);
     }
 

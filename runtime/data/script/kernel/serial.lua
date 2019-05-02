@@ -19,7 +19,10 @@ local function resolve_handles(data, seen)
    end
 end
 
-Serial.save = serpent.dump
+Serial.save = function(s)
+   local dump = serpent.dump(s)
+   return dump
+end
 
 function Serial.load(dump)
    local ok, data = serpent.load(dump)

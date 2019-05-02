@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+
 #include "../filesystem.hpp"
 #include "../optional.hpp"
 #include "../semver.hpp"
@@ -23,6 +24,9 @@ struct ModManifest
     static ModManifest load(const fs::path& path);
 
     std::string name;
+    std::string author;
+    std::string description;
+    std::string license;
     semver::Version version;
     optional<fs::path> path;
     Dependencies dependencies;

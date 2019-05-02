@@ -2,6 +2,9 @@
 
 #include <map>
 #include <vector>
+
+#include <boost/range/adaptor/filtered.hpp>
+
 #include "../filesystem.hpp"
 #include "../optional.hpp"
 #include "loaded_chunk_cache.hpp"
@@ -46,6 +49,8 @@ struct ModInfo
         {
             chunk_cache = LoadedChunkCache{*manifest.path};
         }
+
+        enabled = true;
     }
     ModInfo(const ModInfo&) = delete;
     ModInfo& operator=(const ModInfo&) = delete;
@@ -83,6 +88,7 @@ struct ModInfo
     sol::environment env;
     sol::table store_map;
     sol::table store_global;
+    bool enabled;
 };
 
 /***
@@ -112,26 +118,48 @@ public:
 
     explicit ModManager(LuaEnv*);
 
-    // Iterator for mods.
-    iterator begin()
+    size_t enabled_mod_count() const
     {
-        return mods.begin();
+        size_t count = 0;
+        for (const auto& pair : mods)
+        {
+            const auto& mod = pair.second;
+            if (mod->enabled)
+            {
+                count++;
+            }
+        }
+        return count;
     }
-    iterator end()
+
+    // Iterators for mods.
+    range::iota<ModStorageType::iterator> all_mods()
     {
-        return mods.end();
+        return {mods.begin(), mods.end()};
     }
-    const_iterator begin() const
+
+    range::iota<ModStorageType::const_iterator> all_mods() const
     {
-        return mods.begin();
+        return {mods.begin(), mods.end()};
     }
-    const_iterator end() const
+
+    struct EnabledFilter
     {
-        return mods.end();
+        bool operator()(const ModStorageType::iterator::value_type& pair)
+        {
+            return pair.second->enabled;
+        }
+    };
+
+    boost::filtered_range<EnabledFilter, const ModStorageType> enabled_mods()
+        const
+    {
+        return boost::adaptors::filter(mods, EnabledFilter());
     }
-    size_t count() const
+
+    boost::filtered_range<EnabledFilter, ModStorageType> enabled_mods()
     {
-        return mods.size();
+        return boost::adaptors::filter(mods, EnabledFilter());
     }
 
     /***
@@ -139,6 +167,11 @@ public:
      * binding their APIs to the API manager.
      */
     void load_mods(const fs::path&);
+
+    /***
+     * Wipes the entire state of all mods.
+     */
+    void unload_mods();
 
     /***
      * Runs the startup script with the given filename. It is expected
@@ -158,6 +191,11 @@ public:
     void clear_map_local_stores();
 
     /***
+     * Clears all global mod storages.
+     */
+    void clear_global_stores();
+
+    /***
      * Clears the internal storage for each loaded mod. This is used
      * when transitioning between maps, because most data in the store
      * will become invalid after transitioning.
@@ -166,13 +204,6 @@ public:
 
 
     //****************** Methods for testing use *******************//
-
-    /***
-     * Unloads all characters and items tracked by handles.
-     *
-     * For testing use only.
-     */
-    void clear();
 
     /***
      * Same as load_mods, but also inject an additional mod to be
@@ -226,7 +257,8 @@ public:
         bool readonly = false);
 
     /***
-     * Retrieves a pointer to an instantiated mod.
+     * Retrieves a pointer to an instantiated mod. @a name is of format
+     * "mod_name-0.1.0".
      */
     optional<ModInfo*> get_mod_optional(const std::string& name)
     {
@@ -237,7 +269,8 @@ public:
     }
 
     /***
-     * Retrieves a pointer to an instantiated mod.
+     * Retrieves a pointer to an instantiated mod. @a name is of format
+     * "mod_name-0.1.0".
      *
      * Will throw if the mod doesn't exist.
      *
@@ -252,11 +285,49 @@ public:
     }
 
     /***
+     * Finds the version of a mod that is currently enabled. Only one version
+     * of any given mod can be enabled at a time. @a name is of format
+     * "mod_name".
+     *
+     * Will throw if no such mod matches and is enabled.
+     */
+    ModInfo* get_enabled_mod(const std::string& name)
+    {
+        auto val = get_enabled_mod_optional(name);
+        if (!val)
+            throw std::runtime_error("No mod "s + name + " was enabled."s);
+        return *val;
+    }
+
+    /***
+     * Finds the version of a mod that is currently enabled. Only one version
+     * of any given mod can be enabled at a time. @a name is of format
+     * "mod_name".
+     */
+    optional<ModInfo*> get_enabled_mod_optional(const std::string& name)
+    {
+        for (const auto& pair : mods)
+        {
+            auto& mod = pair.second;
+            if (mod->manifest.name == name && mod->enabled)
+            {
+                return mod.get();
+            }
+        }
+        return none;
+    }
+
+    /***
      * Calculates the order in which mods should be loaded such that all the
      * needed dependencies of a mod are loaded by the time that mod is loaded.
      *
+     * The set of mods enabled is assumed to be valid with no version
+     * conflicts/duplicates.
+     *
      * @return a list of mod names, ordered by loading order
-     * @throws if there is a cyclic dependency, or a dependency is unknown
+     * @throws if there is a cyclic dependency, a dependency is unknown, a
+     * dependency's version requirements cannot be satisfied, or more than one
+     * version of the same mod is enabled
      */
     std::vector<std::string> calculate_loading_order();
 

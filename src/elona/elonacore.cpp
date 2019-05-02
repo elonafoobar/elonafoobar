@@ -4063,6 +4063,11 @@ TurnResult exit_map()
     int previous_map = game_data.current_map;
     int previous_dungeon_level = game_data.current_dungeon_level;
     int fixstart = 0;
+
+    ELONA_LOG("map") << "exit_map levelexitby begin " << levelexitby << " cur "
+                     << game_data.current_map << " cur_level "
+                     << game_data.current_dungeon_level;
+
     game_data.left_minutes_of_executing_quest = 0;
     game_data.rogue_boss_encountered = 0;
     if (map_data.type == mdata_t::MapType::player_owned)
@@ -4434,6 +4439,8 @@ TurnResult exit_map()
     {
         // This map should be saved.
         save_map_local_data();
+
+        ELONA_LOG("map") << "exit_map save local";
     }
     else
     {
@@ -4456,12 +4463,14 @@ TurnResult exit_map()
                 --npcmemory(1, cnt.id);
             }
         }
+
+        ELONA_LOG("map") << "exit_map clear temporary";
     }
 
     bool map_changed = game_data.current_map != previous_map ||
         game_data.current_dungeon_level != previous_dungeon_level;
 
-    ELONA_LOG("map") << "exit_map levelexitby " << levelexitby << " cur "
+    ELONA_LOG("map") << "exit_map levelexitby end " << levelexitby << " cur "
                      << game_data.current_map << " cur_level "
                      << game_data.current_dungeon_level << " prev "
                      << previous_map << " prev_level "

@@ -1,6 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-#include "../thirdparty/sol2/sol.hpp"
-
 #include "../elona/character.hpp"
 #include "../elona/dmgheal.hpp"
 #include "../elona/filesystem.hpp"
@@ -13,6 +10,8 @@
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 #include "tests.hpp"
 
 using namespace elona::testing;
@@ -104,7 +103,8 @@ TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
 
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
-    int thing = mod_mgr.get_mod("test")->store_global["thing"].get<int>();
+    int thing =
+        mod_mgr.get_enabled_mod("test")->store_global["thing"].get<int>();
     REQUIRE(thing == 1);
 }
 
