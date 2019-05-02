@@ -13,6 +13,7 @@ enum class MainMenuResult
     main_menu_about_changelogs,
     main_menu_about_license,
     main_menu_about_credits,
+    main_menu_mods,
     character_making_select_race,
     character_making_select_sex,
     character_making_select_sex_looped,
@@ -40,5 +41,6 @@ MainMenuResult main_menu_about();
 MainMenuResult main_menu_about_changelogs();
 MainMenuResult main_menu_about_license();
 MainMenuResult main_menu_about_credits();
+MainMenuResult main_menu_mods();
 
 } // namespace elona

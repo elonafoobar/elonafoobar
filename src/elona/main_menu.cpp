@@ -1,4 +1,5 @@
 #include "main_menu.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "../version.hpp"
@@ -16,6 +17,7 @@
 #include "menu.hpp"
 #include "random.hpp"
 #include "ui.hpp"
+#include "ui/ui_menu_mods.hpp"
 #include "variables.hpp"
 
 
@@ -144,7 +146,6 @@ MainMenuResult main_title_menu()
 
     cs = 0;
     cs_bk = -1;
-    keyrange = 6;
     pagesize = 0;
 
     load_background_variants(2);
@@ -187,7 +188,7 @@ MainMenuResult main_title_menu()
         80,
         winposy(308, 1),
         320,
-        320);
+        355);
     cmbg = 4;
     x = ww / 5 * 4;
     y = wh - 80;
@@ -204,20 +205,25 @@ MainMenuResult main_title_menu()
         y);
     gmode(2);
 
-    std::vector<std::string> items = {
-        u8"Restore an Adventurer",
-        i18n::s.get("core.locale.main_menu.title_menu.continue"),
-        u8"Generate an Adventurer",
-        i18n::s.get("core.locale.main_menu.title_menu.new"),
-        u8"Incarnate an Adventurer",
-        i18n::s.get("core.locale.main_menu.title_menu.incarnate"),
-        u8"About",
-        i18n::s.get("core.locale.main_menu.title_menu.about"),
-        u8"Options",
-        i18n::s.get("core.locale.main_menu.title_menu.options"),
-        u8"Exit",
-        i18n::s.get("core.locale.main_menu.title_menu.exit"),
+    struct MainMenuItem
+    {
+        std::string subtitle;
+        std::string title;
     };
+    std::vector<MainMenuItem> items = {
+        {u8"Restore an Adventurer",
+         i18n::s.get("core.locale.main_menu.title_menu.continue")},
+        {u8"Generate an Adventurer",
+         i18n::s.get("core.locale.main_menu.title_menu.new")},
+        {u8"Incarnate an Adventurer",
+         i18n::s.get("core.locale.main_menu.title_menu.incarnate")},
+        {u8"About", i18n::s.get("core.locale.main_menu.title_menu.about")},
+        {u8"Options", i18n::s.get("core.locale.main_menu.title_menu.options")},
+        {u8"Mods", i18n::s.get("core.locale.main_menu.title_menu.mods")},
+        {u8"Exit", i18n::s.get("core.locale.main_menu.title_menu.exit")},
+    };
+
+    keyrange = items.size();
 
     asset_load("deco_blend");
     gsel(0);
@@ -237,7 +243,7 @@ MainMenuResult main_title_menu()
         gmode(2);
 
         cs_listbk();
-        for (int cnt = 0; cnt < 6; ++cnt)
+        for (int cnt = 0; cnt < static_cast<int>(items.size()); ++cnt)
         {
             x = wx + 40;
             y = cnt * 35 + wy + 50;
@@ -245,14 +251,14 @@ MainMenuResult main_title_menu()
             if (en)
             {
                 font(14 - en * 2);
-                cs_list(cs == cnt, items.at(cnt * 2 + 1), x + 40, y + 1);
+                cs_list(cs == cnt, items.at(cnt).title, x + 40, y + 1);
             }
             else
             {
                 font(11 - en * 2);
-                mes(x + 40, y - 4, items.at(cnt * 2));
+                mes(x + 40, y - 4, items.at(cnt).subtitle);
                 font(13 - en * 2);
-                cs_list(cs == cnt, items.at(cnt * 2 + 1), x + 40, y + 8);
+                cs_list(cs == cnt, items.at(cnt).title, x + 40, y + 8);
             }
         }
         cs_bk = cs;
@@ -262,37 +268,21 @@ MainMenuResult main_title_menu()
         int index{};
         cursor_check_ex(index);
 
-        if (index == 1)
+        switch (index)
         {
+        case 1:
             snd("core.ok1");
             geneuse = "";
             return MainMenuResult::main_menu_new_game;
-        }
-        if (index == 0)
-        {
-            snd("core.ok1");
-            return MainMenuResult::main_menu_continue;
-        }
-        if (index == 2)
-        {
-            snd("core.ok1");
-            return MainMenuResult::main_menu_incarnate;
-        }
-        if (index == 3)
-        {
-            snd("core.ok1");
-            return MainMenuResult::main_menu_about;
-        }
-        if (index == 4)
-        {
+        case 0: snd("core.ok1"); return MainMenuResult::main_menu_continue;
+        case 2: snd("core.ok1"); return MainMenuResult::main_menu_incarnate;
+        case 3: snd("core.ok1"); return MainMenuResult::main_menu_about;
+        case 4:
             snd("core.ok1");
             set_option();
             return MainMenuResult::main_title_menu;
-        }
-        if (index == 5)
-        {
-            snd("core.ok1");
-            return MainMenuResult::finish_elona;
+        case 5: snd("core.ok1"); return MainMenuResult::main_menu_mods;
+        case 6: snd("core.ok1"); return MainMenuResult::finish_elona;
         }
     }
 }
@@ -329,6 +319,7 @@ MainMenuResult main_menu_wrapper()
         case MainMenuResult::main_menu_about_credits:
             result = main_menu_about_credits();
             break;
+        case MainMenuResult::main_menu_mods: result = main_menu_mods(); break;
         case MainMenuResult::main_title_menu:
             // Loop back to the start.
             result = MainMenuResult::main_title_menu;
@@ -1262,6 +1253,19 @@ MainMenuResult main_menu_about_credits()
         }
         goto savegame_draw_page;
     }
+}
+
+
+
+MainMenuResult main_menu_mods()
+{
+    ui::UIMenuMods().show();
+#if 0
+    lua::lua->get_mod_manager()->unload_mods();
+    lua::lua->get_mod_manager()->load_mods(filesystem::dir::mods());
+    show_loading_screen();
+#endif
+    return MainMenuResult::main_title_menu;
 }
 
 } // namespace elona
