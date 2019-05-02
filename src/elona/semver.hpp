@@ -1,10 +1,12 @@
 #pragma once
 
 #include <cassert>
+
 #include <regex>
 #include <stdexcept>
 #include <string>
 #include <vector>
+
 #include "../util/either.hpp"
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
@@ -463,7 +465,6 @@ private:
 
 } // namespace semver
 } // namespace elona
-
 
 
 #ifdef ELONA_MAJOR_AND_MINOR_MACRO_DEFINED

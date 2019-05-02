@@ -185,7 +185,7 @@ function Handle.create_handle(cpp_ref, kind, uuid)
       return nil
    end
 
-   -- print("CREATE " .. cpp_ref.index .. " " .. uuid)
+   -- print("CREATE " .. kind .. " " .. cpp_ref.index .. " " .. uuid)
 
    local handle = {
       __uuid = uuid,
@@ -298,7 +298,6 @@ end
 
 function Handle.merge_handles(kind, handles_)
    for index, handle in pairs(handles_) do
-
       if handle ~= nil then
          if handles_by_index[kind][index] ~= nil then
             error("Attempt to overwrite handle " .. kind .. ":" .. adjusted_index, 2)

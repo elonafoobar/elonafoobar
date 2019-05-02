@@ -6,6 +6,7 @@ locale {
             incarnate = "冒険者の引継ぎ"
             about = "このゲームについて"
             options = "設定の変更"
+            mods = "MODリスト"
             exit = "終了"
         }
 
@@ -35,6 +36,9 @@ locale {
 
         about_changelog {
             title = "更新履歴"
+        }
+
+        mods {
         }
     }
 }

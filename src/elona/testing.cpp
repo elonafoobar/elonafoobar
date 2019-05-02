@@ -1,7 +1,10 @@
 #include "testing.hpp"
+
 #include <sstream>
+
 #include "../version.hpp"
 #include "config/config.hpp"
+#include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_music.hpp"
 #include "data/types/type_sound.hpp"
@@ -41,7 +44,7 @@ fs::path get_mods_path()
 
 void load_previous_savefile()
 {
-    elona::testing::reset_state();
+    testing::reset_state();
     // This file was saved directly after the dialog at the start of the game.
     elona::playerid = "sav_foobar_test";
     filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
@@ -54,19 +57,29 @@ void load_previous_savefile()
 
 void save_reset_and_reload()
 {
-    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
-    save_game();
-    elona::testing::reset_state();
-    elona::firstturn = 1;
-    load_save_data();
+    testing::save();
+    testing::reset_state();
+    testing::load();
 }
 
 void save_and_reload()
 {
+    testing::save();
+    testing::load();
+}
+
+void save()
+{
     filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
     save_game();
+}
+
+void load()
+{
     elona::firstturn = 1;
     load_save_data();
+    elona::mode = 3;
+    initialize_map();
 }
 
 void load_translations(const std::string& hcl)
@@ -108,6 +121,10 @@ void start_in_map(int map, int level)
 
     elona::playerid = player_id;
     fs::remove_all(filesystem::dir::save(player_id));
+    fs::remove_all(filesystem::dir::tmp());
+    fs::create_directory(filesystem::dir::tmp());
+    writeloadedbuff_clear();
+    Save::instance().clear();
 
     game_data.current_map = map;
     game_data.current_dungeon_level = level;
@@ -178,6 +195,10 @@ void post_run()
 {
     filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
     fs::remove_all(filesystem::dir::save(player_id));
+    fs::remove_all(filesystem::dir::tmp());
+    writeloadedbuff_clear();
+    Save::instance().clear();
+    fs::create_directory(filesystem::dir::tmp());
     finish_elona();
 }
 
