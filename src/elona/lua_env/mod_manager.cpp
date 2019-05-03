@@ -32,22 +32,22 @@ static bool _is_alnum_only(const std::string& str)
            }) == str.end();
 }
 
-static bool _mod_name_is_reserved(const std::string& mod_name)
-{
-    return mod_name == "script" || mod_name == "console" ||
-        mod_name == "BUILTIN";
-}
-
 
 ModManager::ModManager(LuaEnv* lua)
 {
     lua_ = lua;
 }
 
+bool ModManager::mod_name_is_reserved(const std::string& mod_name)
+{
+    return mod_name == "script" || mod_name == "_CONSOLE_" ||
+        mod_name == "_BUILTIN_";
+}
+
 
 void ModManager::load_mods(const fs::path& mod_dir)
 {
-    if (stage != ModLoadingStage::not_started)
+    if (stage_ != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
@@ -59,20 +59,20 @@ void ModManager::load_mods(const fs::path& mod_dir)
 
 void ModManager::unload_mods()
 {
-    if (stage != ModLoadingStage::all_mods_loaded)
+    if (stage_ != ModLoadingStage::all_mods_loaded)
     {
         throw std::runtime_error("Mods have not been loaded.");
     }
 
-    mods = ModStorageType();
-    stage = ModLoadingStage::not_started;
+    mods_ = ModStorageType();
+    stage_ = ModLoadingStage::not_started;
 }
 
 void ModManager::load_mods(
     const fs::path& mod_dir,
     const std::vector<fs::path> additional_mod_paths)
 {
-    if (stage != ModLoadingStage::not_started)
+    if (stage_ != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
@@ -152,7 +152,7 @@ void ModManager::scan_mod(const fs::path& mod_dir)
             "Mod name \"" + mod_name +
             "\" must contain alphanumeric characters only.");
     }
-    if (_mod_name_is_reserved(mod_name))
+    if (mod_name_is_reserved(mod_name))
     {
         throw std::runtime_error(
             "\"" + mod_name + "\" is a reserved mod name.");
@@ -163,8 +163,8 @@ void ModManager::scan_mod(const fs::path& mod_dir)
 
 void ModManager::scan_all_mods(const fs::path& mods_dir)
 {
-    if (stage != ModLoadingStage::not_started &&
-        stage != ModLoadingStage::scan_finished)
+    if (stage_ != ModLoadingStage::not_started &&
+        stage_ != ModLoadingStage::scan_finished)
     {
         throw std::runtime_error("Mods have already been scanned!");
     }
@@ -177,12 +177,12 @@ void ModManager::scan_all_mods(const fs::path& mods_dir)
             scan_mod(entry.path());
         }
     }
-    stage = ModLoadingStage::scan_finished;
+    stage_ = ModLoadingStage::scan_finished;
 }
 
 void ModManager::load_lua_support_libraries()
 {
-    if (stage == ModLoadingStage::not_started)
+    if (stage_ == ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods haven't been scanned yet!");
     }
@@ -192,12 +192,12 @@ void ModManager::load_lua_support_libraries()
     // under data/lua.
     lua_->get_api_manager().load_lua_support_libraries(*lua_);
 
-    stage = ModLoadingStage::lua_libraries_loaded;
+    stage_ = ModLoadingStage::lua_libraries_loaded;
 }
 
 void ModManager::load_scanned_mods()
 {
-    if (stage != ModLoadingStage::lua_libraries_loaded)
+    if (stage_ != ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -207,29 +207,26 @@ void ModManager::load_scanned_mods()
     for (const auto& mod_name : calculate_loading_order())
     {
         ModInfo* mod = get_enabled_mod(mod_name);
-        if (_mod_name_is_reserved(mod_name))
+        if (mod_name_is_reserved(mod_name))
         {
             // TODO warn about reserved mod names.
             continue;
         }
         else
         {
-            if (mod->enabled)
-            {
-                load_mod(*mod);
-            }
+            load_mod(*mod);
         }
         ELONA_LOG("lua.mod") << "Loaded mod " << mod->manifest.name;
     }
 
     lua_->get_export_manager().register_all_exports();
 
-    stage = ModLoadingStage::all_mods_loaded;
+    stage_ = ModLoadingStage::all_mods_loaded;
 }
 
 void ModManager::run_startup_script(const std::string& name)
 {
-    if (stage < ModLoadingStage::lua_libraries_loaded)
+    if (stage_ < ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -239,7 +236,6 @@ void ModManager::run_startup_script(const std::string& name)
     }
 
     ModInfo* script_mod = create_mod("script", none, true);
-    script_mod->enabled = true;
 
     lua_->get_state()->safe_script_file(
         filepathutil::to_utf8_path(filesystem::dir::user_script() / name),
@@ -403,16 +399,14 @@ ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
         setup_mod_globals(*info, info->env);
     }
 
-    // Always enable built-in mods.
-    if (_mod_name_is_reserved(manifest.name))
-    {
-        info->enabled = true;
-    }
+    // TODO: Enable based on user config/dependency resolution. Always enable
+    // built-in mods.
+    enable_mod(manifest.name, manifest.version, true);
 
     auto mod_name_with_version =
         manifest.name + "-" + manifest.version.to_string();
-    mods[mod_name_with_version] = std::move(info);
-    return mods[mod_name_with_version].get();
+    mods_[mod_name_with_version] = std::move(info);
+    return mods_[mod_name_with_version].get();
 }
 
 ModInfo* ModManager::create_mod(
@@ -512,7 +506,7 @@ void ModManager::load_mod_from_script(
     const std::string& script,
     bool readonly)
 {
-    if (stage < ModLoadingStage::lua_libraries_loaded)
+    if (stage_ < ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -526,7 +520,6 @@ void ModManager::load_mod_from_script(
     }
 
     ModInfo* mod = create_mod(name, none, readonly);
-    mod->enabled = true;
 
     // Run the provided script string.
     auto result = lua_->get_state()->safe_script(script, mod->env);
