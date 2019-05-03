@@ -1260,11 +1260,6 @@ MainMenuResult main_menu_about_credits()
 MainMenuResult main_menu_mods()
 {
     ui::UIMenuMods().show();
-#if 0
-    lua::lua->get_mod_manager()->unload_mods();
-    lua::lua->get_mod_manager()->load_mods(filesystem::dir::mods());
-    show_loading_screen();
-#endif
     return MainMenuResult::main_title_menu;
 }
 

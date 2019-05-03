@@ -39,6 +39,13 @@ locale {
         }
 
         mods {
+            title = "Installed Mods"
+            hint_readme_page = "[Change README page]"
+            no_readme = "(No README available.)"
+            name = "Name"
+            author = "Author"
+            version = "Version"
+            description = "Description"
         }
     }
 }
