@@ -49,8 +49,6 @@ struct ModInfo
         {
             chunk_cache = LoadedChunkCache{*manifest.path};
         }
-
-        enabled = true;
     }
     ModInfo(const ModInfo&) = delete;
     ModInfo& operator=(const ModInfo&) = delete;
@@ -88,7 +86,6 @@ struct ModInfo
     sol::environment env;
     sol::table store_map;
     sol::table store_global;
-    bool enabled;
 };
 
 /***
@@ -111,6 +108,7 @@ class ModManager
 {
     using ModStorageType =
         std::unordered_map<std::string, std::unique_ptr<ModInfo>>;
+    using ModVersionsType = std::unordered_map<std::string, semver::Version>;
 
 public:
     using iterator = ModStorageType::iterator;
@@ -118,48 +116,139 @@ public:
 
     explicit ModManager(LuaEnv*);
 
+    static bool mod_name_is_reserved(const std::string& mod_name);
+
     size_t enabled_mod_count() const
     {
-        size_t count = 0;
-        for (const auto& pair : mods)
-        {
-            const auto& mod = pair.second;
-            if (mod->enabled)
-            {
-                count++;
-            }
-        }
-        return count;
+        return enabled_versions_.size();
     }
 
     // Iterators for mods.
     range::iota<ModStorageType::iterator> all_mods()
     {
-        return {mods.begin(), mods.end()};
+        return {mods_.begin(), mods_.end()};
     }
 
     range::iota<ModStorageType::const_iterator> all_mods() const
     {
-        return {mods.begin(), mods.end()};
+        return {mods_.begin(), mods_.end()};
     }
 
-    struct EnabledFilter
+    struct EnabledRange
     {
-        bool operator()(const ModStorageType::iterator::value_type& pair)
+    public:
+        struct iterator
         {
-            return pair.second->enabled;
+        private:
+            using base_iterator_type = typename ModStorageType::const_iterator;
+
+        public:
+            using value_type = base_iterator_type::value_type;
+            using difference_type =
+                typename base_iterator_type::difference_type;
+            using pointer = const value_type*;
+            using reference = const value_type&;
+            using iterator_category =
+                typename base_iterator_type::iterator_category;
+
+
+            iterator(
+                const ModStorageType& map,
+                const typename ModVersionsType::const_iterator& itr)
+                : map(map)
+                , itr(itr)
+            {
+            }
+
+            reference operator*() const
+            {
+                auto name = itr->first + "-" + itr->second.to_string();
+                return *map.find(name);
+            }
+
+            pointer operator->() const
+            {
+                auto name = itr->first + "-" + itr->second.to_string();
+                return map.find(name).operator->();
+            }
+
+            void operator++()
+            {
+                ++itr;
+            }
+
+            bool operator!=(const iterator& other) const
+            {
+                return itr != other.itr;
+            }
+
+        private:
+            const ModStorageType& map;
+            typename ModVersionsType::const_iterator itr;
+        };
+
+        EnabledRange(const ModStorageType& map, const ModVersionsType& ver)
+            : map(map)
+            , ver(ver)
+        {
         }
+
+        iterator begin()
+        {
+            return iterator(map, ver.begin());
+        }
+
+        iterator end()
+        {
+            return iterator(map, ver.end());
+        }
+
+    private:
+        const ModStorageType& map;
+        const ModVersionsType& ver;
     };
 
-    boost::filtered_range<EnabledFilter, const ModStorageType> enabled_mods()
-        const
+    EnabledRange enabled_mods() const
     {
-        return boost::adaptors::filter(mods, EnabledFilter());
+        return EnabledRange(mods_, enabled_versions_);
     }
 
-    boost::filtered_range<EnabledFilter, ModStorageType> enabled_mods()
+    optional<semver::Version> get_enabled_version(const std::string& mod_name)
     {
-        return boost::adaptors::filter(mods, EnabledFilter());
+        auto it = enabled_versions_.find(mod_name);
+        if (it != enabled_versions_.end())
+            return it->second;
+        return none;
+    }
+
+    void enable_mod(
+        const std::string& name,
+        const semver::Version& version,
+        bool fail_on_conflict = false)
+    {
+        auto it = enabled_versions_.find(name);
+        if (it != enabled_versions_.end())
+        {
+            if (fail_on_conflict)
+            {
+                throw std::runtime_error(
+                    "Mod " + name +
+                    " is already enabled. Wanted: " + version.to_string() +
+                    ", enabled version: " + it->second.to_string());
+            }
+            else
+            {
+
+                disable_mod(name);
+            }
+        }
+
+        enabled_versions_[name] = version;
+    }
+
+    void disable_mod(const std::string& name)
+    {
+        enabled_versions_.erase(name);
     }
 
     /***
@@ -262,8 +351,8 @@ public:
      */
     optional<ModInfo*> get_mod_optional(const std::string& name)
     {
-        auto val = mods.find(name);
-        if (val == mods.end())
+        auto val = mods_.find(name);
+        if (val == mods_.end())
             return none;
         return val->second.get();
     }
@@ -278,8 +367,8 @@ public:
      */
     ModInfo* get_mod(const std::string& name)
     {
-        auto val = mods.find(name);
-        if (val == mods.end())
+        auto val = mods_.find(name);
+        if (val == mods_.end())
             throw std::runtime_error("No such mod "s + name + "."s);
         return val->second.get();
     }
@@ -306,15 +395,10 @@ public:
      */
     optional<ModInfo*> get_enabled_mod_optional(const std::string& name)
     {
-        for (const auto& pair : mods)
-        {
-            auto& mod = pair.second;
-            if (mod->manifest.name == name && mod->enabled)
-            {
-                return mod.get();
-            }
-        }
-        return none;
+        auto version = get_enabled_version(name);
+        if (!version)
+            return none;
+        return get_mod_optional(name + "-" + version->to_string());
     }
 
     /***
@@ -420,14 +504,20 @@ private:
     }
 
 private:
-    ModStorageType mods;
+    ModStorageType mods_;
+
+    /***
+     * Map from base mod name to its enabled version, if the mod is enabled.
+     * This ensures each mod has at most one version enabled.
+     */
+    ModVersionsType enabled_versions_;
 
     /***
      * The loading stage the environment is currently in. Used for
      * tracking the lifecycle of mod loading and ensuring the loading
      * functions are run in the correct order.
      */
-    ModLoadingStage stage = ModLoadingStage::not_started;
+    ModLoadingStage stage_ = ModLoadingStage::not_started;
 
     LuaEnv* lua_;
 };

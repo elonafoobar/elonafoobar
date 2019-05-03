@@ -403,9 +403,7 @@ Store.global.val = 42
 Store.global.val = 0
 )"));
 
-    elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_serial_disabled")
-        ->enabled = false;
+    elona::lua::lua->get_mod_manager().disable_mod("test_serial_disabled");
 
     load();
 

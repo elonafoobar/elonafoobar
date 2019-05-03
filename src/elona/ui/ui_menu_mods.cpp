@@ -36,14 +36,16 @@ bool UIMenuMods::init()
 
     for (const auto& mod : lua::lua->get_mod_manager().all_mods())
     {
-        if (mod->second->manifest.name == "_CONSOLE_")
+        const auto& name = mod->second->manifest.name;
+
+        if (lua::ModManager::mod_name_is_reserved(name))
             continue;
 
-        ModDescription mod_desc{mod->second->manifest.name + "(" +
-                                    mod->second->manifest.version.to_string() +
-                                    ")",
-                                mod->second->manifest,
-                                mod->second->enabled};
+        ModDescription mod_desc{
+            name + "(" + mod->second->manifest.version.to_string() + ")",
+            mod->second->manifest,
+            static_cast<bool>(
+                lua::lua->get_mod_manager().get_enabled_version(name))};
 
         mod_descriptions.emplace_back(mod_desc);
         listmax++;
@@ -56,6 +58,17 @@ bool UIMenuMods::init()
     return true;
 }
 
+
+optional<UIMenuMods::ModDescription> UIMenuMods::_find_enabled_mod(
+    const std::string& name)
+{
+    for (const auto& desc : mod_descriptions)
+    {
+        if (desc.enabled && desc.manifest.name == name)
+            return desc;
+    }
+    return none;
+}
 
 
 void UIMenuMods::_draw_mod_page()
