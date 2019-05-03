@@ -14,6 +14,48 @@ namespace elona
 namespace ui
 {
 
+static int _wrap_text(std::string& text, int max_line_length)
+{
+    std::string rest{text};
+    text.clear();
+    int n{};
+
+    while (1)
+    {
+        const auto len = rest.size();
+        if (int(len) < max_line_length)
+        {
+            text += rest;
+            return n;
+        }
+        size_t byte_length = 0;
+        size_t width_length = 0;
+        while (width_length <= len)
+        {
+            const auto bytes = strutil::byte_count(rest[byte_length]);
+            const auto char_width = bytes == 1 ? 1 : 2;
+
+            byte_length += bytes;
+            width_length += char_width;
+
+            if (int(width_length) > max_line_length)
+            {
+                text += rest.substr(0, byte_length) + '\n';
+                ++n;
+                if (rest.size() > byte_length)
+                {
+                    rest = rest.substr(byte_length);
+                }
+                else
+                {
+                    rest = "";
+                }
+                break;
+            }
+        }
+    }
+}
+
 bool UIMenuMods::init()
 {
     snd("core.pop2");
@@ -23,7 +65,7 @@ bool UIMenuMods::init()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    page_bk = 0;
+    page_bk = -1;
     cs_bk2 = 0;
 
     asset_load("void");
@@ -47,7 +89,7 @@ bool UIMenuMods::init()
             static_cast<bool>(
                 lua::lua->get_mod_manager().get_enabled_version(name))};
 
-        mod_descriptions.emplace_back(mod_desc);
+        _mod_descriptions.emplace_back(mod_desc);
         listmax++;
     }
 
@@ -62,7 +104,7 @@ bool UIMenuMods::init()
 optional<UIMenuMods::ModDescription> UIMenuMods::_find_enabled_mod(
     const std::string& name)
 {
-    for (const auto& desc : mod_descriptions)
+    for (const auto& desc : _mod_descriptions)
     {
         if (desc.enabled && desc.manifest.name == name)
             return desc;
@@ -70,39 +112,105 @@ optional<UIMenuMods::ModDescription> UIMenuMods::_find_enabled_mod(
     return none;
 }
 
+void UIMenuMods::_build_description()
+{
+    _description_pages.clear();
+    _desc_page = 0;
+
+    const auto& desc = _mod_descriptions.at(pagesize * page + cs);
+
+    auto readme_path =
+        filesystem::dir::for_mod(desc.manifest.name) / "README.txt";
+    if (!fs::exists(readme_path))
+    {
+        // TODO
+        _description_pages.push_back(
+            i18n::s.get("core.locale.main_menu.mods.no_readme"));
+        return;
+    }
+
+    std::vector<std::string> description_lines;
+    range::copy(
+        fileutil::read_by_line(readme_path),
+        std::back_inserter(description_lines));
+
+    if (description_lines.empty())
+    {
+        // TODO
+        _description_pages.push_back(
+            i18n::s.get("core.locale.main_menu.mods.no_readme"));
+        return;
+    }
+
+    const size_t text_width = 70;
+    constexpr size_t lines_per_page = 20;
+
+    for (auto&& line : description_lines)
+    {
+        _wrap_text(line, text_width);
+    }
+    size_t line_count = 0;
+    for (const auto& lines : description_lines)
+    {
+        if (lines == "")
+        {
+            _description_pages.back() += '\n';
+        }
+        for (const auto& line : strutil::split_lines(lines))
+        {
+            if (line_count == 0)
+            {
+                _description_pages.push_back(line + '\n');
+            }
+            else
+            {
+                _description_pages.back() += line + '\n';
+            }
+            ++line_count;
+            if (line_count == lines_per_page)
+            {
+                line_count = 0;
+            }
+        }
+    }
+}
+
 
 void UIMenuMods::_draw_mod_page()
 {
-    const auto& desc = mod_descriptions.at(pagesize * page + cs);
+    const auto& desc = _mod_descriptions.at(pagesize * page + cs);
 
     display_topic(desc.display_name, wx + 206, wy + 36);
 
-    font(14 - en * 2);
     int y = wy + 60;
 
     gmes(
-        "<b>Name<def>: " + desc.manifest.name,
+        "<b>" + i18n::s.get("core.locale.main_menu.mods.name") + ":<def> " +
+            desc.manifest.name,
         wx + 216,
         y,
         380,
         {30, 30, 30},
         false);
     gmes(
-        "<b>Author:<def> " + desc.manifest.author,
+        "<b>" + i18n::s.get("core.locale.main_menu.mods.author") + ":<def> " +
+            desc.manifest.author,
         wx + 216,
         y + 16,
         380,
         {30, 30, 30},
         false);
     gmes(
-        "<b>Version:<def> " + desc.manifest.version.to_string(),
+        "<b>" + i18n::s.get("core.locale.main_menu.mods.version") + ":<def> " +
+            desc.manifest.version.to_string(),
         wx + 216,
         y + 32,
         380,
         {30, 30, 30},
         false);
     gmes(
-        "<b>Description:<def> " + desc.manifest.description,
+        "<b>" + i18n::s.get("core.locale.main_menu.mods.description") +
+            ":<def> " + desc.manifest.description,
         wx + 216,
         y + 48,
         380,
@@ -111,59 +219,16 @@ void UIMenuMods::_draw_mod_page()
 
     window2(wx + 216 + 386 + 12 - 4, y - 36 - 4, 128 + 8, 128 + 8, 1, 1);
     boxf(wx + 216 + 386 + 12, y - 36, 128, 128, {0, 0, 0});
+    mes(wx + 216 + 366 + 64 + 6, y - 36 + 64 - 7, "(image)", {255, 255, 255});
 
-    display_topic("Description", wx + 206, wy + 160);
+    display_topic(
+        "README (" + std::to_string(_desc_page + 1) + "/" +
+            _description_pages.size() + ")",
+        wx + 206,
+        wy + 160);
 
-    y = wy + 184;
-
-    auto readme_path =
-        filesystem::dir::for_mod(desc.manifest.name) / "README.md";
-    if (fs::exists(readme_path))
-    {
-        std::vector<std::string> credits_text_lines;
-        range::copy(
-            fileutil::read_by_line(readme_path),
-            std::back_inserter(credits_text_lines));
-        const size_t text_width = 75 - 28;
-        constexpr size_t lines_per_page = 16;
-
-        for (auto&& line : credits_text_lines)
-        {
-            // talk_conv only accepts single line text, so you need to split by
-            // line.
-            talk_conv(line, text_width);
-        }
-        size_t line_count = 0;
-        for (const auto& lines : credits_text_lines)
-        {
-            if (lines == "")
-            {
-                y = gmes(lines, wx + 216, y, 510, {30, 30, 30}, false).y;
-            }
-            for (const auto& line : strutil::split_lines(lines))
-            {
-                const auto ny =
-                    gmes(line, wx + 216, y, 510, {30, 30, 30}, false).y;
-                ++line_count;
-                if (line_count == lines_per_page)
-                {
-                    return;
-                    line_count = 0;
-                }
-                y = ny;
-            }
-        }
-    }
-    else
-    {
-        gmes(
-            "(No description available.)",
-            wx + 216,
-            y,
-            510,
-            {30, 30, 30},
-            false);
-    }
+    font(14 - en * 2);
+    mes(wx + 216, wy + 184, _description_pages.at(_desc_page));
 }
 
 
@@ -179,20 +244,17 @@ void UIMenuMods::_draw_navigation_menu()
         {
             break;
         }
-        const auto& desc = mod_descriptions.at(p);
+        const auto& desc = _mod_descriptions.at(p);
         snail::Color color = {0, 0, 0};
         if (desc.enabled)
         {
             color = {0, 0, 255};
         }
 
-        cs_list(
-            cs == cnt,
-            desc.display_name,
-            wx + 66,
-            wy + 66 + cnt * 19 - 1,
-            0,
-            color);
+        auto name = desc.display_name;
+        cutname(name, 17);
+
+        cs_list(cs == cnt, name, wx + 66, wy + 66 + cnt * 19 - 1, 0, color);
     }
 
     if (keyrange != 0)
@@ -226,12 +288,19 @@ void UIMenuMods::_draw_background_vignette(int id, int type)
 
 void UIMenuMods::update()
 {
-    cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
         page = pagemax;
     else if (page > pagemax)
         page = 0;
+
+    if (page_bk != page || cs_bk != cs)
+    {
+        _build_description();
+    }
+
+    cs_bk = -1;
+    page_bk = page;
 
     _redraw = true;
 }
@@ -250,8 +319,9 @@ void UIMenuMods::_draw_window()
         y = winposy(496) - 24;
     }
     ui_display_window(
-        u8"Mod List",
-        strhint2 + strhint3b,
+        i18n::s.get("core.locale.main_menu.mods.title"),
+        strhint2 + strhint3b + " " + key_prev + ","s + key_next + " " +
+            i18n::s.get("core.locale.main_menu.mods.hint_readme_page"),
         (windoww - 780) / 2 + inf_screenx,
         y,
         780,
@@ -295,9 +365,16 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
     if (auto selected = get_selected_index_this_page())
     {
         cs = *selected;
-        snd("core.ok1");
-        auto& desc = mod_descriptions.at(pagesize * page + cs_bk);
-        desc.enabled = !desc.enabled;
+        auto& desc = _mod_descriptions.at(pagesize * page + cs);
+        if (cs_bk == cs)
+        {
+            snd("core.ok1");
+            desc.enabled = !desc.enabled;
+        }
+        else
+        {
+            snd("core.pop1");
+        }
         set_reupdate();
     }
 
@@ -322,6 +399,24 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
         {
             snd("core.pop1");
             --page;
+            set_reupdate();
+        }
+    }
+    if (action == "next_menu")
+    {
+        if (_description_pages.size() != 0)
+        {
+            snd("core.pop1");
+            _desc_page = (_desc_page + 1) % _description_pages.size();
+            set_reupdate();
+        }
+    }
+    if (action == "previous_menu")
+    {
+        if (_description_pages.size() != 0)
+        {
+            snd("core.pop1");
+            _desc_page = (_desc_page - 1) % _description_pages.size();
             set_reupdate();
         }
     }

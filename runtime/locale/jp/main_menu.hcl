@@ -39,6 +39,13 @@ locale {
         }
 
         mods {
+            title = "インストール済みのMOD"
+            hint_readme_page = "[READMEページ切替]"
+            no_readme = "(READMEはありません)"
+            name = "名前"
+            author = "作者"
+            version = "バージョン"
+            description = "説明文"
         }
     }
 }
