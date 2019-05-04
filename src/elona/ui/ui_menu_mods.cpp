@@ -6,6 +6,7 @@
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../lua_env/mod_manager.hpp"
+#include "simple_prompt.hpp"
 
 
 
@@ -17,15 +18,43 @@ namespace ui
 bool UIMenuMods::init()
 {
     snd("core.pop2");
-    listmax = 0;
-    page = 0;
-    pagesize = 18;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    page_bk = -1;
-    cs_bk2 = 0;
 
+    _is_download = false;
+    _load_mods();
+
+    update();
+
+    return true;
+}
+
+
+class DownloadModsInitPrompt : public SimplePrompt<DummyResult>
+{
+public:
+    DownloadModsInitPrompt(std::string message)
+        : SimplePrompt(message)
+    {
+    }
+
+protected:
+    optional<DummyResult> update() override
+    {
+        await(Config::instance().general_wait);
+        auto action = key_check();
+
+        if (action != ""s)
+        {
+            return DummyResult{};
+        }
+
+        return none;
+    }
+};
+
+
+void UIMenuMods::_load_mods()
+{
+    // Redraw background as topic size can change, leaving marks
     asset_load("void");
     ::draw("void", 0, 0, windoww, windowh);
     gsel(0);
@@ -33,27 +62,46 @@ bool UIMenuMods::init()
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
 
-    for (const auto& mod : lua::lua->get_mod_manager().all_mods())
-    {
-        const auto& name = mod->second->manifest.id;
+    _mod_descriptions.clear();
 
-        if (lua::ModManager::mod_id_is_reserved(name))
-            continue;
-
-        ModDescription mod_desc{
-            mod->second->manifest,
-            static_cast<bool>(
-                lua::lua->get_mod_manager().get_enabled_version(name))};
-
-        _mod_descriptions.emplace_back(mod_desc);
-        listmax++;
-    }
+    listmax = 0;
+    page = 0;
+    cs = 0;
+    cc = 0;
+    cs_bk = -1;
+    page_bk = -1;
+    cs_bk2 = 0;
+    pagesize = 18;
 
     windowshadow = 1;
 
-    update();
+    if (_is_download)
+    {
+        draw();
+        DownloadModsInitPrompt(
+            i18n::s.get("core.locale.main_menu.mods.download.failed"))
+            .query();
+        _is_download = false;
+        _load_mods();
+    }
+    else
+    {
+        for (const auto& mod : lua::lua->get_mod_manager().all_mods())
+        {
+            const auto& id = mod->second->manifest.id;
 
-    return true;
+            if (lua::ModManager::mod_id_is_reserved(id))
+                continue;
+
+            ModDescription mod_desc{
+                mod->second->manifest,
+                static_cast<bool>(
+                    lua::lua->get_mod_manager().get_enabled_version(id))};
+
+            _mod_descriptions.emplace_back(mod_desc);
+            listmax++;
+        }
+    }
 }
 
 
@@ -101,10 +149,37 @@ void UIMenuMods::_draw_window()
 {
     int y;
     y = winposy(466) - 24;
+
+    auto hint = ""s + key_enter + " " +
+        i18n::s.get("core.locale.main_menu.mods.hint.toggle") + "  " +
+        key_identify + " " +
+        i18n::s.get("core.locale.main_menu.mods.hint.info");
+
+    if (_is_download)
+    {
+        hint += "  " + key_mode + " " +
+            i18n::s.get("core.locale.main_menu.mods.hint.installed");
+    }
+    else
+    {
+        hint += "  " + key_mode + " " +
+            i18n::s.get("core.locale.main_menu.mods.hint.download");
+    }
+
+
+    std::string title;
+    if (_is_download)
+    {
+        title = i18n::s.get("core.locale.main_menu.mods.title.download");
+    }
+    else
+    {
+        title = i18n::s.get("core.locale.main_menu.mods.title.installed");
+    }
+
     ui_display_window(
-        i18n::s.get("core.locale.main_menu.mods.title"),
-        strhint2 + strhint3b + " " + key_prev + ","s + key_next + " " +
-            i18n::s.get("core.locale.main_menu.mods.hint_readme_page"),
+        title,
+        strhint2 + strhint3b + hint,
         (windoww - 730) / 2 + inf_screenx,
         y,
         730,
@@ -150,7 +225,7 @@ void UIMenuMods::_draw_mod_list()
 
         cs_list(
             cs == cnt,
-            desc.manifest.id,
+            desc.manifest.name,
             wx + 84,
             wy + 66 + cnt * 19 - 1,
             0,
@@ -223,6 +298,19 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
             --page;
             set_reupdate();
         }
+    }
+    if (action == "identify")
+    {
+        int cs_prev = cs;
+        cs = cs_prev;
+        set_reupdate();
+    }
+    if (action == "switch_mode")
+    {
+        cs = 0;
+        _is_download = !_is_download;
+        _load_mods();
+        set_reupdate();
     }
 
     // Closing menu

@@ -760,7 +760,8 @@ void init()
 
     quickpage = 1;
 
-    show_loading_screen();
+    // TODO: Show each time mods are reloaded.
+    // show_loading_screen();
 }
 
 } // namespace elona

@@ -24,6 +24,7 @@ protected:
     virtual void draw();
     virtual optional<UIMenuMods::ResultType> on_key(const std::string& key);
 
+    void _load_mods();
     optional<ModDescription> _find_enabled_mod(const std::string& name);
     void _draw_key(int cnt, int index);
     void _draw_mod_list();
@@ -34,6 +35,7 @@ private:
     std::vector<std::string> _description_pages;
 
     bool _redraw;
+    bool _is_download;
 };
 } // namespace ui
 } // namespace elona

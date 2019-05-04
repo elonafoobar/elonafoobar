@@ -422,20 +422,10 @@ std::vector<std::string> ModManager::calculate_loading_order()
 {
     TopologicalSorter<std::string> sorter;
 
-    // For checking mods with more than one version enabled.
-    std::unordered_set<std::string> checked_mods;
-
     for (const auto& pair : this->enabled_mods())
     {
         const auto& mod = pair.second;
         sorter.add(mod->manifest.id);
-
-        if (checked_mods.find(mod->manifest.id) != checked_mods.end())
-        {
-            throw std::runtime_error(
-                "Mod '" + mod->manifest.id +
-                "' has more than one version enabled.");
-        }
 
         for (const auto& pair : mod->manifest.dependencies)
         {

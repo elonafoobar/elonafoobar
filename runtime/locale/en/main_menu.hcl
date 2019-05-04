@@ -39,13 +39,27 @@ locale {
         }
 
         mods {
-            title = "Installed Mods"
-            hint_readme_page = "[Change README page]"
+            title {
+                installed = "Installed Mods"
+                download = "Download Mods"
+            }
             no_readme = "(No README available.)"
             name = "Name"
             author = "Author"
             version = "Version"
             description = "Description"
+
+            download {
+                failed = "Could not download mod list."
+            }
+
+            hint {
+                toggle = "[Enable/Disable]"
+                info = "[Mod Info]"
+                download = "[Switch To Download]"
+                installed = "[Switch To Installed]"
+                readme_page = "[Change README page]"
+            }
         }
     }
 }

@@ -39,13 +39,27 @@ locale {
         }
 
         mods {
-            title = "インストール済みのMOD"
-            hint_readme_page = "[READMEページ切替]"
+            title {
+                installed = "インストール済みのMOD"
+                download = "MODダウンロード"
+            }
             no_readme = "(READMEはありません)"
             name = "名前"
             author = "作者"
             version = "バージョン"
             description = "説明文"
+
+            download {
+                failed = "MODリストのダウンロードに失敗しました。"
+            }
+
+            hint {
+                toggle = "[有効/無効にする]"
+                info = "[MODの情報]"
+                download = "[ダウンロード]"
+                installed = "[インストール済み]"
+                readme_page = "[READMEページ切替]"
+            }
         }
     }
 }
