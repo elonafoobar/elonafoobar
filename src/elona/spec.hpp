@@ -146,11 +146,11 @@ public:
     }
     ~Object() = default;
 
-    void load(const fs::path& path, const std::string& mod_name);
+    void load(const fs::path& path, const std::string& mod_id);
     void load(
         std::istream& is,
         const std::string& hcl_file,
-        const std::string& mod_name);
+        const std::string& mod_id);
 
     const_iterator begin() const
     {

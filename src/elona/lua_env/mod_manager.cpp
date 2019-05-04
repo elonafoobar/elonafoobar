@@ -38,10 +38,9 @@ ModManager::ModManager(LuaEnv* lua)
     lua_ = lua;
 }
 
-bool ModManager::mod_name_is_reserved(const std::string& mod_name)
+bool ModManager::mod_id_is_reserved(const std::string& mod_id)
 {
-    return mod_name == "script" || mod_name == "_CONSOLE_" ||
-        mod_name == "_BUILTIN_";
+    return mod_id == "script" || mod_id == "_CONSOLE_" || mod_id == "BUILTIN";
 }
 
 
@@ -118,15 +117,14 @@ void ModManager::load_mod(ModInfo& mod)
         if (object && object->is<sol::table>())
         {
             sol::table api_table = object->as<sol::table>();
-            lua_->get_api_manager().add_api(mod.manifest.name, api_table);
+            lua_->get_api_manager().add_api(mod.manifest.id, api_table);
         }
     }
     else
     {
         sol::error err = result;
         report_error(err);
-        throw std::runtime_error(
-            "Failed initializing mod "s + mod.manifest.name);
+        throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
     }
 }
 
@@ -143,19 +141,18 @@ void ModManager::scan_mod(const fs::path& mod_dir)
 
     ModManifest manifest = ModManifest::load(manifest_path);
 
-    const std::string& mod_name = manifest.name;
-    ELONA_LOG("lua.mod") << "Found mod " << mod_name;
+    const std::string& mod_id = manifest.id;
+    ELONA_LOG("lua.mod") << "Found mod " << mod_id;
 
-    if (!_is_alnum_only(mod_name))
+    if (!_is_alnum_only(mod_id))
     {
         throw std::runtime_error(
-            "Mod name \"" + mod_name +
+            "Mod ID \"" + mod_id +
             "\" must contain alphanumeric characters only.");
     }
-    if (mod_name_is_reserved(mod_name))
+    if (mod_id_is_reserved(mod_id))
     {
-        throw std::runtime_error(
-            "\"" + mod_name + "\" is a reserved mod name.");
+        throw std::runtime_error("\"" + mod_id + "\" is a reserved mod ID.");
     }
 
     create_mod(manifest, false);
@@ -204,19 +201,19 @@ void ModManager::load_scanned_mods()
 
     // Ensure that mods are loaded in order, such that all mods that are
     // depended on are loaded before their dependent mods.
-    for (const auto& mod_name : calculate_loading_order())
+    for (const auto& mod_id : calculate_loading_order())
     {
-        ModInfo* mod = get_enabled_mod(mod_name);
-        if (mod_name_is_reserved(mod_name))
+        ModInfo* mod = get_enabled_mod(mod_id);
+        if (mod_id_is_reserved(mod_id))
         {
-            // TODO warn about reserved mod names.
+            // TODO warn about reserved mod IDs.
             continue;
         }
         else
         {
             load_mod(*mod);
         }
-        ELONA_LOG("lua.mod") << "Loaded mod " << mod->manifest.name;
+        ELONA_LOG("lua.mod") << "Loaded mod " << mod->manifest.id;
     }
 
     lua_->get_export_manager().register_all_exports();
@@ -348,7 +345,7 @@ void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
     // environment.
     bind_store(*lua_->get_state(), mod, table);
     table["Elona"] = lua_->get_api_manager().bind(*lua_); // TODO move elsewhere
-    table["_MOD_NAME"] = mod.manifest.name;
+    table["_MOD_ID"] = mod.manifest.id;
 
     // Add a list of whitelisted standard library functions to the
     // environment.
@@ -401,21 +398,20 @@ ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
 
     // TODO: Enable based on user config/dependency resolution. Always enable
     // built-in mods.
-    enable_mod(manifest.name, manifest.version, true);
+    enable_mod(manifest.id, manifest.version, true);
 
-    auto mod_name_with_version =
-        manifest.name + "-" + manifest.version.to_string();
-    mods_[mod_name_with_version] = std::move(info);
-    return mods_[mod_name_with_version].get();
+    auto mod_id_with_version = manifest.id + "-" + manifest.version.to_string();
+    mods_[mod_id_with_version] = std::move(info);
+    return mods_[mod_id_with_version].get();
 }
 
 ModInfo* ModManager::create_mod(
-    const std::string& name,
+    const std::string& id,
     optional<fs::path> mod_dir,
     bool readonly)
 {
     ModManifest manifest;
-    manifest.name = name;
+    manifest.id = id;
     manifest.path = mod_dir;
     manifest.version = semver::Version(0, 1, 0);
 
@@ -432,26 +428,26 @@ std::vector<std::string> ModManager::calculate_loading_order()
     for (const auto& pair : this->enabled_mods())
     {
         const auto& mod = pair.second;
-        sorter.add(mod->manifest.name);
+        sorter.add(mod->manifest.id);
 
-        if (checked_mods.find(mod->manifest.name) != checked_mods.end())
+        if (checked_mods.find(mod->manifest.id) != checked_mods.end())
         {
             throw std::runtime_error(
-                "Mod '" + mod->manifest.name +
+                "Mod '" + mod->manifest.id +
                 "' has more than one version enabled.");
         }
 
         for (const auto& pair : mod->manifest.dependencies)
         {
-            const auto& mod_name = pair.first;
+            const auto& mod_id = pair.first;
             const auto& version_req = pair.second;
 
-            const auto dependent_mod = get_enabled_mod_optional(mod_name);
+            const auto dependent_mod = get_enabled_mod_optional(mod_id);
             if (!dependent_mod)
             {
                 throw std::runtime_error(
-                    "The dependency '" + mod_name + "' of mod '" +
-                    mod->manifest.name +
+                    "The dependency '" + mod_id + "' of mod '" +
+                    mod->manifest.id +
                     "' could not be found in the list of scanned mods.");
             }
             const auto& ver = (*dependent_mod)->manifest.version;
@@ -461,14 +457,14 @@ std::vector<std::string> ModManager::calculate_loading_order()
                 // The dependency requirement 'base' (>= 2.0.0) of mod 'derived'
                 // could not be satisfied by 'base v1.5.0'.
                 std::stringstream ss;
-                ss << "The dependency requirement '" << mod_name << "' ("
+                ss << "The dependency requirement '" << mod_id << "' ("
                    << version_req.to_string() << ") of mod '"
-                   << mod->manifest.name << "'could not be satisfied by '"
-                   << mod_name << " v" << ver.to_string() << "'.";
+                   << mod->manifest.id << "'could not be satisfied by '"
+                   << mod_id << " v" << ver.to_string() << "'.";
                 throw std::runtime_error(ss.str());
             }
 
-            sorter.add_dependency(mod->manifest.name, mod_name);
+            sorter.add_dependency(mod->manifest.id, mod_id);
         }
     }
 

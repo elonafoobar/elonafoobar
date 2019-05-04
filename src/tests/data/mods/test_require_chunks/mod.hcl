@@ -1,4 +1,5 @@
 mod {
+    id = "test_require_chunks"
     name = "test_require_chunks"
     author = "Ruin0x11"
     version = "0.1.0"

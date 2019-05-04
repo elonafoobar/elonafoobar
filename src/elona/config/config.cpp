@@ -495,16 +495,16 @@ Config& Config::instance()
     return the_instance;
 }
 
-void Config::load_def(std::istream& is, const std::string& mod_name)
+void Config::load_def(std::istream& is, const std::string& mod_id)
 {
-    def.load(is, "[input stream]", mod_name);
-    mod_names_.emplace(mod_name);
+    def.load(is, "[input stream]", mod_id);
+    mod_ids_.emplace(mod_id);
 }
 
-void Config::load_def(const fs::path& config_def_path, const std::string& mod_name)
+void Config::load_def(const fs::path& config_def_path, const std::string& mod_id)
 {
-    def.load(config_def_path, mod_name);
-    mod_names_.emplace(mod_name);
+    def.load(config_def_path, mod_id);
+    mod_ids_.emplace(mod_id);
 }
 
 void Config::load_defaults(bool preload)
@@ -557,7 +557,7 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
 
     for (const auto& pair : conf.as<hcl::Object>())
     {
-        const auto& mod_name = pair.first;
+        const auto& mod_id = pair.first;
         const auto& mod_section = pair.second;
 
         if (!mod_section.is<hcl::Object>())
@@ -565,7 +565,7 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
             continue;
         }
 
-        visit_object(mod_section.as<hcl::Object>(), mod_name, hcl_file, preload);
+        visit_object(mod_section.as<hcl::Object>(), mod_id, hcl_file, preload);
     }
 }
 

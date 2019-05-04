@@ -26,16 +26,16 @@ void invalidate_item(Item&);
 /**
  * Registers a single callback in a mod.
 
- * This can only be called once per mod name.
+ * This can only be called once per mod ID.
  *
  * @param lua Lua environment for mod
- * @param mod_name the mod's name
+ * @param mod_id the mod's id
  * @param callback_signature "my_callback(arg)"
  * @param callback_body "return arg + 42"
  */
 void register_lua_function(
     lua::LuaEnv& lua,
-    std::string mod_name,
+    std::string mod_id,
     std::string callback_signature,
     std::string callback_body);
 

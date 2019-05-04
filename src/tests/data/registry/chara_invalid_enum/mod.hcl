@@ -1,4 +1,5 @@
 mod {
+    id = "chara_invalid_enum"
     name = "chara_invalid_enum"
     author = "Ruin0x11"
     version = "0.1.0"

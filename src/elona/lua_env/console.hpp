@@ -24,12 +24,12 @@ struct ModInfo;
  *
  * All console commands and Lua functions are performed in an isolated
  * environment (mod "console"), so that no side-effect happends to the game.
- * Commands have own "namespace", usually the mod name where the command is
+ * Commands have own "namespace", usually the mod ID where the command is
  * registered. There are two special namespaces, "_BUILTIN_" and "_CONSOLE_".
  * "_BUILTIN_" is, you know, a namespace for all built-in commands defined from
- * C++ code, "console.cpp". "_CONSOLE_" is a namespace for user-defined
- * commands which are defined via the console. Registered commands are stored
- * in "COMMANDS" table. You can access any commands like this
+ * C++ code, "console.cpp". "_CONSOLE_" is a namespace for user-defined commands
+ * which are defined via the console. Registered commands are stored in
+ * "COMMANDS" table. You can access any commands like this
  * "COMMANDS[namespace][command_name]" in Lua mode.
  */
 class Console
@@ -55,7 +55,7 @@ public:
 
 
     void register_(
-        const std::string& mod_name,
+        const std::string& mod_id,
         const std::string& name,
         sol::protected_function callback);
 

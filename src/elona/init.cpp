@@ -207,7 +207,7 @@ void initialize_i18n()
             const auto locale_path = entry.path() / "locale" / language;
             if (fs::exists(locale_path))
             {
-                locations.emplace_back(locale_path, manifest.name);
+                locations.emplace_back(locale_path, manifest.id);
             }
         }
     }
@@ -707,7 +707,7 @@ void initialize_config_defs()
             const auto config_def_path = entry.path() / "config_def.hcl";
             if (fs::exists(config_def_path))
             {
-                Config::instance().load_def(config_def_path, manifest.name);
+                Config::instance().load_def(config_def_path, manifest.id);
             }
         }
     }

@@ -1,4 +1,5 @@
 mod {
+    id = "putit_b"
     name = "putit_b"
     author = "Ruin0x11"
     version = "0.1.0"

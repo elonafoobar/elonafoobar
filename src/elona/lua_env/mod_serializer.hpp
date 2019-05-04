@@ -87,10 +87,10 @@ public:
 
         for (const auto& pair : mod_mgr.enabled_mods())
         {
-            std::string mod_name = pair.second->manifest.name;
+            std::string mod_id = pair.second->manifest.id;
             semver::Version mod_version = pair.second->manifest.version;
 
-            putit_archive(mod_name);
+            putit_archive(mod_id);
             putit_archive(mod_version);
 
             sol::table data = pair.second->get_store(store_type);
@@ -98,7 +98,7 @@ public:
 
             ELONA_LOG("lua.mod")
                 << "Saved " << get_store_name(store_type) << " store data for "
-                << mod_name << " " << mod_version.to_string();
+                << mod_id << " " << mod_version.to_string();
         }
     }
 
@@ -114,20 +114,20 @@ public:
 
         for (unsigned i = 0; i < mod_count; i++)
         {
-            std::string mod_name;
+            std::string mod_id;
             semver::Version mod_version;
 
-            putit_archive(mod_name);
+            putit_archive(mod_id);
             putit_archive(mod_version);
 
-            auto mod = mod_mgr.get_enabled_mod_optional(mod_name);
+            auto mod = mod_mgr.get_enabled_mod_optional(mod_id);
             if (!mod)
             {
                 // Skip this piece of data.
                 ELONA_WARN("lua.mod")
                     << "WARNING: skipping mod store loading as mod "
                        "wasn't loaded: "
-                    << mod_name;
+                    << mod_id;
 
                 std::string raw_data;
                 putit_archive(raw_data);
@@ -136,7 +136,7 @@ public:
             }
             ELONA_LOG("lua.mod")
                 << "Loaded " << get_store_name(store_type) << " store data for "
-                << mod_name << " " << mod_version.to_string();
+                << mod_id << " " << mod_version.to_string();
 
             sol::table data = _lua->get_state()->create_table();
             load(data, putit_archive);

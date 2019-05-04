@@ -128,6 +128,7 @@ ModManifest ModManifest::load(const fs::path& path)
     const auto& value = hclutil::skip_sections(
         parsed, {"mod"}, filepathutil::to_utf8_path(path));
 
+    const auto mod_id = _read_string("id", value, path);
     const auto mod_name = _read_string("name", value, path);
     const auto mod_author = _read_string("author", value, path);
     const auto mod_description = _read_string("description", value, path);
@@ -136,7 +137,8 @@ ModManifest ModManifest::load(const fs::path& path)
     const auto mod_path = path.parent_path();
     const auto dependencies = _read_dependencies(value, path);
 
-    return ModManifest{mod_name,
+    return ModManifest{mod_id,
+                       mod_name,
                        mod_author,
                        mod_description,
                        mod_license,

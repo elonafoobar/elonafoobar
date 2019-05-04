@@ -116,7 +116,7 @@ public:
 
     explicit ModManager(LuaEnv*);
 
-    static bool mod_name_is_reserved(const std::string& mod_name);
+    static bool mod_id_is_reserved(const std::string& id);
 
     size_t enabled_mod_count() const
     {
@@ -162,14 +162,16 @@ public:
 
             reference operator*() const
             {
-                auto name = itr->first + "-" + itr->second.to_string();
-                return *map.find(name);
+                auto id_and_version =
+                    itr->first + "-" + itr->second.to_string();
+                return *map.find(id_and_version);
             }
 
             pointer operator->() const
             {
-                auto name = itr->first + "-" + itr->second.to_string();
-                return map.find(name).operator->();
+                auto id_and_version =
+                    itr->first + "-" + itr->second.to_string();
+                return map.find(id_and_version).operator->();
             }
 
             void operator++()
@@ -213,42 +215,42 @@ public:
         return EnabledRange(mods_, enabled_versions_);
     }
 
-    optional<semver::Version> get_enabled_version(const std::string& mod_name)
+    optional<semver::Version> get_enabled_version(const std::string& id)
     {
-        auto it = enabled_versions_.find(mod_name);
+        auto it = enabled_versions_.find(id);
         if (it != enabled_versions_.end())
             return it->second;
         return none;
     }
 
     void enable_mod(
-        const std::string& name,
+        const std::string& id,
         const semver::Version& version,
         bool fail_on_conflict = false)
     {
-        auto it = enabled_versions_.find(name);
+        auto it = enabled_versions_.find(id);
         if (it != enabled_versions_.end())
         {
             if (fail_on_conflict)
             {
                 throw std::runtime_error(
-                    "Mod " + name +
+                    "Mod " + id +
                     " is already enabled. Wanted: " + version.to_string() +
                     ", enabled version: " + it->second.to_string());
             }
             else
             {
 
-                disable_mod(name);
+                disable_mod(id);
             }
         }
 
-        enabled_versions_[name] = version;
+        enabled_versions_[id] = version;
     }
 
-    void disable_mod(const std::string& name)
+    void disable_mod(const std::string& id)
     {
-        enabled_versions_.erase(name);
+        enabled_versions_.erase(id);
     }
 
     /***
@@ -309,7 +311,7 @@ public:
      * For testing use only.
      */
     void load_mod_from_script(
-        const std::string& name,
+        const std::string& id,
         const std::string& script,
         bool readonly = false);
 
@@ -320,13 +322,13 @@ public:
      *
      * For testing use only.
      */
-    void run_in_mod(const std::string& name, const std::string& script);
+    void run_in_mod(const std::string& id, const std::string& script);
 
     /***
      * Creates a new mod, optionally setting its global environment to be read
      * only.
      *
-     * Will throw if a mod with the same name already exists.
+     * Will throw if a mod with the same ID already exists.
      *
      * @return a pointer to the created mod.
      */
@@ -336,69 +338,67 @@ public:
      * Creates a new mod, optionally setting its global environment to be read
      * only.
      *
-     * Will throw if a mod with the same name already exists.
+     * Will throw if a mod with the same ID already exists.
      *
      * @return a pointer to the created mod.
      */
     ModInfo* create_mod(
-        const std::string& name,
+        const std::string& id,
         optional<fs::path> mod_dir = none,
         bool readonly = false);
 
     /***
-     * Retrieves a pointer to an instantiated mod. @a name is of format
-     * "mod_name-0.1.0".
+     * Retrieves a pointer to an instantiated mod. @a id_and_version is of
+     * format "mod_id-0.1.0".
      */
-    optional<ModInfo*> get_mod_optional(const std::string& name)
+    optional<ModInfo*> get_mod_optional(const std::string& id_and_version)
     {
-        auto val = mods_.find(name);
+        auto val = mods_.find(id_and_version);
         if (val == mods_.end())
             return none;
         return val->second.get();
     }
 
     /***
-     * Retrieves a pointer to an instantiated mod. @a name is of format
-     * "mod_name-0.1.0".
+     * Retrieves a pointer to an instantiated mod. @a id_and_version is of
+     * format "mod_id-0.1.0".
      *
      * Will throw if the mod doesn't exist.
      *
      * For testing use only.
      */
-    ModInfo* get_mod(const std::string& name)
+    ModInfo* get_mod(const std::string& id_and_version)
     {
-        auto val = mods_.find(name);
+        auto val = mods_.find(id_and_version);
         if (val == mods_.end())
-            throw std::runtime_error("No such mod "s + name + "."s);
+            throw std::runtime_error("No such mod "s + id_and_version + "."s);
         return val->second.get();
     }
 
     /***
-     * Finds the version of a mod that is currently enabled. Only one version
-     * of any given mod can be enabled at a time. @a name is of format
-     * "mod_name".
+     * Finds the mod info of a mod that is currently enabled. Only one version
+     * of any given mod can be enabled at a time. @a id is of format "mod_id".
      *
      * Will throw if no such mod matches and is enabled.
      */
-    ModInfo* get_enabled_mod(const std::string& name)
+    ModInfo* get_enabled_mod(const std::string& id)
     {
-        auto val = get_enabled_mod_optional(name);
+        auto val = get_enabled_mod_optional(id);
         if (!val)
-            throw std::runtime_error("No mod "s + name + " was enabled."s);
+            throw std::runtime_error("No mod "s + id + " was enabled."s);
         return *val;
     }
 
     /***
-     * Finds the version of a mod that is currently enabled. Only one version
-     * of any given mod can be enabled at a time. @a name is of format
-     * "mod_name".
+     * Finds the mod info of a mod that is currently enabled. Only one version
+     * of any given mod can be enabled at a time. @a id is of format "mod_id".
      */
-    optional<ModInfo*> get_enabled_mod_optional(const std::string& name)
+    optional<ModInfo*> get_enabled_mod_optional(const std::string& id)
     {
-        auto version = get_enabled_version(name);
+        auto version = get_enabled_version(id);
         if (!version)
             return none;
-        return get_mod_optional(name + "-" + version->to_string());
+        return get_mod_optional(id + "-" + version->to_string());
     }
 
     /***
@@ -408,7 +408,7 @@ public:
      * The set of mods enabled is assumed to be valid with no version
      * conflicts/duplicates.
      *
-     * @return a list of mod names, ordered by loading order
+     * @return a list of mod ids, ordered by loading order
      * @throws if there is a cyclic dependency, a dependency is unknown, a
      * dependency's version requirements cannot be satisfied, or more than one
      * version of the same mod is enabled
@@ -504,10 +504,13 @@ private:
     }
 
 private:
+    /**
+     * Map from id and version (mod_id-0.1.0) to mod info.
+     */
     ModStorageType mods_;
 
     /***
-     * Map from base mod name to its enabled version, if the mod is enabled.
+     * Map from base mod id to its enabled version, if the mod is enabled.
      * This ensures each mod has at most one version enabled.
      */
     ModVersionsType enabled_versions_;

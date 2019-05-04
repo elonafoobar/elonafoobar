@@ -61,10 +61,9 @@ void DataManager::_init_from_mod(ModInfo& mod)
 
 void DataManager::init_from_mods()
 {
-    for (const auto& mod_name :
-         _lua->get_mod_manager().calculate_loading_order())
+    for (const auto& mod_id : _lua->get_mod_manager().calculate_loading_order())
     {
-        const auto& mod = _lua->get_mod_manager().get_enabled_mod(mod_name);
+        const auto& mod = _lua->get_mod_manager().get_enabled_mod(mod_id);
         _init_from_mod(*mod);
     }
 

@@ -120,7 +120,7 @@ sol::table APIManager::bind(LuaEnv& lua)
                 return result;
             },
 
-            // If no mod name is provided, assume it is "core".
+            // If no mod ID is provided, assume it is "core".
             [&lua](const std::string& module) {
                 sol::optional<sol::table> result = sol::nullopt;
                 result = lua.get_api_manager().try_find_api("core", module);

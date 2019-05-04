@@ -1,4 +1,5 @@
 mod {
+    id = "invalid"
     name = "invalid"
     author = "Ruin0x11"
     version = "0.1.0"

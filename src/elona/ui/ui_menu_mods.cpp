@@ -35,9 +35,9 @@ bool UIMenuMods::init()
 
     for (const auto& mod : lua::lua->get_mod_manager().all_mods())
     {
-        const auto& name = mod->second->manifest.name;
+        const auto& name = mod->second->manifest.id;
 
-        if (lua::ModManager::mod_name_is_reserved(name))
+        if (lua::ModManager::mod_id_is_reserved(name))
             continue;
 
         ModDescription mod_desc{
@@ -61,7 +61,7 @@ optional<ModDescription> UIMenuMods::_find_enabled_mod(const std::string& name)
 {
     for (const auto& desc : _mod_descriptions)
     {
-        if (desc.enabled && desc.manifest.name == name)
+        if (desc.enabled && desc.manifest.id == name)
             return desc;
     }
     return none;
@@ -150,7 +150,7 @@ void UIMenuMods::_draw_mod_list()
 
         cs_list(
             cs == cnt,
-            desc.manifest.name,
+            desc.manifest.id,
             wx + 84,
             wy + 66 + cnt * 19 - 1,
             0,

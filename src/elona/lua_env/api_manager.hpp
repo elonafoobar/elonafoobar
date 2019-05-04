@@ -71,7 +71,7 @@ public:
     /***
      * Adds a new API from the return value of a mod's init.lua file.
      * It would then be accessable by calling
-     * Elona.require("mod_name", "api_table").
+     * Elona.require("mod_id", "api_table").
      */
     void add_api(const std::string& module_namespace, sol::table& module_table);
 

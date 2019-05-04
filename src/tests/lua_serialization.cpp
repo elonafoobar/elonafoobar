@@ -73,12 +73,12 @@ TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(_MOD_NAME == "test"))"));
+        "test", R"(assert(_MOD_ID == "test"))"));
 
     lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(_MOD_NAME == "test"))"));
+        "test", R"(assert(_MOD_ID == "test"))"));
 }
 
 TEST_CASE(

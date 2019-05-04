@@ -1,4 +1,5 @@
 mod {
+    id = "chara_portrait"
     name = "chara_portrait"
     author = "KI"
     version = "0.1.0"

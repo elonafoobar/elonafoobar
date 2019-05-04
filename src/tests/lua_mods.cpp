@@ -16,7 +16,7 @@
 
 using namespace elona::testing;
 
-TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
+TEST_CASE("Test that _MOD_ID is defined", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
@@ -25,7 +25,7 @@ TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_ID == "my_mod"))"));
 }
 
 TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
@@ -36,13 +36,13 @@ TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", "", true));
 
-    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(_MOD_NAME = "dood")"));
+    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(_MOD_ID = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(dood = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(function dood() end)"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Elona = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Store = "dood")"));
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_ID == "my_mod"))"));
 }
 
 TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
