@@ -880,15 +880,9 @@ label_2061_internal:
     display_topic(
         i18n::s.get("core.locale.ui.inv.window.name"), wx + 28, wy + 30);
     display_topic(s, wx + 526, wy + 30);
-    if (g_show_additional_item_info == AdditionalItemInfo::resistance)
-    {
-        for (int i = 0; i < 11; ++i)
-        {
-            mes(wx + 300 + 20 * i,
-                wy + 40,
-                i18n::s.get_enum("core.locale.ui.equip.resist", i));
-        }
-    }
+
+    draw_additional_item_info_label(wx + 300, wy + 40);
+
     draw("deco_inv_a", wx + ww - 136, wy - 6);
     if (g_show_additional_item_info == AdditionalItemInfo::none)
     {
@@ -1019,10 +1013,10 @@ label_2061_internal:
                     i18n::s.get("core.locale.ui.inv.window.main_hand") + ")";
             }
         }
-        if (g_show_additional_item_info == AdditionalItemInfo::resistance)
+        draw_additional_item_info(inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
+        if (g_show_additional_item_info != AdditionalItemInfo::none)
         {
-            equipinfo(inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
-            s = strmid(s, 0, 24);
+            s = cut_item_name_for_additional_info(s);
         }
         const auto text_color = cs_list_get_item_color(inv[p]);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);

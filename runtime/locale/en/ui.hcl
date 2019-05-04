@@ -266,6 +266,28 @@ locale {
                 _10 = "Ma"
             }
 
+            maintenance {
+                _0 = "St"
+                _1 = "Co"
+                _2 = "De"
+                _3 = "Pe"
+                _4 = "Le"
+                _5 = "Wi"
+                _6 = "Ma"
+                _7 = "Ch"
+                _8 = "Sp"
+                _9 = "Lu"
+            }
+
+            ailment {
+                _0 = "Bl"
+                _1 = "Pa"
+                _2 = "Co"
+                _3 = "Fe"
+                _4 = "Sl"
+                _5 = "Po"
+            }
+
             equip_weight = "Equip weight"
             hit_bonus = "Hit Bonus"
             damage_bonus = "Damage Bonus"

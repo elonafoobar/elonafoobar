@@ -5,12 +5,18 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "data/types/type_item.hpp"
+#include "enchantment.hpp"
+#include "globals.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
 
+
+namespace elona
+{
 
 namespace
 {
@@ -34,18 +40,9 @@ snail::Color _get_element_color(int element)
     }
 }
 
-} // namespace
 
 
-
-namespace elona
-{
-
-int i_at_m66 = 0;
-
-
-
-void equipinfo(const Item& equip, int x, int y)
+void draw_additional_item_info_resistance(const Item& equip, int x, int y)
 {
     if (equip.identification_state != IdentifyState::completely_identified)
     {
@@ -84,6 +81,127 @@ void equipinfo(const Item& equip, int x, int y)
         }
     }
 }
+
+
+
+void draw_additional_item_info_maintenance_and_ailment(
+    const Item& equip,
+    int x,
+    int y)
+{
+    if (equip.identification_state != IdentifyState::completely_identified)
+    {
+        return;
+    }
+
+    for (int i = 0; i < 10; ++i)
+    {
+        if (enchantment_find(equip, 60000 + 10 + i))
+        {
+            mes(x - 100 + i * 20, y, jp ? u8"●" : "#", {0, 100, 100});
+        }
+        else
+        {
+            mes(x - 100 + i * 20, y, "-", {0, 100, 100});
+        }
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        if (enchantment_find(equip, 23 + i))
+        {
+            mes(x + 100 + i * 20, y, jp ? u8"●" : "#", {100, 32, 0});
+        }
+        else
+        {
+            mes(x + 100 + i * 20, y, "-", {100, 32, 0});
+        }
+    }
+}
+
+} // namespace
+
+
+
+int i_at_m66 = 0;
+
+
+
+void draw_additional_item_info_label(int x, int y)
+{
+    switch (g_show_additional_item_info)
+    {
+    case AdditionalItemInfo::none:
+    case AdditionalItemInfo::_size: break;
+    case AdditionalItemInfo::resistance:
+        for (int i = 0; i < 11; ++i)
+        {
+            mes(x + 20 * i,
+                y,
+                i18n::s.get_enum("core.locale.ui.equip.resist", i));
+        }
+        break;
+    case AdditionalItemInfo::maintenance_and_ailment:
+        for (int i = 0; i < 10; ++i)
+        {
+            mes(x - 100 + 20 * i,
+                y,
+                i18n::s.get_enum("core.locale.ui.equip.maintenance", i));
+        }
+        for (int i = 0; i < 6; ++i)
+        {
+            mes(x + 100 + 20 * i,
+                y,
+                i18n::s.get_enum("core.locale.ui.equip.ailment", i));
+        }
+        break;
+    case AdditionalItemInfo::all_attributes:
+        // TODO
+        break;
+    }
+}
+
+
+
+void draw_additional_item_info(const Item& equip, int x, int y)
+{
+    switch (g_show_additional_item_info)
+    {
+    case AdditionalItemInfo::none:
+    case AdditionalItemInfo::_size: break;
+    case AdditionalItemInfo::resistance:
+        draw_additional_item_info_resistance(equip, x, y);
+        break;
+    case AdditionalItemInfo::maintenance_and_ailment:
+        draw_additional_item_info_maintenance_and_ailment(equip, x, y);
+        break;
+    case AdditionalItemInfo::all_attributes:
+        // TODO
+        break;
+    }
+}
+
+
+
+std::string cut_item_name_for_additional_info(
+    const std::string& name,
+    size_t adjustment)
+{
+    size_t width;
+    switch (g_show_additional_item_info)
+    {
+    case AdditionalItemInfo::none:
+    case AdditionalItemInfo::_size: return name;
+    case AdditionalItemInfo::resistance: width = 24; break;
+    case AdditionalItemInfo::maintenance_and_ailment: width = 12; break;
+    case AdditionalItemInfo::all_attributes:
+        // TODO
+        return name;
+    }
+    width -= adjustment;
+
+    return strutil::take_by_width(name, width);
+}
+
 
 
 int eqweaponlight()

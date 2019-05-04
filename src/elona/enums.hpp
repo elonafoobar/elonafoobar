@@ -189,7 +189,7 @@ enum class AdditionalItemInfo
     none,
     resistance,
     maintenance_and_ailment,
-    all_attributs,
+    all_attributes,
 
     _size,
 };

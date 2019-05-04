@@ -46,7 +46,6 @@ locale {
                 weight = "Weight"
                 name = "Name"
 
-                resist = "Fi Co Li Da Mi Po Nt So Nr Ch Ma"
                 total_weight = "Weight ${_1}/${_2}  Cargo ${_3}"
 
                 ground = "Ground"
