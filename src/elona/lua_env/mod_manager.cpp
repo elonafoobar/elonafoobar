@@ -56,17 +56,6 @@ void ModManager::load_mods(const fs::path& mod_dir)
     load_scanned_mods();
 }
 
-void ModManager::unload_mods()
-{
-    if (stage_ != ModLoadingStage::all_mods_loaded)
-    {
-        throw std::runtime_error("Mods have not been loaded.");
-    }
-
-    mods_ = ModStorageType();
-    stage_ = ModLoadingStage::not_started;
-}
-
 void ModManager::load_mods(
     const fs::path& mod_dir,
     const std::vector<fs::path> additional_mod_paths)
@@ -83,6 +72,17 @@ void ModManager::load_mods(
     }
     load_lua_support_libraries();
     load_scanned_mods();
+}
+
+void ModManager::unload_mods()
+{
+    if (stage_ != ModLoadingStage::all_mods_loaded)
+    {
+        return;
+    }
+
+    mods_ = ModStorageType();
+    stage_ = ModLoadingStage::not_started;
 }
 
 

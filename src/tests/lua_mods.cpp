@@ -264,7 +264,7 @@ assert(a == nil)
 
 static void _create_mod(
     elona::lua::LuaEnv& lua,
-    const std::string& name,
+    const std::string& id,
     const std::unordered_map<std::string, std::string> deps)
 {
     elona::lua::ModManifest::Dependencies deps_(deps.size());
@@ -284,7 +284,7 @@ static void _create_mod(
     }
 
     elona::lua::ModManifest manifest;
-    manifest.name = name;
+    manifest.id = id;
     manifest.dependencies = deps_;
     lua.get_mod_manager().create_mod(manifest, false);
 };
