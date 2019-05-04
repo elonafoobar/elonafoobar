@@ -2,6 +2,12 @@
 #include "../lua_env/mod_manifest.hpp"
 #include "ui_menu.hpp"
 #include "ui_menu_mods.hpp"
+
+namespace snail
+{
+class Image;
+}
+
 namespace elona
 {
 namespace ui
@@ -27,6 +33,7 @@ protected:
 private:
     const ModDescription& _desc;
     std::vector<std::string> _readme_pages;
+    optional<snail::Image> _mod_image;
 
     size_t _desc_page;
 };

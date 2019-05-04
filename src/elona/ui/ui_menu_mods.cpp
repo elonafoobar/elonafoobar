@@ -148,9 +148,6 @@ void UIMenuMods::_draw_key(int cnt, int index)
 
 void UIMenuMods::_draw_window()
 {
-    int y;
-    y = winposy(466) - 24;
-
     auto hint = ""s + key_enter + " " +
         i18n::s.get("core.locale.main_menu.mods.hint.toggle") + "  " +
         key_identify + " " +
@@ -182,7 +179,7 @@ void UIMenuMods::_draw_window()
         title,
         strhint2 + strhint3b + hint,
         (windoww - 730) / 2 + inf_screenx,
-        y,
+        winposy(510, 1),
         730,
         530);
 
