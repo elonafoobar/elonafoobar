@@ -43,51 +43,44 @@ namespace elona
 
 int i_at_m66 = 0;
 
-void equipinfo(int item_index, int x, int y)
+
+
+void equipinfo(const Item& equip, int x, int y)
 {
-    int p_at_m66 = 0;
-    std::string s_at_m66;
-    if (inv[item_index].identification_state !=
-        IdentifyState::completely_identified)
+    if (equip.identification_state != IdentifyState::completely_identified)
     {
         return;
     }
-    for (int cnt = 0; cnt < 15; ++cnt)
+
+    for (const auto& enc : equip.enchantments)
     {
-        p_at_m66 = inv[item_index].enchantments[cnt].id;
-        if (p_at_m66 == 0)
-        {
+        if (enc.id == 0)
             break;
-        }
-        i_at_m66 = p_at_m66 / 10000;
-        if (i_at_m66 != 2)
-        {
+        if (enc.id / 10000 != 2)
             continue;
-        }
-        i_at_m66 = p_at_m66 % 10000;
-        p_at_m66 =
-            std::abs(inv[item_index].enchantments[cnt].power / 2 / 50) + 1;
-        if (p_at_m66 > 5)
-        {
-            s_at_m66 = u8"+"s;
-        }
-        else
-        {
-            s_at_m66 = ""s + p_at_m66;
-        }
-        const auto element_color = _get_element_color(i_at_m66);
+
+        const auto power_level = std::abs(enc.power / 2 / 50) + 1;
+        const auto element = enc.id % 10000;
+        const auto color = _get_element_color(element);
         if (jp)
         {
-            const auto glyph =
-                inv[item_index].enchantments[cnt].power >= 0 ? u8"●" : u8"▼";
-            mes(x + (i_at_m66 - 50) * 20, y, glyph, element_color);
-            mes(x + (i_at_m66 - 50) * 20 + 5, y + 1, s_at_m66, element_color);
-            mes(x + (i_at_m66 - 50) * 20 + 4, y, s_at_m66, {255, 255, 255});
+            const auto s =
+                power_level > 5 ? u8"+"s : std::to_string(power_level);
+            const auto glyph = enc.power >= 0 ? u8"●" : u8"▼";
+            mes(x + (element - 50) * 20, y, glyph, color);
+            mes(x + (element - 50) * 20 + 5, y + 1, s, color);
+            mes(x + (element - 50) * 20 + 4, y, s, {255, 255, 255});
         }
         else
         {
-            mes(x + (i_at_m66 - 50) * 20 + 5, y, ""s + p_at_m66, {80, 60, 40});
-            mes(x + (i_at_m66 - 50) * 20 + 4, y, ""s + p_at_m66, element_color);
+            mes(x + (element - 50) * 20 + 5,
+                y,
+                std::to_string(power_level),
+                {80, 60, 40});
+            mes(x + (element - 50) * 20 + 4,
+                y,
+                std::to_string(power_level),
+                color);
         }
     }
 }

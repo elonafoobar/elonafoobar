@@ -4,7 +4,7 @@
 namespace elona
 {
 
-void equipinfo(int = 0, int = 0, int = 0);
+void equipinfo(const Item& equip, int x, int y);
 int eqweaponheavy();
 int eqweaponlight();
 void eqrandweaponmage();

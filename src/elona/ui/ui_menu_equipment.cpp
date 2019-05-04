@@ -145,7 +145,12 @@ void UIMenuEquipment::_draw_window_deco(bool show_resistances)
     elona::draw("deco_wear_b", wx, wy + wh - 164);
     if (show_resistances)
     {
-        mes(wx + 320, wy + 40, i18n::s.get("core.locale.ui.equip.resist"));
+        for (int i = 0; i < 11; ++i)
+        {
+            mes(wx + 320 + 20 * i,
+                wy + 40,
+                i18n::s.get_enum("core.locale.ui.equip.resist", i));
+        }
     }
 }
 
@@ -231,7 +236,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
 
         if (show_resistances)
         {
-            equipinfo(equipped_item, wx + 320, wy + 60 + cnt * 19 + 2);
+            equipinfo(inv[equipped_item], wx + 320, wy + 60 + cnt * 19 + 2);
             item_name = strmid(item_name, 0, 22);
         }
     }
@@ -277,9 +282,10 @@ void UIMenuEquipment::_draw_list_entries(bool show_resistances)
 
 void UIMenuEquipment::draw()
 {
-    _draw_window(g_show_resistances);
+    _draw_window(g_show_additional_item_info == AdditionalItemInfo::resistance);
     _draw_keys(_mainhand);
-    _draw_list_entries(g_show_resistances);
+    _draw_list_entries(
+        g_show_additional_item_info == AdditionalItemInfo::resistance);
 }
 
 static void _unequip_item()
@@ -373,7 +379,8 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     }
     else if (action == "switch_mode")
     {
-        g_show_resistances = !g_show_resistances;
+        g_show_additional_item_info =
+            get_next_enum(g_show_additional_item_info);
         snd("core.pop1");
         set_reupdate();
     }

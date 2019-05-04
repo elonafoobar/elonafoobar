@@ -252,7 +252,19 @@ locale {
             name = "Name"
             weight = "Weight"
 
-            resist = "Fi Co Li Da Mi Po Nt So Nr Ch Ma"
+            resist {
+                _0 = "Fi"
+                _1 = "Co"
+                _2 = "Li"
+                _3 = "Da"
+                _4 = "Mi"
+                _5 = "Po"
+                _6 = "Nt"
+                _7 = "So"
+                _8 = "Nr"
+                _9 = "Ch"
+                _10 = "Ma"
+            }
 
             equip_weight = "Equip weight"
             hit_bonus = "Hit Bonus"
