@@ -5,16 +5,15 @@ namespace elona
 {
 namespace ui
 {
+struct ModDescription
+{
+    lua::ModManifest manifest;
+    bool enabled;
+};
+
 class UIMenuMods : public UIMenu<DummyResult>
 {
 public:
-    struct ModDescription
-    {
-        std::string display_name;
-        lua::ModManifest manifest;
-        bool enabled;
-    };
-
     UIMenuMods()
     {
     }
@@ -26,18 +25,15 @@ protected:
     virtual optional<UIMenuMods::ResultType> on_key(const std::string& key);
 
     optional<ModDescription> _find_enabled_mod(const std::string& name);
-    void _build_description();
-    void _draw_mod_page();
+    void _draw_key(int cnt, int index);
+    void _draw_mod_list();
     void _draw_window();
-    void _draw_navigation_menu();
-    void _draw_background_vignette(int id, int type);
 
 private:
     std::vector<ModDescription> _mod_descriptions;
     std::vector<std::string> _description_pages;
 
     bool _redraw;
-    size_t _desc_page;
 };
 } // namespace ui
 } // namespace elona
