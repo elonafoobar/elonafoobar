@@ -44,10 +44,15 @@ locale {
                 download = "Download Mods"
             }
             no_readme = "(No README available.)"
-            name = "Name"
-            author = "Author"
-            version = "Version"
-            description = "Description"
+
+            info {
+                title = "Information"
+                name = "Name"
+                id = "ID"
+                author = "Author"
+                version = "Version"
+                description = "Description"
+            }
 
             download {
                 failed = "Could not download mod list."
@@ -58,7 +63,6 @@ locale {
                 info = "[Mod Info]"
                 download = "[Switch To Download]"
                 installed = "[Switch To Installed]"
-                readme_page = "[Change README page]"
             }
         }
     }

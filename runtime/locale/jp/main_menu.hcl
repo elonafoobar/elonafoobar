@@ -44,10 +44,15 @@ locale {
                 download = "MODダウンロード"
             }
             no_readme = "(READMEはありません)"
-            name = "名前"
-            author = "作者"
-            version = "バージョン"
-            description = "説明文"
+
+            info {
+                title = "情報"
+                id = "ID"
+                name = "名前"
+                author = "作者"
+                version = "バージョン"
+                description = "説明文"
+            }
 
             download {
                 failed = "MODリストのダウンロードに失敗しました。"
@@ -58,7 +63,6 @@ locale {
                 info = "[MODの情報]"
                 download = "[ダウンロード]"
                 installed = "[インストール済み]"
-                readme_page = "[READMEページ切替]"
             }
         }
     }

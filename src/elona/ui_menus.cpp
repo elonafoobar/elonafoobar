@@ -25,6 +25,7 @@
 #include "ui/ui_menu_keybindings.cpp"
 #include "ui/ui_menu_materials.cpp"
 #include "ui/ui_menu_message_log.cpp"
+#include "ui/ui_menu_mod_info.cpp"
 #include "ui/ui_menu_mods.cpp"
 #include "ui/ui_menu_npc_tone.cpp"
 #include "ui/ui_menu_quest_board.cpp"

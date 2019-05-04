@@ -7,6 +7,7 @@
 #include "../i18n.hpp"
 #include "../lua_env/mod_manager.hpp"
 #include "simple_prompt.hpp"
+#include "ui_menu_mod_info.hpp"
 
 
 
@@ -198,9 +199,11 @@ void UIMenuMods::_draw_window()
     }
 
     display_topic(
-        i18n::s.get("core.locale.main_menu.mods.name"), wx + 46, wy + 36);
+        i18n::s.get("core.locale.main_menu.mods.info.name"), wx + 46, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.main_menu.mods.version"), wx + 255, wy + 36);
+        i18n::s.get("core.locale.main_menu.mods.info.version"),
+        wx + 255,
+        wy + 36);
 }
 
 
@@ -301,8 +304,22 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
     }
     if (action == "identify")
     {
+        const auto& desc = _mod_descriptions.at(pagesize * page + cs);
+
         int cs_prev = cs;
-        cs = cs_prev;
+        int page_prev = page;
+        int listmax_prev = listmax;
+        int pagesize_prev = pagesize;
+
+        lib::scope_guard restore([&]() {
+            cs = cs_prev;
+            page_prev = page;
+            listmax = listmax_prev;
+            pagesize = pagesize_prev;
+        });
+
+        UIMenuModInfo(desc).show();
+
         set_reupdate();
     }
     if (action == "switch_mode")
