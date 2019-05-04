@@ -2254,7 +2254,7 @@ void proc_turn_end(int cc)
         if (rnd(80) == 0)
         {
             p = rnd(10);
-            if (encfind(cc, 60010 + p) == -1)
+            if (!enchantment_find(cdata[cc], 60010 + p))
             {
                 cdata[cc].attr_adjs[p] -=
                     sdata.get(10 + p, cc).original_level / 25 + 1;
@@ -3981,7 +3981,7 @@ void lovemiracle(int chara_index)
 
 void get_pregnant()
 {
-    if (encfind(tc, 48) != -1)
+    if (enchantment_find(cdata[tc], 48))
     {
         if (is_in_fov(cdata[tc]))
         {
@@ -6963,7 +6963,7 @@ label_21451_internal:
                 if (feat(2) == 3)
                 {
                     cell_featset(movx, movy, 0);
-                    if (encfind(cc, 22) != -1)
+                    if (enchantment_find(cdata[cc], 22))
                     {
                         if (is_in_fov(cdata[cc]))
                         {
@@ -7857,10 +7857,9 @@ int do_cast_magic_attempt()
         return 1;
     }
     efp = calcspellpower(efid, cc);
-    p = encfind(cc, 34);
-    if (p != -1)
+    if (const auto spell_enhancement = enchantment_find(cdata[cc], 34))
     {
-        efp = efp * (100 + p / 10) / 100;
+        efp = efp * (100 + *spell_enhancement / 10) / 100;
     }
     rapidmagic = 0;
     if (cdata[cc].can_cast_rapid_magic() &&
@@ -9253,7 +9252,7 @@ TurnResult do_bash()
                 if (rnd(3) == 0)
                 {
                     if (cdata[cc].quality < Quality::miracle &&
-                        encfind(cc, 60010) == -1)
+                        !enchantment_find(cdata[cc], 60010))
                     {
                         --cdata[cc].attr_adjs[0];
                         chara_refresh(cc);

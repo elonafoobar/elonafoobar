@@ -429,7 +429,7 @@ void initialize_elona()
     initialize_rankn();
     initialize_post_data();
     initialize_ego_data();
-    initialize_enchantment_data();
+    enchantment_init();
     initialize_set_of_random_generation();
     initialize_picfood();
     initialize_recipe();
