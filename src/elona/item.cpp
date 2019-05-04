@@ -214,55 +214,6 @@ int item_find(int matcher, int matcher_type, ItemFindLocation location_type)
 
 
 
-int encfind(int cc, int id)
-{
-    int power = -1;
-    for (int cnt = 0; cnt < 30; ++cnt)
-    {
-        if (cdata[cc].body_parts[cnt] % 10000 == 0)
-        {
-            continue;
-        }
-        int ci = cdata[cc].body_parts[cnt] % 10000 - 1;
-        for (int cnt = 0; cnt < 15; ++cnt)
-        {
-            if (inv[ci].enchantments[cnt].id == 0)
-            {
-                break;
-            }
-            if (inv[ci].enchantments[cnt].id == id)
-            {
-                if (inv[ci].enchantments[cnt].power > power)
-                {
-                    power = inv[ci].enchantments[cnt].power;
-                    break;
-                }
-            }
-        }
-    }
-    return power;
-}
-
-
-
-bool encfindspec(int ci, int id)
-{
-    for (int cnt = 0; cnt < 15; ++cnt)
-    {
-        if (inv[ci].enchantments[cnt].id == 0)
-        {
-            break;
-        }
-        if (inv[ci].enchantments[cnt].id == id)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-
-
 std::vector<int> itemlist(int owner, int id)
 {
     std::vector<int> ret;

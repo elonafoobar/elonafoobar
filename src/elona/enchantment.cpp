@@ -8,14 +8,24 @@
 #include "random.hpp"
 #include "variables.hpp"
 
-using namespace elona;
 
 
+namespace elona
+{
 
 namespace
 {
 
 elona_vector2<int> encref;
+elona_vector1<int> p_at_m47;
+elona_vector2<int> enclist;
+elona_vector2<int> egoenc;
+elona_vector2<int> egoref;
+elona_vector1<int> egolist;
+int maxegominorn = 0;
+int enc_at_m48 = 0;
+int encp_at_m48 = 0;
+int p_at_m48 = 0;
 
 
 
@@ -52,22 +62,101 @@ bool check_enchantment_filters(int category, int type)
 
 
 
+void enchantment_sort(int item_index)
+{
+    int f_at_m47 = 0;
+    int cnt2_at_m47 = 0;
+    while (1)
+    {
+        f_at_m47 = 0;
+        for (int cnt = 0; cnt < 14; ++cnt)
+        {
+            cnt2_at_m47 = cnt + 1;
+            if (inv[item_index].enchantments[cnt].id <
+                inv[item_index].enchantments[cnt2_at_m47].id)
+            {
+                p_at_m47(0) = inv[item_index].enchantments[cnt].id;
+                p_at_m47(1) = inv[item_index].enchantments[cnt].power;
+                inv[item_index].enchantments[cnt].id =
+                    inv[item_index].enchantments[cnt2_at_m47].id;
+                inv[item_index].enchantments[cnt2_at_m47].id = p_at_m47;
+                inv[item_index].enchantments[cnt].power =
+                    inv[item_index].enchantments[cnt2_at_m47].power;
+                inv[item_index].enchantments[cnt2_at_m47].power = p_at_m47(1);
+                f_at_m47 = 1;
+            }
+        }
+        if (f_at_m47 == 0)
+        {
+            break;
+        }
+    }
+}
+
+
+
+void add_enchantment_by_fixed_ego()
+{
+    p = 0;
+    for (int cnt = 0; cnt < 11; ++cnt)
+    {
+        if (egoref(0, cnt) != egolv)
+        {
+            continue;
+        }
+        if (egoref(1, cnt) != 0)
+        {
+            if (enchantment_filter(reftype, egoref(1, cnt)) == 0)
+            {
+                continue;
+            }
+        }
+        egolist(p) = cnt;
+        ++p;
+    }
+    if (p == 0)
+    {
+        return;
+    }
+    p = egolist(rnd(p(0)));
+    inv[ci].subname = 10000 + p;
+    ego_add(ci, p);
+    if (rnd(2) == 0)
+    {
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            20);
+    }
+    if (rnd(4) == 0)
+    {
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            25);
+    }
+}
+
+
+
+void add_enchantments_depending_on_ego()
+{
+    for (int cnt = 0, cnt_end = (rnd(rnd(5) + 1) + 1); cnt < cnt_end; ++cnt)
+    {
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            8);
+    }
+    inv[ci].subname = 20000 + rnd(maxegominorn);
+}
+
 } // namespace
 
 
-
-namespace elona
-{
-
-elona_vector2<int> enclist;
-elona_vector2<int> egoenc;
-elona_vector2<int> egoref;
-elona_vector1<int> egolist;
-elona_vector1<int> p_at_m47;
-int maxegominorn = 0;
-int enc_at_m48 = 0;
-int encp_at_m48 = 0;
-int p_at_m48 = 0;
 
 void initialize_enchantment_data()
 {
@@ -466,6 +555,8 @@ void initialize_enchantment_data()
     encprocref(5, 25) = 100;
 }
 
+
+
 std::string enchantment_print_level(int level)
 {
     std::string s;
@@ -481,10 +572,14 @@ std::string enchantment_print_level(int level)
     return s;
 }
 
+
+
 std::string enchantment_level_string(int level)
 {
     return " [" + enchantment_print_level(level) + "]";
 }
+
+
 
 void get_enchantment_description(int val0, int power, int category, bool trait)
 {
@@ -1057,39 +1152,6 @@ int enchantment_gen_p(int multiplier)
 
 
 
-void enchantment_sort(int item_index)
-{
-    int f_at_m47 = 0;
-    int cnt2_at_m47 = 0;
-    while (1)
-    {
-        f_at_m47 = 0;
-        for (int cnt = 0; cnt < 14; ++cnt)
-        {
-            cnt2_at_m47 = cnt + 1;
-            if (inv[item_index].enchantments[cnt].id <
-                inv[item_index].enchantments[cnt2_at_m47].id)
-            {
-                p_at_m47(0) = inv[item_index].enchantments[cnt].id;
-                p_at_m47(1) = inv[item_index].enchantments[cnt].power;
-                inv[item_index].enchantments[cnt].id =
-                    inv[item_index].enchantments[cnt2_at_m47].id;
-                inv[item_index].enchantments[cnt2_at_m47].id = p_at_m47;
-                inv[item_index].enchantments[cnt].power =
-                    inv[item_index].enchantments[cnt2_at_m47].power;
-                inv[item_index].enchantments[cnt2_at_m47].power = p_at_m47(1);
-                f_at_m47 = 1;
-            }
-        }
-        if (f_at_m47 == 0)
-        {
-            break;
-        }
-    }
-}
-
-
-
 void enchantment_remove(
     int item_index,
     int enchantment_type,
@@ -1320,67 +1382,6 @@ bool enchantment_add(
     enchantment_sort(ci);
 
     return true;
-}
-
-
-
-void add_enchantments_depending_on_ego()
-{
-    for (int cnt = 0, cnt_end = (rnd(rnd(5) + 1) + 1); cnt < cnt_end; ++cnt)
-    {
-        enchantment_add(
-            ci,
-            enchantment_generate(enchantment_gen_level(egolv)),
-            enchantment_gen_p(),
-            8);
-    }
-    inv[ci].subname = 20000 + rnd(maxegominorn);
-}
-
-
-
-void add_enchantment_by_fixed_ego()
-{
-    p = 0;
-    for (int cnt = 0; cnt < 11; ++cnt)
-    {
-        if (egoref(0, cnt) != egolv)
-        {
-            continue;
-        }
-        if (egoref(1, cnt) != 0)
-        {
-            if (enchantment_filter(reftype, egoref(1, cnt)) == 0)
-            {
-                continue;
-            }
-        }
-        egolist(p) = cnt;
-        ++p;
-    }
-    if (p == 0)
-    {
-        return;
-    }
-    p = egolist(rnd(p(0)));
-    inv[ci].subname = 10000 + p;
-    ego_add(ci, p);
-    if (rnd(2) == 0)
-    {
-        enchantment_add(
-            ci,
-            enchantment_generate(enchantment_gen_level(egolv)),
-            enchantment_gen_p(),
-            20);
-    }
-    if (rnd(4) == 0)
-    {
-        enchantment_add(
-            ci,
-            enchantment_generate(enchantment_gen_level(egolv)),
-            enchantment_gen_p(),
-            25);
-    }
 }
 
 
@@ -1629,6 +1630,8 @@ void initialize_ego_data()
     maxegominorn = egominorn.size();
 }
 
+
+
 void ego_add(int item_index, int ego_type)
 {
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -1643,4 +1646,54 @@ void ego_add(int item_index, int ego_type)
             enchantment_gen_p(egoenc(cnt * 2 + 1, ego_type)));
     }
 }
+
+
+
+int encfind(int cc, int id)
+{
+    int power = -1;
+    for (int cnt = 0; cnt < 30; ++cnt)
+    {
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
+        {
+            continue;
+        }
+        int ci = cdata[cc].body_parts[cnt] % 10000 - 1;
+        for (int cnt = 0; cnt < 15; ++cnt)
+        {
+            if (inv[ci].enchantments[cnt].id == 0)
+            {
+                break;
+            }
+            if (inv[ci].enchantments[cnt].id == id)
+            {
+                if (inv[ci].enchantments[cnt].power > power)
+                {
+                    power = inv[ci].enchantments[cnt].power;
+                    break;
+                }
+            }
+        }
+    }
+    return power;
+}
+
+
+
+bool encfindspec(int ci, int id)
+{
+    for (int cnt = 0; cnt < 15; ++cnt)
+    {
+        if (inv[ci].enchantments[cnt].id == 0)
+        {
+            break;
+        }
+        if (inv[ci].enchantments[cnt].id == id)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 } // namespace elona
