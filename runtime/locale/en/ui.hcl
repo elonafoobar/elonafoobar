@@ -288,6 +288,9 @@ locale {
                 _5 = "Po"
             }
 
+            fireproof = "Fi"
+            acidproof = "Ac"
+
             equip_weight = "Equip weight"
             hit_bonus = "Hit Bonus"
             damage_bonus = "Damage Bonus"

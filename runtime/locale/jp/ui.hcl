@@ -287,6 +287,9 @@ locale {
                 _5 = "毒"
             }
 
+            fireproof = "熱"
+            acidproof = "酸"
+
             equip_weight = "装備重量"
             hit_bonus = "命中修正"
             damage_bonus = "ダメージ修正"

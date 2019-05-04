@@ -1589,4 +1589,805 @@
         file = "__BUILTIN__/graphic/interface2.bmp"
         load_type = "BufferDeferred"
     }
+
+    enchantment_icons {
+        source = "interface"
+        x = 1248
+        y = 640
+        width = 192
+        height = 160
+        file = "__core__/graphic/enchantment_icons.png"
+        load_type = "Startup"
+    }
+    enchantment_icon_increases_life {
+        source = "interface"
+        x = 1248
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_mana {
+        source = "interface"
+        x = 1264
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_strength {
+        source = "interface"
+        x = 1280
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_consititution {
+        source = "interface"
+        x = 1296
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_dexterity {
+        source = "interface"
+        x = 1312
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_perception {
+        source = "interface"
+        x = 1328
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_learning {
+        source = "interface"
+        x = 1344
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_will {
+        source = "interface"
+        x = 1360
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_magic {
+        source = "interface"
+        x = 1376
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_charisma {
+        source = "interface"
+        x = 1392
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_speed {
+        source = "interface"
+        x = 1408
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_luck {
+        source = "interface"
+        x = 1424
+        y = 640
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_strength {
+        source = "interface"
+        x = 1280
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_consititution {
+        source = "interface"
+        x = 1296
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_dexterity {
+        source = "interface"
+        x = 1312
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_perception {
+        source = "interface"
+        x = 1328
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_learning {
+        source = "interface"
+        x = 1344
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_will {
+        source = "interface"
+        x = 1360
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_magic {
+        source = "interface"
+        x = 1376
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_charisma {
+        source = "interface"
+        x = 1392
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_speed {
+        source = "interface"
+        x = 1408
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_maintains_luck {
+        source = "interface"
+        x = 1424
+        y = 656
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_fire_damage {
+        source = "interface"
+        x = 1248
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_cold_damage {
+        source = "interface"
+        x = 1264
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_lightning_damage {
+        source = "interface"
+        x = 1280
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_darkness_damage {
+        source = "interface"
+        x = 1296
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_mind_damage {
+        source = "interface"
+        x = 1312
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_poison_damage {
+        source = "interface"
+        x = 1328
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_nether_damage {
+        source = "interface"
+        x = 1344
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_sound_damage {
+        source = "interface"
+        x = 1360
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_nerve_damage {
+        source = "interface"
+        x = 1376
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_chaos_damage {
+        source = "interface"
+        x = 1392
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_magic_damage {
+        source = "interface"
+        x = 1408
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_cut_damage {
+        source = "interface"
+        x = 1424
+        y = 672
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_fire {
+        source = "interface"
+        x = 1248
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_cold {
+        source = "interface"
+        x = 1264
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_lightning {
+        source = "interface"
+        x = 1280
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_darkness {
+        source = "interface"
+        x = 1296
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_mind {
+        source = "interface"
+        x = 1312
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_poison {
+        source = "interface"
+        x = 1328
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_nether {
+        source = "interface"
+        x = 1344
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_sound {
+        source = "interface"
+        x = 1360
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_nerve {
+        source = "interface"
+        x = 1376
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_chaos {
+        source = "interface"
+        x = 1392
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_grants_resistance_to_magic {
+        source = "interface"
+        x = 1408
+        y = 688
+        width = 16
+        height = 16
+    }
+    enchantment_icon_can_be_loaded_with_rapid_ammo {
+        source = "interface"
+        x = 1248
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_can_be_loaded_with_explosive_ammo {
+        source = "interface"
+        x = 1264
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_can_be_loaded_with_piercing_ammo {
+        source = "interface"
+        x = 1280
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_can_be_loaded_with_magic_ammo {
+        source = "interface"
+        x = 1296
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_can_be_loaded_with_time_stop_ammo {
+        source = "interface"
+        x = 1312
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_can_be_loaded_with_burst_ammo {
+        source = "interface"
+        x = 1328
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_negates_blindness {
+        source = "interface"
+        x = 1344
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_negates_paralysis {
+        source = "interface"
+        x = 1360
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_negates_confusion {
+        source = "interface"
+        x = 1376
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_negates_fear {
+        source = "interface"
+        x = 1392
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_negates_sleep {
+        source = "interface"
+        x = 1408
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_negates_poison {
+        source = "interface"
+        x = 1424
+        y = 704
+        width = 16
+        height = 16
+    }
+    enchantment_icon_speeds_up_travel_progress {
+        source = "interface"
+        x = 1248
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_protects_you_from_etherwind {
+        source = "interface"
+        x = 1264
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_negates_bad_weather {
+        source = "interface"
+        x = 1280
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_floats_you {
+        source = "interface"
+        x = 1296
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_protects_you_from_mutation {
+        source = "interface"
+        x = 1312
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_enhances_spells {
+        source = "interface"
+        x = 1328
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_allows_you_to_see_invisible_creatures {
+        source = "interface"
+        x = 1344
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_absorbs_stamina {
+        source = "interface"
+        x = 1360
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_brings_an_end {
+        source = "interface"
+        x = 1376
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_absorbs_mana {
+        source = "interface"
+        x = 1392
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_gives_absolute_piercing_attack {
+        source = "interface"
+        x = 1408
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_stops_time {
+        source = "interface"
+        x = 1424
+        y = 720
+        width = 16
+        height = 16
+    }
+    enchantment_icon_protects_you_from_thieves {
+        source = "interface"
+        x = 1248
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_allows_you_to_digest_rotten_food {
+        source = "interface"
+        x = 1264
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_protects_you_from_cursing_words {
+        source = "interface"
+        x = 1280
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_critical_hits {
+        source = "interface"
+        x = 1296
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_sucks_blood {
+        source = "interface"
+        x = 1312
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_disturbs_your_growth {
+        source = "interface"
+        x = 1328
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_attracts_monsters {
+        source = "interface"
+        x = 1344
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_prevents_aliens_from_entering_your_body {
+        source = "interface"
+        x = 1360
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_quality_of_reward {
+        source = "interface"
+        x = 1376
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_extra_melee_attack {
+        source = "interface"
+        x = 1392
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_increases_extra_ranged_attack {
+        source = "interface"
+        x = 1408
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_physical_damage {
+        source = "interface"
+        x = 1424
+        y = 736
+        width = 16
+        height = 16
+    }
+    enchantment_icon_nullifies_damage {
+        source = "interface"
+        x = 1248
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_deals_cut_damage_to_the_attacker {
+        source = "interface"
+        x = 1264
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_diminishes_bleeding {
+        source = "interface"
+        x = 1280
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_catches_signals {
+        source = "interface"
+        x = 1296
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_inflicts_massive_damage_to_dragons {
+        source = "interface"
+        x = 1312
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_inflicts_massive_damage_to_undeads {
+        source = "interface"
+        x = 1328
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_reveals_religion {
+        source = "interface"
+        x = 1344
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_makes_audience_drunk {
+        source = "interface"
+        x = 1360
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_inflicts_massive_damage_to_gods {
+        source = "interface"
+        x = 1376
+        y = 752
+        width = 16
+        height = 16
+    }
+    enchantment_icon_causes_random_teleport {
+        source = "interface"
+        x = 1248
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_prevents_you_from_teleporting {
+        source = "interface"
+        x = 1264
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_strength {
+        source = "interface"
+        x = 1280
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_consititution {
+        source = "interface"
+        x = 1296
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_dexterity {
+        source = "interface"
+        x = 1312
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_perception {
+        source = "interface"
+        x = 1328
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_learning {
+        source = "interface"
+        x = 1344
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_will {
+        source = "interface"
+        x = 1360
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_magic {
+        source = "interface"
+        x = 1376
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_charisma {
+        source = "interface"
+        x = 1392
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_speed {
+        source = "interface"
+        x = 1408
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_decreases_luck {
+        source = "interface"
+        x = 1424
+        y = 768
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_fire {
+        source = "interface"
+        x = 1248
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_cold {
+        source = "interface"
+        x = 1264
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_lightning {
+        source = "interface"
+        x = 1280
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_darkness {
+        source = "interface"
+        x = 1296
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_mind {
+        source = "interface"
+        x = 1312
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_poison {
+        source = "interface"
+        x = 1328
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_nether {
+        source = "interface"
+        x = 1344
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_sound {
+        source = "interface"
+        x = 1360
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_nerve {
+        source = "interface"
+        x = 1376
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_chaos {
+        source = "interface"
+        x = 1392
+        y = 784
+        width = 16
+        height = 16
+    }
+    enchantment_icon_weakens_resistance_to_magic {
+        source = "interface"
+        x = 1408
+        y = 784
+        width = 16
+        height = 16
+    }
 }
