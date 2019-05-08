@@ -8,6 +8,7 @@
 #include "../../ui.hpp"
 #include "../enums/enums.hpp"
 #include "../handle_manager.hpp"
+#include "../interface.hpp"
 
 
 
@@ -20,8 +21,7 @@ namespace lua
 
 EnumString LuaApiAction::talk_to(LuaCharacterHandle speaker)
 {
-    auto& speaker_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(speaker);
+    auto& speaker_ref = lua::ref<Character>(speaker);
 
     auto data = the_character_db.ensure(speaker_ref.id);
     if (data.dialog_id)
@@ -68,8 +68,7 @@ EnumString LuaApiAction::talk_to_with_data(
     LuaCharacterHandle speaker,
     const std::string& dialog)
 {
-    auto& speaker_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(speaker);
+    auto& speaker_ref = lua::ref<Character>(speaker);
 
     if (!talk_setup_variables(speaker_ref))
     {
@@ -105,10 +104,8 @@ EnumString LuaApiAction::melee_attack(
     LuaCharacterHandle attacker,
     LuaCharacterHandle target)
 {
-    auto& attacker_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(attacker);
-    auto& target_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(target);
+    auto& attacker_ref = lua::ref<Character>(attacker);
+    auto& target_ref = lua::ref<Character>(target);
     TempIndexSetter<int> set_cc(cc, attacker_ref.index);
     TempIndexSetter<int> set_tc(tc, target_ref.index);
 
@@ -126,8 +123,7 @@ EnumString LuaApiAction::melee_attack(
  */
 EnumString LuaApiAction::manage_inventory(LuaCharacterHandle target)
 {
-    auto& target_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(target);
+    auto& target_ref = lua::ref<Character>(target);
     TempIndexSetter<int> set(tc, target_ref.index);
 
     auto result = try_interact_with_npc();
@@ -145,8 +141,7 @@ EnumString LuaApiAction::manage_inventory(LuaCharacterHandle target)
  */
 EnumString LuaApiAction::give_item(LuaCharacterHandle target)
 {
-    auto& target_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(target);
+    auto& target_ref = lua::ref<Character>(target);
     TempIndexSetter<int> set(tc, target_ref.index);
 
     invctrl = 10;
@@ -166,8 +161,7 @@ EnumString LuaApiAction::give_item(LuaCharacterHandle target)
  */
 EnumString LuaApiAction::change_tone(LuaCharacterHandle target)
 {
-    auto& target_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(target);
+    auto& target_ref = lua::ref<Character>(target);
     TempIndexSetter<int> set(tc, target_ref.index);
 
     elona::change_npc_tone();
@@ -187,8 +181,7 @@ EnumString LuaApiAction::change_tone(LuaCharacterHandle target)
  */
 EnumString LuaApiAction::change_appearance(LuaCharacterHandle target)
 {
-    auto& target_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(target);
+    auto& target_ref = lua::ref<Character>(target);
     TempIndexSetter<int> set(cc, target_ref.index);
 
     gsel(0);
@@ -209,8 +202,7 @@ EnumString LuaApiAction::change_appearance(LuaCharacterHandle target)
  */
 EnumString LuaApiAction::show_investigate_screen(LuaCharacterHandle target)
 {
-    auto& target_ref =
-        lua::lua->get_handle_manager().get_ref<Character>(target);
+    auto& target_ref = lua::ref<Character>(target);
 
     snd("core.pop2");
     int ccbk = cc;

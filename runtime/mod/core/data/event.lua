@@ -53,5 +53,8 @@ data:add_multi(
       {
          id = "nefia_created"
       },
+      {
+         id = "before_interact_menu"
+      },
    }
 )

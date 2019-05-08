@@ -7,6 +7,7 @@
 #include "../../keybind/macro_action_queue.hpp"
 #include "../../message.hpp"
 #include "../../ui.hpp"
+#include "../enums/enums.hpp"
 
 namespace elona
 {
@@ -383,47 +384,6 @@ int LuaApiInput::prompt_dialog_with_chip_impress(
     assert(result != -1);
 
     return result;
-}
-
-void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
-{
-    auto& speaker_ref = lua::ref<Character>(speaker);
-
-    auto data = the_character_db.ensure(speaker_ref.id);
-    if (!data.dialog_id)
-    {
-        throw sol::error(
-            "Character has no dialog: "s + speaker_ref.new_id().get());
-    }
-
-    talk_setup_variables(speaker_ref);
-    talk_start();
-
-    dialog_start(speaker_ref, *data.dialog_id);
-
-    talk_end();
-}
-
-/**
- * @luadoc start_dialog
- *
- * Starts a dialog with a character.
- * @tparam LuaCharacter speaker Character who will speak.
- * @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
- * character's definition.
- */
-void LuaApiInput::start_dialog_with_data(
-    LuaCharacterHandle speaker,
-    const std::string& dialog)
-{
-    auto& speaker_ref = lua::ref<Character>(speaker);
-
-    talk_setup_variables(speaker_ref);
-    talk_start();
-
-    dialog_start(speaker_ref, dialog);
-
-    talk_end();
 }
 
 /**
