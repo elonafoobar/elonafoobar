@@ -252,7 +252,44 @@ locale {
             name = "Name"
             weight = "Weight"
 
-            resist = "Fi Co Li Da Mi Po Nt So Nr Ch Ma"
+            resist {
+                _0 = "Fi"
+                _1 = "Co"
+                _2 = "Li"
+                _3 = "Da"
+                _4 = "Mi"
+                _5 = "Po"
+                _6 = "Nt"
+                _7 = "So"
+                _8 = "Nr"
+                _9 = "Ch"
+                _10 = "Ma"
+            }
+
+            maintenance {
+                _0 = "St"
+                _1 = "Co"
+                _2 = "De"
+                _3 = "Pe"
+                _4 = "Le"
+                _5 = "Wi"
+                _6 = "Ma"
+                _7 = "Ch"
+                _8 = "Sp"
+                _9 = "Lu"
+            }
+
+            ailment {
+                _0 = "Bl"
+                _1 = "Pa"
+                _2 = "Co"
+                _3 = "Fe"
+                _4 = "Sl"
+                _5 = "Po"
+            }
+
+            fireproof = "Fi"
+            acidproof = "Ac"
 
             equip_weight = "Equip weight"
             hit_bonus = "Hit Bonus"

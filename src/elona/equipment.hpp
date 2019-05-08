@@ -1,10 +1,21 @@
 #pragma once
+
 #include <string>
+
+
 
 namespace elona
 {
 
-void equipinfo(int = 0, int = 0, int = 0);
+struct Item;
+
+
+
+void draw_additional_item_info_label(int x, int y);
+void draw_additional_item_info(const Item& equip, int x, int y);
+std::string cut_item_name_for_additional_info(
+    const std::string& name,
+    size_t adjustment = 0);
 int eqweaponheavy();
 int eqweaponlight();
 void eqrandweaponmage();

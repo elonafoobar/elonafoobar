@@ -880,12 +880,11 @@ label_2061_internal:
     display_topic(
         i18n::s.get("core.locale.ui.inv.window.name"), wx + 28, wy + 30);
     display_topic(s, wx + 526, wy + 30);
-    if (g_show_resistances)
-    {
-        mes(wx + 300, wy + 40, i18n::s.get("core.locale.ui.inv.window.resist"));
-    }
+
+    draw_additional_item_info_label(wx + 300, wy + 40);
+
     draw("deco_inv_a", wx + ww - 136, wy - 6);
-    if (!g_show_resistances)
+    if (g_show_additional_item_info == AdditionalItemInfo::none)
     {
         draw("deco_inv_b", wx + ww - 186, wy - 6);
     }
@@ -1014,10 +1013,10 @@ label_2061_internal:
                     i18n::s.get("core.locale.ui.inv.window.main_hand") + ")";
             }
         }
-        if (g_show_resistances)
+        draw_additional_item_info(inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
+        if (g_show_additional_item_info != AdditionalItemInfo::none)
         {
-            equipinfo(p, wx + 300, wy + 60 + cnt * 19 + 2);
-            s = strmid(s, 0, 24);
+            s = cut_item_name_for_additional_info(s);
         }
         const auto text_color = cs_list_get_item_color(inv[p]);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);
@@ -1032,7 +1031,7 @@ label_2061_internal:
     }
     if (showmoney)
     {
-        if (!g_show_resistances)
+        if (g_show_additional_item_info == AdditionalItemInfo::none)
         {
             font(13 - en * 2);
             gmode(2);
@@ -2143,7 +2142,8 @@ label_2061_internal:
     }
     if (action == "switch_mode")
     {
-        g_show_resistances = !g_show_resistances;
+        g_show_additional_item_info =
+            get_next_enum(g_show_additional_item_info);
         snd("core.pop1");
         goto label_2060_internal;
     }

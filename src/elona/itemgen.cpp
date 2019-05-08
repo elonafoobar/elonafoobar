@@ -678,7 +678,7 @@ void change_item_material(Item& item, int material_id)
     fixlv = item.quality;
     for (auto e : the_item_material_db[p]->enchantments)
     {
-        enchantment_remove(ci, e.first, e.second);
+        enchantment_remove(item, e.first, e.second);
     }
 
     const auto original_value = calculate_original_value(item);

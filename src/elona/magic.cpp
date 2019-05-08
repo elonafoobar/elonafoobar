@@ -857,7 +857,7 @@ bool _magic_632_454_1144(bool label_2182_flag = false)
         txt(i18n::s.get("core.locale.common.nothing_happens"));
         return true;
     }
-    if (encfind(tc, 33) != -1)
+    if (enchantment_find(cdata[tc], 33))
     {
         if (rnd(5))
         {
@@ -2045,9 +2045,9 @@ bool _magic_645_1114()
         }
     }
     p = 75 + sdata(19, tc);
-    if (encfind(tc, 43) != -1)
+    if (const auto anticurse = enchantment_find(cdata[tc], 43))
     {
-        p += encfind(tc, 43) / 2;
+        p += *anticurse / 2;
     }
     if (rnd(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
     {
@@ -4166,7 +4166,7 @@ optional<bool> _proc_general_magic()
         {
             p = rnd(10);
             if ((cdata[tc].quality >= Quality::miracle && rnd(4)) ||
-                encfind(tc, 60010 + p) != -1)
+                enchantment_find(cdata[tc], 60010 + p))
             {
                 p = -1;
             }
@@ -4315,7 +4315,7 @@ optional<bool> _proc_general_magic()
             }
             return true;
         }
-        if (efid != 619 && efid != 635 && encfind(tc, 22) != -1)
+        if (efid != 619 && efid != 635 && enchantment_find(cdata[tc], 22))
         {
             if (is_in_fov(cdata[tc]))
             {
@@ -4325,7 +4325,7 @@ optional<bool> _proc_general_magic()
         }
         if (efid == 635)
         {
-            if (encfind(cc, 22) != -1)
+            if (enchantment_find(cdata[cc], 22))
             {
                 if (is_in_fov(cdata[tc]))
                 {

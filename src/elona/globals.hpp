@@ -11,9 +11,13 @@
 namespace elona
 {
 
-ELONA_EXTERN(bool g_show_resistances);
+enum class AdditionalItemInfo;
 
-}
+
+
+ELONA_EXTERN(AdditionalItemInfo g_show_additional_item_info);
+
+} // namespace elona
 
 
 

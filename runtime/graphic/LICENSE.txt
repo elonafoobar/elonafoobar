@@ -49,3 +49,6 @@ quick_action.png
     Elona foobar License v1
     Copyright (c) 2018 Ruin0x11
 
+enchantment_icons.png
+    Elona foobar License v1
+    Copyright (c) 2019 KI

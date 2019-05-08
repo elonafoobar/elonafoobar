@@ -182,4 +182,23 @@ enum class TurnResult
     ctrl_inventory,
 };
 
+
+
+enum class AdditionalItemInfo
+{
+    none,
+    resistance,
+    maintenance_and_ailment,
+    all_attributes,
+
+    _size,
+};
+
+
+
+ENUMUTIL_DEFINE_NEXT_PREV_FUNCTIONS_LOOPED_EXCLUSIVE_RANGE(
+    AdditionalItemInfo,
+    none,
+    _size)
+
 } // namespace elona

@@ -38,7 +38,7 @@ int LuaApiItem::count()
 bool LuaApiItem::has_enchantment(const LuaItemHandle item, int enchantment_id)
 {
     auto& item_ref = lua::ref<Item>(item);
-    return encfindspec(item_ref.index, enchantment_id);
+    return !!enchantment_find(item_ref, enchantment_id);
 }
 
 /**

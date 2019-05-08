@@ -505,7 +505,7 @@ void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
 {
     std::string level =
         u8"("s + sdata.get(10 + cnt, cc).original_level + u8")"s;
-    if (encfind(cc, 60010 + cnt) != -1)
+    if (enchantment_find(cdata[cc], 60010 + cnt))
     {
         level += u8"*"s;
     }

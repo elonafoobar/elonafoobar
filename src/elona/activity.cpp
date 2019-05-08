@@ -424,7 +424,7 @@ void continuous_action_perform()
                         cdata[cc].quality_of_performance -= p;
                     }
                 }
-                if (encfindspec(cdata[cc].continuous_action.item, 60))
+                if (enchantment_find(inv[cdata[cc].continuous_action.item], 60))
                 {
                     if (rnd(15) == 0)
                     {
@@ -472,8 +472,9 @@ void continuous_action_perform()
                                     {
                                         continue;
                                     }
-                                    if (encfindspec(
-                                            cdata[cc].continuous_action.item,
+                                    if (enchantment_find(
+                                            inv[cdata[cc]
+                                                    .continuous_action.item],
                                             49))
                                     {
                                         flt(calcobjlv(
