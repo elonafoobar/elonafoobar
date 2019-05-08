@@ -41,7 +41,7 @@ locale {
         mods {
             title {
                 installed = "インストール済みのMOD"
-                download = "MODダウンロード"
+                download = "MODのダウンロード"
             }
             no_readme = "(READMEはありません)"
 

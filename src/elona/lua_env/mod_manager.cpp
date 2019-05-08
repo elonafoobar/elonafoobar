@@ -252,18 +252,7 @@ void ModManager::clear_map_local_stores()
     for (auto&& pair : this->enabled_mods())
     {
         auto& mod = pair.second;
-        lua_->get_state()->safe_script(
-            R"(
-local function clear(t)
-    for key, _ in pairs(t) do
-        t[key] = nil
-    end
-end
-if Store then
-    clear(Store.map)
-end
-)",
-            mod->env);
+        lua_->get_state()->safe_script(R"(Store.map = {})", mod->env);
     }
 }
 
@@ -272,18 +261,7 @@ void ModManager::clear_global_stores()
     for (auto&& pair : this->enabled_mods())
     {
         auto& mod = pair.second;
-        lua_->get_state()->safe_script(
-            R"(
-local function clear(t)
-    for key, _ in pairs(t) do
-        t[key] = nil
-    end
-end
-if Store then
-    clear(Store.global)
-end
-)",
-            mod->env);
+        lua_->get_state()->safe_script(R"(Store.global = {})", mod->env);
     }
 }
 
