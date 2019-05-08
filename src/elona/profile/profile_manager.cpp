@@ -3,18 +3,6 @@
 #include "../log.hpp"
 
 
-namespace
-{
-
-void write_default_config(const fs::path& location)
-{
-    std::ofstream out{location.native(), std::ios::binary};
-    out << "config {\n}" << std::endl;
-}
-
-} // namespace
-
-
 namespace elona
 {
 namespace profile
@@ -60,7 +48,7 @@ void ProfileManager::create(const ProfileId& new_profile_id)
     fs::create_directory(to);
 
     auto script_dir = to / "script";
-    fs::create_directory(script_dir.native());
+    fs::create_directory(script_dir);
 
     auto console_script = script_dir / "console.lua";
     std::ofstream out(console_script.native());

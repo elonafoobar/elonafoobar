@@ -41,7 +41,7 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 
 void write_default_config(const fs::path& location)
 {
-    std::ofstream out{location.native(), std::ios::binary};
+    std::ofstream out{location.native()};
     hcl::Object object;
     object["config"] = hcl::Object();
     out << object << std::endl;
