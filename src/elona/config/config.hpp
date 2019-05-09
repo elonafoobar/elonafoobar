@@ -278,12 +278,13 @@ private:
 
 
 /***
- * Loads config options that are marked to be loaded before the
- * application instance is initialized, like screen size.
+ * Loads config options that are marked to be loaded before the application
+ * instance is initialized, like screen size. The config file is loaded from the
+ * current profile.
  */
-void initialize_config_preload(const fs::path& hcl_file);
+void initialize_config_preload();
 
-void load_config(const fs::path& hcl_file);
+void load_config();
 
 void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);

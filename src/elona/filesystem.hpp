@@ -57,7 +57,6 @@ fs::path user_script();
 
 void set_current_profile_directory(const fs::path& current_profile_dir);
 void set_base_save_directory(const fs::path& base_save_dir);
-void set_base_mod_directory(const fs::path& base_mod_dir);
 void set_base_user_directory(const fs::path& base_user_dir);
 void set_profile_directory(const fs::path& profile_dir);
 

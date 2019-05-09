@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_RUNNER
 #include "../elona/testing.hpp"
 #include "../thirdparty/catch2/catch.hpp"
+#include "../util/backtrace.hpp"
 
 #ifdef ELONA_OS_WINDOWS
 #include <crtdbg.h>
@@ -23,6 +24,8 @@ int main(int argc, char* argv[])
     DWORD dwMode = SetErrorMode(SEM_NOGPFAULTERRORBOX);
     SetErrorMode(dwMode | SEM_NOGPFAULTERRORBOX);
 #endif
+
+    lib::setup_backtrace();
 
     srand(static_cast<unsigned int>(std::time(0)));
 
