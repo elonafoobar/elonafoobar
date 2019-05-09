@@ -52,28 +52,16 @@ ELONA_DEFINE_PREDEFINED_DIR(log, "log")
 ELONA_DEFINE_PREDEFINED_DIR(map, "map")
 ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
 ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
+ELONA_DEFINE_PREDEFINED_DIR(mod, "mod")
+ELONA_DEFINE_PREDEFINED_DIR(profile_root, "profile")
 
 #undef ELONA_DEFINE_PREDEFINED_DIR
-
-
-
-fs::path profile_root()
-{
-    return filesystem::path("profile");
-}
 
 
 
 fs::path current_profile()
 {
     return current_profile_dir;
-}
-
-
-
-fs::path mod()
-{
-    return base_mod_dir;
 }
 
 
@@ -95,13 +83,6 @@ fs::path user()
 void set_current_profile_directory(const fs::path& current_profile_dir)
 {
     dir::current_profile_dir = current_profile_dir;
-}
-
-
-
-void set_base_mod_directory(const fs::path& base_mod_dir)
-{
-    dir::base_mod_dir = base_mod_dir;
 }
 
 
@@ -136,7 +117,7 @@ fs::path save(const std::string& player_id)
 
 fs::path user_script()
 {
-    return user() / u8"script";
+    return current_profile() / u8"script";
 }
 
 
@@ -144,7 +125,6 @@ fs::path user_script()
 void set_profile_directory(const fs::path& profile_dir)
 {
     set_current_profile_directory(profile_dir);
-    set_base_mod_directory(profile_dir / u8"mod");
     set_base_save_directory(profile_dir / u8"save");
     set_base_user_directory(profile_dir / u8"user");
 }
@@ -193,8 +173,18 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
 void copy_recursively(const fs::path& source, const fs::path& destination)
 {
     // Check pre-conditions.
-    assert(fs::exists(source) && fs::is_directory(source));
-    assert(!fs::exists(destination));
+    if (!fs::exists(source) || !fs::is_directory(source))
+    {
+        throw std::runtime_error(
+            "Source must be an existing directory: " +
+            filepathutil::to_utf8_path(source));
+    }
+    if (fs::exists(destination))
+    {
+        throw std::runtime_error(
+            "Destination must not exist: " +
+            filepathutil::to_utf8_path(source));
+    }
 
     // mkdir destination
     if (!fs::create_directories(destination))

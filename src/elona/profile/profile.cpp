@@ -17,8 +17,7 @@ bool is_valid_id(const ProfileId& profile_id)
 
 bool is_reserved_id(const ProfileId& profile_id)
 {
-    return profile_id == default_profile_id ||
-        profile_id == default_base_profile_id;
+    return profile_id == default_profile_id;
 }
 
 
