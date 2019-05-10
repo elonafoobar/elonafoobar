@@ -429,7 +429,7 @@ local function register_growth_buff(attribute_index, attribute_name)
       {
          type = "core.buff",
          id = "grow_" .. attribute_name,
-         legacy_id = attribute_index + 20,
+         id = attribute_index + 20,
          buff_type = "Food",
          duration = function(power)
             return 10 + power // 10
