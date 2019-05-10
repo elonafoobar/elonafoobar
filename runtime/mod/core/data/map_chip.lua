@@ -1,15 +1,3 @@
-local data = { _table = {} }
-function data:add_multi(tbl)
-   for _, v in ipairs(tbl) do
-      self:add(v)
-   end
-end
-function data:add(data)
-   self._table[data.id] = data
-end
-
-
-
 local function make_atlas(atlas_index)
    local atlas = {}
    for y=0,24 do
@@ -34,6 +22,7 @@ local function make_atlas(atlas_index)
 
    return atlas
 end
+data:define_type("map_chip")
 
 --
 -- Atlas 0
@@ -98,7 +87,7 @@ do
       atlas_0[i].is_feat = true
    end
 
-   data:add_multi(atlas_0)
+   data:add_multi("core.map_chip", atlas_0)
 end
 
 --
@@ -155,7 +144,7 @@ do
       atlas_1[i].is_feat = true
    end
 
-   data:add_multi(atlas_1)
+   data:add_multi("core.map_chip", atlas_1)
 end
 
 --
@@ -200,9 +189,5 @@ do
    atlas_2[476].wall_kind = 0
    atlas_2[509].wall_kind = 0
 
-   data:add_multi(atlas_2)
+   data:add_multi("core.map_chip", atlas_2)
 end
-
-
-
-return { ["core.map_chip"] = data._table }

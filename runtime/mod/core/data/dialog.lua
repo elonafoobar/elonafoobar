@@ -1,18 +1,8 @@
-local data = { _table = {} }
-function data:add_multi(tbl)
-   for _, v in ipairs(tbl) do
-      self:add(v)
-   end
-end
-function data:add(data)
-   self._table[data.id] = data
-end
-
-
-
 local unique = require("data/dialog/unique")
 
-data:add(
+data:define_type("dialog")
+data:add_multi(
+   "core.dialog",
    {
       id = "ignored",
       root = "core.locale.talk",
@@ -26,8 +16,4 @@ data:add(
    }
 
 )
-data:add_multi(unique)
-
-
-
-return { ["core.dialog"] = data._table }
+data:add_multi("core.dialog", unique)

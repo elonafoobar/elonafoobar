@@ -26,20 +26,21 @@ local function check_event(event_id)
    end
 end
 
-function remove_unknown_events(event_table)
-   for k, _ in pairs(event_table) do
+function remove_unknown_events(data)
+   local event = data.raw["core.event"]
+   for k, _ in pairs(event) do
       event_types[k] = true
    end
 
    for k, _ in pairs(hooks) do
-      if event_table[k] == nil then
+      if event[k] == nil then
          hooks[k] = nil
          reg[k] = nil
       end
    end
 
    for k, _ in pairs(instanced_hooks) do
-      if event_table[k] == nil then
+      if event[k] == nil then
          instanced_hooks[k] = nil
          instanced_reg[k] = nil
       end
