@@ -524,9 +524,6 @@ if(ANDROID)
 else()
   set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
   set(RUNTIME_DIR "${ASSET_DIR}")
-
-  # Copy default config.
-  copy_nonexisting("${CMAKE_SOURCE_DIR}/runtime/config.hcl" "${RUNTIME_DIR}/config.hcl")
 endif()
 
 # Copy and overwrite runtime folders/files (except config.hcl)
