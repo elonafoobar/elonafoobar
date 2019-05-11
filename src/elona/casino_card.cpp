@@ -35,6 +35,37 @@ enum class Suit
 };
 
 
+
+snail::Color suit2color(Suit s)
+{
+    switch (s)
+    {
+    case Suit::spades: return {140, 140, 255};
+    case Suit::hearts: return {255, 140, 140};
+    case Suit::diamonds: return {240, 240, 240};
+    case Suit::clubs: return {140, 255, 140};
+    case Suit::joker: return {250, 250, 105};
+    default: throw "unreachable";
+    }
+}
+
+
+
+const Extent suit2image(Suit s)
+{
+    switch (s)
+    {
+    case Suit::spades: return *draw_get_rect_chara(168); // slime
+    case Suit::hearts: return *draw_get_rect_chara(211); // black cat
+    case Suit::diamonds: return *draw_get_rect_chara(241); // skeleton
+    case Suit::clubs: return *draw_get_rect_chara(223); // armor
+    case Suit::joker: return *draw_get_rect_chara(413); // ehekatl
+    default: throw "unreachable";
+    }
+}
+
+
+
 void showcard2(int card_index, bool show_rank = true)
 {
     const auto rank = card_at_cardcontrol(0, card_index);
@@ -54,49 +85,21 @@ void showcard2(int card_index, bool show_rank = true)
 
         if (show_rank)
         {
-            gmode(2, 220);
-            snail::Color rank_color{0, 0, 0};
-            optional_ref<const Extent> rect;
-            switch (suit)
-            {
-            case Suit::spades:
-                rect = draw_get_rect_chara(168); // slime
-                rank_color = {140, 140, 255, 255};
-                break;
-            case Suit::hearts:
-                rect = draw_get_rect_chara(211); // black cat
-                rank_color = {255, 140, 140, 255};
-                break;
-            case Suit::diamonds:
-                rect = draw_get_rect_chara(241); // skeleton
-                rank_color = {240, 240, 240, 255};
-                break;
-            case Suit::clubs:
-                rect = draw_get_rect_chara(223); // armor
-                rank_color = {140, 255, 140, 255};
-                break;
-            case Suit::joker:
-                rect = draw_get_rect_chara(413); // ehekatl
-                rank_color = {250, 250, 105, 255};
-                break;
-            }
-            assert(rect);
-            set_color_mod(
-                rank_color.r, rank_color.g, rank_color.b, rect->buffer);
+            const auto rank_color = suit2color(suit);
+            // It was used for rank text, but the text is rendered as image now.
+            (void)rank_color;
+            const auto rect = suit2image(suit);
             gcopy(
-                rect->buffer,
-                rect->x,
-                rect->y,
-                rect->width,
-                rect->height,
-                x + 32 - rect->width / 2,
-                y + 88 - rect->height);
-            set_color_mod(255, 255, 255, rect->buffer);
+                rect.buffer,
+                rect.x,
+                rect.y,
+                rect.width,
+                rect.height,
+                x + 32 - rect.width / 2,
+                y + 88 - rect.height);
 
-            gmode(2, 220);
             draw_indexed("card_suit", x + 8, y + 16, static_cast<int>(suit));
             draw_indexed("card_rank", x + 32, y + 16, rank - 1);
-            gmode(2);
         }
         else
         {
