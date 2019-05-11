@@ -301,6 +301,13 @@ else()
   include_directories(${SDL2_MIXER_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
+  include(FindPNG)
+  if(NOT DEFINED PNG_INCLUDE_DIR OR NOT DEFINED PNG_LIBRARIES)
+    find_package(png REQUIRED)
+  endif()
+  include_directories(${PNG_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${PNG_LIBRARIES})
+
   if(LINUX)
     target_link_libraries(${PROJECT_NAME} dl)
   endif()

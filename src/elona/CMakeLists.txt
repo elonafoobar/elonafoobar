@@ -151,6 +151,8 @@ set(ELONA_SOURCES
 
   profile/profile.cpp
   profile/profile_manager.cpp
+
+  foobar_map/tsx_exporter.cpp
   )
 
 if(ANDROID_GENERATE_BUILD_FILES)

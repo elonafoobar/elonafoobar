@@ -3118,6 +3118,14 @@ data:add_multi(
          }
       },
       {
+         id = "_435",
+         legacy_id = 435,
+         source = {
+            x = 288,
+            y = 624,
+         }
+      },
+      {
          id = "_436",
          legacy_id = 436,
          source = {
