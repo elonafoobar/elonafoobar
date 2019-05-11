@@ -1,6 +1,6 @@
 locale {
     event {
-        little_sister_slips = "The little sister slips from Big Daddy's shoulder, \"Mr.Bubbles!\""
+        little_sister_slips = "The little sister slips from Big daddy's shoulder, \"Mr.Bubbles!\""
 
         ehekatl = "memememw...MEMEMEM...MEWWWWWW!"
 
