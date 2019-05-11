@@ -113,6 +113,7 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
 * nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
 * nlohmann/json: seee [src/thirdparty/nlohmannjson/LICENSE.MIT](src/thirdparty/nlohmannjson/LICENSE.MIT).
+* cpp-netlib/uri: see [src/thirdparty/uri/LICENSE_1_0.txt](src/thirdparty/uri/LICENSE_1_0.txt).
 
 ## Lua libraries
 

@@ -34,6 +34,7 @@ public class ElonaFoobarActivity extends SDLActivity
             "boost_iostreams",
             "util",
             "snail",
+            "spider",
             "elona",
             "Elona_foobar"
         };
