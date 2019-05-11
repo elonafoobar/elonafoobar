@@ -495,6 +495,7 @@ private:
                                                      "pcall",
                                                      "xpcall",
                                                      "tostring",
+                                                     "tonumber",
                                                      "error"};
 
         for (const std::string& function_name : safe_functions)

@@ -29,6 +29,17 @@ static int _table_length(sol::table t)
     return i;
 }
 
+static sol::table _make_opts_table(
+    const std::unordered_map<std::string, std::string> opts)
+{
+    sol::table result = lua::lua->get_state()->create_table();
+    for (const auto kvp : opts)
+    {
+        result[kvp.first] = kvp.second;
+    }
+    return result;
+}
+
 optional<TsxExporter::TileSource> TsxExporter::get_source(
     const std::string& type,
     const std::string& data_id,
@@ -141,6 +152,7 @@ void TsxExporter::open_tsx(const std::string& type)
     grid.add("<xmlattr>.height", 1);
 
     _opened = true;
+    _opts_table = _make_opts_table(_opts);
     _id = 0;
     _type = type;
     _table = *table;
@@ -162,15 +174,20 @@ void TsxExporter::write_tile(const std::string& data_id)
             "No such data \"" + _type + "#" + data_id + "\"");
     }
 
-    auto result = _exporter(*val);
+    auto result = _exporter(*val, _opts_table);
     if (!result.valid())
     {
         sol::error err = result;
         throw err;
     }
 
-    sol::table result_tbl = result;
-    auto source = get_source(_type, data_id, result_tbl);
+    sol::optional<sol::table> result_tbl = result;
+    if (!result_tbl)
+    {
+        return;
+    }
+
+    auto source = get_source(_type, data_id, *result_tbl);
     if (!source)
     {
         throw std::runtime_error(
@@ -213,11 +230,14 @@ void TsxExporter::close_tsx()
     _opened = false;
 }
 
-void export_tsx(const std::string& type, const fs::path& filename)
+void export_tsx(
+    const std::string& type,
+    const fs::path& filename,
+    std::unordered_map<std::string, std::string> opts)
 {
     auto table = *lua::lua->get_data_manager().get().get_table(type);
 
-    auto exporter = TsxExporter(filename);
+    auto exporter = TsxExporter(filename, opts);
     exporter.open_tsx(type);
 
     for (const auto kvp : table)

@@ -40,6 +40,19 @@ data:add_multi(
                atlas = "__BUILTIN__/graphic/item.bmp"
             }
          end
+      },
+      {
+         id = "map_chip",
+         export = function(v, opts)
+            if tonumber(opts.atlas_index) ~= v.atlas then
+               return nil
+            end
+
+            return {
+               source = v.source,
+               atlas = "__BUILTIN__/graphic/map" .. opts.atlas_index .. ".bmp"
+            }
+         end
       }
    }
 )

@@ -15,11 +15,14 @@ namespace pt = boost::property_tree;
 class TsxExporter
 {
 public:
-    TsxExporter(const fs::path& filename)
+    TsxExporter(
+        const fs::path& filename,
+        const std::unordered_map<std::string, std::string>& opts)
     {
         _id = 0;
         _opened = false;
         _filename = filename;
+        _opts = opts;
     }
 
     void open_tsx(const std::string& type);
@@ -45,12 +48,17 @@ private:
     bool _opened;
     int _id;
     sol::table _table;
+    std::unordered_map<std::string, std::string> _opts;
+    sol::table _opts_table;
     sol::protected_function _exporter;
     pt::ptree _tree;
     fs::path _filename;
 };
 
-void export_tsx(const std::string& type, const fs::path& filename);
+void export_tsx(
+    const std::string& type,
+    const fs::path& filename,
+    std::unordered_map<std::string, std::string> opts);
 
 } // namespace fmp
 } // namespace elona
