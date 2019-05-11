@@ -137,17 +137,7 @@ void UIMenuCharamakeClass::_draw_choices()
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
 
-        std::string text;
-        if (jp)
-        {
-            text = listn(0, cnt);
-        }
-        else
-        {
-            text = cnven(listn(1, cnt));
-        }
-
-        _draw_choice(cnt, text);
+        _draw_choice(cnt, cnven(listn(0, cnt)));
     }
     cs_bk = cs;
 }

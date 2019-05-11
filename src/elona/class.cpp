@@ -16,7 +16,7 @@ int access_class_info(int dbmode, const std::string& class_id)
 {
     if (class_id.empty())
     {
-        classname = u8"なし";
+        classname = i18n::s.get("core.locale.class.unemployed");
         cequipment = 0;
         return 0;
     }

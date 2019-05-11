@@ -1,0 +1,5 @@
+locale {
+    class {
+        unemployed = "なし"
+    }
+}

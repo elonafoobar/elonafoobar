@@ -74,7 +74,7 @@ locale {
             dying_message = "「${_1}」"
             date = "${_1}年${_2}月${_3}日"
             you_died = "${_2}で${_1}"
-            rank = "{_1}位"
+            rank = "${_1}位"
             you_are_about_to_be_buried = "あともう少しで埋葬される…"
             crawl_up = "這い上がる"
             lie_on_your_back = "埋まる"
