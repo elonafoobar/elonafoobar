@@ -165,7 +165,7 @@ locale {
 
             trade {
                 too_low_value = "You don't have stuff that match ${itemname(_1)}."
-                you_receive = "You receive ${itemname(_1)} in exchange for ${itemname(_2)}."
+                you_receive = "You receive ${itemname(_2)} in exchange for ${itemname(_1)}."
             }
 
             take {
