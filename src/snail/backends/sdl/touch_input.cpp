@@ -1,7 +1,7 @@
-#ifdef ANDROID
-#include "../hsp.hpp"
-#include "../touch_input.hpp"
-#endif
+#include "../../touch_input.hpp"
+#include "../../hsp.hpp"
+
+
 
 namespace elona
 {

@@ -66,6 +66,7 @@ if(ANDROID_GENERATE_BUILD_FILES)
 
   # Generate Android.mk
   add_subdirectory(src/util)
+  set(SNAIL_BACKEND "SDL")
   add_subdirectory(src/snail)
   add_subdirectory(src/elona)
 
@@ -101,7 +102,7 @@ if(ANDROID)
 
   set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
-  set(SNAIL_HEADLESS OFF)
+  set(SNAIL_BACKEND "SDL")
 
   add_library(SDL2 SHARED IMPORTED)
   add_library(SDL2_image SHARED IMPORTED)
@@ -158,9 +159,9 @@ else()
   set(ELONA_BUILD_TARGET "GAME" CACHE STRING "Build executable type (GAME, LAUNCHER, TESTS, or BENCH)")
 
   if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
-    set(SNAIL_HEADLESS ON)
+    set(SNAIL_BACKEND "HEADLESS")
   else()
-    set(SNAIL_HEADLESS OFF)
+    set(SNAIL_BACKEND "SDL")
   endif()
 
   # Executable
@@ -448,19 +449,11 @@ else()
 
   # My libraries: snail
   add_subdirectory(src/snail)
-  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
-    target_link_libraries(${PROJECT_NAME} snail_headless)
-  else()
-    target_link_libraries(${PROJECT_NAME} snail)
-  endif()
+  target_link_libraries(${PROJECT_NAME} ${SNAIL_LIBRARY})
 
   # My libraries: elona
   add_subdirectory(src/elona)
-  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
-    target_link_libraries(${PROJECT_NAME} elona snail_headless util)
-  else()
-    target_link_libraries(${PROJECT_NAME} elona snail util)
-  endif()
+  target_link_libraries(${PROJECT_NAME} elona ${SNAIL_LIBRARY} util)
 
   if((ELONA_BUILD_TARGET STREQUAL "GAME") OR (ELONA_BUILD_TARGET STREQUAL "LAUNCHER"))
     add_subdirectory(src/thirdparty/nfd)

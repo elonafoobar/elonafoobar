@@ -1,16 +1,14 @@
-#ifdef ANDROID
-#include "../hsp.hpp"
-#endif
+#include "../../hsp.hpp"
 #include <iostream>
 #include <unordered_map>
-#include "../../util/strutil.hpp"
-#include "../application.hpp"
-#include "../color.hpp"
-#include "../detail/sdl.hpp"
-#include "../font.hpp"
-#include "../input.hpp"
-#include "../touch_input.hpp"
-#include "../window.hpp"
+#include "../../../util/strutil.hpp"
+#include "../../application.hpp"
+#include "../../color.hpp"
+#include "../../detail/sdl.hpp"
+#include "../../font.hpp"
+#include "../../input.hpp"
+#include "../../touch_input.hpp"
+#include "../../window.hpp"
 
 
 namespace

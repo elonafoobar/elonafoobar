@@ -1,5 +1,5 @@
-#include "../detail/sdl.hpp"
-#include "../application.hpp"
+#include "../../application.hpp"
+#include "../../detail/sdl.hpp"
 
 #include <vector>
 

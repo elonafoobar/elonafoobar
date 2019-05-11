@@ -1,9 +1,7 @@
-#ifdef ANDROID
-#include "../renderer.hpp"
-#endif
+#include "../../renderer.hpp"
 #include <iostream>
 #include <sstream>
-#include "../detail/sdl.hpp"
+#include "../../detail/sdl.hpp"
 
 
 namespace elona

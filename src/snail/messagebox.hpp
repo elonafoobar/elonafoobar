@@ -1,17 +1,21 @@
 #pragma once
 
 #include <string>
-#include "detail/sdl.hpp"
 
 
+
+namespace elona
+{
 namespace snail
 {
+
 enum class MessageBox
 {
-    error = SDL_MESSAGEBOX_ERROR,
-    warning = SDL_MESSAGEBOX_WARNING,
-    info = SDL_MESSAGEBOX_INFORMATION,
+    error,
+    warning,
+    info,
 };
+
 
 
 void show_message_box(
@@ -19,6 +23,5 @@ void show_message_box(
     const std::string& title,
     const std::string& message);
 
-
-
 } // namespace snail
+} // namespace elona

@@ -1,13 +1,11 @@
-#ifdef ANDROID
-#include "../application.hpp"
-#endif
+#include "../../application.hpp"
 #include <algorithm>
 #include <map>
 #include <sstream>
 #include <boost/lexical_cast.hpp>
-#include "../hsp.hpp"
-#include "../input.hpp"
-#include "../touch_input.hpp"
+#include "../../hsp.hpp"
+#include "../../input.hpp"
+#include "../../touch_input.hpp"
 
 
 namespace elona
