@@ -285,19 +285,31 @@ int deny(
     std::stringstream ss;
     if (key.is<std::string>())
     {
-        ss << "Cannot assign to the global variable \"" << key.as<std::string>()
-           << "\". ";
+        ss << "Cannot assign to the field \"" << key.as<std::string>()
+           << "\" as it is readonly.";
     }
     else
     {
-        ss << "An attempt was made to assign to a global variable. ";
+        ss << "Cannot assign to a field as it is readonly.";
     }
-
-    ss << "Please prefix the assignment with \"local\" to make it a local "
-          "variable.";
 
     lua_State* L = ts;
     return luaL_error(L, ss.str().c_str());
+}
+
+int validate_store(
+    sol::table table,
+    sol::object key,
+    sol::object value,
+    sol::this_state ts)
+{
+    if (table[key] != sol::lua_nil)
+    {
+        table.raw_set(key, value);
+        return 0;
+    }
+
+    return deny(table, key, value, ts);
 }
 
 void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
@@ -310,7 +322,7 @@ void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
     metatable["map"] = mod.store_map;
 
     // Prevent creating new variables in the Store table.
-    metatable[sol::meta_function::new_index] = deny;
+    metatable[sol::meta_function::new_index] = validate_store;
     metatable[sol::meta_function::index] = metatable;
 
     Store[sol::metatable_key] = metatable;

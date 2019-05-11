@@ -29,6 +29,35 @@ TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
         "test", "assert(Store.global.thing == nil)"));
 }
 
+TEST_CASE("Test that store can be assigned", "[Lua: Serialization]")
+{
+    elona::lua::LuaEnv lua;
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
+Store.global.thing = 1
+assert(Store.global.thing == 1)
+)"));
+
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().run_in_mod("test", R"(Store.global = {})"));
+
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test", R"(
+Store.global = true
+assert(Store.global == true)
+)"));
+}
+
+TEST_CASE("Test that store cannot have new fields", "[Lua: Serialization]")
+{
+    elona::lua::LuaEnv lua;
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+
+    REQUIRE_THROWS(lua.get_mod_manager().load_mod_from_script("test", R"(
+Store.test = {}
+)"));
+}
+
 TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
@@ -201,7 +230,6 @@ TEST_CASE("Test preservation of handles across reloads", "[Lua: Serialization]")
         "test_serial_handle_reload", R"(
 local Chara = Elona.require("Chara")
 local Item = Elona.require("Item")
-local Item = Elona.require("Item")
 
 Store.global.chara = Chara.create(4, 8, "core.putit")
 Store.global.item = Item.create(4, 8, "core.putitoro", 0)
@@ -211,14 +239,14 @@ Store.map.item = Item.create(4, 8, "core.putitoro", 0)
 
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
         "test_serial_handle_reload");
-    std::string uuid_chara_global = mod->get_store(
-        elona::lua::ModInfo::StoreType::global)["chara"]["__uuid"];
-    std::string uuid_item_global = mod->get_store(
-        elona::lua::ModInfo::StoreType::global)["item"]["__uuid"];
-    std::string uuid_chara_map =
-        mod->get_store(elona::lua::ModInfo::StoreType::map)["chara"]["__uuid"];
-    std::string uuid_item_map =
-        mod->get_store(elona::lua::ModInfo::StoreType::map)["item"]["__uuid"];
+    auto global =
+        mod->get_store(elona::lua::ModInfo::StoreType::global).as<sol::table>();
+    auto map =
+        mod->get_store(elona::lua::ModInfo::StoreType::map).as<sol::table>();
+    std::string uuid_chara_global = global["chara"]["__uuid"];
+    std::string uuid_item_global = global["item"]["__uuid"];
+    std::string uuid_chara_map = map["chara"]["__uuid"];
+    std::string uuid_item_map = map["item"]["__uuid"];
 
     save();
 
@@ -277,7 +305,8 @@ Store.global.it = 0
 
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
         "test_serial_handle_map_change");
-    auto store = mod->get_store(elona::lua::ModInfo::StoreType::global);
+    auto store =
+        mod->get_store(elona::lua::ModInfo::StoreType::global).as<sol::table>();
     std::string uuid_chara = store["chara"]["__uuid"];
     std::string uuid_chara_local = store["chara_local"]["__uuid"];
 
@@ -330,7 +359,8 @@ Store.map.item = Item.create(4, 8, "core.putitoro", 0)
 
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
         "test_serial_handle_map_change_local");
-    auto store = mod->get_store(elona::lua::ModInfo::StoreType::map);
+    auto store =
+        mod->get_store(elona::lua::ModInfo::StoreType::map).as<sol::table>();
     std::string uuid_chara = store["chara"]["__uuid"];
     std::string uuid_item = store["item"]["__uuid"];
 
@@ -383,6 +413,64 @@ Store.global.t = {}
         "test_serial_recursive", R"(
 assert(type(Store.global.t) == "table")
 assert(type(Store.global.t[1]) == "table")
+)"));
+}
+
+
+TEST_CASE("Test serialization of plain value", "[Lua: Serialization]")
+{
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
+        "test_serial_plain", R"(
+Store.global = true
+)"));
+
+    save();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_plain", R"(
+Store.global = {}
+)"));
+
+    load();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_plain", R"(
+assert(Store.global == true)
+)"));
+}
+
+
+TEST_CASE("Test serialization of single handle", "[Lua: Serialization]")
+{
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
+        "test_serial_handle", ""));
+
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
+local Chara = Elona.require("Chara")
+
+Store.global = Chara.create(4, 8, "core.putit")
+assert(Store.global.__handle == true)
+assert(Store.global.position.x == 4)
+)"));
+
+    save();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
+Store.global = {}
+)"));
+
+    load();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
+assert(Store.global.__handle == true)
+assert(Store.global.position.x == 4)
 )"));
 }
 

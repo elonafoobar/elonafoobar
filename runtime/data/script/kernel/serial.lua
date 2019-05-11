@@ -4,18 +4,24 @@ local inspect = require "inspect"
 
 local Serial = {}
 
-local function resolve_handles(data, seen)
-   for key, value in pairs(data) do
-      if type(value) == "table" and not seen[value] then
-         if value.__handle then
-            -- Set the handle's metatable.
-            setmetatable(value, Handle.get_metatable(value.__kind))
-         else
-            -- Avoid recursive tables.
-            seen[value] = true
-            resolve_handles(value, seen)
-         end
+local resolve_handles
+
+local function resolve_handle(value, seen)
+   if type(value) == "table" and not seen[value] then
+      if value.__handle then
+         -- Set the handle's metatable.
+         setmetatable(value, Handle.get_metatable(value.__kind))
+      else
+         -- Avoid recursive tables.
+         seen[value] = true
+         resolve_handles(value, seen)
       end
+   end
+end
+
+resolve_handles = function(data, seen)
+   for key, value in pairs(data) do
+      resolve_handle(value, seen)
    end
 end
 
@@ -29,7 +35,13 @@ function Serial.load(dump)
    if not ok then
       error("Mod data load error: " .. data, 2)
    end
-   resolve_handles(data, {})
+   if type(data) == "table" then
+      if data.__handle then
+         resolve_handle(data, {})
+      else
+         resolve_handles(data, {})
+      end
+   end
    return data
 end
 

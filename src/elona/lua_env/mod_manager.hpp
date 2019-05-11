@@ -54,7 +54,7 @@ struct ModInfo
     ModInfo& operator=(const ModInfo&) = delete;
     ~ModInfo() = default;
 
-    sol::table get_store(StoreType store_type) const
+    sol::object get_store(StoreType store_type) const
     {
         std::string table_name;
         switch (store_type)
@@ -63,10 +63,10 @@ struct ModInfo
         case StoreType::global: table_name = "global"; break;
         }
 
-        return env["Store"][table_name].get<sol::table>();
+        return env["Store"][table_name].get<sol::object>();
     }
 
-    void set_store(StoreType store_type, sol::table data)
+    void set_store(StoreType store_type, sol::object data)
     {
         std::string table_name;
         switch (store_type)

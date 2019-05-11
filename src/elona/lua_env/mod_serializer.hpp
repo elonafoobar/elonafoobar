@@ -60,8 +60,7 @@ public:
         std::tie(index_start, index_end) =
             get_start_end_indices(T::lua_type(), store_type);
 
-        sol::table handles = _lua->get_state()->create_table();
-        load(handles, putit_archive);
+        sol::object handles = load(putit_archive);
 
         auto& handle_mgr = _lua->get_handle_manager();
         handle_mgr.clear_handle_range(T::lua_type(), index_start, index_end);
@@ -71,7 +70,6 @@ public:
             << "Loaded handle data for " << T::lua_type() << " in ["
             << index_start << "," << index_end << "]";
 
-        handles = sol::lua_nil;
         return {index_start, index_end};
     }
 
@@ -93,7 +91,7 @@ public:
             putit_archive(mod_id);
             putit_archive(mod_version);
 
-            sol::table data = pair.second->get_store(store_type);
+            sol::object data = pair.second->get_store(store_type);
             save(data, putit_archive);
 
             ELONA_LOG("lua.mod")
@@ -138,8 +136,7 @@ public:
                 << "Loaded " << get_store_name(store_type) << " store data for "
                 << mod_id << " " << mod_version.to_string();
 
-            sol::table data = _lua->get_state()->create_table();
-            load(data, putit_archive);
+            sol::object data = load(putit_archive);
 
             (*mod)->set_store(store_type, data);
         }
@@ -147,7 +144,7 @@ public:
 
 private:
     template <typename Archive>
-    void save(sol::table& data, Archive& ar)
+    void save(sol::object data, Archive& ar)
     {
         _serial_env["_TO_SERIALIZE"] = data;
         auto result = _lua->get_state()->safe_script(
@@ -167,7 +164,7 @@ private:
     }
 
     template <typename Archive>
-    void load(sol::table& data, Archive& ar)
+    sol::object load(Archive& ar)
     {
         std::string dump;
         ar(dump);
@@ -179,7 +176,7 @@ private:
 
         if (result.valid())
         {
-            data = result.get<sol::table>();
+            return result.get<sol::object>();
         }
         else
         {
