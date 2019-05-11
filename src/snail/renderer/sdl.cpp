@@ -11,6 +11,63 @@ namespace elona
 namespace snail
 {
 
+namespace
+{
+
+template <typename F>
+Rect _render_text_base(
+    F draw,
+    const std::string& text,
+    int x,
+    int y,
+    const Color& color,
+    double scale,
+    bool blended_text_rendering,
+    Font& font,
+    Renderer::TextAlignment text_alignment,
+    Renderer::TextBaseline text_baseline,
+    ::SDL_Renderer* ptr)
+{
+    if (text.empty())
+        return Rect{x, y, 0, 0};
+
+    auto render_func = blended_text_rendering ? &::TTF_RenderUTF8_Blended
+                                              : &::TTF_RenderUTF8_Solid;
+
+    auto surface = detail::enforce_ttf(
+        render_func(font.ptr(), text.c_str(), detail::to_sdl_color(color)));
+    auto texture =
+        detail::enforce_sdl(::SDL_CreateTextureFromSurface(ptr, surface));
+    detail::enforce_sdl(::SDL_SetTextureAlphaMod(texture, color.a));
+
+    int x_;
+    int y_;
+    int width = static_cast<int>(static_cast<double>(surface->w) * scale);
+    int height = static_cast<int>(static_cast<double>(surface->h) * scale);
+
+    switch (text_alignment)
+    {
+    case Renderer::TextAlignment::left: x_ = x; break;
+    case Renderer::TextAlignment::center: x_ = x - width / 2; break;
+    case Renderer::TextAlignment::right: x_ = x - width; break;
+    }
+    switch (text_baseline)
+    {
+    case Renderer::TextBaseline::top: y_ = y; break;
+    case Renderer::TextBaseline::middle: y_ = y - height / 2; break;
+    case Renderer::TextBaseline::bottom: y_ = y - height; break;
+    }
+    ::SDL_Rect dst{x_, y_, width, height};
+    draw(texture, dst);
+
+    ::SDL_FreeSurface(surface);
+    ::SDL_DestroyTexture(texture);
+
+    return Rect{x_, y_, width, height};
+}
+
+} // namespace
+
 SDL_Renderer* _ptr;
 
 void Renderer::set_blend_mode(BlendMode blend_mode)
@@ -100,42 +157,21 @@ Rect Renderer::render_text(
     const Color& color,
     double scale)
 {
-    if (text.empty())
-        return Rect{x, y, 0, 0};
-
-    auto render_func = _blended_text_rendering ? &::TTF_RenderUTF8_Blended
-                                               : &::TTF_RenderUTF8_Solid;
-
-    auto surface = detail::enforce_ttf(
-        render_func(_font.ptr(), text.c_str(), detail::to_sdl_color(color)));
-    auto texture =
-        detail::enforce_sdl(::SDL_CreateTextureFromSurface(ptr(), surface));
-    detail::enforce_sdl(::SDL_SetTextureAlphaMod(texture, color.a));
-
-    int x_;
-    int y_;
-    int width = static_cast<int>(static_cast<double>(surface->w) * scale);
-    int height = static_cast<int>(static_cast<double>(surface->h) * scale);
-
-    switch (_text_alignment)
-    {
-    case TextAlignment::left: x_ = x; break;
-    case TextAlignment::center: x_ = x - width / 2; break;
-    case TextAlignment::right: x_ = x - width; break;
-    }
-    switch (_text_baseline)
-    {
-    case TextBaseline::top: y_ = y; break;
-    case TextBaseline::middle: y_ = y - height / 2; break;
-    case TextBaseline::bottom: y_ = y - height; break;
-    }
-    ::SDL_Rect dst{x_, y_, width, height};
-    detail::enforce_sdl(::SDL_RenderCopy(ptr(), texture, nullptr, &dst));
-
-    ::SDL_FreeSurface(surface);
-    ::SDL_DestroyTexture(texture);
-
-    return Rect{x_, y_, width, height};
+    return _render_text_base(
+        [this](const auto& texture, const auto& dst) {
+            detail::enforce_sdl(
+                ::SDL_RenderCopy(ptr(), texture, nullptr, &dst));
+        },
+        text,
+        x,
+        y,
+        color,
+        scale,
+        _blended_text_rendering,
+        _font,
+        _text_alignment,
+        _text_baseline,
+        ptr());
 }
 
 
@@ -148,16 +184,34 @@ Rect Renderer::render_text_with_shadow(
     const Color& shadow_color,
     double scale)
 {
-    // Render shadow.
-    for (int dy : {-1, 0, 1})
-    {
-        for (int dx : {-1, 0, 1})
-        {
-            if (dx == 0 && dy == 0)
-                continue;
-            render_text(text, x + dx, y + dy, shadow_color, scale);
-        }
-    }
+    // Render shadow. The created texture is reused in each loop.
+    _render_text_base(
+        [this](const auto& texture, const auto& dst) {
+            for (int dy : {-1, 0, 1})
+            {
+                for (int dx : {-1, 0, 1})
+                {
+                    if (dx == 0 && dy == 0)
+                        continue;
+
+                    auto dst_ = dst;
+                    dst_.x += dx;
+                    dst_.y += dy;
+                    detail::enforce_sdl(
+                        ::SDL_RenderCopy(ptr(), texture, nullptr, &dst_));
+                }
+            }
+        },
+        text,
+        x,
+        y,
+        shadow_color,
+        scale,
+        _blended_text_rendering,
+        _font,
+        _text_alignment,
+        _text_baseline,
+        ptr());
 
     // Render text.
     return render_text(text, x, y, text_color, scale);
