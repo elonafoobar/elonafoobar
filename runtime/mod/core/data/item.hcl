@@ -6456,7 +6456,7 @@
         level = 1
         fltselect = 0
         category = 57000
-        subcategory = 99999
+        subcategory = 57004
         rarity = 1000000
         coefficient = 100
         light = 0
@@ -21892,7 +21892,7 @@
         level = 1
         fltselect = 3
         category = 57000
-        subcategory = 57004
+        subcategory = 99999
         rarity = 1000000
         coefficient = 100
         light = 0
@@ -23462,7 +23462,7 @@
         level = 1
         fltselect = 3
         category = 57000
-        subcategory = 57004
+        subcategory = 99999
         rarity = 1000000
         coefficient = 100
         light = 0
