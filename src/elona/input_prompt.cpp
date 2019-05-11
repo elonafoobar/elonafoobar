@@ -20,6 +20,8 @@ int Prompt::query(int x, int y, int width)
     cs = 0;
     cs_bk = -1;
 
+    snail::Input::instance().clear_pressed_keys_and_modifiers();
+
     _replace_null_keys_from_key_select();
     _draw_keys_and_background(x, y, width);
 
