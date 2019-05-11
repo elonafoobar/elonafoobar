@@ -57,7 +57,7 @@ locale {
             dying_message = "\"${_1}\""
             date = "${_1}/${_2}/${_3}"
             you_died = "${capitalize(_1)} in ${_2}."
-            rank = "{ordinal(_1)}"
+            rank = "${ordinal(_1)}"
             you_are_about_to_be_buried = "You are about to be buried..."
             crawl_up = "Crawl up"
             lie_on_your_back = "Lie on your back"
