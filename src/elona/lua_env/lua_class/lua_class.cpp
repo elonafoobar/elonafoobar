@@ -1,3 +1,4 @@
+// @noluadoc
 #include "lua_class.hpp"
 
 #include "lua_class_ability.hpp"

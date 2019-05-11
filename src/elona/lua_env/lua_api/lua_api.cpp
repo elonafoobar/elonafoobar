@@ -1,3 +1,4 @@
+// @noluadoc
 #include "lua_api.hpp"
 
 #include "lua_api_animation.cpp"
