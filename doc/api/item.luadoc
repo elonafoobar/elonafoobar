@@ -31,3 +31,36 @@ function itemname(item, number, use_article) end
 --  @treturn[2] nil
 --  @function create
 function create(position, id, number) end
+
+--- Retrieves the player's memory of an item type.
+--  @tparam num type
+--  @tparam string id
+--  @function memory
+function memory(type, id) end
+
+--- Stacks an item in the inventory indicated. The item will no longer be valid
+--  for use.
+--  @tparam num inventory_id
+--  @tparam LuaItem handle
+--  @treturn[1] LuaItem The modified item stack on success
+--  @treturn[2] nil
+--  @function stack
+function stack(inventory_id, handle) end
+
+--- Returns the trading rate of a cargo item.
+--  @tparam LuaItem handle A cargo item
+--  @treturn num
+--  @function trade_rate
+function trade_rate(handle) end
+
+--- Tries to find an item in the player's inventory, the ground, or both.
+--  @tparam string item_id The item ID to find.
+--  @tparam ItemFindLocation location Where to search for the item.
+--  @function find
+function find(item_id, location) end
+
+--- Returns the string representation of a weight value.
+--  @tparam num weight The weight value
+--  @treturn string
+--  @function weight_string
+function weight_string(weight) end
