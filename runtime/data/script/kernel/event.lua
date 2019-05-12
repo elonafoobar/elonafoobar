@@ -32,17 +32,11 @@ function remove_unknown_events(event_table)
    end
 
    for k, _ in pairs(hooks) do
-      if event_table[k] == nil then
-         hooks[k] = nil
-         reg[k] = nil
-      end
+      check_event(k)
    end
 
    for k, _ in pairs(instanced_hooks) do
-      if event_table[k] == nil then
-         instanced_hooks[k] = nil
-         instanced_reg[k] = nil
-      end
+      check_event(k)
    end
 
    loaded = true

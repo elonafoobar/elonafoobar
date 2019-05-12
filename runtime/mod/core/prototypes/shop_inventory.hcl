@@ -1,2 +1,0 @@
-shop_inventory {
-}

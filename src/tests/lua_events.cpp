@@ -16,6 +16,31 @@
 
 using namespace elona::testing;
 
+TEST_CASE(
+    "Test registering a callback on an unknown event type",
+    "[Lua: Events]")
+{
+    reset_state();
+
+    REQUIRE_THROWS(lua::lua->get_mod_manager().run_in_mod("core", R"(
+local Event = Elona.require("Event")
+
+local function handler()
+   Store.global.test = true
+end
+
+Store.global.test = false
+
+Event.register("core.some_unknown_event", handler)
+)"));
+
+    lua::lua->get_event_manager().trigger(
+        lua::BaseEvent("core.some_unknown_event"));
+
+    REQUIRE_NOTHROW(lua::lua->get_mod_manager().run_in_mod(
+        "core", R"(assert(Store.global.test == false))"));
+}
+
 TEST_CASE("Test registering of callback", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;

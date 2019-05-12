@@ -5,6 +5,10 @@
 namespace elona
 {
 
+ItemMaterialDB the_item_material_db;
+const constexpr char* data::LuaLazyCacheTraits<ItemMaterialDB>::type_id;
+
+
 namespace
 {
 
@@ -20,12 +24,6 @@ std::unordered_map<int, int> _convert_enchantments(const lua::ConfigTable& data)
 }
 
 } // namespace
-
-
-
-ItemMaterialDB the_item_material_db;
-const constexpr char* data::LuaLazyCacheTraits<ItemMaterialDB>::type_id;
-
 
 
 ItemMaterialData ItemMaterialDB::convert(

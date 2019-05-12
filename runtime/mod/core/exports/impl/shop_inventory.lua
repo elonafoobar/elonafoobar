@@ -3,7 +3,6 @@ local Math = Elona.require("Math")
 local Chara = Elona.require("Chara")
 local Skill = Elona.require("Skill")
 local Rand = Elona.require("Rand")
-local Registry = Elona.require("Registry")
 
 local shop_inventory = {}
 
@@ -114,7 +113,7 @@ local function is_cursed(item)
 end
 
 function shop_inventory.should_remove(item, inv)
-   local tags = Registry.get_table("core.item")[item.id].tags
+   local tags = data.raw["core.item"][item.id].tags
 
    if has_tag("neg", tags) then
       return true
@@ -156,7 +155,7 @@ shop_inventory.item_number_factors = {
 }
 
 function shop_inventory.calc_max_item_number(item)
-   local item_def = Registry.get_table("core.item")[item.id]
+   local item_def = data.raw["core.item"][item.id]
    local category = item_def.category
    local number = 1
 
@@ -295,10 +294,10 @@ function shop_inventory.generate(shopkeeper)
    -- Obtain shop inventory data by using the shopkeeper's
    -- character_role as its legacy ID index. If it does not exist, a
    -- default set of items will be generated as a fallback.
-   local id = Registry.get_id_by_legacy("core.shop_inventory", shopkeeper.role)
+   local id = data.by_legacy["core.shop_inventory"][shopkeeper.role]
    local inv = {}
    if id then
-      inv = Registry.get_table("core.shop_inventory")[id]
+      inv = data.raw["core.shop_inventory"][id]
    end
 
    shop_inventory.do_generate(shopkeeper, inv)

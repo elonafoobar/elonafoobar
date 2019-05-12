@@ -1,10 +1,7 @@
 #pragma once
-
 #include <string>
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../optional.hpp"
-
-
 
 namespace elona
 {
@@ -41,7 +38,7 @@ struct DataTable
         int legacy_data_id)
     {
         if (auto it = _storage.get<sol::optional<std::string>>(
-                std::tie("_by_legacy", prototype_id, legacy_data_id)))
+                std::tie("by_legacy", prototype_id, legacy_data_id)))
             return *it;
 
         return none;
@@ -61,7 +58,7 @@ struct DataTable
         const std::string& data_id)
     {
         if (auto it = _storage.get<sol::optional<sol::table>>(
-                std::tie("_data", prototype_id, data_id)))
+                std::tie("raw", prototype_id, data_id)))
             return *it;
 
         return none;
@@ -78,7 +75,7 @@ struct DataTable
     optional<sol::table> get_table(const std::string& prototype_id)
     {
         if (auto it = _storage.get<sol::optional<sol::table>>(
-                std::tie("_data", prototype_id)))
+                std::tie("raw", prototype_id)))
             return *it;
 
         return none;

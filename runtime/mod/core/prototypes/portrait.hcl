@@ -1,2 +1,0 @@
-portrait {
-}
