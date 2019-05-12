@@ -4,11 +4,12 @@ use clang::*;
 use clap::{crate_name, crate_version, App, Arg};
 use regex::Regex;
 
-use std::fs::{self, File};
+use std::fs::{self, File, read_to_string};
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 
 const LUADOC: &str = "@luadoc";
+const NOLUADOC: &str = "@noluadoc";
 const LUA_API: &str = "LuaApi";
 const LUA_CLASS: &str = "Lua";
 const VARARGS: &str = "sol::variadic_args";
@@ -488,6 +489,12 @@ fn get_module_comment_of_entity<'a>(entity: &Entity<'a>, is_class: bool) -> Opti
     None
 }
 
+// Check whether the file has "@noluadoc" directive WITHOUT #include macro expansion.
+fn has_noluadoc(path: &Path) -> Result<bool, Box<std::error::Error>> {
+    let content = read_to_string(path)?;
+    Ok(content.find(NOLUADOC).is_some())
+}
+
 fn get_module_comment<'a>(tu: &TranslationUnit<'a>, is_class: bool) -> Option<ModuleComment> {
     for child in tu.get_entity().get_children().iter() {
         if let Some(it) = get_module_comment_of_entity(&child, is_class) {
@@ -520,8 +527,13 @@ fn get_standing_comments<'a>(tu: &TranslationUnit<'a>, path: &Path, module: &str
 }
 
 fn generate_doc<'a>(path: &Path, index: &Index<'a>, is_class: bool) -> Option<Document> {
-    let tu = index.parser(path).parse().unwrap();
+    let noluadoc_detected = has_noluadoc(path).unwrap();
+    if noluadoc_detected {
+        println!("{:?}: @noluadoc detected. Skipping.", path);
+        return None;
+    }
 
+    let tu = index.parser(path).parse().unwrap();
     let module_comment = get_module_comment(&tu, is_class);
     if !module_comment.is_some() {
         println!("{:?}: No @luadoc comment found in header, skipping.", path);

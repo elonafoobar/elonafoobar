@@ -29,6 +29,12 @@ function count() end
 --  @function player
 function player() end
 
+--- Returns the character at the given index.
+--  @treturn[1] LuaCharacter
+--  @treturn[2] nil
+--  @function get
+function get(index) end
+
 --- Attempts to create a randomly generated character at a given position.
 --  Returns the character if creation succeeded, nil otherwise.
 --  @tparam LuaPosition position (const) position to create the character at
