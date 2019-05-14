@@ -1042,14 +1042,8 @@ void bmes(
     const snail::Color& text_color,
     const snail::Color& shadow_color)
 {
-    for (int dy = -1; dy <= 1; ++dy)
-    {
-        for (int dx = -1; dx <= 1; ++dx)
-        {
-            mes(x + dx, y + dy, message, shadow_color);
-        }
-    }
-    mes(x, y, message, text_color);
+    auto&& r = snail::Application::instance().get_renderer();
+    r.render_text_with_shadow(message, x, y, text_color, shadow_color);
 }
 
 /**

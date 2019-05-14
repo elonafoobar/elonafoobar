@@ -1,6 +1,4 @@
-#ifdef ANDROID
-#include "../window.hpp"
-#endif
+#include "../../window.hpp"
 
 
 

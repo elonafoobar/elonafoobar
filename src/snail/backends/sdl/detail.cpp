@@ -1,6 +1,4 @@
-#ifdef ANDROID
-#include "sdl.hpp"
-#endif
+#include "../../detail/sdl.hpp"
 
 namespace elona
 {

@@ -1,5 +1,6 @@
+#include "../../renderer.hpp"
 #include <sstream>
-#include "../detail/sdl.hpp"
+#include "../../detail/sdl.hpp"
 
 
 namespace elona

@@ -1,3 +1,7 @@
+#include "../../detail/sdl.hpp"
+
+
+
 namespace elona
 {
 namespace snail

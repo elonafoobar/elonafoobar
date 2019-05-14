@@ -1,3 +1,7 @@
+#include "../../window.hpp"
+
+
+
 namespace elona
 {
 namespace snail
