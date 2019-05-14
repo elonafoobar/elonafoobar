@@ -50,6 +50,77 @@ static void _add_properties(pt::ptree& properties, sol::table tbl)
     }
 }
 
+TsxExporter::TileSource TsxExporter::crop_atlas_source(
+    const std::string& type,
+    const std::string& data_id,
+    sol::table result_tbl,
+    sol::table source_tbl)
+{
+    fs::path atlas_path =
+        filesystem::resolve_path_for_mod(result_tbl.get<std::string>("atlas"));
+    std::string atlas_path_str =
+        filepathutil::make_preferred_path_in_utf8(atlas_path);
+
+    auto it = _cache.find(atlas_path_str);
+    if (it == _cache.end())
+    {
+        _cache.emplace(
+            atlas_path_str,
+            snail::Surface{atlas_path,
+                           snail::Color{0, 0, 0},
+                           snail::Surface::Format::argb8888});
+        it = _cache.find(atlas_path_str);
+        assert(it != _cache.end());
+    }
+
+    std::string mod_id, name;
+    std::tie(mod_id, name) = strutil::split_on_string(data_id, ".");
+    fs::path cache_dir = _filename.parent_path() / "cache" / type / mod_id;
+
+    if (auto name_opt =
+            result_tbl.get<sol::optional<std::string>>("image_name"))
+    {
+        name = *name_opt;
+    }
+
+    fs::create_directories(cache_dir);
+
+    bool tall = result_tbl.get_or("tall", false);
+    int width = 48;
+    int height = tall ? 96 : 48;
+    int x = source_tbl.get<int>("x");
+    int y = source_tbl.get<int>("y");
+
+    auto& atlas_image = it->second;
+
+    bg::bgra8_pixel_t* p =
+        reinterpret_cast<bg::bgra8_pixel_t*>(atlas_image.pixels());
+
+    bg::bgra8_view_t view = bg::interleaved_view(
+        atlas_image.width(),
+        atlas_image.height(),
+        p,
+        atlas_image.width() * sizeof(bg::bgra8_pixel_t));
+    auto cropped_view = bg::subimage_view(view, x, y, width, height);
+
+    std::string cache_file =
+        filepathutil::make_preferred_path_in_utf8(cache_dir / (name + ".png"));
+    bg::write_view(cache_file, cropped_view, bg::png_tag{});
+
+    return TileSource{width, height, cache_file, sol::nullopt};
+}
+
+TsxExporter::TileSource TsxExporter::get_file_source(
+    const std::string& source_str)
+{
+    fs::path full_path = filesystem::resolve_path_for_mod(source_str);
+    snail::Surface tile(full_path);
+    return TileSource{tile.width(),
+                      tile.height(),
+                      filepathutil::make_preferred_path_in_utf8(full_path),
+                      sol::nullopt};
+}
+
 optional<TsxExporter::TileSource> TsxExporter::get_source(
     const std::string& type,
     const std::string& data_id,
@@ -58,65 +129,52 @@ optional<TsxExporter::TileSource> TsxExporter::get_source(
     sol::optional<sol::table> source_table = tbl["source"];
     if (source_table)
     {
-        fs::path atlas_path =
-            filesystem::resolve_path_for_mod(tbl.get<std::string>("atlas"));
-        std::string atlas_path_str =
-            filepathutil::make_preferred_path_in_utf8(atlas_path);
-
-        auto it = _cache.find(atlas_path_str);
-        if (it == _cache.end())
-        {
-            _cache.emplace(
-                atlas_path_str,
-                snail::Surface{atlas_path,
-                               snail::Color{0, 0, 0},
-                               snail::Surface::Format::argb8888});
-            it = _cache.find(atlas_path_str);
-            assert(it != _cache.end());
-        }
-
-        std::string mod_id, name;
-        std::tie(mod_id, name) = strutil::split_on_string(data_id, ".");
-        fs::path cache_dir = _filename.parent_path() / "cache" / type / mod_id;
-
-        fs::create_directories(cache_dir);
-
-        bool tall = tbl.get_or("tall", false);
-        int width = 48;
-        int height = tall ? 96 : 48;
-        int x = source_table->get<int>("x");
-        int y = source_table->get<int>("y");
-
-        auto& atlas_image = it->second;
-
-        bg::bgra8_pixel_t* p =
-            reinterpret_cast<bg::bgra8_pixel_t*>(atlas_image.pixels());
-
-        bg::bgra8_view_t view = bg::interleaved_view(
-            atlas_image.width(),
-            atlas_image.height(),
-            p,
-            atlas_image.width() * sizeof(bg::bgra8_pixel_t));
-        auto cropped_view = bg::subimage_view(view, x, y, width, height);
-
-        std::string cache_file = filepathutil::make_preferred_path_in_utf8(
-            cache_dir / (name + ".png"));
-        bg::write_view(cache_file, cropped_view, bg::png_tag{});
-
-        return TileSource{width, height, cache_file};
+        return crop_atlas_source(type, data_id, tbl, *source_table);
     }
 
     sol::optional<std::string> source_str = tbl["source"];
     if (source_str)
     {
-        fs::path full_path = filesystem::resolve_path_for_mod(*source_str);
-        snail::Surface tile(full_path);
-        return TileSource{tile.width(),
-                          tile.height(),
-                          filepathutil::make_preferred_path_in_utf8(full_path)};
+        return get_file_source(*source_str);
     }
 
     return none;
+}
+
+std::vector<TsxExporter::TileSource> TsxExporter::get_sources(
+    const std::string& type,
+    const std::string& data_id,
+    sol::table tbl)
+{
+    std::vector<TsxExporter::TileSource> results;
+    bool is_array = tbl[1] != sol::lua_nil;
+
+    if (is_array)
+    {
+        for (const auto kvp : tbl)
+        {
+            if (auto tbl_item = kvp.second.as<sol::optional<sol::table>>())
+            {
+                if (auto result = get_source(type, data_id, *tbl_item))
+                {
+                    result->properties =
+                        tbl_item->get<sol::optional<sol::table>>("properties");
+                    results.emplace_back(*result);
+                }
+            }
+        }
+    }
+    else
+    {
+        if (auto result = get_source(type, data_id, tbl))
+        {
+            result->properties =
+                tbl.get<sol::optional<sol::table>>("properties");
+            results.emplace_back(*result);
+        }
+    }
+
+    return results;
 }
 
 void TsxExporter::open_tsx(const std::string& type)
@@ -197,34 +255,33 @@ void TsxExporter::write_tile(const std::string& data_id)
         return;
     }
 
-    auto source = get_source(_type, data_id, *result_tbl);
-    if (!source)
+    auto sources = get_sources(_type, data_id, *result_tbl);
+
+    for (const auto& source : sources)
     {
-        throw std::runtime_error(
-            "Cannot determine tile source of \"" + _type + "#" + data_id +
-            "\"");
+        pt::ptree& tile = _tree.add("tileset.tile", "");
+        tile.add("<xmlattr>.id", _id);
+        tile.add("<xmlattr>.type", _type);
+
+        pt::ptree& properties = tile.add("properties", "");
+
+        pt::ptree& property = properties.add("property", "");
+        property.add("<xmlattr>.name", "data_id");
+        property.add("<xmlattr>.value", data_id);
+
+        if (source.properties)
+        {
+            _add_properties(properties, *source.properties);
+        }
+
+        pt::ptree& image = tile.add("image", "");
+        image.put("<xmlattr>.width", source.width);
+        image.put("<xmlattr>.height", source.height);
+        image.put("<xmlattr>.trans", "000000");
+        image.put("<xmlattr>.source", source.filename);
+
+        _id++;
     }
-
-    pt::ptree& tile = _tree.add("tileset.tile", "");
-    tile.add("<xmlattr>.id", _id);
-    tile.add("<xmlattr>.type", _type);
-
-    pt::ptree& properties = tile.add("properties", "");
-
-    pt::ptree& property = properties.add("property", "");
-    property.add("<xmlattr>.name", "data_id");
-    property.add("<xmlattr>.value", data_id);
-
-    auto props_tbl = result_tbl->get<sol::table>("properties");
-    _add_properties(properties, props_tbl);
-
-    pt::ptree& image = tile.add("image", "");
-    image.put("<xmlattr>.width", source->width);
-    image.put("<xmlattr>.height", source->height);
-    image.put("<xmlattr>.trans", "000000");
-    image.put("<xmlattr>.source", source->filename);
-
-    _id++;
 }
 
 void TsxExporter::close_tsx()

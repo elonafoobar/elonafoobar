@@ -73,6 +73,26 @@ data:add_multi(
                }
             }
          end
+      },
+      {
+         id = "map_object",
+         base = "core.map_object",
+         export = function(v, opts)
+            local sources = {}
+            for _, tile in ipairs(v.tiles) do
+               sources[#sources+1] = {
+                  source = data.raw["core.map_chip"][tile].source,
+                  atlas = "__BUILTIN__/graphic/map1.bmp",
+                  image_name = tostring(v.legacy_id) .. "_" .. tile,
+                  properties = {
+                     legacy_id = tostring(v.legacy_id),
+                     tile = tile
+                  }
+               }
+            end
+
+            return sources
+         end
       }
    }
 )

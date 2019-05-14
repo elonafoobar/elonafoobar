@@ -143,6 +143,8 @@ MainMenuResult main_title_menu()
         "core.chara", "/home/ruin/.tiled/Elona_foobar/chara.tsx", {});
     fmp::export_tsx("core.item", "/home/ruin/.tiled/Elona_foobar/item.tsx", {});
     fmp::export_tsx(
+        "core.map_object", "/home/ruin/.tiled/Elona_foobar/map_object.tsx", {});
+    fmp::export_tsx(
         "core.map_chip",
         "/home/ruin/.tiled/Elona_foobar/map0.tsx",
         {{"atlas_index", "0"}});
