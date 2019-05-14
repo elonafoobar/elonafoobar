@@ -40,7 +40,7 @@ void DataManager::_init_from_mod(ModInfo& mod)
         // outside of a mod environment. To determine which mod is adding new
         // types/data in the data chunk, it has to be set on the global Lua
         // state temporarily during the data loading process.
-        _lua->get_state()->set("_MOD_NAME", mod.manifest.name);
+        _lua->get_state()->set("_MOD_ID", mod.manifest.id);
 
         const auto data_script = *mod.manifest.path / "data.lua";
         if (fs::exists(data_script))
@@ -67,7 +67,7 @@ void DataManager::init_from_mods()
         _init_from_mod(*mod);
     }
 
-    _lua->get_state()->set("_MOD_NAME", sol::lua_nil);
+    _lua->get_state()->set("_MOD_ID", sol::lua_nil);
 
     // Prevent modifications to the 'data' table.
     sol::table metatable = _data.storage().create_with(
