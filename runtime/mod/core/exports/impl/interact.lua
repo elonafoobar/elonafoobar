@@ -14,6 +14,7 @@ local interact = {}
 local function add_interact_choices(e)
    local function add_choice(key, cb)
       local root = "core.locale.action.interact.choices"
+      GUI.txt("add choice " .. key .. " ")
       table.insert(e.choices, { root .. "." .. key, cb })
    end
 
@@ -92,7 +93,7 @@ end
 
 function interact.teach_words(e)
    GUI.txt(I18N.get("core.locale.action.interact.change_tone.prompt", e.target))
-   local tone = Input.prompt_text() -- Input.prompt_text(360, 20)
+   local tone = Input.prompt_text(20, 360)
    e.target:set_flag("HasCustomTalk", false)
    if tone == "" then
       e.target.tone = ""
