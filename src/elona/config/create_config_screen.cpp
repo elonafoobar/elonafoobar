@@ -142,17 +142,17 @@ void ConfigScreenCreator::add_keybindings_section()
 
 void ConfigScreenCreator::add_mod_configs_section()
 {
-    const auto& mod_names = config_.get_mod_names();
+    const auto& mod_ids = config_.get_mod_ids();
 
     // Only add the section if there is at least one mod other than "core".
-    if (mod_names.size() <= 1)
+    if (mod_ids.size() <= 1)
     {
         return;
     }
 
     // Add the menu.
     int w = menu_width;
-    int h = menu_height + (menu_item_height * (mod_names.size() - 1));
+    int h = menu_height + (menu_item_height * (mod_ids.size() - 1));
     int mod_menu_index = result_.size();
     result_.emplace_back(std::make_unique<ConfigMenu>(
         i18n::s.get("core.locale.config.menu.mods.name"),
@@ -162,25 +162,25 @@ void ConfigScreenCreator::add_mod_configs_section()
 
     bool found_mods = false;
 
-    for (const auto& mod_name : mod_names)
+    for (const auto& mod_id : mod_ids)
     {
-        if (mod_name == "core")
+        if (mod_id == "core")
         {
             continue;
         }
 
-        auto found_items = visit_mod_config(mod_name);
+        auto found_items = visit_mod_config(mod_id);
 
         if (found_items)
         {
             found_mods = true;
 
-            I18NKey locale_key = mod_name + ".locale.config.menu";
-            int submenu_index = config_key_to_submenu_index_[mod_name];
+            I18NKey locale_key = mod_id + ".locale.config.menu";
+            int submenu_index = config_key_to_submenu_index_[mod_id];
 
             result_.at(mod_menu_index)
                 ->items.emplace_back(std::make_unique<ConfigMenuItemSection>(
-                    mod_name, locale_key, submenu_index));
+                    mod_id, locale_key, submenu_index));
         }
     }
 
@@ -211,11 +211,11 @@ void ConfigScreenCreator::visit_toplevel()
     add_mod_configs_section();
 }
 
-bool ConfigScreenCreator::visit_mod_config(const std::string& mod_name)
+bool ConfigScreenCreator::visit_mod_config(const std::string& mod_id)
 {
-    I18NKey locale_key = mod_name + ".locale.config.menu";
+    I18NKey locale_key = mod_id + ".locale.config.menu";
 
-    return visit_section_children(mod_name, locale_key);
+    return visit_section_children(mod_id, locale_key);
 }
 
 bool ConfigScreenCreator::visit_section_children(

@@ -295,4 +295,53 @@ inline size_t utf8_cut_index(
     return current_byte;
 }
 
+
+/**
+ * Wraps text in a language-agnostic manner. Instead of relying on
+ * language-specific rules, it wraps text based on character width, determined
+ * by codepoint. All 1-byte characters count as width 1, and every other
+ * character is width 2.
+ */
+inline int wrap_text(std::string& text, int max_line_length)
+{
+    std::string rest{text};
+    text.clear();
+    int n{};
+
+    while (1)
+    {
+        const auto len = rest.size();
+        if (int(len) < max_line_length)
+        {
+            text += rest;
+            return n;
+        }
+        size_t byte_length = 0;
+        size_t width_length = 0;
+        while (width_length <= len)
+        {
+            const auto bytes = strutil::byte_count(rest[byte_length]);
+            const auto char_width = bytes == 1 ? 1 : 2;
+
+            byte_length += bytes;
+            width_length += char_width;
+
+            if (int(width_length) > max_line_length)
+            {
+                text += rest.substr(0, byte_length) + '\n';
+                ++n;
+                if (rest.size() > byte_length)
+                {
+                    rest = rest.substr(byte_length);
+                }
+                else
+                {
+                    rest = "";
+                }
+                break;
+            }
+        }
+    }
+}
+
 } // namespace strutil

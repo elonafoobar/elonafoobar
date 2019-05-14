@@ -1,7 +1,10 @@
 #include "console.hpp"
+
 #include <regex>
 #include <sstream>
+
 #include <boost/algorithm/string/predicate.hpp>
+
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
 #include "../../snail/input.hpp"
@@ -57,7 +60,7 @@ constexpr int max_scrollback_count = 1000;
 
 constexpr const char* _lua_var_commands = u8"COMMANDS";
 constexpr const char* _namespace_builtin = u8"_BUILTIN_";
-constexpr const char* _namespace_console = u8"_CONSOLE_";
+constexpr const char* _console_mod_id = u8"_CONSOLE_";
 
 
 
@@ -104,7 +107,7 @@ void Console::init_environment()
 {
     auto core = _lua->get_api_manager().get_core_api_table();
     _console_mod =
-        _lua->get_mod_manager().create_mod(_namespace_console, none, false);
+        _lua->get_mod_manager().create_mod(_console_mod_id, none, false);
 
     // Automatically import APIs from "core" into the environment.
     for (const auto& kvp : core)
@@ -574,11 +577,11 @@ void Console::grab_input()
 
 
 void Console::register_(
-    const std::string& mod_name,
+    const std::string& mod_id,
     const std::string& name,
     sol::protected_function callback)
 {
-    _env()["__USH__"]["register"](mod_name, name, callback);
+    _env()["__USH__"]["register"](mod_id, name, callback);
 }
 
 
@@ -593,7 +596,7 @@ sol::object Console::run(const std::string& cmdline)
 void Console::_init_builtin_lua_functions()
 {
     // Table for built-in Lua functions.
-    sol::table funcs = _command_table()["_BUILTIN_"];
+    sol::table funcs = _command_table()[_namespace_builtin];
 
     auto inspect = lua->get_state()->script_file(filepathutil::to_utf8_path(
         filesystem::dir::data() / "script" / "kernel" / "inspect.lua"));
@@ -631,7 +634,7 @@ void Console::_init_builtin_lua_functions()
         range::transform(
             _lua->get_mod_manager().calculate_loading_order(),
             std::back_inserter(mods),
-            [](const auto& mod_name) { return mod_name; });
+            [](const auto& mod_id) { return mod_id; });
         range::sort(mods);
 
         sol::table ret = _env().create();

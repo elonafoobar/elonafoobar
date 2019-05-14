@@ -28,9 +28,9 @@ public:
 
 private:
     void visit_toplevel();
-    bool visit_mod_config(const std::string& mod_name);
+    bool visit_mod_config(const std::string& mod_id);
     bool visit_section_children(
-        const std::string& mod_name,
+        const std::string& mod_id,
         const I18NKey& locale_key);
     bool visit_section(const SpecKey& current_key, const I18NKey& locale_key);
     bool visit_config_item(

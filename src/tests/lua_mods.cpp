@@ -1,6 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-#include "../thirdparty/sol2/sol.hpp"
-
 #include "../elona/character.hpp"
 #include "../elona/dmgheal.hpp"
 #include "../elona/filesystem.hpp"
@@ -13,11 +10,13 @@
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 #include "tests.hpp"
 
 using namespace elona::testing;
 
-TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
+TEST_CASE("Test that _MOD_ID is defined", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
@@ -26,7 +25,7 @@ TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_ID == "my_mod"))"));
 }
 
 TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
@@ -37,13 +36,13 @@ TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", "", true));
 
-    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(_MOD_NAME = "dood")"));
+    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(_MOD_ID = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(dood = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(function dood() end)"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Elona = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Store = "dood")"));
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_ID == "my_mod"))"));
 }
 
 TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
@@ -104,7 +103,8 @@ TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
 
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
-    int thing = mod_mgr.get_mod("test")->store_global["thing"].get<int>();
+    int thing =
+        mod_mgr.get_enabled_mod("test")->store_global["thing"].get<int>();
     REQUIRE(thing == 1);
 }
 
@@ -264,7 +264,7 @@ assert(a == nil)
 
 static void _create_mod(
     elona::lua::LuaEnv& lua,
-    const std::string& name,
+    const std::string& id,
     const std::unordered_map<std::string, std::string> deps)
 {
     elona::lua::ModManifest::Dependencies deps_(deps.size());
@@ -284,7 +284,7 @@ static void _create_mod(
     }
 
     elona::lua::ModManifest manifest;
-    manifest.name = name;
+    manifest.id = id;
     manifest.dependencies = deps_;
     lua.get_mod_manager().create_mod(manifest, false);
 };

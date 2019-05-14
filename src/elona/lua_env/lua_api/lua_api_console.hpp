@@ -19,7 +19,7 @@ namespace LuaApiConsole
 {
 
 void register_(
-    const std::string& mod_name,
+    const std::string& mod_id,
     const std::string& name,
     sol::protected_function callback);
 

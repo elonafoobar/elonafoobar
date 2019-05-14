@@ -801,6 +801,10 @@ void fmode_7_8(bool read, const fs::path& dir)
 
     lua::ModSerializer mod_serializer(lua::lua.get());
     int index_start, index_end;
+    if (read)
+    {
+        lua::lua->get_mod_manager().clear_global_stores();
+    }
 
     {
         const auto filepath = dir / u8"mod.s1";
@@ -1186,6 +1190,10 @@ void fmode_1_2(bool read)
 
     lua::ModSerializer mod_serializer(lua::lua.get());
     int index_start, index_end;
+    if (read)
+    {
+        lua::lua->get_mod_manager().clear_map_local_stores();
+    }
 
     // Mod map-local store data (Store.map)
     {
@@ -1202,6 +1210,7 @@ void fmode_1_2(bool read)
         else
         {
             Save::instance().add(filepath.filename());
+            writeloadedbuff(u8"mod_map_"s + mid + u8".s2");
 
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::BinaryOArchive ar{out};
@@ -1232,6 +1241,7 @@ void fmode_1_2(bool read)
         else
         {
             Save::instance().add(filepath.filename());
+            writeloadedbuff(u8"mod_cdata_"s + mid + u8".s2");
 
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::BinaryOArchive ar{out};
@@ -1376,6 +1386,7 @@ void fmode_3_4(bool read, const fs::path& filename)
     else
     {
         Save::instance().add(mod_filepath.filename());
+        tmpload(mod_filename);
 
         std::ofstream out{mod_filepath.native(), std::ios::binary};
         putit::BinaryOArchive ar{out};
@@ -1595,7 +1606,8 @@ void Save::save(const fs::path& save_dir)
 void ctrl_file(FileOperation file_operation)
 {
     ELONA_LOG("save.ctrl_file")
-        << "ctrl_file " << static_cast<int>(file_operation) << " mid: " << mid;
+        << "ctrl_file " << static_cast<int>(file_operation) << " mid: " << mid
+        << " fmapfile: " << fmapfile;
 
     game_data.play_time =
         game_data.play_time + timeGetTime() / 1000 - time_begin;
@@ -1671,6 +1683,9 @@ void tmpload(const fs::path& filename)
     const auto original_file = filesystem::dir::save(playerid) / filename;
     if (fs::exists(original_file))
     {
+        ELONA_LOG("save.ctrl_file")
+            << "tmpload " << filepathutil::to_utf8_path(original_file);
+
         fs::copy_file(
             original_file,
             filesystem::dir::tmp() / filename,

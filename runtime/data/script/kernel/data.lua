@@ -4,7 +4,7 @@ data.by_legacy = {}
 data.types = {}
 
 function data:define_type(name, validate)
-   local instance_id = _ENV["_MOD_NAME"] .. "." .. name
+   local instance_id = _ENV["_MOD_ID"] .. "." .. name
 
    if self.types[instance_id] then
       error("duplicate type definition of " .. instance_id)
@@ -41,7 +41,7 @@ function data:add(array)
          error("missing id or type: id=" .. (id or 'nil') .. " type=" .. (data_type or 'nil'))
       end
 
-      local instance_id = _ENV["_MOD_NAME"] .. "." .. id
+      local instance_id = _ENV["_MOD_ID"] .. "." .. id
 
 
       local validator = self.types[data_type]

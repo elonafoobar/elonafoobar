@@ -6,12 +6,10 @@
 #include <regex>
 #include <sstream>
 
-
 #include "../snail/android.hpp"
 #include "../snail/application.hpp"
 #include "../snail/hsp.hpp"
 #include "../snail/window.hpp"
-
 #include "../util/fps_counter.hpp"
 #include "../util/strutil.hpp"
 #include "config/config.hpp"

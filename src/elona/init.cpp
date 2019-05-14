@@ -1,4 +1,5 @@
 #include "init.hpp"
+
 #include "../snail/touch_input.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
@@ -206,7 +207,7 @@ void initialize_i18n()
             const auto locale_path = entry.path() / "locale" / language;
             if (fs::exists(locale_path))
             {
-                locations.emplace_back(locale_path, manifest.name);
+                locations.emplace_back(locale_path, manifest.id);
             }
         }
     }
@@ -706,7 +707,7 @@ void initialize_config_defs()
             const auto config_def_path = entry.path() / "config_def.hcl";
             if (fs::exists(config_def_path))
             {
-                Config::instance().load_def(config_def_path, manifest.name);
+                Config::instance().load_def(config_def_path, manifest.id);
             }
         }
     }
@@ -759,7 +760,8 @@ void init()
 
     quickpage = 1;
 
-    show_loading_screen();
+    // TODO: Show each time mods are reloaded.
+    // show_loading_screen();
 }
 
 } // namespace elona

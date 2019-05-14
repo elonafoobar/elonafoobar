@@ -1,4 +1,5 @@
 #include "mod_manifest.hpp"
+
 #include "../hcl.hpp"
 
 namespace elona
@@ -9,12 +10,15 @@ namespace lua
 namespace
 {
 
-std::string _read_mod_name(const hcl::Value& value, const fs::path& path)
+std::string _read_string(
+    const std::string key,
+    const hcl::Value& value,
+    const fs::path& path)
 {
     std::string result;
 
     // TODO: Clean up, as with lua::ConfigTable
-    const hcl::Value* object = value.find("name");
+    const hcl::Value* object = value.find(key);
     if (object && object->is<std::string>())
     {
         result = object->as<std::string>();
@@ -22,8 +26,8 @@ std::string _read_mod_name(const hcl::Value& value, const fs::path& path)
     else
     {
         throw std::runtime_error(
-            filepathutil::to_utf8_path(path) +
-            ": Missing \"name\" in mod manifest");
+            filepathutil::to_utf8_path(path) + ": Missing \"" + key +
+            "\" in mod manifest");
     }
 
     return result;
@@ -56,7 +60,7 @@ semver::Version _read_mod_version(const hcl::Value& value, const fs::path& path)
     {
         throw std::runtime_error(
             filepathutil::to_utf8_path(path) +
-            ": Missing \"name\" in mod manifest");
+            ": Missing \"version\" in mod manifest");
     }
 }
 
@@ -124,12 +128,23 @@ ModManifest ModManifest::load(const fs::path& path)
     const auto& value = hclutil::skip_sections(
         parsed, {"mod"}, filepathutil::to_utf8_path(path));
 
-    const auto mod_name = _read_mod_name(value, path);
+    const auto mod_id = _read_string("id", value, path);
+    const auto mod_name = _read_string("name", value, path);
+    const auto mod_author = _read_string("author", value, path);
+    const auto mod_description = _read_string("description", value, path);
+    const auto mod_license = _read_string("license", value, path);
     const auto version = _read_mod_version(value, path);
     const auto mod_path = path.parent_path();
     const auto dependencies = _read_dependencies(value, path);
 
-    return ModManifest{mod_name, version, mod_path, dependencies};
+    return ModManifest{mod_id,
+                       mod_name,
+                       mod_author,
+                       mod_description,
+                       mod_license,
+                       version,
+                       mod_path,
+                       dependencies};
 }
 
 } // namespace lua

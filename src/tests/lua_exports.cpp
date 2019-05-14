@@ -1,5 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/filesystem.hpp"
 #include "../elona/lua_env/export_manager.hpp"
 #include "../elona/lua_env/handle_manager.hpp"
@@ -7,6 +5,7 @@
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 #include "util.hpp"
 
@@ -108,7 +107,7 @@ return {
     REQUIRE_NOTHROW(function->call(handle));
 
     elona::lua::lua->get_mod_manager()
-        .get_mod("test_registry_chara_callback")
+        .get_enabled_mod("test_registry_chara_callback")
         ->env.set("index", elona::rc);
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_registry_chara_callback",

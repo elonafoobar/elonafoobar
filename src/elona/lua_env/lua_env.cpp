@@ -1,4 +1,5 @@
 #include "lua_env.hpp"
+
 #include "../config/config.hpp"
 #include "api_manager.hpp"
 #include "console.hpp"
@@ -79,6 +80,7 @@ void LuaEnv::clear()
     event_mgr->clear();
     mod_mgr->clear_mod_stores();
     data_mgr->clear();
+    handle_mgr->clear_all_handles();
     lua_->collect_garbage();
 }
 

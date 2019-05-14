@@ -28,8 +28,8 @@ public:
     }
     ~Config() = default;
 
-    void load_def(std::istream& is, const std::string& mod_name);
-    void load_def(const fs::path& config_def_path, const std::string& mod_name);
+    void load_def(std::istream& is, const std::string& mod_id);
+    void load_def(const fs::path& config_def_path, const std::string& mod_id);
     void load(std::istream&, const std::string&, bool);
     void save();
 
@@ -105,9 +105,9 @@ public:
 
     bool is_test = false; // testing use only
 
-    const std::unordered_set<std::string>& get_mod_names()
+    const std::unordered_set<std::string>& get_mod_ids()
     {
-        return mod_names_;
+        return mod_ids_;
     }
 
     bool is_visible(const std::string& key) const
@@ -272,7 +272,7 @@ private:
     tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters_;
     tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>>
         setters_;
-    std::unordered_set<std::string> mod_names_;
+    std::unordered_set<std::string> mod_ids_;
 };
 
 

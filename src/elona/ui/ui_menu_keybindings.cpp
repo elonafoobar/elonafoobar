@@ -40,7 +40,7 @@ static std::string _action_category_to_name(ActionCategory category)
 }
 
 static std::string _get_localized_action_name(
-    const std::string& mod_name,
+    const std::string& mod_id,
     const std::string& action_id,
     ActionCategory action_category)
 {
@@ -56,20 +56,19 @@ static std::string _get_localized_action_name(
         {
             action_index_plus_1 -= 10;
         }
-        localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut") +
+        localized_name = i18n::s.get(mod_id + ".locale.keybind.shortcut") +
             std::to_string(action_index_plus_1);
         break;
     }
     case ActionCategory::selection:
     {
         const auto action_index_plus_1 = keybind_index_number(action_id) + 1;
-        localized_name = i18n::s.get(mod_name + ".locale.keybind.select") +
+        localized_name = i18n::s.get(mod_id + ".locale.keybind.select") +
             std::to_string(action_index_plus_1);
         break;
     }
     default:
-        localized_name =
-            i18n::s.get(mod_name + ".locale.keybind."s + action_id);
+        localized_name = i18n::s.get(mod_id + ".locale.keybind."s + action_id);
         break;
     }
 
@@ -120,9 +119,9 @@ static void _load_keybindings()
             const auto& action_id = pair->second;
             const auto& keybind_config = keybind_manager.binding(pair->second);
 
-            const auto mod_name = "core"s;
-            std::string localized_name = _get_localized_action_name(
-                mod_name, action_id, action_category);
+            const auto mod_id = "core"s;
+            std::string localized_name =
+                _get_localized_action_name(mod_id, action_id, action_category);
 
             _push_keybind_entry(action_id, localized_name, keybind_config);
         }
@@ -408,10 +407,9 @@ private:
     void _print_conflict(std::ostream& out, const std::string& action_id)
     {
         const auto category = keybind::actions.at(action_id).category;
-        const auto mod_name = "core";
+        const auto mod_id = "core";
         out << "  " << _action_category_to_name(category) << ": "
-            << _get_localized_action_name(mod_name, action_id, category)
-            << "\n";
+            << _get_localized_action_name(mod_id, action_id, category) << "\n";
     }
 
 

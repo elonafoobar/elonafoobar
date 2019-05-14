@@ -6,6 +6,7 @@ locale {
             incarnate = "冒険者の引継ぎ"
             about = "このゲームについて"
             options = "設定の変更"
+            mods = "MODリスト"
             exit = "終了"
         }
 
@@ -35,6 +36,34 @@ locale {
 
         about_changelog {
             title = "更新履歴"
+        }
+
+        mods {
+            title {
+                installed = "インストール済みのMOD"
+                download = "MODのダウンロード"
+            }
+            no_readme = "(READMEはありません)"
+
+            info {
+                title = "情報"
+                id = "ID"
+                name = "名前"
+                author = "作者"
+                version = "バージョン"
+                description = "説明文"
+            }
+
+            download {
+                failed = "MODリストのダウンロードに失敗しました。"
+            }
+
+            hint {
+                toggle = "[有効/無効にする]"
+                info = "[MODの情報]"
+                download = "[ダウンロード]"
+                installed = "[インストール済み]"
+            }
         }
     }
 }

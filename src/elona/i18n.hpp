@@ -495,14 +495,14 @@ public:
 
     struct Location
     {
-        Location(fs::path locale_dir, std::string mod_name)
+        Location(fs::path locale_dir, std::string mod_id)
             : locale_dir(locale_dir)
-            , mod_name(mod_name)
+            , mod_id(mod_id)
         {
         }
 
         fs::path locale_dir;
-        std::string mod_name;
+        std::string mod_id;
     };
 
     void init(const std::vector<Store::Location>&);
@@ -760,9 +760,9 @@ public:
     }
 
 
-    const fs::path& get_locale_dir(const std::string& mod_name)
+    const fs::path& get_locale_dir(const std::string& mod_id)
     {
-        return locale_dir_table[mod_name];
+        return locale_dir_table[mod_id];
     }
 
 
@@ -791,7 +791,7 @@ private:
 
     std::set<I18NKey> unknown_keys;
 
-    // Key: mod name.
+    // Key: mod ID.
     // Value: locale directory.
     std::unordered_map<std::string, fs::path> locale_dir_table;
 };

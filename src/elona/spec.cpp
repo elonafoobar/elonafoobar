@@ -14,19 +14,19 @@ namespace elona
 namespace spec
 {
 
-void Object::load(const fs::path& path, const std::string& mod_name)
+void Object::load(const fs::path& path, const std::string& mod_id)
 {
     std::ifstream ifs(path.native());
-    load(ifs, filepathutil::to_utf8_path(path), mod_name);
+    load(ifs, filepathutil::to_utf8_path(path), mod_id);
 }
 
 void Object::load(
     std::istream& is,
     const std::string& hcl_file,
-    const std::string& mod_name)
+    const std::string& mod_id)
 {
     hcl::ParseResult parseResult = hcl::parse(is);
-    std::string top_level_key = mod_name;
+    std::string top_level_key = mod_id;
 
     if (!parseResult.valid())
     {

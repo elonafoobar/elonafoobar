@@ -6,6 +6,7 @@ locale {
             incarnate = "Incarnate an Adventurer"
             about = "About"
             options = "Options"
+            mods = "Mods"
             exit = "Exit"
         }
 
@@ -35,6 +36,34 @@ locale {
 
         about_changelog {
             title = "Changelogs"
+        }
+
+        mods {
+            title {
+                installed = "Installed Mods"
+                download = "Download Mods"
+            }
+            no_readme = "(No README available.)"
+
+            info {
+                title = "Information"
+                name = "Name"
+                id = "ID"
+                author = "Author"
+                version = "Version"
+                description = "Description"
+            }
+
+            download {
+                failed = "Could not download mod list."
+            }
+
+            hint {
+                toggle = "[Enable/Disable]"
+                info = "[Mod Info]"
+                download = "[Switch To Download]"
+                installed = "[Switch To Installed]"
+            }
         }
     }
 }
