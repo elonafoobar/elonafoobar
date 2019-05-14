@@ -30,6 +30,15 @@ data:add_multi(
                   legacy_id = tostring(v.legacy_id)
                }
             }
+         end,
+         instantiate = function(t)
+            -- t.x
+            -- t.y
+            -- t.name
+            -- t.layer_name
+            -- t.props
+
+            -- Chara.create
          end
       },
       {
@@ -50,6 +59,9 @@ data:add_multi(
                   legacy_id = tostring(v.legacy_id)
                }
             }
+         end,
+         instantiate = function(t)
+            -- Item.create
          end
       },
       {
@@ -72,7 +84,7 @@ data:add_multi(
                   legacy_id = tostring(v.legacy_id)
                }
             }
-         end
+         end,
       },
       {
          id = "map_object",
@@ -92,6 +104,9 @@ data:add_multi(
             end
 
             return sources
+         end,
+         instantiate = function(t)
+            -- Map.set_feat
          end
       }
    }

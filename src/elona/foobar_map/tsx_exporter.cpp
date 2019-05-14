@@ -103,6 +103,8 @@ TsxExporter::TileSource TsxExporter::crop_atlas_source(
         atlas_image.width() * sizeof(bg::bgra8_pixel_t));
     auto cropped_view = bg::subimage_view(view, x, y, width, height);
 
+    // TODO: y offset
+
     std::string cache_file =
         filepathutil::make_preferred_path_in_utf8(cache_dir / (name + ".png"));
     bg::write_view(cache_file, cropped_view, bg::png_tag{});
@@ -254,6 +256,8 @@ void TsxExporter::write_tile(const std::string& data_id)
     {
         return;
     }
+
+    // TODO: sort tiles
 
     auto sources = get_sources(_type, data_id, *result_tbl);
 

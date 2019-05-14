@@ -18,7 +18,7 @@ function data:define_type(name, validate)
 end
 
 function data:add_multi(data_type, array)
-   for _, v in pairs(array) do
+   for _, v in ipairs(array) do
       v.type = data_type
    end
    self:add(array)
@@ -29,7 +29,7 @@ function data:add(array)
       error("not table")
    end
 
-   for _, v in pairs(array) do
+   for _, v in ipairs(array) do
       if type(v) ~= "table" then
          error("not array entry")
       end

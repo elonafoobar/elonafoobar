@@ -8,12 +8,12 @@ data:add_multi(
          id = "voting_box",
          legacy_id = 31,
          tiles = {"core.1_729"},
-         on_activate = function() GUI.snd("core.chat") end
+         on_bump_into = function() GUI.snd("core.chat") end
       },
       {
          id = "small_medal",
          legacy_id = 32,
-         tiles = {"core.1_0"},
+         tiles = {"core.1_234"},
       },
       {
          id = "door_closed",
