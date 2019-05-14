@@ -20,6 +20,8 @@
 #include "ui/ui_menu_mods.hpp"
 #include "variables.hpp"
 
+#include "foobar_map/tsx_exporter.hpp"
+
 
 
 namespace elona
@@ -135,10 +137,25 @@ bool main_menu_loop()
     return result == MainMenuResult::initialize_game;
 }
 
-
-
 MainMenuResult main_title_menu()
 {
+    fmp::export_tsx(
+        "core.chara", "/home/ruin/.tiled/Elona_foobar/chara.tsx", {});
+    fmp::export_tsx("core.item", "/home/ruin/.tiled/Elona_foobar/item.tsx", {});
+    fmp::export_tsx(
+        "core.map_chip",
+        "/home/ruin/.tiled/Elona_foobar/map0.tsx",
+        {{"atlas_index", "0"}});
+    fmp::export_tsx(
+        "core.map_chip",
+        "/home/ruin/.tiled/Elona_foobar/map1.tsx",
+        {{"atlas_index", "1"}});
+    fmp::export_tsx(
+        "core.map_chip",
+        "/home/ruin/.tiled/Elona_foobar/map2.tsx",
+        {{"atlas_index", "2"}});
+    return MainMenuResult::finish_elona;
+
     mode = 10;
     lomiaseaster = 0;
 

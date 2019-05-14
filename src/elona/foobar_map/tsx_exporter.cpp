@@ -40,6 +40,16 @@ static sol::table _make_opts_table(
     return result;
 }
 
+static void _add_properties(pt::ptree& properties, sol::table tbl)
+{
+    for (const auto kvp : tbl)
+    {
+        pt::ptree& property = properties.add("property", "");
+        property.add("<xmlattr>.name", kvp.first.as<std::string>());
+        property.add("<xmlattr>.value", kvp.second.as<std::string>());
+    }
+}
+
 optional<TsxExporter::TileSource> TsxExporter::get_source(
     const std::string& type,
     const std::string& data_id,
@@ -200,10 +210,13 @@ void TsxExporter::write_tile(const std::string& data_id)
     tile.add("<xmlattr>.type", _type);
 
     pt::ptree& properties = tile.add("properties", "");
-    pt::ptree& property = properties.add("property", "");
 
+    pt::ptree& property = properties.add("property", "");
     property.add("<xmlattr>.name", "data_id");
     property.add("<xmlattr>.value", data_id);
+
+    auto props_tbl = result_tbl->get<sol::table>("properties");
+    _add_properties(properties, props_tbl);
 
     pt::ptree& image = tile.add("image", "");
     image.put("<xmlattr>.width", source->width);
