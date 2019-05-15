@@ -16,6 +16,9 @@
 #include "text.hpp"
 #include "variables.hpp"
 
+#include "foobar_map/map_instantiator.hpp"
+#include "foobar_map/map_loader.hpp"
+
 namespace elona
 {
 
@@ -1964,6 +1967,9 @@ static void _init_map_vernis_town()
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
+
+    // TEMP
+    cell_featset(43, 5, tile_downstairs, 11, 6);
 }
 
 static void _init_map_vernis_the_mine()
@@ -2013,6 +2019,7 @@ static void _init_map_vernis_test_site()
 
 static void _init_map_vernis()
 {
+    std::cerr << "cur " << game_data.current_dungeon_level << std::endl;
     if (game_data.current_dungeon_level == 1)
     {
         _init_map_vernis_town();
@@ -2028,6 +2035,13 @@ static void _init_map_vernis()
     if (game_data.current_dungeon_level == 5)
     {
         _init_map_vernis_test_site();
+    }
+
+    // TEMP
+    if (game_data.current_dungeon_level == 6)
+    {
+        auto map = fmp::MapLoader::load(filesystem::dir::map() / "puti.fmp");
+        fmp::instantiate_map(map);
     }
 }
 

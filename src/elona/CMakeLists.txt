@@ -153,6 +153,8 @@ set(ELONA_SOURCES
   profile/profile_manager.cpp
 
   foobar_map/tsx_exporter.cpp
+  foobar_map/map_loader.cpp
+  foobar_map/map_instantiator.cpp
   )
 
 if(ANDROID_GENERATE_BUILD_FILES)

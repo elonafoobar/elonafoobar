@@ -196,6 +196,7 @@ void TsxExporter::open_tsx(const std::string& type)
     auto exporters =
         *lua::lua->get_data_manager().get().get_table("core.tile_exporter");
 
+    // TODO: lookup by "base" field across all exporters
     sol::optional<sol::table> it = exporters[type];
     if (!it)
     {

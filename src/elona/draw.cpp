@@ -723,11 +723,11 @@ void initialize_map_chips(const MapChipDB& db)
     predefined_extents.resize(ChipData::atlas_count);
     tinted_buffers.clear();
 
-    for (const auto& data : db.values())
+    for (const auto& pair : db)
     {
-        auto& atlas = chip_data.get_map(data.atlas);
-
-        atlas[data.legacy_id] = data;
+        auto& id = pair.first;
+        auto& data = pair.second;
+        chip_data.add(data.atlas, id, data);
     }
 
     {

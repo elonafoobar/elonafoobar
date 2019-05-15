@@ -224,7 +224,7 @@ extern CellData cell_data;
 
 struct ChipData
 {
-    using MapType = std::unordered_map<int, MapChip>;
+    using StorageType = std::unordered_map<int, MapChip>;
     static constexpr int chip_size = 825;
     static constexpr int atlas_count = 3;
 
@@ -232,7 +232,7 @@ struct ChipData
     {
         for (int i = 0; i < atlas_count; i++)
         {
-            MapType map = {};
+            StorageType map = {};
             for (int j = 0; j < chip_size; j++)
             {
                 map[j] = MapChip{};
@@ -241,12 +241,18 @@ struct ChipData
         }
     }
 
-    MapType& get_map(int i)
+    void add(int atlas, SharedId id, MapChip chip)
     {
-        return chips.at(i);
+        get_map(atlas)[chip.legacy_id] = chip;
+        by_id[id] = chip.legacy_id;
     }
 
-    MapType& current()
+    StorageType& get_map(int atlas)
+    {
+        return chips.at(atlas);
+    }
+
+    StorageType& current()
     {
         return get_map(map_data.atlas_number);
     }
@@ -254,6 +260,11 @@ struct ChipData
     MapChip& operator[](int i)
     {
         return current().at(i);
+    }
+
+    int for_id(SharedId id)
+    {
+        return by_id.at(id);
     }
 
     MapChip& for_cell(int x, int y)
@@ -267,7 +278,8 @@ struct ChipData
     }
 
 private:
-    std::unordered_map<int, MapType> chips;
+    std::unordered_map<int, StorageType> chips;
+    std::unordered_map<SharedId, int> by_id;
 };
 
 extern ChipData chip_data;

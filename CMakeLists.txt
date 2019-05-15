@@ -260,7 +260,7 @@ else()
   endif()
 
   # Thirdparty libraries
-  find_package(Boost REQUIRED COMPONENTS system filesystem locale)
+  find_package(Boost REQUIRED COMPONENTS system filesystem locale iostreams)
   include_directories(${Boost_INCLUDE_DIRS})
   target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
@@ -307,6 +307,12 @@ else()
   endif()
   include_directories(${PNG_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${PNG_LIBRARIES})
+
+  if(NOT DEFINED ZLIB_INCLUDE_DIR OR NOT DEFINED ZLIB_LIBRARIES)
+    find_package(zlib REQUIRED)
+  endif()
+  include_directories(${ZLIB_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${ZLIB_LIBRARIES})
 
   if(LINUX)
     target_link_libraries(${PROJECT_NAME} dl)
