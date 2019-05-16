@@ -431,21 +431,21 @@ void LuaApiMap::set_memory_xy(int x, int y, int id)
  * Sets a feat at the given position.
  * @tparam LuaPosition position (const) the map position
  * @tparam num tile the tile ID of the feat
- * @tparam num param1 a parameter of the feat
- * @tparam num param2 a parameter of the feat
+ * @tparam num feat_type the integer ID of the feat
+ * @tparam num param the parameter of the feat
  */
 void LuaApiMap::set_feat(
     const Position& position,
     int tile,
-    int param1,
-    int param2)
+    int feat_type,
+    int param)
 {
-    LuaApiMap::set_feat_xy(position.x, position.y, tile, param1, param2);
+    LuaApiMap::set_feat_xy(position.x, position.y, tile, feat_type, param);
 }
 
-void LuaApiMap::set_feat_xy(int x, int y, int tile, int param1, int param2)
+void LuaApiMap::set_feat_xy(int x, int y, int tile, int feat_type, int param)
 {
-    cell_featset(x, y, tile, param1, param2);
+    cell_featset(x, y, tile, feat_type, param);
 }
 
 /**

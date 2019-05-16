@@ -112,6 +112,14 @@ sol::table _build_instantiator_args_table(
         boost::apply_visitor(v, pair.second);
     }
 
+    for (auto& pair : object.tile_props)
+    {
+        auto v = PropertyPusherVisitor(pair.first, props);
+        boost::apply_visitor(v, pair.second);
+    }
+
+    props["is_updating"] = mapupdate == 1;
+
     args["props"] = props;
 
     return args;

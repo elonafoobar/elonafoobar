@@ -169,22 +169,33 @@ void LuaMapData::bind(sol::state& lua)
     /**
      * @luadoc stair_up_pos field LuaPosition
      *
-     * [R] The position of the map's up stairs.
+     * [RW] The position of the map's up stairs.
      */
     LuaMapData.set(
-        "stair_up_pos", sol::property([](MapData& d) {
-            return Position{d.stair_up_pos % 1000, d.stair_up_pos / 1000};
-        }));
+        "stair_up_pos",
+        sol::property(
+            [](MapData& d) {
+                return Position{d.stair_up_pos % 1000, d.stair_up_pos / 1000};
+            },
+            [](MapData& d, const Position& pos) {
+                d.stair_up_pos = pos.y * 1000 + pos.x;
+            }));
 
     /**
      * @luadoc stair_down_pos field LuaPosition
      *
-     * [R] The position of the map's down stairs.
+     * [RW] The position of the map's down stairs.
      */
     LuaMapData.set(
-        "stair_down_pos", sol::property([](MapData& d) {
-            return Position{d.stair_down_pos % 1000, d.stair_down_pos / 1000};
-        }));
+        "stair_down_pos",
+        sol::property(
+            [](MapData& d) {
+                return Position{d.stair_down_pos % 1000,
+                                d.stair_down_pos / 1000};
+            },
+            [](MapData& d, const Position& pos) {
+                d.stair_down_pos = pos.y * 1000 + pos.x;
+            }));
 
     /**
      * @luadoc bgm field core.music

@@ -1,3 +1,8 @@
+local Chara = Elona.require("Chara")
+local Item = Elona.require("Item")
+local Map = Elona.require("Map")
+local LuaPosition = Elona.require("LuaPosition")
+
 data:define_type("tile_exporter")
 data:add_multi(
    "core.tile_exporter",
@@ -32,13 +37,7 @@ data:add_multi(
             }
          end,
          instantiate = function(t)
-            -- t.x
-            -- t.y
-            -- t.name
-            -- t.layer_name
-            -- t.props
-
-            -- Chara.create
+            Chara.create(t.x, t.y, t.id)
          end
       },
       {
@@ -61,7 +60,8 @@ data:add_multi(
             }
          end,
          instantiate = function(t)
-            -- Item.create
+            print(Elona.require("Debug").inspect(t))
+            Item.create(t.x, t.y, t.id, t.props.number or 1)
          end
       },
       {
@@ -106,7 +106,19 @@ data:add_multi(
             return sources
          end,
          instantiate = function(t)
-            -- Map.set_feat
+            if t.is_updating and t.id == "core.small_medal" then
+               return
+            end
+
+            print(Elona.require("Debug").inspect(t))
+            local tile = data.raw["core.map_chip"][t.props.actual_tile]
+            Map.set_feat(t.x, t.y, tile.legacy_id, tonumber(t.props.legacy_id), t.props.param)
+
+            if t.id == "core.stairs_down" then
+               Map.data.stair_down_pos = LuaPosition.new(t.x, t.y)
+            elseif t.id == "core.stairs_up" then
+               Map.data.stair_up_pos = LuaPosition.new(t.x, t.y)
+            end
          end
       }
    }

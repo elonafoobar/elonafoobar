@@ -2019,7 +2019,6 @@ static void _init_map_vernis_test_site()
 
 static void _init_map_vernis()
 {
-    std::cerr << "cur " << game_data.current_dungeon_level << std::endl;
     if (game_data.current_dungeon_level == 1)
     {
         _init_map_vernis_town();

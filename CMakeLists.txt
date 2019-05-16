@@ -199,6 +199,7 @@ else()
       src/tests/keybind_serializer.cpp
       src/tests/semver.cpp
       src/tests/serialization.cpp
+      src/tests/foobar_map.cpp
       )
 
     add_executable(${PROJECT_NAME} src/version.cpp ${TEST_SOURCES})

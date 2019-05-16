@@ -213,6 +213,7 @@ FoobarMap::Object MapLoader::read_object()
     result.x = read_int();
     result.y = read_int();
     result.props = read_properties();
+    result.tile_props = read_properties();
 
     return result;
 }

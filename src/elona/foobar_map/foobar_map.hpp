@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -96,6 +97,7 @@ struct FoobarMap
         int x;
         int y;
         Properties props;
+        Properties tile_props;
     };
 
     struct Layer
@@ -113,10 +115,10 @@ struct FoobarMap
         std::string name;
         Properties props;
 
-        // group
+        // for group layers
         std::vector<int> child_layers;
 
-        // object
+        // for object layers
         std::vector<Object> objects;
     };
 
