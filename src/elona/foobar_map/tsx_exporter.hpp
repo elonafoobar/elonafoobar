@@ -17,11 +17,13 @@ class TsxExporter
 public:
     TsxExporter(
         const fs::path& filename,
+        int columns,
         const std::unordered_map<std::string, std::string>& opts)
     {
         _id = 0;
         _opened = false;
         _filename = filename;
+        _columns = columns;
         _opts = opts;
     }
 
@@ -58,7 +60,8 @@ private:
     std::string _type;
     bool _opened;
     int _id;
-    sol::table _table;
+    int _columns;
+    sol::table _data_table;
     std::unordered_map<std::string, std::string> _opts;
     sol::table _opts_table;
     sol::protected_function _exporter;
@@ -69,6 +72,7 @@ private:
 void export_tsx(
     const std::string& type,
     const fs::path& filename,
+    int columns,
     std::unordered_map<std::string, std::string> opts);
 
 } // namespace fmp

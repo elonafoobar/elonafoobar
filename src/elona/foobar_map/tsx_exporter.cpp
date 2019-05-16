@@ -186,9 +186,9 @@ void TsxExporter::open_tsx(const std::string& type)
         throw std::runtime_error("Already opened");
     }
 
-    auto table = lua::lua->get_data_manager().get().get_table(type);
+    auto data_table = lua::lua->get_data_manager().get().get_table(type);
 
-    if (!table)
+    if (!data_table)
     {
         throw std::runtime_error("No such type \"" + type + "\"");
     }
@@ -214,8 +214,8 @@ void TsxExporter::open_tsx(const std::string& type)
     attrs.put("name", type);
     attrs.put("tilewidth", 48);
     attrs.put("tileheight", 48);
-    attrs.put("tilecount", _table_length(*table));
-    attrs.put("columns", 8);
+    attrs.put("tilecount", _table_length(*data_table));
+    attrs.put("columns", _columns);
 
     pt::ptree grid = _tree.add("tileset.grid", "");
     grid.add("<xmlattr>.orientation", "orthogonal");
@@ -226,7 +226,7 @@ void TsxExporter::open_tsx(const std::string& type)
     _opts_table = _make_opts_table(_opts);
     _id = 0;
     _type = type;
-    _table = *table;
+    _data_table = *data_table;
 }
 
 
@@ -237,7 +237,7 @@ void TsxExporter::write_tile(const std::string& data_id)
         throw std::runtime_error("Not opened");
     }
 
-    sol::optional<sol::table> val = _table[data_id];
+    sol::optional<sol::table> val = _data_table[data_id];
 
     if (!val)
     {
@@ -308,16 +308,17 @@ void TsxExporter::close_tsx()
 void export_tsx(
     const std::string& type,
     const fs::path& filename,
+    int columns,
     std::unordered_map<std::string, std::string> opts)
 {
-    auto table = *lua::lua->get_data_manager().get().get_table(type);
+    auto table = *lua::lua->get_data_manager().get().get_by_order_table(type);
 
-    auto exporter = TsxExporter(filename, opts);
+    auto exporter = TsxExporter(filename, columns, opts);
     exporter.open_tsx(type);
 
     for (const auto kvp : table)
     {
-        exporter.write_tile(kvp.first.as<std::string>());
+        exporter.write_tile(kvp.second.as<std::string>());
     }
 
     exporter.close_tsx();

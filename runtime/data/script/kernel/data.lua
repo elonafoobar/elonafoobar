@@ -1,6 +1,7 @@
 local data = {}
 data.raw = {}
 data.by_legacy = {}
+data.by_order = {}
 data.types = {}
 
 function data:define_type(name, validate)
@@ -83,6 +84,15 @@ function data:add(array)
 
          by_legacy[v.legacy_id] = instance_id
       end
+
+      local by_order = self.by_order[data_type]
+
+      if not by_order then
+         by_order = {}
+         self.by_order[data_type] = by_order
+      end
+
+      table.insert(by_order, instance_id)
    end
 end
 

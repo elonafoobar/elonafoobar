@@ -83,6 +83,23 @@ struct DataTable
 
 
 
+    /**
+     * Get ordering table for @a prototype_id.
+     *
+     * @param prototype_id the namespaced prototype ID.
+     * @return the data table or none if not found.
+     */
+    optional<sol::table> get_by_order_table(const std::string& prototype_id)
+    {
+        if (auto it = _storage.get<sol::optional<sol::table>>(
+                std::tie("by_order", prototype_id)))
+            return *it;
+
+        return none;
+    }
+
+
+
     sol::table& storage()
     {
         return _storage;
