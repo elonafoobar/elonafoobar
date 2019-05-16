@@ -12,13 +12,6 @@ namespace fmp
 
 FoobarMap MapLoader::load(const fs::path& map_file)
 {
-    MapLoader loader;
-
-    return loader.do_load(map_file);
-}
-
-FoobarMap MapLoader::do_load(const fs::path& map_file)
-{
     if (!fs::exists(map_file))
     {
         throw std::runtime_error(
@@ -44,13 +37,13 @@ FoobarMap MapLoader::do_load(const fs::path& map_file)
     _map.version = read_int();
 
     int mod_count = read_int();
-    for (auto i : range::iota<int>(mod_count))
+    for (auto _i : range::iota<int>(mod_count))
     {
         _map.mods.emplace_back(read_string());
     }
 
     int mapping_count = read_int();
-    for (auto i : range::iota<int>(mapping_count))
+    for (auto _i : range::iota<int>(mapping_count))
     {
         std::string name = read_string();
         int id = read_int();
@@ -117,7 +110,7 @@ FoobarMap::Properties MapLoader::read_properties()
     FoobarMap::Properties result;
 
     int property_count = read_int();
-    for (auto i : range::iota<int>(property_count))
+    for (auto _i : range::iota<int>(property_count))
     {
         SharedId key = read_mapped_name();
         FoobarMap::Property prop = read_property();
@@ -147,7 +140,7 @@ std::vector<SharedId> MapLoader::read_tiles()
 {
     std::vector<SharedId> result;
 
-    for (auto i : range::iota<int>(_map.width * _map.height))
+    for (auto _i : range::iota<int>(_map.width * _map.height))
     {
         result.emplace_back(read_mapped_name());
     }
@@ -160,7 +153,7 @@ std::vector<FoobarMap::Layer> MapLoader::read_layers()
     std::vector<FoobarMap::Layer> result;
 
     int layer_count = read_int();
-    for (auto i : range::iota<int>(layer_count))
+    for (auto _i : range::iota<int>(layer_count))
     {
         result.emplace_back(read_layer());
     }
@@ -185,14 +178,14 @@ FoobarMap::Layer MapLoader::read_layer()
     case FoobarMap::Layer::Type::tile: break;
     case FoobarMap::Layer::Type::object:
         count = read_int();
-        for (auto i : range::iota<int>(count))
+        for (auto _i : range::iota<int>(count))
         {
             result.objects.emplace_back(read_object());
         }
         break;
     case FoobarMap::Layer::Type::group:
         count = read_int();
-        for (auto i : range::iota<int>(count))
+        for (auto _i : range::iota<int>(count))
         {
             result.child_layers.emplace_back(read_int());
         }

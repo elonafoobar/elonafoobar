@@ -85,6 +85,7 @@ data:add_multi(
                }
             }
          end,
+         instantiate = function() end
       },
       {
          id = "map_object",

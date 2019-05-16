@@ -132,6 +132,10 @@ set(ELONA_SOURCES
   lua_env/lua_class/lua_class_map_generator.cpp
   lua_env/lua_class/lua_class_position.cpp
 
+  foobar_map/tsx_exporter.cpp
+  foobar_map/map_loader.cpp
+  foobar_map/init_map.cpp
+
   config/config.cpp
   config/config_def.cpp
   config/set_option.cpp
@@ -151,10 +155,6 @@ set(ELONA_SOURCES
 
   profile/profile.cpp
   profile/profile_manager.cpp
-
-  foobar_map/tsx_exporter.cpp
-  foobar_map/map_loader.cpp
-  foobar_map/map_instantiator.cpp
   )
 
 if(ANDROID_GENERATE_BUILD_FILES)

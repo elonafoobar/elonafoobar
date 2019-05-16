@@ -16,8 +16,7 @@
 #include "text.hpp"
 #include "variables.hpp"
 
-#include "foobar_map/map_instantiator.hpp"
-#include "foobar_map/map_loader.hpp"
+#include "foobar_map/init_map.hpp"
 
 namespace elona
 {
@@ -2039,8 +2038,7 @@ static void _init_map_vernis()
     // TEMP
     if (game_data.current_dungeon_level == 6)
     {
-        auto map = fmp::MapLoader::load(filesystem::dir::map() / "puti.fmp");
-        fmp::instantiate_map(map);
+        fmp::init_map("puti");
     }
 }
 

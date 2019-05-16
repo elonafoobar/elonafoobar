@@ -19,11 +19,9 @@ namespace bio = boost::iostreams;
 class MapLoader
 {
 public:
-    static FoobarMap load(const fs::path&);
+    FoobarMap load(const fs::path&);
 
 private:
-    FoobarMap do_load(const fs::path&);
-
     std::string read_string();
     int read_int();
     bool read_bool();

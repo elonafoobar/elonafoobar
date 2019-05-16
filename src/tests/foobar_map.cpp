@@ -6,9 +6,7 @@
 #include "../elona/testing.hpp"
 #include "tests.hpp"
 
-#include "../elona/foobar_map/foobar_map.hpp"
-#include "../elona/foobar_map/map_instantiator.hpp"
-#include "../elona/foobar_map/map_loader.hpp"
+#include "../elona/foobar_map/init_map.hpp"
 
 using namespace elona;
 using namespace elona::testing;
@@ -28,9 +26,7 @@ TEST_CASE("Test foobar map is instantiated correctly", "[FoobarMap]")
         inv[i].clear();
     }
 
-    auto map = fmp::MapLoader::load(
-        testing::get_test_data_path() / "map" / "puti.fmp");
-    fmp::instantiate_map(map);
+    fmp::init_map("puti");
 
     REQUIRE(chara_get_free_slot() == 153);
     REQUIRE(inv_getfreeid(-1) == 5132);
