@@ -5,7 +5,9 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 #include "../../util/strutil.hpp"
+#include "../draw.hpp"
 #include "../lua_env/data_manager.hpp"
+#include "../lua_env/enums/enums.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../macro.hpp"
 
@@ -77,10 +79,19 @@ TsxExporter::TileSource TsxExporter::crop_atlas_source(
     std::tie(mod_id, name) = strutil::split_on_string(data_id, ".");
     fs::path cache_dir = _filename.parent_path() / "cache" / type / mod_id;
 
+    optional<snail::Color> color;
+
     if (auto name_opt =
             result_tbl.get<sol::optional<std::string>>("image_name"))
     {
         name = *name_opt;
+    }
+
+    if (auto color_id = result_tbl.get<sol::optional<std::string>>("color"))
+    {
+        auto color_index =
+            lua::LuaEnums::ColorIndexTable.ensure_from_string(*color_id);
+        color = draw_get_color(color_index, true);
     }
 
     fs::create_directories(cache_dir);
@@ -103,7 +114,22 @@ TsxExporter::TileSource TsxExporter::crop_atlas_source(
         atlas_image.width() * sizeof(bg::bgra8_pixel_t));
     auto cropped_view = bg::subimage_view(view, x, y, width, height);
 
-    // TODO: y offset
+    if (color)
+    {
+        bg::red_t r;
+        bg::blue_t g;
+        bg::green_t b;
+
+        for (auto& i : cropped_view)
+        {
+            auto& cr = bg::get_color(i, r);
+            auto& cg = bg::get_color(i, g);
+            auto& cb = bg::get_color(i, b);
+            cr = bg::channel_multiply(cr, color->r);
+            cg = bg::channel_multiply(cg, color->g);
+            cb = bg::channel_multiply(cb, color->b);
+        }
+    }
 
     std::string cache_file =
         filepathutil::make_preferred_path_in_utf8(cache_dir / (name + ".png"));

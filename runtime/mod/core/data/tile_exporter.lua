@@ -28,7 +28,7 @@ data:add_multi(
 
             return {
                source = image.source,
-               color = image.color,
+               color = v.color,
                tall = image.tall,
                atlas = "__BUILTIN__/graphic/character.bmp",
                properties = {
@@ -51,7 +51,7 @@ data:add_multi(
 
             return {
                source = image.source,
-               color = image.color,
+               color = v.color,
                atlas = "__BUILTIN__/graphic/item.bmp",
                tall = image.tall,
                properties = {
@@ -60,7 +60,6 @@ data:add_multi(
             }
          end,
          instantiate = function(t)
-            print(Elona.require("Debug").inspect(t))
             Item.create(t.x, t.y, t.id, t.props.number or 1)
          end
       },
@@ -111,7 +110,6 @@ data:add_multi(
                return
             end
 
-            print(Elona.require("Debug").inspect(t))
             local tile = data.raw["core.map_chip"][t.props.actual_tile]
             Map.set_feat(t.x, t.y, tile.legacy_id, tonumber(t.props.legacy_id), t.props.param)
 

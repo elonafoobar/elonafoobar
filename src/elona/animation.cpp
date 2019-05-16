@@ -28,11 +28,8 @@ int am;
 
 void set_color_modulator(int color_id, int window_id = -1)
 {
-    set_color_mod(
-        255 - c_col(0, color_id),
-        255 - c_col(1, color_id),
-        255 - c_col(2, color_id),
-        window_id);
+    auto color = draw_get_color(color_id);
+    set_color_mod(color.r, color.g, color.b, window_id);
 }
 
 

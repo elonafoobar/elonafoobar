@@ -509,7 +509,7 @@ data:add_multi(
          can_return_to = true,
          shows_floor_count_in_name = true,
          chara_filter = function()
-            local opts = { objlv = Calc.calc_objlv(Map.current_dungeon_level()), quality = "Bad" }
+            local opts = { objlv = Math.calc_objlv(Map.current_dungeon_level()), quality = "Bad" }
 
             if Map.current_dungeon_level() < 4 and opts.objlv > 5 then
                opts.objlv = 5

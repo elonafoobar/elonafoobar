@@ -160,7 +160,7 @@ optional_ref<const Extent> draw_get_rect(const std::string& key)
  * Applies a color to the item sprite of ID @a id and copies it to the scratch
  * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
  */
-optional_ref<const Extent> prepare_item_image(int id, int color)
+optional_ref<const Extent> prepare_item_image(int id, int color_id)
 {
     const auto rect = draw_get_rect_item(id);
 
@@ -169,11 +169,8 @@ optional_ref<const Extent> prepare_item_image(int id, int color)
 
     // The color modifier is applied to the source buffer before
     // copying it to the scratch region. It is restored after copying.
-    set_color_mod(
-        255 - c_col(0, color),
-        255 - c_col(1, color),
-        255 - c_col(2, color),
-        rect->buffer);
+    auto color = draw_get_color(color_id);
+    set_color_mod(color.r, color.g, color.b, rect->buffer);
     gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
     set_color_mod(255, 255, 255, rect->buffer);
 
@@ -212,11 +209,9 @@ prepare_item_image(int id, int color, int character_image)
         gmode(2);
 
         // Modify color and restore it afterwards.
+        auto color_array = draw_get_color(color);
         set_color_mod(
-            255 - c_col(0, color),
-            255 - c_col(1, color),
-            255 - c_col(2, color),
-            item_rect->buffer);
+            color_array.r, color_array.g, color_array.b, item_rect->buffer);
         gcopy(
             item_rect->buffer,
             item_rect->x,
@@ -228,11 +223,9 @@ prepare_item_image(int id, int color, int character_image)
         set_color_mod(255, 255, 255, item_rect->buffer);
 
         // Modify color and restore it afterwards.
+        color_array = draw_get_color(character_color);
         set_color_mod(
-            255 - c_col(0, character_color),
-            255 - c_col(1, character_color),
-            255 - c_col(2, character_color),
-            rect->buffer);
+            color_array.r, color_array.g, color_array.b, rect->buffer);
         gcopy(
             rect->buffer,
             rect->x + 8,
@@ -266,11 +259,9 @@ prepare_item_image(int id, int color, int character_image)
         boxf(0, 960, item_rect->width, item_rect->height);
 
         // Modify color and restore it afterwards.
+        auto color_array = draw_get_color(character_color);
         set_color_mod(
-            255 - c_col(0, character_color),
-            255 - c_col(1, character_color),
-            255 - c_col(2, character_color),
-            rect->buffer);
+            color_array.r, color_array.g, color_array.b, rect->buffer);
         gcopy(
             rect->buffer,
             rect->x + 8,
@@ -283,11 +274,9 @@ prepare_item_image(int id, int color, int character_image)
 
         gmode(2, 192);
         // Modify color and restore it afterwards.
+        color_array = draw_get_color(color);
         set_color_mod(
-            255 - c_col(0, color),
-            255 - c_col(1, color),
-            255 - c_col(2, color),
-            item_rect->buffer);
+            color_array.r, color_array.g, color_array.b, item_rect->buffer);
         gcopy(
             item_rect->buffer,
             item_rect->x,
@@ -550,11 +539,8 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     pget(128, 0);
     gcopy(texture_id, 128, 0, 128, 198, 256, 0);
     gmode(2);
-    set_color_mod(
-        255 - c_col(0, pcc(body_part, cc) / 1000),
-        255 - c_col(1, pcc(body_part, cc) / 1000),
-        255 - c_col(2, pcc(body_part, cc) / 1000),
-        texture_id);
+    auto color = draw_get_color(pcc(body_part, cc) / 1000);
+    set_color_mod(color.r, color.g, color.b, texture_id);
     gcopy(texture_id, 256, 0, 128, 198, 0, 0);
     set_color_mod(255, 255, 255, texture_id);
 }
@@ -600,10 +586,8 @@ optional_ref<const Extent> chara_preparepic(int image_id)
 
     gsel(rect->buffer);
     boxf(0, 960, rect->width, rect->height);
-    set_color_mod(
-        255 - c_col(0, color_id),
-        255 - c_col(1, color_id),
-        255 - c_col(2, color_id));
+    auto color = draw_get_color(color_id);
+    set_color_mod(color.r, color.g, color.b);
     gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
     set_color_mod(255, 255, 255);
     gsel(0);
@@ -1030,6 +1014,22 @@ void draw_select_key(const std::string& key, int x, int y)
     gmode(2);
 }
 
+
+snail::Color draw_get_color(int color_id, bool no_random)
+{
+    color_id = static_cast<int>(static_cast<ColorIndex>(color_id));
+    if (no_random)
+        color_id %= 21;
+    const auto r = static_cast<uint8_t>(255 - c_col(0, color_id));
+    const auto g = static_cast<uint8_t>(255 - c_col(1, color_id));
+    const auto b = static_cast<uint8_t>(255 - c_col(2, color_id));
+    return {r, g, b, 255};
+}
+
+snail::Color draw_get_color(const ColorIndex& color_index, bool no_random)
+{
+    return draw_get_color(static_cast<int>(color_index), no_random);
+}
 
 
 /**

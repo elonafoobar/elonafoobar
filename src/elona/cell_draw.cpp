@@ -625,8 +625,8 @@ optional_ref<const Extent> prepare_chara_chip(int c_, int dx, int dy)
     }
     gsel(rect->buffer);
     boxf(0, 960, rect->width, rect->height);
-    set_color_mod(
-        255 - c_col(0, col_), 255 - c_col(1, col_), 255 - c_col(2, col_));
+    auto color = draw_get_color(col_);
+    set_color_mod(color.r, color.g, color.b);
     gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
     set_color_mod(255, 255, 255);
     gsel(0);

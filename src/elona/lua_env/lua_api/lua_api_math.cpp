@@ -1,4 +1,5 @@
 #include "lua_api_math.hpp"
+#include "../../calc.hpp"
 
 namespace elona
 {
@@ -19,9 +20,15 @@ int LuaApiMath::clamp(int n, int min, int max)
     return elona::clamp(n, min, max);
 }
 
+int LuaApiMath::calc_objlv(int level)
+{
+    return calcobjlv(level);
+}
+
 void LuaApiMath::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiMath, clamp);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiMath, calc_objlv);
 }
 
 } // namespace lua

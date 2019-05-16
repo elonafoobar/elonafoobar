@@ -11,6 +11,11 @@ data:add_multi(
          on_bump_into = function() GUI.snd("core.chat") end
       },
       {
+         id = "quest_board",
+         legacy_id = 23,
+         tiles = {"core.1_727"},
+      },
+      {
          id = "small_medal",
          legacy_id = 32,
          tiles = {"core.1_234"},

@@ -25,13 +25,13 @@ static void _init_map_shelter()
 {
     if (game_data.current_dungeon_level == 1)
     {
-        map_initcustom(u8"shelter_2"s);
+        fmp::init_map("shelter_2");
         map_data.refresh_type = 0;
         map_data.type = static_cast<int>(mdata_t::MapType::shelter);
     }
     else
     {
-        map_initcustom(u8"shelter_1"s);
+        fmp::init_map("shelter_1");
         map_data.user_map_flag = 0;
     }
     map_data.max_crowd_density = 0;
@@ -52,7 +52,7 @@ static void _init_map_nefia()
 
 static void _init_map_museum()
 {
-    map_initcustom(u8"museum_1"s);
+    fmp::init_map("museum_1");
     map_data.bgm = 53;
     map_placeplayer();
     map_data.user_map_flag = 0;
@@ -63,7 +63,7 @@ static void _init_map_museum()
 
 static void _init_map_shop()
 {
-    map_initcustom(u8"shop_1"s);
+    fmp::init_map("shop_1");
     map_data.bgm = 53;
     map_data.max_item_count = 10;
     map_placeplayer();
@@ -80,7 +80,7 @@ static void _init_map_shop()
 
 static void _init_map_crop()
 {
-    map_initcustom(u8"crop_1"s);
+    fmp::init_map("crop_1");
     map_data.bgm = 68;
     map_placeplayer();
     map_data.max_item_count = 80;
@@ -92,7 +92,7 @@ static void _init_map_crop()
 
 static void _init_map_ranch()
 {
-    map_initcustom(u8"ranch_1"s);
+    fmp::init_map("ranch_1");
     map_data.bgm = 68;
     map_placeplayer();
     map_data.max_item_count = 80;
@@ -106,7 +106,7 @@ static void _init_map_ranch()
 
 static void _init_map_your_dungeon()
 {
-    map_initcustom(u8"dungeon1"s);
+    fmp::init_map("dungeon1");
     map_data.bgm = 68;
     map_placeplayer();
     map_data.max_item_count = 350;
@@ -118,7 +118,7 @@ static void _init_map_your_dungeon()
 
 static void _init_map_storage_house()
 {
-    map_initcustom(u8"storage_1"s);
+    fmp::init_map("storage_1");
     map_data.bgm = 68;
     map_placeplayer();
     map_data.max_item_count = 200;
@@ -160,7 +160,7 @@ static void _init_map_test_site()
 
 static void _init_map_lumiest_graveyard()
 {
-    map_initcustom(u8"grave_1"s);
+    fmp::init_map("grave_1");
     map_data.max_crowd_density = 7;
     map_data.bgm = 79;
     map_placeplayer();
@@ -174,7 +174,7 @@ static void _init_map_lumiest_graveyard()
 
 static void _init_map_jail()
 {
-    map_initcustom(u8"jail1"s);
+    fmp::init_map("jail1");
     map_data.max_crowd_density = 0;
     map_data.bgm = 79;
     map_placeplayer();
@@ -182,7 +182,7 @@ static void _init_map_jail()
 
 static void _init_map_truce_ground()
 {
-    map_initcustom(u8"shrine_1"s);
+    fmp::init_map("shrine_1");
     map_data.max_crowd_density = 10;
     flt();
     itemcreate(-1, 171, 10, 8, 0);
@@ -227,7 +227,7 @@ static void _init_map_truce_ground()
 
 static void _init_map_embassy()
 {
-    map_initcustom(u8"office_1"s);
+    fmp::init_map("office_1");
     map_data.max_crowd_density = 0;
     flt();
     chara_create(-1, 173, 9, 2);
@@ -266,7 +266,7 @@ static void _init_map_embassy()
 
 static void _init_map_test_world_north_border()
 {
-    map_initcustom(u8"test2"s);
+    fmp::init_map("test2");
     map_data.max_crowd_density = 0;
     flt();
     chara_create(-1, 1, 7, 23);
@@ -323,7 +323,7 @@ static void _init_map_test_world_north_border()
 
 static void _init_map_tyris_border()
 {
-    map_initcustom(u8"station-nt1"s);
+    fmp::init_map("station-nt1");
     map_data.max_crowd_density = 0;
     flt();
     chara_create(-1, 1, 7, 23);
@@ -379,7 +379,7 @@ static void _init_map_tyris_border()
 
 static void _init_map_the_smoke_and_pipe()
 {
-    map_initcustom(u8"inn1"s);
+    fmp::init_map("inn1");
     map_data.max_crowd_density = 0;
     flt();
     chara_create(-1, 1, 19, 10);
@@ -449,7 +449,7 @@ static void _init_map_the_smoke_and_pipe()
 
 static void _init_map_miral_and_garoks_workshop()
 {
-    map_initcustom(u8"smith0"s);
+    fmp::init_map("smith0");
     map_data.max_crowd_density = 0;
     flt();
     chara_create(-1, 208, 17, 11);
@@ -470,7 +470,7 @@ static void _init_map_miral_and_garoks_workshop()
 
 static void _init_map_mansion_of_younger_sister()
 {
-    map_initcustom(u8"sister"s);
+    fmp::init_map("sister");
     map_data.max_crowd_density = 0;
     map_data.bgm = 79;
     if (mapupdate == 0)
@@ -499,7 +499,7 @@ static void _init_map_mansion_of_younger_sister()
 
 static void _init_map_cyber_dome()
 {
-    map_initcustom(u8"cyberdome"s);
+    fmp::init_map("cyberdome");
     map_data.max_crowd_density = 10;
     flt();
     itemcreate(-1, 171, 19, 5, 0);
@@ -537,7 +537,7 @@ static void _init_map_cyber_dome()
 
 static void _init_map_larna()
 {
-    map_initcustom(u8"highmountain"s);
+    fmp::init_map("highmountain");
     map_data.max_crowd_density = 20;
     flt();
     chara_create(-1, 41, 21, 23);
@@ -597,7 +597,7 @@ static void _init_map_larna()
 
 static void _init_map_arena()
 {
-    map_initcustom(u8"arena_1"s);
+    fmp::init_map("arena_1");
     map_placeplayer();
     for (int cnt = 0; cnt < 16; ++cnt)
     {
@@ -655,7 +655,7 @@ static void _init_map_arena()
 
 static void _init_map_pet_arena()
 {
-    map_initcustom(u8"arena_2"s);
+    fmp::init_map("arena_2");
     map_data.max_crowd_density = 0;
     map_data.bgm = 81;
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -718,7 +718,7 @@ static void _init_map_pet_arena()
 
 static void _init_map_fort_of_chaos_beast()
 {
-    map_initcustom(u8"god"s);
+    fmp::init_map("god");
     map_data.max_crowd_density = 0;
     map_data.bgm = 63;
     flt();
@@ -728,7 +728,7 @@ static void _init_map_fort_of_chaos_beast()
 
 static void _init_map_fort_of_chaos_machine()
 {
-    map_initcustom(u8"god"s);
+    fmp::init_map("god");
     map_data.max_crowd_density = 0;
     map_data.bgm = 63;
     flt();
@@ -738,7 +738,7 @@ static void _init_map_fort_of_chaos_machine()
 
 static void _init_map_fort_of_chaos_collapsed()
 {
-    map_initcustom(u8"god"s);
+    fmp::init_map("god");
     map_data.bgm = 63;
     map_data.max_crowd_density = 0;
     flt();
@@ -847,21 +847,21 @@ static void _init_map_your_home()
 
 static void _init_map_north_tyris()
 {
-    map_initcustom(u8"ntyris"s);
+    fmp::init_map("ntyris");
     initialize_world_map();
     map_placeplayer();
 }
 
 static void _init_map_south_tyris()
 {
-    map_initcustom(u8"styris"s);
+    fmp::init_map("styris");
     initialize_world_map();
     map_placeplayer();
 }
 
 static void _init_map_test_world()
 {
-    map_initcustom(u8"test"s);
+    fmp::init_map("test");
     initialize_world_map();
     map_placeplayer();
 }
@@ -869,7 +869,7 @@ static void _init_map_test_world()
 static void _init_map_derphy_town()
 {
     map_data.max_crowd_density = 35;
-    map_initcustom(u8"rogueden"s);
+    fmp::init_map("rogueden");
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
@@ -957,7 +957,7 @@ static void _init_map_derphy_town()
 static void _init_map_derphy_thieves_guild()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"thiefguild"s);
+    fmp::init_map("thiefguild");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::guild);
     map_data.max_crowd_density = 25;
@@ -1012,7 +1012,7 @@ static void _init_map_derphy()
 static void _init_map_palmia()
 {
     map_data.max_crowd_density = 45;
-    map_initcustom(u8"palmia"s);
+    fmp::init_map("palmia");
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
@@ -1170,7 +1170,7 @@ static void _init_map_palmia()
 static void _init_map_lumiest_town()
 {
     map_data.max_crowd_density = 40;
-    map_initcustom(u8"lumiest"s);
+    fmp::init_map("lumiest");
     map_placeplayer();
     map_data.user_map_flag = 0;
     if (game_data.quest_flags.sewer_sweeping)
@@ -1288,7 +1288,7 @@ static void _init_map_lumiest_town()
 static void _init_map_lumiest_mages_guild()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"mageguild"s);
+    fmp::init_map("mageguild");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::guild);
     map_data.max_crowd_density = 25;
@@ -1329,7 +1329,7 @@ static void _init_map_lumiest_mages_guild()
 static void _init_map_lumiest_sewer()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"sqSewer"s);
+    fmp::init_map("sqSewer");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;
@@ -1360,7 +1360,7 @@ static void _init_map_lumiest()
 static void _init_map_yowyn_town()
 {
     map_data.max_crowd_density = 35;
-    map_initcustom(u8"yowyn"s);
+    fmp::init_map("yowyn");
     map_placeplayer();
     map_data.user_map_flag = 0;
     if (game_data.quest_flags.cat_house)
@@ -1458,7 +1458,7 @@ static void _init_map_yowyn_town()
 static void _init_map_yowyn_cat_mansion()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"sqcat"s);
+    fmp::init_map("sqcat");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;
@@ -1472,7 +1472,7 @@ static void _init_map_yowyn_cat_mansion()
 static void _init_map_yowyn_battle_field()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"sqwar"s);
+    fmp::init_map("sqwar");
     map_data.indoors_flag = 2;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;
@@ -1529,7 +1529,7 @@ static void _init_map_yowyn()
 static void _init_map_noyel()
 {
     map_data.max_crowd_density = 35;
-    map_initcustom(u8"noyel"s);
+    fmp::init_map("noyel");
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
@@ -1648,7 +1648,7 @@ static void _init_map_noyel()
 static void _init_map_port_kapul_town()
 {
     map_data.max_crowd_density = 40;
-    map_initcustom(u8"kapul"s);
+    fmp::init_map("kapul");
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
@@ -1777,7 +1777,7 @@ static void _init_map_port_kapul_town()
 static void _init_map_port_kapul_fighters_guild()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"fighterguild"s);
+    fmp::init_map("fighterguild");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::guild);
     map_data.max_crowd_density = 25;
@@ -1813,7 +1813,7 @@ static void _init_map_port_kapul_fighters_guild()
 static void _init_map_port_kapul_doom_ground()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"sqkamikaze"s);
+    fmp::init_map("sqkamikaze");
     map_data.indoors_flag = 2;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;
@@ -1854,7 +1854,7 @@ static void _init_map_port_kapul()
 static void _init_map_vernis_town()
 {
     map_data.max_crowd_density = 40;
-    map_initcustom(u8"vernis"s);
+    fmp::init_map("vernis");
     map_placeplayer();
     map_data.user_map_flag = 0;
     if (game_data.quest_flags.thieves_hideout)
@@ -1974,7 +1974,7 @@ static void _init_map_vernis_town()
 static void _init_map_vernis_the_mine()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"puti"s);
+    fmp::init_map("puti");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;
@@ -1988,7 +1988,7 @@ static void _init_map_vernis_the_mine()
 static void _init_map_vernis_robbers_hideout()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"sqRogue"s);
+    fmp::init_map("sqRogue");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;
@@ -2002,7 +2002,7 @@ static void _init_map_vernis_robbers_hideout()
 static void _init_map_vernis_test_site()
 {
     map_data.tileset = 0;
-    map_initcustom(u8"sqNightmare"s);
+    fmp::init_map("sqNightmare");
     map_data.indoors_flag = 1;
     map_data.type = static_cast<int>(mdata_t::MapType::dungeon);
     map_data.max_crowd_density = 0;
@@ -2038,7 +2038,7 @@ static void _init_map_vernis()
     // TEMP
     if (game_data.current_dungeon_level == 6)
     {
-        fmp::init_map("puti");
+        fmp::init_map("firet1");
     }
 }
 
@@ -2345,7 +2345,7 @@ static void _init_map_lesimas()
         if (game_data.current_dungeon_level ==
             area_data[game_data.current_map].deepest_level)
         {
-            map_initcustom(u8"lesimas_1"s);
+            fmp::init_map("lesimas_1");
             map_data.max_crowd_density = 0;
             map_data.refresh_type = 0;
             map_data.bgm = 66;
@@ -2396,7 +2396,7 @@ static void _init_map_tower_of_fire()
     if (game_data.current_dungeon_level ==
         area_data[game_data.current_map].deepest_level)
     {
-        map_initcustom(u8"firet1"s);
+        fmp::init_map("firet1");
         map_data.max_crowd_density = 0;
         map_data.bgm = 66;
         map_placeplayer();
@@ -2412,7 +2412,7 @@ static void _init_map_crypt_of_the_damned()
     if (game_data.current_dungeon_level ==
         area_data[game_data.current_map].deepest_level)
     {
-        map_initcustom(u8"undeadt1"s);
+        fmp::init_map("undeadt1");
         map_data.max_crowd_density = 0;
         map_data.bgm = 66;
         map_placeplayer();
@@ -2428,7 +2428,7 @@ static void _init_map_ancient_castle()
     if (game_data.current_dungeon_level ==
         area_data[game_data.current_map].deepest_level)
     {
-        map_initcustom(u8"roguet1"s);
+        fmp::init_map("roguet1");
         map_data.max_crowd_density = 0;
         map_data.bgm = 66;
         map_placeplayer();
@@ -2444,7 +2444,7 @@ static void _init_map_dragons_nest()
     if (game_data.current_dungeon_level ==
         area_data[game_data.current_map].deepest_level)
     {
-        map_initcustom(u8"d_1"s);
+        fmp::init_map("d_1");
         map_data.max_crowd_density = 0;
         map_data.bgm = 66;
         map_placeplayer();
@@ -2519,7 +2519,7 @@ static void _init_map_yeeks_nest()
 
 static void _init_map_pyramid_first_floor()
 {
-    map_initcustom(u8"sqPyramid"s);
+    fmp::init_map("sqPyramid");
     map_data.max_crowd_density = 40;
     map_data.bgm = 61;
     map_placeplayer();
@@ -2533,7 +2533,7 @@ static void _init_map_pyramid_first_floor()
 
 static void _init_map_pyramid_second_floor()
 {
-    map_initcustom(u8"sqPyramid2"s);
+    fmp::init_map("sqPyramid2");
     map_data.max_crowd_density = 0;
     map_data.bgm = 61;
     map_placeplayer();

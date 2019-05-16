@@ -5,6 +5,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "foobar_map/init_map.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
@@ -392,6 +393,9 @@ void map_placecharaonentrance(int chara_index, int entrance_type)
     cyinit = y_at_m167;
     rc = chara_index;
     chara_place();
+    std::cerr << "map place player " << chara_index << " " << entrance_type
+              << " " << x_at_m167 << " " << y_at_m167 << " " << mapstartx << " "
+              << mapstarty << std::endl;
 }
 
 
@@ -2924,7 +2928,7 @@ void initialize_quest_map_town()
 {
     map_data.max_crowd_density = 0;
     map_data.indoors_flag = 2;
-    map_initcustom(map_get_custom_map_name(game_data.previous_map2));
+    fmp::init_map(map_get_custom_map_name(game_data.previous_map2));
     mdatan(0) = i18n::s.get("core.locale.map.quest.urban_area");
     randomize();
     game_data.entrance_type = 5;

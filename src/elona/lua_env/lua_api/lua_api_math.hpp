@@ -15,6 +15,8 @@ namespace LuaApiMath
 {
 int clamp(int, int, int);
 
+int calc_objlv(int);
+
 
 void bind(sol::table&);
 } // namespace LuaApiMath

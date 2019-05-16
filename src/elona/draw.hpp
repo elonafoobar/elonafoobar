@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "../snail/color.hpp"
+#include "enums.hpp"
 #include "optional.hpp"
 #include "pic_loader/extent.hpp"
 #include "shared_id.hpp"
@@ -93,6 +94,10 @@ void draw_clear_loaded_chips();
 void draw_init_key_select_buffer();
 void draw_select_key(const std::string& key, int x, int y);
 
+snail::Color draw_get_color(int color_id, bool no_random = false);
+snail::Color draw_get_color(
+    const ColorIndex& color_index,
+    bool no_random = false);
 
 void bmes(
     const std::string& message,

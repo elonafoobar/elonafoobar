@@ -460,13 +460,8 @@ void Message::_txt_internal(std::vector<std::string> args)
 
 void Message::txtef(ColorIndex color)
 {
-    const auto color_int =
-        static_cast<int>(static_cast<ColorIndex>(color)) % 21;
-    text_color = {static_cast<uint8_t>(255 - c_col(0, color_int)),
-                  static_cast<uint8_t>(255 - c_col(1, color_int)),
-                  static_cast<uint8_t>(255 - c_col(2, color_int)),
-                  255};
-    fix_text_color = color_int == 5;
+    text_color = draw_get_color(color, true);
+    fix_text_color = color == ColorIndex::orange;
 }
 
 } // namespace elona
