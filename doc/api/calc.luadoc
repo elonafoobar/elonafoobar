@@ -1,0 +1,9 @@
+--- Various calculation.
+--  @usage local Calc = Elona.require("Calc")
+module "Calc"
+
+--- Calculate object generation level.
+--  @tparam num n The base object level.
+--  @treturn num The object level.
+--  @function calc_objlv
+function calc_objlv(n) end
