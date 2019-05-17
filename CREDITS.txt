@@ -10,6 +10,9 @@ tamanugi
 Morganeon
     Enhanced skill tracker, fixed docs. refactored the codebase.
 
+nanbansenji
+    Fixed glitch in Credits/License view.
+
 Doorknob
     Main english translator of omake and omake overhaul. Foobar ported the works from these two variants.
 
@@ -20,4 +23,10 @@ LordAlfredo
     Supported porting E+C's cutscene files to vanilla and foobar.
 
 hapiemp
+    Drew some of graphics.
+
+jack
+    Drew some of pixelarts.
+
+相良 祐
     Drew some of graphics.
