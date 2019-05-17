@@ -95,8 +95,8 @@ _get_pos(int cnt, int list_item, const std::string& list_text)
 
 void UIMenuItemDesc::_draw_normal_mark(int cnt, int list_item)
 {
-    int desc = list_item % 10000;
-    draw_indexed("item_enchant_mark", wx + 40, wy + 61 + cnt * 18, desc);
+    int icon_index = list_item % 10000 - 1;
+    draw_indexed("item_enchant_mark", wx + 40, wy + 61 + cnt * 18, icon_index);
 }
 
 void UIMenuItemDesc::_draw_marks(int cnt, int list_item)
