@@ -11,6 +11,7 @@
 #include "../variables.hpp"
 #include "foobar_map.hpp"
 #include "map_loader.hpp"
+#include "util.hpp"
 
 namespace elona
 {
@@ -149,18 +150,12 @@ static void _instantiate_map(FoobarMap& map)
             {
                 if (instantiators.find(object.data_type) == instantiators.end())
                 {
-                    // TODO: lookup by "base" field across all exporters
-                    sol::optional<sol::table> it =
-                        exporters[object.data_type.get()];
-                    if (!it)
-                    {
-                        throw std::runtime_error(
-                            "No tile exporter registered for \"" +
-                            object.data_type.get() + "\"");
-                    }
-                    instantiators[object.data_type] = lua::WrappedFunction(
-                        object.data_type,
-                        it->get<sol::protected_function>("instantiate"));
+                    auto exporter = get_tile_exporter(object.data_type.get());
+                    auto instantiate =
+                        exporter.get<sol::protected_function>("instantiate");
+
+                    instantiators[object.data_type] =
+                        lua::WrappedFunction(object.data_type, instantiate);
                 }
 
                 auto inst = instantiators.at(object.data_type);

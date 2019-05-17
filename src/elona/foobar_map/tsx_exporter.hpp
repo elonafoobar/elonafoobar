@@ -43,8 +43,7 @@ private:
     TsxExporter::TileSource crop_atlas_source(
         const std::string& type,
         const std::string& data_id,
-        sol::table result_tbl,
-        sol::table source_tbl);
+        sol::table result_tbl);
     TsxExporter::TileSource get_file_source(const std::string& source_str);
     optional<TileSource> get_source(
         const std::string& type,

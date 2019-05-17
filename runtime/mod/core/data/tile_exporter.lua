@@ -10,7 +10,6 @@ data:add_multi(
       {
          id = "chara",
          base = "core.chara",
-         maximum = 188,
          export = function(v)
             local image = ""
             if v.image then
@@ -43,7 +42,6 @@ data:add_multi(
       {
          id = "item",
          base = "core.item",
-         maximum = 400,
          export = function(v)
             local image = ""
             image = data.by_legacy["core.item_chip"][v.image]
@@ -51,7 +49,7 @@ data:add_multi(
 
             return {
                source = image.source,
-               color = v.color,
+               color = ecolor,
                atlas = "__BUILTIN__/graphic/item.bmp",
                tall = image.tall,
                properties = {

@@ -4,6 +4,7 @@
 #include <boost/gil/image.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
+#include "../../util/stopwatch.hpp"
 #include "../../util/strutil.hpp"
 #include "../draw.hpp"
 #include "../lua_env/data_manager.hpp"
@@ -11,6 +12,7 @@
 #include "../lua_env/lua_env.hpp"
 #include "../lua_env/mod_manager.hpp"
 #include "../macro.hpp"
+#include "util.hpp"
 
 namespace elona
 {
@@ -32,6 +34,10 @@ static int _table_length(sol::table t)
     return i;
 }
 
+/**
+ * Adds the options sent to the exporter to the table which is passed to the
+ * tile exporter's "export" function.
+ */
 static sol::table _make_opts_table(
     const std::unordered_map<std::string, std::string> opts)
 {
@@ -43,6 +49,10 @@ static sol::table _make_opts_table(
     return result;
 }
 
+
+/**
+ * Adds properties for each tile in the exported tileset, such as "legacy_id".
+ */
 static void _add_properties(pt::ptree& properties, sol::table tbl)
 {
     for (const auto kvp : tbl)
@@ -53,29 +63,38 @@ static void _add_properties(pt::ptree& properties, sol::table tbl)
     }
 }
 
+/**
+ * Creates a new tile image from an atlas source. @a result_tbl is returned by
+ * the export function and has a "source" field with the same format as the one
+ * in core.chara_chip or core.item_chip.
+ */
 TsxExporter::TileSource TsxExporter::crop_atlas_source(
     const std::string& type,
     const std::string& data_id,
-    sol::table result_tbl,
-    sol::table source_tbl)
+    sol::table result_tbl)
 {
+    sol::table source_tbl = result_tbl["source"];
+
     fs::path atlas_path =
         filesystem::resolve_path_for_mod(result_tbl.get<std::string>("atlas"));
     std::string atlas_path_str =
         filepathutil::make_preferred_path_in_utf8(atlas_path);
 
+    // Load the tileset atlas if it isn't loaded, else look it up in the cache.
     auto it = _cache.find(atlas_path_str);
     if (it == _cache.end())
     {
-        _cache.emplace(
-            atlas_path_str,
-            snail::Surface{atlas_path,
-                           snail::Color{0, 0, 0},
-                           snail::Surface::Format::argb8888});
-        it = _cache.find(atlas_path_str);
-        assert(it != _cache.end());
+        auto pair =
+            _cache.insert({atlas_path_str,
+                           snail::Surface{atlas_path,
+                                          snail::Color{0, 0, 0},
+                                          snail::Surface::Format::argb8888}});
+        it = pair.first;
     }
 
+    auto& atlas_image = it->second;
+
+    // Obtain output filename from data ID.
     std::string mod_id, name;
     std::tie(mod_id, name) = strutil::split_on_string(data_id, ".");
     fs::path cache_dir = _filename.parent_path() / "cache" / type / mod_id;
@@ -97,17 +116,17 @@ TsxExporter::TileSource TsxExporter::crop_atlas_source(
 
     fs::create_directories(cache_dir);
 
+    // Get parameters for output tile image.
     bool tall = result_tbl.get_or("tall", false);
     int width = 48;
     int height = tall ? 96 : 48;
     int x = source_tbl.get<int>("x");
     int y = source_tbl.get<int>("y");
 
-    auto& atlas_image = it->second;
-
     bg::bgra8_pixel_t* p =
         reinterpret_cast<bg::bgra8_pixel_t*>(atlas_image.pixels());
 
+    // Copy the portion of the atlas to a new tile image.
     bg::bgra8_view_t view = bg::interleaved_view(
         atlas_image.width(),
         atlas_image.height(),
@@ -119,6 +138,7 @@ TsxExporter::TileSource TsxExporter::crop_atlas_source(
 
     if (color)
     {
+        // Tint the image.
         bg::bgra8_image_t output(width, height);
         auto output_view = bg::view(output);
 
@@ -150,6 +170,9 @@ TsxExporter::TileSource TsxExporter::crop_atlas_source(
     return TileSource{width, height, cache_file, sol::nullopt};
 }
 
+/**
+ * Returns a source pointing to an individual tile image.
+ */
 TsxExporter::TileSource TsxExporter::get_file_source(
     const std::string& source_str)
 {
@@ -161,6 +184,10 @@ TsxExporter::TileSource TsxExporter::get_file_source(
                       sol::nullopt};
 }
 
+/**
+ * Extracts the tile image from a supported "source" field of tile-like data. It
+ * can be a portion of a tile atlas or an individual image.
+ */
 optional<TsxExporter::TileSource> TsxExporter::get_source(
     const std::string& type,
     const std::string& data_id,
@@ -169,7 +196,7 @@ optional<TsxExporter::TileSource> TsxExporter::get_source(
     sol::optional<sol::table> source_table = tbl["source"];
     if (source_table)
     {
-        return crop_atlas_source(type, data_id, tbl, *source_table);
+        return crop_atlas_source(type, data_id, tbl);
     }
 
     sol::optional<std::string> source_str = tbl["source"];
@@ -181,6 +208,11 @@ optional<TsxExporter::TileSource> TsxExporter::get_source(
     return none;
 }
 
+/**
+ * Obtains the sources from the result of calling "export" on
+ * core.tile_exporter. A single call to "export" can produce multiple tiles, as
+ * in the case of core.map_object.
+ */
 std::vector<TsxExporter::TileSource> TsxExporter::get_sources(
     const std::string& type,
     const std::string& data_id,
@@ -191,6 +223,7 @@ std::vector<TsxExporter::TileSource> TsxExporter::get_sources(
 
     if (is_array)
     {
+        // Treat each entry as a "result" object with a "source" field.
         for (const auto kvp : tbl)
         {
             if (auto tbl_item = kvp.second.as<sol::optional<sol::table>>())
@@ -206,6 +239,7 @@ std::vector<TsxExporter::TileSource> TsxExporter::get_sources(
     }
     else
     {
+        // Treat the table itself as having a "source" field.
         if (auto result = get_source(type, data_id, tbl))
         {
             result->properties =
@@ -217,6 +251,9 @@ std::vector<TsxExporter::TileSource> TsxExporter::get_sources(
     return results;
 }
 
+/**
+ * Opens a Tiled TSX file and writes required properties.
+ */
 void TsxExporter::open_tsx(const std::string& type)
 {
     if (_opened)
@@ -231,18 +268,9 @@ void TsxExporter::open_tsx(const std::string& type)
         throw std::runtime_error("No such type \"" + type + "\"");
     }
 
-    auto exporters =
-        *lua::lua->get_data_manager().get().get_table("core.tile_exporter");
+    sol::table exporter = get_tile_exporter(type);
 
-    // TODO: lookup by "base" field across all exporters
-    sol::optional<sol::table> it = exporters[type];
-    if (!it)
-    {
-        throw std::runtime_error(
-            "No tile exporter registered for \"" + type + "\"");
-    }
-
-    _exporter = it->get<sol::protected_function>("export");
+    _exporter = exporter.get<sol::protected_function>("export");
 
     _tree = {};
 
@@ -268,6 +296,11 @@ void TsxExporter::open_tsx(const std::string& type)
 }
 
 
+/**
+ * Calls "export" on the proper instance of core.tile_exporter, passing in the
+ * data pointed to by @a data_id, and writes one or more tiles to the opened TSX
+ * tileset.
+ */
 void TsxExporter::write_tile(const std::string& data_id)
 {
     if (!_opened)
@@ -295,8 +328,6 @@ void TsxExporter::write_tile(const std::string& data_id)
     {
         return;
     }
-
-    // TODO: sort tiles
 
     auto sources = get_sources(_type, data_id, *result_tbl);
 
@@ -327,6 +358,9 @@ void TsxExporter::write_tile(const std::string& data_id)
     }
 }
 
+/**
+ * Writes a completed TSX file.
+ */
 void TsxExporter::close_tsx()
 {
     if (!_opened)
@@ -345,8 +379,6 @@ void TsxExporter::close_tsx()
 
 static fs::path _tiled_plugin_path()
 {
-    std::cerr << "home " << filesystem::get_home_directory().string()
-              << std::endl;
     return filesystem::get_home_directory() / ".tiled";
 }
 
@@ -355,16 +387,22 @@ static fs::path _tileset_path()
     return _tiled_plugin_path() / "Elona_foobar";
 }
 
+/**
+ * Writes the mods used at the time of export to the tileset output folder, to
+ * allow detecting incompatibilities.
+ */
 static void _write_mods_list()
 {
     auto mods_file = _tileset_path() / "mods.txt";
     std::ofstream out{mods_file.native()};
 
-    for (const auto& pair : lua::lua->get_mod_manager())
+    for (const auto& pair : lua::lua->get_mod_manager().enabled_mods())
     {
-        // TODO: if not mod name is reserved
-        out << pair.second->manifest.name << " "
-            << pair.second->manifest.version.to_string() << "\n";
+        if (!lua::ModManager::mod_id_is_reserved(pair.second->manifest.id))
+        {
+            out << pair.second->manifest.id << " "
+                << pair.second->manifest.version.to_string() << "\n";
+        }
     }
 }
 
@@ -374,6 +412,10 @@ void export_tsx(
     int columns,
     std::unordered_map<std::string, std::string> opts)
 {
+    lib::Stopwatch watch;
+
+    ELONA_LOG("map.tsx") << "writing tileset " << filename << " for " << type;
+
     auto table = *lua::lua->get_data_manager().get().get_by_order_table(type);
 
     auto filepath = _tileset_path() / filename;
@@ -388,6 +430,9 @@ void export_tsx(
     exporter.close_tsx();
 
     _write_mods_list();
+
+    ELONA_LOG("map.tsx") << "wrote " << table.size() << " tiles in "
+                         << watch.measure() << "ms";
 }
 
 } // namespace fmp

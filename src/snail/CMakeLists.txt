@@ -18,6 +18,7 @@ set(SNAIL_SOURCES
   font.cpp
   image.cpp
   input.cpp
+  surface.cpp
 
   backends/${SNAIL_DIR}/application.cpp
   backends/${SNAIL_DIR}/audio.cpp
@@ -35,6 +36,7 @@ set(SNAIL_ANDROID_SOURCES
   font.cpp
   image.cpp
   input.cpp
+  surface.cpp
 
   backends/${SNAIL_DIR}/application.cpp
   backends/${SNAIL_DIR}/audio.cpp

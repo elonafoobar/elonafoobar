@@ -135,6 +135,7 @@ set(ELONA_SOURCES
   foobar_map/tsx_exporter.cpp
   foobar_map/map_loader.cpp
   foobar_map/init_map.cpp
+  foobar_map/util.cpp
 
   config/config.cpp
   config/config_def.cpp
