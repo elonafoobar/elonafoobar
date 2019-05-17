@@ -71,7 +71,7 @@ private:
 
 void export_tsx(
     const std::string& type,
-    const fs::path& filename,
+    const std::string& filename,
     int columns,
     std::unordered_map<std::string, std::string> opts);
 

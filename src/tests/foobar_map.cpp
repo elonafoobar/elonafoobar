@@ -17,30 +17,12 @@ TEST_CASE("Test foobar map is instantiated correctly", "[FoobarMap]")
 {
     testing::reset_state();
 
-    fmp::export_tsx(
-        "core.chara", "/home/ruin/.tiled/Elona_foobar/chara.tsx", 8, {});
-    fmp::export_tsx(
-        "core.item", "/home/ruin/.tiled/Elona_foobar/item.tsx", 8, {});
-    fmp::export_tsx(
-        "core.map_object",
-        "/home/ruin/.tiled/Elona_foobar/map_object.tsx",
-        8,
-        {});
-    fmp::export_tsx(
-        "core.map_chip",
-        "/home/ruin/.tiled/Elona_foobar/map0.tsx",
-        33,
-        {{"atlas_index", "0"}});
-    fmp::export_tsx(
-        "core.map_chip",
-        "/home/ruin/.tiled/Elona_foobar/map1.tsx",
-        33,
-        {{"atlas_index", "1"}});
-    fmp::export_tsx(
-        "core.map_chip",
-        "/home/ruin/.tiled/Elona_foobar/map2.tsx",
-        33,
-        {{"atlas_index", "2"}});
+    fmp::export_tsx("core.chara", "chara.tsx", 8, {});
+    fmp::export_tsx("core.item", "item.tsx", 8, {});
+    fmp::export_tsx("core.map_object", "map_object.tsx", 8, {});
+    fmp::export_tsx("core.map_chip", "map0.tsx", 32, {{"atlas_index", "0"}});
+    fmp::export_tsx("core.map_chip", "map1.tsx", 32, {{"atlas_index", "1"}});
+    fmp::export_tsx("core.map_chip", "map2.tsx", 32, {{"atlas_index", "2"}});
 
     for (auto&& i : cdata.others())
     {

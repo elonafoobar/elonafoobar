@@ -9,6 +9,7 @@
 #include "../lua_env/data_manager.hpp"
 #include "../lua_env/enums/enums.hpp"
 #include "../lua_env/lua_env.hpp"
+#include "../lua_env/mod_manager.hpp"
 #include "../macro.hpp"
 
 namespace elona
@@ -113,27 +114,38 @@ TsxExporter::TileSource TsxExporter::crop_atlas_source(
         p,
         atlas_image.width() * sizeof(bg::bgra8_pixel_t));
     auto cropped_view = bg::subimage_view(view, x, y, width, height);
+    std::string cache_file =
+        filepathutil::make_preferred_path_in_utf8(cache_dir / (name + ".png"));
 
     if (color)
     {
-        bg::red_t r;
-        bg::blue_t g;
-        bg::green_t b;
+        bg::bgra8_image_t output(width, height);
+        auto output_view = bg::view(output);
 
-        for (auto& i : cropped_view)
-        {
-            auto& cr = bg::get_color(i, r);
-            auto& cg = bg::get_color(i, g);
-            auto& cb = bg::get_color(i, b);
-            cr = bg::channel_multiply(cr, color->r);
-            cg = bg::channel_multiply(cg, color->g);
-            cb = bg::channel_multiply(cb, color->b);
-        }
+        bg::transform_pixels(
+            cropped_view, output_view, [&color](bg::bgra8_ref_t i) {
+                bg::blue_t g;
+                bg::green_t b;
+                bg::red_t r;
+                bg::alpha_t a;
+                auto& cb = bg::get_color(i, b);
+                auto& cg = bg::get_color(i, g);
+                auto& cr = bg::get_color(i, r);
+                auto& ca = bg::get_color(i, a);
+
+                return bg::bgra8_image_t::value_type(
+                    bg::channel_multiply(cb, color->b),
+                    bg::channel_multiply(cg, color->g),
+                    bg::channel_multiply(cr, color->r),
+                    ca);
+            });
+
+        bg::write_view(cache_file, output_view, bg::png_tag{});
     }
-
-    std::string cache_file =
-        filepathutil::make_preferred_path_in_utf8(cache_dir / (name + ".png"));
-    bg::write_view(cache_file, cropped_view, bg::png_tag{});
+    else
+    {
+        bg::write_view(cache_file, cropped_view, bg::png_tag{});
+    }
 
     return TileSource{width, height, cache_file, sol::nullopt};
 }
@@ -331,15 +343,41 @@ void TsxExporter::close_tsx()
     _opened = false;
 }
 
+static fs::path _tiled_plugin_path()
+{
+    std::cerr << "home " << filesystem::get_home_directory().string()
+              << std::endl;
+    return filesystem::get_home_directory() / ".tiled";
+}
+
+static fs::path _tileset_path()
+{
+    return _tiled_plugin_path() / "Elona_foobar";
+}
+
+static void _write_mods_list()
+{
+    auto mods_file = _tileset_path() / "mods.txt";
+    std::ofstream out{mods_file.native()};
+
+    for (const auto& pair : lua::lua->get_mod_manager())
+    {
+        // TODO: if not mod name is reserved
+        out << pair.second->manifest.name << " "
+            << pair.second->manifest.version.to_string() << "\n";
+    }
+}
+
 void export_tsx(
     const std::string& type,
-    const fs::path& filename,
+    const std::string& filename,
     int columns,
     std::unordered_map<std::string, std::string> opts)
 {
     auto table = *lua::lua->get_data_manager().get().get_by_order_table(type);
 
-    auto exporter = TsxExporter(filename, columns, opts);
+    auto filepath = _tileset_path() / filename;
+    auto exporter = TsxExporter(filepath, columns, opts);
     exporter.open_tsx(type);
 
     for (const auto kvp : table)
@@ -348,6 +386,8 @@ void export_tsx(
     }
 
     exporter.close_tsx();
+
+    _write_mods_list();
 }
 
 } // namespace fmp

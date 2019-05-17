@@ -170,6 +170,22 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
 
 
 
+fs::path get_home_directory()
+{
+    static auto cache = ([] {
+        auto home_dir = filepathutil::get_home_directory();
+        if (!home_dir)
+        {
+            throw std::runtime_error(u8"Error: fail to get home directory");
+        }
+        return fs::canonical(fs::path{*home_dir});
+    })();
+
+    return cache;
+}
+
+
+
 void copy_recursively(const fs::path& source, const fs::path& destination)
 {
     // Check pre-conditions.

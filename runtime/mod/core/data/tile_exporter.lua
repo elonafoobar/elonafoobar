@@ -60,7 +60,8 @@ data:add_multi(
             }
          end,
          instantiate = function(t)
-            Item.create(t.x, t.y, t.id, t.props.number or 1)
+            local item = Item.create(t.x, t.y, t.id, t.props.number or 1)
+            item.own_state = t.props.own_state or 0
          end
       },
       {

@@ -100,25 +100,21 @@ static void _instantiate_map(FoobarMap& map)
 {
     lib::Stopwatch watch;
 
+    // Some map data properties are set based on 'core.map' or 'core.area' and
+    // do not come from the map file itself. Perhaps they should be unified.
+
     // clang-format off
     map_data.width                = map.width;
     map_data.height               = map.height;
-    // map_data.tileset              = map.props.get_or<int>("tileset", 0);
     map_data.atlas_number         = map.props.get<int>("atlas");
     map_data.next_regenerate_date = map.props.get<int>("next_regenerate_date");
-    // map_data.turn_cost            = map.props.get_or<int>("turn_cost", 10000);
     map_data.max_crowd_density    = map.props.get_or<int>("max_crowd_density", map_data.width * map_data.height / 100);
     map_data.user_map_flag        = 0;
-    // map_data.refresh_type         = map.props.get_or<int>("refresh_type", 1);
-    // map_data.stair_up_pos         = map.props.get_or<int>("stair_up_pos", 0); // TODO make into map object
-    // map_data.stair_down_pos       = map.props.get_or<int>("stair_down_pos", 0); // TODO make into map object
+    map_data.stair_up_pos         = map.props.get_or<int>("stair_up_pos", 0); // TODO make into map object
+    map_data.stair_down_pos       = map.props.get_or<int>("stair_down_pos", 0); // TODO make into map object
     map_data.bgm                  = _get_bgm(map);
-    // map_data.indoors_flag         = map.props.get_or<bool>("is_indoors", true) ? 1 : 2;
-    // map_data.designated_spawns    = map.props.get_or<bool>("is_generated_every_time", false) ? 1 : 0;
-    map_data.max_item_count       = map.props.get_or<int>("max_item_count", 400);
-    map_data.play_campfire_sound  = map.props.get_or<bool>("play_campfire_sound", false) ? 1 : 0;
-    map_data.should_regenerate    = map.props.get_or<bool>("should_regenerate", false) ? 0 : 1;
-    // map_data.refresh_type         = map.props.get_or<bool>("is_temporary", false) ? 0 : 1;
+    map_data.max_item_count       = map.props.get_or<int>("max_item_count", 0);
+    map_data.should_regenerate    = map.props.get_or<bool>("should_regenerate", true) ? 0 : 1;
     // clang-format on
 
     map_initialize();
