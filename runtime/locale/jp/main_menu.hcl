@@ -64,6 +64,13 @@ locale {
                 download = "[ダウンロード]"
                 installed = "[インストール済み]"
             }
+
+            extra {
+                show_menu = "F1: 追加オプションの表示"
+                export_tilesets = "タイルセットを書き出す"
+                exporting = "${_1}の書き出し…"
+                finished = "完了しました。"
+            }
         }
     }
 }

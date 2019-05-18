@@ -4,13 +4,11 @@
 #include <boost/gil/image.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include "../../util/stopwatch.hpp"
 #include "../../util/strutil.hpp"
 #include "../draw.hpp"
 #include "../lua_env/data_manager.hpp"
 #include "../lua_env/enums/enums.hpp"
 #include "../lua_env/lua_env.hpp"
-#include "../lua_env/mod_manager.hpp"
 #include "../macro.hpp"
 #include "util.hpp"
 
@@ -258,7 +256,7 @@ void TsxExporter::open_tsx(const std::string& type)
 {
     if (_opened)
     {
-        throw std::runtime_error("Already opened");
+        throw std::runtime_error("TSX file already opened");
     }
 
     auto data_table = lua::lua->get_data_manager().get().get_table(type);
@@ -305,7 +303,7 @@ void TsxExporter::write_tile(const std::string& data_id)
 {
     if (!_opened)
     {
-        throw std::runtime_error("Not opened");
+        throw std::runtime_error("TSX file not opened");
     }
 
     sol::optional<sol::table> val = _data_table[data_id];
@@ -365,7 +363,7 @@ void TsxExporter::close_tsx()
 {
     if (!_opened)
     {
-        throw std::runtime_error("Not opened");
+        throw std::runtime_error("TSX file not opened");
     }
 
     pt::write_xml(
@@ -375,64 +373,6 @@ void TsxExporter::close_tsx()
         pt::xml_writer_settings<std::string>(' ', 4));
 
     _opened = false;
-}
-
-static fs::path _tiled_plugin_path()
-{
-    return filesystem::get_home_directory() / ".tiled";
-}
-
-static fs::path _tileset_path()
-{
-    return _tiled_plugin_path() / "Elona_foobar";
-}
-
-/**
- * Writes the mods used at the time of export to the tileset output folder, to
- * allow detecting incompatibilities.
- */
-static void _write_mods_list()
-{
-    auto mods_file = _tileset_path() / "mods.txt";
-    std::ofstream out{mods_file.native()};
-
-    for (const auto& pair : lua::lua->get_mod_manager().enabled_mods())
-    {
-        if (!lua::ModManager::mod_id_is_reserved(pair.second->manifest.id))
-        {
-            out << pair.second->manifest.id << " "
-                << pair.second->manifest.version.to_string() << "\n";
-        }
-    }
-}
-
-void export_tsx(
-    const std::string& type,
-    const std::string& filename,
-    int columns,
-    std::unordered_map<std::string, std::string> opts)
-{
-    lib::Stopwatch watch;
-
-    ELONA_LOG("map.tsx") << "writing tileset " << filename << " for " << type;
-
-    auto table = *lua::lua->get_data_manager().get().get_by_order_table(type);
-
-    auto filepath = _tileset_path() / filename;
-    auto exporter = TsxExporter(filepath, columns, opts);
-    exporter.open_tsx(type);
-
-    for (const auto kvp : table)
-    {
-        exporter.write_tile(kvp.second.as<std::string>());
-    }
-
-    exporter.close_tsx();
-
-    _write_mods_list();
-
-    ELONA_LOG("map.tsx") << "wrote " << table.size() << " tiles in "
-                         << watch.measure() << "ms";
 }
 
 } // namespace fmp

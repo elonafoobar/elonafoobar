@@ -7,6 +7,7 @@
 #include "tests.hpp"
 
 #include "../elona/foobar_map/init_map.hpp"
+#include "../elona/foobar_map/tileset_export_progress_prompt.hpp"
 #include "../elona/foobar_map/tsx_exporter.hpp"
 
 using namespace elona;
@@ -16,13 +17,6 @@ using namespace elona::testing;
 TEST_CASE("Test foobar map is instantiated correctly", "[FoobarMap]")
 {
     testing::reset_state();
-
-    fmp::export_tsx("core.chara", "chara.tsx", 8, {});
-    fmp::export_tsx("core.item", "item.tsx", 8, {});
-    fmp::export_tsx("core.map_object", "map_object.tsx", 8, {});
-    fmp::export_tsx("core.map_chip", "map0.tsx", 32, {{"atlas_index", "0"}});
-    fmp::export_tsx("core.map_chip", "map1.tsx", 32, {{"atlas_index", "1"}});
-    fmp::export_tsx("core.map_chip", "map2.tsx", 32, {{"atlas_index", "2"}});
 
     for (auto&& i : cdata.others())
     {

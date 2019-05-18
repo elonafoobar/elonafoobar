@@ -64,6 +64,13 @@ locale {
                 download = "[Switch To Download]"
                 installed = "[Switch To Installed]"
             }
+
+            extra {
+                show_menu = "Press F1 to show more actions."
+                export_tilesets = "Export Tilesets"
+                exporting = "Exporting ${_1}..."
+                finished = "Finished."
+            }
         }
     }
 }

@@ -4,7 +4,9 @@
 #include "../../util/strutil.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../foobar_map/tileset_export_progress_prompt.hpp"
 #include "../i18n.hpp"
+#include "../input_prompt.hpp"
 #include "../lua_env/mod_manager.hpp"
 #include "simple_prompt.hpp"
 #include "ui_menu_mod_info.hpp"
@@ -55,13 +57,7 @@ protected:
 
 void UIMenuMods::_load_mods()
 {
-    // Redraw background as topic size can change, leaving marks
-    asset_load("void");
-    ::draw("void", 0, 0, windoww, windowh);
-    gsel(0);
-    gmode(0);
-    gcopy(4, 0, 0, windoww, windowh, 0, 0);
-    gmode(2);
+    _draw_background();
 
     _mod_descriptions.clear();
 
@@ -134,6 +130,20 @@ void UIMenuMods::update()
 
 
 
+void UIMenuMods::_draw_background()
+{
+    asset_load("void");
+    ::draw("void", 0, 0, windoww, windowh);
+    gsel(0);
+    gmode(0);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
+    gmode(2);
+
+    windowshadow = 1;
+}
+
+
+
 void UIMenuMods::_draw_key(int cnt, int index)
 {
     if (cnt % 2 == 0)
@@ -201,6 +211,11 @@ void UIMenuMods::_draw_window()
         i18n::s.get("core.locale.main_menu.mods.info.version"),
         wx + 255,
         wy + 36);
+
+    font(13 - en * 2, snail::Font::Style::bold);
+    mes(20,
+        windowh - 20,
+        i18n::s.get("core.locale.main_menu.mods.extra.show_menu"));
 }
 
 
@@ -248,9 +263,33 @@ void UIMenuMods::draw()
 {
     if (_redraw)
     {
+        _draw_background();
         _draw_window();
         _draw_mod_list();
         _redraw = false;
+    }
+}
+
+
+void _show_extra_prompt()
+{
+    elona::Prompt prompt;
+    prompt.append(
+        i18n::s.get("core.locale.main_menu.mods.extra.export_tilesets"));
+
+    int rtval = prompt.query(promptx, prompty, 300);
+
+    if (rtval == 0)
+    {
+        TilesetExportProgressPrompt::Tilesets tilesets = {
+            {"core.chara", "chara.tsx", 8, {}},
+            {"core.item", "item.tsx", 8, {}},
+            {"core.map_object", "map_object.tsx", 8, {}},
+            {"core.map_chip", "map0.tsx", 33, {{"atlas_index", "0"}}},
+            {"core.map_chip", "map1.tsx", 33, {{"atlas_index", "1"}}},
+            {"core.map_chip", "map2.tsx", 33, {{"atlas_index", "2"}}},
+        };
+        TilesetExportProgressPrompt(tilesets).query();
     }
 }
 
@@ -299,6 +338,7 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
             set_reupdate();
         }
     }
+
     if (action == "identify")
     {
         const auto& desc = _mod_descriptions.at(pagesize * page + cs);
@@ -324,6 +364,20 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
         cs = 0;
         _is_download = !_is_download;
         _load_mods();
+        set_reupdate();
+    }
+    if (getkey(snail::Key::f1))
+    {
+        int cs_prev = cs;
+        int cs_bk_prev = cs_bk;
+
+        lib::scope_guard restore([&]() {
+            cs = cs_prev;
+            cs_bk = cs_bk_prev;
+        });
+
+        _show_extra_prompt();
+
         set_reupdate();
     }
 

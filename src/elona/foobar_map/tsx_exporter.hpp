@@ -68,11 +68,5 @@ private:
     fs::path _filename;
 };
 
-void export_tsx(
-    const std::string& type,
-    const std::string& filename,
-    int columns,
-    std::unordered_map<std::string, std::string> opts);
-
 } // namespace fmp
 } // namespace elona

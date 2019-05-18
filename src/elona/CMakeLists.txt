@@ -132,9 +132,10 @@ set(ELONA_SOURCES
   lua_env/lua_class/lua_class_map_generator.cpp
   lua_env/lua_class/lua_class_position.cpp
 
-  foobar_map/tsx_exporter.cpp
-  foobar_map/map_loader.cpp
   foobar_map/init_map.cpp
+  foobar_map/map_loader.cpp
+  foobar_map/tileset_export_progress_prompt.cpp
+  foobar_map/tsx_exporter.cpp
   foobar_map/util.cpp
 
   config/config.cpp

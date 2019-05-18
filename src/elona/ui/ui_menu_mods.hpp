@@ -27,6 +27,7 @@ protected:
     void _load_mods();
     optional<ModDescription> _find_enabled_mod(const std::string& name);
     void _draw_key(int cnt, int index);
+    void _draw_background();
     void _draw_mod_list();
     void _draw_window();
 
