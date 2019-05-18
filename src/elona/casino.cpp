@@ -7,6 +7,7 @@
 #include "character_status.hpp"
 #include "config/config.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -73,33 +74,35 @@ label_18671_internal:
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
+        snail::Color text_color{0, 0, 0};
         if (strmid(s, 0, 1) == u8"@"s)
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
             font(16 - en * 2);
-            color(250, 240, 230);
             if (s(1) == u8"BL"s)
             {
-                color(130, 130, 250);
+                text_color = snail::Color{130, 130, 250};
             }
-            if (s(1) == u8"GR"s)
+            else if (s(1) == u8"GR"s)
             {
-                color(130, 250, 130);
+                text_color = snail::Color{130, 250, 130};
             }
-            if (s(1) == u8"QM"s)
+            else if (s(1) == u8"QM"s)
             {
-                color(0, 100, 0);
+                text_color = snail::Color{0, 100, 0};
+            }
+            else
+            {
+                text_color = snail::Color{250, 240, 230};
             }
         }
         else
         {
             font(16 - en * 2);
-            color(250, 240, 230);
+            text_color = snail::Color{250, 240, 230};
         }
-        pos(170, cnt * 20 + 120 + txtadvmsgfix);
-        mes(s);
-        color(0, 0, 0);
+        mes(170, cnt * 20 + 120 + txtadvmsgfix, s, text_color);
     }
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -113,8 +116,7 @@ label_18671_internal:
     }
     gsel(2);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
     gmode(2);
     keyrange = 0;
@@ -135,8 +137,7 @@ label_1868_internal:
     y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
     y(1) = 20 * listmax;
     gmode(0);
-    pos(x, y);
-    gcopy(2, x, y, x(1), y(1));
+    gcopy(2, x, y, x(1), y(1), x, y);
     gmode(2);
     font(14 - en * 2);
     cs_listbk();
@@ -215,15 +216,13 @@ void casino_adv_draw_mat()
         y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
         gmode(0);
-        pos(x - 50, y - 50);
-        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
+        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100, x - 50, y - 50);
         if (cnt == 11)
         {
             break;
         }
-        pos(x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
-        gmode(4, cnt * 25);
-        gcopy_c(2, 0, 0, x(1), y(1));
+        gmode(2, cnt * 25);
+        gcopy_c(2, 0, 0, x(1), y(1), x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
         if (atxpic != 0)
         {
             x(0) = 345;
@@ -231,9 +230,14 @@ void casino_adv_draw_mat()
             y(0) = 170;
             y(1) = atxpic(3);
             gmode(0);
-            pos(x - atxpic(2) / 2, y - atxpic(3) / 2);
-            gcopy(2, x - atxpic(2) / 2, y - atxpic(3) / 2, x(1), y(1));
-            pos(x, y);
+            gcopy(
+                2,
+                x - atxpic(2) / 2,
+                y - atxpic(3) / 2,
+                x(1),
+                y(1),
+                x - atxpic(2) / 2,
+                y - atxpic(3) / 2);
             gmode(2);
             double p_double;
             if (cnt == 10)
@@ -255,6 +259,8 @@ void casino_adv_draw_mat()
                 atxpic(1) / 33 * 32,
                 inf_tiles,
                 inf_tiles,
+                x,
+                y,
                 cnt * (atxpic(2) / 10),
                 cnt * (atxpic(3) / 10),
                 p_double);
@@ -269,9 +275,7 @@ void casino_adv_draw_mat()
                 y(0) = 120;
                 y(1) = 96;
                 gmode(0);
-                pos(x, y);
-                gcopy(2, x, y, x(1), y(1));
-                pos(x + x(1) / 2, y + y(1) / 2);
+                gcopy(2, x, y, x(1), y(1), x, y);
                 gmode(2);
                 gcopy_c(
                     1,
@@ -279,6 +283,8 @@ void casino_adv_draw_mat()
                     mattile / 33 * 32,
                     inf_tiles,
                     inf_tiles,
+                    x + x(1) / 2,
+                    y + y(1) / 2,
                     cnt2 * 9,
                     cnt2 * 9);
             }
@@ -299,11 +305,9 @@ void casino_fade_in_choices()
         y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
         gmode(0);
-        pos(x - 50, y - 50);
-        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
-        pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
-        gmode(4, 250 - cnt * 25);
-        gcopy_c(2, 0, 0, x(1), y(1));
+        gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100, x - 50, y - 50);
+        gmode(2, 250 - cnt * 25);
+        gcopy_c(2, 0, 0, x(1), y(1), x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
         await(15);
         redraw();
     }
@@ -342,9 +346,14 @@ void casino_prepare_choice_graphic()
     }
     gsel(2);
     gmode(0);
-    pos(0, 0);
     gcopy(
-        0, 170, noteinfo() * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax);
+        0,
+        170,
+        noteinfo() * 20 + 120 + txtadvmsgfix + 16,
+        x(1),
+        20 * listmax,
+        0,
+        0);
     gsel(0);
     gmode(2);
     cs = 0;
@@ -353,7 +362,7 @@ void casino_prepare_choice_graphic()
 void casino_acquire_items()
 {
     mtilefilecur = -1;
-    map_prepare_tileset_atlas();
+    draw_prepare_map_chips();
     f = 0;
     for (const auto& cnt : items(-1))
     {
@@ -898,7 +907,7 @@ bool casino_start()
             "@BL" +
             i18n::s.get("core.locale.casino.you_get", 10, matname(1), mat(1)));
     }
-    atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+    atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1));
     atxinfon(2) = "";
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.locale.casino.window.choices.leave");
@@ -938,7 +947,7 @@ bool casino_blackjack()
     noteadd(i18n::s.get_enum("core.locale.casino.blackjack.desc", 1));
     noteadd(i18n::s.get_enum("core.locale.casino.blackjack.desc", 2));
     noteadd(i18n::s.get_enum("core.locale.casino.blackjack.desc", 3));
-    atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+    atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1));
     atxinfon(2) = "";
     if (mat(1) <= 0)
     {
@@ -1001,12 +1010,14 @@ bool casino_blackjack()
             cardplayeradd(1, 220, 240);
         }
         font(14 - en * 2, snail::Font::Style::bold);
-        color(255, 255, 255);
-        pos(152, 154);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"));
-        pos(152, 270);
-        mes(i18n::s.get("core.locale.casino.blackjack.game.you"));
-        color(0, 0, 0);
+        mes(152,
+            154,
+            i18n::s.get("core.locale.casino.blackjack.game.dealer"),
+            {255, 255, 255});
+        mes(152,
+            270,
+            i18n::s.get("core.locale.casino.blackjack.game.you"),
+            {255, 255, 255});
         showcardpile();
         showcardholder();
         showcard();
@@ -1072,8 +1083,7 @@ bool casino_blackjack()
                     "core.locale.casino.blackjack.game.result.win"));
             }
         }
-        atxinfon(1) =
-            i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+        atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1));
         atxinfon(2) =
             i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " " +
             i18n::s.get("core.locale.casino.blackjack.game.wins", winrow);
@@ -1182,7 +1192,7 @@ bool casino_blackjack()
                 noteadd(i18n::s.get(
                     "core.locale.casino.blackjack.game.cheat.dialog"));
                 atxinfon(1) =
-                    i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+                    i18n::s.get("core.locale.casino.chips_left", mat(1));
                 atxinfon(2) =
                     i18n::s.get(
                         "core.locale.casino.blackjack.game.bets", stake) +

@@ -1,4 +1,5 @@
 #include "save.hpp"
+
 #include "audio.hpp"
 #include "character_status.hpp"
 #include "ctrl_file.hpp"
@@ -16,10 +17,7 @@ namespace elona
 
 void load_save_data()
 {
-    ELONA_LOG("Load save data: " << playerid);
-
-    // TODO instead serialize/deserialize data
-    lua::lua->get_handle_manager().clear_map_local_handles();
+    ELONA_LOG("save") << "Load: " << playerid;
 
     Save::instance().clear();
     writeloadedbuff_clear();
@@ -43,9 +41,9 @@ void load_save_data()
             std::ifstream in{(save_dir / "foobar_data.s1").native(),
                              std::ios::binary};
             putit::BinaryIArchive ar{in};
-            ar.load(major);
-            ar.load(minor);
-            ar.load(patch);
+            ar(major);
+            ar(minor);
+            ar(patch);
         }
 
         if (!(major == 0 && minor == 2 && patch == 7))
@@ -76,7 +74,7 @@ void load_save_data()
     }
     refresh_speed(cdata.player());
     time_begin = timeGetTime() / 1000;
-    ELONA_LOG("Load save data end: " << playerid);
+    ELONA_LOG("save") << "Load end: " << playerid;
 }
 
 
@@ -92,7 +90,7 @@ void do_save_game()
 
 void save_game()
 {
-    ELONA_LOG("Save game: " << playerid);
+    ELONA_LOG("save") << "Save: " << playerid;
 
     int save_f = 0;
     if (game_data.current_map == mdata_t::MapId::show_house)
@@ -122,7 +120,7 @@ void save_game()
     Save::instance().save(save_dir);
     ctrl_file(FileOperation2::global_write, save_dir);
     Save::instance().clear();
-    ELONA_LOG("Save game: finish");
+    ELONA_LOG("save") << "Save end:" << playerid;
 }
 
 } // namespace elona

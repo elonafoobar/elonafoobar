@@ -1,15 +1,18 @@
+#include "elona/main.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <SDL.h>
 #include "elona/defines.hpp"
-#include "elona/init.hpp"
 #include "elona/log.hpp"
+#include "util/backtrace.hpp"
 #include "version.hpp"
+
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA
 #endif
 
-namespace elona
+
+namespace
 {
 
 void report_error(const char* what)
@@ -20,28 +23,30 @@ void report_error(const char* what)
 #elif defined(ELONA_OS_ANDROID)
     LOGD("Error: %s", what);
 #endif
-    ELONA_LOG("Error: " << what);
+
+    ELONA_FATAL("system") << what;
     std::cerr << "Error: " << what << std::endl;
 }
-} // namespace elona
+
+} // namespace
 
 
 
 int main(int argc, char** argv)
 {
     using namespace elona;
-    (void)argc, (void)argv;
 
-    log::initialize();
+    lib::setup_backtrace();
 
-    ELONA_LOG(latest_version.long_string());
+    log::Logger::instance().init();
+    ELONA_LOG("system") << latest_version.long_string();
 
 #if DEBUG
-    return run();
+    return run(argc, argv);
 #else
     try
     {
-        return run();
+        return run(argc, argv);
     }
     catch (std::exception& e)
     {

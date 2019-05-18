@@ -1,17 +1,17 @@
-# CMake v3.0 or later
-cmake_minimum_required(VERSION 3.0)
+# CMake v3.2 or later
+cmake_minimum_required(VERSION 3.2)
 
 
 # Project
-project(Elona_foobar VERSION 0.3.3)
+project(Elona_foobar VERSION 0.4.0)
 
 # Android version code. Increment on every distinct release.
-set(PROJECT_VERSION_CODE 4)
+set(PROJECT_VERSION_CODE 5)
 
 
 # Options
 option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
-option(ANDROID_GENERATE_PROPERTIES "Generate android/app/gradle.properties" OFF)
+option(ANDROID_GENERATE_BUILD_FILES "Generate android/app/gradle.properties and src/{elona,snail,util}/Android.mk" OFF)
 
 
 # Platform detection
@@ -24,16 +24,19 @@ endif()
 # Versioning
 
 # Get commit hash from Git
-find_package(Git)
-if(NOT GIT_FOUND)
-  message(FATAL_ERROR "Git not Found")
+if(DEFINED $ENV{APPVEYOR_REPO_COMMIT})
+  set(PROJECT_SOURCE_DIR $ENV{APPVEYOR_REPO_COMMIT})
+else()
+  find_package(Git)
+  if(NOT GIT_FOUND)
+    message(FATAL_ERROR "Git not Found")
+  endif()
+  execute_process(
+    COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    OUTPUT_VARIABLE PROJECT_VERSION_REVISION
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
 endif()
-execute_process(
-  COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
-  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-  OUTPUT_VARIABLE PROJECT_VERSION_REVISION
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-  )
 
 
 # Get date and time
@@ -45,12 +48,28 @@ set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
 # Versioning file
 configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
 
+function(generate_android_mk target)
+  cmake_parse_arguments(ARGS "" "" "SOURCES" ${ARGN})
+  set(ANDROID_MK_TARGET ${target})
+  set(ANDROID_MK_SOURCES "LOCAL_SRC_FILES := \\\n")
+  foreach(SOURCE ${ARGS_SOURCES})
+    set(ANDROID_MK_SOURCES "${ANDROID_MK_SOURCES}${SOURCE} \\\n")
+  endforeach()
+  configure_file("${PROJECT_SOURCE_DIR}/src/${target}/Android.mk.in" "${PROJECT_SOURCE_DIR}/src/${target}/Android.mk")
+endfunction()
 
 
 # CMake is run last in the Android build process, so gradle.properties
-# has to be generated beforehand.
-if(ANDROID_GENERATE_PROPERTIES)
+# and Android.mk have to be generated beforehand.
+if(ANDROID_GENERATE_BUILD_FILES)
   configure_file("${PROJECT_SOURCE_DIR}/android/gradle.properties.in" "${PROJECT_SOURCE_DIR}/android/gradle.properties")
+
+  # Generate Android.mk
+  add_subdirectory(src/util)
+  set(SNAIL_BACKEND "SDL")
+  add_subdirectory(src/snail)
+  add_subdirectory(src/elona)
+
   return()
 endif()
 
@@ -83,19 +102,19 @@ if(ANDROID)
 
   set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
-  SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
+  set(SNAIL_BACKEND "SDL")
 
-  add_library( SDL2 SHARED IMPORTED )
-  add_library( SDL2_image SHARED IMPORTED )
-  add_library( SDL2_ttf SHARED IMPORTED )
-  add_library( SDL2_mixer SHARED IMPORTED )
-  add_library( lua SHARED IMPORTED )
-  add_library( util SHARED IMPORTED )
-  add_library( snail SHARED IMPORTED )
-  add_library( elona SHARED IMPORTED )
-  add_library( boost_filesystem SHARED IMPORTED )
-  add_library( boost_system SHARED IMPORTED )
-  add_library( boost_iostreams SHARED IMPORTED )
+  add_library(SDL2 SHARED IMPORTED)
+  add_library(SDL2_image SHARED IMPORTED)
+  add_library(SDL2_ttf SHARED IMPORTED)
+  add_library(SDL2_mixer SHARED IMPORTED)
+  add_library(lua SHARED IMPORTED)
+  add_library(util SHARED IMPORTED)
+  add_library(snail SHARED IMPORTED)
+  add_library(elona SHARED IMPORTED)
+  add_library(boost_filesystem SHARED IMPORTED)
+  add_library(boost_system SHARED IMPORTED)
+  add_library(boost_iostreams SHARED IMPORTED)
 
   set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libSDL2.so)
@@ -134,23 +153,19 @@ if(ANDROID)
 
   add_library(${PROJECT_NAME} SHARED src/main.cpp src/version.cpp)
 
-  target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams util snail elona)
+  target_link_libraries(${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams util snail elona)
 else()
   # Options
-  option(WITH_TESTS "Build test executable (TESTS or BENCH)" "OFF")
+  set(ELONA_BUILD_TARGET "GAME" CACHE STRING "Build executable type (GAME, LAUNCHER, TESTS, or BENCH)")
 
-  if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
-    unset(SNAIL_HEADLESS CACHE)
-    SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
-  elseif(WITH_TESTS STREQUAL "OFF")
-    unset(SNAIL_HEADLESS CACHE)
-    SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
+  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
+    set(SNAIL_BACKEND "HEADLESS")
   else()
-    # Use the previous flags.
+    set(SNAIL_BACKEND "SDL")
   endif()
 
   # Executable
-  if(WITH_TESTS STREQUAL "TESTS")
+  if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     set (CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/thirdparty/catch2})
     add_library(Catch INTERFACE)
     target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
@@ -161,7 +176,6 @@ else()
       src/tests/util.cpp
       src/tests/config.cpp
       src/tests/config_def.cpp
-      src/tests/dialog.cpp
       src/tests/filesystem.cpp
       src/tests/spec.cpp
       src/tests/lua_api.cpp
@@ -183,12 +197,13 @@ else()
       src/tests/keybind_key_names.cpp
       src/tests/keybind_manager.cpp
       src/tests/keybind_serializer.cpp
+      src/tests/semver.cpp
       src/tests/serialization.cpp
       )
 
     add_executable(${PROJECT_NAME} src/version.cpp ${TEST_SOURCES})
     target_link_libraries(${PROJECT_NAME} Catch)
-  elseif(WITH_TESTS STREQUAL "BENCH")
+  elseif(ELONA_BUILD_TARGET STREQUAL "BENCH")
     add_subdirectory(src/thirdparty/hayai)
 
     # Benchmark sources
@@ -198,18 +213,29 @@ else()
       src/bench/i18n.cpp
       src/bench/lua_callbacks.cpp
       src/bench/magic.cpp
+      src/bench/serialization.cpp
       src/bench/util.cpp
       )
 
     add_executable(${PROJECT_NAME} src/version.cpp ${BENCH_SOURCES})
     target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
-  else()
+  elseif(ELONA_BUILD_TARGET STREQUAL "GAME")
     if(WIN32)
       set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
     else(WIN32)
       set(RESOURCES "")
     endif()
     add_executable(${PROJECT_NAME} WIN32 src/main.cpp src/version.cpp ${RESOURCES})
+  elseif(ELONA_BUILD_TARGET STREQUAL "LAUNCHER")
+    if(WIN32)
+      set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
+    else(WIN32)
+      set(RESOURCES "")
+    endif()
+    add_executable(${PROJECT_NAME} WIN32 src/launcher_main.cpp src/version.cpp ${RESOURCES})
+    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Elona foobar Launcher")
+  else()
+    message(FATAL_ERROR "Unknown build mode: ${ELONA_BUILD_TARGET}")
   endif()
 
   if(WIN32)
@@ -275,8 +301,9 @@ else()
   include_directories(${SDL2_MIXER_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
-  # Compiler options
-  target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
+  if(LINUX)
+    target_link_libraries(${PROJECT_NAME} dl)
+  endif()
 
   set(GENERAL_OPTIONS)
   set(DEBUG_OPTIONS)
@@ -286,20 +313,28 @@ else()
   set(DISABLED_WARNINGS)
   set(WARNINGS_AS_ERRORS)
 
+  list(APPEND EXTRA_DEFINES
+    "BOOST_ALLOW_DEPRECATED_HEADERS" # https://github.com/boostorg/random/issues/49
+    )
+
   if(MSVC)
     list(APPEND EXTRA_DEFINES "_UNICODE")
     list(APPEND GENERAL_OPTIONS
       "W4"
       "source-charset:utf-8"
       "MT"
-      "EHsc")
+      "EHsc"
+      )
     list(APPEND DEBUG_OPTIONS
       "MP8"
       "MTd"
       "ZI"
-      "Od")
+      "Od"
+      "bigobj"
+      )
     list(APPEND RELEASE_OPTIONS
-      "MT")
+      "MT"
+      )
     list(APPEND DISABLED_WARNINGS
       "4244" # 'conversion' conversion from 'type1' to 'type2', possible loss of data
       "4267" # 'var' : conversion from 'size_t' to 'type', possible loss of data
@@ -308,8 +343,8 @@ else()
       "4996" # Call to 'std::equal' with parameters that may be unsafe
       )
     list(APPEND EXTRA_DEFINES
-      "BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE")
-
+      "BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE"
+      )
 
     foreach(opt ${DISABLED_WARNINGS})
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd${opt}")
@@ -331,24 +366,26 @@ else()
   else() # GCC or Clang
     list(APPEND GENERAL_OPTIONS
       "Wall"
-      "Wextra")
+      "Wextra"
+      )
     list(APPEND DEBUG_OPTIONS
       "g"
-      "O0")
-    list(APPEND EXTRA_DEFINES
-      "DEBUG")
-    if(WITH_TESTS STREQUAL "BENCH")
+      "O0"
+      "DDEBUG"
+      )
+    if(ELONA_BUILD_TARGET STREQUAL "BENCH")
       list(APPEND GENERAL_OPTIONS "g1")
     endif()
     list(APPEND DISABLED_WARNINGS
-      "deprecated-declarations")
+      "deprecated-declarations"
+      )
     list(APPEND WARNINGS_AS_ERRORS
-      "return-type")
+      "return-type"
+      )
 
     # Speed up linking on Linux by using split DWARF
     if (LINUX)
-      list(APPEND GENERAL_OPTIONS
-        "gsplit-dwarf")
+      list(APPEND GENERAL_OPTIONS "gsplit-dwarf")
     endif ()
 
     # Use gold linker or lld if available
@@ -371,13 +408,11 @@ else()
     endif()
 
     if (LINKER)
-      list(APPEND LINKER_OPTIONS
-        "fuse-ld=${LINKER}")
+      list(APPEND LINKER_OPTIONS "fuse-ld=${LINKER}")
       message(STATUS "Using linker: ${LINKER}")
     else()
       message(STATUS "Using system linker.")
     endif()
-
 
     foreach(opt ${DISABLED_WARNINGS})
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-${opt}")
@@ -414,42 +449,36 @@ else()
 
   # My libraries: snail
   add_subdirectory(src/snail)
-  if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
-    target_link_libraries(${PROJECT_NAME} snail_headless)
-  elseif(WITH_TESTS STREQUAL "OFF")
-    target_link_libraries(${PROJECT_NAME} snail)
-  else()
-    # Use the previous flags.
-  endif()
+  target_link_libraries(${PROJECT_NAME} ${SNAIL_LIBRARY})
 
   # My libraries: elona
   add_subdirectory(src/elona)
-  target_link_libraries(${PROJECT_NAME} elona)
+  target_link_libraries(${PROJECT_NAME} elona ${SNAIL_LIBRARY} util)
 
-  if(WITH_TESTS STREQUAL "OFF")
+  if((ELONA_BUILD_TARGET STREQUAL "GAME") OR (ELONA_BUILD_TARGET STREQUAL "LAUNCHER"))
     add_subdirectory(src/thirdparty/nfd)
     target_link_libraries(nfd)
   endif()
 
-  INSTALL(TARGETS ${PROJECT_NAME}
+  install(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime)
 
   # Create macOS .app bundle
-  SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}")
-  IF(APPLE)
-    SET(APPS "\${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}.app")
-  ENDIF(APPLE)
-  IF(WIN32)
-    SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.exe")
-  ENDIF(WIN32)
+  set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}")
+  if(APPLE)
+    set(APPS "\${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}.app")
+  endif(APPLE)
+  if(WIN32)
+    set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.exe")
+  endif(WIN32)
 
-  SET(DIRS ${LINK_DIRECTORIES})
+  set(DIRS ${LINK_DIRECTORIES})
 
-  INSTALL(CODE "
-        include(BundleUtilities)
-        fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
-        " COMPONENT Runtime)
+  install(CODE "
+    include(BundleUtilities)
+    fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
+    " COMPONENT Runtime)
 endif()
 
 function(copy_nonexisting source target)
@@ -474,6 +503,12 @@ function(copy_file source target)
     ${target})
 endfunction()
 
+function(remove_dir dir)
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E remove_directory
+    ${dir})
+endfunction()
+
 if(ANDROID)
   set(ASSET_DIR "${CMAKE_SOURCE_DIR}/android/app/src/main/assets")
   file(REMOVE_RECURSE ${ASSET_DIR})
@@ -482,9 +517,6 @@ if(ANDROID)
 else()
   set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
   set(RUNTIME_DIR "${ASSET_DIR}")
-
-  # Copy default config.
-  copy_nonexisting("${CMAKE_SOURCE_DIR}/runtime/config.hcl" "${RUNTIME_DIR}/config.hcl")
 endif()
 
 # Copy and overwrite runtime folders/files (except config.hcl)
@@ -493,29 +525,29 @@ copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
-copy_dir(${CMAKE_SOURCE_DIR}/runtime/mods/ "${RUNTIME_DIR}/mods/")
-copy_dir(${CMAKE_SOURCE_DIR}/runtime/user/ "${RUNTIME_DIR}/user/")
-copy_file(${CMAKE_SOURCE_DIR}/runtime/assets.hcl "${RUNTIME_DIR}")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/mod/ "${RUNTIME_DIR}/mod/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/profile/ "${RUNTIME_DIR}/profile/")
 
 # Copy assets from Elona 1.22 if they are present.
 if (NOT ANDROID OR ANDROID_BUNDLE_ASSETS)
   if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
     copy_dir("${CMAKE_PREFIX_PATH}/elona/graphic" "${ASSET_DIR}/graphic")
-    copy_dir("${CMAKE_PREFIX_PATH}/elona/original" "${ASSET_DIR}/original")
     copy_dir("${CMAKE_PREFIX_PATH}/elona/sound" "${ASSET_DIR}/sound")
     copy_dir("${CMAKE_PREFIX_PATH}/elona/user" "${ASSET_DIR}/user")
     message("Elona 1.22 distribution found.")
   else()
-    message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'original', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
+    message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
   endif()
 endif()
 
 if(NOT ANDROID)
-  if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+  if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
     copy_dir(${CMAKE_SOURCE_DIR}/src/tests/data "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
   endif()
 
-  if(WITH_TESTS STREQUAL "TESTS")
+  if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     copy_dir(${CMAKE_SOURCE_DIR}/src/tests/lua "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
   endif()
+
+  remove_dir("$<TARGET_FILE_DIR:${PROJECT_NAME}>/profile/testing")
 endif()

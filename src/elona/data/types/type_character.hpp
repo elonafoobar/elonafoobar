@@ -7,6 +7,7 @@
 #include "../lua_lazy_cache.hpp"
 
 
+
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(name, n) \
     bool name() const \
     { \
@@ -17,8 +18,8 @@
         return _flags[n]; \
     }
 
+
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS \
-    std::bitset<sizeof(int) * 8 * 50> _flags; \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_floating, 5) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_invisible, 6) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(can_see_invisible, 7) \
@@ -66,7 +67,7 @@
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_lord_of_dungeon, 976) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(has_own_name, 977) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_pregnant, 978) \
-    ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(does_not_search_enemy, 979) \
+    ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_not_attacked_by_enemy, 979) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_contracting_with_reaper, 980) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(needs_refreshing_status, 981) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(visited_just_now, 982) \
@@ -81,12 +82,14 @@
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(only_christmas, 991)
 
 
+
 namespace elona
 {
 
 struct CharacterData
 {
-    int id;
+    SharedId id;
+    int legacy_id;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
     int ai_act_sub_freq;
@@ -122,7 +125,7 @@ struct CharacterData
     std::string portrait_female;
     std::string race;
     int sex;
-    std::unordered_map<int, int> resistances;
+    std::unordered_map<SharedId, int> resistances;
     int fltselect;
     int category;
     int rarity;
@@ -130,10 +133,16 @@ struct CharacterData
     optional<std::string> corpse_eating_callback;
     optional<std::string> dialog_id;
 
+    std::bitset<sizeof(int) * 8 * 50> _flags;
+
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };
 
+
+
 ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, true, "core.chara")
+
+
 
 extern CharacterDB the_character_db;
 

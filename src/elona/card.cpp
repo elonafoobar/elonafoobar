@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -32,18 +33,16 @@ void show_card_collection()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
+    asset_load("deco_feat");
     gsel(0);
     windowshadow = 1;
 
 reset_page:
     listmax = 0;
-    for (const auto& data : the_character_db)
+    for (const auto& data : the_character_db.values())
     {
-        list(0, listmax) = data.id;
-        list(1, listmax) = 1000 * data.level + data.id;
+        list(0, listmax) = data.legacy_id;
+        list(1, listmax) = 1000 * data.level + data.legacy_id;
         ++listmax;
     }
     sort_list_by_column1();
@@ -115,12 +114,14 @@ reset_page:
                 y,
                 0,
                 text_color);
-            color(text_color.r, text_color.g, text_color.b);
-            pos(x + 365, y + 3);
-            mes(npcmemory(0, list(0, p)));
-            pos(x + 455, y + 3);
-            mes(npcmemory(1, list(0, p)));
-            color(0, 0, 0);
+            mes(x + 365,
+                y + 3,
+                std::to_string(npcmemory(0, list(0, p))),
+                text_color);
+            mes(x + 455,
+                y + 3,
+                std::to_string(npcmemory(1, list(0, p))),
+                text_color);
         }
 
         if (keyrange != 0)

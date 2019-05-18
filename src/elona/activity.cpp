@@ -25,6 +25,24 @@
 
 
 
+namespace
+{
+
+// Returns true if stop.
+bool _prompt_stop_continuous_action(const Character& doer)
+{
+    txt(i18n::s.get(
+        "core.locale.activity.cancel.prompt",
+        i18n::s.get_enum(
+            "core.locale.ui.action",
+            static_cast<int>(doer.continuous_action.type))));
+    return static_cast<bool>(yes_no());
+}
+
+} // namespace
+
+
+
 namespace elona
 {
 int digx = 0;
@@ -72,22 +90,23 @@ void rowact_item(int item_index)
 
 void activity_handle_damage(Character& chara)
 {
+    bool stop = false;
     if (chara.index == 0)
     {
         if (chara.continuous_action.type != ContinuousAction::Type::eat &&
             chara.continuous_action.type != ContinuousAction::Type::read &&
             chara.continuous_action.type != ContinuousAction::Type::travel)
         {
-            rtval = 0;
+            stop = true;
         }
         else
         {
             screenupdate = -1;
             update_screen();
-            prompt_stop_continuous_action();
+            stop = _prompt_stop_continuous_action(chara);
         }
     }
-    if (chara.index != 0 || rtval == 0)
+    if (stop)
     {
         if (is_in_fov(chara))
         {
@@ -105,78 +124,80 @@ void activity_handle_damage(Character& chara)
     chara.stops_continuous_action_if_damaged = 0;
 }
 
+
+
 optional<TurnResult> activity_proc(Character& chara)
 {
     ci = chara.continuous_action.item;
     --chara.continuous_action.turn;
     if (chara.continuous_action.type == ContinuousAction::Type::fish)
     {
-        auto_turn(Config::instance().animewait * 2);
+        auto_turn(Config::instance().animation_wait * 2);
         spot_fishing();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::dig_wall)
     {
-        auto_turn(Config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animation_wait * 0.75);
         spot_mining_or_wall();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::search_material)
     {
-        auto_turn(Config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animation_wait * 0.75);
         spot_material();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::dig_ground)
     {
-        auto_turn(Config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animation_wait * 0.75);
         spot_digging();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::sleep)
     {
-        auto_turn(Config::instance().animewait / 4);
+        auto_turn(Config::instance().animation_wait / 4);
         do_rest();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::eat)
     {
-        auto_turn(Config::instance().animewait * 5);
+        auto_turn(Config::instance().animation_wait * 5);
         return do_eat_command();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::read)
     {
-        auto_turn(Config::instance().animewait * 1.25);
+        auto_turn(Config::instance().animation_wait * 1.25);
         return do_read_command();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::sex)
     {
-        auto_turn(Config::instance().animewait * 2.5);
+        auto_turn(Config::instance().animation_wait * 2.5);
         continuous_action_sex();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::others)
     {
         if (game_data.continuous_action_about_to_start == 103)
         {
-            auto_turn(Config::instance().animewait * 2);
+            auto_turn(Config::instance().animation_wait * 2);
         }
         else if (game_data.continuous_action_about_to_start == 104)
         {
-            auto_turn(Config::instance().animewait * 2);
+            auto_turn(Config::instance().animation_wait * 2);
         }
         else if (game_data.continuous_action_about_to_start == 105)
         {
-            auto_turn(Config::instance().animewait * 2.5);
+            auto_turn(Config::instance().animation_wait * 2.5);
         }
         else
         {
-            auto_turn(Config::instance().animewait);
+            auto_turn(Config::instance().animation_wait);
         }
         continuous_action_others();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::blend)
     {
-        auto_turn(Config::instance().animewait);
+        auto_turn(Config::instance().animation_wait);
         continuous_action_blending();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::perform)
     {
-        auto_turn(Config::instance().animewait * 2);
+        auto_turn(Config::instance().animation_wait * 2);
         continuous_action_perform();
     }
     if (chara.continuous_action.type == ContinuousAction::Type::travel)
@@ -199,16 +220,6 @@ optional<TurnResult> activity_proc(Character& chara)
     }
 
     return none;
-}
-
-void prompt_stop_continuous_action()
-{
-    txt(i18n::s.get(
-        "core.locale.activity.cancel.prompt",
-        i18n::s.get_enum(
-            "core.locale.ui.action",
-            static_cast<int>(cdata[cc].continuous_action.type))));
-    rtval = yes_or_no(promptx, prompty, 160);
 }
 
 
@@ -413,7 +424,7 @@ void continuous_action_perform()
                         cdata[cc].quality_of_performance -= p;
                     }
                 }
-                if (encfindspec(cdata[cc].continuous_action.item, 60))
+                if (enchantment_find(inv[cdata[cc].continuous_action.item], 60))
                 {
                     if (rnd(15) == 0)
                     {
@@ -461,8 +472,9 @@ void continuous_action_perform()
                                     {
                                         continue;
                                     }
-                                    if (encfindspec(
-                                            cdata[cc].continuous_action.item,
+                                    if (enchantment_find(
+                                            inv[cdata[cc]
+                                                    .continuous_action.item],
                                             49))
                                     {
                                         flt(calcobjlv(
@@ -1369,7 +1381,7 @@ void continuous_action_others()
         game_data.previous_dungeon_level = game_data.current_dungeon_level;
         game_data.previous_x = cdata.player().position.x;
         game_data.previous_y = cdata.player().position.y;
-        game_data.destination_map = 30;
+        game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
         game_data.destination_dungeon_level = inv[ci].count;
         levelexitby = 2;
         snd("core.exitmap1");
@@ -1421,8 +1433,7 @@ void spot_fishing()
         racount = 0;
         fishstat = 0;
         gsel(9);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"fishing.bmp");
+        picload(filesystem::dir::graphic() / u8"fishing.bmp", 0, 0, true);
         gsel(0);
         return;
     }
@@ -1442,7 +1453,7 @@ void spot_fishing()
         {
             if (rnd(5) == 0)
             {
-                if (Config::instance().animewait != 0)
+                if (Config::instance().animation_wait != 0)
                 {
                     for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end;
                          ++cnt)
@@ -1453,7 +1464,7 @@ void spot_fishing()
                         ++scrturn;
                         update_screen();
                         redraw();
-                        await(Config::instance().animewait * 2);
+                        await(Config::instance().animation_wait * 2);
                     }
                 }
                 if (rnd(3) == 0)
@@ -1472,14 +1483,14 @@ void spot_fishing()
             fishanime = 2;
             snd("core.water2");
             cdata.player().emotion_icon = 220;
-            if (Config::instance().animewait != 0)
+            if (Config::instance().animation_wait != 0)
             {
                 for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
                 {
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(Config::instance().animewait * 2);
+                    await(Config::instance().animation_wait * 2);
                 }
             }
             if (rnd(10))
@@ -1495,7 +1506,7 @@ void spot_fishing()
         if (fishstat == 3)
         {
             fishanime = 3;
-            if (Config::instance().animewait != 0)
+            if (Config::instance().animation_wait != 0)
             {
                 for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end;
                      ++cnt)
@@ -1509,7 +1520,7 @@ void spot_fishing()
                     update_screen();
                     addefmap(fishx, fishy, 5, 2);
                     redraw();
-                    await(Config::instance().animewait * 2);
+                    await(Config::instance().animation_wait * 2);
                 }
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
@@ -1526,7 +1537,7 @@ void spot_fishing()
         {
             fishanime = 4;
             snd("core.fish_get");
-            if (Config::instance().animewait != 0)
+            if (Config::instance().animation_wait != 0)
             {
                 for (int cnt = 0; cnt < 21; ++cnt)
                 {
@@ -1538,7 +1549,7 @@ void spot_fishing()
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(Config::instance().animewait * 2);
+                    await(Config::instance().animation_wait * 2);
                 }
             }
             sound_pick_up();
@@ -1709,7 +1720,7 @@ void spot_mining_or_wall()
         {
             txt(i18n::s.get("core.locale.activity.dig_mining.start.spot"));
         }
-        if (chipm(0, cell_data.at(refx, refy).chip_id_actual) == 6)
+        if (chip_data.for_cell(refx, refy).kind == 6)
         {
             txt(i18n::s.get("core.locale.activity.dig_mining.start.hard"));
         }
@@ -1730,7 +1741,7 @@ void spot_mining_or_wall()
         }
         ++countdig;
         f = 0;
-        if (chipm(0, cell_data.at(refx, refy).chip_id_actual) == 6)
+        if (chip_data.for_cell(refx, refy).kind == 6)
         {
             if (rnd(12000) < sdata(10, cc) + sdata(163, cc) * 10)
             {

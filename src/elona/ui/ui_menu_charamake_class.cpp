@@ -20,7 +20,7 @@ static void _load_class_list()
         listn(1, listmax) = class_.get().id;
         ++listmax;
     }
-    if (Config::instance().extraclass)
+    if (Config::instance().extra_class)
     {
         for (const auto& class_ : class_get_available(true))
         {
@@ -61,22 +61,35 @@ _draw_class_info(int chip_male, int chip_female, const std::string& race)
 {
     {
         auto rect = chara_preparepic(chip_male);
-        pos(wx + 380, wy - rect->height + 60);
-        gcopy(rect->buffer, 0, 960, inf_tiles, rect->height);
+        gcopy(
+            rect->buffer,
+            0,
+            960,
+            inf_tiles,
+            rect->height,
+            wx + 380,
+            wy - rect->height + 60);
     }
     {
         auto rect = chara_preparepic(chip_female);
-        pos(wx + 350, wy - rect->height + 60);
-        gcopy(rect->buffer, 0, 960, inf_tiles, rect->height);
+        gcopy(
+            rect->buffer,
+            0,
+            960,
+            inf_tiles,
+            rect->height,
+            wx + 350,
+            wy - rect->height + 60);
     }
-    pos(wx + 460, wy + 38);
-    mes(i18n::s.get("core.locale.chara_making.select_race.race_info.race") +
-        u8": "s + race);
+    mes(wx + 460,
+        wy + 38,
+        i18n::s.get("core.locale.chara_making.select_race.race_info.race") +
+            u8": "s + race);
 
     draw_race_or_class_info();
 }
 
-static void _draw_window()
+void UIMenuCharamakeClass::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.chara_making.select_class.title"),
@@ -88,9 +101,17 @@ static void _draw_window()
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
-    pos(wx + ww / 4, wy + wh / 2);
-    gmode(4, 50);
-    gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2, 50);
+    gcopy_c(
+        2,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 4,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.chara_making.select_class.class"),
@@ -102,13 +123,13 @@ static void _draw_window()
         wy + 30);
 }
 
-static void _draw_choice(int cnt, const std::string& text)
+void UIMenuCharamakeClass::_draw_choice(int cnt, const std::string& text)
 {
     display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_choices()
+void UIMenuCharamakeClass::_draw_choices()
 {
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
@@ -116,17 +137,7 @@ static void _draw_choices()
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
 
-        std::string text;
-        if (jp)
-        {
-            text = listn(0, cnt);
-        }
-        else
-        {
-            text = cnven(listn(1, cnt));
-        }
-
-        _draw_choice(cnt, text);
+        _draw_choice(cnt, cnven(listn(0, cnt)));
     }
     cs_bk = cs;
 }
@@ -151,7 +162,6 @@ void UIMenuCharamakeClass::draw()
     const std::string& selected_class = listn(1, cs);
     _reload_selected_class(selected_class);
 
-    pos(wx + 200, wy + 66);
     _draw_class_info(ref1, ref2, _race);
 }
 

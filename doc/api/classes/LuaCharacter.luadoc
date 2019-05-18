@@ -1,147 +1,304 @@
---- Represents this character.
--- @classmod LuaCharacter
-
---- [R] The index of this character in the global characters array.
--- @tfield num index
-
---- [R] The prototype ID of this character.
--- @tfield num id
-
---- [R] The character's proper name without any qualifiers.
--- @tfield string name
-
---- [RW] The character's position.
--- @tfield LuaPosition position
-
---- [R] The character's current HP.
--- @tfield num hp
-
---- [R] The character's maximum HP.
--- @tfield num max_hp
-
---- [R] The character's current MP.
--- @tfield num mp
-
---- [R] The character's maximum MP.
--- @tfield num max_mp
-
---- [R] The character's current stamina.
--- @tfield num sp
-
---- [R] The character's maximum stamina.
--- @tfield num max_sp
-
---- [RW] The shop rank of this character. Used only if they are a shopkeeper.
--- @tfield num shop_rank
-
---- [RW] The role this character takes on.
--- @tfield num character_role
-
---- [RW] The character's current experience points.
--- @tfield num experience
+--- Represents a character.
+--  @classmod LuaCharacter
 
 --- Damages this character.
--- @tparam num amount the amount to damage
--- @tparam[opt] Enums.DamageSource source the source of the damage (defaults to the unseen hand)
--- @usage local chara = Chara.player()
---chara:damage_hp(100)
-function damage_hp(amount, source) end
+--  @tparam num amount the amount to damage
+--  @tparam[opt] Enums.DamageSource source the source of the damage (defaults to
+--  the unseen hand)
+--  @usage local chara = Chara.player()
+--  chara:damage_hp(100)
+--  @function damage_hp_source
+function damage_hp_source(amount, source) end
 
 --- Damages this character, with the source being set as another character.
--- @tparam num amount the amount to damage
--- @tparam LuaCharacter source the character acting as the source of the damage
--- @usage local chara = Chara.player()
--- local other = Chara.create(0, 0, "core.putit")
---chara:damage_hp(100, other)
+--  @tparam num amount the amount to damage
+--  @tparam LuaCharacter source the character acting as the source of the damage
+--  @usage local chara = Chara.player()
+--  local other = Chara.create(0, 0, "core.putit")
+--  chara:damage_hp(100, other)
+--  @function damage_hp
 function damage_hp(amount, source) end
 
 --- Applies a status ailment to this character.
--- @tparam Enums.StatusAilment ailment the kind of status ailment
--- @tparam num power the power of the status ailment
--- @usage local chara = Chara.player()
---chara:apply_ailment(Enums.StatusAilment.Blinded, 100)
+--  @tparam Enums.StatusAilment ailment the kind of status ailment
+--  @tparam num power the power of the status ailment
+--  @usage local chara = Chara.player()
+--  chara:apply_ailment("Blinded", 100)
+--  @function apply_ailment
 function apply_ailment(ailment, power) end
 
 --- Heals a status ailment on a character.
--- @tparam Enums.StatusAilment ailment the kind of status ailment
--- @tparam num power the power of the healing. If 0, heal the ailment
--- completely.
--- @usage local chara = Chara.player()
---chara:heal_ailment(Enums.StatusAilment.Blinded, 100)
+--  @tparam Enums.StatusAilment ailment the kind of status ailment
+--  @tparam num power the power of the healing. If 0, heal the ailment
+--  completely.
+--  @usage local chara = Chara.player()
+--  chara:heal_ailment("Blinded", 100)
+--  @function heal_ailment
 function heal_ailment(ailment, power) end
 
 --- Adds a buff to a character.
--- @tparam string id the buff to add
--- @tparam power num the buff's power
--- @tparam turns num the number of turns the buff will last
--- @tparam[opt] LuaCharacter doer the character who applied this buff
-function add_buff(id, power, turns, doer) end
+--  @tparam string buff_id the buff to add
+--  @tparam num power the buff's power
+--  @tparam num turns the number of turns the buff will last
+--  @tparam[opt] LuaCharacter doer the character who applied this buff
+--  @function add_buff
+function add_buff(buff_id, power, turns, doer) end
+
+--- Sets a growth buff of this character.
+--  @tparam num index
+--  @tparam num power
+--  @function set_growth_buff
+function set_growth_buff(index, power) end
 
 --- Attempts to recruit this character as an ally of the player.
---- This will only work if the character isn't already an ally, isn't
---- the player, is alive and the player has a free party slot.
--- @treturn bool true if the character was recruited successfully
+--  This will only work if the character isn't already an ally, isn't
+--  the player, is alive and the player has a free party slot.
+--  @treturn bool true if the character was recruited successfully
+--  @function recruit_as_ally
 function recruit_as_ally() end
 
---- Sets a flag on this character. <b>Note</b>: Currently, all flags up
---- to <code>IsQuickTempered</code> are "intrinsic" and are always
---- reset when this character is refreshed each turn. To change these
---- flags, you must call this function inside a handler for
---- <code>Event.EventKind.CharaRefreshed</code>, or the flag will be
---- reset later.
--- @tparam Enums.CharaFlag flag the flag to set
--- @tparam bool value the flag's new value
--- @see Event.EventKind.CharaRefreshed
--- @usage local Event = Elona.require("Event")
--- local Enums = Elona.require("Enums")
---
--- local function make_invisible(chara)
---   chara:set_flag(Enums.CharaFlag.IsInvisible, true) -- intrinsic, reset on refresh
--- end
---
--- -- force this flag to be overridden after this character is refreshed.
--- Event.register(Event.EventKind.CharaRefreshed, make_invisible)
--- Event.register(Event.EventKind.CharaCreated, make_invisible)
+--- Gets the value of a flag on this character.
+--  @tparam Enums.CharaFlag flag the flag to get
+--  @treturn bool
+--  @function get_flag
+function get_flag(chara, flag) end
 
+--- Sets the value of a flag on this character. <b>Note</b>: Currently, all flags
+--  up to <code>IsQuickTempered</code> are "intrinsic" and are always reset when
+--  this character is refreshed each turn. To change these flags, you must call
+--  this function inside a handler for
+--  <code>core.character_refreshed</code>, or the flag will be reset later.
+--  @tparam Enums.CharaFlag flag the flag to set
+--  @tparam bool value the flag's new value
+--  @see core.event
+--  @usage local Event = Elona.require("Event")
+--
+--  local function make_invisible(chara)
+--  chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
+--  end
+--
+--  -- force this flag to be overridden after this character is refreshed.
+--  Event.register("core.character_refreshed", make_invisible)
+--  Event.register("core.character_created", make_invisible)
+--  @function set_flag
 function set_flag(flag, value) end
 
+--- Obtains the skill of the given ID.
+--  @tparam string skill_id ID of type core.ability
+--  @treturn LuaAbility
+--  @function get_skill
+function get_skill(skill_id) end
+
 --- Makes this character gain a new skill or spell. This only has an
---- effect if the character does not already know the skill/spell.
--- @tparam num id the skill/spell ID
--- @tparam num initial_level the intial skill/spell level
--- @tparam[opt] num initial_stock the initial spell stock for spells
-function gain_skill(id, initial_level, initial_stock) end
+--  effect if the character does not already know the skill/spell.
+--  @tparam string skill_id the skill/spell ID of type core.ability
+--  @tparam num initial_level the intial skill/spell level
+--  @tparam[opt] num initial_stock the initial spell stock for spells
+--  @function gain_skill
+function gain_skill(skill_id, initial_level, initial_stock) end
 
 --- Makes this character gain experience in a skill or spell. This only
---- has an effect if the character already knows the skill/spell.
--- @tparam num id the skill/spell ID
--- @tparam num amount the amount of experience
-function gain_skill_exp(id, amount) end
+--  has an effect if the character already knows the skill/spell.
+--  @tparam string skill_id the skill/spell ID of type core.ability
+--  @tparam num amount the amount of experience
+--  @function gain_skill_exp
+function gain_skill_exp(skill_id, amount) end
 
 --- Modifies this character's resistance. Since the effect is
---- permanent, once your resistance is modified, it will not be reset
---- on refreshing.
--- @tparam num element the corresponding element
--- @tparam num delta the amount of increase/decrease (can be negative)
+--  permanent, once your resistance is modified, it will not be reset
+--  on refreshing.
+--  @tparam num element the corresponding element
+--  @tparam num delta the amount of increase/decrease (can be negative)
+--  @function modify_resistance
 function modify_resistance(element, delta) end
 
 --- Modifies this character's sanity.
--- @tparam num delta the amount of increase/decrease (can be negative)
+--  @tparam num delta the amount of increase/decrease (can be negative)
+--  @function modify_sanity
 function modify_sanity(delta) end
 
 --- Modifies this character's karma. Currently only has an effect if
---- the character is the player.
--- @tparam num delta the amount of increase/decrease (can be negative)
+--  the character is the player.
+--  @tparam num delta the amount of increase/decrease (can be negative)
+--  @function modify_karma
 function modify_karma(delta) end
 
 --- Modifies this character's ether corruption. Currently only has an
---- effect if the character is the player.
--- @tparam num delta the amount of increase/decrease (can be negative)
+--  effect if the character is the player.
+--  @tparam num delta the amount of increase/decrease (can be negative)
+--  @function modify_corruption
 function modify_corruption(delta) end
 
 --- Makes this character pregnant. Only has an effect if the character
---- is not already pregnant.
+--  is not already pregnant.
+--  @function make_pregnant
 function make_pregnant() end
 
 --- Applies the effects of eating rotten food to this character.
+--  @function eat_rotten_food
 function eat_rotten_food() end
+
+--- Deletes this character and removes it from the map. The character will no
+--  longer be valid for use.
+--  @function vanquish
+function vanquish() end
+
+--- Applies the effects of acting hostile towards a target character.
+--  @tparam LuaCharacter target Target to act hostile towards
+--  @function act_hostile_against
+function act_hostile_against(target) end
+
+--- Refreshes this character, reapplying bonuses given by equipment.
+--  @function refresh
+function refresh() end
+
+--- Refreshes the burden state of this character. Only valid if called on the
+--  player. Call this method if the character's inventory changes so the weight
+--  can be reapplied.
+--  @function refresh_burden_state
+function refresh_burden_state() end
+
+--- Moves this character to a new position.
+--  @tparam LuaPosition pos
+--  @function move_to
+function move_to(pos) end
+
+--- Moves this character to a new position.
+--  @tparam num x
+--  @tparam num y
+--  @function move_to_xy
+function move_to_xy(x, y) end
+
+--- Changes the worshipped god of this character without invoking the god
+--  switching penalty.
+--  @tparam string god_id ID of type core.god.
+--  @function switch_religion
+function switch_religion(god_id) end
+
+--- Returns the duration of an ailment on this character.
+--  @tparam StatusAilment ailment
+--  @treturn num
+--  @function get_ailment
+function get_ailment(ailment) end
+
+--- [R] The index of this character in the global characters array.
+--  @tfield num index
+
+--- [R] The legacy ID of this character.
+--  @tfield legacy_id index
+
+--- [R] The character's proper name without any qualifiers.
+--  @tfield string name
+
+--- [R] The character's maximum HP.
+--  @tfield num max_hp
+
+--- [R] The character's current stamina.
+--  @tfield num sp
+
+--- [R] The character's maximum stamina.
+--  @tfield num max_sp
+
+--- [R] The character's current MP.
+--  @tfield num mp
+
+--- [R] The character's maximum MP.
+--  @tfield num max_mp
+
+--- [RW] The character's worshipped god.
+--  @tfield string max_mp
+
+--- [RW] The character's position.
+--  @tfield LuaPosition position
+
+--- [RW] The character's initial position.
+--  @tfield LuaPosition initial_position
+
+--- [RW] The shop rank of this character. Used only if they are a
+--  shopkeeper.
+--  @tfield num shop_rank
+
+--- [RW] The role this character takes on.
+--  @tfield num role
+
+--- [RW] The character's current gold.
+--  @tfield num gold
+
+--- [RW] The character's current experience points.
+--  @tfield num experience
+
+--- [RW] The character's current fame.
+--  @tfield num fame
+
+--- [RW] The character's current level.
+--  @tfield num level
+
+--- [RW] The character's current talk type.
+--  @tfield num talk_type
+
+--- [RW] The character's current PV. Reset on refresh.
+--  @tfield num pv
+
+--- [RW] The character's current DV. Reset on refresh.
+--  @tfield num dv
+
+--- [RW] The character's current hit bonus. Reset on refresh.
+--  @tfield num hit_bonus
+
+--- [RW] The character's current growth buffs.
+--  @tfield num growth_buffs
+
+--- [RW] The character's current hate.
+--  @tfield num hate
+
+--- [RW] The character's current emotion icon. Valid values are 0-99.
+--  @tfield num fame
+
+--- [RW] The character's current karma. Only valid if the character is
+--  the player.
+--  @tfield num karma
+
+--- [RW] The index of a character this character is targeting..
+--  @tfield num enemy_id
+
+--- [RW] The character's current image.
+--  @tfield string portrait
+
+--- [RW] The character's current portrait.
+--  @tfield string portrait
+
+--- [RW] The character's current impression.
+--  @tfield num impression
+
+--- [RW] The character's current interest.
+--  @tfield num interest
+
+--- [RW] The character's AI calmness.
+--  @tfield num ai_calm
+
+--- [R] The new-style version prototype ID of the character.
+--  @tfield string id
+
+--- [R] The name of the character with article and title.
+--  @tfield string name
+
+--- [R] The name of the character without article and title.
+--  @tfield string basename
+
+--- [R] The title of the character.
+--  @tfield string title
+
+--- [RW] The sex of the character.
+--  @tfield Gender sex
+
+--- [RW] The relationship of the character to the player.
+--  @tfield Relationship relationship
+
+--- [RW] The original relationship of the character to the player.
+--  @tfield Relationship relationship
+
+--- [RW] The quality of the character.
+--  @tfield Quality quality
+
+--- [R] The prototype data of the character.
+--  @tfield table prototype

@@ -1,5 +1,6 @@
 #include "ui_menu_message_log.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../message_log.hpp"
 
@@ -23,17 +24,22 @@ void _draw_window()
         {
             const auto x =
                 dx == p ? log_window_width % chunk_width : chunk_width;
-            pos(dx * chunk_width + inf_msgx,
-                inf_msgy - (dy + 1) * inf_msgspace);
-            gcopy(3, 496, 536 + dy % 4 * inf_msgspace, x, inf_msgspace);
+            draw_region(
+                "message_window_contents",
+                dx * chunk_width + inf_msgx,
+                inf_msgy - (dy + 1) * inf_msgspace,
+                0,
+                dy % 4 * inf_msgspace,
+                x,
+                inf_msgspace);
         }
     }
 
     for (int dx = 0; dx < p + 1; ++dx)
     {
         const auto x = dx == p ? log_window_width % chunk_width : chunk_width;
-        pos(dx * chunk_width + inf_msgx, inf_msgy);
-        gcopy(3, 496, 528, x, 6);
+        draw_region(
+            "message_window_border", dx * chunk_width + inf_msgx, inf_msgy, x);
     }
 }
 
@@ -52,13 +58,13 @@ void _draw_single_message(size_t cnt, int message_offset)
     }
 
     int message_width = 0;
-    font(inf_mesfont - en * 2);
+    font(14 - en * 2);
     for (const auto& span : message_log.at(n - cnt - 4 + message_offset))
     {
-        pos(message_width * inf_mesfont / 2 + inf_msgx + 6,
-            inf_msgy - cnt * inf_msgspace + vfix);
-        color(span.color.r, span.color.g, span.color.b);
-        mes(span.text);
+        mes(message_width * 7 + inf_msgx + 6,
+            inf_msgy - cnt * inf_msgspace + vfix,
+            span.text,
+            span.color);
 
         message_width += strlen_u(span.text);
     }
@@ -77,8 +83,7 @@ void _draw_messages(int message_offset)
     }
     gsel(0);
     gmode(2);
-    pos(0, -3);
-    gcopy(4, 0, 0, windoww, inf_msgy);
+    gcopy(4, 0, 0, windoww, inf_msgy, 0, -3);
 }
 
 } // namespace

@@ -6,12 +6,10 @@
 #include <regex>
 #include <sstream>
 
-
 #include "../snail/android.hpp"
 #include "../snail/application.hpp"
 #include "../snail/hsp.hpp"
 #include "../snail/window.hpp"
-
 #include "../util/fps_counter.hpp"
 #include "../util/strutil.hpp"
 #include "config/config.hpp"
@@ -103,7 +101,9 @@ std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs)
 }
 
 
-
+/**
+ * Polls for input and waits @a msec milliseconds.
+ */
 void await(int msec)
 {
     snail::hsp::await(msec);
@@ -115,10 +115,10 @@ void await(int msec)
         snail::Application::instance().was_focus_lost_just_now())
     {
         if (player_queried_for_input &&
-            Config::instance().get<bool>("core.config.android.quicksave") &&
+            Config::instance().get<bool>("core.android.quicksave") &&
             !std::uncaught_exception())
         {
-            ELONA_LOG("Focus lost, quicksaving game.");
+            ELONA_LOG("gui") << "Focus lost, quicksaving game.";
             snail::android::toast(
                 i18n::s.get("core.locale.ui.save_on_suspend"),
                 snail::android::ToastLength::long_length);
@@ -128,7 +128,9 @@ void await(int msec)
 }
 
 
-
+/**
+ * Draws a filled box.
+ */
 void boxf(int x, int y, int width, int height, const snail::Color& color)
 {
     snail::hsp::boxf(x, y, width, height, color);
@@ -142,7 +144,9 @@ void boxf()
 }
 
 
-
+/**
+ * Draws a line box.
+ */
 void boxl(int x, int y, int width, int height, const snail::Color& color)
 {
     const auto x2 = x + width;
@@ -249,17 +253,13 @@ void bsave(const fs::path& filename, elona_vector1<int>& data)
 }
 
 
-
+/**
+ * Creates a new window buffer with the specified width and height at index @a
+ * window_id.
+ */
 void buffer(int window_id, int width, int height)
 {
     snail::hsp::buffer(window_id, width, height);
-}
-
-
-
-void color(int r, int g, int b)
-{
-    snail::hsp::color(r, g, b);
 }
 
 
@@ -318,6 +318,14 @@ int dialog_macos(const std::string& message, int option)
 }
 #endif
 
+/**
+ * Opens a dialog box. Returns @ref DIALOG_YES (6) or @ref DIALOG_NO (7).
+ * Supported values of @a option:
+ * - 0: Info, OK
+ * - 1: Warning, OK
+ * - 2: Info, Yes/No
+ * - 3: Warning, Yes/No
+ */
 int dialog(const std::string& message, int option)
 {
 #if defined(ELONA_OS_WINDOWS)
@@ -332,13 +340,10 @@ int dialog(const std::string& message, int option)
 }
 
 
-
-void exec(const std::string&, int)
-{
-}
-
-
-
+/**
+ * Selects the size and style of the font configured in the game's config file
+ * for use with @ref mes.
+ */
 void font(int size, snail::Font::Style style)
 {
     snail::hsp::font(
@@ -349,53 +354,122 @@ void font(int size, snail::Font::Style style)
 }
 
 
-
+/**
+ * Copy from source window to the currently selected window with offset.
+ */
 void gcopy(
     int window_id,
     int src_x,
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y)
+{
+    snail::hsp::gcopy(
+        window_id, src_x, src_y, src_width, src_height, dst_x, dst_y, -1, -1);
+}
+
+
+
+/**
+ * Copy from source window to the currently selected window with offset and
+ * stretching.
+ */
+void gcopy(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height)
 {
     snail::hsp::gcopy(
-        window_id, src_x, src_y, src_width, src_height, dst_width, dst_height);
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_x,
+        dst_y,
+        dst_width,
+        dst_height);
 }
 
 
 
-void gcopy_c(int window_id, int src_x, int src_y, int src_width, int src_height)
-{
-    gcopy_c(
-        window_id, src_x, src_y, src_width, src_height, src_width, src_height);
-}
-
-
-
+/**
+ * Copy from source window to the currently selected window, centered.
+ */
 void gcopy_c(
     int window_id,
     int src_x,
     int src_y,
     int src_width,
     int src_height,
-    int dst_width,
-    int dst_height)
+    int dst_x,
+    int dst_y)
 {
-    pos(ginfo(22) - dst_width / 2, ginfo(23) - dst_height / 2);
-    snail::hsp::gcopy(
-        window_id, src_x, src_y, src_width, src_height, dst_width, dst_height);
+    gcopy_c(
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_x,
+        dst_y,
+        src_width,
+        src_height);
 }
 
 
 
+/**
+ * Copy from source window to the currently selected window, centered, with
+ * stretching.
+ */
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
+    int dst_width,
+    int dst_height)
+{
+    snail::hsp::gcopy(
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_x - dst_width / 2,
+        dst_y - dst_height / 2,
+        dst_width,
+        dst_height);
+}
+
+
+/**
+ * Returns true if @a key is pressed.
+ */
 bool getkey(snail::Key key)
 {
     return snail::Input::instance().is_pressed(key);
 }
 
 
-
+/**
+ * Obtains a substring delimited by @a delimiter in @a source at offset @a
+ * offset and copies it to @a out. If the delimiter is not found, the substring
+ * will be delimited by the next newline found, if there are any,  or the length
+ * of the string.
+ */
 void getstr(
     std::string& out,
     const std::string& source,
@@ -427,14 +501,35 @@ void getstr(
 }
 
 
-
+/**
+ * Obtains information about the graphics system. Supported values for @a type
+ * are 0-23, but only some are implemented. Implemented values for @a type are
+ * as follows:
+ * - 3: Selected window ID.
+ * - 6: Application window width.
+ * - 7: Application window height.
+ * - 10: Application window width.
+ * - 11: Application window height.
+ * - 12: Selected window width.
+ * - 13: Selected window height.
+ * - 22: Draw position X.
+ * - 23: Draw position Y.
+ */
 int ginfo(int type)
 {
     return snail::hsp::ginfo(type);
 }
 
 
-
+/**
+ * Sets the drawing mode to use when copying images between windows. @a alpha
+ * controls the amount of transparency images are copied with.
+ *
+ * Supported values for @a mode are as follows (others are ignored):
+ * - 0: Normal.
+ * - 2: Blend.
+ * - 5: Add.
+ */
 void gmode(int mode, int alpha)
 {
     snail::hsp::gmode(mode, alpha);
@@ -442,20 +537,37 @@ void gmode(int mode, int alpha)
 
 
 
-template <typename T>
-constexpr T rad2deg(T rad)
-{
-    return rad * 180.0 / 3.14159265358979323846264;
-}
-
-
-
+/**
+ * Copy from source window to the currently selected window with rotation.
+ */
 void grotate(
     int window_id,
     int src_x,
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
+    double angle)
+{
+    snail::hsp::grotate(
+        window_id, src_x, src_y, src_width, src_height, dst_x, dst_y, angle);
+}
+
+
+
+/**
+ * Copy from source window to the currently selected window with stretching and
+ * rotation.
+ */
+void grotate(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height,
     double angle)
@@ -466,33 +578,27 @@ void grotate(
         src_y,
         src_width,
         src_height,
+        dst_x,
+        dst_y,
         dst_width,
         dst_height,
         angle);
 }
 
 
-
-void grotate(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    double angle)
-{
-    snail::hsp::grotate(window_id, src_x, src_y, src_width, src_height, angle);
-}
-
-
-
+/**
+ * Select the window to operate on with functions like @ref gcopy.
+ */
 void gsel(int window_id)
 {
     snail::hsp::gsel(window_id);
 }
 
 
-
+/**
+ * Returns the position in @a str where @a pattern is found relative from @a pos
+ * in the string. Returns -1 if @a pattern is not found.
+ */
 int instr(const std::string& str, size_t pos, const std::string pattern)
 {
     if (pattern == "\n")
@@ -504,7 +610,10 @@ int instr(const std::string& str, size_t pos, const std::string pattern)
 }
 
 
-
+/**
+ * Attemps to convert @a s to a string using @ref std::stoi, Returns 0 on
+ * invalid input.
+ */
 int stoi(const std::string& s)
 {
     try
@@ -522,31 +631,40 @@ int stoi(const std::string& s)
 }
 
 
-
+/**
+ * Draws a line.
+ */
 void line(int x1, int y1, int x2, int y2, const snail::Color& color)
 {
     snail::hsp::line(x1, y1, x2, y2, color);
 }
 
 
-
-void mes(const std::string& text)
+/**
+ * Draws a string.
+ */
+void mes(int x, int y, const std::string& text, const snail::Color& color)
 {
-    snail::hsp::mes(text);
+    snail::hsp::mes(x, y, text, color);
 }
 
 
-
-void mes(int n)
-{
-    mes(std::to_string(n));
-}
-
-
-
+/**
+ * Sets @a buffer to receive text by pushing a new message box onto the message
+ * box stack. All key input will be redirected to @a buffer as a string.
+ * Multiple message boxes can be pushed, and the state of text for each will be
+ * saved.
+ *
+ * If @a text is true, enable text editing behavior.
+ * - Escape will output '\t' (a tab character)
+ * - Backspace will erase text in @a buffer.
+ * - CTRL-V will paste text from the clipboard.
+ *
+ * To stop redirecting text to @a buffer, call @ref onkey_0.
+ */
 void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer, Config::instance().keywait, text);
+    snail::hsp::mesbox(buffer, Config::instance().key_wait, text);
 }
 
 
@@ -601,7 +719,13 @@ size_t count(const std::string& str)
 
 } // namespace notemanip
 
-
+/**
+ * Inserts the text @a text to the current note buffer at line number @a index.
+ * If @a overwrite is true, overwrite the line instead of inserting it.
+ *
+ * @a text could contain multiple newlines, meaning multiple lines could be
+ * added.
+ */
 void noteadd(const std::string& text, int index, int overwrite)
 {
     assert(overwrite == 0 || overwrite == 1);
@@ -639,7 +763,9 @@ void noteadd(const std::string& text, int index, int overwrite)
 }
 
 
-
+/**
+ * Deletes the line at @a index in the current note buffer.
+ */
 void notedel(size_t index)
 {
     if (!notemanip::buffer)
@@ -657,7 +783,10 @@ void notedel(size_t index)
 }
 
 
-
+/**
+ * Gets the line at @a index in the current note buffer and copies it to @a out,
+ * or an empty string if out of range.
+ */
 void noteget(std::string& out, size_t index)
 {
     if (!notemanip::buffer)
@@ -679,13 +808,19 @@ void noteget(std::string& out, size_t index)
 
 
 
+/**
+ * Returns the number of lines in the current note buffer.
+ */
 int noteinfo()
 {
     return notemanip::buffer ? notemanip::count(*notemanip::buffer) : 0;
 }
 
 
-
+/**
+ * Sets @a buf as the current note buffer. Returns the number of lines in the
+ * new buffer.
+ */
 int notesel(std::string& buf)
 {
     notemanip::buffer = &buf;
@@ -693,7 +828,9 @@ int notesel(std::string& buf)
 }
 
 
-
+/**
+ * Clears the current note buffer.
+ */
 void noteunsel()
 {
     notemanip::buffer = nullptr;
@@ -715,7 +852,12 @@ void pget(int x, int y)
 
 
 
-void picload(const fs::path& filepath, int mode)
+/**
+ * Loads @a filepath, an image file, and renders it to the currently selected
+ * window. if @a create_buffer is true, create a new buffer and render to it
+ * instead.
+ */
+void picload(const fs::path& filepath, int x, int y, bool create_buffer)
 {
     optional<snail::Color> keycolor = snail::Color{0, 0, 0};
     if (filepathutil::to_utf8_path(filepath).find(u8"pcc") != std::string::npos)
@@ -726,15 +868,8 @@ void picload(const fs::path& filepath, int mode)
     {
         keycolor = none;
     }
-    snail::BasicImage img{filepath, keycolor};
-    snail::hsp::picload(img, mode);
-}
-
-
-
-void pos(int x, int y)
-{
-    snail::hsp::pos(x, y);
+    snail::Image img{filepath, keycolor};
+    snail::hsp::picload(img, x, y, create_buffer);
 }
 
 
@@ -763,10 +898,7 @@ static void _draw_fps()
         fps_str = _make_fps_string();
     }
 
-    // Global font/color is modified, so it has to be restored directly after.
-    const auto colorbk_r = ginfo(16);
-    const auto colorbk_g = ginfo(17);
-    const auto colorbk_b = ginfo(18);
+    // Global font is modified, so it has to be restored directly after.
     const auto& fontbk = snail::Application::instance().get_renderer().font();
     const auto fontbk_size = fontbk.size();
     const auto fontbk_style = fontbk.style();
@@ -777,19 +909,19 @@ static void _draw_fps()
     // cleared between each redraw.
     boxf(4, 4, strlen_u(fps_str) * 7 + 2, 14 - en * 2 + 2, {0, 0, 0, 255});
     font(13 - en * 2);
-    color(255, 255, 255);
-    pos(5, 5);
-    mes(fps_str);
+    mes(5, 5, fps_str, {255, 255, 255});
 
     font(fontbk_size, fontbk_style);
-    color(colorbk_r, colorbk_g, colorbk_b);
 
     lib::g_fps_counter.count();
 }
 
+/**
+ * Renders window buffer 0 to the application window.
+ */
 void redraw()
 {
-    if (Config::instance().get<bool>("core.config.foobar.show_fps"))
+    if (Config::instance().get<bool>("core.foobar.show_fps"))
     {
         _draw_fps();
     }
@@ -798,7 +930,9 @@ void redraw()
 }
 
 
-
+/**
+ * Returns a bitmask of @a StickKey indicating keys pressed.
+ */
 StickKey stick(StickKey allow_repeat_keys)
 {
     const auto& input = snail::Input::instance();
@@ -862,7 +996,9 @@ StickKey stick(StickKey allow_repeat_keys)
 }
 
 
-
+/**
+ * Returns the number of UTF-8 codepoints contained in @a str.
+ */
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
@@ -876,7 +1012,12 @@ size_t strlen_u(const std::string& str)
 }
 
 
-
+/**
+ * Returns @a length characters of @a source starting at @a pos.
+ *
+ * If @a pos is -1, return @a length characters from right to left starting at
+ * the end of the string.
+ */
 std::string strmid(const std::string& source, int pos, int length)
 {
     const auto src_len = source.size();
@@ -901,7 +1042,9 @@ std::string strmid(const std::string& source, int pos, int length)
 }
 
 
-
+/**
+ * Initializes the application window.
+ */
 void title(
     const std::string& title_str,
     const std::string& display_mode,
@@ -941,7 +1084,9 @@ void wpoke(int& x, size_t index, int y)
 }
 
 
-
+/**
+ * Sets the color modifier of copy operations between windows.
+ */
 void set_color_mod(int r, int g, int b, int window_id)
 {
     snail::hsp::set_color_mod(r, g, b, window_id);
@@ -1040,7 +1185,11 @@ int ImmGetOpenStatus(int)
 }
 
 
-
+/**
+ * Pops a message box from the stack of message boxes, returning key input to
+ * the next message box on the stack. After calling @ref mesbox, call this
+ * function to stop redirecting text.
+ */
 void onkey_0()
 {
     snail::hsp::onkey_0();

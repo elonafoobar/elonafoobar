@@ -12,6 +12,7 @@
 #include "elona.hpp"
 #include "enums.hpp"
 #include "equipment.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -24,6 +25,7 @@
 #include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+
 
 
 namespace elona
@@ -671,7 +673,7 @@ label_20591:
         }
         if (invctrl == 28)
         {
-            int stat = item_find(622, 3, 1);
+            int stat = item_find(622, 3, ItemFindLocation::player_inventory);
             if (stat != -1)
             {
                 p = inv[stat].number();
@@ -695,9 +697,7 @@ label_20591:
             }
         }
     }
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_inv.bmp", 1);
+    asset_load("deco_inv");
     gsel(0);
     if (returnfromidentify == 0)
     {
@@ -773,8 +773,7 @@ label_2060_internal:
         y = 34;
         x = windoww - 650 + 156;
         window2(x, y, 475, 22, 5, 5);
-        pos(x - 28, y - 8);
-        gcopy(3, 64, 288, 50, 32);
+        draw("radar_deco", x - 28, y - 8);
         if (dropcontinue)
         {
             i = 4;
@@ -802,13 +801,13 @@ label_2060_internal:
                 break;
             }
             p = cycle(cnt, i);
-            pos(x + cnt * 44 + 20, y - 24);
-            gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
+            draw_indexed(
+                "inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
             if (invctrl == p)
             {
                 gmode(5, 70);
-                pos(x + cnt * 44 + 20, y - 24);
-                gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
+                draw_indexed(
+                    "inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
                 gmode(2);
             }
             std::string inv_command_txt =
@@ -867,8 +866,7 @@ label_2061_internal:
 }
     if (invicon(invctrl) != -1)
     {
-        pos(wx + 46, wy - 14);
-        gcopy(3, 288 + invicon(invctrl) * 48, 48, 48, 48);
+        draw_indexed("inventory_icon", wx + 46, wy - 14, invicon(invctrl));
     }
     s = i18n::s.get("core.locale.ui.inv.window.weight");
     if (invctrl == 11 || invctrl == 12)
@@ -882,22 +880,16 @@ label_2061_internal:
     display_topic(
         i18n::s.get("core.locale.ui.inv.window.name"), wx + 28, wy + 30);
     display_topic(s, wx + 526, wy + 30);
-    if (showresist)
+
+    draw_additional_item_info_label(wx + 300, wy + 40);
+
+    draw("deco_inv_a", wx + ww - 136, wy - 6);
+    if (g_show_additional_item_info == AdditionalItemInfo::none)
     {
-        pos(wx + 300, wy + 40);
-        mes(i18n::s.get("core.locale.ui.inv.window.resist"));
+        draw("deco_inv_b", wx + ww - 186, wy - 6);
     }
-    pos(wx + ww - 136, wy - 6);
-    gcopy(3, 960, 96, 144, 48);
-    if (showresist == 0)
-    {
-        pos(wx + ww - 186, wy - 6);
-        gcopy(3, 960, 144, 48, 72);
-    }
-    pos(wx + ww - 246, wy - 6);
-    gcopy(3, 1008, 144, 48, 72);
-    pos(wx - 6, wy - 6);
-    gcopy(3, 960, 216, 48, 72);
+    draw("deco_inv_c", wx + ww - 246, wy - 6);
+    draw("deco_inv_d", wx - 6, wy - 6);
     s = ""s + listmax + u8" items"s;
     s += "  ("s +
         i18n::s.get(
@@ -920,16 +912,15 @@ label_2061_internal:
         window(x + 4, y + 4, w, h - h % 8, true);
         window(x, y, w, h - h % 8);
         font(12 + en - en * 2);
-        pos(x + 16, y + 17);
-        mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
-        pos(x + 16, y + 35);
-        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight") +
-            ":" + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s +
-            cnveqweight(tc));
+        mes(x + 16, y + 17, u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
+        mes(x + 16,
+            y + 35,
+            i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight") +
+                ":" + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s +
+                cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
-        pos(x, y);
-        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip"));
+        mes(x, y, i18n::s.get("core.locale.ui.inv.take_ally.window.equip"));
         x += 60;
         for (int cnt = 0; cnt < 30; ++cnt)
         {
@@ -938,19 +929,12 @@ label_2061_internal:
                 continue;
             }
             p = cdata[tc].body_parts[cnt];
-            if (p % 10000 != 0)
-            {
-                color(50, 50, 200);
-            }
-            else
-            {
-                color(100, 100, 100);
-            }
-            pos(x, y);
             std::string body_part_desc =
                 i18n::s.get_enum("core.locale.ui.body_part", p / 10000);
-            mes(body_part_desc);
-            color(0, 0, 0);
+            const auto text_color = p % 10000 != 0
+                ? snail::Color{50, 50, 200}
+                : snail::Color{100, 100, 100};
+            mes(x, y, body_part_desc, text_color);
             x += (body_part_desc.size() + 1) * 6;
         }
     }
@@ -1000,7 +984,7 @@ label_2061_internal:
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
         {
-            if (p >= 5080)
+            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.locale.ui.inv.window.ground") + ")";
@@ -1029,17 +1013,17 @@ label_2061_internal:
                     i18n::s.get("core.locale.ui.inv.window.main_hand") + ")";
             }
         }
-        if (showresist)
+        draw_additional_item_info(inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
+        if (g_show_additional_item_info != AdditionalItemInfo::none)
         {
-            equipinfo(p, wx + 300, wy + 60 + cnt * 19 + 2);
-            s = strmid(s, 0, 24);
+            s = cut_item_name_for_additional_info(s);
         }
         const auto text_color = cs_list_get_item_color(inv[p]);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);
-        pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
-        color(text_color.r, text_color.g, text_color.b);
-        mes(s(1));
-        color(0, 0, 0);
+        mes(wx + 600 - strlen_u(s(1)) * 7,
+            wy + 60 + cnt * 19 + 2,
+            s(1),
+            text_color);
     }
     if (keyrange != 0)
     {
@@ -1047,13 +1031,12 @@ label_2061_internal:
     }
     if (showmoney)
     {
-        if (showresist == 0)
+        if (g_show_additional_item_info == AdditionalItemInfo::none)
         {
             font(13 - en * 2);
             gmode(2);
             draw("gold_coin", wx + 340, wy + 32);
-            pos(wx + 368, wy + 37 - en * 2);
-            mes(""s + cdata[tc].gold + u8" gp"s);
+            mes(wx + 368, wy + 37 - en * 2, ""s + cdata[tc].gold + u8" gp"s);
         }
     }
     redraw();
@@ -1297,8 +1280,7 @@ label_2061_internal:
                             itemname(ci, in),
                             (in * calcitemvalue(ci, 1))));
                     }
-                    rtval = yes_or_no(promptx, prompty, 160);
-                    if (rtval != 0)
+                    if (!yes_no())
                     {
                         screenupdate = -1;
                         update_screen();
@@ -1982,7 +1964,7 @@ label_2061_internal:
                 result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
-            if (chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4)
+            if (chip_data.for_cell(tlocx, tlocy).effect & 4)
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.throw.location_is_blocked"));
@@ -2011,7 +1993,7 @@ label_2061_internal:
                 snd("core.fail1");
                 goto label_20591;
             }
-            int stat = item_find(622, 3, 1);
+            int stat = item_find(622, 3, ItemFindLocation::player_inventory);
             if (stat != -1)
             {
                 i = stat;
@@ -2160,14 +2142,8 @@ label_2061_internal:
     }
     if (action == "switch_mode")
     {
-        if (showresist == 1)
-        {
-            showresist = 0;
-        }
-        else
-        {
-            showresist = 1;
-        }
+        g_show_additional_item_info =
+            get_next_enum(g_show_additional_item_info);
         snd("core.pop1");
         goto label_2060_internal;
     }
@@ -2182,8 +2158,7 @@ label_2061_internal:
                 if (listmax > 0)
                 {
                     txt(i18n::s.get("core.locale.ui.inv.take.really_leave"));
-                    rtval = yes_or_no(promptx, prompty, 160);
-                    if (rtval != 0)
+                    if (!yes_no())
                     {
                         goto label_2060_internal;
                     }

@@ -7,8 +7,8 @@ locale {
         it_is_sold_out = "It's sold out."
         something_appears = "${itemname(_1)} appear${s(_1)}."
         something_appears_from_nowhere = "${itemname(_1)} appear${s(_1)} from nowhere."
-        you_learn_skill = "You learn {_1}!"
-        your_skill_improves = "Your {_1} skill improves!"
+        you_learn_skill = "You learn ${_1}!"
+        your_skill_improves = "Your ${_1} skill improves!"
 
         wish_gold = "Lots of gold pieces appear."
         wish_platinum = "Platinum pieces appear."

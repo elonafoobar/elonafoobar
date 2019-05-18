@@ -1,6 +1,5 @@
 #pragma once
 
-#include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_env.hpp"
@@ -50,6 +49,30 @@ sol::table handle(T& it)
 }
 
 /**
+ * Obtains a reference to the C++ data pointed to by a handle.
+ */
+template <typename T>
+sol::optional<T&> ref_opt(sol::table handle)
+{
+    return lua::lua->get_handle_manager().get_ref<T>(handle);
+}
+
+/**
+ * Obtains a reference to the C++ data pointed to by a handle.
+ */
+template <typename T>
+T& ref(sol::table handle)
+{
+    auto result = lua::lua->get_handle_manager().get_ref<T>(handle);
+    if (!result)
+    {
+        throw sol::error(
+            "Handle reference is not valid. Was the object removed?");
+    }
+    return *result;
+}
+
+/**
  * Obtains a Lua handle to a compatible C++ object.
  */
 template <typename T>
@@ -61,16 +84,6 @@ optional<sol::table> handle_opt(T& it)
         return none;
     }
     return h;
-}
-
-/**
- * Runs a Lua event of a given type safely, reporting any errors using txt().
- */
-template <EventKind event, typename R = void, typename... Args>
-void run_event(Args&&... args)
-{
-    lua::lua->get_event_manager().run_callbacks<event>(
-        std::forward<Args>(args)...);
 }
 
 template <typename... Args>

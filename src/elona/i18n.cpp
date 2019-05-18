@@ -28,12 +28,12 @@ void Store::init(const std::vector<Store::Location>& locations)
 
     for (const auto& loc : locations)
     {
-        locale_dir_table[loc.mod_name] = loc.locale_dir;
-        load(loc.locale_dir, loc.mod_name);
+        locale_dir_table[loc.mod_id] = loc.locale_dir;
+        load(loc.locale_dir, loc.mod_id);
     }
 }
 
-void Store::load(const fs::path& path, const std::string& mod_name)
+void Store::load(const fs::path& path, const std::string& mod_id)
 {
     for (const auto& entry :
          filesystem::dir_entries(path, filesystem::DirEntryRange::Type::file))
@@ -46,14 +46,14 @@ void Store::load(const fs::path& path, const std::string& mod_name)
                 filepathutil::make_preferred_path_in_utf8(entry.path())};
         }
 
-        load(ifs, entry.path().string(), mod_name);
+        load(ifs, filepathutil::to_utf8_path(entry.path()), mod_id);
     }
 }
 
 void Store::load(
     std::istream& is,
     const std::string& hcl_file,
-    const std::string& mod_name)
+    const std::string& mod_id)
 {
     const hcl::Value& value = hclutil::load(is, hcl_file);
 
@@ -64,7 +64,7 @@ void Store::load(
 
     const hcl::Value locale = value["locale"];
 
-    visit_object(locale.as<hcl::Object>(), mod_name + ".locale", hcl_file);
+    visit_object(locale.as<hcl::Object>(), mod_id + ".locale", hcl_file);
 }
 
 void Store::visit_object(

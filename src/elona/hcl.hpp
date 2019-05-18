@@ -26,12 +26,6 @@ inline hcl::Value& skip_sections(
     for (auto it = section_names.begin(); it < section_names.end(); it++)
     {
         std::string name = *it;
-        if (!value->is<hcl::Object>() || !value->has(name))
-        {
-            throw std::runtime_error(
-                hcl_file + ": \"" + sections +
-                "\" object not found at top level"s);
-        }
 
         if (sections == "")
         {
@@ -40,6 +34,13 @@ inline hcl::Value& skip_sections(
         else
         {
             sections += "." + name;
+        }
+
+        if (!value->is<hcl::Object>() || !value->has(name))
+        {
+            throw std::runtime_error(
+                hcl_file + ": \"" + sections +
+                "\" object not found at top level"s);
         }
         value = value->find(name);
     }

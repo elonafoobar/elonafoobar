@@ -1,0 +1,61 @@
+--- Contains parameters for the current map.
+--  @classmod LuaMapData
+
+--- [RW] The map tile atlas to use for this map.
+--  @tfield num atlas_number
+
+--- [RW] The date in hours when this map is next regenerated.
+--  @tfield num next_regenerate_date
+
+--- [RW] The relative time it takes to pass a single turn in this map.
+--  @tfield num turn_cost
+
+--- [RW] The maximum crowd density of this map.
+--  @tfield num max_crowd_density
+
+--- [R] The current dungeon level of this map.
+--  @tfield num current_dungeon_level
+
+--- [RW] The tileset type to use for this map.
+--  @tfield num tileset
+
+--- [RW] The date in hours when the map is next restocked.
+--  @tfield num next_restock_date
+
+--- [RW] The maximum number of items this map can hold.
+--  @tfield num max_item_count
+
+--- [R] The number of times this map has been regenerated.
+--  @tfield num regenerate_count
+
+--- [RW] If true, reset characters to their initial position on map
+--  refresh.
+--  @tfield bool is_genreated_every_time
+
+--- [RW] Indicates if this map is indoors.
+--  @tfield bool is_indoors
+
+--- [RW] Indicates if this map is a user map.
+--  @tfield bool is_user_map
+
+--- [RW] If true, play the campfire ambience.
+--  @tfield bool play_campfire_sound
+
+--- [RW] If true, regenerate this map when it is refreshed. This will
+--  restock shop inventories.
+--  @tfield bool should_regenerate
+
+--- [RW] If true, delete this map when it is exited.
+--  @tfield bool is_temporary
+
+--- [RW] The type of the map.
+--  @tfield MapType type
+
+--- [R] The position of the map's up stairs.
+--  @tfield LuaPosition stair_up_pos
+
+--- [R] The position of the map's down stairs.
+--  @tfield LuaPosition stair_down_pos
+
+--- [RW] The music which will play on entering the map.
+--  @tfield core.music bgm

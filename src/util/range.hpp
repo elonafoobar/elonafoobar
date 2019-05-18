@@ -9,11 +9,12 @@ namespace range
 {
 
 template <typename Range, typename Predicate>
-auto count_if(Range&& range, Predicate predicate)
+auto count_if(Range&& range, Predicate&& predicate)
 {
     using std::begin;
     using std::end;
-    return std::count_if(begin(range), end(range), predicate);
+    return std::count_if(
+        begin(range), end(range), std::forward<Predicate>(predicate));
 }
 
 
@@ -29,21 +30,23 @@ auto distance(Range&& range)
 
 
 template <typename Range, typename Predicate>
-bool all_of(Range&& range, Predicate predicate)
+bool all_of(Range&& range, Predicate&& predicate)
 {
     using std::begin;
     using std::end;
-    return std::all_of(begin(range), end(range), predicate);
+    return std::all_of(
+        begin(range), end(range), std::forward<Predicate>(predicate));
 }
 
 
 
 template <typename Range, typename Predicate>
-bool any_of(Range&& range, Predicate predicate)
+bool any_of(Range&& range, Predicate&& predicate)
 {
     using std::begin;
     using std::end;
-    return std::any_of(begin(range), end(range), predicate);
+    return std::any_of(
+        begin(range), end(range), std::forward<Predicate>(predicate));
 }
 
 
@@ -89,11 +92,12 @@ auto find(Range&& range, const T& value)
 
 
 template <typename Range, typename Predicate>
-auto find_if(Range&& range, Predicate predicate)
+auto find_if(Range&& range, Predicate&& predicate)
 {
     using std::begin;
     using std::end;
-    return std::find_if(begin(range), end(range), predicate);
+    return std::find_if(
+        begin(range), end(range), std::forward<Predicate>(predicate));
 }
 
 
@@ -134,6 +138,31 @@ void sort(Range&& range, Comparator less)
     using std::begin;
     using std::end;
     std::sort(begin(range), end(range), less);
+}
+
+
+
+// https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Erase-Remove
+template <typename Range, typename T>
+void remove_erase(Range& range, const T& element)
+{
+    using std::begin;
+    using std::end;
+    range.erase(std::remove(begin(range), end(range), element), end(range));
+}
+
+
+
+// https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Erase-Remove
+template <typename Range, typename Predicate>
+void remove_erase_if(Range& range, Predicate&& predicate)
+{
+    using std::begin;
+    using std::end;
+    range.erase(
+        std::remove_if(
+            begin(range), end(range), std::forward<Predicate>(predicate)),
+        end(range));
 }
 
 

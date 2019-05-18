@@ -7,11 +7,12 @@ namespace elona
 const constexpr char* data::LuaLazyCacheTraits<CharaChipDB>::type_id;
 
 
+
 CharaChipData CharaChipDB::convert(
     const lua::ConfigTable& data,
-    const std::string& id_)
+    const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_OPT_OR(tall, bool, false);
     DATA_OPT_OR(offset_y, int, 16);
 
@@ -35,7 +36,7 @@ CharaChipData CharaChipDB::convert(
         if (!fs::exists(*filepath))
         {
             throw std::runtime_error(
-                id_ + ": Image file doesn't exist: " + filepath->string());
+                id + ": Image file doesn't exist: " + filepath->string());
         }
     }
 
@@ -46,9 +47,12 @@ CharaChipData CharaChipDB::convert(
     }
 
     return CharaChipData{
+        SharedId{id},
         legacy_id,
         Extent{x, y, width, height},
-        CharaChip{SharedId(std::string(Traits::type_id) + ":" + id_), offset_y},
+        CharaChip{
+            SharedId(std::string(Traits::type_id) + data_id_separator + id),
+            offset_y},
         filepath};
 }
 

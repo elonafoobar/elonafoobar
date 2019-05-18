@@ -75,7 +75,7 @@ local function format_file_report_header(report, file_name, opts)
 
       if errors > 0 then
          status = status and (status.." / ") or ""
-         status = status..(format_color(tostring(errors).." error"..plural(errors), opts.color, "bright"))
+         status = status..(format_color(tostring(errors).." error"..plural(errors), opts.color, "bright", "red"))
       end
    end
 

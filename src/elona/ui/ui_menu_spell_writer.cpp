@@ -54,7 +54,7 @@ void UIMenuSpellWriter::update()
     }
 }
 
-static void _draw_window()
+void UIMenuSpellWriter::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.ui.reserve.title"),
@@ -68,7 +68,7 @@ static void _draw_window()
         i18n::s.get("core.locale.ui.reserve.status"), wx + 390, wy + 36);
 }
 
-static void _draw_key(int cnt)
+void UIMenuSpellWriter::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -77,7 +77,7 @@ static void _draw_key(int cnt)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuSpellWriter::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -93,43 +93,44 @@ static void _draw_keys()
     }
 }
 
-static void _draw_list_entry_image(int cnt)
+void UIMenuSpellWriter::_draw_list_entry_image(int cnt)
 {
     const constexpr int _book_item_chip = 429;
     draw_item_material(_book_item_chip, wx + 38, wy + 73 + cnt * 19);
 }
 
-static void _draw_list_entry_name(int cnt, int item_index)
+void UIMenuSpellWriter::_draw_list_entry_name(int cnt, int item_index)
 {
     std::string item_name = ioriginalnameref(item_index);
     cs_list(cs == cnt, item_name, wx + 84, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_list_entry_reserve_status(int cnt, int item_index)
+void UIMenuSpellWriter::_draw_list_entry_reserve_status(int cnt, int item_index)
 {
-    pos(wx + 400, wy + 66 + cnt * 19 + 2);
     if (itemmemory(2, item_index) == 1)
     {
-        color(120, 120, 120);
-        mes(i18n::s.get("core.locale.ui.reserve.not_reserved"));
-        color(0, 0, 0);
+        mes(wx + 400,
+            wy + 66 + cnt * 19 + 2,
+            i18n::s.get("core.locale.ui.reserve.not_reserved"),
+            {120, 120, 120});
     }
     else
     {
-        color(55, 55, 255);
-        mes(i18n::s.get("core.locale.ui.reserve.reserved"));
-        color(0, 0, 0);
+        mes(wx + 400,
+            wy + 66 + cnt * 19 + 2,
+            i18n::s.get("core.locale.ui.reserve.reserved"),
+            {55, 55, 255});
     }
 }
 
-static void _draw_list_entry(int cnt, int item_index)
+void UIMenuSpellWriter::_draw_list_entry(int cnt, int item_index)
 {
     _draw_list_entry_image(cnt);
     _draw_list_entry_name(cnt, item_index);
     _draw_list_entry_reserve_status(cnt, item_index);
 }
 
-static void _draw_list_entries()
+void UIMenuSpellWriter::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();

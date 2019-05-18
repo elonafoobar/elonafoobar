@@ -35,10 +35,17 @@ struct optional_ref
     }
 
 
-    optional_ref(const T& value)
+    optional_ref(T& value)
         : data(std::addressof(value))
     {
     }
+
+
+    optional_ref(const optional_ref& other) = default;
+    optional_ref(optional_ref&& other) = default;
+    optional_ref& operator=(const optional_ref& other) = default;
+    optional_ref& operator=(optional_ref&& other) = default;
+
 
 
     explicit operator bool() const noexcept
@@ -47,20 +54,25 @@ struct optional_ref
     }
 
 
-    const T* operator->() const noexcept
+
+    T* operator->() const noexcept
     {
         assert(data);
         return data;
     }
 
-    const T* operator*() const noexcept
+
+
+    T& operator*() const noexcept
     {
-        return data;
+        assert(data);
+        return *data;
     }
 
 
+
 private:
-    const T* data = nullptr;
+    T* data = nullptr;
 };
 
 

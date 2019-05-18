@@ -1,4 +1,5 @@
 #include "types/type_ability.cpp"
+#include "types/type_asset.cpp"
 #include "types/type_buff.cpp"
 #include "types/type_chara_chip.cpp"
 #include "types/type_character.cpp"
@@ -9,6 +10,7 @@
 #include "types/type_item_chip.cpp"
 #include "types/type_item_material.cpp"
 #include "types/type_map.cpp"
+#include "types/type_map_chip.cpp"
 #include "types/type_music.cpp"
 #include "types/type_portrait.cpp"
 #include "types/type_race.cpp"

@@ -6,7 +6,12 @@ namespace elona
 namespace lua
 {
 
-namespace Rand
+/**
+ * @luadoc
+ *
+ * Functions for working with randomness.
+ */
+namespace LuaApiRand
 {
 int rnd(int n);
 
@@ -14,11 +19,13 @@ bool one_in(int n);
 
 bool coinflip();
 
+int between(int min, int max);
+
 sol::object choice(sol::table table);
 
 
 void bind(sol::table&);
-}; // namespace Rand
+}; // namespace LuaApiRand
 
 } // namespace lua
 } // namespace elona

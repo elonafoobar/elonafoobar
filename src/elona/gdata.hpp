@@ -8,7 +8,7 @@ namespace elona
 template <typename T>
 struct elona_vector1;
 
-struct Date
+struct DateTime
 {
     int year;
     int month;
@@ -95,7 +95,7 @@ struct GameData
     int pc_y_in_world_map;
     int play_days;
     int random_seed;
-    Date date;
+    DateTime date;
     int next_inventory_serial_id;
     int weather;
     int hours_until_weather_changes;
@@ -223,19 +223,16 @@ struct GameData
 
 extern GameData game_data;
 
+
+
+/// @putit
 struct FoobarData
 {
-    // NOTE: Don't add new fields unless you add them to serialization,
-    // which will break save compatibility.
+    /// @putit
     bool is_autodig_enabled{};
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        // WARNING: Changing this will break save compatibility!
-        ar(is_autodig_enabled);
-    }
+#include "_putit/foobar_data.cpp"
 };
 
 

@@ -4,6 +4,7 @@
 #include "../config/config.hpp"
 #include "../variables.hpp"
 #include "keybind_manager.hpp"
+#include "macro_action_queue.hpp"
 
 namespace elona
 {
@@ -43,12 +44,17 @@ static std::map<InputContextType, std::vector<ActionCategory>> input_context_typ
 };
 // clang-format on
 
+bool InputContext::_is_valid_action(const std::string& action_id)
+{
+    return _available_actions.find(action_id) != _available_actions.end();
+}
+
 bool InputContext::_matches(
     const std::string& action_id,
     snail::Key key,
     snail::ModKey modifiers)
 {
-    if (_available_actions.find(action_id) == _available_actions.end())
+    if (!_is_valid_action(action_id))
     {
         return false;
     }
@@ -174,7 +180,7 @@ optional<std::string> InputContext::_check_movement_action(
     {
         // Has to be modified globally, since scroll speed is determined by
         // keybd_wait. See @ref ui_scroll_screen()
-        keybd_wait = 100000;
+        keybd_wait = 100000 + keybd_wait % 100;
         if (keywait == 0)
         {
             keywait = 1;
@@ -287,7 +293,7 @@ std::string InputContext::_delay_movement_action(
     {
         if ((modifiers & snail::ModKey::shift) != snail::ModKey::shift)
         {
-            keybd_wait = 1000;
+            keybd_wait = 1000 + keybd_wait % 100;
         }
     }
 
@@ -300,17 +306,17 @@ std::string InputContext::_delay_movement_action(
     {
         if (keybd_attacking != 0)
         {
-            if (keybd_wait % Config::instance().attackwait != 0)
+            if (keybd_wait % Config::instance().attack_wait != 0)
             {
                 return ""s;
             }
         }
-        else if (Config::instance().scroll == 0)
+        else if (!Config::instance().scroll)
         {
-            if (keybd_wait <
-                Config::instance().walkwait * Config::instance().startrun)
+            if (keybd_wait < Config::instance().walk_wait *
+                    Config::instance().start_run_wait)
             {
-                if (keybd_wait % Config::instance().walkwait != 0)
+                if (keybd_wait % Config::instance().walk_wait != 0)
                 {
                     return ""s;
                 }
@@ -320,7 +326,7 @@ std::string InputContext::_delay_movement_action(
                 running = 1;
                 if (keybd_wait < 100000)
                 {
-                    if (keybd_wait % Config::instance().runwait != 0)
+                    if (keybd_wait % Config::instance().run_wait != 0)
                     {
                         return ""s;
                     }
@@ -338,11 +344,11 @@ std::string InputContext::_delay_movement_action(
                 }
             }
         }
-        else if (keybd_wait > Config::instance().startrun)
+        else if (keybd_wait > Config::instance().start_run_wait)
         {
-            if (Config::instance().runscroll == 0)
+            if (!Config::instance().scroll_when_run)
             {
-                if (keybd_wait % Config::instance().runwait != 0)
+                if (keybd_wait % Config::instance().run_wait != 0)
                 {
                     return ""s;
                 }
@@ -351,8 +357,8 @@ std::string InputContext::_delay_movement_action(
         }
     }
     else if (
-        keybd_wait <
-        Config::instance().select_fast_start * Config::instance().select_wait)
+        keybd_wait < Config::instance().select_fast_start_wait *
+            Config::instance().select_wait)
     {
         if (keybd_wait % Config::instance().select_wait != 0)
         {
@@ -412,8 +418,34 @@ bool InputContext::_delay_normal_action(const Keybind& keybind)
     return false;
 } // namespace elona
 
+optional<std::string> InputContext::_handle_macro_action(
+    MacroActionQueue& macro_action_queue)
+{
+    std::string action = "";
+
+    while (action == "" || !_is_valid_action(action))
+    {
+        if (macro_action_queue.empty())
+        {
+            return none;
+        }
+
+        action = macro_action_queue.pop();
+    }
+
+    return action;
+}
+
 std::string InputContext::check_for_command(KeyWaitDelay delay_type)
 {
+    if (!keybind::macro_action_queue.empty())
+    {
+        if (auto action = _handle_macro_action(keybind::macro_action_queue))
+        {
+            return *action;
+        }
+    }
+
     _menu_cycle_key_pressed = false;
     key_escape = false;
 

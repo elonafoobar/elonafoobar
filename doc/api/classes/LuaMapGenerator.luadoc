@@ -1,0 +1,95 @@
+--- Enumerations for various data types. All enum variants take the
+--  name of the variant as a string for its value. This means that
+--  anywhere an enum value is required, you can pass a string with its
+--  name instead of using the <code>Enums</code> table.
+--  @classmod LuaEnums
+
+--- Gets the world map tile the player was standing on when they entered the map
+--  being generated.
+--  @treturn num the tile ID
+--  @function stood_world_map_tile
+function stood_world_map_tile() end
+
+--- Returns true if the map is being generated for the first time, across all
+--  regenerations.
+--  @treturn bool
+--  @function is_first_generation
+function is_first_generation() end
+
+--- Returns true if the current dungeon level is the deepest in this map.
+--  @treturn bool
+--  @function is_deepest_level
+function is_deepest_level() end
+
+--- Creates a blank map of the specified size.
+--  @tparam num width
+--  @tparam num height
+--  @function create
+function create(width, height) end
+
+--- Loads a custom map with the given name.
+--  @tparam string map_name
+--  @function load_custom
+function load_custom(name) end
+
+--- Generates a random nefia (dungeon).
+--  @function generate_nefia
+function generate_nefia() end
+
+--- Sets the created map's name.
+--  @tparam string name
+--  @function set_name
+function set_name(name) end
+
+--- Initializes the created map's tileset.
+--  @tparam num tileset_id
+--  @function set_tileset
+function set_tileset(tileset) end
+
+--- Sets the position of the stairs up in the created map.
+--  @tparam num x
+--  @tparam num y
+--  @function set_stair_up_pos
+function set_stair_up_pos(x, y) end
+
+--- Sets the position of the stairs down in the created map.
+--  @tparam num x
+--  @tparam num y
+--  @function set_stair_down_pos
+function set_stair_down_pos(x, y) end
+
+--- Sets the created map's entrance type.
+--  @tparam Enums.EntranceType type
+--  @function set_entrance_type
+function set_entrance_type(type) end
+
+--- Sets the created map's no aggro refresh flag. If true, characters
+--  will not have their enemy_id and hate reset after map
+--  initialization. Set this flag to true if you change the "enemy_id"
+--  or "hate" fields of any characters in the generation function.
+--  @tparam bool flag
+--  @function set_no_aggro_refresh
+function set_no_aggro_refresh(flag) end
+
+--- Sets the position of the player based on the entrance type.
+--  @function place_player
+function place_player() end
+
+--- Sets the position of the player to the given coordinates and
+--  updates the entrance type accordingly.
+--  @tparam num x
+--  @tparam num y
+--  @function place_player_xy
+function place_player_xy(x, y) end
+
+--- Creates new quests for the characters in the created map if necessary.
+--  @function update_quests_in_map
+function update_quests_in_map() end
+
+--- Marks all characters in this map as being enemies and quest targets.
+--  @function mark_quest_targets
+function mark_quest_targets() end
+
+--- Initializes this map as a world map,
+--  @function initialize_world_map
+function initialize_world_map() end

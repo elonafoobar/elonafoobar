@@ -71,7 +71,6 @@ ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
 ELONA_EXTERN(int scposval);
 ELONA_EXTERN(int weatherbk);
-ELONA_EXTERN(elona_vector1<int> inhlist);
 
 
 // crafting.cpp / blending.cpp
@@ -96,9 +95,6 @@ ELONA_EXTERN(int tile_dooropen);
 ELONA_EXTERN(int tile_downlocked);
 ELONA_EXTERN(int tile_re);
 ELONA_EXTERN(int tile_plant);
-ELONA_EXTERN(int tile_board);
-ELONA_EXTERN(int tile_votebox);
-ELONA_EXTERN(int tile_townboard);
 ELONA_EXTERN(elona_vector1<int> isetgod);
 ELONA_EXTERN(elona_vector1<int> isetcrop);
 ELONA_EXTERN(int rdtry);
@@ -135,7 +131,6 @@ ELONA_EXTERN(int refx);
 ELONA_EXTERN(int refy);
 ELONA_EXTERN(int movx);
 ELONA_EXTERN(int movy);
-ELONA_EXTERN(int dbg_freemove);
 ELONA_EXTERN(int ri);
 
 // dmgheal.cpp
@@ -243,7 +238,6 @@ ELONA_EXTERN(elona_vector1<std::string> inputlog);
 ELONA_EXTERN(elona_vector1<std::string> invkey);
 ELONA_EXTERN(elona_vector1<std::string> ioriginalnameref2);
 ELONA_EXTERN(elona_vector1<std::string> ioriginalnameref);
-ELONA_EXTERN(elona_vector1<std::string> jkey);
 ELONA_EXTERN(elona_vector1<std::string> key);
 ELONA_EXTERN(std::string key_identify);
 ELONA_EXTERN(std::string key_pageup);
@@ -253,14 +247,6 @@ ELONA_EXTERN(std::string key_help);
 ELONA_EXTERN(std::string key_msglog);
 ELONA_EXTERN(std::string key_enter);
 ELONA_EXTERN(std::string key_save);
-ELONA_EXTERN(std::string key_north);
-ELONA_EXTERN(std::string key_northeast);
-ELONA_EXTERN(std::string key_east);
-ELONA_EXTERN(std::string key_southeast);
-ELONA_EXTERN(std::string key_south);
-ELONA_EXTERN(std::string key_southwest);
-ELONA_EXTERN(std::string key_west);
-ELONA_EXTERN(std::string key_northwest);
 ELONA_EXTERN(std::string key_skill);
 ELONA_EXTERN(std::string key_close);
 ELONA_EXTERN(std::string key_cast);
@@ -281,7 +267,6 @@ ELONA_EXTERN(std::string key_wear);
 ELONA_EXTERN(std::string key_godown);
 ELONA_EXTERN(std::string key_goup);
 ELONA_EXTERN(std::string key_interact);
-ELONA_EXTERN(std::string key_rest);
 ELONA_EXTERN(std::string key_use);
 ELONA_EXTERN(std::string key_bash);
 ELONA_EXTERN(std::string key_open);
@@ -290,9 +275,7 @@ ELONA_EXTERN(std::string key_pray);
 ELONA_EXTERN(std::string key_offer);
 ELONA_EXTERN(std::string key_journal);
 ELONA_EXTERN(std::string key_material);
-ELONA_EXTERN(std::string key_quick);
 ELONA_EXTERN(std::string key_trait);
-ELONA_EXTERN(std::string key_look);
 ELONA_EXTERN(std::string key_give);
 ELONA_EXTERN(std::string key_prev);
 ELONA_EXTERN(std::string key_next);
@@ -300,32 +283,23 @@ ELONA_EXTERN(std::string key_throw);
 ELONA_EXTERN(std::string key_mode);
 ELONA_EXTERN(std::string key_ammo);
 ELONA_EXTERN(std::string key_mode2);
-ELONA_EXTERN(std::string key_quicksave);
-ELONA_EXTERN(std::string key_quickload);
-ELONA_EXTERN(std::string key_autodig);
 ELONA_EXTERN(elona_vector1<std::string> key_list);
 ELONA_EXTERN(elona_vector1<std::string> key_select);
 ELONA_EXTERN(elona_vector1<std::string> keylog);
 ELONA_EXTERN(elona_vector1<std::string> mdatan);
-ELONA_EXTERN(elona_vector1<std::string> musicfile);
 ELONA_EXTERN(elona_vector1<std::string> newsbuff);
 ELONA_EXTERN(elona_vector1<std::string> playerheader);
 ELONA_EXTERN(elona_vector1<std::string> q);
 ELONA_EXTERN(elona_vector1<std::string> qname);
-ELONA_EXTERN(elona_vector1<std::string> randn1);
-ELONA_EXTERN(elona_vector1<std::string> rn1);
-ELONA_EXTERN(elona_vector1<std::string> rn2);
 ELONA_EXTERN(elona_vector1<std::string> rtvaln);
 ELONA_EXTERN(elona_vector1<std::string> s1);
 ELONA_EXTERN(elona_vector1<std::string> s);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn2);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn);
-ELONA_EXTERN(elona_vector1<std::string> untaglist);
 ELONA_EXTERN(elona_vector2<int> adata);
 ELONA_EXTERN(elona_vector2<int> breathlist);
 ELONA_EXTERN(elona_vector2<int> c_col);
 ELONA_EXTERN(elona_vector2<int> card);
-ELONA_EXTERN(elona_vector2<int> chipm);
 ELONA_EXTERN(elona_vector2<int> cmapdata);
 ELONA_EXTERN(elona_vector2<int> cycle);
 ELONA_EXTERN(elona_vector2<int> dblist);
@@ -346,17 +320,14 @@ ELONA_EXTERN(elona_vector2<int> qdata);
 ELONA_EXTERN(elona_vector2<int> slight);
 ELONA_EXTERN(elona_vector2<int> userdata);
 ELONA_EXTERN(elona_vector2<std::string> _melee);
-ELONA_EXTERN(elona_vector2<std::string> cdatan2);
 ELONA_EXTERN(elona_vector2<std::string> cdatan);
 ELONA_EXTERN(elona_vector2<std::string> listn);
 ELONA_EXTERN(elona_vector2<std::string> mapnamerd);
 ELONA_EXTERN(elona_vector2<std::string> promptl);
-ELONA_EXTERN(elona_vector2<std::string> rnlist);
 ELONA_EXTERN(elona_vector2<std::string> userdatan);
 ELONA_EXTERN(elona_vector3<int> bddata);
 ELONA_EXTERN(elona_vector3<int> efmap);
 ELONA_EXTERN(elona_vector3<int> map);
-ELONA_EXTERN(int am);
 ELONA_EXTERN(int ammo);
 ELONA_EXTERN(int ammoproc);
 ELONA_EXTERN(int ammoprocbk);
@@ -424,11 +395,9 @@ ELONA_EXTERN(int efid);
 ELONA_EXTERN(int efp);
 ELONA_EXTERN(int efsource);
 ELONA_EXTERN(CurseState efstatus);
-ELONA_EXTERN(int egg);
 ELONA_EXTERN(int egolv);
 ELONA_EXTERN(int ele);
 ELONA_EXTERN(int elep);
-ELONA_EXTERN(int elona_export);
 ELONA_EXTERN(int en);
 ELONA_EXTERN(int encounter);
 ELONA_EXTERN(int encounterlv);
@@ -454,23 +423,16 @@ ELONA_EXTERN(int fltselect);
 ELONA_EXTERN(int flttypemajor);
 ELONA_EXTERN(int flttypeminor);
 ELONA_EXTERN(int foot);
-ELONA_EXTERN(int ghelp);
 ELONA_EXTERN(int gold);
 ELONA_EXTERN(int grown);
 ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
-ELONA_EXTERN(int hour_played);
 ELONA_EXTERN(int ichargelevel);
 ELONA_EXTERN(IdentifyState idtresult);
 ELONA_EXTERN(int importmode);
 ELONA_EXTERN(int in);
-ELONA_EXTERN(int inf_clockh);
-ELONA_EXTERN(int inf_clockw);
-ELONA_EXTERN(int inf_clockx);
 ELONA_EXTERN(int inf_maxlog);
 ELONA_EXTERN(size_t inf_maxmsglen);
-ELONA_EXTERN(int inf_mesfont);
-ELONA_EXTERN(int inf_msgline);
 ELONA_EXTERN(int inf_msgspace);
 ELONA_EXTERN(int inf_msgx);
 ELONA_EXTERN(int inf_msgy);
@@ -480,11 +442,9 @@ ELONA_EXTERN(int inf_screenx);
 ELONA_EXTERN(int inf_screeny);
 ELONA_EXTERN(int inf_tiles);
 ELONA_EXTERN(int inf_verh);
-ELONA_EXTERN(int inf_vertype);
 ELONA_EXTERN(int inf_very);
 ELONA_EXTERN(int initeco);
 ELONA_EXTERN(int initlv);
-ELONA_EXTERN(int initnum);
 ELONA_EXTERN(int invally);
 ELONA_EXTERN(int invfile);
 ELONA_EXTERN(int invhead);
@@ -502,7 +462,6 @@ ELONA_EXTERN(int lastctrl);
 ELONA_EXTERN(int len);
 ELONA_EXTERN(int levelexitby);
 ELONA_EXTERN(int listmax);
-ELONA_EXTERN(int livestock);
 ELONA_EXTERN(int lomiaseaster);
 ELONA_EXTERN(int mapstartx);
 ELONA_EXTERN(int mapstarty);
@@ -511,13 +470,10 @@ ELONA_EXTERN(int mapupdate);
 ELONA_EXTERN(int marry);
 ELONA_EXTERN(int maxbreath);
 ELONA_EXTERN(int maxitemid);
-ELONA_EXTERN(int medit);
 ELONA_EXTERN(int menucycle);
 ELONA_EXTERN(int minlevel);
 ELONA_EXTERN(int mode);
-ELONA_EXTERN(int mousel);
 ELONA_EXTERN(int msgalert);
-ELONA_EXTERN(int msgline);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
 ELONA_EXTERN(int musicloop);
@@ -544,7 +500,6 @@ ELONA_EXTERN(int prompty);
 ELONA_EXTERN(int prot);
 ELONA_EXTERN(int protdice1);
 ELONA_EXTERN(int protdice2);
-ELONA_EXTERN(int quickkeywait);
 ELONA_EXTERN(int quickpage);
 ELONA_EXTERN(int r2);
 ELONA_EXTERN(int r);
@@ -577,13 +532,10 @@ ELONA_EXTERN(int scxbk);
 ELONA_EXTERN(int scy);
 ELONA_EXTERN(int scybk);
 ELONA_EXTERN(int sexvalue);
-ELONA_EXTERN(int shade);
 ELONA_EXTERN(int shoptrade);
-ELONA_EXTERN(int showresist);
 ELONA_EXTERN(int size);
 ELONA_EXTERN(int sizefix);
 ELONA_EXTERN(int sound);
-ELONA_EXTERN(int step);
 ELONA_EXTERN(int strsize);
 ELONA_EXTERN(int supply);
 ELONA_EXTERN(int sxfix);
@@ -610,9 +562,6 @@ ELONA_EXTERN(int vfix);
 ELONA_EXTERN(int voidlv);
 ELONA_EXTERN(int windowh);
 ELONA_EXTERN(int windoww);
-ELONA_EXTERN(int windowx);
-ELONA_EXTERN(int windowy);
-ELONA_EXTERN(int worker);
 ELONA_EXTERN(int wh);
 ELONA_EXTERN(int ww);
 ELONA_EXTERN(int wx);
@@ -628,7 +577,6 @@ ELONA_EXTERN(std::string dbidn);
 ELONA_EXTERN(std::string defload);
 ELONA_EXTERN(std::string fmapfile);
 ELONA_EXTERN(std::string geneuse);
-ELONA_EXTERN(std::string homepage);
 ELONA_EXTERN(std::string mid);
 ELONA_EXTERN(std::string note_buff);
 ELONA_EXTERN(std::string playerid);
@@ -643,10 +591,8 @@ ELONA_EXTERN(std::string strhint5);
 ELONA_EXTERN(std::string strhint5b);
 ELONA_EXTERN(std::string strhint7);
 ELONA_EXTERN(std::string userfile);
-ELONA_EXTERN(std::string usermsg);
 
 ELONA_EXTERN(optional<int> chatval_unique_chara_id);
-ELONA_EXTERN(bool chatval_show_impress);
 
 //// Game formulae
 int calcincome(int = 0);
@@ -738,8 +684,6 @@ void initialize_building_data();
 void initialize_nefia_names();
 void initialize_picfood();
 void initialize_cloud_data();
-void load_random_name_table();
-void load_random_title_table();
 void initialize_item_material_data();
 void initialize_set_of_random_generation();
 void initialize_economy();
@@ -826,7 +770,7 @@ int key_direction(const std::string& action);
 
 // Querying input
 int ask_direction();
-int target_position();
+int target_position(bool target_chara = true);
 int prompt_magic_location();
 int prompt_really_attack();
 
@@ -872,7 +816,6 @@ TurnResult try_to_open_locked_door();
 void build_target_list();
 void equip_melee_weapon();
 void get_inheritance();
-void main_title_loop();
 void remove_card_and_figures();
 
 void try_to_melee_attack();
@@ -925,7 +868,7 @@ void damage_by_cursed_equipments();
 //// proc_movement_event
 TurnResult proc_movement_event();
 void map_global_proc_travel_events();
-void proc_trap();
+void move_character();
 void sense_map_feats_on_move();
 
 
@@ -965,7 +908,6 @@ int mapitemfind(int = 0, int = 0, int = 0);
 
 // Map drawing
 void cell_draw();
-void map_prepare_tileset_atlas();
 void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 
 // Map animation
@@ -999,7 +941,6 @@ void initialize_random_nefia_rdtype8();
 void initialize_random_nefia_rdtype9();
 void mapgen_dig_maze();
 void initialize_random_nefia_rdtype10();
-void initialize_home_mdata();
 
 
 //// weather_changes
@@ -1069,16 +1010,6 @@ void fix_input_chat(std::string&);
 void fix_input_chat2(std::string&);
 
 
-// Text generation
-std::string randomname();
-enum class RandomTitleType
-{
-    character,
-    weapon,
-    party,
-    living_weapon,
-};
-std::string random_title(RandomTitleType type = RandomTitleType::character);
 
 // Text fragments
 std::string cnvarticle(const std::string&);
@@ -1172,7 +1103,6 @@ void scene_fade_to_black();
 //// Scenario
 void conquer_lesimas();
 void play_the_last_scene_again();
-std::vector<std::string> txtsetwinword(int);
 
 
 //// Game lifecycle

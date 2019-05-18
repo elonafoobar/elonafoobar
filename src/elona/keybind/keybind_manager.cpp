@@ -6,6 +6,30 @@
 #include "keybind_deserializer.hpp"
 #include "keybind_serializer.hpp"
 
+
+
+namespace
+{
+
+std::string key_autodig;
+std::string key_east;
+std::string key_look;
+std::string key_north;
+std::string key_northeast;
+std::string key_northwest;
+std::string key_quick;
+std::string key_quickload;
+std::string key_quicksave;
+std::string key_rest;
+std::string key_south;
+std::string key_southeast;
+std::string key_southwest;
+std::string key_west;
+
+} // namespace
+
+
+
 namespace elona
 {
 

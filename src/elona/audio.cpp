@@ -158,14 +158,14 @@ void play_music_inner(const SharedId& music_id, int musicloop)
         auto music = the_music_db[music_id];
         if (!music)
         {
-            ELONA_LOG("Cannot load music " << music_id.get());
+            ELONA_ERROR("audio") << "Cannot load music " << music_id.get();
             return;
         }
         if (!fs::exists(music->file))
         {
-            ELONA_LOG(
-                "Cannot load file " << music->file.string() << " for music "
-                                    << music_id.get());
+            ELONA_ERROR("audio") << "Cannot load file "
+                                 << filepathutil::to_utf8_path(music->file)
+                                 << " for music " << music_id.get();
             return;
         }
 
@@ -190,12 +190,12 @@ void snd_inner(
     if (!Config::instance().sound)
         return;
 
-    int channel = sound.id;
+    int channel = sound.legacy_id;
     if (channel > temporary_channels_head)
     {
         if (loop)
         {
-            switch (sound.id)
+            switch (sound.legacy_id)
             {
             case 78: channel = 14; break;
             case 79: channel = 15; break;
@@ -214,7 +214,8 @@ void snd_inner(
                      ++i)
                 {
                     if (CHECKPLAY(i) &&
-                        soundlist[i - temporary_channels_head] == sound.id)
+                        soundlist[i - temporary_channels_head] ==
+                            sound.legacy_id)
                     {
                         channel = i;
                         found = true;
@@ -231,7 +232,8 @@ void snd_inner(
                     if (!CHECKPLAY(i))
                     {
                         channel = i;
-                        soundlist[i - temporary_channels_head] = sound.id;
+                        soundlist[i - temporary_channels_head] =
+                            sound.legacy_id;
                     }
                 }
             }
@@ -342,9 +344,9 @@ void initialize_sound_file()
 {
     soundlist.resize(temporary_channels_size);
 
-    for (const auto& se : the_sound_db)
+    for (const auto& se : the_sound_db.values())
     {
-        _preload_sound_if_needed(se.file, se.id);
+        _preload_sound_if_needed(se.file, se.legacy_id);
     }
 }
 
@@ -379,7 +381,7 @@ std::pair<short, unsigned char> sound_calculate_position(
 
 std::pair<short, unsigned char> sound_calculate_position(const Position& p)
 {
-    if (!Config::instance().get<bool>("core.config.screen.stereo_sound"))
+    if (!Config::instance().get<bool>("core.screen.stereo_sound"))
     {
         return {0, 0};
     }
@@ -397,12 +399,9 @@ std::pair<short, unsigned char> sound_calculate_position(const Position& p)
 void stop_music()
 {
     mmstop();
-    if (Config::instance().music == "direct_music")
-    {
-        DMSTOP();
-        DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
-        DMPLAY(1, 0);
-    }
+    DMSTOP();
+    DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
+    DMPLAY(1, 0);
 }
 
 
@@ -555,11 +554,11 @@ void snd_at(
 
     if (!sound)
     {
-        ELONA_LOG("Cannot load sound " << sound_id);
+        ELONA_ERROR("audio") << "Cannot load sound " << sound_id;
         return;
     }
 
-    snd_inner(**sound, angle, dist, loop, allow_duplicate);
+    snd_inner(*sound, angle, dist, loop, allow_duplicate);
 }
 
 void snd_at(
@@ -577,11 +576,11 @@ void snd(SharedId sound_id, bool loop, bool allow_duplicate)
 
     if (!sound)
     {
-        ELONA_LOG("Cannot load sound " << sound_id);
+        ELONA_ERROR("audio") << "Cannot load sound " << sound_id;
         return;
     }
 
-    snd_inner(**sound, 0, 0, loop, allow_duplicate);
+    snd_inner(*sound, 0, 0, loop, allow_duplicate);
 }
 
 void snd(const char* sound_id, bool loop, bool allow_duplicate)
@@ -599,10 +598,8 @@ void play_music(optional<SharedId> music_id)
 {
     sound_play_environmental();
 
-    if (Config::instance().music == "none")
-    {
+    if (!Config::instance().music)
         return;
-    }
 
     if (!music_id)
     {

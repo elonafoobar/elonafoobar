@@ -1,9 +1,13 @@
 locale {
     talk {
         unique {
-            zeome = "So you've made it this far. Evidently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"
+            zeome {
+                dialog = "So you've made it this far. Evidently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"
+            }
 
-            whom_dwell_in_the_vanity = "Leave me alone."
+            whom_dwell_in_the_vanity {
+                dialog = "Leave me alone."
+            }
 
             # TODO
             orphe {
@@ -425,7 +429,9 @@ locale {
                 dies = "${basename(_1)} kills himself..."
             }
 
-            garokk = "Don't you see I'm busy!"
+            garokk {
+                dialog = "Don't you see I'm busy!"
+            }
 
             miral {
                 dialog = "Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"
@@ -480,7 +486,7 @@ locale {
                 }
             }
 
-            paels_mom {
+            lily {
                 after_sold = "You are cruel."
 
                 progress {
@@ -731,8 +737,11 @@ locale {
                     brought_all {
                         dialog {
                             _0 = "Oh! So these are Rachel's storybooks? I feel like I should read them soon... it's been such a long time. Give me a moment to look at them will you. These... these are! And this! And... *Renton bubbles at the mouth* "
-                            _1 = "And this... *huff* *huff* "
-                            _2 = "*A crazed look wells up in Renton's eyes* These books... only a true artistic genius could've painted like this. Effort alone is simply not enough... my sister... no matter how long or hard she tried, she never could've painted such beauty. If the goddess of luck truly exists, I should devote myself to her. I'm sorry... you do deserve a reward. I'd like to be alone for a while... if you don't mind. "
+                            _1 = "..."
+                            _2 = "... ..."
+                            _3 = "... ... ..."
+                            _4 = "And this... *huff* *huff* "
+                            _5 = "*A crazed look wells up in Renton's eyes* These books... only a true artistic genius could've painted like this. Effort alone is simply not enough... my sister... no matter how long or hard she tried, she never could've painted such beauty. If the goddess of luck truly exists, I should devote myself to her. I'm sorry... you do deserve a reward. I'd like to be alone for a while... if you don't mind. "
                         }
 
                         ehekatl = "\"Mew?\""

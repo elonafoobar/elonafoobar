@@ -35,6 +35,37 @@ enum class Suit
 };
 
 
+
+snail::Color suit2color(Suit s)
+{
+    switch (s)
+    {
+    case Suit::spades: return {140, 140, 255};
+    case Suit::hearts: return {255, 140, 140};
+    case Suit::diamonds: return {240, 240, 240};
+    case Suit::clubs: return {140, 255, 140};
+    case Suit::joker: return {250, 250, 105};
+    default: throw "unreachable";
+    }
+}
+
+
+
+const Extent suit2image(Suit s)
+{
+    switch (s)
+    {
+    case Suit::spades: return *draw_get_rect_chara(168); // slime
+    case Suit::hearts: return *draw_get_rect_chara(211); // black cat
+    case Suit::diamonds: return *draw_get_rect_chara(241); // skeleton
+    case Suit::clubs: return *draw_get_rect_chara(223); // armor
+    case Suit::joker: return *draw_get_rect_chara(413); // ehekatl
+    default: throw "unreachable";
+    }
+}
+
+
+
 void showcard2(int card_index, bool show_rank = true)
 {
     const auto rank = card_at_cardcontrol(0, card_index);
@@ -46,53 +77,29 @@ void showcard2(int card_index, bool show_rank = true)
     gmode(2);
     if (is_closed)
     {
-        // Card's back.
-        pos(x, y);
-        gcopy(3, 736, 216, 64, 96);
+        draw("card_back", x, y);
     }
     else
     {
-        // Card's face.
-        pos(x, y);
-        gcopy(3, 672, 216, 64, 96);
+        draw("card_front", x, y);
 
         if (show_rank)
         {
-            gmode(4, 220);
-            snail::Color rank_color{0, 0, 0};
-            optional_ref<Extent> rect;
-            switch (suit)
-            {
-            case Suit::spades:
-                rect = draw_get_rect_chara(168); // slime
-                rank_color = {140, 140, 255, 255};
-                break;
-            case Suit::hearts:
-                rect = draw_get_rect_chara(211); // black cat
-                rank_color = {255, 140, 140, 255};
-                break;
-            case Suit::diamonds:
-                rect = draw_get_rect_chara(241); // skeleton
-                rank_color = {240, 240, 240, 255};
-                break;
-            case Suit::clubs:
-                rect = draw_get_rect_chara(223); // armor
-                rank_color = {140, 255, 140, 255};
-                break;
-            case Suit::joker:
-                rect = draw_get_rect_chara(413); // ehekatl
-                rank_color = {250, 250, 105, 255};
-                break;
-            }
-            pos(x + 32 - rect->width / 2, y + 88 - rect->height);
-            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+            const auto rank_color = suit2color(suit);
+            // It was used for rank text, but the text is rendered as image now.
+            (void)rank_color;
+            const auto rect = suit2image(suit);
+            gcopy(
+                rect.buffer,
+                rect.x,
+                rect.y,
+                rect.width,
+                rect.height,
+                x + 32 - rect.width / 2,
+                y + 88 - rect.height);
 
-            gmode(4, 220);
-            pos(x + 8, y + 16);
-            gcopy(3, 864 + static_cast<int>(suit) * 24, 533, 24, 32);
-            pos(x + 32, y + 16);
-            gcopy(3, 864 + (rank - 1) * 24, 565, 24, 32);
-            gmode(2);
+            draw_indexed("card_suit", x + 8, y + 16, static_cast<int>(suit));
+            draw_indexed("card_rank", x + 32, y + 16, rank - 1);
         }
         else
         {
@@ -167,8 +174,7 @@ void initcard(int x, int y, int)
 void showcardpile()
 {
     int pilestack_at_cardcontrol = 0;
-    pos(pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
-    gcopy(3, 528, 216, 80, 112);
+    draw("card_pile", pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
     pilestack_at_cardcontrol = 0;
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
     {
@@ -248,9 +254,10 @@ int servecard(int player_id)
     {
         if (cnt != 0)
         {
-            pos(card_at_cardcontrol(3, cardid_at_cardcontrol),
+            draw(
+                "card_scratch",
+                card_at_cardcontrol(3, cardid_at_cardcontrol),
                 card_at_cardcontrol(4, cardid_at_cardcontrol));
-            gcopy(3, 608, 216, 64, 96);
         }
         card_at_cardcontrol(3, cardid_at_cardcontrol) =
             pilex_at_cardcontrol - dx_at_cardcontrol / 10 * cnt;
@@ -266,15 +273,14 @@ int servecard(int player_id)
             card_at_cardcontrol(4, cardid_at_cardcontrol) =
                 piley_at_cardcontrol - dy_at_cardcontrol;
         }
+
         gmode(0);
-        gsel(3);
-        pos(608, 216);
-        gcopy(
+        asset_copy_from(
             0,
             card_at_cardcontrol(3, cardid_at_cardcontrol),
             card_at_cardcontrol(4, cardid_at_cardcontrol),
-            64,
-            96);
+            "card_scratch");
+
         gsel(0);
         gmode(2);
         showcard2(cardid_at_cardcontrol);
@@ -300,8 +306,7 @@ void showcardholder()
             dx_at_cardcontrol =
                 cardplayer_at_cardcontrol(1, p_at_cardcontrol) + cnt * 88;
             dy_at_cardcontrol = cardplayer_at_cardcontrol(2, p_at_cardcontrol);
-            pos(dx_at_cardcontrol - 8, dy_at_cardcontrol - 8);
-            gcopy(3, 528, 216, 80, 112);
+            draw("card_pile", dx_at_cardcontrol - 8, dy_at_cardcontrol - 8);
         }
     }
 }
@@ -322,25 +327,29 @@ int opencard2(int card_index, int player_id)
     {
         if (player_id == 0)
         {
-            pos(card_at_cardcontrol(3, card_index) - 8,
+            draw(
+                "card_pile",
+                card_at_cardcontrol(3, card_index) - 8,
                 card_at_cardcontrol(4, card_index) - 8);
-            gcopy(3, 528, 216, 80, 112);
         }
         else
         {
-            pos(card_at_cardcontrol(3, card_index),
-                card_at_cardcontrol(4, card_index));
             gcopy(
                 4,
                 card_at_cardcontrol(3, card_index) - wx - 4,
                 card_at_cardcontrol(4, card_index) - wy - 4,
                 80,
-                112);
+                112,
+                card_at_cardcontrol(3, card_index),
+                card_at_cardcontrol(4, card_index));
         }
-        pos(card_at_cardcontrol(3, card_index) + 32,
-            card_at_cardcontrol(4, card_index) + 48);
         gmode(2);
-        gcopy_c(3, 736, 216, 64, 96, 64 - cnt * 14, 96);
+        draw_centered(
+            "card_back",
+            card_at_cardcontrol(3, card_index) + 32,
+            card_at_cardcontrol(4, card_index) + 48,
+            64 - cnt * 14,
+            96);
         await(10);
         redraw();
     }
@@ -356,19 +365,23 @@ int trashcard(int card_index)
 {
     for (int cnt = 0; cnt < 21; ++cnt)
     {
-        pos(card_at_cardcontrol(3, card_index) - 8,
+        draw(
+            "card_pile",
+            card_at_cardcontrol(3, card_index) - 8,
             card_at_cardcontrol(4, card_index) - 8);
-        gcopy(3, 528, 216, 80, 112);
         gmode(2);
         if (cnt == 20)
         {
             redraw();
             break;
         }
-        pos(card_at_cardcontrol(3, card_index) + 32,
-            card_at_cardcontrol(4, card_index) + 48);
-        grotate(
-            3, 736, 216, 64, 96, 64 - cnt * 3, 96 - cnt * 4, 0.015 * cnt * cnt);
+        draw_rotated(
+            "card_back",
+            card_at_cardcontrol(3, card_index) + 32,
+            card_at_cardcontrol(4, card_index) + 48,
+            64 - cnt * 3,
+            96 - cnt * 4,
+            0.015 * cnt * cnt);
         await(10);
         redraw();
     }

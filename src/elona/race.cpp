@@ -15,7 +15,7 @@ std::vector<std::reference_wrapper<const RaceData>> race_get_available(
     bool is_extra_race)
 {
     std::vector<std::reference_wrapper<const RaceData>> ret;
-    for (const auto& race : the_race_db)
+    for (const auto& race : the_race_db.values())
     {
         if (race.is_extra == is_extra_race)
         {
@@ -101,13 +101,33 @@ int access_race_info(int dbmode, const std::string& race_id)
         cdata[rc].body_parts[i] = 11 * 10'000;
         ++i;
     }
+
     for (const auto& pair : data->skills)
     {
-        chara_init_skill(cdata[rc], pair.first, pair.second);
+        if (const auto ability_data = the_ability_db[pair.first])
+        {
+            chara_init_skill(cdata[rc], ability_data->legacy_id, pair.second);
+        }
+        else
+        {
+            // Skip the skill if undefined.
+            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first
+                                   << " (race " << race_id << ")";
+        }
     }
+
     for (const auto& pair : data->resistances)
     {
-        sdata(pair.first, rc) = pair.second;
+        if (const auto ability_data = the_ability_db[pair.first])
+        {
+            sdata(ability_data->legacy_id, rc) = pair.second;
+        }
+        else
+        {
+            // Skip the resistance if undefined.
+            ELONA_WARN("lua.data") << "Undefined resistance ID: " << pair.first
+                                   << " (race " << race_id << ")";
+        }
     }
 
     return 0;

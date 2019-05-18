@@ -1,12 +1,13 @@
 #include "lua_env.hpp"
+
 #include "../config/config.hpp"
 #include "api_manager.hpp"
+#include "console.hpp"
 #include "data_manager.hpp"
 #include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "i18n_function_manager.hpp"
-#include "lua_console.hpp"
 #include "mod_manager.hpp"
 
 namespace elona
@@ -27,10 +28,11 @@ LuaEnv::LuaEnv()
         sol::lib::string,
         sol::lib::math,
         sol::lib::io,
-        sol::lib::os);
+        sol::lib::os,
+        sol::lib::coroutine);
 
     // Add executable directory to package.path
-    fs::path exe_path = filesystem::dir::data() / "lua";
+    fs::path exe_path = filesystem::dir::data() / "script" / "kernel";
     std::string normalized = filepathutil::to_forward_slashes(exe_path);
     lua_->safe_script(
         u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
@@ -45,7 +47,7 @@ LuaEnv::LuaEnv()
     data_mgr = std::make_unique<DataManager>(this);
     export_mgr = std::make_unique<ExportManager>(this);
     i18n_function_mgr = std::make_unique<I18NFunctionManager>(this);
-    lua_console = std::make_unique<LuaConsole>(this);
+    console = std::make_unique<Console>(this);
 }
 
 
@@ -59,7 +61,7 @@ LuaEnv::~LuaEnv() = default;
 
 void LuaEnv::clear()
 {
-    for (int i = 0; i < 5480; i++)
+    for (int i = 0; i < ELONA_MAX_ITEMS; i++)
     {
         if (inv[i].number() != 0)
         {
@@ -78,6 +80,7 @@ void LuaEnv::clear()
     event_mgr->clear();
     mod_mgr->clear_mod_stores();
     data_mgr->clear();
+    handle_mgr->clear_all_handles();
     lua_->collect_garbage();
 }
 

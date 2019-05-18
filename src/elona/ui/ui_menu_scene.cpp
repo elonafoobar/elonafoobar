@@ -1,5 +1,7 @@
 #include "ui_menu_scene.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_asset.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../message.hpp"
 
@@ -44,12 +46,8 @@ static void _load_scenes()
 bool UIMenuScene::init()
 {
     snd("core.book1");
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
-    gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"g1.bmp", 0);
+    asset_load("book");
+    asset_load("g1");
     gsel(0);
     listmax = 0;
     page = 0;
@@ -76,29 +74,26 @@ void UIMenuScene::update()
     {
         page = 0;
     }
-    wx = (windoww - 720) / 2 + inf_screenx;
-    wy = winposy(468);
+    const auto& info = get_image_info("book");
+    wx = (windoww - info.width + 16) / 2 + inf_screenx;
+    wy = winposy(info.height + 20);
 }
 
-static void _draw_window()
+void UIMenuScene::_draw_window()
 {
     gmode(2);
-    pos(wx, wy);
-    gcopy(4, 0, 0, 736, 448);
-    x = 240;
-    y = 320;
-    pos(wx + 190, wy + 220);
-    gmode(4, 100);
-    gcopy_c(7, 0, 0, 180, 300, x, y);
+    elona::draw("book", wx, wy);
+    gmode(2, 100);
+    draw_centered("g1", wx + 190, wy + 220, 240, 320);
     gmode(2);
 }
 
-static void _draw_key(int cnt)
+void UIMenuScene::_draw_key(int cnt)
 {
     display_key(wx + 394, wy + 91 + cnt * 22 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuScene::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -114,19 +109,17 @@ static void _draw_keys()
     }
 }
 
-static void _draw_title()
+void UIMenuScene::_draw_title()
 {
     font(
         12 - en * 2,
         snail::Font::Style::italic | snail::Font::Style::underline);
-    pos(wx + 90, wy + 50);
-    mes(u8"Elona - Scene playback"s);
+    mes(wx + 90, wy + 50, u8"Elona - Scene playback"s);
     font(12 - en * 2);
-    pos(wx + 390, wy + 50);
-    mes(i18n::s.get("core.locale.ui.scene.you_can_play"));
+    mes(wx + 390, wy + 50, i18n::s.get("core.locale.ui.scene.you_can_play"));
 }
 
-static void _draw_list_entry(int cnt, int list_item)
+void UIMenuScene::_draw_list_entry(int cnt, int list_item)
 {
     cs_list(
         cs == cnt,
@@ -135,7 +128,7 @@ static void _draw_list_entry(int cnt, int list_item)
         wy + 91 + cnt * 22 - 1);
 }
 
-static void _draw_list_entries()
+void UIMenuScene::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -151,15 +144,13 @@ static void _draw_list_entries()
     }
 }
 
-static void _draw_more()
+void UIMenuScene::_draw_more()
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(wx + 500, wy + 375);
-    mes(u8"- "s + (page + 1) + u8" -"s);
+    mes(wx + 500, wy + 375, u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)
     {
-        pos(wx + 590, wy + 375);
-        mes(u8"(more)"s);
+        mes(wx + 590, wy + 375, u8"(more)"s);
     }
 }
 

@@ -14,8 +14,7 @@ static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
-    lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(), {base_path / name});
+    lua.get_mod_manager().load_mods(filesystem::dir::mod(), {base_path / name});
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 
@@ -43,7 +42,7 @@ TEST_CASE("test reading duplicate keys", "[Lua: Data]")
 
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(), {base_path / "chara_duplicate_key"});
+        filesystem::dir::mod(), {base_path / "chara_duplicate_key"});
 
     REQUIRE_THROWS(lua.get_data_manager().init_from_mods());
 }
@@ -59,7 +58,7 @@ TEST_CASE("test registering character", "[Lua: Data]")
     auto data = db["chara.spiral_putit"];
 
     REQUIRE(data);
-    REQUIRE(data->id == 9999);
+    REQUIRE(data->legacy_id == 9999);
     REQUIRE(data->item_type == 2);
     REQUIRE(data->filter == "/slime/ether/");
     REQUIRE(data->level == 2);
@@ -80,7 +79,8 @@ TEST_CASE("test registering character", "[Lua: Data]")
         REQUIRE(data->special_actions == expected);
     }
     {
-        std::unordered_map<int, int> expected = {{54, 500}};
+        std::unordered_map<SharedId, int> expected = {
+            {SharedId{"core.mind"}, 500}};
         REQUIRE(data->resistances == expected);
     }
 
@@ -149,7 +149,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
     auto data = db["chara_defaults.nothing"];
 
     REQUIRE(data);
-    REQUIRE(data->id == 9999);
+    REQUIRE(data->legacy_id == 9999);
     REQUIRE(data->item_type == 0);
     REQUIRE(data->filter == "");
     REQUIRE(data->level == 0);
@@ -168,7 +168,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
         REQUIRE(data->special_actions == expected);
     }
     {
-        std::unordered_map<int, int> expected = {};
+        std::unordered_map<SharedId, int> expected = {};
         REQUIRE(data->resistances == expected);
     }
 
@@ -190,7 +190,7 @@ TEST_CASE("test usage of legacy ID", "[Lua: Data]")
     auto data = db[9999];
 
     REQUIRE(data);
-    REQUIRE(data->id == 9999);
+    REQUIRE(data->legacy_id == 9999);
 }
 
 TEST_CASE("test character flags", "[Lua: Data]")

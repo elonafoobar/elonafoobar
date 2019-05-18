@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+
 #include "filesystem.hpp"
 
 namespace elona
@@ -21,7 +22,11 @@ void post_run();
  */
 void reset_state();
 
+void save_reset_and_reload();
 void save_and_reload();
+
+void save();
+void load();
 
 /***
  * Loads a pre-prepared savefile to test save breakages between

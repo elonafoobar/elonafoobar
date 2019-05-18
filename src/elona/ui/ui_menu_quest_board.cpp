@@ -53,14 +53,12 @@ static void _populate_quest_list()
     sort_list_by_column1();
 }
 
-static void _draw_background()
+void UIMenuQuestBoard::_draw_background()
 {
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_board.bmp", 1);
+    asset_load("deco_board");
     gsel(0);
     gsel(4);
-    fillbg(3, 960, 96, 128, 128);
+    draw_bg("deco_board_a");
     ww = 560;
     int h = 140;
     wh = h * 4;
@@ -71,8 +69,7 @@ static void _draw_background()
         y = wy + cnt * 120;
         window(wx + 4, y + 4, ww, h, true);
         window(wx, y, ww, h);
-        pos(wx + 20, y + 8);
-        gcopy(3, 960, 240, 48, 84);
+        elona::draw("deco_board_b", wx + 20, y + 8);
     }
     render_hud();
     gsel(0);
@@ -114,25 +111,24 @@ void UIMenuQuestBoard::update()
     }
 }
 
-static void _draw_window()
+void UIMenuQuestBoard::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.board.title");
     s(1) = strhint2 + strhint3b;
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, inf_ver);
+    gcopy(4, 0, 0, windoww, inf_ver, 0, 0);
     gmode(2);
     font(16 - en * 2);
     bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), wx + ww + 20, wy);
 }
 
-static void _draw_key(int cnt)
+void UIMenuQuestBoard::_draw_key(int cnt)
 {
     boxf(wx + 70, y, 460, 18, {12, 14, 16, 16});
     display_key(wx + 70, y - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuQuestBoard::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -171,34 +167,31 @@ static snail::Color _get_quest_difficulty_color(
     }
 }
 
-static void _draw_list_entry_title(int cnt, const std::string& title)
+void UIMenuQuestBoard::_draw_list_entry_title(int cnt, const std::string& title)
 {
     font(14 - en * 2);
     cs_list(cs == cnt, title, wx + 96, y - 1, 19);
 }
 
-static void _draw_list_entry_date(const std::string& date_text)
+void UIMenuQuestBoard::_draw_list_entry_date(const std::string& date_text)
 {
     std::string quest_date = u8"("s + date_text + u8")"s;
-    pos(wx + 344, y + 2);
-    mes(quest_date);
+    mes(wx + 344, y + 2, quest_date);
 }
 
-static void _draw_list_entry_giver_name(int chara_index)
+void UIMenuQuestBoard::_draw_list_entry_giver_name(int chara_index)
 {
     std::string name = cdatan(0, chara_index);
     cutname(name, 20);
-    pos(wx + 392, y + 2);
-    mes(name);
+    mes(wx + 392, y + 2, name);
 }
 
-static void _draw_list_entry_difficulty(
+void UIMenuQuestBoard::_draw_list_entry_difficulty(
     int quest_difficulty,
     int difficulty_stars)
 {
-    auto col =
+    const auto col =
         _get_quest_difficulty_color(cdata.player().level, quest_difficulty);
-    color(col.r, col.g, col.b);
 
     if (difficulty_stars < 11)
     {
@@ -210,28 +203,30 @@ static void _draw_list_entry_difficulty(
         }
         for (int cnt = 0, cnt_end = (difficulty_stars); cnt < cnt_end; ++cnt)
         {
-            pos(wx + 270 + cnt % 5 * 13, y + dy + cnt / 5 * 8 + 2);
-            mes(i18n::s.get("core.locale.ui.board.difficulty"));
+            mes(wx + 270 + cnt % 5 * 13,
+                y + dy + cnt / 5 * 8 + 2,
+                i18n::s.get("core.locale.ui.board.difficulty"),
+                col);
         }
     }
     else
     {
-        pos(wx + 270, y + 2);
-        mes(i18n::s.get(
-            "core.locale.ui.board.difficulty_counter", difficulty_stars));
+        mes(wx + 270,
+            y + 2,
+            i18n::s.get(
+                "core.locale.ui.board.difficulty_counter", difficulty_stars),
+            col);
     }
 }
 
-static void _draw_list_entry_desc()
+void UIMenuQuestBoard::_draw_list_entry_desc()
 {
     talk_conv(buff, 70);
-    color(0, 0, 0);
     font(13 - en * 2);
-    pos(wx + 20, y + 20);
-    mes(buff);
+    mes(wx + 20, y + 20, buff);
 }
 
-static void _draw_list_entry(int cnt, int rq, int tc)
+void UIMenuQuestBoard::_draw_list_entry(int cnt, int rq, int tc)
 {
     quest_set_data(0);
     int quest_difficulty = quest_data[rq].difficulty / 5 + 1;
@@ -246,7 +241,7 @@ static void _draw_list_entry(int cnt, int rq, int tc)
     _draw_list_entry_desc();
 }
 
-static void _draw_list_entries()
+void UIMenuQuestBoard::_draw_list_entries()
 {
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -283,8 +278,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     {
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval != 0)
+        if (!yes_no())
         {
             set_reupdate();
             return none;

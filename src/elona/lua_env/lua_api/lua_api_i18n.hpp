@@ -6,7 +6,13 @@ namespace elona
 namespace lua
 {
 
-namespace I18N
+/**
+ * @luadoc
+ *
+ * Functions for localization.
+ * See the I18N section for more information.
+ */
+namespace LuaApiI18N
 {
 std::string get(const std::string&, sol::variadic_args);
 
@@ -33,7 +39,7 @@ void register_function(
 
 
 void bind(sol::table&);
-} // namespace I18N
+} // namespace LuaApiI18N
 
 } // namespace lua
 } // namespace elona

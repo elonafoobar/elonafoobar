@@ -75,6 +75,17 @@ Iterator sample(const Range& range, Iterator result, Distance n)
 
 
 
+template <typename Range1, typename Distance, typename Range2 = Range1>
+Range2 sampled(const Range1& range, Distance n)
+{
+    using std::back_inserter;
+    Range2 result;
+    sample(range, back_inserter(result), n);
+    return result;
+}
+
+
+
 template <typename T>
 struct WeightedRandomSampler
 {

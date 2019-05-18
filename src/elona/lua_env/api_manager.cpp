@@ -88,14 +88,14 @@ void APIManager::load_lua_support_libraries(LuaEnv& lua)
 
     auto result = lua.get_state()->safe_script_file(
         filepathutil::to_utf8_path(
-            filesystem::dir::data() / "lua" / "init.lua"),
+            filesystem::dir::data() / "script" / "kernel" / "init.lua"),
         api_env);
 
     if (!result.valid())
     {
         sol::error err = result;
         std::string what = err.what();
-        ELONA_LOG(what);
+        ELONA_FATAL("lua.core") << what;
         throw std::runtime_error("Failed initializing Lua support libraries.");
     }
 }
@@ -120,7 +120,7 @@ sol::table APIManager::bind(LuaEnv& lua)
                 return result;
             },
 
-            // If no mod name is provided, assume it is "core".
+            // If no mod ID is provided, assume it is "core".
             [&lua](const std::string& module) {
                 sol::optional<sol::table> result = sol::nullopt;
                 result = lua.get_api_manager().try_find_api("core", module);

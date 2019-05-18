@@ -40,12 +40,10 @@ before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
   - cd C:\projects\ElonaFoobar
   - if exist %PREFIX% set NEEDDEPENDS=rem
-
   - |-
     %NEEDDEPENDS% mkdir %PREFIX%\include\SDL2
     %NEEDDEPENDS% mkdir %PREFIX%\lib
     %NEEDDEPENDS% cd %TEMP%
-
   - |-
     %NEEDDEPENDS% appveyor DownloadFile http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip
     %NEEDDEPENDS% 7z x -y SDL2-devel-2.0.8-VC.zip > nul
@@ -84,33 +82,38 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir bin
   - cd bin
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DELONA_BUILD_TARGET=TESTS %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
   - cmake --build . --config %CONFIGURATION%
   - cd %CONFIGURATION%
   - Elona_foobar.exe --durations=yes
   - cd %APPVEYOR_BUILD_FOLDER%\bin
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DELONA_BUILD_TARGET=GAME %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+  - cmake --build . --config %CONFIGURATION%
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DELONA_BUILD_TARGET=LAUNCHER %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
   - cmake --build . --config %CONFIGURATION%
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mv bin\%CONFIGURATION% bin\Elona_foobar
   - mv CHANGELOG*.md bin\Elona_foobar
-  - mv README*.md bin\Elona_foobar
-  - mv LICENSE bin\Elona_foobar
-  - mv CREDITS bin\Elona_foobar
+  - mv LICENSE.txt bin\Elona_foobar
+  - mv CREDITS.txt bin\Elona_foobar
   - del bin\Elona_foobar\*.ilk
   - del bin\Elona_foobar\*.pdb
   - rd /q /s bin\Elona_foobar\graphic
-  - rd /q /s bin\Elona_foobar\original
+  - rd /q /s bin\Elona_foobar\log
+  - rd /q /s bin\Elona_foobar\save
   - rd /q /s bin\Elona_foobar\sound
   - rd /q /s bin\Elona_foobar\tests
   - rd /q /s bin\Elona_foobar\tmp
   - rd /q /s bin\Elona_foobar\user
   - xcopy /s /e /y runtime\* bin\Elona_foobar
+  - ps: "$env:ELONAFOOBAR_VERSION=(Select-String 'project\\(Elona_foobar VERSION (.*)\\)' CMakeLists.txt).Matches.Groups[1].Value"
   - cd bin
-  - 7z a -y Elona_foobar_windows.zip Elona_foobar
+  - ren Elona_foobar\Elona_foobar.exe "Elona foobar.exe"
+  - ren Elona_foobar "Elona foobar v%ELONAFOOBAR_VERSION%"
+  - 7z a -y "Elona foobar v%ELONAFOOBAR_VERSION% (Windows).zip" "Elona foobar v%ELONAFOOBAR_VERSION%"
 
 artifacts:
-  - path: bin\Elona_foobar_windows.zip
+  - path: 'bin\Elona foobar v* (Windows).zip'
 

@@ -1,6 +1,7 @@
 #include "ui_menu_equipment.hpp"
 #include "../character.hpp"
 #include "../equipment.hpp"
+#include "../globals.hpp"
 #include "../item.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
@@ -92,9 +93,7 @@ bool UIMenuEquipment::init()
     }
 
     window_animation(wx, wy, ww, wh, 9, 4);
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_wear.bmp", 1);
+    asset_load("deco_wear");
     gsel(0);
     windowshadow = 1;
 
@@ -117,7 +116,7 @@ void UIMenuEquipment::update()
     }
 }
 
-static void _draw_window_background()
+void UIMenuEquipment::_draw_window_background()
 {
     ui_display_window(
         i18n::s.get("core.locale.ui.equip.title"),
@@ -134,27 +133,20 @@ static void _draw_window_background()
         wy + 30);
 }
 
-static void _draw_window_deco(bool show_resistances)
+void UIMenuEquipment::_draw_window_deco(bool show_additional_info)
 {
-    if (!show_resistances)
+    if (!show_additional_info)
     {
         display_topic(
             i18n::s.get("core.locale.ui.equip.weight"), wx + 524, wy + 30);
     }
-    pos(wx + 46, wy - 16);
-    gcopy(3, 768, 48, 48, 48);
-    pos(wx + ww - 106, wy);
-    gcopy(3, 960, 96, 96, 120);
-    pos(wx, wy + wh - 164);
-    gcopy(3, 960, 216, 72, 144);
-    if (show_resistances)
-    {
-        pos(wx + 320, wy + 40);
-        mes(i18n::s.get("core.locale.ui.equip.resist"));
-    }
+    draw_indexed("inventory_icon", wx + 46, wy - 16, 10);
+    elona::draw("deco_wear_a", wx + ww - 106, wy);
+    elona::draw("deco_wear_b", wx, wy + wh - 164);
+    draw_additional_item_info_label(wx + 320, wy + 40);
 }
 
-static void _draw_window_headers()
+void UIMenuEquipment::_draw_window_headers()
 {
     display_note(
         i18n::s.get("core.locale.ui.equip.equip_weight") + ": " +
@@ -166,14 +158,14 @@ static void _draw_window_headers()
         cdata[cc].pv);
 }
 
-static void _draw_window(bool show_resistances)
+void UIMenuEquipment::_draw_window(bool show_additional_info)
 {
     _draw_window_background();
-    _draw_window_deco(show_resistances);
+    _draw_window_deco(show_additional_info);
     _draw_window_headers();
 }
 
-static void _draw_key(int cnt, int p_, bool is_main_hand)
+void UIMenuEquipment::_draw_key(int cnt, int p_, bool is_main_hand)
 {
     if (cnt % 2 == 0)
     {
@@ -191,13 +183,12 @@ static void _draw_key(int cnt, int p_, bool is_main_hand)
             i18n::s.get_enum("core.locale.ui.body_part", list(1, p_));
     }
 
-    pos(wx + 22, wy + 60 + cnt * 19 - 4);
-    gcopy(3, 600 + (list(1, p_) - 1) * 24, 336, 24, 24);
-    pos(wx + 46, wy + 60 + cnt * 19 + 3);
-    mes(body_part_name);
+    draw_indexed(
+        "body_part_icon", wx + 22, wy + 60 + cnt * 19 - 4, list(1, p_) - 1);
+    mes(wx + 46, wy + 60 + cnt * 19 + 3, body_part_name);
 }
 
-static void _draw_keys(int main_hand)
+void UIMenuEquipment::_draw_keys(int main_hand)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     gmode(2);
@@ -218,7 +209,7 @@ static void _draw_keys(int main_hand)
 }
 
 static void
-_draw_single_list_entry(int cnt, int list_item, bool show_resistances)
+_draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
 {
     display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
 
@@ -235,10 +226,11 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
         draw_item_with_portrait(
             inv[equipped_item], wx + 126, wy + 70 + cnt * 19);
 
-        if (show_resistances)
+        draw_additional_item_info(
+            inv[equipped_item], wx + 320, wy + 60 + cnt * 19 + 2);
+        if (show_additional_info)
         {
-            equipinfo(equipped_item, wx + 320, wy + 60 + cnt * 19 + 2);
-            item_name = strmid(item_name, 0, 22);
+            item_name = cut_item_name_for_additional_info(item_name, 2);
         }
     }
     else
@@ -257,13 +249,13 @@ _draw_single_list_entry(int cnt, int list_item, bool show_resistances)
         30,
         text_color);
 
-    pos(wx + 640 - strlen_u(item_weight) * 7, wy + 60 + cnt * 19 + 2);
-    color(text_color.r, text_color.g, text_color.b);
-    mes(item_weight);
-    color(0, 0, 0);
+    mes(wx + 640 - strlen_u(item_weight) * 7,
+        wy + 60 + cnt * 19 + 2,
+        item_weight,
+        text_color);
 }
 
-static void _draw_list_entries(bool show_resistances)
+void UIMenuEquipment::_draw_list_entries(bool show_additional_info)
 {
     font(14 - en * 2);
     cs_listbk();
@@ -276,16 +268,16 @@ static void _draw_list_entries(bool show_resistances)
         }
 
         int list_item = list(0, index);
-        _draw_single_list_entry(cnt, list_item, show_resistances);
+        _draw_single_list_entry(cnt, list_item, show_additional_info);
     }
     cs_bk = cs;
 }
 
 void UIMenuEquipment::draw()
 {
-    _draw_window(_show_resistances);
+    _draw_window(g_show_additional_item_info != AdditionalItemInfo::none);
     _draw_keys(_mainhand);
-    _draw_list_entries(_show_resistances);
+    _draw_list_entries(g_show_additional_item_info != AdditionalItemInfo::none);
 }
 
 static void _unequip_item()
@@ -379,7 +371,8 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     }
     else if (action == "switch_mode")
     {
-        _show_resistances = !_show_resistances;
+        g_show_additional_item_info =
+            get_next_enum(g_show_additional_item_info);
         snd("core.pop1");
         set_reupdate();
     }

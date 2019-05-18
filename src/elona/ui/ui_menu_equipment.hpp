@@ -22,10 +22,16 @@ protected:
         const std::string& key);
 
 private:
+    void _draw_window_background();
+    void _draw_window_deco(bool);
+    void _draw_window_headers();
+    void _draw_window(bool);
+    void _draw_key(int, int, bool);
+    void _draw_keys(int);
+    void _draw_list_entries(bool);
+
     int _cs_prev = 0;
     int _mainhand = 0;
-
-    bool _show_resistances = false;
 };
 
 } // namespace ui

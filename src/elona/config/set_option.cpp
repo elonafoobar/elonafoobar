@@ -16,21 +16,44 @@
 namespace elona
 {
 
+struct ConfigMenuHistory
+{
+    int cs;
+    int submenu;
+};
+
 void set_option()
 {
     int submenu = 0;
     cs = 0;
+    std::stack<ConfigMenuHistory> history;
 
-    const auto ConfigScreen = create_config_screen();
+    const auto config_screen = create_config_screen();
 
     while (true)
     {
-        auto& menu_def = ConfigScreen[submenu];
-        auto result = menu_def->query(submenu);
+        auto& menu_def = config_screen.at(submenu);
+        const auto result = menu_def->query();
 
         if (result)
         {
-            submenu = *result;
+            if (result->go_back)
+            {
+                {
+                    const auto& prev = history.top();
+                    cs = prev.cs;
+                    submenu = prev.submenu;
+                }
+                history.pop();
+            }
+            // Don't push history if the submenu index returned is the same
+            // (user viewed and exited the help text of an option)
+            else if (result->submenu != submenu)
+            {
+                history.push({cs, submenu});
+                cs = 0;
+                submenu = result->submenu;
+            }
         }
         else
         {

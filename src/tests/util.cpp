@@ -18,7 +18,7 @@ namespace testing
 
 void set_english()
 {
-    Config::instance().set("core.config.language.language", "en");
+    Config::instance().set("core.language.language", "en");
     elona::jp = 0;
     elona::en = 1;
     initialize_i18n();
@@ -27,7 +27,7 @@ void set_english()
 
 void set_japanese()
 {
-    Config::instance().set("core.config.language.language", "jp");
+    Config::instance().set("core.language.language", "jp");
     elona::jp = 1;
     elona::en = 0;
     initialize_i18n();
@@ -108,14 +108,14 @@ void invalidate_chara(Character& chara)
 
 void register_lua_function(
     lua::LuaEnv& lua,
-    std::string mod_name,
+    std::string mod_id,
     std::string callback_signature,
     std::string callback_body)
 {
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+    lua.get_mod_manager().load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
-        mod_name,
+        mod_id,
         "\
 local Exports = {}\
 \

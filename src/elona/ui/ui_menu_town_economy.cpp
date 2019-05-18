@@ -1,6 +1,7 @@
 #include "ui_menu_town_economy.hpp"
 #include "../area.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 
 namespace elona
@@ -15,25 +16,14 @@ static void _show_economy_info(
     int value,
     int prev_value)
 {
-    pos(x, y);
-    mes(text);
+    mes(x, y, text);
 
-    pos(x + 130, y);
-    mes(""s + value);
+    mes(x + 130, y, ""s + value);
 
-    int diff = value - prev_value;
-    if (diff >= 0)
-    {
-        color(0, 0, 150);
-    }
-    else
-    {
-        color(150, 0, 0);
-    }
-
-    pos(x + 130 + ginfo(14) + 12, y);
-    mes(u8"("s + diff + u8")"s);
-    color(0, 0, 0);
+    const auto diff = value - prev_value;
+    const auto text_color =
+        diff >= 0 ? snail::Color{0, 0, 150} : snail::Color{150, 0, 0};
+    mes(x + 130 + ginfo(14) + 12, y, u8"("s + diff + u8")"s, text_color);
 }
 
 bool UIMenuTownEconomy::init()
@@ -43,15 +33,11 @@ bool UIMenuTownEconomy::init()
     keyrange = 0;
     pagesize = 1;
     listmax = 2;
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
+    asset_load("deco_politics");
     gsel(0);
-    fillbg(3, 960, 96, 128, 128);
+    draw_bg("deco_politics_a");
     render_hud();
-    gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    asset_load("ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");
@@ -78,14 +64,14 @@ void UIMenuTownEconomy::update()
     }
 }
 
-static void _draw_window()
+void UIMenuTownEconomy::_draw_window()
 {
     std::string hint = strhint2 + strhint3b;
     showscroll(hint, wx, wy, ww, wh);
     font(14 - en * 2);
 }
 
-static void _draw_economy_info(int _city)
+void UIMenuTownEconomy::_draw_economy_info(int _city)
 {
     display_topic(
         i18n::s.get("core.locale.ui.economy.information"), wx + 65, wy + 50);
@@ -120,7 +106,7 @@ static void _draw_economy_info(int _city)
         podata(105, _city));
 }
 
-static void _draw_economy_details()
+void UIMenuTownEconomy::_draw_economy_details()
 {
     display_topic(
         i18n::s.get("core.locale.ui.economy.population_detail"),
@@ -156,8 +142,9 @@ void UIMenuTownEconomy::draw()
     }
     else
     {
-        pos(wx + 40, wy + 60);
-        mes(i18n::s.get("core.locale.ui.city_chart.no_economy"));
+        mes(wx + 40,
+            wy + 60,
+            i18n::s.get("core.locale.ui.city_chart.no_economy"));
     }
 }
 

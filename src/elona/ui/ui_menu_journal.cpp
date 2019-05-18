@@ -2,6 +2,8 @@
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../character.hpp"
+#include "../data/types/type_asset.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../quest.hpp"
 
@@ -148,10 +150,11 @@ bool UIMenuJournal::init()
     append_subquest_journal(1);
     listmax = noteinfo();
     show_title(strhint2 + strhint3);
-    wx = (windoww - 736) / 2 + inf_screenx;
-    wy = winposy(448);
+    const auto& info = get_image_info("book");
+    wx = (windoww - info.width) / 2 + inf_screenx;
+    wy = winposy(info.height);
     snd("core.book1");
-    window_animation(wx, wy, 736, 448, 9, 4);
+    window_animation(wx, wy, info.width, info.height, 9, 4);
 
     return true;
 }
@@ -168,12 +171,9 @@ void UIMenuJournal::update()
     {
         page = 0;
     }
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
+    asset_load("book");
     gsel(0);
-    pos(wx, wy);
-    gcopy(4, 0, 0, 736, 448);
+    elona::draw("book", wx, wy);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -184,53 +184,53 @@ void UIMenuJournal::update()
         x = wx + 80 + cnt / 20 * 306;
         y = wy + 45 + cnt % 20 * 16;
         noteget(s, p);
+        snail::Color text_color{0, 0, 0};
         if (strmid(s, 0, 1) == u8"@"s)
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
             font(10 + en - en * 2, snail::Font::Style::bold);
-            color(0, 0, 200);
             if (s(1) == u8"QL"s)
             {
-                color(100, 100, 0);
+                text_color = snail::Color{100, 100, 0};
             }
-            if (s(1) == u8"QC"s)
+            else if (s(1) == u8"QC"s)
             {
-                color(0, 100, 100);
+                text_color = snail::Color{0, 100, 100};
             }
-            if (s(1) == u8"QM"s)
+            else if (s(1) == u8"QM"s)
             {
-                color(0, 100, 0);
+                text_color = snail::Color{0, 100, 0};
             }
-            if (s(1) == u8"RE"s)
+            else if (s(1) == u8"RE"s)
             {
-                color(100, 0, 0);
+                text_color = snail::Color{100, 0, 0};
                 font(12 + sizefix - en * 2);
             }
-            if (s(1) == u8"BL"s)
+            else if (s(1) == u8"BL"s)
             {
-                color(0, 0, 100);
+                text_color = snail::Color{0, 0, 100};
                 font(12 + sizefix - en * 2);
+            }
+            else
+            {
+                text_color = snail::Color{0, 0, 200};
             }
         }
         else
         {
             font(12 + sizefix - en * 2);
         }
-        pos(x, y);
-        mes(s);
-        color(0, 0, 0);
+        mes(x, y, s, text_color);
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);
-            pos(x + 90, y + 330);
-            mes(u8"- "s + (p / 20 + 1) + u8" -"s);
+            mes(x + 90, y + 330, u8"- "s + (p / 20 + 1) + u8" -"s);
             if (p % 40 == 20)
             {
                 if (page < pagemax)
                 {
-                    pos(x + 200, y + 330);
-                    mes(u8"(more)"s);
+                    mes(x + 200, y + 330, u8"(more)"s);
                 }
             }
         }

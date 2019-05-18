@@ -57,7 +57,7 @@ locale {
             dying_message = "\"${_1}\""
             date = "${_1}/${_2}/${_3}"
             you_died = "${capitalize(_1)} in ${_2}."
-            rank = "{ordinal(_1)}"
+            rank = "${ordinal(_1)}"
             you_are_about_to_be_buried = "You are about to be buried..."
             crawl_up = "Crawl up"
             lie_on_your_back = "Lie on your back"
@@ -110,7 +110,7 @@ locale {
 
         quest {
             kamikaze_attack {
-                messange = "The messenger \"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\""
+                message = "The messenger \"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\""
                 stairs_appear = "Suddenly, stairs appear."
             }
         }
@@ -180,7 +180,7 @@ locale {
         no_target_around = "You look around and find nothing."
 
         return {
-            forbidden = "Returning while taking a quest if forbidden. Are you sure you want to return?"
+            forbidden = "Returning while taking a quest is forbidden. Are you sure you want to return?"
             no_location = "You don't know any location you can return to"
             where_do_you_want_to_go = "Where do you want to go?"
             air_becomes_charged = "The air around you becomes charged."

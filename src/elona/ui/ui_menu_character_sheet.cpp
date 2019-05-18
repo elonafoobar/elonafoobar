@@ -6,12 +6,15 @@
 #include "../character.hpp"
 #include "../character_status.hpp"
 #include "../class.hpp"
+#include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
 #include "../keybind/keybind.hpp"
 #include "../map.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+#include "../pic_loader/pic_loader.hpp"
+#include "../pic_loader/tinted_buffers.hpp"
 
 namespace elona
 {
@@ -159,13 +162,12 @@ bool UIMenuCharacterSheet::init()
 
     _load_list(_operation);
 
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
+    const auto& data = asset_load("ie_sheet");
     gsel(0);
-    wx = (windoww - 700) / 2 + inf_screenx;
-    wy = winposy(400) - 10;
-    ww = 700;
-    wh = 400;
+    wx = (windoww - data.width) / 2 + inf_screenx;
+    wy = winposy(data.height) - 10;
+    ww = data.width;
+    wh = data.height;
     s = i18n::s.get("core.locale.ui.chara_sheet.title.default");
     if (_operation == CharacterSheetOperation::train_skill)
     {
@@ -184,9 +186,8 @@ bool UIMenuCharacterSheet::init()
     gsel(0);
     if (!_returned_from_portrait)
     {
-        gmode(6, 80);
-        pos(wx + 4, wy + 4);
-        gcopy(7, 0, 0, 700, 400);
+        gmode(2, 80);
+        elona::draw("ie_sheet", wx + 4, wy + 4);
         gmode(2);
     }
     if (_operation == CharacterSheetOperation::train_skill)
@@ -199,7 +200,7 @@ bool UIMenuCharacterSheet::init()
     return true;
 }
 
-static void _draw_title(CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
 {
     std::string title = "";
     std::string strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
@@ -268,7 +269,6 @@ static void _draw_title(CharacterSheetOperation op)
         }
     }
 
-    color(0, 0, 0);
     show_title(title);
 }
 
@@ -297,7 +297,7 @@ void UIMenuCharacterSheet::update()
     _draw_title(_operation);
 }
 
-static void _draw_window(bool show_bonus)
+void UIMenuCharacterSheet::_draw_window(bool show_bonus)
 {
     std::string tips;
     if (show_bonus && page != 0)
@@ -311,7 +311,7 @@ static void _draw_window(bool show_bonus)
 }
 
 
-static void _draw_first_page_topics()
+void UIMenuCharacterSheet::_draw_first_page_topics()
 {
     display_topic(
         i18n::s.get("core.locale.ui.chara_sheet.attributes"),
@@ -333,26 +333,40 @@ static void _draw_first_page_topics()
         wy + 273);
 }
 
-static void _draw_portrait_face()
+void UIMenuCharacterSheet::_draw_portrait_face()
 {
     if (cdata[cc].portrait != "")
     {
         if (const auto rect = draw_get_rect_portrait(cdata[cc].portrait))
         {
-            pos(wx + 560, wy + 27);
-            gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+            gcopy(
+                rect->buffer,
+                rect->x,
+                rect->y,
+                rect->width,
+                rect->height,
+                wx + 560,
+                wy + 27);
         }
     }
     window2(wx + 557, wy + 23, 87, 120, 1, 10);
 }
 
-static void _draw_portrait_sprite()
+void UIMenuCharacterSheet::_draw_portrait_sprite()
 {
     if (cdata[cc].has_own_sprite() == 1)
     {
-        pos(wx + 596 + 22, wy + 86 + 24);
         gmode(2);
-        gcopy_c(20 + cc, 32, 0, 32, 48, 24, 40);
+        gcopy_c(
+            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
+            32,
+            0,
+            32,
+            48,
+            wx + 596 + 22,
+            wy + 86 + 24,
+            24,
+            40);
     }
     else
     {
@@ -360,13 +374,13 @@ static void _draw_portrait_sprite()
     }
 }
 
-static void _draw_first_page_portrait()
+void UIMenuCharacterSheet::_draw_first_page_portrait()
 {
     _draw_portrait_face();
     _draw_portrait_sprite();
 }
 
-static void _draw_first_page_text_exp()
+void UIMenuCharacterSheet::_draw_first_page_text_exp()
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.exp.level");
@@ -376,14 +390,11 @@ static void _draw_first_page_text_exp()
     s(4) = i18n::s.get("core.locale.ui.chara_sheet.exp.guild");
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 355, wy + 46 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 355, wy + 46 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
-static void _draw_first_page_text_personal()
+void UIMenuCharacterSheet::_draw_first_page_text_personal()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.personal.name");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.personal.aka");
@@ -395,28 +406,34 @@ static void _draw_first_page_text_personal()
     s(7) = i18n::s.get("core.locale.ui.chara_sheet.personal.weight");
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 30 + cnt / 4 * 190, wy + 61 + cnt % 4 * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 30 + cnt / 4 * 190,
+            wy + 61 + cnt % 4 * 15,
+            s(cnt),
+            {20, 10, 0});
     }
 }
 
-static void _draw_first_page_text_attribute()
+void UIMenuCharacterSheet::_draw_first_page_text_attribute()
 {
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 37, wy + 157 + cnt * 15);
         gmode(2);
-        gcopy_c(1, cnt * inf_tiles, 672, inf_tiles, inf_tiles);
-        pos(wx + 54, wy + 151 + cnt * 15);
-        color(20, 10, 0);
-        mes(i18n::s.get_enum("core.locale.ui.attribute", cnt));
-        color(0, 0, 0);
+        gcopy_c(
+            1,
+            cnt * inf_tiles,
+            672,
+            inf_tiles,
+            inf_tiles,
+            wx + 37,
+            wy + 157 + cnt * 15);
+        mes(wx + 54,
+            wy + 151 + cnt * 15,
+            i18n::s.get_enum("core.locale.ui.attribute", cnt),
+            {20, 10, 0});
     }
 }
 
-static void _draw_first_page_text_time()
+void UIMenuCharacterSheet::_draw_first_page_text_time()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.time.turns");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.time.days");
@@ -426,14 +443,11 @@ static void _draw_first_page_text_time()
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 32, wy + 301 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 32, wy + 301 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
-static void _draw_first_page_text_weight()
+void UIMenuCharacterSheet::_draw_first_page_text_weight()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_weight");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_limit");
@@ -441,14 +455,11 @@ static void _draw_first_page_text_weight()
     s(3) = i18n::s.get("core.locale.ui.chara_sheet.weight.deepest_level");
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        pos(wx + 224, wy + 301 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 224, wy + 301 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
-static void _draw_first_page_text_level()
+void UIMenuCharacterSheet::_draw_first_page_text_level()
 {
     font(14 - en * 2);
     s(0) = ""s + cdata[cc].level;
@@ -458,14 +469,11 @@ static void _draw_first_page_text_level()
     s(4) = guildname();
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 410 + en * 5, wy + 45 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 410 + en * 5, wy + 45 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
-static void _draw_first_page_text_name()
+void UIMenuCharacterSheet::_draw_first_page_text_name()
 {
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
@@ -486,75 +494,58 @@ static void _draw_first_page_text_name()
     s(7) = ""s + cdata[cc].weight + u8" kg"s;
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
-            wy + 60 + cnt % 4 * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
+            wy + 60 + cnt % 4 * 15,
+            s(cnt),
+            {20, 10, 0});
     }
 }
 
-static void _draw_attribute_level(int cnt)
+void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
 {
     std::string level =
         u8"("s + sdata.get(10 + cnt, cc).original_level + u8")"s;
-    if (encfind(cc, 60010 + cnt) != -1)
+    if (enchantment_find(cdata[cc], 60010 + cnt))
     {
         level += u8"*"s;
     }
-    pos(wx + 92, wy + 151 + cnt * 15);
-    color(20, 10, 0);
-    mes(""s + sdata((10 + cnt), cc));
-    color(0, 0, 0);
-    pos(wx + 124, wy + 151 + cnt * 15);
-    color(20, 10, 0);
-    mes(level);
-    color(0, 0, 0);
+    mes(wx + 92, wy + 151 + cnt * 15, ""s + sdata((10 + cnt), cc), {20, 10, 0});
+    mes(wx + 124, wy + 151 + cnt * 15, level, {20, 10, 0});
 }
 
-static void _draw_attribute_potential(int cnt)
+void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
 {
     int potential = sdata.get(10 + cnt, cc).potential;
-    pos(wx + 176, wy + 152 + cnt * 15);
     if (potential >= 200)
     {
-        color(20, 10, 0);
-        mes(u8"Superb"s);
-        color(0, 0, 0);
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Superb"s, {20, 10, 0});
         return;
     }
     if (potential >= 150)
     {
-        color(20, 10, 0);
-        mes(u8"Great"s);
-        color(0, 0, 0);
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Great"s, {20, 10, 0});
         return;
     }
     if (potential >= 100)
     {
-        color(20, 10, 0);
-        mes(u8"Good"s);
-        color(0, 0, 0);
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Good"s, {20, 10, 0});
         return;
     }
     if (potential >= 50)
     {
-        color(20, 10, 0);
-        mes(u8"Bad"s);
-        color(0, 0, 0);
+        mes(wx + 176, wy + 152 + cnt * 15, u8"Bad"s, {20, 10, 0});
         return;
     }
-    mes(u8"Hopeless"s);
-    color(0, 0, 0);
+    mes(wx + 176, wy + 152 + cnt * 15, u8"Hopeless"s);
 }
 
-static void _draw_attribute(int cnt)
+void UIMenuCharacterSheet::_draw_attribute(int cnt)
 {
     _draw_attribute_level(cnt);
     _draw_attribute_potential(cnt);
 }
 
-static void _draw_first_page_attributes()
+void UIMenuCharacterSheet::_draw_first_page_attributes()
 {
     for (int cnt = 0; cnt < 8; ++cnt)
     {
@@ -562,32 +553,32 @@ static void _draw_first_page_attributes()
     }
 }
 
-static void _draw_first_page_weapon_info()
+void UIMenuCharacterSheet::_draw_first_page_weapon_info()
 {
     append_accuracy_info(0);
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    color(20, 10, 0);
-    pos(wx + 417, wy + 281 + p(2) * 16);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.protect"));
-    color(0, 0, 0);
-    color(20, 10, 0);
-    pos(wx + 590 - en * 16, wy + 281 + p(2) * 16);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.damage.evade"));
-    color(0, 0, 0);
+    mes(wx + 417,
+        wy + 281 + p(2) * 16,
+        i18n::s.get("core.locale.ui.chara_sheet.damage.protect"),
+        {20, 10, 0});
+    mes(wx + 590 - en * 16,
+        wy + 281 + p(2) * 16,
+        i18n::s.get("core.locale.ui.chara_sheet.damage.evade"),
+        {20, 10, 0});
     attackskill = 106;
     int evade = calc_evasion(tc);
     prot = calcattackdmg(AttackDamageCalculationMode::defense);
     font(14 - en * 2);
-    pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
-    mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s +
-        protdice2);
-    pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
-    mes(""s + evade + u8"%"s);
+    mes(wx + 460 + en * 8,
+        wy + 279 + p(2) * 16,
+        ""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s +
+            protdice2);
+    mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, ""s + evade + u8"%"s);
     ++p(2);
 }
 
-static void _draw_first_page_text_fame()
+void UIMenuCharacterSheet::_draw_first_page_text_fame()
 {
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.attribute.life");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.attribute.mana");
@@ -607,14 +598,11 @@ static void _draw_first_page_text_fame()
     s(15) = "";
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(wx + 255, wy + 151 + cnt * 15);
-        color(20, 10, 0);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 255, wy + 151 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
-static void _draw_first_page_stats_fame()
+void UIMenuCharacterSheet::_draw_first_page_stats_fame()
 {
     s(0) =
         ""s + sdata(2, cc) + u8"("s + sdata.get(2, cc).original_level + u8")"s;
@@ -630,14 +618,11 @@ static void _draw_first_page_stats_fame()
     s(8) = "";
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        color(20, 10, 0);
-        pos(wx + 310, wy + 151 + cnt * 15);
-        mes(s(cnt));
-        color(0, 0, 0);
+        mes(wx + 310, wy + 151 + cnt * 15, s(cnt), {20, 10, 0});
     }
 }
 
-static void _draw_first_page_stats_time()
+void UIMenuCharacterSheet::_draw_first_page_stats_time()
 {
     s(0) = i18n::s.get(
         "core.locale.ui.chara_sheet.time.turn_counter", game_data.play_turns);
@@ -650,12 +635,11 @@ static void _draw_first_page_stats_time()
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        pos(wx + 80, wy + 299 + cnt * 15);
-        mes(s(cnt));
+        mes(wx + 80, wy + 299 + cnt * 15, s(cnt));
     }
 }
 
-static void _draw_first_page_stats_weight()
+void UIMenuCharacterSheet::_draw_first_page_stats_weight()
 {
     s(0) = ""s + cnvweight(game_data.cargo_weight);
     s(1) = cnvweight(game_data.current_cart_limit);
@@ -666,12 +650,13 @@ static void _draw_first_page_stats_weight()
         cnvrank(game_data.deepest_dungeon_level));
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        pos(wx + 287 + en * 14, wy + 299 + cnt * 15);
-        mes(s(cnt));
+        mes(wx + 287 + en * 14, wy + 299 + cnt * 15, s(cnt));
     }
 }
 
-static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
+void UIMenuCharacterSheet::_draw_first_page_buffs(
+    int& _cs_buff,
+    int& _cs_buffmax)
 {
     _cs_buffmax = 0;
     for (int cnt = 0; cnt < 15; ++cnt)
@@ -680,14 +665,13 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
         y = wy + 151 + cnt % 3 * 32;
         if (cdata[cc].buffs[cnt].id == 0)
         {
-            gmode(4, 120);
+            gmode(2, 120);
             elona::draw("buff_icon_none", x, y);
             gmode(2);
             continue;
         }
         ++_cs_buffmax;
-        pos(x, y);
-        gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32);
+        draw_indexed("buff_icon", x, y, cdata[cc].buffs[cnt].id);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});
@@ -716,16 +700,15 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
     }
 
     font(13 - en * 2);
-    pos(wx + 108, wy + 366);
-    mes(buff_desc);
+    mes(wx + 108, wy + 366, buff_desc);
     font(11 + sizefix * 2 - en * 2, snail::Font::Style::bold);
-    color(20, 10, 0);
-    pos(wx + 70, wy + 369 - en * 3);
-    mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":");
-    color(0, 0, 0);
+    mes(wx + 70,
+        wy + 369 - en * 3,
+        i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":",
+        {20, 10, 0});
 }
 
-static void _draw_first_page(int& _cs_buff, int& _cs_buffmax)
+void UIMenuCharacterSheet::_draw_first_page(int& _cs_buff, int& _cs_buffmax)
 {
     keyrange = 0;
     key_list = key_enter;
@@ -755,7 +738,7 @@ static void _draw_first_page(int& _cs_buff, int& _cs_buffmax)
     _draw_first_page_buffs(_cs_buff, _cs_buffmax);
 }
 
-static void _draw_other_pages_topics()
+void UIMenuCharacterSheet::_draw_other_pages_topics()
 {
     display_topic(
         i18n::s.get("core.locale.ui.chara_sheet.skill.name"), wx + 28, wy + 36);
@@ -770,7 +753,7 @@ static void _draw_other_pages_topics()
         wy + 36);
 }
 
-static void _draw_other_pages_keys()
+void UIMenuCharacterSheet::_draw_other_pages_keys()
 {
     keyrange = 0;
     int item_count = 0;
@@ -814,14 +797,14 @@ static void _draw_other_pages_keys()
     }
 }
 
-static void _draw_other_pages()
+void UIMenuCharacterSheet::_draw_other_pages()
 {
     _draw_other_pages_topics();
     _draw_other_pages_keys();
 }
 
 
-static void _draw_skill_icon(int cnt, int list_item)
+void UIMenuCharacterSheet::_draw_skill_icon(int cnt, int list_item)
 {
     int icon;
 
@@ -836,9 +819,15 @@ static void _draw_skill_icon(int cnt, int list_item)
         icon = the_ability_db[list_item]->related_basic_attribute - 10;
     }
 
-    pos(wx + 38, wy + 75 + cnt * 19);
     gmode(2);
-    gcopy_c(1, icon * inf_tiles, 672, inf_tiles, inf_tiles);
+    gcopy_c(
+        1,
+        icon * inf_tiles,
+        672,
+        inf_tiles,
+        inf_tiles,
+        wx + 38,
+        wy + 75 + cnt * 19);
 }
 
 static bool _is_resistance(int skill)
@@ -846,7 +835,7 @@ static bool _is_resistance(int skill)
     return skill >= 50 && skill < 100;
 }
 
-static void _draw_skill_name(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
 {
     std::string skill_name = i18n::s.get_m(
         "locale.ability",
@@ -873,7 +862,7 @@ static void _draw_skill_name(int cnt, int skill_id)
     cs_list(cs == cnt, skill_name, wx + x, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_skill_power(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
 {
     int power;
     std::string desc = "";
@@ -896,14 +885,14 @@ static void _draw_skill_power(int cnt, int skill_id)
         desc += u8"("s + sdata.get(skill_id, cc).potential + u8"%)"s;
     }
 
-    pos(wx + 280 - strlen_u(desc) * 7, wy + 66 + cnt * 19 + 2);
-    mes(desc);
+    mes(wx + 280 - strlen_u(desc) * 7, wy + 66 + cnt * 19 + 2, desc);
 }
 
-static void _draw_skill_desc(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
 {
-    pos(wx + 330, wy + 66 + cnt * 19 + 2);
-    mes(i18n::s
+    mes(wx + 330,
+        wy + 66 + cnt * 19 + 2,
+        i18n::s
             .get_m_optional(
                 "locale.ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
@@ -911,7 +900,10 @@ static void _draw_skill_desc(int cnt, int skill_id)
             .get_value_or(""));
 }
 
-static void _draw_skill_train_cost(int cnt, int skill_id, bool is_training)
+void UIMenuCharacterSheet::_draw_skill_train_cost(
+    int cnt,
+    int skill_id,
+    bool is_training)
 {
     std::string train_cost;
 
@@ -923,8 +915,9 @@ static void _draw_skill_train_cost(int cnt, int skill_id, bool is_training)
     {
         train_cost = ""s + calclearncost(skill_id, cc) + u8"p "s;
     }
-    pos(wx + 322 - strlen_u(train_cost) * 7, wy + 66 + cnt * 19 + 2);
-    mes(train_cost);
+    mes(wx + 322 - strlen_u(train_cost) * 7,
+        wy + 66 + cnt * 19 + 2,
+        train_cost);
 }
 
 static bool _has_enchantment(int cc, int skill_id)
@@ -932,7 +925,7 @@ static bool _has_enchantment(int cc, int skill_id)
     return sdata.get(skill_id, cc).original_level != sdata(skill_id, cc);
 }
 
-static void _draw_skill_enchantment_power(int cnt, int skill_id)
+void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)
 {
     const auto bonus =
         sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
@@ -946,11 +939,13 @@ static void _draw_skill_enchantment_power(int cnt, int skill_id)
         star_count = bonus / 5;
     }
     std::string enchantment_level = enchantment_print_level(star_count);
-    pos(wx + 282, wy + 66 + cnt * 19 + 2);
-    mes(enchantment_level);
+    mes(wx + 282, wy + 66 + cnt * 19 + 2, enchantment_level);
 }
 
-static void _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_skill_entry(
+    int cnt,
+    int skill_id,
+    CharacterSheetOperation op)
 {
     _draw_skill_icon(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);
@@ -969,14 +964,14 @@ static void _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
     }
 }
 
-static void _draw_text_entry(int cnt, const std::string& text)
+void UIMenuCharacterSheet::_draw_text_entry(int cnt, const std::string& text)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     cs_list(cs == cnt, text, wx + 88, wy + 66 + cnt * 19);
     font(14 - en * 2);
 }
 
-static void _draw_other_page_single_list_entry(
+void UIMenuCharacterSheet::_draw_other_page_single_list_entry(
     int cnt,
     int list_item,
     const std::string& text,
@@ -992,7 +987,8 @@ static void _draw_other_page_single_list_entry(
     }
 }
 
-static void _draw_other_page_list_entries(CharacterSheetOperation op)
+void UIMenuCharacterSheet::_draw_other_page_list_entries(
+    CharacterSheetOperation op)
 {
     font(14 - en * 2);
     cs_listbk();

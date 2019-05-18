@@ -28,13 +28,13 @@ void get_random_npc_id()
 {
     WeightedRandomSampler<CharacterId> sampler;
 
-    for (const auto& data : the_character_db)
+    for (const auto& data : the_character_db.values())
     {
         if (data.level > objlv)
             continue;
         if (fltselect != data.fltselect)
             continue;
-        if (fltselect == 2 && npcmemory(1, data.id) != 0)
+        if (fltselect == 2 && npcmemory(1, data.legacy_id) != 0)
             continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;
@@ -56,7 +56,7 @@ void get_random_npc_id()
                 continue;
         }
         sampler.add(
-            {data.id, 0},
+            {data.legacy_id, 0},
             data.rarity /
                     (500 + std::abs(data.level - objlv) * data.coefficient) +
                 1);

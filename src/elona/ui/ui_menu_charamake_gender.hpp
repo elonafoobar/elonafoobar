@@ -19,6 +19,11 @@ protected:
     virtual void draw();
     virtual optional<UIMenuCharamakeGender::ResultType> on_key(
         const std::string& key);
+
+private:
+    void _draw_window();
+    void _draw_choice(int, const std::string&);
+    void _draw_choices();
 };
 
 } // namespace ui

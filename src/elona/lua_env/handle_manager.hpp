@@ -6,13 +6,13 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include "../../util/noncopyable.hpp"
-#include "../item.hpp"
 #include "lua_env.hpp"
 
 namespace elona
 {
 
 struct Character;
+struct Item;
 
 namespace lua
 {
@@ -34,7 +34,7 @@ class LuaEnv;
  * acts as the interface for providing handles to other Lua
  * environments.
  *
- * See data/lua/handle.lua for more information.
+ * See data/script/kernel/handle.lua for more information.
  */
 class HandleManager : public lib::noncopyable
 {
@@ -76,10 +76,14 @@ public:
      * if the handle is invalid or of the wrong type.
      */
     template <typename T>
-    T& get_ref(sol::table handle)
+    sol::optional<T&> get_ref(sol::table handle)
     {
         sol::object obj =
             handle_env["Handle"]["get_ref"](handle, T::lua_type());
+        if (obj == sol::lua_nil)
+        {
+            return sol::nullopt;
+        }
         return obj.as<T&>();
     }
 

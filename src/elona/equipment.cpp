@@ -5,80 +5,386 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "data/types/type_item.hpp"
+#include "draw.hpp"
+#include "enchantment.hpp"
+#include "globals.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
+
+
 namespace elona
 {
 
-int i_at_m66 = 0;
-
-void equipinfo(int item_index, int x, int y)
+namespace
 {
-    int p_at_m66 = 0;
-    std::string s_at_m66;
-    if (inv[item_index].identification_state !=
-        IdentifyState::completely_identified)
+
+snail::Color _get_element_color(int element)
+{
+    switch (element)
     {
-        return;
+    case 50: return {150, 0, 0};
+    case 51: return {0, 0, 150};
+    case 52: return {150, 150, 0};
+    case 59: return {150, 0, 150};
+    case 53: return {100, 80, 80};
+    case 55: return {0, 150, 0};
+    case 60: return {150, 100, 100};
+    case 57: return {50, 100, 150};
+    case 58: return {100, 150, 50};
+    case 54: return {150, 100, 50};
+    case 56: return {150, 50, 0};
+    default: return {0, 0, 0};
     }
-    for (int cnt = 0; cnt < 15; ++cnt)
+}
+
+
+
+void draw_additional_item_info_resistance(const Item& equip, int x, int y)
+{
+    for (const auto& enc : equip.enchantments)
     {
-        p_at_m66 = inv[item_index].enchantments[cnt].id;
-        if (p_at_m66 == 0)
-        {
+        if (enc.id == 0)
             break;
-        }
-        i_at_m66 = p_at_m66 / 10000;
-        if (i_at_m66 != 2)
-        {
+        if (enc.id / 10000 != 2)
             continue;
-        }
-        i_at_m66 = p_at_m66 % 10000;
-        pos(x + (i_at_m66 - 50) * 20, y);
-        p_at_m66 =
-            std::abs(inv[item_index].enchantments[cnt].power / 2 / 50) + 1;
-        if (p_at_m66 > 5)
-        {
-            s_at_m66 = u8"+"s;
-        }
-        else
-        {
-            s_at_m66 = ""s + p_at_m66;
-        }
+
+        const auto power_level = std::abs(enc.power / 2 / 50) + 1;
+        const auto element = enc.id % 10000;
+        const auto color = _get_element_color(element);
         if (jp)
         {
-            colorres();
-            if (inv[item_index].enchantments[cnt].power >= 0)
-            {
-                mes(u8"●"s);
-            }
-            else
-            {
-                mes(u8"▼"s);
-            }
-            pos(x + (i_at_m66 - 50) * 20 + 5, y + 1);
-            mes(s_at_m66);
-            pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            color(255, 255, 255);
-            mes(s_at_m66);
-            color(0, 0, 0);
+            const auto s =
+                power_level > 5 ? u8"+"s : std::to_string(power_level);
+            const auto glyph = enc.power >= 0 ? u8"●" : u8"▼";
+            mes(x + (element - 50) * 20, y, glyph, color);
+            mes(x + (element - 50) * 20 + 5, y + 1, s, color);
+            mes(x + (element - 50) * 20 + 4, y, s, {255, 255, 255});
         }
         else
         {
-            color(80, 60, 40);
-            pos(x + (i_at_m66 - 50) * 20 + 5, y);
-            mes(""s + p_at_m66);
-            color(0, 0, 0);
-            colorres();
-            pos(x + (i_at_m66 - 50) * 20 + 4, y);
-            mes(""s + p_at_m66);
-            color(0, 0, 0);
+            mes(x + (element - 50) * 20 + 5,
+                y,
+                std::to_string(power_level),
+                {80, 60, 40});
+            mes(x + (element - 50) * 20 + 4,
+                y,
+                std::to_string(power_level),
+                color);
         }
     }
 }
+
+
+
+void draw_additional_item_info_maintenance_and_ailment(
+    const Item& equip,
+    int x,
+    int y)
+{
+    for (int i = 0; i < 10; ++i)
+    {
+        if (enchantment_find(equip, 60000 + 10 + i))
+        {
+            mes(x - 100 + i * 20, y, jp ? u8"●" : "#", {0, 100, 100});
+        }
+        else
+        {
+            mes(x - 100 + i * 20, y, "-", {0, 100, 100});
+        }
+    }
+    for (int i = 0; i < 6; ++i)
+    {
+        if (enchantment_find(equip, 23 + i))
+        {
+            mes(x + 100 + i * 20, y, jp ? u8"●" : "#", {100, 32, 0});
+        }
+        else
+        {
+            mes(x + 100 + i * 20, y, "-", {100, 32, 0});
+        }
+    }
+}
+
+
+
+optional<const char*> enchantment_type2icon_id(const Enchantment& enc)
+{
+    switch (enc.id)
+    {
+    case 10002: return "enchantment_icon_increases_life";
+    case 10003: return "enchantment_icon_increases_mana";
+    case 10010:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_strength"
+                                   : "enchantment_icon_decreases_strength";
+    case 10011:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_consititution"
+                                   : "enchantment_icon_decreases_consititution";
+    case 10012:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_dexterity"
+                                   : "enchantment_icon_decreases_dexterity";
+    case 10013:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_perception"
+                                   : "enchantment_icon_decreases_perception";
+    case 10014:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_learning"
+                                   : "enchantment_icon_decreases_learning";
+    case 10015:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_will"
+                                   : "enchantment_icon_decreases_will";
+    case 10016:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_magic"
+                                   : "enchantment_icon_decreases_magic";
+    case 10017:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_charisma"
+                                   : "enchantment_icon_decreases_charisma";
+    case 10018:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_speed"
+                                   : "enchantment_icon_decreases_speed";
+    case 10019:
+        return enc.power / 50 >= 0 ? "enchantment_icon_increases_luck"
+                                   : "enchantment_icon_decreases_luck";
+    case 20050:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_fire"
+            : "enchantment_icon_weakens_resistance_to_fire";
+    case 20051:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_cold"
+            : "enchantment_icon_weakens_resistance_to_cold";
+    case 20052:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_lightning"
+            : "enchantment_icon_weakens_resistance_to_lightning";
+    case 20053:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_darkness"
+            : "enchantment_icon_weakens_resistance_to_darkness";
+    case 20054:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_mind"
+            : "enchantment_icon_weakens_resistance_to_mind";
+    case 20055:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_poison"
+            : "enchantment_icon_weakens_resistance_to_poison";
+    case 20056:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_nether"
+            : "enchantment_icon_weakens_resistance_to_nether";
+    case 20057:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_sound"
+            : "enchantment_icon_weakens_resistance_to_sound";
+    case 20058:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_nerve"
+            : "enchantment_icon_weakens_resistance_to_nerve";
+    case 20059:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_chaos"
+            : "enchantment_icon_weakens_resistance_to_chaos";
+    case 20060:
+        return enc.power / 50 >= 0
+            ? "enchantment_icon_grants_resistance_to_magic"
+            : "enchantment_icon_weakens_resistance_to_magic";
+    case 60010: return "enchantment_icon_maintains_strength";
+    case 60011: return "enchantment_icon_maintains_consititution";
+    case 60012: return "enchantment_icon_maintains_dexterity";
+    case 60013: return "enchantment_icon_maintains_perception";
+    case 60014: return "enchantment_icon_maintains_learning";
+    case 60015: return "enchantment_icon_maintains_will";
+    case 60016: return "enchantment_icon_maintains_magic";
+    case 60017: return "enchantment_icon_maintains_charisma";
+    case 60018: return "enchantment_icon_maintains_speed";
+    case 60019: return "enchantment_icon_maintains_luck";
+    case 70050: return "enchantment_icon_deals_fire_damage";
+    case 70051: return "enchantment_icon_deals_cold_damage";
+    case 70052: return "enchantment_icon_deals_lightning_damage";
+    case 70053: return "enchantment_icon_deals_darkness_damage";
+    case 70054: return "enchantment_icon_deals_mind_damage";
+    case 70055: return "enchantment_icon_deals_poison_damage";
+    case 70056: return "enchantment_icon_deals_nether_damage";
+    case 70057: return "enchantment_icon_deals_sound_damage";
+    case 70058: return "enchantment_icon_deals_nerve_damage";
+    case 70059: return "enchantment_icon_deals_chaos_damage";
+    case 70060: return "enchantment_icon_deals_magic_damage";
+    case 70061: return "enchantment_icon_deals_cut_damage";
+    case 90000: return "enchantment_icon_can_be_loaded_with_rapid_ammo";
+    case 90001: return "enchantment_icon_can_be_loaded_with_explosive_ammo";
+    case 90002: return "enchantment_icon_can_be_loaded_with_piercing_ammo";
+    case 90003: return "enchantment_icon_can_be_loaded_with_magic_ammo";
+    case 90004: return "enchantment_icon_can_be_loaded_with_time_stop_ammo";
+    case 90005: return "enchantment_icon_can_be_loaded_with_burst_ammo";
+    case 21: return "enchantment_icon_causes_random_teleport";
+    case 22: return "enchantment_icon_prevents_you_from_teleporting";
+    case 23: return "enchantment_icon_negates_blindness";
+    case 24: return "enchantment_icon_negates_paralysis";
+    case 25: return "enchantment_icon_negates_confusion";
+    case 26: return "enchantment_icon_negates_fear";
+    case 27: return "enchantment_icon_negates_sleep";
+    case 28: return "enchantment_icon_negates_poison";
+    case 29: return "enchantment_icon_speeds_up_travel_progress";
+    case 30: return "enchantment_icon_protects_you_from_etherwind";
+    case 31: return "enchantment_icon_negates_bad_weather";
+    case 32: return "enchantment_icon_floats_you";
+    case 33: return "enchantment_icon_protects_you_from_mutation";
+    case 34: return "enchantment_icon_enhances_spells";
+    case 35: return "enchantment_icon_allows_you_to_see_invisible_creatures";
+    case 36: return "enchantment_icon_absorbs_stamina";
+    case 37: return "enchantment_icon_brings_an_end";
+    case 38: return "enchantment_icon_absorbs_mana";
+    case 39: return "enchantment_icon_gives_absolute_piercing_attack";
+    case 40: return "enchantment_icon_stops_time";
+    case 41: return "enchantment_icon_protects_you_from_thieves";
+    case 42: return "enchantment_icon_allows_you_to_digest_rotten_food";
+    case 43: return "enchantment_icon_protects_you_from_cursing_words";
+    case 44: return "enchantment_icon_increases_critical_hits";
+    case 45: return "enchantment_icon_sucks_blood";
+    case 46: return "enchantment_icon_disturbs_your_growth";
+    case 47: return "enchantment_icon_attracts_monsters";
+    case 48: return "enchantment_icon_prevents_aliens_from_entering_your_body";
+    case 49: return "enchantment_icon_increases_quality_of_reward";
+    case 50: return "enchantment_icon_increases_extra_melee_attack";
+    case 51: return "enchantment_icon_increases_extra_ranged_attack";
+    case 52: return "enchantment_icon_decreases_physical_damage";
+    case 53: return "enchantment_icon_nullifies_damage";
+    case 54: return "enchantment_icon_deals_cut_damage_to_the_attacker";
+    case 55: return "enchantment_icon_diminishes_bleeding";
+    case 56: return "enchantment_icon_catches_signals";
+    case 57: return "enchantment_icon_inflicts_massive_damage_to_dragons";
+    case 58: return "enchantment_icon_inflicts_massive_damage_to_undeads";
+    case 59: return "enchantment_icon_reveals_religion";
+    case 60: return "enchantment_icon_makes_audience_drunk";
+    case 61: return "enchantment_icon_inflicts_massive_damage_to_gods";
+    default: return none;
+    }
+}
+
+
+
+void draw_additional_item_info_all_attributes(const Item& equip, int x, int y)
+{
+    if (equip.is_fireproof())
+    {
+        mes(x - 100, y, jp ? u8"●" : "#", {100, 32, 0});
+    }
+    else
+    {
+        mes(x - 100, y, "-", {100, 32, 0});
+    }
+    if (equip.is_acidproof())
+    {
+        mes(x - 80, y, jp ? u8"●" : "#", {100, 32, 0});
+    }
+    else
+    {
+        mes(x - 80, y, "-", {100, 32, 0});
+    }
+
+    int i = 0;
+    for (const auto& enc : equip.enchantments)
+    {
+        if (enc.id == 0)
+            break;
+
+        if (const auto icon_id = enchantment_type2icon_id(enc))
+        {
+            draw(*icon_id, x - 60 + i * 20, y);
+            ++i;
+        }
+    }
+}
+
+} // namespace
+
+
+
+int i_at_m66 = 0;
+
+
+
+void draw_additional_item_info_label(int x, int y)
+{
+    switch (g_show_additional_item_info)
+    {
+    case AdditionalItemInfo::none:
+    case AdditionalItemInfo::_size: break;
+    case AdditionalItemInfo::resistance:
+        for (int i = 0; i < 11; ++i)
+        {
+            mes(x + 20 * i,
+                y,
+                i18n::s.get_enum("core.locale.ui.equip.resist", i));
+        }
+        break;
+    case AdditionalItemInfo::maintenance_and_ailment:
+        for (int i = 0; i < 10; ++i)
+        {
+            mes(x - 100 + 20 * i,
+                y,
+                i18n::s.get_enum("core.locale.ui.equip.maintenance", i));
+        }
+        for (int i = 0; i < 6; ++i)
+        {
+            mes(x + 100 + 20 * i,
+                y,
+                i18n::s.get_enum("core.locale.ui.equip.ailment", i));
+        }
+        break;
+    case AdditionalItemInfo::all_attributes:
+        mes(x - 100, y, i18n::s.get("core.locale.ui.equip.fireproof"));
+        mes(x - 80, y, i18n::s.get("core.locale.ui.equip.acidproof"));
+        break;
+    }
+}
+
+
+
+void draw_additional_item_info(const Item& equip, int x, int y)
+{
+    if (equip.identification_state != IdentifyState::completely_identified)
+        return;
+
+    switch (g_show_additional_item_info)
+    {
+    case AdditionalItemInfo::none:
+    case AdditionalItemInfo::_size: break;
+    case AdditionalItemInfo::resistance:
+        draw_additional_item_info_resistance(equip, x, y);
+        break;
+    case AdditionalItemInfo::maintenance_and_ailment:
+        draw_additional_item_info_maintenance_and_ailment(equip, x, y);
+        break;
+    case AdditionalItemInfo::all_attributes:
+        draw_additional_item_info_all_attributes(equip, x, y);
+        break;
+    }
+}
+
+
+
+std::string cut_item_name_for_additional_info(
+    const std::string& name,
+    size_t adjustment)
+{
+    size_t width;
+    switch (g_show_additional_item_info)
+    {
+    case AdditionalItemInfo::none:
+    case AdditionalItemInfo::_size: return name;
+    case AdditionalItemInfo::resistance: width = 24; break;
+    case AdditionalItemInfo::maintenance_and_ailment: width = 14; break;
+    case AdditionalItemInfo::all_attributes: width = 14; break;
+    }
+    width -= adjustment;
+
+    return strutil::take_by_width(name, width);
+}
+
 
 
 int eqweaponlight()
@@ -1170,55 +1476,6 @@ void supply_initial_equipments()
     eqtwohand = 0;
     eqtwowield = 0;
     eqmultiweapon = 0;
-}
-
-void colorres(int)
-{
-    color(0, 0, 0);
-    if (i_at_m66 == 50)
-    {
-        color(150, 0, 0);
-    }
-    if (i_at_m66 == 51)
-    {
-        color(0, 0, 150);
-    }
-    if (i_at_m66 == 52)
-    {
-        color(150, 150, 0);
-    }
-    if (i_at_m66 == 59)
-    {
-        color(150, 0, 150);
-    }
-    if (i_at_m66 == 53)
-    {
-        color(100, 80, 80);
-    }
-    if (i_at_m66 == 55)
-    {
-        color(0, 150, 0);
-    }
-    if (i_at_m66 == 60)
-    {
-        color(150, 100, 100);
-    }
-    if (i_at_m66 == 57)
-    {
-        color(50, 100, 150);
-    }
-    if (i_at_m66 == 58)
-    {
-        color(100, 150, 50);
-    }
-    if (i_at_m66 == 54)
-    {
-        color(150, 100, 50);
-    }
-    if (i_at_m66 == 56)
-    {
-        color(150, 50, 0);
-    }
 }
 
 } // namespace elona

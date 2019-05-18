@@ -3,8 +3,8 @@ data:add(
    {
       {
          type = "core.chara",
-         name = "spiral_putit",
-         id = 9999,
+         id = "spiral_putit",
+         legacy_id = 9999,
          item_type = 2,
          tags = {"slime", "ether"},
          level = 2,
@@ -19,7 +19,7 @@ data:add(
          special_actions = {636},
          race = "slime",
          class_ = "wizard",
-         resistances = {[54] = 500},
+         resistances = {["core.mind"] = 500},
          image = 430,
          female_image = 431,
          male_image = 432,

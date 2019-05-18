@@ -1,6 +1,7 @@
 #include "ui_menu_town_politics.hpp"
 #include "../area.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../map.hpp"
 
@@ -47,15 +48,11 @@ bool UIMenuTownPolitics::init()
     bool is_town = map_data.type == mdata_t::MapType::town;
     _load_politics_list(is_town);
 
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
+    asset_load("deco_politics");
     gsel(0);
-    fillbg(3, 960, 96, 128, 128);
+    draw_bg("deco_politics_a");
     render_hud();
-    gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    asset_load("ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");
@@ -81,32 +78,31 @@ void UIMenuTownPolitics::update()
     }
 }
 
-static void _draw_window()
+void UIMenuTownPolitics::_draw_window()
 {
     std::string hint = strhint2 + strhint3b;
     showscroll(hint, wx, wy, ww, wh);
     display_topic(i18n::s.get("core.locale.ui.politics.law"), wx + 65, wy + 45);
 
     font(12 + sizefix - en * 2);
-    pos(wx + 185, wy + 52);
-    mes(i18n::s.get("core.locale.ui.politics.global"));
+    mes(wx + 185, wy + 52, i18n::s.get("core.locale.ui.politics.global"));
 
     if (map_data.type == mdata_t::MapType::town)
     {
-        pos(wx + 285, wy + 52);
-        mes(i18n::s.get(
-            "core.locale.ui.politics.law_of", mapname(game_data.current_map)));
+        mes(wx + 285,
+            wy + 52,
+            i18n::s.get(
+                "core.locale.ui.politics.law_of",
+                mapname(game_data.current_map)));
     }
 
-    pos(wx + 155, wy + 46);
     gmode(2);
-    gcopy(3, 312, 360, 24, 24);
-    pos(wx + 255, wy + 46);
+    draw_indexed("politics_law", wx + 155, wy + 46, 1);
     gmode(2);
-    gcopy(3, 288, 360, 24, 24);
+    draw_indexed("politics_law", wx + 255, wy + 46, 0);
 }
 
-static void _draw_key(int cnt)
+void UIMenuTownPolitics::_draw_key(int cnt)
 {
     if (cnt % 2 == 0)
     {
@@ -115,7 +111,7 @@ static void _draw_key(int cnt)
     display_key(wx + 72, wy + 76 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuTownPolitics::_draw_keys()
 {
     font(14 - en * 2);
     keyrange = 0;
@@ -137,12 +133,11 @@ static void
 _draw_single_list_entry(int cnt, int list_item, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + 100, wy + 76 + cnt * 19 - 1);
-    pos(wx + 42, wy + 68 + cnt * 19 + 2);
     gmode(2);
-    gcopy(3, 288 + list_item * 24, 360, 24, 24);
+    draw_indexed("politics_law", wx + 42, wy + 68 + cnt * 19 + 2, list_item);
 }
 
-static void _draw_list_entries()
+void UIMenuTownPolitics::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();

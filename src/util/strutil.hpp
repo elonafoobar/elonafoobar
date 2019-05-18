@@ -76,6 +76,29 @@ inline std::pair<std::string, std::string> split_on_string(
 
 
 
+template <typename T>
+std::vector<std::string> split(const std::string& str, const T& separator)
+{
+    std::vector<std::string> ret;
+
+    std::string::size_type pos = 0;
+    while (true)
+    {
+        const auto separator_pos = str.find(separator, pos);
+        if (separator_pos == std::string::npos)
+        {
+            break;
+        }
+        ret.push_back(str.substr(pos, separator_pos - pos));
+        pos = separator_pos + 1;
+    }
+
+    ret.push_back(str.substr(pos));
+    return ret;
+}
+
+
+
 inline std::string remove_str(
     const std::string& str,
     const std::string& pattern)
@@ -270,6 +293,55 @@ inline size_t utf8_cut_index(
     }
 
     return current_byte;
+}
+
+
+/**
+ * Wraps text in a language-agnostic manner. Instead of relying on
+ * language-specific rules, it wraps text based on character width, determined
+ * by codepoint. All 1-byte characters count as width 1, and every other
+ * character is width 2.
+ */
+inline int wrap_text(std::string& text, int max_line_length)
+{
+    std::string rest{text};
+    text.clear();
+    int n{};
+
+    while (1)
+    {
+        const auto len = rest.size();
+        if (int(len) < max_line_length)
+        {
+            text += rest;
+            return n;
+        }
+        size_t byte_length = 0;
+        size_t width_length = 0;
+        while (width_length <= len)
+        {
+            const auto bytes = strutil::byte_count(rest[byte_length]);
+            const auto char_width = bytes == 1 ? 1 : 2;
+
+            byte_length += bytes;
+            width_length += char_width;
+
+            if (int(width_length) > max_line_length)
+            {
+                text += rest.substr(0, byte_length) + '\n';
+                ++n;
+                if (rest.size() > byte_length)
+                {
+                    rest = rest.substr(byte_length);
+                }
+                else
+                {
+                    rest = "";
+                }
+                break;
+            }
+        }
+    }
 }
 
 } // namespace strutil

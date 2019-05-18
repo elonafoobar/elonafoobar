@@ -46,7 +46,6 @@ locale {
                 weight = "Weight"
                 name = "Name"
 
-                resist = "Fi Co Li Da Mi Po Nt So Nr Ch Ma"
                 total_weight = "Weight ${_1}/${_2}  Cargo ${_3}"
 
                 ground = "Ground"
@@ -166,7 +165,7 @@ locale {
 
             trade {
                 too_low_value = "You don't have stuff that match ${itemname(_1)}."
-                you_receive = "You receive ${itemname(_1)} in exchange for ${itemname(_2)}."
+                you_receive = "You receive ${itemname(_2)} in exchange for ${itemname(_1)}."
             }
 
             take {

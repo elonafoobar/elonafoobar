@@ -6,11 +6,12 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
+#include "draw.hpp"
 #include "enums.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
-#include "lua_env/lua_console.hpp"
+#include "lua_env/console.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -24,6 +25,17 @@
 #include "variables.hpp"
 #include "wish.hpp"
 
+
+
+namespace
+{
+
+int mousel;
+
+}
+
+
+
 namespace elona
 {
 
@@ -34,8 +46,8 @@ static bool _proc_autodig()
     if (foobar_data.is_autodig_enabled)
     {
         if (0 <= x && x < map_data.width && 0 <= y && y < map_data.height &&
-            (chipm(7, cell_data.at(x, y).chip_id_actual) & 4) &&
-            chipm(0, cell_data.at(x, y).chip_id_actual) != 3 &&
+            (chip_data.for_cell(x, y).effect & 4) &&
+            chip_data.for_cell(x, y).kind != 3 &&
             map_data.type != mdata_t::MapType::world_map)
         {
             refx = x;
@@ -119,7 +131,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     if (action == "tcg")
     {
         tcgmain();
-        map_prepare_tileset_atlas();
+        draw_prepare_map_chips();
         update_entire_screen();
         return TurnResult::turn_end;
     }
@@ -142,8 +154,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             {
                 sx = 192;
             }
-            pos(i * 192, inf_msgy);
-            gcopy(3, 496, 528, sx, 5);
+            draw_region("message_window", i * 192, inf_msgy, sx);
         }
         redraw();
         wait_key_pressed();

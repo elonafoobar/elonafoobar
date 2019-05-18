@@ -19,6 +19,7 @@
 #include "item.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/character_instance_event.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
@@ -178,14 +179,14 @@ optional<Position> get_free_space(
         }
         if (cell_data.at(x, y).feats != 0)
         {
-            if (chipm(7, cell_data.at(x, y).feats % 1000) & 4)
+            if (chip_data.for_feat(x, y).effect & 4)
             {
                 continue;
             }
         }
         if (cell_data.at(x, y).chara_index_plus_one == 0)
         {
-            if (!(chipm(7, cell_data.at(x, y).chip_id_actual) & 4))
+            if (!(chip_data.for_cell(x, y).effect & 4))
             {
                 return pos;
             }
@@ -236,7 +237,7 @@ bool can_place_character_at(const Position& position, bool allow_stairs)
         return false;
 
     // Wall
-    if (chipm(7, cell_data.at(position.x, position.y).chip_id_actual) & 4)
+    if (chip_data.for_cell(position.x, position.y).effect & 4)
         return false;
 
     // There is someone.
@@ -246,7 +247,7 @@ bool can_place_character_at(const Position& position, bool allow_stairs)
     if (cell_data.at(position.x, position.y).feats != 0)
     {
         // There is an object which prevents from walking through.
-        if (chipm(7, cell_data.at(position.x, position.y).feats % 1000) & 4)
+        if (chip_data.for_feat(position.x, position.y).effect & 4)
             return false;
 
         cell_featread(position.x, position.y);
@@ -304,7 +305,7 @@ bool chara_place_internal(
                     y = rnd(map_data.height);
                     // FIXME: I refered to oor, but I think it is not perfect.
                     // Break wall.
-                    if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+                    if (chip_data.for_cell(x, y).effect & 4)
                     {
                         cell_data.at(x, y).chip_id_actual = tile_tunnel;
                     }
@@ -1058,12 +1059,8 @@ void chara_refresh(int cc)
     refresh_speed(cdata[cc]);
     cdata[cc].needs_refreshing_status() = false;
 
-    auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
-    if (handle != sol::lua_nil)
-    {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::character_refreshed>(handle);
-    }
+    lua::lua->get_event_manager().trigger(
+        lua::CharacterInstanceEvent("core.character_refreshed", cdata[cc]));
 }
 
 
@@ -1438,10 +1435,6 @@ int chara_copy(const Character& source)
 
 void chara_killed(Character& chara)
 {
-    auto handle = lua::lua->get_handle_manager().get_handle(chara);
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::character_killed>(handle);
-
     if (chara.state() == Character::State::empty)
     {
         // This character slot is invalid, and can be overwritten by newly

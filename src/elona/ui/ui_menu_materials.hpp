@@ -20,6 +20,15 @@ protected:
     virtual void draw();
     virtual optional<UIMenuMaterials::ResultType> on_key(
         const std::string& key);
+
+private:
+    void _draw_window();
+    void _draw_key(int);
+    void _draw_keys();
+    void _draw_single_list_entry_name(int, int);
+    void _draw_single_list_entry_desc(int, int);
+    void _draw_single_list_entry(int, int);
+    void _draw_list_entries();
 };
 
 } // namespace ui

@@ -23,6 +23,10 @@ protected:
     virtual optional<UIMenuItemDesc::ResultType> on_key(const std::string& key);
 
 private:
+    void _draw_normal_mark(int, int);
+    void _draw_marks(int, int);
+    void _draw_message(int, int, const std::string&);
+
     const Item& _the_item;
 };
 

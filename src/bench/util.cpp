@@ -1,5 +1,5 @@
-#include "../enums.hpp"
-#include "../turn_sequence.hpp"
+#include "../elona/enums.hpp"
+#include "../elona/turn_sequence.hpp"
 
 namespace elona
 {

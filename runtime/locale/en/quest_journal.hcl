@@ -231,7 +231,7 @@ locale {
                     title = "Little sister Lv30"
 
                     progress {
-                        _0 = "A strange scientist asked me to bring little sisters to her. To capture a little sister, I need to kill Big Daddy first then throw the little ball at her."
+                        _0 = "A strange scientist asked me to bring little sisters to her. To capture a little sister, I need to kill Big daddy first then throw the little ball at her."
                     }
                 }
             }

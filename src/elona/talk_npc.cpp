@@ -23,6 +23,7 @@
 #include "random.hpp"
 #include "shop.hpp"
 #include "talk.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -361,13 +362,7 @@ TalkResult talk_arena_master(int chatval_)
     game_data.executing_immediate_quest_show_hunt_remain = 1;
     game_data.executing_immediate_quest = 0;
     game_data.executing_immediate_quest_status = 1;
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = 6;
-    game_data.destination_dungeon_level = 1;
-    levelexitby = 2;
+    map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::arena));
     chatteleport = 1;
     return TalkResult::talk_end;
 }
@@ -442,13 +437,8 @@ TalkResult talk_pet_arena_master(int chatval_)
     game_data.executing_immediate_quest_show_hunt_remain = 0;
     game_data.executing_immediate_quest = 0;
     game_data.executing_immediate_quest_status = 1;
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = 40;
-    game_data.destination_dungeon_level = 1;
-    levelexitby = 2;
+    map_prepare_for_travel_with_prev(
+        static_cast<int>(mdata_t::MapId::pet_arena));
     chatteleport = 1;
     return TalkResult::talk_end;
 }
@@ -842,13 +832,8 @@ TalkResult talk_innkeeper_shelter()
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = 30;
-    game_data.destination_dungeon_level = 1;
-    levelexitby = 2;
+    map_prepare_for_travel_with_prev(
+        static_cast<int>(mdata_t::MapId::shelter_));
     chatteleport = 1;
     snd("core.exitmap1");
     return TalkResult::talk_end;
@@ -878,7 +863,7 @@ TalkResult talk_servant_fire()
 
 TalkResult talk_maid_think_of_house_name()
 {
-    mdatan(0) = random_title();
+    mdatan(0) = random_title(RandomTitleType::character);
     if (rnd(5))
     {
         mdatan(0) = i18n::s.get(
@@ -1431,13 +1416,7 @@ TalkResult talk_accepted_quest()
         quest_data[rq].client_chara_type;
     game_data.executing_immediate_quest = rq;
     game_data.executing_immediate_quest_status = 1;
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = 13;
-    game_data.destination_dungeon_level = 1;
-    levelexitby = 2;
+    map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::quest));
     chatteleport = 1;
     return TalkResult::talk_end;
 }

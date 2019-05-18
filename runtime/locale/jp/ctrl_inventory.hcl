@@ -46,7 +46,6 @@ locale {
                 weight = "重さ"
                 name = "アイテムの名称"
 
-                resist = "火 冷 雷 闇 幻 毒 獄 音 神 沌 魔"
                 total_weight = "重さ合計 ${_1}/${_2}  荷車 ${_3}"
 
                 ground = "足元"

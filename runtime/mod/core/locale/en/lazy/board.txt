@@ -1,0 +1,116 @@
+####################### Reference #######################
+	/Translation Note/
+Text written after %xxx,x,EN will be displayed in the English version of Elona.
+See /Vernis for example. The translation doesn't have to be precise.
+You can even add your own sentences if you like to. 
+
+You can completely ignore the use of {} when translating. (ie. {だ},{だな} )
+Those are structures which are used for some Japanese conversions.
+They also convert the code into designated in-game variable. 
+The codes are listed below.
+
+{player}	player's name
+{aka}		player's nickname(aka)
+{npc}		the name of the person player is talking to
+{me}		"I"
+{you}		"you"
+{objective}	quest:objective
+{reward}	quest:reward
+{ref}		quest:refer
+{map}		quest:map name
+{client}	quest:client name
+
+####################### Begin ######################
+
+
+%COOK,GENERAL,EN
+A new recipe!:As in the capacity of a cooking master, I'm always eager to learn a new recipe. Bring me {objective} and I'll pay you {reward}.
+%END
+
+%COOK,1,EN
+A reception.:We will be hosting this very important reception tonight. The guests must be satisfied and made to feel gorgeous. I want you to prepare {objective} and {reward} are yours.
+%END
+
+%COOK,2,EN
+On a diet:Vegetables are essential parts of a healthy diet. Cook {objective} for me. Your rewards are {reward}.
+%END
+
+%COOK,3,EN
+Cocktail party!:Run a small errand for us and earn {reward}. We need a wicked relish for our cocktail party. Say, {objective} sounds decent.
+%END
+
+%COOK,4,EN
+Sweet sweet.:I prefer cakes and candies to alcoholic drinks. You want {reward}? Gimme {objective}!
+%END
+
+%COOK,5,EN
+I love noodles!:I love noodles! Is there anyone that hates noodles? I want to eat {objective} now! Rewards? Of course. {reward} sound good? 
+%END
+
+%COOK,6,EN
+Fussy taste.:My children won't eat fish. It's killing me. I'm gonna give {reward} to anyone that makes {objective} delicious enough to sweep their fuss!
+%END
+
+%COOK,7,EN
+Going on a picnic.:First off, the rewards are no more than {reward}, ok? My kid needs {objective} for a picnic tomorrow. Please hurry.
+%END
+
+%COOK,8,EN
+My stomach!:My stomach growls like I'm starving to death habitually. Will you bring a piece to this beast? Maybe {objective} will do the job. I can give you {reward} as a reward.
+%END
+
+%COLLECT,EN
+I want it!:Have you seen {client}'s {ref}? I want it! I want it! Get it for me by fair means or foul! I'll give you {reward}.
+%END
+
+%DELIVER,64000,EN
+Ecologist.:My friend in {map} is collecting waste materials. The name is {client}. If you plan to visit {map}, could you hand him {ref}? I'll pay you {reward}.
+%END
+
+%DELIVER,60000,EN
+A present.:My uncle {client} has built a house in {map} and I'm planning to send {ref} as a gift. I have {reward} in reward.
+%END
+
+%DELIVER,54000,EN
+Book delivery.:Can you take {ref} to a person named {client} who lives in {map}? I'll pay you {reward}.
+%END
+
+%DELIVER,77000,EN
+A small token.:As a token of our long lasting friendship, I decided to give {ref} to {client} who lives in {map}. I'll arrange {reward} for your reward.
+%END
+
+%SUPPLY,EN
+Birthday.:I want to give my kid {objective} as a birthday present. If you can send me this item, I'll pay you {reward} in exchange.
+%END
+
+%HUNT,EN
+Hunting.:Filthy creatures are spawning in a forest nearby this city. I'll give you {reward} if you get rid of them.
+%END
+
+%HUNTEX,EN
+Panic.:Help! Our town is being seized by several subspecies of {objective} which are expected to be around {ref} level. Eliminate them all and I'll reward you with {reward} on behalf of all the citizen.
+%END
+
+%HARVEST,EN
+The harvest time.:At last, the harvest time has come. It is by no means a job that I alone can handle. You get {reward} if you can gather grown crops weighting {ref}.
+%END
+
+%PARTY,EN
+Party time!:I'm throwing a big party today. Many celebrities are going to attend the party so I need someone to keep them entertained. If you successfully gather {ref}, I'll give you a platinum coin. You'll surely be earning tons of tips while you work, too.
+%END
+
+%ESCORT,0,EN
+Beauty and the beast:Such great beauty is a sin...My girl friend is followed by her ex-lover and needs an escort. If you safely bring her to {map}, I'll give you {reward}. Please, protect her from the beast.
+%END
+
+%ESCORT,1,EN
+Before it's too late.:Terrible thing happened! My dad is affected by a deadly poison. Hurry! Please take him to his doctor in {map}. I'll let you have {reward} if you sucssed!
+%END
+
+%ESCORT,2,EN
+Escort needed.:We have this client secretly heading to {map} for certain reasons. We offer you {reward} if you succeed in escorting this person.
+%END
+
+%CONQUER,EN
+Challenge:Only experienced adventurers should take this task. An unique mutant of {objective} has been sighted near the town. Slay this monster and we'll give you {reward}. This is no ordinary mission. The monster's leve is expected to be around {ref}.
+%END

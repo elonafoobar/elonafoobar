@@ -6,13 +6,18 @@ namespace elona
 namespace lua
 {
 
-namespace Math
+/**
+ * @luadoc
+ *
+ * Math utility functions.
+ */
+namespace LuaApiMath
 {
 int clamp(int, int, int);
 
 
 void bind(sol::table&);
-} // namespace Math
+} // namespace LuaApiMath
 
 } // namespace lua
 } // namespace elona

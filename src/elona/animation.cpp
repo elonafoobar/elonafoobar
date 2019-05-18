@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "element.hpp"
@@ -20,6 +21,8 @@ using namespace elona;
 
 namespace
 {
+
+int am;
 
 
 
@@ -85,20 +88,18 @@ void do_animation(
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, center.x - size / 2, center.y - size / 2, size, size);
+    gcopy(0, center.x - size / 2, center.y - size / 2, size, size, 0, 0);
     gmode(2);
     gsel(0);
 
     for (int t = 0; t < duration; ++t)
     {
         gmode(0);
-        pos(center.x - size / 2, center.y - size / 2);
-        gcopy(4, 0, 0, size, size);
+        gcopy(4, 0, 0, size, size, center.x - size / 2, center.y - size / 2);
         gmode(2);
         draw(image_key, center, t);
         redraw();
-        await(Config::instance().animewait);
+        await(Config::instance().animation_wait);
     }
 }
 
@@ -118,8 +119,7 @@ void do_particle_animation(
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, center.x - size / 2, center.y - size / 2, size, size);
+    gcopy(0, center.x - size / 2, center.y - size / 2, size, size, 0, 0);
     gmode(2);
     gsel(0);
 
@@ -132,15 +132,14 @@ void do_particle_animation(
     for (int t = 0; t < duration; ++t)
     {
         gmode(0);
-        pos(center.x - size / 2, center.y - size / 2);
-        gcopy(4, 0, 0, size, size);
+        gcopy(4, 0, 0, size, size, center.x - size / 2, center.y - size / 2);
         gmode(2);
         for (int i = 0; i < max_particles; ++i)
         {
             draw(image_key, center, t, particles[i], i);
         }
         redraw();
-        await(Config::instance().animewait);
+        await(Config::instance().animation_wait);
     }
 }
 
@@ -202,7 +201,7 @@ void AbstractAnimation::play()
 {
     if (mode == 9)
         return;
-    if (Config::instance().animewait == 0)
+    if (Config::instance().animation_wait == 0)
         return;
 
     if (updates_screen())
@@ -265,13 +264,14 @@ void BrightAuraAnimation::do_play()
     // Store part of the previous screen.
     gsel(4);
     gmode(0);
-    pos(0, 0);
     gcopy(
         0,
         base_pos.x - inf_tiles / 2,
         base_pos.y - inf_tiles / 2,
         inf_tiles * 2,
-        inf_tiles * 2);
+        inf_tiles * 2,
+        0,
+        0);
     gmode(2);
     gsel(0);
 
@@ -293,24 +293,30 @@ void BrightAuraAnimation::do_play()
     {
         if (type == Type::healing_rain)
         {
-            await(Config::instance().animewait / 4);
+            await(Config::instance().animation_wait / 4);
         }
         else
         {
-            await(Config::instance().animewait);
+            await(Config::instance().animation_wait);
         }
-        pos(base_pos.x - inf_tiles / 2, base_pos.y - inf_tiles / 2);
-        gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
+        gcopy(
+            4,
+            0,
+            0,
+            inf_tiles * 2,
+            inf_tiles * 2,
+            base_pos.x - inf_tiles / 2,
+            base_pos.y - inf_tiles / 2);
         for (int j = 0; j < max_particles; ++j)
         {
-            pos(base_pos.x + particles_pos[j].x,
-                base_pos.y + particles_pos[j].y + i * 2 / particles_n[j]);
             grotate(
                 1,
                 0,
                 960,
                 48,
                 48,
+                base_pos.x + particles_pos[j].x,
+                base_pos.y + particles_pos[j].y + i * 2 / particles_n[j],
                 inf_tiles - i * 4,
                 inf_tiles - i * 4,
                 i * 2 * particles_n[j]);
@@ -328,22 +334,19 @@ void BreathAnimation::do_play()
 
     // Prepare image.
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime7.bmp");
+    picload(filesystem::dir::graphic() / u8"anime7.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
-    pos(0, 0);
     gsel(4);
-    pos(0, 0);
     gmode(0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
 
     for (int i = 0; i < 6; ++i)
     {
         // Restore entire of the previous screen.
-        pos(0, 0);
         gmode(0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
 
         bool did_draw{};
         for (const auto& position : breath_pos())
@@ -360,7 +363,6 @@ void BreathAnimation::do_play()
             if (sx < windoww &&
                 sy < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
             {
-                pos(sx, sy);
                 gmode(2);
                 set_color_modulator(element_color_id(element), 7);
                 grotate(
@@ -369,6 +371,8 @@ void BreathAnimation::do_play()
                     0,
                     inf_tiles,
                     inf_tiles,
+                    sx,
+                    sy,
                     std::atan2(
                         target_pos.x - attacker_pos.x,
                         attacker_pos.y - target_pos.y));
@@ -378,7 +382,7 @@ void BreathAnimation::do_play()
         }
         if (did_draw)
         {
-            await(Config::instance().animewait);
+            await(Config::instance().animation_wait);
             redraw();
         }
     }
@@ -406,14 +410,12 @@ void BallAnimation::do_play()
 
     // Load image.
     gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"anime5.bmp");
+    picload(filesystem::dir::graphic() / u8"anime5.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
     gsel(0);
 
@@ -458,11 +460,16 @@ void BallAnimation::do_play()
                     if (sy * inf_tiles + inf_screeny <
                         inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
                     {
-                        pos(sx * inf_tiles + inf_screenx,
-                            sy * inf_tiles + inf_screeny);
                         gmode(2);
                         set_color_modulator(anicol, 7);
-                        gcopy(7, anip * 48, 96, 48, 48);
+                        gcopy(
+                            7,
+                            anip * 48,
+                            96,
+                            48,
+                            48,
+                            sx * inf_tiles + inf_screenx,
+                            sy * inf_tiles + inf_screeny);
                         clear_color_modulator(7);
                     }
                 }
@@ -474,16 +481,14 @@ void BallAnimation::do_play()
         {
             if (anidy < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
             {
-                pos(anidx, anidy);
-                gmode(4, 250 - cnt * cnt * 2);
-                gcopy_c(7, cnt * 96, 0, 96, 96);
+                gmode(2, 250 - cnt * cnt * 2);
+                gcopy_c(7, cnt * 96, 0, 96, 96, anidx, anidy);
             }
         }
         redraw();
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
-        await(Config::instance().animewait);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
+        await(Config::instance().animation_wait);
     }
 
     // Play sound.
@@ -503,13 +508,11 @@ void BoltAnimation::do_play()
     snd_at("core.bolt1", attacker_pos);
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime6.bmp");
+    picload(filesystem::dir::graphic() / u8"anime6.bmp", 0, 0, true);
 
-    pos(0, 0);
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
 
     int x = attacker_pos.x;
@@ -550,9 +553,8 @@ void BoltAnimation::do_play()
             }
         }
 
-        pos(0, 0);
         gmode(0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
 
         bool did_draw{};
         for (int u = 0; u < t + 1; ++u)
@@ -567,7 +569,6 @@ void BoltAnimation::do_play()
             }
             if (ap(u) < 5 && is_in_screen(ax(u), ay(u)))
             {
-                pos(ax(u), ay(u));
                 gmode(2);
                 set_color_modulator(element_color_id(element), 7);
                 grotate(
@@ -576,6 +577,8 @@ void BoltAnimation::do_play()
                     0,
                     inf_tiles,
                     inf_tiles,
+                    ax(u),
+                    ay(u),
                     std::atan2(
                         target_pos.x - attacker_pos.x,
                         attacker_pos.y - target_pos.y));
@@ -586,7 +589,7 @@ void BoltAnimation::do_play()
         }
         if (did_draw)
         {
-            await(Config::instance().animewait * 1.75);
+            await(Config::instance().animation_wait * 1.75);
             redraw();
         }
     }
@@ -616,31 +619,30 @@ void ThrowingObjectAnimation::do_play()
 
         gsel(4);
         gmode(0);
-        pos(0, 0);
-        gcopy(0, x, y - inf_tiles / 2, inf_tiles, inf_tiles);
+        gcopy(0, x, y - inf_tiles / 2, inf_tiles, inf_tiles, 0, 0);
         gmode(2);
         gsel(0);
         gmode(2);
 
         if (is_in_screen(x + inf_tiles / 2, y))
         {
-            pos(x + inf_tiles / 2, y);
             grotate(
                 1,
                 0,
                 960,
                 inf_tiles,
                 inf_tiles,
+                x + inf_tiles / 2,
+                y,
                 std::atan2(
                     attacker_pos.x - target_pos.x,
                     target_pos.y - attacker_pos.y));
         }
         redraw();
         gmode(0);
-        pos(x, y - inf_tiles / 2);
-        gcopy(4, 0, 0, inf_tiles, inf_tiles);
+        gcopy(4, 0, 0, inf_tiles, inf_tiles, x, y - inf_tiles / 2);
         gmode(2);
-        await(Config::instance().animewait);
+        await(Config::instance().animation_wait);
     }
 }
 
@@ -671,7 +673,7 @@ void RangedAttackAnimation::do_play()
     }
     if (type == Type::crossbow)
     {
-        prepare_item_image(2, anicol);
+        prepare_item_image(1, anicol);
         snd_at("core.bow1", attacker_pos);
     }
     if (type == Type::firearm)
@@ -708,28 +710,27 @@ void RangedAttackAnimation::do_play()
 
         gsel(4);
         gmode(0);
-        pos(0, 0);
-        gcopy(0, ax, ay - inf_tiles / 2, inf_tiles, inf_tiles);
+        gcopy(0, ax, ay - inf_tiles / 2, inf_tiles, inf_tiles, 0, 0);
         gmode(2);
         gsel(0);
         gmode(2);
 
-        pos(ax + inf_tiles / 2, ay);
         grotate(
             1,
             0,
             960,
             inf_tiles,
             inf_tiles,
+            ax + inf_tiles / 2,
+            ay,
             std::atan2(
                 target_pos.x - attacker_pos.x, attacker_pos.y - target_pos.y));
 
         redraw();
         gmode(0);
-        pos(ax, ay - inf_tiles / 2);
-        gcopy(4, 0, 0, inf_tiles, inf_tiles);
+        gcopy(4, 0, 0, inf_tiles, inf_tiles, ax, ay - inf_tiles / 2);
         gmode(2);
-        await(Config::instance().animewait);
+        await(Config::instance().animation_wait);
     }
 
     if (anisound)
@@ -802,12 +803,11 @@ void MeleeAttackAnimation::do_play()
     int anidy = (position.y - scy) * inf_tiles + inf_screeny;
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, anidx - 24, anidy - 48, 96, 144);
+    gcopy(0, anidx - 24, anidy - 48, 96, 144, 0, 0);
     if (is_critical)
     {
         gsel(7);
-        picload(filesystem::dir::graphic() / u8"anime28.bmp");
+        picload(filesystem::dir::graphic() / u8"anime28.bmp", 0, 0, true);
     }
     gmode(2);
     gsel(0);
@@ -818,46 +818,51 @@ void MeleeAttackAnimation::do_play()
         gmode(2);
         if (is_critical)
         {
-            pos(anidx - 24, anidy - 32);
-            gcopy(7, cnt * 96, 0, 96, 96);
+            gcopy(7, cnt * 96, 0, 96, 96, anidx - 24, anidy - 32);
         }
         for (int cnt = 0, cnt_end = (damage_percent); cnt < cnt_end; ++cnt)
         {
-            pos(anidx + 24 + sx(cnt) +
+            grotate(
+                1,
+                anix1,
+                0,
+                inf_tiles,
+                inf_tiles,
+                anidx + 24 + sx(cnt) +
                     (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2 +
                     (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
-                anidy + sy(cnt) + cnt2 * cnt2 / 3);
-            grotate(1, anix1, 0, inf_tiles, inf_tiles, 6, 6, 0.4 * cnt);
+                anidy + sy(cnt) + cnt2 * cnt2 / 3,
+                6,
+                6,
+                0.4 * cnt);
         }
         if (ap == 0)
         {
-            pos(anidx + sx + 24, anidy + sy + 10);
             grotate(
                 1,
                 0,
                 960,
                 inf_tiles,
                 inf_tiles,
+                anidx + sx + 24,
+                anidy + sy + 10,
                 cnt * 10 + damage_percent,
                 cnt * 10 + damage_percent,
                 0.5 * cnt - 0.8);
         }
         if (ap == 1)
         {
-            pos(anidx, anidy);
-            gcopy(3, 1008 + cnt * 48, 432, 48, 48);
+            draw_indexed("anim_slash", anidx, anidy, cnt);
         }
         if (ap == 2)
         {
-            pos(anidx, anidy);
-            gcopy(3, 816 + cnt * 48, 432, 48, 48);
+            draw_indexed("anim_bash", anidx, anidy, cnt);
         }
         redraw();
         gmode(0);
-        pos(anidx - 24, anidy - 48);
-        gcopy(4, 0, 0, 96, 144);
+        gcopy(4, 0, 0, 96, 144, anidx - 24, anidy - 48);
         gmode(2);
-        await(Config::instance().animewait);
+        await(Config::instance().animation_wait);
     }
 }
 
@@ -870,30 +875,27 @@ void GeneEngineeringAnimation::do_play()
         return;
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime13.bmp");
+    picload(filesystem::dir::graphic() / u8"anime13.bmp", 0, 0, true);
 
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
 
     int anidx = (position.x - scx) * inf_tiles + inf_screenx - 24;
     int anidy = (position.y - scy) * inf_tiles + inf_screeny - 60;
     for (int t = 0; t < 10; ++t)
     {
-        pos(0, 0);
         gmode(0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
         for (int i = 0; i < anidy / 96 + 2; ++i)
         {
-            pos(anidx, anidy - i * 96);
-            gcopy(7, t / 2 * 96, (i == 0) * 96, 96, 96);
+            gcopy(7, t / 2 * 96, (i == 0) * 96, 96, 96, anidx, anidy - i * 96);
         }
 
-        await(Config::instance().animewait * 2.25);
+        await(Config::instance().animation_wait * 2.25);
         redraw();
     }
 }
@@ -906,11 +908,10 @@ void MiracleAnimation::do_play()
     elona_vector1<int> ay;
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime12.bmp");
+    picload(filesystem::dir::graphic() / u8"anime12.bmp", 0, 0, true);
     gsel(4);
-    pos(0, 0);
     gmode(0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
     am = 0;
     for (auto&& cnt : cdata.all())
@@ -952,9 +953,8 @@ void MiracleAnimation::do_play()
     }
     for (int cnt = 0;; ++cnt)
     {
-        pos(0, 0);
         gmode(0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         int af = 0;
         for (int cnt = 0, cnt_end = (am); cnt < cnt_end; ++cnt)
         {
@@ -966,31 +966,43 @@ void MiracleAnimation::do_play()
             int cnt2 = cnt;
             int anidy = ay(cnt) * clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
             gmode(2);
-            pos(ax(cnt), anidy);
             gcopy(
                 7,
                 clamp((8 - ap(cnt)), 0, 8) * 96 + 96 * (ap(cnt) < 15),
                 0,
                 96,
-                96);
+                96,
+                ax(cnt),
+                anidy);
             if (ap(cnt) <= 14)
             {
                 if (ap(cnt) >= 6)
                 {
-                    pos(ax(cnt), anidy + 16);
-                    gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
+                    gcopy(
+                        7,
+                        (14 - ap(cnt)) / 2 * 96,
+                        96,
+                        96,
+                        96,
+                        ax(cnt),
+                        anidy + 16);
                 }
             }
             int anidx =
                 clamp(anidy / 55 + 1, 0, 7 - clamp((11 - ap(cnt)) * 2, 0, 7));
             for (int cnt = 1, cnt_end = cnt + (anidx); cnt < cnt_end; ++cnt)
             {
-                pos(ax(cnt2), anidy - cnt * 55);
-                gcopy(7, 96 * (ap(cnt2) < 15), 0, 96, 55);
+                gcopy(
+                    7,
+                    96 * (ap(cnt2) < 15),
+                    0,
+                    96,
+                    55,
+                    ax(cnt2),
+                    anidy - cnt * 55);
                 if (cnt == anidx)
                 {
-                    pos(ax(cnt2), anidy - cnt * 55 - 40);
-                    gcopy(7, 288, 0, 96, 40);
+                    gcopy(7, 288, 0, 96, 40, ax(cnt2), anidy - cnt * 55 - 40);
                 }
             }
             if (ap(cnt) >= 20)
@@ -1023,7 +1035,7 @@ void MiracleAnimation::do_play()
         {
             break;
         }
-        await(Config::instance().animewait * 2.25);
+        await(Config::instance().animation_wait * 2.25);
         redraw();
     }
 }
@@ -1036,11 +1048,10 @@ void MeteorAnimation::do_play()
     elona_vector1<int> ay;
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime17.bmp");
+    picload(filesystem::dir::graphic() / u8"anime17.bmp", 0, 0, true);
     gsel(4);
-    pos(0, 0);
     gmode(0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
     am = 0;
     for (int cnt = 0; cnt < 75; ++cnt)
@@ -1052,16 +1063,14 @@ void MeteorAnimation::do_play()
     }
     for (int cnt = 0;; ++cnt)
     {
-        if (cnt < 4)
+        int x = 0, y = 0;
+        if (cnt >= 4)
         {
-            pos(0, 0);
-        }
-        else
-        {
-            pos(5 - rnd(10), 5 - rnd(10));
+            x = 5 - rnd(10);
+            y = 5 - rnd(10);
         }
         gmode(0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, x, y);
         int af = 0;
         for (int cnt = 0, cnt_end = (am); cnt < cnt_end; ++cnt)
         {
@@ -1078,13 +1087,25 @@ void MeteorAnimation::do_play()
             }
             if (ap(cnt) >= 10)
             {
-                pos(ax(cnt) - 48, ay(cnt));
-                gcopy(7, (ap(cnt) - 10) * 192, 96, 192, 96);
+                gcopy(
+                    7,
+                    (ap(cnt) - 10) * 192,
+                    96,
+                    192,
+                    96,
+                    ax(cnt) - 48,
+                    ay(cnt));
             }
             if (ap(cnt) < 16)
             {
-                pos(ax(cnt), ay(cnt));
-                gcopy(7, clamp((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
+                gcopy(
+                    7,
+                    clamp((ap(cnt) - 8), 0, 8) * 96,
+                    0,
+                    96,
+                    96,
+                    ax(cnt),
+                    ay(cnt));
             }
             ++ap(cnt);
         }
@@ -1102,13 +1123,12 @@ void MeteorAnimation::do_play()
         {
             break;
         }
-        await(Config::instance().animewait * 3);
+        await(Config::instance().animation_wait * 3);
         redraw();
     }
-    await(Config::instance().animewait);
-    pos(0, 0);
+    await(Config::instance().animation_wait);
     gmode(0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
     redraw();
 }
@@ -1124,13 +1144,12 @@ void RagnarokAnimation::do_play()
 
     // Load image.
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime16.bmp");
+    picload(filesystem::dir::graphic() / u8"anime16.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);
-    pos(0, 0);
     gmode(0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
 
     for (int i = 0; i < TODO; ++i)
@@ -1143,8 +1162,7 @@ void RagnarokAnimation::do_play()
     for (int t = 0;; ++t)
     {
         gmode(0);
-        pos(5 - rnd(10), 5 - rnd(10));
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 5 - rnd(10), 5 - rnd(10));
         gmode(2);
 
         bool did_draw{};
@@ -1157,10 +1175,8 @@ void RagnarokAnimation::do_play()
             did_draw = true;
             if (0 <= ap(i) && ap(i) < 10)
             {
-                pos(ax(i), ay(i));
-                gcopy(7, ap(i) * 96, 96, 96, 96);
-                pos(ax(i), ay(i) - 96);
-                gcopy(7, ap(i) * 96, 0, 96, 96);
+                gcopy(7, ap(i) * 96, 96, 96, 96, ax(i), ay(i));
+                gcopy(7, ap(i) * 96, 0, 96, 96, ax(i), ay(i) - 96);
             }
             if (ap(i) < 0)
             {
@@ -1180,14 +1196,13 @@ void RagnarokAnimation::do_play()
         {
             break;
         }
-        await(Config::instance().animewait * 3);
+        await(Config::instance().animation_wait * 3);
         redraw();
     }
 
-    await(Config::instance().animewait);
-    pos(0, 0);
+    await(Config::instance().animation_wait);
     gmode(0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
     redraw();
 }

@@ -13,6 +13,8 @@
 #include "random.hpp"
 #include "variables.hpp"
 
+
+
 namespace elona
 {
 
@@ -21,18 +23,18 @@ int i_at_m79 = 0;
 void initialize_mef()
 {
     DIM3(mefsubref, 6, 6);
-    mefsubref(0, 1) = 144;
-    mefsubref(1, 1) = 624;
-    mefsubref(0, 2) = 272;
-    mefsubref(1, 2) = 624;
+    mefsubref(0, 1) = 0;
+    mefsubref(1, 1) = 0;
+    mefsubref(0, 2) = 4;
+    mefsubref(1, 2) = 0;
     mefsubref(2, 2) = 1;
-    mefsubref(0, 3) = 304;
-    mefsubref(1, 3) = 624;
+    mefsubref(0, 3) = 5;
+    mefsubref(1, 3) = 0;
     mefsubref(2, 3) = 1;
-    mefsubref(0, 4) = 368;
-    mefsubref(1, 4) = 624;
-    mefsubref(0, 5) = 464;
-    mefsubref(1, 5) = 624;
+    mefsubref(0, 4) = 7;
+    mefsubref(1, 4) = 0;
+    mefsubref(0, 5) = 10;
+    mefsubref(1, 5) = 0;
 }
 
 void mef_delete(int mef_index)
@@ -79,7 +81,7 @@ void mef_add(
     p_at_m79 = cell_data.at(pos_x, pos_y).chip_id_actual;
     if (type == 5)
     {
-        if (chipm(0, p_at_m79) == 3)
+        if (chip_data[p_at_m79].kind == 3)
         {
             return;
         }
@@ -164,7 +166,7 @@ void mef_update()
                             f = 0;
                             continue;
                         }
-                        if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+                        if (chip_data.for_cell(x, y).effect & 4)
                         {
                             cell_data.at(x, y).chip_id_actual = 37;
                             cnt = 0 - 1;

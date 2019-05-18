@@ -56,15 +56,14 @@ protected:
 
         snd("core.pop2");
 
-        gmode(6, 80);
+        gmode(2, 80);
         window(_x + 12, _y + 12, _width, _height, true); // Shadow
         gmode(2);
 
         window(_x + 8, _y + 8, _width, _height, false);
 
         font(_font_size);
-        pos(_x + 40, _y + _font_size + 36);
-        mes(_message);
+        mes(_x + 40, _y + _font_size + 36, _message);
 
         snail::Input::instance().clear_pressed_keys_and_modifiers();
         redraw();

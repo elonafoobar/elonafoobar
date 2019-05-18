@@ -584,7 +584,7 @@ int show_random_event_window(
 {
     assert(!choices.empty());
 
-    if (Config::instance().skiprandevents && choices.size() == 1)
+    if (Config::instance().skip_random_event_popups && choices.size() == 1)
     {
         // Skip this event.
         snd("core.pop4");
@@ -621,10 +621,8 @@ int show_random_event_window(
     {
         chatesc = -1;
     }
-    gsel(7);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / (background_filename + u8".bmp"), 0);
+    asset_load(background_filename);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
@@ -647,8 +645,7 @@ int show_random_event_window(
         wx = (windoww - dx) / 2 + inf_screenx;
         wy = winposy(dy);
         gmode(0);
-        pos(wx + 12, wy + 6);
-        gcopy(7, 0, 0, tx, ty);
+        gcopy(7, 0, 0, tx, ty, wx + 12, wy + 6);
         gmode(2);
         boxl(wx + 12, wy + 6, tx, ty, {240, 230, 220});
         font(14 - en * 2);
@@ -658,10 +655,7 @@ int show_random_event_window(
             wy + vfix + 16,
             {245, 235, 225},
             {30, 20, 10});
-        color(30, 30, 30);
-        pos(wx + 24, wy + ty + vfix + 20);
-        mes(buff);
-        color(0, 0, 0);
+        mes(wx + 24, wy + ty + vfix + 20, buff, {30, 30, 30});
         keyrange = 0;
         cs_listbk();
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

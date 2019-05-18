@@ -42,6 +42,9 @@ void _initialize_iterable_dbs(lua::DataTable& data)
 
     the_class_db.initialize(data);
     the_class_db.load_all();
+
+    the_god_db.initialize(data);
+    the_god_db.load_all();
 }
 
 
@@ -69,6 +72,19 @@ void _initialize_chip_dbs(lua::DataTable& data)
         the_portrait_db.initialize(data);
         the_portrait_db.load_all();
         initialize_portraits(the_portrait_db);
+    }
+
+    {
+        MapChipDB the_map_chip_db;
+        the_map_chip_db.initialize(data);
+        the_map_chip_db.load_all();
+        initialize_map_chips(the_map_chip_db);
+    }
+
+    {
+        the_asset_db.initialize(data);
+        the_asset_db.load_all();
+        init_assets();
     }
 }
 

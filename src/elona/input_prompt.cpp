@@ -20,6 +20,8 @@ int Prompt::query(int x, int y, int width)
     cs = 0;
     cs_bk = -1;
 
+    snail::Input::instance().clear_pressed_keys_and_modifiers();
+
     _replace_null_keys_from_key_select();
     _draw_keys_and_background(x, y, width);
 
@@ -105,9 +107,13 @@ void Prompt::_draw_keys_and_background(int x, int y, int width)
 void Prompt::_draw_main_frame(int width)
 {
     window2(sx + 8, sy + 8, width - 16, _promptmax * 20 + 42 - 16, 0, 0);
-    pos(sx - 16, sy);
-    gcopy(3, 64, 288, 50, 32);
+    draw("radar_deco", sx - 16, sy);
     font(14 - en * 2);
+}
+
+static void _display_prompt_key(int x, int y, int nth)
+{
+    gcopy(3, nth * 24 + 624, 30, 24, 18, x, y);
 }
 
 void Prompt::_draw_entries()
@@ -117,8 +123,7 @@ void Prompt::_draw_entries()
     int cnt = 0;
     for (const auto& entry : _entries)
     {
-        pos(sx + 30, cnt * 20 + sy + 22);
-        gcopy(3, cnt * 24 + 624, 30, 24, 18);
+        _display_prompt_key(sx + 30, cnt * 20 + sy + 22, cnt);
 
         auto text = entry.locale_key;
         if (auto text_opt =
@@ -167,16 +172,14 @@ void PromptWithNumber::_draw_window()
 {
     window2(dx(1) + sx + 20, dy, dx - 40, 36, 0, 2);
     draw("label_input", dx(1) + sx + dx / 2 - 56, dy - 32);
-    pos(dx(1) + sx + 28, dy + 4);
-    gcopy(3, 312, 336, 24, 24);
-    pos(dx(1) + sx + dx - 51, dy + 4);
-    gcopy(3, 336, 336, 24, 24);
+    draw("arrow_left", dx(1) + sx + 28, dy + 4);
+    draw("arrow_right", dx(1) + sx + dx - 51, dy + 4);
     const auto inputlog2 =
         ""s + elona::stoi(inputlog(0)) + u8"("s + _max + u8")"s;
-    pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
-    color(255, 255, 255);
-    mes(inputlog2);
-    color(0, 0, 0);
+    mes(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8,
+        dy + 11,
+        inputlog2,
+        {255, 255, 255});
     inputlog = ""s + _number;
 }
 

@@ -28,7 +28,7 @@ int fish_select_at_random()
 {
     const auto bait = inv[cdata.player().continuous_action.item].param4;
     WeightedRandomSampler<int> sampler;
-    for (const auto& fish : the_fish_db)
+    for (const auto& fish : the_fish_db.values())
     {
         if (fish.no_generate)
         {
@@ -40,7 +40,7 @@ int fish_select_at_random()
         {
             continue;
         }
-        sampler.add(fish.id, fish.rarity);
+        sampler.add(fish.legacy_id, fish.rarity);
     }
 
     return sampler.get().get_value_or(1);

@@ -4,12 +4,13 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "data/types/type_asset.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "lua_env/lua_console.hpp"
+#include "lua_env/console.hpp"
 #include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -37,6 +38,8 @@ int cs_posbk_y;
 int cs_posbk_w;
 int cs_posbk_h;
 
+constexpr int inf_clockw = 120;
+
 
 
 void update_screen_hud()
@@ -53,13 +56,10 @@ void update_screen_hud()
         {
             sx = 192;
         }
-        pos(cnt * 192, inf_bary);
-        gcopy(3, 0, 464 - inf_barh, sx, inf_barh);
-        pos(cnt * 192, inf_msgy);
-        gcopy(3, 496, 528, sx, inf_msgh);
+        draw_bar_vert("hud_bar", cnt * 192, inf_bary, sx, inf_barh, inf_barh);
+        draw_region("message_window", cnt * 192, inf_msgy, sx, inf_msgh);
     }
-    pos(0, inf_msgy);
-    gcopy(3, 120, 504, inf_msgx, inf_verh);
+    draw_region("hud_minimap", 0, inf_msgy, inf_msgx, inf_verh);
     draw("map_name_icon", inf_radarw + 6, inf_bary);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -72,21 +72,24 @@ void update_screen_hud()
         {
             sx = 14;
         }
-        pos(inf_radarw + cnt * 47 + 148 + sx, inf_bary + 1);
-        gcopy(3, cnt * 16, 376, 16, 16);
+        draw_indexed(
+            "attribute_icon",
+            inf_radarw + cnt * 47 + 148 + sx,
+            inf_bary + 1,
+            cnt);
     }
     font(12 + sizefix - en * 2);
-    pos(inf_radarw + 24, inf_bary + 3 + vfix - en);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
-        mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
+        mes(inf_radarw + 24,
+            inf_bary + 3 + vfix - en,
+            cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
     }
     else
     {
-        mes(cnven(mdatan(0)));
+        mes(inf_radarw + 24, inf_bary + 3 + vfix - en, cnven(mdatan(0)));
     }
-    pos(inf_radarw + 114, inf_bary + 3 + vfix - en);
-    mes(maplevel());
+    mes(inf_radarw + 114, inf_bary + 3 + vfix - en, maplevel());
 }
 
 
@@ -194,10 +197,16 @@ void render_weather_effect_snow()
         auto&& particle = particles[i];
         if (i % 30 == 0)
         {
-            gmode(4, 100 + i % 150);
+            gmode(2, 100 + i % 150);
         }
-        pos(particle.x, particle.y);
-        gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
+        draw_indexed_region(
+            "weather_particle",
+            particle.x,
+            particle.y,
+            particle.x % 2,
+            i % 6,
+            1,
+            1);
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
@@ -233,10 +242,16 @@ void render_weather_effect_etherwind()
         auto&& particle = particles[i];
         if (i % 20 == 0)
         {
-            gmode(4, 100 + i % 150);
+            gmode(2, 100 + i % 150);
         }
-        pos(particle.x, particle.y);
-        gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
+        draw_indexed_region(
+            "weather_particle",
+            particle.x,
+            particle.y,
+            2 + particle.x % 2,
+            i % 6,
+            1,
+            1);
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
@@ -259,7 +274,7 @@ void render_weather_effect_etherwind()
 
 void render_weather_effect()
 {
-    if (!Config::instance().env)
+    if (!Config::instance().weather_effect)
         return;
     if (map_data.indoors_flag != 2)
         return;
@@ -283,8 +298,14 @@ void draw_minimap_pixel(int x, int y)
 {
     const auto x2 = 120 * x / map_data.width;
     const auto y2 = 84 * y / map_data.height;
-    pos(inf_radarx + x2, inf_radary + y2);
-    gcopy(3, 688 + x2, 528 + y2, raderw, raderh);
+    draw_region(
+        "minimap_scratch",
+        inf_radarx + x2,
+        inf_radary + y2,
+        x2,
+        y2,
+        raderw,
+        raderh);
 }
 
 
@@ -323,7 +344,7 @@ void highlight_characters_in_pet_arena()
                 color);
             if (cc.index == camera)
             {
-                gmode(4, 120);
+                gmode(2, 120);
                 draw("camera", x + 36, y + 32);
                 gmode(2);
             }
@@ -371,7 +392,7 @@ void _render_hp_or_mp_bar(
     int max,
     int x,
     int y,
-    int bar_offset_x,
+    const std::string& bar_id,
     bool show_digit = false)
 {
     draw("hp_bar_frame", x, y);
@@ -379,8 +400,7 @@ void _render_hp_or_mp_bar(
     if (value > 0)
     {
         const auto width = std::min(value * 84 / max, 100);
-        pos(x + 16, y + 5);
-        gcopy(3, bar_offset_x - width, 520, width, 6);
+        draw_bar(bar_id, x + 16, y + 5, width, 6, width);
     }
 
     if (show_digit)
@@ -393,14 +413,14 @@ void _render_hp_or_mp_bar(
 
 void render_hp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
-    _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, 412, show_digit);
+    _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, "hud_hp_bar", show_digit);
 }
 
 
 
 void render_mp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
-    _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, 532, show_digit);
+    _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, "hud_mp_bar", show_digit);
 }
 
 
@@ -414,45 +434,38 @@ void render_basic_attributes_and_pv_dv()
         if (i < 8)
         {
             // Basic attributes except for Speed
-            if (cdata.player().attr_adjs[i] < 0)
-            {
-                color(200, 0, 0);
-            }
-            else
-            {
-                color(0, 0, 0);
-            }
-            pos(x, y);
-            gcopy(3, 0, 440, 28, 16);
-            mes(sdata(10 + i, 0));
-            color(0, 0, 0);
+            draw_region("attributes_bar", x, y, 28);
+            const auto text_color = cdata.player().attr_adjs[i] < 0
+                ? snail::Color{200, 0, 0}
+                : snail::Color{0, 0, 0};
+            mes(x, y, std::to_string(sdata(10 + i, 0)), text_color);
         }
         else if (i == 8)
         {
             // Speed
+            draw_region("attributes_bar", x + 8, y, 34);
+            snail::Color text_color{0, 0, 0};
             if (gspdorg > gspd)
             {
-                color(200, 0, 0);
+                text_color = snail::Color{200, 0, 0};
             }
             else if (gspdorg < gspd)
             {
-                color(0, 120, 0);
+                text_color = snail::Color{0, 120, 0};
             }
             else
             {
-                color(0, 0, 0);
+                text_color = snail::Color{0, 0, 0};
             }
-            pos(x + 8, y);
-            gcopy(3, 0, 440, 34, 16);
-            mes(gspd);
-            color(0, 0, 0);
+            mes(x + 8, y, std::to_string(gspd), text_color);
         }
         else
         {
             // PV/DV
-            pos(x + 14, y);
-            gcopy(3, 0, 440, 64, 16);
-            mes(""s + cdata.player().dv + u8"/"s + cdata.player().pv);
+            draw_region("attributes_bar", x + 14, y, 64);
+            mes(x + 14,
+                y,
+                ""s + cdata.player().dv + u8"/"s + cdata.player().pv);
         }
     }
 }
@@ -506,9 +519,8 @@ void render_character_level()
 
 void render_date_label()
 {
-    pos(inf_clockx, inf_clocky);
-    gcopy(3, 448, 408, inf_clockw, inf_clockh);
-    draw("date_label_frame", inf_clockx + 78, inf_clocky + 8);
+    draw("clock", 0, inf_clocky);
+    draw("date_label_frame", 78, inf_clocky + 8);
 }
 
 
@@ -524,16 +536,11 @@ void render_buffs()
             break;
 
         // Icon
-        pos(x, y);
-        gcopy(5, buff.id * 32, 1120, 32, 32);
+        draw_indexed("buff_icon", x, y, buff.id);
         // Turns
-        pos(x + 3, y + 19);
-        mes(buff.turns);
+        mes(x + 3, y + 19, std::to_string(buff.turns));
         // Turns
-        color(255, 255, 255);
-        pos(x + 2, y + 18);
-        mes(buff.turns);
-        color(0, 0, 0);
+        mes(x + 2, y + 18, std::to_string(buff.turns), {255, 255, 255});
 
         y -= 32;
     }
@@ -560,9 +567,10 @@ void render_clock()
         info.height,
         game_data.date.minute * 6);
 
-    pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
-        game_data.date.day);
+    mes(inf_clockw - 3,
+        inf_clocky + 17 + vfix,
+        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
+            game_data.date.day);
     bmes(
         i18n::s.get_enum("core.locale.ui.time", game_data.date.hour / 4) +
             u8" "s +
@@ -656,13 +664,9 @@ int render_one_status_ailment(
     if (!do_render(value))
         return y;
 
+    draw_region("status_ailment_bar", x, y, 50 + en * 30);
     const auto text_color = get_color(value);
-    color(text_color.r, text_color.g, text_color.b);
-    pos(x, y);
-    gcopy(3, 0, 416, 50 + en * 30, 15);
-    pos(x + 6, y + vfix + 1);
-    mes(get_text(value));
-    color(0, 0, 0);
+    mes(x + 6, y + vfix + 1, get_text(value), text_color);
 
     return y - 20;
 }
@@ -991,7 +995,7 @@ void render_status_ailments()
 
 void render_autoturn_animation()
 {
-    if (racount == 0 && Config::instance().animewait != 0)
+    if (racount == 0 && Config::instance().animation_wait != 0)
     {
         load_continuous_action_animation();
     }
@@ -1007,7 +1011,7 @@ void render_autoturn_animation()
 
     if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
-        if (rowactre == 0 && Config::instance().animewait != 0)
+        if (rowactre == 0 && Config::instance().animation_wait != 0)
         {
             render_fishing_animation();
         }
@@ -1034,7 +1038,7 @@ void render_autoturn_animation()
              ContinuousAction::Type::fish &&
          rowactre != 0))
     {
-        if (Config::instance().animewait != 0)
+        if (Config::instance().animation_wait != 0)
         {
             window2(sx, sy - 104, 148, 101, 0, 5);
             if (racount % 15 == 0)
@@ -1042,7 +1046,6 @@ void render_autoturn_animation()
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     gmode(0);
-                    pos(sx + 2, sy - 102);
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::dig_wall)
                     {
@@ -1050,8 +1053,9 @@ void render_autoturn_animation()
                         {
                             snd("core.dig1");
                         }
-                        gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 2);
+                        gcopy(
+                            9, cnt / 2 % 5 * 144, 0, 144, 96, sx + 2, sy - 102);
+                        await(Config::instance().animation_wait * 2);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::fish)
@@ -1063,8 +1067,9 @@ void render_autoturn_animation()
                                 snd("core.water");
                             }
                         }
-                        gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 2.5);
+                        gcopy(
+                            9, cnt / 3 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
+                        await(Config::instance().animation_wait * 2.5);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::search_material)
@@ -1073,8 +1078,9 @@ void render_autoturn_animation()
                         {
                             snd("core.bush1");
                         }
-                        gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 2.75);
+                        gcopy(
+                            9, cnt / 2 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
+                        await(Config::instance().animation_wait * 2.75);
                     }
                     if (cdata.player().continuous_action.type ==
                         ContinuousAction::Type::dig_ground)
@@ -1083,15 +1089,16 @@ void render_autoturn_animation()
                         {
                             snd("core.dig2");
                         }
-                        gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
-                        await(Config::instance().animewait * 3);
+                        gcopy(
+                            9, cnt / 2 % 4 * 144, 0, 144, 96, sx + 2, sy - 102);
+                        await(Config::instance().animation_wait * 3);
                     }
                     redraw();
                 }
             }
             else
             {
-                gcopy(9, 0, 0, 144, 96);
+                gcopy(9, 0, 0, 144, 96, sx + 2, sy - 102);
             }
         }
         ++racount;
@@ -1123,6 +1130,8 @@ int evtiles = 0;
 int evscrh = 0;
 int evscrw = 0;
 
+
+
 Position gmes(
     const std::string& text,
     int x_base,
@@ -1134,42 +1143,35 @@ Position gmes(
     int font_size = 14;
     font(font_size - en * 2);
 
-    const auto message = text + u8"$end";
     int x = x_base;
     int y = y_base;
     size_t pos = 0;
     snail::Color text_color = text_color_base;
 
-    while (message.find(u8"$end", pos) != pos)
+    while (pos < text.size())
     {
         bool wait_to_break_line = false;
-        uint8_t first = message[pos];
-        size_t byte;
-        if (first <= 0x7F)
-            byte = 1;
-        else if (first >= 0xc2 && first <= 0xdf)
-            byte = 2;
-        else if (first >= 0xe0 && first <= 0xef)
-            byte = 3;
-        else if (first >= 0xf0 && first <= 0xf7)
-            byte = 4;
-        else if (first >= 0xf8 && first <= 0xfb)
-            byte = 5;
-        else if (first >= 0xfc && first <= 0xfd)
-            byte = 6;
-        else
-            byte = 1;
-        std::string m_ = strmid(message, pos, byte);
+        const auto byte = strutil::byte_count(text[pos]);
+        std::string one_char = text.substr(pos, byte);
         pos += byte;
-        if (m_ == u8"。" || m_ == u8"、" || m_ == u8"」" || m_ == u8"』" ||
-            m_ == u8"！" || m_ == u8"？" || m_ == u8"…")
+
+        if (one_char == u8"。" || one_char == u8"、" || one_char == u8"」" ||
+            one_char == u8"』" || one_char == u8"！" || one_char == u8"？" ||
+            one_char == u8"…")
         {
             wait_to_break_line = true;
         }
-        else if (m_ == u8"<")
+        else if (one_char == u8"<")
         {
-            const auto tag = strmid(message, pos, instr(message, pos, u8">"));
-            pos += instr(message, pos, u8">") + 1;
+            const auto closing_tag_pos = text.find(u8">", pos);
+            if (closing_tag_pos == std::string::npos)
+            {
+                ELONA_ERROR("text") << "Invalid notation: missing '>'";
+                // Stop processing, return immediately.
+                return {x_base, y + font_size + 4};
+            }
+            const auto tag = text.substr(pos, closing_tag_pos - pos);
+            pos = closing_tag_pos + 1;
             if (tag == u8"emp1")
             {
                 font(font_size - en * 2, snail::Font::Style::underline);
@@ -1220,11 +1222,13 @@ Position gmes(
             }
             continue;
         }
-        if (m_ == u8"^")
+        else if (one_char == u8"^")
         {
-            m_ = strmid(message, pos, 1);
+            // Escape
+            one_char = text.substr(pos, 1);
             ++pos;
         }
+
         if (!wait_to_break_line)
         {
             if (x >= x_base + width)
@@ -1235,15 +1239,9 @@ Position gmes(
         }
         if (shadow)
         {
-            color(180, 160, 140);
-            elona::pos(x + 1, y + 1);
-            mes(m_);
-            color(0, 0, 0);
+            mes(x + 1, y + 1, one_char, {180, 160, 140});
         }
-        color(text_color.r, text_color.g, text_color.b);
-        elona::pos(x, y);
-        mes(m_);
-        color(0, 0, 0);
+        mes(x, y, one_char, text_color);
         x += font_size / 2 * (byte == 1 ? 1 : 2);
     }
 
@@ -1254,12 +1252,11 @@ Position gmes(
 
 void initialize_ui_constants()
 {
-    inf_clockarrowx = inf_clockx + 62;
+    inf_clockarrowx = 62;
     inf_clockarrowy = inf_clocky + 48;
     inf_barh = 16;
     inf_msgh = 72;
     inf_verh = inf_barh + inf_msgh;
-    inf_msgline = 4;
     inf_radarx = 1;
     inf_radarw = 136;
     inf_screenw = windoww / inf_tiles + (windoww % inf_tiles != 0);
@@ -1272,28 +1269,16 @@ void initialize_ui_constants()
     {
         ++inf_screenh;
     }
-    if (inf_vertype == 0)
+    inf_screeny = 0;
+    if ((windowh - inf_verh) % inf_tiles != 0)
     {
-        inf_ver = 0;
-        inf_bary = 0;
-        inf_msgy = inf_ver + inf_barh;
-        inf_screeny = inf_verh;
-        inf_clocky = windowh - inf_clockh;
-        inf_radary = 1;
+        inf_screeny = 0 - inf_tiles + (windowh - inf_verh) % inf_tiles;
     }
-    else
-    {
-        inf_screeny = 0;
-        if ((windowh - inf_verh) % inf_tiles != 0)
-        {
-            inf_screeny = 0 - inf_tiles + (windowh - inf_verh) % inf_tiles;
-        }
-        inf_ver = windowh - inf_verh;
-        inf_bary = windowh - inf_barh;
-        inf_msgy = inf_ver;
-        inf_clocky = 0;
-        inf_radary = windowh - 86;
-    }
+    inf_ver = windowh - inf_verh;
+    inf_bary = windowh - inf_barh;
+    inf_msgy = inf_ver;
+    inf_clocky = 0;
+    inf_radary = windowh - 86;
     scposy = inf_screenh / 2 - 1;
     inf_hpx = (windoww - 84) / 2 - 100;
     inf_hpy = inf_ver - 12;
@@ -1301,8 +1286,7 @@ void initialize_ui_constants()
     inf_mpy = inf_ver - 12;
     inf_msgx = inf_radarw;
     inf_msgspace = 15;
-    int inf_maxmsglen_i =
-        std::max((windoww - inf_msgx - 28) / inf_mesfont * 2 - 1, 0);
+    int inf_maxmsglen_i = std::max((windoww - inf_msgx - 28) / 14 * 2 - 1, 0);
     inf_maxmsglen = static_cast<size_t>(inf_maxmsglen_i);
     inf_maxlog = (inf_msgy - 100) / inf_msgspace + 3;
     inf_very = windowh - inf_verh;
@@ -1360,20 +1344,18 @@ void update_screen()
 void screen_txtadv()
 {
     gmode(0);
-    pos(0, 0);
     if (txtadvscreenupdate == 1)
     {
-        gcopy(4, 0, 0, windoww, windowh - inf_verh);
+        gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
     }
     else
     {
-        gcopy(4, 0, 0, windoww, 100);
+        gcopy(4, 0, 0, windoww, 100, 0, 0);
     }
     gmode(2);
     for (int i = 0; i < 4; ++i)
     {
         font(13 - en * 2);
-        color(250, 250, 250);
         if (i == 0)
         {
             sx = 265;
@@ -1389,8 +1371,7 @@ void screen_txtadv()
             sx = 220;
             sy = 10 + i * 14;
         }
-        pos(sx, sy);
-        mes(atxinfon(i));
+        mes(sx, sy, atxinfon(i), {250, 250, 250});
     }
     txtadvscreenupdate = 1;
 }
@@ -1459,7 +1440,7 @@ void render_hud()
             {
                 if (!cdata.player().continuous_action)
                 {
-                    gmode(4, 150);
+                    gmode(2, 150);
                 }
             }
         }
@@ -1472,7 +1453,7 @@ void render_hud()
     render_date_label();
 
     // Buffs
-    gmode(4, 180);
+    gmode(2, 180);
     render_buffs();
     gmode(2);
 
@@ -1483,11 +1464,12 @@ void render_hud()
     render_skill_trackers();
 
     // HP bars(pets)
-    if (Config::instance().hp_bar != "hide")
+    if (Config::instance().hp_bar_position != "hide")
     {
         show_hp_bar(
-            Config::instance().hp_bar == "left" ? HPBarSide::left_side
-                                                : HPBarSide::right_side,
+            Config::instance().hp_bar_position == "left"
+                ? HPBarSide::left_side
+                : HPBarSide::right_side,
             inf_clocky);
     }
 
@@ -1503,28 +1485,27 @@ void render_hud()
 void load_continuous_action_animation()
 {
     gsel(9);
-    pos(0, 0);
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_wall)
     {
-        picload(filesystem::dir::graphic() / u8"anime1.bmp");
+        picload(filesystem::dir::graphic() / u8"anime1.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre)
         {
-            picload(filesystem::dir::graphic() / u8"anime2.bmp");
+            picload(filesystem::dir::graphic() / u8"anime2.bmp", 0, 0, true);
         }
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::search_material)
     {
-        picload(filesystem::dir::graphic() / u8"anime3.bmp");
+        picload(filesystem::dir::graphic() / u8"anime3.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_ground)
     {
-        picload(filesystem::dir::graphic() / u8"anime4.bmp");
+        picload(filesystem::dir::graphic() / u8"anime4.bmp", 0, 0, true);
     }
     gsel(0);
 }
@@ -1539,7 +1520,7 @@ void ui_draw_caption(const std::string& text)
     msgx = 20;
     msgy = 30;
     sx = 760;
-    sx = text.size() * 8 + 45;
+    sx = strlen_u(text) * 8 + 45;
     if (sx > 760)
     {
         sx = 760;
@@ -1555,17 +1536,12 @@ void ui_draw_caption(const std::string& text)
         {
             ap = 128;
         }
-        pos(cnt * 128 + msgx, msgy);
-        gcopy(3, 672, 477, ap, 3);
-        pos(cnt * 128 + msgx, msgy + 2);
-        gcopy(3, 672, 480, ap, 22);
-        pos(cnt * 128 + msgx, msgy + 22);
-        gcopy(3, 672, 477, ap, 2);
+
+        draw_region("caption", cnt * 128 + msgx, msgy, 0, 0, ap, 3);
+        draw_region("caption", cnt * 128 + msgx, msgy + 2, 0, 3, ap, 22);
+        draw_region("caption", cnt * 128 + msgx, msgy + 22, 0, 0, ap, 2);
     }
-    pos(msgx + 18, msgy + vfix + 4);
-    color(245, 245, 245);
-    mes(text);
-    color(0, 0, 0);
+    mes(msgx + 18, msgy + vfix + 4, text, {245, 245, 245});
     gmode(2);
 
     // __s__
@@ -1607,7 +1583,7 @@ void update_scrolling_info()
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (Config::instance().alwayscenter)
+    if (Config::instance().always_center)
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -1677,11 +1653,11 @@ void update_slight()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = 1 + (Config::instance().scroll == 0);
+    ly = Config::instance().scroll ? 1 : 2;
     for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        lx = 1 + (Config::instance().scroll == 0);
+        lx = Config::instance().scroll ? 1 : 2;
         if (sy < 0 || sy >= map_data.height)
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
@@ -1789,8 +1765,14 @@ void ui_render_non_hud()
 
     if (raderx != -1)
     {
-        pos(inf_radarx + raderx, inf_radary + radery);
-        gcopy(3, 688 + raderx, 528 + radery, 6, 6);
+        draw_region(
+            "minimap_scratch",
+            inf_radarx + raderx,
+            inf_radary + radery,
+            raderx,
+            radery,
+            6,
+            6);
     }
 
     render_pc_position_in_minimap();
@@ -1819,24 +1801,22 @@ void ui_scroll_screen()
     {
         return;
     }
-    scrollp = Config::instance().walkwait;
+    scrollp = Config::instance().walk_wait;
     if (map_data.type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
         keybd_wait = 1000;
-        if (chipm(
-                0,
-                cell_data
-                    .at(cdata.player().position.x, cdata.player().position.y)
-                    .chip_id_actual) == 4)
+        if (chip_data
+                .for_cell(cdata.player().position.x, cdata.player().position.y)
+                .kind == 4)
         {
             scrollp = 9;
         }
     }
-    else if (keybd_wait > Config::instance().startrun)
+    else if (keybd_wait > Config::instance().start_run_wait)
     {
         scrollp = 3;
-        if (Config::instance().runscroll == 0)
+        if (!Config::instance().scroll_when_run)
         {
             return;
         }
@@ -1866,15 +1846,13 @@ void ui_scroll_screen()
         syfix = (cdata.player().next_position.y - cdata.player().position.y) *
             cnt * inf_tiles / scrollp * -1;
         gsel(4);
-        pos(0, 0);
         gmode(0);
-        gcopy(0, 0, windowh - inf_verh, windoww, inf_tiles);
+        gcopy(0, 0, windowh - inf_verh, windoww, inf_tiles, 0, 0);
         gsel(0);
         gmode(2);
         ui_render_non_hud();
         gmode(0);
-        pos(0, windowh - inf_verh);
-        gcopy(4, 0, 0, windoww, inf_tiles);
+        gcopy(4, 0, 0, windoww, inf_tiles, 0, windowh - inf_verh);
         gmode(2);
         render_hud();
         gmode(2);
@@ -1888,6 +1866,11 @@ void ui_scroll_screen()
 
 void ui_initialize_minimap()
 {
+    raderx = -1;
+    radery = -1;
+    raderw = 120 / map_data.width + 2;
+    raderh = 84 / map_data.height + 2;
+
     gsel(3);
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
     {
@@ -1897,15 +1880,16 @@ void ui_initialize_minimap()
             sx = cnt;
             sy(1) = 84 * sy / map_data.height;
             sx(1) = 120 * sx / map_data.width;
-            pos(688 + sx(1), 528 + sy(1));
+            const auto rect = draw_get_rect(chip_data.for_cell(sx, sy).key);
             gcopy(
-                2,
-                cell_data.at(sx, sy).chip_id_actual % 33 * inf_tiles + sx % 16,
-                cell_data.at(sx, sy).chip_id_actual / 33 * inf_tiles + sy % 12,
+                rect->buffer,
+                rect->x + sx % 16,
+                rect->y + sy % 12,
                 raderw,
-                raderh);
-            pos(688 + sx(1), 528 + sy(1));
-            if (chipm(7, cell_data.at(sx, sy).chip_id_actual) & 4)
+                raderh,
+                688 + sx(1),
+                528 + sy(1));
+            if (chip_data.for_cell(sx, sy).effect & 4)
             {
                 boxf(688 + sx(1), 528 + sy(1), raderw, raderh, {0, 0, 0, 100});
             }
@@ -1926,8 +1910,7 @@ void fade_out()
 {
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, 0, 0, windoww, windowh);
+    gcopy(0, 0, 0, windoww, windowh, 0, 0);
     gsel(0);
     gmode(0);
     for (int cnt = 0; cnt < 50; ++cnt)
@@ -1938,10 +1921,9 @@ void fade_out()
     }
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 10 + cnt * 5);
+        gmode(2, 10 + cnt * 5);
         await(20);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         redraw();
     }
     gmode(2);
@@ -1965,10 +1947,9 @@ void animation_fade_in()
 {
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 10 + cnt * 5);
+        gmode(2, 10 + cnt * 5);
         await(20);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         redraw();
     }
     gmode(2);
@@ -2009,7 +1990,6 @@ void event_7_modify_screen()
                 dx = map_data.width;
             }
             ap = cell_data.at(dx, dy).chip_id_actual;
-            pos(x * evtiles, y * evtiles);
             gmode(0);
             gcopy_c(
                 2,
@@ -2017,6 +1997,8 @@ void event_7_modify_screen()
                 ap / 33 * inf_tiles,
                 inf_tiles,
                 inf_tiles,
+                x * evtiles,
+                y * evtiles,
                 evtiles,
                 evtiles);
         }
@@ -2047,18 +2029,18 @@ void render_fishing_animation()
             sy +=
                 (cdata.player().position.y - fishy) * 8 * (fishanime(1) - 15) +
                 fishanime(1);
-            pos(sx, sy - 44);
-            gcopy(9, 144 + fishanime(1) / 2 % 2 * 48, 0, 48, 48);
+            gcopy(9, 144 + fishanime(1) / 2 % 2 * 48, 0, 48, 48, sx, sy - 44);
         }
         else
         {
-            pos(sx, sy - fishanime(1) * 3 + 14);
             gcopy(
                 9,
                 144 + fishanime(1) % 2 * 48,
                 0,
                 48,
-                clamp(fishanime(1) * 5, 1, 48));
+                clamp(fishanime(1) * 5, 1, 48),
+                sx,
+                sy - fishanime(1) * 3 + 14);
         }
         return;
     }
@@ -2089,8 +2071,7 @@ void render_fishing_animation()
     {
         ap = 10;
     }
-    pos(sx, sy - 5 + ap);
-    gcopy(9, 116, 18, 14, 10 - ap);
+    gcopy(9, 116, 18, 14, 10 - ap, sx, sy - 5 + ap);
     sx = (cdata.player().position.x - scx) * inf_tiles + inf_screenx;
     sy = (cdata.player().position.y - scy) * inf_tiles + inf_screeny;
     gmode(2);
@@ -2098,17 +2079,15 @@ void render_fishing_animation()
     {
         sx2 = inf_tiles / 2 + rnd(3) - 1;
         sy2 = inf_tiles / 2 + 12;
-        pos(sx + sx2 + 1, sy + sy2 + 40);
         gmode(2);
-        gcopy_c(9, 48, 0, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48, sx + sx2 + 1, sy + sy2 + 40);
     }
     if (fishdir == 1)
     {
         sx2 = inf_tiles / 2 - 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
-        pos(sx + sx2 - 16, sy + sy2 + 25);
         gmode(2);
-        gcopy_c(9, 48, 0, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48, sx + sx2 - 16, sy + sy2 + 25);
     }
     if (fishdir == 2)
     {
@@ -2119,21 +2098,18 @@ void render_fishing_animation()
     {
         sx2 = inf_tiles / 2 + 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
-        pos(sx + sx2 + 14, sy + sy2 + 25);
         gmode(2);
-        gcopy_c(9, 48, 0, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48, sx + sx2 + 14, sy + sy2 + 25);
     }
     if (fishdir == 2)
     {
         gmode(2);
-        pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 24, 48, 24, 0.5 * fishdir * 3.14);
+        grotate(9, 0, 24, 48, 24, sx + sx2, sy + sy2, 0.5 * fishdir * 3.14);
     }
     else
     {
         gmode(2);
-        pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 0, 48, 48, 0.5 * fishdir * 3.14);
+        grotate(9, 0, 0, 48, 48, sx + sx2, sy + sy2, 0.5 * fishdir * 3.14);
     }
     randomize();
 }
@@ -2189,15 +2165,14 @@ void ui_display_window(
         {255, 255, 255},
         {20, 10, 0});
     font(12 + sizefix - en * 2);
-    pos(x + 58 + x_offset, y + height - 43 - height % 8);
-    mes(key_help);
+    mes(x + 58 + x_offset, y + height - 43 - height % 8, key_help);
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
-            y + height - 65 - height % 8);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
+            y + height - 65 - height % 8,
+            page_str);
 
         // __s__
         elona::s(0) = title;
@@ -2225,21 +2200,20 @@ void ui_display_window2(
     int height)
 {
     gmode(2);
-    pos(x, y);
-    gcopy(7, 0, 0, width, height);
+    gcopy(7, 0, 0, width, height, x, y);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (tips != ""s)
     {
-        pos(x + width - strlen_u(tips) * 7 - 140,
-            y + height - 24 - height % 8 + 0);
-        mes(tips);
+        mes(x + width - strlen_u(tips) * 7 - 140,
+            y + height - 24 - height % 8 + 0,
+            tips);
     }
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        pos(x + width - strlen_u(page_str) * 7 - 40,
-            y + height - 24 - height % 8 + 0);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 24 - height % 8 + 0,
+            page_str);
 
         // __s__
         elona::s(0) = page_str;
@@ -2256,8 +2230,9 @@ void ui_display_window2(
 void display_note(const std::string& text, int x_offset)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    pos(wx + ww - strlen_u(text) * 7 - 140 - x_offset, wy + wh - 65 - wh % 8);
-    mes(text);
+    mes(wx + ww - strlen_u(text) * 7 - 140 - x_offset,
+        wy + wh - 65 - wh % 8,
+        text);
 }
 
 
@@ -2266,8 +2241,7 @@ void display_topic(const std::string& topic, int x, int y)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     draw("topic_icon", x, y + 7);
-    pos(x + 26, y + vfix + 8);
-    mes(topic);
+    mes(x + 26, y + vfix + 8, topic);
     line(x + 22, y + 21, x + strlen_u(topic) * 7 + 36, y + 21);
 }
 
@@ -2278,16 +2252,18 @@ void display_customkey(const std::string& key, int x, int y)
     gsel(3);
     draw_select_key(key, 624, 30);
     gsel(0);
-    pos(x, y);
-    gcopy(3, 624, 30, 24, 18);
+    gcopy(3, 624, 30, 24, 18, x, y);
 }
 
 
 
+/**
+ * Draws a selection key sprite that was previously buffered by @ref
+ * draw_init_key_select_buffer.
+ */
 void display_key(int x, int y, int nth)
 {
-    pos(x, y);
-    gcopy(3, nth * 24 + 72, 30, 24, 18);
+    gcopy(3, nth * 24 + 72, 30, 24, 18, x, y);
 }
 
 
@@ -2305,9 +2281,14 @@ void fillbg(
     {
         for (int dx = 0; dx < windoww / tile_width + 1; ++dx)
         {
-            pos(windoww - (dx + 1) * tile_width,
+            gcopy(
+                tile_window_id,
+                tile_x,
+                tile_y,
+                tile_width,
+                tile_height,
+                windoww - (dx + 1) * tile_width,
                 inf_ver - (dy + 1) * tile_height);
-            gcopy(tile_window_id, tile_x, tile_y, tile_width, tile_height);
         }
     }
 
@@ -2322,9 +2303,11 @@ void load_background_variants(int buffer)
     gsel(buffer);
     for (int cnt = 0; cnt < 8; ++cnt)
     {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+            cnt % 4 * 180,
+            cnt / 4 * 300,
+            false);
     }
     gsel(buffer_bk);
 }
@@ -2333,14 +2316,11 @@ void load_background_variants(int buffer)
 
 void clear_background_in_character_making()
 {
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, 64);
+    draw_region("void", 0, 0, 0, 0, windoww, 64);
     gmode(2);
 }
 
@@ -2348,14 +2328,11 @@ void clear_background_in_character_making()
 
 void clear_background_in_continue()
 {
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
 }
 
@@ -2372,25 +2349,21 @@ void draw_scroll(int x, int y, int width, int height)
         {
             if (i == 0)
             {
-                pos(x, y);
-                gcopy(7, 0, 0, 64, 48);
-                pos(x, y3);
-                gcopy(7, 0, 144, 64, 48);
+                draw_region("ie_scroll", x, y, 0, 0, 64, 48);
+                draw_region("ie_scroll", x, y3, 0, 144, 64, 48);
             }
             continue;
         }
         if (i < width / 8 - 8)
         {
-            pos(i * 8 + x, y);
-            gcopy(7, (i - 8) % 18 * 8 + 64, 0, 8, 48);
-            pos(i * 8 + x, y3);
-            gcopy(7, (i - 8) % 18 * 8 + 64, 144, 8, 48);
+            draw_region(
+                "ie_scroll", i * 8 + x, y, (i - 8) % 18 * 8 + 64, 0, 8, 48);
+            draw_region(
+                "ie_scroll", i * 8 + x, y3, (i - 8) % 18 * 8 + 64, 144, 8, 48);
             continue;
         }
-        pos(x3, y);
-        gcopy(7, 208, 0, 64, 48);
-        pos(x3, y3);
-        gcopy(7, 208, 144, 64, 48);
+        draw_region("ie_scroll", x3, y, 208, 0, 64, 48);
+        draw_region("ie_scroll", x3, y3, 208, 144, 64, 48);
         break;
     }
 
@@ -2400,18 +2373,24 @@ void draw_scroll(int x, int y, int width, int height)
         {
             if (j == 0)
             {
-                pos(x, i * 8 + y + 48);
-                gcopy(7, 0, i % 12 * 8 + 48, 64, 8);
+                draw_region(
+                    "ie_scroll", x, i * 8 + y + 48, 0, i % 12 * 8 + 48, 64, 8);
                 continue;
             }
             if (j < width / 8 - 15)
             {
-                pos(j * 8 + x + 56, i * 8 + y + 48);
-                gcopy(7, j % 18 * 8 + 64, i % 12 * 8 + 48, 8, 8);
+                draw_region(
+                    "ie_scroll",
+                    j * 8 + x + 56,
+                    i * 8 + y + 48,
+                    j % 18 * 8 + 64,
+                    i % 12 * 8 + 48,
+                    8,
+                    8);
                 continue;
             }
-            pos(x3, i * 8 + y + 48);
-            gcopy(7, 208, i % 12 * 8 + 48, 64, 8);
+            draw_region(
+                "ie_scroll", x3, i * 8 + y + 48, 208, i % 12 * 8 + 48, 64, 8);
             break;
         }
     }
@@ -2423,8 +2402,7 @@ void cs_listbk()
 {
     if (cs_bk == -1)
         return;
-    pos(cs_posbk_x, cs_posbk_y);
-    gcopy(3, 264, 96, cs_posbk_w, cs_posbk_h);
+    draw_region("list_scratch", cs_posbk_x, cs_posbk_y, cs_posbk_w, cs_posbk_h);
 }
 
 
@@ -2443,17 +2421,12 @@ void cs_list(
             clamp(int(strlen_u(text)) * 7 + 32 + x_offset, 10, 480);
 
         gsel(3);
-        pos(264, 96);
-        gcopy(0, x, y, width, 19);
+        gcopy(0, x, y, width, 19, 264, 96);
+        asset_copy_from(0, x, y, width, 19, "list_scratch");
         gsel(0);
 
-        const auto colorbk_r = ginfo(16);
-        const auto colorbk_g = ginfo(17);
-        const auto colorbk_b = ginfo(18);
         boxf(x, y, width, 19, {127, 191, 255, 63});
-        color(colorbk_r, colorbk_g, colorbk_b);
-        pos(x + width - 20, y + 4);
-        gcopy(3, 48, 360, 16, 16);
+        draw("list_bullet", x + width - 20, y + 4);
 
         cs_posbk_x = x;
         cs_posbk_y = y;
@@ -2461,10 +2434,7 @@ void cs_list(
         cs_posbk_h = 19;
     }
 
-    color(text_color.r, text_color.g, text_color.b);
-    pos(x + 4 + x_offset, y + vfix + 3);
-    mes(text);
-    color(0, 0, 0);
+    mes(x + 4 + x_offset, y + vfix + 3, text, text_color);
 }
 
 
@@ -2499,7 +2469,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
 {
     if (windowshadow != 0)
     {
-        gmode(6, 80);
+        gmode(2, 80);
         draw_scroll(x + 3, y + 3, width, height);
         windowshadow = 0;
         gmode(2);
@@ -2523,16 +2493,14 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
         y + height - 69 - height % 8,
         {224, 213, 191});
     font(12 + sizefix - en * 2);
-    color(0, 0, 0);
-    pos(x + 68, y + height - 63 - height % 8);
-    mes(hint);
+    mes(x + 68, y + height - 63 - height % 8, hint);
     if (pagesize != 0)
     {
         const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
-        pos(x + width - strlen_u(page_str) * 7 - 40,
-            y + height - 63 - height % 8);
-        mes(page_str);
+        mes(x + width - strlen_u(page_str) * 7 - 40,
+            y + height - 63 - height % 8,
+            page_str);
 
         // __s__
         elona::s(0) = page_str;
@@ -2563,30 +2531,26 @@ void window(int x, int y, int width, int height, bool shadow)
     if (!shadow)
     {
         // Top left
-        pos(x, y);
-        gcopy(3, 0, 48, 64, 48);
+        draw_region("window", x, y, 0, 0, 64, 48);
     }
     // Top right
-    pos(x3, y);
-    gcopy(3, 208, 48, 56, 48);
+    draw_region("window", x3, y, 208, 0, 56, 48);
     // Bottom left
-    pos(x, y3);
-    gcopy(3, 0, 48 + 144, 64, 48);
+    draw_region("window", x, y3, 0, 144, 64, 48);
     // Bottom right
-    pos(x3, y3);
-    gcopy(3, 208, 48 + 144, 56, 48);
+    draw_region("window", x3, y3, 208, 144, 56, 48);
 
     for (int dx = 8; dx < width / 8 - 8; ++dx)
     {
         if (!shadow)
         {
             // Top middle
-            pos(dx * 8 + x, y);
-            gcopy(3, (dx - 8) % 18 * 8 + 36, 48, 8, 48);
+            draw_region(
+                "window", dx * 8 + x, y, (dx - 8) % 18 * 8 + 36, 0, 8, 48);
         }
         // Bottom middle
-        pos(dx * 8 + x, y3);
-        gcopy(3, (dx - 8) % 18 * 8 + 54, 48 + 144, 8, 48);
+        draw_region(
+            "window", dx * 8 + x, y3, (dx - 8) % 18 * 8 + 54, 144, 8, 48);
     }
 
     for (int dy = 0; dy < height / 8 - 14; ++dy)
@@ -2594,18 +2558,24 @@ void window(int x, int y, int width, int height, bool shadow)
         if (!shadow)
         {
             // Middle left
-            pos(x, dy * 8 + y + 48);
-            gcopy(3, 0, dy % 12 * 8 + 48 + 48, 64, 8);
+            draw_region(
+                "window", x, dy * 8 + y + 48, 0, dy % 12 * 8 + 48, 64, 8);
             // Middle middle
             for (int dx = 1; dx < width / 8 - 15; ++dx)
             {
-                pos(dx * 8 + x + 56, dy * 8 + y + 48);
-                gcopy(3, dx % 18 * 8 + 64, dy % 12 * 8 + 48 + 48, 8, 8);
+                draw_region(
+                    "window",
+                    dx * 8 + x + 56,
+                    dy * 8 + y + 48,
+                    dx % 18 * 8 + 64,
+                    dy % 12 * 8 + 48,
+                    8,
+                    8);
             }
         }
         // Middle right
-        pos(x3, dy * 8 + y + 48);
-        gcopy(3, 208, dy % 12 * 8 + 48 + 48, 56, 8);
+        draw_region(
+            "window", x3, dy * 8 + y + 48, 208, dy % 12 * 8 + 48, 56, 8);
     }
 
     gmode(2);
@@ -2637,34 +2607,42 @@ void window2(
     switch (fill_style)
     {
     case 0:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         break;
     case 1:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 2:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 210});
         break;
     case 3:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 10});
         break;
     case 4:
-        pos(x + 4, y + 4);
-        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        draw_region(
+            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 5: break;
     case 6:
-        pos(x + width / 2, y + height / 2);
-        gmode(4, 180);
-        gcopy_c(3, 24, 72, 228, 144, width - 4, height - 4);
+        gmode(2, 180);
+        draw_region_centered(
+            "window",
+            x + width / 2,
+            y + height / 2,
+            24,
+            24,
+            228,
+            144,
+            width - 4,
+            height - 4);
         break;
     default: break;
     }
@@ -2672,44 +2650,78 @@ void window2(
     gmode(2);
     for (int cnt = 0, cnt_end = (width / 16 - 2); cnt < cnt_end; ++cnt)
     {
-        pos(cnt * 16 + x + 16, y);
-        gcopy(3, frame_style * 48 + 16, 240, 16, 16);
-        pos(cnt * 16 + x + 16, y + height - 16);
-        gcopy(3, frame_style * 48 + 16, 240 + 32, 16, 16);
+        draw_region(
+            "window_frame",
+            cnt * 16 + x + 16,
+            y,
+            frame_style * 48 + 16,
+            0,
+            16,
+            16);
+        draw_region(
+            "window_frame",
+            cnt * 16 + x + 16,
+            y + height - 16,
+            frame_style * 48 + 16,
+            32,
+            16,
+            16);
     }
 
     const auto x2 = x + width / 16 * 16 - 16;
     const auto y2 = y + height / 16 * 16 - 16;
 
-    pos(x2, y);
-    gcopy(3, frame_style * 48 + 16, 240, width % 16, 16);
-    pos(x2, y + height - 16);
-    gcopy(3, frame_style * 48 + 16, 240 + 32, width % 16, 16);
+    draw_region(
+        "window_frame", x2, y, frame_style * 48 + 16, 0, width % 16, 16);
+    draw_region(
+        "window_frame",
+        x2,
+        y + height - 16,
+        frame_style * 48 + 16,
+        32,
+        width % 16,
+        16);
 
     for (int i = 0; i < height / 16 - 2; ++i)
     {
-        pos(x, i * 16 + y + 16);
-        gcopy(3, frame_style * 48, 240 + 16, 16, 16);
-        pos(x + width - 16, i * 16 + y + 16);
-        gcopy(3, frame_style * 48 + 32, 240 + 16, 16, 16);
+        draw_region(
+            "window_frame", x, i * 16 + y + 16, frame_style * 48, 16, 16, 16);
+        draw_region(
+            "window_frame",
+            x + width - 16,
+            i * 16 + y + 16,
+            frame_style * 48 + 32,
+            16,
+            16,
+            16);
     }
-    pos(x, y2);
-    gcopy(3, frame_style * 48, 240 + 16, 16, height % 16);
-    pos(x + width - 16, y2);
-    gcopy(3, frame_style * 48 + 32, 240 + 16, 16, height % 16);
-    pos(x, y);
-    gcopy(3, frame_style * 48, 240, 16, 16);
-    pos(x, y + height - 16);
-    gcopy(3, frame_style * 48, 240 + 32, 16, 16);
-    pos(x + width - 16, y);
-    gcopy(3, frame_style * 48 + 32, 240, 16, 16);
-    pos(x + width - 16, y + height - 16);
-    gcopy(3, frame_style * 48 + 32, 240 + 32, 16, 16);
+    draw_region("window_frame", x, y2, frame_style * 48, 16, 16, height % 16);
+    draw_region(
+        "window_frame",
+        x + width - 16,
+        y2,
+        frame_style * 48 + 32,
+        16,
+        16,
+        height % 16);
+    draw_region("window_frame", x, y, frame_style * 48, 0, 16, 16);
+    draw_region(
+        "window_frame", x, y + height - 16, frame_style * 48, 32, 16, 16);
+    draw_region(
+        "window_frame", x + width - 16, y, frame_style * 48 + 32, 0, 16, 16);
+    draw_region(
+        "window_frame",
+        x + width - 16,
+        y + height - 16,
+        frame_style * 48 + 32,
+        32,
+        16,
+        16);
 
     if (fill_style == 5)
     {
-        pos(x + 2, y + 2);
-        gcopy(3, 24, 72, 228, 144, width - 4, height - 5);
+        draw_region(
+            "window", x + 2, y + 2, 24, 24, 228, 144, width - 4, height - 5);
         boxf(x + 2, y + 2, width - 4, height - 4, {0, 0, 0, 195});
     }
 }
@@ -2729,15 +2741,14 @@ void window_animation(
         nowindowanime = 0;
         return;
     }
-    if (!Config::instance().windowanime)
+    if (!Config::instance().window_animation)
         return;
     if (duration == 0)
         return;
 
     gsel(temporary_window_id);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, x, y, width, height);
+    gcopy(0, x, y, width, height, 0, 0);
     gsel(0);
     gmode(0);
 
@@ -2762,10 +2773,9 @@ void window_animation(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animewait * 0.75);
+            await(Config::instance().animation_wait * 0.75);
         }
-        pos(x, y);
-        gcopy(temporary_window_id, 0, 0, width, height);
+        gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }
 
     gmode(2);
@@ -2781,15 +2791,14 @@ void window_animation_corner(
     int duration,
     int temporary_window_id)
 {
-    if (!Config::instance().windowanime)
+    if (!Config::instance().window_animation)
         return;
     if (duration == 0)
         return;
 
     gsel(temporary_window_id);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, x, y, width, height);
+    gcopy(0, x, y, width, height, 0, 0);
     gsel(0);
     gmode(0);
 
@@ -2810,10 +2819,9 @@ void window_animation_corner(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animewait * 0.75);
+            await(Config::instance().animation_wait * 0.75);
         }
-        pos(x, y);
-        gcopy(temporary_window_id, 0, 0, width, height);
+        gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }
 
     gmode(2);

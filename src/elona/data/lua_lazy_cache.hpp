@@ -1,8 +1,11 @@
 #pragma once
+
 #include <unordered_map>
 #include <vector>
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../thirdparty/sol2/sol.hpp"
+#include "../../util/map_key_iterator.hpp"
+#include "../../util/map_value_iterator.hpp"
 #include "../../util/noncopyable.hpp"
 #include "../filesystem.hpp"
 #include "../log.hpp"
@@ -10,12 +13,12 @@
 #include "../lua_env/data_table.hpp"
 #include "../optional.hpp"
 #include "../shared_id.hpp"
+#include "common.hpp"
 
-using namespace std::literals::string_literals;
+
 
 namespace elona
 {
-
 namespace data
 {
 
@@ -23,7 +26,15 @@ template <typename>
 struct LuaLazyCacheTraits;
 
 
-template <class T>
+
+template <typename T>
+class LuaLazyCacheWithLegacyIdTable : public lib::noncopyable
+{
+};
+
+
+
+template <typename T>
 class LuaLazyCache : public lib::noncopyable
 {
 public:
@@ -34,90 +45,69 @@ public:
     using MapType = std::unordered_map<IdType, DataType>;
     using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
     using ErrorMapType = std::unordered_map<IdType, std::string>;
+    using KeysIterator = lib::map_key_iterator<MapType, IdType>;
+    using ValuesIterator = lib::map_value_iterator<MapType, DataType>;
 
-    LuaLazyCache()
-    {
-    }
+
+
+    LuaLazyCache() = default;
+
+
 
     void initialize(lua::DataTable data)
     {
         _data = data;
     }
 
+
+
     // NOTE: To iterate all values, they all have to be loaded from Lua first by
     // calling load_all().
-    struct iterator
+
+    typename MapType::const_iterator begin() const
     {
-    private:
-        using base_iterator_type = typename MapType::const_iterator;
-
-    public:
-        using value_type = const DataType;
-        using difference_type = typename base_iterator_type::difference_type;
-        using pointer = value_type*;
-        using reference = value_type&;
-        using iterator_category =
-            typename base_iterator_type::iterator_category;
-
-
-        iterator(const typename MapType::const_iterator& itr)
-            : itr(itr)
-        {
-        }
-
-        reference operator*() const
-        {
-            return itr->second;
-        }
-
-        pointer operator->() const
-        {
-            return itr.operator->();
-        }
-
-        void operator++()
-        {
-            ++itr;
-        }
-
-        bool operator!=(const iterator& other) const
-        {
-            return itr != other.itr;
-        }
-
-    private:
-        typename MapType::const_iterator itr;
-    };
-
-
-
-    iterator begin() const
-    {
-        return iterator{std::begin(_storage)};
+        return std::begin(_storage);
     }
 
-    iterator end() const
+
+    typename MapType::const_iterator end() const
     {
-        return iterator{std::end(_storage)};
+        return std::end(_storage);
     }
+
+
+
+    KeysIterator keys() const
+    {
+        return KeysIterator(_storage);
+    }
+
+
+
+    ValuesIterator values() const
+    {
+        return ValuesIterator(_storage);
+    }
+
+
 
     void load_all()
     {
-        sol::optional<sol::table> it = _data.storage["raw"][Traits::type_id];
+        auto it = _data.get_table(Traits::type_id);
         if (!it)
-        {
             return;
-        }
 
         for (const auto& pair : *it)
         {
-            SharedId id(pair.first.as<std::string>());
+            SharedId id(pair.first.template as<std::string>());
             if ((*this)[id])
                 continue;
 
             retrieve_from_lua(id);
         }
     }
+
+
 
     void clear()
     {
@@ -171,9 +161,50 @@ public:
     optional_ref<DataType> operator[](const LegacyIdType& legacy_id)
     {
         if (const auto id = get_id_from_legacy(legacy_id))
+        {
             return (*this)[*id];
+        }
         else
+        {
             return none;
+        }
+    }
+
+    const DataType& ensure(const IdType& id)
+    {
+        auto data = (*this)[id];
+
+        if (!data)
+        {
+            throw sol::error{"No data entry with ID \"" + id.get() +
+                             "\" of type \"" + Traits::type_id + "\" exists."};
+        }
+
+        return *data;
+    }
+
+    const DataType& ensure(const std::string& inner_id)
+    {
+        return this->ensure(IdType(inner_id));
+    }
+
+    const DataType& ensure(const char* inner_id)
+    {
+        return this->ensure(IdType(std::string(inner_id)));
+    }
+
+    const DataType& ensure(const LegacyIdType& legacy_id)
+    {
+        const auto id = get_id_from_legacy(legacy_id);
+
+        if (!id)
+        {
+            throw sol::error{"No data entry with legacy ID \"" +
+                             std::to_string(legacy_id) + "\" of type \"" +
+                             Traits::type_id + "\" exists."};
+        }
+
+        return this->ensure(*id);
     }
 
 private:
@@ -216,9 +247,11 @@ private:
         }
         catch (const std::exception& e)
         {
+            using namespace std::literals::string_literals;
+
             std::string message = "Error initializing "s + Traits::type_id +
-                ":" + id.get() + ": " + e.what();
-            ELONA_LOG(message);
+                data_id_separator + id.get() + ": " + e.what();
+            ELONA_WARN("lua.data") << message;
             std::cerr << message << std::endl;
 
             _errors.emplace(id, e.what());
@@ -234,8 +267,11 @@ protected:
     LegacyMapType _by_legacy_id;
     ErrorMapType _errors;
 };
+
 } // namespace data
 } // namespace elona
+
+
 
 #define ELONA_DEFINE_LUA_DB(ClassName, DataTypeName, legacy_id, name) \
     class ClassName; \
@@ -257,9 +293,21 @@ protected:
     };
 
 #define DATA_REQ(name, type) type name = data.required<type>(#name);
+#define DATA_REQ_FUNC(name) \
+    sol::protected_function name##_ = \
+        data.required<sol::protected_function>(#name); \
+    lua::WrappedFunction name(id, name##_);
 #define DATA_OPT_OR(name, type, def) \
     type name = data.optional_or<type>(#name, def);
 #define DATA_OPT(name, type) optional<type> name = data.optional<type>(#name);
+#define DATA_OPT_FUNC(name) \
+    optional<sol::protected_function> name##_ = \
+        data.optional<sol::protected_function>(#name); \
+    optional<lua::WrappedFunction> name = none; \
+    if (name##_) \
+    { \
+        name = lua::WrappedFunction(id, *name##_); \
+    }
 #define DATA_VEC(name, type) std::vector<type> name = data.vector<type>(#name);
 #define DATA_TABLE(name, keytype, valuetype) \
     std::unordered_map<keytype, valuetype> name = \

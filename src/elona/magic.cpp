@@ -10,9 +10,11 @@
 #include "character_status.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
+#include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "element.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -94,7 +96,7 @@ bool _magic_1136()
                 {
                     p = cell_data.at(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt)
                             .chip_id_actual;
-                    if ((264 <= p && p < 363) || chipm(7, p) & 4)
+                    if ((264 <= p && p < 363) || chip_data[p].effect & 4)
                     {
                         f = 0;
                         break;
@@ -115,18 +117,15 @@ bool _magic_1136()
     }
     txt(i18n::s.get("core.locale.magic.map.apply"));
     snd("core.book1");
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"paper.bmp", 1);
+    const auto& info = asset_load("paper");
     gsel(0);
-    ww = 400;
-    wh = 300;
+    ww = info.width;
+    wh = info.height;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     gmode(2);
-    pos(wx, wy);
-    gcopy(4, 0, 0, ww, wh);
-    gmode(1);
+    gcopy(4, 0, 0, ww, wh, wx, wy);
+    gmode(0);
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         y = cnt + inv[ci].param2 - 2;
@@ -135,30 +134,22 @@ bool _magic_1136()
         {
             x = cnt + inv[ci].param1 - 3;
             sx = cnt * inf_tiles + wx + 46;
-            p = cell_data.at(x, y).chip_id_actual;
-            pos(sx + 1, sy + 1);
-            gcopy(
-                2,
-                p % 33 * inf_tiles,
-                p / 33 * inf_tiles,
-                inf_tiles,
-                inf_tiles);
+            draw_map_tile(cell_data.at(x, y).chip_id_actual, sx + 1, sy + 1);
             if (x == inv[ci].param1)
             {
                 if (y == inv[ci].param2)
                 {
-                    pos(sx, sy);
                     font(40 - en * 2, snail::Font::Style::italic);
-                    color(255, 20, 20);
-                    mes(i18n::s.get("core.locale.magic.map.mark"));
-                    color(0, 0, 0);
+                    mes(sx,
+                        sy,
+                        i18n::s.get("core.locale.magic.map.mark"),
+                        {255, 20, 20});
                 }
             }
         }
     }
     gmode(2);
-    pos(wx, wy);
-    gcopy(4, 400, 0, ww, wh);
+    gcopy(4, 400, 0, ww, wh, wx, wy);
     redraw();
     wait_key_pressed();
     snd("core.card1");
@@ -656,7 +647,7 @@ bool _magic_185()
         {
             continue;
         }
-        if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
+        if (chip_data.for_cell(x, y).kind == 3)
         {
             f = 1;
             break;
@@ -672,7 +663,7 @@ bool _magic_185()
             {
                 continue;
             }
-            if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
+            if (chip_data.for_cell(x, y).kind == 3)
             {
                 f = 1;
                 break;
@@ -686,10 +677,8 @@ bool _magic_185()
         update_screen();
         return false;
     }
-    if (chipm(
-            0,
-            cell_data.at(cdata.player().position.x, cdata.player().position.y)
-                .chip_id_actual) == 3)
+    if (chip_data.for_cell(cdata.player().position.x, cdata.player().position.y)
+            .kind == 3)
     {
         txt(i18n::s.get("core.locale.magic.fish.cannot_during_swim"));
         update_screen();
@@ -868,7 +857,7 @@ bool _magic_632_454_1144(bool label_2182_flag = false)
         txt(i18n::s.get("core.locale.common.nothing_happens"));
         return true;
     }
-    if (encfind(tc, 33) != -1)
+    if (enchantment_find(cdata[tc], 33))
     {
         if (rnd(5))
         {
@@ -1880,8 +1869,7 @@ bool _magic_1141()
         if (stat == 1)
         {
             txt(i18n::s.get("core.locale.magic.escape.during_quest"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 return true;
             }
@@ -2057,9 +2045,9 @@ bool _magic_645_1114()
         }
     }
     p = 75 + sdata(19, tc);
-    if (encfind(tc, 43) != -1)
+    if (const auto anticurse = enchantment_find(cdata[tc], 43))
     {
-        p += encfind(tc, 43) / 2;
+        p += *anticurse / 2;
     }
     if (rnd(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
     {
@@ -2305,7 +2293,7 @@ bool _magic_436_437_455_634_456()
         {
             f = 0;
         }
-        else if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+        else if (chip_data.for_cell(x, y).effect & 4)
         {
             f = 0;
         }
@@ -2421,8 +2409,7 @@ bool _magic_49(int efcibk)
     equip = inv[ci].body_part;
     animeload(8, cc);
     inv[ci].quality = Quality::miracle;
-    fixmaterial = inv[ci].material;
-    change_item_material();
+    change_item_material(inv[ci], inv[ci].material);
     randomize(inv[efcibk].param1);
     inv[ci].subname = 40000 + rnd(30000);
     p = rnd(rnd(rnd(10) + 1) + 3) + 3;
@@ -2502,19 +2489,21 @@ bool _magic_21_1127()
         }
         else
         {
+            int material = fixmaterial;
+
             animeload(8, cc);
             if (efp <= 50)
             {
                 if (rnd(3) == 0)
                 {
-                    fixmaterial = 35;
+                    material = 35;
                 }
             }
             s = itemname(ci, 1, 1);
             objlv = efp / 10;
             objfix = efp / 100;
             randomize();
-            change_item_material();
+            change_item_material(inv[ci], material);
             txt(i18n::s.get(
                 "core.locale.magic.change_material.apply",
                 cdata[cc],
@@ -2961,7 +2950,7 @@ bool _magic_457_438()
     }
     else
     {
-        if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+        if (chip_data.for_cell(x, y).effect & 4)
         {
             if (homemapmode == 0)
             {
@@ -2969,7 +2958,7 @@ bool _magic_457_438()
                 {
                     f = 0;
                 }
-                else if (chipm(0, cell_data.at(x, y).chip_id_actual) == 3)
+                else if (chip_data.for_cell(x, y).kind == 3)
                 {
                     f = 0;
                 }
@@ -3004,14 +2993,14 @@ bool _magic_457_438()
         if (efid == 457)
         {
             snd("core.offer1");
-            if (chipm(0, cell_data.at(x, y).chip_id_actual) == 6)
+            if (chip_data.for_cell(x, y).kind == 6)
             {
                 txt(i18n::s.get("core.locale.magic.create.door.resist"));
                 return true;
             }
             txt(i18n::s.get("core.locale.magic.create.door.apply"));
             cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
-            if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+            if (chip_data.for_cell(x, y).effect & 4)
             {
                 cell_data.at(x, y).chip_id_actual = tile_tunnel;
             }
@@ -3459,7 +3448,7 @@ bool _magic_651()
 
 bool _magic_464()
 {
-    bool fastest = Config::instance().animewait == 0;
+    bool fastest = Config::instance().animation_wait == 0;
     std::string messages;
 
     animeload(10, tc);
@@ -3496,7 +3485,7 @@ bool _magic_464()
         else
         {
             txt(message);
-            await(Config::instance().animewait * 4);
+            await(Config::instance().animation_wait * 4);
             redraw();
         }
     }
@@ -4177,7 +4166,7 @@ optional<bool> _proc_general_magic()
         {
             p = rnd(10);
             if ((cdata[tc].quality >= Quality::miracle && rnd(4)) ||
-                encfind(tc, 60010 + p) != -1)
+                enchantment_find(cdata[tc], 60010 + p))
             {
                 p = -1;
             }
@@ -4326,7 +4315,7 @@ optional<bool> _proc_general_magic()
             }
             return true;
         }
-        if (efid != 619 && efid != 635 && encfind(tc, 22) != -1)
+        if (efid != 619 && efid != 635 && enchantment_find(cdata[tc], 22))
         {
             if (is_in_fov(cdata[tc]))
             {
@@ -4336,7 +4325,7 @@ optional<bool> _proc_general_magic()
         }
         if (efid == 635)
         {
-            if (encfind(cc, 22) != -1)
+            if (enchantment_find(cdata[cc], 22))
             {
                 if (is_in_fov(cdata[tc]))
                 {
@@ -4452,7 +4441,7 @@ optional<bool> _proc_general_magic()
                 cdata[cc].continuous_action.finish();
                 ccprev = cc;
                 cc = tc;
-                proc_trap();
+                move_character();
                 cc = ccprev;
                 if (tc == 0)
                 {

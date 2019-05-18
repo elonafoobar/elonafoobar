@@ -250,7 +250,9 @@ void UIMenuCtrlAlly::update()
     }
 }
 
-static void _draw_info_pet_arena(const Character& chara, std::string& _s)
+void UIMenuCtrlAlly::_draw_info_pet_arena(
+    const Character& chara,
+    std::string& _s)
 {
     if (followerin(chara.index) == 1)
     {
@@ -429,8 +431,7 @@ void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
     std::string ally_info = ""s + calcslavevalue(chara.index) * 2 / 3 +
         i18n::s.get("core.locale.ui.gold");
 
-    pos(wx + 390, wy + 66 + cnt * 19 + 2);
-    mes(ally_info);
+    mes(wx + 390, wy + 66 + cnt * 19 + 2, ally_info);
 }
 
 void UIMenuCtrlAlly::_draw_ally_name(int cnt, const Character& chara)
@@ -454,11 +455,8 @@ void UIMenuCtrlAlly::_draw_ally_info(int cnt, const Character& chara)
         ally_info = _modify_ally_info_gene_engineer(chara, ally_info);
     }
 
-    pos(wx + 370, wy + 66 + cnt * 19 + 2);
     const auto text_color = _draw_get_color(chara);
-    color(text_color.r, text_color.g, text_color.b);
-    mes(ally_info);
-    color(0, 0, 0);
+    mes(wx + 370, wy + 66 + cnt * 19 + 2, ally_info, text_color);
 }
 
 void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const Character& chara)

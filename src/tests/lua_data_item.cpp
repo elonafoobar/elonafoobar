@@ -14,8 +14,7 @@ static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
-    lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(), {base_path / name});
+    lua.get_mod_manager().load_mods(filesystem::dir::mod(), {base_path / name});
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 
@@ -33,7 +32,7 @@ TEST_CASE("test registering item", "[Lua: Data]")
     auto data = db["item.putitoro"];
 
     REQUIRE(data);
-    REQUIRE(data->id == 9999);
+    REQUIRE(data->legacy_id == 9999);
     REQUIRE(data->image == 695);
     REQUIRE(data->value == 2000);
     REQUIRE(data->weight == 200);

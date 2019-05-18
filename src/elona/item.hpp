@@ -4,21 +4,28 @@
 #include <memory>
 #include <vector>
 #include "../util/range.hpp"
+#include "data/types/type_item.hpp"
 #include "enums.hpp"
 #include "position.hpp"
-#include "putit.hpp"
+#include "shared_id.hpp"
+
+
+#define ELONA_OTHER_INVENTORIES_INDEX 1320
+#define ELONA_ITEM_ON_GROUND_INDEX 5080
+#define ELONA_MAX_ITEMS 5480
 
 
 namespace elona
 {
 
 
-// FIXME
+/// @putit
 struct Enchantment
 {
-    // NOTE: Don't add new fields unless you add them to serialization, which
-    // will break save compatibility.
+    /// @putit
     int id = 0;
+
+    /// @putit
     int power = 0;
 
     bool operator==(const Enchantment& other) const noexcept
@@ -27,16 +34,12 @@ struct Enchantment
     }
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        // WARNING: Changing this will break save compatibility!
-        ar(id);
-        ar(power);
-    }
+#include "_putit/enchantment.cpp"
 };
 
 
+
+/// @putit
 struct Item
 {
 private:
@@ -46,45 +49,110 @@ private:
 public:
     Item();
 
-    // NOTE: Don't add new fields unless you add them to serialization, which
-    // will break save compatibility.
-
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
     // arguments. New code should pass Item& instead. Not serialized; set on
     // creation and load.
     int index = -1;
 
+private:
+    /// @putit
+    int number_ = 0;
+
+public:
+    /// @putit
     int value = 0;
+
+    /// @putit
     int image = 0;
+
+    /// @putit
     int id = 0;
+
+    /// @putit
     Quality quality = Quality::none;
+
+    /// @putit
     Position position;
+
+    /// @putit
     int weight = 0;
+
+    /// @putit
     IdentifyState identification_state = IdentifyState::unidentified;
+
+    /// @putit
     int count = 0;
+
+    /// @putit
     int dice_x = 0;
+
+    /// @putit
     int dice_y = 0;
+
+    /// @putit
     int damage_bonus = 0;
+
+    /// @putit
     int hit_bonus = 0;
+
+    /// @putit
     int dv = 0;
+
+    /// @putit
     int pv = 0;
+
+    /// @putit
     int skill = 0;
+
+    /// @putit
     CurseState curse_state = CurseState::none;
+
+    /// @putit
     int body_part = 0;
+
+    /// @putit
     int function = 0;
+
+    /// @putit
     int enhancement = 0;
+
+    /// @putit
     int own_state = 0;
+
+    /// @putit
     int color = 0;
+
+    /// @putit
     int subname = 0;
+
+    /// @putit
     int material = 0;
+
+    /// @putit
     int param1 = 0;
+
+    /// @putit
     int param2 = 0;
+
+    /// @putit
     int param3 = 0;
+
+    /// @putit
     int param4 = 0;
+
+    /// @putit
     int difficulty_of_identification = 0;
+
+    /// @putit
     int turn = 0;
 
+private:
+    /// @putit
+    FlagSet _flags;
+
+public:
+    /// @putit
     std::vector<Enchantment> enchantments;
 
 
@@ -106,6 +174,11 @@ public:
     void set_number(int number_);
     void modify_number(int delta);
     void remove();
+
+    SharedId new_id() const
+    {
+        return *the_item_db.get_id_from_legacy(this->id);
+    }
 
 
 #define ELONA_ITEM_DEFINE_FLAG_ACCESSOR(name, n) \
@@ -137,99 +210,7 @@ public:
 #undef ELONA_ITEM_DEFINE_FLAG_ACCESSOR
 
 
-    template <
-        typename Archive,
-        std::enable_if_t<
-            std::is_base_of<putit::IArchiveBase, Archive>::value,
-            std::nullptr_t> = nullptr>
-    void serialize(Archive& ar)
-    {
-        // WARNING: Changing this will break save compatibility!
-        ar(number_);
-        ar(value);
-        ar(image);
-        ar(id);
-        ar(quality);
-        ar(position);
-        ar(weight);
-        ar(identification_state);
-        ar(count);
-        ar(dice_x);
-        ar(dice_y);
-        ar(damage_bonus);
-        ar(hit_bonus);
-        ar(dv);
-        ar(pv);
-        ar(skill);
-        ar(curse_state);
-        ar(body_part);
-        ar(function);
-        ar(enhancement);
-        ar(own_state);
-        ar(color);
-        ar(subname);
-        ar(material);
-        ar(param1);
-        ar(param2);
-        ar(param3);
-        ar(param4);
-        ar(difficulty_of_identification);
-        ar(turn);
-        {
-            uint32_t tmp;
-            ar(tmp);
-            _flags = tmp;
-        }
-        range::for_each(
-            enchantments, [&](auto&& enchantment) { ar(enchantment); });
-    }
-
-
-    template <
-        typename Archive,
-        std::enable_if_t<
-            std::is_base_of<putit::OArchiveBase, Archive>::value,
-            std::nullptr_t> = nullptr>
-    void serialize(Archive& ar)
-    {
-        // WARNING: Changing this will break save compatibility!
-        ar(number_);
-        ar(value);
-        ar(image);
-        ar(id);
-        ar(quality);
-        ar(position);
-        ar(weight);
-        ar(identification_state);
-        ar(count);
-        ar(dice_x);
-        ar(dice_y);
-        ar(damage_bonus);
-        ar(hit_bonus);
-        ar(dv);
-        ar(pv);
-        ar(skill);
-        ar(curse_state);
-        ar(body_part);
-        ar(function);
-        ar(enhancement);
-        ar(own_state);
-        ar(color);
-        ar(subname);
-        ar(material);
-        ar(param1);
-        ar(param2);
-        ar(param3);
-        ar(param4);
-        ar(difficulty_of_identification);
-        ar(turn);
-        {
-            auto tmp = static_cast<uint32_t>(_flags.to_ulong());
-            ar(tmp);
-        }
-        range::for_each(
-            enchantments, [&](auto&& enchantment) { ar(enchantment); });
-    }
+#include "_putit/item.cpp"
 
 
     static void copy(const Item& from, Item& to)
@@ -242,9 +223,6 @@ public:
 
 private:
     static void refresh();
-    int number_ = 0;
-
-    FlagSet _flags;
 
     Item(const Item&) = default;
     Item(Item&&) = default;
@@ -295,7 +273,18 @@ void item_set_num(Item&, int);
 void itemturn(int = 0);
 int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int, bool = false);
-int item_find(int = 0, int = 0, int = 0);
+
+enum class ItemFindLocation
+{
+    player_inventory,
+    ground,
+    player_inventory_and_ground,
+};
+int item_find(
+    int = 0,
+    int = 0,
+    ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
+
 int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
 void item_dump_desc(const Item&);

@@ -6,7 +6,13 @@ namespace elona
 namespace lua
 {
 
-namespace Trait
+/**
+ * @luadoc
+ *
+ * Functions for working with traits.
+ * Currently only the player can have traits.
+ */
+namespace LuaApiTrait
 {
 sol::optional<int> level(int);
 
@@ -20,7 +26,7 @@ void modify(int, int);
 
 
 void bind(sol::table&);
-} // namespace Trait
+} // namespace LuaApiTrait
 
 } // namespace lua
 } // namespace elona

@@ -9,17 +9,18 @@ CharacterDB the_character_db;
 const constexpr char* data::LuaLazyCacheTraits<CharacterDB>::type_id;
 
 
-static std::unordered_map<int, int> _convert_resistances(
+
+static std::unordered_map<SharedId, int> _convert_resistances(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    std::unordered_map<int, int> resistances;
+    std::unordered_map<SharedId, int> resistances;
 
     if (auto it = data.optional<sol::table>(id))
     {
         for (const auto& kvp : *it)
         {
-            int k = kvp.first.as<int>();
+            SharedId k{kvp.first.as<std::string>()};
             int v = kvp.second.as<int>();
             resistances.emplace(k, v);
         }
@@ -28,6 +29,8 @@ static std::unordered_map<int, int> _convert_resistances(
 
     return resistances;
 }
+
+
 
 static std::vector<int> _convert_chara_flags(
     const lua::ConfigTable& data,
@@ -50,11 +53,12 @@ static std::vector<int> _convert_chara_flags(
 }
 
 
+
 CharacterData CharacterDB::convert(
     const lua::ConfigTable& data,
-    const std::string&)
+    const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_OPT_OR(ai_act_sub_freq, int, 0);
     DATA_OPT_OR(ai_calm, int, 0);
     DATA_OPT_OR(ai_dist, int, 0);
@@ -81,7 +85,7 @@ CharacterData CharacterDB::convert(
     DATA_OPT_OR(image, int, 0);
     DATA_OPT_OR(level, int, 0);
     DATA_OPT_OR(male_image, int, 0);
-    DATA_ENUM(original_relationship, int, RelationTable, 0);
+    DATA_ENUM(original_relationship, int, RelationshipTable, 0);
 
     // Portrait
     std::string portrait_male;
@@ -113,8 +117,7 @@ CharacterData CharacterDB::convert(
     DATA_VEC(normal_actions, int);
     DATA_VEC(special_actions, int);
 
-    std::unordered_map<int, int> resistances =
-        _convert_resistances(data, "resistances");
+    const auto resistances = _convert_resistances(data, "resistances");
 
     if (normal_actions.empty())
     {
@@ -134,6 +137,7 @@ CharacterData CharacterDB::convert(
     std::string filter = data::convert_tags(data, "tags");
 
     return CharacterData{
+        SharedId{id},
         legacy_id,
         normal_actions,
         special_actions,

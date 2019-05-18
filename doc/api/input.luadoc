@@ -3,61 +3,132 @@
 module "Input"
 
 --- Prompts the player to select "yes" or "no".
--- @tparam string message a message to display
--- @treturn bool true if "yes" was selected.
--- @usage local result = Input.yes_no("Yes or no?")
+--  @tparam string message a message to display
+--  @treturn[1] bool true if "yes" was selected.
+--  @treturn[2] nil if canceled.
+--  @usage local result = Input.yes_no("Yes or no?")
 --
--- if result then
---    GUI.txt("You chose yes. ")
--- else
---    GUI.txt("You chose no. ")
--- end
-function yes_or_no(message) end
-
---- Prompts the player to select from a list of choices. Raises an
---- error if no arguments are provided.
--- @tparam choices table a list of string choices
--- @treturn[1] num the index of the item chosen, starting from 1
--- @treturn[2] nil if canceled
--- @usage GUI.txt("Which? ")
--- local choices = {"First", "Second", "Third"}
--- local result = Input.prompt_choice(choices)
---
--- if result then
---    GUI.txt("You chose \"" .. choices[result] .. "\". ")
--- else
---    GUI.txt("Never mind. ")
--- end
-function prompt_choice(choices) end
+--  if result == nil then
+--  GUI.txt("You canceled. ")
+--  elseif result then
+--  GUI.txt("You chose yes. ")
+--  else
+--  GUI.txt("You chose no. ")
+--  end
+--  @function yes_no
+function yes_no(message) end
 
 --- Prompts the player to choose a number. Raises an error if
---- <code>max</code> is less than 0.
--- @tparam string message a message to display
--- @tparam num max the maximum number choosable
--- @tparam[opt] num index the starting index
--- @treturn[1] num the number chosen
--- @treturn[2] nil if canceled, or max < 0
--- @usage local result = Input.prompt_number("Which character to spawn? ", 353)
--- if result then
---    local chara = Chara.create(25, 25, result)
---    if chara then
---       GUI.txt("Spawned " .. chara.name .. ". ")
---    end
--- else
---    GUI.txt("Never mind.")
--- end
-function prompt_number(message, max, index) end
+--  <code>max</code> is less than 0.
+--  @tparam string message a message to display
+--  @tparam num max the maximum number choosable
+--  @tparam[opt] num initial the initial value
+--  @treturn[1] num the number chosen
+--  @treturn[2] nil if canceled, or max < 0
+--  @usage local result = Input.prompt_number("Which character to spawn? ", 353)
+--  if result then
+--  local chara = Chara.create(25, 25, result)
+--  if chara then
+--  GUI.txt("Spawned " .. chara.name .. ". ")
+--  end
+--  else
+--  GUI.txt("Never mind.")
+--  end
+--  @function prompt_number
+function prompt_number(message, max, initial) end
 
 --- Prompts the player to enter text.
--- @tparam string message a message to display
--- @tparam bool is_cancelable whether or not the dialog can be canceled
--- @treturn[1] string the text that was input
--- @treturn[1] nil if canceled
--- @usage local result = Input.prompt_text("What text?", true)
+--  @tparam string message a message to display
+--  @tparam bool is_cancelable whether or not the dialog can be canceled
+--  @treturn[1] string the text that was input
+--  @treturn[1] nil if canceled
+--  @usage local result = Input.prompt_text("What text?", true)
 --
--- if result then
---    GUI.txt("You typed \"" .. result .. "\". ")
--- else
---    GUI.txt("Never mind. ")
--- end
+--  if result then
+--  GUI.txt("You typed \"" .. result .. "\". ")
+--  else
+--  GUI.txt("Never mind. ")
+--  end
+--  @function prompt_text
 function prompt_text(message, is_cancelable) end
+
+--- Prompts the player to select from a list of choices. Raises an
+--  error if no arguments are provided.
+--  @tparam table choices a list of string choices
+--  @treturn[1] num the index of the item chosen, starting from 1
+--  @treturn[2] nil if canceled
+--  @usage GUI.txt("Which? ")
+--  local choices = {"First", "Second", "Third"}
+--  local result = Input.prompt_choice(choices)
+--
+--  if result then
+--  GUI.txt("You chose \"" .. choices[result] .. "\". ")
+--  else
+--  GUI.txt("Never mind. ")
+--  end
+--  @function prompt_choice
+function prompt_choice(choices) end
+
+--- Creates a dialog window like the one normally shown when talking to a
+--  character.
+--
+--  @tparam string message Message to display.
+--  @tparam string portrait_id Portrait ID of the speaker.
+--  @tparam string speaker_name Name of the speaker to display.
+--  @tparam[opt] num default_index Default choice to use if canceled.
+--  @tparam {string,...} choices An array of string choices for the dialog.
+--  @tparam[opt] num impression Impression to display.
+--  @tparam[opt] num interest Interest to display.
+--  @return num index of the selected item, or the default if canceled
+--  @function prompt_dialog
+function prompt_dialog(text, portrait_id, speaker_name, choices, default_index, impression, interest) end
+
+--- Creates a dialog window like the one normally shown when talking to a
+--  character.
+--
+--  @tparam string message Message to display.
+--  @tparam num chara_image Character chip of the speaker.
+--  @tparam string speaker_name Name of the speaker to display.
+--  @tparam[opt] num default_index Default choice to use if canceled.
+--  @tparam {string,...} choices An array of string choices for the dialog.
+--  @tparam[opt] num impression Impression to display.
+--  @tparam[opt] num interest Interest to display.
+--  @return num index of the selected item, or the default if canceled
+--  @function prompt_dialog
+function prompt_dialog(text, chara_image, speaker_name, choices, default_index, impression, interest) end
+
+--- Starts a dialog with a character.
+--  @tparam LuaCharacter speaker Character who will speak.
+--  @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
+--  character's definition.
+--  @function start_dialog
+function start_dialog(speaker, dialog) end
+
+--- Prompts the player to choose an ally.
+--  @tparam ChooseAllyOperation operation the operation to apply
+--  @treturn[1] LuaCharacter
+--  @treturn[2] nil
+--  @function choose_ally
+function choose_ally(operation) end
+
+--- Enqueues an action or a list of actions into the macro action queue. It will
+--  be run in order of insertion the next time input is queried.
+--  @tparam[1] string action the action to run.
+--  @tparam[2] table actions an array of actions to run.
+--  @usage Macro.enqueue("north")
+--  Macro.enqueue({"east", "wait", "northwest"})
+--  @function enqueue_macro
+function enqueue_macro(action_id) end
+
+--- Clears any actions that haven't been run yet in the macro action queue.
+--  @function clear_macro_queue
+function clear_macro_queue() end
+
+--- Disables input/macro keywait for this frame.
+--  @function ignore_keywait
+function ignore_keywait() end
+
+--- Returns true if any key is pressed.
+--  @treturn bool
+--  @function any_key_pressed
+function any_key_pressed() end

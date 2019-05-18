@@ -2,11 +2,6 @@
 BOOST_DIR = E:\build\SDK\boost_1_66_0
 
 BIN_DIR = bin
-PROGRAM = $(BIN_DIR)\Elona_foobar.exe
-TEST_RUNNER = $(BIN_DIR)\test_runner.exe
-BENCH_RUNNER = $(BIN_DIR)\bench_runner.exe
-
-MKDIR = mkdir
 
 BOOST_ROOT = $(BOOST_INCLUDEDIR)
 BOOST_INCLUDEDIR = $(BOOST_DIR)
@@ -15,46 +10,96 @@ CMAKE_ARGS = \
         -DBOOST_ROOT="$(BOOST_ROOT)" \
         -DBOOST_INCLUDEDIR="$(BOOST_INCLUDEDIR)" \
         -DBOOST_LIBRARYDIR="$(BOOST_LIBRARYDIR)" \
-        -G "Visual Studio 15 2017 Win64"
+        -G "Visual Studio 15 2017 Win64" \
+        $(CMAKE_ARGS)
+
+# Utilities
+MKDIR = mkdir
 
 
-all: $(BIN_DIR)
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) & cmake --build .
+.PHONY: FORCE
 
 
-build: $(BIN_DIR) $(PROGRAM)
+all: $(BIN_DIR) FORCE # Build the most recently built target.
+	cd $(BIN_DIR) & \
+		cmake .. $(CMAKE_ARGS) & \
+		cmake --build .
 
 
-tests: $(BIN_DIR) $(TEST_RUNNER)
+run: build FORCE # Run Elona foobar (debug).
+	.\$(BIN_DIR)\Debug\Elona_foobar.exe
 
 
-bench: $(BIN_DIR) $(BENCH_RUNNER)
+build: $(BIN_DIR) FORCE # Build Elona foobar (debug).
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Debug $(CMAKE_ARGS) & \
+		cmake --build . --config Debug
+
+
+run_release: build_release FORCE # Run Elona foobar (release).
+	.\$(BIN_DIR)\Release\Elona_foobar.exe
+
+
+build_release: $(BIN_DIR) FORCE # Build Elona foobar (release).
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=GAME -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS) & \
+		cmake --build . --config Release
+
+
+launcher: FORCE # Build Elona foobar Launcher (debug)
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=LAUNCHER -DCMAKE_BUILD_TYPE=Debug $(CMAKE_ARGS) & \
+		cmake --build . --config Debug
+
+
+launcher_release: FORCE # Build Elona foobar Launcher (release)
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=LAUNCHER -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS) & \
+		cmake --build . --config Release
+
+
+tests: test_runner FORCE # Run all tests.
+	cd $(BIN_DIR)\Debug & \
+		.\Elona_foobar.exe --durations=yes
+
+
+test_runner: $(BIN_DIR) FORCE # Build test runner.
+	-rd /q /s .\$(BIN_DIR)\Debug\tests
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=TESTS -DCMAKE_BUILD_TYPE=Debug $(CMAKE_ARGS) & \
+		cmake --build . --config Debug
+
+
+bench: bench_runner FORCE # Run benchmark.
+	cd $(BIN_DIR)\Release & \
+		.\Elona_foobar
+
+
+bench_runner: $(BIN_DIR) FORCE # Build benchmark runner.
+	cd $(BIN_DIR) & \
+		cmake .. -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS) & \
+		cmake --build . --config Release
 
 
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
 
-$(PROGRAM): FORCE
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=OFF & cmake --build .
-
-
-$(TEST_RUNNER):
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TESTS & cmake --build .
-
-
-$(BENCH_RUNNER):
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release & cmake --build .
-
-
-clean: FORCE
+clean: FORCE # Clean up built products.
 	-rd /q /s $(BIN_DIR)
 
-format: FORCE
-        powershell -Command "Get-ChildItem src -Include *.cpp,*.hpp -Recurs | Where {$$_.FullName -notlike '*\src\thirdparty\*'} | Foreach {clang-format -i $$_.FullName; Write-Host $$_.Name}"
-        git diff
+
+# Format src/*.{hpp,cpp} except under src/thirdparty.
+format: FORCE # Format all C++ source files.
+	powershell -Command "Get-ChildItem src -Include *.cpp,*.hpp -Recurs | Where {$$_.FullName -notlike '*\src\thirdparty\*'} | Foreach {clang-format -i $$_.FullName; Write-Host $$_.Name}"
+	git diff
+
+
+putit: FORCE # Generate serializers for save data.
+	python3 .\src\putit\bin\putit.py
+	git diff
+
+
+rebuild: clean build FORCE # Clean and build Elona.
 
 FORCE:
-
-
-rebuild: clean build

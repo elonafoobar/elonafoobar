@@ -59,7 +59,6 @@ public:
     ConfigDef()
         : spec::Object("config")
     {
-        locale_root = "core.locale.config.menu";
     }
 
     ~ConfigDef() = default;
@@ -89,11 +88,6 @@ public:
         return data.at(key);
     }
 
-    const std::string& get_locale_root() const
-    {
-        return locale_root;
-    }
-
     void post_visit(const SpecKey&, const spec::SectionDef&);
     void pre_visit_section(const SpecKey&, const hcl::Object&);
     void pre_visit_item(const SpecKey&, const hcl::Object&);
@@ -107,7 +101,6 @@ private:
      */
     bool is_child_visible(const SpecKey&);
 
-    std::string locale_root;
     std::map<std::string, MetaData> data;
 };
 } // namespace elona

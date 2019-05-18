@@ -8,9 +8,10 @@ BuffDB the_buff_db;
 const constexpr char* data::LuaLazyCacheTraits<BuffDB>::type_id;
 
 
+
 BuffData BuffDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("id");
+    auto legacy_id = data.required<int>("legacy_id");
     DATA_ENUM(buff_type, BuffType, BuffTypeTable, BuffType::buff);
     DATA_REQ(duration, sol::protected_function);
     DATA_REQ(on_refresh, sol::protected_function);
@@ -24,6 +25,7 @@ BuffData BuffDB::convert(const lua::ConfigTable& data, const std::string& id)
     }
 
     return BuffData{
+        SharedId{id},
         legacy_id,
         data.storage,
         buff_type,

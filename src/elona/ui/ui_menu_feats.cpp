@@ -29,9 +29,7 @@ bool UIMenuFeats::init()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
+    asset_load("deco_feat");
     gsel(0);
     windowshadow = 1;
 
@@ -147,7 +145,7 @@ void UIMenuFeats::update()
     }
 }
 
-static void _draw_window_background(bool is_chara_making)
+void UIMenuFeats::_draw_window_background(bool is_chara_making)
 {
     int y_adjust;
     if (is_chara_making)
@@ -173,32 +171,27 @@ static void _draw_window_background(bool is_chara_making)
         40);
 }
 
-static void _draw_window_deco()
+void UIMenuFeats::_draw_window_deco()
 {
     s(0) = i18n::s.get("core.locale.trait.window.name");
     s(1) = i18n::s.get("core.locale.trait.window.level");
     s(2) = i18n::s.get("core.locale.trait.window.detail");
     display_topic(s, wx + 46, wy + 36);
     display_topic(s(2), wx + 255, wy + 36);
-    pos(wx + 46, wy - 16);
-    gcopy(3, 816, 48, 48, 48);
-    pos(wx + ww - 56, wy + wh - 198);
-    gcopy(3, 960, 96, 48, 192);
-    pos(wx, wy);
-    gcopy(3, 1008, 96, 48, 144);
-    pos(wx + ww - 108, wy);
-    gcopy(3, 960, 288, 96, 72);
-    pos(wx, wy + wh - 70);
-    gcopy(3, 1008, 240, 96, 48);
+    draw_indexed("inventory_icon", wx + 46, wy - 16, 11);
+    elona::draw("deco_feat_a", wx + ww - 56, wy + wh - 198);
+    elona::draw("deco_feat_b", wx, wy);
+    elona::draw("deco_feat_c", wx + ww - 108, wy);
+    elona::draw("deco_feat_d", wx, wy + wh - 70);
 }
 
-static void _draw_window(bool is_chara_making)
+void UIMenuFeats::_draw_window(bool is_chara_making)
 {
     _draw_window_background(is_chara_making);
     _draw_window_deco();
 }
 
-static void _draw_key(int cnt, int p_)
+void UIMenuFeats::_draw_key(int cnt, int p_)
 {
     int list_item = list(0, p_);
     int list_value = list(1, p_);
@@ -219,7 +212,7 @@ static void _draw_key(int cnt, int p_)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuFeats::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -235,7 +228,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_acquirable_trait_number(int tc_)
+void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
 {
     std::string note;
     if (tc_ == 0)
@@ -252,18 +245,14 @@ static void _draw_acquirable_trait_number(int tc_)
     display_note(note, 50);
 }
 
-static void _draw_single_list_entry_name(
+void UIMenuFeats::_draw_single_list_entry_name(
     int cnt,
     const snail::Color& text_color)
 {
-    pos(wx + 270, wy + 66 + cnt * 19 + 2);
-
-    color(text_color.r, text_color.g, text_color.b);
-    mes(traitrefn(2));
-    color(0, 0, 0);
+    mes(wx + 270, wy + 66 + cnt * 19 + 2, traitrefn(2), text_color);
 }
 
-static void _draw_single_list_entry_text(
+void UIMenuFeats::_draw_single_list_entry_text(
     int cnt,
     bool draw_name,
     const snail::Color& text_color,
@@ -271,15 +260,14 @@ static void _draw_single_list_entry_text(
 {
     if (draw_name)
     {
-        pos(wx + 30, wy + 61 + cnt * 19);
         x = 84;
     }
     else
     {
-        pos(wx + 45, wy + 61 + cnt * 19);
         x = 70;
     }
-    gcopy(3, 384 + traitref * 24, 336, 24, 24);
+    draw_indexed(
+        "trait_icon", wx + (draw_name ? 30 : 45), wy + 61 + cnt * 19, traitref);
 
     cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, text_color);
 
@@ -307,9 +295,7 @@ static snail::Color _get_trait_color(int trait_value)
     }
 }
 
-
-
-static void _draw_single_list_entry(
+void UIMenuFeats::_draw_single_list_entry(
     int cnt,
     int list_item,
     int list_value,
@@ -337,7 +323,7 @@ static void _draw_single_list_entry(
     _draw_single_list_entry_text(cnt, draw_name, text_color, text);
 }
 
-static void _draw_list_entries()
+void UIMenuFeats::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -472,9 +458,9 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& action)
             set_reupdate();
         }
     }
-    else if (action == "switch_mode" || action == "switch_mode_2")
+    else if (action == "switch_mode" || action == "identify")
     {
-        bool is_forwards = action == "switch_mode_2";
+        bool is_forwards = action == "identify";
         _switch_target(is_forwards);
         set_reupdate();
     }

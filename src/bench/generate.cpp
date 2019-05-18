@@ -1,11 +1,11 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
 #include <cassert>
-#include "../ability.hpp"
-#include "../character.hpp"
-#include "../debug.hpp"
-#include "../testing.hpp"
-#include "../variables.hpp"
+#include "../elona/ability.hpp"
+#include "../elona/character.hpp"
+#include "../elona/debug.hpp"
+#include "../elona/testing.hpp"
+#include "../elona/variables.hpp"
 #include "util.hpp"
 
 class GenerateCharacterFixture : public ::hayai::Fixture
@@ -26,7 +26,7 @@ public:
     {
         int x = i % 50;
         int y = i / 50;
-        assert(chara_create(-1, 3, x, y) == 1);
+        chara_create(-1, 3, x, y);
         i++;
     }
 

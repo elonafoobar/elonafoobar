@@ -11,6 +11,7 @@ set(ELONA_SOURCES
   audio.cpp
   autopick.cpp
   blending.cpp
+  browser.cpp
   buff.cpp
   building.cpp
   calc.cpp
@@ -27,8 +28,10 @@ set(ELONA_SOURCES
   ctrl_file.cpp
   ctrl_inventory.cpp
   debug.cpp
+  dialog.cpp
   dmgheal.cpp
   draw.cpp
+  draw_asset.cpp
   element.cpp
   elonacore.cpp
   enchantment.cpp
@@ -41,6 +44,7 @@ set(ELONA_SOURCES
   gdata.cpp
   get_card_info.cpp
   get_random_npc_id.cpp
+  globals.cpp
   god.cpp
   i18n.cpp
   init.cpp
@@ -52,8 +56,10 @@ set(ELONA_SOURCES
   item_load_desc.cpp
   item_material.cpp
   itemgen.cpp
+  loading_screen.cpp
   log.cpp
   magic.cpp
+  main.cpp
   main_menu.cpp
   map.cpp
   map_cell.cpp
@@ -90,6 +96,7 @@ set(ELONA_SOURCES
   turn_sequence.cpp
   turn_sequence_pc_actions.cpp
   ui.cpp
+  ui_menus.cpp
   variables.cpp
   wish.cpp
 
@@ -98,51 +105,37 @@ set(ELONA_SOURCES
   data/util.cpp
 
   lua_env/api_manager.cpp
+  lua_env/console.cpp
   lua_env/data_manager.cpp
   lua_env/event_manager.cpp
   lua_env/export_manager.cpp
   lua_env/handle_manager.cpp
   lua_env/i18n_function_manager.cpp
   lua_env/interface.cpp
-  lua_env/lua_console.cpp
   lua_env/lua_env.cpp
   lua_env/mod_manager.cpp
   lua_env/mod_manifest.cpp
+  lua_env/mod_serializer.cpp
 
   lua_env/enums/enums.cpp
 
-  lua_env/lua_api/lua_api_animation.cpp
-  lua_env/lua_api/lua_api_chara.cpp
   lua_env/lua_api/lua_api.cpp
-  lua_env/lua_api/lua_api_debug.cpp
-  lua_env/lua_api/lua_api_fov.cpp
-  lua_env/lua_api/lua_api_gui.cpp
-  lua_env/lua_api/lua_api_i18n.cpp
-  lua_env/lua_api/lua_api_input.cpp
-  lua_env/lua_api/lua_api_item.cpp
-  lua_env/lua_api/lua_api_magic.cpp
-  lua_env/lua_api/lua_api_map.cpp
-  lua_env/lua_api/lua_api_math.cpp
-  lua_env/lua_api/lua_api_pos.cpp
-  lua_env/lua_api/lua_api_rand.cpp
-  lua_env/lua_api/lua_api_skill.cpp
-  lua_env/lua_api/lua_api_trait.cpp
-  lua_env/lua_api/lua_api_world.cpp
 
   lua_env/lua_class/lua_class.cpp
   lua_env/lua_class/lua_class_ability.cpp
+  lua_env/lua_class/lua_class_area.cpp
   lua_env/lua_class/lua_class_character.cpp
+  lua_env/lua_class/lua_class_date_time.cpp
+  lua_env/lua_class/lua_class_game_data.cpp
   lua_env/lua_class/lua_class_item.cpp
+  lua_env/lua_class/lua_class_map_data.cpp
+  lua_env/lua_class/lua_class_map_generator.cpp
   lua_env/lua_class/lua_class_position.cpp
 
   config/config.cpp
   config/config_def.cpp
   config/set_option.cpp
   config/create_config_screen.cpp
-
-  dialog/dialog.cpp
-  dialog/dialog_data.cpp
-  dialog/dialog_decoder.cpp
 
   keybind/input_context.cpp
   keybind/key_names.cpp
@@ -151,47 +144,17 @@ set(ELONA_SOURCES
   keybind/keybind_deserializer.cpp
   keybind/keybind_manager.cpp
   keybind/keybind_serializer.cpp
+  keybind/macro_action_queue.cpp
 
   pic_loader/pic_loader.cpp
+  pic_loader/tinted_buffers.cpp
 
-  ui/ui_menu_adventurers.cpp
-  ui/ui_menu_alias.cpp
-  ui/ui_menu_book.cpp
-  ui/ui_menu_character_sheet.cpp
-  ui/ui_menu_charamake_alias.cpp
-  ui/ui_menu_charamake_attributes.cpp
-  ui/ui_menu_charamake_class.cpp
-  ui/ui_menu_charamake_gender.cpp
-  ui/ui_menu_charamake_race.cpp
-  ui/ui_menu_chat_history.cpp
-  ui/ui_menu_config.cpp
-  ui/ui_menu_crafting.cpp
-  ui/ui_menu_ctrl_ally.cpp
-  ui/ui_menu_dialog.cpp
-  ui/ui_menu_equipment.cpp
-  ui/ui_menu_feats.cpp
-  ui/ui_menu_game_help.cpp
-  ui/ui_menu_god.cpp
-  ui/ui_menu_hire.cpp
-  ui/ui_menu_item_desc.cpp
-  ui/ui_menu_journal.cpp
-  ui/ui_menu_keybindings.cpp
-  ui/ui_menu_materials.cpp
-  ui/ui_menu_message_log.cpp
-  ui/ui_menu_npc_tone.cpp
-  ui/ui_menu_quest_board.cpp
-  ui/ui_menu_scene.cpp
-  ui/ui_menu_skills.cpp
-  ui/ui_menu_spell_writer.cpp
-  ui/ui_menu_spells.cpp
-  ui/ui_menu_town_chart.cpp
-  ui/ui_menu_town_economy.cpp
-  ui/ui_menu_town_politics.cpp
-  ui/ui_menu_composite_character.cpp
-  ui/ui_menu_composite_message.cpp
-  ui/ui_menu_composite_skills.cpp
-  ui/ui_menu_composite_town.cpp
+  profile/profile.cpp
+  profile/profile_manager.cpp
   )
 
-add_library(elona STATIC ${ELONA_SOURCES})
-
+if(ANDROID_GENERATE_BUILD_FILES)
+  generate_android_mk(elona SOURCES ${ELONA_SOURCES})
+else()
+  add_library(elona STATIC ${ELONA_SOURCES})
+endif()

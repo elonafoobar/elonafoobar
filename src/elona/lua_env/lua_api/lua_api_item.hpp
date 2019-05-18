@@ -6,7 +6,12 @@ namespace elona
 namespace lua
 {
 
-namespace Item
+/**
+ * @luadoc
+ *
+ * Functions for working with items.
+ */
+namespace LuaApiItem
 {
 int count();
 
@@ -31,9 +36,13 @@ sol::optional<LuaItemHandle> stack(int, LuaItemHandle);
 
 int trade_rate(LuaItemHandle);
 
+sol::optional<LuaItemHandle> find(const std::string&, const EnumString&);
+
+std::string weight_string(int);
+
 
 void bind(sol::table&);
-} // namespace Item
+} // namespace LuaApiItem
 
 } // namespace lua
 } // namespace elona

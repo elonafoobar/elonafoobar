@@ -1,0 +1,117 @@
+--- A set of events that can be listened for using the <code>Event</code> module.
+-- @see Event
+-- @usage local Event = Elona.require("Event")
+-- local function my_chara_moved_handler(e)
+--    local chara = e.chara
+--    -- your code here
+-- end
+-- Event.register("core.character_moved", my_chara_moved_handler)
+module "core.event"
+
+--- Fired after the game has finished initially loading. This will
+--- only ever be fired once per game session. The starting map will be
+--- initialized before this is called.
+-- @event core.game_initialized
+
+--- Fired after a character has been initially created (but not loaded
+--- from a savefile).
+-- @event core.character_created
+-- @tfield LuaCharacter chara the character that was created
+
+--- Fired after an item has been initially created (but not loaded
+--- from a savefile).
+-- @event core.item_created
+-- @tfield LuaItem item the item that was created
+
+--- Fired after a character is no longer valid for use inside scripts.
+-- @event core.character_removed
+-- @tfield LuaCharacter chara the character that was removed
+
+--- Fired after an item is no longer valid for use inside scripts.
+-- @event core.item_removed
+-- @tfield LuaItem item the item that was removed
+
+--- Fired after a character is refreshed. This means various
+-- attributes like speed are recalculated. Also, intrinsic character
+-- flags (the first 32) will be automatically set from their prototype
+-- definitions on refresh. This means that if you want to set a
+-- character's intrinsic flag, you have to do so on this event.
+-- @see LuaCharacter.set_flag
+-- @event core.character_refreshed
+-- @tfield LuaCharacter chara the character that was refreshed
+
+--- Fired before a character is damaged. You can change the amount of
+--- damage taken by modifying <code>amount</code>.
+-- @event core.calc_character_damage
+-- @tfield LuaCharacter target the character will be damaged
+-- @tfield[opt] Enums.Element element the element type of the damage
+-- @tfield Enums.DamageSource|LuaCharacter source the source of the damage
+-- @tfield num damage (<b><i>mut</i></b>) the amount of damage
+
+--- Fired after a character is damaged.
+-- @event core.character_damaged
+-- @tfield LuaCharacter target the character that was damaged
+-- @tfield[opt] Enums.Element element the element type of the damage
+-- @tfield Enums.DamageSource|LuaCharacter source the source of the damage
+-- @tfield num damage the amount of damage
+
+--- Fired after a character was killed. This might not remove the
+--- character, because they might revive at some later time (like NPCs
+--- in towns). As such, you shouldn't remove the character's data from
+--- global storage here.
+-- @event core.character_killed
+-- @tfield LuaCharacter target the character that was killed
+-- @tfield[opt] Enums.Element element the element type of the damage received
+-- @tfield Enums.DamageSource|LuaCharacter source the source of the killing
+-- @tfield num damage the amount of damage that caused the killing
+
+--- Fired when a character is about to start moving.
+-- @event core.character_moved
+-- @tfield LuaCharacter chara the character that is moving
+-- @usage local GUI = Elona.require("GUI")
+-- local Event = Elona.require("Event")
+--
+-- local function my_chara_moved_handler(e)
+--     GUI.txt("The character " .. e.chara.name .. " is about to move. ")
+-- end
+--
+-- Event.register("core.character_moved", my_chara_moved_handler)
+
+--- Fired when a player's turn has just started.
+-- @event core.player_turn_started
+
+--- Fired when all characters have finished their actions this turn.
+-- @event core.all_turns_finished
+
+--- Fired after a map has been initialized.
+-- @event core.map_initialized
+-- @tfield bool regenerated true if this map was reset to its initial
+-- @tfield string id ID of the map
+-- @tfield num index the instance index of the map
+-- state on load
+-- @usage local Chara = Elona.require("Chara")
+-- local Event = Elona.require("Event")
+-- local Map = Elona.require("Map")
+--
+-- local function place_characters()
+--     for i=0, 50 do
+--         local pos = Map.random_pos()
+--         Chara.create(pos, "core.putit")
+--     end
+-- end
+--
+-- Event.register("core.map_initialized", place_characters)
+
+--- Fired before the current map is unloaded.
+-- @event core.before_map_unload
+
+--- Fired when all mods have finished loading.
+-- @event core.all_mods_loaded
+
+--- Fired when the startup script finished loading. This is only fired
+--- when the startup script config option is used.
+-- @event core.script_loaded
+
+--- Fired when a nefia is created.
+-- @tfield LuaArea nefia the created nefia
+-- @event core.script_loaded

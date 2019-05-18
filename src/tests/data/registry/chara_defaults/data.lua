@@ -3,8 +3,8 @@ data:add(
    {
       {
          type = "core.chara",
-         name = "nothing",
-         id = 9999
+         id = "nothing",
+         legacy_id = 9999
       }
    }
 )

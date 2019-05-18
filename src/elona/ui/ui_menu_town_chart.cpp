@@ -23,12 +23,9 @@ void UIMenuTownChart::update()
     cc = 0;
     cs_bk = -1;
     snd("core.chat");
-
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
+    asset_load("deco_politics");
     gsel(0);
-    fillbg(3, 960, 96, 128, 128);
+    draw_bg("deco_politics_a");
     render_hud();
     windowshadow = 1;
 
@@ -64,8 +61,9 @@ void UIMenuTownChart::draw()
         game_data.current_dungeon_level != 1)
     {
         font(14 - en * 2);
-        pos(wx + 40, wy + 50);
-        mes(i18n::s.get("core.locale.ui.town_chart.no_economy"));
+        mes(wx + 40,
+            wy + 50,
+            i18n::s.get("core.locale.ui.town_chart.no_economy"));
     }
     else
     {
@@ -99,8 +97,7 @@ void UIMenuTownChart::draw()
                 y = wy + 70 + n * 55;
             }
             x = wx + (ww - 70) / (i + 1) * (j0 + 1);
-            pos(x - 26, y - 3);
-            gcopy(3, 960, 288, 144, 24);
+            elona::draw("deco_politics_b", x - 26, y - 3);
             p = pochart(j0, n, lv);
             key_list(cnt) = key_select(cnt);
             ++keyrange;

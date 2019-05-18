@@ -410,8 +410,7 @@ void god_proc_switching_penalty()
     if (rtval == 0)
     {
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh - inf_verh);
+        gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
         gmode(2);
         render_hud();
         redraw();
@@ -429,7 +428,7 @@ void god_proc_switching_penalty()
             magic();
             snd("core.punish1");
             mode = 0;
-            await(Config::instance().animewait * 20);
+            await(Config::instance().animation_wait * 20);
         }
         cdata.player().god_id = core_god::int2godid(inv[ci].param1);
         switch_religion();
@@ -489,8 +488,7 @@ TurnResult do_pray()
     }
     Message::instance().linebreak();
     txt(i18n::s.get("core.locale.god.pray.prompt"));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval != 0)
+    if (!yes_no())
     {
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -553,8 +551,7 @@ TurnResult do_pray()
             if (f)
             {
                 txt(i18n::s.get("core.locale.god.pray.servant.prompt_decline"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval == 0)
+                if (yes_no())
                 {
                     ++game_data.god_rank;
                 }

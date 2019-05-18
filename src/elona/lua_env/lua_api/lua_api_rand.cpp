@@ -5,22 +5,67 @@ namespace elona
 namespace lua
 {
 
-int Rand::rnd(int n)
+/**
+ * @luadoc
+ *
+ * Returns a random number from 0 to n, exclusive.
+ * @tparam num n
+ * @treturn num a number in [0, n)
+ */
+int LuaApiRand::rnd(int n)
 {
     return elona::rnd(n);
 }
 
-bool Rand::one_in(int n)
+/**
+ * @luadoc
+ *
+ * Returns true one out of every n times.
+ * @tparam num n
+ * @treturn bool true one out of every n times
+ */
+bool LuaApiRand::one_in(int n)
 {
-    return Rand::rnd(n) == 0;
+    return LuaApiRand::rnd(n) == 0;
 }
 
-bool Rand::coinflip()
+/**
+ * @luadoc
+ *
+ * Returns true 50% of the time.
+ * @treturn bool true 50% of the time
+ */
+bool LuaApiRand::coinflip()
 {
-    return Rand::one_in(2);
+    return LuaApiRand::one_in(2);
 }
 
-sol::object Rand::choice(sol::table table)
+/**
+ * @luadoc
+ *
+ * Returns a random number from min to max, exclusive.
+ * @tparam num min
+ * @tparam num max
+ * @treturn num a number in [min, max)
+ */
+int LuaApiRand::between(int min, int max)
+{
+    if (max <= min)
+    {
+        return min;
+    }
+
+    return min + elona::rnd(max - min);
+}
+
+/**
+ * @luadoc
+ *
+ * Returns a random object from a table.
+ * @tparam table table a table
+ * @treturn object an object from the table
+ */
+sol::object LuaApiRand::choice(sol::table table)
 {
     if (table.size() == 0)
     {
@@ -30,12 +75,13 @@ sol::object Rand::choice(sol::table table)
     return table[elona::rnd(table.size()) + 1];
 }
 
-void Rand::bind(sol::table& api_table)
+void LuaApiRand::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, Rand, rnd);
-    LUA_API_BIND_FUNCTION(api_table, Rand, one_in);
-    LUA_API_BIND_FUNCTION(api_table, Rand, coinflip);
-    LUA_API_BIND_FUNCTION(api_table, Rand, choice);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, rnd);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, one_in);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, coinflip);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, between);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, choice);
 }
 
 } // namespace lua

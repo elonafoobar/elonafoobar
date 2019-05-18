@@ -1,59 +1,20 @@
 #include "filesystem.hpp"
 #include "defines.hpp"
 
-// For get_executable_path()
-#if defined(ELONA_OS_WINDOWS)
-#include <windows.h> // GetModuleFileName
-#elif defined(ELONA_OS_MACOS)
-#include <limits.h> // PATH_MAX
-#include <mach-o/dyld.h> // _NSGetExecutablePath
-#elif defined(ELONA_OS_LINUX)
-#include <limits.h> // PATH_MAX
-#include <unistd.h> // readlink
-#elif defined(ELONA_OS_ANDROID)
-#include "SDL_system.h" // SDL_AndroidGetExternalStoragePath
-#else
-#error Unsupported OS
-#endif
-
 
 
 namespace
 {
 
-fs::path get_executable_path()
+fs::path get_executable_dir()
 {
     static auto cache = ([] {
-#if defined(ELONA_OS_WINDOWS)
-        TCHAR buf[1024 + 1];
-        size_t buf_size = sizeof(buf);
-        if (GetModuleFileName(nullptr, buf, buf_size) == 0)
+        auto exe_name = filepathutil::get_executable_path();
+        if (!exe_name)
         {
             throw std::runtime_error(u8"Error: fail to get excutable path");
         }
-#elif defined(ELONA_OS_MACOS)
-        char buf[PATH_MAX + 1];
-        uint32_t buf_size = sizeof(buf);
-        if (_NSGetExecutablePath(buf, &buf_size) != 0)
-        {
-            throw std::runtime_error(u8"Error: fail to get excutable path");
-        }
-#elif defined(ELONA_OS_LINUX)
-        char buf[PATH_MAX + 1];
-        size_t buf_size = sizeof(buf);
-        if (readlink("/proc/self/exe", buf, buf_size) == -1)
-        {
-            throw std::runtime_error(u8"Error: fail to get excutable path");
-        }
-#elif defined(ELONA_OS_ANDROID)
-        std::string external_storage_path(SDL_AndroidGetExternalStoragePath());
-        if (external_storage_path.back() != '/')
-            external_storage_path += '/';
-        const char* buf = external_storage_path.c_str();
-#else
-#error Unsupported OS
-#endif
-        return fs::canonical(fs::path{buf}.remove_filename());
+        return fs::canonical(fs::path{*exe_name}.remove_filename());
     })();
 
     return cache;
@@ -71,7 +32,10 @@ namespace filesystem
 namespace dir
 {
 
+fs::path current_profile_dir;
+fs::path base_mod_dir;
 fs::path base_save_dir;
+fs::path base_user_dir;
 
 
 #define ELONA_DEFINE_PREDEFINED_DIR(func_name, path_name) \
@@ -84,18 +48,62 @@ ELONA_DEFINE_PREDEFINED_DIR(exe, "")
 ELONA_DEFINE_PREDEFINED_DIR(data, "data")
 ELONA_DEFINE_PREDEFINED_DIR(graphic, "graphic")
 ELONA_DEFINE_PREDEFINED_DIR(locale, "locale")
+ELONA_DEFINE_PREDEFINED_DIR(log, "log")
 ELONA_DEFINE_PREDEFINED_DIR(map, "map")
-ELONA_DEFINE_PREDEFINED_DIR(mods, "mods")
 ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
 ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
-ELONA_DEFINE_PREDEFINED_DIR(user, "user")
+ELONA_DEFINE_PREDEFINED_DIR(mod, "mod")
+ELONA_DEFINE_PREDEFINED_DIR(profile_root, "profile")
 
 #undef ELONA_DEFINE_PREDEFINED_DIR
+
+
+
+fs::path current_profile()
+{
+    return current_profile_dir;
+}
+
 
 
 fs::path save()
 {
     return base_save_dir;
+}
+
+
+
+fs::path user()
+{
+    return base_user_dir;
+}
+
+
+
+void set_current_profile_directory(const fs::path& current_profile_dir)
+{
+    dir::current_profile_dir = current_profile_dir;
+}
+
+
+
+void set_base_save_directory(const fs::path& base_save_dir)
+{
+    dir::base_save_dir = base_save_dir;
+}
+
+
+
+void set_base_user_directory(const fs::path& base_user_dir)
+{
+    dir::base_user_dir = base_user_dir;
+}
+
+
+
+fs::path for_mod(const std::string& mod_id)
+{
+    return mod() / filepathutil::u8path(mod_id);
 }
 
 
@@ -107,16 +115,18 @@ fs::path save(const std::string& player_id)
 
 
 
-fs::path for_mod(const std::string& mod_id)
+fs::path user_script()
 {
-    return mods() / filepathutil::u8path(mod_id);
+    return current_profile() / u8"script";
 }
 
 
 
-void set_base_save_directory(const fs::path& base_save_dir)
+void set_profile_directory(const fs::path& profile_dir)
 {
-    dir::base_save_dir = base_save_dir;
+    set_current_profile_directory(profile_dir);
+    set_base_save_directory(profile_dir / u8"save");
+    set_base_user_directory(profile_dir / u8"user");
 }
 
 } // namespace dir
@@ -125,7 +135,7 @@ void set_base_save_directory(const fs::path& base_save_dir)
 
 fs::path path(const std::string& str)
 {
-    return get_executable_path() / filepathutil::u8path(str);
+    return get_executable_dir() / filepathutil::u8path(str);
 }
 
 
@@ -133,14 +143,14 @@ fs::path path(const std::string& str)
 fs::path resolve_path_for_mod(const std::string& mod_local_path)
 {
     // TODO: standardize mod naming convention.
-    std::regex mod_name_regex("^__([a-zA-Z0-9_]+)__/(.*)");
+    std::regex mod_id_regex("^__([a-zA-Z0-9_]+)__/(.*)");
     std::smatch match;
-    std::string mod_name, rest;
+    std::string mod_id, rest;
 
-    if (std::regex_match(mod_local_path, match, mod_name_regex) &&
+    if (std::regex_match(mod_local_path, match, mod_id_regex) &&
         match.size() == 3)
     {
-        mod_name = match.str(1);
+        mod_id = match.str(1);
         rest = match.str(2);
     }
     else
@@ -148,13 +158,56 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
         throw std::runtime_error("Invalid filepath syntax: " + mod_local_path);
     }
 
-    if (mod_name == "BUILTIN")
+    if (mod_id == "BUILTIN")
     {
         return dir::exe() / rest;
     }
     else
     {
-        return dir::for_mod(mod_name) / rest;
+        return dir::for_mod(mod_id) / rest;
+    }
+}
+
+
+
+void copy_recursively(const fs::path& source, const fs::path& destination)
+{
+    // Check pre-conditions.
+    if (!fs::exists(source) || !fs::is_directory(source))
+    {
+        throw std::runtime_error(
+            "Source must be an existing directory: " +
+            filepathutil::to_utf8_path(source));
+    }
+    if (fs::exists(destination))
+    {
+        throw std::runtime_error(
+            "Destination must not exist: " +
+            filepathutil::to_utf8_path(source));
+    }
+
+    // mkdir destination
+    if (!fs::create_directories(destination))
+    {
+        throw std::runtime_error{
+            "Failed to create directory: " +
+            filepathutil::make_preferred_path_in_utf8(destination)};
+    }
+
+    // Iterate all files under source.
+    for (const auto& entry : fs::directory_iterator{source})
+    {
+        const auto from = entry.path();
+        const auto to = destination / from.filename();
+        if (fs::is_directory(from))
+        {
+            // Call itself recursively.
+            copy_recursively(from, to);
+        }
+        else
+        {
+            fs::copy_file(from, to);
+        }
     }
 }
 

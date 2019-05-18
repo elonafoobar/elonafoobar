@@ -6,7 +6,7 @@ locale {
         ]
 
         ally {
-            sells_items = "${name(_1)} sells ${_2} items and earns ${_3} gold pieces."
+            sells_items = "${name(_1)} sells ${_2} item${s(_2)} and earns ${_3} gold piece${s(_3)}."
             visits_trainer = "${basename(_1)} visits a trainer and develops ${his(_1)} potential!"
         }
 

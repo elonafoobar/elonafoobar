@@ -21,6 +21,10 @@ protected:
         const std::string& key);
 
 private:
+    void _draw_window();
+    void _draw_economy_info(int);
+    void _draw_economy_details();
+
     int _city;
 };
 

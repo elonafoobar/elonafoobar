@@ -48,15 +48,13 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
     {
         window2(x + 20, y, dx - 40, 36, 0, 2);
         draw("label_input", x + dx / 2 - 56, y - 32);
-        pos(x + 28, y + 4);
-        gcopy(3, 312, 336, 24, 24);
-        pos(x + dx - 51, y + 4);
-        gcopy(3, 336, 336, 24, 24);
+        draw("arrow_left", x + 28, y + 4);
+        draw("arrow_right", x + dx - 51, y + 4);
         const std::string inputlog2 = inputlog + u8"(" + max_number + u8")";
-        pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + vfix + 11);
-        color(255, 255, 255);
-        mes(inputlog2);
-        color(0, 0, 0);
+        mes(x + dx - 70 - strlen_u(inputlog2) * 8 + 8,
+            y + vfix + 11,
+            inputlog2,
+            {255, 255, 255});
         redraw();
         auto action = key_check();
         if (action == "enter")
@@ -160,7 +158,6 @@ bool input_text_dialog(
     dx = val2 * 16 + 60;
     font(16 - en * 2);
 
-    pos(x, y);
     inputlog = "";
     mesbox(inputlog, true);
     boxf(x + 4, y + 4, dx - 1, 35, {0, 0, 0, 127});
@@ -178,7 +175,7 @@ bool input_text_dialog(
             --cnt;
             continue;
         }
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         window2(x, y, dx, 36, 0, 2);
         draw("label_input", x + dx / 2 - 60, y - 32);
 
@@ -186,8 +183,7 @@ bool input_text_dialog(
         apledit(p(2), 2, 0);
         if (p(2) > val2 * (1 + en) - 2)
         {
-            pos(x + 8, y + 4);
-            gcopy(3, 72, 336, 24, 24);
+            draw("ime_status_none", x + 8, y + 4);
         }
         if (cnt % 20 < 10)
         {
@@ -262,13 +258,10 @@ bool input_text_dialog(
             }
         }
 
-        gmode(4, p(1) / 2 + 50);
+        gmode(2, p(1) / 2 + 50);
         draw("input_caret", x + 34 + p(4) * 8, y + 5);
         gmode(2);
-        color(255, 255, 255);
-        pos(x + 36, y + vfix + 9);
-        mes(s);
-        color(0, 0, 0);
+        mes(x + 36, y + vfix + 9, s, {255, 255, 255});
 
         redraw();
     }
@@ -287,23 +280,23 @@ bool input_text_dialog(
 
 static void _proc_android_vibrate()
 {
-    if (Config::instance().get<bool>("core.config.android.vibrate"))
+    if (Config::instance().get<bool>("core.android.vibrate"))
     {
         int duration =
-            Config::instance().get<int>("core.config.android.vibrate_duration");
+            Config::instance().get<int>("core.android.vibrate_duration");
         snail::android::vibrate(static_cast<long>(duration * 25));
     }
 }
 
 static void _handle_msgalert()
 {
-    if (Config::instance().alert > 1)
+    if (Config::instance().alert_wait > 1)
     {
         _proc_android_vibrate();
 
-        for (int i = 0; i < Config::instance().alert; ++i)
+        for (int i = 0; i < Config::instance().alert_wait; ++i)
         {
-            await(Config::instance().wait1);
+            await(Config::instance().general_wait);
         }
         keylog = "";
     }
@@ -335,7 +328,7 @@ std::string key_check(KeyWaitDelay delay_type)
 
     _update_pressed_key_name();
 
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     return InputContext::for_menu().check_for_command(delay_type);
 }
 
@@ -350,7 +343,7 @@ std::string key_check_pc_turn(KeyWaitDelay delay_type)
 
     _update_pressed_key_name();
 
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     return InputContext::instance().check_for_command(delay_type);
 }
 
@@ -365,7 +358,7 @@ std::string cursor_check_ex(int& index)
 
     _update_pressed_key_name();
 
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     return InputContext::for_menu().check_for_command_with_list(index);
 }
 
@@ -387,7 +380,7 @@ std::string get_selected_item(int& p_)
     _update_pressed_key_name();
 
     int index{};
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     auto command = InputContext::for_menu().check_for_command_with_list(index);
 
     p_ = -1;
@@ -411,13 +404,22 @@ optional<int> get_shortcut(const std::string& action)
 }
 
 
-int yes_or_no(int x, int y, int width)
+
+YesNo yes_no()
 {
-    Prompt result;
-    result.append(i18n::s.get("core.locale.ui.yes"), snail::Key::key_y, 0);
-    result.append(i18n::s.get("core.locale.ui.no"), snail::Key::key_n, 1);
-    return result.query(x, y, width);
+    Prompt prompt;
+    prompt.append(i18n::s.get("core.locale.ui.yes"), snail::Key::key_y, 0);
+    prompt.append(i18n::s.get("core.locale.ui.no"), snail::Key::key_n, 1);
+
+    const auto result = prompt.query(promptx, prompty, 160);
+    if (result == 0)
+        return YesNo::yes;
+    else if (result == 1)
+        return YesNo::no;
+    else
+        return YesNo::canceled;
 }
+
 
 
 bool is_modifier_pressed(snail::ModKey modifier)
@@ -430,11 +432,11 @@ void wait_key_released()
 {
     while (1)
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         const auto input = stick(StickKey::mouse_left | StickKey::mouse_right);
         if (input == StickKey::none)
         {
-            await(Config::instance().wait1);
+            await(Config::instance().general_wait);
             auto action = key_check();
             if (action == "")
             {
@@ -453,7 +455,7 @@ void wait_key_pressed(bool only_enter_or_cancel)
 
     while (1)
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         auto action = key_check();
         if (only_enter_or_cancel)
         {

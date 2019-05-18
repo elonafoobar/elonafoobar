@@ -1,5 +1,7 @@
 #include "ui_menu_keybindings.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_asset.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../keybind/keybind_manager.hpp"
@@ -38,7 +40,7 @@ static std::string _action_category_to_name(ActionCategory category)
 }
 
 static std::string _get_localized_action_name(
-    const std::string& mod_name,
+    const std::string& mod_id,
     const std::string& action_id,
     ActionCategory action_category)
 {
@@ -54,20 +56,19 @@ static std::string _get_localized_action_name(
         {
             action_index_plus_1 -= 10;
         }
-        localized_name = i18n::s.get(mod_name + ".locale.keybind.shortcut") +
+        localized_name = i18n::s.get(mod_id + ".locale.keybind.shortcut") +
             std::to_string(action_index_plus_1);
         break;
     }
     case ActionCategory::selection:
     {
         const auto action_index_plus_1 = keybind_index_number(action_id) + 1;
-        localized_name = i18n::s.get(mod_name + ".locale.keybind.select") +
+        localized_name = i18n::s.get(mod_id + ".locale.keybind.select") +
             std::to_string(action_index_plus_1);
         break;
     }
     default:
-        localized_name =
-            i18n::s.get(mod_name + ".locale.keybind."s + action_id);
+        localized_name = i18n::s.get(mod_id + ".locale.keybind."s + action_id);
         break;
     }
 
@@ -118,16 +119,16 @@ static void _load_keybindings()
             const auto& action_id = pair->second;
             const auto& keybind_config = keybind_manager.binding(pair->second);
 
-            const auto mod_name = "core"s;
-            std::string localized_name = _get_localized_action_name(
-                mod_name, action_id, action_category);
+            const auto mod_id = "core"s;
+            std::string localized_name =
+                _get_localized_action_name(mod_id, action_id, action_category);
 
             _push_keybind_entry(action_id, localized_name, keybind_config);
         }
     }
 }
 
-static void _draw_background()
+void UIMenuKeybindings::_draw_background()
 {
     int bg_variant_buffer = mode == 10 ? 2 : 4;
     load_background_variants(bg_variant_buffer);
@@ -140,15 +141,12 @@ static void _draw_background()
     }
     if (mode == 10)
     {
-        gsel(4);
         gmode(0);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"title.bmp", 1);
-        gcopy(4, 0, 0, 800, 600, windoww, windowh);
+        asset_load("title");
+        elona::draw("title", 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
     }
 }
@@ -160,16 +158,15 @@ bool UIMenuKeybindings::init()
     pagesize = 15;
     cs = 0;
 
-    wx = (windoww - 700) / 2 + inf_screenx;
-    wy = winposy(400) - 10;
-    ww = 700;
-    wh = 400;
-
     _draw_background();
 
-    gsel(7);
-    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
+    const auto& info = asset_load("ie_sheet");
     gsel(0);
+
+    wx = (windoww - info.width) / 2 + inf_screenx;
+    wy = winposy(info.height) - 10;
+    ww = info.width;
+    wh = info.height;
 
     _load_keybindings();
 
@@ -193,7 +190,7 @@ void UIMenuKeybindings::update()
     }
 }
 
-static void _draw_window()
+void UIMenuKeybindings::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.config.menu.keybindings.name"),
@@ -204,7 +201,7 @@ static void _draw_window()
         wh);
 }
 
-static void _draw_topics()
+void UIMenuKeybindings::_draw_topics()
 {
     display_topic(
         i18n::s.get("core.locale.keybind.menu.topics.name"),
@@ -224,7 +221,7 @@ static void _draw_topics()
         wy + 36);
 }
 
-static void _draw_keys()
+void UIMenuKeybindings::_draw_keys()
 {
     keyrange = 0;
     int item_count = 0;
@@ -268,26 +265,30 @@ static void _draw_keys()
     }
 }
 
-static void _draw_keybind_entry(int cnt, const std::string& text)
+void UIMenuKeybindings::_draw_keybind_entry(int cnt, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + _x_align_action_name, wy + 66 + cnt * 19 - 1);
 
-    pos(wx + _x_align_binding_primary, wy + 66 + cnt * 19 + 2);
-    mes(listn(2, pagesize * page + cnt));
+    mes(wx + _x_align_binding_primary,
+        wy + 66 + cnt * 19 + 2,
+        listn(2, pagesize * page + cnt));
 
-    pos(wx + _x_align_binding_alternate, wy + 66 + cnt * 19 + 2);
-    mes(listn(3, pagesize * page + cnt));
+    mes(wx + _x_align_binding_alternate,
+        wy + 66 + cnt * 19 + 2,
+        listn(3, pagesize * page + cnt));
 }
 
-static void _draw_text_entry(int cnt, const std::string& text)
+void UIMenuKeybindings::_draw_text_entry(int cnt, const std::string& text)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     cs_list(cs == cnt, text, wx + 88, wy + 66 + cnt * 19);
     font(14 - en * 2);
 }
 
-static void
-_draw_single_list_entry(int cnt, int list_item, const std::string& text)
+void UIMenuKeybindings::_draw_single_list_entry(
+    int cnt,
+    int list_item,
+    const std::string& text)
 {
     if (list_item >= 0)
     {
@@ -299,7 +300,7 @@ _draw_single_list_entry(int cnt, int list_item, const std::string& text)
     }
 }
 
-static void _draw_list_entries()
+void UIMenuKeybindings::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -347,7 +348,7 @@ public:
 protected:
     optional<bool> update() override
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
 
         const auto& keys = snail::Input::instance().pressed_keys();
 
@@ -406,10 +407,9 @@ private:
     void _print_conflict(std::ostream& out, const std::string& action_id)
     {
         const auto category = keybind::actions.at(action_id).category;
-        const auto mod_name = "core";
+        const auto mod_id = "core";
         out << "  " << _action_category_to_name(category) << ": "
-            << _get_localized_action_name(mod_name, action_id, category)
-            << "\n";
+            << _get_localized_action_name(mod_id, action_id, category) << "\n";
     }
 
 
@@ -453,7 +453,7 @@ public:
 protected:
     optional<KeyPromptResult> update() override
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
 
         const auto& keys = snail::Input::instance().pressed_keys();
         auto modifiers = snail::Input::instance().modifiers();
@@ -583,8 +583,9 @@ optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(
     {
         KeybindManager::instance().save();
 
-        // Return to the root config menu (index 0).
-        return UIMenuKeybindings::Result::finish(0);
+        // Return to the previous menu.
+        UIMenuConfigResult result = {true, 0};
+        return UIMenuKeybindings::Result::finish(result);
     }
 
     return none;

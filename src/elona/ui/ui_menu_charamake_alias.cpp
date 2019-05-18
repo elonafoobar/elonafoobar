@@ -1,8 +1,10 @@
 #include "ui_menu_charamake_alias.hpp"
 #include "../audio.hpp"
 #include "../character_making.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
+#include "../text.hpp"
 
 namespace elona
 {
@@ -42,7 +44,7 @@ void UIMenuCharamakeAlias::_reroll_aliases()
             }
             else
             {
-                listn(0, cnt) = random_title();
+                listn(0, cnt) = random_title(RandomTitleType::character);
             }
         }
         if (cnt == 0)
@@ -64,7 +66,7 @@ void UIMenuCharamakeAlias::update()
     _redraw_aliases = true;
 }
 
-static void _draw_window()
+void UIMenuCharamakeAlias::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.chara_making.select_alias.title"),
@@ -78,9 +80,17 @@ static void _draw_window()
     ++cmbg;
     x = ww / 3 * 2;
     y = wh - 80;
-    pos(wx + ww / 2, wy + wh / 2);
-    gmode(4, 40);
-    gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2, 40);
+    gcopy_c(
+        2,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 2,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.chara_making.select_alias.alias_list"),
@@ -88,20 +98,19 @@ static void _draw_window()
         wy + 30);
 }
 
-static void _draw_alias_locked(int cnt)
+void UIMenuCharamakeAlias::_draw_alias_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    pos(wx + 280, wy + 66 + cnt * 19 + 2);
-    color(20, 20, 140);
-    mes(u8"Locked!"s);
-    color(0, 0, 0);
+    mes(wx + 280, wy + 66 + cnt * 19 + 2, u8"Locked!"s, {20, 20, 140});
 }
 
-static void _draw_alias(int cnt, const std::string& text, bool is_locked)
+void UIMenuCharamakeAlias::_draw_alias(
+    int cnt,
+    const std::string& text,
+    bool is_locked)
 {
     font(14 - en * 2);
-    pos(wx + 38, wy + 66 + cnt * 19 - 2);
-    gcopy(3, cnt * 24 + 72, 30, 24, 18);
+    display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 
     if (is_locked)

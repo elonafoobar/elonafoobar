@@ -7,14 +7,19 @@ namespace elona
 namespace lua
 {
 
-namespace Pos
+/**
+ *@luadoc
+ *
+ * Functions for working with positions.
+ */
+namespace LuaApiPos
 {
 int dist(const Position&, const Position&);
 int dist_xy(int, int, int, int);
 
 
 void bind(sol::table&);
-} // namespace Pos
+} // namespace LuaApiPos
 
 } // namespace lua
 } // namespace elona

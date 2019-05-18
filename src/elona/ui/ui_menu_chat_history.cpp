@@ -1,5 +1,6 @@
 #include "ui_menu_chat_history.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 
 
@@ -21,10 +22,7 @@ void _draw_messages()
     i = 0;
     s = u8"No new messages received."s;
     i += talk_conv(s, (ww - 110 - en * 50) / 7);
-    pos(wx + 48, (19 - i) * 16 + wy + 48);
-    color(30, 20, 10);
-    mes(s);
-    color(0, 0, 0);
+    mes(wx + 48, (19 - i) * 16 + wy + 48, s, {30, 20, 10});
 }
 
 } // namespace
@@ -41,9 +39,7 @@ bool UIMenuChatHistory::init()
     key_list(0) = key_enter;
     keyrange = 0;
     pagesize = 0;
-    gsel(7);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
+    asset_load("ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

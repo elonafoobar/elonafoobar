@@ -40,8 +40,10 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/character_instance_event.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
@@ -52,7 +54,6 @@
 #include "menu.hpp"
 #include "message.hpp"
 #include "network.hpp"
-#include "putit.hpp"
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -61,6 +62,7 @@
 #include "save_update.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "turn_sequence.hpp"
 #include "ui.hpp"
@@ -88,28 +90,35 @@ void select_house_board_tile()
 {
     snd("core.pop2");
 
+    auto box_size = inf_tiles / 2;
     while (1)
     {
         gmode(0);
         p = 0;
+        // TODO
         for (int y = 0; y < 20; ++y)
         {
             for (int x = 0; x < 33; ++x)
             {
                 if (p < listmax)
                 {
-                    pos(x * 24, y * 24);
-                    gcopy(
-                        2,
-                        list(0, p) % 33 * 48,
-                        list(0, p) / 33 * 48,
-                        48,
-                        48,
-                        24,
-                        24);
-                    if (chipm(7, list(0, p)) & 4)
+                    const auto& chip = chip_data[list(0, p)];
+                    draw_map_tile(
+                        list(0, p),
+                        x * box_size,
+                        y * box_size,
+                        inf_tiles,
+                        inf_tiles,
+                        box_size,
+                        box_size);
+                    if (chip.effect & 4)
                     {
-                        boxl(x * 24, y * 24, 24, 24, {240, 230, 220});
+                        boxl(
+                            x * box_size,
+                            y * box_size,
+                            box_size,
+                            box_size,
+                            {240, 230, 220});
                     }
                 }
                 ++p;
@@ -118,11 +127,11 @@ void select_house_board_tile()
 
         gmode(2);
         redraw();
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         const auto input = stick();
         if (input == StickKey::mouse_left)
         {
-            p = mousex / 24 + mousey / 24 * 33;
+            p = mousex / box_size + mousey / box_size * 33;
             if (p >= listmax)
             {
                 snd("core.fail1");
@@ -537,17 +546,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (Config::instance().autoturn == "normal")
+    if (Config::instance().auto_turn_speed == "normal")
     {
         await(delay);
         ++scrturn;
     }
-    if (Config::instance().autoturn != "highest" || firstautoturn == 1)
+    if (Config::instance().auto_turn_speed != "highest" || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (Config::instance().autoturn == "normal")
+    if (Config::instance().auto_turn_speed == "normal")
     {
         redraw();
     }
@@ -700,7 +709,7 @@ void initialize_picfood()
 
 void finish_elona()
 {
-    if (Config::instance().autonumlock)
+    if (Config::instance().autodisable_numlock)
     {
         snail::Input::instance().restore_numlock();
     }
@@ -734,49 +743,6 @@ void csvsort(
             break;
         }
         p_at_m40(0) += strsize;
-    }
-}
-
-
-
-void load_random_name_table()
-{
-    std::vector<std::string> lines;
-    range::copy(
-        fileutil::read_by_line(
-            i18n::s.get_locale_dir("core") / "lazy" / "ndata.csv"),
-        std::back_inserter(lines));
-
-    SDIM3(randn1, 30, 20);
-    SDIM4(rnlist, 20, 15, lines.size());
-
-    for (size_t i = 0; i < lines.size(); ++i)
-    {
-        csvsort(randn1, lines[i], 44);
-        for (size_t j = 0; j < 15; ++j)
-        {
-            rnlist(j, i) = randn1(j);
-        }
-    }
-}
-
-
-
-void load_random_title_table()
-{
-    std::vector<std::string> lines;
-    range::copy(
-        fileutil::read_by_line(filesystem::dir::data() / u8"name.csv"),
-        std::back_inserter(lines));
-
-    SDIM3(rn1, 15, lines.size());
-    SDIM3(rn2, 15, lines.size());
-
-    for (size_t i = 0; i < lines.size(); ++i)
-    {
-        csvsort(randn1, lines[i], 44);
-        rn1(i) = lang(randn1(0), randn1(1));
-        rn2(i) = lang(randn1(2), randn1(3));
     }
 }
 
@@ -1056,14 +1022,14 @@ int route_info(int& x, int& y, int n)
         {
             return 0;
         }
-        if (chipm(7, cell_data.at(x, y).chip_id_actual) & 1)
+        if (chip_data.for_cell(x, y).effect & 1)
         {
             return 0;
         }
         if (cell_data.at(x, y).feats != 0)
         {
             cell_featread(x, y);
-            if (chipm(7, feat) & 1)
+            if (chip_data[feat].effect & 1)
             {
                 return 0;
             }
@@ -1129,7 +1095,7 @@ int breath_list()
                 {
                     continue;
                 }
-                if (chipm(7, cell_data.at(tx, ty).chip_id_actual) & 1)
+                if (chip_data.for_cell(tx, ty).effect & 1)
                 {
                     continue;
                 }
@@ -1563,7 +1529,7 @@ void animeload(int animation_type, int chara_index)
     {
         return;
     }
-    if (Config::instance().animewait == 0)
+    if (Config::instance().animation_wait == 0)
     {
         return;
     }
@@ -1575,15 +1541,17 @@ void animeload(int animation_type, int chara_index)
         (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(
-        filesystem::dir::graphic() / (u8"anime"s + animation_type + u8".bmp"));
+        filesystem::dir::graphic() / (u8"anime"s + animation_type + u8".bmp"),
+        0,
+        0,
+        true);
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, dx_at_m133 - 24, dy_at_m133 - 40, 96, 96);
+    gcopy(0, dx_at_m133 - 24, dy_at_m133 - 40, 96, 96, 0, 0);
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = Config::instance().animewait * 3.5;
+    i_at_m133(1) = Config::instance().animation_wait * 3.5;
     r_at_m133 = 0;
     if (animation_type == 8)
     {
@@ -1592,31 +1560,37 @@ void animeload(int animation_type, int chara_index)
     if (animation_type == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = Config::instance().animewait * 2.5;
+        i_at_m133(1) = Config::instance().animation_wait * 2.5;
         r_at_m133 = 0.2;
         snd("core.enc2");
     }
     if (animation_type == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = Config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animation_wait * 3.5;
         r_at_m133 = 0;
         snd("core.enc");
     }
     if (animation_type == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = Config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animation_wait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
         gmode(2);
-        pos(dx_at_m133 + 24, dy_at_m133 + 8);
-        grotate(7, cnt * 96, 0, 96, 96, r_at_m133 * cnt);
+        grotate(
+            7,
+            cnt * 96,
+            0,
+            96,
+            96,
+            dx_at_m133 + 24,
+            dy_at_m133 + 8,
+            r_at_m133 * cnt);
         gmode(0);
         redraw();
-        pos(dx_at_m133 - 24, dy_at_m133 - 40);
-        gcopy(4, 0, 0, 96, 96);
+        gcopy(4, 0, 0, 96, 96, dx_at_m133 - 24, dy_at_m133 - 40);
         await(i_at_m133(1));
     }
     gmode(2);
@@ -1628,7 +1602,7 @@ void animeblood(int cc, int animation_type, int element)
 {
     if (is_in_fov(cdata[cc]) == 0)
         return;
-    if (Config::instance().animewait == 0)
+    if (Config::instance().animation_wait == 0)
         return;
 
     int cnt2_at_m133 = 0;
@@ -1649,52 +1623,51 @@ void animeblood(int cc, int animation_type, int element)
     dy_at_m133(1) = 0;
     gsel(4);
     gmode(0);
-    pos(0, 0);
-    gcopy(0, dx_at_m133 - 48, dy_at_m133 - 56, 144, 160);
+    gcopy(0, dx_at_m133 - 48, dy_at_m133 - 56, 144, 160, 0, 0);
 
     int ele2_at_m133 = 1;
     gsel(7);
     switch (element)
     {
     case 52:
-        picload(filesystem::dir::graphic() / u8"anime18.bmp");
+        picload(filesystem::dir::graphic() / u8"anime18.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 51:
-        picload(filesystem::dir::graphic() / u8"anime19.bmp");
+        picload(filesystem::dir::graphic() / u8"anime19.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 50:
-        picload(filesystem::dir::graphic() / u8"anime20.bmp");
+        picload(filesystem::dir::graphic() / u8"anime20.bmp", 0, 0, true);
         dy_at_m133(1) = -20;
         break;
     case 56:
-        picload(filesystem::dir::graphic() / u8"anime22.bmp");
+        picload(filesystem::dir::graphic() / u8"anime22.bmp", 0, 0, true);
         dy_at_m133(1) = -24;
         break;
     case 53:
-        picload(filesystem::dir::graphic() / u8"anime21.bmp");
+        picload(filesystem::dir::graphic() / u8"anime21.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 54:
-        picload(filesystem::dir::graphic() / u8"anime23.bmp");
+        picload(filesystem::dir::graphic() / u8"anime23.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 57:
-        picload(filesystem::dir::graphic() / u8"anime24.bmp");
+        picload(filesystem::dir::graphic() / u8"anime24.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 59:
-        picload(filesystem::dir::graphic() / u8"anime25.bmp");
+        picload(filesystem::dir::graphic() / u8"anime25.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 58:
-        picload(filesystem::dir::graphic() / u8"anime26.bmp");
+        picload(filesystem::dir::graphic() / u8"anime26.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 55:
     case 63:
-        picload(filesystem::dir::graphic() / u8"anime27.bmp");
+        picload(filesystem::dir::graphic() / u8"anime27.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     default: ele2_at_m133 = 0; break;
@@ -1717,32 +1690,39 @@ void animeblood(int cc, int animation_type, int element)
         gmode(2);
         if (ele2_at_m133)
         {
-            pos(dx_at_m133 - 24, dy_at_m133 - 32 + dy_at_m133(1));
-            gcopy(7, cnt * 96, 0, 96, 96);
+            gcopy(
+                7,
+                cnt * 96,
+                0,
+                96,
+                96,
+                dx_at_m133 - 24,
+                dy_at_m133 - 32 + dy_at_m133(1));
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            pos(dx_at_m133 + 24 + x_at_m133(cnt) +
-                    (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1) *
-                        cnt2_at_m133 +
-                    (x_at_m133(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2_at_m133,
-                dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2 -
-                    12 + cnt);
             grotate(
                 1,
                 0,
                 960,
                 inf_tiles,
                 inf_tiles,
+                dx_at_m133 + 24 + x_at_m133(cnt) +
+                    (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1) *
+                        cnt2_at_m133 +
+                    (x_at_m133(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2_at_m133,
+                dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2 -
+                    12 + cnt,
                 24 - cnt2_at_m133 * 2,
                 24 - cnt2_at_m133 * 2,
                 0.2 * cnt);
         }
         gmode(0);
         redraw();
-        pos(dx_at_m133 - 48, dy_at_m133 - 56);
-        gcopy(4, 0, 0, 144, 160);
-        await(Config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
+        gcopy(4, 0, 0, 144, 160, dx_at_m133 - 48, dy_at_m133 - 56);
+        await(
+            Config::instance().animation_wait *
+            (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
 
     gmode(2);
@@ -1769,7 +1749,7 @@ void spillblood(int x, int y, int range)
         {
             continue;
         }
-        if (chipm(2, cell_data.at(dx_at_m136, dy_at_m136).chip_id_actual))
+        if (chip_data.for_cell(dx_at_m136, dy_at_m136).wall_kind)
         {
             continue;
         }
@@ -1801,7 +1781,7 @@ void spillfrag(int x, int y, int range)
         {
             continue;
         }
-        if (chipm(2, cell_data.at(dx_at_m136, dy_at_m136).chip_id_actual))
+        if (chip_data.for_cell(dx_at_m136, dy_at_m136).wall_kind)
         {
             continue;
         }
@@ -2274,7 +2254,7 @@ void proc_turn_end(int cc)
         if (rnd(80) == 0)
         {
             p = rnd(10);
-            if (encfind(cc, 60010 + p) == -1)
+            if (!enchantment_find(cdata[cc], 60010 + p))
             {
                 cdata[cc].attr_adjs[p] -=
                     sdata.get(10 + p, cc).original_level / 25 + 1;
@@ -2668,11 +2648,11 @@ int convertartifact(int item_index, int ignore_external_container)
         return item_index;
     }
     f_at_m163 = 0;
-    for (int cnt = 0; cnt < 5480; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
         if (ignore_external_container)
         {
-            if (cnt >= 5080)
+            if (cnt >= ELONA_ITEM_ON_GROUND_INDEX)
             {
                 break;
             }
@@ -2962,8 +2942,9 @@ void initialize_set_of_random_generation()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"book.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "book.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -3672,7 +3653,7 @@ void character_drops_item()
         }
     }
 
-    // ../runtime/mods/core/exports/impl/chara_drop.lua
+    // ../runtime/profile/_/mod/core/exports/impl/chara_drop.lua
     lua::call(
         "exports:core.impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
 
@@ -3919,7 +3900,7 @@ void auto_identify()
             s = itemname(ci);
             item_identify(inv[ci], IdentifyState::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
-            if (!Config::instance().hideautoidentify)
+            if (!Config::instance().hide_autoidentify)
             {
                 txt(i18n::s.get(
                     "core.locale.misc.identify.fully_identified",
@@ -3932,7 +3913,7 @@ void auto_identify()
         {
             if (p > rnd(p(1)))
             {
-                if (!Config::instance().hideautoidentify)
+                if (!Config::instance().hide_autoidentify)
                 {
                     txt(i18n::s.get(
                         "core.locale.misc.identify.almost_identified",
@@ -4000,7 +3981,7 @@ void lovemiracle(int chara_index)
 
 void get_pregnant()
 {
-    if (encfind(tc, 48) != -1)
+    if (enchantment_find(cdata[tc], 48))
     {
         if (is_in_fov(cdata[tc]))
         {
@@ -4082,6 +4063,11 @@ TurnResult exit_map()
     int previous_map = game_data.current_map;
     int previous_dungeon_level = game_data.current_dungeon_level;
     int fixstart = 0;
+
+    ELONA_LOG("map") << "exit_map levelexitby begin " << levelexitby << " cur "
+                     << game_data.current_map << " cur_level "
+                     << game_data.current_dungeon_level;
+
     game_data.left_minutes_of_executing_quest = 0;
     game_data.rogue_boss_encountered = 0;
     if (map_data.type == mdata_t::MapType::player_owned)
@@ -4116,7 +4102,7 @@ TurnResult exit_map()
         }
     }
     game_data.previous_map = game_data.current_map;
-    if (game_data.previous_map == 30)
+    if (game_data.previous_map == mdata_t::MapId::shelter_)
     {
         game_data.current_map = game_data.previous_map2;
         game_data.current_dungeon_level = game_data.previous_dungeon_level;
@@ -4291,7 +4277,8 @@ TurnResult exit_map()
         game_data.current_dungeon_level = game_data.destination_dungeon_level;
         if (game_data.executing_immediate_quest_type == 0)
         {
-            if (game_data.previous_map != 2)
+            if (game_data.previous_map !=
+                static_cast<int>(mdata_t::MapId::fields))
             {
                 game_data.pc_x_in_world_map =
                     area_data[game_data.current_map].position.x;
@@ -4313,7 +4300,8 @@ TurnResult exit_map()
         rc = 0;
         revive_player();
         game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-        game_data.destination_outer_map = area_data[7].outer_map;
+        game_data.destination_outer_map =
+            area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map;
         game_data.current_dungeon_level = 1;
     }
     if (rdtry > 1)
@@ -4451,6 +4439,8 @@ TurnResult exit_map()
     {
         // This map should be saved.
         save_map_local_data();
+
+        ELONA_LOG("map") << "exit_map save local";
     }
     else
     {
@@ -4473,20 +4463,25 @@ TurnResult exit_map()
                 --npcmemory(1, cnt.id);
             }
         }
+
+        ELONA_LOG("map") << "exit_map clear temporary";
     }
 
     bool map_changed = game_data.current_map != previous_map ||
         game_data.current_dungeon_level != previous_dungeon_level;
 
-    // Only clear map-local data if the map was changed. The map might
+    ELONA_LOG("map") << "exit_map levelexitby end " << levelexitby << " cur "
+                     << game_data.current_map << " cur_level "
+                     << game_data.current_dungeon_level << " prev "
+                     << previous_map << " prev_level "
+                     << previous_dungeon_level;
+
+    // Only trigger the map unload event if the map was changed. The map might
     // not change if access to it is refused (jail, pyramid, etc.).
     if (map_changed)
     {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::map_unloading>();
-
-        lua::lua->get_mod_manager().clear_map_local_data();
-        lua::lua->get_handle_manager().clear_map_local_handles();
+        lua::lua->get_event_manager().trigger(
+            lua::BaseEvent("core.before_map_unload"));
     }
 
     mode = 2;
@@ -4534,96 +4529,6 @@ void save_map_local_data()
 
     // write data for items/character inventories local to this map
     ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
-}
-
-
-
-void map_prepare_tileset_atlas()
-{
-    gsel(6);
-    if (map_data.atlas_number != mtilefilecur)
-    {
-        pos(0, 0);
-        picload(
-            filesystem::dir::graphic() /
-                (u8"map"s + map_data.atlas_number + u8".bmp"),
-            1);
-        mtilefilecur = map_data.atlas_number;
-        initialize_map_chip();
-    }
-    map_tileset(map_data.tileset);
-    gsel(2);
-    gmode(0);
-    pos(0, 0);
-    // gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
-
-    int shadow = 5;
-    if (map_data.indoors_flag == 2)
-    {
-        if (game_data.date.hour >= 24 ||
-            (game_data.date.hour >= 0 && game_data.date.hour < 4))
-        {
-            shadow = 110;
-        }
-        if (game_data.date.hour >= 4 && game_data.date.hour < 10)
-        {
-            shadow = std::min(10, 70 - (game_data.date.hour - 3) * 10);
-        }
-        if (game_data.date.hour >= 10 && game_data.date.hour < 12)
-        {
-            shadow = 10;
-        }
-        if (game_data.date.hour >= 12 && game_data.date.hour < 17)
-        {
-            shadow = 1;
-        }
-        if (game_data.date.hour >= 17 && game_data.date.hour < 21)
-        {
-            shadow = (game_data.date.hour - 17) * 20;
-        }
-        if (game_data.date.hour >= 21 && game_data.date.hour < 24)
-        {
-            shadow = 80 + (game_data.date.hour - 21) * 10;
-        }
-        if (game_data.weather == 3 && shadow < 40)
-        {
-            shadow = 40;
-        }
-        if (game_data.weather == 4 && shadow < 65)
-        {
-            shadow = 65;
-        }
-        if (game_data.current_map == mdata_t::MapId::noyel &&
-            (game_data.date.hour >= 17 || game_data.date.hour < 7))
-        {
-            shadow += 35;
-        }
-    }
-
-    pos(0, 0);
-    gmode(0);
-    set_color_mod(255 - shadow, 255 - shadow, 255 - shadow, 6);
-    gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
-    set_color_mod(255, 255, 255, 6);
-    gmode(4, 30);
-    if (map_data.atlas_number == 0)
-    {
-        pos(0, 192);
-        gcopy(6, 0, 192, 1360, 48);
-    }
-    if (map_data.atlas_number == 1)
-    {
-        pos(0, 1056);
-        gcopy(6, 0, 1056, 1360, 48);
-    }
-    if (map_data.atlas_number != 2)
-    {
-        pos(0, 336);
-        gcopy(6, 0, 336, 1360, 48);
-    }
-    gmode(0);
-    gsel(0);
-    gmode(2);
 }
 
 
@@ -4718,7 +4623,7 @@ void map_global_prepare()
 
 void map_global_place_entrances()
 {
-    initialize_map_chip();
+    draw_prepare_map_chips();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         int cnt2 = cnt;
@@ -4770,11 +4675,10 @@ void map_global_place_entrances()
             area_data[cnt].position.y = map_data.height / 2;
         }
         p = cnt;
-        if (chipm(
-                7,
-                cell_data
-                    .at(area_data[cnt].position.x, area_data[cnt].position.y)
-                    .chip_id_actual) &
+        if (chip_data
+                    .for_cell(
+                        area_data[cnt].position.x, area_data[cnt].position.y)
+                    .effect &
                 4 ||
             cell_data.at(area_data[cnt].position.x, area_data[cnt].position.y)
                     .feats != 0)
@@ -4795,7 +4699,7 @@ void map_global_place_entrances()
                 {
                     continue;
                 }
-                if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+                if (chip_data.for_cell(x, y).effect & 4)
                 {
                     continue;
                 }
@@ -4931,12 +4835,14 @@ void atxinit()
         update_screen();
         mode = 9;
         atxbgbk = atxbg;
-        gsel(4);
         gmode(0);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / (atxbg + u8".bmp"s), 1);
-        pos(0, inf_msgh);
-        gcopy(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
+        asset_load(atxbg);
+        draw(
+            "atx_background",
+            0,
+            inf_msgh,
+            windoww,
+            windowh - inf_verh - inf_msgh);
         gmode(2);
         p = windoww / 192;
         for (int cnt = 0, cnt_end = (p + 1); cnt < cnt_end; ++cnt)
@@ -4949,12 +4855,19 @@ void atxinit()
             {
                 sx = 192;
             }
-            pos(cnt * 192, 0);
-            gcopy(3, 496, 528, sx, inf_msgh);
+            draw_region("message_window", cnt * 192, 0, sx, inf_msgh);
         }
         window2(windoww - 208, 0, 208, 98, 0, 0);
-        pos(windoww - 204, 4);
-        gcopy(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
+        gcopy(
+            0,
+            120,
+            88,
+            windoww - 120,
+            windowh - inf_verh - 112,
+            windoww - 204,
+            4,
+            200,
+            90);
         gsel(0);
     }
 }
@@ -5228,9 +5141,10 @@ std::string txtitemoncell(int x, int y)
             rtvaln = "";
             p_at_m185(0) = -cell_data.at(x, y).item_appearances_memory;
             p_at_m185(1) = 0;
-            i_at_m185(0) = p_at_m185 % 1000 + 5080;
-            i_at_m185(1) = p_at_m185 / 1000 % 1000 + 5080;
-            i_at_m185(2) = p_at_m185 / 1000000 % 1000 + 5080;
+            i_at_m185(0) = p_at_m185 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            i_at_m185(1) = p_at_m185 / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            i_at_m185(2) =
+                p_at_m185 / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 if (i_at_m185(cnt) == 6079)
@@ -5430,9 +5344,9 @@ TurnResult step_into_gate()
 
 
 
-int target_position()
+int target_position(bool target_chara)
 {
-    if (tlocinitx != 0 || tlocinity != 0)
+    if (tlocinitx != 0 || tlocinity != 0 || homemapmode == 1)
     {
         tlocx = tlocinitx;
         tlocy = tlocinity;
@@ -5450,26 +5364,30 @@ int target_position()
     else
     {
         scposval = 1;
-        if (cdata.player().enemy_id == 0)
+
+        if (target_chara)
         {
-            find_enemy_target();
-        }
-        build_target_list();
-        if (listmax == 0)
-        {
-            txt(i18n::s.get("core.locale.misc.no_target_around"));
-        }
-        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-        {
-            if (list(0, cnt) == 0)
+            if (cdata.player().enemy_id == 0)
             {
-                continue;
+                find_enemy_target();
             }
-            if (list(0, cnt) == cdata.player().enemy_id)
+            build_target_list();
+            if (listmax == 0)
             {
-                tlocx = cdata[list(0, cnt)].position.x;
-                tlocy = cdata[list(0, cnt)].position.y;
-                break;
+                txt(i18n::s.get("core.locale.misc.no_target_around"));
+            }
+            for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+            {
+                if (list(0, cnt) == 0)
+                {
+                    continue;
+                }
+                if (list(0, cnt) == cdata.player().enemy_id)
+                {
+                    tlocx = cdata[list(0, cnt)].position.x;
+                    tlocy = cdata[list(0, cnt)].position.y;
+                    break;
+                }
             }
         }
     }
@@ -5482,7 +5400,6 @@ int target_position()
         dy = (tlocy - scy) * inf_tiles + inf_screeny;
         if (dy + inf_tiles <= windowh - inf_verh)
         {
-            pos(dx, dy * (dy > 0));
             snail::Application::instance().get_renderer().set_blend_mode(
                 snail::BlendMode::blend);
             snail::Application::instance().get_renderer().set_draw_color(
@@ -5498,13 +5415,7 @@ int target_position()
         }
         if (homemapmode == 1)
         {
-            pos(windoww - 80, 20);
-            gcopy(
-                2,
-                tile % 33 * inf_tiles,
-                tile / 33 * inf_tiles,
-                inf_tiles,
-                inf_tiles);
+            draw_map_tile(tile, windoww - 80, 20);
         }
         else
         {
@@ -5559,7 +5470,6 @@ int target_position()
                         sy = (dy - scy) * inf_tiles + inf_screeny;
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
-                            pos(sx, sy * (sy > 0));
                             snail::Application::instance()
                                 .get_renderer()
                                 .set_blend_mode(snail::BlendMode::blend);
@@ -5602,8 +5512,8 @@ int target_position()
             }
             if (input == StickKey::mouse_right)
             {
-                if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 2 ||
-                    chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 1)
+                if (chip_data.for_cell(tlocx, tlocy).kind == 2 ||
+                    chip_data.for_cell(tlocx, tlocy).kind == 1)
                 {
                     snd("core.fail1");
                     wait_key_released();
@@ -5613,8 +5523,9 @@ int target_position()
                 snd("core.cursor1");
                 wait_key_released();
             }
-            tx = clamp(mousex - inf_screenx, 0, windoww) / 48;
-            ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) / 48;
+            tx = clamp(mousex - inf_screenx, 0, windoww) / inf_tiles;
+            ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) /
+                inf_tiles;
             int stat = key_direction(action);
             if (stat == 1)
             {
@@ -5712,8 +5623,7 @@ int target_position()
         {
             if (findlocmode == 1)
             {
-                if (cansee == 0 ||
-                    chipm(7, cell_data.at(tlocx, tlocy).chip_id_actual) & 4)
+                if (cansee == 0 || chip_data.for_cell(tlocx, tlocy).effect & 4)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.which_direction.cannot_see"));
@@ -5739,7 +5649,7 @@ int target_position()
                 snd("core.cursor1");
             }
             scposval = 0;
-            if (tlocinitx == 0 && tlocinity == 0)
+            if (tlocinitx == 0 && tlocinity == 0 && homemapmode != 1)
             {
                 update_screen();
             }
@@ -6012,8 +5922,7 @@ int prompt_really_attack()
     s = txttargetlevel(cc, tc);
     txt(s);
     txt(i18n::s.get("core.locale.action.really_attack", cdata[tc]));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval == 0)
+    if (yes_no())
     {
         update_screen();
         return 1;
@@ -6181,7 +6090,7 @@ void try_to_return()
     if (stat == 1)
     {
         txt(i18n::s.get("core.locale.misc.return.forbidden"));
-        if (yes_or_no(promptx, prompty, 160) == 0)
+        if (!yes_no())
         {
             update_screen();
             return;
@@ -6291,8 +6200,7 @@ TurnResult do_gatcha()
         tmat = 41;
     }
     txt(i18n::s.get("core.locale.action.gatcha.prompt", matname(tmat)));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval == 0)
+    if (yes_no())
     {
         if (mat(tmat) > 0)
         {
@@ -6334,8 +6242,7 @@ int read_textbook()
         if (sdata.get(inv[ci].param1, 0).original_level == 0)
         {
             txt(i18n::s.get("core.locale.action.read.book.not_interested"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 return 0;
             }
@@ -6749,13 +6656,8 @@ std::string getnpctxt(const std::string& tag, const std::string& default_text)
 TurnResult do_enter_strange_gate()
 {
     snd("core.exitmap1");
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = 35;
-    game_data.destination_dungeon_level = 1;
-    levelexitby = 2;
+    map_prepare_for_travel_with_prev(
+        static_cast<int>(mdata_t::MapId::show_house));
     return TurnResult::exit_map;
 }
 
@@ -6770,13 +6672,12 @@ int ask_direction()
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx - 48;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny - 48;
     gmode(0);
-    pos(0, 0);
-    gcopy(0, x, y, 144, 144);
+    gcopy(0, x, y, 144, 144, 0, 0);
     gsel(0);
     t = 0;
 label_2128_internal:
     ++t;
-    gmode(4, 200 - t / 2 % 20 * (t / 2 % 20));
+    gmode(2, 200 - t / 2 % 20 * (t / 2 % 20));
     x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
     y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
     if (!getkey(snail::Key::alt))
@@ -6792,8 +6693,7 @@ label_2128_internal:
     draw_rotated("direction_arrow", x - 48, y + 48, 225);
     redraw();
     gmode(0);
-    pos(x - 48 - 24, y - 48 - 24);
-    gcopy(4, 0, 0, 144, 144);
+    gcopy(4, 0, 0, 144, 144, x - 48 - 24, y - 48 - 24);
     gmode(2);
     auto action = key_check(KeyWaitDelay::walk_run);
     x = cdata.player().position.x;
@@ -6930,7 +6830,7 @@ void disarm_trap()
 
 
 
-void proc_trap()
+void move_character()
 {
 label_21451_internal:
     if (Config::instance().scroll)
@@ -7072,7 +6972,7 @@ label_21451_internal:
                 if (feat(2) == 3)
                 {
                     cell_featset(movx, movy, 0);
-                    if (encfind(cc, 22) != -1)
+                    if (enchantment_find(cdata[cc], 22))
                     {
                         if (is_in_fov(cdata[cc]))
                         {
@@ -7176,8 +7076,7 @@ label_21451_internal:
 
 void draw_sleep_background_frame()
 {
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh - inf_verh);
+    gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
     gmode(2);
     render_hud();
     if (screenupdate == 0)
@@ -7191,12 +7090,9 @@ void draw_sleep_background_frame()
 
 void load_sleep_background()
 {
-    gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"bg_night.bmp", 1);
-    pos(0, 0);
-    gcopy(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
+    asset_load("bg_night");
+    draw("bg_night", 0, 0, windoww, windowh - inf_verh);
     gsel(0);
 }
 
@@ -7221,9 +7117,9 @@ void sleep_start()
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        gmode(4, cnt * 10);
+        gmode(2, cnt * 10);
         draw_sleep_background_frame();
-        await(Config::instance().animewait * 10);
+        await(Config::instance().animation_wait * 10);
     }
     gmode(2);
     cc = 0;
@@ -7278,7 +7174,7 @@ void sleep_start()
         game_data.date.minute = 0;
         cc = 0;
         draw_sleep_background_frame();
-        await(Config::instance().animewait * 25);
+        await(Config::instance().animation_wait * 25);
     }
     if (game_data.character_and_status_for_gene != 0)
     {
@@ -7445,10 +7341,8 @@ void map_global_proc_travel_events()
                 cdata[cc].continuous_action.turn * 16 / 10;
         }
         if (game_data.weather == 2 ||
-            chipm(
-                0,
-                cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                    .chip_id_actual) == 4)
+            chip_data.for_cell(cdata[cc].position.x, cdata[cc].position.y)
+                    .kind == 4)
         {
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 22 / 10;
@@ -7489,10 +7383,8 @@ void map_global_proc_travel_events()
         }
     }
     if (game_data.weather == 2 ||
-        chipm(
-            0,
-            cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                .chip_id_actual) == 4)
+        chip_data.for_cell(cdata[cc].position.x, cdata[cc].position.y).kind ==
+            4)
     {
         if (game_data.protects_from_bad_weather == 0)
         {
@@ -7850,8 +7742,7 @@ int do_cast_magic_attempt()
             if (!Config::instance().skip_overcasting_warning)
             {
                 txt(i18n::s.get("core.locale.action.cast.overcast_warning"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     update_screen();
                     efsource = 0;
@@ -7975,10 +7866,9 @@ int do_cast_magic_attempt()
         return 1;
     }
     efp = calcspellpower(efid, cc);
-    p = encfind(cc, 34);
-    if (p != -1)
+    if (const auto spell_enhancement = enchantment_find(cdata[cc], 34))
     {
-        efp = efp * (100 + p / 10) / 100;
+        efp = efp * (100 + *spell_enhancement / 10) / 100;
     }
     rapidmagic = 0;
     if (cdata[cc].can_cast_rapid_magic() &&
@@ -8425,7 +8315,7 @@ label_2173_internal:
     efsource = 0;
     if (inv[ci].number() == 0)
     {
-        if (ci >= 5080)
+        if (ci >= ELONA_ITEM_ON_GROUND_INDEX)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
             return 1;
@@ -8876,8 +8766,7 @@ int pick_up_item(bool play_sound)
         {
             txt(i18n::s.get(
                 "core.locale.action.pick_up.do_you_want_to_remove", inv[ci]));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval == 0)
+            if (yes_no())
             {
                 snd_("core.build1");
                 if (inv[ci].id == 555)
@@ -9237,7 +9126,7 @@ TurnResult do_bash()
             }
             if (y + 1 < map_data.height)
             {
-                if ((chipm(7, cell_data.at(x, y + 1).chip_id_actual) & 4) == 0)
+                if ((chip_data.for_cell(x, y + 1).effect & 4) == 0)
                 {
                     ++y;
                 }
@@ -9372,7 +9261,7 @@ TurnResult do_bash()
                 if (rnd(3) == 0)
                 {
                     if (cdata[cc].quality < Quality::miracle &&
-                        encfind(cc, 60010) == -1)
+                        !enchantment_find(cdata[cc], 60010))
                     {
                         --cdata[cc].attr_adjs[0];
                         chara_refresh(cc);
@@ -9411,9 +9300,11 @@ TurnResult do_bash()
 
 TurnResult proc_movement_event()
 {
-    if (auto handle = lua::handle_opt(cdata[cc]))
+    auto result = lua::lua->get_event_manager().trigger(
+        lua::CharacterInstanceEvent("core.character_moved", cdata[cc]));
+    if (result.blocked())
     {
-        lua::run_event<lua::EventKind::character_moved>(*handle);
+        return TurnResult::turn_end;
     }
 
     if (cdata[cc].is_ridden())
@@ -9489,11 +9380,11 @@ TurnResult proc_movement_event()
             }
         }
     }
-    proc_trap();
+    move_character();
     p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y).chip_id_actual;
-    if (chipm(0, p) == 3)
+    if (chip_data[p].kind == 3)
     {
-        if (chipm(1, p) == 5)
+        if (chip_data[p].kind2 == 5)
         {
             heal_insanity(cdata[cc], 1);
         }
@@ -9692,7 +9583,7 @@ TurnResult proc_movement_event()
 
 void proc_autopick()
 {
-    if (!Config::instance().use_autopick)
+    if (!Config::instance().autopick)
         return;
     if (is_modifier_pressed(snail::ModKey::ctrl))
         return;
@@ -9733,8 +9624,7 @@ void proc_autopick()
             {
                 txt(i18n::s.get(
                     "core.locale.ui.autopick.do_you_really_pick_up", inv[ci]));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     did_something = false;
                     break;
@@ -9763,8 +9653,7 @@ void proc_autopick()
             {
                 txt(i18n::s.get(
                     "core.locale.ui.autopick.do_you_really_destroy", inv[ci]));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     did_something = false;
                     break;
@@ -9786,8 +9675,7 @@ void proc_autopick()
             {
                 txt(i18n::s.get(
                     "core.locale.ui.autopick.do_you_really_open", inv[ci]));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     did_something = false;
                     break;
@@ -9843,7 +9731,7 @@ void sense_map_feats_on_move()
                 txt(i18n::s.get("core.locale.action.move.sense_something"));
             }
         }
-        p = chipm(0, cell_data.at(x, y).chip_id_actual);
+        p = chip_data.for_cell(x, y).kind;
         if (p != 0)
         {
             if (tname(p) != ""s)
@@ -9863,8 +9751,8 @@ void sense_map_feats_on_move()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= Config::instance().walkwait *
-                            Config::instance().startrun ||
+                if (keybd_wait <= Config::instance().walk_wait *
+                            Config::instance().start_run_wait ||
                     cdata.player().turn % 2 == 0 ||
                     map_data.type == mdata_t::MapType::world_map)
                 {
@@ -10059,8 +9947,7 @@ int unlock_box(int difficulty)
         }
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.action.unlock.try_again"));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval == 0)
+        if (yes_no())
         {
             unlock_box(difficulty);
             return 0;
@@ -10416,7 +10303,7 @@ TurnResult try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(Config::instance().animewait * 5);
+                await(Config::instance().animation_wait * 5);
                 return TurnResult::turn_end;
             }
             feat(2) = 0;
@@ -10477,7 +10364,7 @@ TurnResult try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(Config::instance().animewait * 5);
+        await(Config::instance().animation_wait * 5);
     }
     return TurnResult::turn_end;
 }
@@ -10758,7 +10645,7 @@ label_22191_internal:
         attackdmg = dmg;
         if (cc == 0)
         {
-            if (Config::instance().attackanime)
+            if (Config::instance().attack_animation)
             {
                 int damage_percent = dmg * 100 / cdata[tc].max_hp;
                 MeleeAttackAnimation(
@@ -11540,10 +11427,8 @@ TurnResult do_plant()
         return TurnResult::pc_turn_user_error;
     }
     int val0;
-    if (chipm(
-            0,
-            cell_data.at(cdata.player().position.x, cdata.player().position.y)
-                .chip_id_actual) == 2)
+    if (chip_data.for_cell(cdata.player().position.x, cdata.player().position.y)
+            .kind == 2)
     {
         val0 = 1;
     }
@@ -11847,7 +11732,7 @@ int new_ally_joins()
     cdata[rc].original_relationship = 10;
     cdata[rc].character_role = 0;
     cdata[rc].is_quest_target() = false;
-    cdata[rc].does_not_search_enemy() = false;
+    cdata[rc].is_not_attacked_by_enemy() = false;
     cdata[rc].is_hung_on_sand_bag() = false;
     cdata[rc].is_temporary() = false;
     cdata[rc].only_christmas() = false;
@@ -11973,10 +11858,8 @@ label_2682_internal:
         for (int cnt = 0; cnt < 25; ++cnt)
         {
             redraw();
-            pos(0, 0);
-            gmode(4, cnt * 15);
-            pos(0, 0);
-            gcopy(4, 0, 0, windoww, windowh);
+            gmode(2, cnt * 15);
+            gcopy(4, 0, 0, windoww, windowh, 0, 0);
             gmode(2);
             await(10);
         }
@@ -12034,12 +11917,9 @@ label_2684_internal:
             notedel(p - cnt - 1);
         }
     }
-    gsel(4);
     gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 1);
-    pos(0, y1);
-    gcopy(4, 0, 0, 640, 480, windoww, y2 - y1);
+    asset_load(file);
+    draw(file, 0, y1, windoww, y2 - y1);
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
@@ -12047,8 +11927,7 @@ label_2684_internal:
     {
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
         tc = 0;
         talk_to_npc();
@@ -12058,8 +11937,7 @@ label_2684_internal:
     {
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
         redraw();
         await(1000);
@@ -12077,9 +11955,8 @@ label_2684_internal:
         {
             dx = 0;
         }
-        pos(windoww / 2, y + 4);
         gmode(2, 95);
-        gcopy_c(3, 456, 144, 344, 72, dx, 72);
+        draw_centered("scene_title", windoww / 2, y + 4, dx, 72);
     }
     x = 40;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -12087,7 +11964,7 @@ label_2684_internal:
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - strlen_u(s(0)) * 4;
-        gmode(6, 255);
+        gmode(2);
         bmes(s, x, y, {240, 240, 240}, {10, 10, 10});
     }
     gsel(0);
@@ -12099,15 +11976,13 @@ label_2684_internal:
         {
             scene_cut = 1;
         }
-        gmode(4, cnt * 16);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2, cnt * 16);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         redraw();
     }
     gmode(2);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
+    gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
     anime_halt(windoww - 120, windowh - 60);
     boxf(0, 0, windoww, y1, {5, 5, 5});
@@ -12281,7 +12156,7 @@ void weather_changes()
             sound_play_environmental();
         }
     }
-    map_prepare_tileset_atlas();
+    draw_prepare_map_chips();
     adventurer_update();
     foods_get_rotten();
     if (map_data.type == mdata_t::MapType::world_map)
@@ -12485,23 +12360,43 @@ optional<TurnResult> check_angband()
 
 
 
+std::string ask_win_comment()
+{
+    std::vector<std::string> choices;
+    {
+        const auto choices_ =
+            i18n::s.get_list("core.locale.scenario.win_words");
+        if (choices_.empty())
+        {
+            choices.push_back("I can't sleep tonight.");
+        }
+        else
+        {
+            choices = sampled(choices_, std::min(choices_.size(), size_t(3)));
+        }
+    }
+
+    Prompt prompt(Prompt::Type::cannot_cancel);
+    for (const auto& choice : choices)
+    {
+        prompt.append(choice);
+    }
+    const auto selected_index = prompt.query(promptx, prompty, 310);
+
+    return choices[selected_index];
+}
+
+
+
 void conquer_lesimas()
 {
-    std::string wincomment;
     snd("core.complete1");
     stop_music();
     txt(i18n::s.get("core.locale.win.conquer_lesimas"));
     update_screen();
-    const auto win_words = txtsetwinword(3);
 
-    Prompt prompt(Prompt::Type::cannot_cancel);
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        prompt.append(win_words[cnt]);
-    }
-    rtval = prompt.query(promptx, prompty, 310);
+    const auto win_comment = ask_win_comment();
 
-    wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
     update_screen();
@@ -12546,18 +12441,12 @@ void conquer_lesimas()
     mode = 0;
     play_music("core.mcMarch2");
     ui_win_screen_fade();
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    pos(0, 0);
-    gcopy(4, 0, 0, 640, 480, windoww, windowh);
+    asset_load("void");
+    draw_region("void", 0, 0, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
     animation_fade_in();
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"g1.bmp", 1);
+    draw_region("void", 0, 0, 0, 0, windoww, windowh);
+    asset_load("g1");
     gsel(0);
     ui_draw_caption(i18n::s.get(
         "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0)));
@@ -12572,35 +12461,37 @@ void conquer_lesimas()
         windowh / 2 - wh / 2,
         ww,
         wh);
-    cmbg = 0;
-    x = ww / 3 - 20;
-    y = wh - 140;
-    pos(wx + ww - 120, wy + wh / 2);
-    gmode(4, 250);
-    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2, 250);
+    draw_centered("g1", wx + ww - 120, wy + wh / 2, ww / 3 - 20, wh - 140);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.win.window.caption"), wx + 28, wy + 40);
     font(14 - en * 2);
-    pos(wx + 40, wy + 76);
-    mes(i18n::s.get("core.locale.win.window.arrived_at_tyris", 517, 8, 12));
-    pos(wx + 40, wy + 116);
-    mes(i18n::s.get(
-        "core.locale.win.window.have_killed",
-        game_data.deepest_dungeon_level,
-        game_data.kill_count));
-    pos(wx + 40, wy + 146);
-    mes(i18n::s.get("core.locale.win.window.score", calcscore()));
-    pos(wx + 40, wy + 186);
-    mes(i18n::s.get(
-        "core.locale.win.window.lesimas",
-        game_data.date.year,
-        game_data.date.month,
-        game_data.date.day));
-    pos(wx + 40, wy + 206);
-    mes(i18n::s.get("core.locale.win.window.comment", wincomment));
-    pos(wx + 40, wy + 246);
-    mes(i18n::s.get("core.locale.win.window.your_journey_continues"));
+    mes(wx + 40,
+        wy + 76,
+        i18n::s.get("core.locale.win.window.arrived_at_tyris", 517, 8, 12));
+    mes(wx + 40,
+        wy + 116,
+        i18n::s.get(
+            "core.locale.win.window.have_killed",
+            game_data.deepest_dungeon_level,
+            game_data.kill_count));
+    mes(wx + 40,
+        wy + 146,
+        i18n::s.get("core.locale.win.window.score", calcscore()));
+    mes(wx + 40,
+        wy + 186,
+        i18n::s.get(
+            "core.locale.win.window.lesimas",
+            game_data.date.year,
+            game_data.date.month,
+            game_data.date.day));
+    mes(wx + 40,
+        wy + 206,
+        i18n::s.get("core.locale.win.window.comment", win_comment));
+    mes(wx + 40,
+        wy + 246,
+        i18n::s.get("core.locale.win.window.your_journey_continues"));
     redraw();
     key_list = key_enter;
     keyrange = 0;
@@ -12622,8 +12513,7 @@ void play_the_last_scene_again()
 {
     update_entire_screen();
     txt(i18n::s.get("core.locale.win.watch_event_again"));
-    rtval = yes_or_no(promptx, prompty, 160);
-    if (rtval == 0)
+    if (yes_no())
     {
         conquer_lesimas();
         return;
@@ -12737,9 +12627,7 @@ TurnResult pc_died()
         std::ofstream out{bone_filepath.native(), std::ios::binary};
         out << buff(0) << std::endl;
     }
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
+    asset_load("void");
     gsel(0);
     show_game_score_ranking();
     ui_draw_caption(
@@ -12779,8 +12667,7 @@ void show_game_score_ranking()
 {
     notesel(buff);
     gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, 800, 600, windoww, windowh);
+    draw("void", 0, 0, windoww, windowh);
     gmode(2);
     x = 135;
     y = 134;
@@ -12794,7 +12681,7 @@ void show_game_score_ranking()
     {
         p = 0;
     }
-    color(138, 131, 100);
+
     for (int cnt = p, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
         p = cnt * 4;
@@ -12807,10 +12694,7 @@ void show_game_score_ranking()
         {
             s = " "s + i18n::s.get("core.locale.misc.score.rank", cnt + 1);
         }
-        pos(x - 80, y + 10);
-        color(10, 10, 10);
-        mes(s);
-        color(0, 0, 0);
+        mes(x - 80, y + 10, s, {10, 10, 10});
         bool no_entry = false;
         if (p >= noteinfo())
         {
@@ -12824,29 +12708,24 @@ void show_game_score_ranking()
                 no_entry = true;
             }
         }
-        pos(x, y);
-        color(10, 10, 10);
         if (no_entry)
         {
-            mes(u8"no entry");
-            color(0, 0, 0);
+            mes(x, y, u8"no entry", {10, 10, 10});
             continue;
         }
-        mes(s);
+        mes(x, y, s, {10, 10, 10});
         noteget(s, p + 2);
-        pos(x, y + 20);
-        mes(s);
+        mes(x, y + 20, s, {10, 10, 10});
         noteget(s(10), p + 3);
         csvsort(s, s(10), 44);
-        pos(x + 480, y + 20);
-        mes(i18n::s.get("core.locale.misc.score.score", s(0)));
+        mes(x + 480,
+            y + 20,
+            i18n::s.get("core.locale.misc.score.score", s(0)),
+            {10, 10, 10});
         p = elona::stoi(s(1)) % 1000;
 
         draw_chara_scale_height(elona::stoi(s(1)), x - 22, y + 12);
-
-        color(0, 0, 0);
     }
-    color(0, 0, 0);
 }
 
 

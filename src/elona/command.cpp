@@ -47,6 +47,9 @@
 namespace
 {
 
+int dbg_freemove;
+
+
 
 template <typename F>
 bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
@@ -364,8 +367,8 @@ TurnResult do_dig_command()
             return TurnResult::turn_end;
         }
     }
-    if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) == 0 ||
-        chipm(0, cell_data.at(x, y).chip_id_actual) == 3 ||
+    if ((chip_data.for_cell(x, y).effect & 4) == 0 ||
+        chip_data.for_cell(x, y).kind == 3 ||
         map_data.type == mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
@@ -629,8 +632,7 @@ TurnResult do_throw_command()
                 {
                     if (y < map_data.height)
                     {
-                        if ((chipm(7, cell_data.at(x, y).chip_id_actual) & 4) ==
-                            0)
+                        if ((chip_data.for_cell(x, y).effect & 4) == 0)
                         {
                             tlocx = x;
                             tlocy = y;
@@ -830,7 +832,7 @@ TurnResult do_throw_command()
             }
             if (inv[ci].id == 587)
             {
-                if (chipm(0, cell_data.at(tlocx, tlocy).chip_id_actual) == 4)
+                if (chip_data.for_cell(tlocx, tlocy).kind == 4)
                 {
                     return TurnResult::turn_end;
                 }
@@ -1217,7 +1219,6 @@ label_1953_internal:
                         sy = (dy - scy) * inf_tiles + inf_screeny;
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
-                            pos(sx, sy * (sy > 0));
                             snail::Application::instance()
                                 .get_renderer()
                                 .set_blend_mode(snail::BlendMode::blend);
@@ -1243,7 +1244,6 @@ label_1953_internal:
                 sy = y * inf_tiles + inf_screeny;
                 if (sy + inf_tiles <= windowh - inf_verh)
                 {
-                    pos(sx, sy * (sy > 0));
                     snail::Application::instance()
                         .get_renderer()
                         .set_blend_mode(snail::BlendMode::blend);
@@ -1264,7 +1264,6 @@ label_1953_internal:
                 y * inf_tiles + inf_screeny - 12,
                 cnt);
         }
-        color(0, 0, 0);
         txttargetnpc(
             cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
         cs_bk = cs;
@@ -2176,8 +2175,7 @@ TurnResult do_use_command()
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use.shelter.during_quest"));
-                    rtval = yes_or_no(promptx, prompty, 160);
-                    if (rtval != 0)
+                    if (!yes_no())
                     {
                         update_screen();
                         return TurnResult::pc_turn_user_error;
@@ -2325,8 +2323,7 @@ TurnResult do_use_command()
             if (game_data.quest_flags.red_blossom_in_palmia == 1)
             {
                 txt(i18n::s.get("core.locale.action.use.nuke.not_quest_goal"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     update_screen();
                     return TurnResult::pc_turn_user_error;
@@ -2402,8 +2399,7 @@ TurnResult do_use_command()
     case 46:
         Message::instance().linebreak();
         txt(i18n::s.get("core.locale.action.use.rope.prompt"));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval != 0)
+        if (!yes_no())
         {
             return TurnResult::turn_end;
         }
@@ -2504,8 +2500,7 @@ TurnResult do_use_command()
             "core.locale.action.use.gene_machine.prompt",
             cdata[tc],
             cdata[rc]));
-        rtval = yes_or_no(promptx, prompty, 160);
-        if (rtval != 0)
+        if (!yes_no())
         {
             return TurnResult::turn_end;
         }
@@ -2837,7 +2832,7 @@ TurnResult do_use_stairs_command(int val0)
         txt(i18n::s.get("core.locale.action.use_stairs.cannot_during_debug"));
         return TurnResult::pc_turn_user_error;
     }
-    int stat = item_find(631, 3, -1);
+    int stat = item_find(631, 3, ItemFindLocation::ground);
     if (stat != -1)
     {
         if (map_is_town_or_guild())
@@ -2853,8 +2848,7 @@ TurnResult do_use_stairs_command(int val0)
         if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
         {
             txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.prompt"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 update_screen();
                 return TurnResult::pc_turn_user_error;
@@ -3008,8 +3002,7 @@ TurnResult do_use_stairs_command(int val0)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_quest"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval != 0)
+                if (!yes_no())
                 {
                     update_screen();
                     return TurnResult::pc_turn_user_error;
@@ -3263,9 +3256,9 @@ TurnResult do_movement_command()
                         "core.locale.action.move.leave.abandoning_quest"));
                 }
             }
-            rtval = yes_or_no(promptx, prompty, 160);
+            const auto yesno_result = yes_no();
             update_screen();
-            if (rtval == 0)
+            if (yesno_result)
             {
                 game_data.player_x_on_map_leave = cdata.player().position.x;
                 game_data.player_y_on_map_leave = cdata.player().position.y;
@@ -3473,12 +3466,10 @@ TurnResult do_get_command()
             }
             create_harvested_item();
             harvest_plant(
-                chipm(
-                    0,
-                    cell_data
-                        .at(cdata.player().position.x,
-                            cdata.player().position.y)
-                        .chip_id_actual) == 2
+                chip_data.for_cell(
+                             cdata.player().position.x,
+                             cdata.player().position.y)
+                            .kind == 2
                     ? 1
                     : 0);
             if (feat(2) == 40)
@@ -3493,8 +3484,7 @@ TurnResult do_get_command()
             feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
-            rtval = yes_or_no(promptx, prompty, 160);
-            if (rtval != 0)
+            if (!yes_no())
             {
                 update_screen();
                 return TurnResult::pc_turn_user_error;
@@ -3515,11 +3505,10 @@ TurnResult do_get_command()
     if (number == 0)
     {
         if ((map_is_town_or_guild()) &&
-            chipm(
-                0,
-                cell_data
-                    .at(cdata.player().position.x, cdata.player().position.y)
-                    .chip_id_actual) == 4)
+            chip_data
+                    .for_cell(
+                        cdata.player().position.x, cdata.player().position.y)
+                    .kind == 4)
         {
             snd("core.foot2a");
             txt(i18n::s.get("core.locale.action.get.snow"));

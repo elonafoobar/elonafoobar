@@ -7,27 +7,27 @@
 namespace elona
 {
 
-
+/// @putit
 struct Position
 {
+    /// @putit
     int x = 0;
+
+    /// @putit
     int y = 0;
 
     Position()
     {
     }
+
     Position(int _x, int _y)
         : x(_x)
         , y(_y)
     {
     }
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        ar(x);
-        ar(y);
-    }
+
+#include "_putit/position.cpp"
 };
 
 

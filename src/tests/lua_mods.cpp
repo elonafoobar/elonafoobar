@@ -1,6 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-#include "../thirdparty/sol2/sol.hpp"
-
 #include "../elona/character.hpp"
 #include "../elona/dmgheal.hpp"
 #include "../elona/filesystem.hpp"
@@ -8,47 +5,51 @@
 #include "../elona/itemgen.hpp"
 #include "../elona/lua_env/event_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
+#include "../elona/lua_env/lua_event/base_event.hpp"
+#include "../elona/lua_env/lua_event/lua_event_map_initialized.hpp"
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 #include "tests.hpp"
 
 using namespace elona::testing;
 
-TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
+TEST_CASE("Test that _MOD_ID is defined", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_ID == "my_mod"))"));
 }
 
 TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", "", true));
 
-    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(_MOD_NAME = "dood")"));
+    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(_MOD_ID = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(dood = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(function dood() end)"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Elona = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Store = "dood")"));
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+        mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_ID == "my_mod"))"));
 }
 
 TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
@@ -83,7 +84,7 @@ TEST_CASE("Test no access to os/io", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("my_mod", ""));
 
@@ -95,14 +96,15 @@ TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(
         mod_mgr.load_mod_from_script("test", "Store.global.thing = 1"));
 
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
-    int thing = mod_mgr.get_mod("test")->store_global["thing"].get<int>();
+    int thing =
+        mod_mgr.get_enabled_mod("test")->store_global["thing"].get<int>();
     REQUIRE(thing == 1);
 }
 
@@ -110,7 +112,7 @@ TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(
         mod_mgr.load_mod_from_script("test", "Store.global.thing = 1"));
@@ -124,7 +126,7 @@ TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
@@ -135,21 +137,21 @@ end
 
 Store.global.thing = 1
 
-Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
+Event.register("core.all_turns_finished", my_turn_handler)
 )"));
 
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 2)"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 4)"));
 }
@@ -158,7 +160,7 @@ TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(
         mod_mgr.load_mod_from_script("first", R"(Store.global.thing = 42)"));
@@ -185,7 +187,7 @@ TEST_CASE("Test complex nested table assignment", "[Lua: Mods]")
     elona::lua::LuaEnv lua;
     auto& mod_mgr = lua.get_mod_manager();
     ;
-    mod_mgr.load_mods(filesystem::dir::mods());
+    mod_mgr.load_mods(filesystem::dir::mod());
 
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
@@ -209,14 +211,14 @@ end
 
 Store.global.grid = grid
 
-Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
+Event.register("core.all_turns_finished", my_turn_handler)
 )"));
 
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 0)"));
 
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
+    lua.get_event_manager().trigger(
+        elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 1)"));
 }
@@ -225,7 +227,7 @@ TEST_CASE("Test requiring Lua chunk multiple times", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(),
+        filesystem::dir::mod(),
         {filesystem::dir::exe() / u8"tests/data/mods/test_require_chunks"});
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require_chunks", R"(
@@ -248,7 +250,7 @@ TEST_CASE(
 {
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mods(),
+        filesystem::dir::mod(),
         {filesystem::dir::exe() / u8"tests/data/mods/test_require"});
 
     // Attempts to load a file outside the mod's directory.
@@ -262,12 +264,28 @@ assert(a == nil)
 
 static void _create_mod(
     elona::lua::LuaEnv& lua,
-    const std::string& name,
-    const std::unordered_set<std::string> deps)
+    const std::string& id,
+    const std::unordered_map<std::string, std::string> deps)
 {
+    elona::lua::ModManifest::Dependencies deps_(deps.size());
+    for (const auto& kvp : deps)
+    {
+        const auto& key = kvp.first;
+        const auto& value = kvp.second;
+        const auto ver = semver::VersionRequirement::parse(value);
+        if (ver)
+        {
+            deps_.emplace(key, ver.right());
+        }
+        else
+        {
+            throw std::runtime_error{ver.left()};
+        }
+    }
+
     elona::lua::ModManifest manifest;
-    manifest.name = name;
-    manifest.dependencies = deps;
+    manifest.id = id;
+    manifest.dependencies = deps_;
     lua.get_mod_manager().create_mod(manifest, false);
 };
 
@@ -276,9 +294,9 @@ TEST_CASE("Test calculation of loading order of mods", "[Lua: Mods]")
 {
     elona::lua::LuaEnv lua;
 
-    _create_mod(lua, "a", {"c"});
+    _create_mod(lua, "a", {{"c", "*"}});
     _create_mod(lua, "b", {});
-    _create_mod(lua, "c", {"b", "d"});
+    _create_mod(lua, "c", {{"b", "*"}, {"d", "*"}});
     _create_mod(lua, "d", {});
 
     auto order = lua.get_mod_manager().calculate_loading_order();
@@ -295,7 +313,7 @@ TEST_CASE(
 {
     elona::lua::LuaEnv lua;
 
-    _create_mod(lua, "a", {"b", "c"});
+    _create_mod(lua, "a", {{"b", "*"}, {"c", "*"}});
     _create_mod(lua, "b", {});
 
     REQUIRE_THROWS(lua.get_mod_manager().calculate_loading_order());
@@ -307,9 +325,9 @@ TEST_CASE(
 {
     elona::lua::LuaEnv lua;
 
-    _create_mod(lua, "a", {"b"});
-    _create_mod(lua, "b", {"c"});
-    _create_mod(lua, "c", {"a"});
+    _create_mod(lua, "a", {{"b", "*"}});
+    _create_mod(lua, "b", {{"c", "*"}});
+    _create_mod(lua, "c", {{"a", "*"}});
 
     REQUIRE_THROWS(lua.get_mod_manager().calculate_loading_order());
 }

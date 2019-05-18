@@ -88,12 +88,12 @@ void cell_check(int x, int y)
     if (cell_data.at(x, y).feats != 0)
     {
         cellfeat = cell_data.at(x, y).feats / 1000 % 100;
-        if (chipm(7, cell_data.at(x, y).feats % 1000) & 4)
+        if (chip_data.for_feat(x, y).effect & 4)
         {
             cellaccess = 0;
         }
     }
-    if (chipm(7, cell_data.at(x, y).chip_id_actual) & 4)
+    if (chip_data.for_cell(x, y).effect & 4)
     {
         cellaccess = 0;
     }
@@ -256,12 +256,11 @@ int cell_findspace(int base_x, int base_y, int range)
             {
                 continue;
             }
-            if (chipm(7, cell_data.at(dx_at_m130, dy_at_m130).chip_id_actual) &
-                4)
+            if (chip_data.for_cell(dx_at_m130, dy_at_m130).effect & 4)
             {
                 continue;
             }
-            if (chipm(7, cell_data.at(dx_at_m130, dy_at_m130).feats % 1000) & 4)
+            if (chip_data.for_feat(dx_at_m130, dy_at_m130).effect & 4)
             {
                 continue;
             }

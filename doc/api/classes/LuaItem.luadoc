@@ -1,29 +1,79 @@
 --- Represents an item.
--- @classmod LuaItem
+--  @classmod LuaItem
+
+--- Removes this item. The item reference will no longer be valid for use.
+--  @function remove
+function remove() end
+
+--- Changes the material of this item.
+--  @tparam string material_id ID of the item material
+--  @function change_material
+function change_material(material_id) end
 
 --- [R] The index of this item in the global items array.
--- @tfield num index
+--  @tfield num index
 
---- [R] The prototype ID of this item.
--- @tfield num id
-
---- [R] The fully qualified name of this item.
--- @tfield string name
+--- [R] The legacy ID of this item.
+--  @tfield num legacy_id
 
 --- [RW] The item's position.
--- @tfield LuaPosition position
-
---- [RW] The number of items represented by this item.
--- @tfield num number
+--  @tfield num position
 
 --- [RW] The number of charges this item holds (for rods, bait, etc.)
--- @tfield num count
+--  @tfield num count
 
---- [RW] An integer used for indexing a subname of an item, like the ID for a recipe.
--- @tfield num subname
+--- [RW] The subname of this item. Controls the character index of
+--  corpses, etc.
+--  @tfield num subname
+
+--- [RW] The image ID of the item.
+--  @tfield num image
+
+--- [RW] The value of the item.
+--  @tfield num value
+
+--- [RW] A generic parameter.
+--  @tfield num param1
+
+--- [RW] A generic parameter.
+--  @tfield num param2
+
+--- [RW] A generic parameter.
+--  @tfield num param3
+
+--- [RW] A generic parameter.
+--  @tfield num param4
+
+--- [RW] Controls the ownership of this item.
+--  <code>-2</code>: Item was dropped by the player on death
+--  <code>0</code>: Normal, can be picked up by the player
+--  <code>1</code>: Not owned ("It's not your property", etc.)
+--  <code>2</code>: Not carryable (shopkeeper's trunk).
+--  <code>3</code>: Built shelter
+--  <code>4</code>: Harvestable item in harvest quests
+--  @tfield num own_state
+
+--- [R] The material ID of this item. To change it, use
+--  LuaItem.change_material.
+--  @tfield string material
+
+--- [R] The new-style prototype ID of the item.
+--  @tfield string id
+
+--- [R] The name of the item with article and number.
+--  @tfield string name
+
+--- [R] The name of the item without article and number.
+--  @tfield string basename
+
+--- [RW] The number of this item.
+--  @tfield num number
 
 --- [RW] The curse state of this item.
--- @tfield Enums.CurseState curse_state
+--  @tfield CurseState curse_state
 
---- [RW] The identification state of this item.
--- @tfield Enums.IdentifyState identify_state
+--- [RW] The identify state of this item.
+--  @tfield IdentifyState identify_state
+
+--- [R] The prototype data of the character.
+--  @tfield table prototype

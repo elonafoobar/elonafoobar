@@ -3,20 +3,31 @@
 module "Rand"
 
 --- Returns a random number from 0 to n, exclusive.
--- @tparam num n
--- @treturn num a number in [0, n)
+--  @tparam num n
+--  @treturn num a number in [0, n)
+--  @function rnd
 function rnd(n) end
 
 --- Returns true one out of every n times.
--- @tparam num n
--- @treturn bool true one out of every n times
+--  @tparam num n
+--  @treturn bool true one out of every n times
+--  @function one_in
 function one_in(n) end
 
 --- Returns true 50% of the time.
--- @treturn bool true 50% of the time
+--  @treturn bool true 50% of the time
+--  @function coinflip
 function coinflip() end
 
+--- Returns a random number from min to max, exclusive.
+--  @tparam num min
+--  @tparam num max
+--  @treturn num a number in [min, max)
+--  @function between
+function between(min, max) end
+
 --- Returns a random object from a table.
--- @tparam t a table
--- @treturn object an object from the table
-function choice(t) end
+--  @tparam table table a table
+--  @treturn object an object from the table
+--  @function choice
+function choice(table) end

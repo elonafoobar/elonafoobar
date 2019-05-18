@@ -1,4 +1,8 @@
 #include "data_manager.hpp"
+
+#include "../../util/natural_order_comparator.hpp"
+#include "../log.hpp"
+#include "api_manager.hpp"
 #include "mod_manager.hpp"
 
 
@@ -18,15 +22,15 @@ DataManager::DataManager(LuaEnv* lua)
 void DataManager::clear()
 {
     sol::table data = _lua->get_state()->script_file(filepathutil::to_utf8_path(
-        filesystem::dir::data() / "lua" / "data.lua"));
-    _data.storage = data;
+        filesystem::dir::data() / "script" / "kernel" / "data.lua"));
+    _data.storage() = data;
 }
 
 void DataManager::_init_from_mod(ModInfo& mod)
 {
     // Bypass the metatable on the mod's environment preventing creation of
     // new global variables.
-    mod.env.raw_set("data", _data.storage);
+    mod.env.raw_set("data", _data.storage());
 
     if (mod.manifest.path)
     {
@@ -36,7 +40,7 @@ void DataManager::_init_from_mod(ModInfo& mod)
         // outside of a mod environment. To determine which mod is adding new
         // types/data in the data chunk, it has to be set on the global Lua
         // state temporarily during the data loading process.
-        _lua->get_state()->set("_MOD_NAME", mod.manifest.name);
+        _lua->get_state()->set("_MOD_ID", mod.manifest.id);
 
         const auto data_script = *mod.manifest.path / "data.lua";
         if (fs::exists(data_script))
@@ -57,23 +61,22 @@ void DataManager::_init_from_mod(ModInfo& mod)
 
 void DataManager::init_from_mods()
 {
-    for (const auto& mod_name :
-         _lua->get_mod_manager().calculate_loading_order())
+    for (const auto& mod_id : _lua->get_mod_manager().calculate_loading_order())
     {
-        const auto& mod = _lua->get_mod_manager().get_mod(mod_name);
+        const auto& mod = _lua->get_mod_manager().get_enabled_mod(mod_id);
         _init_from_mod(*mod);
     }
 
-    _lua->get_state()->set("_MOD_NAME", sol::lua_nil);
+    _lua->get_state()->set("_MOD_ID", sol::lua_nil);
 
     // Prevent modifications to the 'data' table.
-    sol::table metatable = _data.storage.create_with(
+    sol::table metatable = _data.storage().create_with(
         sol::meta_function::new_index,
         sol::detail::fail_on_newindex,
         sol::meta_function::index,
-        _data.storage);
+        _data.storage());
 
-    _data.storage[sol::metatable_key] = metatable;
+    _data.storage()[sol::metatable_key] = metatable;
 }
 
 } // namespace lua

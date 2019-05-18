@@ -11,27 +11,24 @@ namespace elona
 namespace lua
 {
 
-int Skill::level(int skill, LuaCharacterHandle handle)
+/**
+ * @luadoc
+ *
+ * Obtains a character's resistance level for an element.
+ * @tparam Enums.Element element the element
+ * @tparam LuaCharacter chara the character to get resistance information from
+ * @treturn num the character's resistance level
+ */
+int LuaApiSkill::resistance(const EnumString& element, LuaCharacterHandle chara)
 {
-    if (skill < 0 || skill >= 600)
-    {
-        return -1;
-    }
-    auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
-    return elona::sdata(skill, chara.index);
+    auto& chara_ref = lua::ref<Character>(chara);
+    Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
+    return elona::sdata(static_cast<int>(element_value), chara_ref.index);
 }
 
-int Skill::resistance(const EnumString& element_name, LuaCharacterHandle handle)
+void LuaApiSkill::bind(sol::table& api_table)
 {
-    auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
-    Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
-    return elona::sdata(static_cast<int>(element), chara.index);
-}
-
-void Skill::bind(sol::table& api_table)
-{
-    LUA_API_BIND_FUNCTION(api_table, Skill, level);
-    LUA_API_BIND_FUNCTION(api_table, Skill, resistance);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiSkill, resistance);
 }
 
 } // namespace lua

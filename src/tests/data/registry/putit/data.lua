@@ -3,13 +3,13 @@ data:add_multi(
    "putit.putit",
    {
       {
-         name = "normal",
-         id = 3,
+         id = "normal",
+         legacy_id = 3,
          display_name = "putit"
       },
       {
-         name = "red",
-         id = 4,
+         id = "red",
+         legacy_id = 4,
          display_name = "red putit"
       }
    }

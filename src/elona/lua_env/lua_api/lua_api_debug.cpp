@@ -13,12 +13,24 @@ namespace elona
 namespace lua
 {
 
-void Debug::log(const std::string& message)
+/**
+ * @luadoc
+ *
+ * Logs a message to log.txt.
+ * @tparam string message the message to log
+ */
+void LuaApiDebug::log(const std::string& message)
 {
-    ELONA_LOG(message);
+    ELONA_LOG("lua.debug") << message;
 }
 
-void Debug::report_error(const std::string& message)
+/**
+ * @luadoc
+ *
+ * Reports an error to the game console and log file.
+ * @tparam string message the error message to report
+ */
+void LuaApiDebug::report_error(const std::string& message)
 {
     std::istringstream sstream(message);
     std::string line;
@@ -29,45 +41,55 @@ void Debug::report_error(const std::string& message)
         txt(line + "  ", Message::color{ColorIndex::red});
     }
 
-    ELONA_LOG("Script error: " << message);
+    ELONA_ERROR("lua.debug") << "Script error: " << message;
     std::cerr << "Script error: " << message << std::endl;
 }
 
-void Debug::dump_characters()
+/**
+ * @luadoc
+ *
+ * Dumps all characters to the log.
+ */
+void LuaApiDebug::dump_characters()
 {
-    ELONA_LOG("===== Charas =====")
+    ELONA_LOG("lua.debug") << "===== Charas =====";
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (elona::cdata[cnt].state() != Character::State::empty)
-            ELONA_LOG(
-                elona::cdata[cnt].index
-                << ") Name: " << elona::name(cnt)
-                << ", Pos: " << elona::cdata[cnt].position);
+            ELONA_LOG("lua.debug")
+                << elona::cdata[cnt].index << ") Name: " << elona::name(cnt)
+                << ", Pos: " << elona::cdata[cnt].position;
     }
 }
 
-void Debug::dump_items()
+
+/**
+ * @luadoc
+ *
+ * Dumps all items to the log.
+ */
+void LuaApiDebug::dump_items()
 {
-    ELONA_LOG("===== Items  =====")
+    ELONA_LOG("lua.debug") << "===== Items  =====";
     for (const auto& cnt : items(-1))
     {
         if (elona::inv[cnt].number() != 0)
-            ELONA_LOG(
-                elona::inv[cnt].index
-                << ") Name: " << elona::itemname(cnt)
-                << ", Pos: " << elona::inv[cnt].position << ", Curse: "
-                << static_cast<int>(elona::inv[cnt].curse_state) << ", Ident: "
+            ELONA_LOG("lua.debug")
+                << elona::inv[cnt].index << ") Name: " << elona::itemname(cnt)
+                << ", Pos: " << elona::inv[cnt].position
+                << ", Curse: " << static_cast<int>(elona::inv[cnt].curse_state)
+                << ", Ident: "
                 << static_cast<int>(elona::inv[cnt].identification_state)
-                << ", Count: " << elona::inv[cnt].count);
+                << ", Count: " << elona::inv[cnt].count;
     }
 }
 
-void Debug::bind(sol::table& api_table)
+void LuaApiDebug::bind(sol::table& api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, Debug, log);
-    LUA_API_BIND_FUNCTION(api_table, Debug, report_error);
-    LUA_API_BIND_FUNCTION(api_table, Debug, dump_characters);
-    LUA_API_BIND_FUNCTION(api_table, Debug, dump_items);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, log);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, report_error);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, dump_characters);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, dump_items);
 }
 
 } // namespace lua

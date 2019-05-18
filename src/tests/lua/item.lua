@@ -42,8 +42,10 @@ lrun("test Item.count", function()
 end)
 
 local function tally()
+   print("=====")
    local count = 0
-   for _, _ in Item.iter(5080, 5480) do
+   for _, i in Item.iter(5080, 5480) do
+      print(i.basename)
       count = count + 1
    end
    return count

@@ -24,6 +24,7 @@
 #include "keybind/input_context.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/base_event.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
@@ -44,8 +45,12 @@
 
 namespace
 {
+
+int hour_played;
 int ct = 0;
-}
+
+} // namespace
+
 
 
 namespace elona
@@ -583,7 +588,7 @@ label_2689_internal:
                 {
                     if (cdata[c].relationship > -3)
                     {
-                        if (cdata[c].does_not_search_enemy() == 0)
+                        if (!cdata[c].is_not_attacked_by_enemy())
                         {
                             f = 1;
                             break;
@@ -594,7 +599,7 @@ label_2689_internal:
                 {
                     if (cdata[c].original_relationship <= -3)
                     {
-                        if (cdata[c].does_not_search_enemy() == 0)
+                        if (!cdata[c].is_not_attacked_by_enemy())
                         {
                             f = 1;
                             break;
@@ -604,7 +609,7 @@ label_2689_internal:
             }
             if (f)
             {
-                if (cdata[cc].does_not_search_enemy() == 0)
+                if (!cdata[cc].is_not_attacked_by_enemy())
                 {
                     cdata[cc].enemy_id = c;
                     cdata[cc].hate = 30;
@@ -833,8 +838,8 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         if (ct >= ELONA_MAX_CHARACTERS)
         {
-            lua::lua->get_event_manager()
-                .run_callbacks<lua::EventKind::all_turns_finished>();
+            lua::lua->get_event_manager().trigger(
+                lua::BaseEvent("core.all_turns_finished"));
             return TurnResult::all_turns_finished;
         }
     }
@@ -1015,9 +1020,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(Config::instance().animewait * 6);
+                await(Config::instance().animation_wait * 6);
             }
-            await(Config::instance().animewait * 3);
+            await(Config::instance().animation_wait * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
@@ -1234,7 +1239,7 @@ TurnResult turn_end()
             if (cc != 0)
             {
                 update_screen();
-                await(Config::instance().animewait * 10);
+                await(Config::instance().animation_wait * 10);
             }
             txt(u8" *tick* "s, Message::color{ColorIndex::cyan});
             return TurnResult::pass_one_turn_freeze_time;
@@ -1249,8 +1254,6 @@ TurnResult pc_turn(bool advance_time)
 {
     if (advance_time)
     {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::EventKind::player_turn>();
         if (game_data.catches_god_signal)
         {
             if (rnd(1000) == 0)
@@ -1279,7 +1282,7 @@ TurnResult pc_turn(bool advance_time)
         }
         if (game_data.player_cellaccess_check_flag)
         {
-            await(Config::instance().wait1 / 3);
+            await(Config::instance().general_wait / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata.player().position.y + dy;
@@ -1376,6 +1379,10 @@ TurnResult pc_turn(bool advance_time)
         {
             update_screen();
         }
+
+        lua::lua->get_event_manager().trigger(
+            lua::BaseEvent("core.player_turn_started"));
+
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
             game_data.executing_immediate_quest_status = 3;
@@ -1480,8 +1487,7 @@ TurnResult pc_turn(bool advance_time)
             {
                 txt(i18n::s.get(
                     "core.locale.action.use_stairs.prompt_give_up_game"));
-                rtval = yes_or_no(promptx, prompty, 160);
-                if (rtval == 0)
+                if (yes_no())
                 {
                     petarenawin = 2;
                     return TurnResult::turn_end;
@@ -1547,7 +1553,8 @@ label_2747:
         return TurnResult::turn_end;
     }
     ++t;
-    if (Config::instance().scrsync > 0 && t % Config::instance().scrsync == 0)
+    if (Config::instance().screen_refresh_wait > 0 &&
+        t % Config::instance().screen_refresh_wait == 0)
     {
         ++scrturn;
         ui_render_from_screensync();
@@ -1569,7 +1576,7 @@ label_2747:
     // queried, but it would probably be dangerous to allow the game
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
-    await(Config::instance().wait1);
+    await(Config::instance().general_wait);
     auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 

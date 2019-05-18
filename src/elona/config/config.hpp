@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_set>
 #include "../../snail/window.hpp"
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../util/noncopyable.hpp"
@@ -27,92 +28,87 @@ public:
     }
     ~Config() = default;
 
-    void init(const fs::path&);
-    void init(const ConfigDef);
+    void load_def(std::istream& is, const std::string& mod_id);
+    void load_def(const fs::path& config_def_path, const std::string& mod_id);
     void load(std::istream&, const std::string&, bool);
     void save();
 
     void clear()
     {
         def.clear();
-        storage.clear();
-        getters.clear();
-        setters.clear();
+        storage_.clear();
+        getters_.clear();
+        setters_.clear();
     }
 
-    int alert;
-    bool alwayscenter;
-    int animewait;
-    bool attackanime;
-    int attackwait;
-    bool autonumlock;
+    // If your are vimmer, ex command ":sort /\w\+;/ r" can sort the list well.
+    int alert_wait;
+    bool allow_enhanced_skill;
+    bool always_center;
+    int animation_wait;
+    bool attack_animation;
+    bool attack_neutral_npcs;
+    int attack_wait;
+    std::string auto_turn_speed;
+    bool autodisable_numlock;
+    bool autopick;
     bool autosave;
-    std::string autoturn;
     bool damage_popup;
     std::string display_mode;
-    bool env;
-    bool extraclass;
-    bool extrahelp;
-    bool extrarace;
+    int enhanced_skill_lowerbound;
+    int enhanced_skill_upperbound;
+    bool extra_class;
+    bool extra_help;
+    bool extra_race;
     std::string font_filename;
     std::string fullscreen;
-    bool heart;
-    bool hideautoidentify;
-    bool hideshopresult;
-    std::string hp_bar;
-    bool attack_neutral_npcs;
+    int general_wait;
+    bool heartbeat;
+    bool hide_autoidentify;
+    bool hide_shop_updates;
+    bool high_quality_shadow;
+    std::string hp_bar_position;
     bool joypad;
-    int keywait;
+    int key_wait;
     std::string language;
     bool leash_icon;
     int max_damage_popup;
-    bool allow_enhanced_skill;
-    int enhanced_skill_lowerbound;
-    int enhanced_skill_upperbound;
     bool message_add_timestamps;
     int message_transparency;
-    std::string music;
+    bool music;
     bool net;
-    bool netchat;
-    bool netwish;
-    bool objectshadow;
+    bool net_chat;
+    bool net_wish;
+    bool object_shadow;
     std::string pcc_graphic_scale;
     int restock_interval;
-    bool runscroll;
-    int runwait;
+    int run_wait;
+    int screen_refresh_wait;
     bool scroll;
-    int scrsync;
-    int select_fast_start;
-    int select_wait;
+    bool scroll_when_run;
+    int select_fast_start_wait;
     int select_fast_wait;
-    bool serverlist;
-    bool shadow;
+    int select_wait;
+    bool server_list;
     bool skip_confirm_at_shop;
     bool skip_overcasting_warning;
-    bool skiprandevents;
+    bool skip_random_event_popups;
     bool sound;
-    int startrun;
+    int start_run_wait;
     std::string startup_script;
     bool story;
-    bool titleanime;
-    int wait1;
-    int walkwait;
-    bool windowanime;
+    bool title_effect;
+    int walk_wait;
+    bool weather_effect;
+    bool window_animation;
     bool wizard;
 
-    bool use_autopick;
-    bool use_autopick_in_home;
-    bool use_autopick_in_dungeon;
-    bool use_autopick_in_shop;
-    bool use_autopick_in_ranch;
-    bool use_autopick_in_crop;
-    bool use_autopick_in_storage_house;
-    bool use_autopick_in_shelter;
-    bool use_autopick_in_town;
-    bool use_autopick_in_conquered_nefia;
-    bool use_autopick_in_conquered_quest_map;
-
     bool is_test = false; // testing use only
+
+    const std::unordered_set<std::string>& get_mod_ids()
+    {
+        return mod_ids_;
+    }
 
     bool is_visible(const std::string& key) const
     {
@@ -127,7 +123,7 @@ public:
         {
             throw std::runtime_error("No such config value " + key);
         }
-        getters[key] = getter;
+        getters_[key] = getter;
     }
 
     template <typename T>
@@ -139,7 +135,7 @@ public:
         {
             throw std::runtime_error("No such config value " + key);
         }
-        setters[key] = [setter](const hcl::Value& value) {
+        setters_[key] = [setter](const hcl::Value& value) {
             setter(value.as<T>());
         };
     }
@@ -152,18 +148,18 @@ public:
         def.inject_enum(key, variants, default_variant);
 
         auto EnumDef = def.get<spec::EnumDef>(key);
-        if (storage.find(key) != storage.end())
+        if (storage_.find(key) != storage_.end())
         {
             // Check if this enum has an invalid value. If so, set it to the
             // default.
             std::string current = get<std::string>(key);
             if (!EnumDef.get_index_of(current))
             {
-                ELONA_LOG(
-                    "Config key "s
-                    << key << " had invalid variant "s << current << ". "s
+                ELONA_WARN("config")
+                    << "Config key "s << key << " had invalid variant "s
+                    << current << ". "s
                     << "("s << def.type_to_string(key) << ")"s
-                    << "Setting to "s << EnumDef.get_default() << "."s);
+                    << "Setting to "s << EnumDef.get_default() << "."s;
                 set(key, EnumDef.get_default());
             }
         }
@@ -177,12 +173,12 @@ public:
     template <typename T>
     T get(const std::string& key) const
     {
-        if (storage.find(key) == storage.end())
+        if (storage_.find(key) == storage_.end())
         {
             // TODO fallback to default specified in config definition instead
             throw std::runtime_error("No such config value " + key);
         }
-        if (!storage.at(key).is<T>())
+        if (!storage_.at(key).is<T>())
         {
             throw std::runtime_error(
                 "Expected type \"" + def.type_to_string(key) + "\" for key " +
@@ -191,13 +187,13 @@ public:
 
         try
         {
-            if (getters.find(key) != getters.end())
+            if (getters_.find(key) != getters_.end())
             {
-                return getters.at(key)().as<T>();
+                return getters_.at(key)().as<T>();
             }
             else
             {
-                return storage.at(key).as<T>();
+                return storage_.at(key).as<T>();
             }
         }
         catch (std::exception& e)
@@ -209,7 +205,7 @@ public:
 
     void set(const std::string& key, const hcl::Value value)
     {
-        ELONA_LOG("Set config option: " << key << " to " << value);
+        ELONA_LOG("config") << "Set: " << key << " to " << value;
 
         if (!def.exists(key))
         {
@@ -221,16 +217,16 @@ public:
             {
                 int temp = value.as<int>();
                 temp = clamp(temp, def.get_min(key), def.get_max(key));
-                storage[key] = temp;
+                storage_[key] = temp;
             }
             else
             {
-                storage[key] = std::move(value);
+                storage_[key] = std::move(value);
             }
 
-            if (setters.find(key) != setters.end())
+            if (setters_.find(key) != setters_.end())
             {
-                setters[key](storage.at(key));
+                setters_[key](storage_.at(key));
             }
         }
         else
@@ -245,13 +241,13 @@ public:
 
     void run_setter(const std::string& key)
     {
-        if (storage.find(key) == storage.end())
+        if (storage_.find(key) == storage_.end())
         {
             return;
         }
-        if (setters.find(key) != setters.end())
+        if (setters_.find(key) != setters_.end())
         {
-            setters[key](storage.at(key));
+            setters_[key](storage_.at(key));
         }
     }
 
@@ -272,21 +268,23 @@ private:
     bool verify_types(const hcl::Value&, const std::string&);
 
     ConfigDef def;
-    tsl::ordered_map<std::string, hcl::Value> storage;
-    tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters;
+    tsl::ordered_map<std::string, hcl::Value> storage_;
+    tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters_;
     tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>>
-        setters;
+        setters_;
+    std::unordered_set<std::string> mod_ids_;
 };
 
 
 
 /***
- * Loads config options that are marked to be loaded before the
- * application instance is initialized, like screen size.
+ * Loads config options that are marked to be loaded before the application
+ * instance is initialized, like screen size. The config file is loaded from the
+ * current profile.
  */
-void initialize_config_preload(const fs::path& hcl_file);
+void initialize_config_preload();
 
-void load_config(const fs::path& hcl_file);
+void load_config();
 
 void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);

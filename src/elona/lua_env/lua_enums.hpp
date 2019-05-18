@@ -35,7 +35,7 @@ public:
             }
         }
 
-        assert(false);
+        throw std::runtime_error("Could not convert a value of type " + name);
         return "<invalid enum>";
     }
 
@@ -44,9 +44,8 @@ public:
         auto it = storage.find(key);
         if (it == storage.end())
         {
-            ELONA_LOG(
-                "Enum value " << key << " for " << name
-                              << " not found, using default");
+            ELONA_WARN("lua.enum") << "Enum value " << key << " for " << name
+                                   << " not found, using default";
             return default_val;
         }
 

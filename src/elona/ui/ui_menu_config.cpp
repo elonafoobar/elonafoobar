@@ -2,6 +2,7 @@
 #include "../audio.hpp"
 #include "../config/config.hpp"
 #include "../config/config_menu.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../network.hpp"
@@ -12,7 +13,7 @@ namespace elona
 namespace ui
 {
 
-static void _draw_background()
+void UIMenuConfig::_draw_background()
 {
     int bg_variant_buffer = mode == 10 ? 2 : 4;
     load_background_variants(bg_variant_buffer);
@@ -25,15 +26,12 @@ static void _draw_background()
     }
     if (mode == 10)
     {
-        gsel(4);
         gmode(0);
-        pos(0, 0);
-        picload(filesystem::dir::graphic() / u8"title.bmp", 1);
-        gcopy(4, 0, 0, 800, 600, windoww, windowh);
+        asset_load("title");
+        elona::draw("title", 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
     }
 }
@@ -59,6 +57,9 @@ bool UIMenuConfig::init()
 
     windowshadow = 1;
 
+    assert(_menu.items.size() > 0);
+    _is_section = _menu.items.at(0)->submenu() != none;
+
     return true;
 }
 
@@ -77,7 +78,7 @@ void UIMenuConfig::update()
     }
 }
 
-static void _draw_window(const std::string& title, int width, int height)
+void UIMenuConfig::_draw_window(const std::string& title, int width, int height)
 {
     pagesize = 0;
     int y;
@@ -98,7 +99,7 @@ static void _draw_window(const std::string& title, int width, int height)
         height);
 }
 
-static void _draw_deco()
+void UIMenuConfig::_draw_deco()
 {
     display_topic(
         i18n::s.get("core.locale.config.common.menu"), wx + 34, wy + 36);
@@ -114,13 +115,21 @@ static void _draw_deco()
 
     x = ww / 5 * 3;
     y = wh - 80;
-    pos(wx + ww / 3, wy + wh / 2);
-    gmode(4, 50);
-    gcopy_c(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2, 50);
+    gcopy_c(
+        p,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 3,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
 }
 
-static void _draw_keys(bool is_root_menu)
+void UIMenuConfig::_draw_keys(bool is_root_menu)
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -144,15 +153,13 @@ static void _draw_keys(bool is_root_menu)
     }
 }
 
-static void _draw_arrows(int item_pos)
+void UIMenuConfig::_draw_arrows(int item_pos)
 {
-    pos(wx + 220, wy + 66 + item_pos * 19 - 5);
-    gcopy(3, 312, 336, 24, 24);
-    pos(wx + 358, wy + 66 + item_pos * 19 - 5);
-    gcopy(3, 336, 336, 24, 24);
+    elona::draw("arrow_left", wx + 220, wy + 66 + item_pos * 19 - 5);
+    elona::draw("arrow_right", wx + 358, wy + 66 + item_pos * 19 - 5);
 }
 
-static void _draw_items(ConfigMenu& menu, bool is_root_menu)
+void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)
 {
     font(14 - en * 2);
     cs_listbk();
@@ -179,7 +186,7 @@ static void _draw_items(ConfigMenu& menu, bool is_root_menu)
         }
         // if (submenu == 3)
         // {
-        //     if (Config::instance().net == 0)
+        //     if (!Config::instance().net)
         //     {
         //         if (cnt >= 1)
         //         {
@@ -192,9 +199,7 @@ static void _draw_items(ConfigMenu& menu, bool is_root_menu)
         {
             _draw_arrows(item_pos);
         }
-        pos(wx + 250, wy + 66 + cnt * 19);
-
-        mes(item->get_message());
+        mes(wx + 250, wy + 66 + cnt * 19, item->get_message());
 
         item_pos++;
     }
@@ -207,8 +212,8 @@ void UIMenuConfig::draw()
 
     pagesize = listmax;
 
-    _draw_keys(_submenu_index == 0);
-    _draw_items(_menu, _submenu_index == 0);
+    _draw_keys(_is_section);
+    _draw_items(_menu, _is_section);
 
     _menu.draw();
 
@@ -229,7 +234,7 @@ public:
 protected:
     optional<DummyResult> update() override
     {
-        await(Config::instance().wait1);
+        await(Config::instance().general_wait);
         auto action = key_check();
 
         if (action != ""s)
@@ -249,14 +254,17 @@ static void _show_config_item_desc(const std::string& desc)
 optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     const std::string& action)
 {
-    if (auto submenu = get_selected_item())
+    if (auto index = get_selected_index_this_page())
     {
-        cs = _index;
-        if (_submenu_index == 0)
+        cs = *index;
+        if (_is_section)
         {
-            cs = 0;
+            auto submenu_index = _menu.items[cs]->submenu();
+            assert(submenu_index);
+
             snd("core.ok1");
-            return UIMenuConfig::Result::finish(*submenu + 1);
+            UIMenuConfigResult result = {false, *submenu_index};
+            return UIMenuConfig::Result::finish(result);
         }
     }
     else if (action == "next_page" || action == "previous_page")
@@ -283,15 +291,16 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
 
         // Restart with same index so background can be redrawn again in the
         // title screen.
-        return UIMenuConfig::Result::finish(_submenu_index);
+        UIMenuConfigResult result = {false, _submenu_index};
+        return UIMenuConfig::Result::finish(result);
     }
     if (action == "cancel")
     {
         if (_submenu_index != 0)
         {
-            // TODO nested menus
             cs = _submenu_index - 1;
-            return UIMenuConfig::Result::finish(0);
+            UIMenuConfigResult result = {true, 0};
+            return UIMenuConfig::Result::finish(result);
         }
         else
         {
@@ -301,7 +310,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
     }
 
     return none;
-}
+} // namespace ui
 
 } // namespace ui
 } // namespace elona

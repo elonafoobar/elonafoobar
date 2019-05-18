@@ -49,6 +49,7 @@ struct Area
     bool can_return_to();
     bool can_return_to_if_wizard();
     bool is_museum_or_shop();
+    bool is_hidden_in_world_map();
 
 
     /**
@@ -118,6 +119,13 @@ extern AreaData area_data;
 
 
 void initialize_adata();
+
+void area_generate_from_mapdef(
+    Area& area,
+    const MapDefData& map,
+    int outer_map,
+    int x,
+    int y);
 
 
 } // namespace elona

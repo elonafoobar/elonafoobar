@@ -20,7 +20,7 @@ static void _load_race_list()
         list(0, listmax) = 0;
         ++listmax;
     }
-    if (Config::instance().extrarace)
+    if (Config::instance().extra_race)
     {
         for (const auto& race : race_get_available(true))
         {
@@ -70,7 +70,7 @@ void UIMenuCharamakeRace::update()
     }
 }
 
-static void _draw_race_info(int chip_male, int chip_female)
+void UIMenuCharamakeRace::_draw_race_info(int chip_male, int chip_female)
 {
     {
         // male
@@ -85,7 +85,7 @@ static void _draw_race_info(int chip_male, int chip_female)
     draw_race_or_class_info();
 }
 
-static void _draw_window()
+void UIMenuCharamakeRace::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.chara_making.select_race.title"),
@@ -97,9 +97,17 @@ static void _draw_window()
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
-    pos(wx + ww / 4, wy + wh / 2);
-    gmode(4, 50);
-    gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2, 50);
+    gcopy_c(
+        2,
+        cmbg / 4 % 4 * 180,
+        cmbg / 4 / 4 % 2 * 300,
+        180,
+        300,
+        wx + ww / 4,
+        wy + wh / 2,
+        x,
+        y);
     gmode(2);
     display_topic(
         i18n::s.get("core.locale.chara_making.select_race.race"),
@@ -111,13 +119,13 @@ static void _draw_window()
         wy + 30);
 }
 
-static void _draw_choice(int cnt, const std::string& text)
+void UIMenuCharamakeRace::_draw_choice(int cnt, const std::string& text)
 {
     display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_choices()
+void UIMenuCharamakeRace::_draw_choices()
 {
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -156,7 +164,6 @@ void UIMenuCharamakeRace::draw()
     const std::string& selected_race = listn(1, page * pagesize + cs);
     _reload_selected_race(selected_race);
 
-    pos(wx + 200, wy + 66);
     _draw_race_info(ref1, ref2);
 }
 

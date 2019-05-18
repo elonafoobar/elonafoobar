@@ -11,12 +11,10 @@ namespace
 
 constexpr int _displayed_portrait_width = 80;
 constexpr int _displayed_portrait_height = 112;
-constexpr int _portrait_grid_column = 16;
-constexpr int _portrait_grid_row = 8;
 
 
 
-static void copy_image(snail::BasicImage& img, const Extent& ext)
+static void copy_image(snail::Image& img, const Extent& ext)
 {
     const auto save =
         snail::Application::instance().get_renderer().blend_mode();
@@ -29,10 +27,8 @@ static void copy_image(snail::BasicImage& img, const Extent& ext)
 
 
 
-static void copy_image_cropped(
-    snail::BasicImage& img,
-    const Extent& source,
-    const Extent& dest)
+static void
+copy_image_cropped(snail::Image& img, const Extent& source, const Extent& dest)
 {
     const auto save =
         snail::Application::instance().get_renderer().blend_mode();
@@ -46,10 +42,8 @@ static void copy_image_cropped(
 
 
 // FIXME: refactor this dirty hack.
-static void copy_image_portrait(
-    snail::BasicImage& img,
-    const Extent& source,
-    const Extent& dest)
+static void
+copy_image_portrait(snail::Image& img, const Extent& source, const Extent& dest)
 {
     auto& renderer = snail::Application::instance().get_renderer();
     const auto save = renderer.blend_mode();
@@ -87,48 +81,102 @@ void PicLoader::clear()
     storage.clear();
 }
 
-void PicLoader::load(
-    const fs::path& image_file,
-    const IdType& id,
-    PageType type)
+std::pair<Extent, size_t> PicLoader::find_extent(
+    int width,
+    int height,
+    PageType type,
+    size_t& info_index,
+    // TODO: move out
+    int buffer_width,
+    int buffer_height)
 {
-    snail::BasicImage img{image_file, snail::Color{0, 0, 0}};
     Extent ext{0, 0, 0, 0};
 
-    size_t i = 0;
-    while (true)
-    {
-        if (i == buffers.size())
+    auto check =
+        [this, &ext, &type, &width, &height, &buffer_width, &buffer_height](
+            size_t index) -> optional<size_t> {
+        if (index == buffers.size())
         {
-            add_buffer(type);
+            add_buffer(type, buffer_width, buffer_height);
         }
 
-        auto& info = buffers.at(i);
-        i += 1;
+        auto& info = buffers.at(index);
 
         if (info.type != type)
         {
-            continue;
+            return none;
         }
 
         // Try to find an available buffer location to pack this
         // sprite.
-        if (auto pair = info.find(img.width(), img.height()))
+        if (auto pair = info.find(width, height))
         {
             size_t skyline_index = pair->first;
             ext = pair->second;
             ext.buffer = info.buffer_id;
 
-            // Update the sprite packing information.
-            info.insert_extent(skyline_index, ext);
+            return skyline_index;
+        }
 
+        return none;
+    };
+
+    optional<size_t> skyline_index = check(info_index);
+    if (skyline_index)
+    {
+        return {ext, *skyline_index};
+    }
+
+    size_t i = 0;
+    while (true)
+    {
+        if (i == info_index)
+        {
+            i += 1;
+            continue;
+        }
+
+        skyline_index = check(i);
+        if (skyline_index)
+        {
             break;
         }
+
+        i += 1;
+    }
+
+    info_index = i;
+
+    return {ext, *skyline_index};
+}
+
+void PicLoader::load(
+    const fs::path& image_file,
+    const IdType& id,
+    PageType type)
+{
+    snail::Image img{image_file, snail::Color{0, 0, 0}};
+    Extent ext{0, 0, 0, 0};
+
+    auto it = storage.find(id);
+    if (it != storage.end())
+    {
+        ext = it->second;
+    }
+    else
+    {
+        size_t info_index = 0;
+        size_t skyline_index;
+        std::tie(ext, skyline_index) = find_extent(
+            img.width(), img.height(), type, info_index, 1024, 1024);
+
+        // Update the sprite packing information.
+        auto& info = buffers.at(info_index);
+        info.insert_extent(skyline_index, ext);
     }
 
     // Render the sprite to the region of the buffer that was found.
     gsel(ext.buffer);
-    pos(ext.x, ext.y);
 
     copy_image(img, ext);
 
@@ -141,7 +189,7 @@ void PicLoader::add_predefined_extents(
     const MapType& extents,
     PageType type)
 {
-    snail::BasicImage img{atlas_file, snail::Color{0, 0, 0}};
+    snail::Image img{atlas_file, snail::Color{0, 0, 0}};
 
     // Add a new buffer for this atlas. The assumption is that all the
     // defined sprites will fit on this buffer. This assumption might
@@ -149,47 +197,49 @@ void PicLoader::add_predefined_extents(
     // (character.bmp, image.bmp) there is still a good amount of
     // unused space to hold any potential overflow.
 
-    // FIXME: refactor this dirty hack.
-    int width = img.width();
-    int height = img.height();
-    if (type == PageType::portrait)
-    {
-        width = _displayed_portrait_width * _portrait_grid_column;
-        height = _displayed_portrait_height * _portrait_grid_row;
-    }
-
-    BufferInfo& info = add_buffer(type, width, height);
-    gsel(info.buffer_id);
-
+    size_t info_index = 0;
     for (auto& pair : extents)
     {
         // Get the source loaded from a definition file.
         const Extent& source = pair.second;
+        Extent dest{0, 0, 0, 0};
 
-        assert(source.right() < img.width());
-        assert(source.bottom() < img.height());
-
-        // Find a region on a buffer to place the sprite.
-
-        // FIXME: refactor this dirty hack.
-        int width = source.width;
-        int height = source.height;
-        if (type == PageType::portrait)
+        auto it = storage.find(pair.first);
+        if (it != storage.end())
         {
-            width = _displayed_portrait_width;
-            height = _displayed_portrait_height;
+            dest = it->second;
+            info_index = dest.buffer - max_buffers;
+        }
+        else
+        {
+            assert(source.right() < img.width());
+            assert(source.bottom() < img.height());
+
+            // Find a region on a buffer to place the sprite.
+
+            // FIXME: refactor this dirty hack.
+            int width = source.width;
+            int height = source.height;
+            if (type == PageType::portrait)
+            {
+                width = _displayed_portrait_width;
+                height = _displayed_portrait_height;
+            }
+
+            size_t skyline_index;
+            std::tie(dest, skyline_index) = find_extent(
+                width, height, type, info_index, img.width(), img.height());
+            dest.frame_width = source.frame_width;
+
+            // Update the sprite packing information.
+            auto& info = buffers.at(info_index);
+            info.insert_extent(skyline_index, dest);
+
+            // Store the buffer region for later lookup.
+            storage[pair.first] = dest;
         }
 
-        auto found = info.find(width, height);
-        assert(found);
-
-        size_t skyline_index = found->first;
-        Extent& dest = found->second;
-        dest.buffer = info.buffer_id;
-        dest.frame_width = source.frame_width;
-
-        // Update the sprite packing information.
-        info.insert_extent(skyline_index, dest);
+        gsel(dest.buffer);
 
         // Render the defined portion of the image onto the buffer.
         if (type == PageType::portrait)
@@ -200,9 +250,6 @@ void PicLoader::add_predefined_extents(
         {
             copy_image_cropped(img, source, dest);
         }
-
-        // Store the buffer region for later lookup.
-        storage[pair.first] = dest;
     }
 }
 
@@ -211,9 +258,9 @@ PicLoader::BufferInfo& PicLoader::add_buffer(PageType type, int w, int h)
     int new_buffer_index;
     size_t buffer_info_index = buffers.size();
 
-    assert(buffer_info_index < 10);
+    assert(buffer_info_index < max_buffers);
 
-    new_buffer_index = 10 + buffer_info_index;
+    new_buffer_index = max_buffers + buffer_info_index;
     buffers.emplace_back(type, new_buffer_index, w, h);
 
     buffer(new_buffer_index, w, h);

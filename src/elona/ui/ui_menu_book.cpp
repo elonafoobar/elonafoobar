@@ -1,5 +1,6 @@
 #include "ui_menu_book.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 
@@ -11,15 +12,14 @@ namespace ui
 bool UIMenuBook::init()
 {
     snd("core.book1");
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
+    asset_load("book");
     gsel(0);
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"book.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "book.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -62,10 +62,11 @@ void UIMenuBook::update()
 
 void UIMenuBook::draw()
 {
-    wx = (windoww - 720) / 2 + inf_screenx;
-    wy = winposy(468);
-    pos(wx, wy);
-    gcopy(4, 0, 0, 736, 448);
+    const auto& info = get_image_info("book");
+    wx = (windoww - info.width + 16) / 2 + inf_screenx;
+    wy = winposy(info.height + 20);
+    elona::draw("book", wx, wy);
+
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -88,13 +89,11 @@ void UIMenuBook::draw()
         {
             font(12 + sizefix - en * 2);
         }
-        pos(x, y);
-        mes(s);
+        mes(x, y, s);
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);
-            pos(x + 90, y + 330);
-            mes(u8"- "s + (p / 20 + 1) + u8" -"s);
+            mes(x + 90, y + 330, u8"- "s + (p / 20 + 1) + u8" -"s);
         }
     }
 }

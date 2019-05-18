@@ -54,10 +54,11 @@ PortraitData _PortraitDBBase::convert(
         }
     }
 
-    return PortraitData{id,
-                        SharedId{Traits::type_id + ":"s + id},
-                        Extent{x, y, width, height},
-                        filepath};
+    return PortraitData{
+        SharedId{id},
+        SharedId{std::string(Traits::type_id) + data_id_separator + id},
+        Extent{x, y, width, height},
+        filepath};
 }
 
 
@@ -130,9 +131,9 @@ std::string PortraitDB::get_previous_portrait(const std::string& current)
 
 void PortraitDB::_cache_sorted_portrait_table()
 {
-    for (const auto& data : *this)
+    for (const auto& pair : *this)
     {
-        sorted_portrait_table.insert(data.id);
+        sorted_portrait_table.insert(pair.first);
     }
 }
 

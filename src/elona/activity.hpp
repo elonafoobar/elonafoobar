@@ -13,7 +13,6 @@ void rowact_item(int item_index);
 void activity_handle_damage(Character&);
 optional<TurnResult> activity_proc(Character&);
 
-void prompt_stop_continuous_action();
 void continuous_action_perform();
 void continuous_action_sex();
 void continuous_action_blending();

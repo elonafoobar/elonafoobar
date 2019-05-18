@@ -23,6 +23,8 @@
 #include "menu.hpp"
 #include "message.hpp"
 #include "network.hpp"
+#include "pic_loader/pic_loader.hpp"
+#include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "trait.hpp"
@@ -295,12 +297,13 @@ void text_set()
         _melee(1, 7) = u8"attack"s;
         _melee(2, 7) = u8"spore"s;
     }
-    homepage = i18n::s.get("core.locale.system.lafrontier_homepage");
 }
+
+
 
 bool maybe_show_ex_help(int id, bool should_update_screen)
 {
-    if (Config::instance().extrahelp)
+    if (Config::instance().extra_help)
     {
         if (game_data.exhelp_flags.at(id) == 0)
         {
@@ -309,8 +312,7 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
                 if (cdata.player().continuous_action.turn == 0)
                 {
                     game_data.exhelp_flags.at(id) = 1;
-                    ghelp = id;
-                    show_ex_help();
+                    show_ex_help(id);
 
                     if (should_update_screen)
                     {
@@ -327,18 +329,19 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
     return false;
 }
 
-void show_ex_help()
+
+
+void show_ex_help(int id)
 {
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_help.bmp", 1);
+    asset_load("deco_help");
     gsel(0);
     page = 0;
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data() / u8"exhelp.txt").native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "exhelp.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -346,11 +349,11 @@ void show_ex_help()
         }
     }
     p = instr(
-        buff, 0, u8"%"s + ghelp + u8","s + i18n::s.get("core.locale.meta.tag"));
+        buff, 0, u8"%"s + id + u8","s + i18n::s.get("core.locale.meta.tag"));
     if (p == -1)
     {
         dialog(
-            u8"help index not found %"s + ghelp + u8","s +
+            u8"help index not found %"s + id + u8","s +
             i18n::s.get("core.locale.meta.tag"));
         return;
     }
@@ -371,12 +374,9 @@ void show_ex_help()
         wy = winposy(dy);
         window2(
             (windoww - 325) / 2 + inf_screenx, winposy(dy) + 6, 325, 32, 0, 1);
-        pos(wx + 5, wy + 4);
-        gcopy(3, 960, 96, 48, 48);
-        pos(wx + dx - 55, wy + 4);
-        gcopy(3, 960, 96, 48, 48);
-        pos(wx + 10, wy + 42);
-        gcopy(3, 960, 144, 96, 120);
+        draw("deco_help_a", wx + 5, wy + 4);
+        draw("deco_help_a", wx + dx - 55, wy + 4);
+        draw("deco_help_b", wx + 10, wy + 42);
         font(16 - en * 2, snail::Font::Style::bold);
         bmes(
             i18n::s.get("core.locale.ui.exhelp.title"),
@@ -398,9 +398,7 @@ void show_ex_help()
                 {
                     break;
                 }
-                color(30, 30, 30);
                 const auto ny = gmes(s, tx, y, 330, {30, 30, 30}, true).y;
-                color(0, 0, 0);
                 y = ny;
             }
         }
@@ -683,9 +681,7 @@ int change_appearance()
     wy = winposy(wh);
     snd("core.port");
     window_animation(wx, wy, ww, wh, 9, 7);
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_mirror.bmp", 1);
+    asset_load("deco_mirror");
     gsel(0);
     windowshadow = 1;
 label_2040_internal:
@@ -754,8 +750,7 @@ label_2041_internal:
         i18n::s.get("core.locale.ui.appearance.basic.category"),
         wx + 34,
         wy + 36);
-    pos(wx + ww - 40, wy);
-    gcopy(3, 960, 96, 48, 120);
+    draw("deco_mirror_a", wx + ww - 40, wy);
     ++i;
     if (i % 100 < 45)
     {
@@ -772,22 +767,34 @@ label_2041_internal:
         {
             if (const auto rect = draw_get_rect_portrait(cdata[cc].portrait))
             {
-                pos(wx + 238, wy + 75);
                 gcopy(
-                    rect->buffer, rect->x, rect->y, rect->width, rect->height);
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    wx + 238,
+                    wy + 75);
             }
         }
     }
     else if (cdata[cc].has_own_sprite() == 1)
     {
-        pos(wx + 280, wy + 130);
         gmode(2);
         const auto is_fullscale =
             Config::instance().pcc_graphic_scale == "fullscale";
         const auto width = is_fullscale ? (32 * 2) : (24 * 2);
         const auto height = is_fullscale ? (48 * 2) : (40 * 2);
         gcopy_c(
-            20 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, width, height);
+            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
+            f / 4 % 4 * 32,
+            f / 16 % 4 * 48,
+            32,
+            48,
+            wx + 280,
+            wy + 130,
+            width,
+            height);
     }
     else
     {
@@ -823,10 +830,8 @@ label_2041_internal:
         cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         if (rtval != -2)
         {
-            pos(wx + 30, wy + 66 + cnt * 21 - 5);
-            gcopy(3, 312, 336, 24, 24);
-            pos(wx + 175, wy + 66 + cnt * 21 - 5);
-            gcopy(3, 336, 336, 24, 24);
+            draw("arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
+            draw("arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
         }
     }
     if (keyrange != 0)
@@ -1007,9 +1012,17 @@ int change_appearance_equipment()
             ++f;
         }
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
-        pos(wx + 280, wy + 120);
         gmode(2);
-        gcopy_c(20 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
+        gcopy_c(
+            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
+            f / 4 % 4 * 32,
+            f / 16 % 4 * 48,
+            32,
+            48,
+            wx + 280,
+            wy + 120,
+            48,
+            80);
         gmode(2);
         font(14 - en * 2);
         cs_listbk();
@@ -1031,10 +1044,8 @@ int change_appearance_equipment()
                 {
                     s += u8"Off"s;
                 }
-                pos(wx + 30, wy + 66 + cnt * 21 - 5);
-                gcopy(3, 312, 336, 24, 24);
-                pos(wx + 175, wy + 66 + cnt * 21 - 5);
-                gcopy(3, 336, 336, 24, 24);
+                draw("arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
+                draw("arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
             }
             cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         }
@@ -1124,15 +1135,14 @@ void show_weapon_dice(int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    color(20, 10, 0);
     if (val0 == 0)
     {
-        pos(wx + 590, wy + 281 + p(2) * 16);
-        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.hit"));
-        pos(wx + 417, wy + 281 + p(2) * 16);
-        mes(s(1));
+        mes(wx + 590,
+            wy + 281 + p(2) * 16,
+            i18n::s.get("core.locale.ui.chara_sheet.damage.hit"),
+            {20, 10, 0});
+        mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
-    color(0, 0, 0);
     attackrange = 0;
     if (the_item_db[inv[cw].id]->category == 24000) // TODO coupling
     {
@@ -1146,8 +1156,7 @@ void show_weapon_dice(int val0)
     s = ""s + tohit + u8"%"s;
     if (val0 == 0)
     {
-        pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
-        mes(s);
+        mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, s);
     }
     else
     {
@@ -1160,8 +1169,7 @@ void show_weapon_dice(int val0)
             3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
     if (val0 == 0)
     {
-        pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
-        mes(s);
+        mes(wx + 460 + en * 8, wy + 279 + p(2) * 16, s);
     }
     else
     {
@@ -1374,7 +1382,6 @@ label_1965_internal:
             break;
         }
         noteget(s, p);
-        pos(wx + 54, wy + 66 + cnt * 19 + 2);
         gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
     }
     redraw();

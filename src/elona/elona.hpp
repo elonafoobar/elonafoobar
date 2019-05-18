@@ -390,17 +390,11 @@ void boxf();
 void boxl(int x, int y, int width, int height, const snail::Color& color);
 
 
-void buffer(int window_id, int width = 0, int heihgt = 0);
-
-
-void color(int r, int g, int b);
+void buffer(int window_id, int width = 0, int height = 0);
 
 
 int dialog(const std::string& message, int = 0);
 
-
-
-void exec(const std::string&, int);
 
 
 void font(int size, snail::Font::Style style = snail::Font::Style::regular);
@@ -411,15 +405,18 @@ void gcopy(
     int src_y,
     int src_width,
     int src_height,
-    int dst_width = -1,
-    int dst_height = -1);
-
-void gcopy_c(
+    int dst_x,
+    int dst_y);
+void gcopy(
     int window_id,
     int src_x,
     int src_y,
     int src_width,
-    int src_height);
+    int src_height,
+    int dst_x,
+    int dst_y,
+    int dst_width,
+    int dst_height);
 
 void gcopy_c(
     int window_id,
@@ -427,6 +424,17 @@ void gcopy_c(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y);
+
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height);
 
@@ -454,6 +462,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     double angle);
 
 void grotate(
@@ -462,6 +472,8 @@ void grotate(
     int src_y,
     int src_width,
     int src_height,
+    int dst_x,
+    int dst_y,
     int dst_width,
     int dst_height,
     double angle);
@@ -483,9 +495,11 @@ void line(
 
 
 
-void mes(const std::string& text);
-
-void mes(int n);
+void mes(
+    int x,
+    int y,
+    const std::string& text,
+    const snail::Color& color = {0, 0, 0});
 
 void mesbox(std::string& buffer, bool text = false);
 
@@ -514,10 +528,7 @@ void objprm(int, const std::string&);
 
 void pget(int x, int y);
 
-void picload(const fs::path& file, int immediately = 0);
-
-void pos(int x, int y = 0);
-
+void picload(const fs::path& file, int x, int y, bool create_buffer);
 
 
 void redraw();

@@ -10,6 +10,7 @@
 #include "../../snail/window.hpp"
 #include "../../util/fps_counter.hpp"
 #include "../../util/range.hpp"
+#include "../draw.hpp"
 #include "../elona.hpp"
 #include "../hcl.hpp"
 #include "../variables.hpp"
@@ -17,7 +18,6 @@
 
 namespace
 {
-
 
 struct ConfigLoadingError : public std::runtime_error
 {
@@ -41,10 +41,9 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 
 void write_default_config(const fs::path& location)
 {
-    std::ofstream out{location.native(), std::ios::binary};
+    std::ofstream out{location.native()};
     hcl::Object object;
     object["config"] = hcl::Object();
-    object["config"]["core"] = hcl::Object();
     out << object << std::endl;
 }
 
@@ -93,14 +92,14 @@ void inject_display_modes(Config& conf)
     if (current_display_mode != "")
     {
         conf.inject_enum(
-            "core.config.screen.display_mode",
+            "core.screen.display_mode",
             display_mode_names,
             default_display_mode);
 
         if (Config::instance().display_mode == spec::unknown_enum_variant)
         {
             Config::instance().set(
-                u8"core.config.screen.display_mode", default_display_mode);
+                "core.screen.display_mode", default_display_mode);
         }
     }
 }
@@ -124,7 +123,7 @@ void inject_save_files(Config& conf)
         }
     }
 
-    conf.inject_enum("core.config.game.default_save", saves, "");
+    conf.inject_enum("core.game.default_save", saves, "");
 }
 
 /***
@@ -167,7 +166,7 @@ void inject_languages(Config& conf)
     }
 
     conf.inject_enum(
-        "core.config.language.language", locales, spec::unknown_enum_variant);
+        "core.language.language", locales, spec::unknown_enum_variant);
 }
 
 
@@ -207,8 +206,7 @@ void convert_and_set_requested_font_quality(std::string variant)
         if (variant != "high")
         {
             // Unknown font quality; fallback to the default value, "high".
-            ELONA_LOG(
-                "[Config] Warning: Unsupported font quality: " << variant);
+            ELONA_WARN("config") << "Unsupported font quality: " << variant;
         }
         snail::Application::instance()
             .get_renderer()
@@ -243,36 +241,45 @@ namespace elona
 
 void config_query_language()
 {
-    buffer(4);
-    picload(filesystem::dir::graphic() / u8"lang.bmp");
+    constexpr snail::Color bg_color{160, 145, 128};
+    constexpr snail::Color fg_color{71, 64, 55};
+
     gsel(0);
     gmode(0);
-    p = 0;
+    int cursor = 0;
 
-    while (1)
+    const auto prev_font = Config::instance().font_filename;
+    // Because this Japanese font has more glyph than English one does, it can
+    // display language names more correctly.
+    Config::instance().font_filename =
+        "GenShinGothic/GenShinGothic-Monospace-Regular.ttf";
+    font(16);
+
+    while (true)
     {
-        boxf();
-        pos(160, 170);
-        gcopy(4, 0, 0, 340, 100);
-        pos(180, 220 + p * 20);
-        gcopy(4, 360, 6, 20, 18);
+        boxf(0, 0, windoww, windowh, bg_color);
+        mes(40, 40, u8"Choose your language and press Enter key.", fg_color);
+        mes(40, 60, u8"言語を選びENTERキーを押してください。", fg_color);
+        mes(50, 90, u8"Japanese (日本語)", fg_color);
+        mes(50, 110, u8"English", fg_color);
+        mes(35, cursor == 0 ? 90 : 110, u8">", fg_color);
         redraw();
         await(30);
         if (getkey(snail::Key::down))
         {
-            p = 1;
+            cursor = 1;
         }
         if (getkey(snail::Key::keypad_2))
         {
-            p = 1;
+            cursor = 1;
         }
         if (getkey(snail::Key::up))
         {
-            p = 0;
+            cursor = 0;
         }
         if (getkey(snail::Key::keypad_8))
         {
-            p = 0;
+            cursor = 0;
         }
         if (getkey(snail::Key::enter))
         {
@@ -289,7 +296,7 @@ void config_query_language()
     }
 
     std::string locale = spec::unknown_enum_variant;
-    if (p == 0)
+    if (cursor == 0)
     {
         locale = "jp";
     }
@@ -297,42 +304,46 @@ void config_query_language()
     {
         locale = "en";
     }
-    Config::instance().set(u8"core.config.language.language", locale);
+    Config::instance().set(u8"core.language.language", locale);
+
+    Config::instance().font_filename = prev_font;
 }
 
 #define CONFIG_OPTION(confkey, type, getter) \
-    conf.bind_getter("core.config."s + confkey, [&]() { return (getter); }); \
+    conf.bind_getter("core."s + confkey, [&]() { return (getter); }); \
     conf.bind_setter<type>( \
-        "core.config."s + confkey, [&](auto value) { getter = value; })
+        "core."s + confkey, [&](auto value) { getter = value; })
 
 #define CONFIG_KEY(confkey, keyname) \
     CONFIG_OPTION((confkey), std::string, keyname)
 
-void load_config(const fs::path& hcl_file)
+void load_config()
 {
+    const fs::path config_file =
+        filesystem::dir::current_profile() / "config.hcl";
     auto& conf = Config::instance();
 
     // TODO do inversions
     // clang-format off
-    CONFIG_OPTION("anime.alert_wait"s, int, Config::instance().alert);
-    CONFIG_OPTION("anime.anime_wait"s, int, Config::instance().animewait);
-    CONFIG_OPTION("anime.attack_anime"s, bool, Config::instance().attackanime);
-    CONFIG_OPTION("anime.auto_turn_speed"s, std::string, Config::instance().autoturn);
-    CONFIG_OPTION("anime.general_wait"s, int, Config::instance().wait1);
-    CONFIG_OPTION("anime.screen_refresh"s, int, Config::instance().scrsync);
+    CONFIG_OPTION("anime.alert_wait"s, int, Config::instance().alert_wait);
+    CONFIG_OPTION("anime.anime_wait"s, int, Config::instance().animation_wait);
+    CONFIG_OPTION("anime.attack_anime"s, bool, Config::instance().attack_animation);
+    CONFIG_OPTION("anime.auto_turn_speed"s, std::string, Config::instance().auto_turn_speed);
+    CONFIG_OPTION("anime.general_wait"s, int, Config::instance().general_wait);
+    CONFIG_OPTION("anime.screen_refresh"s, int, Config::instance().screen_refresh_wait);
     CONFIG_OPTION("anime.scroll"s, bool, Config::instance().scroll);
-    CONFIG_OPTION("anime.scroll_when_run"s, bool, Config::instance().runscroll);
-    CONFIG_OPTION("anime.title_effect"s, bool, Config::instance().titleanime);
-    CONFIG_OPTION("anime.weather_effect"s, bool, Config::instance().env);
-    CONFIG_OPTION("anime.window_anime"s, bool, Config::instance().windowanime);
+    CONFIG_OPTION("anime.scroll_when_run"s, bool, Config::instance().scroll_when_run);
+    CONFIG_OPTION("anime.title_effect"s, bool, Config::instance().title_effect);
+    CONFIG_OPTION("anime.weather_effect"s, bool, Config::instance().weather_effect);
+    CONFIG_OPTION("anime.window_anime"s, bool, Config::instance().window_animation);
     CONFIG_OPTION("balance.restock_interval"s, int, Config::instance().restock_interval);
     CONFIG_OPTION("font.file"s, std::string, Config::instance().font_filename);
     CONFIG_OPTION("font.size_adjustment"s, int, sizefix);
     CONFIG_OPTION("font.vertical_offset"s, int, vfix);
-    CONFIG_OPTION("foobar.autopick"s, bool, Config::instance().use_autopick);
+    CONFIG_OPTION("foobar.autopick"s, bool, Config::instance().autopick);
     CONFIG_OPTION("foobar.autosave"s, bool, Config::instance().autosave);
     CONFIG_OPTION("foobar.damage_popup"s, bool, Config::instance().damage_popup);
-    CONFIG_OPTION("foobar.hp_bar_position"s, std::string, Config::instance().hp_bar);
+    CONFIG_OPTION("foobar.hp_bar_position"s, std::string, Config::instance().hp_bar_position);
     CONFIG_OPTION("foobar.leash_icon"s, bool, Config::instance().leash_icon);
     CONFIG_OPTION("foobar.max_damage_popup"s, int, Config::instance().max_damage_popup);
     CONFIG_OPTION("foobar.allow_enhanced_skill_tracking"s, bool, Config::instance().allow_enhanced_skill);
@@ -343,59 +354,57 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("foobar.skip_confirm_at_shop"s, bool, Config::instance().skip_confirm_at_shop);
     CONFIG_OPTION("foobar.skip_overcasting_warning"s, bool, Config::instance().skip_overcasting_warning);
     CONFIG_OPTION("game.attack_neutral_npcs"s, bool, Config::instance().attack_neutral_npcs);
-    CONFIG_OPTION("game.extra_help"s, bool, Config::instance().extrahelp);
-    CONFIG_OPTION("game.hide_autoidentify"s, bool, Config::instance().hideautoidentify);
-    CONFIG_OPTION("game.hide_shop_updates"s, bool, Config::instance().hideshopresult);
+    CONFIG_OPTION("game.extra_help"s, bool, Config::instance().extra_help);
+    CONFIG_OPTION("game.hide_autoidentify"s, bool, Config::instance().hide_autoidentify);
+    CONFIG_OPTION("game.hide_shop_updates"s, bool, Config::instance().hide_shop_updates);
     CONFIG_OPTION("game.story"s, bool, Config::instance().story);
-    CONFIG_OPTION("input.attack_wait"s, int, Config::instance().attackwait);
-    CONFIG_OPTION("input.autodisable_numlock"s, bool, Config::instance().autonumlock);
-    CONFIG_OPTION("input.key_wait"s, int, Config::instance().keywait);
-    CONFIG_OPTION("input.walk_wait"s, int, Config::instance().walkwait);
-    CONFIG_OPTION("input.run_wait"s, int, Config::instance().runwait);
-    CONFIG_OPTION("input.start_run_wait"s, int, Config::instance().startrun);
+    CONFIG_OPTION("input.attack_wait"s, int, Config::instance().attack_wait);
+    CONFIG_OPTION("input.autodisable_numlock"s, bool, Config::instance().autodisable_numlock);
+    CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
+    CONFIG_OPTION("input.walk_wait"s, int, Config::instance().walk_wait);
+    CONFIG_OPTION("input.run_wait"s, int, Config::instance().run_wait);
+    CONFIG_OPTION("input.start_run_wait"s, int, Config::instance().start_run_wait);
     CONFIG_OPTION("input.select_wait"s, int, Config::instance().select_wait);
-    CONFIG_OPTION("input.select_fast_start_wait"s, int, Config::instance().select_fast_start);
+    CONFIG_OPTION("input.select_fast_start_wait"s, int, Config::instance().select_fast_start_wait);
     CONFIG_OPTION("input.select_fast_wait"s, int, Config::instance().select_fast_wait);
     CONFIG_OPTION("message.add_timestamps"s, bool, Config::instance().message_add_timestamps);
     CONFIG_OPTION("message.transparency"s, int, Config::instance().message_transparency);
-    CONFIG_OPTION("net.chat"s, bool, Config::instance().netchat);
+    CONFIG_OPTION("net.chat"s, bool, Config::instance().net_chat);
     CONFIG_OPTION("net.enabled"s, bool, Config::instance().net);
-    CONFIG_OPTION("net.server_list"s, bool, Config::instance().serverlist);
-    CONFIG_OPTION("net.wish"s, bool, Config::instance().netwish);
-    CONFIG_OPTION("anime.always_center"s, bool, Config::instance().alwayscenter);
-    CONFIG_OPTION("screen.music"s, std::string, Config::instance().music);
+    CONFIG_OPTION("net.server_list"s, bool, Config::instance().server_list);
+    CONFIG_OPTION("net.wish"s, bool, Config::instance().net_wish);
+    CONFIG_OPTION("anime.always_center"s, bool, Config::instance().always_center);
+    CONFIG_OPTION("screen.music"s, bool, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
-    CONFIG_OPTION("screen.heartbeat"s, bool, Config::instance().heart);
-    CONFIG_OPTION("screen.high_quality_shadows"s, bool, Config::instance().shadow);
-    CONFIG_OPTION("screen.object_shadows"s, bool, Config::instance().objectshadow);
-    CONFIG_OPTION("screen.skip_random_event_popups"s, bool, Config::instance().skiprandevents);
+    CONFIG_OPTION("screen.heartbeat"s, bool, Config::instance().heartbeat);
+    CONFIG_OPTION("screen.high_quality_shadows"s, bool, Config::instance().high_quality_shadow);
+    CONFIG_OPTION("screen.object_shadows"s, bool, Config::instance().object_shadow);
+    CONFIG_OPTION("screen.skip_random_event_popups"s, bool, Config::instance().skip_random_event_popups);
     // clang-format on
 
     conf.bind_setter<std::string>(
-        "core.config.screen.orientation",
-        &convert_and_set_requested_orientation);
+        "core.screen.orientation", &convert_and_set_requested_orientation);
 
-    conf.bind_setter<bool>("core.config.foobar.show_fps", [](bool) {
-        lib::g_fps_counter.clear();
-    });
+    conf.bind_setter<bool>(
+        "core.foobar.show_fps", [](bool) { lib::g_fps_counter.clear(); });
 
     conf.bind_setter<std::string>(
-        "core.config.font.quality", &convert_and_set_requested_font_quality);
+        "core.font.quality", &convert_and_set_requested_font_quality);
 
-    std::ifstream ifs{hcl_file.native()};
-    conf.load(ifs, hcl_file.string(), false);
+    std::ifstream ifs{config_file.native()};
+    conf.load(ifs, filepathutil::to_utf8_path(config_file), false);
 
-    if (Config::instance().runwait < 1)
+    if (Config::instance().run_wait < 1)
     {
-        Config::instance().runwait = 1;
+        Config::instance().run_wait = 1;
     }
-    if (Config::instance().attackwait < 1)
+    if (Config::instance().attack_wait < 1)
     {
-        Config::instance().attackwait = 1;
+        Config::instance().attack_wait = 1;
     }
-    if (Config::instance().startrun >= 20)
+    if (Config::instance().start_run_wait >= 20)
     {
-        Config::instance().startrun = 1000;
+        Config::instance().start_run_wait = 1000;
     }
     if (Config::instance().language == spec::unknown_enum_variant)
     {
@@ -411,8 +420,11 @@ void load_config(const fs::path& hcl_file)
     }
 }
 
-void initialize_config_preload(const fs::path& hcl_file)
+void initialize_config_preload()
 {
+    const fs::path config_file =
+        filesystem::dir::current_profile() / "config.hcl";
+
     auto& conf = Config::instance();
 
     inject_display_modes(conf);
@@ -422,44 +434,40 @@ void initialize_config_preload(const fs::path& hcl_file)
     // clang-format off
     CONFIG_OPTION("language.language"s, std::string, Config::instance().language);
     CONFIG_OPTION("screen.fullscreen"s, std::string, Config::instance().fullscreen);
-    CONFIG_OPTION("screen.music"s, std::string, Config::instance().music);
+    CONFIG_OPTION("screen.music"s, bool, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
-    CONFIG_OPTION("balance.extra_race"s, bool, Config::instance().extrarace);
-    CONFIG_OPTION("balance.extra_class"s, bool, Config::instance().extraclass);
+    CONFIG_OPTION("balance.extra_race"s, bool, Config::instance().extra_race);
+    CONFIG_OPTION("balance.extra_class"s, bool, Config::instance().extra_class);
     CONFIG_OPTION("input.joypad"s, bool, Config::instance().joypad);
-    CONFIG_OPTION("input.key_wait"s, int, Config::instance().keywait);
-    CONFIG_OPTION("ui.msg_line"s, int, inf_msgline);
-    CONFIG_OPTION("ui.tile_size"s, int, inf_tiles);
-    CONFIG_OPTION("ui.font_size"s, int, inf_mesfont);
-    CONFIG_OPTION("ui.inf_ver_type"s, int, inf_vertype);
-    CONFIG_OPTION("ui.window_x"s, int, windowx);
-    CONFIG_OPTION("ui.window_y"s, int, windowy);
-    CONFIG_OPTION("ui.clock_x"s, int, inf_clockx);
-    CONFIG_OPTION("ui.clock_w"s, int, inf_clockw);
-    CONFIG_OPTION("ui.clock_h"s, int, inf_clockh);
+    CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
     CONFIG_OPTION("game.default_save"s, std::string, defload); // TODO runtime enum
     CONFIG_OPTION("debug.wizard"s, bool, Config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, Config::instance().display_mode);
     //clang-format on
 
     conf.bind_setter<int>(
-        "core.config.android.quick_action_size", &set_touch_quick_action_size);
+        "core.android.quick_action_size", &set_touch_quick_action_size);
 
     conf.bind_setter<int>(
-        "core.config.android.quick_action_transparency",
+        "core.android.quick_action_transparency",
         &set_touch_quick_action_transparency);
 
-    if (!fs::exists(hcl_file))
+    if (!fs::exists(config_file))
     {
-        write_default_config(hcl_file);
+        write_default_config(config_file);
     }
 
     std::ifstream ifs{
-        hcl_file.native()};
-    conf.load(ifs, hcl_file.string(), true);
+        config_file.native()};
+    conf.load(ifs, filepathutil::to_utf8_path(config_file), true);
 
     snail::android::set_navigation_bar_visibility(
-        !conf.get<bool>("core.config.android.hide_navigation"));
+        !conf.get<bool>("core.android.hide_navigation"));
+
+    // TODO: move it somewhere else or make it constant. "inf_tiles" is too
+    // frequently used to find out where it should be initialized. Thus, it is
+    // initialized as close to the previous position as possilbe.
+    inf_tiles = 48;
 }
 
 #undef CONFIG_OPTION
@@ -487,16 +495,16 @@ Config& Config::instance()
     return the_instance;
 }
 
-void Config::init(const fs::path& config_def_file)
+void Config::load_def(std::istream& is, const std::string& mod_id)
 {
-    clear();
-    def.init(config_def_file);
+    def.load(is, "[input stream]", mod_id);
+    mod_ids_.emplace(mod_id);
 }
 
-void Config::init(const ConfigDef def_)
+void Config::load_def(const fs::path& config_def_path, const std::string& mod_id)
 {
-    clear();
-    def = def_;
+    def.load(config_def_path, mod_id);
+    mod_ids_.emplace(mod_id);
 }
 
 void Config::load_defaults(bool preload)
@@ -541,16 +549,24 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
     }
 
     const hcl::Value conf = value["config"];
-
-    // TODO mod support
-    if (!conf.is<hcl::Object>() || !conf.has("core"))
+    if (!conf.is<hcl::Object>())
     {
         throw ConfigLoadingError(
-            hcl_file + ": \"core\" object not found after \"config\"");
+            hcl_file + ": mod section object not found after \"config\"");
     }
 
-    const hcl::Value core = conf["core"];
-    visit_object(core.as<hcl::Object>(), "core.config", hcl_file, preload);
+    for (const auto& pair : conf.as<hcl::Object>())
+    {
+        const auto& mod_id = pair.first;
+        const auto& mod_section = pair.second;
+
+        if (!mod_section.is<hcl::Object>())
+        {
+            continue;
+        }
+
+        visit_object(mod_section.as<hcl::Object>(), mod_id, hcl_file, preload);
+    }
 }
 
 void Config::visit_object(
@@ -640,14 +656,14 @@ bool Config::verify_types(
 
 void Config::save()
 {
-    std::ofstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
+    std::ofstream file{(filesystem::dir::current_profile() / u8"config.hcl").native(),
                        std::ios::binary};
     if (!file)
     {
         throw ConfigLoadingError{
             u8"Failed to open: "s
             + filepathutil::make_preferred_path_in_utf8(
-                  filesystem::dir::exe() / u8"config.hcl")};
+                  filesystem::dir::current_profile() / u8"config.hcl")};
     }
 
     // Create a top level "config" section.
@@ -656,10 +672,9 @@ void Config::save()
     hcl::Value* parent = out.find("config");
     assert(parent);
 
-    // Create sections under the top-level "config" section for each
-    // mod that has config options (for now, only "core"), then write
-    // their individual config sections.
-    for (auto&& pair : storage)
+    // Create sections under the top-level "config" section for each mod that
+    // has config options, then write their individual config sections.
+    for (auto&& pair : storage_)
     {
         std::string key = pair.first;
         hcl::Value value = pair.second;
@@ -683,7 +698,7 @@ void Config::save()
         std::string token;
         hcl::Value* current = parent;
 
-        // Function to split the flat key ("core.config.some.option")
+        // Function to split the flat key ("core.some.option")
         // on the next period and set the token to the split section
         // name ("some" or "option").
         auto advance = [&pos, &key, &token]() {
@@ -720,13 +735,6 @@ void Config::save()
         }
         std::string scope = token;
         set(token);
-
-        // Skip the "config" section name in "core.<config>.some.option".
-        {
-            const auto ok = advance();
-            assert(ok);
-        }
-        assert(token == "config");
 
         // Traverse the remaining namespaces ("some.option").
         while (advance())

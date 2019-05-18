@@ -18,8 +18,12 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/lua_event_calc_character_damage.hpp"
+#include "lua_env/lua_event/lua_event_character_damaged.hpp"
+#include "lua_env/lua_event/lua_event_character_killed.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
@@ -282,8 +286,23 @@ int damage_hp(
     {
         dmg_at_m141 = 0;
     }
+
+    auto result =
+        lua::lua->get_event_manager().trigger(lua::CalcCharacterDamageEvent(
+            victim, dmg_at_m141, element, damage_source));
+    if (auto damage = result.optional<int>("damage"))
+    {
+        dmg_at_m141 = *damage;
+    }
+    else if (result.blocked())
+    {
+        return 1;
+    }
+
     victim.hp -= dmg_at_m141;
 
+    lua::lua->get_event_manager().trigger(lua::CharacterDamagedEvent(
+        victim, dmg_at_m141, element, damage_source));
 
     if (is_in_fov(victim))
     {
@@ -657,10 +676,10 @@ int damage_hp(
         {
             if (Config::instance().sound)
             {
-                if (Config::instance().heart)
+                if (Config::instance().heartbeat)
                 {
                     int threshold = Config::instance().get<int>(
-                        "core.config.screen.heartbeat_threshold");
+                        "core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         if (!CHECKPLAY(32))
@@ -668,7 +687,7 @@ int damage_hp(
                             snd("core.Heart1");
 
                             if (Config::instance().get<bool>(
-                                    "core.config.android.vibrate"))
+                                    "core.android.vibrate"))
                             {
                                 snail::android::vibrate_pulse();
                             }
@@ -793,9 +812,6 @@ int damage_hp(
             }
         }
     }
-
-    lua::run_event<lua::EventKind::character_damaged>(
-        lua::handle(victim), dmg_at_m141);
 
     if (victim.hp < 0)
     {
@@ -1206,6 +1222,9 @@ int damage_hp(
                 }
             }
         }
+
+        lua::lua->get_event_manager().trigger(lua::CharacterKilledEvent(
+            victim, dmg_at_m141, element, damage_source));
 
         end_dmghp(victim);
 

@@ -124,7 +124,7 @@ bool UIMenuCrafting::init()
     return true;
 }
 
-static void _draw_window()
+void UIMenuCrafting::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.locale.crafting.menu.title"),
@@ -145,12 +145,12 @@ static void _draw_window()
         i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
 }
 
-static void _draw_key(int cnt)
+void UIMenuCrafting::_draw_key(int cnt)
 {
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
-static void _draw_keys()
+void UIMenuCrafting::_draw_keys()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -170,7 +170,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_recipe_desc(const CraftingRecipe& recipe)
+void UIMenuCrafting::_draw_recipe_desc(const CraftingRecipe& recipe)
 {
     font(13 - en * 2);
 
@@ -185,21 +185,14 @@ static void _draw_recipe_desc(const CraftingRecipe& recipe)
     desc += u8" "s + recipe.required_skill_level + u8"("s +
         sdata(recipe.skill_used, 0) + u8")"s;
 
-    if (recipe.required_skill_level <= sdata(recipe.skill_used, 0))
-    {
-        color(30, 30, 200);
-    }
-    else
-    {
-        color(200, 30, 30);
-    }
-
-    pos(wx + 37, wy + 288);
-    mes(desc + u8" "s);
-    color(0, 0, 0);
+    const auto text_color =
+        recipe.required_skill_level <= sdata(recipe.skill_used, 0)
+        ? snail::Color{30, 30, 200}
+        : snail::Color{200, 30, 30};
+    mes(wx + 37, wy + 288, desc + u8" "s, text_color);
 }
 
-static void _draw_single_recipe_required_material(
+void UIMenuCrafting::_draw_single_recipe_required_material(
     int mat_index,
     const RequiredMaterial& required_mat)
 {
@@ -207,21 +200,17 @@ static void _draw_single_recipe_required_material(
         i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount +
         u8"("s + mat(required_mat.id) + u8")"s;
 
-    if (mat(required_mat.id) >= required_mat.amount)
-    {
-        color(30, 30, 200);
-    }
-    else
-    {
-        color(200, 30, 30);
-    }
-
-    pos(wx + 37 + mat_index % 3 * 192, wy + 334 + mat_index / 3 * 16);
-    mes(mat_desc);
-    color(0, 0, 0);
+    const auto text_color = mat(required_mat.id) >= required_mat.amount
+        ? snail::Color{30, 30, 200}
+        : snail::Color{200, 30, 30};
+    mes(wx + 37 + mat_index % 3 * 192,
+        wy + 334 + mat_index / 3 * 16,
+        mat_desc,
+        text_color);
 }
 
-static void _draw_recipe_required_materials(const CraftingRecipe& recipe)
+void UIMenuCrafting::_draw_recipe_required_materials(
+    const CraftingRecipe& recipe)
 {
     int mat_index = 0;
     for (const auto required_mat : recipe.required_materials)
@@ -231,7 +220,7 @@ static void _draw_recipe_required_materials(const CraftingRecipe& recipe)
     }
 }
 
-static void _draw_recipe(int item_id, bool draw_desc)
+void UIMenuCrafting::_draw_recipe(int item_id, bool draw_desc)
 {
     auto recipe = crafting_find_recipe(item_id);
     assert(recipe);
@@ -243,7 +232,10 @@ static void _draw_recipe(int item_id, bool draw_desc)
     _draw_recipe_required_materials(*recipe);
 }
 
-static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
+void UIMenuCrafting::_draw_single_list_entry(
+    int cnt,
+    int item_id,
+    bool can_craft)
 {
     std::string item_name = ioriginalnameref(item_id);
     std::string item_make =
@@ -261,15 +253,12 @@ static void _draw_single_list_entry(int cnt, int item_id, bool can_craft)
         0,
         text_color);
 
-    pos(wx + 308, wy + 66 + cnt * 19 + 2);
-    color(text_color.r, text_color.g, text_color.b);
-    mes(item_make);
-    color(0, 0, 0);
+    mes(wx + 308, wy + 66 + cnt * 19 + 2, item_make, text_color);
 
     draw_item_material(ipicref(item_id), wx + 37, wy + 69 + cnt * 19 + 2);
 }
 
-static bool _draw_list_entries(bool draw_desc)
+bool UIMenuCrafting::_draw_list_entries(bool draw_desc)
 {
     bool should_redraw = false;
 
