@@ -4,11 +4,11 @@ module "Console"
 
 --- Registers a new console command.
 --
---  @tparam string mod_name the mod's name where the command is defined.
+--  @tparam string mod_id the mod's id where the command is defined.
 --  @tparam string name the command name.
 --  @tparam function callback the command itself.
 --  @function register_
-function register_(mod_name, name, callback) end
+function register_(mod_id, name, callback) end
 
 --- Runs registered command.
 --
