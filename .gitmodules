@@ -16,3 +16,6 @@
 [submodule "android/external/boost"]
 	path = android/external/boost
 	url = https://www.github.com/Ruin0x11/libboost-1.67-android
+[submodule "deps/windows"]
+	path = deps/windows
+	url = https://github.com/ruin0x11/foobar_windows_deps

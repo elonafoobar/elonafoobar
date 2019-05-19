@@ -1,9 +1,9 @@
 # Change this variable to point to your Boost installation.
-BOOST_DIR = E:\build\SDK\boost_1_66_0
+BOOST_DIR = E:\build\boost_1_69_0
 
 BIN_DIR = bin
 
-BOOST_ROOT = $(BOOST_INCLUDEDIR)
+BOOST_ROOT = $(BOOST_DIR)
 BOOST_INCLUDEDIR = $(BOOST_DIR)
 BOOST_LIBRARYDIR = $(BOOST_INCLUDEDIR)\lib64-msvc-14.1
 CMAKE_ARGS = \

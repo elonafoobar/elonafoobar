@@ -3,9 +3,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <boost/iostreams/filtering_stream.hpp>
 
 #include "../filesystem.hpp"
+#include "../../thirdparty/zstr/zstr.hpp"
 #include "../shared_id.hpp"
 #include "foobar_map.hpp"
 
@@ -13,8 +13,6 @@ namespace elona
 {
 namespace fmp
 {
-
-namespace bio = boost::iostreams;
 
 class MapLoader
 {
@@ -34,7 +32,7 @@ private:
     FoobarMap::Layer read_layer();
     FoobarMap::Object read_object();
 
-    bio::filtering_stream<bio::input> _in;
+    std::unique_ptr<zstr::ifstream> _in;
 
     FoobarMap _map;
 };

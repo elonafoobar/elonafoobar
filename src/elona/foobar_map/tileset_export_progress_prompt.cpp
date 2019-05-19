@@ -111,6 +111,16 @@ void TilesetExportProgressPrompt::export_tsx(
     _table =
         *lua::lua->get_data_manager().get().get_by_order_table(opts.data_type);
 
+    fs::create_directories(_tileset_path());
+
+    // Copy Tiled plugin
+    fs::copy_file(filesystem::dir::data() / "tiled" / "elona_foobar.py",
+                  _tiled_plugin_path(),
+                  fs::copy_option::overwrite_if_exists);
+    fs::copy_file(filesystem::dir::data() / "tiled" / "elona122.py",
+                  _tiled_plugin_path(),
+                  fs::copy_option::overwrite_if_exists);
+
     auto filepath = _tileset_path() / opts.filename;
     _exporter =
         std::make_unique<fmp::TsxExporter>(filepath, opts.columns, opts.opts);

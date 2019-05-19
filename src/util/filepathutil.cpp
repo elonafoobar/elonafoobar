@@ -5,7 +5,7 @@
 
 // For get_executable_path()
 #if BOOST_OS_WINDOWS
-#include <shlobj_core.h> // SHGetFolderPathW
+#include <Shlobj.h> // SHGetKnownFolderPath
 #include <windows.h> // GetModuleFileName
 #elif BOOST_OS_MACOS
 #include <limits.h> // PATH_MAX
@@ -106,15 +106,19 @@ boost::optional<std::string> get_home_directory()
 {
     boost::optional<std::string> home_directory;
 #if BOOST_OS_WINDOWS
-    wchar_t folder[MAX_PATH + 1];
-    HRESULT hr = SHGetFolderPathW(0, CSIDL_PROFILE, 0, 0, folder);
+    wchar_t* knownFolderPath;
+
+    auto hr = SHGetKnownFolderPath(
+      FOLDERID_Profile, KF_FLAG_DEFAULT, nullptr, &knownFolderPath);
+
     if (SUCCEEDED(hr))
     {
         char result[MAX_PATH + 1];
-        wcstombs(result, folder, MAX_PATH);
+        wcstombs(result, knownFolderPath, MAX_PATH);
         home_directory = std::string(result);
+        CoTaskMemFree(knownFolderPath);
     }
-#elif BOOST_OS_LINUX || BOOST_OS_MACOS
+  #elif BOOST_OS_LINUX || BOOST_OS_MACOS
     char* result = getenv("HOME");
     if (result == nullptr)
     {

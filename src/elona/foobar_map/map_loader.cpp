@@ -2,8 +2,6 @@
 #include "../../util/range.hpp"
 
 #include <iostream>
-#include <boost/iostreams/copy.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
 
 namespace elona
 {
@@ -21,13 +19,10 @@ FoobarMap MapLoader::load(const fs::path& map_file)
 
     _map = {};
 
-    auto file =
-        std::ifstream{map_file.native(), std::ios::in | std::ios::binary};
-    _in.push(bio::gzip_decompressor());
-    _in.push(file);
+    _in = std::make_unique<zstr::ifstream>(filepathutil::make_preferred_path_in_utf8(map_file));
 
     char header[4];
-    _in.read(header, 4);
+    _in->read(header, 4);
 
     if (strncmp(header, "FMP ", 4) != 0)
     {
@@ -67,7 +62,7 @@ std::string MapLoader::read_string()
     std::string result;
     char ch;
 
-    while ((ch = _in.get()))
+    while ((ch = _in->get()))
     {
         result += ch;
         if (ch == '\0')
@@ -80,21 +75,21 @@ std::string MapLoader::read_string()
 int MapLoader::read_int()
 {
     int i;
-    _in.read(reinterpret_cast<char*>(&i), sizeof(i));
+    _in->read(reinterpret_cast<char*>(&i), sizeof(i));
     return i;
 }
 
 bool MapLoader::read_bool()
 {
     char b;
-    _in.read(&b, sizeof(b));
+    _in->read(&b, sizeof(b));
     return b == 1;
 }
 
 char MapLoader::read_char()
 {
     char c;
-    _in.read(&c, sizeof(c));
+    _in->read(&c, sizeof(c));
     return c;
 }
 
