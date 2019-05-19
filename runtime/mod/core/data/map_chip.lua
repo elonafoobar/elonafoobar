@@ -17,11 +17,20 @@ local function make_atlas(atlas_index)
          end
       end
    end
-   atlas[#atlas+1] = atlas[0]
-   atlas[0] = nil
 
    return atlas
 end
+
+-- function for ensuring that tile 0 is inserted first, preserving
+-- tile display order in exported tilesets
+local function add_atlas(atlas)
+   local shifted_atlas = {}
+   for i=0,825 do
+      shifted_atlas[i+1] = atlas[i]
+   end
+   data:add_multi("core.map_chip", shifted_atlas)
+end
+
 data:define_type("map_chip")
 
 --
@@ -87,7 +96,7 @@ do
       atlas_0[i].is_feat = true
    end
 
-   data:add_multi("core.map_chip", atlas_0)
+   add_atlas(atlas_0)
 end
 
 --
@@ -144,7 +153,7 @@ do
       atlas_1[i].is_feat = true
    end
 
-   data:add_multi("core.map_chip", atlas_1)
+   add_atlas(atlas_1)
 end
 
 --
@@ -189,5 +198,5 @@ do
    atlas_2[476].wall_kind = 0
    atlas_2[509].wall_kind = 0
 
-   data:add_multi("core.map_chip", atlas_2)
+   add_atlas(atlas_2)
 end

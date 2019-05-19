@@ -79,7 +79,8 @@ data:add_multi(
                source = v.source,
                atlas = "__BUILTIN__/graphic/map" .. opts.atlas_index .. ".bmp",
                properties = {
-                  legacy_id = tostring(v.legacy_id)
+                  legacy_id = tostring(v.legacy_id),
+                  atlas = opts.atlas_index
                }
             }
          end,
