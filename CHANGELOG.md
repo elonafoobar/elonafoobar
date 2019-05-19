@@ -1,6 +1,16 @@
 # Changelog
 
-## [0.4.0] - 2019-05-XX
+## [0.4.1] - 2019-05-19
+
+### Fixed
+
+- Update old save files (`shop*.s2`). It often crashed Elona when you open any containers.
+- Show loading screen which was implemented but not shown.
+  - You cast Resurrection. Putit has been resurrected!
+
+
+
+## [0.4.0] - 2019-05-18
 
 ### Added
 
