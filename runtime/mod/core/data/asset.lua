@@ -378,8 +378,8 @@ data:add_multi(
       {
          id = "card_suit",
          source = "interface",
-         x = 864,
-         y = 533,
+         x = 192,
+         y = 672,
          width = 24,
          height = 32,
          count_x = 5,
@@ -389,8 +389,8 @@ data:add_multi(
       {
          id = "card_rank",
          source = "interface",
-         x = 864,
-         y = 565,
+         x = 312,
+         y = 672,
          width = 24,
          height = 32,
          count_x = 13,
