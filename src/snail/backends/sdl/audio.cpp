@@ -3,11 +3,10 @@
 
 #include <vector>
 
+
+
 namespace
 {
-
-constexpr int max_volume = MIX_MAX_VOLUME;
-
 
 // Channels:
 // 0-6: reserved for SEs used very frequently
@@ -16,14 +15,14 @@ constexpr int max_volume = MIX_MAX_VOLUME;
 // 13-16: reserved for weather effect
 
 constexpr int max_channels = 17;
-constexpr int temporary_channels_head = 7;
-constexpr int temporary_channels_size = 6;
 
 
 std::vector<Mix_Chunk*> chunks;
 
 Mix_Music* played_music = nullptr;
+
 } // namespace
+
 
 
 namespace elona
