@@ -199,22 +199,29 @@ void render_weather_effect_snow()
         {
             gmode(2, 100 + i % 150);
         }
-        draw_indexed_region(
-            "weather_particle",
-            particle.x,
-            particle.y,
-            particle.x % 2,
-            i % 6,
-            1,
-            1);
+
+        if (particle != Position{0, 0})
+        {
+            // Draw.
+            draw_indexed_region(
+                "weather_particle",
+                particle.x,
+                particle.y,
+                particle.x % 2,
+                i % 6,
+                1,
+                1);
+        }
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
+            // Create new particle.
             particle.x = rnd(windoww);
             particle.y = -rnd(windowh / 2);
         }
         else
         {
+            // Update position.
             particle.x += rnd(3) - 1;
             particle.y += rnd(2) + i % 5;
             if (particle.y > windowh - inf_verh - 10 || rnd(500) == 0)
@@ -244,22 +251,29 @@ void render_weather_effect_etherwind()
         {
             gmode(2, 100 + i % 150);
         }
-        draw_indexed_region(
-            "weather_particle",
-            particle.x,
-            particle.y,
-            2 + particle.x % 2,
-            i % 6,
-            1,
-            1);
+
+        if (particle != Position{0, 0})
+        {
+            // Draw.
+            draw_indexed_region(
+                "weather_particle",
+                particle.x,
+                particle.y,
+                2 + particle.x % 2,
+                i % 6,
+                1,
+                1);
+        }
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
+            // Create new particle.
             particle.x = rnd(windoww);
             particle.y = windowh - inf_verh - 8 - rnd(100);
         }
         else
         {
+            // Update position.
             particle.x += rnd(3) - 1;
             particle.y -= rnd(2) + i % 5;
             if (particle.y < 0)
