@@ -275,7 +275,7 @@ else()
   endif()
 
   # Thirdparty libraries
-  find_package(Boost REQUIRED COMPONENTS system filesystem locale)
+  find_package(Boost REQUIRED COMPONENTS system filesystem)
   include_directories(${Boost_INCLUDE_DIRS})
   target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
