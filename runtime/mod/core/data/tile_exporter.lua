@@ -92,13 +92,15 @@ data:add_multi(
          export = function(v, opts)
             local sources = {}
             for _, tile in ipairs(v.tiles) do
+               local editor_tile = v.editor_tile or tile
                sources[#sources+1] = {
-                  source = data.raw["core.map_chip"][tile].source,
+                  source = data.raw["core.map_chip"][editor_tile].source,
                   atlas = "__BUILTIN__/graphic/map1.bmp",
-                  image_name = tostring(v.legacy_id) .. "_" .. tile,
+                  image_name = tostring(v.legacy_id) .. "_" .. editor_tile,
                   properties = {
                      legacy_id = tostring(v.legacy_id),
-                     tile = tile
+                     actual_tile = tile,
+                     tile = editor_tile
                   }
                }
             end
@@ -110,8 +112,9 @@ data:add_multi(
                return
             end
 
+            print(Elona.require("Debug").inspect(t))
             local tile = data.raw["core.map_chip"][t.props.actual_tile]
-            Map.set_feat(t.x, t.y, tile.legacy_id, tonumber(t.props.legacy_id), t.props.param)
+            Map.set_feat(t.x, t.y, tile.legacy_id, tonumber(t.props.legacy_id), t.props.param or 0)
 
             if t.id == "core.stairs_down" then
                Map.data.stair_down_pos = LuaPosition.new(t.x, t.y)

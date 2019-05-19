@@ -66,7 +66,14 @@ struct FoobarMap
             const auto it = storage.find(key);
             if (it == storage.end())
                 return none;
-            return boost::get<T>(it->second);
+            try
+            {
+                return boost::get<T>(it->second);
+            }
+            catch (std::exception& e)
+            {
+                return none;
+            }
         }
 
         template <typename T>
@@ -75,7 +82,14 @@ struct FoobarMap
             const auto it = storage.find(key);
             if (it == storage.end())
                 return default_value;
-            return boost::get<T>(it->second);
+            try
+            {
+                return boost::get<T>(it->second);
+            }
+            catch (std::exception& e)
+            {
+                return default_value;
+            }
         }
 
     private:

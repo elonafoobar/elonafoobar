@@ -18,7 +18,8 @@ data:add_multi(
       {
          id = "small_medal",
          legacy_id = 32,
-         tiles = {"core.1_234"},
+         tiles = {"core.1_0"},
+         editor_tile = "core.1_234"
       },
       {
          id = "door_closed",
@@ -78,7 +79,8 @@ data:add_multi(
       {
          id = "trap",
          legacy_id = 14,
-         tiles = {"core.1_234"},
+         tiles = {"core.1_0"},
+         editor_tile = "core.1_234"
       },
    }
 )

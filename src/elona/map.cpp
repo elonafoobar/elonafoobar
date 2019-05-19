@@ -412,7 +412,6 @@ bool map_should_reveal_fog()
 {
     bool result = false;
 
-    std::cerr << "type " << static_cast<int>(map_data.type) << std::endl;
     if (game_data.current_map == mdata_t::MapId::quest)
     {
         return game_data.executing_immediate_quest_type == 1009;

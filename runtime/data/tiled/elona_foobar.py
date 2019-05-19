@@ -619,13 +619,18 @@ def find_tileset(m, data_type):
     return None
 
 
-def find_object_tile(tileset, data_id, cache):
+def find_object_tile(tileset, data_id, cache, tile_prop=""):
     if data_id in cache:
         return tileset.tileAt(cache[data_id])
     for i in range(tileset.tileCount()):
         tile = tileset.tileAt(i)
-        if tile.propertyAsString("data_id") == data_id:
-            cache[data_id] = tile.id()
+        found_data = tile.propertyAsString("data_id") == data_id
+        found_tile = True
+        if tile_prop != "" and tile.propertyAsString("tile") != tile_prop:
+            found_tile = False
+        if found_data and found_tile:
+            if tile_prop == "":
+                cache[data_id] = tile.id()
             return tile
     return None
 
@@ -671,7 +676,13 @@ def load_objects(m, object_group, d):
             raise Exception("No tileset loaded that has " + data_type)
         data_id = obj["data_id"]
         name = obj["name"]
-        tile = find_object_tile(tileset, data_id, cache)
+        tile_prop = ""
+        if "tile" in obj["props"]:
+            tile_prop = obj["props"]["tile"]
+        elif "tile" in obj["tile_props"]:
+            tile_prop = obj["tile_props"]["tile"]
+        print("TILE P {}".format(tile_prop))
+        tile = find_object_tile(tileset, data_id, cache, tile_prop)
         if tile == None:
             raise Exception("No tileset loaded that has " +
                             data_type + "#" + data_id)
