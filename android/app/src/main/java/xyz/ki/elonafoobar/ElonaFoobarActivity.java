@@ -35,7 +35,8 @@ public class ElonaFoobarActivity extends SDLActivity
             "util",
             "snail",
             "elona",
-            "Elona_foobar"
+            "Elona_foobar",
+            "z"
         };
     }
 

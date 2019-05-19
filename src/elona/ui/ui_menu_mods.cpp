@@ -4,13 +4,15 @@
 #include "../../util/strutil.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
-#include "../foobar_map/tileset_export_progress_prompt.hpp"
 #include "../i18n.hpp"
 #include "../input_prompt.hpp"
 #include "../lua_env/mod_manager.hpp"
 #include "simple_prompt.hpp"
 #include "ui_menu_mod_info.hpp"
 
+#ifndef ELONA_OS_ANDROID
+#include "../foobar_map/tileset_export_progress_prompt.hpp"
+#endif
 
 
 namespace elona
@@ -281,6 +283,9 @@ void _show_extra_prompt()
 
     if (rtval == 0)
     {
+        // There is no point to having a tileset export feature when there is no
+        // map editor on Android.
+#ifndef ELONA_OS_ANDROID
         TilesetExportProgressPrompt::Tilesets tilesets = {
             {"core.chara", "chara.tsx", 8, {}},
             {"core.item", "item.tsx", 8, {}},
@@ -290,6 +295,7 @@ void _show_extra_prompt()
             {"core.map_chip", "map2.tsx", 33, {{"atlas_index", "2"}}},
         };
         TilesetExportProgressPrompt(tilesets).query();
+#endif
     }
 }
 

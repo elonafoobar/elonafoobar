@@ -7,6 +7,7 @@
 #include "../../util/map_key_iterator.hpp"
 #include "../../util/map_value_iterator.hpp"
 #include "../../util/noncopyable.hpp"
+#include "../../util/stopwatch.hpp"
 #include "../filesystem.hpp"
 #include "../log.hpp"
 #include "../lua_env/config_table.hpp"
@@ -93,6 +94,8 @@ public:
 
     void load_all()
     {
+        lib::Stopwatch watch;
+
         auto it = _data.get_table(Traits::type_id);
         if (!it)
             return;
@@ -105,6 +108,9 @@ public:
 
             retrieve_from_lua(id);
         }
+
+        ELONA_LOG("lua.data") << "'" << Traits::type_id << "' loaded in "
+                              << watch.measure() << "ms";
     }
 
 

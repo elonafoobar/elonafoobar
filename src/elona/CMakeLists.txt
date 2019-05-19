@@ -134,8 +134,6 @@ set(ELONA_SOURCES
 
   foobar_map/init_map.cpp
   foobar_map/map_loader.cpp
-  foobar_map/tileset_export_progress_prompt.cpp
-  foobar_map/tsx_exporter.cpp
   foobar_map/util.cpp
 
   config/config.cpp
@@ -158,6 +156,14 @@ set(ELONA_SOURCES
   profile/profile.cpp
   profile/profile_manager.cpp
   )
+
+# Only enable tileset export on platforms besides Android to avoid a
+# libpng dependency, since there is no map editor on Android anyway.
+if(NOT ANDROID)
+  list(APPEND ELONA_SOURCES
+    foobar_map/tsx_exporter.cpp
+    foobar_map/tileset_export_progress_prompt.cpp)
+endif()
 
 if(ANDROID_GENERATE_BUILD_FILES)
   generate_android_mk(elona SOURCES ${ELONA_SOURCES})
