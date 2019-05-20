@@ -13,10 +13,8 @@
 namespace
 {
 
-void _update_save_data_0(const fs::path& save_dir, int serial_id)
+void _update_save_data_0(const fs::path& save_dir)
 {
-    assert(serial_id == 0);
-
     bool is_autodig_enabled;
     {
         int dummy_i;
@@ -42,10 +40,8 @@ void _update_save_data_0(const fs::path& save_dir, int serial_id)
 
 
 
-void _update_save_data_1(const fs::path& save_dir, int serial_id)
+void _update_save_data_1(const fs::path& save_dir)
 {
-    assert(serial_id == 1);
-
     // Prepend "core." prefix to old race ID.
     for (const auto& entry : filesystem::dir_entries(
              save_dir,
@@ -104,10 +100,8 @@ void _update_save_data_1(const fs::path& save_dir, int serial_id)
 
 
 
-void _update_save_data_2(const fs::path& save_dir, int serial_id)
+void _update_save_data_2(const fs::path& save_dir)
 {
-    assert(serial_id == 2);
-
     // Prepend "core." prefix to old class ID.
     for (const auto& entry : filesystem::dir_entries(
              save_dir,
@@ -166,10 +160,8 @@ void _update_save_data_2(const fs::path& save_dir, int serial_id)
 
 
 
-void _update_save_data_3(const fs::path& save_dir, int serial_id)
+void _update_save_data_3(const fs::path& save_dir)
 {
-    assert(serial_id == 3);
-
     // Prepend "core." prefix to old class ID.
     for (const auto& entry : filesystem::dir_entries(
              save_dir,
@@ -616,10 +608,8 @@ void _update_save_data_3(const fs::path& save_dir, int serial_id)
 
 
 
-void _update_save_data_4(const fs::path& save_dir, int serial_id)
+void _update_save_data_4(const fs::path& save_dir)
 {
-    assert(serial_id == 4);
-
     // Replace double bed and happy bed's image.
     for (const auto& entry : filesystem::dir_entries(
              save_dir,
@@ -850,10 +840,8 @@ std::string _update_save_data_5_convert_portrait_id(int old_id, int sex)
 
 
 
-void _update_save_data_5(const fs::path& save_dir, int serial_id)
+void _update_save_data_5(const fs::path& save_dir)
 {
-    assert(serial_id == 5);
-
     // Convert portrait field.
     for (const auto& entry : filesystem::dir_entries(
              save_dir,
@@ -1308,10 +1296,8 @@ void _update_save_data_5(const fs::path& save_dir, int serial_id)
 /// Updates save file from v6 to v7.
 /// - Changes indoor flag of North Tyris south border, South Tyris north border,
 ///   and Test World north border in area data (adata.s1).
-void _update_save_data_6(const fs::path& save_dir, int serial_id)
+void _update_save_data_6(const fs::path& save_dir)
 {
-    assert(serial_id == 6);
-
     const auto adata_filepath = save_dir / "adata.s1";
     // Temporary data for contents of `adata.s1`.
     std::vector<int> data(40 * 500, 0);
@@ -1364,10 +1350,8 @@ void _update_save_data_6(const fs::path& save_dir, int serial_id)
 
 /// Update save data from v7 to v8. Fix wrongly saved positions of
 /// up/downstairs.
-void _update_save_data_7(const fs::path& save_dir, int serial_id)
+void _update_save_data_7(const fs::path& save_dir)
 {
-    assert(serial_id == 7);
-
     for (const auto& entry : filesystem::dir_entries(
              save_dir,
              filesystem::DirEntryRange::Type::file,
@@ -1486,10 +1470,8 @@ void _update_save_data_7(const fs::path& save_dir, int serial_id)
 
 /// Update save data from v8 to v9.
 /// Write array length even if its size is fixed.
-void _update_save_data_8(const fs::path& save_dir, int serial_id)
+void _update_save_data_8(const fs::path& save_dir)
 {
-    assert(serial_id == 8);
-
     // Character data
     for (const auto& entry : filesystem::dir_entries(
              save_dir,
@@ -2067,10 +2049,8 @@ void _update_save_data_8(const fs::path& save_dir, int serial_id)
 
 
 /// Create new mod save data for saves without it.
-void _update_save_data_9(const fs::path& save_dir, int serial_id)
+void _update_save_data_9(const fs::path& save_dir)
 {
-    assert(serial_id == 9);
-
     lua::ModSerializer mod_serializer(lua::lua.get());
 
     // Global mod data
@@ -2217,11 +2197,9 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
 /// Update "shop*.s2" which have not been updated in _update_save_data_8() and
 /// _update_save_data_9(). Migration code is similar to them except for target
 /// files.
-void _update_save_data_10(const fs::path& save_dir, int serial_id)
+void _update_save_data_10(const fs::path& save_dir)
 {
     lua::ModSerializer mod_serializer(lua::lua.get());
-
-    assert(serial_id == 10);
 
     // _update_save_data_8
     // shop*.s2 files
@@ -2402,7 +2380,7 @@ void _update_save_data_10(const fs::path& save_dir, int serial_id)
 
 /// Update save data from v11 to v12.
 /// Fix Stersha's portrait ID from "starsha" to "stersha".
-void _update_save_data_11(const fs::path& save_dir, int serial_id)
+void _update_save_data_11(const fs::path& save_dir)
 {
     const auto palmia_cdata_file = save_dir / "cdata_15_101.s2";
     if (!fs::exists(palmia_cdata_file))
@@ -2825,7 +2803,7 @@ void _update_save_data_11(const fs::path& save_dir, int serial_id)
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
 #define ELONA_CASE(n) \
-    case n: _update_save_data_##n(save_dir, serial_id); break;
+    case n: _update_save_data_##n(save_dir); break;
 
     switch (serial_id)
     {
