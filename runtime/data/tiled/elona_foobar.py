@@ -167,7 +167,6 @@ class ElonaFoobar(T.Plugin):
             fh.read(4)
 
             self.version = unpack("I", fh.read(4))[0]
-            print("version " + str(self.version))
 
             mod_count = unpack("I", fh.read(4))[0]
             print("mod count " + str(mod_count))
@@ -185,7 +184,6 @@ class ElonaFoobar(T.Plugin):
 
             self.layers = list()
             layer_count = unpack("I", fh.read(4))[0]
-            print("LAYER COUNT {}".format(layer_count))
 
             for i in range(layer_count):
                 self.layers.append(read_layer(fh, ids_to_names))
@@ -254,7 +252,6 @@ class ElonaFoobar(T.Plugin):
 
         is_new_map = m.tilesetCount() == 0
         if is_new_map:
-            print("NEW MAP")
             mdata = {
                 "width": m.width(),
                 "height": m.height(),
@@ -298,7 +295,6 @@ class ElonaFoobar(T.Plugin):
 
             out.write(pack("I", m.layerCount()))
 
-            print("LAYER COUNT WRITE {}".format(m.layerCount()))
             for i in range(m.layerCount()):
                 l = m.layerAt(i)
                 write_layer(out, m, l, i, property_names)
@@ -309,40 +305,11 @@ class ElonaFoobar(T.Plugin):
 def collect_mods_used(m):
     mods = set()
 
-    for i in range(m.layerCount()):
-        l = m.layerAt(i)
-
-        # tiles
-        if l.isTileLayer():
-            mdata = l.asTileLayer()
-            print("tile layer " + l.name() + " " + str(mdata.isEmpty()))
-            print(str(mdata.width()) + " " + str(mdata.height()))
-            for y in range(mdata.height()):
-                for x in range(mdata.width()):
-                    tile = mdata.cellAt(x, y).tile()
-                    if tile == None:
-                        continue
-
-                    data_id = tile.propertyAsString("data_id")
-                    mod, name = data_id.split(".")
-                    if not mod in mods:
-                        mods.add(mod)
-
-        # objects
-        elif l.isObjectGroup():
-            objs = l.asObjectGroup()
-            for i in range(objs.objectCount()):
-                o = objs.objectAt(i)
-
-                data_id = o.effectiveType()
-                mod, name = data_id.split(".")
-                if not mod in mods:
-                    mods.add(mod)
-
-                data_id = o.cell().tile().propertyAsString("data_id")
-                mod, name = data_id.split(".")
-                if not mod in mods:
-                    mods.add(mod)
+    base_directory = dirname(realpath(__file__))
+    mods_file = join(base_directory, "Elona_foobar/mods.txt")
+    with open(mods_file, "r") as fh:
+        for mod in fh:
+            mods.add(mod)
 
     return mods
 
@@ -359,7 +326,6 @@ class Mapping():
 
 
 def collect_property_names(m):
-    print("collect property names")
     mapping = Mapping()
     default_tile = get_default_tile(m)
 
@@ -374,7 +340,6 @@ def collect_property_names(m):
         # tiles
         if l.isTileLayer():
             mdata = l.asTileLayer()
-            print(str(mdata.width()) + " " + str(mdata.height()))
             for y in range(mdata.height()):
                 for x in range(mdata.width()):
                     # tile property names
@@ -406,26 +371,21 @@ def collect_property_names(m):
         for key in l.properties().keys():
             mapping.add(key)
 
-    pprint(mapping.names_to_ids)
     return mapping.names_to_ids
 
 
 def read_dict(fh):
     ids_to_names = dict()
     key_count = unpack("I", fh.read(4))[0]
-    print("dict " + str(key_count))
     for i in range(key_count):
         key = read_string(fh)
         value = unpack("I", fh.read(4))[0]
         ids_to_names[value] = key
 
-    pprint(ids_to_names)
     return ids_to_names
 
 
 def write_dict(out, d):
-    print("WRITE dict")
-    pprint(d)
     out.write(pack("I", len(d.keys())))
     for key in d.keys():
         write_string(out, key)
@@ -434,7 +394,6 @@ def write_dict(out, d):
 
 
 def read_properties(fh, ids_to_names):
-    print("props")
     props = dict()
     key_count = unpack("I", fh.read(4))[0]
 
@@ -444,7 +403,6 @@ def read_properties(fh, ids_to_names):
         val = read_typed_value(fh)
         props[key] = val
 
-    pprint(props)
     return props
 
 
@@ -549,7 +507,6 @@ def read_layer(fh, ids_to_names):
         obj_count = unpack("I", fh.read(4))[0]
         for i in range(obj_count):
             o = read_object(fh, ids_to_names)
-            pprint(o)
             objs.append(o)
     elif kind == 2:
         # group layer
@@ -681,7 +638,6 @@ def load_objects(m, object_group, d):
             tile_prop = obj["props"]["tile"]
         elif "tile" in obj["tile_props"]:
             tile_prop = obj["tile_props"]["tile"]
-        print("TILE P {}".format(tile_prop))
         tile = find_object_tile(tileset, data_id, cache, tile_prop)
         if tile == None:
             raise Exception("No tileset loaded that has " +
