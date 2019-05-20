@@ -279,18 +279,13 @@ else()
   include_directories(${Boost_INCLUDE_DIRS})
   target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
-  if(WIN32)
-    # Build custom version of Lua 5.3 with UTF-16 filename support
-    add_subdirectory(${CMAKE_PREFIX_PATH}/lib/lua ${PROJECT_BINARY_DIR}/lib/lua)
-    include_directories(PUBLIC ${CMAKE_PREFIX_PATH}/lib/lua/src/)
-    target_link_libraries(${PROJECT_NAME} liblua53)
-  else()
-    if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
-      find_package(Lua REQUIRED)
-    endif()
-    include_directories(${LUA_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
+  # NOTE: The prebuilt version of lua in the windows dependency
+  # submodule is patched with wstring support.
+  if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
+    find_package(Lua REQUIRED)
   endif()
+  include_directories(${LUA_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
 
   if(NOT DEFINED SDL2_INCLUDE_DIR OR NOT DEFINED SDL2_LIBRARIES)
     find_package(SDL2 REQUIRED)
