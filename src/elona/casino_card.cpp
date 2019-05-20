@@ -363,13 +363,13 @@ int opencard2(int card_index, int player_id)
 
 int trashcard(int card_index)
 {
+    gmode(2);
     for (int cnt = 0; cnt < 21; ++cnt)
     {
         draw(
             "card_pile",
             card_at_cardcontrol(3, card_index) - 8,
             card_at_cardcontrol(4, card_index) - 8);
-        gmode(2);
         if (cnt == 20)
         {
             redraw();
