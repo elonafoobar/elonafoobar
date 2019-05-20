@@ -41,6 +41,7 @@ before_build:
   - cd C:\projects\ElonaFoobar
   - if exist %PREFIX% set NEEDDEPENDS=rem
   - |-
+    %NEEDDEPENDS% mkdir %PREFIX%
     %NEEDDEPENDS% cp deps\install.bat %PREFIX%
     %NEEDDEPENDS% cd %PREFIX%
     %NEEDDEPENDS% git clone https://www.github.com/Ruin0x11/foobar_windows_deps windows
