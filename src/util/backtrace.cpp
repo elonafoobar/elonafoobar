@@ -67,7 +67,7 @@ FILE *addr2line(void **addresses, char **symbols, int address_count)
         cmd_buffer,
         buffer_size,
         "addr2line -C -f -e \"%s\"",
-        exe_path->c_str());
+        exe_path->string().c_str());
 #elif BOOST_OS_MACOS
     length = snprintf(cmd_buffer, buffer_size, "atos -p %d", (int)getpid());
 #endif

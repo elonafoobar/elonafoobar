@@ -7,6 +7,7 @@
 #include <codecvt> // std::codecvt_utf8_utf16
 #include <Shlobj.h> // SHGetKnownFolderPath
 #include <windows.h> // GetModuleFileName
+#include "unicode_utf16.hpp"
 #elif BOOST_OS_MACOS
 #include <limits.h> // PATH_MAX
 #include <mach-o/dyld.h> // _NSGetExecutablePath
@@ -32,17 +33,17 @@ namespace fs = boost::filesystem;
 
 
 
+
 /**
  * Converts a UTF-8 encoded string to a filesystem path in the platform's native
  * encoding (UTF-16 for Windows, UTF-8 for everything else)
  */
-fs::path u8path(const std::string& str)
+fs::path u8path(const std::string& u8str)
 {
 #if BOOST_OS_WINDOWS
-    return std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t>()
-        .from_bytes(str);
+    return lib::unicode::utf8_to_utf16(u8str);
 #else
-    return str;
+    return u8str;
 #endif
 }
 
@@ -56,8 +57,8 @@ fs::path u8path(const std::string& str)
 std::string make_preferred_path_in_utf8(const fs::path& path)
 {
 #if BOOST_OS_WINDOWS
-    return std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t>()
-        .to_bytes(path.make_preferred().native());
+    auto path_ = path;
+    return lib::unicode::utf16_to_utf8(path_.make_preferred().native());
 #else
     return path.native();
 #endif
@@ -71,8 +72,7 @@ std::string make_preferred_path_in_utf8(const fs::path& path)
 std::string to_utf8_path(const fs::path& path)
 {
 #if BOOST_OS_WINDOWS
-    return std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t>()
-        .to_bytes(path.native());
+    return lib::unicode::utf16_to_utf8(path.native());
 #else
     return path.native();
 #endif
@@ -88,17 +88,17 @@ std::string to_forward_slashes(const fs::path& path)
 }
 
 
-boost::optional<std::string> get_executable_path()
+boost::optional<fs::path> get_executable_path()
 {
 #if BOOST_OS_WINDOWS
-    TCHAR buf_wide[1024 + 1];
-    size_t buf_size = sizeof(buf_wide);
-    if (GetModuleFileName(nullptr, buf_wide, buf_size) == 0)
+    static_assert(std::is_same<TCHAR, wchar_t>::value, "TCHAR must be wchar_t");
+
+    wchar_t buf[1024 + 1];
+    size_t buf_size = sizeof(buf);
+    if (GetModuleFileName(nullptr, buf, buf_size) == 0)
     {
         return boost::none;
     }
-    char buf[2048 + 1];
-    wcstombs(buf, buf_wide, wcslen(buf_wide) + 1);
 #elif BOOST_OS_MACOS
     char buf[PATH_MAX + 1];
     uint32_t buf_size = sizeof(buf);
@@ -116,33 +116,31 @@ boost::optional<std::string> get_executable_path()
     }
     buf[result] = '\0';
 #elif BOOST_OS_ANDROID
-    std::string external_storage_path(SDL_AndroidGetExternalStoragePath());
-    if (external_storage_path.back() != '/')
-        external_storage_path += '/';
-    const char* buf = external_storage_path.c_str();
+    std::string buf(SDL_AndroidGetExternalStoragePath());
+    if (buf.back() != '/')
+        buf += '/';
 #else
 #error Unsupported OS
 #endif
 
-    return std::string(buf);
+    return fs::path(buf);
 }
 
-boost::optional<std::string> get_home_directory()
+boost::optional<fs::path> get_home_directory()
 {
-    boost::optional<std::string> home_directory;
 #if BOOST_OS_WINDOWS
     wchar_t* knownFolderPath;
 
     auto hr = SHGetKnownFolderPath(
         FOLDERID_Profile, KF_FLAG_DEFAULT, nullptr, &knownFolderPath);
 
-    if (SUCCEEDED(hr))
+    if (!SUCCEEDED(hr))
     {
-        char result[MAX_PATH + 1];
-        wcstombs(result, knownFolderPath, MAX_PATH);
-        home_directory = std::string(result);
-        CoTaskMemFree(knownFolderPath);
+        return boost::none;
     }
+
+    std::wstring result(knownFolderPath);
+    CoTaskMemFree(knownFolderPath);
 #elif BOOST_OS_LINUX || BOOST_OS_MACOS
     char* result = getenv("HOME");
     if (result == nullptr)
@@ -153,12 +151,19 @@ boost::optional<std::string> get_home_directory()
             result = pwd->pw_dir;
         }
     }
-    if (result != nullptr)
+    if (result == nullptr)
     {
-        home_directory = result;
+        return boost::none;
     }
+#elif BOOST_OS_ANDROID
+    std::string result(SDL_AndroidGetExternalStoragePath());
+    if (result.back() != '/')
+        result += '/';
+#else
+#error Unsupported OS
 #endif
-    return home_directory;
+
+    return fs::path(result);
 }
 
 } // namespace filepathutil

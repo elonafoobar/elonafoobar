@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"
+#include "../util/stopwatch.hpp"
 
 
 
@@ -26,10 +27,14 @@ void Store::init(const std::vector<Store::Location>& locations)
 {
     clear();
 
+    lib::Stopwatch watch;
+
     for (const auto& loc : locations)
     {
         locale_dir_table[loc.mod_id] = loc.locale_dir;
         load(loc.locale_dir, loc.mod_id);
+
+        ELONA_LOG("i18n") << "loaded translations for '" << loc.mod_id << "' in " << watch.measure() << "ms";
     }
 }
 

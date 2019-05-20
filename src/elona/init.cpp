@@ -717,6 +717,7 @@ void initialize_config_defs()
 
 void init()
 {
+    lib::Stopwatch watch;
     lua::lua = std::make_unique<lua::LuaEnv>();
 
     initialize_config_defs();
@@ -728,7 +729,7 @@ void init()
     initialize_config();
 
     initialize_lua();
-    // Load translations from scanned mods.
+
     initialize_i18n();
 
     lua::lua->get_api_manager().lock();

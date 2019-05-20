@@ -14,7 +14,7 @@ fs::path get_executable_dir()
         {
             throw std::runtime_error(u8"Error: fail to get excutable path");
         }
-        return fs::canonical(fs::path{*exe_name}.remove_filename());
+        return fs::canonical(exe_name->remove_filename());
     })();
 
     return cache;

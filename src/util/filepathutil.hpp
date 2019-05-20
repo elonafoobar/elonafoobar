@@ -11,11 +11,13 @@
 namespace filepathutil
 {
 
-boost::filesystem::path u8path(const std::string&);
+namespace fs = boost::filesystem;
+
+fs::path u8path(const std::string&);
 std::string make_preferred_path_in_utf8(const boost::filesystem::path& path);
 std::string to_utf8_path(const boost::filesystem::path& path);
 std::string to_forward_slashes(const boost::filesystem::path& path);
-boost::optional<std::string> get_executable_path();
-boost::optional<std::string> get_home_directory();
+boost::optional<fs::path> get_executable_path();
+boost::optional<fs::path> get_home_directory();
 
 } // namespace filepathutil

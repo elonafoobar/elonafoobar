@@ -5,6 +5,10 @@ set(UTIL_SOURCES
   fps_counter.cpp
   )
 
+if(WIN32)
+  list(APPEND UTIL_SOURCES unicode_utf16.cpp)
+endif()
+
 if(ANDROID_GENERATE_BUILD_FILES)
   generate_android_mk(util SOURCES ${UTIL_SOURCES})
 else()
