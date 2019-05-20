@@ -2213,6 +2213,193 @@ void _update_save_data_9(const fs::path& save_dir, int serial_id)
 
 
 
+/// Update save data from v10 to v11.
+/// Update "shop*.s2" which have not been updated in _update_save_data_8() and
+/// _update_save_data_9(). Migration code is similar to them except for target
+/// files.
+void _update_save_data_10(const fs::path& save_dir, int serial_id)
+{
+    lua::ModSerializer mod_serializer(lua::lua.get());
+
+    assert(serial_id == 10);
+
+    // _update_save_data_8
+    // shop*.s2 files
+    for (const auto& entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(shop.*\.s2)"}))
+    {
+        // Open file.
+        std::ifstream fin{entry.path().native(), std::ios::binary};
+        putit::BinaryIArchive iar{fin};
+
+        // Prepare a temporary output stream.
+        // It is a string stream, but used as a memory stream here.
+        // `std::stringstream` class does not convert line endings and
+        // treat NUL as a terminator of string, so that it can be safely
+        // used as a memory stream.
+        std::ostringstream out;
+        putit::BinaryOArchive oar{out};
+
+        const auto begin = 1320;
+        const auto end = 5480;
+        for (int idx = begin; idx < end; ++idx)
+        {
+            // DO NOT use usual serialization utilities to migrate old data
+            // safely because they may be changed in the future version.
+
+            // Prepare variables.
+            int number_ = 0;
+            int value = 0;
+            int image = 0;
+            int id = 0;
+            Quality quality = Quality::none;
+            Position position;
+            int weight = 0;
+            IdentifyState identification_state = IdentifyState::unidentified;
+            int count = 0;
+            int dice_x = 0;
+            int dice_y = 0;
+            int damage_bonus = 0;
+            int hit_bonus = 0;
+            int dv = 0;
+            int pv = 0;
+            int skill = 0;
+            CurseState curse_state = CurseState::none;
+            int body_part = 0;
+            int function = 0;
+            int enhancement = 0;
+            int own_state = 0;
+            int color = 0;
+            int subname = 0;
+            int material = 0;
+            int param1 = 0;
+            int param2 = 0;
+            int param3 = 0;
+            int param4 = 0;
+            int difficulty_of_identification = 0;
+            int turn = 0;
+
+            std::bitset<32> _flags;
+
+            std::vector<Enchantment> enchantments(15);
+
+            // Load item data.
+            {
+                iar(number_);
+                iar(value);
+                iar(image);
+                iar(id);
+                iar(quality);
+                iar(position);
+                iar(weight);
+                iar(identification_state);
+                iar(count);
+                iar(dice_x);
+                iar(dice_y);
+                iar(damage_bonus);
+                iar(hit_bonus);
+                iar(dv);
+                iar(pv);
+                iar(skill);
+                iar(curse_state);
+                iar(body_part);
+                iar(function);
+                iar(enhancement);
+                iar(own_state);
+                iar(color);
+                iar(subname);
+                iar(material);
+                iar(param1);
+                iar(param2);
+                iar(param3);
+                iar(param4);
+                iar(difficulty_of_identification);
+                iar(turn);
+                iar(_flags);
+                range::for_each(enchantments, [&](auto&& enchantment) {
+                    iar(enchantment);
+                });
+            }
+            // Dump item data to the memory stream.
+            {
+                oar(number_);
+                oar(value);
+                oar(image);
+                oar(id);
+                oar(quality);
+                oar(position);
+                oar(weight);
+                oar(identification_state);
+                oar(count);
+                oar(dice_x);
+                oar(dice_y);
+                oar(damage_bonus);
+                oar(hit_bonus);
+                oar(dv);
+                oar(pv);
+                oar(skill);
+                oar(curse_state);
+                oar(body_part);
+                oar(function);
+                oar(enhancement);
+                oar(own_state);
+                oar(color);
+                oar(subname);
+                oar(material);
+                oar(param1);
+                oar(param2);
+                oar(param3);
+                oar(param4);
+                oar(difficulty_of_identification);
+                oar(turn);
+                oar(_flags);
+                oar(enchantments);
+            }
+        }
+
+        // Close the file and reopen to write.
+        fin.close();
+        std::ofstream fout{entry.path().native(), std::ios::binary};
+        // Write the data.
+        fout.write(out.str().c_str(), out.str().size());
+    }
+
+    // _update_save_data_9
+    // shop*.s2 files
+    for (const auto& entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(shop.*\.s2)"}))
+    {
+        std::ifstream fin{entry.path().native(), std::ios::binary};
+        putit::BinaryIArchive iar{fin};
+
+        for (size_t index = 1320; index < 5480; ++index)
+        {
+            iar(inv[index]);
+            inv[index].index = index;
+            lua::lua->get_handle_manager().create_item_handle(inv[index]);
+        }
+
+        fs::path outpath = save_dir /
+            ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
+        std::ofstream fout{outpath.native(), std::ios::binary};
+        putit::BinaryOArchive oar{fout};
+
+        mod_serializer.save_handles<Item>(oar, lua::ModInfo::StoreType::map);
+
+        for (int index = 1320; index < 5480; index++)
+        {
+            inv[index].set_number(0);
+            lua::lua->get_handle_manager().remove_item_handle(inv[index]);
+        }
+    }
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
 #define ELONA_CASE(n) \
@@ -2230,6 +2417,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(7)
         ELONA_CASE(8)
         ELONA_CASE(9)
+        ELONA_CASE(10)
     default: assert(0); break;
     }
 #undef ELONA_CASE
