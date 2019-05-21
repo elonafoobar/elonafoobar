@@ -9,4 +9,7 @@ echo %%a
 )
 popd
 
+rem The prebuilt SDL2_image includes its own zlib, so it should be removed to avoid conflicts.
+del lib\zlib1.dll
+
 echo Done.

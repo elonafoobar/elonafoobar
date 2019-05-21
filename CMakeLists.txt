@@ -281,8 +281,14 @@ else()
 
   # NOTE: The prebuilt version of lua in the windows dependency
   # submodule is patched with wstring support.
-  if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
-    find_package(Lua REQUIRED)
+  if(WIN32)
+    # FindLua does not support distinguishing debug/release builds.
+    set(LUA_INCLUDE_DIR ${CMAKE_PREFIX_PATH}/include)
+    set(LUA_LIBRARIES debug ${CMAKE_PREFIX_PATH}/lib/lua53d.lib optimized ${CMAKE_PREFIX_PATH}/lib/lua53.lib)
+  else()
+    if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
+      find_package(Lua REQUIRED)
+    endif()
   endif()
   include_directories(${LUA_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
