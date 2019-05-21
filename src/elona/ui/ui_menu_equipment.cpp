@@ -143,7 +143,7 @@ void UIMenuEquipment::_draw_window_deco(bool show_additional_info)
     draw_indexed("inventory_icon", wx + 46, wy - 16, 10);
     elona::draw("deco_wear_a", wx + ww - 106, wy);
     elona::draw("deco_wear_b", wx, wy + wh - 164);
-    draw_additional_item_info_label(wx + 320, wy + 40);
+    draw_additional_item_info_label(wx + 350, wy + 40);
 }
 
 void UIMenuEquipment::_draw_window_headers()
@@ -227,7 +227,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
             inv[equipped_item], wx + 126, wy + 70 + cnt * 19);
 
         draw_additional_item_info(
-            inv[equipped_item], wx + 320, wy + 60 + cnt * 19 + 2);
+            inv[equipped_item], wx + 350, wy + 60 + cnt * 19 + 2);
         if (show_additional_info)
         {
             item_name = cut_item_name_for_additional_info(item_name, 2);
