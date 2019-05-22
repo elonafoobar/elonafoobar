@@ -2208,6 +2208,14 @@ void _update_save_data_10(const fs::path& save_dir)
              filesystem::DirEntryRange::Type::file,
              std::regex{u8R"(shop.*\.s2)"}))
     {
+        if (fs::exists(
+                save_dir /
+                ("mod_" + filepathutil::to_utf8_path(entry.path().filename()))))
+        {
+            // This file is saved in new format. Skipping.
+            continue;
+        }
+
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
@@ -2351,6 +2359,14 @@ void _update_save_data_10(const fs::path& save_dir)
              filesystem::DirEntryRange::Type::file,
              std::regex{u8R"(shop.*\.s2)"}))
     {
+        if (fs::exists(
+                save_dir /
+                ("mod_" + filepathutil::to_utf8_path(entry.path().filename()))))
+        {
+            // Has already existed. Skipping.
+            continue;
+        }
+
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
 
