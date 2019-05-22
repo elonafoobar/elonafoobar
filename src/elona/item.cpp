@@ -533,44 +533,44 @@ void Item::set_number(int number_)
 
 
 
-int item_separate(int ci)
+int item_separate(int src)
 {
-    if (inv[ci].number() <= 1)
-        return ci;
+    if (inv[src].number() <= 1)
+        return src;
 
-    int ti = inv_getfreeid(inv_getowner(ci));
-    if (ti == -1)
+    int dst = inv_getfreeid(inv_getowner(src));
+    if (dst == -1)
     {
-        ti = inv_getfreeid(-1);
-        if (ti == -1)
+        dst = inv_getfreeid(-1);
+        if (dst == -1)
         {
-            inv[ci].set_number(1);
+            inv[src].set_number(1);
             txt(i18n::s.get("core.locale.item.something_falls_and_disappears"));
-            return ci;
+            return src;
         }
     }
 
-    item_copy(ci, ti);
-    inv[ti].set_number(inv[ci].number() - 1);
-    inv[ci].set_number(1);
+    item_copy(src, dst);
+    inv[dst].set_number(inv[src].number() - 1);
+    inv[src].set_number(1);
 
-    if (inv_getowner(ti) == -1 && mode != 6)
+    if (inv_getowner(dst) == -1 && mode != 6)
     {
-        if (inv_getowner(ci) != -1)
+        if (inv_getowner(src) != -1)
         {
-            inv[ci].position = cdata[inv_getowner(ci)].position;
+            inv[src].position = cdata[inv_getowner(src)].position;
         }
-        inv[ti].position = inv[ci].position;
-        itemturn(ti);
-        cell_refresh(inv[ti].position.x, inv[ti].position.y);
-        if (inv_getowner(ci) != -1)
+        inv[dst].position = inv[src].position;
+        itemturn(dst);
+        cell_refresh(inv[dst].position.x, inv[dst].position.y);
+        if (inv_getowner(src) != -1)
         {
             txt(i18n::s.get("core.locale.item.something_falls_from_backpack"));
         }
         refresh_burden_state();
     }
 
-    return ti;
+    return dst;
 }
 
 

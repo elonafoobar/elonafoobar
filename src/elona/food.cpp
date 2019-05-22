@@ -463,14 +463,14 @@ void cook()
 
 
 
-void make_dish(int ci, int type)
+void make_dish(int ingredient, int type)
 {
-    inv[ci].image = picfood(type, inv[ci].param1 / 1000);
-    inv[ci].weight = 500;
-    inv[ci].param2 = type;
-    if (inv[ci].material == 35 && inv[ci].param3 >= 0)
+    inv[ingredient].image = picfood(type, inv[ingredient].param1 / 1000);
+    inv[ingredient].weight = 500;
+    inv[ingredient].param2 = type;
+    if (inv[ingredient].material == 35 && inv[ingredient].param3 >= 0)
     {
-        inv[ci].param3 = game_data.date.hours() + 72;
+        inv[ingredient].param3 = game_data.date.hours() + 72;
     }
 }
 

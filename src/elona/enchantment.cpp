@@ -626,7 +626,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
 
 
 bool enchantment_add(
-    int ci,
+    int item_index,
     int type,
     int power,
     int flip_percentage,
@@ -634,7 +634,7 @@ bool enchantment_add(
     bool only_check,
     bool force)
 {
-    const auto category = the_item_db[inv[ci].id]->category;
+    const auto category = the_item_db[inv[item_index].id]->category;
 
     if (type == 0)
     {
@@ -750,14 +750,14 @@ bool enchantment_add(
     i_at_m48 = -1;
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (inv[ci].enchantments[cnt].id == enc)
+        if (inv[item_index].enchantments[cnt].id == enc)
         {
             i_at_m48 = cnt;
             continue;
         }
         if (i_at_m48 == -1)
         {
-            if (inv[ci].enchantments[cnt].id == 0)
+            if (inv[item_index].enchantments[cnt].id == 0)
             {
                 i_at_m48 = cnt;
             }
@@ -768,7 +768,7 @@ bool enchantment_add(
         return false;
     }
 
-    if (inv[ci].enchantments[i_at_m48].id == enc)
+    if (inv[item_index].enchantments[i_at_m48].id == enc)
     {
         if (category == 25000)
         {
@@ -787,12 +787,12 @@ bool enchantment_add(
         return true;
     }
 
-    if (inv[ci].enchantments[i_at_m48].id == enc)
+    if (inv[item_index].enchantments[i_at_m48].id == enc)
     {
-        encp += inv[ci].enchantments[i_at_m48].power;
+        encp += inv[item_index].enchantments[i_at_m48].power;
     }
-    inv[ci].enchantments[i_at_m48].id = enc;
-    inv[ci].enchantments[i_at_m48].power = encp;
+    inv[item_index].enchantments[i_at_m48].id = enc;
+    inv[item_index].enchantments[i_at_m48].power = encp;
 
     if (type < 10000)
     {
@@ -802,11 +802,12 @@ bool enchantment_add(
     {
         p_at_m48 = type / 10000;
     }
-    if (inv[ci].value * encref(1, p_at_m48) / 100 > 0)
+    if (inv[item_index].value * encref(1, p_at_m48) / 100 > 0)
     {
-        inv[ci].value = inv[ci].value * encref(1, p_at_m48) / 100;
+        inv[item_index].value =
+            inv[item_index].value * encref(1, p_at_m48) / 100;
     }
-    enchantment_sort(inv[ci]);
+    enchantment_sort(inv[item_index]);
 
     return true;
 }
