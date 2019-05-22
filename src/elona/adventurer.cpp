@@ -15,10 +15,14 @@
 #include "text.hpp"
 #include "variables.hpp"
 
+
+
 namespace elona
 {
 
 int i_at_m145 = 0;
+
+
 
 void create_all_adventurers()
 {
@@ -74,6 +78,7 @@ void create_adventurer()
 }
 
 
+
 int advfavoriteskill(int seed)
 {
     randomize(seed);
@@ -105,6 +110,8 @@ int advfavoritestat(int seed)
     randomize();
     return i_at_m145;
 }
+
+
 
 void addnews2(const std::string& news_content, int show_message)
 {
@@ -188,6 +195,7 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
     }
     newsbuff += u8"\n"s;
 }
+
 
 
 void adventurer_update()
@@ -311,6 +319,7 @@ void adventurer_update()
 }
 
 
+
 int adventurer_discover_equipment()
 {
     f = 0;
@@ -350,23 +359,19 @@ int adventurer_discover_equipment()
     {
         flttypemajor = choice(fsetitem);
     }
-    int stat = itemcreate(rc, 0, -1, -1, 0);
-    if (stat == 0)
+    if (itemcreate(rc, 0, -1, -1, 0))
     {
-        return 0;
-    }
-    inv[ci].identification_state = IdentifyState::completely_identified;
-    if (inv[ci].quality >= Quality::miracle)
-    {
-        if (the_item_db[inv[ci].id]->category < 50000)
+        inv[ci].identification_state = IdentifyState::completely_identified;
+        if (inv[ci].quality >= Quality::miracle)
         {
-            addnews(1, rc, 0, itemname(ci));
+            if (the_item_db[inv[ci].id]->category < 50000)
+            {
+                addnews(1, rc, 0, itemname(ci));
+            }
         }
+        wear_most_valuable_equipment();
     }
-    wear_most_valuable_equipment();
     return 0;
 }
-
-
 
 } // namespace elona

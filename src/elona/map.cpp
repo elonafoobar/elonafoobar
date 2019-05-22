@@ -373,8 +373,7 @@ void map_reload(const std::string& map_filename)
             if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
-                int stat = itemcreate(-1, cmapdata(0, i), x, y, 0);
-                if (stat != 0)
+                if (itemcreate(-1, cmapdata(0, i), x, y, 0))
                 {
                     inv[ci].own_state = cmapdata(3, i);
                 }
@@ -838,8 +837,7 @@ static void _proc_generate_bard_items(Character& chara)
 static void _generate_bad_quality_item()
 {
     flt(calcobjlv(cdata[rc].level), calcfixlv(Quality::bad));
-    int stat = itemcreate(rc, 0, -1, -1, 0);
-    if (stat != 0)
+    if (itemcreate(rc, 0, -1, -1, 0))
     {
         if (inv[ci].weight <= 0 || inv[ci].weight >= 4000)
         {
@@ -960,35 +958,25 @@ void map_reload_noyel()
     if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
-        int stat = itemcreate(-1, 763, 29, 16, 0);
-        if (stat != 0)
+        if (itemcreate(-1, 763, 29, 16, 0))
         {
             inv[ci].own_state = 1;
         }
+        flt();
+        if (itemcreate(-1, 686, 29, 16, 0))
         {
-            flt();
-            int stat = itemcreate(-1, 686, 29, 16, 0);
-            if (stat != 0)
-            {
-                inv[ci].own_state = 1;
-            }
+            inv[ci].own_state = 1;
         }
+        flt();
+        if (itemcreate(-1, 171, 29, 17, 0))
         {
-            flt();
-            int stat = itemcreate(-1, 171, 29, 17, 0);
-            if (stat != 0)
-            {
-                inv[ci].param1 = 6;
-                inv[ci].own_state = 1;
-            }
+            inv[ci].param1 = 6;
+            inv[ci].own_state = 1;
         }
+        flt();
+        if (itemcreate(-1, 756, 29, 17, 0))
         {
-            flt();
-            int stat = itemcreate(-1, 756, 29, 17, 0);
-            if (stat != 0)
-            {
-                inv[ci].own_state = 5;
-            }
+            inv[ci].own_state = 5;
         }
         {
             flt();

@@ -123,34 +123,34 @@ TurnResult ai_proc_basic()
                     {
                         tlocx = cdata[tc].position.x;
                         tlocy = cdata[tc].position.y;
-                        int stat = 0;
+                        bool success = false;
                         if (act == -9999)
                         {
                             flt();
                             flttypemajor = 52000;
-                            stat = itemcreate(
+                            success = !!itemcreate(
                                 cc, choice(isetthrowpotionminor), -1, -1, 0);
                         }
                         if (act == -9998)
                         {
                             flt();
                             flttypemajor = 52000;
-                            stat = itemcreate(
+                            success = !!itemcreate(
                                 cc, choice(isetthrowpotionmajor), -1, -1, 0);
                         }
                         if (act == -9997)
                         {
                             flt();
                             flttypemajor = 52000;
-                            stat = itemcreate(
+                            success = !!itemcreate(
                                 cc, choice(isetthrowpotiongreater), -1, -1, 0);
                         }
                         if (act == -9996)
                         {
                             flt();
-                            stat = itemcreate(cc, 698, -1, -1, 0);
+                            success = !!itemcreate(cc, 698, -1, -1, 0);
                         }
-                        if (stat == 1)
+                        if (success)
                         {
                             return do_throw_command();
                         }
@@ -765,8 +765,7 @@ label_2692_internal:
                                 flttypeminor = 52002;
                             }
                         }
-                        int stat = itemcreate(cc, 0, -1, -1, 0);
-                        if (stat == 1)
+                        if (itemcreate(cc, 0, -1, -1, 0))
                         {
                             cdata[cc].item_which_will_be_used = ci;
                         }
@@ -792,9 +791,7 @@ label_2692_internal:
                                     if (is_in_fov(cdata[game_data.fire_giant]))
                                     {
                                         flt();
-                                        int stat =
-                                            itemcreate(cc, 587, -1, -1, 0);
-                                        if (stat == 1)
+                                        if (itemcreate(cc, 587, -1, -1, 0))
                                         {
                                             tlocx = cdata[game_data.fire_giant]
                                                         .position.x;
@@ -828,8 +825,7 @@ label_2692_internal:
                                 if (found_snowman)
                                 {
                                     flt();
-                                    int stat = itemcreate(cc, 587, -1, -1, 0);
-                                    if (stat == 1)
+                                    if (itemcreate(cc, 587, -1, -1, 0))
                                     {
                                         tlocx = inv[ti].position.x;
                                         tlocy = inv[ti].position.y;
@@ -845,13 +841,12 @@ label_2692_internal:
                                         .item_appearances_actual == 0)
                                 {
                                     flt();
-                                    int stat = itemcreate(
-                                        -1,
-                                        541,
-                                        cdata[cc].position.x,
-                                        cdata[cc].position.y,
-                                        0);
-                                    if (stat == 1)
+                                    if (itemcreate(
+                                            -1,
+                                            541,
+                                            cdata[cc].position.x,
+                                            cdata[cc].position.y,
+                                            0))
                                     {
                                         snd("core.snow");
                                         txt(i18n::s.get(
@@ -865,8 +860,7 @@ label_2692_internal:
                             if (rnd(12) == 0)
                             {
                                 flt();
-                                int stat = itemcreate(cc, 587, -1, -1, 0);
-                                if (stat == 1)
+                                if (itemcreate(cc, 587, -1, -1, 0))
                                 {
                                     tlocx = cdata.player().position.x;
                                     tlocy = cdata.player().position.y;
@@ -908,8 +902,8 @@ label_2692_internal:
                     {
                         flttypeminor = 52002;
                     }
-                    int stat = itemcreate(cc, 0, -1, -1, 0);
-                    if (stat == 1 && the_item_db[inv[ci].id]->is_drinkable)
+                    if (itemcreate(cc, 0, -1, -1, 0) &&
+                        the_item_db[inv[ci].id]->is_drinkable)
                     {
                         if (inv[ci].id == 577)
                         {
@@ -963,8 +957,7 @@ label_2692_internal:
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;
                         flt();
-                        int stat = itemcreate(cc, 698, -1, -1, 0);
-                        if (stat == 1)
+                        if (itemcreate(cc, 698, -1, -1, 0))
                         {
                             if (is_in_fov(cdata[cc]))
                             {

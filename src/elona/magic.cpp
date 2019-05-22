@@ -2914,19 +2914,21 @@ bool _magic_1132(int& fltbk, int& valuebk)
             {
                 flttypemajor = fltbk;
             }
-            int stat = itemcreate(0, 0, -1, -1, 0);
-            if (stat == 0)
+            if (itemcreate(0, 0, -1, -1, 0))
             {
-                continue;
-            }
-            if (inv[ci].value > valuebk * 3 / 2 + 1000)
-            {
-                inv[ci].remove();
-                continue;
+                if (inv[ci].value > valuebk * 3 / 2 + 1000)
+                {
+                    inv[ci].remove();
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
             }
             else
             {
-                break;
+                continue;
             }
         }
         txt(i18n::s.get("core.locale.magic.alchemy", inv[ci]));

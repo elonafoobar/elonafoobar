@@ -1627,13 +1627,12 @@ void blending_start_attempt()
         {
             flt();
             nostack = 1;
-            int stat = itemcreate(
-                -1,
-                rpdata(0, rpid),
-                cdata.player().position.x,
-                cdata.player().position.y,
-                0);
-            if (stat != 0)
+            if (itemcreate(
+                    -1,
+                    rpdata(0, rpid),
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0))
             {
                 for (int cnt = 0;; ++cnt)
                 {
@@ -1834,8 +1833,7 @@ void blending_proc_on_success_events()
         {
             --game_data.holy_well_count;
             flt();
-            int stat = itemcreate(0, 516, -1, -1, 0);
-            if (stat != 0)
+            if (itemcreate(0, 516, -1, -1, 0))
             {
                 inv[ci].curse_state = CurseState::blessed;
             }

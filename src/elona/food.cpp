@@ -278,8 +278,7 @@ void chara_vomit(Character& cc)
         if (rnd(p * p * p) == 0 || cc.index == 0)
         {
             flt();
-            int stat = itemcreate(-1, 704, cc.position.x, cc.position.y, 0);
-            if (stat != 0)
+            if (itemcreate(-1, 704, cc.position.x, cc.position.y, 0))
             {
                 if (cc.index != 0)
                 {

@@ -1173,30 +1173,32 @@ void show_shop_log()
             flt(list(0, cnt2), static_cast<Quality>(list(1, cnt2)));
             flttypemajor = elona::stoi(listn(0, cnt2));
             nostack = 1;
-            int stat = itemcreate(-1, 0, -1, -1, 0);
-            if (stat == 0)
+            if (itemcreate(-1, 0, -1, -1, 0))
             {
-                f = 0;
-                break;
-            }
-            if (inv[ci].value > elona::stoi(listn(1, cnt2)) * 2)
-            {
-                item_stack(-1, ci);
-                f = 1;
-                break;
-            }
-            else
-            {
-                inv[ci].remove();
-                if (cnt == 3)
+                if (inv[ci].value > elona::stoi(listn(1, cnt2)) * 2)
                 {
-                    f = 0;
+                    item_stack(-1, ci);
+                    f = 1;
                     break;
                 }
                 else
                 {
-                    continue;
+                    inv[ci].remove();
+                    if (cnt == 3)
+                    {
+                        f = 0;
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
+            }
+            else
+            {
+                f = 0;
+                break;
             }
         }
         if (f == 0)
@@ -1561,8 +1563,7 @@ void update_ranch()
                     (cdatan(2, chara.index) == "core.chicken" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    int stat = itemcreate(-1, 573, x, y, 0);
-                    if (stat)
+                    if (itemcreate(-1, 573, x, y, 0))
                     {
                         inv[ci].subname = chara.id;
                         inv[ci].weight = chara.weight * 10 + 250;
@@ -1577,8 +1578,7 @@ void update_ranch()
                     (cdatan(2, chara.index) == "core.sheep" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    int stat = itemcreate(-1, 574, x, y, 0);
-                    if (stat)
+                    if (itemcreate(-1, 574, x, y, 0))
                     {
                         inv[ci].subname = chara.id;
                     }
@@ -1588,8 +1588,7 @@ void update_ranch()
                 // Shit
                 if (rnd(80) == 0)
                 {
-                    int stat = itemcreate(-1, 575, x, y, 0);
-                    if (stat)
+                    if (itemcreate(-1, 575, x, y, 0))
                     {
                         inv[ci].subname = chara.id;
                         inv[ci].weight = chara.weight * 40 + 300;

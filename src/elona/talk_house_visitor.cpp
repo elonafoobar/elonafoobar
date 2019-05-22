@@ -50,9 +50,8 @@ TalkResult _talk_hv_visitor()
 void _adventurer_give_new_year_gift()
 {
     flt();
-    int stat = itemcreate(
-        -1, 752, cdata.player().position.x, cdata.player().position.y, 0);
-    if (stat != 0)
+    if (itemcreate(
+            -1, 752, cdata.player().position.x, cdata.player().position.y, 0))
     {
         inv[ci].param3 = cdata[tc].impression + rnd(50);
     }

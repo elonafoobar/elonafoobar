@@ -3615,9 +3615,7 @@ void character_drops_item()
         cdata[rc].is_livestock() == 1 || 0)
     {
         flt();
-        int stat =
-            itemcreate(-1, 204, cdata[rc].position.x, cdata[rc].position.y, 0);
-        if (stat != 0)
+        if (itemcreate(-1, 204, cdata[rc].position.x, cdata[rc].position.y, 0))
         {
             remain_make(ci, rc);
             if (cdata[rc].is_livestock() == 1)
@@ -3921,13 +3919,12 @@ void lovemiracle(int chara_index)
     flt();
     if (rnd(2))
     {
-        int stat = itemcreate(
-            -1,
-            573,
-            cdata[chara_index].position.x,
-            cdata[chara_index].position.y,
-            0);
-        if (stat)
+        if (itemcreate(
+                -1,
+                573,
+                cdata[chara_index].position.x,
+                cdata[chara_index].position.y,
+                0))
         {
             inv[ci].subname = cdata[chara_index].id;
             inv[ci].weight = cdata[chara_index].weight * 10 + 250;
@@ -3939,13 +3936,12 @@ void lovemiracle(int chara_index)
     }
     else
     {
-        int stat = itemcreate(
-            -1,
-            574,
-            cdata[chara_index].position.x,
-            cdata[chara_index].position.y,
-            0);
-        if (stat)
+        if (itemcreate(
+                -1,
+                574,
+                cdata[chara_index].position.x,
+                cdata[chara_index].position.y,
+                0))
         {
             inv[ci].subname = cdata[chara_index].id;
         }
@@ -6191,9 +6187,8 @@ TurnResult do_gatcha()
                 p = 416;
             }
             flt();
-            int stat = itemcreate(
-                -1, p, cdata[cc].position.x, cdata[cc].position.y, 0);
-            if (stat != 0)
+            if (itemcreate(
+                    -1, p, cdata[cc].position.x, cdata[cc].position.y, 0))
             {
                 inv[ci].param2 = 0;
             }

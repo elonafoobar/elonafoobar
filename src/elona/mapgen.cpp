@@ -3737,9 +3737,12 @@ void map_initcustom(const std::string& map_filename)
         if (cmapdata(4, cnt) == 0)
         {
             flt();
-            int stat = itemcreate(
-                -1, cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt), 0);
-            if (stat != 0)
+            if (itemcreate(
+                    -1,
+                    cmapdata(0, cnt),
+                    cmapdata(1, cnt),
+                    cmapdata(2, cnt),
+                    0))
             {
                 inv[ci].own_state = cmapdata(3, cnt);
             }

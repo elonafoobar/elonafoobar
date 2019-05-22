@@ -656,8 +656,7 @@ int quest_generate()
             }
             flt(40, Quality::good);
             flttypemajor = choice(fsetcollect);
-            int stat = itemcreate(n, 0, -1, -1, 0);
-            if (stat != 0)
+            if (itemcreate(n, 0, -1, -1, 0))
             {
                 inv[ci].count = rq;
                 i(0) = n;

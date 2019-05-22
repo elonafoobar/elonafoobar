@@ -219,8 +219,7 @@ void LuaApiInternal::strange_scientist_pick_reward()
         if (f)
         {
             flt(cdata.player().level * 3 / 2, calcfixlv(Quality::good));
-            int stat = itemcreate(-1, cnt, -1, -1, 0);
-            if (stat == 1)
+            if (itemcreate(-1, cnt, -1, -1, 0))
             {
                 if (inv[ci].quality < Quality::miracle)
                 {

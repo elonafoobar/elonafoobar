@@ -1387,8 +1387,7 @@ TurnResult do_dip_command()
                 {
                     --game_data.holy_well_count;
                     flt();
-                    int stat = itemcreate(0, 516, -1, -1, 0);
-                    if (stat != 0)
+                    if (itemcreate(0, 516, -1, -1, 0))
                     {
                         inv[ci].curse_state = CurseState::blessed;
                     }
@@ -3517,8 +3516,7 @@ TurnResult do_get_command()
             }
             flt();
             {
-                int stat = itemcreate(0, 587, -1, -1, 0);
-                if (stat != 0)
+                if (itemcreate(0, 587, -1, -1, 0))
                 {
                     inv[ci].curse_state = CurseState::none;
                     inv[ci].identification_state =

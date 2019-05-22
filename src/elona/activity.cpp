@@ -535,8 +535,7 @@ void continuous_action_perform()
                                             dbid = 55;
                                         }
                                     }
-                                    int stat = itemcreate(-1, dbid, x, y, 1);
-                                    if (stat != 0)
+                                    if (itemcreate(-1, dbid, x, y, 1))
                                     {
                                         // NOTE: may cause Lua creation
                                         // callbacks to run twice.

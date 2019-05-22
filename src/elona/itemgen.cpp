@@ -42,7 +42,7 @@ int calculate_original_value(const Item& ci)
 namespace elona
 {
 
-int itemcreate(int slot, int id, int x, int y, int number)
+optional<int> itemcreate(int slot, int id, int x, int y, int number)
 {
     if (flttypeminor != 0)
     {
@@ -94,7 +94,9 @@ void get_random_item_id()
     dbid = sampler.get().value_or(25);
 }
 
-int do_create_item(int slot, int x, int y)
+
+
+optional<int> do_create_item(int slot, int x, int y)
 {
     if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
     {
@@ -106,7 +108,7 @@ int do_create_item(int slot, int x, int y)
 
     ci = inv_getfreeid(slot);
     if (ci == -1)
-        return 0;
+        return none;
 
     item_delete(ci);
     inv[ci].index = ci;
@@ -168,7 +170,7 @@ int do_create_item(int slot, int x, int y)
             }
         }
         if (!ok)
-            return 0;
+            return none;
     }
 
     if (dbid == -1)
@@ -304,7 +306,7 @@ int do_create_item(int slot, int x, int y)
         {
             earn_gold(cdata[slot], inv[ci].number());
             inv[ci].remove();
-            return 1;
+            return ci;
         }
     }
 
@@ -485,7 +487,7 @@ int do_create_item(int slot, int x, int y)
         if (stat == 1)
         {
             ci = ti;
-            return 1;
+            return ci;
         }
     }
 
@@ -493,8 +495,10 @@ int do_create_item(int slot, int x, int y)
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
-    return 1;
+    return ci;
 }
+
+
 
 void init_item_quality_curse_state_material_and_equipments(Item& item)
 {
