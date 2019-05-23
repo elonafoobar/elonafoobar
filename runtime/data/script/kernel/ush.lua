@@ -13,9 +13,25 @@ function ush.init(environment)
 
    -- echo
    ush.register('_BUILTIN_', 'echo', function(...)
-      -- TODO do not use inspect
-      local x = ...
-      E.print(E.COMMANDS._BUILTIN_.inspect(x))
+      local function do_echo(x, indent)
+         if type(x) == 'table' then
+            for k, v in pairs(x) do
+               if type(k) ~= 'number' or k < 1 or #x < k then
+                  E.print(('  '):rep(indent) .. tostring(k))
+               end
+               do_echo(v, indent + 1)
+            end
+         else
+            E.print(('  '):rep(indent) .. tostring(x))
+         end
+      end
+
+      local args = {...}
+      if #args == 1 then
+         do_echo(args[1], -1)
+      else
+         do_echo(args, -1)
+      end
       return nil
    end)
 
@@ -38,7 +54,7 @@ function ush.run(cmdline)
    local ast = parse(cmdline)
    E.RESULT = execute(ast, E)
    if E.RESULT ~= nil then
-      E.print(tostring(E.RESULT))
+      E.COMMANDS._BUILTIN_.echo(E.RESULT)
    end
    return E.RESULT
 end
