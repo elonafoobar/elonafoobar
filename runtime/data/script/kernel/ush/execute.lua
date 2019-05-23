@@ -94,10 +94,13 @@ function Executor:_look_up_command(command_name)
    -- Do "Did you mean?" suggestion.
    local did_you_mean = {}
    local calculator = jarowinkler.DefaultCalculator.new()
-   for _, cmd in ipairs(commands) do
-      local distance = calculator:distance(command_name, has_namespace and cmd.full_name or cmd.name)
-      if distance >= _did_you_mean_threshold then
-         did_you_mean[#did_you_mean+1] = {distance = distance, command_name = full_name}
+   for namespace, command_table in pairs(self.E.COMMANDS) do
+      for name, _ in pairs(command_table) do
+         local full_name = namespace .. '.' .. name
+         local distance = calculator:distance(command_name, has_namespace and full_name or name)
+         if distance >= _did_you_mean_threshold then
+            did_you_mean[#did_you_mean+1] = {distance = distance, command_name = full_name}
+         end
       end
    end
    table.sort(did_you_mean, function(a, b) return a.distance < b.distance end)
