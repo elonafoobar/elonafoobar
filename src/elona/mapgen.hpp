@@ -30,4 +30,18 @@ int initialize_random_nefia_rdtype3();
 int initialize_quest_map_party();
 void initialize_home_mdata();
 
+
+
+enum class FieldMapType
+{
+    plain_field,
+    forest,
+    sea,
+    grassland,
+    desert,
+    snow_field,
+};
+
+FieldMapType map_get_field_type();
+
 } // namespace elona

@@ -91,7 +91,7 @@ void initialize_world()
     game_data.date.year = 517;
     game_data.date.month = 8;
     game_data.date.day = 12;
-    game_data.date.hour = 1;
+    game_data.date.hour = 16;
     game_data.date.minute = 10;
 
     game_data.pc_x_in_world_map = 22;
@@ -751,12 +751,6 @@ void init()
     initialize_elona();
 
     Config::instance().save();
-
-    game_data.date.year = 517;
-    game_data.date.month = 8;
-    game_data.date.day = 12;
-    game_data.date.hour = 16;
-    game_data.date.minute = 10;
 
     quickpage = 1;
 

@@ -610,11 +610,11 @@ void Console::_init_builtin_lua_functions()
         print(ss.str());
     };
 
-    funcs["hello_world"] = [this]() { print(u8"Hello, World!"); };
+    funcs["hello_world"] = []() { return "Hello, World!"; };
 
     funcs["lua"] = [this]() {
         _in_lua_mode = true;
-        print(u8"Lua mode activated");
+        print(u8"Lua mode activated.");
     };
 
     funcs["exit_lua"] = [this]() {
@@ -651,7 +651,7 @@ void Console::_init_builtin_lua_functions()
 
         game_data.wizard = 1;
         cdatan(1, 0) = "*Debug*";
-        print("Wizard mode activated");
+        print("Wizard mode activated.");
         print("Please get on Ylva Express on Platform 9 ¾.");
     };
 
@@ -680,7 +680,7 @@ void Console::_init_builtin_lua_functions()
         debug::voldemort = false;
         game_data.wizard = 0;
         cdatan(1, 0) = random_title(RandomTitleType::character);
-        print("Wizard mode inactivated");
+        print("Wizard mode inactivated.");
         print("I am perfectly normal, thank you very much.");
     };
 

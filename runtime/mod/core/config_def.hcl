@@ -142,7 +142,7 @@ config {
 
             attack_anime = true
             weather_effect = true
-            title_effect = false
+            title_effect = true
             window_anime = false
 
             screen_refresh = {

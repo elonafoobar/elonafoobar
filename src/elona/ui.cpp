@@ -109,23 +109,30 @@ void render_weather_effect_rain()
          ++i)
     {
         auto&& particle = particles[i];
-        const auto brightness = rnd(100);
-        line(
-            particle.x,
-            particle.y,
-            particle.x + i % 2 + 1,
-            particle.y + i % 3 + 1,
-            {static_cast<uint8_t>(70 + brightness),
-             static_cast<uint8_t>(100 + brightness),
-             static_cast<uint8_t>(150 + brightness)});
+
+        if (particle != Position{0, 0})
+        {
+            const auto brightness = rnd(100);
+            // Draw.
+            line(
+                particle.x,
+                particle.y,
+                particle.x + i % 2 + 1,
+                particle.y + i % 3 + 1,
+                {static_cast<uint8_t>(70 + brightness),
+                 static_cast<uint8_t>(100 + brightness),
+                 static_cast<uint8_t>(150 + brightness)});
+        }
 
         if (particle == Position{0, 0})
         {
+            // Create new particle.
             particle.x = rnd(windoww);
             particle.y = rnd(windowh - inf_verh) - 6;
         }
         else
         {
+            // Update position.
             particle.x += 2;
             particle.y += 16 + i % 8;
             if (particle.y > windowh - inf_verh - 4)
@@ -153,23 +160,30 @@ void render_weather_effect_hard_rain()
          ++i)
     {
         auto&& particle = particles[i];
-        const auto brightness = rnd(100);
-        line(
-            particle.x,
-            particle.y,
-            particle.x + i % 2 + 1,
-            particle.y + i % 5 + 4,
-            {static_cast<uint8_t>(70 + brightness),
-             static_cast<uint8_t>(100 + brightness),
-             static_cast<uint8_t>(150 + brightness)});
+
+        if (particle != Position{0, 0})
+        {
+            const auto brightness = rnd(100);
+            // Draw.
+            line(
+                particle.x,
+                particle.y,
+                particle.x + i % 2 + 1,
+                particle.y + i % 5 + 4,
+                {static_cast<uint8_t>(70 + brightness),
+                 static_cast<uint8_t>(100 + brightness),
+                 static_cast<uint8_t>(150 + brightness)});
+        }
 
         if (particle == Position{0, 0})
         {
+            // Create new particle.
             particle.x = rnd(windoww);
             particle.y = rnd(windowh - inf_verh) - 6;
         }
         else
         {
+            // Update position.
             ++particle.x;
             particle.y += 24 + i % 8;
             if (particle.y > windowh - inf_verh - 9)
@@ -199,22 +213,29 @@ void render_weather_effect_snow()
         {
             gmode(2, 100 + i % 150);
         }
-        draw_indexed_region(
-            "weather_particle",
-            particle.x,
-            particle.y,
-            particle.x % 2,
-            i % 6,
-            1,
-            1);
+
+        if (particle != Position{0, 0})
+        {
+            // Draw.
+            draw_indexed_region(
+                "weather_particle",
+                particle.x,
+                particle.y,
+                particle.x % 2,
+                i % 6,
+                1,
+                1);
+        }
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
+            // Create new particle.
             particle.x = rnd(windoww);
             particle.y = -rnd(windowh / 2);
         }
         else
         {
+            // Update position.
             particle.x += rnd(3) - 1;
             particle.y += rnd(2) + i % 5;
             if (particle.y > windowh - inf_verh - 10 || rnd(500) == 0)
@@ -244,22 +265,29 @@ void render_weather_effect_etherwind()
         {
             gmode(2, 100 + i % 150);
         }
-        draw_indexed_region(
-            "weather_particle",
-            particle.x,
-            particle.y,
-            2 + particle.x % 2,
-            i % 6,
-            1,
-            1);
+
+        if (particle != Position{0, 0})
+        {
+            // Draw.
+            draw_indexed_region(
+                "weather_particle",
+                particle.x,
+                particle.y,
+                2 + particle.x % 2,
+                i % 6,
+                1,
+                1);
+        }
 
         if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
+            // Create new particle.
             particle.x = rnd(windoww);
             particle.y = windowh - inf_verh - 8 - rnd(100);
         }
         else
         {
+            // Update position.
             particle.x += rnd(3) - 1;
             particle.y -= rnd(2) + i % 5;
             if (particle.y < 0)

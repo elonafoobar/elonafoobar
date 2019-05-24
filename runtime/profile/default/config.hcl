@@ -57,8 +57,7 @@ config {
             weather_effect = true
 
             # Play animations at the title screen.
-            # NOTE: Currently not implemented.
-            title_effect = false
+            title_effect = true
 
             # Play window animations.
             window_anime = false

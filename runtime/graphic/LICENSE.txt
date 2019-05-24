@@ -212,3 +212,7 @@ emoticons.png
 charasheet_buff.png
     Elona foobar License v1
     Copyright (c) 2018 hapiemp
+
+water_ripple.png
+    Elona foobar License v1
+    Copyright (c) 2019 KI

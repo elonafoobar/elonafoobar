@@ -646,17 +646,18 @@ TurnResult do_throw_command()
         {tlocx, tlocy}, cdata[cc].position, inv[ci].image, inv[ci].color)
         .play();
     ti = inv_getfreeid(-1);
-    inv[ci].modify_number(-1);
-    if (inv[ci].id == 685)
+    if (inv[ci].id == 685 && ti != -1)
     {
-        if (ti != -1)
-        {
-            item_copy(ci, ti);
-            inv[ti].set_number(1);
-            inv[ti].position.x = tlocx;
-            inv[ti].position.y = tlocy;
-            ci = ti;
-        }
+        item_copy(ci, ti);
+        inv[ti].position.x = tlocx;
+        inv[ti].position.y = tlocy;
+        inv[ti].set_number(1);
+        inv[ci].modify_number(-1);
+        ci = ti;
+    }
+    else
+    {
+        inv[ci].modify_number(-1);
     }
     if (cc == 0)
     {
