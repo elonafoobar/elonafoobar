@@ -112,8 +112,8 @@ after_build:
   - cd bin
   - ren Elona_foobar\Elona_foobar.exe "Elona foobar.exe"
   - ren Elona_foobar "Elona foobar v%ELONAFOOBAR_VERSION%"
-  - 7z a -y "Elona foobar v%ELONAFOOBAR_VERSION% (Windows).zip" "Elona foobar v%ELONAFOOBAR_VERSION%"
+  - 7z a -y "Elona_foobar-v%ELONAFOOBAR_VERSION%-Windows.zip" "Elona foobar v%ELONAFOOBAR_VERSION%"
 
 artifacts:
-  - path: 'bin\Elona foobar v* (Windows).zip'
+  - path: 'bin\Elona_foobar-v*-Windows.zip'
 
