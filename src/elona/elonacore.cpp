@@ -416,13 +416,13 @@ void initialize_pc_character()
     gain_race_feat();
     cdata.player().skill_bonus = 5 + trait(154);
     cdata.player().total_skill_bonus = 5 + trait(154);
-    for (const auto& cnt : items(0))
+    for (auto&& item : inv.pc())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        inv[cnt].identification_state = IdentifyState::completely_identified;
+        item.identification_state = IdentifyState::completely_identified;
     }
     chara_refresh(0);
 }
@@ -2958,20 +2958,20 @@ void character_drops_item()
         {
             return;
         }
-        for (const auto& cnt : items(rc))
+        for (auto&& item : inv.for_chara(cdata[rc]))
         {
-            ci = cnt;
-            if (inv[cnt].number() == 0)
+            ci = item.index;
+            if (item.number() == 0)
             {
                 continue;
             }
             if (map_data.refresh_type == 0)
             {
-                if (inv[cnt].body_part != 0)
+                if (item.body_part != 0)
                 {
                     continue;
                 }
-                if (inv[ci].is_precious())
+                if (item.is_precious())
                 {
                     continue;
                 }
@@ -2984,7 +2984,7 @@ void character_drops_item()
             {
                 continue;
             }
-            if (the_item_db[inv[ci].id]->is_cargo)
+            if (the_item_db[item.id]->is_cargo)
             {
                 if (map_data.type != mdata_t::MapType::world_map &&
                     map_data.type != mdata_t::MapType::player_owned &&
@@ -3001,27 +3001,27 @@ void character_drops_item()
                 }
             }
             f = 0;
-            if (inv[ci].body_part != 0)
+            if (item.body_part != 0)
             {
                 if (rnd(10))
                 {
                     f = 1;
                 }
-                if (inv[ci].curse_state == CurseState::blessed)
+                if (item.curse_state == CurseState::blessed)
                 {
                     if (rnd(2))
                     {
                         f = 1;
                     }
                 }
-                if (is_cursed(inv[ci].curse_state))
+                if (is_cursed(item.curse_state))
                 {
                     if (rnd(2))
                     {
                         f = 0;
                     }
                 }
-                if (inv[ci].curse_state == CurseState::doomed)
+                if (item.curse_state == CurseState::doomed)
                 {
                     if (rnd(2))
                     {
@@ -3030,7 +3030,7 @@ void character_drops_item()
                 }
             }
             else if (
-                inv[ci].identification_state ==
+                item.identification_state ==
                 IdentifyState::completely_identified)
             {
                 if (rnd(4))
@@ -3042,35 +3042,34 @@ void character_drops_item()
             {
                 continue;
             }
-            if (inv[ci].body_part != 0)
+            if (item.body_part != 0)
             {
-                cdata[rc].body_parts[inv[ci].body_part - 100] =
-                    cdata[rc].body_parts[inv[ci].body_part - 100] / 10000 *
-                    10000;
-                inv[ci].body_part = 0;
+                cdata[rc].body_parts[item.body_part - 100] =
+                    cdata[rc].body_parts[item.body_part - 100] / 10000 * 10000;
+                item.body_part = 0;
             }
             f = 0;
-            if (!inv[ci].is_precious())
+            if (!item.is_precious())
             {
                 if (rnd(4) == 0)
                 {
                     f = 1;
                 }
-                if (inv[ci].curse_state == CurseState::blessed)
+                if (item.curse_state == CurseState::blessed)
                 {
                     if (rnd(3) == 0)
                     {
                         f = 0;
                     }
                 }
-                if (is_cursed(inv[ci].curse_state))
+                if (is_cursed(item.curse_state))
                 {
                     if (rnd(3) == 0)
                     {
                         f = 1;
                     }
                 }
-                if (inv[ci].curse_state == CurseState::doomed)
+                if (item.curse_state == CurseState::doomed)
                 {
                     if (rnd(3) == 0)
                     {
@@ -3080,11 +3079,11 @@ void character_drops_item()
             }
             if (f)
             {
-                inv[ci].remove();
+                item.remove();
                 continue;
             }
-            inv[ci].position.x = cdata[rc].position.x;
-            inv[ci].position.y = cdata[rc].position.y;
+            item.position.x = cdata[rc].position.x;
+            item.position.y = cdata[rc].position.y;
             int stat = item_stack(-1, ci);
             if (stat == 0)
             {
@@ -3138,19 +3137,19 @@ void character_drops_item()
             return;
         }
     }
-    for (const auto& cnt : items(rc))
+    for (auto&& item : inv.for_chara(cdata[rc]))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        ci = cnt;
+        ci = item.index;
         f = 0;
         if (cdata[rc].character_role == 20)
         {
             break;
         }
-        if (inv[ci].quality > Quality::miracle || inv[ci].id == 55)
+        if (item.quality > Quality::miracle || item.id == 55)
         {
             f = 1;
         }
@@ -3179,11 +3178,11 @@ void character_drops_item()
                 f = 0;
             }
         }
-        if (inv[ci].quality == Quality::special)
+        if (item.quality == Quality::special)
         {
             f = 1;
         }
-        if (inv[ci].is_quest_target())
+        if (item.is_quest_target())
         {
             f = 1;
         }
@@ -3191,32 +3190,24 @@ void character_drops_item()
         {
             continue;
         }
-        if (catitem != 0)
+        if (catitem != 0 && !item.is_blessed_by_ehekatl() &&
+            the_item_db[item.id]->category < 50000 &&
+            item.quality >= Quality::great)
         {
-            if (!inv[ci].is_blessed_by_ehekatl())
+            if (rnd(3))
             {
-                if (the_item_db[inv[ci].id]->category < 50000)
-                {
-                    if (inv[ci].quality >= Quality::great)
-                    {
-                        if (rnd(3))
-                        {
-                            txt(i18n::s.get(
-                                    "core.locale.misc.black_cat_licks",
-                                    cdata[catitem],
-                                    inv[ci]),
-                                Message::color{ColorIndex::cyan});
-                            inv[ci].is_blessed_by_ehekatl() = true;
-                            reftype = the_item_db[inv[ci].id]->category;
-                            enchantment_add(
-                                ci,
-                                enchantment_generate(
-                                    enchantment_gen_level(rnd(4))),
-                                enchantment_gen_p());
-                            animeload(8, rc);
-                        }
-                    }
-                }
+                txt(i18n::s.get(
+                        "core.locale.misc.black_cat_licks",
+                        cdata[catitem],
+                        item),
+                    Message::color{ColorIndex::cyan});
+                item.is_blessed_by_ehekatl() = true;
+                reftype = the_item_db[item.id]->category;
+                enchantment_add(
+                    ci,
+                    enchantment_generate(enchantment_gen_level(rnd(4))),
+                    enchantment_gen_p());
+                animeload(8, rc);
             }
         }
         if (inv[ci].body_part != 0)
@@ -3856,21 +3847,20 @@ void auto_identify()
     {
         return;
     }
-    for (const auto& cnt : items(0))
+    for (const auto& item : inv.pc())
     {
-        if (inv[cnt].number() == 0 ||
-            inv[cnt].identification_state ==
-                IdentifyState::completely_identified)
+        if (item.number() == 0 ||
+            item.identification_state == IdentifyState::completely_identified)
         {
             continue;
         }
-        if (the_item_db[inv[cnt].id]->category >= 50000)
+        if (the_item_db[item.id]->category >= 50000)
         {
             continue;
         }
-        ci = cnt;
+        ci = item.index;
         p(0) = sdata(13, 0) + sdata(162, 0) * 5;
-        p(1) = 1500 + inv[ci].difficulty_of_identification * 5;
+        p(1) = 1500 + item.difficulty_of_identification * 5;
         if (p > rnd(p(1) * 5))
         {
             s = itemname(ci);
@@ -4850,9 +4840,9 @@ void atxinit()
 void begintempinv()
 {
     ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        inv[cnt].remove();
+        item.remove();
     }
 }
 
@@ -4945,9 +4935,9 @@ void supply_income()
     }
     else
     {
-        for (const auto& cnt : items(-1))
+        for (auto&& item : inv.ground())
         {
-            inv[cnt].remove();
+            item.remove();
         }
     }
     mode = 6;
@@ -5029,11 +5019,11 @@ void supply_income()
         {
             save_set_autosave();
             p = -1;
-            for (const auto& cnt : items(-1))
+            for (const auto& item : inv.ground())
             {
-                if (inv[cnt].number() == 0)
+                if (item.number() == 0)
                 {
-                    p = cnt;
+                    p = item.index;
                     break;
                 }
             }
@@ -6469,11 +6459,11 @@ void dump_player_info()
 
 void remove_card_and_figures()
 {
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].id == 504 || inv[cnt].id == 503)
+        if (item.id == 504 || item.id == 503)
         {
-            inv[cnt].remove();
+            item.remove();
         }
     }
 }
@@ -6549,43 +6539,42 @@ void load_gene_files()
     sdata.clear(0);
     Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        inv[cnt].remove();
+        item.remove();
     }
-    for (const auto& cnt : items(0))
+    for (auto&& item : inv.pc())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].id == 717)
+        if (item.id == 717)
         {
             lomiaseaster = 1;
         }
-        if (inv[cnt].id == 511 ||
-            the_item_db[inv[cnt].id]->subcategory == 53100)
+        if (item.id == 511 || the_item_db[item.id]->subcategory == 53100)
         {
             continue;
         }
-        if (inv[cnt].id == 578)
+        if (item.id == 578)
         {
             continue;
         }
-        if (inv[cnt].quality == Quality::special)
+        if (item.quality == Quality::special)
         {
             continue;
         }
-        if (inv[cnt].is_precious())
+        if (item.is_precious())
         {
             continue;
         }
-        if (the_item_db[inv[cnt].id]->category == 25000)
+        if (the_item_db[item.id]->category == 25000)
         {
-            inv[cnt].count = -1;
+            item.count = -1;
         }
-        inv[cnt].body_part = 0;
-        item_copy(cnt, inv_getfreeid(-1));
+        item.body_part = 0;
+        item_copy(item.index, inv_getfreeid(-1));
     }
     for (auto&& cnt : cdata.all())
     {
@@ -7333,16 +7322,16 @@ void map_global_proc_travel_events()
     if (cdata.player().nutrition <= 5000)
     {
         f = 0;
-        for (const auto& cnt : items(cc))
+        for (const auto& item : inv.for_chara(cdata[cc]))
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (the_item_db[inv[cnt].id]->category == 91000)
+            if (the_item_db[item.id]->category == 91000)
             {
                 f = 1;
-                ci = cnt;
+                ci = item.index;
                 break;
             }
         }
@@ -8967,13 +8956,13 @@ int pick_up_item(bool play_sound)
             if (map_data.play_campfire_sound == 1)
             {
                 f = 0;
-                for (const auto& cnt : items(-1))
+                for (const auto& item : inv.ground())
                 {
-                    if (inv[cnt].number() == 0)
+                    if (item.number() == 0)
                     {
                         continue;
                     }
-                    if (inv[cnt].id == 255)
+                    if (item.id == 255)
                     {
                         f = 1;
                         break;
@@ -9569,22 +9558,22 @@ void proc_autopick()
         return;
 
 
-    for (const auto& ci : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[ci].number() == 0)
+        if (item.number() == 0)
             continue;
-        if (inv[ci].position != cdata.player().position)
+        if (item.position != cdata.player().position)
             continue;
-        if (inv[ci].own_state > 0)
+        if (item.own_state > 0)
             continue;
 
-        item_checkknown(ci);
+        item_checkknown(item.index);
 
         const auto x = cdata.player().position.x;
         const auto y = cdata.player().position.y;
 
         bool did_something = true;
-        const auto op = Autopick::instance().get_operation(inv[ci]);
+        const auto op = Autopick::instance().get_operation(item);
         switch (op.type)
         {
         case Autopick::Operation::Type::do_nothing:
@@ -9598,15 +9587,15 @@ void proc_autopick()
             if (op.show_prompt)
             {
                 txt(i18n::s.get(
-                    "core.locale.ui.autopick.do_you_really_pick_up", inv[ci]));
+                    "core.locale.ui.autopick.do_you_really_pick_up", item));
                 if (!yes_no())
                 {
                     did_something = false;
                     break;
                 }
             }
-            in = inv[ci].number();
-            elona::ci = ci;
+            in = item.number();
+            elona::ci = item.index;
             pick_up_item(op.sound == "");
             if (int(op.type) & int(Autopick::Operation::Type::no_drop))
             {
@@ -9627,7 +9616,7 @@ void proc_autopick()
             if (op.show_prompt)
             {
                 txt(i18n::s.get(
-                    "core.locale.ui.autopick.do_you_really_destroy", inv[ci]));
+                    "core.locale.ui.autopick.do_you_really_destroy", item));
                 if (!yes_no())
                 {
                     did_something = false;
@@ -9638,8 +9627,8 @@ void proc_autopick()
             {
                 snd("core.crush1");
             }
-            txt(i18n::s.get("core.locale.ui.autopick.destroyed", inv[ci]));
-            inv[ci].remove();
+            txt(i18n::s.get("core.locale.ui.autopick.destroyed", item));
+            item.remove();
             cell_refresh(x, y);
             cell_data.at(x, y).item_appearances_memory =
                 cell_data.at(x, y).item_appearances_actual;
@@ -9649,14 +9638,14 @@ void proc_autopick()
             if (op.show_prompt)
             {
                 txt(i18n::s.get(
-                    "core.locale.ui.autopick.do_you_really_open", inv[ci]));
+                    "core.locale.ui.autopick.do_you_really_open", item));
                 if (!yes_no())
                 {
                     did_something = false;
                     break;
                 }
             }
-            elona::ci = ci;
+            elona::ci = item.index;
             (void)do_open_command(op.sound == ""); // Result is unused.
             break;
         }

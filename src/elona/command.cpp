@@ -380,29 +380,29 @@ TurnResult do_dig_command()
 static void _search_for_crystal()
 {
     p = 9999;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].own_state != 5)
+        if (item.own_state != 5)
         {
             continue;
         }
-        if (inv[cnt].id != 748)
+        if (item.id != 748)
         {
             continue;
         }
         if (p > dist(
-                    inv[cnt].position.x,
-                    inv[cnt].position.y,
+                    item.position.x,
+                    item.position.y,
                     cdata.player().position.x,
                     cdata.player().position.y))
         {
             p = dist(
-                inv[cnt].position.x,
-                inv[cnt].position.y,
+                item.position.x,
+                item.position.y,
                 cdata.player().position.x,
                 cdata.player().position.y);
         }
@@ -2738,9 +2738,9 @@ TurnResult do_open_command(bool play_sound)
         }
         else
         {
-            for (const auto& cnt : items(-1))
+            for (auto&& item : inv.ground())
             {
-                inv[cnt].remove();
+                item.remove();
             }
         }
         shoptrade = 0;

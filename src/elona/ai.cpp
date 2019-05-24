@@ -303,19 +303,18 @@ TurnResult proc_npc_movement_event(bool retreat)
             {
                 sell(0) = 0;
                 sell(1) = 0;
-                for (const auto& cnt : items(cc))
+                for (auto&& item : inv.for_chara(cdata[cc]))
                 {
-                    if (inv[cnt].number() == 0)
+                    if (item.number() == 0)
                     {
                         continue;
                     }
-                    int category = the_item_db[inv[cnt].id]->category;
-                    if (category == 77000)
+                    if (the_item_db[item.id]->category == 77000)
                     {
-                        p = inv[cnt].value * inv[cnt].number();
-                        sell += inv[cnt].number();
+                        p = item.value * item.number();
+                        sell += item.number();
                         sell(1) += p;
-                        inv[cnt].remove();
+                        item.remove();
                         earn_gold(cdata[cc], p);
                     }
                 }

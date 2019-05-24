@@ -62,7 +62,7 @@ void Item::clear()
 
 
 
-bool Item::almost_equals(const Item& other, bool ignore_position)
+bool Item::almost_equals(const Item& other, bool ignore_position) const
 {
     return true
         // && number == other.number
@@ -88,6 +88,8 @@ bool Item::almost_equals(const Item& other, bool ignore_position)
         range::equal(enchantments, other.enchantments);
 }
 
+
+
 Inventory::Inventory()
     : storage(ELONA_MAX_ITEMS)
 {
@@ -99,19 +101,41 @@ Inventory::Inventory()
 
 
 
+InventorySlice Inventory::for_chara(const Character& chara)
+{
+    if (chara.index == 0)
+    {
+        return pc();
+    }
+    else
+    {
+        return {std::begin(storage) + 200 + 20 * (chara.index - 1),
+                std::begin(storage) + 200 + 20 * (chara.index - 1) + 20};
+    }
+}
+
+
+
+InventorySlice Inventory::by_index(int index)
+{
+    if (index == -1)
+    {
+        return ground();
+    }
+    else
+    {
+        return for_chara(cdata[index]);
+    }
+}
+
+
+
 int f_at_m53 = 0;
 int f_at_m54 = 0;
 elona_vector1<int> p_at_m57;
 std::string s_;
 int a_ = 0;
 int skip_ = 0;
-
-
-range::iota<int> items(int owner)
-{
-    const auto tmp = inv_getheader(owner);
-    return {tmp.first, tmp.first + tmp.second};
-}
 
 
 
@@ -217,15 +241,15 @@ int item_find(int matcher, int matcher_type, ItemFindLocation location_type)
 std::vector<int> itemlist(int owner, int id)
 {
     std::vector<int> ret;
-    for (const auto& cnt : items(owner))
+    for (const auto& item : inv.by_index(owner))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].id == id)
+        if (item.id == id)
         {
-            ret.push_back(cnt);
+            ret.push_back(item.index);
         }
     }
     return ret;
@@ -261,15 +285,15 @@ int itemfind(int inventory_id, int matcher, int matcher_type)
     f_at_m54 = -1;
     if (matcher_type == 0)
     {
-        for (const auto& cnt : items(inventory_id))
+        for (const auto& item : inv.for_chara(cdata[inventory_id]))
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].id == matcher)
+            if (item.id == matcher)
             {
-                f_at_m54 = cnt;
+                f_at_m54 = item.index;
                 break;
             }
         }
@@ -277,15 +301,15 @@ int itemfind(int inventory_id, int matcher, int matcher_type)
     }
     else
     {
-        for (const auto& cnt : items(inventory_id))
+        for (const auto& item : inv.for_chara(cdata[inventory_id]))
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (the_item_db[inv[cnt].id]->subcategory == matcher)
+            if (the_item_db[item.id]->subcategory == matcher)
             {
-                f_at_m54 = cnt;
+                f_at_m54 = item.index;
                 break;
             }
         }
@@ -297,15 +321,15 @@ int itemfind(int inventory_id, int matcher, int matcher_type)
 
 int mapitemfind(int x, int y, int id)
 {
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].id == id && inv[cnt].position == Position{x, y})
+        if (item.id == id && item.position == Position{x, y})
         {
-            return cnt;
+            return item.index;
         }
     }
     return -1; // Not found
@@ -331,25 +355,21 @@ void cell_refresh(int x, int y)
     p_at_m55 = 0;
     cell_data.at(x, y).item_appearances_actual = 0;
     cell_data.at(x, y).light = 0;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() > 0)
+        if (item.number() > 0)
         {
-            if (inv[cnt].position.x == x && inv[cnt].position.y == y)
+            if (item.position.x == x && item.position.y == y)
             {
-                floorstack(p_at_m55) = cnt;
+                floorstack(p_at_m55) = item.index;
                 ++p_at_m55;
                 wpoke(
-                    cell_data.at(x, y).item_appearances_actual,
-                    0,
-                    inv[cnt].image);
+                    cell_data.at(x, y).item_appearances_actual, 0, item.image);
                 wpoke(
-                    cell_data.at(x, y).item_appearances_actual,
-                    2,
-                    inv[cnt].color);
-                if (ilight(inv[cnt].id) != 0)
+                    cell_data.at(x, y).item_appearances_actual, 2, item.color);
+                if (ilight(item.id) != 0)
                 {
-                    cell_data.at(x, y).light = ilight(inv[cnt].id);
+                    cell_data.at(x, y).light = ilight(item.id);
                 }
             }
         }
@@ -1529,24 +1549,24 @@ int item_stack(int inventory_id, int ci, int show_message)
 
     bool did_stack = false;
 
-    for (const auto& i : items(inventory_id))
+    for (auto&& item : inv.by_index(inventory_id))
     {
-        if (i == ci || inv[i].number() == 0 || inv[i].id != inv[ci].id)
+        if (item.index == ci || item.number() == 0 || item.id != inv[ci].id)
             continue;
 
         bool stackable;
-        if (inv[i].id == 622)
+        if (item.id == 622)
             stackable = inventory_id != -1 || mode == 6 ||
-                inv[i].position == inv[ci].position;
+                item.position == inv[ci].position;
         else
             stackable =
-                inv[i].almost_equals(inv[ci], inventory_id != -1 || mode == 6);
+                item.almost_equals(inv[ci], inventory_id != -1 || mode == 6);
 
         if (stackable)
         {
-            inv[i].modify_number(inv[ci].number());
+            item.modify_number(inv[ci].number());
             inv[ci].remove();
-            ti = i;
+            ti = item.index;
             did_stack = true;
             break;
         }
@@ -1651,23 +1671,23 @@ bool item_fire(int owner, int ci)
         {
             return false;
         }
-        for (const auto& cnt : items(owner))
+        for (const auto& item : inv.by_index(owner))
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].id == 567)
+            if (item.id == 567)
             {
                 if (blanket == -1)
                 {
-                    blanket = cnt;
+                    blanket = item.index;
                 }
                 continue;
             }
             if (ci == -1)
             {
-                list.push_back(cnt);
+                list.push_back(item.index);
             }
         }
     }
@@ -1839,15 +1859,15 @@ void mapitem_fire(int x, int y)
     }
 
     int ci = -1;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].position == Position{x, y})
+        if (item.position == Position{x, y})
         {
-            ci = cnt;
+            ci = item.index;
             break;
         }
     }
@@ -1882,23 +1902,23 @@ bool item_cold(int owner, int ci)
         {
             return false;
         }
-        for (const auto& cnt : items(owner))
+        for (const auto& item : inv.by_index(owner))
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].id == 568)
+            if (item.id == 568)
             {
                 if (blanket == -1)
                 {
-                    blanket = cnt;
+                    blanket = item.index;
                 }
                 continue;
             }
             if (ci == -1)
             {
-                list.push_back(cnt);
+                list.push_back(item.index);
             }
         }
     }
@@ -2003,15 +2023,15 @@ void mapitem_cold(int x, int y)
         return;
     }
     int ci = -1;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].position == Position{x, y})
+        if (item.position == Position{x, y})
         {
-            ci = cnt;
+            ci = item.index;
             break;
         }
     }
@@ -2065,15 +2085,15 @@ int inv_getowner(int inv_id)
 
 int inv_find(int id, int owner)
 {
-    for (const auto& cnt : items(owner))
+    for (const auto& item : inv.for_chara(cdata[owner]))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].id == id)
+        if (item.id == id)
         {
-            return cnt;
+            return item.index;
         }
     }
     return -1; // Not found
@@ -2081,9 +2101,9 @@ int inv_find(int id, int owner)
 
 bool inv_getspace(int owner)
 {
-    for (const auto& cnt : items(owner))
+    for (const auto& item : inv.by_index(owner))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             return true;
         }
@@ -2094,9 +2114,9 @@ bool inv_getspace(int owner)
 int inv_sum(int owner)
 {
     int n{};
-    for (const auto& cnt : items(owner))
+    for (const auto& item : inv.by_index(owner))
     {
-        if (inv[cnt].number() != 0)
+        if (item.number() != 0)
         {
             ++n;
         }
@@ -2110,20 +2130,20 @@ int inv_compress(int owner)
     for (int i = 0; i < 100; ++i)
     {
         int threshold = 200 * (i * i + 1);
-        for (const auto& cnt : items(owner))
+        for (auto&& item : inv.by_index(owner))
         {
-            if (inv[cnt].number() != 0)
+            if (item.number() != 0)
             {
-                if (!inv[cnt].is_precious() && inv[cnt].value < threshold)
+                if (!item.is_precious() && item.value < threshold)
                 {
-                    inv[cnt].remove();
+                    item.remove();
                     ++number_of_deleted_items;
-                    if (inv[cnt].position.x >= 0 &&
-                        inv[cnt].position.x < map_data.width &&
-                        inv[cnt].position.y >= 0 &&
-                        inv[cnt].position.y < map_data.height)
+                    if (item.position.x >= 0 &&
+                        item.position.x < map_data.width &&
+                        item.position.y >= 0 &&
+                        item.position.y < map_data.height)
                     {
-                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                        cell_refresh(item.position.x, item.position.y);
                     }
                 }
             }
@@ -2139,11 +2159,11 @@ int inv_compress(int owner)
     }
 
     int slot = -1;
-    for (const auto& cnt : items(owner))
+    for (const auto& item : inv.by_index(owner))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
-            slot = cnt;
+            slot = item.index;
             break;
         }
     }
@@ -2170,11 +2190,11 @@ int inv_compress(int owner)
 
 int inv_getfreeid(int owner)
 {
-    for (const auto& cnt : items(owner))
+    for (const auto& item : inv.by_index(owner))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
-            return cnt;
+            return item.index;
         }
     }
     if (owner == -1 && mode != 6)
@@ -2192,17 +2212,17 @@ int inv_weight(int owner)
     {
         game_data.cargo_weight = 0;
     }
-    for (const auto& cnt : items(owner))
+    for (const auto& item : inv.by_index(owner))
     {
-        if (inv[cnt].number() != 0)
+        if (item.number() != 0)
         {
-            if (inv[cnt].weight >= 0)
+            if (item.weight >= 0)
             {
-                weight += inv[cnt].weight * inv[cnt].number();
+                weight += item.weight * item.number();
             }
             else if (owner == 0)
             {
-                game_data.cargo_weight += -inv[cnt].weight * inv[cnt].number();
+                game_data.cargo_weight += -item.weight * item.number();
             }
         }
     }

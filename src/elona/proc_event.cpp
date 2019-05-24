@@ -534,20 +534,19 @@ void proc_event()
             }
             p(0) = 0;
             p(1) = 6;
-            for (const auto& ci : items(-1))
+            for (const auto& item : inv.ground())
             {
-                if (inv[ci].number() == 0)
+                if (item.number() == 0)
                     continue;
-                if (inv[ci].function != 44)
+                if (item.function != 44)
                     continue;
                 if (c == tc)
                 {
-                    if (inv[ci].param1 == 2)
+                    if (item.param1 == 2)
                     {
-                        cell_swap(
-                            c, -1, inv[ci].position.x, inv[ci].position.y);
-                        i = ci;
-                        p = ci;
+                        cell_swap(c, -1, item.position.x, item.position.y);
+                        i = item.index;
+                        p = item.index;
                         break;
                     }
                     else
@@ -559,28 +558,28 @@ void proc_event()
                 {
                     break;
                 }
-                else if (ci == i)
+                else if (item.index == i)
                 {
                     continue;
                 }
                 p(2) = dist(
-                    inv[ci].position.x,
-                    inv[ci].position.y,
+                    item.position.x,
+                    item.position.y,
                     inv[i].position.x,
                     inv[i].position.y);
                 if (p(2) < p(1))
                 {
-                    if (cell_data.at(inv[ci].position.x, inv[ci].position.y)
+                    if (cell_data.at(item.position.x, item.position.y)
                                 .chara_index_plus_one == 0 ||
                         c == 0 || c == tc)
                     {
-                        p(0) = ci;
+                        p(0) = item.index;
                         p(1) = p(2);
                     }
                 }
-                if (c == 0 && inv[ci].param1 == 1)
+                if (c == 0 && item.param1 == 1)
                 {
-                    p = ci;
+                    p = item.index;
                     break;
                 }
             }

@@ -1120,11 +1120,11 @@ void quest_exit_map()
 {
     if (game_data.executing_immediate_quest_type == 1006)
     {
-        for (const auto& cnt : items(0))
+        for (auto&& item : inv.pc())
         {
-            if (inv[cnt].own_state == 4)
+            if (item.own_state == 4)
             {
-                inv[cnt].remove();
+                item.remove();
             }
         }
         refresh_burden_state();

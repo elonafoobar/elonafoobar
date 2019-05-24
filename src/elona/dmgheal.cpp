@@ -71,16 +71,16 @@ void dmgheal_death_by_backpack(Character& chara)
     int heaviest_weight = 0;
     std::string heaviest_item_name;
 
-    for (const auto& cnt : items(chara.index))
+    for (const auto& item : inv.for_chara(chara))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].weight > heaviest_weight)
+        if (item.weight > heaviest_weight)
         {
-            heaviest_item_index = cnt;
-            heaviest_weight = inv[cnt].weight;
+            heaviest_item_index = item.index;
+            heaviest_weight = item.weight;
         }
     }
     if (heaviest_item_index == -1)

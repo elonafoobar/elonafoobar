@@ -347,16 +347,16 @@ void map_reload(const std::string& map_filename)
 
     mef_clear_all();
 
-    for (const auto& i : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[i].number() > 0)
+        if (item.number() > 0)
         {
-            if (inv[i].own_state == 1)
+            if (item.own_state == 1)
             {
-                if (the_item_db[inv[i].id]->category == 57000)
+                if (the_item_db[item.id]->category == 57000)
                 {
-                    inv[i].remove();
-                    cell_refresh(inv[i].position.x, inv[i].position.y);
+                    item.remove();
+                    cell_refresh(item.position.x, item.position.y);
                 }
             }
         }
@@ -697,35 +697,35 @@ static void _clear_material_spots()
 
 static void _modify_items_on_regenerate()
 {
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
 
         // Update tree of fruits.
-        if (inv[cnt].id == 526)
+        if (item.id == 526)
         {
-            if (inv[cnt].param1 < 10)
+            if (item.param1 < 10)
             {
-                inv[cnt].param1 += 1;
-                inv[cnt].image = 591;
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                item.param1 += 1;
+                item.image = 591;
+                cell_refresh(item.position.x, item.position.y);
             }
         }
 
         // Clear player-owned items on the ground.
         if (map_is_town_or_guild())
         {
-            if (inv[cnt].own_state < 0)
+            if (item.own_state < 0)
             {
-                ++inv[cnt].own_state;
+                ++item.own_state;
             }
-            if (inv[cnt].own_state == 0)
+            if (item.own_state == 0)
             {
-                inv[cnt].remove();
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                item.remove();
+                cell_refresh(item.position.x, item.position.y);
             }
         }
     }
@@ -944,15 +944,15 @@ void map_proc_regen_and_update()
 
 void map_reload_noyel()
 {
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].id == 555 || inv[cnt].id == 600)
+        if (item.id == 555 || item.id == 600)
         {
             continue;
         }
-        inv[cnt].remove();
+        item.remove();
 
-        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+        cell_refresh(item.position.x, item.position.y);
     }
 
     if (area_data[game_data.current_map].christmas_festival)

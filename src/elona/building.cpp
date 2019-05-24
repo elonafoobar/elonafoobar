@@ -117,7 +117,7 @@ void prepare_house_board_tiles()
 
 
 
-int calc_heirloom_value(Item& heirloom)
+int calc_heirloom_value(const Item& heirloom)
 {
     const auto category = the_item_db[heirloom.id]->category;
 
@@ -138,7 +138,7 @@ using ItemAndValue = std::pair<int, int>;
 
 void add_heirloom_if_valuable_enough(
     std::vector<ItemAndValue>& heirlooms,
-    Item& heirloom)
+    const Item& heirloom)
 {
     const auto category = the_item_db[heirloom.id]->category;
     if (category == 60000)
@@ -394,12 +394,12 @@ TurnResult show_house_board()
     p(0) = 0;
     p(1) = 0;
     p(2) = 0;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
         ++p(2);
-        if (inv[cnt].number() != 0)
+        if (item.number() != 0)
         {
-            if (the_item_db[inv[cnt].id]->category != 60000)
+            if (the_item_db[item.id]->category != 60000)
             {
                 ++p;
             }
@@ -1025,54 +1025,54 @@ void show_shop_log()
     }
     mode = 6;
     dblistmax = 0;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() <= 0)
+        if (item.number() <= 0)
         {
             continue;
         }
-        if (inv[cnt].id == 561)
+        if (item.id == 561)
         {
             continue;
         }
-        if (inv[cnt].id == 562)
+        if (item.id == 562)
         {
             continue;
         }
-        if (inv[cnt].id == 24)
+        if (item.id == 24)
         {
             continue;
         }
-        if (inv[cnt].id == 54)
+        if (item.id == 54)
         {
             continue;
         }
-        if (inv[cnt].id == 555)
+        if (item.id == 555)
         {
             continue;
         }
-        if (inv[cnt].id == 344)
+        if (item.id == 344)
         {
             continue;
         }
-        if (inv[cnt].weight < 0)
+        if (item.weight < 0)
         {
             continue;
         }
-        if (inv[cnt].quality >= Quality::special)
+        if (item.quality >= Quality::special)
         {
             continue;
         }
-        if (inv[cnt].value < 50)
+        if (item.value < 50)
         {
             continue;
         }
-        int category = the_item_db[inv[cnt].id]->category;
+        int category = the_item_db[item.id]->category;
         if (category == 60000)
         {
             continue;
         }
-        dblist(0, dblistmax) = cnt;
+        dblist(0, dblistmax) = item.index;
         dblist(1, dblistmax) = category;
         ++dblistmax;
     }
@@ -1154,9 +1154,9 @@ void show_shop_log()
     }
     else
     {
-        for (const auto& cnt : items(-1))
+        for (auto&& item : inv.ground())
         {
-            inv[cnt].remove();
+            item.remove();
         }
     }
     mode = 6;
@@ -1266,14 +1266,14 @@ void update_shop()
             cell_data.at(cnt, y).light = 0;
         }
     }
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() <= 0)
+        if (item.number() <= 0)
         {
             continue;
         }
-        x = inv[cnt].position.x;
-        y = inv[cnt].position.y;
+        x = item.position.x;
+        y = item.position.y;
         if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
         {
             continue;
@@ -1321,26 +1321,26 @@ void update_museum()
     rankorg = game_data.ranks.at(3);
     rankcur = 0;
     DIM3(dblist, 2, 800);
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].id != 503 && inv[cnt].id != 504)
+        if (item.id != 503 && item.id != 504)
         {
             continue;
         }
         if (wpeek(
-                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                cell_data.at(item.position.x, item.position.y)
                     .item_appearances_actual,
-                0) != inv[cnt].image)
+                0) != item.image)
         {
             continue;
         }
-        dbid = inv[cnt].subname;
-        calc_collection_value(inv[cnt].id != 503);
-        if (inv[cnt].id == 503)
+        dbid = item.subname;
+        calc_collection_value(item.id != 503);
+        if (item.id == 503)
         {
             rankcur += rtval;
         }
@@ -1390,21 +1390,21 @@ void calc_home_rank()
     game_data.total_heirloom_value = 0;
 
     std::vector<ItemAndValue> heirlooms{heirloom_list_size};
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
         if (wpeek(
-                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                cell_data.at(item.position.x, item.position.y)
                     .item_appearances_actual,
-                0) != inv[cnt].image)
+                0) != item.image)
         {
             continue;
         }
 
-        add_heirloom_if_valuable_enough(heirlooms, inv[cnt]);
+        add_heirloom_if_valuable_enough(heirlooms, item);
     }
     size_t i{};
     for (const auto& heirloom : heirlooms)

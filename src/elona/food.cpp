@@ -265,11 +265,11 @@ void chara_vomit(Character& cc)
     if (map_data.type != mdata_t::MapType::world_map)
     {
         auto p = 2;
-        for (const auto& i : items(-1))
+        for (const auto& item : inv.ground())
         {
-            if (inv[i].number() > 0)
+            if (item.number() > 0)
             {
-                if (inv[i].id == 704)
+                if (item.id == 704)
                 {
                     ++p;
                 }
@@ -1507,13 +1507,13 @@ void foods_get_rotten()
             continue;
         }
 
-        for (const auto& i : items(chara))
+        for (const auto& item : inv.by_index(chara))
         {
-            if (inv[i].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            _food_gets_rotten(chara, i);
+            _food_gets_rotten(chara, item.index);
         }
     }
 }

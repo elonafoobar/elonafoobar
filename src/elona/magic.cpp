@@ -533,15 +533,15 @@ bool _magic_183()
     if (cc != 0)
     {
         f = 0;
-        for (const auto& cnt : items(cc))
+        for (const auto& item : inv.for_chara(cdata[cc]))
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].skill == 183)
+            if (item.skill == 183)
             {
-                ci = cnt;
+                ci = item.index;
                 f = 1;
                 break;
             }
@@ -1128,23 +1128,23 @@ bool _magic_412()
     }
     p(1) = 0;
     p(2) = 0;
-    for (const auto& cnt : items(tc))
+    for (auto&& item : inv.for_chara(cdata[tc]))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (!is_cursed(inv[cnt].curse_state))
+        if (!is_cursed(item.curse_state))
         {
             continue;
         }
-        ci = cnt;
+        ci = item.index;
         p = 0;
-        if (inv[ci].curse_state == CurseState::cursed)
+        if (item.curse_state == CurseState::cursed)
         {
             p = rnd(200) + 1;
         }
-        if (inv[ci].curse_state == CurseState::doomed)
+        if (item.curse_state == CurseState::doomed)
         {
             p = rnd(1000) + 1;
         }
@@ -1152,7 +1152,7 @@ bool _magic_412()
         {
             p = p / 2 + 1;
         }
-        else if (inv[ci].body_part == 0)
+        else if (item.body_part == 0)
         {
             continue;
         }
@@ -1161,7 +1161,7 @@ bool _magic_412()
             if (efp >= p)
             {
                 ++p(1);
-                inv[ci].curse_state = CurseState::none;
+                item.curse_state = CurseState::none;
                 item_stack(tc, ci, 1);
             }
             else
@@ -3391,35 +3391,35 @@ bool _magic_651()
             "core.locale.magic.scavenge.apply", cdata[cc], cdata[tc]));
     }
     p = -1;
-    for (const auto& cnt : items(tc))
+    for (const auto& item : inv.for_chara(cdata[tc]))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].id == 618)
+        if (item.id == 618)
         {
-            p = cnt;
+            p = item.index;
             break;
         }
     }
     if (p == -1)
     {
-        for (const auto& cnt : items(tc))
+        for (const auto& item : inv.for_chara(cdata[tc]))
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].is_precious())
+            if (item.is_precious())
             {
                 continue;
             }
-            if (the_item_db[inv[cnt].id]->category != 57000)
+            if (the_item_db[item.id]->category != 57000)
             {
                 continue;
             }
-            p = cnt;
+            p = item.index;
             break;
         }
     }
@@ -3518,9 +3518,9 @@ bool _magic_463()
     }
     else
     {
-        for (const auto& cnt : items(-1))
+        for (auto&& item : inv.ground())
         {
-            inv[cnt].remove();
+            item.remove();
         }
     }
     shoptrade = 0;

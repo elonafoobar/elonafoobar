@@ -437,10 +437,10 @@ void eqrandweaponmage()
 
 void wear_most_valuable_equipment_for_all_body_parts()
 {
-    for (const auto& cnt : items(rc))
+    for (const auto& item : inv.for_chara(cdata[rc]))
     {
-        ci = cnt;
-        if (inv[cnt].number() == 0 || inv[cnt].body_part != 0)
+        ci = item.index;
+        if (item.number() == 0 || item.body_part != 0)
         {
             continue;
         }

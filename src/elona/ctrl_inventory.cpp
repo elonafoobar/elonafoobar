@@ -134,31 +134,31 @@ label_20591:
         {
             showmoney = 0;
         }
-        for (const auto& cnt : items(p))
+        for (auto& item : inv.by_index(p))
         {
-            if (inv[cnt].number() <= 0)
+            if (item.number() <= 0)
             {
-                inv[cnt].remove();
+                item.remove();
                 continue;
             }
-            if (inv[cnt].id == 488)
+            if (item.id == 488)
             {
-                inv[cnt].function = 9;
+                item.function = 9;
             }
-            if (inv[cnt].id >= maxitemid || inv[cnt].id < 0)
+            if (item.id >= maxitemid || item.id < 0)
             {
                 dialog(i18n::s.get(
-                    "core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
-                inv[cnt].remove();
-                inv[cnt].id = 0;
+                    "core.locale.ui.inv.common.invalid", item.index, item.id));
+                item.remove();
+                item.id = 0;
                 continue;
             }
             if (map_data.type == mdata_t::MapType::world_map)
             {
                 if (invctrl == 7)
                 {
-                    if (the_item_db[inv[cnt].id]->subcategory != 53100 &&
-                        inv[cnt].id != 621)
+                    if (the_item_db[item.id]->subcategory != 53100 &&
+                        item.id != 621)
                     {
                         continue;
                     }
@@ -168,26 +168,25 @@ label_20591:
             {
                 if (invctrl == 27)
                 {
-                    if (inv[cnt].position.x != tlocx ||
-                        inv[cnt].position.y != tlocy)
+                    if (item.position.x != tlocx || item.position.y != tlocy)
                     {
                         continue;
                     }
                 }
                 else if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                 {
-                    if (inv[cnt].position.x != cdata[cc].position.x ||
-                        inv[cnt].position.y != cdata[cc].position.y)
+                    if (item.position.x != cdata[cc].position.x ||
+                        item.position.y != cdata[cc].position.y)
                     {
                         continue;
                     }
                 }
             }
-            item_checkknown(cnt);
-            reftype = the_item_db[inv[cnt].id]->category;
-            if (inv[cnt].own_state == 5)
+            item_checkknown(item.index);
+            reftype = the_item_db[item.id]->category;
+            if (item.own_state == 5)
             {
-                if (!inv[cnt].is_showroom_only() || invctrl != 14)
+                if (!item.is_showroom_only() || invctrl != 14)
                 {
                     if (invctrl != 1)
                     {
@@ -197,62 +196,60 @@ label_20591:
             }
             if (countequip == 0)
             {
-                if (inv[cnt].body_part != 0)
+                if (item.body_part != 0)
                 {
                     continue;
                 }
             }
-            if (inv[cnt].body_part != 0)
+            if (item.body_part != 0)
             {
                 if (reftype == 10000)
                 {
                     if (mainweapon == -1 ||
-                        inv[cnt].body_part < inv[mainweapon].body_part)
+                        item.body_part < inv[mainweapon].body_part)
                     {
-                        mainweapon = cnt;
+                        mainweapon = item.index;
                     }
                 }
             }
             if (invctrl == 5)
             {
-                if (reftype != 57000 && reftype != 91000 &&
-                    inv[cnt].material != 35)
+                if (reftype != 57000 && reftype != 91000 && item.material != 35)
                 {
                     continue;
                 }
             }
             if (invctrl == 6)
             {
-                if (iequiploc(inv[cnt]) !=
-                    cdata[cc].body_parts[body - 100] / 10000)
+                if (iequiploc(item) != cdata[cc].body_parts[body - 100] / 10000)
                 {
                     continue;
                 }
             }
             if (invctrl == 7)
             {
-                if (!the_item_db[inv[cnt].id]->is_readable)
+                if (!the_item_db[item.id]->is_readable)
                 {
                     continue;
                 }
             }
             if (invctrl == 8)
             {
-                if (!the_item_db[inv[cnt].id]->is_drinkable)
+                if (!the_item_db[item.id]->is_drinkable)
                 {
                     continue;
                 }
             }
             if (invctrl == 9)
             {
-                if (!the_item_db[inv[cnt].id]->is_zappable)
+                if (!the_item_db[item.id]->is_zappable)
                 {
                     continue;
                 }
             }
             if (invctrl == 11)
             {
-                if (inv[cnt].id == 54 || inv[cnt].id == 55)
+                if (item.id == 54 || item.id == 55)
                 {
                     continue;
                 }
@@ -261,7 +258,7 @@ label_20591:
             {
                 if (shoptrade)
                 {
-                    if (inv[cnt].weight >= 0)
+                    if (item.weight >= 0)
                     {
                         continue;
                     }
@@ -270,33 +267,33 @@ label_20591:
                         continue;
                     }
                 }
-                else if (inv[cnt].weight < 0)
+                else if (item.weight < 0)
                 {
                     if (reftype == 92000)
                     {
                         continue;
                     }
                 }
-                if (inv[cnt].value <= 1)
+                if (item.value <= 1)
                 {
                     continue;
                 }
-                if (inv[cnt].is_precious())
+                if (item.is_precious())
                 {
                     continue;
                 }
-                if (inv[cnt].param3 < 0)
+                if (item.param3 < 0)
                 {
                     continue;
                 }
-                if (inv[cnt].quality == Quality::special)
+                if (item.quality == Quality::special)
                 {
                     continue;
                 }
             }
             if (invctrl == 13)
             {
-                if (inv[cnt].identification_state ==
+                if (item.identification_state ==
                     IdentifyState::completely_identified)
                 {
                     continue;
@@ -304,16 +301,15 @@ label_20591:
             }
             if (invctrl == 14)
             {
-                if (inv[cnt].function == 0 &&
-                    !the_item_db[inv[cnt].id]->is_usable &&
-                    !inv[cnt].is_alive())
+                if (item.function == 0 && !the_item_db[item.id]->is_usable &&
+                    !item.is_alive())
                 {
                     continue;
                 }
             }
             if (invctrl == 15)
             {
-                if (reftype != 72000 && inv[cnt].id != 701)
+                if (reftype != 72000 && item.id != 701)
                 {
                     continue;
                 }
@@ -324,14 +320,14 @@ label_20591:
                 {
                     continue;
                 }
-                else if (inv[cnt].param2 != 0)
+                else if (item.param2 != 0)
                 {
                     continue;
                 }
             }
             if (invctrl == 17)
             {
-                if (reftype != 52000 && inv[cnt].id != 617)
+                if (reftype != 52000 && item.id != 617)
                 {
                     continue;
                 }
@@ -340,19 +336,19 @@ label_20591:
             {
                 if (inv[cidip].id == 617)
                 {
-                    if (inv[cnt].id != 342)
+                    if (item.id != 342)
                     {
                         continue;
                     }
                 }
-                if (cidip == cnt || inv[cnt].id == 516)
+                if (cidip == item.index || item.id == 516)
                 {
                     continue;
                 }
             }
             if (invctrl == 19)
             {
-                dbid = inv[cnt].id;
+                dbid = item.id;
                 dbspec = 12;
                 int is_offerable = access_item_db(inv[ci], dbid, 16);
                 if (is_offerable == 0)
@@ -362,19 +358,19 @@ label_20591:
             }
             if (invctrl == 20)
             {
-                if (inv[cnt].id == 54 || inv[cnt].id == 55)
+                if (item.id == 54 || item.id == 55)
                 {
                     continue;
                 }
             }
             if (invctrl == 21)
             {
-                if (calcitemvalue(cnt, 0) * inv[cnt].number() <
+                if (calcitemvalue(item.index, 0) * item.number() <
                     calcitemvalue(citrade, 0) * inv[citrade].number() / 2 * 3)
                 {
                     continue;
                 }
-                if (inv[cnt].is_stolen())
+                if (item.is_stolen())
                 {
                     continue;
                 }
@@ -407,14 +403,14 @@ label_20591:
                 }
                 if (invctrl(1) == 3)
                 {
-                    if (!inv[cnt].has_charge())
+                    if (!item.has_charge())
                     {
                         continue;
                     }
                 }
                 if (invctrl(1) == 4)
                 {
-                    if (inv[cnt].body_part != 0)
+                    if (item.body_part != 0)
                     {
                         continue;
                     }
@@ -428,15 +424,14 @@ label_20591:
                 }
                 if (invctrl(1) == 6)
                 {
-                    if (inv[cnt].weight <= 0 || inv[cnt].id == 641)
+                    if (item.weight <= 0 || item.id == 641)
                     {
                         continue;
                     }
                 }
                 if (invctrl(1) == 7)
                 {
-                    if (inv[cnt].quality >= Quality::miracle ||
-                        reftype >= 50000)
+                    if (item.quality >= Quality::miracle || reftype >= 50000)
                     {
                         continue;
                     }
@@ -448,42 +443,42 @@ label_20591:
                 {
                     if (game_data.current_map == mdata_t::MapId::lumiest)
                     {
-                        if (inv[cnt].id != 687 || inv[cnt].param2 == 0)
+                        if (item.id != 687 || item.param2 == 0)
                         {
                             continue;
                         }
                     }
-                    else if (inv[cnt].own_state != 4)
+                    else if (item.own_state != 4)
                     {
                         continue;
                     }
                 }
                 else if (invctrl(1) == 8)
                 {
-                    if (inv[cnt].id != 504)
+                    if (item.id != 504)
                     {
                         continue;
                     }
-                    else if (inv[cnt].own_state != 0)
+                    else if (item.own_state != 0)
                     {
                         continue;
                     }
-                    else if (inv[cnt].subname == 0)
+                    else if (item.subname == 0)
                     {
                         continue;
                     }
-                    else if (card(0, inv[cnt].subname))
+                    else if (card(0, item.subname))
                     {
                         continue;
                     }
                 }
-                else if (inv[cnt].own_state == 4)
+                else if (item.own_state == 4)
                 {
                     continue;
                 }
                 if (invctrl(1) == 2)
                 {
-                    if (inv[cnt].id != 615)
+                    if (item.id != 615)
                     {
                         continue;
                     }
@@ -500,7 +495,7 @@ label_20591:
                     }
                 }
             }
-            else if (inv[cnt].own_state == 4)
+            else if (item.own_state == 4)
             {
                 if (invctrl != 1 && invctrl != 2 && invctrl != 3 &&
                     invctrl != 5)
@@ -510,15 +505,14 @@ label_20591:
             }
             if (invctrl == 26)
             {
-                if (reftype != 52000 && inv[cnt].id != 578 &&
-                    inv[cnt].id != 685 && inv[cnt].id != 699 &&
-                    inv[cnt].id != 772)
+                if (reftype != 52000 && item.id != 578 && item.id != 685 &&
+                    item.id != 699 && item.id != 772)
                 {
                     continue;
                 }
-                if (inv[cnt].id == 685)
+                if (item.id == 685)
                 {
-                    if (inv[cnt].subname != 0)
+                    if (item.subname != 0)
                     {
                         continue;
                     }
@@ -528,21 +522,21 @@ label_20591:
             {
                 if (cnt2 == 0)
                 {
-                    if (inv[cnt].own_state != 1)
+                    if (item.own_state != 1)
                     {
                         continue;
                     }
                 }
             }
-            list(0, listmax) = cnt;
-            list(1, listmax) = reftype * 1000 + inv[cnt].id;
-            if (inv[cnt].id == 544)
+            list(0, listmax) = item.index;
+            list(1, listmax) = reftype * 1000 + item.id;
+            if (item.id == 544)
             {
-                list(1, listmax) += inv[cnt].param1 + 900;
+                list(1, listmax) += item.param1 + 900;
             }
             if (invctrl == 1 || invctrl == 13)
             {
-                if (inv[cnt].body_part != 0)
+                if (item.body_part != 0)
                 {
                     list(1, listmax) -= 99999000;
                 }
@@ -553,7 +547,7 @@ label_20591:
             }
             if (invctrl == 28)
             {
-                list(1, listmax) = calcmedalvalue(cnt);
+                list(1, listmax) = calcmedalvalue(item.index);
             }
             ++listmax;
         }

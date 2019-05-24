@@ -209,48 +209,48 @@ optional<TurnResult> handle_pc_action(std::string& action)
             action = "search";
         }
         p = 0;
-        for (const auto& ci : items(-1))
+        for (const auto& item : inv.ground())
         {
-            if (inv[ci].number() == 0)
+            if (item.number() == 0)
                 continue;
-            if (inv[ci].position != cdata[cc].position)
+            if (item.position != cdata[cc].position)
                 continue;
-            if (the_item_db[inv[ci].id]->category == 72000)
+            if (the_item_db[item.id]->category == 72000)
             {
                 p = 1;
             }
-            if (the_item_db[inv[ci].id]->subcategory == 60001)
+            if (the_item_db[item.id]->subcategory == 60001)
             {
                 p = 2;
             }
-            if (the_item_db[inv[ci].id]->category == 60002)
+            if (the_item_db[item.id]->category == 60002)
             {
                 p(0) = 3;
-                p(1) = ci;
+                p(1) = item.index;
             }
-            if (inv[ci].function != 0 || the_item_db[inv[ci].id]->is_usable)
+            if (item.function != 0 || the_item_db[item.id]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[inv[ci].id]->is_readable)
+            if (the_item_db[item.id]->is_readable)
             {
                 p = 5;
             }
-            if (inv[ci].id == 631)
+            if (item.id == 631)
             {
                 action = "go_down";
             }
-            if (inv[ci].id == 750 &&
+            if (item.id == 750 &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_up";
             }
-            if (inv[ci].id == 751 &&
+            if (item.id == 751 &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_down";
             }
-            if (inv[ci].id == 753)
+            if (item.id == 753)
             {
                 action = "go_down";
             }

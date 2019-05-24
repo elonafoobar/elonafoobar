@@ -2908,11 +2908,11 @@ int initialize_quest_map_party()
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].number() > 0)
+        if (item.number() > 0)
         {
-            inv[cnt].own_state = 1;
+            item.own_state = 1;
         }
     }
     return 1;
@@ -2954,20 +2954,20 @@ void initialize_quest_map_town()
             cdata[rc].original_relationship = -3;
         }
     }
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
         f = 0;
-        if (inv[cnt].id == 109 || inv[cnt].id == 173)
+        if (item.id == 109 || item.id == 173)
         {
-            inv[cnt].param1 = -10;
+            item.param1 = -10;
         }
-        if (inv[cnt].id == 241)
+        if (item.id == 241)
         {
-            inv[cnt].param1 = 0;
+            item.param1 = 0;
         }
     }
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)

@@ -1168,29 +1168,27 @@ int calccostreload(int owner, bool do_reload)
 {
     int cost{};
 
-    for (const auto& cnt : items(owner))
+    for (auto&& item : inv.for_chara(cdata[owner]))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
             continue;
-        if (the_item_db[inv[cnt].id]->category != 25000)
+        if (the_item_db[item.id]->category != 25000)
             continue;
 
-        int ammo = cnt;
-        for (int cnt = 0; cnt < 15; ++cnt)
+        for (auto&& enc : item.enchantments)
         {
-            if (inv[ammo].enchantments[cnt].id == 0)
+            if (enc.id == 0)
                 break;
 
-            int enc = inv[ammo].enchantments[cnt].id;
-            if (enc / 10000 == 9)
+            if (enc.id / 10000 == 9)
             {
-                int type = enc % 10000;
-                int current = inv[ammo].enchantments[cnt].power % 1000;
-                int max = inv[ammo].enchantments[cnt].power / 1000;
+                int type = enc.id % 10000;
+                int current = enc.power % 1000;
+                int max = enc.power / 1000;
                 cost += (max - current) * (50 + type * type * 10);
                 if (do_reload)
                 {
-                    inv[ammo].enchantments[cnt].power = max * 1000 + max;
+                    enc.power = max * 1000 + max;
                 }
             }
         }
@@ -1229,13 +1227,13 @@ int calcidentifyvalue(int type)
     if (type == 1)
     {
         int need_to_identify{};
-        for (const auto& cnt : items(0))
+        for (const auto& item : inv.pc())
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].identification_state !=
+            if (item.identification_state !=
                 IdentifyState::completely_identified)
             {
                 ++need_to_identify;
