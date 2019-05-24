@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 3.2)
 
 
 # Project
-project(Elona_foobar VERSION 0.4.1)
+project(Elona_foobar VERSION 0.4.2)
 
 # Android version code. Increment on every distinct release.
-set(PROJECT_VERSION_CODE 6)
+set(PROJECT_VERSION_CODE 7)
 
 
 # Options
@@ -24,19 +24,16 @@ endif()
 # Versioning
 
 # Get commit hash from Git
-if(DEFINED ENV{APPVEYOR_REPO_COMMIT})
-  set(PROJECT_VERSION_REVISION $ENV{APPVEYOR_REPO_COMMIT})
-else()
-  find_package(Git)
-  if(NOT GIT_FOUND)
-    message(FATAL_ERROR "Git not Found")
-  endif()
-  execute_process(
-    COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-    OUTPUT_VARIABLE PROJECT_VERSION_REVISION
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
+find_package(Git)
+if(NOT GIT_FOUND)
+  message(FATAL_ERROR "Git not Found")
 endif()
+execute_process(
+  COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+  OUTPUT_VARIABLE PROJECT_VERSION_REVISION
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+message(STATUS "Commit hash: ${PROJECT_VERSION_REVISION}")
 
 
 # Get date and time

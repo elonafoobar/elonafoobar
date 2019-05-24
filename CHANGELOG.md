@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.4.2] - 2019-05-24
+
+### Added
+
+- Make output of in-game console human-friendly.
+- Implement water ripple effect in the title menu. Also make `title_effect` option available, which had no effect before.
+
+
+### Fixed
+
+- [vanilla] Change the time when the story begins: 01:10 -> 16:10
+  - See [these tweet](https://twitter.com/ki_foobar/status/1105046955556724736) for details (in Japanese).
+- Fix weather effect's glitch.
+- Fix glitch of rendering of casino cards.
+- Fix Stersha's portrait in the save updated from v0.3.3.
+- Fix the bug that ghost monster ball (you can see, but cannot pick it up) appeared on throwing the ball.
+- Fix error when you canceled a dialog window by pressing `Shift` or `ESC`.
+- Fix failure to update the save from v0.4.0. The bug could break the save completely.
+- Adjust the position of the additional item information such as enchantment icons in `w`ear menu.
+- Replace item `kiroku.counter` with gold pieces. `kiroku.counter` is a mod item defined by `kiroku` mod, one of the sample mods. `kiroku` was deleted in v0.4.0, which caused undefined item error.
+- Fix snow field map not generated even if you enter field map from snow title.
+
+
+
 ## [0.4.1] - 2019-05-19
 
 ### Fixed
