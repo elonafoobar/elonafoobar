@@ -3,10 +3,10 @@
 * One of the Elona variants.
 * It is made of C++.
 * It is derived from Elona v1.22.
-* It is alpha version yet.
-* It ~~has~~will have the highest extensibility with Lua. [####+]
-* It ~~achieves~~will achieve truly internationalization. [####+]
-* It works on multi-platform. [####+]
+* It is still in an early stage of development.
+* It features high extensibility through a mod system. [####+]
+* It can be localized in multiple languages. [####+]
+* It works on Windows, Linux, macOS, and Android. [####+]
 
 
 # How To Build
@@ -83,7 +83,7 @@ By default, assets from vanilla Elona in `deps/` are not bundled with the APK, t
 
 # How To Play
 
-1. Copy the `data`, `graphic`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.
+1. Copy the `graphic` and `sound` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.
 2. Execute `bin/Elona_foobar`, `bin/Elona_foobar.app` or `bin/Debug/Elona_foobar.exe`.
 
 

@@ -2,16 +2,16 @@
  <Elona foobar>
 ================
 
-* One of the Elona variants. It can be used.
+* One of the Elona variants.
 * It is derived from Elona v1.22.
-* It is alpha version yet.
-* It will have the highest extensibility with mod system. [####+]
-* It will truly support multiple languages. [####+]
-* It works on Windows, Linux, macOS, Android. [####+]
+* It is still in an early stage of development.
+* It features high extensibility through a mod system. [####+]
+* It can be localized in multiple languages. [####+]
+* It works on Windows, Linux, macOS, and Android. [####+]
 
 
 
-The Elona variant that has mod system. With its high extensibility,
+An Elona variant that has a mod system. With its high extensibility,
 you can build your own Elona.
                                            ~Ylva Fantasy Encyclopedia~
 
@@ -23,7 +23,7 @@ you can build your own Elona.
  How to Install
 ----------------
 
-1. Copy the graphic, sound and user folders from vanilla v1.22 to
+1. Copy the graphic and sound folders from vanilla v1.22 to
    the folder containing the executable. Make sure *not* to
    overwrite any files that already exist, as they have been
    updated in this version.
