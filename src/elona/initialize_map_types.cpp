@@ -2264,33 +2264,16 @@ static void _init_map_fields()
     }
 
     mdatan(0) = "";
-    if (4 <= game_data.stood_world_map_tile &&
-        game_data.stood_world_map_tile < 9)
+
+    switch (map_get_field_type())
     {
-        _init_map_fields_forest();
-    }
-    if (264 <= game_data.stood_world_map_tile &&
-        game_data.stood_world_map_tile < 363)
-    {
-        _init_map_fields_sea();
-    }
-    if (9 <= game_data.stood_world_map_tile &&
-        game_data.stood_world_map_tile < 13)
-    {
-        _init_map_fields_grassland();
-    }
-    if (13 <= game_data.stood_world_map_tile &&
-        game_data.stood_world_map_tile < 17)
-    {
-        _init_map_fields_desert();
-    }
-    if (chip_data[game_data.stood_world_map_tile].kind == 4)
-    {
-        _init_map_fields_snow_field();
-    }
-    if (mdatan(0) == ""s)
-    {
-        _init_map_fields_plain_field();
+    case FieldMapType::plain_field: _init_map_fields_plain_field(); break;
+    case FieldMapType::forest: _init_map_fields_forest(); break;
+    case FieldMapType::sea: _init_map_fields_sea(); break;
+    case FieldMapType::grassland: _init_map_fields_grassland(); break;
+    case FieldMapType::desert: _init_map_fields_desert(); break;
+    case FieldMapType::snow_field: _init_map_fields_snow_field(); break;
+    default: assert(0); break;
     }
 
     map_placeplayer();
