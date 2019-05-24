@@ -231,6 +231,12 @@ MainMenuResult main_title_menu()
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
 
+    snail::Image water_ripple{filesystem::path("graphic/water_ripple.png")};
+
+    std::vector<std::pair<int, Position>> ripple_source;
+    std::vector<std::tuple<int, int, Position>> ripples;
+    int frame = 0;
+
     while (true)
     {
         if (Config::instance().autodisable_numlock)
@@ -241,6 +247,60 @@ MainMenuResult main_title_menu()
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
+
+        if (Config::instance().title_effect)
+        {
+            if (frame % 20 == 0)
+            {
+                ripple_source.push_back(std::make_pair(
+                    0,
+                    Position{rnd(windoww - 20) + 10, rnd(windowh - 20) + 10}));
+            }
+
+            for (auto&& s : ripple_source)
+            {
+                if (s.first % 5 == 0)
+                {
+                    ripples.push_back(std::make_tuple(
+                        0,
+                        rnd(rnd(3) + 1),
+                        Position{s.second.x - rnd(256) + rnd(256),
+                                 s.second.y - rnd(256) + rnd(256)}));
+                }
+                ++s.first;
+            }
+
+            auto&& renderer = snail::Application::instance().get_renderer();
+            for (auto&& r : ripples)
+            {
+                const auto t = std::get<0>(r);
+                const auto kind = std::get<1>(r);
+                const auto x = std::get<2>(r).x;
+                const auto y = std::get<2>(r).y;
+                const auto width = 1.5 * t;
+                const auto height = width;
+                gmode(2, 100 + rnd(6) * 20);
+                renderer.render_image(
+                    water_ripple,
+                    256 * kind,
+                    0,
+                    256,
+                    256,
+                    x - width / 2,
+                    y - height / 2,
+                    width,
+                    height);
+                gmode(2);
+                ++std::get<0>(r);
+            }
+
+            range::remove_erase_if(ripple_source, [](const auto& s) {
+                return s.first >= 15 + 5 * rnd(3);
+            });
+            range::remove_erase_if(ripples, [](const auto& r) {
+                return std::get<0>(r) >= rnd(rnd(256)) + rnd(256) + 64;
+            });
+        }
 
         cs_listbk();
         for (int cnt = 0; cnt < static_cast<int>(items.size()); ++cnt)
@@ -284,6 +344,8 @@ MainMenuResult main_title_menu()
         case 5: snd("core.ok1"); return MainMenuResult::main_menu_mods;
         case 6: snd("core.ok1"); return MainMenuResult::finish_elona;
         }
+
+        ++frame;
     }
 }
 

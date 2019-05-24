@@ -270,10 +270,9 @@ DOC
                 }
                 title_effect {
                     name = "Title Water Effect"
-                    yes_no = core.locale.config.common.yes_no.unsupported
+                    yes_no = core.locale.config.common.yes_no.on_off
                     doc = <<DOC
 Play animations at the title screen.
-Currently not implemented.
 DOC
                 }
                 window_anime {

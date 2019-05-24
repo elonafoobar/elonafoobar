@@ -54,6 +54,11 @@
                     no = "無効"
                 }
 
+                on_off {
+                    yes = "オン"
+                    no = "オフ"
+                }
+
                 unsupported {
                     yes = "オフ(未実装)"
                     no = "オフ(未実装)"
@@ -253,8 +258,8 @@ DOC
                 }
                 title_effect {
                     name = "タイトルの水の波紋"
-                    yes_no = core.locale.config.common.yes_no.unsupported
-                    doc = "現在実装されていません。"
+                    doc = "タイトル画面に水の波紋のエフェクトを表示します。"
+                    yes_no = core.locale.config.common.yes_no.on_off
                 }
                 window_anime {
                     name = "ウィンドウアニメ"
