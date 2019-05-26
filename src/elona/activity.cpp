@@ -1852,6 +1852,8 @@ TurnResult do_dig_after_sp_check()
     return TurnResult::turn_end;
 }
 
+
+
 int search_material_spot()
 {
     if (cell_data.at(cdata.player().position.x, cdata.player().position.y)
@@ -1859,6 +1861,7 @@ int search_material_spot()
     {
         return 0;
     }
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(1) < 24 || 28 < feat(1))
     {
         return 0;
