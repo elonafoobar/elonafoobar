@@ -1613,7 +1613,10 @@ bool _magic_1113()
             snd("core.curse3");
         }
     }
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    if (cdata[tc].index == 0)
+    {
+        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    }
     return true;
 }
 
