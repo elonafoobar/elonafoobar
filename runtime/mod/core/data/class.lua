@@ -368,6 +368,7 @@ data:add_multi(
             ["core.marksman"] = 50,
             ["core.pickpocket"] = 50,
             ["core.riding"] = 50,
+            ["core.lock_picking"] = 50,
          },
       },
 })
