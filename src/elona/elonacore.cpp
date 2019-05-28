@@ -5903,7 +5903,7 @@ int find_enemy_target()
     {
         if (cc == 0)
         {
-            i18n::s.get("core.locale.action.ranged.no_target");
+            txt(i18n::s.get("core.locale.action.ranged.no_target"));
             update_screen();
         }
         return 0;
@@ -8367,7 +8367,7 @@ int do_magic_attempt()
             {
                 if (is_in_fov(cdata[cc]))
                 {
-                    txt(i18n::s.get("core.locale.misc.shakes_head"));
+                    txt(i18n::s.get("core.locale.misc.shakes_head", cdata[cc]));
                 }
                 return 1;
             }

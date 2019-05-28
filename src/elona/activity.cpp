@@ -677,7 +677,7 @@ void continuous_action_sex()
         {
             txt(i18n::s.get(
                 "core.locale.activity.sex.spare_life",
-                i18n::s.get("core.locale.ui.sex2", cdata[tc].sex),
+                i18n::s.get_enum("core.locale.ui.sex2", cdata[tc].sex),
                 cdata[tc]));
         }
         cdata[cc].continuous_action.finish();
