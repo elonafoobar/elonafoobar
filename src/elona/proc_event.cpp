@@ -21,6 +21,7 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "random_event.hpp"
+#include "save.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -209,7 +210,7 @@ void proc_event()
             cdata.player().position.y,
             rnd(3) + 2);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+        save_set_autosave();
         break;
     case 29:
     {
@@ -358,7 +359,7 @@ void proc_event()
         cdata.player().gold -= cdata.player().gold / 3;
         decfame(0, 10);
         chara_refresh(0);
-        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+        save_set_autosave();
         break;
     case 20:
         damage_hp(cdata[evdata1(evnum - (evnum != 0) * 1)], 9999, -11);

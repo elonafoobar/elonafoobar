@@ -1360,16 +1360,7 @@ TurnResult pc_turn(bool advance_time)
                 }
             }
         }
-        if (autosave)
-        {
-            autosave = 0;
-            if (game_data.wizard == 0 &&
-                game_data.current_map != mdata_t::MapId::pet_arena &&
-                Config::instance().autosave)
-            {
-                do_save_game();
-            }
-        }
+        save_autosave_if_needed();
         if (autoturn == 1)
         {
             autoturn = 0;

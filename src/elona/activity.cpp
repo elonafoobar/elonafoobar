@@ -19,6 +19,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "optional.hpp"
+#include "save.hpp"
 #include "status_ailment.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -1687,9 +1688,7 @@ void spot_digging()
                             txt(
                                 i18n::s.get("core.locale.common.something_is_"
                                             "put_on_the_ground"));
-                            autosave = 1 *
-                                (game_data.current_map !=
-                                 mdata_t::MapId::show_house);
+                            save_set_autosave();
                             inv[cnt].modify_number(-1);
                             break;
                         }

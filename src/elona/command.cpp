@@ -2582,7 +2582,7 @@ TurnResult do_use_command()
             }
         }
         chara_vanquish(tc);
-        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+        save_set_autosave();
         chara_gain_skill_exp(cdata.player(), 151, 1200);
         randomize();
         screenupdate = -1;
@@ -3475,8 +3475,7 @@ TurnResult do_get_command()
                     : 0);
             if (feat(2) == 40)
             {
-                autosave =
-                    1 * (game_data.current_map != mdata_t::MapId::show_house);
+                save_set_autosave();
             }
             refresh_burden_state();
             return TurnResult::turn_end;
