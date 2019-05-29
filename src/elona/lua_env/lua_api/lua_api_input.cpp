@@ -388,7 +388,10 @@ void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
             "Character has no dialog: "s + speaker_ref.new_id().get());
     }
 
-    talk_setup_variables(speaker_ref);
+    if (!talk_setup_variables(speaker_ref))
+    {
+        return;
+    }
     talk_start();
 
     dialog_start(speaker_ref, *data.dialog_id);
@@ -410,7 +413,10 @@ void LuaApiInput::start_dialog_with_data(
 {
     auto& speaker_ref = lua::ref<Character>(speaker);
 
-    talk_setup_variables(speaker_ref);
+    if (!talk_setup_variables(speaker_ref))
+    {
+        return;
+    }
     talk_start();
 
     dialog_start(speaker_ref, dialog);
