@@ -57,17 +57,15 @@ std::string to_forward_slashes(const fs::path& path)
 }
 
 
-boost::optional<std::string> get_executable_path()
+boost::optional<boost::filesystem::path::string_type> get_executable_path()
 {
 #if BOOST_OS_WINDOWS
-    TCHAR buf_wide[1024 + 1];
-    size_t buf_size = sizeof(buf_wide);
-    if (GetModuleFileName(nullptr, buf_wide, buf_size) == 0)
+    wchar_t buf[1024 + 1];
+    size_t buf_size = sizeof(buf);
+    if (GetModuleFileName(nullptr, buf, buf_size) == 0)
     {
         return boost::none;
     }
-    char buf[2048 + 1];
-    wcstombs(buf, buf_wide, wcslen(buf_wide) + 1);
 #elif BOOST_OS_MACOS
     char buf[PATH_MAX + 1];
     uint32_t buf_size = sizeof(buf);
@@ -93,7 +91,7 @@ boost::optional<std::string> get_executable_path()
 #error Unsupported OS
 #endif
 
-    return std::string(buf);
+    return fs::path::string_type(buf);
 }
 
 } // namespace filepathutil
