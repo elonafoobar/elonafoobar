@@ -1,5 +1,4 @@
 #include "main_menu.hpp"
-
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "../version.hpp"
@@ -18,6 +17,7 @@
 #include "menu.hpp"
 #include "random.hpp"
 #include "ui.hpp"
+#include "ui/menu_cursor_history.hpp"
 #include "ui/simple_prompt.hpp"
 #include "ui/ui_menu_mods.hpp"
 #include "variables.hpp"
@@ -180,6 +180,12 @@ MainMenuResult main_title_menu()
     cs = 0;
     cs_bk = -1;
     pagesize = 0;
+
+    if (const auto cursor =
+            ui::MenuCursorHistory::instance().restore("core.main_title_menu"))
+    {
+        cs = cursor->position();
+    }
 
     load_background_variants(2);
 
@@ -361,13 +367,20 @@ MainMenuResult main_title_menu()
         int index{};
         cursor_check_ex(index);
 
+        if (index != -1)
+        {
+            ui::MenuCursorHistory::instance().save(
+                "core.main_title_menu", ui::MenuCursor{cs});
+        }
+
         switch (index)
         {
+        case -1: break;
+        case 0: snd("core.ok1"); return MainMenuResult::main_menu_continue;
         case 1:
             snd("core.ok1");
             geneuse = "";
             return MainMenuResult::main_menu_new_game;
-        case 0: snd("core.ok1"); return MainMenuResult::main_menu_continue;
         case 2: snd("core.ok1"); return MainMenuResult::main_menu_incarnate;
         case 3: snd("core.ok1"); return MainMenuResult::main_menu_about;
         case 4:
@@ -376,6 +389,7 @@ MainMenuResult main_title_menu()
             return MainMenuResult::main_title_menu;
         case 5: snd("core.ok1"); return MainMenuResult::main_menu_mods;
         case 6: snd("core.ok1"); return MainMenuResult::finish_elona;
+        default: throw "unreachable";
         }
 
         ++frame;
