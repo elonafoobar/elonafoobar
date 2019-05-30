@@ -16,7 +16,10 @@
 #include "mef.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -1496,7 +1499,7 @@ void quest_complete()
     }
     quest_data[rq].id = 0;
     quest_data[rq].progress = 0;
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
 }
 
 } // namespace elona

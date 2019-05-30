@@ -4324,8 +4324,7 @@ TurnResult exit_map()
             area_data[game_data.current_map].type != mdata_t::MapType::field &&
             game_data.current_map != mdata_t::MapId::show_house)
         {
-            autosave =
-                1 * (game_data.current_map != mdata_t::MapId::show_house);
+            save_set_autosave();
         }
         if (map_data.type != mdata_t::MapType::world_map)
         {
@@ -5048,14 +5047,13 @@ void supply_income()
                     income(1)),
                 Message::color{ColorIndex::orange});
         }
-        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+        save_set_autosave();
     }
     if (game_data.date.day == 1)
     {
         if (cdata.player().level > 5)
         {
-            autosave =
-                1 * (game_data.current_map != mdata_t::MapId::show_house);
+            save_set_autosave();
             p = -1;
             for (const auto& cnt : items(-1))
             {
@@ -7266,7 +7264,7 @@ void sleep_start()
     }
     msg_halt();
     play_music();
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
         update_shop();
@@ -10113,7 +10111,7 @@ void open_box()
     }
     snd("core.ding2");
     txt(i18n::s.get("core.locale.action.open.goods", inv[ri]));
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     inv[ri].param1 = 0;
     if (inv[ri].id == 284)
     {
@@ -11593,7 +11591,7 @@ void create_harvested_item()
     {
         flttypemajor = choice(fsetplantartifact);
         fixlv = Quality::miracle;
-        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+        save_set_autosave();
     }
     if (feat(2) == 36)
     {

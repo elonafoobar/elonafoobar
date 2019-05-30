@@ -1,7 +1,7 @@
 #include "save.hpp"
-
 #include "audio.hpp"
 #include "character_status.hpp"
+#include "config/config.hpp"
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
@@ -14,6 +14,15 @@
 
 namespace elona
 {
+
+namespace
+{
+
+bool will_autosave = false;
+
+}
+
+
 
 void load_save_data()
 {
@@ -121,6 +130,30 @@ void save_game()
     ctrl_file(FileOperation2::global_write, save_dir);
     Save::instance().clear();
     ELONA_LOG("save") << "Save end:" << playerid;
+}
+
+
+
+void save_set_autosave()
+{
+    will_autosave = true;
+}
+
+
+
+void save_autosave_if_needed()
+{
+    if (will_autosave)
+    {
+        will_autosave = false;
+        if (!game_data.wizard &&
+            game_data.current_map != mdata_t::MapId::show_house &&
+            game_data.current_map != mdata_t::MapId::pet_arena &&
+            Config::instance().autosave)
+        {
+            do_save_game();
+        }
+    }
 }
 
 } // namespace elona

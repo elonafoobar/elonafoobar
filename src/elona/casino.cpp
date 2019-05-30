@@ -18,8 +18,11 @@
 #include "menu.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -990,7 +993,7 @@ bool casino_blackjack()
     stake = rtval;
     winrow = 0;
     cardround = 0;
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     for (int cnt = 0;; ++cnt)
     {
         screenupdate = -1;

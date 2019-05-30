@@ -20,13 +20,13 @@
 #include "network.hpp"
 #include "optional.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "variables.hpp"
 
 
 
 namespace
 {
-
 
 template <typename T, typename Similarity = int>
 class BySimilaritySelector
@@ -770,7 +770,7 @@ bool process_wish()
 
     txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
 
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
 
     log_copy_observer = std::make_unique<LogCopyObserver>();
     subscribe_log(log_copy_observer.get());
