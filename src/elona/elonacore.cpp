@@ -7973,6 +7973,7 @@ int drink_well()
         txt(i18n::s.get("core.locale.action.drink.well.is_dry", valn));
         return 1;
     }
+    item_separate(ci);
     snd_at("core.drink1", cdata[cc].position);
     const auto valn = itemname(ci);
     txt(i18n::s.get("core.locale.action.drink.well.draw", cdata[cc], valn));
