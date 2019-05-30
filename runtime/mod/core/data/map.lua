@@ -1111,7 +1111,6 @@ data:add_multi(
          legacy_id = 8,
          entrance_type = "StairUp",
          tile_set = "Normal",
-         appearance = 138,
          base_turn_cost = 10000,
          is_indoor = true,
          is_generated_every_time = false,
