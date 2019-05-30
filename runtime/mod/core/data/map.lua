@@ -1115,6 +1115,7 @@ data:add_multi(
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+         is_fixed = false,
 
          chara_filter = function()
             return { level = Map.data.current_dungeon_level, quality = "Bad" }
