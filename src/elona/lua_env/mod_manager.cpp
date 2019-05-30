@@ -17,6 +17,7 @@
 #include "data_manager.hpp"
 #include "event_manager.hpp"
 #include "export_manager.hpp"
+#include "lua_event/base_event.hpp"
 
 
 
@@ -219,6 +220,7 @@ void ModManager::load_scanned_mods()
     lua_->get_export_manager().register_all_exports();
 
     stage_ = ModLoadingStage::all_mods_loaded;
+    lua_->get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
 }
 
 void ModManager::run_startup_script(const std::string& name)
