@@ -2981,6 +2981,129 @@ void _update_save_data_12(const fs::path& save_dir)
 
 
 
+/// Update save data from v13 to v14.
+/// Remove fixed random dungeon.
+void _update_save_data_13(const fs::path& save_dir)
+{
+    // Remove *_8_101.s2 files.
+    for (const auto& prefix : {"cdata",
+                               "cdatan",
+                               "inv",
+                               "map",
+                               "mdata",
+                               "mdatan",
+                               "mef",
+                               "mod_cdata",
+                               "mod_inv",
+                               "mod_map",
+                               "sdata"})
+    {
+        const auto path = save_dir / (std::string(prefix) + "_8_101.s2");
+        if (fs::exists(path))
+        {
+            ELONA_LOG("save.update")
+                << "remove " << filepathutil::to_utf8_path(path.filename());
+            fs::remove(path);
+        }
+    }
+
+    if (!fs::exists(save_dir / "adata.s1"))
+        return;
+
+    // Remove the area data from adata.s1.
+    std::vector<int> data(40 * 500);
+    {
+        // Load
+        std::ifstream in{(save_dir / "adata.s1").native(), std::ios::binary};
+        putit::BinaryIArchive iar{in};
+
+        for (size_t i = 0; i < 500; ++i)
+        {
+            for (size_t j = 0; j < 40; ++j)
+            {
+                iar(data.at(i * 40 + j));
+            }
+        }
+    }
+
+    // Clear the area data (index: 8).
+    for (size_t j = 0; j < 40; ++j)
+    {
+        data.at(8 * 40 + j) = 0;
+    }
+    ELONA_LOG("save.update") << "clear adata(X, 8)";
+
+    {
+        // Write
+        std::ofstream out{(save_dir / "adata.s1").native(), std::ios::binary};
+        putit::BinaryOArchive oar{out};
+
+        for (size_t i = 0; i < 500; ++i)
+        {
+            for (size_t j = 0; j < 40; ++j)
+            {
+                oar(data.at(i * 40 + j));
+            }
+        }
+    }
+
+    if (!fs::exists(save_dir / "map_4_101.s2"))
+        return;
+
+    // Remove cell data from North Tyris map.
+    std::vector<int> ntyris_map(95 * 55 * 10);
+    {
+        // Load
+        std::ifstream in{(save_dir / "map_4_101.s2").native(),
+                         std::ios::binary};
+        putit::BinaryIArchive iar{in};
+
+        for (size_t i = 0; i < 10; ++i)
+        {
+            for (size_t y = 0; y < 95; ++y)
+            {
+                for (size_t x = 0; x < 55; ++x)
+                {
+                    iar(ntyris_map.at(i * 95 * 55 + y * 55 + x));
+                }
+            }
+        }
+    }
+
+    // Get cell_data.feats at (27, 47).
+    const auto feats = ntyris_map.at(6 * 95 * 55 + 47 * 55 + 27);
+    const auto feat1 = feats / 1000 % 100;
+    const auto feat2 = feats / 100000 % 100;
+    const auto feat3 = feats / 10000000;
+
+    if (feat1 == 15 && feat2 + feat3 * 100 == 8)
+    {
+        ntyris_map.at(6 * 95 * 55 + 47 * 55 + 27) = 0;
+        ELONA_LOG("save.update")
+            << "clear cell data in ntyris map at (47, 27).";
+    }
+
+    {
+        // Write
+        std::ofstream out{(save_dir / "map_4_101.s2").native(),
+                          std::ios::binary};
+        putit::BinaryOArchive oar{out};
+
+        for (size_t i = 0; i < 10; ++i)
+        {
+            for (size_t y = 0; y < 95; ++y)
+            {
+                for (size_t x = 0; x < 55; ++x)
+                {
+                    oar(ntyris_map.at(i * 95 * 55 + y * 55 + x));
+                }
+            }
+        }
+    }
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
 #define ELONA_CASE(n) \
@@ -3001,6 +3124,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(10)
         ELONA_CASE(11)
         ELONA_CASE(12)
+        ELONA_CASE(13)
     default: assert(0); break;
     }
 #undef ELONA_CASE

@@ -1111,11 +1111,11 @@ data:add_multi(
          legacy_id = 8,
          entrance_type = "StairUp",
          tile_set = "Normal",
-         appearance = 138,
          base_turn_cost = 10000,
          is_indoor = true,
          is_generated_every_time = false,
          default_ai_calm = 0,
+         is_fixed = false,
 
          chara_filter = function()
             return { level = Map.data.current_dungeon_level, quality = "Bad" }

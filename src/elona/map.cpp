@@ -1263,6 +1263,7 @@ static void _create_nefia(int index, int x, int y)
     area.deepest_level = area.danger_level + rnd(4) + 2;
     area.has_been_conquered = 0;
     area.dungeon_prefix = rnd(mapnamerd.i_size());
+    area.outer_map = game_data.destination_outer_map;
 
     cell_data.at(x, y).feats = 1;
 
