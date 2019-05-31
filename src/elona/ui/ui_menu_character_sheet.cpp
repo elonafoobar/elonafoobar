@@ -478,8 +478,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
     s(2) = cnven(i18n::s.get_m("locale.race", cdatan(2, cc), "name"));
-    access_class_info(2, cdatan(3, cc));
-    s(4) = cnven(classname);
+    s(4) = cnven(class_get_name(cdatan(3, cc)));
     if (cdata[cc].sex == 0)
     {
         s(3) = cnven(i18n::s.get("core.locale.ui.sex3.male"));

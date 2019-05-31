@@ -3248,7 +3248,7 @@ void character_drops_item()
         }
     }
 
-    switch (access_class_info(16, cdatan(3, rc)))
+    switch (the_class_db[cdatan(3, rc)]->item_type)
     {
     case 1:
         if (rnd(20) == 0)

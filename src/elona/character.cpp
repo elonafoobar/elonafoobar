@@ -48,7 +48,6 @@ int chara_create_internal()
         }
     }
     chara_delete(rc);
-    cequipment = 0;
     if (rc == 0)
     {
         p = 10;

@@ -255,23 +255,26 @@ MainMenuResult character_making_customize_appearance()
 
 static void _reroll_character()
 {
-    const auto portrait_save = cdata[rc].portrait;
+    const auto portrait_save = cdata.player().portrait;
 
     chara_delete(0);
     access_race_info(3, cmrace);
-    access_class_info(3, cmclass);
-    cdatan(0, rc) = u8"????"s;
-    cdatan(1, rc) = cmaka;
-    cdata[rc].level = 1;
+    class_init_chara(cdata.player(), cmclass);
+    cdatan(0, cdata.player().index) = u8"????"s;
+    cdatan(1, cdata.player().index) = cmaka;
+    cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
-        sdata.get(cnt, rc).original_level = cmstats(cnt - 10) / 1'000'000;
-        sdata.get(cnt, rc).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
-        sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
+        sdata.get(cnt, cdata.player().index).original_level =
+            cmstats(cnt - 10) / 1'000'000;
+        sdata.get(cnt, cdata.player().index).experience =
+            cmstats(cnt - 10) % 1'000'000 / 1'000;
+        sdata.get(cnt, cdata.player().index).potential =
+            cmstats(cnt - 10) % 1'000;
     }
     initialize_character();
     initialize_pc_character();
-    cdata[rc].portrait = portrait_save;
+    cdata.player().portrait = portrait_save;
     create_pcpic(cdata.player());
 }
 
@@ -426,13 +429,15 @@ MainMenuResult character_making_final_phase()
 
 
 
-void draw_race_or_class_info()
+void draw_race_or_class_info(const std::string& description)
 {
-    font(14 - en * 2);
-    tx = wx + 230;
-    ty = wy + 62;
-    talk_conv(buff, 60 + en * 2);
-    mes(tx - 20, ty, buff);
+    {
+        std::string tmp = description;
+        talk_conv(tmp, 60 + en * 2);
+        font(14 - en * 2);
+        mes(wx + 210, wy + 62, tmp);
+    }
+
     font(14 - en * 2);
     tx = wx + 200;
     ty = wy + 166;

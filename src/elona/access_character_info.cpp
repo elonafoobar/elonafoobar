@@ -74,7 +74,7 @@ int access_character_info()
         }
         if (!data->class_.empty())
         {
-            access_class_info(3, data->class_);
+            class_init_chara(cdata[rc], data->class_);
         }
         cdata[rc].element_of_unarmed_attack = data->element_of_unarmed_attack;
 

@@ -38,7 +38,6 @@ void dump_player_info()
     std::stringstream ss;
 
     cc = 0;
-    access_class_info(2, cdatan(3, 0));
 
     ss << u8"Elona 1.22" << std::endl;
     ss << u8"Elona foobar " << latest_version.long_string() << std::endl;
@@ -61,7 +60,7 @@ void dump_player_info()
               30)
        << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
        << std::endl;
-    ss << fixtxt(u8"職業       : " + classname, 30)
+    ss << fixtxt(u8"職業       : " + class_get_name(cdatan(3, 0)), 30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
     ss << fixtxt(u8"レベル     : " + std::to_string(cdata.player().level), 30)
        << fixtxt(u8"経過日数  : " + std::to_string(game_data.play_days), 32)
@@ -230,10 +229,9 @@ void dump_player_info()
             continue;
         }
 
-        access_class_info(2, cdatan(3, idx));
         ss << cdatan(0, idx) << u8" "
            << i18n::s.get_m("locale.race", cdatan(2, idx), "name") << u8"の"
-           << classname << u8" "
+           << class_get_name(cdatan(3, idx)) << u8" "
            << i18n::s.get_enum("core.locale.ui.sex", chara.sex) << u8" "
            << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
            << u8" " << chara.weight << u8"kg" << std::endl;

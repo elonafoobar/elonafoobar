@@ -70,7 +70,12 @@ void UIMenuCharamakeRace::update()
     }
 }
 
-void UIMenuCharamakeRace::_draw_race_info(int chip_male, int chip_female)
+
+
+void UIMenuCharamakeRace::_draw_race_info(
+    const std::string& race_id,
+    int chip_male,
+    int chip_female)
 {
     {
         // male
@@ -82,8 +87,12 @@ void UIMenuCharamakeRace::_draw_race_info(int chip_male, int chip_female)
     }
 
     gmode(2);
-    draw_race_or_class_info();
+    draw_race_or_class_info(
+        i18n::s.get_m_optional("locale.race", race_id, "description")
+            .get_value_or(""));
 }
+
+
 
 void UIMenuCharamakeRace::_draw_window()
 {
@@ -164,7 +173,7 @@ void UIMenuCharamakeRace::draw()
     const std::string& selected_race = listn(1, page * pagesize + cs);
     _reload_selected_race(selected_race);
 
-    _draw_race_info(ref1, ref2);
+    _draw_race_info(selected_race, ref1, ref2);
 }
 
 optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(

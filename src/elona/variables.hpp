@@ -569,7 +569,6 @@ ELONA_EXTERN(int x2);
 ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
 ELONA_EXTERN(std::string cardrefrace);
-ELONA_EXTERN(std::string classname);
 ELONA_EXTERN(std::string cmaka);
 ELONA_EXTERN(std::string dbidn);
 ELONA_EXTERN(std::string defload);
