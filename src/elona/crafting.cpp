@@ -426,7 +426,7 @@ void crafting_menu()
             _craft_item(matid, *recipe);
 
             r2 = matuse;
-            gain_crafting_experience(recipe->skill_used, matuse);
+            chara_gain_exp_crafting(cdata.player(), recipe->skill_used, matuse);
             chara_refresh(0);
 
             // NOTE: page_load is called in UIMenuCrafting.

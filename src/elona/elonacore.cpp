@@ -2079,7 +2079,7 @@ int try_to_reveal()
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc)) >
         rnd(game_data.current_dungeon_level * 8 + 60))
     {
-        gain_detection_experience(cc);
+        chara_gain_exp_detection(cdata[cc]);
         return 1;
     }
     return 0;
@@ -2114,7 +2114,7 @@ int try_to_disarm_trap()
     if (rnd(sdata(175, cc) * 15 + 20 + sdata(12, cc)) >
         rnd(game_data.current_dungeon_level * 12 + 100))
     {
-        gain_disarm_trap_experience();
+        chara_gain_exp_disarm_trap(cdata[cc]);
         return 1;
     }
     return 0;
@@ -7237,7 +7237,7 @@ int decode_book()
     {
         ci = cdata[cc].continuous_action.item;
         cibkread = ci;
-        gain_literacy_experience();
+        chara_gain_exp_literacy(cdata.player());
         if (inv[ci].id == 783)
         {
             return 0;
@@ -7326,7 +7326,7 @@ int decode_book()
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20) /
                     clamp((100 + spell((efid - 400)) / 2), 50, 1000) +
                 1);
-        gain_memorization_experience(0);
+        chara_gain_exp_memorization(cdata.player(), efid);
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
@@ -7443,7 +7443,7 @@ int do_cast_magic()
     if (stat == 1)
     {
         cc = ccbk;
-        gain_casting_experience(cc, spellbk);
+        chara_gain_exp_casting(cdata[cc], spellbk);
         return 1;
     }
     return 0;
@@ -8028,7 +8028,7 @@ int do_zap()
                 item_identify(inv[ci], IdentifyState::partly_identified);
             }
         }
-        gain_magic_device_experience(cc);
+        chara_gain_exp_magic_device(cdata[cc]);
     }
     else if (is_in_fov(cdata[cc]))
     {
@@ -8694,7 +8694,7 @@ int pick_up_item(bool play_sound)
         }
         else
         {
-            gain_negotiation_experience(0, sellgold);
+            chara_gain_exp_negotiation(cdata.player(), sellgold);
         }
     }
     else
@@ -9678,7 +9678,7 @@ int unlock_box(int difficulty)
         return 0;
     }
     txt(i18n::s.get("core.locale.action.unlock.succeed"));
-    gain_lock_picking_experience(cc);
+    chara_gain_exp_lock_picking(cdata[cc]);
     return 1;
 }
 
@@ -10056,7 +10056,7 @@ TurnResult try_to_open_locked_door()
     {
         if (feat(2) > 0)
         {
-            gain_lock_picking_experience(cc);
+            chara_gain_exp_lock_picking(cdata[cc]);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
         if (is_in_fov(cdata[cc]))

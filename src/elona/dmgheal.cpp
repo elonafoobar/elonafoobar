@@ -1256,7 +1256,7 @@ void damage_mp(Character& cc, int delta)
     }
     if (cc.mp < 0)
     {
-        gain_mana_capacity_experience(cc.index);
+        chara_gain_exp_mana_capacity(cc);
         auto damage = -cc.mp * 400 / (100 + sdata(164, cc.index) * 10);
         if (cc.index == 0)
         {

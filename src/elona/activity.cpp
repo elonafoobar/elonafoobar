@@ -1556,7 +1556,7 @@ void spot_fishing()
             fishanime = 0;
             cdata[cc].continuous_action.finish();
             fish_get(fish);
-            gain_fishing_experience(0);
+            chara_gain_exp_fishing(cdata.player());
             cdata.player().emotion_icon = 306;
         }
         if (rnd(10) == 0)
@@ -1813,7 +1813,7 @@ void spot_mining_or_wall()
                 }
                 txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
             }
-            gain_digging_experience();
+            chara_gain_exp_digging(cdata.player());
             cdata[cc].continuous_action.finish();
         }
         else if (cdata[cc].turn % 5 == 0)
