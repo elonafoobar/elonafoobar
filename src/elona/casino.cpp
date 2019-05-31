@@ -61,6 +61,7 @@ void casino_choose_card()
     {
         if (init)
         {
+            init = false;
             key = "";
             keylog = "";
             screenupdate = -1;

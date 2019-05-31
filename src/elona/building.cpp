@@ -32,12 +32,6 @@
 namespace
 {
 
-int egg;
-int livestock;
-int worker;
-
-
-
 void prepare_house_board_tiles()
 {
     std::vector<int> unavailable_tiles{
