@@ -3674,8 +3674,7 @@ TurnResult do_exit_command()
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            snd("core.write1");
-            save_game();
+            save_game(save_game_no_message);
             txt(i18n::s.get("core.locale.action.exit.saved"));
             txt(i18n::s.get(
                 "core.locale.action.exit.you_close_your_eyes", cdata[cc]));

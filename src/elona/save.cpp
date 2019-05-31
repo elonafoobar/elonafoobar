@@ -20,7 +20,44 @@ namespace
 
 bool will_autosave = false;
 
+
+
+void _do_save_game()
+{
+    ELONA_LOG("save") << "Save: " << playerid;
+
+    int save_f = 0;
+    if (game_data.current_map == mdata_t::MapId::show_house)
+    {
+        txt(i18n::s.get("core.locale.misc.save.cannot_save_in_user_map"),
+            Message::color{ColorIndex::red});
+        update_screen();
+        return;
+    }
+    ctrl_file(FileOperation::map_write);
+    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
+    save_f = 0;
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
+    {
+        if (filepathutil::to_utf8_path(entry.path().filename()) == playerid)
+        {
+            save_f = 1;
+            break;
+        }
+    }
+    const auto save_dir = filesystem::dir::save(playerid);
+    if (save_f == 0)
+    {
+        fs::create_directory(save_dir);
+    }
+    Save::instance().save(save_dir);
+    ctrl_file(FileOperation2::global_write, save_dir);
+    Save::instance().clear();
+    ELONA_LOG("save") << "Save end:" << playerid;
 }
+
+} // namespace
 
 
 
@@ -88,48 +125,20 @@ void load_save_data()
 
 
 
-void do_save_game()
+void save_game(bool no_message, bool silent)
 {
-    snd("core.write1");
-    save_game();
-    txt(i18n::s.get("core.locale.ui.save"), Message::color{ColorIndex::orange});
-}
-
-
-
-void save_game()
-{
-    ELONA_LOG("save") << "Save: " << playerid;
-
-    int save_f = 0;
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    if (!silent)
     {
-        txt(i18n::s.get("core.locale.misc.save.cannot_save_in_user_map"),
-            Message::color{ColorIndex::red});
-        update_screen();
-        return;
+        snd("core.write1");
     }
-    ctrl_file(FileOperation::map_write);
-    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
-    save_f = 0;
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
+
+    _do_save_game();
+
+    if (!no_message)
     {
-        if (filepathutil::to_utf8_path(entry.path().filename()) == playerid)
-        {
-            save_f = 1;
-            break;
-        }
+        txt(i18n::s.get("core.locale.ui.save"),
+            Message::color{ColorIndex::orange});
     }
-    const auto save_dir = filesystem::dir::save(playerid);
-    if (save_f == 0)
-    {
-        fs::create_directory(save_dir);
-    }
-    Save::instance().save(save_dir);
-    ctrl_file(FileOperation2::global_write, save_dir);
-    Save::instance().clear();
-    ELONA_LOG("save") << "Save end:" << playerid;
 }
 
 
@@ -151,7 +160,7 @@ void save_autosave_if_needed()
             game_data.current_map != mdata_t::MapId::pet_arena &&
             Config::instance().autosave)
         {
-            do_save_game();
+            save_game();
         }
     }
 }

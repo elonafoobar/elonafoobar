@@ -71,7 +71,7 @@ void save_and_reload()
 void save()
 {
     filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
-    save_game();
+    save_game(save_game_no_message, save_game_silent);
 }
 
 void load()
@@ -132,7 +132,7 @@ void start_in_map(int map, int level)
     elona::mode = 2;
     initialize_map();
 
-    save_game();
+    save_game(save_game_no_message, save_game_silent);
 }
 
 void start_in_debug_map()

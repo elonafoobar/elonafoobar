@@ -5293,9 +5293,9 @@ TurnResult step_into_gate()
         return TurnResult::pc_turn_user_error;
     }
 
-    if (1 && game_data.wizard == 0)
+    if (!game_data.wizard)
     {
-        do_save_game();
+        save_game();
     }
     txt(i18n::s.get("core.locale.action.exit_map.gate.step_into"));
     inv[ci].modify_number(-1);
@@ -9364,9 +9364,9 @@ void proc_autopick()
             }
             if (int(op.type) & int(Autopick::Operation::Type::save))
             {
-                if (game_data.wizard == 0)
+                if (!game_data.wizard)
                 {
-                    do_save_game();
+                    save_game();
                 }
             }
             break;
@@ -11355,8 +11355,7 @@ void initialize_economy()
     bkdata(1) = game_data.current_dungeon_level;
     bkdata(2) = cdata.player().position.x;
     bkdata(3) = cdata.player().position.y;
-    snd("core.write1");
-    save_game();
+    save_game(save_game_no_message);
     mode = 11;
     cdata.player().position.x = 0;
     cdata.player().position.y = 0;
