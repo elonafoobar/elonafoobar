@@ -109,7 +109,7 @@ static void _load_list_skill_category(CharacterSheetOperation op)
     ++listmax;
     if (op == CharacterSheetOperation::learn_skill)
     {
-        map_get_trainer_skills();
+        map_get_trainer_skills(cdata[cc]);
     }
     else
     {

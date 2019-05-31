@@ -1,264 +1,193 @@
 #include "ability.hpp"
+#include "character.hpp"
 #include "gdata.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
 
-static void _trainer_skills_yowyn(int& dbmax)
+namespace
 {
-    dblist(0, dbmax) = 154;
-    ++dbmax;
-    dblist(0, dbmax) = 162;
-    ++dbmax;
-    dblist(0, dbmax) = 184;
-    ++dbmax;
-    dblist(0, dbmax) = 176;
-    ++dbmax;
-    dblist(0, dbmax) = 177;
-    ++dbmax;
-    dblist(0, dbmax) = 180;
-    ++dbmax;
-    dblist(0, dbmax) = 301;
-    ++dbmax;
-    dblist(0, dbmax) = 167;
-    ++dbmax;
-    dblist(0, dbmax) = 153;
-    ++dbmax;
-}
 
-static void _trainer_skills_vernis(int& dbmax)
+const std::vector<int> _yowyn = {
+    154,
+    162,
+    184,
+    176,
+    177,
+    180,
+    301,
+    167,
+    153,
+};
+
+const std::vector<int> _vernis = {
+    178,
+    154,
+    184,
+    163,
+    182,
+    185,
+    158,
+};
+
+const std::vector<int> _palmia{
+    151,
+    150,
+    161,
+    179,
+    301,
+    156,
+    160,
+    172,
+    178,
+};
+
+const std::vector<int> _noyel{
+    181,
+    150,
+    162,
+    184,
+    182,
+    155,
+    153,
+};
+
+const std::vector<int> _lumiest = {
+    172,
+    154,
+    150,
+    174,
+    185,
+    171,
+    160,
+    167,
+};
+
+const std::vector<int> _mages_guild = {
+    172,
+    165,
+    155,
+    164,
+    178,
+    188,
+    171,
+    187,
+};
+
+const std::vector<int> _derphy = {
+    158,
+    157,
+    170,
+    171,
+    176,
+    174,
+    183,
+    163,
+};
+
+const std::vector<int> _thieves_guild = {
+    300,
+    175,
+    158,
+    157,
+    189,
+};
+
+const std::vector<int> _port_kapul = {
+    156,
+    160,
+    183,
+    185,
+    174,
+    151,
+};
+
+const std::vector<int> _fighters_guild = {
+    153,
+    166,
+    167,
+    169,
+    152,
+    189,
+    168,
+    186,
+};
+
+} // namespace
+
+
+
+void map_get_trainer_skills(const Character& chara)
 {
-    dblist(0, dbmax) = 178;
-    ++dbmax;
-    dblist(0, dbmax) = 154;
-    ++dbmax;
-    dblist(0, dbmax) = 184;
-    ++dbmax;
-    dblist(0, dbmax) = 163;
-    ++dbmax;
-    dblist(0, dbmax) = 182;
-    ++dbmax;
-    dblist(0, dbmax) = 185;
-    ++dbmax;
-    dblist(0, dbmax) = 158;
-    ++dbmax;
-}
+    const auto append = [](std::vector<int>& lhs, const std::vector<int>& rhs) {
+        lhs.insert(lhs.end(), rhs.begin(), rhs.end());
+    };
 
-static void _trainer_skills_palmia(int& dbmax)
-{
-    dblist(0, dbmax) = 151;
-    ++dbmax;
-    dblist(0, dbmax) = 150;
-    ++dbmax;
-    dblist(0, dbmax) = 161;
-    ++dbmax;
-    dblist(0, dbmax) = 179;
-    ++dbmax;
-    dblist(0, dbmax) = 301;
-    ++dbmax;
-    dblist(0, dbmax) = 156;
-    ++dbmax;
-    dblist(0, dbmax) = 160;
-    ++dbmax;
-    dblist(0, dbmax) = 172;
-    ++dbmax;
-    dblist(0, dbmax) = 178;
-    ++dbmax;
-}
-
-static void _trainer_skills_noyel(int& dbmax)
-{
-    dblist(0, dbmax) = 181;
-    ++dbmax;
-    dblist(0, dbmax) = 150;
-    ++dbmax;
-    dblist(0, dbmax) = 162;
-    ++dbmax;
-    dblist(0, dbmax) = 184;
-    ++dbmax;
-    dblist(0, dbmax) = 182;
-    ++dbmax;
-    dblist(0, dbmax) = 155;
-    ++dbmax;
-    dblist(0, dbmax) = 153;
-    ++dbmax;
-}
-
-static void _trainer_skills_lumiest(int& dbmax)
-{
-    if (game_data.current_dungeon_level == 1)
-    {
-        dblist(0, dbmax) = 172;
-        ++dbmax;
-        dblist(0, dbmax) = 154;
-        ++dbmax;
-        dblist(0, dbmax) = 150;
-        ++dbmax;
-        dblist(0, dbmax) = 174;
-        ++dbmax;
-        dblist(0, dbmax) = 185;
-        ++dbmax;
-        dblist(0, dbmax) = 171;
-        ++dbmax;
-        dblist(0, dbmax) = 160;
-        ++dbmax;
-        dblist(0, dbmax) = 167;
-        ++dbmax;
-    }
-    if (game_data.current_dungeon_level == 3)
-    {
-        dblist(0, dbmax) = 172;
-        ++dbmax;
-        dblist(0, dbmax) = 165;
-        ++dbmax;
-        dblist(0, dbmax) = 155;
-        ++dbmax;
-        dblist(0, dbmax) = 164;
-        ++dbmax;
-        dblist(0, dbmax) = 178;
-        ++dbmax;
-        dblist(0, dbmax) = 188;
-        ++dbmax;
-        dblist(0, dbmax) = 171;
-        ++dbmax;
-        dblist(0, dbmax) = 187;
-        ++dbmax;
-    }
-}
-
-static void _trainer_skills_derphy(int& dbmax)
-{
-    if (game_data.current_dungeon_level == 1)
-    {
-        dblist(0, dbmax) = 158;
-        ++dbmax;
-        dblist(0, dbmax) = 157;
-        ++dbmax;
-        dblist(0, dbmax) = 170;
-        ++dbmax;
-        dblist(0, dbmax) = 171;
-        ++dbmax;
-        dblist(0, dbmax) = 176;
-        ++dbmax;
-        dblist(0, dbmax) = 174;
-        ++dbmax;
-        dblist(0, dbmax) = 183;
-        ++dbmax;
-        dblist(0, dbmax) = 163;
-        ++dbmax;
-    }
-    if (game_data.current_dungeon_level == 3)
-    {
-        dblist(0, dbmax) = 300;
-        ++dbmax;
-        dblist(0, dbmax) = 175;
-        ++dbmax;
-        dblist(0, dbmax) = 158;
-        ++dbmax;
-        dblist(0, dbmax) = 157;
-        ++dbmax;
-        dblist(0, dbmax) = 189;
-        ++dbmax;
-    }
-}
-
-static void _trainer_skills_port_kapul(int& dbmax)
-{
-    if (game_data.current_dungeon_level == 1)
-    {
-        dblist(0, dbmax) = 156;
-        ++dbmax;
-        dblist(0, dbmax) = 160;
-        ++dbmax;
-        dblist(0, dbmax) = 183;
-        ++dbmax;
-        dblist(0, dbmax) = 185;
-        ++dbmax;
-        dblist(0, dbmax) = 174;
-        ++dbmax;
-        dblist(0, dbmax) = 151;
-        ++dbmax;
-    }
-    if (game_data.current_dungeon_level == 3)
-    {
-        dblist(0, dbmax) = 153;
-        ++dbmax;
-        dblist(0, dbmax) = 166;
-        ++dbmax;
-        dblist(0, dbmax) = 167;
-        ++dbmax;
-        dblist(0, dbmax) = 169;
-        ++dbmax;
-        dblist(0, dbmax) = 152;
-        ++dbmax;
-        dblist(0, dbmax) = 189;
-        ++dbmax;
-        dblist(0, dbmax) = 168;
-        ++dbmax;
-        dblist(0, dbmax) = 186;
-        ++dbmax;
-    }
-}
-
-void map_get_trainer_skills()
-{
-    int dbmax = 0;
-
-    dblist(0, dbmax) = 159;
-    ++dbmax;
-    dblist(0, dbmax) = 173;
-    ++dbmax;
+    std::vector<int> skills{159, 173};
 
     if (game_data.current_map == mdata_t::MapId::yowyn)
     {
-        _trainer_skills_yowyn(dbmax);
+        append(skills, _yowyn);
     }
     if (game_data.current_map == mdata_t::MapId::vernis)
     {
-        _trainer_skills_vernis(dbmax);
+        append(skills, _vernis);
     }
     if (game_data.current_map == mdata_t::MapId::palmia)
     {
-        _trainer_skills_palmia(dbmax);
+        append(skills, _palmia);
     }
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        _trainer_skills_noyel(dbmax);
+        append(skills, _noyel);
     }
     if (game_data.current_map == mdata_t::MapId::lumiest)
     {
-        _trainer_skills_lumiest(dbmax);
+        if (game_data.current_dungeon_level == 1)
+        {
+            append(skills, _lumiest);
+        }
+        else if (game_data.current_dungeon_level == 3)
+        {
+            append(skills, _mages_guild);
+        }
     }
     if (game_data.current_map == mdata_t::MapId::derphy)
     {
-        _trainer_skills_derphy(dbmax);
+        if (game_data.current_dungeon_level == 1)
+        {
+            append(skills, _derphy);
+        }
+        else if (game_data.current_dungeon_level == 3)
+        {
+            append(skills, _thieves_guild);
+        }
     }
     if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
-        _trainer_skills_port_kapul(dbmax);
+        if (game_data.current_dungeon_level == 1)
+        {
+            append(skills, _port_kapul);
+        }
+        else if (game_data.current_dungeon_level == 3)
+        {
+            append(skills, _fighters_guild);
+        }
     }
 
-    for (int cnt = 0, cnt_end = (dbmax); cnt < cnt_end; ++cnt)
+    for (const auto& skill_id : skills)
     {
-        p = dblist(0, cnt);
-        f = 0;
-        if (sdata.get(p, cc).original_level == 0)
+        if (sdata.get(skill_id, chara.index).original_level == 0)
         {
-            if (the_ability_db[p]->related_basic_attribute != 0)
-            {
-                f = 1;
-            }
-        }
-        if (f)
-        {
-            list(0, listmax) = p;
+            list(0, listmax) = skill_id;
             list(1, listmax) =
-                the_ability_db[p]->related_basic_attribute + 21000;
+                the_ability_db[skill_id]->related_basic_attribute + 21000;
             ++listmax;
         }
     }
 }
-
 
 } // namespace elona
