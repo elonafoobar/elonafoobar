@@ -508,8 +508,6 @@ ELONA_EXTERN(int radery);
 ELONA_EXTERN(int range_);
 ELONA_EXTERN(int rapidmagic);
 ELONA_EXTERN(int rc);
-ELONA_EXTERN(int ref1);
-ELONA_EXTERN(int ref2);
 ELONA_EXTERN(int reftype);
 ELONA_EXTERN(int reftypeminor);
 ELONA_EXTERN(int returnfromidentify);

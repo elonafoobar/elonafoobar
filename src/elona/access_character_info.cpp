@@ -70,7 +70,7 @@ int access_character_info()
             data->original_relationship;
         if (!data->race.empty())
         {
-            access_race_info(3, data->race);
+            race_init_chara(cdata[rc], data->race);
         }
         if (!data->class_.empty())
         {

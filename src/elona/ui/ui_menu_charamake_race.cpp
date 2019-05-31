@@ -72,19 +72,14 @@ void UIMenuCharamakeRace::update()
 
 
 
-void UIMenuCharamakeRace::_draw_race_info(
-    const std::string& race_id,
-    int chip_male,
-    int chip_female)
+void UIMenuCharamakeRace::_draw_race_info(const std::string& race_id)
 {
-    {
-        // male
-        draw_chara(chip_male, wx + 480, wy + 96, 2, 40);
-    }
-    {
-        // female
-        draw_chara(chip_female, wx + 350, wy + 96, 2, 40);
-    }
+    const auto race_data = the_race_db[cdatan(2, 0)];
+
+    // male
+    draw_chara(race_data->male_image, wx + 480, wy + 96, 2, 40);
+    // female
+    draw_chara(race_data->female_image, wx + 350, wy + 96, 2, 40);
 
     gmode(2);
     draw_race_or_class_info(
@@ -153,12 +148,15 @@ void UIMenuCharamakeRace::_draw_choices()
     cs_bk = cs;
 }
 
+
+
 static void _reload_selected_race(const std::string& race)
 {
     chara_delete(0);
-    access_race_info(3, race);
-    access_race_info(11, race);
+    race_init_chara(cdata.player(), race);
 }
+
+
 
 void UIMenuCharamakeRace::draw()
 {
@@ -173,7 +171,7 @@ void UIMenuCharamakeRace::draw()
     const std::string& selected_race = listn(1, page * pagesize + cs);
     _reload_selected_race(selected_race);
 
-    _draw_race_info(selected_race, ref1, ref2);
+    _draw_race_info(selected_race);
 }
 
 optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(

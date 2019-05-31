@@ -75,7 +75,6 @@ MainMenuResult character_making_select_race()
         auto value = *result.value;
         cmrace(0) = value.race_id;
         cmrace(1) = value.race_name;
-        access_race_info(11, cmrace);
         return MainMenuResult::character_making_select_sex;
     }
 }
@@ -258,19 +257,16 @@ static void _reroll_character()
     const auto portrait_save = cdata.player().portrait;
 
     chara_delete(0);
-    access_race_info(3, cmrace);
+    race_init_chara(cdata.player(), cmrace);
     class_init_chara(cdata.player(), cmclass);
-    cdatan(0, cdata.player().index) = u8"????"s;
-    cdatan(1, cdata.player().index) = cmaka;
+    cdatan(0, 0) = u8"????"s;
+    cdatan(1, 0) = cmaka;
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
-        sdata.get(cnt, cdata.player().index).original_level =
-            cmstats(cnt - 10) / 1'000'000;
-        sdata.get(cnt, cdata.player().index).experience =
-            cmstats(cnt - 10) % 1'000'000 / 1'000;
-        sdata.get(cnt, cdata.player().index).potential =
-            cmstats(cnt - 10) % 1'000;
+        sdata.get(cnt, 0).original_level = cmstats(cnt - 10) / 1'000'000;
+        sdata.get(cnt, 0).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
+        sdata.get(cnt, 0).potential = cmstats(cnt - 10) % 1'000;
     }
     initialize_character();
     initialize_pc_character();
