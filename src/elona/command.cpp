@@ -2732,7 +2732,7 @@ TurnResult do_open_command(bool play_sound)
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
         tmpload(filepathutil::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
-                filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
+                filesystem::dirs::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(
                 FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");

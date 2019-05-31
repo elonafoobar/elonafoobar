@@ -118,7 +118,7 @@ void Console::init_environment()
     _env().raw_set(
         "__USH__",
         _lua->get_state()->safe_script_file(filepathutil::to_utf8_path(
-            filesystem::dir::data() / "script" / "kernel" / "ush.lua")),
+            filesystem::dirs::data() / "script" / "kernel" / "ush.lua")),
         _env());
 
     _env().create_named(_lua_var_commands);
@@ -156,7 +156,7 @@ bool Console::run_userscript()
 {
     auto result = _lua->get_state()->safe_script_file(
         filepathutil::to_utf8_path(
-            filesystem::dir::user_script() / "console.lua"),
+            filesystem::dirs::user_script() / "console.lua"),
         _env());
 
     if (!result.valid())
@@ -599,7 +599,7 @@ void Console::_init_builtin_lua_functions()
     sol::table funcs = _command_table()[_namespace_builtin];
 
     auto inspect = lua->get_state()->script_file(filepathutil::to_utf8_path(
-        filesystem::dir::data() / "script" / "kernel" / "inspect.lua"));
+        filesystem::dirs::data() / "script" / "kernel" / "inspect.lua"));
     funcs["inspect"] = inspect;
 
     funcs["dump"] = [this]() {

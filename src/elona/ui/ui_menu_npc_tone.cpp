@@ -18,13 +18,11 @@ static int _load_talk_entries()
         i18n::s.get("core.locale.action.interact.change_tone.default_tone");
 
     ++_listmax;
-    const auto base_dir = filesystem::dir::user() / u8"talk";
+    const auto base_dir = filesystem::dirs::user() / u8"talk";
     if (fs::exists(base_dir))
     {
-        for (const auto& entry : filesystem::dir_entries(
-                 base_dir,
-                 filesystem::DirEntryRange::Type::file,
-                 std::regex{u8R"(.*\.txt)"}))
+        for (const auto& entry :
+             filesystem::glob_files(base_dir, std::regex{u8R"(.*\.txt)"}))
         {
             list(0, _listmax) = _listmax;
             listn(0, _listmax) = filepathutil::to_utf8_path(

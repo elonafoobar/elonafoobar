@@ -43,10 +43,8 @@ template <typename F>
 std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
 {
     std::vector<fs::path> result;
-    for (const auto& entry : filesystem::dir_entries(
-             base_dir,
-             filesystem::DirEntryRange::Type::dir,
-             std::regex{"[a-z][a-z0-9_]*"}))
+    for (const auto& entry :
+         filesystem::glob_dirs(base_dir, std::regex{"[a-z][a-z0-9_]*"}))
     {
         if (fs::exists(entry.path() / "mod.hcl"))
         {
@@ -266,7 +264,7 @@ void ModManager::run_startup_script(const std::string& name)
     ModInfo* script_mod = create_mod("script", none, true);
 
     lua_->get_state()->safe_script_file(
-        filepathutil::to_utf8_path(filesystem::dir::user_script() / name),
+        filepathutil::to_utf8_path(filesystem::dirs::user_script() / name),
         script_mod->env);
 
     // Bypass read-only metatable
@@ -533,7 +531,7 @@ std::vector<std::string> ModManager::calculate_loading_order()
 std::vector<ModManifest> ModManager::get_templates()
 {
     std::vector<ModManifest> result;
-    for (const auto& path : template_mod_dirs(filesystem::dir::mod()))
+    for (const auto& path : template_mod_dirs(filesystem::dirs::mod()))
     {
         auto manifest = ModManifest::load(path / "mod.hcl");
         result.push_back(manifest);
@@ -547,8 +545,8 @@ void ModManager::create_mod_from_template(
     const std::string& new_mod_id,
     const std::string& template_mod_id)
 {
-    const auto from = filesystem::dir::for_mod(template_mod_id);
-    const auto to = filesystem::dir::for_mod(new_mod_id);
+    const auto from = filesystem::dirs::for_mod(template_mod_id);
+    const auto to = filesystem::dirs::for_mod(new_mod_id);
     filesystem::copy_recursively(from, to);
 }
 
@@ -556,7 +554,7 @@ void ModManager::create_mod_from_template(
 
 bool ModManager::exists(const std::string& mod_id)
 {
-    for (const auto& dir : all_mod_dirs(filesystem::dir::mod()))
+    for (const auto& dir : all_mod_dirs(filesystem::dirs::mod()))
     {
         if (mod_id == filepathutil::to_utf8_path(dir.filename()))
         {

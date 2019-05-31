@@ -43,10 +43,8 @@ void _update_save_data_0(const fs::path& save_dir)
 void _update_save_data_1(const fs::path& save_dir)
 {
     // Prepend "core." prefix to old race ID.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(cdatan.*\.s[12])"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(cdatan.*\.s[12])"}))
     {
         std::vector<std::string> lines;
         range::copy(
@@ -103,10 +101,8 @@ void _update_save_data_1(const fs::path& save_dir)
 void _update_save_data_2(const fs::path& save_dir)
 {
     // Prepend "core." prefix to old class ID.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(cdatan.*\.s[12])"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(cdatan.*\.s[12])"}))
     {
         std::vector<std::string> lines;
         range::copy(
@@ -163,10 +159,8 @@ void _update_save_data_2(const fs::path& save_dir)
 void _update_save_data_3(const fs::path& save_dir)
 {
     // Prepend "core." prefix to old class ID.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -611,10 +605,8 @@ void _update_save_data_3(const fs::path& save_dir)
 void _update_save_data_4(const fs::path& save_dir)
 {
     // Replace double bed and happy bed's image.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -843,10 +835,8 @@ std::string _update_save_data_5_convert_portrait_id(int old_id, int sex)
 void _update_save_data_5(const fs::path& save_dir)
 {
     // Convert portrait field.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -1352,10 +1342,8 @@ void _update_save_data_6(const fs::path& save_dir)
 /// up/downstairs.
 void _update_save_data_7(const fs::path& save_dir)
 {
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(mdata_(\d+)_(\d+)\.s2)"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"(mdata_(\d+)_(\d+)\.s2)"}))
     {
         // Temporary data for contents of each `mdata` file.
         std::vector<int> data(100, 0);
@@ -1473,10 +1461,8 @@ void _update_save_data_7(const fs::path& save_dir)
 void _update_save_data_8(const fs::path& save_dir)
 {
     // Character data
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -1902,10 +1888,8 @@ void _update_save_data_8(const fs::path& save_dir)
     }
 
     // Item data
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -2116,10 +2100,8 @@ void _update_save_data_9(const fs::path& save_dir)
     }
 
     // Map local mod data
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(map(_.*)?\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(map(_.*)?\.s2)"}))
     {
         fs::path outpath = save_dir /
             ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
@@ -2130,10 +2112,8 @@ void _update_save_data_9(const fs::path& save_dir)
     }
 
     // Map local character handles
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(cdata(_.*)?\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(cdata(_.*)?\.s2)"}))
     {
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
@@ -2161,10 +2141,8 @@ void _update_save_data_9(const fs::path& save_dir)
     }
 
     // Map local item handles
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(inv(_.*)?\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(inv(_.*)?\.s2)"}))
     {
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
@@ -2203,10 +2181,8 @@ void _update_save_data_10(const fs::path& save_dir)
 
     // _update_save_data_8
     // shop*.s2 files
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(shop.*\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(shop.*\.s2)"}))
     {
         if (fs::exists(
                 save_dir /
@@ -2354,10 +2330,8 @@ void _update_save_data_10(const fs::path& save_dir)
 
     // _update_save_data_9
     // shop*.s2 files
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(shop.*\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(shop.*\.s2)"}))
     {
         if (fs::exists(
                 save_dir /
@@ -2820,10 +2794,8 @@ void _update_save_data_11(const fs::path& save_dir)
 /// Remove "core.item#kiroku.counter".
 void _update_save_data_12(const fs::path& save_dir)
 {
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?inv(_.*)?\.s[12]|shop.*\.s2)"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?inv(_.*)?\.s[12]|shop.*\.s2)"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};

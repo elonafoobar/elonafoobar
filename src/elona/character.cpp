@@ -1202,7 +1202,7 @@ int chara_custom_talk(int cc, int talk_type)
     if (cdata[cc].has_custom_talk())
     {
         const auto filepath =
-            filesystem::dir::user() / u8"talk" / cdatan(4, cc);
+            filesystem::dirs::user() / u8"talk" / cdatan(4, cc);
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -1389,7 +1389,8 @@ void chara_vanquish(int cc)
     {
         const auto storage_filename = filepathutil::u8path(
             "shop"s + std::to_string(cdata[cc].shop_store_id) + ".s2");
-        const auto storage_filepath = filesystem::dir::tmp() / storage_filename;
+        const auto storage_filepath =
+            filesystem::dirs::tmp() / storage_filename;
         tmpload(storage_filename);
         if (fs::exists(storage_filepath))
         {

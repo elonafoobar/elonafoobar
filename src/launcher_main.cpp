@@ -30,9 +30,8 @@ std::vector<std::string> profiles;
 std::vector<std::string> list_profiles()
 {
     std::vector<std::string> result;
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::profile_root(),
-             filesystem::DirEntryRange::Type::dir))
+    for (const auto& entry :
+         filesystem::glob_dirs(filesystem::dirs::profile_root()))
     {
         const auto id = filepathutil::to_utf8_path(entry.path().filename());
         if (profile::is_valid_id(id))
@@ -135,7 +134,7 @@ bool handle_event()
             };
             for (const auto& filename : filenames)
             {
-                const auto path = filesystem::dir::exe() / filename;
+                const auto path = filesystem::dirs::exe() / filename;
                 if (fs::exists(path))
                 {
                     boost::process::spawn(

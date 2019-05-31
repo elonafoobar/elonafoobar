@@ -1519,7 +1519,7 @@ void animeload(int animation_type, int chara_index)
         (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(
-        filesystem::dir::graphic() / (u8"anime"s + animation_type + u8".bmp"),
+        filesystem::dirs::graphic() / (u8"anime"s + animation_type + u8".bmp"),
         0,
         0,
         true);
@@ -1608,44 +1608,44 @@ void animeblood(int cc, int animation_type, int element)
     switch (element)
     {
     case 52:
-        picload(filesystem::dir::graphic() / u8"anime18.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime18.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 51:
-        picload(filesystem::dir::graphic() / u8"anime19.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime19.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 50:
-        picload(filesystem::dir::graphic() / u8"anime20.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime20.bmp", 0, 0, true);
         dy_at_m133(1) = -20;
         break;
     case 56:
-        picload(filesystem::dir::graphic() / u8"anime22.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime22.bmp", 0, 0, true);
         dy_at_m133(1) = -24;
         break;
     case 53:
-        picload(filesystem::dir::graphic() / u8"anime21.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime21.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 54:
-        picload(filesystem::dir::graphic() / u8"anime23.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime23.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 57:
-        picload(filesystem::dir::graphic() / u8"anime24.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime24.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 59:
-        picload(filesystem::dir::graphic() / u8"anime25.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime25.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 58:
-        picload(filesystem::dir::graphic() / u8"anime26.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime26.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 55:
     case 63:
-        picload(filesystem::dir::graphic() / u8"anime27.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime27.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     default: ele2_at_m133 = 0; break;
@@ -4413,7 +4413,7 @@ TurnResult exit_map()
 
         tmpload(filepathutil::u8path("mdata_" + mid + ".s2"));
         // delete all map-local data
-        if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
+        if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             ctrl_file(FileOperation::map_delete);
         }
@@ -4929,7 +4929,7 @@ void supply_income()
     invfile = 4;
     ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     tmpload(filepathutil::u8path(u8"shop4.s2"));
-    if (fs::exists(filesystem::dir::tmp() / u8"shop4.s2"s))
+    if (fs::exists(filesystem::dirs::tmp() / u8"shop4.s2"s))
     {
         ctrl_file(FileOperation2::map_items_read, u8"shop4.s2"s);
     }
@@ -8498,7 +8498,7 @@ int pick_up_item(bool play_sound)
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
                     tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
                     if (fs::exists(
-                            filesystem::dir::tmp() /
+                            filesystem::dirs::tmp() /
                             (u8"mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(FileOperation::map_delete);
@@ -12272,7 +12272,7 @@ TurnResult pc_died()
     }
     buff = "";
     notesel(buff);
-    const auto bone_filepath = filesystem::dir::save() / u8"bone.txt";
+    const auto bone_filepath = filesystem::dirs::save() / u8"bone.txt";
     if (fs::exists(bone_filepath))
     {
         std::ifstream in{bone_filepath.native(), std::ios::binary};

@@ -37,8 +37,7 @@ void _do_save_game()
     ctrl_file(FileOperation::map_write);
     ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
     save_f = 0;
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
         if (filepathutil::to_utf8_path(entry.path().filename()) == playerid)
         {
@@ -46,7 +45,7 @@ void _do_save_game()
             break;
         }
     }
-    const auto save_dir = filesystem::dir::save(playerid);
+    const auto save_dir = filesystem::dirs::save(playerid);
     if (save_f == 0)
     {
         fs::create_directory(save_dir);
@@ -69,7 +68,7 @@ void load_save_data()
     writeloadedbuff_clear();
 
     ctrl_file(FileOperation::temp_dir_delete);
-    const auto save_dir = filesystem::dir::save(playerid);
+    const auto save_dir = filesystem::dirs::save(playerid);
 
     // TODO: Delete this line when the v1.0.0 stable is released!
     if (!fs::exists(save_dir / "version.s0"))

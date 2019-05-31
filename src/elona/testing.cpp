@@ -34,7 +34,7 @@ void reset_state();
 
 fs::path get_test_data_path()
 {
-    return filesystem::dir::exe() / "tests" / "data";
+    return filesystem::dirs::exe() / "tests" / "data";
 }
 
 fs::path get_mods_path()
@@ -47,7 +47,7 @@ void load_previous_savefile()
     testing::reset_state();
     // This file was saved directly after the dialog at the start of the game.
     elona::playerid = "sav_foobar_test";
-    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
+    filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
     load_save_data();
     elona::firstturn = 1;
     elona::mode =
@@ -70,7 +70,7 @@ void save_and_reload()
 
 void save()
 {
-    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
+    filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
     save_game(save_game_no_message, save_game_silent);
 }
 
@@ -114,15 +114,15 @@ void configure_lua()
 
 void start_in_map(int map, int level)
 {
-    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
+    filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
 
     lua::lua->clear();
     initialize_debug_globals();
 
     elona::playerid = player_id;
-    fs::remove_all(filesystem::dir::save(player_id));
-    fs::remove_all(filesystem::dir::tmp());
-    fs::create_directory(filesystem::dir::tmp());
+    fs::remove_all(filesystem::dirs::save(player_id));
+    fs::remove_all(filesystem::dirs::tmp());
+    fs::create_directory(filesystem::dirs::tmp());
     writeloadedbuff_clear();
     Save::instance().clear();
 
@@ -170,7 +170,7 @@ void pre_init()
 
     const fs::path source_config_file = get_test_data_path() / "config.hcl";
     const fs::path config_file =
-        filesystem::dir::current_profile() / "config.hcl";
+        filesystem::dirs::current_profile() / "config.hcl";
     fs::copy_file(
         source_config_file, config_file, fs::copy_option::overwrite_if_exists);
 
@@ -180,7 +180,7 @@ void pre_init()
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
     init_assets();
-    filesystem::dir::set_base_save_directory(fs::path("save"));
+    filesystem::dirs::set_base_save_directory(fs::path("save"));
     initialize_config();
 
     configure_lua();
@@ -196,12 +196,12 @@ void pre_init()
 
 void post_run()
 {
-    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
-    fs::remove_all(filesystem::dir::save(player_id));
-    fs::remove_all(filesystem::dir::tmp());
+    filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
+    fs::remove_all(filesystem::dirs::save(player_id));
+    fs::remove_all(filesystem::dirs::tmp());
     writeloadedbuff_clear();
     Save::instance().clear();
-    fs::create_directory(filesystem::dir::tmp());
+    fs::create_directory(filesystem::dirs::tmp());
     finish_elona();
 }
 

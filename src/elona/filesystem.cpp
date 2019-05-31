@@ -29,7 +29,7 @@ namespace elona
 namespace filesystem
 {
 
-namespace dir
+namespace dirs
 {
 
 fs::path current_profile_dir;
@@ -82,21 +82,21 @@ fs::path user()
 
 void set_current_profile_directory(const fs::path& current_profile_dir)
 {
-    dir::current_profile_dir = current_profile_dir;
+    dirs::current_profile_dir = current_profile_dir;
 }
 
 
 
 void set_base_save_directory(const fs::path& base_save_dir)
 {
-    dir::base_save_dir = base_save_dir;
+    dirs::base_save_dir = base_save_dir;
 }
 
 
 
 void set_base_user_directory(const fs::path& base_user_dir)
 {
-    dir::base_user_dir = base_user_dir;
+    dirs::base_user_dir = base_user_dir;
 }
 
 
@@ -129,7 +129,7 @@ void set_profile_directory(const fs::path& profile_dir)
     set_base_user_directory(profile_dir / u8"user");
 }
 
-} // namespace dir
+} // namespace dirs
 
 
 
@@ -160,11 +160,11 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
 
     if (mod_id == "BUILTIN")
     {
-        return dir::exe() / rest;
+        return dirs::exe() / rest;
     }
     else
     {
-        return dir::for_mod(mod_id) / rest;
+        return dirs::for_mod(mod_id) / rest;
     }
 }
 

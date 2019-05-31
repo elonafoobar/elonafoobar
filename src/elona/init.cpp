@@ -45,8 +45,8 @@ namespace
 
 void initialize_directories()
 {
-    const boost::filesystem::path paths[] = {filesystem::dir::save(),
-                                             filesystem::dir::tmp()};
+    const boost::filesystem::path paths[] = {filesystem::dirs::save(),
+                                             filesystem::dirs::tmp()};
 
     for (const auto& path : paths)
     {
@@ -135,7 +135,7 @@ namespace elona
 void initialize_lua()
 {
     // Scan mods under "mods/" folder.
-    lua::lua->get_mod_manager().load_mods(filesystem::dir::mod());
+    lua::lua->get_mod_manager().load_mods(filesystem::dirs::mod());
 
     // Initialize "console" mod.
     lua::lua->get_console().init_environment();
@@ -163,7 +163,7 @@ void initialize_config()
 
     if (defines::is_android)
     {
-        snail::TouchInput::instance().initialize(filesystem::dir::graphic());
+        snail::TouchInput::instance().initialize(filesystem::dirs::graphic());
     }
 
     time_warn = timeGetTime() / 1000;
@@ -193,10 +193,10 @@ void initialize_i18n()
 
     // Load built-in translations in data/locale/(jp|en).
     std::vector<i18n::Store::Location> locations{
-        {filesystem::dir::locale() / language, "core"}};
+        {filesystem::dirs::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dir::mod()))
+    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
         const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
         const auto locale_path = mod_dir / "locale" / language;
@@ -224,7 +224,7 @@ void initialize_elona()
     buffer(8, windoww, windowh);
     gsel(0);
     buffer(1, 1584, 1200);
-    picload(filesystem::dir::graphic() / u8"item.bmp", 0, 0, false);
+    picload(filesystem::dirs::graphic() / u8"item.bmp", 0, 0, false);
     if (inf_tiles != 48)
     {
         gcopy(1, 0, 0, 1584, 1200, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
@@ -690,7 +690,7 @@ void initialize_config_defs()
     Config::instance().clear();
 
     // Somewhat convoluted as mods haven't been loaded yet by the mod manager.
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dir::mod()))
+    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
         const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
         const auto config_def_path = mod_dir / "config_def.hcl";

@@ -27,7 +27,7 @@ void ProfileManager::load(const ProfileId& profile_id)
 {
     ELONA_LOG("profile") << "Load '" << profile_id << "'.";
 
-    filesystem::dir::set_profile_directory(get_dir_for(profile_id));
+    filesystem::dirs::set_profile_directory(get_dir_for(profile_id));
 }
 
 

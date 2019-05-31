@@ -230,9 +230,9 @@ void Autopick::load(const std::string& player_id)
     _clear();
 
     // Priority: save/xxx/autopick > save/autopick > /autopick
-    for (const auto directory : {filesystem::dir::save(player_id),
-                                 filesystem::dir::save(),
-                                 filesystem::dir::exe()})
+    for (const auto directory : {filesystem::dirs::save(player_id),
+                                 filesystem::dirs::save(),
+                                 filesystem::dirs::exe()})
     {
         for (const auto filename :
              {u8"autopick", u8"autopick.txt", u8"autopick.txt.txt"})
