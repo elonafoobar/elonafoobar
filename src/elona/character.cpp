@@ -1075,14 +1075,13 @@ void chara_refresh(int cc)
     {
         cdata[cc].max_hp += 10;
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& buff : cdata[cc].buffs)
     {
-        rp = cdata[cc].buffs[cnt].id;
-        if (rp == 0)
+        if (buff.id == 0)
         {
             break;
         }
-        apply_buff(cc, rp, cdata[cc].buffs[cnt].power);
+        buff_apply(cdata[cc], buff.id, buff.power);
     }
     if (cdata[cc].equipment_type & 4)
     {

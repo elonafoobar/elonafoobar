@@ -3616,7 +3616,7 @@ optional<bool> _proc_general_magic()
         }
 
         buff_add(
-            cdata[tc], *buff_id, efp, calc_buff_duration(p, efp), cdata[cc]);
+            cdata[tc], *buff_id, efp, buff_calc_duration(p, efp), cdata[cc]);
 
         if (efid == 447)
         {

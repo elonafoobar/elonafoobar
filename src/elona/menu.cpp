@@ -495,9 +495,9 @@ static std::string _make_buff_power_string(int skill_id)
 {
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
     const auto duration =
-        calc_buff_duration(buff_id, calcspellpower(skill_id, cc));
+        buff_calc_duration(buff_id, calcspellpower(skill_id, cc));
     const auto description =
-        get_buff_description(buff_id, calcspellpower(skill_id, cc));
+        buff_get_description(buff_id, calcspellpower(skill_id, cc));
     return std::to_string(duration) +
         i18n::s.get("core.locale.ui.spell.turn_counter") + " " + description;
 }

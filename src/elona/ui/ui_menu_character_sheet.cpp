@@ -681,9 +681,9 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
 
     if (_cs_buffmax != 0)
     {
-        const auto duration = calc_buff_duration(
+        const auto duration = buff_calc_duration(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
-        const auto description = get_buff_description(
+        const auto description = buff_get_description(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
         buff_desc = ""s +
             i18n::s.get_enum_property(
