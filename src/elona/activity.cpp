@@ -19,6 +19,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "optional.hpp"
+#include "save.hpp"
 #include "status_ailment.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -677,7 +678,7 @@ void continuous_action_sex()
         {
             txt(i18n::s.get(
                 "core.locale.activity.sex.spare_life",
-                i18n::s.get("core.locale.ui.sex2", cdata[tc].sex),
+                i18n::s.get_enum("core.locale.ui.sex2", cdata[tc].sex),
                 cdata[tc]));
         }
         cdata[cc].continuous_action.finish();
@@ -1687,9 +1688,7 @@ void spot_digging()
                             txt(
                                 i18n::s.get("core.locale.common.something_is_"
                                             "put_on_the_ground"));
-                            autosave = 1 *
-                                (game_data.current_map !=
-                                 mdata_t::MapId::show_house);
+                            save_set_autosave();
                             inv[cnt].modify_number(-1);
                             break;
                         }
@@ -1852,6 +1851,8 @@ TurnResult do_dig_after_sp_check()
     return TurnResult::turn_end;
 }
 
+
+
 int search_material_spot()
 {
     if (cell_data.at(cdata.player().position.x, cdata.player().position.y)
@@ -1859,6 +1860,7 @@ int search_material_spot()
     {
         return 0;
     }
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(1) < 24 || 28 < feat(1))
     {
         return 0;

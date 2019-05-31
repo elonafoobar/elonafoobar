@@ -32,6 +32,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
@@ -809,7 +810,7 @@ bool _magic_1117()
     }
     snd("core.ding2");
     txt(i18n::s.get("core.locale.magic.create_material.apply", s(0)));
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     for (int cnt = 0,
              cnt_end = (rnd(3) + 3 + (efstatus == CurseState::blessed) * 6);
          cnt < cnt_end;
@@ -1317,7 +1318,7 @@ bool _magic_1104()
         obvious = 0;
         return true;
     }
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     return true;
 }
 
@@ -1421,7 +1422,7 @@ bool _magic_1105()
         }
     }
     chara_refresh(tc);
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     return true;
 }
 
@@ -1539,7 +1540,7 @@ bool _magic_1119()
         }
     }
     chara_refresh(tc);
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     return true;
 }
 
@@ -1613,7 +1614,10 @@ bool _magic_1113()
             snd("core.curse3");
         }
     }
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    if (cdata[tc].index == 0)
+    {
+        save_set_autosave();
+    }
     return true;
 }
 
@@ -2438,7 +2442,7 @@ bool _magic_49(int efcibk)
     objfix = 0;
     ci = efcibk;
     inv[ci].modify_number(-1);
-    autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+    save_set_autosave();
     return true;
 }
 
@@ -2822,8 +2826,7 @@ bool _magic_1140()
         MenuResult result = ctrl_inventory();
         if (result.succeeded)
         {
-            autosave =
-                1 * (game_data.current_map != mdata_t::MapId::show_house);
+            save_set_autosave();
             animeload(8, cc);
             if (!is_cursed(efstatus))
             {
@@ -2899,7 +2902,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
     }
     if (f == 1)
     {
-        autosave = 1 * (game_data.current_map != mdata_t::MapId::show_house);
+        save_set_autosave();
         animeload(8, cc);
         fltbk = the_item_db[inv[ci].id]->category;
         valuebk = calcitemvalue(ci, 0);

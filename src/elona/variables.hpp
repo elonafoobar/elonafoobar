@@ -338,7 +338,6 @@ ELONA_EXTERN(int attacknum);
 ELONA_EXTERN(int attackrange);
 ELONA_EXTERN(int attackskill);
 ELONA_EXTERN(int atxspot);
-ELONA_EXTERN(int autosave);
 ELONA_EXTERN(int body);
 ELONA_EXTERN(int bonus);
 ELONA_EXTERN(int camera);

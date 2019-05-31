@@ -2427,23 +2427,7 @@ static void _init_map_dragons_nest()
     }
 }
 
-static void _init_map_puppy_cave()
-{
-    generate_random_nefia();
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
-    {
-        if (game_data.quest_flags.puppys_cave < 2)
-        {
-            if (chara_find_ally(225) == -1)
-            {
-                flt();
-                chara_create(-1, 225, -3, 0);
-                cdata[rc].is_not_attacked_by_enemy() = true;
-            }
-        }
-    }
-}
+
 
 static void _init_map_minotaurs_nest()
 {
@@ -2613,7 +2597,6 @@ void initialize_map_from_map_type()
     case mdata_t::MapId::crypt_of_the_damned:        _init_map_crypt_of_the_damned();       break;
     case mdata_t::MapId::ancient_castle:             _init_map_ancient_castle();            break;
     case mdata_t::MapId::dragons_nest:               _init_map_dragons_nest();              break;
-    case mdata_t::MapId::puppy_cave:                 _init_map_puppy_cave();                break;
     case mdata_t::MapId::minotaurs_nest:             _init_map_minotaurs_nest();            break;
     case mdata_t::MapId::yeeks_nest:                 _init_map_yeeks_nest();                break;
     case mdata_t::MapId::pyramid:                    _init_map_pyramid();                   break;
