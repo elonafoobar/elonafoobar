@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.4.3] - 2019-05-31
+
+### Added
+
+- Don't autosave when NPC drinks potion of potential.
+- Add Lock Picking skill to developer class.
+
+
+### Fixed
+
+- [vanilla] Fix that stacked wells dried out at the same time.
+- Fix that you failed to search material spot if there are growing plants around you.
+- Fix Poppy did not appear in puppy's cave 4th.
+- Fix failure to launch foobar on Windows.
+- Fix `core.all_mods_loaded` event not being fired.
+- Fix a strange random nefia at (27, 47) in North Tyris.
+  - Its tile set was wrong, the deepest level was the first floor, and also it won't disappear even after diastrophism.
+  - The nefia will be removed when you update the old save data. NOTE: exit the nefia before updating foobar.
+- Fix several text errors.
+
+
+
 ## [0.4.2] - 2019-05-24
 
 ### Added
