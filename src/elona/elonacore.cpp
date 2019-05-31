@@ -6673,119 +6673,122 @@ int ask_direction()
     gcopy(0, x, y, 144, 144, 0, 0);
     gsel(0);
     t = 0;
-label_2128_internal:
-    ++t;
-    gmode(2, 200 - t / 2 % 20 * (t / 2 % 20));
-    x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
-    y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
-    if (!getkey(snail::Key::alt))
+
+    while (true)
     {
-        draw_rotated("direction_arrow", x, y - 48, 0);
-        draw_rotated("direction_arrow", x, y + 48, 180);
-        draw_rotated("direction_arrow", x + 48, y, 90);
-        draw_rotated("direction_arrow", x - 48, y, 270);
-    }
-    draw_rotated("direction_arrow", x - 48, y - 48, 315);
-    draw_rotated("direction_arrow", x + 48, y + 48, 135);
-    draw_rotated("direction_arrow", x + 48, y - 48, 45);
-    draw_rotated("direction_arrow", x - 48, y + 48, 225);
-    redraw();
-    gmode(0);
-    gcopy(4, 0, 0, 144, 144, x - 48 - 24, y - 48 - 24);
-    gmode(2);
-    auto action = key_check(KeyWaitDelay::walk_run);
-    x = cdata.player().position.x;
-    y = cdata.player().position.y;
-    if (action == "wait" || action == "enter")
-    {
-        tlocx = x;
-        tlocy = y;
-        keyhalt = 1;
-        return 1;
-    }
-    if (action == "north")
-    {
-        if (getkey(snail::Key::alt))
+        ++t;
+        gmode(2, 200 - t / 2 % 20 * (t / 2 % 20));
+        x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
+        y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
+        if (!getkey(snail::Key::alt))
         {
-            goto label_2128_internal;
+            draw_rotated("direction_arrow", x, y - 48, 0);
+            draw_rotated("direction_arrow", x, y + 48, 180);
+            draw_rotated("direction_arrow", x + 48, y, 90);
+            draw_rotated("direction_arrow", x - 48, y, 270);
         }
-        else
+        draw_rotated("direction_arrow", x - 48, y - 48, 315);
+        draw_rotated("direction_arrow", x + 48, y + 48, 135);
+        draw_rotated("direction_arrow", x + 48, y - 48, 45);
+        draw_rotated("direction_arrow", x - 48, y + 48, 225);
+        redraw();
+        gmode(0);
+        gcopy(4, 0, 0, 144, 144, x - 48 - 24, y - 48 - 24);
+        gmode(2);
+        auto action = key_check(KeyWaitDelay::walk_run);
+        x = cdata.player().position.x;
+        y = cdata.player().position.y;
+        if (action == "wait" || action == "enter")
         {
-            y -= 1;
+            tlocx = x;
+            tlocy = y;
+            keyhalt = 1;
+            return 1;
         }
-    }
-    if (action == "south")
-    {
-        if (getkey(snail::Key::alt))
+        if (action == "north")
         {
-            goto label_2128_internal;
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                y -= 1;
+            }
         }
-        else
+        if (action == "south")
         {
-            y += 1;
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                y += 1;
+            }
         }
-    }
-    if (action == "west")
-    {
-        if (getkey(snail::Key::alt))
+        if (action == "west")
         {
-            goto label_2128_internal;
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                x -= 1;
+            }
         }
-        else
+        if (action == "east")
+        {
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                x += 1;
+            }
+        }
+        if (action == "northwest")
         {
             x -= 1;
+            y -= 1;
         }
-    }
-    if (action == "east")
-    {
-        if (getkey(snail::Key::alt))
-        {
-            goto label_2128_internal;
-        }
-        else
+        if (action == "northeast")
         {
             x += 1;
+            y -= 1;
         }
-    }
-    if (action == "northwest")
-    {
-        x -= 1;
-        y -= 1;
-    }
-    if (action == "northeast")
-    {
-        x += 1;
-        y -= 1;
-    }
-    if (action == "southwest")
-    {
-        x -= 1;
-        y += 1;
-    }
-    if (action == "southeast")
-    {
-        x += 1;
-        y += 1;
-    }
-    if (action != ""s)
-    {
-        if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
+        if (action == "southwest")
         {
-            x = cdata.player().position.x;
-            y = cdata.player().position.y;
+            x -= 1;
+            y += 1;
+        }
+        if (action == "southeast")
+        {
+            x += 1;
+            y += 1;
+        }
+        if (action != ""s)
+        {
+            if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
+            {
+                x = cdata.player().position.x;
+                y = cdata.player().position.y;
+                keyhalt = 1;
+                return 0;
+            }
+            if (x == cdata.player().position.x &&
+                y == cdata.player().position.y)
+            {
+                return 0;
+            }
+            tlocx = x;
+            tlocy = y;
             keyhalt = 1;
-            return 0;
+            return 1;
         }
-        if (x == cdata.player().position.x && y == cdata.player().position.y)
-        {
-            return 0;
-        }
-        tlocx = x;
-        tlocy = y;
-        keyhalt = 1;
-        return 1;
     }
-    goto label_2128_internal;
 }
 
 
