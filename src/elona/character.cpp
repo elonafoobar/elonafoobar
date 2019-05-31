@@ -36,6 +36,56 @@ using namespace elona;
 namespace
 {
 
+int _calc_chara_generation_rate(const CharacterData& data)
+{
+    const auto R = data.rarity;
+    const auto D = std::abs(data.level - objlv);
+    const auto C = data.coefficient;
+
+    return R / (500 + D * C) + 1;
+}
+
+
+
+int _get_random_npc_id()
+{
+    WeightedRandomSampler<int> sampler;
+
+    for (const auto& data : the_character_db.values())
+    {
+        if (data.level > objlv)
+            continue;
+        if (fltselect != data.fltselect)
+            continue;
+        if (fltselect == 2 && npcmemory(1, data.legacy_id) != 0)
+            continue;
+        if (flttypemajor != 0 && flttypemajor != data.category)
+            continue;
+        if (!fltnrace(0).empty() && fltnrace(0) != data.race)
+            continue;
+        if (filtermax != 0)
+        {
+            // FIXME: use std::all_of
+            bool ok = true;
+            for (int i = 0; i < filtermax; ++i)
+            {
+                if (data.filter.find(filtern(i)) == std::string::npos)
+                {
+                    ok = false;
+                    break;
+                }
+            }
+            if (!ok)
+                continue;
+        }
+        sampler.add(data.legacy_id, _calc_chara_generation_rate(data));
+    }
+
+    return sampler.get().value_or(0);
+}
+
+
+
 int chara_create_internal()
 {
     if (rc == -1)
@@ -76,7 +126,7 @@ int chara_create_internal()
             }
         }
         dbmode = 1;
-        get_random_npc_id();
+        dbid = _get_random_npc_id();
         if (dbid == 0)
         {
             if (fltselect == 2 || fixlv == Quality::special)
@@ -85,14 +135,7 @@ int chara_create_internal()
             }
             flt(objlv + 10, fixlv);
             dbmode = 1;
-            get_random_npc_id();
-        }
-    }
-    else if (dbid == 343)
-    {
-        if (usernpcmax > 0)
-        {
-            cdata[rc].cnpc_id = rnd(usernpcmax);
+            dbid = _get_random_npc_id();
         }
     }
 
@@ -111,7 +154,7 @@ int chara_create_internal()
             cmshade = 1;
             flt(objlv, fixlv);
             dbmode = 1;
-            get_random_npc_id();
+            dbid = _get_random_npc_id();
         }
     }
     if (game_data.current_map == mdata_t::MapId::the_void)

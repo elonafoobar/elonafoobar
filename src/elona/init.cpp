@@ -61,7 +61,6 @@ void initialize_directories()
 
 void load_character_sprite()
 {
-    usernpcmax = 0;
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
 }

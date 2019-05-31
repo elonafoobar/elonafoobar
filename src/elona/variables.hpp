@@ -554,7 +554,6 @@ ELONA_EXTERN(int tlocy);
 ELONA_EXTERN(int tx);
 ELONA_EXTERN(int txt3rd);
 ELONA_EXTERN(int ty);
-ELONA_EXTERN(int usernpcmax);
 ELONA_EXTERN(int userrelation);
 ELONA_EXTERN(int vfix);
 ELONA_EXTERN(int voidlv);
@@ -689,9 +688,6 @@ void clear_existing_quest_list();
 
 //// Character querying
 int relationbetween(int, int);
-
-//// Character generation
-void get_random_npc_id();
 
 
 //// Character manipulation
