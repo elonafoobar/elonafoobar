@@ -735,7 +735,8 @@ label_2692_internal:
                 {
                     if (rnd(100) == 0)
                     {
-                        dmgcon(cc, StatusAilment::sleep, 4000);
+                        status_ailment_damage(
+                            cdata[cc], StatusAilment::sleep, 4000);
                     }
                 }
             }

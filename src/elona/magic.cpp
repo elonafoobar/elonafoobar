@@ -180,7 +180,7 @@ bool _magic_1135()
     {
         txt(i18n::s.get("core.locale.magic.love_potion.spill", cdata[tc]));
         chara_modify_impression(cdata[tc], clamp(efp / 15, 0, 15));
-        dmgcon(tc, StatusAilment::dimmed, 100);
+        status_ailment_damage(cdata[tc], StatusAilment::dimmed, 100);
         lovemiracle(tc);
         return true;
     }
@@ -194,7 +194,7 @@ bool _magic_1135()
         lovemiracle(tc);
         chara_modify_impression(cdata[tc], clamp(efp / 4, 0, 25));
     }
-    dmgcon(tc, StatusAilment::dimmed, 500);
+    status_ailment_damage(cdata[tc], StatusAilment::dimmed, 500);
     return true;
 }
 
@@ -284,7 +284,7 @@ bool _magic_1102()
                 Message::color{ColorIndex::cyan});
         }
     }
-    dmgcon(tc, StatusAilment::drunk, efp);
+    status_ailment_damage(cdata[tc], StatusAilment::drunk, efp);
     eatstatus(efstatus, tc);
     return true;
 }
@@ -1984,7 +1984,7 @@ bool _magic_1108()
                 "core.locale.magic.common.melts_alien_children", cdata[tc]));
         }
     }
-    dmgcon(tc, StatusAilment::poisoned, efp);
+    status_ailment_damage(cdata[tc], StatusAilment::poisoned, efp);
     return true;
 }
 
@@ -1996,7 +1996,7 @@ bool _magic_1111()
     {
         txt(i18n::s.get("core.locale.magic.ink_attack", cdata[tc]));
     }
-    dmgcon(tc, StatusAilment::blinded, efp);
+    status_ailment_damage(cdata[tc], StatusAilment::blinded, efp);
     return true;
 }
 
@@ -2008,7 +2008,7 @@ bool _magic_1109()
     {
         txt(i18n::s.get("core.locale.magic.confusion", cdata[tc]));
     }
-    dmgcon(tc, StatusAilment::confused, efp);
+    status_ailment_damage(cdata[tc], StatusAilment::confused, efp);
     return true;
 }
 
@@ -2020,7 +2020,7 @@ bool _magic_1110()
     {
         txt(i18n::s.get("core.locale.magic.paralysis", cdata[tc]));
     }
-    dmgcon(tc, StatusAilment::paralyzed, efp);
+    status_ailment_damage(cdata[tc], StatusAilment::paralyzed, efp);
     return true;
 }
 
@@ -2032,7 +2032,7 @@ bool _magic_1112()
     {
         txt(i18n::s.get("core.locale.magic.sleep", cdata[tc]));
     }
-    dmgcon(tc, StatusAilment::sleep, efp);
+    status_ailment_damage(cdata[tc], StatusAilment::sleep, efp);
     return true;
 }
 
@@ -3345,7 +3345,7 @@ bool _magic_638_648()
             txt(i18n::s.get("core.locale.magic.gaze", cdata[cc], cdata[tc]));
         }
     }
-    dmgcon(tc, StatusAilment::dimmed, 200);
+    status_ailment_damage(cdata[tc], StatusAilment::dimmed, 200);
     return true;
 }
 
@@ -3883,7 +3883,8 @@ optional<bool> _proc_general_magic()
                         txt(i18n::s.get(
                             "core.locale.magic.rain_of_sanity", cdata[tc]));
                         heal_insanity(cdata[tc], efp / 10);
-                        healcon(tc, StatusAilment::insane, 9999);
+                        status_ailment_heal(
+                            cdata[tc], StatusAilment::insane, 9999);
                     }
                     continue;
                 }
@@ -4052,7 +4053,7 @@ optional<bool> _proc_general_magic()
         heal_both_rider_and_mount();
         if (efstatus == CurseState::blessed)
         {
-            healcon(tc, StatusAilment::sick, 5 + rnd(5));
+            status_ailment_heal(cdata[tc], StatusAilment::sick, 5 + rnd(5));
         }
         if (rnd(3) == 0)
         {
@@ -4151,11 +4152,11 @@ optional<bool> _proc_general_magic()
         damage_hp(cdata[tc], roll(dice1, dice2, bonus), cc, ele, elep);
         if (efid == 617)
         {
-            dmgcon(tc, StatusAilment::fear, elep);
+            status_ailment_damage(cdata[tc], StatusAilment::fear, elep);
         }
         if (efid == 618)
         {
-            dmgcon(tc, StatusAilment::sleep, elep);
+            status_ailment_damage(cdata[tc], StatusAilment::sleep, elep);
         }
         if (efid == 614)
         {

@@ -429,7 +429,8 @@ void continuous_action_perform()
                 {
                     if (rnd(15) == 0)
                     {
-                        dmgcon(tc, StatusAilment::drunk, 500);
+                        status_ailment_damage(
+                            cdata[tc], StatusAilment::drunk, 500);
                     }
                 }
                 if (rnd(sdata(183, cc) + 1) > rnd(cdata[tc].level * 5 + 1))
@@ -731,20 +732,20 @@ void continuous_action_sex()
         {
             if (rnd(3) == 0)
             {
-                dmgcon(c, StatusAilment::insane, 500);
+                status_ailment_damage(cdata[c], StatusAilment::insane, 500);
             }
             if (rnd(5) == 0)
             {
-                dmgcon(c, StatusAilment::paralyzed, 500);
+                status_ailment_damage(cdata[c], StatusAilment::paralyzed, 500);
             }
-            dmgcon(c, StatusAilment::insane, 300);
+            status_ailment_damage(cdata[c], StatusAilment::insane, 300);
             heal_insanity(cdata[c], 10);
             chara_gain_skill_exp(cdata[c], 11, 250 + (c >= 57) * 1000);
             chara_gain_skill_exp(cdata[c], 15, 250 + (c >= 57) * 1000);
         }
         if (rnd(15) == 0)
         {
-            dmgcon(c, StatusAilment::sick, 200);
+            status_ailment_damage(cdata[c], StatusAilment::sick, 200);
         }
         chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
     }

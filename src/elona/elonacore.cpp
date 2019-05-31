@@ -2034,7 +2034,7 @@ int try_to_cast_spell()
                 txt(i18n::s.get("core.locale.misc.fail_to_cast.too_difficult"));
             }
         }
-        dmgcon(cc, StatusAilment::confused, 100);
+        status_ailment_damage(cdata[cc], StatusAilment::confused, 100);
         return 0;
     }
     if (rnd(4) == 0)
@@ -2168,7 +2168,7 @@ void proc_turn_end(int cc)
     regen = 1;
     if (cdata[cc].sleep > 0)
     {
-        healcon(cc, StatusAilment::sleep, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::sleep, 1);
         if (cdata[cc].sleep > 0)
         {
             cdata[cc].emotion_icon = 114;
@@ -2179,7 +2179,7 @@ void proc_turn_end(int cc)
     if (cdata[cc].poisoned > 0)
     {
         damage_hp(cdata[cc], rnd(2 + sdata(11, cc) / 10), -4);
-        healcon(cc, StatusAilment::poisoned, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::poisoned, 1);
         if (cdata[cc].poisoned > 0)
         {
             cdata[cc].emotion_icon = 108;
@@ -2249,14 +2249,14 @@ void proc_turn_end(int cc)
             {
                 if (rnd(200) == 0)
                 {
-                    healcon(cc, StatusAilment::sick);
+                    status_ailment_heal(cdata[cc], StatusAilment::sick);
                 }
             }
         }
     }
     if (cdata[cc].blind > 0)
     {
-        healcon(cc, StatusAilment::blinded, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::blinded, 1);
         if (cdata[cc].blind > 0)
         {
             cdata[cc].emotion_icon = 110;
@@ -2265,7 +2265,7 @@ void proc_turn_end(int cc)
     if (cdata[cc].paralyzed > 0)
     {
         regen = 0;
-        healcon(cc, StatusAilment::paralyzed, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::paralyzed, 1);
         if (cdata[cc].paralyzed > 0)
         {
             cdata[cc].emotion_icon = 115;
@@ -2273,7 +2273,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].confused > 0)
     {
-        healcon(cc, StatusAilment::confused, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::confused, 1);
         if (cdata[cc].confused > 0)
         {
             cdata[cc].emotion_icon = 111;
@@ -2281,7 +2281,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].fear > 0)
     {
-        healcon(cc, StatusAilment::fear, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::fear, 1);
         if (cdata[cc].fear > 0)
         {
             cdata[cc].emotion_icon = 113;
@@ -2289,7 +2289,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].dimmed > 0)
     {
-        healcon(cc, StatusAilment::dimmed, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::dimmed, 1);
         if (cdata[cc].dimmed > 0)
         {
             cdata[cc].emotion_icon = 112;
@@ -2297,7 +2297,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].drunk > 0)
     {
-        healcon(cc, StatusAilment::drunk, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::drunk, 1);
         if (cdata[cc].drunk > 0)
         {
             cdata[cc].emotion_icon = 106;
@@ -2309,8 +2309,8 @@ void proc_turn_end(int cc)
             cdata[cc],
             rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
-        healcon(
-            cc,
+        status_ailment_heal(
+            cdata[cc],
             StatusAilment::bleeding,
             1 + cdata[cc].cures_bleeding_quickly() * 3);
         if (cdata[cc].bleeding > 0)
@@ -2351,7 +2351,7 @@ void proc_turn_end(int cc)
         {
             cdata[cc].fear += rnd(10);
         }
-        healcon(cc, StatusAilment::insane, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::insane, 1);
         if (cdata[cc].insane > 0)
         {
             cdata[cc].emotion_icon = 124;
@@ -6662,8 +6662,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.blind"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::blinded,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6674,8 +6674,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.paralyze"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::paralyzed,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6686,8 +6686,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.confuse"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::confused,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6760,8 +6760,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.poison"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::poisoned,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6772,8 +6772,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.sleep"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::sleep,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6861,7 +6861,7 @@ void sleep_start()
         cdata[tc].hp = cdata[tc].max_hp;
         cdata[tc].mp = cdata[tc].max_mp;
         cdata[tc].sp = cdata[tc].max_sp;
-        healcon(tc, StatusAilment::sick, 7 + rnd(7));
+        status_ailment_heal(cdata[tc], StatusAilment::sick, 7 + rnd(7));
         if (cdata[tc].has_anorexia())
         {
             cdata[tc].anorexia_count -= rnd(6);
@@ -7138,7 +7138,8 @@ void map_global_proc_travel_events()
                     "core.locale.action.move.global.weather.snow.eat"));
                 cdata[cc].nutrition += 5000;
                 show_eating_message();
-                dmgcon(0, StatusAilment::dimmed, 1000);
+                status_ailment_damage(
+                    cdata.player(), StatusAilment::dimmed, 1000);
             }
         }
     }
@@ -8384,11 +8385,11 @@ void heal_both_rider_and_mount()
     {
         const auto amount = roll(dice1, dice2, bonus);
         heal_hp(cdata[tc(cnt)], amount);
-        healcon(tc(cnt), StatusAilment::fear);
-        healcon(tc(cnt), StatusAilment::poisoned, 50);
-        healcon(tc(cnt), StatusAilment::confused, 50);
-        healcon(tc(cnt), StatusAilment::dimmed, 30);
-        healcon(tc(cnt), StatusAilment::bleeding, 20);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::fear);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::poisoned, 50);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::confused, 50);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::dimmed, 30);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::bleeding, 20);
         heal_insanity(cdata[tc(cnt)], 1);
         if (is_in_fov(cdata[tc(cnt)]))
         {
@@ -10265,8 +10266,8 @@ void try_to_melee_attack()
                     cdata[tc]));
             }
             damage_hp(cdata[tc], rnd(sdata(168, cc)) + 1, cc);
-            dmgcon(
-                tc,
+            status_ailment_damage(
+                cdata[tc],
                 StatusAilment::dimmed,
                 50 + int(std::sqrt(sdata(168, cc))) * 15);
             cdata[tc].paralyzed += rnd(3);

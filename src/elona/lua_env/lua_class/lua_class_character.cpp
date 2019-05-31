@@ -85,7 +85,7 @@ void LuaCharacter::apply_ailment(
 
     StatusAilment ailment_value =
         LuaEnums::StatusAilmentTable.ensure_from_string(ailment);
-    elona::dmgcon(self.index, ailment_value, power);
+    elona::status_ailment_damage(self, ailment_value, power);
 }
 
 /**
@@ -110,7 +110,7 @@ void LuaCharacter::heal_ailment(
 
     StatusAilment ailment_value =
         LuaEnums::StatusAilmentTable.ensure_from_string(ailment);
-    elona::healcon(self.index, ailment_value, power);
+    elona::status_ailment_heal(self, ailment_value, power);
 }
 
 void LuaCharacter::add_buff(

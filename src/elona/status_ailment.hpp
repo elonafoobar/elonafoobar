@@ -5,6 +5,9 @@
 namespace elona
 {
 
+struct Character;
+
+
 
 // TODO: they shouldn't be linked to specific magic numbers.
 enum class StatusAilment
@@ -23,8 +26,14 @@ enum class StatusAilment
 };
 
 
-void dmgcon(int cc, StatusAilment status_ailment, int power);
-void healcon(int cc, StatusAilment status_ailment, int power = 0);
 
+void status_ailment_damage(
+    Character& chara,
+    StatusAilment status_ailment,
+    int power);
+void status_ailment_heal(
+    Character& chara,
+    StatusAilment status_ailment,
+    int power = 0);
 
 } // namespace elona
