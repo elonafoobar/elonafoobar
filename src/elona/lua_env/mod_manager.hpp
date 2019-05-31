@@ -11,6 +11,8 @@
 #include "lua_env.hpp"
 #include "mod_manifest.hpp"
 
+
+
 namespace elona
 {
 namespace lua
@@ -415,6 +417,15 @@ public:
      */
     std::vector<std::string> calculate_loading_order();
 
+    std::vector<ModManifest> get_templates();
+
+    void create_mod_from_template(
+        const std::string& new_mod_id,
+        const std::string& template_mod_id);
+
+    bool exists(const std::string& mod_id);
+
+
 private:
     //********************* Lifecycle methods **********************//
 
@@ -524,6 +535,14 @@ private:
 
     LuaEnv* lua_;
 };
+
+
+
+std::vector<fs::path> all_mod_dirs(const fs::path& base_dir);
+std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir);
+std::vector<fs::path> template_mod_dirs(const fs::path& base_dir);
+
+bool is_valid_mod_id(const std::string& id);
 
 } // namespace lua
 } // namespace elona

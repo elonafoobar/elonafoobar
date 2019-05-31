@@ -37,7 +37,7 @@ void UIMenuModInfo::_build_description()
     if (!fs::exists(readme_path))
     {
         _readme_pages.push_back(
-            i18n::s.get("core.locale.main_menu.mods.no_readme"));
+            i18n::s.get("core.locale.main_menu.mod_list.no_readme"));
     }
     else
     {
@@ -81,7 +81,7 @@ void UIMenuModInfo::_build_description()
         if (description_lines.empty())
         {
             _readme_pages.push_back(
-                i18n::s.get("core.locale.main_menu.mods.no_readme"));
+                i18n::s.get("core.locale.main_menu.mod_list.no_readme"));
         }
     }
 
@@ -110,20 +110,22 @@ void UIMenuModInfo::update()
 void UIMenuModInfo::_draw_mod_page()
 {
     display_topic(
-        i18n::s.get("core.locale.main_menu.mods.info.title"), wx + 30, wy + 36);
+        i18n::s.get("core.locale.main_menu.mod_list.info.title"),
+        wx + 30,
+        wy + 36);
 
     int y = wy + 60;
 
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.id") + ":<def> " +
-            _desc.manifest.id,
+        "<b>" + i18n::s.get("core.locale.main_menu.mod_list.info.id") +
+            ":<def> " + _desc.manifest.id,
         wx + 30,
         y,
         570,
         {30, 30, 30},
         false);
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.author") +
+        "<b>" + i18n::s.get("core.locale.main_menu.mod_list.info.author") +
             ":<def> " + _desc.manifest.author,
         wx + 30,
         y + 16,
@@ -131,7 +133,7 @@ void UIMenuModInfo::_draw_mod_page()
         {30, 30, 30},
         false);
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.version") +
+        "<b>" + i18n::s.get("core.locale.main_menu.mod_list.info.version") +
             ":<def> " + _desc.manifest.version.to_string(),
         wx + 30,
         y + 32,
@@ -139,7 +141,7 @@ void UIMenuModInfo::_draw_mod_page()
         {30, 30, 30},
         false);
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.description") +
+        "<b>" + i18n::s.get("core.locale.main_menu.mod_list.info.description") +
             ":<def> " + _desc.manifest.description,
         wx + 30,
         y + 48,

@@ -39,6 +39,14 @@ locale {
         }
 
         mods {
+            title = "MOD"
+            menu {
+                list = "List"
+                develop = "Develop"
+            }
+        }
+
+        mod_list {
             title {
                 installed = "Installed Mods"
                 download = "Download Mods"
@@ -64,6 +72,15 @@ locale {
                 download = "[Switch To Download]"
                 installed = "[Switch To Installed]"
             }
+        }
+
+        mod_develop {
+            title = "Mods"
+            lets_create = "Let's create a mod."
+            key_hint = "Enter [Create]"
+            no_template = "No template found"
+            invalid_id = "'${_1}' is invalid. Only letters, digits, and underscore are allowed."
+            exist = "Mod '${_1}' already exists."
         }
     }
 }
