@@ -26,7 +26,10 @@ namespace elona
 namespace lua
 {
 
-static bool _is_alnum_only(const std::string& str)
+namespace
+{
+
+bool _is_alnum_only(const std::string& str)
 {
     return find_if(str.begin(), str.end(), [](char c) {
                return !(isalnum(c) || (c == '_'));
@@ -34,15 +37,43 @@ static bool _is_alnum_only(const std::string& str)
 }
 
 
+
+template <typename F>
+std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
+{
+    std::vector<fs::path> result;
+    for (const auto& entry : filesystem::dir_entries(
+             base_dir,
+             filesystem::DirEntryRange::Type::dir,
+             std::regex{"[a-z][a-z0-9_]*"}))
+    {
+        if (fs::exists(entry.path() / "mod.hcl"))
+        {
+            if (predicate(entry.path()))
+            {
+                result.push_back(entry.path());
+            }
+        }
+    }
+    return result;
+}
+
+} // namespace
+
+
+
 ModManager::ModManager(LuaEnv* lua)
 {
     lua_ = lua;
 }
 
+
+
 bool ModManager::mod_id_is_reserved(const std::string& mod_id)
 {
     return mod_id == "script" || mod_id == "_CONSOLE_" || mod_id == "BUILTIN";
 }
+
 
 
 void ModManager::load_mods(const fs::path& mod_dir)
@@ -56,6 +87,8 @@ void ModManager::load_mods(const fs::path& mod_dir)
     load_lua_support_libraries();
     load_scanned_mods();
 }
+
+
 
 void ModManager::load_mods(
     const fs::path& mod_dir,
@@ -75,6 +108,8 @@ void ModManager::load_mods(
     load_scanned_mods();
 }
 
+
+
 void ModManager::unload_mods()
 {
     if (stage_ != ModLoadingStage::all_mods_loaded)
@@ -87,11 +122,13 @@ void ModManager::unload_mods()
 }
 
 
+
 void report_error(sol::error err)
 {
     std::string what = err.what();
     ELONA_ERROR("lua.mod") << what;
 }
+
 
 
 void ModManager::load_mod(ModInfo& mod)
@@ -129,18 +166,11 @@ void ModManager::load_mod(ModInfo& mod)
     }
 }
 
+
+
 void ModManager::scan_mod(const fs::path& mod_dir)
 {
-    fs::path manifest_path = mod_dir / "mod.hcl";
-
-    if (!fs::exists(manifest_path))
-    {
-        throw std::runtime_error(
-            "Could not find mod manifest at " +
-            filepathutil::to_utf8_path(manifest_path));
-    }
-
-    ModManifest manifest = ModManifest::load(manifest_path);
+    ModManifest manifest = ModManifest::load(mod_dir / "mod.hcl");
 
     const std::string& mod_id = manifest.id;
     ELONA_LOG("lua.mod") << "Found mod " << mod_id;
@@ -159,6 +189,8 @@ void ModManager::scan_mod(const fs::path& mod_dir)
     create_mod(manifest, false);
 }
 
+
+
 void ModManager::scan_all_mods(const fs::path& mods_dir)
 {
     if (stage_ != ModLoadingStage::not_started &&
@@ -167,16 +199,14 @@ void ModManager::scan_all_mods(const fs::path& mods_dir)
         throw std::runtime_error("Mods have already been scanned!");
     }
 
-    for (const auto& entry : filesystem::dir_entries(
-             mods_dir, filesystem::DirEntryRange::Type::dir))
+    for (const auto& mod_dir : normal_mod_dirs(mods_dir))
     {
-        if (fs::exists(entry.path() / "init.lua"))
-        {
-            scan_mod(entry.path());
-        }
+        scan_mod(mod_dir);
     }
     stage_ = ModLoadingStage::scan_finished;
 }
+
+
 
 void ModManager::load_lua_support_libraries()
 {
@@ -192,6 +222,8 @@ void ModManager::load_lua_support_libraries()
 
     stage_ = ModLoadingStage::lua_libraries_loaded;
 }
+
+
 
 void ModManager::load_scanned_mods()
 {
@@ -223,6 +255,8 @@ void ModManager::load_scanned_mods()
     lua_->get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
 }
 
+
+
 void ModManager::run_startup_script(const std::string& name)
 {
     if (stage_ < ModLoadingStage::lua_libraries_loaded)
@@ -249,6 +283,8 @@ void ModManager::run_startup_script(const std::string& name)
     Message::instance().linebreak();
 }
 
+
+
 void ModManager::clear_map_local_stores()
 {
     for (auto&& pair : this->enabled_mods())
@@ -257,6 +293,8 @@ void ModManager::clear_map_local_stores()
         lua_->get_state()->safe_script(R"(Store.map = {})", mod->env);
     }
 }
+
+
 
 void ModManager::clear_global_stores()
 {
@@ -267,11 +305,15 @@ void ModManager::clear_global_stores()
     }
 }
 
+
+
 void ModManager::clear_mod_stores()
 {
     clear_map_local_stores();
     clear_global_stores();
 }
+
+
 
 // Callback to be called in Lua for preventing write access to unknown
 // globals.
@@ -299,6 +341,8 @@ int deny(
     return luaL_error(L, ss.str().c_str());
 }
 
+
+
 int validate_store(
     sol::table table,
     sol::object key,
@@ -313,6 +357,8 @@ int validate_store(
 
     return deny(table, key, value, ts);
 }
+
+
 
 void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
 {
@@ -330,6 +376,8 @@ void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
     Store[sol::metatable_key] = metatable;
     table["Store"] = Store;
 }
+
+
 
 void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
 {
@@ -358,6 +406,8 @@ void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
     }
 }
 
+
+
 void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 {
     sol::table env_metatable = lua_->get_state()->create_table_with();
@@ -372,6 +422,8 @@ void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 
     mod.env[sol::metatable_key] = env_metatable;
 }
+
+
 
 ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
 {
@@ -397,6 +449,8 @@ ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
     return mods_[mod_id_with_version].get();
 }
 
+
+
 ModInfo* ModManager::create_mod(
     const std::string& id,
     optional<fs::path> mod_dir,
@@ -409,6 +463,8 @@ ModInfo* ModManager::create_mod(
 
     return create_mod(manifest, readonly);
 }
+
+
 
 std::vector<std::string> ModManager::calculate_loading_order()
 {
@@ -478,6 +534,45 @@ std::vector<std::string> ModManager::calculate_loading_order()
 }
 
 
+
+std::vector<ModManifest> ModManager::get_templates()
+{
+    std::vector<ModManifest> result;
+    for (const auto& path : template_mod_dirs(filesystem::dir::mod()))
+    {
+        auto manifest = ModManifest::load(path / "mod.hcl");
+        result.push_back(manifest);
+    }
+    return result;
+}
+
+
+
+void ModManager::create_mod_from_template(
+    const std::string& new_mod_id,
+    const std::string& template_mod_id)
+{
+    const auto from = filesystem::dir::for_mod(template_mod_id);
+    const auto to = filesystem::dir::for_mod(new_mod_id);
+    filesystem::copy_recursively(from, to);
+}
+
+
+
+bool ModManager::exists(const std::string& mod_id)
+{
+    for (const auto& dir : all_mod_dirs(filesystem::dir::mod()))
+    {
+        if (mod_id == filepathutil::to_utf8_path(dir.filename()))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
 // For testing use
 void ModManager::load_mod_from_script(
     const std::string& name,
@@ -521,6 +616,8 @@ void ModManager::load_mod_from_script(
     }
 }
 
+
+
 void ModManager::run_in_mod(const std::string& name, const std::string& script)
 {
     auto val = get_enabled_mod_optional(name);
@@ -543,6 +640,41 @@ void ModManager::run_in_mod(const std::string& name, const std::string& script)
         sol::error err = result;
         throw err;
     }
+}
+
+
+
+std::vector<fs::path> all_mod_dirs(const fs::path& base_dir)
+{
+    return mod_dirs_internal(base_dir, [](const auto&) { return true; });
+}
+
+
+
+std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir)
+{
+    return mod_dirs_internal(base_dir, [](const auto& path) {
+        const auto mod_id = filepathutil::to_utf8_path(path.filename());
+        return !strutil::has_prefix(mod_id, "template_");
+    });
+}
+
+
+
+std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
+{
+    return mod_dirs_internal(base_dir, [](const auto& path) {
+        const auto mod_id = filepathutil::to_utf8_path(path.filename());
+        return strutil::has_prefix(mod_id, "template_");
+    });
+}
+
+
+
+bool is_valid_mod_id(const std::string& id)
+{
+    return !id.empty() && _is_alnum_only(id) &&
+        !lua->get_mod_manager().mod_id_is_reserved(id);
 }
 
 } // namespace lua

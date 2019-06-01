@@ -6,7 +6,7 @@ locale {
             incarnate = "冒険者の引継ぎ"
             about = "このゲームについて"
             options = "設定の変更"
-            mods = "MODリスト"
+            mods = "MOD"
             exit = "終了"
         }
 
@@ -39,6 +39,14 @@ locale {
         }
 
         mods {
+            title = "MOD"
+            menu {
+                list = "リスト"
+                develop = "開発"
+            }
+        }
+
+        mod_list {
             title {
                 installed = "インストール済みのMOD"
                 download = "MODのダウンロード"
@@ -64,6 +72,15 @@ locale {
                 download = "[ダウンロード]"
                 installed = "[インストール済み]"
             }
+        }
+
+        mod_develop {
+            title = "MOD"
+            lets_create = "MODを作ってみよう。"
+            key_hint = "決定 [作成]"
+            no_template = "No template found"
+            invalid_id = "'${_1}' は無効です。アルファベット、数字、アンダーバーのみ使用できます"
+            exist = "MOD '${_1}' はすでに存在します"
         }
     }
 }

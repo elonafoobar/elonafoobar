@@ -183,7 +183,7 @@ void copy_recursively(const fs::path& source, const fs::path& destination)
     {
         throw std::runtime_error(
             "Destination must not exist: " +
-            filepathutil::to_utf8_path(source));
+            filepathutil::to_utf8_path(destination));
     }
 
     // mkdir destination

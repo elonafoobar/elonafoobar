@@ -197,18 +197,13 @@ void initialize_i18n()
         {filesystem::dir::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::mod(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dir::mod()))
     {
-        const auto manifest_path = entry.path() / "mod.hcl";
-        if (fs::exists(manifest_path))
+        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
+        const auto locale_path = mod_dir / "locale" / language;
+        if (fs::exists(locale_path))
         {
-            lua::ModManifest manifest = lua::ModManifest::load(manifest_path);
-            const auto locale_path = entry.path() / "locale" / language;
-            if (fs::exists(locale_path))
-            {
-                locations.emplace_back(locale_path, manifest.id);
-            }
+            locations.emplace_back(locale_path, manifest.id);
         }
     }
 
@@ -696,18 +691,13 @@ void initialize_config_defs()
     Config::instance().clear();
 
     // Somewhat convoluted as mods haven't been loaded yet by the mod manager.
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::mod(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dir::mod()))
     {
-        const auto manifest_path = entry.path() / "mod.hcl";
-        if (fs::exists(manifest_path))
+        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
+        const auto config_def_path = mod_dir / "config_def.hcl";
+        if (fs::exists(config_def_path))
         {
-            lua::ModManifest manifest = lua::ModManifest::load(manifest_path);
-            const auto config_def_path = entry.path() / "config_def.hcl";
-            if (fs::exists(config_def_path))
-            {
-                Config::instance().load_def(config_def_path, manifest.id);
-            }
+            Config::instance().load_def(config_def_path, manifest.id);
         }
     }
 }
