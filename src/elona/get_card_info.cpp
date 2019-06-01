@@ -1,15 +1,31 @@
+#include "data/types/type_character.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "variables.hpp"
 
 
+
 namespace elona
 {
 
-
 int get_card_info()
 {
-    cardrefn = i18n::s.get_enum("core.locale.card_info", dbid);
+    std::string card_name;
+    if (const auto card_name_opt =
+            i18n::s.get_enum_optional("core.locale.card_info", dbid))
+    {
+        card_name = *card_name_opt;
+    }
+    else if (const auto chara_id = the_character_db.get_id_from_legacy(dbid))
+    {
+        card_name = i18n::s.get_m("locale.chara", *chara_id, "name");
+    }
+    else
+    {
+        return 0; // undefined card
+    }
+
+    cardrefn = card_name;
 
     if (dbid == 0)
     {
@@ -3318,7 +3334,5 @@ int get_card_info()
     }
     return 0;
 }
-
-
 
 } // namespace elona
