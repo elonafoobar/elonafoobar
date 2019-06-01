@@ -26,15 +26,32 @@ bool UIMenuModInfo::init()
     return true;
 }
 
+
+
+optional<fs::path> UIMenuModInfo::_find_readme(const fs::path& mod_dir)
+{
+    for (const auto& filename :
+         {"README.md", "README.markdown", "README.txt", "README"})
+    {
+        if (fs::exists(mod_dir / filename))
+        {
+            return mod_dir / filename;
+        }
+    }
+    return none;
+}
+
+
+
 void UIMenuModInfo::_build_description()
 {
     _readme_pages.clear();
     _desc_page = 0;
 
     auto readme_path =
-        filesystem::dir::for_mod(_desc.manifest.id) / "README.md";
+        _find_readme(filesystem::dir::for_mod(_desc.manifest.id));
 
-    if (!fs::exists(readme_path))
+    if (!readme_path)
     {
         _readme_pages.push_back(
             i18n::s.get("core.locale.main_menu.mods.no_readme"));
@@ -43,7 +60,7 @@ void UIMenuModInfo::_build_description()
     {
         std::vector<std::string> description_lines;
         range::copy(
-            fileutil::read_by_line(readme_path),
+            fileutil::read_by_line(*readme_path),
             std::back_inserter(description_lines));
 
         const size_t text_width = 90 - 2;
