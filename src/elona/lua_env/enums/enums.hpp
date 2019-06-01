@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../../character.hpp"
 #include "../../element.hpp"
 #include "../../enums.hpp"
@@ -8,7 +9,10 @@
 #include "../../menu.hpp"
 #include "../../status_ailment.hpp"
 #include "../../text.hpp"
+#include "../../wish.hpp"
 #include "../lua_enums.hpp"
+
+
 
 namespace elona
 {
@@ -25,6 +29,7 @@ namespace lua
  */
 namespace LuaEnums
 {
+
 extern EnumMap<DamageSource> DamageSourceTable;
 extern EnumMap<ColorIndex> ColorIndexTable;
 extern EnumMap<CurseState> CurseStateTable;
@@ -45,8 +50,12 @@ extern EnumMap<CharaFindLocation> CharaFindLocationTable;
 extern EnumMap<ItemFindLocation> ItemFindLocationTable;
 extern EnumMap<ControlAllyOperation> ControlAllyOperationTable;
 extern EnumMap<RandomTitleType> RandomTitleTypeTable;
+extern EnumMap<WishMatchType> WishMatchTypeTable;
+extern EnumMap<WishHook> WishHookTable;
+
 
 void bind(sol::table&);
+
 } // namespace LuaEnums
 
 } // namespace lua

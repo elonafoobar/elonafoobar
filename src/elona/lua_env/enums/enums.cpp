@@ -433,6 +433,40 @@ EnumMap<RandomTitleType> RandomTitleTypeTable{
         {"LivingWeapon", RandomTitleType::living_weapon},
     }};
 
+/**
+ * @luadoc
+ *
+ * Match type to use with Wish.match.
+ * @see Wish.match
+ */
+EnumMap<WishMatchType> WishMatchTypeTable{
+    "WishMatchType",
+    {
+        {"Prefix", WishMatchType::prefix},
+        {"Suffix", WishMatchType::suffix},
+        {"Include", WishMatchType::include},
+        {"Perfect", WishMatchType::perfect},
+    }};
+
+/**
+ * @luadoc
+ *
+ * Wish hook point to use with Wish.add.
+ * @see Wish.add
+ */
+EnumMap<WishHook> WishHookTable{
+    "WishHook",
+    {
+        {"First", WishHook::first},
+        {"BeforeVanillaSpecial", WishHook::before_vanilla_special},
+        {"AfterVanillaSpecial", WishHook::after_vanilla_special},
+        {"BeforeVanillaItem", WishHook::before_vanilla_item},
+        {"AfterVanillaItem", WishHook::after_vanilla_item},
+        {"BeforeVanillaSkill", WishHook::before_vanilla_skill},
+        {"AfterVanillaSkill", WishHook::after_vanilla_skill},
+        {"Last", WishHook::last},
+    }};
+
 } // namespace LuaEnums
 
 void LuaEnums::bind(sol::table& core)
@@ -458,6 +492,8 @@ void LuaEnums::bind(sol::table& core)
     ItemFindLocationTable.bind(Enums);
     ControlAllyOperationTable.bind(Enums);
     RandomTitleTypeTable.bind(Enums);
+    WishMatchTypeTable.bind(Enums);
+    WishHookTable.bind(Enums);
 }
 
 } // namespace lua

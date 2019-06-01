@@ -301,3 +301,25 @@ ControlAllyOperation = {}
 --  @tfield Enums.RandomTitleType Party
 --  @tfield Enums.RandomTitleType LivingWeapon
 RandomTitleType = {}
+
+--- Match type to use with Wish.match.
+--  @see Wish.match
+--  @enum WishMatchType
+--  @tfield Enums.WishMatchType Prefix
+--  @tfield Enums.WishMatchType Suffix
+--  @tfield Enums.WishMatchType Include
+--  @tfield Enums.WishMatchType Perfect
+WishMatchType = {}
+
+--- Wish hook point to use with Wish.add.
+--  @see Wish.add
+--  @enum WishHook
+--  @tfield Enums.WishHook First
+--  @tfield Enums.WishHook BeforeVanillaSpecial
+--  @tfield Enums.WishHook AfterVanillaSpecial
+--  @tfield Enums.WishHook BeforeVanillaItem
+--  @tfield Enums.WishHook AfterVanillaItem
+--  @tfield Enums.WishHook BeforeVanillaSkill
+--  @tfield Enums.WishHook AfterVanillaSkill
+--  @tfield Enums.WishHook Last
+WishHook = {}

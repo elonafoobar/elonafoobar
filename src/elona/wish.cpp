@@ -1,6 +1,10 @@
 #include "wish.hpp"
+
+#include <array>
+
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
@@ -120,6 +124,26 @@ private:
 std::unique_ptr<LogCopyObserver> log_copy_observer;
 
 
+std::array<
+    std::vector<lua::WrappedFunction>,
+    static_cast<size_t>(WishHook::_size)>
+    wish_hooks;
+
+
+
+bool call_hook(WishHook type, const std::string& input)
+{
+    for (auto&& hooks : wish_hooks.at(static_cast<size_t>(type)))
+    {
+        if (hooks.call_with_result(false, input))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 
 std::string fix_wish(const std::string& text)
 {
@@ -208,6 +232,7 @@ void wish_end()
 }
 
 
+
 int select_wished_character(const std::string& input)
 {
     constexpr int default_result = 37;
@@ -235,6 +260,7 @@ int select_wished_character(const std::string& input)
 
     return selector.get_or(default_result);
 }
+
 
 
 void wish_for_character()
@@ -286,20 +312,6 @@ void wish_for_figure()
 
 
 
-template <typename F>
-bool _match_wish(
-    const std::string& key,
-    const std::vector<std::string>& english_words,
-    F match)
-{
-    auto words = i18n::s.get_list(key);
-    words.insert(
-        std::end(words), std::begin(english_words), std::end(english_words));
-    return range::any_of(words, match);
-}
-
-
-
 /// Returns true if `wish` equals one of the special words. English words are
 /// available in all languages.
 /// @params key The I18N key associated with the special words. Note that it
@@ -309,10 +321,11 @@ bool match_special_wish(
     const std::string& key,
     const std::vector<std::string>& english_words)
 {
-    return _match_wish(
+    return wish_match(
+        wish,
+        WishMatchType::perfect,
         "core.locale.wish.special_wish." + key,
-        english_words,
-        [&](const auto& word) { return wish == word; });
+        english_words);
 }
 
 
@@ -326,10 +339,11 @@ bool match_general_wish(
     const std::string& key,
     const std::vector<std::string>& english_words)
 {
-    return _match_wish(
+    return wish_match(
+        wish,
+        WishMatchType::include,
         "core.locale.wish.general_wish." + key,
-        english_words,
-        [&](const auto& word) { return strutil::contains(wish, word); });
+        english_words);
 }
 
 
@@ -758,15 +772,22 @@ bool wish_for_skill(const std::string& input)
 
 
 
-bool process_wish()
+bool process_wish(optional<std::string> wish)
 {
     using namespace strutil;
 
     txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"),
         Message::color{ColorIndex::orange});
 
-    input_text_dialog(
-        (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
+    if (wish)
+    {
+        inputlog(0) = *wish;
+    }
+    else
+    {
+        input_text_dialog(
+            (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
+    }
 
     txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
 
@@ -774,6 +795,11 @@ bool process_wish()
 
     log_copy_observer = std::make_unique<LogCopyObserver>();
     subscribe_log(log_copy_observer.get());
+
+    if (call_hook(WishHook::first, inputlog(0)))
+    {
+        return true;
+    }
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")
     {
@@ -787,7 +813,17 @@ bool process_wish()
 
     snd("core.ding2");
 
+    if (call_hook(WishHook::before_vanilla_special, inputlog(0)))
+    {
+        return true;
+    }
+
     if (grant_special_wishing(inputlog))
+    {
+        return true;
+    }
+
+    if (call_hook(WishHook::after_vanilla_special, inputlog(0)))
     {
         return true;
     }
@@ -827,35 +863,90 @@ bool process_wish()
         }
     }
 
-    if (!skip_item)
+    if (call_hook(WishHook::before_vanilla_item, inputlog(0)))
     {
-        bool granted = wish_for_item(inputlog);
-        if (granted)
-            return true;
+        return true;
     }
 
-    wish_for_skill(inputlog);
+    if (!skip_item && wish_for_item(inputlog))
+    {
+        return true;
+    }
 
-    return true;
+    if (call_hook(WishHook::after_vanilla_item, inputlog(0)))
+    {
+        return true;
+    }
+
+    if (call_hook(WishHook::before_vanilla_skill, inputlog(0)))
+    {
+        return true;
+    }
+
+    if (wish_for_skill(inputlog))
+    {
+        return true;
+    }
+
+    if (call_hook(WishHook::after_vanilla_skill, inputlog(0)))
+    {
+        return true;
+    }
+
+    if (call_hook(WishHook::last, inputlog(0)))
+    {
+        return true;
+    }
+
+    return false;
 }
 
-
-
 } // namespace
+
 
 
 namespace elona
 {
 
-
-void what_do_you_wish_for()
+bool what_do_you_wish_for(optional<std::string> wish)
 {
-    const auto did_wish_something = process_wish();
+    const auto did_wish_something = process_wish(wish);
     if (did_wish_something)
     {
         wish_end();
     }
+    return did_wish_something;
 }
 
+
+
+bool wish_match(
+    const std::string& input,
+    WishMatchType match_type,
+    const std::string& i18n_key_to_word_list,
+    const std::vector<std::string>& english_words)
+{
+    auto words = i18n::s.get_list(i18n_key_to_word_list);
+    words.insert(
+        std::end(words), std::begin(english_words), std::end(english_words));
+
+    return range::any_of(words, [&](const auto& word) {
+        switch (match_type)
+        {
+        case WishMatchType::prefix: return strutil::starts_with(input, word);
+        case WishMatchType::suffix: return strutil::ends_with(input, word);
+        case WishMatchType::include: return strutil::contains(input, word);
+        case WishMatchType::perfect: return input == word;
+        default: throw "unreachable";
+        }
+    });
+}
+
+
+
+void wish_add(WishHook hook, lua::WrappedFunction callback)
+{
+    wish_hooks.at(static_cast<size_t>(hook)).push_back(callback);
+}
 
 } // namespace elona
