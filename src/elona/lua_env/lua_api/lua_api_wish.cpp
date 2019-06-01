@@ -75,20 +75,20 @@ bool LuaApiWish::match(
  * boolean value (success/failure)
  *
  * @usage
- * -- Add 'hoge'
- * Wish.add('First', function(input)
- *    if Wish.match(
- *          input,
- *          'Include',
- *          'mod_name.locale.wish.enormous_money',
- *          {'enormous money'}) then
- *       Item.create(Chara.player().position, 'core.gold_piece', 1000 * 1000 * 1000)
- *       GUI.txt(I18N.get('mod_name.locale.wish.get_money'))
- *       return true
- *    else
- *       return false
- *    end
- * end)
+ * > -- Add custom wish, 'enormous_money'.
+ * > Wish.add('First', function(input)
+ * >    if Wish.match(
+ * >          input,
+ * >          'Include',
+ * >          'mod_name.locale.wish.enormous_money',
+ * >          {'enormous money'}) then
+ * >       Item.create(Chara.player().position, 'core.gold_piece', 1000 * 1000 * 1000)
+ * >       GUI.txt(I18N.get('mod_name.locale.wish.get_money'))
+ * >       return true
+ * >    else
+ * >       return false
+ * >    end
+ * > end)
  */
 // clang-format on
 void LuaApiWish::add(
