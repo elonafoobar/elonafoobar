@@ -721,7 +721,7 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("enemy_id", &Character::enemy_id);
 
     /**
-     * @luadoc portrait field string
+     * @luadoc image field num
      *
      * [RW] The character's current image.
      */
