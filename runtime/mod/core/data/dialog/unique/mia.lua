@@ -1,6 +1,5 @@
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
 local Internal = Elona.require("Internal")
 local Item = Elona.require("Item")
 

@@ -4,7 +4,6 @@ local FOV = Elona.require("FOV")
 local GUI = Elona.require("GUI")
 local I18N = Elona.require("I18N")
 local Math = Elona.require("Math")
-local Skill = Elona.require("Skill")
 local Rand = Elona.require("Rand")
 
 local eating_effect = {}

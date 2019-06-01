@@ -1,5 +1,4 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local Chara = Elona.require("Chara")
 local FOV = Elona.require("FOV")
 local I18N = Elona.require("I18N")
 local Item = Elona.require("Item")
