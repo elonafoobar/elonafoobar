@@ -493,12 +493,13 @@ TurnResult show_skill_list()
 
 static std::string _make_buff_power_string(int skill_id)
 {
-    p = the_ability_db[skill_id]->ability_type % 1000;
-    const auto duration = calc_buff_duration(p, calcspellpower(skill_id, cc));
+    const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
+    const auto duration =
+        calc_buff_duration(buff_id, calcspellpower(skill_id, cc));
     const auto description =
-        get_buff_description(p, calcspellpower(skill_id, cc));
-    return ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter") +
-        description;
+        get_buff_description(buff_id, calcspellpower(skill_id, cc));
+    return std::to_string(duration) +
+        i18n::s.get("core.locale.ui.spell.turn_counter") + " " + description;
 }
 
 std::string make_spell_description(int skill_id)
