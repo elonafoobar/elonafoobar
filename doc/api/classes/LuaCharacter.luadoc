@@ -262,7 +262,7 @@ function get_ailment(ailment) end
 --  @tfield num enemy_id
 
 --- [RW] The character's current image.
---  @tfield string portrait
+--  @tfield num image
 
 --- [RW] The character's current portrait.
 --  @tfield string portrait
