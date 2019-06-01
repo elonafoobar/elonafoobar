@@ -261,7 +261,6 @@ void initialize_elona()
     SDIM3(qname, 40, 500);
     DIM2(gdata, 1000);
     DIM2(genetemp, 1000);
-    SDIM3(gdatan, 40, 50);
     DIM2(mdatatmp, 100);
     map_data.clear();
     SDIM3(mdatan, 20, 2);

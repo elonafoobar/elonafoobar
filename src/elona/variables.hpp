@@ -231,7 +231,6 @@ ELONA_EXTERN(elona_vector1<std::string> egominorn);
 ELONA_EXTERN(elona_vector1<std::string> egoname);
 ELONA_EXTERN(elona_vector1<std::string> filtern);
 ELONA_EXTERN(elona_vector1<std::string> fltnrace);
-ELONA_EXTERN(elona_vector1<std::string> gdatan);
 ELONA_EXTERN(elona_vector1<std::string> ialphanameref);
 ELONA_EXTERN(elona_vector1<std::string> iknownnameref);
 ELONA_EXTERN(elona_vector1<std::string> inputlog);
