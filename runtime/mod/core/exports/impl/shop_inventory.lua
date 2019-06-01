@@ -1,7 +1,6 @@
 local Item = Elona.require("Item")
 local Math = Elona.require("Math")
 local Chara = Elona.require("Chara")
-local Skill = Elona.require("Skill")
 local Rand = Elona.require("Rand")
 
 local shop_inventory = {}

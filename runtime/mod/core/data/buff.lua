@@ -94,9 +94,9 @@ data:add_multi(
          duration = function(power)
             return 5 + power // 40
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, _args)
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -108,10 +108,10 @@ data:add_multi(
          duration = function(power)
             return 12 + power // 20
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             mod_skill_level(args, "core.healing", 40)
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -123,12 +123,12 @@ data:add_multi(
          duration = function(power)
             return 4 + power // 6
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             mod_skill_level(args, "core.element_fire", 100)
             mod_skill_level(args, "core.element_cold", 100)
             mod_skill_level(args, "core.element_lightning", 100)
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -191,11 +191,11 @@ data:add_multi(
          duration = function(power)
             return 6 + power // 10
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             args.chara.dv = args.chara.dv // 2
             args.chara.pv = args.chara.pv // 2
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -207,12 +207,12 @@ data:add_multi(
          duration = function(power)
             return 4 + power // 15
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             mod_skill_level_clamp(args, "core.element_fire", -100)
             mod_skill_level_clamp(args, "core.element_cold", -100)
             mod_skill_level_clamp(args, "core.element_lightning", -100)
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -227,7 +227,7 @@ data:add_multi(
          duration = function(power)
             return 15 + power // 5
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, _args)
          end,
          _effect = function(power)
             return 50 + power // 3 * 2
@@ -241,11 +241,11 @@ data:add_multi(
          duration = function(power)
             return 4 + power // 15
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             mod_skill_level_clamp(args, "core.element_nerve", -100)
             mod_skill_level_clamp(args, "core.element_mind", -100)
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -284,7 +284,7 @@ data:add_multi(
                args.chara.pv = args.chara.pv // 5
             end
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 20, 20
          end,
          description = get_description
@@ -293,7 +293,7 @@ data:add_multi(
          id = "lulwys_trick",
          legacy_id = 14,
          buff_type = "Buff",
-         duration = function(power)
+         duration = function(_power)
             return 7
          end,
          on_refresh = function(self, args)
@@ -314,10 +314,10 @@ data:add_multi(
          duration = function(power)
             return 4 + power // 40
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             args.chara:set_flag("IsIncognito", true)
          end,
-         on_removal = function(self, args)
+         on_removal = function(_self, args)
             if not Chara.is_player(args.chara) then
                return
             end
@@ -331,7 +331,7 @@ data:add_multi(
                end
             end
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -347,16 +347,16 @@ data:add_multi(
          id = "death_word",
          legacy_id = 16,
          buff_type = "Hex",
-         duration = function(power)
+         duration = function(_power)
             return 20
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             args.chara:set_flag("IsSentencedDaeth", true)
          end,
-         on_removal = function(self, args)
+         on_removal = function(_self, args)
             args.chara:set_flag("IsSentencedDaeth", false)
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 0
          end,
          description = get_description
@@ -365,7 +365,7 @@ data:add_multi(
          id = "boost",
          legacy_id = 17,
          buff_type = "Buff",
-         duration = function(power)
+         duration = function(_power)
             return 5
          end,
          on_refresh = function(self, args)
@@ -379,7 +379,7 @@ data:add_multi(
             args.chara.dv = args.chara.dv * 150 // 100 + 25
             args.chara.hit_bonus = args.chara.hit_bonus * 150 // 100 + 50
          end,
-         _effect = function(power)
+         _effect = function(_power)
             return 120
          end,
          description = get_description
@@ -392,13 +392,13 @@ data:add_multi(
          id = "contingency",
          legacy_id = 18,
          buff_type = "Buff",
-         duration = function(power)
+         duration = function(_power)
             return 66
          end,
-         on_refresh = function(self, args)
+         on_refresh = function(_self, args)
             args.chara:set_flag("IsContractingWithReaper", true)
          end,
-         on_removal = function(self, args)
+         on_removal = function(_self, args)
             args.chara:set_flag("IsContractingWithReaper", false)
          end,
          _effect = function(power)
@@ -410,7 +410,7 @@ data:add_multi(
          id = "luck",
          legacy_id = 19,
          buff_type = "Buff",
-         duration = function(power)
+         duration = function(_power)
             return 777
          end,
          on_refresh = function(self, args)
