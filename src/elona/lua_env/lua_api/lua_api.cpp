@@ -22,7 +22,10 @@
 #include "lua_api_rand.cpp"
 #include "lua_api_skill.cpp"
 #include "lua_api_trait.cpp"
+#include "lua_api_wish.cpp"
 #include "lua_api_world.cpp"
+
+
 
 namespace elona
 {
@@ -58,6 +61,7 @@ void LuaApi::bind(sol::table& core)
     LUA_API_BIND(core, Rand);
     LUA_API_BIND(core, Skill);
     LUA_API_BIND(core, Trait);
+    LUA_API_BIND(core, Wish);
     LUA_API_BIND(core, World);
 }
 
