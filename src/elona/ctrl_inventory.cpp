@@ -1470,8 +1470,13 @@ label_2061_internal:
                     "core.locale.ui.inv.give.present.dialog", cdata[tc]));
                 chara_modify_impression(cdata[tc], giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
+                refresh_burden_state();
+                if (invally == 1)
+                {
+                    goto label_20591;
+                }
                 update_screen();
-                result.turn_result = TurnResult::pc_turn_user_error;
+                result.turn_result = TurnResult::turn_end;
                 return result;
             }
             f = 0;
