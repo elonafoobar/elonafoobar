@@ -51,16 +51,6 @@ void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
             ++itr;
         }
     }
-    else if (fmode_str == u8"gdatan"s)
-    {
-        lines.resize(50);
-        auto itr = std::begin(lines);
-        for (int i = 0; i < 50; ++i)
-        {
-            gdatan(i) = *itr;
-            ++itr;
-        }
-    }
     else if (fmode_str == u8"mdatan"s)
     {
         lines.resize(2);
@@ -141,13 +131,6 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
         for (int i = 0; i < 500; ++i)
         {
             out << qname(i) << std::endl;
-        }
-    }
-    else if (fmode_str == u8"gdatan"s)
-    {
-        for (int i = 0; i < 50; ++i)
-        {
-            out << gdatan(i) << std::endl;
         }
     }
     else if (fmode_str == u8"mdatan"s)
@@ -771,7 +754,13 @@ void fmode_7_8(bool read, const fs::path& dir)
 
     arrayfile(read, u8"cdatan1", dir / u8"cdatan.s1");
     arrayfile(read, u8"qname", dir / u8"qname.s1");
-    arrayfile(read, u8"gdatan", dir / u8"gdatan.s1");
+
+    // TODO: Delete this line when the v1.0.0 stable is released!
+    if (!read && fs::exists(dir / u8"gdatan.s1"))
+    {
+        fs::remove(dir / u8"gdatan.s1");
+    }
+
     if (!read)
     {
         bsave(dir / u8"evnum.s1", evnum);
