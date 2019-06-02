@@ -428,6 +428,10 @@ std::string mapname(int id, bool description)
 std::string txtbuilding(int x, int y)
 {
     const auto type = bddata(0, x, y);
+    if (type == 0)
+    {
+        return "";
+    }
     return i18n::s.get(
         "core.locale.map.you_see",
         i18n::s.get_enum("core.locale.map.misc_location", type));
