@@ -855,7 +855,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
         redraw();
         auto action = cursor_check_ex();
         _set_pcc_info(chara, cs);
-        p = 0;
+        bool changed = false;
         if (rtval == -2)
         {
             if (action == "enter")
@@ -912,13 +912,13 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                          (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
                 {
                     ++pcc(rtval, chara.index);
-                    p = 1;
+                    changed = true;
                 }
             }
             else if (pcc(rtval, chara.index) / 1000 < 21)
             {
                 pcc(rtval, chara.index) += 1000;
-                p = 1;
+                changed = true;
             }
         }
         if (action == "previous_page")
@@ -944,16 +944,19 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                          (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
                 {
                     --pcc(rtval, chara.index);
-                    p = 1;
+                    changed = true;
                 }
             }
             else if (pcc(rtval, chara.index) / 1000 > 0)
             {
                 pcc(rtval, chara.index) -= 1000;
-                p = 1;
+                changed = true;
             }
         }
-        create_pcpic(chara, false);
+        if (changed)
+        {
+            create_pcpic(chara, false);
+        }
         if (action == "cancel")
         {
             if (page == 0)
