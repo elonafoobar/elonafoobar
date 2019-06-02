@@ -960,8 +960,18 @@ int change_appearance()
         create_pcpic(cc, false);
         if (action == "cancel")
         {
-            create_pcpic(cc);
-            return 0;
+            if (page == 0)
+            {
+                create_pcpic(cc);
+                return 0;
+            }
+            else
+            {
+                page = 0;
+                cs = 8;
+                init = true;
+                continue;
+            }
         }
         if (mode == 1)
         {
