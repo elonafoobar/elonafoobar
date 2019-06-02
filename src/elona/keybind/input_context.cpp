@@ -401,7 +401,10 @@ bool InputContext::_delay_normal_action(const Keybind& keybind)
         last_held_key_frames = 0;
     }
 
-    bool delayed = _is_keypress_delayed(last_held_key_frames, 1, 20);
+    bool delayed = _is_keypress_delayed(
+        last_held_key_frames,
+        Config::instance().key_repeat_wait,
+        Config::instance().initial_key_repeat_wait);
 
     last_held_key_frames++;
 

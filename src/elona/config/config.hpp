@@ -68,7 +68,9 @@ public:
     bool hide_shop_updates;
     bool high_quality_shadow;
     std::string hp_bar_position;
+    int initial_key_repeat_wait;
     bool joypad;
+    int key_repeat_wait;
     int key_wait;
     std::string language;
     bool leash_icon;

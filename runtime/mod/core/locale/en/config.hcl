@@ -324,6 +324,16 @@ DOC
                     doc = "Number of frames to wait between presses of shortcut keys."
                     formatter = core.locale.config.common.formatter.wait
                 }
+                initial_key_repeat_wait {
+                    name = "Initial key repeat wait"
+                    doc = "Number of frames to wait between the first action and the second."
+                    formatter = core.locale.config.common.formatter.wait
+                }
+                key_repeat_wait {
+                    name = "Key repeat wait"
+                    doc = "Number of frames to wait between any actions."
+                    formatter = core.locale.config.common.formatter.wait
+                }
                 select_wait {
                     name = "Select Wait"
                     doc = "Number of frames to wait between item selection initially."

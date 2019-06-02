@@ -361,6 +361,8 @@ void load_config()
     CONFIG_OPTION("input.attack_wait"s, int, Config::instance().attack_wait);
     CONFIG_OPTION("input.autodisable_numlock"s, bool, Config::instance().autodisable_numlock);
     CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
+    CONFIG_OPTION("input.initial_key_repeat_wait"s, int, Config::instance().initial_key_repeat_wait);
+    CONFIG_OPTION("input.key_repeat_wait"s, int, Config::instance().key_repeat_wait);
     CONFIG_OPTION("input.walk_wait"s, int, Config::instance().walk_wait);
     CONFIG_OPTION("input.run_wait"s, int, Config::instance().run_wait);
     CONFIG_OPTION("input.start_run_wait"s, int, Config::instance().start_run_wait);

@@ -193,6 +193,18 @@ config {
                 max = 10
             }
 
+            initial_key_repeat_wait = {
+                default = 5
+                min = 1
+                max = 20
+            }
+
+            key_repeat_wait = {
+                default = 1
+                min = 1
+                max = 5
+            }
+
             select_wait = {
                 default = 10
                 min = 1
