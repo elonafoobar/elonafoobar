@@ -1103,7 +1103,7 @@ void change_appearance_equipment(Character& chara)
                 snd("core.cursor1");
             }
         }
-        if ((cs == 0 && action == "entry") || action == "cancel")
+        if ((cs == 0 && action == "enter") || action == "cancel")
         {
             snd("core.ok1");
             create_pcpic(chara);
