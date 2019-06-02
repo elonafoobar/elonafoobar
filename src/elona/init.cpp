@@ -615,7 +615,7 @@ void initialize_debug_globals()
         mat(cnt) = 200;
     }
     create_all_adventurers();
-    create_pcpic(0);
+    create_pcpic(cdata.player());
     cdatan(1, 0) = random_title(RandomTitleType::character);
     cdatan(0, 0) = random_name();
 }

@@ -223,7 +223,8 @@ label_20591:
             }
             if (invctrl == 6)
             {
-                if (iequiploc(cnt) != cdata[cc].body_parts[body - 100] / 10000)
+                if (iequiploc(inv[cnt]) !=
+                    cdata[cc].body_parts[body - 100] / 10000)
                 {
                     continue;
                 }
@@ -1634,7 +1635,7 @@ label_2061_internal:
                 wear_most_valuable_equipment_for_all_body_parts();
                 if (tc < 16)
                 {
-                    create_pcpic(tc);
+                    create_pcpic(cdata[tc]);
                 }
                 chara_refresh(tc);
                 refresh_burden_state();
@@ -1949,7 +1950,7 @@ label_2061_internal:
             wear_most_valuable_equipment_for_all_body_parts();
             if (tc < 16)
             {
-                create_pcpic(tc);
+                create_pcpic(cdata[tc]);
             }
             chara_refresh(tc);
             refresh_burden_state();

@@ -235,23 +235,23 @@ MainMenuResult character_making_customize_appearance()
             "core.locale.chara_making.customize_appearance.caption");
 
         cdata.player().has_own_sprite() = true;
-        int stat = change_appearance();
-        if (stat == 0)
+        switch (menu_change_appearance(cdata.player()))
         {
+        case ChangeAppearanceResult::proceed:
+            clear_background_in_character_making();
+            return MainMenuResult::character_making_final_phase;
+        case ChangeAppearanceResult::canceled:
             clear_background_in_character_making();
             return MainMenuResult::character_making_select_alias_looped;
-        }
-        if (stat != -1)
-        {
+        case ChangeAppearanceResult::show_help:
+            show_game_help();
+            clear_background_in_character_making();
             break;
         }
-        show_game_help();
-        clear_background_in_character_making();
     }
-    clear_background_in_character_making();
-
-    return MainMenuResult::character_making_final_phase;
 }
+
+
 
 static void _reroll_character()
 {
@@ -272,8 +272,10 @@ static void _reroll_character()
     initialize_character();
     initialize_pc_character();
     cdata[rc].portrait = portrait_save;
-    create_pcpic(0);
+    create_pcpic(cdata.player());
 }
+
+
 
 static int _prompt_satisfied()
 {

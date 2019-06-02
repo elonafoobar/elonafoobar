@@ -397,7 +397,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     else if (action == "cancel")
     {
         menucycle = 0;
-        create_pcpic(cc);
+        create_pcpic(cdata[cc]);
         update_screen();
         // result.turn_result = TurnResult::pc_turn_user_error
         return UIMenuEquipment::Result::cancel();

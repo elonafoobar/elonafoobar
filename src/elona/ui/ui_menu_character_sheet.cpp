@@ -1080,7 +1080,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         {
             if (cc < 16)
             {
-                change_appearance();
+                menu_change_appearance(cdata[cc]);
                 if (_operation != CharacterSheetOperation::character_making)
                 {
                     nowindowanime = 1;

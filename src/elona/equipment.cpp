@@ -454,7 +454,7 @@ void wear_most_valuable_equipment()
 {
     int eqdup = 0;
     elona_vector1<int> bodylist;
-    i = iequiploc(ci);
+    i = iequiploc(inv[ci]);
     if (i != 0)
     {
         eqdup = 0;

@@ -74,7 +74,7 @@ void load_save_data()
     {
         if (cdata[cnt].has_own_sprite() == 1 || cnt == 0)
         {
-            create_pcpic(cnt);
+            create_pcpic(cdata[cnt]);
         }
     }
     if (game_data.wizard == 1)

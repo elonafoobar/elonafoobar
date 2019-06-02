@@ -106,6 +106,63 @@ double easing(double t)
 
 
 
+void _set_pcc_depending_on_equipments(Character& chara, const Item& equipment)
+{
+    int item_appearance = the_item_db[equipment.id]->appearance;
+    if (item_appearance == 0)
+    {
+        item_appearance = 1;
+    }
+    switch (iequiploc(equipment))
+    {
+    case 3:
+        pcc(4, chara.index) = item_appearance + equipment.color * 1000;
+        break;
+    case 4:
+        pcc(2, chara.index) = item_appearance + equipment.color * 1000;
+        break;
+    case 7:
+        pcc(8, chara.index) = item_appearance + equipment.color * 1000;
+        break;
+    case 8:
+        pcc(5, chara.index) = item_appearance + equipment.color * 1000;
+        break;
+    case 9:
+        pcc(3, chara.index) = item_appearance + equipment.color * 1000;
+        break;
+    default: break;
+    }
+}
+
+
+
+void _load_pcc_part(Character& chara, int body_part, const char* body_part_str)
+{
+    const auto idx = chara.index;
+
+    const auto filepath = filesystem::dir::graphic() /
+        (u8"pcc_"s + body_part_str + (pcc(body_part, idx) % 1000) + u8".bmp");
+    if (!fs::exists(filepath))
+        return;
+
+    const auto texture_id =
+        10 + PicLoader::max_buffers + TintedBuffers::max_buffers + idx;
+
+    picload(filepath, 128, 0, false);
+    boxf(256, 0, 128, 198);
+    gmode(2);
+    pget(128, 0);
+    gcopy(texture_id, 128, 0, 128, 198, 256, 0);
+    gmode(2);
+    set_color_mod(
+        255 - c_col(0, pcc(body_part, idx) / 1000),
+        255 - c_col(1, pcc(body_part, idx) / 1000),
+        255 - c_col(2, pcc(body_part, idx) / 1000),
+        texture_id);
+    gcopy(texture_id, 256, 0, 128, 198, 0, 0);
+    set_color_mod(255, 255, 255, texture_id);
+}
+
 } // namespace
 
 
@@ -534,53 +591,6 @@ void draw_emo(int cc, int x, int y)
 
 
 
-void load_pcc_part(int cc, int body_part, const char* body_part_str)
-{
-    const auto filepath = filesystem::dir::graphic() /
-        (u8"pcc_"s + body_part_str + (pcc(body_part, cc) % 1000) + u8".bmp");
-    if (!fs::exists(filepath))
-        return;
-
-    const auto texture_id =
-        10 + PicLoader::max_buffers + TintedBuffers::max_buffers + cc;
-
-    picload(filepath, 128, 0, false);
-    boxf(256, 0, 128, 198);
-    gmode(2);
-    pget(128, 0);
-    gcopy(texture_id, 128, 0, 128, 198, 256, 0);
-    gmode(2);
-    set_color_mod(
-        255 - c_col(0, pcc(body_part, cc) / 1000),
-        255 - c_col(1, pcc(body_part, cc) / 1000),
-        255 - c_col(2, pcc(body_part, cc) / 1000),
-        texture_id);
-    gcopy(texture_id, 256, 0, 128, 198, 0, 0);
-    set_color_mod(255, 255, 255, texture_id);
-}
-
-
-
-void set_pcc_depending_on_equipments(int cc, int ci)
-{
-    int item_appearance = the_item_db[inv[ci].id]->appearance;
-    if (item_appearance == 0)
-    {
-        item_appearance = 1;
-    }
-    switch (iequiploc(ci))
-    {
-    case 3: pcc(4, cc) = item_appearance + inv[ci].color * 1000; break;
-    case 4: pcc(2, cc) = item_appearance + inv[ci].color * 1000; break;
-    case 7: pcc(8, cc) = item_appearance + inv[ci].color * 1000; break;
-    case 8: pcc(5, cc) = item_appearance + inv[ci].color * 1000; break;
-    case 9: pcc(3, cc) = item_appearance + inv[ci].color * 1000; break;
-    default: break;
-    }
-}
-
-
-
 optional_ref<const Extent> chara_preparepic(const Character& cc)
 {
     return chara_preparepic(cc.image);
@@ -612,105 +622,107 @@ optional_ref<const Extent> chara_preparepic(int image_id)
 
 
 
-void create_pcpic(int cc, bool with_equipments)
+void create_pcpic(Character& chara, bool with_equipments)
 {
+    const auto idx = chara.index;
+
     buffer(
-        10 + PicLoader::max_buffers + TintedBuffers::max_buffers + cc,
+        10 + PicLoader::max_buffers + TintedBuffers::max_buffers + idx,
         384,
         198);
     boxf();
 
-    if (pcc(15, cc) == 0)
+    if (pcc(15, idx) == 0)
     {
-        pcc(15, cc) = cdata[cc].sex + 1;
-        pcc(14, cc) = cdata[cc].sex + 7;
-        pcc(1, cc) = 2 + rnd(21) * 1000;
-        pcc(9, cc) = 1 + rnd(21) * 1000;
-        pcc(7, cc) = 1 + rnd(21) * 1000;
-        pcc(16, cc) = 1;
+        pcc(15, idx) = chara.sex + 1;
+        pcc(14, idx) = chara.sex + 7;
+        pcc(1, idx) = 2 + rnd(21) * 1000;
+        pcc(9, idx) = 1 + rnd(21) * 1000;
+        pcc(7, idx) = 1 + rnd(21) * 1000;
+        pcc(16, idx) = 1;
     }
 
     if (with_equipments)
     {
-        pcc(4, cc) = 0;
-        pcc(2, cc) = 0;
-        pcc(6, cc) = 0;
-        pcc(3, cc) = 0;
-        pcc(8, cc) = 0;
-        pcc(5, cc) = 0;
-        for (int i = 0; i < 30; ++i)
+        pcc(4, idx) = 0;
+        pcc(2, idx) = 0;
+        pcc(6, idx) = 0;
+        pcc(3, idx) = 0;
+        pcc(8, idx) = 0;
+        pcc(5, idx) = 0;
+        for (auto&& body_part : chara.body_parts)
         {
-            if (cdata[cc].body_parts[i] % 10000 != 0)
+            if (body_part % 10000 != 0)
             {
-                set_pcc_depending_on_equipments(
-                    cc, cdata[cc].body_parts[i] % 10000 - 1);
+                _set_pcc_depending_on_equipments(
+                    chara, inv[body_part % 10000 - 1]);
             }
         }
     }
 
-    pcc(10, cc) = pcc(1, cc) / 1000 * 1000 + pcc(10, cc) % 1000;
-    pcc(14, cc) = pcc(15, cc) / 1000 * 1000 + pcc(14, cc) % 1000;
+    pcc(10, idx) = pcc(1, idx) / 1000 * 1000 + pcc(10, idx) % 1000;
+    pcc(14, idx) = pcc(15, idx) / 1000 * 1000 + pcc(14, idx) % 1000;
     if (with_equipments)
     {
-        if (pcc(24, cc) == 0)
+        if (pcc(24, idx) == 0)
         {
-            load_pcc_part(cc, 4, u8"mantle_");
+            _load_pcc_part(chara, 4, u8"mantle_");
         }
     }
-    load_pcc_part(cc, 1, u8"hairbk_");
-    if (cc == 0 && game_data.mount != 0 && pcc(16, cc) != 0)
+    _load_pcc_part(chara, 1, u8"hairbk_");
+    if (idx == 0 && game_data.mount != 0 && pcc(16, idx) != 0)
     {
-        load_pcc_part(cc, 16, u8"ridebk_");
+        _load_pcc_part(chara, 16, u8"ridebk_");
     }
     else
     {
-        load_pcc_part(cc, 15, u8"body_");
+        _load_pcc_part(chara, 15, u8"body_");
     }
-    load_pcc_part(cc, 14, u8"eye_");
-    if (cc != 0 || game_data.mount == 0 || pcc(16, cc) == 0)
+    _load_pcc_part(chara, 14, u8"eye_");
+    if (idx != 0 || game_data.mount == 0 || pcc(16, idx) == 0)
     {
-        load_pcc_part(cc, 7, u8"pants_");
+        _load_pcc_part(chara, 7, u8"pants_");
     }
-    load_pcc_part(cc, 9, u8"cloth_");
+    _load_pcc_part(chara, 9, u8"cloth_");
     if (with_equipments)
     {
-        if (pcc(20, cc) == 0)
+        if (pcc(20, idx) == 0)
         {
-            load_pcc_part(cc, 2, u8"chest_");
+            _load_pcc_part(chara, 2, u8"chest_");
         }
-        if ((cc != 0 || game_data.mount == 0 || pcc(16, cc) == 0) &&
-            pcc(21, cc) == 0)
+        if ((idx != 0 || game_data.mount == 0 || pcc(16, idx) == 0) &&
+            pcc(21, idx) == 0)
         {
-            load_pcc_part(cc, 3, u8"leg_");
+            _load_pcc_part(chara, 3, u8"leg_");
         }
-        if (pcc(22, cc) == 0)
+        if (pcc(22, idx) == 0)
         {
-            load_pcc_part(cc, 5, u8"belt_");
+            _load_pcc_part(chara, 5, u8"belt_");
         }
-        if (pcc(23, cc) == 0)
+        if (pcc(23, idx) == 0)
         {
-            load_pcc_part(cc, 8, u8"glove_");
+            _load_pcc_part(chara, 8, u8"glove_");
         }
     }
-    if (cc == 0)
+    if (idx == 0)
     {
         if (game_data.mount != 0)
         {
-            load_pcc_part(cc, 16, u8"ride_");
+            _load_pcc_part(chara, 16, u8"ride_");
         }
     }
     if (with_equipments)
     {
-        if (pcc(24, cc) == 0)
+        if (pcc(24, idx) == 0)
         {
-            load_pcc_part(cc, 4, u8"mantlebk_");
+            _load_pcc_part(chara, 4, u8"mantlebk_");
         }
     }
-    load_pcc_part(cc, 1, u8"hair_");
-    load_pcc_part(cc, 10, u8"subhair_");
-    load_pcc_part(cc, 11, u8"etc_");
-    load_pcc_part(cc, 12, u8"etc_");
-    load_pcc_part(cc, 13, u8"etc_");
+    _load_pcc_part(chara, 1, u8"hair_");
+    _load_pcc_part(chara, 10, u8"subhair_");
+    _load_pcc_part(chara, 11, u8"etc_");
+    _load_pcc_part(chara, 12, u8"etc_");
+    _load_pcc_part(chara, 13, u8"etc_");
 
     gsel(0);
 }

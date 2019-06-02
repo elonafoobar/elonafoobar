@@ -285,10 +285,7 @@ TurnResult do_interact_command()
     if (p == 8)
     {
         gsel(0);
-        ccbk = cc;
-        cc = tc;
-        change_appearance();
-        cc = ccbk;
+        menu_change_appearance(cdata[tc]);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -1469,7 +1466,7 @@ TurnResult do_dip_command()
         }
         if (inv[ci].body_part != 0)
         {
-            create_pcpic(cc);
+            create_pcpic(cdata[cc]);
         }
         return TurnResult::turn_end;
     }
@@ -1865,10 +1862,7 @@ TurnResult do_use_command()
             tc = chara;
             screenupdate = -1;
             update_screen();
-            ccbk = cc;
-            cc = tc;
-            change_appearance_equipment();
-            cc = ccbk;
+            change_appearance_equipment(cdata[tc]);
         }
         else
         {
