@@ -687,9 +687,10 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
     windowshadow = 1;
 
     bool init = true;
-
+    int tick = 0;
     while (true)
     {
+        ++tick;
         if (init)
         {
             init = false;
@@ -769,15 +770,6 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             wx + 34,
             wy + 36);
         draw("deco_mirror_a", wx + ww - 40, wy);
-        ++i;
-        if (i % 100 < 45)
-        {
-            f = i % 16;
-        }
-        else
-        {
-            ++f;
-        }
         window2(wx + 234, wy + 71, 88, 120, 1, 1);
         if (cs == 1 && page == 0)
         {
@@ -801,19 +793,22 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             gmode(2);
             const auto is_fullscale =
                 Config::instance().pcc_graphic_scale == "fullscale";
-            const auto width = is_fullscale ? (32 * 2) : (24 * 2);
-            const auto height = is_fullscale ? (48 * 2) : (40 * 2);
-            gcopy_c(
-                chara.index + 10 + PicLoader::max_buffers +
-                    TintedBuffers::max_buffers,
-                f / 4 % 4 * 32,
-                f / 16 % 4 * 48,
-                32,
-                48,
-                wx + 280,
-                wy + 130,
-                width,
-                height);
+            const auto width = is_fullscale ? 32 : 24;
+            const auto height = is_fullscale ? 48 : 40;
+            for (int i = 0; i < 4; ++i)
+            {
+                gcopy_c(
+                    chara.index + 10 + PicLoader::max_buffers +
+                        TintedBuffers::max_buffers,
+                    tick / 5 % 4 * 32,
+                    i % 4 * 48,
+                    32,
+                    48,
+                    wx + 238 + i % 2 * (32 + 8) + (32 + 8) / 2,
+                    wy + 75 + i / 2 * (48 + 8) + (48 + 8) / 2,
+                    width,
+                    height);
+            }
         }
         else
         {
@@ -1021,8 +1016,10 @@ void change_appearance_equipment(Character& chara)
         ++keyrange;
     }
 
+    int tick = 0;
     while (true)
     {
+        ++tick;
         pagesize = 0;
         ui_display_window(
             i18n::s.get("core.locale.ui.appearance.equipment.title"),
@@ -1034,28 +1031,26 @@ void change_appearance_equipment(Character& chara)
         s = i18n::s.get("core.locale.ui.appearance.equipment.part");
         pagesize = listmax;
         display_topic(s, wx + 34, wy + 36);
-        ++i;
-        if (i % 100 < 45)
-        {
-            f = i % 16;
-        }
-        else
-        {
-            ++f;
-        }
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         gmode(2);
-        gcopy_c(
-            chara.index + 10 + PicLoader::max_buffers +
-                TintedBuffers::max_buffers,
-            f / 4 % 4 * 32,
-            f / 16 % 4 * 48,
-            32,
-            48,
-            wx + 280,
-            wy + 120,
-            48,
-            80);
+        const auto is_fullscale =
+            Config::instance().pcc_graphic_scale == "fullscale";
+        const auto width = is_fullscale ? 32 : 24;
+        const auto height = is_fullscale ? 48 : 40;
+        for (int i = 0; i < 4; ++i)
+        {
+            gcopy_c(
+                chara.index + 10 + PicLoader::max_buffers +
+                    TintedBuffers::max_buffers,
+                tick / 5 % 4 * 32,
+                i % 4 * 48,
+                32,
+                48,
+                wx + 238 + i % 2 * (32 + 8) + (32 + 8) / 2,
+                wy + 64 + i / 2 * (48 + 8) + (48 + 8) / 2,
+                width,
+                height);
+        }
         gmode(2);
         font(14 - en * 2);
         cs_listbk();
