@@ -161,7 +161,7 @@ void UIMenuFeats::_draw_window_background(bool is_chara_making)
     ui_display_window(
         i18n::s.get("core.locale.trait.window.title"),
         i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
-            strhint3 + u8"z,x [" +
+            strhint3 + key_mode + u8"," + key_identify + u8" [" +
             i18n::s.get("core.locale.trait.window.ally") + u8"]",
         (windoww - 730) / 2 + inf_screenx,
         winposy(430, y_adjust) + y_adjust * 15,
