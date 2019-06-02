@@ -1860,7 +1860,7 @@ void blending_proc_on_success_events()
     item_stack(0, ci);
     if (inv[ci].body_part != 0)
     {
-        create_pcpic(0);
+        create_pcpic(cdata.player());
     }
     if (inv_getowner(ci) == -1)
     {

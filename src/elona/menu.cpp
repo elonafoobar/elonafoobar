@@ -57,7 +57,7 @@
 namespace
 {
 
-void _set_pcc_info(int val0)
+void _set_pcc_info(Character& chara, int val0)
 {
     rtval = -2;
     if (page == 0)
@@ -71,47 +71,47 @@ void _set_pcc_info(int val0)
             rtval(0) = 100;
             rtval(1) = 0;
             rtval(2) = -2;
-            rtvaln = cdata[cc].portrait;
+            rtvaln = chara.portrait;
         }
         if (val0 == 2)
         {
             rtval(0) = 1;
             rtval(1) = 0;
-            rtval(2) = pcc(1, cc) % 1000;
+            rtval(2) = pcc(1, chara.index) % 1000;
             rtvaln = u8"hair"s;
         }
         if (val0 == 3)
         {
             rtval(0) = 10;
             rtval(1) = 0;
-            rtval(2) = pcc(10, cc) % 1000;
+            rtval(2) = pcc(10, chara.index) % 1000;
             rtvaln = u8"subhair"s;
         }
         if (val0 == 4)
         {
             rtval(0) = 1;
             rtval(1) = 1;
-            rtval(2) = pcc(1, cc) / 1000;
+            rtval(2) = pcc(1, chara.index) / 1000;
         }
         if (val0 == 5)
         {
             rtval(0) = 15;
             rtval(1) = 0;
-            rtval(2) = pcc(15, cc) % 1000;
+            rtval(2) = pcc(15, chara.index) % 1000;
             rtvaln = u8"body"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 9;
             rtval(1) = 0;
-            rtval(2) = pcc(9, cc) % 1000;
+            rtval(2) = pcc(9, chara.index) % 1000;
             rtvaln = u8"cloth"s;
         }
         if (val0 == 7)
         {
             rtval(0) = 7;
             rtval(1) = 0;
-            rtval(2) = pcc(7, cc) % 1000;
+            rtval(2) = pcc(7, chara.index) % 1000;
             rtvaln = u8"pants"s;
         }
         if (val0 == 8)
@@ -121,17 +121,17 @@ void _set_pcc_info(int val0)
         }
         if (val0 == 9)
         {
-            if (cc != 0)
+            if (chara.index != 0)
             {
                 rtval(0) = 101;
                 rtval(1) = 0;
-                rtval(2) = cdata[cc].has_own_sprite();
+                rtval(2) = chara.has_own_sprite();
             }
             else
             {
                 rtval(0) = 16;
                 rtval(1) = 0;
-                rtval(2) = pcc(16, cc) % 1000;
+                rtval(2) = pcc(16, chara.index) % 1000;
                 rtvaln = u8"ride"s;
             }
         }
@@ -142,46 +142,46 @@ void _set_pcc_info(int val0)
         {
             rtval(0) = 15;
             rtval(1) = 1;
-            rtval(2) = pcc(15, cc) / 1000;
+            rtval(2) = pcc(15, chara.index) / 1000;
         }
         if (val0 == 1)
         {
             rtval(0) = 9;
             rtval(1) = 1;
-            rtval(2) = pcc(9, cc) / 1000;
+            rtval(2) = pcc(9, chara.index) / 1000;
         }
         if (val0 == 2)
         {
             rtval(0) = 7;
             rtval(1) = 1;
-            rtval(2) = pcc(7, cc) / 1000;
+            rtval(2) = pcc(7, chara.index) / 1000;
         }
         if (val0 == 3)
         {
             rtval(0) = 11;
             rtval(1) = 0;
-            rtval(2) = pcc(11, cc) % 1000;
+            rtval(2) = pcc(11, chara.index) % 1000;
             rtvaln = u8"etc"s;
         }
         if (val0 == 4)
         {
             rtval(0) = 12;
             rtval(1) = 0;
-            rtval(2) = pcc(12, cc) % 1000;
+            rtval(2) = pcc(12, chara.index) % 1000;
             rtvaln = u8"etc"s;
         }
         if (val0 == 5)
         {
             rtval(0) = 13;
             rtval(1) = 0;
-            rtval(2) = pcc(13, cc) % 1000;
+            rtval(2) = pcc(13, chara.index) % 1000;
             rtvaln = u8"etc"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 14;
             rtval(1) = 0;
-            rtval(2) = pcc(14, cc) % 1000;
+            rtval(2) = pcc(14, chara.index) % 1000;
             rtvaln = u8"eye"s;
         }
         if (val0 == 7)
@@ -669,9 +669,9 @@ MenuResult menu_feats_character_making()
 
 
 
-int change_appearance()
+ChangeAppearanceResult menu_change_appearance(Character& chara)
 {
-    create_pcpic(cc, false);
+    create_pcpic(chara, false);
     page = 0;
     pagesize = 19;
     cs = 0;
@@ -707,7 +707,7 @@ int change_appearance()
                 s(7) = i18n::s.get("core.locale.ui.appearance.basic.pants");
                 s(8) =
                     i18n::s.get("core.locale.ui.appearance.basic.set_detail");
-                if (cc != 0)
+                if (chara.index != 0)
                 {
                     s(9) =
                         i18n::s.get("core.locale.ui.appearance.basic.custom");
@@ -717,7 +717,8 @@ int change_appearance()
                     s(9) =
                         i18n::s.get("core.locale.ui.appearance.basic.riding");
                 }
-                p = 9 + (cc != 0) + (cc == 0) * (game_data.mount != 0);
+                p = 9 + (chara.index != 0) +
+                    (chara.index == 0) * (game_data.mount != 0);
             }
             else
             {
@@ -780,10 +781,9 @@ int change_appearance()
         window2(wx + 234, wy + 71, 88, 120, 1, 1);
         if (cs == 1 && page == 0)
         {
-            if (cdata[cc].portrait != "")
+            if (chara.portrait != "")
             {
-                if (const auto rect =
-                        draw_get_rect_portrait(cdata[cc].portrait))
+                if (const auto rect = draw_get_rect_portrait(chara.portrait))
                 {
                     gcopy(
                         rect->buffer,
@@ -796,7 +796,7 @@ int change_appearance()
                 }
             }
         }
-        else if (cdata[cc].has_own_sprite())
+        else if (chara.has_own_sprite())
         {
             gmode(2);
             const auto is_fullscale =
@@ -804,7 +804,8 @@ int change_appearance()
             const auto width = is_fullscale ? (32 * 2) : (24 * 2);
             const auto height = is_fullscale ? (48 * 2) : (40 * 2);
             gcopy_c(
-                cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
+                chara.index + 10 + PicLoader::max_buffers +
+                    TintedBuffers::max_buffers,
                 f / 4 % 4 * 32,
                 f / 16 % 4 * 48,
                 32,
@@ -816,7 +817,7 @@ int change_appearance()
         }
         else
         {
-            draw_chara(cdata[cc], wx + 280, wy + 130);
+            draw_chara(chara, wx + 280, wy + 130);
         }
         gmode(2);
         font(14 - en * 2);
@@ -828,7 +829,7 @@ int change_appearance()
             {
                 break;
             }
-            _set_pcc_info(cnt);
+            _set_pcc_info(chara, cnt);
             s = listn(0, p);
             if (rtval >= 0)
             {
@@ -858,14 +859,14 @@ int change_appearance()
         }
         redraw();
         auto action = cursor_check_ex();
-        _set_pcc_info(cs);
+        _set_pcc_info(chara, cs);
         p = 0;
         if (rtval == -2)
         {
             if (action == "enter")
             {
-                create_pcpic(cc);
-                return 1;
+                create_pcpic(chara);
+                return ChangeAppearanceResult::proceed;
             }
             if (action == "next_page" || action == "previous_page")
             {
@@ -899,13 +900,13 @@ int change_appearance()
             snd("core.cursor1");
             if (rtval == 100)
             {
-                cdata[cc].portrait =
-                    the_portrait_db.get_next_portrait(cdata[cc].portrait);
+                chara.portrait =
+                    the_portrait_db.get_next_portrait(chara.portrait);
                 continue;
             }
             if (rtval == 101)
             {
-                cdata[cc].has_own_sprite() = true;
+                chara.has_own_sprite() = true;
                 continue;
             }
             if (rtval(1) == 0)
@@ -913,15 +914,15 @@ int change_appearance()
                 if (fs::exists(
                         filesystem::dir::graphic() /
                         (u8"pcc_"s + rtvaln + u8"_" +
-                         (pcc(rtval, cc) % 1000 + 1) + u8".bmp")))
+                         (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
                 {
-                    ++pcc(rtval, cc);
+                    ++pcc(rtval, chara.index);
                     p = 1;
                 }
             }
-            else if (pcc(rtval, cc) / 1000 < 21)
+            else if (pcc(rtval, chara.index) / 1000 < 21)
             {
-                pcc(rtval, cc) += 1000;
+                pcc(rtval, chara.index) += 1000;
                 p = 1;
             }
         }
@@ -930,40 +931,40 @@ int change_appearance()
             snd("core.cursor1");
             if (rtval == 100)
             {
-                cdata[cc].portrait =
-                    the_portrait_db.get_previous_portrait(cdata[cc].portrait);
+                chara.portrait =
+                    the_portrait_db.get_previous_portrait(chara.portrait);
                 continue;
             }
             if (rtval == 101)
             {
-                cdata[cc].has_own_sprite() = false;
+                chara.has_own_sprite() = false;
                 continue;
             }
             if (rtval(1) == 0)
             {
-                if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15) ||
+                if ((pcc(rtval, chara.index) % 1000 == 1 && rtval != 15) ||
                     fs::exists(
                         filesystem::dir::graphic() /
                         (u8"pcc_"s + rtvaln + u8"_"s +
-                         (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s)))
+                         (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
                 {
-                    --pcc(rtval, cc);
+                    --pcc(rtval, chara.index);
                     p = 1;
                 }
             }
-            else if (pcc(rtval, cc) / 1000 > 0)
+            else if (pcc(rtval, chara.index) / 1000 > 0)
             {
-                pcc(rtval, cc) -= 1000;
+                pcc(rtval, chara.index) -= 1000;
                 p = 1;
             }
         }
-        create_pcpic(cc, false);
+        create_pcpic(chara, false);
         if (action == "cancel")
         {
             if (page == 0)
             {
-                create_pcpic(cc);
-                return 0;
+                create_pcpic(chara);
+                return ChangeAppearanceResult::canceled;
             }
             else
             {
@@ -977,15 +978,17 @@ int change_appearance()
         {
             if (getkey(snail::Key::f1))
             {
-                return -1;
+                return ChangeAppearanceResult::show_help;
             }
         }
     }
 }
 
-int change_appearance_equipment()
+
+
+void change_appearance_equipment(Character& chara)
 {
-    create_pcpic(cc);
+    create_pcpic(chara);
     snd("core.pop2");
     page = 0;
     pagesize = 18;
@@ -1018,7 +1021,7 @@ int change_appearance_equipment()
         ++keyrange;
     }
 
-    while (1)
+    while (true)
     {
         pagesize = 0;
         ui_display_window(
@@ -1043,7 +1046,8 @@ int change_appearance_equipment()
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         gmode(2);
         gcopy_c(
-            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
+            chara.index + 10 + PicLoader::max_buffers +
+                TintedBuffers::max_buffers,
             f / 4 % 4 * 32,
             f / 16 % 4 * 48,
             32,
@@ -1065,7 +1069,7 @@ int change_appearance_equipment()
             s = listn(0, p);
             if (cnt != 0)
             {
-                if (pcc(20 + cnt - 1, cc) == 0)
+                if (pcc(20 + cnt - 1, chara.index) == 0)
                 {
                     s += u8"On"s;
                 }
@@ -1092,26 +1096,28 @@ int change_appearance_equipment()
             }
             if (action == "next_page" || action == "previous_page")
             {
-                if (pcc(20 + cs - 1, cc) == 0)
+                if (pcc(20 + cs - 1, chara.index) == 0)
                 {
-                    pcc(20 + cs - 1, cc) = 1;
+                    pcc(20 + cs - 1, chara.index) = 1;
                 }
                 else
                 {
-                    pcc(20 + cs - 1, cc) = 0;
+                    pcc(20 + cs - 1, chara.index) = 0;
                 }
-                create_pcpic(cc);
+                create_pcpic(chara);
                 snd("core.cursor1");
             }
         }
         if ((cs == 0 && action == "entry") || action == "cancel")
         {
             snd("core.ok1");
-            create_pcpic(cc);
-            return 1;
+            create_pcpic(chara);
+            return;
         }
     }
 }
+
+
 
 void append_accuracy_info(int val0)
 {

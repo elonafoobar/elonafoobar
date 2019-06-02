@@ -2318,4 +2318,24 @@ void item_build_shelter(Item& shelter)
 
 
 
+int iequiploc(const Item& item)
+{
+    switch (the_item_db[item.id]->category)
+    {
+    case 12000: return 1;
+    case 34000: return 2;
+    case 20000: return 3;
+    case 16000: return 4;
+    case 10000: return 5;
+    case 14000: return 5;
+    case 32000: return 6;
+    case 22000: return 7;
+    case 18000: return 9;
+    case 24000: return 10;
+    case 25000: return 11;
+    case 19000: return 8;
+    default: return 0;
+    }
+}
+
 } // namespace elona

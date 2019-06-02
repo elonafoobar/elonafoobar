@@ -506,28 +506,6 @@ void gain_race_feat()
 
 
 
-int iequiploc(int ci)
-{
-    switch (the_item_db[inv[ci].id]->category)
-    {
-    case 12000: return 1;
-    case 34000: return 2;
-    case 20000: return 3;
-    case 16000: return 4;
-    case 10000: return 5;
-    case 14000: return 5;
-    case 32000: return 6;
-    case 22000: return 7;
-    case 18000: return 9;
-    case 24000: return 10;
-    case 25000: return 11;
-    case 19000: return 8;
-    default: return 0;
-    }
-}
-
-
-
 int roundmargin(int x, int y)
 {
     if (x > y)
@@ -1271,7 +1249,7 @@ void ride_begin(int mount)
     cell_data.at(cdata[mount].position.x, cdata[mount].position.y)
         .chara_index_plus_one = 0;
     game_data.mount = mount;
-    create_pcpic(0);
+    create_pcpic(cdata.player());
     cdata[game_data.mount].continuous_action.finish();
     refresh_speed(cdata[game_data.mount]);
     txt(""s + cdata[mount].current_speed + u8") "s);
@@ -1293,7 +1271,7 @@ void ride_end()
     cdata[mount].is_ridden() = false;
     cdata[mount].continuous_action.finish();
     game_data.mount = 0;
-    create_pcpic(0);
+    create_pcpic(cdata.player());
     refresh_speed(cdata[mount]);
 }
 
@@ -3121,7 +3099,7 @@ void character_drops_item()
             inv[ci].remove();
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-        create_pcpic(0);
+        create_pcpic(cdata.player());
         return;
     }
     else
@@ -3130,7 +3108,7 @@ void character_drops_item()
         {
             if (cdata[rc].has_own_sprite() == 1)
             {
-                create_pcpic(rc);
+                create_pcpic(cdata[rc]);
             }
         }
         if (cdata[rc].relationship == 10)

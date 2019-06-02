@@ -720,7 +720,6 @@ void gain_race_feat();
 // Item status querying
 int cargocheck();
 void getinheritance(int, elona_vector1<int>&, int&);
-int iequiploc(int = 0);
 
 // Item manipulation
 int access_item_db(int);
@@ -887,11 +886,6 @@ int blending_find_required_mat();
 int blending_spend_materials();
 void blending_start_attempt();
 void blending_proc_on_success_events();
-
-
-//// Menus
-int change_appearance_equipment();
-
 
 //// Map
 int map_barrel(int = 0, int = 0);

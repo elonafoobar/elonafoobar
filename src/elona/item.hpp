@@ -328,4 +328,7 @@ enum class ItemDescriptionType : int
 
 void item_load_desc(int ci, int& p);
 
+
+int iequiploc(const Item& item);
+
 } // namespace elona
