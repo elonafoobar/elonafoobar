@@ -142,6 +142,14 @@ config {
             # Number of frames to wait between presses of shortcut keys.
             # Valid values are 1 - 10.
             key_wait = 5
+
+            # Number of frames to wait between the first action and the second.
+            # Valid values are 1 - 20.
+            initial_key_repeat_wait = 5
+
+            # Number of frames to wait between any actions.
+            # Valid values are 1 - 5.
+            key_repeat_wait = 1
         }
 
         # These settings affect game balance.

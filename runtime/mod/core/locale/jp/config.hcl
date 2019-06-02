@@ -296,6 +296,14 @@ DOC
                     name = "キーウェイト"
                     formatter = core.locale.config.common.formatter.wait
                 }
+                initial_key_repeat_wait {
+                    name = "キーリピートウェイト(開始)"
+                    formatter = core.locale.config.common.formatter.wait
+                }
+                key_repeat_wait {
+                    name = "キーリピートウェイト"
+                    formatter = core.locale.config.common.formatter.wait
+                }
                 select_wait {
                     name = "選択ウェイト"
                     formatter = core.locale.config.common.formatter.wait
