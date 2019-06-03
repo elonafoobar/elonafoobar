@@ -265,11 +265,11 @@ void chara_vomit(Character& cc)
     if (map_data.type != mdata_t::MapType::world_map)
     {
         auto p = 2;
-        for (const auto& i : items(-1))
+        for (const auto& item : inv.ground())
         {
-            if (inv[i].number() > 0)
+            if (item.number() > 0)
             {
-                if (inv[i].id == 704)
+                if (item.id == 704)
                 {
                     ++p;
                 }
@@ -278,8 +278,7 @@ void chara_vomit(Character& cc)
         if (rnd(p * p * p) == 0 || cc.index == 0)
         {
             flt();
-            int stat = itemcreate(-1, 704, cc.position.x, cc.position.y, 0);
-            if (stat != 0)
+            if (itemcreate(-1, 704, cc.position.x, cc.position.y, 0))
             {
                 if (cc.index != 0)
                 {
@@ -464,14 +463,14 @@ void cook()
 
 
 
-void make_dish(int ci, int type)
+void make_dish(int ingredient, int type)
 {
-    inv[ci].image = picfood(type, inv[ci].param1 / 1000);
-    inv[ci].weight = 500;
-    inv[ci].param2 = type;
-    if (inv[ci].material == 35 && inv[ci].param3 >= 0)
+    inv[ingredient].image = picfood(type, inv[ingredient].param1 / 1000);
+    inv[ingredient].weight = 500;
+    inv[ingredient].param2 = type;
+    if (inv[ingredient].material == 35 && inv[ingredient].param3 >= 0)
     {
-        inv[ci].param3 = game_data.date.hours() + 72;
+        inv[ingredient].param3 = game_data.date.hours() + 72;
     }
 }
 
@@ -1508,13 +1507,13 @@ void foods_get_rotten()
             continue;
         }
 
-        for (const auto& i : items(chara))
+        for (const auto& item : inv.by_index(chara))
         {
-            if (inv[i].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            _food_gets_rotten(chara, i);
+            _food_gets_rotten(chara, item.index);
         }
     }
 }

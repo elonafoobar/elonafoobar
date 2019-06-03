@@ -14,7 +14,7 @@ struct Item;
 
 
 bool enchantment_add(
-    int ci,
+    int item_index,
     int type,
     int power,
     int flip_percentage = 0,

@@ -535,8 +535,7 @@ void continuous_action_perform()
                                             dbid = 55;
                                         }
                                     }
-                                    int stat = itemcreate(-1, dbid, x, y, 1);
-                                    if (stat != 0)
+                                    if (itemcreate(-1, dbid, x, y, 1))
                                     {
                                         // NOTE: may cause Lua creation
                                         // callbacks to run twice.
@@ -1627,73 +1626,65 @@ void spot_digging()
     txt(i18n::s.get("core.locale.activity.dig_spot.finish"));
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        for (const auto& cnt : items(0))
+        for (auto&& item : inv.pc())
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].id == 621)
+            if (item.id == 621 && item.param1 != 0 &&
+                item.param1 == cdata.player().position.x &&
+                item.param2 == cdata.player().position.y)
             {
-                if (inv[cnt].param1 != 0)
+                snd("core.chest1");
+                txt(i18n::s.get("core.locale.activity.dig_spot."
+                                "something_is_there"),
+                    Message::color{ColorIndex::orange});
+                msg_halt();
+                snd("core.ding2");
+                flt();
+                itemcreate(
+                    -1,
+                    622,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    2 + rnd(3));
+                flt();
+                itemcreate(
+                    -1,
+                    55,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    1 + rnd(3));
+                flt();
+                itemcreate(
+                    -1,
+                    54,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    rnd(10000) + 2000);
+                for (int i = 0; i < 4; ++i)
                 {
-                    if (inv[cnt].param1 == cdata.player().position.x)
+                    flt(calcobjlv(cdata.player().level + 10),
+                        calcfixlv(Quality::good));
+                    if (i == 0)
                     {
-                        if (inv[cnt].param2 == cdata.player().position.y)
-                        {
-                            snd("core.chest1");
-                            txt(i18n::s.get("core.locale.activity.dig_spot."
-                                            "something_is_there"),
-                                Message::color{ColorIndex::orange});
-                            msg_halt();
-                            snd("core.ding2");
-                            flt();
-                            itemcreate(
-                                -1,
-                                622,
-                                cdata.player().position.x,
-                                cdata.player().position.y,
-                                2 + rnd(3));
-                            flt();
-                            itemcreate(
-                                -1,
-                                55,
-                                cdata.player().position.x,
-                                cdata.player().position.y,
-                                1 + rnd(3));
-                            flt();
-                            itemcreate(
-                                -1,
-                                54,
-                                cdata.player().position.x,
-                                cdata.player().position.y,
-                                rnd(10000) + 2000);
-                            for (int cnt = 0, cnt_end = (4); cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                flt(calcobjlv(cdata.player().level + 10),
-                                    calcfixlv(Quality::good));
-                                if (cnt == 0)
-                                {
-                                    fixlv = Quality::godly;
-                                }
-                                flttypemajor = choice(fsetchest);
-                                itemcreate(
-                                    -1,
-                                    0,
-                                    cdata.player().position.x,
-                                    cdata.player().position.y,
-                                    0);
-                            }
-                            txt(
-                                i18n::s.get("core.locale.common.something_is_"
-                                            "put_on_the_ground"));
-                            save_set_autosave();
-                            inv[cnt].modify_number(-1);
-                            break;
-                        }
+                        fixlv = Quality::godly;
                     }
+                    flttypemajor = choice(fsetchest);
+                    itemcreate(
+                        -1,
+                        0,
+                        cdata.player().position.x,
+                        cdata.player().position.y,
+                        0);
                 }
+                txt(
+                    i18n::s.get("core.locale.common.something_is_"
+                                "put_on_the_ground"));
+                save_set_autosave();
+                item.modify_number(-1);
+                break;
             }
         }
     }

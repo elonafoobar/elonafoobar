@@ -437,10 +437,10 @@ void eqrandweaponmage()
 
 void wear_most_valuable_equipment_for_all_body_parts()
 {
-    for (const auto& cnt : items(rc))
+    for (const auto& item : inv.for_chara(cdata[rc]))
     {
-        ci = cnt;
-        if (inv[cnt].number() == 0 || inv[cnt].body_part != 0)
+        ci = item.index;
+        if (item.number() == 0 || item.body_part != 0)
         {
             continue;
         }
@@ -619,29 +619,31 @@ void supply_new_equipment()
         {
             break;
         }
-        int stat = itemcreate(rc, 0, -1, -1, 0);
-        if (stat == 0)
+        if (itemcreate(rc, 0, -1, -1, 0))
         {
-            break;
-        }
-        inv[ci].identification_state = IdentifyState::completely_identified;
-        if (inv[ci].quality >= Quality::miracle)
-        {
-            if (the_item_db[inv[ci].id]->category < 50000)
+            inv[ci].identification_state = IdentifyState::completely_identified;
+            if (inv[ci].quality >= Quality::miracle)
             {
-                if (cdata[rc].character_role == 13)
+                if (the_item_db[inv[ci].id]->category < 50000)
                 {
-                    addnews(1, rc, 0, itemname(ci));
+                    if (cdata[rc].character_role == 13)
+                    {
+                        addnews(1, rc, 0, itemname(ci));
+                    }
+                }
+            }
+            wear_most_valuable_equipment();
+            if (cdata[rc].character_role != 13)
+            {
+                if (rnd(3))
+                {
+                    break;
                 }
             }
         }
-        wear_most_valuable_equipment();
-        if (cdata[rc].character_role != 13)
+        else
         {
-            if (rnd(3))
-            {
-                break;
-            }
+            break;
         }
     }
 }
@@ -1461,8 +1463,7 @@ void supply_initial_equipments()
         {
             flt();
             nostack = 1;
-            int stat = itemcreate(rc, 772, -1, -1, 0);
-            if (stat != 0)
+            if (itemcreate(rc, 772, -1, -1, 0))
             {
                 inv[ci].modify_number(rnd(4));
                 if (rnd(2))

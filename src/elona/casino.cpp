@@ -361,15 +361,9 @@ void casino_acquire_items()
 {
     mtilefilecur = -1;
     draw_prepare_map_chips();
-    f = 0;
-    for (const auto& cnt : items(-1))
-    {
-        if (inv[cnt].number() != 0)
-        {
-            f = 1;
-        }
-    }
-    if (f == 1)
+    const auto have_any_rewards = range::any_of(
+        inv.ground(), [](const auto& item) { return item.number() != 0; });
+    if (have_any_rewards)
     {
         if (cdata.player().hp >= 0)
         {

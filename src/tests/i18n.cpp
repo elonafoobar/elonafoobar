@@ -54,7 +54,7 @@ TEST_CASE("test format chara", "[I18N: Formatting]")
 TEST_CASE("test format item", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
+    REQUIRE_SOME(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
     Item& i = elona::inv[elona::ci];
 
     REQUIRE(

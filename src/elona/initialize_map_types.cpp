@@ -782,15 +782,15 @@ static void _init_map_your_home()
             // map if the home was upgraded.
             ctrl_file(
                 FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
-            for (const auto& cnt : items(-1))
+            for (auto&& item : inv.ground())
             {
-                if (inv[cnt].number() == 0)
+                if (item.number() == 0)
                 {
                     continue;
                 }
-                inv[cnt].position.x = map_data.width / 2;
-                inv[cnt].position.y = map_data.height / 2;
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                item.position.x = map_data.width / 2;
+                item.position.y = map_data.height / 2;
+                cell_refresh(item.position.x, item.position.y);
             }
             ctrl_file(FileOperation::map_home_upgrade);
             for (auto&& cnt : cdata.others())

@@ -380,29 +380,29 @@ TurnResult do_dig_command()
 static void _search_for_crystal()
 {
     p = 9999;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].own_state != 5)
+        if (item.own_state != 5)
         {
             continue;
         }
-        if (inv[cnt].id != 748)
+        if (item.id != 748)
         {
             continue;
         }
         if (p > dist(
-                    inv[cnt].position.x,
-                    inv[cnt].position.y,
+                    item.position.x,
+                    item.position.y,
                     cdata.player().position.x,
                     cdata.player().position.y))
         {
             p = dist(
-                inv[cnt].position.x,
-                inv[cnt].position.y,
+                item.position.x,
+                item.position.y,
                 cdata.player().position.x,
                 cdata.player().position.y);
         }
@@ -794,7 +794,7 @@ TurnResult do_throw_command()
                 potionthrow = 100;
                 cc = tc;
                 dbid = inv[ci].id;
-                access_item_db(15);
+                access_item_db(inv[ci], dbid, 15);
                 cc = ccthrowpotion;
                 return TurnResult::turn_end;
             }
@@ -1387,8 +1387,7 @@ TurnResult do_dip_command()
                 {
                     --game_data.holy_well_count;
                     flt();
-                    int stat = itemcreate(0, 516, -1, -1, 0);
-                    if (stat != 0)
+                    if (itemcreate(0, 516, -1, -1, 0))
                     {
                         inv[ci].curse_state = CurseState::blessed;
                     }
@@ -2739,9 +2738,9 @@ TurnResult do_open_command(bool play_sound)
         }
         else
         {
-            for (const auto& cnt : items(-1))
+            for (auto&& item : inv.ground())
             {
-                inv[cnt].remove();
+                item.remove();
             }
         }
         shoptrade = 0;
@@ -3315,7 +3314,7 @@ TurnResult do_read_command()
     }
     efid = 0;
     dbid = inv[ci].id;
-    access_item_db(13);
+    access_item_db(inv[ci], dbid, 13);
     if (efid == 1115)
     {
         return build_new_building();
@@ -3360,14 +3359,14 @@ TurnResult do_eat_command()
 TurnResult do_drink_command()
 {
     dbid = inv[ci].id;
-    access_item_db(15);
+    access_item_db(inv[ci], dbid, 15);
     return TurnResult::turn_end;
 }
 
 TurnResult do_zap_command()
 {
     dbid = inv[ci].id;
-    access_item_db(14);
+    access_item_db(inv[ci], dbid, 14);
     int stat = do_zap();
     if (stat == 0)
     {
@@ -3517,8 +3516,7 @@ TurnResult do_get_command()
             }
             flt();
             {
-                int stat = itemcreate(0, 587, -1, -1, 0);
-                if (stat != 0)
+                if (itemcreate(0, 587, -1, -1, 0))
                 {
                     inv[ci].curse_state = CurseState::none;
                     inv[ci].identification_state =

@@ -1,5 +1,6 @@
 #include <unordered_map>
 #include "character.hpp"
+#include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
@@ -8,29 +9,27 @@
 #include "random.hpp"
 #include "variables.hpp"
 
-#include "data/types/type_item.hpp"
 
 
 namespace elona
 {
 
-
-int access_item_db(int dbmode)
+int access_item_db(Item& item, int legacy_id, int dbmode)
 {
-    const auto info = the_item_db[dbid];
+    const auto info = the_item_db[legacy_id];
     if (info)
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv[ci].value = info->value;
-            inv[ci].weight = info->weight;
-            inv[ci].dice_x = info->dice_x;
-            inv[ci].dice_y = info->dice_y;
-            inv[ci].hit_bonus = info->hit_bonus;
-            inv[ci].damage_bonus = info->damage_bonus;
-            inv[ci].pv = info->pv;
-            inv[ci].dv = info->dv;
-            inv[ci].material = info->material;
+            item.value = info->value;
+            item.weight = info->weight;
+            item.dice_x = info->dice_x;
+            item.dice_y = info->dice_y;
+            item.hit_bonus = info->hit_bonus;
+            item.damage_bonus = info->damage_bonus;
+            item.pv = info->pv;
+            item.dv = info->dv;
+            item.material = info->material;
             if (dbmode == 10)
                 return 0;
         }
@@ -74,53 +73,53 @@ int access_item_db(int dbmode)
     if (dbmode == 3)
     {
         // Common initialization
-        inv[ci].id = dbid;
-        inv[ci].set_number(1);
-        inv[ci].difficulty_of_identification = 0; // Default value
-        inv[ci].image = info->image;
+        item.id = legacy_id;
+        item.set_number(1);
+        item.difficulty_of_identification = 0; // Default value
+        item.image = info->image;
         fixeditemenc(0) = 0; // Default value
         reftype = info->category;
         reftypeminor = info->subcategory;
     }
 
-    switch (dbid)
+    switch (legacy_id)
     {
     case 792:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 8;
+            item.param2 = 8;
         }
         break;
     case 791:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
             fixeditemenc(0) = 57;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 61;
             fixeditemenc(3) = 200;
             fixeditemenc(4) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 790:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
+            item.function = 15;
         }
         break;
     case 789:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
+            item.function = 15;
         }
         break;
     case 788:
         if (dbmode == 3)
         {
-            inv[ci].skill = 108;
+            item.skill = 108;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -130,20 +129,20 @@ int access_item_db(int dbmode)
     case 787:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 5;
-            inv[ci].param3 = 720;
+            item.param2 = 5;
+            item.param3 = 720;
         }
         break;
     case 786:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 4;
+            item.param2 = 4;
         }
         break;
     case 785:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         break;
     case 783:
@@ -156,47 +155,47 @@ int access_item_db(int dbmode)
     case 781:
         if (dbmode == 3)
         {
-            inv[ci].skill = 101;
+            item.skill = 101;
         }
         break;
     case 778:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 777:
         if (dbmode == 3)
         {
-            inv[ci].function = 26;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param3 = 240;
+            item.function = 26;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param3 = 240;
             fixlv = Quality::special;
         }
         break;
     case 776:
         if (dbmode == 3)
         {
-            inv[ci].function = 26;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param3 = 240;
+            item.function = 26;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param3 = 240;
             fixlv = Quality::special;
         }
         break;
     case 775:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
-            inv[ci].param2 = 8;
+            item.is_precious() = true;
+            item.param2 = 8;
         }
         break;
     case 772:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 32;
+            item.param1 = 2000;
+            item.param3 = 32;
         }
         break;
     case 771:
@@ -224,46 +223,46 @@ int access_item_db(int dbmode)
     case 767:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 0;
+            item.param1 = 0;
         }
         break;
     case 761:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
+            item.skill = 183;
             fixeditemenc(0) = 60;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv[ci].function = 17;
-            inv[ci].is_precious() = true;
-            inv[ci].param1 = 200;
+            item.function = 17;
+            item.is_precious() = true;
+            item.param1 = 200;
             fixlv = Quality::special;
         }
         break;
     case 760:
         if (dbmode == 3)
         {
-            inv[ci].function = 49;
-            inv[ci].is_precious() = true;
-            inv[ci].param1 = rnd(20000) + 1;
+            item.function = 49;
+            item.is_precious() = true;
+            item.param1 = rnd(20000) + 1;
             fixlv = Quality::special;
         }
         break;
     case 759:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
         }
         break;
     case 758:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
             fixeditemenc(0) = 35;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -281,43 +280,43 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 33;
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 756:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 7;
+            item.param2 = 7;
         }
         break;
     case 755:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 6;
+            item.param2 = 6;
         }
         break;
     case 749:
         if (dbmode == 3)
         {
-            inv[ci].function = 48;
-            inv[ci].is_precious() = true;
+            item.function = 48;
+            item.is_precious() = true;
         }
         break;
     case 748:
         if (dbmode == 3)
         {
-            inv[ci].function = 47;
-            inv[ci].is_precious() = true;
-            inv[ci].is_showroom_only() = true;
+            item.function = 47;
+            item.is_precious() = true;
+            item.is_showroom_only() = true;
         }
         break;
     case 747:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
-            inv[ci].param2 = rnd(4) + 1;
+            item.param1 = 1;
+            item.param2 = rnd(4) + 1;
         }
         if (dbmode == 13)
         {
@@ -328,51 +327,51 @@ int access_item_db(int dbmode)
     case 746:
         if (dbmode == 3)
         {
-            inv[ci].function = 30;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param1 = 1132;
-            inv[ci].param2 = 100;
-            inv[ci].param3 = 24;
+            item.function = 30;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param1 = 1132;
+            item.param2 = 100;
+            item.param3 = 24;
         }
         break;
     case 745:
         if (dbmode == 3)
         {
-            inv[ci].function = 30;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param1 = 1132;
-            inv[ci].param2 = 100;
-            inv[ci].param3 = 24;
+            item.function = 30;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param1 = 1132;
+            item.param2 = 100;
+            item.param3 = 24;
         }
         break;
     case 744:
         if (dbmode == 3)
         {
-            inv[ci].function = 30;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param1 = 1132;
-            inv[ci].param2 = 100;
-            inv[ci].param3 = 24;
+            item.function = 30;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param1 = 1132;
+            item.param2 = 100;
+            item.param3 = 24;
         }
         break;
     case 743:
         if (dbmode == 3)
         {
-            inv[ci].function = 30;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param1 = 1132;
-            inv[ci].param2 = 100;
-            inv[ci].param3 = 24;
+            item.function = 30;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param1 = 1132;
+            item.param2 = 100;
+            item.param3 = 24;
         }
         break;
     case 742:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
             fixlv = Quality::special;
         }
         if (dbmode == 13)
@@ -384,7 +383,7 @@ int access_item_db(int dbmode)
     case 741:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
             fixeditemenc(0) = 20050;
             fixeditemenc(1) = 550;
             fixeditemenc(2) = 70052;
@@ -394,8 +393,8 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 10011;
             fixeditemenc(7) = 720;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -409,15 +408,15 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 20057;
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 739:
         if (dbmode == 3)
         {
-            inv[ci].skill = 107;
+            item.skill = 107;
             fixeditemenc(0) = 80002;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70054;
@@ -431,15 +430,15 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 80003;
             fixeditemenc(11) = 350;
             fixeditemenc(12) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 738:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 6;
+            item.param2 = 6;
         }
         break;
     case 737:
@@ -463,7 +462,7 @@ int access_item_db(int dbmode)
     case 735:
         if (dbmode == 3)
         {
-            inv[ci].skill = 107;
+            item.skill = 107;
             fixeditemenc(0) = 80025;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -472,14 +471,14 @@ int access_item_db(int dbmode)
     case 733:
         if (dbmode == 3)
         {
-            inv[ci].function = 45;
+            item.function = 45;
         }
         break;
     case 732:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -492,8 +491,8 @@ int access_item_db(int dbmode)
     case 731:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -506,7 +505,7 @@ int access_item_db(int dbmode)
     case 730:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 728:
@@ -519,29 +518,29 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 20050;
             fixeditemenc(5) = 350;
             fixeditemenc(6) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 727:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
             fixeditemenc(0) = 54;
             fixeditemenc(1) = 1000;
             fixeditemenc(2) = 20058;
             fixeditemenc(3) = 450;
             fixeditemenc(4) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 726:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
             fixeditemenc(0) = 30183;
             fixeditemenc(1) = -450;
             fixeditemenc(2) = 52;
@@ -549,15 +548,15 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 53;
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 725:
         if (dbmode == 3)
         {
-            inv[ci].skill = 111;
+            item.skill = 111;
             fixeditemenc(0) = 70059;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 30183;
@@ -565,15 +564,15 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 44;
             fixeditemenc(5) = 450;
             fixeditemenc(6) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 724:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 723:
@@ -584,8 +583,8 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 30166;
             fixeditemenc(3) = 650;
             fixeditemenc(4) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -597,31 +596,31 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 30109;
             fixeditemenc(3) = 700;
             fixeditemenc(4) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 721:
         if (dbmode == 3)
         {
-            inv[ci].function = 43;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param3 = 480;
+            item.function = 43;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param3 = 480;
             fixlv = Quality::special;
         }
         break;
     case 720:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 200;
+            item.param1 = 200;
         }
         break;
     case 719:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
             fixeditemenc(0) = 44;
             fixeditemenc(1) = 250;
             fixeditemenc(2) = 39;
@@ -629,15 +628,15 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 33;
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 718:
         if (dbmode == 3)
         {
-            inv[ci].skill = 111;
+            item.skill = 111;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 70054;
@@ -649,36 +648,36 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 30;
             fixeditemenc(9) = 500;
             fixeditemenc(10) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 717:
         if (dbmode == 3)
         {
-            inv[ci].function = 42;
+            item.function = 42;
         }
         break;
     case 716:
         if (dbmode == 3)
         {
-            inv[ci].skill = 111;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.skill = 111;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 715:
         if (dbmode == 3)
         {
-            inv[ci].function = 41;
+            item.function = 41;
         }
         break;
     case 714:
         if (dbmode == 3)
         {
-            inv[ci].skill = 111;
+            item.skill = 111;
             fixeditemenc(0) = 80024;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -687,7 +686,7 @@ int access_item_db(int dbmode)
     case 713:
         if (dbmode == 3)
         {
-            inv[ci].skill = 111;
+            item.skill = 111;
             fixeditemenc(0) = 70061;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -712,8 +711,8 @@ int access_item_db(int dbmode)
     case 710:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -744,13 +743,13 @@ int access_item_db(int dbmode)
     case 707:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
+            item.skill = 183;
             fixeditemenc(0) = 49;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv[ci].function = 17;
-            inv[ci].is_precious() = true;
-            inv[ci].param1 = 180;
+            item.function = 17;
+            item.is_precious() = true;
+            item.param1 = 180;
             fixlv = Quality::special;
         }
         break;
@@ -773,8 +772,8 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 41;
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -790,21 +789,21 @@ int access_item_db(int dbmode)
     case 703:
         if (dbmode == 3)
         {
-            inv[ci].function = 39;
+            item.function = 39;
         }
         break;
     case 702:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
-            inv[ci].param2 = 4;
+            item.is_precious() = true;
+            item.param2 = 4;
             fixlv = Quality::special;
         }
         break;
     case 701:
         if (dbmode == 3)
         {
-            inv[ci].function = 37;
+            item.function = 37;
         }
         break;
     case 700:
@@ -818,7 +817,7 @@ int access_item_db(int dbmode)
     case 699:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 698:
@@ -833,8 +832,8 @@ int access_item_db(int dbmode)
     case 697:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -847,8 +846,8 @@ int access_item_db(int dbmode)
     case 696:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -861,64 +860,64 @@ int access_item_db(int dbmode)
     case 695:
         if (dbmode == 3)
         {
-            inv[ci].skill = 102;
+            item.skill = 102;
             fixeditemenc(0) = 44;
             fixeditemenc(1) = 750;
             fixeditemenc(2) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 693:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
-            inv[ci].function = 17;
-            inv[ci].param1 = 175;
+            item.skill = 183;
+            item.function = 17;
+            item.param1 = 175;
         }
         break;
     case 692:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
-            inv[ci].function = 17;
-            inv[ci].param1 = 70;
+            item.skill = 183;
+            item.function = 17;
+            item.param1 = 70;
         }
         break;
     case 691:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
-            inv[ci].function = 17;
-            inv[ci].param1 = 130;
+            item.skill = 183;
+            item.function = 17;
+            item.param1 = 130;
         }
         break;
     case 690:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
-            inv[ci].function = 17;
-            inv[ci].param1 = 150;
+            item.skill = 183;
+            item.function = 17;
+            item.param1 = 150;
         }
         break;
     case 689:
         if (dbmode == 3)
         {
-            inv[ci].function = 36;
+            item.function = 36;
         }
         break;
     case 688:
         if (dbmode == 3)
         {
-            inv[ci].function = 35;
+            item.function = 35;
         }
         break;
     case 687:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -929,76 +928,76 @@ int access_item_db(int dbmode)
     case 686:
         if (dbmode == 3)
         {
-            inv[ci].function = 34;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param3 = 720;
+            item.function = 34;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param3 = 720;
             fixlv = Quality::special;
         }
         break;
     case 685:
         if (dbmode == 3)
         {
-            inv[ci].function = 33;
+            item.function = 33;
         }
         break;
     case 684:
         if (dbmode == 3)
         {
-            inv[ci].function = 32;
-            inv[ci].is_precious() = true;
+            item.function = 32;
+            item.is_precious() = true;
         }
         break;
     case 683:
         if (dbmode == 3)
         {
-            inv[ci].function = 30;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param1 = 1132;
-            inv[ci].param2 = 100;
-            inv[ci].param3 = 24;
+            item.function = 30;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param1 = 1132;
+            item.param2 = 100;
+            item.param3 = 24;
             fixlv = Quality::special;
         }
         break;
     case 682:
         if (dbmode == 3)
         {
-            inv[ci].function = 31;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param3 = 72;
+            item.function = 31;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param3 = 72;
             fixlv = Quality::special;
         }
         break;
     case 681:
         if (dbmode == 3)
         {
-            inv[ci].function = 30;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param1 = 404;
-            inv[ci].param2 = 400;
-            inv[ci].param3 = 8;
+            item.function = 30;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param1 = 404;
+            item.param2 = 400;
+            item.param3 = 8;
             fixlv = Quality::special;
         }
         break;
     case 680:
         if (dbmode == 3)
         {
-            inv[ci].function = 30;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param1 = 446;
-            inv[ci].param2 = 300;
-            inv[ci].param3 = 12;
+            item.function = 30;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param1 = 446;
+            item.param2 = 300;
+            item.param3 = 12;
             fixlv = Quality::special;
         }
         break;
     case 679:
         if (dbmode == 3)
         {
-            inv[ci].skill = 103;
+            item.skill = 103;
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80013;
@@ -1010,15 +1009,15 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 20054;
             fixeditemenc(9) = 400;
             fixeditemenc(10) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 678:
         if (dbmode == 3)
         {
-            inv[ci].skill = 101;
+            item.skill = 101;
             fixeditemenc(0) = 41;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 35;
@@ -1030,15 +1029,15 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 30185;
             fixeditemenc(9) = 600;
             fixeditemenc(10) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 677:
         if (dbmode == 3)
         {
-            inv[ci].skill = 104;
+            item.skill = 104;
             fixeditemenc(0) = 80023;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80012;
@@ -1050,15 +1049,15 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 20056;
             fixeditemenc(9) = 150;
             fixeditemenc(10) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 676:
         if (dbmode == 3)
         {
-            inv[ci].skill = 105;
+            item.skill = 105;
             fixeditemenc(0) = 80000;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70050;
@@ -1074,15 +1073,15 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 20052;
             fixeditemenc(13) = 250;
             fixeditemenc(14) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 675:
         if (dbmode == 3)
         {
-            inv[ci].skill = 107;
+            item.skill = 107;
             fixeditemenc(0) = 30184;
             fixeditemenc(1) = 600;
             fixeditemenc(2) = 42;
@@ -1098,15 +1097,15 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 80025;
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 674:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
             fixeditemenc(0) = 80017;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 43;
@@ -1116,15 +1115,15 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 20057;
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 673:
         if (dbmode == 3)
         {
-            inv[ci].skill = 108;
+            item.skill = 108;
             fixeditemenc(0) = 80014;
             fixeditemenc(1) = 200;
             fixeditemenc(2) = 80005;
@@ -1134,44 +1133,44 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 20052;
             fixeditemenc(7) = 300;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 672:
         if (dbmode == 3)
         {
-            inv[ci].function = 29;
-            inv[ci].is_precious() = true;
+            item.function = 29;
+            item.is_precious() = true;
             fixlv = Quality::special;
         }
         break;
     case 671:
         if (dbmode == 3)
         {
-            inv[ci].function = 28;
-            inv[ci].is_precious() = true;
+            item.function = 28;
+            item.is_precious() = true;
             fixlv = Quality::special;
         }
         break;
     case 670:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 7;
+            item.param1 = 7;
         }
         break;
     case 669:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 7;
+            item.param1 = 7;
         }
         break;
     case 668:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
-            inv[ci].param2 = rnd(4) + 1;
+            item.param1 = 1;
+            item.param2 = rnd(4) + 1;
         }
         if (dbmode == 13)
         {
@@ -1182,26 +1181,26 @@ int access_item_db(int dbmode)
     case 667:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 7;
+            item.param2 = 7;
         }
         break;
     case 666:
         if (dbmode == 3)
         {
-            inv[ci].function = 27;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param3 = 120;
+            item.function = 27;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param3 = 120;
             fixlv = Quality::special;
         }
         break;
     case 665:
         if (dbmode == 3)
         {
-            inv[ci].function = 26;
-            inv[ci].is_precious() = true;
-            inv[ci].has_cooldown_time() = true;
-            inv[ci].param3 = 240;
+            item.function = 26;
+            item.is_precious() = true;
+            item.has_cooldown_time() = true;
+            item.param3 = 240;
             fixlv = Quality::special;
         }
         break;
@@ -1216,15 +1215,15 @@ int access_item_db(int dbmode)
     case 663:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
             fixlv = Quality::special;
         }
         break;
     case 662:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
-            inv[ci].param2 = 7;
+            item.is_precious() = true;
+            item.param2 = 7;
             fixlv = Quality::special;
         }
         break;
@@ -1240,16 +1239,16 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 30182;
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 660:
         if (dbmode == 3)
         {
-            inv[ci].count = 5 + rnd(5) - rnd(5);
-            inv[ci].has_charge() = true;
+            item.count = 5 + rnd(5) - rnd(5);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1262,15 +1261,15 @@ int access_item_db(int dbmode)
     case 655:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
-            inv[ci].param2 = 7;
+            item.is_precious() = true;
+            item.param2 = 7;
             fixlv = Quality::special;
         }
         break;
     case 654:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 160;
+            item.param1 = 160;
         }
         break;
     case 650:
@@ -1283,33 +1282,33 @@ int access_item_db(int dbmode)
     case 648:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 643:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 130;
+            item.param1 = 130;
         }
         break;
     case 641:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
             fixlv = Quality::special;
         }
         break;
     case 640:
         if (dbmode == 3)
         {
-            inv[ci].function = 25;
+            item.function = 25;
         }
         break;
     case 639:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
-            inv[ci].param2 = 7;
+            item.is_precious() = true;
+            item.param2 = 7;
             fixlv = Quality::special;
         }
         break;
@@ -1325,26 +1324,26 @@ int access_item_db(int dbmode)
     case 637:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
             fixlv = Quality::special;
         }
         break;
     case 635:
         if (dbmode == 3)
         {
-            inv[ci].function = 24;
+            item.function = 24;
         }
         break;
     case 634:
         if (dbmode == 3)
         {
-            inv[ci].function = 23;
+            item.function = 23;
         }
         break;
     case 633:
         if (dbmode == 3)
         {
-            inv[ci].skill = 111;
+            item.skill = 111;
             fixeditemenc(0) = 70054;
             fixeditemenc(1) = 800;
             fixeditemenc(2) = 0;
@@ -1362,22 +1361,22 @@ int access_item_db(int dbmode)
     case 630:
         if (dbmode == 3)
         {
-            inv[ci].function = 21;
+            item.function = 21;
         }
         break;
     case 629:
         if (dbmode == 3)
         {
-            inv[ci].function = 20;
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.function = 20;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         break;
     case 628:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1403,15 +1402,15 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 30161;
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 626:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         if (dbmode == 15)
         {
@@ -1424,13 +1423,13 @@ int access_item_db(int dbmode)
     case 625:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 624:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         if (dbmode == 13)
         {
@@ -1443,7 +1442,7 @@ int access_item_db(int dbmode)
     case 623:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         if (dbmode == 13)
         {
@@ -1456,7 +1455,7 @@ int access_item_db(int dbmode)
     case 622:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 621:
@@ -1480,8 +1479,8 @@ int access_item_db(int dbmode)
     case 618:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -1491,45 +1490,45 @@ int access_item_db(int dbmode)
     case 616:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 615:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 613:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 180;
+            item.param1 = 180;
         }
         break;
     case 611:
         if (dbmode == 3)
         {
-            inv[ci].function = 8;
+            item.function = 8;
         }
         break;
     case 606:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 225;
+            item.function = 15;
+            item.param1 = 225;
         }
         break;
     case 603:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
-            inv[ci].is_precious() = true;
+            item.function = 44;
+            item.is_precious() = true;
         }
         break;
     case 602:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 100;
+            item.param2 = 100;
         }
         if (dbmode == 15)
         {
@@ -1540,25 +1539,25 @@ int access_item_db(int dbmode)
     case 600:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 598:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6;
+            item.param1 = 6;
         }
         break;
     case 597:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6;
+            item.param1 = 6;
         }
         break;
     case 587:
         if (dbmode == 3)
         {
-            inv[ci].function = 14;
+            item.function = 14;
         }
         if (dbmode == 15)
         {
@@ -1571,15 +1570,15 @@ int access_item_db(int dbmode)
     case 583:
         if (dbmode == 3)
         {
-            inv[ci].function = 13;
-            inv[ci].param1 = 100;
+            item.function = 13;
+            item.param1 = 100;
         }
         break;
     case 582:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1592,8 +1591,8 @@ int access_item_db(int dbmode)
     case 581:
         if (dbmode == 3)
         {
-            inv[ci].count = 6 + rnd(6) - rnd(6);
-            inv[ci].has_charge() = true;
+            item.count = 6 + rnd(6) - rnd(6);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1605,7 +1604,7 @@ int access_item_db(int dbmode)
     case 578:
         if (dbmode == 3)
         {
-            inv[ci].function = 11;
+            item.function = 11;
         }
         break;
     case 577:
@@ -1620,7 +1619,7 @@ int access_item_db(int dbmode)
     case 576:
         if (dbmode == 3)
         {
-            inv[ci].function = 10;
+            item.function = 10;
         }
         break;
     case 574:
@@ -1635,8 +1634,8 @@ int access_item_db(int dbmode)
     case 573:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 8000;
-            inv[ci].param3 = 240;
+            item.param1 = 8000;
+            item.param3 = 240;
         }
         break;
     case 572:
@@ -1649,14 +1648,14 @@ int access_item_db(int dbmode)
     case 571:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 5;
+            item.param2 = 5;
         }
         break;
     case 570:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1668,8 +1667,8 @@ int access_item_db(int dbmode)
     case 569:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1682,15 +1681,15 @@ int access_item_db(int dbmode)
     case 568:
         if (dbmode == 3)
         {
-            inv[ci].count = 12 + rnd(12) - rnd(12);
-            inv[ci].has_charge() = true;
+            item.count = 12 + rnd(12) - rnd(12);
+            item.has_charge() = true;
         }
         break;
     case 567:
         if (dbmode == 3)
         {
-            inv[ci].count = 12 + rnd(12) - rnd(12);
-            inv[ci].has_charge() = true;
+            item.count = 12 + rnd(12) - rnd(12);
+            item.has_charge() = true;
         }
         break;
     case 566:
@@ -1705,8 +1704,8 @@ int access_item_db(int dbmode)
     case 565:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1718,8 +1717,8 @@ int access_item_db(int dbmode)
     case 564:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1732,7 +1731,7 @@ int access_item_db(int dbmode)
     case 563:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 0;
+            item.param1 = 0;
         }
         if (dbmode == 13)
         {
@@ -1743,13 +1742,13 @@ int access_item_db(int dbmode)
     case 562:
         if (dbmode == 3)
         {
-            inv[ci].function = 8;
+            item.function = 8;
         }
         break;
     case 560:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         break;
     case 559:
@@ -1790,13 +1789,13 @@ int access_item_db(int dbmode)
     case 555:
         if (dbmode == 3)
         {
-            inv[ci].function = 7;
+            item.function = 7;
         }
         break;
     case 554:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -1806,7 +1805,7 @@ int access_item_db(int dbmode)
     case 553:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -1824,8 +1823,8 @@ int access_item_db(int dbmode)
     case 551:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1837,8 +1836,8 @@ int access_item_db(int dbmode)
     case 550:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1860,8 +1859,8 @@ int access_item_db(int dbmode)
     case 548:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1874,8 +1873,8 @@ int access_item_db(int dbmode)
     case 546:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -1888,8 +1887,8 @@ int access_item_db(int dbmode)
     case 545:
         if (dbmode == 3)
         {
-            inv[ci].count = 7 + rnd(7) - rnd(7);
-            inv[ci].has_charge() = true;
+            item.count = 7 + rnd(7) - rnd(7);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1901,8 +1900,8 @@ int access_item_db(int dbmode)
     case 544:
         if (dbmode == 3)
         {
-            inv[ci].function = 6;
-            inv[ci].param1 = discsetmc();
+            item.function = 6;
+            item.param1 = discsetmc();
         }
         break;
     case 543:
@@ -1922,14 +1921,14 @@ int access_item_db(int dbmode)
     case 526:
         if (dbmode == 3)
         {
-            inv[ci].param1 = rnd(5) + 2;
-            inv[ci].param2 = choice(isetfruit);
+            item.param1 = rnd(5) + 2;
+            item.param2 = choice(isetfruit);
         }
         break;
     case 522:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
+            item.param1 = 1;
         }
         if (dbmode == 13)
         {
@@ -1940,7 +1939,7 @@ int access_item_db(int dbmode)
     case 521:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
+            item.param1 = 1;
         }
         if (dbmode == 13)
         {
@@ -1968,8 +1967,8 @@ int access_item_db(int dbmode)
     case 518:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -1981,8 +1980,8 @@ int access_item_db(int dbmode)
     case 517:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2012,7 +2011,7 @@ int access_item_db(int dbmode)
     case 514:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
             fixeditemenc(0) = 80003;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80004;
@@ -2024,21 +2023,21 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 20059;
             fixeditemenc(9) = 300;
             fixeditemenc(10) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 513:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
         }
         break;
     case 512:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2048,12 +2047,12 @@ int access_item_db(int dbmode)
     case 511:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 100 + rnd(200);
+            item.param1 = 100 + rnd(200);
         }
         if (dbmode == 13)
         {
             efid = 1128;
-            efp = inv[ci].param1;
+            efp = item.param1;
             read_scroll();
             return -1;
         }
@@ -2097,7 +2096,7 @@ int access_item_db(int dbmode)
     case 505:
         if (dbmode == 3)
         {
-            inv[ci].is_precious() = true;
+            item.is_precious() = true;
         }
         if (dbmode == 13)
         {
@@ -2137,25 +2136,25 @@ int access_item_db(int dbmode)
     case 499:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 7;
+            item.param2 = 7;
         }
         break;
     case 498:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 6;
+            item.param2 = 6;
         }
         break;
     case 497:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 5;
+            item.param2 = 5;
         }
         break;
     case 496:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2201,7 +2200,7 @@ int access_item_db(int dbmode)
     case 488:
         if (dbmode == 3)
         {
-            inv[ci].function = 9;
+            item.function = 9;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2223,8 +2222,8 @@ int access_item_db(int dbmode)
     case 485:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2236,8 +2235,8 @@ int access_item_db(int dbmode)
     case 484:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2250,13 +2249,13 @@ int access_item_db(int dbmode)
     case 483:
         if (dbmode == 3)
         {
-            inv[ci].skill = 109;
+            item.skill = 109;
         }
         break;
     case 482:
         if (dbmode == 3)
         {
-            inv[ci].skill = 109;
+            item.skill = 109;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2266,8 +2265,8 @@ int access_item_db(int dbmode)
     case 481:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2280,8 +2279,8 @@ int access_item_db(int dbmode)
     case 480:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2302,50 +2301,50 @@ int access_item_db(int dbmode)
     case 478:
         if (dbmode == 3)
         {
-            inv[ci].function = 5;
+            item.function = 5;
         }
         break;
     case 454:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
         }
         break;
     case 453:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
         }
         break;
     case 452:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
         }
         break;
     case 451:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
         }
         break;
     case 450:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
         }
         break;
     case 449:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
         }
         break;
     case 434:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2403,49 +2402,49 @@ int access_item_db(int dbmode)
     case 428:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 0;
+            item.param1 = 0;
         }
         break;
     case 427:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 7;
+            item.param2 = 7;
         }
         break;
     case 426:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 3;
+            item.param2 = 3;
         }
         break;
     case 425:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 6;
+            item.param2 = 6;
         }
         break;
     case 424:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 3;
+            item.param2 = 3;
         }
         break;
     case 423:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 4;
+            item.param2 = 4;
         }
         break;
     case 422:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         break;
     case 421:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2455,7 +2454,7 @@ int access_item_db(int dbmode)
     case 420:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2465,7 +2464,7 @@ int access_item_db(int dbmode)
     case 419:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2475,7 +2474,7 @@ int access_item_db(int dbmode)
     case 418:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2485,7 +2484,7 @@ int access_item_db(int dbmode)
     case 417:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 1;
+            item.param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -2495,8 +2494,8 @@ int access_item_db(int dbmode)
     case 412:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2517,8 +2516,8 @@ int access_item_db(int dbmode)
     case 410:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2531,67 +2530,67 @@ int access_item_db(int dbmode)
     case 409:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 5;
+            item.param1 = 5;
         }
         break;
     case 408:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
+            item.param1 = 1;
         }
         break;
     case 407:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2;
+            item.param1 = 2;
         }
         break;
     case 406:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 0;
+            item.param1 = 0;
         }
         break;
     case 405:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3;
+            item.param1 = 3;
         }
         break;
     case 404:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 0;
+            item.param1 = 0;
         }
         break;
     case 403:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3;
+            item.param1 = 3;
         }
         break;
     case 402:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 5;
+            item.param1 = 5;
         }
         break;
     case 401:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 4;
+            item.param1 = 4;
         }
         break;
     case 400:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2;
+            item.param1 = 2;
         }
         break;
     case 399:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
+            item.param1 = 1;
         }
         break;
     case 398:
@@ -2606,8 +2605,8 @@ int access_item_db(int dbmode)
     case 397:
         if (dbmode == 3)
         {
-            inv[ci].count = 5 + rnd(5) - rnd(5);
-            inv[ci].has_charge() = true;
+            item.count = 5 + rnd(5) - rnd(5);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2620,8 +2619,8 @@ int access_item_db(int dbmode)
     case 396:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2643,7 +2642,7 @@ int access_item_db(int dbmode)
     case 393:
         if (dbmode == 3)
         {
-            inv[ci].function = 3;
+            item.function = 3;
         }
         break;
     case 392:
@@ -2658,8 +2657,8 @@ int access_item_db(int dbmode)
     case 391:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2698,8 +2697,8 @@ int access_item_db(int dbmode)
     case 387:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2712,8 +2711,8 @@ int access_item_db(int dbmode)
     case 386:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2726,8 +2725,8 @@ int access_item_db(int dbmode)
     case 385:
         if (dbmode == 3)
         {
-            inv[ci].count = 6 + rnd(6) - rnd(6);
-            inv[ci].has_charge() = true;
+            item.count = 6 + rnd(6) - rnd(6);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2748,8 +2747,8 @@ int access_item_db(int dbmode)
     case 383:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2771,8 +2770,8 @@ int access_item_db(int dbmode)
     case 381:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2785,8 +2784,8 @@ int access_item_db(int dbmode)
     case 380:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2808,8 +2807,8 @@ int access_item_db(int dbmode)
     case 378:
         if (dbmode == 3)
         {
-            inv[ci].count = 5 + rnd(5) - rnd(5);
-            inv[ci].has_charge() = true;
+            item.count = 5 + rnd(5) - rnd(5);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2822,8 +2821,8 @@ int access_item_db(int dbmode)
     case 377:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2853,8 +2852,8 @@ int access_item_db(int dbmode)
     case 374:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2867,8 +2866,8 @@ int access_item_db(int dbmode)
     case 373:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2890,8 +2889,8 @@ int access_item_db(int dbmode)
     case 371:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2913,8 +2912,8 @@ int access_item_db(int dbmode)
     case 369:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2936,8 +2935,8 @@ int access_item_db(int dbmode)
     case 367:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -2950,8 +2949,8 @@ int access_item_db(int dbmode)
     case 366:
         if (dbmode == 3)
         {
-            inv[ci].count = 7 + rnd(7) - rnd(7);
-            inv[ci].has_charge() = true;
+            item.count = 7 + rnd(7) - rnd(7);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -2963,8 +2962,8 @@ int access_item_db(int dbmode)
     case 365:
         if (dbmode == 3)
         {
-            inv[ci].count = 5 + rnd(5) - rnd(5);
-            inv[ci].has_charge() = true;
+            item.count = 5 + rnd(5) - rnd(5);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3017,15 +3016,15 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 20059;
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 359:
         if (dbmode == 3)
         {
-            inv[ci].skill = 104;
+            item.skill = 104;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70056;
@@ -3035,15 +3034,15 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 26;
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 358:
         if (dbmode == 3)
         {
-            inv[ci].skill = 105;
+            item.skill = 105;
             fixeditemenc(0) = 80002;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70054;
@@ -3057,8 +3056,8 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 30172;
             fixeditemenc(11) = 420;
             fixeditemenc(12) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -3082,15 +3081,15 @@ int access_item_db(int dbmode)
             fixeditemenc(14) = 24;
             fixeditemenc(15) = 100;
             fixeditemenc(16) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 356:
         if (dbmode == 3)
         {
-            inv[ci].skill = 103;
+            item.skill = 103;
             fixeditemenc(0) = 38;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 20050;
@@ -3104,8 +3103,8 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 26;
             fixeditemenc(11) = 100;
             fixeditemenc(12) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -3127,16 +3126,16 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 25;
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 354:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3146,8 +3145,8 @@ int access_item_db(int dbmode)
     case 353:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3157,8 +3156,8 @@ int access_item_db(int dbmode)
     case 352:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3168,8 +3167,8 @@ int access_item_db(int dbmode)
     case 351:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3179,8 +3178,8 @@ int access_item_db(int dbmode)
     case 350:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3190,8 +3189,8 @@ int access_item_db(int dbmode)
     case 349:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3201,8 +3200,8 @@ int access_item_db(int dbmode)
     case 348:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3212,8 +3211,8 @@ int access_item_db(int dbmode)
     case 347:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3223,8 +3222,8 @@ int access_item_db(int dbmode)
     case 346:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3234,8 +3233,8 @@ int access_item_db(int dbmode)
     case 345:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 4;
+            item.param1 = 6000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3245,7 +3244,7 @@ int access_item_db(int dbmode)
     case 344:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
+            item.param1 = 1;
         }
         if (dbmode == 13)
         {
@@ -3256,125 +3255,125 @@ int access_item_db(int dbmode)
     case 343:
         if (dbmode == 3)
         {
-            inv[ci].function = 22;
+            item.function = 22;
         }
         break;
     case 342:
         if (dbmode == 3)
         {
-            inv[ci].function = 16;
-            inv[ci].param1 = 60;
+            item.function = 16;
+            item.param1 = 60;
         }
         break;
     case 334:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 333:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 3;
+            item.param2 = 3;
         }
         break;
     case 330:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 328:
         if (dbmode == 3)
         {
-            inv[ci].function = 17;
-            inv[ci].param1 = 150;
+            item.function = 17;
+            item.param1 = 150;
         }
         break;
     case 327:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 325:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 130;
+            item.param1 = 130;
         }
         break;
     case 322:
         if (dbmode == 3)
         {
-            inv[ci].function = 19;
+            item.function = 19;
         }
         break;
     case 319:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 0;
+            item.param1 = 0;
         }
         break;
     case 310:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 130;
+            item.param1 = 130;
         }
         break;
     case 309:
         if (dbmode == 3)
         {
-            inv[ci].function = 19;
+            item.function = 19;
         }
         break;
     case 307:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 130;
+            item.param1 = 130;
         }
         break;
     case 306:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 200;
+            item.function = 15;
+            item.param1 = 200;
         }
         break;
     case 305:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 130;
+            item.param1 = 130;
         }
         break;
     case 304:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 100;
+            item.param1 = 100;
         }
         break;
     case 303:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 120;
+            item.param1 = 120;
         }
         break;
     case 299:
         if (dbmode == 3)
         {
-            inv[ci].function = 19;
+            item.function = 19;
         }
         break;
     case 297:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 150;
+            item.param1 = 150;
         }
         break;
     case 290:
         if (dbmode == 3)
         {
-            inv[ci].count = 1 + rnd(1) - rnd(1);
-            inv[ci].has_charge() = true;
+            item.count = 1 + rnd(1) - rnd(1);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -3386,8 +3385,8 @@ int access_item_db(int dbmode)
     case 289:
         if (dbmode == 3)
         {
-            inv[ci].count = 1 + rnd(1) - rnd(1);
-            inv[ci].has_charge() = true;
+            item.count = 1 + rnd(1) - rnd(1);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3436,8 +3435,8 @@ int access_item_db(int dbmode)
     case 272:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3450,8 +3449,8 @@ int access_item_db(int dbmode)
     case 271:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3464,8 +3463,8 @@ int access_item_db(int dbmode)
     case 270:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3478,8 +3477,8 @@ int access_item_db(int dbmode)
     case 269:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3492,8 +3491,8 @@ int access_item_db(int dbmode)
     case 268:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3506,8 +3505,8 @@ int access_item_db(int dbmode)
     case 267:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3520,14 +3519,14 @@ int access_item_db(int dbmode)
     case 266:
         if (dbmode == 3)
         {
-            inv[ci].skill = 101;
+            item.skill = 101;
         }
         break;
     case 265:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3540,8 +3539,8 @@ int access_item_db(int dbmode)
     case 264:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3554,8 +3553,8 @@ int access_item_db(int dbmode)
     case 263:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3577,8 +3576,8 @@ int access_item_db(int dbmode)
     case 261:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 6000;
-            inv[ci].param3 = 6;
+            item.param1 = 6000;
+            item.param3 = 6;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3588,28 +3587,28 @@ int access_item_db(int dbmode)
     case 260:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 7000;
-            inv[ci].param3 = 240;
+            item.param1 = 7000;
+            item.param3 = 240;
         }
         break;
     case 259:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 5000;
-            inv[ci].param3 = 24;
+            item.param1 = 5000;
+            item.param3 = 24;
         }
         break;
     case 258:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 3;
+            item.param2 = 3;
         }
         break;
     case 257:
         if (dbmode == 3)
         {
-            inv[ci].count = 5 + rnd(5) - rnd(5);
-            inv[ci].has_charge() = true;
+            item.count = 5 + rnd(5) - rnd(5);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3622,23 +3621,23 @@ int access_item_db(int dbmode)
     case 256:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 80;
+            item.function = 15;
+            item.param1 = 80;
         }
         break;
     case 255:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 40;
+            item.function = 15;
+            item.param1 = 40;
         }
         break;
     case 254:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
-            inv[ci].function = 17;
-            inv[ci].param1 = 110;
+            item.skill = 183;
+            item.function = 17;
+            item.param1 = 110;
         }
         break;
     case 253:
@@ -3653,8 +3652,8 @@ int access_item_db(int dbmode)
     case 252:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3667,8 +3666,8 @@ int access_item_db(int dbmode)
     case 251:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3681,8 +3680,8 @@ int access_item_db(int dbmode)
     case 250:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3695,8 +3694,8 @@ int access_item_db(int dbmode)
     case 249:
         if (dbmode == 3)
         {
-            inv[ci].count = 5 + rnd(5) - rnd(5);
-            inv[ci].has_charge() = true;
+            item.count = 5 + rnd(5) - rnd(5);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3709,8 +3708,8 @@ int access_item_db(int dbmode)
     case 248:
         if (dbmode == 3)
         {
-            inv[ci].count = 3 + rnd(3) - rnd(3);
-            inv[ci].has_charge() = true;
+            item.count = 3 + rnd(3) - rnd(3);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3723,8 +3722,8 @@ int access_item_db(int dbmode)
     case 247:
         if (dbmode == 3)
         {
-            inv[ci].count = 2 + rnd(2) - rnd(2);
-            inv[ci].has_charge() = true;
+            item.count = 2 + rnd(2) - rnd(2);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3737,8 +3736,8 @@ int access_item_db(int dbmode)
     case 246:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -3796,31 +3795,31 @@ int access_item_db(int dbmode)
     case 235:
         if (dbmode == 3)
         {
-            inv[ci].skill = 104;
+            item.skill = 104;
         }
         break;
     case 234:
         if (dbmode == 3)
         {
-            inv[ci].skill = 102;
+            item.skill = 102;
         }
         break;
     case 233:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 3;
+            item.param2 = 3;
         }
         break;
     case 232:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
         }
         break;
     case 231:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3830,7 +3829,7 @@ int access_item_db(int dbmode)
     case 230:
         if (dbmode == 3)
         {
-            inv[ci].skill = 108;
+            item.skill = 108;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3840,7 +3839,7 @@ int access_item_db(int dbmode)
     case 229:
         if (dbmode == 3)
         {
-            inv[ci].skill = 105;
+            item.skill = 105;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3850,56 +3849,56 @@ int access_item_db(int dbmode)
     case 228:
         if (dbmode == 3)
         {
-            inv[ci].skill = 104;
+            item.skill = 104;
         }
         break;
     case 227:
         if (dbmode == 3)
         {
-            inv[ci].skill = 103;
+            item.skill = 103;
         }
         break;
     case 226:
         if (dbmode == 3)
         {
-            inv[ci].skill = 102;
+            item.skill = 102;
         }
         break;
     case 225:
         if (dbmode == 3)
         {
-            inv[ci].skill = 101;
+            item.skill = 101;
         }
         break;
     case 224:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
         }
         break;
     case 223:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 60;
+            item.function = 15;
+            item.param1 = 60;
         }
         break;
     case 219:
         if (dbmode == 3)
         {
-            inv[ci].function = 46;
+            item.function = 46;
         }
         break;
     case 213:
         if (dbmode == 3)
         {
-            inv[ci].skill = 104;
+            item.skill = 104;
         }
         break;
     case 212:
         if (dbmode == 3)
         {
-            inv[ci].skill = 105;
+            item.skill = 105;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3909,7 +3908,7 @@ int access_item_db(int dbmode)
     case 211:
         if (dbmode == 3)
         {
-            inv[ci].skill = 107;
+            item.skill = 107;
             fixeditemenc(0) = 80025;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -3918,7 +3917,7 @@ int access_item_db(int dbmode)
     case 210:
         if (dbmode == 3)
         {
-            inv[ci].skill = 111;
+            item.skill = 111;
         }
         break;
     case 209:
@@ -3933,7 +3932,7 @@ int access_item_db(int dbmode)
     case 207:
         if (dbmode == 3)
         {
-            inv[ci].skill = 108;
+            item.skill = 108;
             fixeditemenc(0) = 80001;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 60012;
@@ -3947,15 +3946,15 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 70055;
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 206:
         if (dbmode == 3)
         {
-            inv[ci].skill = 101;
+            item.skill = 101;
             fixeditemenc(0) = 80000;
             fixeditemenc(1) = 200;
             fixeditemenc(2) = 70052;
@@ -3965,8 +3964,8 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 30172;
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -3982,8 +3981,8 @@ int access_item_db(int dbmode)
     case 204:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1000;
-            inv[ci].param3 = 4;
+            item.param1 = 1000;
+            item.param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -3993,8 +3992,8 @@ int access_item_db(int dbmode)
     case 203:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4006,8 +4005,8 @@ int access_item_db(int dbmode)
     case 202:
         if (dbmode == 3)
         {
-            inv[ci].count = 9 + rnd(9) - rnd(9);
-            inv[ci].has_charge() = true;
+            item.count = 9 + rnd(9) - rnd(9);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4019,8 +4018,8 @@ int access_item_db(int dbmode)
     case 201:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 2;
+            item.param1 = 2000;
+            item.param3 = 2;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4030,8 +4029,8 @@ int access_item_db(int dbmode)
     case 200:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 72;
+            item.param1 = 2000;
+            item.param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4041,8 +4040,8 @@ int access_item_db(int dbmode)
     case 199:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 72;
+            item.param1 = 2000;
+            item.param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4052,8 +4051,8 @@ int access_item_db(int dbmode)
     case 198:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 72;
+            item.param1 = 2000;
+            item.param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4063,35 +4062,35 @@ int access_item_db(int dbmode)
     case 197:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 12;
+            item.param1 = 3000;
+            item.param3 = 12;
         }
         break;
     case 196:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 8;
+            item.param1 = 3000;
+            item.param3 = 8;
         }
         break;
     case 195:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 12;
+            item.param1 = 3000;
+            item.param3 = 12;
         }
         break;
     case 194:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 8;
+            item.param1 = 3000;
+            item.param3 = 8;
         }
         break;
     case 193:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
+            item.param1 = 2000;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4101,20 +4100,20 @@ int access_item_db(int dbmode)
     case 192:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 16;
+            item.param1 = 3000;
+            item.param3 = 16;
         }
         break;
     case 191:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 4000;
+            item.param1 = 4000;
         }
         break;
     case 190:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
+            item.param1 = 2000;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4124,8 +4123,8 @@ int access_item_db(int dbmode)
     case 188:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 72;
+            item.param1 = 2000;
+            item.param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4135,7 +4134,7 @@ int access_item_db(int dbmode)
     case 187:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
+            item.param1 = 2000;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4145,8 +4144,8 @@ int access_item_db(int dbmode)
     case 186:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 72;
+            item.param1 = 2000;
+            item.param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4156,8 +4155,8 @@ int access_item_db(int dbmode)
     case 185:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 72;
+            item.param1 = 2000;
+            item.param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4167,43 +4166,43 @@ int access_item_db(int dbmode)
     case 184:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 8;
+            item.param1 = 3000;
+            item.param3 = 8;
         }
         break;
     case 183:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 16;
+            item.param1 = 3000;
+            item.param3 = 16;
         }
         break;
     case 182:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 12;
+            item.param1 = 3000;
+            item.param3 = 12;
         }
         break;
     case 181:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 16;
+            item.param1 = 3000;
+            item.param3 = 16;
         }
         break;
     case 180:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 16;
+            item.param1 = 3000;
+            item.param3 = 16;
         }
         break;
     case 179:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2000;
-            inv[ci].param3 = 48;
+            item.param1 = 2000;
+            item.param3 = 48;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4213,22 +4212,22 @@ int access_item_db(int dbmode)
     case 178:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 72;
+            item.param1 = 3000;
+            item.param3 = 72;
         }
         break;
     case 177:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 3000;
-            inv[ci].param3 = 72;
+            item.param1 = 3000;
+            item.param3 = 72;
         }
         break;
     case 176:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4240,8 +4239,8 @@ int access_item_db(int dbmode)
     case 175:
         if (dbmode == 3)
         {
-            inv[ci].count = 10 + rnd(10) - rnd(10);
-            inv[ci].has_charge() = true;
+            item.count = 10 + rnd(10) - rnd(10);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4253,13 +4252,13 @@ int access_item_db(int dbmode)
     case 174:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 110;
+            item.param1 = 110;
         }
         break;
     case 173:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 100;
+            item.param2 = 100;
         }
         if (dbmode == 15)
         {
@@ -4270,54 +4269,54 @@ int access_item_db(int dbmode)
     case 161:
         if (dbmode == 3)
         {
-            inv[ci].function = 1;
+            item.function = 1;
         }
         break;
     case 160:
         if (dbmode == 3)
         {
-            inv[ci].function = 4;
+            item.function = 4;
         }
         break;
     case 155:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 100;
+            item.function = 15;
+            item.param1 = 100;
         }
         break;
     case 154:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 100;
+            item.function = 15;
+            item.param1 = 100;
         }
         break;
     case 153:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 100;
+            item.function = 15;
+            item.param1 = 100;
         }
         break;
     case 142:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 200;
+            item.function = 15;
+            item.param1 = 200;
         }
         break;
     case 127:
         if (dbmode == 3)
         {
-            inv[ci].function = 2;
+            item.function = 2;
         }
         break;
     case 125:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4329,8 +4328,8 @@ int access_item_db(int dbmode)
     case 123:
         if (dbmode == 3)
         {
-            inv[ci].count = 10 + rnd(10) - rnd(10);
-            inv[ci].has_charge() = true;
+            item.count = 10 + rnd(10) - rnd(10);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4342,8 +4341,8 @@ int access_item_db(int dbmode)
     case 122:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4355,8 +4354,8 @@ int access_item_db(int dbmode)
     case 121:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4368,8 +4367,8 @@ int access_item_db(int dbmode)
     case 120:
         if (dbmode == 3)
         {
-            inv[ci].count = 10 + rnd(10) - rnd(10);
-            inv[ci].has_charge() = true;
+            item.count = 10 + rnd(10) - rnd(10);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4381,8 +4380,8 @@ int access_item_db(int dbmode)
     case 119:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4394,8 +4393,8 @@ int access_item_db(int dbmode)
     case 118:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4408,8 +4407,8 @@ int access_item_db(int dbmode)
     case 116:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4422,14 +4421,14 @@ int access_item_db(int dbmode)
     case 112:
         if (dbmode == 3)
         {
-            inv[ci].function = 15;
-            inv[ci].param1 = 150;
+            item.function = 15;
+            item.param1 = 150;
         }
         break;
     case 109:
         if (dbmode == 3)
         {
-            inv[ci].param2 = 100;
+            item.param2 = 100;
         }
         if (dbmode == 15)
         {
@@ -4440,45 +4439,45 @@ int access_item_db(int dbmode)
     case 102:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 101:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 92:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 88:
         if (dbmode == 3)
         {
-            inv[ci].skill = 183;
-            inv[ci].function = 17;
-            inv[ci].param1 = 200;
+            item.skill = 183;
+            item.function = 17;
+            item.param1 = 200;
         }
         break;
     case 81:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 80:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 100;
+            item.param1 = 100;
         }
         break;
     case 77:
         if (dbmode == 3)
         {
-            inv[ci].function = 44;
+            item.function = 44;
         }
         break;
     case 76:
@@ -4511,12 +4510,12 @@ int access_item_db(int dbmode)
     case 73:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
             fixeditemenc(0) = 37;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -4568,7 +4567,7 @@ int access_item_db(int dbmode)
     case 64:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
             fixeditemenc(0) = 36;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 70059;
@@ -4582,15 +4581,15 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 20056;
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 63:
         if (dbmode == 3)
         {
-            inv[ci].skill = 107;
+            item.skill = 107;
             fixeditemenc(0) = 32;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 38;
@@ -4602,27 +4601,27 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 80025;
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 62:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
         }
         break;
     case 61:
         if (dbmode == 3)
         {
-            inv[ci].skill = 108;
+            item.skill = 108;
         }
         break;
     case 60:
         if (dbmode == 3)
         {
-            inv[ci].skill = 110;
+            item.skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4632,13 +4631,13 @@ int access_item_db(int dbmode)
     case 59:
         if (dbmode == 3)
         {
-            inv[ci].skill = 168;
+            item.skill = 168;
         }
         break;
     case 58:
         if (dbmode == 3)
         {
-            inv[ci].skill = 108;
+            item.skill = 108;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4648,7 +4647,7 @@ int access_item_db(int dbmode)
     case 57:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 25;
@@ -4658,15 +4657,15 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 20058;
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
     case 56:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 70058;
@@ -4676,8 +4675,8 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 24;
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
-            inv[ci].is_precious() = true;
-            inv[ci].difficulty_of_identification = 500;
+            item.is_precious() = true;
+            item.difficulty_of_identification = 500;
             fixlv = Quality::special;
         }
         break;
@@ -4747,8 +4746,8 @@ int access_item_db(int dbmode)
     case 34:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4761,8 +4760,8 @@ int access_item_db(int dbmode)
     case 33:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4775,8 +4774,8 @@ int access_item_db(int dbmode)
     case 32:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4842,11 +4841,11 @@ int access_item_db(int dbmode)
     case 25:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 2;
+            item.param1 = 2;
         }
         if (dbmode == 13)
         {
-            inv[ci].param1 = 2;
+            item.param1 = 2;
             read_normal_book();
             return -1;
         }
@@ -4854,7 +4853,7 @@ int access_item_db(int dbmode)
     case 24:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 0;
+            item.param1 = 0;
         }
         if (dbmode == 13)
         {
@@ -4865,11 +4864,11 @@ int access_item_db(int dbmode)
     case 23:
         if (dbmode == 3)
         {
-            inv[ci].param1 = 1;
+            item.param1 = 1;
         }
         if (dbmode == 13)
         {
-            inv[ci].param1 = 1;
+            item.param1 = 1;
             read_normal_book();
             return -1;
         }
@@ -4877,8 +4876,8 @@ int access_item_db(int dbmode)
     case 22:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4891,8 +4890,8 @@ int access_item_db(int dbmode)
     case 21:
         if (dbmode == 3)
         {
-            inv[ci].count = 4 + rnd(4) - rnd(4);
-            inv[ci].has_charge() = true;
+            item.count = 4 + rnd(4) - rnd(4);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4905,8 +4904,8 @@ int access_item_db(int dbmode)
     case 20:
         if (dbmode == 3)
         {
-            inv[ci].count = 5 + rnd(5) - rnd(5);
-            inv[ci].has_charge() = true;
+            item.count = 5 + rnd(5) - rnd(5);
+            item.has_charge() = true;
         }
         if (dbmode == 13)
         {
@@ -4919,8 +4918,8 @@ int access_item_db(int dbmode)
     case 19:
         if (dbmode == 3)
         {
-            inv[ci].count = 12 + rnd(12) - rnd(12);
-            inv[ci].has_charge() = true;
+            item.count = 12 + rnd(12) - rnd(12);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4932,8 +4931,8 @@ int access_item_db(int dbmode)
     case 18:
         if (dbmode == 3)
         {
-            inv[ci].count = 8 + rnd(8) - rnd(8);
-            inv[ci].has_charge() = true;
+            item.count = 8 + rnd(8) - rnd(8);
+            item.has_charge() = true;
         }
         if (dbmode == 14)
         {
@@ -4989,25 +4988,25 @@ int access_item_db(int dbmode)
     case 4:
         if (dbmode == 3)
         {
-            inv[ci].skill = 103;
+            item.skill = 103;
         }
         break;
     case 3:
         if (dbmode == 3)
         {
-            inv[ci].skill = 102;
+            item.skill = 102;
         }
         break;
     case 2:
         if (dbmode == 3)
         {
-            inv[ci].skill = 101;
+            item.skill = 101;
         }
         break;
     case 1:
         if (dbmode == 3)
         {
-            inv[ci].skill = 100;
+            item.skill = 100;
         }
         break;
     default: break;
@@ -5015,7 +5014,5 @@ int access_item_db(int dbmode)
 
     return 0;
 }
-
-
 
 } // namespace elona

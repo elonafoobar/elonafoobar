@@ -158,7 +158,7 @@ public:
 
     void clear();
 
-    bool almost_equals(const Item& other, bool ignore_position);
+    bool almost_equals(const Item& other, bool ignore_position) const;
 
     // for identifying the type of a Lua reference
     static std::string lua_type()
@@ -232,6 +232,36 @@ private:
 
 
 
+struct InventorySlice
+{
+    using iterator = std::vector<Item>::iterator;
+
+    InventorySlice(const iterator& begin, const iterator& end)
+        : _begin(begin)
+        , _end(end)
+    {
+    }
+
+    iterator begin()
+    {
+        return _begin;
+    }
+
+    iterator end()
+    {
+        return _end;
+    }
+
+private:
+    const iterator _begin;
+    const iterator _end;
+};
+
+
+
+struct Character;
+
+
 struct Inventory
 {
     Inventory();
@@ -243,6 +273,31 @@ struct Inventory
     }
 
 
+    InventorySlice all()
+    {
+        return {std::begin(storage), std::end(storage)};
+    }
+
+
+    InventorySlice pc()
+    {
+        return {std::begin(storage), std::begin(storage) + 200};
+    }
+
+
+    InventorySlice ground()
+    {
+        return {std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX,
+                std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX + 400};
+    }
+
+
+    InventorySlice for_chara(const Character& chara);
+
+    InventorySlice by_index(int index);
+
+
+
 private:
     std::vector<Item> storage;
 };
@@ -251,21 +306,17 @@ private:
 extern Inventory inv;
 
 
-struct Character;
-
-
 
 IdentifyState item_identify(Item& ci, IdentifyState level);
 IdentifyState item_identify(Item& ci, int power);
 
-range::iota<int> items(int owner);
 std::vector<int> itemlist(int owner, int id);
 void itemname_additional_info();
 
 void item_checkknown(int = 0);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
-void item_acid(const Character& owner, int ci = -1);
+void item_acid(const Character& owner, int item_index = -1);
 void item_delete(int);
 void item_exchange(int = 0, int = 0);
 void item_modify_num(Item&, int);
@@ -289,9 +340,9 @@ int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
 void item_dump_desc(const Item&);
 
-bool item_fire(int owner, int ci = -1);
+bool item_fire(int owner, int item_index = -1);
 void mapitem_fire(int x, int y);
-bool item_cold(int owner, int ci = -1);
+bool item_cold(int owner, int item_index = -1);
 void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
@@ -326,9 +377,10 @@ enum class ItemDescriptionType : int
     small_font_italic = -2,
 };
 
-void item_load_desc(int ci, int& p);
+void item_load_desc(int item_index, int& p);
 
 
 int iequiploc(const Item& item);
+int access_item_db(Item& item, int legacy_id, int dbmode);
 
 } // namespace elona

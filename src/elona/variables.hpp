@@ -722,7 +722,6 @@ int cargocheck();
 void getinheritance(int, elona_vector1<int>&, int&);
 
 // Item manipulation
-int access_item_db(int);
 int convertartifact(int = 0, int = 0);
 int discsetmc();
 void set_item_info();

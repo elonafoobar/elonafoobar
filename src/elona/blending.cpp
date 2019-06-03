@@ -1286,22 +1286,22 @@ int blendcheckmat(int recipe_id)
             {
                 o_at_m181 = 0;
             }
-            for (const auto& cnt : items(o_at_m181))
+            for (const auto& item : o_at_m181 == -1 ? inv.ground() : inv.pc())
             {
-                if (inv[cnt].number() <= 0)
+                if (item.number() <= 0)
                 {
                     continue;
                 }
                 if ((rpdata(2, rpid) <= 0 || step_at_m181 != 0) &&
-                    inv[cnt].own_state > 0)
+                    item.own_state > 0)
                 {
                     continue;
                 }
                 if (o_at_m181 == -1)
                 {
                     if (dist(
-                            inv[cnt].position.x,
-                            inv[cnt].position.y,
+                            item.position.x,
+                            item.position.y,
                             cdata.player().position.x,
                             cdata.player().position.y) > 4)
                     {
@@ -1310,7 +1310,7 @@ int blendcheckmat(int recipe_id)
                 }
                 if (rpdata(40 + rp_at_m181, rpid))
                 {
-                    int stat = blendcheckext(cnt, rp_at_m181);
+                    int stat = blendcheckext(item.index, rp_at_m181);
                     if (stat == 0)
                     {
                         continue;
@@ -1318,7 +1318,7 @@ int blendcheckmat(int recipe_id)
                 }
                 if (id_at_m181 < 9000)
                 {
-                    if (inv[cnt].id == id_at_m181)
+                    if (item.id == id_at_m181)
                     {
                         f_at_m181 = 1;
                         break;
@@ -1328,7 +1328,7 @@ int blendcheckmat(int recipe_id)
                 if (id_at_m181 < 10000)
                 {
                     if (instr(
-                            the_item_db[inv[cnt].id]->rffilter,
+                            the_item_db[item.id]->rffilter,
                             0,
                             u8"/"s + rfnameorg(0, (id_at_m181 - 9000)) +
                                 u8"/"s) != -1 ||
@@ -1339,7 +1339,7 @@ int blendcheckmat(int recipe_id)
                     }
                     continue;
                 }
-                if (the_item_db[inv[cnt].id]->category == id_at_m181)
+                if (the_item_db[item.id]->category == id_at_m181)
                 {
                     f_at_m181 = 1;
                     break;
@@ -1375,21 +1375,21 @@ int blendmatnum(int matcher, int step)
         {
             o_at_m182 = 0;
         }
-        for (const auto& cnt : items(o_at_m182))
+        for (const auto& item : o_at_m182 == -1 ? inv.ground() : inv.pc())
         {
-            if (inv[cnt].number() <= 0)
+            if (item.number() <= 0)
             {
                 continue;
             }
-            if ((rpdata(2, rpid) <= 0 || step != 0) && inv[cnt].own_state > 0)
+            if ((rpdata(2, rpid) <= 0 || step != 0) && item.own_state > 0)
             {
                 continue;
             }
             if (o_at_m182 == -1)
             {
                 if (dist(
-                        inv[cnt].position.x,
-                        inv[cnt].position.y,
+                        item.position.x,
+                        item.position.y,
                         cdata.player().position.x,
                         cdata.player().position.y) > 4)
                 {
@@ -1398,7 +1398,7 @@ int blendmatnum(int matcher, int step)
             }
             if (rpdata(40 + step, rpid))
             {
-                int stat = blendcheckext(cnt, step);
+                int stat = blendcheckext(item.index, step);
                 if (stat == 0)
                 {
                     continue;
@@ -1406,28 +1406,28 @@ int blendmatnum(int matcher, int step)
             }
             if (matcher < 9000)
             {
-                if (inv[cnt].id == matcher)
+                if (item.id == matcher)
                 {
-                    m_at_m182 += inv[cnt].number();
+                    m_at_m182 += item.number();
                 }
                 continue;
             }
             if (matcher < 10000)
             {
                 if (instr(
-                        the_item_db[inv[cnt].id]->rffilter,
+                        the_item_db[item.id]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (matcher - 9000)) + u8"/"s) !=
                         -1 ||
                     matcher == 9004)
                 {
-                    m_at_m182 += inv[cnt].number();
+                    m_at_m182 += item.number();
                 }
                 continue;
             }
-            if (the_item_db[inv[cnt].id]->category == matcher)
+            if (the_item_db[item.id]->category == matcher)
             {
-                m_at_m182 += inv[cnt].number();
+                m_at_m182 += item.number();
                 continue;
             }
         }
@@ -1443,7 +1443,6 @@ int blendlist(elona_vector2<int>& result_array, int step)
     int m_at_m183 = 0;
     int o_at_m183 = 0;
     int reftype_at_m183 = 0;
-    int f_at_m183 = 0;
     id_at_m183 = rpdata(20 + step, rpid);
     m_at_m183 = 0;
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -1456,35 +1455,35 @@ int blendlist(elona_vector2<int>& result_array, int step)
         {
             o_at_m183 = 0;
         }
-        for (const auto& cnt : items(o_at_m183))
+        for (const auto& item : o_at_m183 == -1 ? inv.ground() : inv.pc())
         {
             if (m_at_m183 >= 500)
             {
                 break;
             }
-            if (inv[cnt].number() <= 0)
+            if (item.number() <= 0)
             {
                 continue;
             }
-            if ((rpdata(2, rpid) <= 0 || step != 0) && inv[cnt].own_state > 0)
+            if ((rpdata(2, rpid) <= 0 || step != 0) && item.own_state > 0)
             {
                 continue;
             }
             if (o_at_m183 == -1)
             {
                 if (dist(
-                        inv[cnt].position.x,
-                        inv[cnt].position.y,
+                        item.position.x,
+                        item.position.y,
                         cdata.player().position.x,
                         cdata.player().position.y) > 4)
                 {
                     continue;
                 }
             }
-            reftype_at_m183 = the_item_db[inv[cnt].id]->category;
+            reftype_at_m183 = the_item_db[item.id]->category;
             if (rpdata(40 + step, rpid))
             {
-                int stat = blendcheckext(cnt, step);
+                int stat = blendcheckext(item.index, step);
                 if (stat == 0)
                 {
                     continue;
@@ -1492,7 +1491,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             }
             if (id_at_m183 < 9000)
             {
-                if (inv[cnt].id != id_at_m183)
+                if (item.id != id_at_m183)
                 {
                     continue;
                 }
@@ -1500,7 +1499,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             else if (id_at_m183 < 10000)
             {
                 if (instr(
-                        the_item_db[inv[cnt].id]->rffilter,
+                        the_item_db[item.id]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (id_at_m183 - 9000)) + u8"/"s) ==
                         -1 &&
@@ -1515,22 +1514,22 @@ int blendlist(elona_vector2<int>& result_array, int step)
             }
             if (step > 0)
             {
-                f_at_m183 = cnt;
-                for (int cnt = 0, cnt_end = (step); cnt < cnt_end; ++cnt)
+                bool has_already_used = false;
+                for (int i = 0; i < step; ++i)
                 {
-                    if (rpref(10 + cnt * 2) == f_at_m183)
+                    if (rpref(10 + i * 2) == item.index)
                     {
-                        f_at_m183 = -999;
+                        has_already_used = true;
                         break;
                     }
                 }
-                if (f_at_m183 == -999)
+                if (has_already_used)
                 {
                     continue;
                 }
             }
-            result_array(0, m_at_m183) = cnt;
-            result_array(1, m_at_m183) = reftype_at_m183 * 1000 + inv[cnt].id;
+            result_array(0, m_at_m183) = item.index;
+            result_array(1, m_at_m183) = reftype_at_m183 * 1000 + item.id;
             ++m_at_m183;
         }
     }
@@ -1627,13 +1626,12 @@ void blending_start_attempt()
         {
             flt();
             nostack = 1;
-            int stat = itemcreate(
-                -1,
-                rpdata(0, rpid),
-                cdata.player().position.x,
-                cdata.player().position.y,
-                0);
-            if (stat != 0)
+            if (itemcreate(
+                    -1,
+                    rpdata(0, rpid),
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0))
             {
                 for (int cnt = 0;; ++cnt)
                 {
@@ -1834,8 +1832,7 @@ void blending_proc_on_success_events()
         {
             --game_data.holy_well_count;
             flt();
-            int stat = itemcreate(0, 516, -1, -1, 0);
-            if (stat != 0)
+            if (itemcreate(0, 516, -1, -1, 0))
             {
                 inv[ci].curse_state = CurseState::blessed;
             }

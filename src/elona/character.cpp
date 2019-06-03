@@ -1470,9 +1470,9 @@ void chara_delete(int cc)
         chara_remove(cdata[cc]);
     }
 
-    for (const auto& cnt : items(cc))
+    for (auto&& item : inv.for_chara(cdata[cc]))
     {
-        inv[cnt].remove();
+        item.remove();
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -1523,9 +1523,9 @@ void chara_relocate(
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
     int p = invhead;
-    for (const auto& cnt : items(slot))
+    for (auto&& item : inv.for_chara(cdata[slot]))
     {
-        if (cnt == invrange)
+        if (item.index == invrange)
         {
             break;
         }
@@ -1533,12 +1533,12 @@ void chara_relocate(
         {
             if (ci == p)
             {
-                ci = cnt;
+                ci = item.index;
             }
         }
-        Item::copy(inv[p], inv[cnt]);
+        Item::copy(inv[p], item);
         inv[p].clear();
-        inv[cnt].body_part = 0;
+        item.body_part = 0;
         ++p;
     }
 

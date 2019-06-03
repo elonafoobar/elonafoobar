@@ -347,16 +347,16 @@ void map_reload(const std::string& map_filename)
 
     mef_clear_all();
 
-    for (const auto& i : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[i].number() > 0)
+        if (item.number() > 0)
         {
-            if (inv[i].own_state == 1)
+            if (item.own_state == 1)
             {
-                if (the_item_db[inv[i].id]->category == 57000)
+                if (the_item_db[item.id]->category == 57000)
                 {
-                    inv[i].remove();
-                    cell_refresh(inv[i].position.x, inv[i].position.y);
+                    item.remove();
+                    cell_refresh(item.position.x, item.position.y);
                 }
             }
         }
@@ -373,8 +373,7 @@ void map_reload(const std::string& map_filename)
             if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
-                int stat = itemcreate(-1, cmapdata(0, i), x, y, 0);
-                if (stat != 0)
+                if (itemcreate(-1, cmapdata(0, i), x, y, 0))
                 {
                     inv[ci].own_state = cmapdata(3, i);
                 }
@@ -698,35 +697,35 @@ static void _clear_material_spots()
 
 static void _modify_items_on_regenerate()
 {
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
 
         // Update tree of fruits.
-        if (inv[cnt].id == 526)
+        if (item.id == 526)
         {
-            if (inv[cnt].param1 < 10)
+            if (item.param1 < 10)
             {
-                inv[cnt].param1 += 1;
-                inv[cnt].image = 591;
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                item.param1 += 1;
+                item.image = 591;
+                cell_refresh(item.position.x, item.position.y);
             }
         }
 
         // Clear player-owned items on the ground.
         if (map_is_town_or_guild())
         {
-            if (inv[cnt].own_state < 0)
+            if (item.own_state < 0)
             {
-                ++inv[cnt].own_state;
+                ++item.own_state;
             }
-            if (inv[cnt].own_state == 0)
+            if (item.own_state == 0)
             {
-                inv[cnt].remove();
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                item.remove();
+                cell_refresh(item.position.x, item.position.y);
             }
         }
     }
@@ -838,8 +837,7 @@ static void _proc_generate_bard_items(Character& chara)
 static void _generate_bad_quality_item()
 {
     flt(calcobjlv(cdata[rc].level), calcfixlv(Quality::bad));
-    int stat = itemcreate(rc, 0, -1, -1, 0);
-    if (stat != 0)
+    if (itemcreate(rc, 0, -1, -1, 0))
     {
         if (inv[ci].weight <= 0 || inv[ci].weight >= 4000)
         {
@@ -946,49 +944,39 @@ void map_proc_regen_and_update()
 
 void map_reload_noyel()
 {
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].id == 555 || inv[cnt].id == 600)
+        if (item.id == 555 || item.id == 600)
         {
             continue;
         }
-        inv[cnt].remove();
+        item.remove();
 
-        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+        cell_refresh(item.position.x, item.position.y);
     }
 
     if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
-        int stat = itemcreate(-1, 763, 29, 16, 0);
-        if (stat != 0)
+        if (itemcreate(-1, 763, 29, 16, 0))
         {
             inv[ci].own_state = 1;
         }
+        flt();
+        if (itemcreate(-1, 686, 29, 16, 0))
         {
-            flt();
-            int stat = itemcreate(-1, 686, 29, 16, 0);
-            if (stat != 0)
-            {
-                inv[ci].own_state = 1;
-            }
+            inv[ci].own_state = 1;
         }
+        flt();
+        if (itemcreate(-1, 171, 29, 17, 0))
         {
-            flt();
-            int stat = itemcreate(-1, 171, 29, 17, 0);
-            if (stat != 0)
-            {
-                inv[ci].param1 = 6;
-                inv[ci].own_state = 1;
-            }
+            inv[ci].param1 = 6;
+            inv[ci].own_state = 1;
         }
+        flt();
+        if (itemcreate(-1, 756, 29, 17, 0))
         {
-            flt();
-            int stat = itemcreate(-1, 756, 29, 17, 0);
-            if (stat != 0)
-            {
-                inv[ci].own_state = 5;
-            }
+            inv[ci].own_state = 5;
         }
         {
             flt();

@@ -93,14 +93,13 @@ TalkResult talk_wizard_identify(int chatval_)
         return TalkResult::talk_npc;
     }
     p = 0;
-    for (const auto& cnt : items(0))
+    for (const auto& item : inv.pc())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].identification_state !=
-            IdentifyState::completely_identified)
+        if (item.identification_state != IdentifyState::completely_identified)
         {
             ++p;
         }
@@ -118,17 +117,17 @@ TalkResult talk_wizard_identify(int chatval_)
         p(1) = 0;
         p(0) = 0;
         p(1) = 0;
-        for (const auto& cnt : items(0))
+        for (auto&& item : inv.pc())
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].identification_state !=
+            if (item.identification_state !=
                 IdentifyState::completely_identified)
             {
-                const auto result = item_identify(inv[cnt], 250);
-                item_stack(0, cnt, 1);
+                const auto result = item_identify(item, 250);
+                item_stack(0, item.index, 1);
                 ++p(1);
                 if (result >= IdentifyState::completely_identified)
                 {
@@ -218,12 +217,11 @@ TalkResult talk_healer_restore_attributes()
 TalkResult talk_trade()
 {
     invsubroutine = 1;
-    for (const auto& cnt : items(tc))
+    for (auto&& item : inv.for_chara(cdata[tc]))
     {
-        if (inv[cnt].number() != 0)
+        if (item.number() != 0)
         {
-            inv[cnt].identification_state =
-                IdentifyState::completely_identified;
+            item.identification_state = IdentifyState::completely_identified;
         }
     }
     invctrl(0) = 20;
@@ -2173,15 +2171,15 @@ TalkResult talk_npc()
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
-                    for (const auto& cnt : items(0))
+                    for (const auto& item : inv.pc())
                     {
-                        if (inv[cnt].number() == 0)
+                        if (item.number() == 0)
                         {
                             continue;
                         }
-                        if (inv[cnt].id == p)
+                        if (item.id == p)
                         {
-                            deliver(1) = cnt;
+                            deliver(1) = item.index;
                             break;
                         }
                     }
@@ -2198,36 +2196,31 @@ TalkResult talk_npc()
             quest_data[rq].progress == 1)
         {
             supply = -1;
-            for (const auto& cnt : items(0))
+            for (const auto& item : inv.pc())
             {
-                if (inv[cnt].number() == 0)
+                if (item.number() == 0)
                 {
                     continue;
                 }
-                if (inv[cnt].is_marked_as_no_drop())
+                if (item.is_marked_as_no_drop())
                 {
                     continue;
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[inv[cnt].id]->category == 57000)
+                    if (the_item_db[item.id]->category == 57000 &&
+                        item.param1 / 1000 == quest_data[rq].extra_info_1 &&
+                        item.param2 == quest_data[rq].extra_info_2)
                     {
-                        if (inv[cnt].param1 / 1000 ==
-                            quest_data[rq].extra_info_1)
-                        {
-                            if (inv[cnt].param2 == quest_data[rq].extra_info_2)
-                            {
-                                supply = cnt;
-                                break;
-                            }
-                        }
+                        supply = item.index;
+                        break;
                     }
                 }
                 if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (inv[cnt].id == quest_data[rq].target_item_id)
+                    if (item.id == quest_data[rq].target_item_id)
                     {
-                        supply = cnt;
+                        supply = item.index;
                         break;
                     }
                 }
@@ -2412,6 +2405,6 @@ TalkResult talk_npc()
     }
 
     return TalkResult::talk_end;
-} // namespace elona
+}
 
 } // namespace elona

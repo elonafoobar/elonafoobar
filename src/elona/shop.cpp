@@ -72,9 +72,9 @@ void shop_load_shoptmp()
 
 void shop_refresh()
 {
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        inv[cnt].remove();
+        item.remove();
     }
 
     lua::call(
