@@ -264,11 +264,21 @@ void ConfigScreenCreator::add_mod_configs_section()
             found_mods = true;
 
             I18NKey locale_key = mod_id + ".locale.config.menu";
-            int submenu_index = config_key_to_submenu_index_[mod_id];
+
+            std::string id = mod_id;
+            const auto& children = config_.get_def().get_children(mod_id);
+            if (children.size() == 1)
+            {
+                // If the mod has only one section, expand the section into
+                // "Mod Settings" submenu.
+                id += "." + children.front();
+            }
+
+            int submenu_index = config_key_to_submenu_index_[id];
 
             result_.at(mod_menu_index)
                 ->items.emplace_back(std::make_unique<ConfigMenuItemSection>(
-                    mod_id, locale_key, submenu_index));
+                    id, locale_key, submenu_index));
         }
     }
 
