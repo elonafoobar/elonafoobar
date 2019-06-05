@@ -32,6 +32,7 @@ set(ELONA_SOURCES
   dmgheal.cpp
   draw.cpp
   draw_asset.cpp
+  dump_player_info.cpp
   element.cpp
   elonacore.cpp
   enchantment.cpp
