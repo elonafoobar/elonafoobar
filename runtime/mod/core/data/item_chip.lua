@@ -2165,6 +2165,8 @@ data:add_multi(
       {
          id = "simple_rack",
          legacy_id = 290,
+         stack_height = 36,
+         offset_y = 22,
          source = {
             x = 1248,
             y = 384,
