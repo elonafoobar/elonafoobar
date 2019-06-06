@@ -60,6 +60,6 @@ CREDITS.txtをご覧ください。
 --------
 
 - Twitter: https://twitter.com/ElonaFoobar
-- Discord: https://discordapp.com/invite/6HktEKh
+- Discord: https://discord.gg/4htdyc2
 - GitHub: https://github.com/ElonaFoobar/ElonaFoobar/issues/new/choose
 - Gmail: elonafoobar@gmail.com
