@@ -297,6 +297,7 @@ static void _load_item_enchantment_desc(int item_index, int& p)
 }
 
 
+
 void item_load_desc(int item_index, int& p)
 {
     const I18NKey& locale_key_prefix =

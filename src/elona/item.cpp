@@ -1588,6 +1588,8 @@ int item_stack(int inventory_id, int ci, int show_message)
     return did_stack;
 }
 
+
+
 void item_dump_desc(const Item& i)
 {
     reftype = the_item_db[i.id]->category;
