@@ -198,7 +198,7 @@ return {
       },
       get_out = function(t)
          local larnneire = Chara.find("core.larnneire", "Others")
-         if larnneire == nil then
+         if not Chara.is_alive(larnneire) then
             local lomias = Chara.find("core.lomias", "Others")
             Chara.player():act_hostile_against(lomias)
             t:say("after.get_out.larnneire_died", "__BYE__")
