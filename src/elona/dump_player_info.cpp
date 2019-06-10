@@ -234,9 +234,9 @@ void dump_player_info()
         ss << cdatan(0, idx) << u8" "
            << i18n::s.get_m("locale.race", cdatan(2, idx), "name") << u8"の"
            << classname << u8" "
-           << i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex)
-           << u8" " << calcage(idx) << u8"歳" << u8"  " << chara.height
-           << u8"cm" << u8" " << chara.weight << u8"kg" << std::endl;
+           << i18n::s.get_enum("core.locale.ui.sex", chara.sex) << u8" "
+           << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
+           << u8" " << chara.weight << u8"kg" << std::endl;
         ss << u8"レベル " << chara.level;
         if (chara.is_married())
         {
