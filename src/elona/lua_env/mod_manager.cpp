@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "../../util/range.hpp"
 #include "../../util/topological_sorter.hpp"
 #include "../character.hpp"
 #include "../elona.hpp"
@@ -31,9 +32,9 @@ namespace
 
 bool _is_alnum_only(const std::string& str)
 {
-    return find_if(str.begin(), str.end(), [](char c) {
-               return !(isalnum(c) || (c == '_'));
-           }) == str.end();
+    return range::all_of(str, [](char c) {
+        return ('a' <= c && c <= 'z') || ('0' <= c && c <= '9') || c == '_';
+    });
 }
 
 
@@ -175,15 +176,9 @@ void ModManager::scan_mod(const fs::path& mod_dir)
     const std::string& mod_id = manifest.id;
     ELONA_LOG("lua.mod") << "Found mod " << mod_id;
 
-    if (!_is_alnum_only(mod_id))
+    if (!is_valid_mod_id(mod_id))
     {
-        throw std::runtime_error(
-            "Mod ID \"" + mod_id +
-            "\" must contain alphanumeric characters only.");
-    }
-    if (mod_id_is_reserved(mod_id))
-    {
-        throw std::runtime_error("\"" + mod_id + "\" is a reserved mod ID.");
+        throw std::runtime_error("Mod ID \"" + mod_id + "\" is invalid.");
     }
 
     create_mod(manifest, false);
