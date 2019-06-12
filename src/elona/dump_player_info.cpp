@@ -40,10 +40,10 @@ void dump_player_info()
     cc = 0;
     access_class_info(2, cdatan(3, 0));
 
-    ss << "Elona 1.22" << std::endl;
-    ss << "Elona foobar " << latest_version.long_string() << std::endl;
+    ss << u8"Elona 1.22" << std::endl;
+    ss << u8"Elona foobar " << latest_version.long_string() << std::endl;
 
-    ss << "キャラクター情報 " << game_date_time() << "  " << mdatan(0)
+    ss << u8"キャラクター情報 " << game_date_time() << "  " << mdatan(0)
        << std::endl;
 
     ss << std::endl;
@@ -199,7 +199,7 @@ void dump_player_info()
         ss << std::endl;
     }
 
-    ss << "------------------------------ 特徴" << std::endl;
+    ss << u8"------------------------------ 特徴" << std::endl;
     ss << std::endl;
 
     tc = 0;
@@ -219,7 +219,7 @@ void dump_player_info()
 
     ss << std::endl;
 
-    ss << "------------------------------ 仲間" << std::endl;
+    ss << u8"------------------------------ 仲間" << std::endl;
     ss << std::endl;
 
     for (int idx = 1; idx < 16; ++idx)
@@ -234,9 +234,9 @@ void dump_player_info()
         ss << cdatan(0, idx) << u8" "
            << i18n::s.get_m("locale.race", cdatan(2, idx), "name") << u8"の"
            << classname << u8" "
-           << i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex)
-           << u8" " << calcage(idx) << u8"歳" << u8"  " << chara.height
-           << u8"cm" << u8" " << chara.weight << u8"kg" << std::endl;
+           << i18n::s.get_enum("core.locale.ui.sex", chara.sex) << u8" "
+           << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
+           << u8" " << chara.weight << u8"kg" << std::endl;
         ss << u8"レベル " << chara.level;
         if (chara.is_married())
         {
