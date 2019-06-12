@@ -331,6 +331,13 @@ else()
 
   list(APPEND EXTRA_DEFINES
     "BOOST_ALLOW_DEPRECATED_HEADERS" # https://github.com/boostorg/random/issues/49
+
+    # https://www.boost.org/doc/libs/1_69_0/doc/html/boost_asio/using.html
+    # > With MSVC or Borland C++ you may want to add -DBOOST_DATE_TIME_NO_LIB and
+    # > -DBOOST_REGEX_NO_LIB to your project settings to disable autolinking of
+    # > the Boost.Date_Time and Boost.Regex libraries respectively.
+    "BOOST_DATE_TIME_NO_LIB"
+    "BOOST_REGEX_NO_LIB"
     )
 
   if(MSVC)

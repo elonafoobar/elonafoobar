@@ -62,7 +62,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 
 ### Windows
 
-1. Download and install the binaries for Boost `1.66` from [here](https://dl.bintray.com/boostorg/release/1.66.0/binaries/boost_1_66_0-msvc-14.1-64.exe).
+1. Download and install the binaries for Boost `1.69` from [here](https://dl.bintray.com/boostorg/release/1.69.0/binaries/boost_1_69_0-msvc-14.1-64.exe).
 2. Edit `Makefile.win` to point to your Boost install directory.
 3. Run `download.bat` inside the `deps` folder to download and extract the other dependencies to `deps\include`, `deps\lib` and `thirdparty\lib` (you have to have `7z.exe` and `patch.exe` on your `PATH`). This will also patch Lua for UTF-16 filename support.
 4. Open the `Developer Command Prompt for VS 2017`.
