@@ -18,9 +18,12 @@ matrix:
             - cmake
             - zlib1g-dev
             - gtk+-3.0
+            - openssl
             # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
     - os: osx
-      env: BUILD_TYPE=osx
+      env:
+        - BUILD_TYPE=osx
+        - OPENSSL_ROOT_DIR=/usr/local/opt/openssl/
       compiler: clang
     - os: linux
       env: BUILD_TYPE=android
@@ -48,7 +51,7 @@ before_install:
   - if [[ "$BUILD_TYPE" == "osx" ]]; then
       brew update &&
       brew upgrade cmake boost &&
-      brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua clang-format;
+      brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua openssl clang-format;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
       export CC="gcc-7";

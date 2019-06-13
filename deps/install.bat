@@ -5,6 +5,7 @@ set SDL2_MIXER_VERSION=2.0.2
 set SDL2_TTF_VERSION=2.0.14
 set SDL2_IMAGE_VERSION=2.0.3
 set LUA_VERSION=5.3.4
+set OPENSSL_VERSION=1.1.1b
 
 REM These shouldn't need be changed.
 set SDL2=SDL2-%SDL2_VERSION%
@@ -12,12 +13,14 @@ set SDL2_MIXER=SDL2_mixer-%SDL2_MIXER_VERSION%
 set SDL2_TTF=SDL2_ttf-%SDL2_TTF_VERSION%
 set SDL2_IMAGE=SDL2_image-%SDL2_IMAGE_VERSION%
 set LUA=lua-%LUA_VERSION%
+set OPENSSL=openssl-%OPENSSL_VERSION%
 
 set SDL2_ARCHIVE=SDL2-devel-%SDL2_VERSION%-VC.zip
 set SDL2_MIXER_ARCHIVE=SDL2_mixer-devel-%SDL2_MIXER_VERSION%-VC.zip
 set SDL2_TTF_ARCHIVE=SDL2_ttf-devel-%SDL2_TTF_VERSION%-VC.zip
 set SDL2_IMAGE_ARCHIVE=SDL2_image-devel-%SDL2_IMAGE_VERSION%-VC.zip
 set LUA_ARCHIVE=%LUA%.tar.gz
+set OPENSSL_ARCHIVE=%OPENSSL%.tar.gz
 
 
 where /q 7z > nul
@@ -114,6 +117,22 @@ if not exist lib\lua (
     patch -p0 --binary < ..\lua_wstring_5.3.4.patch
     popd
     rd /q /s %LUA%
+)
+
+
+: OpenSSL 1.1.1
+if not exist %OPENSSL_ARCHIVE% (
+    echo Downloading %OPENSSL%...
+    powershell -Command "(New-Object Net.WebClient).DownloadFile('https://www.openssl.org/source/%OPENSSL_ARCHIVE%', '%OPENSSL_ARCHIVE%')"
+)
+
+if not exist lib\openssl (
+    echo Extracting %OPENSSL%...
+    mkdir lib\openssl
+    copy ..\cmake\openssl\* lib\openssl
+    7z x %OPENSSL_ARCHIVE% -so | 7z x -aoa -si -ttar > nul
+    move %OPENSSL%\src lib\openssl\ > nul
+    rd /q /s %OPENSSL%
 )
 
 
