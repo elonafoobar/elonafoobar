@@ -389,7 +389,7 @@ MainMenuResult main_title_menu()
             return MainMenuResult::main_title_menu;
         case 5: snd("core.ok1"); return MainMenuResult::main_menu_mods;
         case 6: snd("core.ok1"); return MainMenuResult::finish_elona;
-        default: throw "unreachable";
+        default: break;
         }
 
         ++frame;
