@@ -2682,7 +2682,7 @@ TurnResult do_open_command(bool play_sound)
                         Character::State::alive)
                     {
                         tc = chara_find(203);
-                        if (tc != 0)
+                        if (tc != 0 && cdata[tc].state() == Character::State::alive)
                         {
                             txt(i18n::s.get(
                                     "core.locale.action.open.shackle.dialog"),
