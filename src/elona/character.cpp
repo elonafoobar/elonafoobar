@@ -1081,7 +1081,11 @@ int relationbetween(int c1, int c2)
     return 0;
 }
 
-
+int chara_find(const std::string& chara_id)
+{
+    // Note: if `chara_id` not found, `ensure()` throws an exception.
+    return chara_find(the_character_db.ensure(chara_id).legacy_id);
+}
 
 int chara_find(int id)
 {

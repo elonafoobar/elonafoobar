@@ -714,6 +714,7 @@ enum class CharaFindLocation
     others
 };
 
+int chara_find(const std::string& chara_id);
 int chara_find(int id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
