@@ -9,4 +9,3 @@ V=1
 
 LOCAL_SRC_FILES := boost/lib/llvm/${TARGET_ARCH_ABI}/libboost_filesystem.so \
 	boost/lib/llvm/${TARGET_ARCH_ABI}/libboost_system.so \
-	boost/lib/llvm/${TARGET_ARCH_ABI}/libboost_iostreams.so

@@ -31,7 +31,6 @@ public class ElonaFoobarActivity extends SDLActivity
             "lua",
             "boost_filesystem",
             "boost_system",
-            "boost_iostreams",
             "util",
             "snail",
             "spider",

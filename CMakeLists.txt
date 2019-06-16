@@ -115,7 +115,6 @@ if(ANDROID)
   add_library(elona SHARED IMPORTED)
   add_library(boost_filesystem SHARED IMPORTED)
   add_library(boost_system SHARED IMPORTED)
-  add_library(boost_iostreams SHARED IMPORTED)
 
   set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libSDL2.so)
@@ -140,8 +139,6 @@ if(ANDROID)
     ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_filesystem.so)
   set_target_properties(boost_system PROPERTIES IMPORTED_LOCATION
     ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_system.so)
-  set_target_properties(boost_iostreams PROPERTIES IMPORTED_LOCATION
-    ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_iostreams.so)
 
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2/include)
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_image)
@@ -157,7 +154,7 @@ if(ANDROID)
 
   add_library(${PROJECT_NAME} SHARED src/main.cpp src/version.cpp)
 
-  target_link_libraries(${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams util snail spider elona)
+  target_link_libraries(${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system util snail spider elona)
 else()
   # Options
   set(ELONA_BUILD_TARGET "GAME" CACHE STRING "Build executable type (GAME, LAUNCHER, TESTS, or BENCH)")
