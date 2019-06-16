@@ -4,7 +4,6 @@ set -e
 # Boost 1.69
 ccache -V && ccache --show-stats && ccache --zero-stats
 echo "using gcc : : ccache $CXX : <cflags>-std=c11 <cxxflags>-std=c++11 ;" > ~/user-config.jam
-echo "using clang : : ccache $CXX : <cflags>-std=c11 <cxxflags>-std=c++11 ;" >> ~/user-config.jam
 export BOOST_TOOLSET=gcc
 cd "$BOOST_ROOT" && ./b2 toolset="$BOOST_TOOLSET" threading=multi --prefix="$BOOST_ROOT" -d0 install
 export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=/usr"
