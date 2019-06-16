@@ -128,7 +128,7 @@ void proc_event()
             evdata2(evnum - (evnum != 0) * 1));
         break;
     case 2:
-        tc = chara_find(34);
+        tc = chara_find("core.lomias");
         talk_to_npc();
         break;
     case 24:
@@ -136,15 +136,15 @@ void proc_event()
         initialize_economy();
         break;
     case 3:
-        tc = chara_find(2);
+        tc = chara_find("core.zeome");
         talk_to_npc();
         break;
     case 11:
-        tc = chara_find(1);
+        tc = chara_find("core.shopkeeper");
         talk_to_npc();
         break;
     case 23:
-        tc = chara_find(302);
+        tc = chara_find("core.rogue_boss");
         talk_to_npc();
         game_data.rogue_boss_encountered = 23;
         break;
@@ -374,7 +374,7 @@ void proc_event()
             cdata[evdata1(evnum - (evnum != 0) * 1)].position.y,
             4);
         game_data.quest_flags.pael_and_her_mom = 1001;
-        tc = chara_find(221);
+        tc = chara_find("core.pael");
         if (tc != 0)
         {
             if (cdata[tc].state() == Character::State::alive)

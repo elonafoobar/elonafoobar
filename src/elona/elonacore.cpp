@@ -12149,13 +12149,13 @@ void conquer_lesimas()
         Message::instance().clear();
         txt(u8"あなたは、台座の上に置かれている絢爛な装飾の本を、いぶかしげに眺めた。"s);
         msg_halt();
-        tc = chara_find(23);
+        tc = chara_find("core.orphe");
         talk_to_npc();
         Message::instance().clear();
         txt(u8"青年は悪戯っぽくニヤリと笑い、壁に寄りかかった。"s);
         msg_halt();
         Message::instance().clear();
-        chara_vanquish(chara_find(23));
+        chara_vanquish(chara_find("core.orphe"));
         screenupdate = -1;
         update_screen();
         txt(u8"…どれくらい時間がたっただろう。氷の瞳の男は、いつの間にか姿を消していた。あなたは不安を振り払い、ゆっくりと本に手を伸ばした…"s);

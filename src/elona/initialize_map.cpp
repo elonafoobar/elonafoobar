@@ -818,7 +818,7 @@ static void _update_quest_flags_lesimas()
 
 static void _update_paels_mom()
 {
-    tc = chara_find(222);
+    tc = chara_find("core.lily");
     if (tc != 0)
     {
         if (game_data.quest_flags.pael_and_her_mom >= 10)
@@ -990,21 +990,21 @@ static void _notify_distance_traveled()
 
 static void _remove_lomias_and_larnneire()
 {
-    if (chara_find(33) != 0)
+    if (chara_find("core.larnneire") != 0)
     {
-        chara_vanquish(chara_find(33));
+        chara_vanquish(chara_find("core.larnneire"));
     }
-    if (chara_find(34) != 0)
+    if (chara_find("core.lomias") != 0)
     {
-        chara_vanquish(chara_find(34));
+        chara_vanquish(chara_find("core.lomias"));
     }
 }
 
 static void _remove_xabi()
 {
-    if (chara_find(80) != 0)
+    if (chara_find("core.xabi") != 0)
     {
-        chara_vanquish(chara_find(80));
+        chara_vanquish(chara_find("core.xabi"));
     }
 }
 
