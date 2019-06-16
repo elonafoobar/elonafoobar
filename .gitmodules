@@ -15,4 +15,4 @@
 	url = https://www.github.com/Ruin0x11/SDL2_ttf
 [submodule "android/external/boost"]
 	path = android/external/boost
-	url = https://www.github.com/Ruin0x11/libboost-1.67-android
+	url = https://github.com/ElonaFoobar/libboost-1.69-android.git
