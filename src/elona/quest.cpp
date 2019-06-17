@@ -387,7 +387,7 @@ void quest_set_data(int val0)
         }
         s(4) = i18n::s.get(
             "core.locale.quest.info.deliver.text", s(10), s(11), s(12));
-        s(6) = s(4);
+        s(6) = s(4) + i18n::s.get("core.locale.quest.info.deliver.deliver");
     }
     if (quest_data[rq].id == 1003)
     {

@@ -95,7 +95,8 @@ locale {
             }
 
             deliver {
-                text = "${_2}に住む${_3}に${_1}を配達"
+                text = "${_2}に住む${_3}に${_1}"
+                deliver = "を配達"
             }
 
             conquer {

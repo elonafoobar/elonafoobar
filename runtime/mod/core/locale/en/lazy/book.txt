@@ -59,7 +59,7 @@ This cave has been my hideaway in the
 last few seasons, though if you are
 reading this, it is most likely now
 yours to reside in. I don't mind as
-I'm either dead or faboulously rich.
+I'm either dead or fabulously rich.
 
 Still, if you are planning on going
 into the same trade as I and are not
@@ -302,7 +302,7 @@ you return to your duties.
 
 In closing, I hope this is of some
 use to you, and I hope my final
-adenture is a good one. Now if you
+adventure is a good one. Now if you
 will excuse me, I have a fort to
 conquer. How bad could it be?
 
@@ -316,7 +316,7 @@ Good luck to you and your travels.
 %2,EN
 	Author: <Madness!>
 
-This book is an item that should fial
+This book is an item that should fail
 to generate out of <Something>.
 
 A special action, or bug, leads to
@@ -373,7 +373,7 @@ them a glance before shoving them in
 your sack if ill-gotten gains and 
 simply gone back to "adventuring".
 No doubt you have sold them for more
-tankerds of ale and legs of mutton,
+tankards of ale and legs of mutton,
 but the more intelligent among you
 might collect them into a pile and 
 ponder "Why do monsters have these?"
@@ -399,7 +399,7 @@ Step 2.) 'r'ecite the deed upon the
 
 Step 3.) Aesthetically place all the 
    Cards and Figures you have found
-   inside the musuem. Neatness is a
+   inside the museum. Neatness is a
    virtue, though not necessary.
 
 Step 4.) Profit!
@@ -652,7 +652,7 @@ Assign that person to the job.
 
 The other part is also simple, to 
 SELL Stuff you need to HAVE stuff.
-So go get stuff and and leave it in
+So go get stuff and leave it in
 your shop. The better stuff should
 be out on display, the less good bits
 should be in a pile in the back in 
@@ -980,7 +980,7 @@ Jerky!
 	-== In Conclusion ==-
 At this point a wise man would stop
 writing here, and just let you dream.
-Simply imagine the possabilities, and
+Simply imagine the possibilities, and
 then grasp them.
 
 In my next book, which will be soon
