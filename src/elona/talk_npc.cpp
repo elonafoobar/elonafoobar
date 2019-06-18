@@ -1110,7 +1110,7 @@ TalkResult talk_shop_reload_ammo()
 {
     if (calccostreload(0) == 0)
     {
-        buff = i18n::s.get("core.locale.talk.npc.shop.ammo.no_ammo");
+        buff = i18n::s.get("core.locale.talk.npc.shop.ammo.no_ammo", cdata[tc]);
         return TalkResult::talk_npc;
     }
     buff = i18n::s.get(

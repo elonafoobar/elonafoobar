@@ -96,6 +96,7 @@ locale {
 
             deliver {
                 text = "Deliver ${_1} to ${_3} who lives in ${_2}."
+                deliver = ""
             }
 
             conquer {

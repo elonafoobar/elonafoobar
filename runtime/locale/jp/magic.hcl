@@ -392,7 +392,7 @@ locale {
 
         change_material {
             more_power_needed = "アーティファクトの再生成にはパワーが足りない。"
-            artifact_reconstructed = "${name(_1)}の${_2}は${itemname(_3, 1)}は再生成された。"
+            artifact_reconstructed = "${name(_1)}の${itemname(_2, 1)}は再生成された。"
             apply = "${name(_1)}の${_2}は${itemname(_3, 1)}に変化した。"
         }
 
