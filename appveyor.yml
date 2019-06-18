@@ -6,9 +6,10 @@ os:
 environment:
   matrix:
   - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64"
-    BOOST_VERSION: 1.66.0
-    BOOST_ROOT: C:\Libraries\boost_1_66_0
+    BOOST_VERSION: 1.69.0
+    BOOST_ROOT: C:\Libraries\boost_1_69_0
     PREFIX: C:\SDK
+    OPENSSL_ROOT_DIR: C:\OpenSSL-v111-Win64
 
 build:
   verbosity: detailed

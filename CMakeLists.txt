@@ -11,7 +11,7 @@ set(PROJECT_VERSION_CODE 8)
 
 # Options
 option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
-option(ANDROID_GENERATE_BUILD_FILES "Generate android/app/gradle.properties and src/{elona,snail,util}/Android.mk" OFF)
+option(ANDROID_GENERATE_BUILD_FILES "Generate android/app/gradle.properties and src/{elona,snail,spider,util}/Android.mk" OFF)
 
 
 # Platform detection
@@ -65,6 +65,9 @@ if(ANDROID_GENERATE_BUILD_FILES)
   add_subdirectory(src/util)
   set(SNAIL_BACKEND "SDL")
   add_subdirectory(src/snail)
+  # TODO set(SPIDER_BACKEND "BOOST_ASIO")
+  set(SPIDER_BACKEND "HEADLESS")
+  add_subdirectory(src/spider)
   add_subdirectory(src/elona)
 
   return()
@@ -100,6 +103,8 @@ if(ANDROID)
   set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
   set(SNAIL_BACKEND "SDL")
+  # TODO set(SPIDER_BACKEND "BOOST_ASIO")
+  set(SPIDER_BACKEND "HEADLESS")
 
   add_library(SDL2 SHARED IMPORTED)
   add_library(SDL2_image SHARED IMPORTED)
@@ -108,10 +113,10 @@ if(ANDROID)
   add_library(lua SHARED IMPORTED)
   add_library(util SHARED IMPORTED)
   add_library(snail SHARED IMPORTED)
+  add_library(spider SHARED IMPORTED)
   add_library(elona SHARED IMPORTED)
   add_library(boost_filesystem SHARED IMPORTED)
   add_library(boost_system SHARED IMPORTED)
-  add_library(boost_iostreams SHARED IMPORTED)
 
   set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libSDL2.so)
@@ -127,6 +132,8 @@ if(ANDROID)
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libutil.so)
   set_target_properties(snail PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libsnail.so)
+  set_target_properties(spider PROPERTIES IMPORTED_LOCATION
+    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libspider.so)
   set_target_properties(elona PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libelona.so)
 
@@ -134,8 +141,6 @@ if(ANDROID)
     ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_filesystem.so)
   set_target_properties(boost_system PROPERTIES IMPORTED_LOCATION
     ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_system.so)
-  set_target_properties(boost_iostreams PROPERTIES IMPORTED_LOCATION
-    ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_iostreams.so)
 
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2/include)
   include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_image)
@@ -144,21 +149,24 @@ if(ANDROID)
   include_directories(${EXTERNAL_LIB_LOCATION}/lua/src)
   include_directories(${EXTERNAL_LIB_LOCATION}/util)
   include_directories(${EXTERNAL_LIB_LOCATION}/snail)
+  include_directories(${EXTERNAL_LIB_LOCATION}/spider)
   include_directories(${EXTERNAL_LIB_LOCATION}/elona)
   include_directories(${EXTERNAL_LIB_LOCATION}/boost/include)
   link_directories(${EXTERNAL_LIB_LOCATION}/boost/libs/llvm/armeabi-v7a)
 
   add_library(${PROJECT_NAME} SHARED src/main.cpp src/version.cpp)
 
-  target_link_libraries(${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams util snail elona)
+  target_link_libraries(${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system util snail spider elona)
 else()
   # Options
   set(ELONA_BUILD_TARGET "GAME" CACHE STRING "Build executable type (GAME, LAUNCHER, TESTS, or BENCH)")
 
   if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
     set(SNAIL_BACKEND "HEADLESS")
+    set(SPIDER_BACKEND "HEADLESS")
   else()
     set(SNAIL_BACKEND "SDL")
+    set(SPIDER_BACKEND "BOOST_ASIO")
   endif()
 
   # Executable
@@ -302,6 +310,25 @@ else()
     target_link_libraries(${PROJECT_NAME} dl)
   endif()
 
+  if(WIN32)
+  else()
+    target_link_libraries(${PROJECT_NAME} pthread)
+  endif()
+
+  if(WIN32)
+    if(NOT DEFINED OPENSSL_INCLUDE_DIR OR NOT DEFINED OPENSSL_LIBRARIES)
+      find_package(OpenSSL REQUIRED)
+    endif()
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
+  else()
+    if(NOT DEFINED OPENSSL_INCLUDE_DIR OR NOT DEFINED OPENSSL_LIBRARIES)
+      find_package(OpenSSL REQUIRED)
+    endif()
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
+  endif()
+
   set(GENERAL_OPTIONS)
   set(DEBUG_OPTIONS)
   set(RELEASE_OPTIONS)
@@ -312,6 +339,13 @@ else()
 
   list(APPEND EXTRA_DEFINES
     "BOOST_ALLOW_DEPRECATED_HEADERS" # https://github.com/boostorg/random/issues/49
+
+    # https://www.boost.org/doc/libs/1_69_0/doc/html/boost_asio/using.html
+    # > With MSVC or Borland C++ you may want to add -DBOOST_DATE_TIME_NO_LIB and
+    # > -DBOOST_REGEX_NO_LIB to your project settings to disable autolinking of
+    # > the Boost.Date_Time and Boost.Regex libraries respectively.
+    "BOOST_DATE_TIME_NO_LIB"
+    "BOOST_REGEX_NO_LIB"
     )
 
   if(MSVC)
@@ -448,9 +482,16 @@ else()
   add_subdirectory(src/snail)
   target_link_libraries(${PROJECT_NAME} ${SNAIL_LIBRARY})
 
+  # My libraries: spider
+  add_subdirectory(src/spider)
+  target_link_libraries(${PROJECT_NAME} ${SPIDER_LIBRARY})
+
+  add_subdirectory(src/thirdparty/uri)
+  target_link_libraries(${PROJECT_NAME} ${NETWORK_URI_LIBRARY})
+
   # My libraries: elona
   add_subdirectory(src/elona)
-  target_link_libraries(${PROJECT_NAME} elona ${SNAIL_LIBRARY} util)
+  target_link_libraries(${PROJECT_NAME} elona ${SNAIL_LIBRARY} ${SPIDER_LIBRARY} util)
 
   if((ELONA_BUILD_TARGET STREQUAL "GAME") OR (ELONA_BUILD_TARGET STREQUAL "LAUNCHER"))
     add_subdirectory(src/thirdparty/nfd)

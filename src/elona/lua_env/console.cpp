@@ -8,6 +8,7 @@
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
 #include "../../snail/input.hpp"
+#include "../../spider/http.hpp"
 #include "../../util/strutil.hpp"
 #include "../ability.hpp"
 #include "../config/config.hpp"
@@ -682,6 +683,14 @@ void Console::_init_builtin_lua_functions()
         cdatan(1, 0) = random_title(RandomTitleType::character);
         print("Wizard mode inactivated.");
         print("I am perfectly normal, thank you very much.");
+    };
+
+    funcs["ex"] = [this]() {
+        spider::http::Request req{spider::http::Verb::GET,
+                                  "http://elonafoobar.com"};
+        req.send(
+            [this](const auto& res) { print(res.body); },
+            [this](const auto& err) { print(err.what()); });
     };
 
     // Map functions stored in COMMANDS._BUILTIN_ to global.
