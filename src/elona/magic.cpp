@@ -2628,7 +2628,7 @@ bool _magic_630_1129()
         if (result.succeeded)
         {
             dbid = inv[ci].id;
-            access_item_db(inv[ci], dbid, 2);
+            item_db_get_charge_level(inv[ci], dbid);
             if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480 ||
                 inv[ci].id == 289 || inv[ci].id == 732 ||
                 (inv[ci].id == 687 && inv[ci].param2 != 0))
@@ -2720,7 +2720,7 @@ bool _magic_629()
         if (result.succeeded)
         {
             dbid = inv[ci].id;
-            access_item_db(inv[ci], dbid, 2);
+            item_db_get_charge_level(inv[ci], dbid);
             for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (ichargelevel == 1)

@@ -279,7 +279,7 @@ void mef_proc(int tc)
             potionspill = 1;
             efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
             dbid = mef(7, ef);
-            access_item_db(inv[ci], dbid, 15);
+            item_db_on_drink(inv[ci], dbid);
             if (cdata[tc].state() == Character::State::empty)
             {
                 check_kill(mef(6, ef), tc);

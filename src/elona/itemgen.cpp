@@ -212,8 +212,8 @@ optional<int> do_create_item(int slot, int x, int y)
         dbid = 501;
     }
 
-    access_item_db(inv[ci], dbid, 3);
-    access_item_db(inv[ci], dbid, 2);
+    item_db_set_full_stats(inv[ci], dbid);
+    item_db_get_charge_level(inv[ci], dbid);
 
     inv[ci].color = generate_color(the_item_db[inv[ci].id]->color, inv[ci].id);
 
@@ -688,7 +688,7 @@ void change_item_material(Item& item, int material_id)
     const auto original_value = calculate_original_value(item);
 
     dbid = item.id;
-    access_item_db(inv[ci], dbid, 10);
+    item_db_set_basic_stats(inv[ci], dbid);
     item.value = original_value;
     if (material_id != 0)
     {

@@ -381,6 +381,14 @@ void item_load_desc(int item_index, int& p);
 
 
 int iequiploc(const Item& item);
-int access_item_db(Item& item, int legacy_id, int dbmode);
+
+void item_db_set_basic_stats(Item& item, int legacy_id);
+bool item_db_is_offerable(Item& item, int legacy_id);
+void item_db_get_description(Item& item, int legacy_id);
+void item_db_get_charge_level(Item& item, int legacy_id);
+void item_db_set_full_stats(Item& item, int legacy_id);
+void item_db_on_read(Item& item, int legacy_id);
+void item_db_on_zap(Item& item, int legacy_id);
+void item_db_on_drink(Item& item, int legacy_id);
 
 } // namespace elona

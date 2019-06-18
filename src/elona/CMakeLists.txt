@@ -2,7 +2,6 @@
 set(ELONA_SOURCES
   ability.cpp
   access_character_info.cpp
-  access_item_db.cpp
   activity.cpp
   adventurer.cpp
   ai.cpp
@@ -53,6 +52,7 @@ set(ELONA_SOURCES
   input.cpp
   input_prompt.cpp
   item.cpp
+  item_db.cpp
   item_load_desc.cpp
   item_material.cpp
   itemgen.cpp

@@ -929,7 +929,7 @@ int calcitemvalue(int item_index, int situation)
     if (inv[item_index].has_charge())
     {
         dbid = inv[item_index].id;
-        access_item_db(inv[item_index], dbid, 2);
+        item_db_get_charge_level(inv[item_index], dbid);
         if (inv[item_index].count < 0)
         {
             ret = ret / 10;
