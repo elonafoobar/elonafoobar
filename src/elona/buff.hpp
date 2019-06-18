@@ -13,20 +13,22 @@ struct Character;
 struct Buff;
 
 
-int calc_buff_duration(int id, int power);
-std::string get_buff_description(int id, int power);
-void apply_buff(int cc, int id, int power);
 
-bool buff_has(const Character& cc, const std::string& id);
-optional_ref<const Buff> buff_find(const Character& cc, const std::string& id);
+int buff_calc_duration(int id, int power);
+std::string buff_get_description(int id, int power);
+
+void buff_apply(Character& chara, int id, int power);
+
+bool buff_has(const Character& chara, const std::string& id);
+optional_ref<const Buff> buff_find(
+    const Character& chara,
+    const std::string& id);
 void buff_add(
-    Character& cc,
+    Character& chara,
     const std::string& id,
     int power,
     int turns,
     optional_ref<const Character> doer = none);
-void buff_delete(Character& cc, int slot);
-
-
+void buff_delete(Character& chara, int slot);
 
 } // namespace elona

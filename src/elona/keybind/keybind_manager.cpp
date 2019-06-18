@@ -55,7 +55,7 @@ KeybindManager::GroupedMapType KeybindManager::create_category_to_action_list()
 
 void KeybindManager::save()
 {
-    auto path = filesystem::dir::exe() / u8"keybindings.hcl";
+    auto path = filesystem::dirs::exe() / u8"keybindings.hcl";
     std::ofstream file{path.native(), std::ios::binary};
     if (!file)
     {
@@ -71,7 +71,7 @@ void KeybindManager::load()
 {
     clear();
 
-    auto path = filesystem::dir::exe() / u8"keybindings.hcl";
+    auto path = filesystem::dirs::exe() / u8"keybindings.hcl";
     std::ifstream file{path.native(), std::ios::binary};
 
     if (file)

@@ -664,7 +664,7 @@ void proc_event()
             Message::color{ColorIndex::red});
         msg_halt();
         gsel(7);
-        picload(filesystem::dir::graphic() / u8"bg22.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"bg22.bmp", 0, 0, true);
         gsel(4);
         gmode(0);
         gcopy_c(
@@ -678,7 +678,7 @@ void proc_event()
             windoww + 4,
             windowh + 4);
         gsel(7);
-        picload(filesystem::dir::graphic() / u8"anime9.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime9.bmp", 0, 0, true);
         gsel(0);
         dx = windoww / 2;
         dy = (windowh - inf_verh) / 2;

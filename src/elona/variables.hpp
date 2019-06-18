@@ -508,8 +508,6 @@ ELONA_EXTERN(int radery);
 ELONA_EXTERN(int range_);
 ELONA_EXTERN(int rapidmagic);
 ELONA_EXTERN(int rc);
-ELONA_EXTERN(int ref1);
-ELONA_EXTERN(int ref2);
 ELONA_EXTERN(int reftype);
 ELONA_EXTERN(int reftypeminor);
 ELONA_EXTERN(int returnfromidentify);
@@ -554,7 +552,6 @@ ELONA_EXTERN(int tlocy);
 ELONA_EXTERN(int tx);
 ELONA_EXTERN(int txt3rd);
 ELONA_EXTERN(int ty);
-ELONA_EXTERN(int usernpcmax);
 ELONA_EXTERN(int userrelation);
 ELONA_EXTERN(int vfix);
 ELONA_EXTERN(int voidlv);
@@ -569,7 +566,6 @@ ELONA_EXTERN(int x2);
 ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
 ELONA_EXTERN(std::string cardrefrace);
-ELONA_EXTERN(std::string classname);
 ELONA_EXTERN(std::string cmaka);
 ELONA_EXTERN(std::string dbidn);
 ELONA_EXTERN(std::string defload);
@@ -690,9 +686,6 @@ void clear_existing_quest_list();
 
 //// Character querying
 int relationbetween(int, int);
-
-//// Character generation
-void get_random_npc_id();
 
 
 //// Character manipulation

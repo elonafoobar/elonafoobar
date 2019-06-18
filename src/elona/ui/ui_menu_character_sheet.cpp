@@ -109,7 +109,7 @@ static void _load_list_skill_category(CharacterSheetOperation op)
     ++listmax;
     if (op == CharacterSheetOperation::learn_skill)
     {
-        map_get_trainer_skills();
+        map_get_trainer_skills(cdata[cc]);
     }
     else
     {
@@ -478,8 +478,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
     s(2) = cnven(i18n::s.get_m("locale.race", cdatan(2, cc), "name"));
-    access_class_info(2, cdatan(3, cc));
-    s(4) = cnven(classname);
+    s(4) = cnven(class_get_name(cdatan(3, cc)));
     if (cdata[cc].sex == 0)
     {
         s(3) = cnven(i18n::s.get("core.locale.ui.sex3.male"));
@@ -682,9 +681,9 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
 
     if (_cs_buffmax != 0)
     {
-        const auto duration = calc_buff_duration(
+        const auto duration = buff_calc_duration(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
-        const auto description = get_buff_description(
+        const auto description = buff_get_description(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
         buff_desc = ""s +
             i18n::s.get_enum_property(

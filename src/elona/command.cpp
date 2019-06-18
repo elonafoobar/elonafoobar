@@ -2732,7 +2732,7 @@ TurnResult do_open_command(bool play_sound)
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
         tmpload(filepathutil::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
-                filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
+                filesystem::dirs::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(
                 FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
@@ -3674,8 +3674,7 @@ TurnResult do_exit_command()
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            snd("core.write1");
-            save_game();
+            save_game(save_game_no_message);
             txt(i18n::s.get("core.locale.action.exit.saved"));
             txt(i18n::s.get(
                 "core.locale.action.exit.you_close_your_eyes", cdata[cc]));

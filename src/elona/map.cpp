@@ -333,7 +333,7 @@ void CellData::unpack_from(elona_vector3<int>& legacy_map, bool clear)
 
 void map_reload(const std::string& map_filename)
 {
-    fmapfile = (filesystem::dir::map() / map_filename).generic_string();
+    fmapfile = (filesystem::dirs::map() / map_filename).generic_string();
     ctrl_file(FileOperation::map_load_map_obj_files);
 
     for (int y = 0; y < map_data.height; ++y)

@@ -575,8 +575,8 @@ void _adventurer_drink()
         "core.locale.talk.visitor.adventurer.drink.cheers", cdata[tc]));
     txt(i18n::s.get("core.locale.magic.alcohol.normal"),
         Message::color{ColorIndex::cyan});
-    dmgcon(tc, StatusAilment::drunk, 1000);
-    dmgcon(cc, StatusAilment::drunk, 1000);
+    status_ailment_damage(cdata[tc], StatusAilment::drunk, 1000);
+    status_ailment_damage(cdata[cc], StatusAilment::drunk, 1000);
     chara_modify_impression(cdata[tc], 15);
 }
 

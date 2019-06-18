@@ -1519,7 +1519,7 @@ void animeload(int animation_type, int chara_index)
         (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(
-        filesystem::dir::graphic() / (u8"anime"s + animation_type + u8".bmp"),
+        filesystem::dirs::graphic() / (u8"anime"s + animation_type + u8".bmp"),
         0,
         0,
         true);
@@ -1608,44 +1608,44 @@ void animeblood(int cc, int animation_type, int element)
     switch (element)
     {
     case 52:
-        picload(filesystem::dir::graphic() / u8"anime18.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime18.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 51:
-        picload(filesystem::dir::graphic() / u8"anime19.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime19.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 50:
-        picload(filesystem::dir::graphic() / u8"anime20.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime20.bmp", 0, 0, true);
         dy_at_m133(1) = -20;
         break;
     case 56:
-        picload(filesystem::dir::graphic() / u8"anime22.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime22.bmp", 0, 0, true);
         dy_at_m133(1) = -24;
         break;
     case 53:
-        picload(filesystem::dir::graphic() / u8"anime21.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime21.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 54:
-        picload(filesystem::dir::graphic() / u8"anime23.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime23.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 57:
-        picload(filesystem::dir::graphic() / u8"anime24.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime24.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 59:
-        picload(filesystem::dir::graphic() / u8"anime25.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime25.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 58:
-        picload(filesystem::dir::graphic() / u8"anime26.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime26.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 55:
     case 63:
-        picload(filesystem::dir::graphic() / u8"anime27.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime27.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     default: ele2_at_m133 = 0; break;
@@ -2034,7 +2034,7 @@ int try_to_cast_spell()
                 txt(i18n::s.get("core.locale.misc.fail_to_cast.too_difficult"));
             }
         }
-        dmgcon(cc, StatusAilment::confused, 100);
+        status_ailment_damage(cdata[cc], StatusAilment::confused, 100);
         return 0;
     }
     if (rnd(4) == 0)
@@ -2079,7 +2079,7 @@ int try_to_reveal()
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc)) >
         rnd(game_data.current_dungeon_level * 8 + 60))
     {
-        gain_detection_experience(cc);
+        chara_gain_exp_detection(cdata[cc]);
         return 1;
     }
     return 0;
@@ -2114,7 +2114,7 @@ int try_to_disarm_trap()
     if (rnd(sdata(175, cc) * 15 + 20 + sdata(12, cc)) >
         rnd(game_data.current_dungeon_level * 12 + 100))
     {
-        gain_disarm_trap_experience();
+        chara_gain_exp_disarm_trap(cdata[cc]);
         return 1;
     }
     return 0;
@@ -2168,7 +2168,7 @@ void proc_turn_end(int cc)
     regen = 1;
     if (cdata[cc].sleep > 0)
     {
-        healcon(cc, StatusAilment::sleep, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::sleep, 1);
         if (cdata[cc].sleep > 0)
         {
             cdata[cc].emotion_icon = 114;
@@ -2179,7 +2179,7 @@ void proc_turn_end(int cc)
     if (cdata[cc].poisoned > 0)
     {
         damage_hp(cdata[cc], rnd(2 + sdata(11, cc) / 10), -4);
-        healcon(cc, StatusAilment::poisoned, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::poisoned, 1);
         if (cdata[cc].poisoned > 0)
         {
             cdata[cc].emotion_icon = 108;
@@ -2249,14 +2249,14 @@ void proc_turn_end(int cc)
             {
                 if (rnd(200) == 0)
                 {
-                    healcon(cc, StatusAilment::sick);
+                    status_ailment_heal(cdata[cc], StatusAilment::sick);
                 }
             }
         }
     }
     if (cdata[cc].blind > 0)
     {
-        healcon(cc, StatusAilment::blinded, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::blinded, 1);
         if (cdata[cc].blind > 0)
         {
             cdata[cc].emotion_icon = 110;
@@ -2265,7 +2265,7 @@ void proc_turn_end(int cc)
     if (cdata[cc].paralyzed > 0)
     {
         regen = 0;
-        healcon(cc, StatusAilment::paralyzed, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::paralyzed, 1);
         if (cdata[cc].paralyzed > 0)
         {
             cdata[cc].emotion_icon = 115;
@@ -2273,7 +2273,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].confused > 0)
     {
-        healcon(cc, StatusAilment::confused, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::confused, 1);
         if (cdata[cc].confused > 0)
         {
             cdata[cc].emotion_icon = 111;
@@ -2281,7 +2281,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].fear > 0)
     {
-        healcon(cc, StatusAilment::fear, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::fear, 1);
         if (cdata[cc].fear > 0)
         {
             cdata[cc].emotion_icon = 113;
@@ -2289,7 +2289,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].dimmed > 0)
     {
-        healcon(cc, StatusAilment::dimmed, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::dimmed, 1);
         if (cdata[cc].dimmed > 0)
         {
             cdata[cc].emotion_icon = 112;
@@ -2297,7 +2297,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].drunk > 0)
     {
-        healcon(cc, StatusAilment::drunk, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::drunk, 1);
         if (cdata[cc].drunk > 0)
         {
             cdata[cc].emotion_icon = 106;
@@ -2309,8 +2309,8 @@ void proc_turn_end(int cc)
             cdata[cc],
             rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
-        healcon(
-            cc,
+        status_ailment_heal(
+            cdata[cc],
             StatusAilment::bleeding,
             1 + cdata[cc].cures_bleeding_quickly() * 3);
         if (cdata[cc].bleeding > 0)
@@ -2351,7 +2351,7 @@ void proc_turn_end(int cc)
         {
             cdata[cc].fear += rnd(10);
         }
-        healcon(cc, StatusAilment::insane, 1);
+        status_ailment_heal(cdata[cc], StatusAilment::insane, 1);
         if (cdata[cc].insane > 0)
         {
             cdata[cc].emotion_icon = 124;
@@ -3248,7 +3248,7 @@ void character_drops_item()
         }
     }
 
-    switch (access_class_info(16, cdatan(3, rc)))
+    switch (the_class_db[cdatan(3, rc)]->item_type)
     {
     case 1:
         if (rnd(20) == 0)
@@ -4413,7 +4413,7 @@ TurnResult exit_map()
 
         tmpload(filepathutil::u8path("mdata_" + mid + ".s2"));
         // delete all map-local data
-        if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
+        if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             ctrl_file(FileOperation::map_delete);
         }
@@ -4929,7 +4929,7 @@ void supply_income()
     invfile = 4;
     ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     tmpload(filepathutil::u8path(u8"shop4.s2"));
-    if (fs::exists(filesystem::dir::tmp() / u8"shop4.s2"s))
+    if (fs::exists(filesystem::dirs::tmp() / u8"shop4.s2"s))
     {
         ctrl_file(FileOperation2::map_items_read, u8"shop4.s2"s);
     }
@@ -5293,9 +5293,9 @@ TurnResult step_into_gate()
         return TurnResult::pc_turn_user_error;
     }
 
-    if (1 && game_data.wizard == 0)
+    if (!game_data.wizard)
     {
-        do_save_game();
+        save_game();
     }
     txt(i18n::s.get("core.locale.action.exit_map.gate.step_into"));
     inv[ci].modify_number(-1);
@@ -6662,8 +6662,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.blind"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::blinded,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6674,8 +6674,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.paralyze"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::paralyzed,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6686,8 +6686,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.confuse"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::confused,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6760,8 +6760,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.poison"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::poisoned,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6772,8 +6772,8 @@ label_21451_internal:
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.sleep"));
                     }
-                    dmgcon(
-                        cc,
+                    status_ailment_damage(
+                        cdata[cc],
                         StatusAilment::sleep,
                         100 + game_data.current_dungeon_level * 2);
                 }
@@ -6861,7 +6861,7 @@ void sleep_start()
         cdata[tc].hp = cdata[tc].max_hp;
         cdata[tc].mp = cdata[tc].max_mp;
         cdata[tc].sp = cdata[tc].max_sp;
-        healcon(tc, StatusAilment::sick, 7 + rnd(7));
+        status_ailment_heal(cdata[tc], StatusAilment::sick, 7 + rnd(7));
         if (cdata[tc].has_anorexia())
         {
             cdata[tc].anorexia_count -= rnd(6);
@@ -7138,7 +7138,8 @@ void map_global_proc_travel_events()
                     "core.locale.action.move.global.weather.snow.eat"));
                 cdata[cc].nutrition += 5000;
                 show_eating_message();
-                dmgcon(0, StatusAilment::dimmed, 1000);
+                status_ailment_damage(
+                    cdata.player(), StatusAilment::dimmed, 1000);
             }
         }
     }
@@ -7237,7 +7238,7 @@ int decode_book()
     {
         ci = cdata[cc].continuous_action.item;
         cibkread = ci;
-        gain_literacy_experience();
+        chara_gain_exp_literacy(cdata.player());
         if (inv[ci].id == 783)
         {
             return 0;
@@ -7326,7 +7327,7 @@ int decode_book()
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20) /
                     clamp((100 + spell((efid - 400)) / 2), 50, 1000) +
                 1);
-        gain_memorization_experience(0);
+        chara_gain_exp_memorization(cdata.player(), efid);
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
@@ -7443,7 +7444,7 @@ int do_cast_magic()
     if (stat == 1)
     {
         cc = ccbk;
-        gain_casting_experience(cc, spellbk);
+        chara_gain_exp_casting(cdata[cc], spellbk);
         return 1;
     }
     return 0;
@@ -8028,7 +8029,7 @@ int do_zap()
                 item_identify(inv[ci], IdentifyState::partly_identified);
             }
         }
-        gain_magic_device_experience(cc);
+        chara_gain_exp_magic_device(cdata[cc]);
     }
     else if (is_in_fov(cdata[cc]))
     {
@@ -8384,11 +8385,11 @@ void heal_both_rider_and_mount()
     {
         const auto amount = roll(dice1, dice2, bonus);
         heal_hp(cdata[tc(cnt)], amount);
-        healcon(tc(cnt), StatusAilment::fear);
-        healcon(tc(cnt), StatusAilment::poisoned, 50);
-        healcon(tc(cnt), StatusAilment::confused, 50);
-        healcon(tc(cnt), StatusAilment::dimmed, 30);
-        healcon(tc(cnt), StatusAilment::bleeding, 20);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::fear);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::poisoned, 50);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::confused, 50);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::dimmed, 30);
+        status_ailment_heal(cdata[tc(cnt)], StatusAilment::bleeding, 20);
         heal_insanity(cdata[tc(cnt)], 1);
         if (is_in_fov(cdata[tc(cnt)]))
         {
@@ -8498,7 +8499,7 @@ int pick_up_item(bool play_sound)
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
                     tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
                     if (fs::exists(
-                            filesystem::dir::tmp() /
+                            filesystem::dirs::tmp() /
                             (u8"mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(FileOperation::map_delete);
@@ -8694,7 +8695,7 @@ int pick_up_item(bool play_sound)
         }
         else
         {
-            gain_negotiation_experience(0, sellgold);
+            chara_gain_exp_negotiation(cdata.player(), sellgold);
         }
     }
     else
@@ -9364,9 +9365,9 @@ void proc_autopick()
             }
             if (int(op.type) & int(Autopick::Operation::Type::save))
             {
-                if (game_data.wizard == 0)
+                if (!game_data.wizard)
                 {
-                    do_save_game();
+                    save_game();
                 }
             }
             break;
@@ -9678,7 +9679,7 @@ int unlock_box(int difficulty)
         return 0;
     }
     txt(i18n::s.get("core.locale.action.unlock.succeed"));
-    gain_lock_picking_experience(cc);
+    chara_gain_exp_lock_picking(cdata[cc]);
     return 1;
 }
 
@@ -10056,7 +10057,7 @@ TurnResult try_to_open_locked_door()
     {
         if (feat(2) > 0)
         {
-            gain_lock_picking_experience(cc);
+            chara_gain_exp_lock_picking(cdata[cc]);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
         if (is_in_fov(cdata[cc]))
@@ -10265,8 +10266,8 @@ void try_to_melee_attack()
                     cdata[tc]));
             }
             damage_hp(cdata[tc], rnd(sdata(168, cc)) + 1, cc);
-            dmgcon(
-                tc,
+            status_ailment_damage(
+                cdata[tc],
                 StatusAilment::dimmed,
                 50 + int(std::sqrt(sdata(168, cc))) * 15);
             cdata[tc].paralyzed += rnd(3);
@@ -11355,8 +11356,7 @@ void initialize_economy()
     bkdata(1) = game_data.current_dungeon_level;
     bkdata(2) = cdata.player().position.x;
     bkdata(3) = cdata.player().position.y;
-    snd("core.write1");
-    save_game();
+    save_game(save_game_no_message);
     mode = 11;
     cdata.player().position.x = 0;
     cdata.player().position.y = 0;
@@ -12273,7 +12273,7 @@ TurnResult pc_died()
     }
     buff = "";
     notesel(buff);
-    const auto bone_filepath = filesystem::dir::save() / u8"bone.txt";
+    const auto bone_filepath = filesystem::dirs::save() / u8"bone.txt";
     if (fs::exists(bone_filepath))
     {
         std::ifstream in{bone_filepath.native(), std::ios::binary};

@@ -75,7 +75,6 @@ MainMenuResult character_making_select_race()
         auto value = *result.value;
         cmrace(0) = value.race_id;
         cmrace(1) = value.race_name;
-        access_race_info(11, cmrace);
         return MainMenuResult::character_making_select_sex;
     }
 }
@@ -255,23 +254,23 @@ MainMenuResult character_making_customize_appearance()
 
 static void _reroll_character()
 {
-    const auto portrait_save = cdata[rc].portrait;
+    const auto portrait_save = cdata.player().portrait;
 
     chara_delete(0);
-    access_race_info(3, cmrace);
-    access_class_info(3, cmclass);
-    cdatan(0, rc) = u8"????"s;
-    cdatan(1, rc) = cmaka;
-    cdata[rc].level = 1;
+    race_init_chara(cdata.player(), cmrace);
+    class_init_chara(cdata.player(), cmclass);
+    cdatan(0, 0) = u8"????"s;
+    cdatan(1, 0) = cmaka;
+    cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
-        sdata.get(cnt, rc).original_level = cmstats(cnt - 10) / 1'000'000;
-        sdata.get(cnt, rc).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
-        sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
+        sdata.get(cnt, 0).original_level = cmstats(cnt - 10) / 1'000'000;
+        sdata.get(cnt, 0).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
+        sdata.get(cnt, 0).potential = cmstats(cnt - 10) % 1'000;
     }
     initialize_character();
     initialize_pc_character();
-    cdata[rc].portrait = portrait_save;
+    cdata.player().portrait = portrait_save;
     create_pcpic(cdata.player());
 }
 
@@ -302,8 +301,7 @@ static int _prompt_satisfied()
 static bool _validate_save_path(const std::string& playerid)
 {
     if (range::any_of(
-            filesystem::dir_entries(
-                filesystem::dir::save(), filesystem::DirEntryRange::Type::all),
+            filesystem::glob_entries(filesystem::dirs::save()),
             [&](const auto& entry) {
                 return filepathutil::to_utf8_path(entry.path().filename()) ==
                     playerid;
@@ -426,13 +424,15 @@ MainMenuResult character_making_final_phase()
 
 
 
-void draw_race_or_class_info()
+void draw_race_or_class_info(const std::string& description)
 {
-    font(14 - en * 2);
-    tx = wx + 230;
-    ty = wy + 62;
-    talk_conv(buff, 60 + en * 2);
-    mes(tx - 20, ty, buff);
+    {
+        std::string tmp = description;
+        talk_conv(tmp, 60 + en * 2);
+        font(14 - en * 2);
+        mes(wx + 210, wy + 62, tmp);
+    }
+
     font(14 - en * 2);
     tx = wx + 200;
     ty = wy + 166;

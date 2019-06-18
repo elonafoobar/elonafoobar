@@ -21,27 +21,26 @@ bool UIMenuCharamakeAttributes::init()
 void UIMenuCharamakeAttributes::_reroll_attributes()
 {
     chara_delete(0);
-    access_race_info(3, _race);
-    access_class_info(3, _klass);
-    cdata[rc].level = 1;
+    race_init_chara(cdata.player(), _race);
+    class_init_chara(cdata.player(), _klass);
+    cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
         if (_locked_attributes(cnt - 10) == 0)
         {
             if (_minimum)
             {
-                sdata.get(cnt, rc).original_level -=
-                    sdata.get(cnt, rc).original_level / 2;
+                sdata.get(cnt, 0).original_level -=
+                    sdata.get(cnt, 0).original_level / 2;
             }
             else
             {
-                sdata.get(cnt, rc).original_level -=
-                    rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+                sdata.get(cnt, 0).original_level -=
+                    rnd(sdata.get(cnt, 0).original_level / 2 + 1);
             }
-            _attributes(cnt - 10) =
-                sdata.get(cnt, rc).original_level * 1000000 +
-                sdata.get(cnt, rc).experience * 1000 +
-                sdata.get(cnt, rc).potential;
+            _attributes(cnt - 10) = sdata.get(cnt, 0).original_level * 1000000 +
+                sdata.get(cnt, 0).experience * 1000 +
+                sdata.get(cnt, 0).potential;
         }
     }
 }

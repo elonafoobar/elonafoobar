@@ -858,17 +858,17 @@ TurnResult pass_one_turn(bool label_2738_flg)
             {
                 if (cdata[cnt].state() == Character::State::alive)
                 {
-                    gain_healing_and_meditation_experience(cnt);
+                    chara_gain_exp_healing_and_meditation(cdata[cnt]);
                 }
             }
         }
         if (p == 2)
         {
-            gain_stealth_experience(0);
+            chara_gain_exp_stealth(cdata.player());
         }
         if (p == 3)
         {
-            gain_weight_lifting_experience(0);
+            chara_gain_exp_weight_lifting(cdata.player());
         }
         if (p == 4)
         {

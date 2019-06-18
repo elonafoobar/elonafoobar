@@ -429,7 +429,8 @@ void continuous_action_perform()
                 {
                     if (rnd(15) == 0)
                     {
-                        dmgcon(tc, StatusAilment::drunk, 500);
+                        status_ailment_damage(
+                            cdata[tc], StatusAilment::drunk, 500);
                     }
                 }
                 if (rnd(sdata(183, cc) + 1) > rnd(cdata[tc].level * 5 + 1))
@@ -731,20 +732,20 @@ void continuous_action_sex()
         {
             if (rnd(3) == 0)
             {
-                dmgcon(c, StatusAilment::insane, 500);
+                status_ailment_damage(cdata[c], StatusAilment::insane, 500);
             }
             if (rnd(5) == 0)
             {
-                dmgcon(c, StatusAilment::paralyzed, 500);
+                status_ailment_damage(cdata[c], StatusAilment::paralyzed, 500);
             }
-            dmgcon(c, StatusAilment::insane, 300);
+            status_ailment_damage(cdata[c], StatusAilment::insane, 300);
             heal_insanity(cdata[c], 10);
             chara_gain_skill_exp(cdata[c], 11, 250 + (c >= 57) * 1000);
             chara_gain_skill_exp(cdata[c], 15, 250 + (c >= 57) * 1000);
         }
         if (rnd(15) == 0)
         {
-            dmgcon(c, StatusAilment::sick, 200);
+            status_ailment_damage(cdata[c], StatusAilment::sick, 200);
         }
         chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
     }
@@ -1433,7 +1434,7 @@ void spot_fishing()
         racount = 0;
         fishstat = 0;
         gsel(9);
-        picload(filesystem::dir::graphic() / u8"fishing.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"fishing.bmp", 0, 0, true);
         gsel(0);
         return;
     }
@@ -1556,7 +1557,7 @@ void spot_fishing()
             fishanime = 0;
             cdata[cc].continuous_action.finish();
             fish_get(fish);
-            gain_fishing_experience(0);
+            chara_gain_exp_fishing(cdata.player());
             cdata.player().emotion_icon = 306;
         }
         if (rnd(10) == 0)
@@ -1813,7 +1814,7 @@ void spot_mining_or_wall()
                 }
                 txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
             }
-            gain_digging_experience();
+            chara_gain_exp_digging(cdata.player());
             cdata[cc].continuous_action.finish();
         }
         else if (cdata[cc].turn % 5 == 0)

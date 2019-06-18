@@ -35,8 +35,7 @@ void Store::init(const std::vector<Store::Location>& locations)
 
 void Store::load(const fs::path& path, const std::string& mod_id)
 {
-    for (const auto& entry :
-         filesystem::dir_entries(path, filesystem::DirEntryRange::Type::file))
+    for (const auto& entry : filesystem::glob_files(path))
     {
         std::ifstream ifs(entry.path().native());
         if (!ifs)

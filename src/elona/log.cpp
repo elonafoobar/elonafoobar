@@ -85,7 +85,7 @@ void Logger::init()
 {
     _start_time = steady_clock::now();
 
-    const auto root_dir = filesystem::dir::log();
+    const auto root_dir = filesystem::dirs::log();
     _mkdir(root_dir);
     _rotate_log_files(root_dir);
 

@@ -1641,7 +1641,7 @@ void tcginit()
     asset_load("deco_card");
     asset_load("interface2");
     gsel(2);
-    picload(filesystem::dir::graphic() / u8"card0.bmp", 0, 0, false);
+    picload(filesystem::dirs::graphic() / u8"card0.bmp", 0, 0, false);
     asset_load("bg_card");
     tcg_prepare_cnt2();
     tcgdrawbg();
@@ -1759,7 +1759,7 @@ void tcgdeck()
             s_at_tcg(cnt) =
                 i18n::s.get("core.locale.tcg.deck.name", s_at_tcg(cnt));
             const auto deck_filepath =
-                filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
+                filesystem::dirs::tmp() / (u8"deck_"s + cnt + u8".s2");
             tmpload(filepathutil::u8path(u8"deck_"s + cnt + u8".s2"));
             if (!fs::exists(deck_filepath))
             {
@@ -1789,7 +1789,7 @@ void tcgdeck()
         curdeck = rtval;
         tmpload(filepathutil::u8path(u8"deck_"s + curdeck + u8".s2"));
         if (fs::exists(
-                filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
+                filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
             prompt.append(i18n::s.get("core.locale.tcg.deck.choices.edit"));
             prompt.append(
@@ -1809,7 +1809,7 @@ void tcgdeck()
             {
                 ctrl_file(
                     FileOperation2::deck_read,
-                    filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
+                    filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2"));
             }
         }
         decksizebk_at_tcg = game_data.tcg_decks.at(curdeck);
@@ -2690,7 +2690,7 @@ label_1830_internal:
             {
                 ctrl_file(
                     FileOperation2::deck_write,
-                    filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
+                    filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2"));
                 writeloadedbuff(u8"deck_"s + curdeck + u8".s2");
             }
             else

@@ -139,7 +139,7 @@ namespace elona
 
 void show_loading_screen()
 {
-    const auto path = filesystem::dir::graphic() / "rolling_putit.png";
+    const auto path = filesystem::dirs::graphic() / "rolling_putit.png";
     snail::Image cute_creature(path);
 
     int frame = 0;

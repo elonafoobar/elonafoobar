@@ -18,7 +18,7 @@ using namespace elona::testing;
 TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
         "test", "Store.global.thing = 1"));
@@ -32,7 +32,7 @@ TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 TEST_CASE("Test that store can be assigned", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 Store.global.thing = 1
@@ -51,7 +51,7 @@ assert(Store.global == true)
 TEST_CASE("Test that store cannot have new fields", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_THROWS(lua.get_mod_manager().load_mod_from_script("test", R"(
 Store.test = {}
@@ -61,7 +61,7 @@ Store.test = {}
 TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
         "test1", "Store.global.mine = false; Store.global.thing = 1"));
@@ -83,7 +83,7 @@ TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
@@ -98,7 +98,7 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
@@ -115,7 +115,7 @@ TEST_CASE(
     "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")

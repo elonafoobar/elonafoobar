@@ -85,21 +85,21 @@ void chara_gain_skill_exp(
     int experience_divisor_of_related_basic_attribute = 0,
     int experience_divisor_of_character_level = 0);
 
-void gain_digging_experience();
-void gain_literacy_experience();
-void gain_negotiation_experience(int cc, int gold);
-void gain_lock_picking_experience(int cc);
-void gain_detection_experience(int cc);
-void gain_casting_experience(int cc, int spell_id);
-void gain_mana_capacity_experience(int cc);
-void gain_healing_and_meditation_experience(int cc);
-void gain_stealth_experience(int cc);
-void gain_investing_experience(int cc);
-void gain_weight_lifting_experience(int cc);
-void gain_magic_device_experience(int cc);
-void gain_fishing_experience(int cc);
-void gain_memorization_experience(int cc);
-void gain_crafting_experience(int skill, int mat_amount);
-void gain_disarm_trap_experience();
+void chara_gain_exp_digging(Character& chara);
+void chara_gain_exp_literacy(Character& chara);
+void chara_gain_exp_negotiation(Character& chara, int gold);
+void chara_gain_exp_lock_picking(Character& chara);
+void chara_gain_exp_detection(Character& chara);
+void chara_gain_exp_casting(Character& chara, int spell_id);
+void chara_gain_exp_mana_capacity(Character& chara);
+void chara_gain_exp_healing_and_meditation(Character& chara);
+void chara_gain_exp_stealth(Character& chara);
+void chara_gain_exp_investing(Character& chara);
+void chara_gain_exp_weight_lifting(Character& chara);
+void chara_gain_exp_magic_device(Character& chara);
+void chara_gain_exp_fishing(Character& chara);
+void chara_gain_exp_memorization(Character& chara, int spell_id);
+void chara_gain_exp_crafting(Character& chara, int skill, int material_amount);
+void chara_gain_exp_disarm_trap(Character& chara);
 
 } // namespace elona

@@ -54,10 +54,11 @@ void _start_elona()
     }
     else if (defload != ""s)
     {
-        if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
+        if (!fs::exists(filesystem::dirs::save(defload) / u8"header.txt"))
         {
             if (fs::exists(
-                    filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
+                    filesystem::dirs::save(u8"sav_" + defload) /
+                    u8"header.txt"))
             {
                 // TODO: Delete it when v1.0.0 stable is released.
                 defload = u8"sav_"s + defload;

@@ -33,7 +33,7 @@ protected:
         const std::string& key);
 
 private:
-    void _draw_race_info(int, int);
+    void _draw_race_info(const std::string&);
     void _draw_window();
     void _draw_choice(int, const std::string&);
     void _draw_choices();

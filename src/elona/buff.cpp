@@ -13,13 +13,11 @@
 
 
 
-using namespace elona;
-
+namespace elona
+{
 
 namespace
 {
-
-
 
 constexpr int buff_find_slot_no_effect = -1;
 
@@ -61,17 +59,11 @@ void buff_on_removal(Character& chara, int id)
     }
 }
 
-
-
 } // namespace
 
 
 
-namespace elona
-{
-
-
-int calc_buff_duration(int id, int power)
+int buff_calc_duration(int id, int power)
 {
     auto buff = the_buff_db[id];
     assert(buff);
@@ -81,7 +73,8 @@ int calc_buff_duration(int id, int power)
 }
 
 
-std::string get_buff_description(int id, int power)
+
+std::string buff_get_description(int id, int power)
 {
     auto buff = the_buff_db[id];
     assert(buff);
@@ -93,40 +86,42 @@ std::string get_buff_description(int id, int power)
 
 
 
-void apply_buff(int cc, int id, int power)
+void buff_apply(Character& chara, int id, int power)
 {
     auto buff = the_buff_db[id];
     assert(buff);
 
     auto& self = buff->self;
     auto& on_refresh = buff->on_refresh;
-    auto args =
-        lua::create_table("power", power, "chara", lua::handle(cdata[cc]));
+    auto args = lua::create_table("power", power, "chara", lua::handle(chara));
     on_refresh.call(self, args);
 }
 
 
-bool buff_has(const Character& cc, const std::string& id)
+
+bool buff_has(const Character& chara, const std::string& id)
 {
     auto buff_def = the_buff_db[id];
     assert(buff_def);
 
     int legacy_id = buff_def->legacy_id;
     return range::any_of(
-        cc.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
+        chara.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
 }
 
 
 
-optional_ref<const Buff> buff_find(const Character& cc, const std::string& id)
+optional_ref<const Buff> buff_find(
+    const Character& chara,
+    const std::string& id)
 {
     auto buff_def = the_buff_db[id];
     assert(buff_def);
 
     int legacy_id = buff_def->legacy_id;
     const auto itr = range::find_if(
-        cc.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
-    if (itr == std::end(cc.buffs))
+        chara.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
+    if (itr == std::end(chara.buffs))
     {
         return none;
     }
@@ -139,7 +134,7 @@ optional_ref<const Buff> buff_find(const Character& cc, const std::string& id)
 
 
 void buff_add(
-    Character& cc,
+    Character& chara,
     const std::string& id,
     int power,
     int turns,
@@ -153,10 +148,10 @@ void buff_add(
     if (turns <= 0)
         return;
 
-    const auto slot = buff_find_slot(cc, legacy_id, turns);
+    const auto slot = buff_find_slot(chara, legacy_id, turns);
     if (slot == buff_find_slot_no_effect)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(chara))
         {
             txt(i18n::s.get("core.locale.magic.buff.no_effect"));
             return;
@@ -166,19 +161,19 @@ void buff_add(
     if (buff->type == BuffType::hex)
     {
         bool resists{};
-        if (sdata(60, cc.index) / 2 > rnd(power * 2 + 100))
+        if (sdata(60, chara.index) / 2 > rnd(power * 2 + 100))
         {
             resists = true;
         }
-        if (power * 3 < sdata(60, cc.index))
+        if (power * 3 < sdata(60, chara.index))
         {
             resists = true;
         }
-        if (power / 3 > sdata(60, cc.index))
+        if (power / 3 > sdata(60, chara.index))
         {
             resists = false;
         }
-        if (cc.quality > Quality::great)
+        if (chara.quality > Quality::great)
         {
             if (rnd(4))
             {
@@ -189,11 +184,11 @@ void buff_add(
                 turns = turns / 5 + 1;
             }
         }
-        if (cc.quality >= Quality::miracle && id == "core.death_word")
+        if (chara.quality >= Quality::miracle && id == "core.death_word")
         {
             resists = true;
         }
-        if (const auto& holy_veil = buff_find(cc, "core.holy_veil"))
+        if (const auto& holy_veil = buff_find(chara, "core.holy_veil"))
         {
             if (holy_veil->power + 50 > power * 5 / 2 ||
                 rnd(holy_veil->power + 50) > rnd(power + 1))
@@ -204,68 +199,69 @@ void buff_add(
         }
         if (resists)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(chara))
             {
-                txt(i18n::s.get("core.locale.magic.buff.resists", cc));
+                txt(i18n::s.get("core.locale.magic.buff.resists", chara));
             }
             return;
         }
         if (doer && doer->index == 0)
         {
-            hostileaction(0, cc.index);
+            hostileaction(0, chara.index);
         }
     }
 
-    if (is_in_fov(cc))
+    if (is_in_fov(chara))
     {
         // Messages of fodd buff are shown elsewhere.
         if (buff->type != BuffType::food)
         {
             txt(i18n::s.get_enum_property(
-                "core.locale.buff", legacy_id, "apply", cc));
+                "core.locale.buff", legacy_id, "apply", chara));
         }
 
         add_damage_popup(
             i18n::s.get_enum_property("core.locale.buff", "name", legacy_id),
-            cc.index,
+            chara.index,
             {255, 255, 255});
     }
 
-    cc.buffs[slot] = {legacy_id, power, turns};
+    chara.buffs[slot] = {legacy_id, power, turns};
 
-    chara_refresh(cc.index);
+    chara_refresh(chara.index);
 }
 
 
 
-void buff_delete(Character& cc, int slot)
+void buff_delete(Character& chara, int slot)
 {
-    if (cc.index == 0)
+    if (chara.index == 0)
     {
         txt(i18n::s.get(
                 "core.locale.magic.buff.ends",
                 i18n::s.get_enum_property(
-                    "core.locale.buff", "name", cc.buffs[slot].id)),
+                    "core.locale.buff", "name", chara.buffs[slot].id)),
             Message::color{ColorIndex::purple});
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(chara))
     {
         add_damage_popup(
             i18n::s.get_enum_property(
-                "core.locale.buff", "name", cc.buffs[slot].id),
-            cc.index,
+                "core.locale.buff", "name", chara.buffs[slot].id),
+            chara.index,
             {191, 191, 191});
     }
-    buff_on_removal(cc, cc.buffs[slot].id);
-    cc.buffs[slot].id = 0;
-    for (int cnt = slot, cnt_end = cnt + (16 - slot - 1); cnt < cnt_end; ++cnt)
+
+    buff_on_removal(chara, chara.buffs[slot].id);
+    chara.buffs[slot].id = 0;
+    for (int i = slot; i < 16 - slot - 1; ++i)
     {
-        if (cc.buffs[cnt].id == 0)
+        if (chara.buffs[i].id == 0)
         {
-            if (cc.buffs[cnt + 1].id != 0)
+            if (chara.buffs[i + 1].id != 0)
             {
-                cc.buffs[cnt] = cc.buffs[cnt + 1];
-                cc.buffs[cnt + 1] = Buff{};
+                chara.buffs[i] = chara.buffs[i + 1];
+                chara.buffs[i + 1] = Buff{};
             }
             else
             {
@@ -274,9 +270,7 @@ void buff_delete(Character& cc, int slot)
         }
     }
 
-    chara_refresh(cc.index);
+    chara_refresh(chara.index);
 }
-
-
 
 } // namespace elona

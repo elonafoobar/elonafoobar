@@ -334,7 +334,7 @@ void BreathAnimation::do_play()
 
     // Prepare image.
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime7.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / u8"anime7.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);
@@ -410,7 +410,7 @@ void BallAnimation::do_play()
 
     // Load image.
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime5.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / u8"anime5.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);
@@ -508,7 +508,7 @@ void BoltAnimation::do_play()
     snd_at("core.bolt1", attacker_pos);
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime6.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / u8"anime6.bmp", 0, 0, true);
 
     gsel(4);
     gmode(0);
@@ -807,7 +807,7 @@ void MeleeAttackAnimation::do_play()
     if (is_critical)
     {
         gsel(7);
-        picload(filesystem::dir::graphic() / u8"anime28.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime28.bmp", 0, 0, true);
     }
     gmode(2);
     gsel(0);
@@ -875,7 +875,7 @@ void GeneEngineeringAnimation::do_play()
         return;
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime13.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / u8"anime13.bmp", 0, 0, true);
 
     gsel(4);
     gmode(0);
@@ -908,7 +908,7 @@ void MiracleAnimation::do_play()
     elona_vector1<int> ay;
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime12.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / u8"anime12.bmp", 0, 0, true);
     gsel(4);
     gmode(0);
     gcopy(0, 0, 0, windoww, windowh, 0, 0);
@@ -1048,7 +1048,7 @@ void MeteorAnimation::do_play()
     elona_vector1<int> ay;
 
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime17.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / u8"anime17.bmp", 0, 0, true);
     gsel(4);
     gmode(0);
     gcopy(0, 0, 0, windoww, windowh, 0, 0);
@@ -1144,7 +1144,7 @@ void RagnarokAnimation::do_play()
 
     // Load image.
     gsel(7);
-    picload(filesystem::dir::graphic() / u8"anime16.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / u8"anime16.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);

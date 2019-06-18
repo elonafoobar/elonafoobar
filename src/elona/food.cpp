@@ -204,8 +204,8 @@ void eat_rotten_food()
         ++fdmax;
     }
     nutrition = 1000;
-    dmgcon(cc, StatusAilment::paralyzed, 100);
-    dmgcon(cc, StatusAilment::confused, 200);
+    status_ailment_damage(cdata[cc], StatusAilment::paralyzed, 100);
+    status_ailment_damage(cdata[cc], StatusAilment::confused, 200);
 }
 
 
@@ -311,7 +311,7 @@ void chara_vomit(Character& cc)
         }
     }
 
-    dmgcon(cc.index, StatusAilment::dimmed, 100);
+    status_ailment_damage(cc, StatusAilment::dimmed, 100);
     modify_weight(cc, -(1 + rnd(5)));
     if (cc.nutrition <= 0)
     {
@@ -371,7 +371,7 @@ void get_sick_if_cursed(CurseState curse_state, Character& drinker)
     {
         txt(i18n::s.get("core.locale.food.eat_status.cursed_drink", drinker));
     }
-    dmgcon(drinker.index, StatusAilment::sick, 200);
+    status_ailment_damage(drinker, StatusAilment::sick, 200);
 }
 
 
@@ -1149,7 +1149,8 @@ void apply_general_eating_effect(int cieat)
                 {
                     txt(i18n::s.get("core.locale.food.effect.human.dislike"));
                     damage_insanity(cdata[cc], 15);
-                    dmgcon(cc, StatusAilment::insane, 150);
+                    status_ailment_damage(
+                        cdata[cc], StatusAilment::insane, 150);
                     if (trait(41) == 0)
                     {
                         if (rnd(5) == 0)
@@ -1344,7 +1345,7 @@ void apply_general_eating_effect(int cieat)
             modify_karma(cdata.player(), -10);
             lovemiracle(cc);
         }
-        dmgcon(cc, StatusAilment::dimmed, 500);
+        status_ailment_damage(cdata[cc], StatusAilment::dimmed, 500);
         cdata[cc].emotion_icon = 317;
     }
     for (int cnt = 0; cnt < 15; ++cnt)

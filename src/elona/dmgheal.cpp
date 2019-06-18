@@ -552,36 +552,36 @@ int damage_hp(
             {
                 if (rnd(10) < element_power / 75 + 4)
                 {
-                    dmgcon(
-                        victim.index,
+                    status_ailment_damage(
+                        victim,
                         StatusAilment::blinded,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
-                    dmgcon(
-                        victim.index,
+                    status_ailment_damage(
+                        victim,
                         StatusAilment::paralyzed,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
-                    dmgcon(
-                        victim.index,
+                    status_ailment_damage(
+                        victim,
                         StatusAilment::confused,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
-                    dmgcon(
-                        victim.index,
+                    status_ailment_damage(
+                        victim,
                         StatusAilment::poisoned,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
-                    dmgcon(
-                        victim.index,
+                    status_ailment_damage(
+                        victim,
                         StatusAilment::sleep,
                         rnd(element_power / 3 * 2 + 1));
                 }
@@ -595,45 +595,33 @@ int damage_hp(
             }
             if (element == 53)
             {
-                dmgcon(
-                    victim.index,
-                    StatusAilment::blinded,
-                    rnd(element_power + 1));
+                status_ailment_damage(
+                    victim, StatusAilment::blinded, rnd(element_power + 1));
             }
             if (element == 58)
             {
-                dmgcon(
-                    victim.index,
-                    StatusAilment::paralyzed,
-                    rnd(element_power + 1));
+                status_ailment_damage(
+                    victim, StatusAilment::paralyzed, rnd(element_power + 1));
             }
             if (element == 54)
             {
-                dmgcon(
-                    victim.index,
-                    StatusAilment::confused,
-                    rnd(element_power + 1));
+                status_ailment_damage(
+                    victim, StatusAilment::confused, rnd(element_power + 1));
             }
             if (element == 57)
             {
-                dmgcon(
-                    victim.index,
-                    StatusAilment::confused,
-                    rnd(element_power + 1));
+                status_ailment_damage(
+                    victim, StatusAilment::confused, rnd(element_power + 1));
             }
             if (element == 55)
             {
-                dmgcon(
-                    victim.index,
-                    StatusAilment::poisoned,
-                    rnd(element_power + 1));
+                status_ailment_damage(
+                    victim, StatusAilment::poisoned, rnd(element_power + 1));
             }
             if (element == 61)
             {
-                dmgcon(
-                    victim.index,
-                    StatusAilment::bleeding,
-                    rnd(element_power + 1));
+                status_ailment_damage(
+                    victim, StatusAilment::bleeding, rnd(element_power + 1));
             }
             if (element == 62)
             {
@@ -1256,7 +1244,7 @@ void damage_mp(Character& cc, int delta)
     }
     if (cc.mp < 0)
     {
-        gain_mana_capacity_experience(cc.index);
+        chara_gain_exp_mana_capacity(cc);
         auto damage = -cc.mp * 400 / (100 + sdata(164, cc.index) * 10);
         if (cc.index == 0)
         {
@@ -1345,7 +1333,7 @@ void damage_insanity(Character& cc, int delta)
     cc.insanity += delta;
     if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cc.insanity + 1) > 50)
     {
-        dmgcon(cc.index, StatusAilment::insane, 100);
+        status_ailment_damage(cc, StatusAilment::insane, 100);
     }
 }
 

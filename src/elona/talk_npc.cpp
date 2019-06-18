@@ -1538,7 +1538,7 @@ TalkResult talk_invest()
     {
         snd("core.paygold1");
         cdata.player().gold -= calcinvestvalue();
-        gain_investing_experience(0);
+        chara_gain_exp_investing(cdata.player());
         cdata[tc].shop_rank += rnd(2) + 2;
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
     }

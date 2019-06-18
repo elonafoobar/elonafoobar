@@ -30,8 +30,7 @@ static void _load_class_list()
     }
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
-        access_class_info(2, listn(1, cnt));
-        listn(0, cnt) = classname;
+        listn(0, cnt) = class_get_name(listn(1, cnt));
     }
 }
 
@@ -56,8 +55,11 @@ void UIMenuCharamakeClass::update()
 {
 }
 
-static void
-_draw_class_info(int chip_male, int chip_female, const std::string& race)
+static void _draw_class_info(
+    const std::string& class_id,
+    int chip_male,
+    int chip_female,
+    const std::string& race)
 {
     {
         auto rect = chara_preparepic(chip_male);
@@ -86,7 +88,9 @@ _draw_class_info(int chip_male, int chip_female, const std::string& race)
         i18n::s.get("core.locale.chara_making.select_race.race_info.race") +
             u8": "s + race);
 
-    draw_race_or_class_info();
+    draw_race_or_class_info(
+        i18n::s.get_m_optional("locale.class", class_id, "description")
+            .get_value_or(""));
 }
 
 void UIMenuCharamakeClass::_draw_window()
@@ -145,8 +149,7 @@ void UIMenuCharamakeClass::_draw_choices()
 static void _reload_selected_class(const std::string& klass)
 {
     chara_delete(0);
-    access_class_info(3, klass);
-    access_class_info(11, klass);
+    class_init_chara(cdata.player(), klass);
 }
 
 void UIMenuCharamakeClass::draw()
@@ -162,7 +165,9 @@ void UIMenuCharamakeClass::draw()
     const std::string& selected_class = listn(1, cs);
     _reload_selected_class(selected_class);
 
-    _draw_class_info(ref1, ref2, _race);
+    const auto race_data = the_race_db[cdatan(2, 0)];
+    _draw_class_info(
+        selected_class, race_data->male_image, race_data->female_image, _race);
 }
 
 optional<UIMenuCharamakeClass::ResultType> UIMenuCharamakeClass::on_key(

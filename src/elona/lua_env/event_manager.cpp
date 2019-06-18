@@ -60,7 +60,7 @@ void EventManager::clear()
 
     lua->get_state()->safe_script_file(
         filepathutil::to_utf8_path(
-            filesystem::dir::data() / "script" / "kernel" / "event.lua"),
+            filesystem::dirs::data() / "script" / "kernel" / "event.lua"),
         env);
 
     sol::table core = lua->get_api_manager().get_core_api_table();

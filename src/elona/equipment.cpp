@@ -717,8 +717,11 @@ void supply_initial_equipments()
         probeq = 10;
         fixeq = 1;
     }
-    if (cequipment == 1)
+
+    switch (class_get_equipment_type(cdatan(3, rc)))
     {
+    case 0: break;
+    case 1:
         generatemoney(rc);
         eqweapon1(0) = eqweaponheavy();
         eqweapon1(1) = 2;
@@ -746,90 +749,28 @@ void supply_initial_equipments()
         }
         eqrange(0) = 24030;
         eqrange(1) = 1;
-    }
-    if (cequipment == 8)
-    {
+        break;
+    case 2:
         generatemoney(rc);
-        eqweapon1(0) = 232;
-        eqweapon1(1) = 3;
+        eqrandweaponmage();
+        eqamulet1(0) = 34001;
+        eqamulet1(1) = 1;
+        eqring1(0) = 32001;
+        eqring1(1) = 2;
+        eqring2(0) = 32001;
+        eqring2(1) = 1;
         if (rnd(10) < probeq)
         {
-            eqboots(0) = 18001;
-            eqboots(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqgirdle(0) = 19001;
-            eqgirdle(1) = 1;
+            eqarmor(0) = 16003;
+            eqarmor(1) = 1;
         }
         if (rnd(10) < probeq)
         {
             eqcloack(0) = 20001;
-            eqcloack(1) = 2;
+            eqcloack(1) = 1;
         }
-        eqrange(0) = 24030;
-        eqrange(1) = 1;
-        eqtwohand = 1;
-    }
-    if (cequipment == 7)
-    {
-        generatemoney(rc);
-        eqweapon1(0) = eqweaponlight();
-        eqweapon1(1) = 2;
-        eqweapon2(0) = eqweaponlight();
-        eqweapon2(1) = 2;
-        if (rnd(10) < probeq)
-        {
-            eqarmor(0) = 16001;
-            eqarmor(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqhelm(0) = 12001;
-            eqhelm(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqboots(0) = 18001;
-            eqboots(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqgirdle(0) = 19001;
-            eqgirdle(1) = 1;
-        }
-        eqrange(0) = 24030;
-        eqrange(1) = 1;
-        eqtwowield = 1;
-    }
-    if (cequipment == 6)
-    {
-        generatemoney(rc);
-        eqweapon1(0) = 10004;
-        eqweapon1(1) = 1;
-        if (rnd(10) < probeq)
-        {
-            eqshield(0) = 14003;
-            eqshield(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqarmor(0) = 16001;
-            eqarmor(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqhelm(0) = 12001;
-            eqhelm(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqboots(0) = 18001;
-            eqboots(1) = 1;
-        }
-    }
-    if (cequipment == 3)
-    {
+        break;
+    case 3:
         generatemoney(rc);
         eqweapon1(0) = 10002;
         eqweapon1(1) = 1;
@@ -854,30 +795,8 @@ void supply_initial_equipments()
             eqboots(0) = 18001;
             eqboots(1) = 1;
         }
-    }
-    if (cequipment == 2)
-    {
-        generatemoney(rc);
-        eqrandweaponmage();
-        eqamulet1(0) = 34001;
-        eqamulet1(1) = 1;
-        eqring1(0) = 32001;
-        eqring1(1) = 2;
-        eqring2(0) = 32001;
-        eqring2(1) = 1;
-        if (rnd(10) < probeq)
-        {
-            eqarmor(0) = 16003;
-            eqarmor(1) = 1;
-        }
-        if (rnd(10) < probeq)
-        {
-            eqcloack(0) = 20001;
-            eqcloack(1) = 1;
-        }
-    }
-    if (cequipment == 4)
-    {
+        break;
+    case 4:
         generatemoney(rc);
         eqweapon1(0) = 10002;
         eqweapon1(1) = 1;
@@ -912,9 +831,8 @@ void supply_initial_equipments()
             eqboots(0) = 18001;
             eqboots(1) = 1;
         }
-    }
-    if (cequipment == 5)
-    {
+        break;
+    case 5:
         generatemoney(rc);
         eqrandweaponmage();
         eqamulet1(0) = 34001;
@@ -933,7 +851,87 @@ void supply_initial_equipments()
             eqcloack(0) = 20001;
             eqcloack(1) = 1;
         }
+        break;
+    case 6:
+        generatemoney(rc);
+        eqweapon1(0) = 10004;
+        eqweapon1(1) = 1;
+        if (rnd(10) < probeq)
+        {
+            eqshield(0) = 14003;
+            eqshield(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqarmor(0) = 16001;
+            eqarmor(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqhelm(0) = 12001;
+            eqhelm(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqboots(0) = 18001;
+            eqboots(1) = 1;
+        }
+        break;
+    case 7:
+        generatemoney(rc);
+        eqweapon1(0) = eqweaponlight();
+        eqweapon1(1) = 2;
+        eqweapon2(0) = eqweaponlight();
+        eqweapon2(1) = 2;
+        if (rnd(10) < probeq)
+        {
+            eqarmor(0) = 16001;
+            eqarmor(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqhelm(0) = 12001;
+            eqhelm(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqboots(0) = 18001;
+            eqboots(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqgirdle(0) = 19001;
+            eqgirdle(1) = 1;
+        }
+        eqrange(0) = 24030;
+        eqrange(1) = 1;
+        eqtwowield = 1;
+        break;
+    case 8:
+        generatemoney(rc);
+        eqweapon1(0) = 232;
+        eqweapon1(1) = 3;
+        if (rnd(10) < probeq)
+        {
+            eqboots(0) = 18001;
+            eqboots(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqgirdle(0) = 19001;
+            eqgirdle(1) = 1;
+        }
+        if (rnd(10) < probeq)
+        {
+            eqcloack(0) = 20001;
+            eqcloack(1) = 2;
+        }
+        eqrange(0) = 24030;
+        eqrange(1) = 1;
+        eqtwohand = 1;
+        break;
     }
+
     if (cdata[rc].quality >= Quality::miracle)
     {
         for (int cnt = 0; cnt < 2; ++cnt)

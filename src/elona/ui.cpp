@@ -1528,24 +1528,24 @@ void load_continuous_action_animation()
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_wall)
     {
-        picload(filesystem::dir::graphic() / u8"anime1.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime1.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre)
         {
-            picload(filesystem::dir::graphic() / u8"anime2.bmp", 0, 0, true);
+            picload(filesystem::dirs::graphic() / u8"anime2.bmp", 0, 0, true);
         }
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::search_material)
     {
-        picload(filesystem::dir::graphic() / u8"anime3.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime3.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_ground)
     {
-        picload(filesystem::dir::graphic() / u8"anime4.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime4.bmp", 0, 0, true);
     }
     gsel(0);
 }
@@ -2322,7 +2322,7 @@ void load_background_variants(int buffer)
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+            filesystem::dirs::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
             cnt % 4 * 180,
             cnt / 4 * 300,
             false);

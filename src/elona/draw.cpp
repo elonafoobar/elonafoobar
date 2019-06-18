@@ -140,7 +140,7 @@ void _load_pcc_part(Character& chara, int body_part, const char* body_part_str)
 {
     const auto idx = chara.index;
 
-    const auto filepath = filesystem::dir::graphic() /
+    const auto filepath = filesystem::dirs::graphic() /
         (u8"pcc_"s + body_part_str + (pcc(body_part, idx) % 1000) + u8".bmp");
     if (!fs::exists(filepath))
         return;
@@ -777,12 +777,12 @@ void initialize_map_chips(const MapChipDB& db)
             }
 
             loader.add_predefined_extents(
-                filesystem::dir::graphic() / (u8"map"s + i + ".bmp"),
+                filesystem::dirs::graphic() / (u8"map"s + i + ".bmp"),
                 extents_chips,
                 PicLoader::PageType::map_chip);
 
             loader.add_predefined_extents(
-                filesystem::dir::graphic() / (u8"map"s + i + ".bmp"),
+                filesystem::dirs::graphic() / (u8"map"s + i + ".bmp"),
                 extents_feats,
                 PicLoader::PageType::map_feat);
         }
@@ -920,7 +920,7 @@ void initialize_item_chips(const ItemChipDB& db)
     }
 
     loader.add_predefined_extents(
-        filesystem::dir::graphic() / u8"item.bmp",
+        filesystem::dirs::graphic() / u8"item.bmp",
         predefined_extents,
         PicLoader::PageType::item);
 }
@@ -949,7 +949,7 @@ void initialize_portraits(const PortraitDB& db)
     }
 
     loader.add_predefined_extents(
-        filesystem::dir::graphic() / u8"face1.bmp",
+        filesystem::dirs::graphic() / u8"face1.bmp",
         predefined_extents,
         PicLoader::PageType::portrait);
 }
@@ -986,7 +986,7 @@ void initialize_chara_chips(const CharaChipDB& db)
     }
 
     loader.add_predefined_extents(
-        filesystem::dir::graphic() / u8"character.bmp",
+        filesystem::dirs::graphic() / u8"character.bmp",
         predefined_extents,
         PicLoader::PageType::character);
 }

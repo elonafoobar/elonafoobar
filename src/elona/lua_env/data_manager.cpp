@@ -22,7 +22,7 @@ DataManager::DataManager(LuaEnv* lua)
 void DataManager::clear()
 {
     sol::table data = _lua->get_state()->script_file(filepathutil::to_utf8_path(
-        filesystem::dir::data() / "script" / "kernel" / "data.lua"));
+        filesystem::dirs::data() / "script" / "kernel" / "data.lua"));
     _data.storage() = data;
 }
 
