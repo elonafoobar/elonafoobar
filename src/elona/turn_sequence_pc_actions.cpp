@@ -18,7 +18,6 @@
 #include "mdata.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
 #include "optional.hpp"
 #include "save.hpp"
 #include "ui.hpp"
@@ -688,7 +687,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action == "chat_box")
     {
-        show_chat_dialog();
+        menu_chat_dialog();
         update_screen();
         return none;
     }

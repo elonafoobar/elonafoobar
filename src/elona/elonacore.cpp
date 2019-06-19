@@ -53,7 +53,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
+#include "net.hpp"
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -1164,39 +1164,6 @@ void page_load()
         cs = csprev;
         pagesaved = 0;
     }
-}
-
-
-
-void fix_input_chat(std::string& str)
-{
-    str = strutil::replace(str, u8" ", u8"+");
-    str = strutil::replace(str, u8"%", u8"per");
-    str = strutil::replace(str, u8"&", u8"and");
-    str = strutil::remove_str(str, u8"<");
-    str = strutil::remove_str(str, u8">");
-}
-
-
-
-void fix_input_chat2(std::string& str)
-{
-    str = strutil::replace(str, u8"fucking", u8"nyoro~n");
-    str = strutil::replace(str, u8"fuck", u8"nyou talk funny");
-}
-
-
-
-void cnv_filestr(std::string& str)
-{
-    str = strutil::replace(str, u8"\"", u8"_");
-    str = strutil::replace(str, u8"\\", u8"_");
-    str = strutil::replace(str, u8"<", u8"_");
-    str = strutil::replace(str, u8">", u8"_");
-    str = strutil::replace(str, u8"/", u8"_");
-    str = strutil::replace(str, u8"?", u8"_");
-    str = strutil::replace(str, u8"|", u8"_");
-    str = strutil::replace(str, u8"*", u8"_");
 }
 
 
@@ -12373,14 +12340,7 @@ TurnResult pc_died()
         wait_key_pressed();
         return TurnResult::finish_elona;
     }
-    s = u8"dead"s +
-        i18n::s.get(
-            "core.locale.misc.death.sent_message",
-            cdatan(1, 0),
-            cdatan(0, 0),
-            ndeathcause,
-            mdatan(0),
-            last_words);
+    net_send_death(ndeathcause, mdatan(0), last_words);
     screenupdate = -1;
     update_entire_screen();
     levelexitby = 3;

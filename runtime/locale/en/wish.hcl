@@ -2,7 +2,6 @@ locale {
     wish {
         what_do_you_wish_for ="What do you wish for? "
         your_wish = "\"${_1}!!\""
-        sent_message = "${_1} ${_2} goes wild with joy, ${_3} ${_4}"
 
         it_is_sold_out = "It's sold out."
         something_appears = "${itemname(_1)} appear${s(_1)}."

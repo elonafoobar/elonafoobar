@@ -1,14 +1,24 @@
 locale {
-    network {
-        need_connection = "You need an internet connection."
+    net {
         failed_to_send = "Failed to send a message."
 
         chat {
             wait_more = "You think you should wait a little more."
-            says = "${_1} ${_2} says, ${_3}"
+            message = '"${_1}"'
+            sent_message = "${_1} ${_2} says, ${_3}"
+        }
+
+        dead {
+            sent_message = "${_1} ${_2} ${_3} in ${_4} ${5}"
+        }
+
+        wish {
+            sent_message = "${_1} ${_2} goes wild with joy, ${_3} ${_4}"
         }
 
         alias {
+            message = "Your favorite alias♪1"
+
             title = "Voting Box"
             hint = "Enter [Vote] "
             choice = "Choice"
@@ -18,7 +28,7 @@ locale {
             cannot_vote_until = "You can't vote until ${_1}."
             prompt = "Which one do you want to vote?"
 
-            rank = "${_1}"
+            rank = "${ordinal(_1)}"
             selected = ""
 
             ok = "Ok"

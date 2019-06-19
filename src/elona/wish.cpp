@@ -10,6 +10,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "config/config.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
@@ -21,7 +22,7 @@
 #include "map_cell.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
+#include "net.hpp"
 #include "optional.hpp"
 #include "random.hpp"
 #include "save.hpp"
@@ -210,25 +211,14 @@ std::string remove_extra_str(const std::string& text)
 }
 
 
+
 void wish_end()
 {
-    if (game_data.wizard || wishfilter)
-    {
-        return;
-    }
-
-    // net_send(
-    //     "wish"
-    //     + i18n::s.get(
-    //           "core.locale.wish.sent_message",
-    //           cdatan(1, 0),
-    //           cdatan(0, 0),
-    //           i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
-    //           cnven(log_copy_observer->get_copy())));
+    net_send_wish(
+        i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
+        cnven(log_copy_observer->get_copy()));
 
     log_copy_observer.reset();
-
-    wishfilter = 1;
 }
 
 

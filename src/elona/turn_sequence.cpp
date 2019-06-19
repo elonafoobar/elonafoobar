@@ -32,7 +32,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
+#include "net.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
@@ -55,7 +55,6 @@ int ct = 0;
 
 namespace elona
 {
-
 
 TurnResult npc_turn()
 {
@@ -1551,10 +1550,14 @@ label_2747:
         ui_render_from_screensync();
     }
 
+    for (const auto& chat : net_receive_chats(true))
+    {
+        txt(chat.as_log(), Message::color{ColorIndex::yellow});
+    }
+
     if (timeGetTime() / 1000 - time_warn > 3600)
     {
         time_warn = timeGetTime() / 1000;
-        wishfilter = 0;
         ++hour_played;
         s = i18n::s.get("core.locale.action.playtime_report", hour_played);
         s += cheer_up_message(hour_played);
