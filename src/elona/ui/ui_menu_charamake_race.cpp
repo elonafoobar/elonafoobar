@@ -74,7 +74,7 @@ void UIMenuCharamakeRace::update()
 
 void UIMenuCharamakeRace::_draw_race_info(const std::string& race_id)
 {
-    const auto race_data = the_race_db[cdatan(2, 0)];
+    const auto race_data = the_race_db[race_id];
 
     // male
     draw_chara(race_data->male_image, wx + 480, wy + 96, 2, 40);

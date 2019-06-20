@@ -110,7 +110,7 @@ MainMenuResult character_making_select_class(bool advanced_to_next_menu)
         snd("core.ok1");
     }
 
-    auto result = ui::UIMenuCharamakeClass(cmrace(1)).show();
+    auto result = ui::UIMenuCharamakeClass(cmrace(0), cmrace(1)).show();
 
     if (result.canceled)
     {
