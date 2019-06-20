@@ -72,6 +72,24 @@ int class_get_equipment_type(const std::string& class_id)
 
 
 
+int class_get_item_type(const std::string& class_id)
+{
+    if (class_id.empty())
+    {
+        return 0;
+    }
+    else if (const auto data = the_class_db[class_id])
+    {
+        return data->item_type;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+
 std::vector<std::reference_wrapper<const ClassData>> class_get_available(
     bool is_extra_class)
 {
