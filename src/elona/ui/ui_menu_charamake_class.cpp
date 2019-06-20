@@ -165,9 +165,12 @@ void UIMenuCharamakeClass::draw()
     const std::string& selected_class = listn(1, cs);
     _reload_selected_class(selected_class);
 
-    const auto race_data = the_race_db[cdatan(2, 0)];
+    const auto race_data = the_race_db[_race_id];
     _draw_class_info(
-        selected_class, race_data->male_image, race_data->female_image, _race);
+        selected_class,
+        race_data->male_image,
+        race_data->female_image,
+        _race_name);
 }
 
 optional<UIMenuCharamakeClass::ResultType> UIMenuCharamakeClass::on_key(
