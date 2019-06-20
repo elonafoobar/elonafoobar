@@ -91,6 +91,12 @@ struct Request
     }
 
 
+    const Body& body() const noexcept
+    {
+        return _body;
+    }
+
+
     int max_redirects() const noexcept
     {
         return _max_redirects;
