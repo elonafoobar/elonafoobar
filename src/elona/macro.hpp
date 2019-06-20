@@ -25,3 +25,13 @@
     } while (0)
 
 #define UNUSED(x) (void)x
+
+
+
+#if defined(__clang__) || defined(__GNUC__)
+#define ELONA_NODISCARD_ATTR __attribute__((warn_unused_result))
+#elif defined(MSVC)
+#define ELONA_NODISCARD_ATTR _Check_return_
+#else
+#define ELONA_NODISCARD_ATTR
+#endif

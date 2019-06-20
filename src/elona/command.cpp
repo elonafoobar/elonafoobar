@@ -1357,7 +1357,8 @@ TurnResult do_dip_command()
                     "core.locale.action.dip.result.well_refilled", inv[ci]));
                 if (inv[cidip].id == 587)
                 {
-                    i18n::s.get("core.locale.action.dip.result.snow_melts.dip");
+                    txt(i18n::s.get(
+                        "core.locale.action.dip.result.snow_melts.dip"));
                 }
                 else
                 {

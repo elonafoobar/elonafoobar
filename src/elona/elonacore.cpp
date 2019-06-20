@@ -5717,7 +5717,7 @@ TurnResult try_interact_with_npc()
 {
     if (cdata[tc].continuous_action.turn != 0)
     {
-        i18n::s.get("core.locale.action.npc.is_busy_now", cdata[tc]);
+        txt(i18n::s.get("core.locale.action.npc.is_busy_now", cdata[tc]));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -11789,7 +11789,8 @@ void weather_changes()
                     if (rnd(2) == 0)
                     {
                         game_data.weather = 2;
-                        i18n::s.get("core.locale.action.weather.snow.starts");
+                        txt(i18n::s.get(
+                            "core.locale.action.weather.snow.starts"));
                         break;
                     }
                 }
@@ -11798,20 +11799,22 @@ void weather_changes()
                     if (rnd(10) == 0)
                     {
                         game_data.weather = 3;
-                        i18n::s.get("core.locale.action.weather.rain.starts");
+                        txt(i18n::s.get(
+                            "core.locale.action.weather.rain.starts"));
                         break;
                     }
                     if (rnd(40) == 0)
                     {
                         game_data.weather = 4;
-                        i18n::s.get(
-                            "core.locale.action.weather.rain.starts_heavy");
+                        txt(i18n::s.get(
+                            "core.locale.action.weather.rain.starts_heavy"));
                         break;
                     }
                     if (rnd(60) == 0)
                     {
                         game_data.weather = 2;
-                        i18n::s.get("core.locale.action.weather.snow.starts");
+                        txt(i18n::s.get(
+                            "core.locale.action.weather.snow.starts"));
                         break;
                     }
                 }
@@ -11892,7 +11895,7 @@ void weather_changes()
         {
             if (mode == 0)
             {
-                i18n::s.get("core.locale.action.move.global.nap");
+                txt(i18n::s.get("core.locale.action.move.global.nap"));
                 game_data.continuous_active_hours -= 3;
                 if (game_data.continuous_active_hours < 0)
                 {
