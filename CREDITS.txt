@@ -21,12 +21,3 @@ AnnaBannana
 
 LordAlfredo
     Supported porting E+C's cutscene files to vanilla and foobar.
-
-hapiemp
-    Drew some of graphics.
-
-jack
-    Drew some of pixelarts.
-
-相良 祐
-    Drew some of graphics.

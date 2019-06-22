@@ -88,7 +88,6 @@
   - None -> Resistances -> Maintenance and status ailments -> All enchantments -> None -> ...
 - Add mod list menu to the main title menu. You can only see the installed mods so far.
 - Improve performance of text rendering with shadow.
-- Add some images. Great thank you for awesome paintings and pixelarts!
 
 
 ### Changed
