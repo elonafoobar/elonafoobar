@@ -12,7 +12,7 @@ public:
     UIMenuCharamakeClass(
         const std::string& race_id,
         const std::string& race_name)
-        : _race_id(_race_id)
+        : _race_id(race_id)
         , _race_name(race_name)
     {
     }

@@ -40,7 +40,6 @@
 - Fix the bug that ghost monster ball (you can see, but cannot pick it up) appeared on throwing the ball.
 - Fix error when you canceled a dialog window by pressing `Shift` or `ESC`.
 - Fix failure to update the save from v0.4.0. The bug could break the save completely.
-- Adjust the position of the additional item information such as enchantment icons in `w`ear menu.
 - Replace item `kiroku.counter` with gold pieces. `kiroku.counter` is a mod item defined by `kiroku` mod, one of the sample mods. `kiroku` was deleted in v0.4.0, which caused undefined item error.
 - Fix snow field map not generated even if you enter field map from snow title.
 
@@ -83,9 +82,8 @@
   - `mod_cdata_<xxx>.s2`: map local, references to characters
   - `mod_inv_<xxx>.s2`: map local, references to items
 - Show "maintains XX" and "negates the effect of XX" enchantments in item list menus.
-- Show all enchantment's icons and fireproof/acidproof in item list menus.
   - You can switch the mode via `z` in the same way to toggle resistance's visibility.
-  - None -> Resistances -> Maintenance and status ailments -> All enchantments -> None -> ...
+  - None -> Resistances -> Maintenance and status ailments -> None -> ...
 - Add mod list menu to the main title menu. You can only see the installed mods so far.
 - Improve performance of text rendering with shadow.
 
