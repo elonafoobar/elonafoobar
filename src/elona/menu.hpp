@@ -101,4 +101,7 @@ void item_show_description();
 
 MenuResult ctrl_inventory();
 
+void menu_chat_dialog();
+void menu_voting_box();
+
 } // namespace elona

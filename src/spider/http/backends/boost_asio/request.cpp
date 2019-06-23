@@ -233,6 +233,12 @@ private:
         {
             _request.set(header.first, header.second);
         }
+
+        // Body
+        _request.body() = request.body();
+
+        // Add Content-Length header automatically.
+        _request.prepare_payload();
     }
 
 

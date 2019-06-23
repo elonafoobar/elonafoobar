@@ -22,7 +22,7 @@
 #include "magic.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
+#include "net.hpp"
 #include "pic_loader/pic_loader.hpp"
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
@@ -47,6 +47,7 @@
 #include "ui/ui_menu_skills.hpp"
 #include "ui/ui_menu_spell_writer.hpp"
 #include "ui/ui_menu_spells.hpp"
+#include "ui/ui_menu_voting_box.hpp"
 
 #include "ui/ui_menu_composite_character.hpp"
 #include "ui/ui_menu_composite_message.hpp"
@@ -1496,5 +1497,34 @@ void item_show_description()
     returnfromidentify = 1;
 }
 
+
+
+void menu_chat_dialog()
+{
+    if (!net_can_send_chat_now())
+    {
+        txt(i18n::s.get("core.locale.net.chat.wait_more"));
+        return;
+    }
+
+    inputlog = "";
+    input_text_dialog(80, windowh - inf_verh - 70, 38);
+    if (inputlog(0).empty())
+    {
+        return;
+    }
+
+    const auto message =
+        i18n::s.get("core.locale.net.chat.message", inputlog(0));
+    txt(message);
+    net_send_chat(message);
+}
+
+
+
+void menu_voting_box()
+{
+    ui::UIMenuVotingBox().show();
+}
 
 } // namespace elona

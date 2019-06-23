@@ -1,15 +1,18 @@
 #pragma once
+
 #include "ui_menu.hpp"
+
+
 
 namespace elona
 {
 namespace ui
 {
 
-class UIMenuChatHistory : public UIMenu<DummyResult>
+class UIMenuVotingBox : public UIMenu<DummyResult>
 {
 public:
-    UIMenuChatHistory()
+    UIMenuVotingBox()
     {
     }
 
@@ -17,14 +20,11 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuChatHistory::ResultType> on_key(
+    virtual optional<UIMenuAdventurers::ResultType> on_key(
         const std::string& key);
 
 private:
-    std::vector<std::string> _chats;
-
-    void _load_chat_history();
-    void _draw_messages();
+    bool _can_vote_now;
 };
 
 } // namespace ui

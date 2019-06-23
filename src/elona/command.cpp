@@ -34,7 +34,6 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
@@ -3285,7 +3284,7 @@ TurnResult do_movement_command()
         if (cellfeat == 31)
         {
             snd("core.chat");
-            // Voting box is not supported now.
+            menu_voting_box();
             return TurnResult::turn_end;
         }
         if (cellfeat == 33)

@@ -5,7 +5,6 @@
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
-#include "../network.hpp"
 #include "simple_prompt.hpp"
 
 namespace elona

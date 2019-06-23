@@ -36,3 +36,4 @@
 #include "ui/ui_menu_town_chart.cpp"
 #include "ui/ui_menu_town_economy.cpp"
 #include "ui/ui_menu_town_politics.cpp"
+#include "ui/ui_menu_voting_box.cpp"

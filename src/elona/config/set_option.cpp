@@ -6,7 +6,6 @@
 #include "../input.hpp"
 #include "../macro.hpp"
 #include "../menu.hpp"
-#include "../network.hpp"
 #include "../ui/ui_menu_config.hpp"
 #include "../variables.hpp"
 #include "config_menu.hpp"

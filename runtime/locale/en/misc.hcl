@@ -62,7 +62,6 @@ locale {
             crawl_up = "Crawl up"
             lie_on_your_back = "Lie on your back"
             you_have_been_buried = "You have been buried. Bye...(Hit any key to exit)"
-            sent_message = "${_1} ${_2} ${_3} in ${_4} ${5}"
         }
 
         score {

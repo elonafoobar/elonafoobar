@@ -72,7 +72,7 @@ set(ELONA_SOURCES
   menu_quick_menu.cpp
   message.cpp
   message_log.cpp
-  network.cpp
+  net.cpp
   proc_event.cpp
   quest.cpp
   race.cpp

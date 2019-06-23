@@ -18,7 +18,6 @@ namespace elona
 
 
 ELONA_EXTERN(elona_vector1<int> ap);
-ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
 
 // casino.cpp / casino_card.cpp
@@ -144,16 +143,12 @@ ELONA_EXTERN(elona_vector1<std::string> tname);
 
 // turn_sequence.cpp
 ELONA_EXTERN(int tgloc);
-ELONA_EXTERN(std::string chatnew);
 ELONA_EXTERN(int dbg_skipevent);
 ELONA_EXTERN(int findlocmode);
 ELONA_EXTERN(int dirsub);
 ELONA_EXTERN(int mousex);
 ELONA_EXTERN(int mousey);
 ELONA_EXTERN(bool player_queried_for_input);
-
-// network.cpp
-ELONA_EXTERN(elona_vector1<std::string> netbuf);
 
 // activity.cpp
 ELONA_EXTERN(elona_vector1<int> fsetperform);
@@ -362,7 +357,6 @@ ELONA_EXTERN(int cm);
 ELONA_EXTERN(int cmbg);
 ELONA_EXTERN(int cmsex);
 ELONA_EXTERN(int cmshade);
-ELONA_EXTERN(int comctrl);
 ELONA_EXTERN(int cooktool);
 ELONA_EXTERN(int creaturepack);
 ELONA_EXTERN(int critical);
@@ -990,8 +984,6 @@ std::string fixtxt(const std::string&, int = 0);
 std::string sncnv(const std::string&);
 void cutname(std::string&, int = 0);
 void lenfix(std::string&, int = 0);
-void fix_input_chat(std::string&);
-void fix_input_chat2(std::string&);
 
 
 
