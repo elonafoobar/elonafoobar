@@ -481,7 +481,7 @@ else()
 
   # My libraries: elona
   add_subdirectory(src/elona)
-  target_link_libraries(${PROJECT_NAME} elona ${SNAIL_LIBRARY} ${SPIDER_LIBRARY} util)
+  target_link_libraries(${PROJECT_NAME} elona ${SNAIL_LIBRARY} ${SPIDER_LIBRARY} util ${NETWORK_URI_LIBRARY})
 
   if((ELONA_BUILD_TARGET STREQUAL "GAME") OR (ELONA_BUILD_TARGET STREQUAL "LAUNCHER"))
     add_subdirectory(src/thirdparty/nfd)
