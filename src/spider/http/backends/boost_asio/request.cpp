@@ -386,7 +386,8 @@ private:
         {
             if (ec == asio::error::eof ||
                 (ec.category() == asio::error::get_ssl_category() &&
-                 ERR_GET_REASON(ec.value()) == SSL_R_SHORT_READ))
+                 ERR_GET_REASON(ec.value()) ==
+                     asio::ssl::error::stream_errors::stream_truncated))
             {
                 // This error can be ignored.
                 // http://stackoverflow.com/questions/25587403/boost-asio-ssl-async-shutdown-always-finishes-with-an-error
