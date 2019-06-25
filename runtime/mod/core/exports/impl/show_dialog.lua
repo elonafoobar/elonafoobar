@@ -1,4 +1,5 @@
 local Chara = Elona.require("Chara")
+local Data = Elona.require("Data")
 local I18N = Elona.require("I18N")
 local Input = Elona.require("Input")
 local Internal = Elona.require("Internal")
@@ -109,7 +110,7 @@ end
 -- @tparam string node Node inside the dialog to jump to.
 -- @treturn table Current node data in {choice, opts} format
 local function jump_to_dialog(talk, new_dialog_id, node)
-   local dialog = data.raw["core.dialog"][new_dialog_id]
+   local dialog = Data.get('core.dialog', new_dialog_id)
    if dialog == nil then
       error("No such dialog " .. new_dialog_id)
    end
@@ -271,7 +272,7 @@ end
 -- @tparam LuaCharacter chara The speaking character.
 -- @tparam string dialog_id ID of core.dialog to use.
 local function show_dialog(chara, id)
-   local dialog = data.raw["core.dialog"][id]
+   local dialog = Data.get('core.dialog', id)
    if dialog == nil then
       error("No such dialog " .. id)
    end

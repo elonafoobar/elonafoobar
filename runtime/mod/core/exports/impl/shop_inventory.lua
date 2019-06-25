@@ -1,3 +1,4 @@
+local Data = Elona.require("Data")
 local Item = Elona.require("Item")
 local Math = Elona.require("Math")
 local Chara = Elona.require("Chara")
@@ -154,7 +155,7 @@ shop_inventory.item_number_factors = {
 }
 
 function shop_inventory.calc_max_item_number(item)
-   local item_def = data.raw["core.item"][item.id]
+   local item_def = Data.get("core.item", item.id)
    local category = item_def.category
    local number = 1
 
@@ -293,10 +294,10 @@ function shop_inventory.generate(shopkeeper)
    -- Obtain shop inventory data by using the shopkeeper's
    -- character_role as its legacy ID index. If it does not exist, a
    -- default set of items will be generated as a fallback.
-   local id = data.by_legacy["core.shop_inventory"][shopkeeper.role]
+   local id = Data.get_id_by_legacy("core.shop_inventory", shopkeeper.role)
    local inv = {}
    if id then
-      inv = data.raw["core.shop_inventory"][id]
+      inv = Data.get("core.shop_inventory", id)
    end
 
    shop_inventory.do_generate(shopkeeper, inv)
