@@ -29,7 +29,7 @@ constexpr size_t ChatKind_size = static_cast<size_t>(ChatKind::_size);
 
 std::array<TimePoint, ChatKind_size> last_chat_sent_at;
 
-std::array<Duration, ChatKind_size> chat_sending_interval{{
+constexpr std::array<Duration, ChatKind_size> chat_sending_interval{{
     std::chrono::minutes{5}, // chat
     std::chrono::minutes{2}, // dead
     std::chrono::hours{1}, // wish
@@ -81,13 +81,7 @@ std::string replace_f_word(std::string str)
 
 void send_chat(ChatKind kind, const std::string& message)
 {
-    if (!Config::instance().net)
-    {
-        return;
-    }
-
-    if (Clock::now() - last_chat_sent_at[static_cast<size_t>(kind)] <
-        chat_sending_interval[static_cast<size_t>(kind)])
+    if (!can_send_chat_now(kind))
     {
         return;
     }
@@ -100,21 +94,17 @@ void send_chat(ChatKind kind, const std::string& message)
         Verb::POST, chat_url, common_headers_post, Body{payload.dump()}};
     req.send(
         [](const auto& response) {
-            if (response.status / 100 == 4)
+            if (response.status / 100 != 2)
             {
-                txt("[net] 4xx"); // TODO
-                ELONA_WARN(response.body);
-                return;
-            }
-            if (response.status / 100 == 5)
-            {
-                txt("[net] 5xx"); // TODO
-                ELONA_WARN(response.body);
+                txt(i18n::s.get("core.locale.net.failed_to_send"));
+                ELONA_WARN("net.post") << chat_url << " " << response.status
+                                       << " " << response.body;
                 return;
             }
         },
         [](const auto& error) {
-            txt("[net] failed to send message: " + error.what()); // TODO
+            txt(i18n::s.get("core.locale.net.failed_to_send"));
+            ELONA_WARN(error.what());
         });
 
     last_chat_sent_at[static_cast<size_t>(kind)] = Clock::now();
@@ -130,7 +120,6 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
     {
         return {};
     }
-
     if (Clock::now() - last_chat_received_at < chat_receive_interval)
     {
         return {};
@@ -142,18 +131,15 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
     Request req{Verb::GET, chat_url, common_headers_get};
     req.send(
         [&](const auto& response) {
-            if (response.status / 100 == 4)
+            if (response.status / 100 != 2)
             {
-                txt("[net] 4xx"); // TODO
+                txt(i18n::s.get("core.locale.net.failed_to_receive"));
+                ELONA_WARN("net.get") << chat_url << " " << response.status
+                                      << " " << response.body;
                 done = true;
                 return;
             }
-            if (response.status / 100 == 5)
-            {
-                txt("[net] 5xx"); // TODO
-                done = true;
-                return;
-            }
+
             const auto chats_json = json::parse(response.body);
             for (const json& chat_json : chats_json)
             {
@@ -184,13 +170,14 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
             done = true;
         },
         [&](const auto& error) {
-            txt("[net] failed to get chats: " + error.what()); // TODO
+            txt(i18n::s.get("core.locale.net.failed_to_receive"));
+            ELONA_WARN(error.what());
             done = true;
         });
 
     while (!done)
     {
-        // show loading cycle.
+        // TODO: show loading cycle.
         await(10);
     }
 
@@ -202,24 +189,26 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
 
 std::vector<PollData> net_receive_polls()
 {
+    if (!Config::instance().net)
+    {
+        return {};
+    }
+
     bool done = false;
     std::vector<PollData> polls;
 
     Request req{Verb::GET, poll_url, common_headers_get};
     req.send(
         [&](const auto& response) {
-            if (response.status / 100 == 4)
+            if (response.status / 100 != 2)
             {
-                txt("[net] 4xx"); // TODO
+                txt(i18n::s.get("core.locale.net.failed_to_receive"));
+                ELONA_WARN("net.get") << poll_url << " " << response.status
+                                      << " " << response.body;
                 done = true;
                 return;
             }
-            if (response.status / 100 == 5)
-            {
-                txt("[net] 5xx"); // TODO
-                done = true;
-                return;
-            }
+
             const auto polls_json = json::parse(response.body);
             for (const json& poll_json : polls_json)
             {
@@ -231,13 +220,14 @@ std::vector<PollData> net_receive_polls()
             done = true;
         },
         [&](const auto& error) {
-            txt("[net] failed to get polls: " + error.what()); // TODO
+            txt(i18n::s.get("core.locale.net.failed_to_receive"));
+            ELONA_WARN(error.what());
             done = true;
         });
 
     while (!done)
     {
-        // show loading cycle.
+        // TODO: show loading cycle.
         await(10);
     }
 
@@ -269,7 +259,6 @@ void net_send_death(
     const std::string& map,
     const std::string& last_words)
 {
-    // if (!Config::instance().net || !Config::instance().net_death)
     if (!Config::instance().net)
     {
         return;
@@ -324,22 +313,17 @@ void net_send_poll(const std::string& name)
         Verb::POST, poll_url, common_headers_post, Body{payload.dump()}};
     req.send(
         [](const auto& response) {
-            // Do nothing.
-            if (response.status / 100 == 4)
+            if (response.status / 100 != 2)
             {
-                txt("[net] 4xx"); // TODO
-                ELONA_WARN(response.body);
-                return;
-            }
-            if (response.status / 100 == 5)
-            {
-                txt("[net] 5xx"); // TODO
-                ELONA_WARN(response.body);
+                txt(i18n::s.get("core.locale.net.failed_to_send"));
+                ELONA_WARN("net.post") << poll_url << " " << response.status
+                                       << " " << response.body;
                 return;
             }
         },
         [](const auto& error) {
-            txt("[net] failed to register your name: " + error.what()); // TODO
+            txt(i18n::s.get("core.locale.net.failed_to_send"));
+            ELONA_WARN(error.what());
         });
 }
 
@@ -354,22 +338,17 @@ void net_send_vote(int poll_id)
         Verb::POST, vote_url, common_headers_post, Body{payload.dump()}};
     req.send(
         [](const auto& response) {
-            // Do nothing.
-            if (response.status / 100 == 4)
+            if (response.status / 100 != 2)
             {
-                txt("[net] 4xx"); // TODO
-                ELONA_WARN(response.body);
-                return;
-            }
-            if (response.status / 100 == 5)
-            {
-                txt("[net] 5xx"); // TODO
-                ELONA_WARN(response.body);
+                txt(i18n::s.get("core.locale.net.failed_to_send"));
+                ELONA_WARN("net.post") << vote_url << " " << response.status
+                                       << " " << response.body;
                 return;
             }
         },
         [](const auto& error) {
-            txt("[net] failed to vote: " + error.what()); // TODO
+            txt(i18n::s.get("core.locale.net.failed_to_send"));
+            ELONA_WARN(error.what());
         });
 }
 

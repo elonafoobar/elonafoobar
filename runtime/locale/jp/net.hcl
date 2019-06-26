@@ -1,6 +1,7 @@
 locale {
     net {
         failed_to_send = "送信に失敗した。"
+        failed_to_receive = "受信に失敗した。"
 
         chat {
             wait_more = "もう少し待った方がいい気がする。"
