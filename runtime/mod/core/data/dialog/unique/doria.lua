@@ -1,4 +1,5 @@
 local Chara = Elona.require("Chara")
+local Data = Elona.require("Data")
 local Internal = Elona.require("Internal")
 local Rand = Elona.require("Rand")
 local GUI = Elona.require("GUI")
@@ -58,7 +59,7 @@ local function extract_id_parts(key)
 end
 
 local function quota_args()
-   local id = data.by_legacy["core.chara"][World.data.fighters_guild_target]
+   local id = Data.get_id_by_legacy("core.chara", World.data.fighters_guild_target)
    local mod_id, instance_id = extract_id_parts(id)
    local name = I18N.get(mod_id .. ".locale.chara." .. instance_id .. ".name")
    return {World.data.fighters_guild_quota, name}

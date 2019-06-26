@@ -1,3 +1,4 @@
+local Data = Elona.require("Data")
 local Rand = Elona.require("Rand")
 local Item = Elona.require("Item")
 local Math = Elona.require("Math")
@@ -159,7 +160,7 @@ data:add_multi(
             {
                on_generate = function()
                   local reserved = {}
-                  for item_id, _ in pairs(data.raw["core.item"]) do
+                  for item_id, _ in pairs(Data.get_table("core.item")) do
                      if Item.memory(2, item_id) > 1 then
                         reserved[#reserved+1] = item_id
                      end
