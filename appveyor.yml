@@ -35,7 +35,7 @@ branches:
 
 cache:
   - C:\SDK -> appveyor.yml
-  - C:\projects/ElonaFoobar/bin -> appveyor.yml
+  - C:\projects\ElonaFoobar\bin -> appveyor.yml
 
 before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
@@ -44,7 +44,7 @@ before_build:
   - if exist %PREFIX% set NEEDDEPENDS=rem
   - |-
     %NEEDDEPENDS% mkdir %PREFIX%
-    %NEEDDEPENDS% cp deps\install.bat %PREFIX%
+    %NEEDDEPENDS% cp C:\projects\ElonaFoobar\deps\install.bat %PREFIX%
     %NEEDDEPENDS% cd %PREFIX%
     %NEEDDEPENDS% git clone --depth=1 https://github.com/ElonaFoobar/windows_deps windows
     %NEEDDEPENDS% call .\install.bat
