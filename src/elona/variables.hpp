@@ -521,7 +521,6 @@ ELONA_EXTERN(int scx);
 ELONA_EXTERN(int scxbk);
 ELONA_EXTERN(int scy);
 ELONA_EXTERN(int scybk);
-ELONA_EXTERN(int sexvalue);
 ELONA_EXTERN(int shoptrade);
 ELONA_EXTERN(int size);
 ELONA_EXTERN(int sizefix);

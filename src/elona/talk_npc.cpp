@@ -1189,7 +1189,7 @@ TalkResult talk_result_maid_chase_out()
 
 TalkResult talk_prostitute_buy()
 {
-    sexvalue = sdata(17, tc) * 25 + 100 + cdata.player().fame / 10;
+    int sexvalue = sdata(17, tc) * 25 + 100 + cdata.player().fame / 10;
     if (cdata.player().gold >= sexvalue)
     {
         ELONA_APPEND_RESPONSE(
