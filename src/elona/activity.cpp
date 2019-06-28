@@ -749,7 +749,7 @@ void continuous_action_sex()
         }
         chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
     }
-    sexvalue = sdata(17, cc) * (50 + rnd(50)) + 100;
+    int sexvalue = sdata(17, cc) * (50 + rnd(50)) + 100;
 
     std::string dialog_head;
     std::string dialog_tail;
