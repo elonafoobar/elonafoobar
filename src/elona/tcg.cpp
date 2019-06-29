@@ -225,7 +225,7 @@ int card_ref(int id, CardInfo& card_info)
     card_info.cardrefhp = 0;
     card_info.cardrefn = "";
     card_info.cardrefpic = 0;
-    card_info.cardrefrare = 1;
+    card_info.cardrefrare = 0;
     card_info.cardrefskill = 0;
     card_info.cardrefskillcost = 0;
     card_info.cardreftype = 0;
