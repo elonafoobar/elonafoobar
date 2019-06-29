@@ -8,7 +8,7 @@
 namespace elona
 {
 
-int get_card_info()
+int get_card_info(int dbid, CardInfo& card_info)
 {
     std::string card_name;
     if (const auto card_name_opt =
@@ -25,3311 +25,3311 @@ int get_card_info()
         return 0; // undefined card
     }
 
-    cardrefn = card_name;
+    card_info.cardrefn = card_name;
 
     if (dbid == 0)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 168;
-        cardrefrace = u8"slime"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 168;
+        card_info.cardrefrace = u8"slime"s;
         return 1;
     }
     if (dbid == 343)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 1;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 1;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 1)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 140;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 140;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 353)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 443;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 443;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 70)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 144;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 144;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 69)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 15;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 15;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 73)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 41;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 41;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 74)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 69;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 69;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 206)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 163;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 163;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 38)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 142;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 142;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 40)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 7;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 7;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 333)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 415;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 415;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 76)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 363;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 363;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 77)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 25;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 25;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 204)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 74;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 74;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 2)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 297;
-        cardrefrace = u8"elea"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 297;
+        card_info.cardrefrace = u8"elea"s;
         return 1;
     }
     if (dbid == 37)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 347;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 347;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 23)
     {
-        cardreftype = 0;
-        cardrefrare = 1;
-        cardrefcost = 0;
-        cardrefpic = 331;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 1;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 331;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 26)
     {
-        cardreftype = 0;
-        cardrefrare = 1;
-        cardrefcost = 0;
-        cardrefpic = 332;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 1;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 332;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 27)
     {
-        cardreftype = 0;
-        cardrefrare = 1;
-        cardrefcost = 0;
-        cardrefpic = 333;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 1;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 333;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 28)
     {
-        cardreftype = 10;
-        cardrefdomain = 3;
-        cardrefrare = 1;
-        cardrefcost = 6;
-        cardrefattack = 5;
-        cardrefhp = 6;
-        cardrefpic = 334;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 10;
+        card_info.cardrefdomain = 3;
+        card_info.cardrefrare = 1;
+        card_info.cardrefcost = 6;
+        card_info.cardrefattack = 5;
+        card_info.cardrefhp = 6;
+        card_info.cardrefpic = 334;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 29)
     {
-        cardreftype = 0;
-        cardrefrare = 1;
-        cardrefcost = 0;
-        cardrefpic = 337;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 1;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 337;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 140)
     {
-        cardreftype = 0;
-        cardrefrare = 1;
-        cardrefcost = 0;
-        cardrefpic = 338;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 1;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 338;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 30)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 8;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 8;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 31)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 109;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 109;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 351)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 478;
-        cardrefrace = u8"cat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 478;
+        card_info.cardrefrace = u8"cat"s;
         return 1;
     }
     if (dbid == 352)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 479;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 479;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 32)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 344;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 344;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 33)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 345;
-        cardrefrace = u8"elea"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 345;
+        card_info.cardrefrace = u8"elea"s;
         return 1;
     }
     if (dbid == 34)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 346;
-        cardrefrace = u8"elea"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 346;
+        card_info.cardrefrace = u8"elea"s;
         return 1;
     }
     if (dbid == 139)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 99;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 99;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 146)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 99;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 99;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 142)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 340;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 340;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 141)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 339;
-        cardrefrace = u8"lich"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 339;
+        card_info.cardrefrace = u8"lich"s;
         return 1;
     }
     if (dbid == 143)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 341;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 341;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 144)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 343;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 343;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 145)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 342;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 342;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 306)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 393;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 393;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 331)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 413;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 413;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 336)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 413;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 413;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 338)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 432;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 432;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 339)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 433;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 433;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 342)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 447;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 447;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 340)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 435;
-        cardrefrace = u8"god"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 435;
+        card_info.cardrefrace = u8"god"s;
         return 1;
     }
     if (dbid == 3)
     {
-        cardreftype = 10;
-        cardrefdomain = 0;
-        cardrefrare = 80;
-        cardrefcost = 2;
-        cardrefattack = 2;
-        cardrefhp = 2;
-        cardrefpic = 168;
-        cardrefrace = u8"slime"s;
+        card_info.cardreftype = 10;
+        card_info.cardrefdomain = 0;
+        card_info.cardrefrare = 80;
+        card_info.cardrefcost = 2;
+        card_info.cardrefattack = 2;
+        card_info.cardrefhp = 2;
+        card_info.cardrefpic = 168;
+        card_info.cardrefrace = u8"slime"s;
         return 1;
     }
     if (dbid == 4)
     {
-        cardreftype = 10;
-        cardrefdomain = 0;
-        cardrefrare = 70;
-        cardrefcost = 3;
-        cardrefattack = 3;
-        cardrefhp = 3;
-        cardrefpic = 3168;
-        cardrefrace = u8"slime"s;
+        card_info.cardreftype = 10;
+        card_info.cardrefdomain = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 3;
+        card_info.cardrefattack = 3;
+        card_info.cardrefhp = 3;
+        card_info.cardrefpic = 3168;
+        card_info.cardrefrace = u8"slime"s;
         return 1;
     }
     if (dbid == 169)
     {
-        cardreftype = 10;
-        cardrefskill = 1;
-        cardrefdomain = 1;
-        cardrefrare = 70;
-        cardrefcost = 4;
-        cardrefattack = 4;
-        cardrefhp = 3;
-        cardrefskillcost = 3;
-        cardrefpic = 4257;
-        cardrefrace = u8"slime"s;
+        card_info.cardreftype = 10;
+        card_info.cardrefskill = 1;
+        card_info.cardrefdomain = 1;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 4;
+        card_info.cardrefattack = 4;
+        card_info.cardrefhp = 3;
+        card_info.cardrefskillcost = 3;
+        card_info.cardrefpic = 4257;
+        card_info.cardrefrace = u8"slime"s;
         return 1;
     }
     if (dbid == 194)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 2257;
-        cardrefrace = u8"slime"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 2257;
+        card_info.cardrefrace = u8"slime"s;
         return 1;
     }
     if (dbid == 286)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 400;
-        cardrefrace = u8"slime"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 400;
+        card_info.cardrefrace = u8"slime"s;
         return 1;
     }
     if (dbid == 285)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 17400;
-        cardrefrace = u8"slime"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17400;
+        card_info.cardrefrace = u8"slime"s;
         return 1;
     }
     if (dbid == 287)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 401;
-        cardrefrace = u8"drake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 401;
+        card_info.cardrefrace = u8"drake"s;
         return 1;
     }
     if (dbid == 327)
     {
-        cardreftype = 0;
-        cardrefrare = 15;
-        cardrefcost = 0;
-        cardrefpic = 282;
-        cardrefrace = u8"machine"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 15;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 282;
+        card_info.cardrefrace = u8"machine"s;
         return 1;
     }
     if (dbid == 5)
     {
-        cardreftype = 10;
-        cardrefdomain = 2;
-        cardrefrare = 100;
-        cardrefcost = 1;
-        cardrefattack = 1;
-        cardrefhp = 1;
-        cardrefpic = 169;
-        cardrefrace = u8"rabbit"s;
+        card_info.cardreftype = 10;
+        card_info.cardrefdomain = 2;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 1;
+        card_info.cardrefattack = 1;
+        card_info.cardrefhp = 1;
+        card_info.cardrefpic = 169;
+        card_info.cardrefrace = u8"rabbit"s;
         return 1;
     }
     if (dbid == 6)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 174;
-        cardrefrace = u8"snail"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 174;
+        card_info.cardrefrace = u8"snail"s;
         return 1;
     }
     if (dbid == 7)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 37;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 37;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 8)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 139;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 139;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 9)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 102;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 102;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 269)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 179;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 179;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 320)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 410;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 410;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 273)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 187;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 187;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 326)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 148;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 148;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 270)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 181;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 181;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 349)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 442;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 442;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 348)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 473;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 473;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 347)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 285;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 285;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 271)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 183;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 183;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 335)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 418;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 418;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 337)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 419;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 419;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 272)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 185;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 185;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 274)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 189;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 189;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 289)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 195;
-        cardrefrace = u8"eulderna"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 195;
+        card_info.cardrefrace = u8"eulderna"s;
         return 1;
     }
     if (dbid == 293)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 76;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 76;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 295)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 78;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 78;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 35)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 104;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 104;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 36)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 106;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 106;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 174)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 112;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 112;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 10)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 170;
-        cardrefrace = u8"sheep"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 170;
+        card_info.cardrefrace = u8"sheep"s;
         return 1;
     }
     if (dbid == 11)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 172;
-        cardrefrace = u8"frog"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 172;
+        card_info.cardrefrace = u8"frog"s;
         return 1;
     }
     if (dbid == 12)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 31;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 31;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 13)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 171;
-        cardrefrace = u8"kobold"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 171;
+        card_info.cardrefrace = u8"kobold"s;
         return 1;
     }
     if (dbid == 236)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 378;
-        cardrefrace = u8"yeek"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 378;
+        card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
     if (dbid == 238)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 6378;
-        cardrefrace = u8"yeek"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 6378;
+        card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
     if (dbid == 241)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 2378;
-        cardrefrace = u8"yeek"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 2378;
+        card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
     if (dbid == 240)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 8378;
-        cardrefrace = u8"yeek"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 8378;
+        card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
     if (dbid == 237)
     {
-        cardreftype = 0;
-        cardrefrare = 150;
-        cardrefcost = 0;
-        cardrefpic = 3378;
-        cardrefrace = u8"yeek"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 150;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3378;
+        card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
     if (dbid == 244)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 385;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 385;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 245)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 386;
-        cardrefrace = u8"rock"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 386;
+        card_info.cardrefrace = u8"rock"s;
         return 1;
     }
     if (dbid == 321)
     {
-        cardreftype = 0;
-        cardrefrare = 15;
-        cardrefcost = 0;
-        cardrefpic = 411;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 15;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 411;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 242)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 381;
-        cardrefrace = u8"yeek"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 381;
+        card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
     if (dbid == 239)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 379;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 379;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 14)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 173;
-        cardrefrace = u8"centipede"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 173;
+        card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
     if (dbid == 15)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 177;
-        cardrefrace = u8"mushroom"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 177;
+        card_info.cardrefrace = u8"mushroom"s;
         return 1;
     }
     if (dbid == 283)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 399;
-        cardrefrace = u8"mushroom"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 399;
+        card_info.cardrefrace = u8"mushroom"s;
         return 1;
     }
     if (dbid == 284)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 8399;
-        cardrefrace = u8"mushroom"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 8399;
+        card_info.cardrefrace = u8"mushroom"s;
         return 1;
     }
     if (dbid == 16)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 136;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 136;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 39)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 134;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 134;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 171)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 128;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 128;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 172)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 127;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 127;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 173)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 146;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 146;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 71)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 120;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 120;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 72)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 119;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 119;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 79)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 117;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 117;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 80)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 116;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 116;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 17)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 17165;
-        cardrefrace = u8"orc"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17165;
+        card_info.cardrefrace = u8"orc"s;
         return 1;
     }
     if (dbid == 281)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 397;
-        cardrefrace = u8"lizardman"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 397;
+        card_info.cardrefrace = u8"lizardman"s;
         return 1;
     }
     if (dbid == 282)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 398;
-        cardrefrace = u8"minotaur"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 398;
+        card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
     if (dbid == 296)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 4398;
-        cardrefrace = u8"minotaur"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4398;
+        card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
     if (dbid == 298)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 3398;
-        cardrefrace = u8"minotaur"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3398;
+        card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
     if (dbid == 299)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 8398;
-        cardrefrace = u8"minotaur"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 8398;
+        card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
     if (dbid == 300)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 10398;
-        cardrefrace = u8"minotaur"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 10398;
+        card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
     if (dbid == 251)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 391;
-        cardrefrace = u8"troll"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 391;
+        card_info.cardrefrace = u8"troll"s;
         return 1;
     }
     if (dbid == 18)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3;
-        cardrefrace = u8"elea"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3;
+        card_info.cardrefrace = u8"elea"s;
         return 1;
     }
     if (dbid == 24)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 47;
-        cardrefrace = u8"elea"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 47;
+        card_info.cardrefrace = u8"elea"s;
         return 1;
     }
     if (dbid == 309)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 405;
-        cardrefrace = u8"asura"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 405;
+        card_info.cardrefrace = u8"asura"s;
         return 1;
     }
     if (dbid == 310)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 2405;
-        cardrefrace = u8"asura"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 2405;
+        card_info.cardrefrace = u8"asura"s;
         return 1;
     }
     if (dbid == 311)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3405;
-        cardrefrace = u8"asura"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3405;
+        card_info.cardrefrace = u8"asura"s;
         return 1;
     }
     if (dbid == 41)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 13;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 13;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 75)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 21;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 21;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 19)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 175;
-        cardrefrace = u8"mandrake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 175;
+        card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
     if (dbid == 22)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 176;
-        cardrefrace = u8"beetle"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 176;
+        card_info.cardrefrace = u8"beetle"s;
         return 1;
     }
     if (dbid == 20)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 165;
-        cardrefrace = u8"orc"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 165;
+        card_info.cardrefrace = u8"orc"s;
         return 1;
     }
     if (dbid == 25)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3165;
-        cardrefrace = u8"orc"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3165;
+        card_info.cardrefrace = u8"orc"s;
         return 1;
     }
     if (dbid == 21)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 167;
-        cardrefrace = u8"zombie"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 167;
+        card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
     if (dbid == 42)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 200;
-        cardrefrace = u8"bat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 200;
+        card_info.cardrefrace = u8"bat"s;
         return 1;
     }
     if (dbid == 43)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 3200;
-        cardrefrace = u8"bat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3200;
+        card_info.cardrefrace = u8"bat"s;
         return 1;
     }
     if (dbid == 44)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 4200;
-        cardrefrace = u8"bat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4200;
+        card_info.cardrefrace = u8"bat"s;
         return 1;
     }
     if (dbid == 45)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 16201;
-        cardrefrace = u8"ent"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16201;
+        card_info.cardrefrace = u8"ent"s;
         return 1;
     }
     if (dbid == 46)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 17201;
-        cardrefrace = u8"ent"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17201;
+        card_info.cardrefrace = u8"ent"s;
         return 1;
     }
     if (dbid == 47)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 202;
-        cardrefrace = u8"lich"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 202;
+        card_info.cardrefrace = u8"lich"s;
         return 1;
     }
     if (dbid == 48)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 16202;
-        cardrefrace = u8"lich"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16202;
+        card_info.cardrefrace = u8"lich"s;
         return 1;
     }
     if (dbid == 49)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 17202;
-        cardrefrace = u8"lich"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17202;
+        card_info.cardrefrace = u8"lich"s;
         return 1;
     }
     if (dbid == 307)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 404;
-        cardrefrace = u8"lich"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 404;
+        card_info.cardrefrace = u8"lich"s;
         return 1;
     }
     if (dbid == 308)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 4404;
-        cardrefrace = u8"lich"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4404;
+        card_info.cardrefrace = u8"lich"s;
         return 1;
     }
     if (dbid == 50)
     {
-        cardreftype = 0;
-        cardrefrare = 80;
-        cardrefcost = 0;
-        cardrefpic = 6203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 80;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 6203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 51)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 3203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 52)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 12203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 12203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 53)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 5203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 54)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 4203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 55)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 10203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 10203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 56)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 9203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 9203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 57)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 2203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 2203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 58)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 11203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 11203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 59)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 15203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 15203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 60)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 18203;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 18203;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 61)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 6204;
-        cardrefrace = u8"rabbit"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 6204;
+        card_info.cardrefrace = u8"rabbit"s;
         return 1;
     }
     if (dbid == 62)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3204;
-        cardrefrace = u8"rabbit"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3204;
+        card_info.cardrefrace = u8"rabbit"s;
         return 1;
     }
     if (dbid == 63)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 205;
-        cardrefrace = u8"ghost"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 205;
+        card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
     if (dbid == 64)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 2205;
-        cardrefrace = u8"ghost"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 2205;
+        card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
     if (dbid == 312)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 406;
-        cardrefrace = u8"ent"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 406;
+        card_info.cardrefrace = u8"ent"s;
         return 1;
     }
     if (dbid == 313)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 16406;
-        cardrefrace = u8"ent"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16406;
+        card_info.cardrefrace = u8"ent"s;
         return 1;
     }
     if (dbid == 65)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 5206;
-        cardrefrace = u8"spirit"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5206;
+        card_info.cardrefrace = u8"spirit"s;
         return 1;
     }
     if (dbid == 66)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 18206;
-        cardrefrace = u8"spirit"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 18206;
+        card_info.cardrefrace = u8"spirit"s;
         return 1;
     }
     if (dbid == 67)
     {
-        cardreftype = 0;
-        cardrefrare = 80;
-        cardrefcost = 0;
-        cardrefpic = 207;
-        cardrefrace = u8"eye"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 80;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 207;
+        card_info.cardrefrace = u8"eye"s;
         return 1;
     }
     if (dbid == 315)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 8207;
-        cardrefrace = u8"eye"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 8207;
+        card_info.cardrefrace = u8"eye"s;
         return 1;
     }
     if (dbid == 316)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 4407;
-        cardrefrace = u8"eye"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4407;
+        card_info.cardrefrace = u8"eye"s;
         return 1;
     }
     if (dbid == 314)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 3407;
-        cardrefrace = u8"eye"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3407;
+        card_info.cardrefrace = u8"eye"s;
         return 1;
     }
     if (dbid == 68)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 235;
-        cardrefrace = u8"wyvern"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 235;
+        card_info.cardrefrace = u8"wyvern"s;
         return 1;
     }
     if (dbid == 78)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 209;
-        cardrefrace = u8"eulderna"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 209;
+        card_info.cardrefrace = u8"eulderna"s;
         return 1;
     }
     if (dbid == 81)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 210;
-        cardrefrace = u8"wasp"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 210;
+        card_info.cardrefrace = u8"wasp"s;
         return 1;
     }
     if (dbid == 82)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3210;
-        cardrefrace = u8"wasp"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3210;
+        card_info.cardrefrace = u8"wasp"s;
         return 1;
     }
     if (dbid == 83)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 232;
-        cardrefrace = u8"giant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 232;
+        card_info.cardrefrace = u8"giant"s;
         return 1;
     }
     if (dbid == 84)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 16232;
-        cardrefrace = u8"giant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16232;
+        card_info.cardrefrace = u8"giant"s;
         return 1;
     }
     if (dbid == 85)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 16212;
-        cardrefrace = u8"imp"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16212;
+        card_info.cardrefrace = u8"imp"s;
         return 1;
     }
     if (dbid == 86)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 4212;
-        cardrefrace = u8"imp"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4212;
+        card_info.cardrefrace = u8"imp"s;
         return 1;
     }
     if (dbid == 87)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 18212;
-        cardrefrace = u8"imp"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 18212;
+        card_info.cardrefrace = u8"imp"s;
         return 1;
     }
     if (dbid == 88)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 213;
-        cardrefrace = u8"hand"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 213;
+        card_info.cardrefrace = u8"hand"s;
         return 1;
     }
     if (dbid == 89)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 18213;
-        cardrefrace = u8"hand"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 18213;
+        card_info.cardrefrace = u8"hand"s;
         return 1;
     }
     if (dbid == 90)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 16213;
-        cardrefrace = u8"hand"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16213;
+        card_info.cardrefrace = u8"hand"s;
         return 1;
     }
     if (dbid == 91)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 214;
-        cardrefrace = u8"ghost"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 214;
+        card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
     if (dbid == 92)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 5214;
-        cardrefrace = u8"ghost"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5214;
+        card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
     if (dbid == 93)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 215;
-        cardrefrace = u8"mandrake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 215;
+        card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
     if (dbid == 94)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 10215;
-        cardrefrace = u8"mandrake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 10215;
+        card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
     if (dbid == 95)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 17216;
-        cardrefrace = u8"snake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17216;
+        card_info.cardrefrace = u8"snake"s;
         return 1;
     }
     if (dbid == 96)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 16216;
-        cardrefrace = u8"snake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16216;
+        card_info.cardrefrace = u8"snake"s;
         return 1;
     }
     if (dbid == 97)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3233;
-        cardrefrace = u8"drake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3233;
+        card_info.cardrefrace = u8"drake"s;
         return 1;
     }
     if (dbid == 98)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 233;
-        cardrefrace = u8"drake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 233;
+        card_info.cardrefrace = u8"drake"s;
         return 1;
     }
     if (dbid == 99)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 219;
-        cardrefrace = u8"zombie"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 219;
+        card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
     if (dbid == 100)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 10219;
-        cardrefrace = u8"zombie"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 10219;
+        card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
     if (dbid == 101)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 5219;
-        cardrefrace = u8"zombie"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5219;
+        card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
     if (dbid == 257)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 8219;
-        cardrefrace = u8"zombie"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 8219;
+        card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
     if (dbid == 254)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 395;
-        cardrefrace = u8"zombie"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 395;
+        card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
     if (dbid == 102)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 16220;
-        cardrefrace = u8"goblin"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16220;
+        card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
     if (dbid == 103)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 5220;
-        cardrefrace = u8"goblin"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5220;
+        card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
     if (dbid == 104)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 18220;
-        cardrefrace = u8"goblin"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 18220;
+        card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
     if (dbid == 105)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 4220;
-        cardrefrace = u8"goblin"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4220;
+        card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
     if (dbid == 106)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3221;
-        cardrefrace = u8"ghost"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3221;
+        card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
     if (dbid == 107)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 4221;
-        cardrefrace = u8"ghost"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4221;
+        card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
     if (dbid == 108)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 222;
-        cardrefrace = u8"bear"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 222;
+        card_info.cardrefrace = u8"bear"s;
         return 1;
     }
     if (dbid == 109)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3222;
-        cardrefrace = u8"bear"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3222;
+        card_info.cardrefrace = u8"bear"s;
         return 1;
     }
     if (dbid == 344)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 439;
-        cardrefrace = u8"bear"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 439;
+        card_info.cardrefrace = u8"bear"s;
         return 1;
     }
     if (dbid == 110)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 223;
-        cardrefrace = u8"armor"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 223;
+        card_info.cardrefrace = u8"armor"s;
         return 1;
     }
     if (dbid == 111)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 17223;
-        cardrefrace = u8"armor"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17223;
+        card_info.cardrefrace = u8"armor"s;
         return 1;
     }
     if (dbid == 112)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 5223;
-        cardrefrace = u8"armor"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5223;
+        card_info.cardrefrace = u8"armor"s;
         return 1;
     }
     if (dbid == 113)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 16223;
-        cardrefrace = u8"armor"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16223;
+        card_info.cardrefrace = u8"armor"s;
         return 1;
     }
     if (dbid == 114)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 224;
-        cardrefrace = u8"medusa"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 224;
+        card_info.cardrefrace = u8"medusa"s;
         return 1;
     }
     if (dbid == 115)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 5224;
-        cardrefrace = u8"medusa"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5224;
+        card_info.cardrefrace = u8"medusa"s;
         return 1;
     }
     if (dbid == 116)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 16224;
-        cardrefrace = u8"medusa"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16224;
+        card_info.cardrefrace = u8"medusa"s;
         return 1;
     }
     if (dbid == 117)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 225;
-        cardrefrace = u8"cupid"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 225;
+        card_info.cardrefrace = u8"cupid"s;
         return 1;
     }
     if (dbid == 118)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 226;
-        cardrefrace = u8"phantom"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 226;
+        card_info.cardrefrace = u8"phantom"s;
         return 1;
     }
     if (dbid == 248)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 389;
-        cardrefrace = u8"dinosaur"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 389;
+        card_info.cardrefrace = u8"dinosaur"s;
         return 1;
     }
     if (dbid == 119)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 227;
-        cardrefrace = u8"harpy"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 227;
+        card_info.cardrefrace = u8"harpy"s;
         return 1;
     }
     if (dbid == 120)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 19228;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 19228;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 121)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 3228;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3228;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 122)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 228;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 228;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 123)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 5228;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5228;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 124)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 4228;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4228;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 125)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 18228;
-        cardrefrace = u8"dragon"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 18228;
+        card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
     if (dbid == 126)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 229;
-        cardrefrace = u8"cerberus"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 229;
+        card_info.cardrefrace = u8"cerberus"s;
         return 1;
     }
     if (dbid == 255)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 396;
-        cardrefrace = u8"centipede"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 396;
+        card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
     if (dbid == 256)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3396;
-        cardrefrace = u8"centipede"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3396;
+        card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
     if (dbid == 127)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 230;
-        cardrefrace = u8"spider"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 230;
+        card_info.cardrefrace = u8"spider"s;
         return 1;
     }
     if (dbid == 128)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 19230;
-        cardrefrace = u8"spider"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 19230;
+        card_info.cardrefrace = u8"spider"s;
         return 1;
     }
     if (dbid == 129)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 17230;
-        cardrefrace = u8"spider"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17230;
+        card_info.cardrefrace = u8"spider"s;
         return 1;
     }
     if (dbid == 130)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 5230;
-        cardrefrace = u8"spider"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5230;
+        card_info.cardrefrace = u8"spider"s;
         return 1;
     }
     if (dbid == 131)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 16230;
-        cardrefrace = u8"spider"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16230;
+        card_info.cardrefrace = u8"spider"s;
         return 1;
     }
     if (dbid == 132)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 6231;
-        cardrefrace = u8"golem"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 6231;
+        card_info.cardrefrace = u8"golem"s;
         return 1;
     }
     if (dbid == 133)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 231;
-        cardrefrace = u8"golem"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 231;
+        card_info.cardrefrace = u8"golem"s;
         return 1;
     }
     if (dbid == 134)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 15231;
-        cardrefrace = u8"golem"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 15231;
+        card_info.cardrefrace = u8"golem"s;
         return 1;
     }
     if (dbid == 135)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 5231;
-        cardrefrace = u8"golem"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5231;
+        card_info.cardrefrace = u8"golem"s;
         return 1;
     }
     if (dbid == 136)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 17231;
-        cardrefrace = u8"golem"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17231;
+        card_info.cardrefrace = u8"golem"s;
         return 1;
     }
     if (dbid == 137)
     {
-        cardreftype = 0;
-        cardrefrare = 15;
-        cardrefcost = 0;
-        cardrefpic = 9231;
-        cardrefrace = u8"golem"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 15;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 9231;
+        card_info.cardrefrace = u8"golem"s;
         return 1;
     }
     if (dbid == 138)
     {
-        cardreftype = 0;
-        cardrefrare = 15;
-        cardrefcost = 0;
-        cardrefpic = 2231;
-        cardrefrace = u8"golem"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 15;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 2231;
+        card_info.cardrefrace = u8"golem"s;
         return 1;
     }
     if (dbid == 147)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 237;
-        cardrefrace = u8"crab"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 237;
+        card_info.cardrefrace = u8"crab"s;
         return 1;
     }
     if (dbid == 148)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 239;
-        cardrefrace = u8"centipede"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 239;
+        card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
     if (dbid == 149)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 240;
-        cardrefrace = u8"goblin"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 240;
+        card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
     if (dbid == 150)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 241;
-        cardrefrace = u8"skeleton"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 241;
+        card_info.cardrefrace = u8"skeleton"s;
         return 1;
     }
     if (dbid == 151)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3241;
-        cardrefrace = u8"skeleton"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3241;
+        card_info.cardrefrace = u8"skeleton"s;
         return 1;
     }
     if (dbid == 152)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 243;
-        cardrefrace = u8"eulderna"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 243;
+        card_info.cardrefrace = u8"eulderna"s;
         return 1;
     }
     if (dbid == 153)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 244;
-        cardrefrace = u8"piece"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 244;
+        card_info.cardrefrace = u8"piece"s;
         return 1;
     }
     if (dbid == 154)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 245;
-        cardrefrace = u8"piece"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 245;
+        card_info.cardrefrace = u8"piece"s;
         return 1;
     }
     if (dbid == 155)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 246;
-        cardrefrace = u8"piece"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 246;
+        card_info.cardrefrace = u8"piece"s;
         return 1;
     }
     if (dbid == 156)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 247;
-        cardrefrace = u8"piece"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 247;
+        card_info.cardrefrace = u8"piece"s;
         return 1;
     }
     if (dbid == 157)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 248;
-        cardrefrace = u8"piece"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 248;
+        card_info.cardrefrace = u8"piece"s;
         return 1;
     }
     if (dbid == 158)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 249;
-        cardrefrace = u8"piece"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 249;
+        card_info.cardrefrace = u8"piece"s;
         return 1;
     }
     if (dbid == 159)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 159;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 159;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 160)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 57;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 57;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 161)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 100;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 100;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 302)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 150;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 150;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 303)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 31;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 31;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 304)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 158;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 158;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 305)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 157;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 157;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 162)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 250;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 250;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 234)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3250;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3250;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 231)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 370;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 370;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 232)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 373;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 373;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 233)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 377;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 377;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 235)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 4377;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4377;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 163)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 251;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 251;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 164)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 253;
-        cardrefrace = u8"cat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 253;
+        card_info.cardrefrace = u8"cat"s;
         return 1;
     }
     if (dbid == 246)
     {
-        cardreftype = 0;
-        cardrefrare = 1;
-        cardrefcost = 0;
-        cardrefpic = 387;
-        cardrefrace = u8"cat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 1;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 387;
+        card_info.cardrefrace = u8"cat"s;
         return 1;
     }
     if (dbid == 332)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 6387;
-        cardrefrace = u8"cat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 6387;
+        card_info.cardrefrace = u8"cat"s;
         return 1;
     }
     if (dbid == 229)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 368;
-        cardrefrace = u8"cat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 368;
+        card_info.cardrefrace = u8"cat"s;
         return 1;
     }
     if (dbid == 230)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 369;
-        cardrefrace = u8"catgod"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 369;
+        card_info.cardrefrace = u8"catgod"s;
         return 1;
     }
     if (dbid == 228)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 367;
-        cardrefrace = u8"cat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 367;
+        card_info.cardrefrace = u8"cat"s;
         return 1;
     }
     if (dbid == 165)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 254;
-        cardrefrace = u8"dog"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 254;
+        card_info.cardrefrace = u8"dog"s;
         return 1;
     }
     if (dbid == 225)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 364;
-        cardrefrace = u8"dog"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 364;
+        card_info.cardrefrace = u8"dog"s;
         return 1;
     }
     if (dbid == 226)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 365;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 365;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 227)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 366;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 366;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 166)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 4;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 167)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 6255;
-        cardrefrace = u8"rat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 6255;
+        card_info.cardrefrace = u8"rat"s;
         return 1;
     }
     if (dbid == 168)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 256;
-        cardrefrace = u8"shell"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 256;
+        card_info.cardrefrace = u8"shell"s;
         return 1;
     }
     if (dbid == 170)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 258;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 258;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 175)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 348;
-        cardrefrace = u8"catgod"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 348;
+        card_info.cardrefrace = u8"catgod"s;
         return 1;
     }
     if (dbid == 176)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 105;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 105;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 249)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 105;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 105;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 210)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 354;
-        cardrefrace = u8"catsister"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 354;
+        card_info.cardrefrace = u8"catsister"s;
         return 1;
     }
     if (dbid == 211)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 355;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 355;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 177)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 349;
-        cardrefrace = u8"machinegod"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 349;
+        card_info.cardrefrace = u8"machinegod"s;
         return 1;
     }
     if (dbid == 178)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3339;
-        cardrefrace = u8"undeadgod"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3339;
+        card_info.cardrefrace = u8"undeadgod"s;
         return 1;
     }
     if (dbid == 179)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 350;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 350;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 208)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 352;
-        cardrefrace = u8"dwarf"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 352;
+        card_info.cardrefrace = u8"dwarf"s;
         return 1;
     }
     if (dbid == 209)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 353;
-        cardrefrace = u8"dwarf"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 353;
+        card_info.cardrefrace = u8"dwarf"s;
         return 1;
     }
     if (dbid == 180)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 259;
-        cardrefrace = u8"cat"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 259;
+        card_info.cardrefrace = u8"cat"s;
         return 1;
     }
     if (dbid == 181)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 260;
-        cardrefrace = u8"hound"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 260;
+        card_info.cardrefrace = u8"hound"s;
         return 1;
     }
     if (dbid == 182)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 208;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 208;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 183)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 71;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 71;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 184)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 73;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 73;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 185)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 122;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 122;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 350)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 1477;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 1477;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 186)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 270;
-        cardrefrace = u8"machine"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 270;
+        card_info.cardrefrace = u8"machine"s;
         return 1;
     }
     if (dbid == 187)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 17270;
-        cardrefrace = u8"machine"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17270;
+        card_info.cardrefrace = u8"machine"s;
         return 1;
     }
     if (dbid == 188)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 3270;
-        cardrefrace = u8"machine"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3270;
+        card_info.cardrefrace = u8"machine"s;
         return 1;
     }
     if (dbid == 345)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 470;
-        cardrefrace = u8"bike"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 470;
+        card_info.cardrefrace = u8"bike"s;
         return 1;
     }
     if (dbid == 346)
     {
-        cardreftype = 0;
-        cardrefrare = 5;
-        cardrefcost = 0;
-        cardrefpic = 471;
-        cardrefrace = u8"bike"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 5;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 471;
+        card_info.cardrefrace = u8"bike"s;
         return 1;
     }
     if (dbid == 341)
     {
-        cardreftype = 0;
-        cardrefrare = 25;
-        cardrefcost = 0;
-        cardrefpic = 434;
-        cardrefrace = u8"machine"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 25;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 434;
+        card_info.cardrefrace = u8"machine"s;
         return 1;
     }
     if (dbid == 258)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 198;
-        cardrefrace = u8"machine"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 198;
+        card_info.cardrefrace = u8"machine"s;
         return 1;
     }
     if (dbid == 189)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 271;
-        cardrefrace = u8"eye"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 271;
+        card_info.cardrefrace = u8"eye"s;
         return 1;
     }
     if (dbid == 190)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 3271;
-        cardrefrace = u8"eye"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3271;
+        card_info.cardrefrace = u8"eye"s;
         return 1;
     }
     if (dbid == 191)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 272;
-        cardrefrace = u8"wisp"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 272;
+        card_info.cardrefrace = u8"wisp"s;
         return 1;
     }
     if (dbid == 192)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 273;
-        cardrefrace = u8"crab"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 273;
+        card_info.cardrefrace = u8"crab"s;
         return 1;
     }
     if (dbid == 193)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 17273;
-        cardrefrace = u8"crab"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17273;
+        card_info.cardrefrace = u8"crab"s;
         return 1;
     }
     if (dbid == 195)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 274;
-        cardrefrace = u8"chicken"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 274;
+        card_info.cardrefrace = u8"chicken"s;
         return 1;
     }
     if (dbid == 196)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 275;
-        cardrefrace = u8"mandrake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 275;
+        card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
     if (dbid == 201)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 5275;
-        cardrefrace = u8"mandrake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5275;
+        card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
     if (dbid == 197)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 4275;
-        cardrefrace = u8"mandrake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4275;
+        card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
     if (dbid == 198)
     {
-        cardreftype = 0;
-        cardrefrare = 60;
-        cardrefcost = 0;
-        cardrefpic = 3275;
-        cardrefrace = u8"mandrake"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 60;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3275;
+        card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
     if (dbid == 199)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 276;
-        cardrefrace = u8"stalker"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 276;
+        card_info.cardrefrace = u8"stalker"s;
         return 1;
     }
     if (dbid == 200)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 3276;
-        cardrefrace = u8"stalker"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3276;
+        card_info.cardrefrace = u8"stalker"s;
         return 1;
     }
     if (dbid == 202)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 351;
-        cardrefrace = u8"giant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 351;
+        card_info.cardrefrace = u8"giant"s;
         return 1;
     }
     if (dbid == 203)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 23;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 23;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 205)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 104;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 104;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 207)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 351;
-        cardrefrace = u8"giant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 351;
+        card_info.cardrefrace = u8"giant"s;
         return 1;
     }
     if (dbid == 212)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 117;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 117;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 213)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 356;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 356;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 221)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 358;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 358;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 222)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 359;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 359;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 223)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 361;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 361;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 224)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 362;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 362;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 243)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 383;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 383;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 247)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 388;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 388;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 252)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 392;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 392;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 253)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 394;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 394;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 259)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 199;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 199;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 301)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 403;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 403;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 214)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 166;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 166;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 215)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 3166;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 3166;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 217)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 4166;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 4166;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 216)
     {
-        cardreftype = 0;
-        cardrefrare = 20;
-        cardrefcost = 0;
-        cardrefpic = 429;
-        cardrefrace = u8"yith"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 20;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 429;
+        card_info.cardrefrace = u8"yith"s;
         return 1;
     }
     if (dbid == 218)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 277;
-        cardrefrace = u8"yith"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 277;
+        card_info.cardrefrace = u8"yith"s;
         return 1;
     }
     if (dbid == 219)
     {
-        cardreftype = 0;
-        cardrefrare = 80;
-        cardrefcost = 0;
-        cardrefpic = 278;
-        cardrefrace = u8"orc"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 80;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 278;
+        card_info.cardrefrace = u8"orc"s;
         return 1;
     }
     if (dbid == 220)
     {
-        cardreftype = 0;
-        cardrefrare = 30;
-        cardrefcost = 0;
-        cardrefpic = 430;
-        cardrefrace = u8"yith"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 30;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 430;
+        card_info.cardrefrace = u8"yith"s;
         return 1;
     }
     if (dbid == 250)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 390;
-        cardrefrace = u8"fairy"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 390;
+        card_info.cardrefrace = u8"fairy"s;
         return 1;
     }
     if (dbid == 260)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 211;
-        cardrefrace = u8"servant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 211;
+        card_info.cardrefrace = u8"servant"s;
         return 1;
     }
     if (dbid == 261)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 217;
-        cardrefrace = u8"servant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 217;
+        card_info.cardrefrace = u8"servant"s;
         return 1;
     }
     if (dbid == 262)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 218;
-        cardrefrace = u8"servant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 218;
+        card_info.cardrefrace = u8"servant"s;
         return 1;
     }
     if (dbid == 263)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 236;
-        cardrefrace = u8"servant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 236;
+        card_info.cardrefrace = u8"servant"s;
         return 1;
     }
     if (dbid == 264)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 269;
-        cardrefrace = u8"servant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 269;
+        card_info.cardrefrace = u8"servant"s;
         return 1;
     }
     if (dbid == 265)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 267;
-        cardrefrace = u8"servant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 267;
+        card_info.cardrefrace = u8"servant"s;
         return 1;
     }
     if (dbid == 266)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 242;
-        cardrefrace = u8"servant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 242;
+        card_info.cardrefrace = u8"servant"s;
         return 1;
     }
     if (dbid == 267)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 17262;
-        cardrefrace = u8"horse"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17262;
+        card_info.cardrefrace = u8"horse"s;
         return 1;
     }
     if (dbid == 276)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 6262;
-        cardrefrace = u8"horse"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 6262;
+        card_info.cardrefrace = u8"horse"s;
         return 1;
     }
     if (dbid == 275)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 15262;
-        cardrefrace = u8"horse"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 15262;
+        card_info.cardrefrace = u8"horse"s;
         return 1;
     }
     if (dbid == 268)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 16262;
-        cardrefrace = u8"horse"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 16262;
+        card_info.cardrefrace = u8"horse"s;
         return 1;
     }
     if (dbid == 277)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 10262;
-        cardrefrace = u8"horse"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 10262;
+        card_info.cardrefrace = u8"horse"s;
         return 1;
     }
     if (dbid == 278)
     {
-        cardreftype = 0;
-        cardrefrare = 70;
-        cardrefcost = 0;
-        cardrefpic = 191;
-        cardrefrace = u8"mutant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 191;
+        card_info.cardrefrace = u8"mutant"s;
         return 1;
     }
     if (dbid == 279)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 263;
-        cardrefrace = u8"yerles"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 263;
+        card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
     if (dbid == 280)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 192;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 192;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 288)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 193;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 193;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 290)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 196;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 196;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 292)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 197;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 197;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 294)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 196;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 196;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 291)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 80;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 80;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 297)
     {
-        cardreftype = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = 196;
-        cardrefrace = u8"norland"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 196;
+        card_info.cardrefrace = u8"norland"s;
         return 1;
     }
     if (dbid == 317)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 279;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 279;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 318)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 408;
-        cardrefrace = u8"machinegod"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 408;
+        card_info.cardrefrace = u8"machinegod"s;
         return 1;
     }
     if (dbid == 319)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 409;
-        cardrefrace = u8"mutant"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 409;
+        card_info.cardrefrace = u8"mutant"s;
         return 1;
     }
     if (dbid == 322)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 412;
-        cardrefrace = u8"roran"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 412;
+        card_info.cardrefrace = u8"roran"s;
         return 1;
     }
     if (dbid == 334)
     {
-        cardreftype = 0;
-        cardrefrare = 50;
-        cardrefcost = 0;
-        cardrefpic = 416;
-        cardrefrace = u8"juere"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 50;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 416;
+        card_info.cardrefrace = u8"juere"s;
         return 1;
     }
     if (dbid == 323)
     {
-        cardreftype = 0;
-        cardrefrare = 10;
-        cardrefcost = 0;
-        cardrefpic = 280;
-        cardrefrace = u8"ghost"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 10;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 280;
+        card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
     if (dbid == 324)
     {
-        cardreftype = 0;
-        cardrefrare = 15;
-        cardrefcost = 0;
-        cardrefpic = 19281;
-        cardrefrace = u8"quickling"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 15;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 19281;
+        card_info.cardrefrace = u8"quickling"s;
         return 1;
     }
     if (dbid == 325)
     {
-        cardreftype = 0;
-        cardrefrare = 15;
-        cardrefcost = 0;
-        cardrefpic = 5281;
-        cardrefrace = u8"quickling"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 15;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5281;
+        card_info.cardrefrace = u8"quickling"s;
         return 1;
     }
     if (dbid == 328)
     {
-        cardreftype = 0;
-        cardrefrare = 2;
-        cardrefcost = 0;
-        cardrefpic = 252;
-        cardrefrace = u8"metal"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 2;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 252;
+        card_info.cardrefrace = u8"metal"s;
         return 1;
     }
     if (dbid == 329)
     {
-        cardreftype = 0;
-        cardrefrare = 5;
-        cardrefcost = 0;
-        cardrefpic = 5252;
-        cardrefrace = u8"metal"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 5;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 5252;
+        card_info.cardrefrace = u8"metal"s;
         return 1;
     }
     if (dbid == 330)
     {
-        cardreftype = 0;
-        cardrefrare = 40;
-        cardrefcost = 0;
-        cardrefpic = 17283;
-        cardrefrace = u8"dinosaur"s;
+        card_info.cardreftype = 0;
+        card_info.cardrefrare = 40;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = 17283;
+        card_info.cardrefrace = u8"dinosaur"s;
         return 1;
     }
     if (dbid == 502)
     {
-        cardreftype = 30;
-        cardrefdomain = 1;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -1;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 1;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -1;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 503)
     {
-        cardreftype = 30;
-        cardrefdomain = 1;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -2;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 1;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -2;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 500)
     {
-        cardreftype = 30;
-        cardrefdomain = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -3;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -3;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 501)
     {
-        cardreftype = 30;
-        cardrefdomain = 0;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -4;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 0;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -4;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 504)
     {
-        cardreftype = 30;
-        cardrefdomain = 2;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -5;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 2;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -5;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 505)
     {
-        cardreftype = 30;
-        cardrefdomain = 2;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -6;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 2;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -6;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 506)
     {
-        cardreftype = 30;
-        cardrefdomain = 3;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -7;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 3;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -7;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 507)
     {
-        cardreftype = 30;
-        cardrefdomain = 3;
-        cardrefrare = 100;
-        cardrefcost = 0;
-        cardrefpic = -8;
-        cardrefrace = "";
+        card_info.cardreftype = 30;
+        card_info.cardrefdomain = 3;
+        card_info.cardrefrare = 100;
+        card_info.cardrefcost = 0;
+        card_info.cardrefpic = -8;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 508)
     {
-        cardreftype = 20;
-        cardrefskill = 2;
-        cardrefdomain = 0;
-        cardrefrare = 80;
-        cardrefcost = 3;
-        cardrefpic = -22;
-        cardrefrace = "";
+        card_info.cardreftype = 20;
+        card_info.cardrefskill = 2;
+        card_info.cardrefdomain = 0;
+        card_info.cardrefrare = 80;
+        card_info.cardrefcost = 3;
+        card_info.cardrefpic = -22;
+        card_info.cardrefrace = "";
         return 1;
     }
     if (dbid == 509)
     {
-        cardreftype = 20;
-        cardrefskill = 3;
-        cardrefdomain = 0;
-        cardrefrare = 70;
-        cardrefcost = 2;
-        cardrefpic = -23;
-        cardrefrace = "";
+        card_info.cardreftype = 20;
+        card_info.cardrefskill = 3;
+        card_info.cardrefdomain = 0;
+        card_info.cardrefrare = 70;
+        card_info.cardrefcost = 2;
+        card_info.cardrefpic = -23;
+        card_info.cardrefrace = "";
         return 1;
     }
     return 0;
