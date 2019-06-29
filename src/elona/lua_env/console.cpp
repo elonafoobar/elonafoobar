@@ -34,24 +34,6 @@ namespace lua
 namespace
 {
 
-struct CommandLineParseError : std::runtime_error
-{
-    CommandLineParseError(const std::string& msg)
-        : std::runtime_error(msg)
-    {
-    }
-};
-
-
-
-struct ParsedCommandLine
-{
-    std::vector<std::pair<std::string, std::vector<std::string>>>
-        piped_commands;
-};
-
-
-
 constexpr const char* prompt_normal = "> ";
 constexpr const char* prompt_lua_primary = "lua> ";
 constexpr const char* prompt_lua_secondary = "lua>> ";
