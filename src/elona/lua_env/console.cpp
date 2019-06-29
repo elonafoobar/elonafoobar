@@ -667,9 +667,8 @@ void Console::_init_builtin_lua_functions()
         print("I am perfectly normal, thank you very much.");
     };
 
-    funcs["ex"] = [this]() {
-        spider::http::Request req{spider::http::Verb::GET,
-                                  "http://elonafoobar.com"};
+    funcs["httpget"] = [this](const std::string& url) {
+        spider::http::Request req{spider::http::Verb::GET, url};
         req.send(
             [this](const auto& res) { print(res.body); },
             [this](const auto& err) { print(err.what()); });
