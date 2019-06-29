@@ -20,7 +20,6 @@
 #include "random.hpp"
 #include "save.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
 #include "tcg.hpp"
 
 
