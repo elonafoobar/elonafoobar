@@ -23,7 +23,7 @@
 #include "ui.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
-
+#include "tcg.hpp"
 
 
 namespace

@@ -11,7 +11,7 @@
 #include "macro.hpp"
 #include "random.hpp"
 #include "variables.hpp"
-
+#include "tcg.hpp"
 
 namespace elona
 {

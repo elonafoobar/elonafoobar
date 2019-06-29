@@ -1,8 +1,7 @@
 #include "data/types/type_character.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
-#include "variables.hpp"
-
+#include "tcg.hpp"
 
 
 namespace elona
