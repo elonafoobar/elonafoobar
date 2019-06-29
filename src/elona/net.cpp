@@ -120,7 +120,8 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
     {
         return {};
     }
-    if (Clock::now() - last_chat_received_at < chat_receive_interval)
+    if (skip_old_chat &&
+        Clock::now() - last_chat_received_at < chat_receive_interval)
     {
         return {};
     }
