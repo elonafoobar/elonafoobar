@@ -32,21 +32,30 @@ void DataManager::_init_from_mod(ModInfo& mod)
     // new global variables.
     mod.env.raw_set("data", _data.storage());
 
-    if (mod.manifest.path)
+    if (!mod.manifest.path)
     {
-        // The name of the mod for which the current data script is being ran is
-        // present in the mod's environment table. However, it is not present in
-        // the chunk where the 'data' table originates from, as it originated
-        // outside of a mod environment. To determine which mod is adding new
-        // types/data in the data chunk, it has to be set on the global Lua
-        // state temporarily during the data loading process.
-        _lua->get_state()->set("_MOD_ID", mod.manifest.id);
+        return; // psuedo-mod
+    }
 
-        const auto data_script = *mod.manifest.path / "data.lua";
-        if (fs::exists(data_script))
+    // The name of the mod for which the current data script is being ran is
+    // present in the mod's environment table. However, it is not present in
+    // the chunk where the 'data' table originates from, as it originated
+    // outside of a mod environment. To determine which mod is adding new
+    // types/data in the data chunk, it has to be set on the global Lua
+    // state temporarily during the data loading process.
+    _lua->get_state()->set("_MOD_ID", mod.manifest.id);
+
+    // for (const auto filename : {"data.lua",
+    //                             "extensions.lua",
+    //                             "data-update.lua",
+    //                             "extensions-update.lua"})
+    for (const auto filename : {"data.lua", "data-update.lua"})
+    {
+        const auto script_filepath = *mod.manifest.path / filename;
+        if (fs::exists(script_filepath))
         {
             auto result = _lua->get_state()->safe_script_file(
-                filepathutil::to_utf8_path(data_script),
+                filepathutil::to_utf8_path(script_filepath),
                 mod.env,
                 sol::script_pass_on_error);
 

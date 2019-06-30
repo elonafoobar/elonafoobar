@@ -75,3 +75,21 @@ TEST_CASE(
     REQUIRE_NONE(lua.get_export_manager().get_exported_function(
         "exports:test_export_keys.0"));
 }
+
+TEST_CASE("test order of script execution", "[Lua: Data]")
+{
+    const auto base_path = testing::get_test_data_path() / "registry";
+
+    elona::lua::LuaEnv lua;
+    lua.get_mod_manager().load_mods(
+        filesystem::dirs::mod(), {base_path / "load_order"});
+
+    REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
+
+    auto& table = lua.get_data_manager().get();
+
+    auto spell = table.raw("core.ability", "load_order.expecto_patronum");
+    REQUIRE_SOME(spell);
+    REQUIRE((*spell)["related_basic_attribute"].get<int>() == 17);
+    REQUIRE((*spell)["cost"].get<int>() == 100);
+}
