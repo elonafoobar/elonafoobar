@@ -1,3 +1,4 @@
+#include "tcg.hpp"
 #include "audio.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
@@ -10,7 +11,6 @@
 #include "input_prompt.hpp"
 #include "macro.hpp"
 #include "random.hpp"
-#include "tcg.hpp"
 
 namespace elona
 {
@@ -242,8 +242,9 @@ int card_ref(int id, CardInfo& card_info)
     {
         cardrefbg = card_info.cardrefdomain;
         rtvaln += " <" + i18n::s.get("core.locale.tcg.card.creature") + ">  " +
-            i18n::s.get("core.locale.tcg.card.race") + ":" + card_info.cardrefrace +
-            u8"  Hp:"s + card_info.cardrefhp + u8"  Atk:"s + card_info.cardrefattack;
+            i18n::s.get("core.locale.tcg.card.race") + ":" +
+            card_info.cardrefrace + u8"  Hp:"s + card_info.cardrefhp +
+            u8"  Atk:"s + card_info.cardrefattack;
     }
     if (card_info.cardreftype == 30)
     {
@@ -1254,7 +1255,8 @@ void saccard(int card_index, int player_index)
     ++cpdata_at_tcg(6, player_index);
     ++cpdata_at_tcg(5, player_index);
     CardInfo card_info;
-    int stat = card_ref(500 + card_at_tcg(23, card_index) * 2 + rnd(2), card_info);
+    int stat =
+        card_ref(500 + card_at_tcg(23, card_index) * 2 + rnd(2), card_info);
     create_card(card_index, stat);
     cdbitmod(1, card_index, 1);
     card_at_tcg(4, card_index) = landix_at_tcg(player_index) +

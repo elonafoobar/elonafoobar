@@ -5,7 +5,8 @@
 namespace elona
 {
 
-typedef struct {
+typedef struct
+{
     int cardrefattack;
     int cardrefcost;
     int cardrefdomain;

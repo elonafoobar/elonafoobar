@@ -19,8 +19,8 @@
 #include "message.hpp"
 #include "random.hpp"
 #include "save.hpp"
-#include "ui.hpp"
 #include "tcg.hpp"
+#include "ui.hpp"
 
 
 namespace elona
