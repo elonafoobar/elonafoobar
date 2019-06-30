@@ -364,6 +364,10 @@ private:
 
         if (_is_https)
         {
+            // Cancel all pending operations.
+            error_code ec_;
+            _secure_socket.lowest_layer().cancel(ec_);
+            // Shut down the TLS socket.
             auto self = shared_from_this();
             _secure_socket.async_shutdown(
                 [this, self](const auto& ec) { on_shutdown(ec); });
@@ -390,19 +394,36 @@ private:
     {
         if (ec)
         {
-            if (ec == asio::error::eof ||
-                (ec.category() == asio::error::get_ssl_category() &&
-                 ERR_GET_REASON(ec.value()) ==
-                     asio::ssl::error::stream_errors::stream_truncated))
+            if (ec == asio::error::eof)
             {
-                // This error can be ignored.
+                // Shutdown operation actually succeeded.
+                // See this page for rationale:
                 // http://stackoverflow.com/questions/25587403/boost-asio-ssl-async-shutdown-always-finishes-with-an-error
+                // This behaviour was fixed in Boost 1.70, then Boost suppresses
+                // this kind of EOF error.
             }
             else
             {
-                fail("Failed to shutdown the connection: " + _url);
-                return;
+                // FIXME: work around
+                // This shutdown operation always fails with
+                // asio::ssl::error::stream_errors::stream_truncated.
+                // According to this page,
+                // https://github.com/cpp-netlib/cpp-netlib/issues/670
+                // to ignore the error is incorrect, but I cannot find
+                // an proper handling.
+
+                // fail("Failed to shutdown the connection: " + _url);
+                // return;
             }
+        }
+
+        // Close the lower layer's connection under TLS socket.
+        error_code ec_;
+        _secure_socket.lowest_layer().close(ec_);
+        if (ec_)
+        {
+            fail("Failed to shutdown the connection: " + _url);
+            return;
         }
 
         on_successfully_recieved();
@@ -426,8 +447,9 @@ private:
                 do_redirect(_response[field::location].to_string());
                 return;
             }
-        default: _done(_construct_response()); break;
         }
+
+        _done(_construct_response());
     }
 
 

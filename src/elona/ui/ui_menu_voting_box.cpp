@@ -118,10 +118,10 @@ void UIMenuVotingBox::draw()
         cmbg / 4 / 4 % 2 * 300,
         180,
         300,
-        ww / 5 * 3,
-        wh - 80,
         wx + ww / 3 * 2,
-        wy + wh / 2);
+        wy + wh / 2,
+        ww / 5 * 3,
+        wh - 80);
     gmode(2);
 
     display_topic(

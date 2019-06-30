@@ -34,24 +34,6 @@ namespace lua
 namespace
 {
 
-struct CommandLineParseError : std::runtime_error
-{
-    CommandLineParseError(const std::string& msg)
-        : std::runtime_error(msg)
-    {
-    }
-};
-
-
-
-struct ParsedCommandLine
-{
-    std::vector<std::pair<std::string, std::vector<std::string>>>
-        piped_commands;
-};
-
-
-
 constexpr const char* prompt_normal = "> ";
 constexpr const char* prompt_lua_primary = "lua> ";
 constexpr const char* prompt_lua_secondary = "lua>> ";
@@ -685,9 +667,8 @@ void Console::_init_builtin_lua_functions()
         print("I am perfectly normal, thank you very much.");
     };
 
-    funcs["ex"] = [this]() {
-        spider::http::Request req{spider::http::Verb::GET,
-                                  "http://elonafoobar.com"};
+    funcs["httpget"] = [this](const std::string& url) {
+        spider::http::Request req{spider::http::Verb::GET, url};
         req.send(
             [this](const auto& res) { print(res.body); },
             [this](const auto& err) { print(err.what()); });
