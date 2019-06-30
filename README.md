@@ -16,7 +16,7 @@
 * `make`
 * CMake 3.2 or later
 * C++ compiler which supports C++14
-* Boost
+* Boost 1.69
 * Lua 5.3
 * SDL2, SDL2_image, SDL2_ttf and SDL2_mixer
 * `clang-format`, `find` and `xargs`(Optional)
@@ -24,8 +24,6 @@
 ### Additional requirements for Windows
 
 * Visual Studio 2017 x64
-* 7-Zip or similar (for automated dependency extraction using `7z.exe`)
-* `patch.exe` (for patching Lua with UTF-16 filename support. It comes with Git for Windows. Make sure it's on your path.)
 
 ### Additional requirements for Linux
 
@@ -64,7 +62,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 
 1. Download and install the binaries for Boost `1.69` from [here](https://dl.bintray.com/boostorg/release/1.69.0/binaries/boost_1_69_0-msvc-14.1-64.exe).
 2. Edit `Makefile.win` to point to your Boost install directory.
-3. Run `download.bat` inside the `deps` folder to download and extract the other dependencies to `deps\include`, `deps\lib` and `thirdparty\lib` (you have to have `7z.exe` and `patch.exe` on your `PATH`). This will also patch Lua for UTF-16 filename support.
+3. Run `install.bat` inside the `deps` folder to move the other dependencies to `deps\include` and `deps\lib`.
 4. Open the `Developer Command Prompt for VS 2017`.
 5. `cd path/to/Elona_foobar & nmake build -f Makefile.win`
 
@@ -112,7 +110,7 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * boostrandom: see [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt).
 * cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
 * nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
-* nlohmann/json: seee [src/thirdparty/nlohmannjson/LICENSE.MIT](src/thirdparty/nlohmannjson/LICENSE.MIT).
+* nlohmann/json: see [src/thirdparty/nlohmannjson/LICENSE.MIT](src/thirdparty/nlohmannjson/LICENSE.MIT).
 * cpp-netlib/uri: see [src/thirdparty/uri/LICENSE_1_0.txt](src/thirdparty/uri/LICENSE_1_0.txt).
 
 ## Lua libraries
