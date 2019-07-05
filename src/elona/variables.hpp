@@ -220,7 +220,6 @@ ELONA_EXTERN(std::vector<std::string> artifactlocation);
 ELONA_EXTERN(elona_vector1<std::string> booktitle);
 ELONA_EXTERN(elona_vector1<std::string> buff);
 ELONA_EXTERN(elona_vector1<std::string> buffboard);
-ELONA_EXTERN(elona_vector1<std::string> cardrefn);
 ELONA_EXTERN(elona_vector1<std::string> description);
 ELONA_EXTERN(elona_vector1<std::string> egominorn);
 ELONA_EXTERN(elona_vector1<std::string> egoname);
@@ -335,15 +334,6 @@ ELONA_EXTERN(int atxspot);
 ELONA_EXTERN(int body);
 ELONA_EXTERN(int bonus);
 ELONA_EXTERN(int camera);
-ELONA_EXTERN(int cardrefattack);
-ELONA_EXTERN(int cardrefcost);
-ELONA_EXTERN(int cardrefdomain);
-ELONA_EXTERN(int cardrefhp);
-ELONA_EXTERN(int cardrefpic);
-ELONA_EXTERN(int cardrefrare);
-ELONA_EXTERN(int cardrefskill);
-ELONA_EXTERN(int cardrefskillcost);
-ELONA_EXTERN(int cardreftype);
 ELONA_EXTERN(int cc);
 ELONA_EXTERN(int ccbk);
 ELONA_EXTERN(int cellaccess);
@@ -558,7 +548,6 @@ ELONA_EXTERN(int x1);
 ELONA_EXTERN(int x2);
 ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
-ELONA_EXTERN(std::string cardrefrace);
 ELONA_EXTERN(std::string cmaka);
 ELONA_EXTERN(std::string dbidn);
 ELONA_EXTERN(std::string defload);
@@ -586,81 +575,6 @@ int calcincome(int = 0);
 int calcmagiccontrol(int = 0, int = 0);
 int calcstartcard(int = 0);
 int randskill();
-
-//// TCG
-void actionproc();
-void tcgdeck();
-void tcgdraw();
-void tcgdrawbg();
-void tcgdrawcard(int = 0, int = 0);
-void tcginit();
-void tcgmain();
-void gravecard(int = 0);
-void calcdecksize();
-void calcdomain();
-void calcstartattb(int = 0);
-void cardpos(int = 0, int = 0);
-void cdbitmod(int = 0, int = 0, int = 0);
-void cpflip();
-void csfix();
-void cslinedown();
-void cslineup();
-int pileremain();
-void delbottomcard(int = 0);
-int gameover();
-void getrandomcard(int = 0);
-void opencard(int = 0);
-void saccard(int = 0, int = 0);
-void makecardlist();
-void efllistadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-
-// Game phases
-void tcg_game_over();
-void tcg_phase_one();
-void tcg_phase_two();
-void tcg_phase_three();
-void tcg_phase_four();
-void tcg_update_mana();
-
-// Game flow
-void tcg_show_refs();
-void tcg_clear_stack();
-void tcg_draw_selection();
-void tcg_draw_deck_editor();
-void tcg_prepare_cnt2();
-void tcg_update_page();
-void tcg_draw_menu();
-void tcg_prompt_action();
-void tcg_clear_cursor();
-void tcg_update_selection();
-void tcg_card_selected();
-void tcg_proc_ai_elist();
-void tcg_proc_ai();
-void tcg_proc_ai_sacrifice();
-int tcg_draw_background();
-int tcg_try_sacrifice();
-void dmgcard(int = 0, int = 0);
-void dmgplayer(int = 0, int = 0);
-
-// Game actions
-int getdecksum(int = 0);
-int getholdersum(int = 0);
-int getspotsum(int = 0);
-void cpisenemy();
-void cpisme();
-
-// Card queries
-int get_card_info();
-int card_ref(int = 0);
-int cardcanblock(int = 0);
-int cardcandeclareattack(int = 0);
-int cardcanuseskill(int = 0);
-int cdbit(int = 0, int = 0);
-
-// Card actions
-int create_card(int = 0, int = 0);
-int putcard(int = 0, int = 0);
-
 
 //// Init
 void initialize_pc_character();

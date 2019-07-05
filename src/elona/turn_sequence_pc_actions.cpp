@@ -20,10 +20,9 @@
 #include "message.hpp"
 #include "optional.hpp"
 #include "save.hpp"
+#include "tcg.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
 #include "wish.hpp"
-
 
 
 namespace

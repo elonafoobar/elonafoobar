@@ -1,3 +1,4 @@
+#include "tcg.hpp"
 #include "audio.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
@@ -10,8 +11,6 @@
 #include "input_prompt.hpp"
 #include "macro.hpp"
 #include "random.hpp"
-#include "variables.hpp"
-
 
 namespace elona
 {
@@ -218,51 +217,57 @@ std::string cnvrare(int rarity)
 
 
 
-int card_ref(int id)
+int card_ref(int id, CardInfo& card_info)
 {
-    cardrefcost = 0;
-    cardrefhp = 0;
-    cardrefattack = 0;
-    cardrefskill = 0;
-    cardrefdomain = 0;
-    cardrefrare = 100;
+    card_info.cardrefattack = 0;
+    card_info.cardrefcost = 0;
+    card_info.cardrefdomain = 0;
+    card_info.cardrefhp = 0;
+    card_info.cardrefn = "";
+    card_info.cardrefpic = 0;
+    card_info.cardrefrare = 0;
+    card_info.cardrefskill = 0;
+    card_info.cardrefskillcost = 0;
+    card_info.cardreftype = 0;
+    card_info.cardrefrace = "";
     dbid = id;
-    get_card_info();
-    if (cardreftype == 0)
+    get_card_info(id, card_info);
+    if (card_info.cardreftype == 0)
     {
-        cardreftype = 10;
-        cardrefdomain = 4;
+        card_info.cardreftype = 10;
+        card_info.cardrefdomain = 4;
     }
-    rtvaln = cardrefn;
-    if (cardreftype == 10)
+    rtvaln = card_info.cardrefn;
+    if (card_info.cardreftype == 10)
     {
-        cardrefbg = cardrefdomain;
+        cardrefbg = card_info.cardrefdomain;
         rtvaln += " <" + i18n::s.get("core.locale.tcg.card.creature") + ">  " +
-            i18n::s.get("core.locale.tcg.card.race") + ":" + cardrefrace +
-            u8"  Hp:"s + cardrefhp + u8"  Atk:"s + cardrefattack;
+            i18n::s.get("core.locale.tcg.card.race") + ":" +
+            card_info.cardrefrace + u8"  Hp:"s + card_info.cardrefhp +
+            u8"  Atk:"s + card_info.cardrefattack;
     }
-    if (cardreftype == 30)
+    if (card_info.cardreftype == 30)
     {
         cardrefbg = 6;
         rtvaln += " <" + i18n::s.get("core.locale.tcg.card.land") + ">";
     }
-    if (cardreftype == 20)
+    if (card_info.cardreftype == 20)
     {
         cardrefbg = 5;
         rtvaln += " <" + i18n::s.get("core.locale.tcg.card.spell") + ">";
     }
     rtvaln += "  " + i18n::s.get("core.locale.tcg.card.domain") + ":" +
-        domname_at_tcg(cardrefdomain);
+        domname_at_tcg(card_info.cardrefdomain);
     rtvaln += "  " + i18n::s.get("core.locale.tcg.card.rare") + ":" +
-        cnvrare(cardrefrare);
-    if (cardrefskill != 0)
+        cnvrare(card_info.cardrefrare);
+    if (card_info.cardrefskill != 0)
     {
         s_at_tcg = "";
-        if (cardreftype == 10)
+        if (card_info.cardreftype == 10)
         {
             s_at_tcg += i18n::s.get("core.locale.tcg.card.skill") + ":";
         }
-        s_at_tcg += cdrefn_at_tcg(cardrefskill);
+        s_at_tcg += cdrefn_at_tcg(card_info.cardrefskill);
         talk_conv(s_at_tcg, 95);
         rtvaln += u8"\n"s + s_at_tcg;
     }
@@ -838,19 +843,20 @@ void efllistadd(
 
 int create_card(int card_index, int card_id)
 {
-    int stat = card_ref(card_id);
+    CardInfo card_info;
+    int stat = card_ref(card_id, card_info);
     card_at_tcg(18, card_index) = stat;
-    card_at_tcg(9, card_index) = cardreftype;
-    card_at_tcg(10, card_index) = cardrefcost;
-    card_at_tcg(16, card_index) = cardrefhp;
-    card_at_tcg(11, card_index) = cardrefattack;
-    card_at_tcg(13, card_index) = cardrefskill;
-    card_at_tcg(17, card_index) = cardrefpic;
+    card_at_tcg(9, card_index) = card_info.cardreftype;
+    card_at_tcg(10, card_index) = card_info.cardrefcost;
+    card_at_tcg(16, card_index) = card_info.cardrefhp;
+    card_at_tcg(11, card_index) = card_info.cardrefattack;
+    card_at_tcg(13, card_index) = card_info.cardrefskill;
+    card_at_tcg(17, card_index) = card_info.cardrefpic;
     card_at_tcg(19, card_index) = cardrefbg;
     carddetailn_at_tcg(card_index) = rtvaln;
-    cardn_at_tcg(0, card_index) = cardrefrace;
-    card_at_tcg(20, card_index) = cardrefskillcost;
-    card_at_tcg(23, card_index) = cardrefdomain;
+    cardn_at_tcg(0, card_index) = card_info.cardrefrace;
+    card_at_tcg(20, card_index) = card_info.cardrefskillcost;
+    card_at_tcg(23, card_index) = card_info.cardrefdomain;
     return card_index;
 }
 
@@ -1248,7 +1254,9 @@ void saccard(int card_index, int player_index)
     }
     ++cpdata_at_tcg(6, player_index);
     ++cpdata_at_tcg(5, player_index);
-    int stat = card_ref(500 + card_at_tcg(23, card_index) * 2 + rnd(2));
+    CardInfo card_info;
+    int stat =
+        card_ref(500 + card_at_tcg(23, card_index) * 2 + rnd(2), card_info);
     create_card(card_index, stat);
     cdbitmod(1, card_index, 1);
     card_at_tcg(4, card_index) = landix_at_tcg(player_index) +
@@ -1592,7 +1600,6 @@ void tcginit()
     DIM3(cardstack_at_tcg, 5, 100);
     DIM3(gravelist_at_tcg, 4, 2);
     SDIM3(carddetailn_at_tcg, 200, maxcard_at_tcg);
-    SDIM1(cardrefn);
     SDIM1(helpmsg_at_tcg);
     DIM2(deck, 1000);
     SDIM3(domname_at_tcg, 20, 10);
@@ -1839,8 +1846,9 @@ void tcgmain()
         for (int cnt = 0; cnt < 30; ++cnt)
         {
             cc_at_tcg = rp_at_tcg * 40 + cnt;
-            int stat = card_ref(rnd(1000));
-            if (cardrefcost == 0)
+            CardInfo card_info;
+            int stat = card_ref(rnd(1000), card_info);
+            if (card_info.cardrefcost == 0)
             {
                 --cnt;
                 continue;
