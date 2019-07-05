@@ -34,6 +34,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "message.hpp"
+#include "net.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
@@ -2692,6 +2693,7 @@ TurnResult do_open_command(bool play_sound)
                             cdata[game_data.fire_giant].hate = 1000;
                         }
                         game_data.released_fire_giant = 1;
+                        net_send_news("fire");
                     }
                 }
             }

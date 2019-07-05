@@ -57,6 +57,7 @@ locale {
 
             formatter {
                 wait = "${_1} wait"
+                every_minutes = "Every ${_1} min."
             }
         }
 
@@ -190,21 +191,71 @@ DOC
 
             net {
                 name = "Network Setting"
-                enabled {
+                is_enabled {
                     name = "Use Network"
                     doc = <<DOC
-Enable network features (chat, alias, and moongate).
-Currently unimplemented.
+Enable or disable network-related features.
+The following options are available only if the option is set to Yes.
 DOC
                 }
-                wish {
-                    name = "Constantly Connect"
-                }
                 chat {
-                    name = "Filter Chat"
+                    name = "Chat Log"
+                    variants {
+                        "disabled" = "Disabled"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send and receive"
+                    }
                 }
-                server_list {
-                    name = "Use Custom Server"
+                death {
+                    name = "Death Log"
+                    variants {
+                        "disabled" = "Disabled"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send and receive"
+                    }
+                }
+                wish {
+                    name = "Wish Log"
+                    variants {
+                        "disabled" = "Disabled"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send and receive"
+                    }
+                }
+                news {
+                    name = "Palmia Times"
+                    variants {
+                        "disabled" = "Disabled"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send and receive"
+                    }
+                }
+                is_alias_vote_enabled {
+                    name = "Alias Vote"
+                    yes_no = core.locale.config.common.yes_no.enable_disable
+                }
+                hide_your_name {
+                    name = "Hide Your Name"
+                    doc = <<DOC
+If you set the option Yes, your character's name is replaced with a random name
+when sending chat, death or wish log.
+When you register your name, the converted one is used, too.
+DOC
+                }
+                hide_your_alias {
+                    name = "Hide Your Alias"
+                    doc = <<DOC
+If you set the option Yes, your character's alias is replaced with a random alias
+when sending chat, death or wish log.
+When you register your alias, the converted one is used, too.
+DOC
+                }
+                chat_receive_interval {
+                    name = "Chat Interval"
+                    formatter = core.locale.config.common.formatter.every_minutes
+                    doc = <<DOC
+Set the interval between receiving chat, death and wish log.
+DOC
                 }
             }
 

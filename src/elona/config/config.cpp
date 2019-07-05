@@ -370,10 +370,7 @@ void load_config()
     CONFIG_OPTION("input.select_fast_wait"s, int, Config::instance().select_fast_wait);
     CONFIG_OPTION("message.add_timestamps"s, bool, Config::instance().message_add_timestamps);
     CONFIG_OPTION("message.transparency"s, int, Config::instance().message_transparency);
-    CONFIG_OPTION("net.chat"s, bool, Config::instance().net_chat);
-    CONFIG_OPTION("net.enabled"s, bool, Config::instance().net);
-    CONFIG_OPTION("net.server_list"s, bool, Config::instance().server_list);
-    CONFIG_OPTION("net.wish"s, bool, Config::instance().net_wish);
+    CONFIG_OPTION("net.is_enabled"s, bool, Config::instance().net);
     CONFIG_OPTION("anime.always_center"s, bool, Config::instance().always_center);
     CONFIG_OPTION("screen.music"s, bool, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
