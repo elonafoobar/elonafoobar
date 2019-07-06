@@ -11,8 +11,9 @@ namespace elona
 enum class ChatKind
 {
     chat,
-    dead,
+    death,
     wish,
+    news,
 
     _size,
 };
@@ -73,7 +74,10 @@ void net_send_death(
     const std::string& map,
     const std::string& last_words);
 void net_send_wish(const std::string& input, const std::string& result);
-void net_send_poll(const std::string& name);
+void net_send_news(
+    const std::string& locale_id,
+    const std::string& extra_info = "");
+void net_register_your_name();
 void net_send_vote(int poll_id);
 
 bool net_can_send_chat_now();

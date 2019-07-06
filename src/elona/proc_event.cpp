@@ -18,6 +18,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "message.hpp"
+#include "net.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "random_event.hpp"
@@ -234,6 +235,10 @@ void proc_event()
                 mapname(game_data.current_map),
                 cdata[tc]),
             Message::color{ColorIndex::red});
+        if (game_data.current_dungeon_level % 50 == 0)
+        {
+            net_send_news("void", cnvrank(game_data.current_dungeon_level));
+        }
     }
     break;
     case 4:
@@ -857,6 +862,7 @@ void proc_event()
         {
             modify_karma(cdata.player(), -10);
         }
+        net_send_news("bomb", mapname(game_data.current_map));
         break;
     case 18:
         if (map_data.type == mdata_t::MapType::world_map)

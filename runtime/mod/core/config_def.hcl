@@ -88,10 +88,47 @@ config {
     net = {
         type = "section"
         options = {
-            enabled = false
-            wish = false
-            chat = false
-            server_list = false
+            is_enabled = false
+            chat = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            death = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            wish = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            news = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            is_alias_vote_enabled = false
+            hide_your_name = false
+            hide_your_alias = false
+            chat_receive_interval = {
+                default = 5
+                min = 1
+                max = 30
+            }
+            # language_blacklist = {
+            #     default = []
+            #     visible = false
+            # }
+            # word_blacklist = {
+            #     default = []
+            #     visible = false
+            # }
+            # player_blacklist = {
+            #     default = []
+            #     visible = false
+            # }
         }
     }
 

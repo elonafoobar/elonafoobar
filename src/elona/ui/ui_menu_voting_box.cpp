@@ -197,8 +197,7 @@ optional<UIMenuVotingBox::ResultType> UIMenuVotingBox::on_key(
 
         if (id == -999) // Register your name.
         {
-            net_send_poll(
-                cdatan(1, 0) + i18n::space_if_needed() + cdatan(0, 0));
+            net_register_your_name();
             prompt.append("ok", snail::Key::key_y);
             prompt.query(promptx, prompty, 200);
             set_reinit();

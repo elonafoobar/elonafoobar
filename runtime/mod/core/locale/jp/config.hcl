@@ -67,6 +67,7 @@
 
             formatter {
                 wait = "${_1} wait"
+                every_minutes = "${_1}分毎"
             }
         }
 
@@ -194,19 +195,68 @@ DOC
 
             net {
                 name = "ネット機能の設定"
-                enabled {
+                is_enabled {
                     name = "ネットの使用"
-                    doc = "現在実装されていません。"
-                }
-                wish {
-                    name = "定期的に接続"
+                    doc = <<DOC
+ネット機能を使用するかどうかを設定します。
+以下のオプションはこのオプションを「する」にしたときに限り有効となります。
+DOC
                 }
                 chat {
-                    name = "チャットをフィルタ"
+                    name = "チャット"
+                    variants {
+                        "disabled" = "使用しない"
+                        "receive" = "受信のみ"
+                        "send_receive" = "送信/受信"
+                    }
                 }
-                server_list {
-                    name = "カスタムサーバー"
-                    yes_no = core.locale.config.common.yes_no.shiyou_suru_shinai
+                death {
+                    name = "死亡ログ"
+                    variants {
+                        "disabled" = "使用しない"
+                        "receive" = "受信のみ"
+                        "send_receive" = "送信/受信"
+                    }
+                }
+                wish {
+                    name = "願いログ"
+                    variants {
+                        "disabled" = "使用しない"
+                        "receive" = "受信のみ"
+                        "send_receive" = "送信/受信"
+                    }
+                }
+                news {
+                    name = "パルミア・タイムズ"
+                    variants {
+                        "disabled" = "使用しない"
+                        "receive" = "受信のみ"
+                        "send_receive" = "送信/受信"
+                    }
+                }
+                is_alias_vote_enabled {
+                    name = "異名投票"
+                }
+                hide_your_name {
+                    name = "名前を隠す"
+                    doc = <<DOC
+チャットや死亡ログ、願いログを送るとき、PCの名前をランダムな名前で置き換えて送ります。
+異名投票でも変換後の名前が使われます。
+DOC
+                }
+                hide_your_alias {
+                    name = "異名を隠す"
+                    doc = <<DOC
+チャットや死亡ログ、願いログを送るとき、PCの異名をランダムな異名で置き換えて送ります。
+異名投票でも変換後の異名が使われます。
+DOC
+                }
+                chat_receive_interval {
+                    name = "受信頻度"
+                    formatter = core.locale.config.common.formatter.every_minutes
+                    doc = <<DOC
+チャットや死亡ログ、願いログを受け取る頻度を設定します。
+DOC
                 }
             }
 

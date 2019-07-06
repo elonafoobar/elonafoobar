@@ -18,6 +18,7 @@
 #include "magic.hpp"
 #include "map.hpp"
 #include "message.hpp"
+#include "net.hpp"
 #include "optional.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -364,6 +365,7 @@ void run_random_event(RandomEvent event)
             "core.locale.common.you_put_in_your_backpack", inv[ci]));
         listmax = 1;
         event_bg = u8"bg_re15";
+        net_send_news("ehekatl");
         break;
     case 5:
         if (trait(42))

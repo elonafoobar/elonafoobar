@@ -112,6 +112,7 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
 * nlohmann/json: see [src/thirdparty/nlohmannjson/LICENSE.MIT](src/thirdparty/nlohmannjson/LICENSE.MIT).
 * cpp-netlib/uri: see [src/thirdparty/uri/LICENSE_1_0.txt](src/thirdparty/uri/LICENSE_1_0.txt).
+* xxHash: see [src/thirdparty/xxHash/LICENSE](src/thirdparty/xxHash/LICENSE).
 
 ## Lua libraries
 

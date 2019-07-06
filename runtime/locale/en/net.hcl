@@ -9,12 +9,19 @@ locale {
             sent_message = "${_1} ${_2} says, ${_3}"
         }
 
-        dead {
+        death {
             sent_message = "${_1} ${_2} ${_3} in ${_4} ${5}"
         }
 
         wish {
             sent_message = "${_1} ${_2} goes wild with joy, ${_3} ${_4}"
+        }
+
+        news {
+            bomb = "[Palmia Times ${_1}] Atomic Bomb Explosion in ${_4}"
+            void = "[Palmia Times ${_1}] ${_2} ${_3} Reaches Void ${_4}"
+            ehekatl = "[Palmia Times ${_1}] ${_2} ${_3} Gets Statue of Ehekatl"
+            fire = "[Palmia Times ${_1}] Noyel Big Fire, Someone Releases Giant"
         }
 
         alias {
