@@ -201,33 +201,33 @@ DOC
                 chat {
                     name = "Chat Log"
                     variants {
-                        "disabled" = "Disabled"
+                        "disabled" = "Disable"
                         "receive" = "Only receive"
-                        "send_receive" = "Send and receive"
+                        "send_receive" = "Send & receive"
                     }
                 }
                 death {
                     name = "Death Log"
                     variants {
-                        "disabled" = "Disabled"
+                        "disabled" = "Disable"
                         "receive" = "Only receive"
-                        "send_receive" = "Send and receive"
+                        "send_receive" = "Send & receive"
                     }
                 }
                 wish {
                     name = "Wish Log"
                     variants {
-                        "disabled" = "Disabled"
+                        "disabled" = "Disable"
                         "receive" = "Only receive"
-                        "send_receive" = "Send and receive"
+                        "send_receive" = "Send & receive"
                     }
                 }
                 news {
                     name = "Palmia Times"
                     variants {
-                        "disabled" = "Disabled"
+                        "disabled" = "Disable"
                         "receive" = "Only receive"
-                        "send_receive" = "Send and receive"
+                        "send_receive" = "Send & receive"
                     }
                 }
                 is_alias_vote_enabled {
@@ -254,7 +254,7 @@ DOC
                     name = "Chat Interval"
                     formatter = core.locale.config.common.formatter.every_minutes
                     doc = <<DOC
-Set the interval between receiving chat, death and wish log.
+Set the interval between receiving chat, death wish and news log.
 DOC
                 }
             }
