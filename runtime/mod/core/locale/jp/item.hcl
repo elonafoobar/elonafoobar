@@ -2748,7 +2748,7 @@ locale {
                 }
             }
         }
-        bow_of_vinderre {
+        bow_of_vindale {
             name = "《異形の森の弓》"
             unidentified_name = "波動を放つ弓"
             description {

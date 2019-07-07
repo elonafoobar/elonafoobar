@@ -1608,7 +1608,7 @@ locale {
                 }
             }
         }
-        bow_of_vinderre {
+        bow_of_vindale {
             name = "<Bow of Vindale>"
             unidentified_name = "shaking bow"
         }

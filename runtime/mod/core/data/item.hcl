@@ -6931,7 +6931,7 @@
         color = "Blue"
         locale_key_prefix = "core.locale.item.ether_dagger"
     }
-    bow_of_vinderre {
+    bow_of_vindale {
         legacy_id = 207
         image = 404
         value = 60000
@@ -6963,7 +6963,7 @@
         tags = []
         rftags = []
         color = "Grey"
-        locale_key_prefix = "core.locale.item.bow_of_vinderre"
+        locale_key_prefix = "core.locale.item.bow_of_vindale"
     }
     worthless_fake_gold_bar {
         legacy_id = 208

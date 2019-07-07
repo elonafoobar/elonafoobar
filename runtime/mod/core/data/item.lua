@@ -7142,7 +7142,7 @@ data:add_multi(
          locale_key_prefix = "core.locale.item.ether_dagger",
       },
       {
-         id = "bow_of_vinderre",
+         id = "bow_of_vindale",
          legacy_id = 207,
          image = 404,
          value = 60000,
@@ -7174,7 +7174,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Grey",
-         locale_key_prefix = "core.locale.item.bow_of_vinderre",
+         locale_key_prefix = "core.locale.item.bow_of_vindale",
       },
       {
          id = "worthless_fake_gold_bar",
