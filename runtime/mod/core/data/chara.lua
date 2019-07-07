@@ -6089,7 +6089,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "gilbert_the_colonel",
+         id = "gilbert",
          legacy_id = 231,
          item_type = 3,
          tags = { "man" },

@@ -2702,7 +2702,7 @@ data:add_multi(
          }
       },
       {
-         id = "gilbert_the_colonel",
+         id = "gilbert",
          legacy_id = 370,
          source = {
             x = 336,

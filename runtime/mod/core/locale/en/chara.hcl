@@ -848,7 +848,7 @@ locale {
         yerles_elite_machine_infantry {
             name = "Yerles elite machine infantry"
         }
-        gilbert_the_colonel {
+        gilbert {
             name = "<Gilbert> the colonel"
             text_100 = ["\"Help the helpless! Crush the vileness!\"", "\"Atten-TION! Salute!\"", "\"For the Kingdom, we shall never fall!\"", "\"Who's house? Mah House!\""]
         }
