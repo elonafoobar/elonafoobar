@@ -5100,7 +5100,7 @@ locale {
         }
         statue_of_opatos {
             name = "Opatos"
-            unidentified_name = "celestial statue"
+            unidentified_name = "god"
             description {
                 main {
                     text = "You feel the ground shake slightly at this statue,"
@@ -5109,7 +5109,7 @@ locale {
         }
         statue_of_lulwy {
             name = "Lulwy"
-            unidentified_name = "celestial statue"
+            unidentified_name = "goddess"
             description {
                 main {
                     text = "A beautiful statue of a winged goddess,"
@@ -5224,7 +5224,7 @@ locale {
         }
         statue_of_jure {
             name = "Jure"
-            unidentified_name = "celestial statue"
+            unidentified_name = "goddess"
         }
         ancient_book {
             name = "ancient book"
@@ -5460,7 +5460,7 @@ locale {
         }
         statue_of_ehekatl {
             name = "Ehekatl"
-            unidentified_name = "celestial statue"
+            unidentified_name = "goddess"
         }
         arbalest {
             name = "<Arbalest>"
@@ -5706,11 +5706,11 @@ locale {
         }
         statue_of_kumiromi {
             name = "Kumiromi"
-            unidentified_name = "celestial statue"
+            unidentified_name = "god"
         }
         statue_of_mani {
             name = "Mani"
-            unidentified_name = "celestial statue"
+            unidentified_name = "god"
         }
         luxury_sofa {
             name = "luxury sofa"
