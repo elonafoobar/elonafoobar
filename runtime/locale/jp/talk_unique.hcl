@@ -427,7 +427,7 @@ locale {
                 dies = "${basename(_1)}は自ら命を絶った…"
             }
 
-            garokk {
+            garok {
                 dialog = "見て分からんか、わしゃ忙しいんじゃ。用があるなら手短にな。"
             }
 

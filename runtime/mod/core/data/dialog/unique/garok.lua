@@ -1,8 +1,8 @@
 local Internal = Elona.require("Internal")
 
 return {
-   id = "garokk",
-   root = "core.locale.talk.unique.garokk",
+   id = "garok",
+   root = "core.locale.talk.unique.garok",
    nodes = {
       __start = {
          text = {

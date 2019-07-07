@@ -2558,7 +2558,7 @@ data:add_multi(
          }
       },
       {
-         id = "garokk",
+         id = "garok",
          legacy_id = 352,
          source = {
             x = 1056,

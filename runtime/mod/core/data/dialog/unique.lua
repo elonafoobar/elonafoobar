@@ -12,7 +12,7 @@ local unique = {
    require("data/dialog/unique/slan"),
    require("data/dialog/unique/erystia"),
    require("data/dialog/unique/karam"),
-   require("data/dialog/unique/garokk"),
+   require("data/dialog/unique/garok"),
    require("data/dialog/unique/miral"),
    require("data/dialog/unique/pael"),
    require("data/dialog/unique/lily"),
