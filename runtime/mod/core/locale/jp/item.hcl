@@ -4480,7 +4480,7 @@ locale {
                 }
             }
         }
-        golden_statue {
+        statue_of_money {
             name = "金の像"
             description {
                 main {

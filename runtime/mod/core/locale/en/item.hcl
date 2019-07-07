@@ -2618,8 +2618,8 @@ locale {
                 }
             }
         }
-        golden_statue {
-            name = "golden statue"
+        statue_of_money {
+            name = "money"
             description {
                 main {
                     text = "A statue common in Asseria style casinos,"

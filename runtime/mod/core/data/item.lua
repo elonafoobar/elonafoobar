@@ -11572,7 +11572,7 @@ data:add_multi(
          locale_key_prefix = "core.locale.item.golden_pedestal",
       },
       {
-         id = "golden_statue",
+         id = "statue_of_money",
          legacy_id = 336,
          image = 300,
          value = 3200,
@@ -11599,11 +11599,11 @@ data:add_multi(
          rarity = 200000,
          coefficient = 100,
          light = 0,
-         originalnameref2 = "",
+         originalnameref2 = "statue",
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.golden_statue",
+         locale_key_prefix = "core.locale.item.statue_of_money",
       },
       {
          id = "remains_skin",

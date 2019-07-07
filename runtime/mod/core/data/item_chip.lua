@@ -2254,7 +2254,7 @@ data:add_multi(
          }
       },
       {
-         id = "golden_statue",
+         id = "statue_of_money",
          legacy_id = 300,
          offset_y = 22,
          source = {
