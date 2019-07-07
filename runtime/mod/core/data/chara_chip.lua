@@ -187,7 +187,7 @@ data:add_multi(
          }
       },
       {
-         id = "moyer_the_crooked",
+         id = "moyer",
          legacy_id = 23,
          source = {
             x = 1104,

@@ -2681,7 +2681,7 @@ TurnResult do_open_command(bool play_sound)
                     if (cdata[game_data.fire_giant].state() ==
                         Character::State::alive)
                     {
-                        tc = chara_find("core.moyer_the_crooked");
+                        tc = chara_find("core.moyer");
                         if (tc != 0 &&
                             cdata[tc].state() == Character::State::alive)
                         {

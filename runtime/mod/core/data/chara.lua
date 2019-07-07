@@ -7476,7 +7476,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "moyer_the_crooked",
+         id = "moyer",
          legacy_id = 203,
          item_type = 3,
          tags = { "man" },

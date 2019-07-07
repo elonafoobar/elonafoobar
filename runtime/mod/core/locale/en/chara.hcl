@@ -1054,7 +1054,7 @@ locale {
             name = "<Ebon> the fire giant"
             text_100 = ["You hear a bonfire in the distance, only it sounds like it's breathing."]
         }
-        moyer_the_crooked {
+        moyer {
             name = "<Moyer> the crooked"
             text_100 = ["\"Hey now, I stopped, I stopped!\"", "\"Behold! a Legendary Giant of Fire! Be careful you aren't burned now.\"", "\"And if you think that's special, wait till you see what I got over here!\""]
         }
