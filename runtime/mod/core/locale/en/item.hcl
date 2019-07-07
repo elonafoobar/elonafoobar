@@ -2276,8 +2276,8 @@ locale {
                 }
             }
         }
-        rack_of_good {
-            name = "good"
+        rack_of_goods {
+            name = "goods"
             description {
                 main {
                     text = "Products for display or sale,"

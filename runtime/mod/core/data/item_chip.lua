@@ -1867,7 +1867,7 @@ data:add_multi(
          }
       },
       {
-         id = "rack_of_good",
+         id = "rack_of_goods",
          legacy_id = 256,
          source = {
             x = 1200,

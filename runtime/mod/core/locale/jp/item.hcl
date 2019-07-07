@@ -3900,7 +3900,7 @@ locale {
                 }
             }
         }
-        rack_of_good {
+        rack_of_goods {
             name = "日用品の棚"
             description {
                 main {

@@ -9780,7 +9780,7 @@
         rftags = []
         locale_key_prefix = "core.locale.item.well_kept_armor"
     }
-    rack_of_good {
+    rack_of_goods {
         legacy_id = 292
         image = 256
         value = 1800
@@ -9811,7 +9811,7 @@
         has_random_name = false
         tags = []
         rftags = []
-        locale_key_prefix = "core.locale.item.rack_of_good"
+        locale_key_prefix = "core.locale.item.rack_of_goods"
     }
     rack_of_accessories {
         legacy_id = 293

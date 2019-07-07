@@ -10076,7 +10076,7 @@ data:add_multi(
          locale_key_prefix = "core.locale.item.well_kept_armor",
       },
       {
-         id = "rack_of_good",
+         id = "rack_of_goods",
          legacy_id = 292,
          image = 256,
          value = 1800,
@@ -10107,7 +10107,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.rack_of_good",
+         locale_key_prefix = "core.locale.item.rack_of_goods",
       },
       {
          id = "rack_of_accessories",
