@@ -1035,7 +1035,7 @@
         color = "RandomSeeded"
         locale_key_prefix = "core.locale.item.sleeping_drug"
     }
-    bottle_of_crim_ale {
+    crim_ale {
         legacy_id = 31
         image = 354
         value = 280
@@ -1066,7 +1066,7 @@
         has_random_name = false
         tags = []
         rftags = []
-        locale_key_prefix = "core.locale.item.bottle_of_crim_ale"
+        locale_key_prefix = "core.locale.item.crim_ale"
     }
     spellbook_of_ice_bolt {
         legacy_id = 32

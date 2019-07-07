@@ -404,7 +404,7 @@ locale {
                 }
             }
         }
-        bottle_of_crim_ale {
+        crim_ale {
             name = "クリムエール"
             unidentified_name = "透明なポーション"
             description {

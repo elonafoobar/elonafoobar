@@ -1070,7 +1070,7 @@ data:add_multi(
          locale_key_prefix = "core.locale.item.sleeping_drug",
       },
       {
-         id = "bottle_of_crim_ale",
+         id = "crim_ale",
          legacy_id = 31,
          image = 354,
          value = 280,
@@ -1101,7 +1101,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_crim_ale",
+         locale_key_prefix = "core.locale.item.crim_ale",
       },
       {
          id = "spellbook_of_ice_bolt",

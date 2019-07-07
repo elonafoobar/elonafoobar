@@ -252,7 +252,7 @@ locale {
                 }
             }
         }
-        bottle_of_crim_ale {
+        crim_ale {
             name = "crim ale"
             unidentified_name = "clear liquid"
             description {
