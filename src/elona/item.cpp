@@ -1047,41 +1047,52 @@ std::string itemname(int item_index, int number, int skip_article)
             }
             else
             {
-                s3_ = u8"of"s;
+                s3_ = u8"of";
             }
             if (inv[item_index].identification_state !=
                     IdentifyState::unidentified &&
-                s2_ == ""s)
+                s2_ == "")
             {
                 if (inv[item_index].weight < 0)
                 {
-                    s2_ = u8"cargo"s;
+                    s2_ = u8"cargo";
                 }
                 if (a_ == 22000 || a_ == 18000)
                 {
-                    s2_ = u8"pair"s;
+                    s2_ = u8"pair";
                 }
             }
             if (a_ == 57000 && inv[item_index].param1 != 0 &&
                 inv[item_index].param2 != 0)
             {
-                s2_ = u8"dish"s;
+                s2_ = u8"dish";
             }
         }
         if (s2_ != ""s)
         {
             if (num2_ > 1)
             {
-                s_ = ""s + num2_ + u8" "s + s_ + s2_ + u8"s "s + s3_ + u8" "s;
+                if (s2_ == "variety")
+                {
+                    s_ = ""s + num2_ + u8" " + s_ + u8"variety " + s3_ + u8" ";
+                }
+                else if (s2_ == "dish")
+                {
+                    s_ = ""s + num2_ + u8" " + s_ + u8"dishes " + s3_ + u8" ";
+                }
+                else
+                {
+                    s_ = ""s + num2_ + u8" " + s_ + s2_ + u8"s " + s3_ + u8" ";
+                }
             }
             else
             {
-                s_ = s_ + s2_ + u8" "s + s3_ + u8" "s;
+                s_ = s_ + s2_ + u8" " + s3_ + u8" ";
             }
         }
         else if (num2_ > 1)
         {
-            s_ = ""s + num2_ + u8" "s + s_;
+            s_ = ""s + num2_ + u8" " + s_;
         }
     }
     if (inv[item_index].material == 35 && inv[item_index].param3 < 0)
@@ -1333,9 +1344,69 @@ label_0313_internal:
                 }
             }
         }
-        if (s2_ == ""s && inv[item_index].id != 618 && num2_ > 1)
+        if (s2_ == "" && inv[item_index].id != 618 && num2_ > 1)
         {
-            s_ += u8"s"s;
+            switch (s_.back())
+            {
+            case 'f':
+                if (strutil::ends_with(s_, "staff"))
+                {
+                    s_ = s_.substr(0, s_.size() - 2) + "ves"; // staff -> staves
+                }
+                else
+                {
+                    s_ =
+                        s_.substr(0, s_.size() - 1) + "ves"; // shelf -> shelves
+                }
+                break;
+            case 's':
+                if (!strutil::ends_with(s_, "stairs"))
+                {
+                    s_ += "es"; // upstairs -> upstairs / dress -> dresses
+                }
+                break;
+            case 'y':
+                if (strutil::ends_with(s_, "key") ||
+                    strutil::ends_with(s_, "toy"))
+                {
+                    s_ += "s"; // key -> keys / toy -> toys
+                }
+                else
+                {
+                    s_ = s_.substr(0, s_.size() - 1) +
+                        "ies"; // cherry -> cherries
+                }
+                break;
+            case 'o':
+                if (strutil::ends_with(s_, "tomato") ||
+                    strutil::ends_with(s_, "potato"))
+                {
+                    s_ += "es"; // tomato -> tomatoes / potato -> potatoes
+                }
+                else
+                {
+                    s_ += "s"; // piano -> pianos
+                }
+                break;
+            case 'x':
+                s_ += "es"; // box -> boxes
+                break;
+            case 'h':
+                if (strutil::ends_with(s_, "sh"))
+                {
+                    s_ += "es"; // dish -> dishes
+                }
+                else if (strutil::ends_with(s_, "ch"))
+                {
+                    s_ += "es"; // torch -> torches
+                }
+                else
+                {
+                    s_ += "s";
+                }
+                break;
+            default: s_ += "s"; break;
+            }
         }
         itemname_additional_info(item_index);
     }
