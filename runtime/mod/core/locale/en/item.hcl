@@ -5746,7 +5746,7 @@ locale {
             name = "skull bow"
         }
         pot_for_testing {
-            name = "pot for testing"
+            name = "for testing"
             description {
                 main {
                     text = "dev item"
@@ -5754,7 +5754,7 @@ locale {
             }
         }
         frying_pan_for_testing {
-            name = "frying pan for testing"
+            name = "for testing"
             description {
                 main {
                     text = "dev item"

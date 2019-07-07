@@ -26371,7 +26371,7 @@
         rarity = 1000000
         coefficient = 100
         light = 0
-        originalnameref2 = ""
+        originalnameref2 = "pot"
         has_random_name = false
         tags = []
         rftags = []
@@ -26405,7 +26405,7 @@
         rarity = 1000000
         coefficient = 100
         light = 0
-        originalnameref2 = ""
+        originalnameref2 = "frying pan"
         has_random_name = false
         tags = []
         rftags = []

@@ -1040,6 +1040,11 @@ std::string itemname(int item_index, int number, int skip_article)
             {
                 s3_ = u8"with"s;
             }
+            else if (strutil::contains(
+                         ioriginalnameref(inv[item_index].id), u8"for testing"))
+            {
+                s3_ = "";
+            }
             else
             {
                 s3_ = u8"of"s;
