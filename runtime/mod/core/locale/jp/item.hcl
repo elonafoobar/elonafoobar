@@ -1853,7 +1853,7 @@ locale {
                 }
             }
         }
-        statue_ornamented_with_plants {
+        pillar_ornamented_with_plants {
             name = "植物で飾られた柱"
             description {
                 main {
@@ -1866,7 +1866,7 @@ locale {
                 }
             }
         }
-        statue_ornamented_with_flowers {
+        pillar_ornamented_with_flowers {
             name = "花で飾られた柱"
             description {
                 main {
@@ -2217,7 +2217,7 @@ locale {
                 }
             }
         }
-        grave_of_ornamented_with_flowers {
+        grave_ornamented_with_flowers {
             name = "花で飾られた墓"
             description {
                 main {

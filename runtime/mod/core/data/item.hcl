@@ -4631,7 +4631,7 @@
         color = "RandomFurniture"
         locale_key_prefix = "core.locale.item.carnation"
     }
-    statue_ornamented_with_plants {
+    pillar_ornamented_with_plants {
         legacy_id = 138
         image = 525
         value = 3400
@@ -4658,13 +4658,13 @@
         rarity = 200000
         coefficient = 100
         light = 0
-        originalnameref2 = ""
+        originalnameref2 = "pillar"
         has_random_name = false
         tags = []
         rftags = []
-        locale_key_prefix = "core.locale.item.statue_ornamented_with_plants"
+        locale_key_prefix = "core.locale.item.pillar_ornamented_with_plants"
     }
-    statue_ornamented_with_flowers {
+    pillar_ornamented_with_flowers {
         legacy_id = 139
         image = 526
         value = 3900
@@ -4691,11 +4691,11 @@
         rarity = 200000
         coefficient = 100
         light = 0
-        originalnameref2 = ""
+        originalnameref2 = "pillar"
         has_random_name = false
         tags = []
         rftags = []
-        locale_key_prefix = "core.locale.item.statue_ornamented_with_flowers"
+        locale_key_prefix = "core.locale.item.pillar_ornamented_with_flowers"
     }
     canvas {
         legacy_id = 140
@@ -5573,7 +5573,7 @@
         rftags = []
         locale_key_prefix = "core.locale.item.crumbled_grave"
     }
-    grave_of_ornamented_with_flowers {
+    grave_ornamented_with_flowers {
         legacy_id = 166
         image = 158
         value = 3250
@@ -5604,7 +5604,7 @@
         has_random_name = false
         tags = []
         rftags = []
-        locale_key_prefix = "core.locale.item.grave_of_ornamented_with_flowers"
+        locale_key_prefix = "core.locale.item.grave_ornamented_with_flowers"
     }
     brand_new_grave {
         legacy_id = 167

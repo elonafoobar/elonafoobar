@@ -1054,16 +1054,16 @@ locale {
                 }
             }
         }
-        statue_ornamented_with_plants {
-            name = "statue ornamented with plants"
+        pillar_ornamented_with_plants {
+            name = "ornamented with plants"
             description {
                 main {
                     text = "A pillar designed after one's common in Eludernia,"
                 }
             }
         }
-        statue_ornamented_with_flowers {
-            name = "statue ornamented with flowers"
+        pillar_ornamented_with_flowers {
+            name = "ornamented with flowers"
             description {
                 main {
                     text = "A pillar designed after one's common in Eludernia,"
@@ -1278,7 +1278,7 @@ locale {
                 }
             }
         }
-        grave_of_ornamented_with_flowers {
+        grave_ornamented_with_flowers {
             name = "ornamented with flowers"
             description {
                 main {

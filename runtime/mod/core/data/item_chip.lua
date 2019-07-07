@@ -1060,7 +1060,7 @@ data:add_multi(
          }
       },
       {
-         id = "grave_of_ornamented_with_flowers",
+         id = "grave_ornamented_with_flowers",
          legacy_id = 158,
          shadow = 150,
          stack_height = 24,
@@ -4065,7 +4065,7 @@ data:add_multi(
          }
       },
       {
-         id = "statue_ornamented_with_plants",
+         id = "pillar_ornamented_with_plants",
          legacy_id = 525,
          offset_y = 20,
          tall = true,
@@ -4075,7 +4075,7 @@ data:add_multi(
          }
       },
       {
-         id = "statue_ornamented_with_flowers",
+         id = "pillar_ornamented_with_flowers",
          legacy_id = 526,
          offset_y = 20,
          tall = true,

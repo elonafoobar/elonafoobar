@@ -1038,7 +1038,7 @@ std::string itemname(int item_index, int number, int skip_article)
             if (strutil::contains(
                     ioriginalnameref(inv[item_index].id), u8"with"))
             {
-                s3_ = u8"with"s;
+                s3_ = "";
             }
             else if (strutil::contains(
                          ioriginalnameref(inv[item_index].id), u8"for testing"))
