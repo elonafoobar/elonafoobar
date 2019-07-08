@@ -138,9 +138,6 @@ ELONA_EXTERN(int catitem);
 ELONA_EXTERN(int rollanatomy);
 ELONA_EXTERN(int rtdmg);
 
-// draw.cpp
-ELONA_EXTERN(elona_vector1<std::string> tname);
-
 // turn_sequence.cpp
 ELONA_EXTERN(int tgloc);
 ELONA_EXTERN(int dbg_skipevent);
