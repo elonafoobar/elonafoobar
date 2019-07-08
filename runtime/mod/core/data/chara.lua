@@ -6089,7 +6089,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "gilbert_the_colonel",
+         id = "gilbert",
          legacy_id = 231,
          item_type = 3,
          tags = { "man" },
@@ -6753,7 +6753,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "garokk",
+         id = "garok",
          legacy_id = 208,
          item_type = 3,
          tags = { "man" },
@@ -6776,7 +6776,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         dialog_id = "core.garokk",
+         dialog_id = "core.garok",
       },
       {
          id = "miral",
@@ -7476,7 +7476,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "moyer_the_crooked",
+         id = "moyer",
          legacy_id = 203,
          item_type = 3,
          tags = { "man" },

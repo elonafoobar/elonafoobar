@@ -187,7 +187,7 @@ data:add_multi(
          }
       },
       {
-         id = "moyer_the_crooked",
+         id = "moyer",
          legacy_id = 23,
          source = {
             x = 1104,
@@ -2558,7 +2558,7 @@ data:add_multi(
          }
       },
       {
-         id = "garokk",
+         id = "garok",
          legacy_id = 352,
          source = {
             x = 1056,
@@ -2702,7 +2702,7 @@ data:add_multi(
          }
       },
       {
-         id = "gilbert_the_colonel",
+         id = "gilbert",
          legacy_id = 370,
          source = {
             x = 336,

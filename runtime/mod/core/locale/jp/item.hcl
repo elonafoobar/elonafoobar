@@ -404,7 +404,7 @@ locale {
                 }
             }
         }
-        bottle_of_crim_ale {
+        crim_ale {
             name = "クリムエール"
             unidentified_name = "透明なポーション"
             description {
@@ -1853,7 +1853,7 @@ locale {
                 }
             }
         }
-        statue_ornamented_with_plants {
+        pillar_ornamented_with_plants {
             name = "植物で飾られた柱"
             description {
                 main {
@@ -1866,7 +1866,7 @@ locale {
                 }
             }
         }
-        statue_ornamented_with_flowers {
+        pillar_ornamented_with_flowers {
             name = "花で飾られた柱"
             description {
                 main {
@@ -2217,7 +2217,7 @@ locale {
                 }
             }
         }
-        grave_of_ornamented_with_flowers {
+        grave_ornamented_with_flowers {
             name = "花で飾られた墓"
             description {
                 main {
@@ -2748,7 +2748,7 @@ locale {
                 }
             }
         }
-        bow_of_vinderre {
+        bow_of_vindale {
             name = "《異形の森の弓》"
             unidentified_name = "波動を放つ弓"
             description {
@@ -3900,7 +3900,7 @@ locale {
                 }
             }
         }
-        rack_of_good {
+        rack_of_goods {
             name = "日用品の棚"
             description {
                 main {
@@ -4480,7 +4480,7 @@ locale {
                 }
             }
         }
-        golden_statue {
+        statue_of_money {
             name = "金の像"
             description {
                 main {

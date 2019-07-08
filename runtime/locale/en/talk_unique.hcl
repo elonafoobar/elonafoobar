@@ -429,7 +429,7 @@ locale {
                 dies = "${basename(_1)} kills himself..."
             }
 
-            garokk {
+            garok {
                 dialog = "Don't you see I'm busy!"
             }
 
