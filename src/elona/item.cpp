@@ -1070,24 +1070,28 @@ std::string itemname(int item_index, int number, int skip_article)
         }
         if (s2_ != ""s)
         {
+            if (!s3_.empty())
+            {
+                s3_ += " ";
+            }
             if (num2_ > 1)
             {
                 if (s2_ == "variety")
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + u8"variety " + s3_ + u8" ";
+                    s_ = ""s + num2_ + u8" " + s_ + u8"variety " + s3_;
                 }
                 else if (s2_ == "dish")
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + u8"dishes " + s3_ + u8" ";
+                    s_ = ""s + num2_ + u8" " + s_ + u8"dishes " + s3_;
                 }
                 else
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + s2_ + u8"s " + s3_ + u8" ";
+                    s_ = ""s + num2_ + u8" " + s_ + s2_ + u8"s " + s3_;
                 }
             }
             else
             {
-                s_ = s_ + s2_ + u8" " + s3_ + u8" ";
+                s_ = s_ + s2_ + u8" " + s3_;
             }
         }
         else if (num2_ > 1)
