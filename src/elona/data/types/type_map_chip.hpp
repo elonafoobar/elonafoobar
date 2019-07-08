@@ -67,6 +67,6 @@ struct MapChip
 
 
 
-ELONA_DEFINE_LUA_DB(MapChipDB, MapChip, false, "core.map_chip")
+ELONA_DEFINE_LUA_DB(MapChipDB, MapChip, "core.map_chip")
 
 } // namespace elona

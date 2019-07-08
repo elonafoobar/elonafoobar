@@ -18,6 +18,6 @@ struct ItemChipData
 
 
 
-ELONA_DEFINE_LUA_DB(ItemChipDB, ItemChipData, true, "core.item_chip")
+ELONA_DEFINE_LUA_DB(ItemChipDB, ItemChipData, "core.item_chip")
 
 } // namespace elona

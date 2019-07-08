@@ -140,7 +140,7 @@ struct CharacterData
 
 
 
-ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, true, "core.chara")
+ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, "core.chara")
 
 
 

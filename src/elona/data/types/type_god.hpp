@@ -14,7 +14,7 @@ struct GodData
 
 
 
-ELONA_DEFINE_LUA_DB(GodDB, GodData, true, "core.god")
+ELONA_DEFINE_LUA_DB(GodDB, GodData, "core.god")
 
 
 

@@ -30,7 +30,7 @@ struct RaceData
 
 
 
-ELONA_DEFINE_LUA_DB(RaceDB, RaceData, false, "core.race")
+ELONA_DEFINE_LUA_DB(RaceDB, RaceData, "core.race")
 
 
 

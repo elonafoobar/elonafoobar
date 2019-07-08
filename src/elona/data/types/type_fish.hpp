@@ -21,7 +21,7 @@ struct FishData
 
 
 
-ELONA_DEFINE_LUA_DB(FishDB, FishData, true, "core.fish")
+ELONA_DEFINE_LUA_DB(FishDB, FishData, "core.fish")
 
 
 

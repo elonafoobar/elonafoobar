@@ -25,11 +25,7 @@ struct ItemMaterialData
 
 
 
-ELONA_DEFINE_LUA_DB(
-    ItemMaterialDB,
-    ItemMaterialData,
-    true,
-    "core.item_material")
+ELONA_DEFINE_LUA_DB(ItemMaterialDB, ItemMaterialData, "core.item_material")
 
 
 
