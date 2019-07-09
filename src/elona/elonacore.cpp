@@ -9426,10 +9426,12 @@ void sense_map_feats_on_move()
         if (p != 0)
         {
             std::string tname = ""s;
-            if(p == 1) {
+            if (p == 1)
+            {
                 tname = i18n::s.get("core.locale.item.chip.dryrock");
             }
-            if(p == 2) {
+            if (p == 2)
+            {
                 tname = i18n::s.get("core.locale.item.chip.field");
             }
 
