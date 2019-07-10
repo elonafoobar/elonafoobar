@@ -1001,9 +1001,6 @@ void draw_clear_loaded_chips()
 void initialize_all_chips()
 {
     initialize_mef();
-    SDIM3(tname, 16, 11);
-    tname(1) = i18n::s.get("core.locale.item.chip.dryrock");
-    tname(2) = i18n::s.get("core.locale.item.chip.field");
     draw_prepare_map_chips();
 }
 

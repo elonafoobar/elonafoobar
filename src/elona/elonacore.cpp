@@ -9425,9 +9425,19 @@ void sense_map_feats_on_move()
         p = chip_data.for_cell(x, y).kind;
         if (p != 0)
         {
-            if (tname(p) != ""s)
+            std::string tname = ""s;
+            if (p == 1)
             {
-                txt(i18n::s.get("core.locale.action.move.walk_into", tname(p)));
+                tname = i18n::s.get("core.locale.item.chip.dryrock");
+            }
+            if (p == 2)
+            {
+                tname = i18n::s.get("core.locale.item.chip.field");
+            }
+
+            if (tname != ""s)
+            {
+                txt(i18n::s.get("core.locale.action.move.walk_into", tname));
             }
             if (p == 3)
             {
