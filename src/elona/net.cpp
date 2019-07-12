@@ -108,14 +108,14 @@ void send_chat(ChatKind kind, const std::string& message)
         [](const auto& response) {
             if (response.status / 100 != 2)
             {
-                txt(i18n::s.get("core.locale.net.failed_to_send"));
+                txt(i18n::s.get("core.net.failed_to_send"));
                 ELONA_WARN("net.post") << chat_url << " " << response.status
                                        << " " << response.body;
                 return;
             }
         },
         [](const auto& error) {
-            txt(i18n::s.get("core.locale.net.failed_to_send"));
+            txt(i18n::s.get("core.net.failed_to_send"));
             ELONA_WARN(error.what());
         });
 
@@ -201,7 +201,7 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
         [&](const auto& response) {
             if (response.status / 100 != 2)
             {
-                txt(i18n::s.get("core.locale.net.failed_to_receive"));
+                txt(i18n::s.get("core.net.failed_to_receive"));
                 ELONA_WARN("net.get") << chat_url << " " << response.status
                                       << " " << response.body;
                 done = true;
@@ -263,7 +263,7 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
             done = true;
         },
         [&](const auto& error) {
-            txt(i18n::s.get("core.locale.net.failed_to_receive"));
+            txt(i18n::s.get("core.net.failed_to_receive"));
             ELONA_WARN(error.what());
             done = true;
         });
@@ -299,7 +299,7 @@ std::vector<PollData> net_receive_polls()
         [&](const auto& response) {
             if (response.status / 100 != 2)
             {
-                txt(i18n::s.get("core.locale.net.failed_to_receive"));
+                txt(i18n::s.get("core.net.failed_to_receive"));
                 ELONA_WARN("net.get") << poll_url << " " << response.status
                                       << " " << response.body;
                 done = true;
@@ -317,7 +317,7 @@ std::vector<PollData> net_receive_polls()
             done = true;
         },
         [&](const auto& error) {
-            txt(i18n::s.get("core.locale.net.failed_to_receive"));
+            txt(i18n::s.get("core.net.failed_to_receive"));
             ELONA_WARN(error.what());
             done = true;
         });
@@ -347,7 +347,7 @@ void net_send_chat(const std::string& message)
     send_chat(
         ChatKind::chat,
         i18n::s.get(
-            "core.locale.net.chat.sent_message",
+            "core.net.chat.sent_message",
             get_pc_alias(),
             get_pc_name(),
             message));
@@ -376,7 +376,7 @@ void net_send_death(
     send_chat(
         ChatKind::death,
         i18n::s.get(
-            "core.locale.net.death.sent_message",
+            "core.net.death.sent_message",
             get_pc_alias(),
             get_pc_name(),
             cause,
@@ -404,7 +404,7 @@ void net_send_wish(const std::string& input, const std::string& result)
     send_chat(
         ChatKind::wish,
         i18n::s.get(
-            "core.locale.net.wish.sent_message",
+            "core.net.wish.sent_message",
             get_pc_alias(),
             get_pc_name(),
             input,
@@ -431,7 +431,7 @@ void net_send_news(const std::string& locale_id, const std::string& extra_info)
     send_chat(
         ChatKind::news,
         i18n::s.get(
-            "core.locale.net.news." + locale_id,
+            "core.net.news." + locale_id,
             get_date(),
             get_pc_alias(),
             get_pc_name(),
@@ -460,14 +460,14 @@ void net_register_your_name()
         [](const auto& response) {
             if (response.status / 100 != 2)
             {
-                txt(i18n::s.get("core.locale.net.failed_to_send"));
+                txt(i18n::s.get("core.net.failed_to_send"));
                 ELONA_WARN("net.post") << poll_url << " " << response.status
                                        << " " << response.body;
                 return;
             }
         },
         [](const auto& error) {
-            txt(i18n::s.get("core.locale.net.failed_to_send"));
+            txt(i18n::s.get("core.net.failed_to_send"));
             ELONA_WARN(error.what());
         });
 }
@@ -494,14 +494,14 @@ void net_send_vote(int poll_id)
         [](const auto& response) {
             if (response.status / 100 != 2)
             {
-                txt(i18n::s.get("core.locale.net.failed_to_send"));
+                txt(i18n::s.get("core.net.failed_to_send"));
                 ELONA_WARN("net.post") << vote_url << " " << response.status
                                        << " " << response.body;
                 return;
             }
         },
         [](const auto& error) {
-            txt(i18n::s.get("core.locale.net.failed_to_send"));
+            txt(i18n::s.get("core.net.failed_to_send"));
             ELONA_WARN(error.what());
         });
 }

@@ -142,10 +142,10 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
     {
     case 0: addnews2(valn); break;
     case 1:
-        addnewstopic(u8"@01"s, i18n::s.get("core.locale.news.discovery.title"));
+        addnewstopic(u8"@01"s, i18n::s.get("core.news.discovery.title"));
         addnews2(
             i18n::s.get(
-                "core.locale.news.discovery.text",
+                "core.news.discovery.text",
                 cdatan(1, adventurer),
                 cdatan(0, adventurer),
                 valn,
@@ -153,41 +153,39 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
             1);
         break;
     case 2:
-        addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.growth.title"));
+        addnewstopic(u8"@02"s, i18n::s.get("core.news.growth.title"));
         addnews2(
             i18n::s.get(
-                "core.locale.news.growth.text",
+                "core.news.growth.text",
                 cdatan(1, adventurer),
                 cdatan(0, adventurer),
                 cdata[adventurer].level),
             1);
         break;
     case 3:
-        addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.recovery.title"));
+        addnewstopic(u8"@02"s, i18n::s.get("core.news.recovery.title"));
         addnews2(
             i18n::s.get(
-                "core.locale.news.recovery.text",
+                "core.news.recovery.text",
                 cdatan(1, adventurer),
                 cdatan(0, adventurer)),
             1);
         break;
     case 4:
-        addnewstopic(
-            u8"@03"s, i18n::s.get("core.locale.news.accomplishment.title"));
+        addnewstopic(u8"@03"s, i18n::s.get("core.news.accomplishment.title"));
         addnews2(
             i18n::s.get(
-                "core.locale.news.accomplishment.text",
+                "core.news.accomplishment.text",
                 cdatan(1, adventurer),
                 cdatan(0, adventurer),
                 fame),
             1);
         break;
     case 5:
-        addnewstopic(
-            u8"@04"s, i18n::s.get("core.locale.news.retirement.title"));
+        addnewstopic(u8"@04"s, i18n::s.get("core.news.retirement.title"));
         addnews2(
             i18n::s.get(
-                "core.locale.news.retirement.text",
+                "core.news.retirement.text",
                 cdatan(1, adventurer),
                 cdatan(0, adventurer)),
             1);
@@ -211,8 +209,7 @@ void adventurer_update()
                 cdata[rc].period_of_contract = 0;
                 cdata[rc].is_contracting() = false;
                 cdata[rc].relationship = 0;
-                txt(i18n::s.get(
-                    "core.locale.chara.contract_expired", cdata[rc]));
+                txt(i18n::s.get("core.chara.contract_expired", cdata[rc]));
             }
         }
         if (cdata[rc].current_map != game_data.current_map)

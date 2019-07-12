@@ -91,7 +91,7 @@ void UIMenuConfig::_draw_window(const std::string& title, int width, int height)
     }
     ui_display_window(
         title,
-        strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help"),
+        strhint3 + key_mode2 + i18n::s.get("core.ui.hint.help"),
         (windoww - width) / 2 + inf_screenx,
         y,
         width,
@@ -100,8 +100,7 @@ void UIMenuConfig::_draw_window(const std::string& title, int width, int height)
 
 void UIMenuConfig::_draw_deco()
 {
-    display_topic(
-        i18n::s.get("core.locale.config.common.menu"), wx + 34, wy + 36);
+    display_topic(i18n::s.get("core.config.common.menu"), wx + 34, wy + 36);
 
     if (mode == 10)
     {

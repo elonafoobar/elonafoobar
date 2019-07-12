@@ -41,8 +41,7 @@ bool UIMenuCharamakeClass::init()
     page = 0;
     pagesize = 0;
 
-    character_making_draw_background(
-        "core.locale.chara_making.select_class.caption");
+    character_making_draw_background("core.chara_making.select_class.caption");
 
     windowshadow = 1;
 
@@ -85,18 +84,18 @@ static void _draw_class_info(
     }
     mes(wx + 460,
         wy + 38,
-        i18n::s.get("core.locale.chara_making.select_race.race_info.race") +
-            u8": "s + race);
+        i18n::s.get("core.chara_making.select_race.race_info.race") + u8": "s +
+            race);
 
     draw_race_or_class_info(
-        i18n::s.get_m_optional("locale.class", class_id, "description")
+        i18n::s.get_m_optional("class", class_id, "description")
             .get_value_or(""));
 }
 
 void UIMenuCharamakeClass::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.chara_making.select_class.title"),
+        i18n::s.get("core.chara_making.select_class.title"),
         strhint3b,
         (windoww - 680) / 2 + inf_screenx,
         winposy(500, 1) + 20,
@@ -118,11 +117,9 @@ void UIMenuCharamakeClass::_draw_window()
         y);
     gmode(2);
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_class.class"),
-        wx + 28,
-        wy + 30);
+        i18n::s.get("core.chara_making.select_class.class"), wx + 28, wy + 30);
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_class.detail"),
+        i18n::s.get("core.chara_making.select_class.detail"),
         wx + 188,
         wy + 30);
 }

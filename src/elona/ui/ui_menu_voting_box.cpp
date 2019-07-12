@@ -26,12 +26,12 @@ bool UIMenuVotingBox::init()
     cc = 0;
     cs_bk = -1;
 
-    txt(i18n::s.get("core.locale.net.alias.message"));
+    txt(i18n::s.get("core.net.alias.message"));
 
     listmax = 0;
     list(0, listmax) = -999;
     list(1, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.locale.net.alias.submit");
+    listn(0, listmax) = i18n::s.get("core.net.alias.submit");
     ++listmax;
 
     for (const auto& poll : net_receive_polls())
@@ -45,7 +45,7 @@ bool UIMenuVotingBox::init()
 
     if (_can_vote_now)
     {
-        txt(i18n::s.get("core.locale.net.alias.prompt"));
+        txt(i18n::s.get("core.net.alias.prompt"));
         for (int i = 0; i < listmax; ++i)
         {
             if (i == 0)
@@ -64,7 +64,7 @@ bool UIMenuVotingBox::init()
     else
     {
         txt(i18n::s.get(
-            "core.locale.net.alias.cannot_vote_until",
+            "core.net.alias.cannot_vote_until",
             cnvdate(game_data.next_voting_time)));
         for (int i = 0; i < listmax; ++i)
         {
@@ -104,8 +104,8 @@ void UIMenuVotingBox::update()
 void UIMenuVotingBox::draw()
 {
     ui_display_window(
-        i18n::s.get("core.locale.net.alias.title"),
-        i18n::s.get("core.locale.net.alias.hint") + strhint2 + strhint3,
+        i18n::s.get("core.net.alias.title"),
+        i18n::s.get("core.net.alias.hint") + strhint2 + strhint3,
         (windoww - 640) / 2 + inf_screenx,
         winposy(448),
         640,
@@ -124,9 +124,8 @@ void UIMenuVotingBox::draw()
         wh - 80);
     gmode(2);
 
-    display_topic(
-        i18n::s.get("core.locale.net.alias.choice"), wx + 28, wy + 36);
-    display_topic(i18n::s.get("core.locale.net.alias.vote"), wx + 440, wy + 36);
+    display_topic(i18n::s.get("core.net.alias.choice"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.net.alias.vote"), wx + 440, wy + 36);
 
     keyrange = 0;
     for (int i = 0; i < pagesize; ++i)
@@ -161,13 +160,13 @@ void UIMenuVotingBox::draw()
             {
                 mes(wx + 90,
                     wy + 66 + i * 19 + 2,
-                    i18n::s.get("core.locale.net.alias.selected"));
+                    i18n::s.get("core.net.alias.selected"));
             }
             else
             {
                 mes(wx + 90,
                     wy + 66 + i * 19 + 2,
-                    i18n::s.get("core.locale.net.alias.rank", idx));
+                    i18n::s.get("core.net.alias.rank", idx));
             }
         }
         cs_list(cs == i, listn(0, idx), wx + 138, wy + 66 + i * 19 - 1);
@@ -193,7 +192,7 @@ optional<UIMenuVotingBox::ResultType> UIMenuVotingBox::on_key(
         const auto id = list(0, *idx);
 
         cs = i;
-        Prompt prompt("core.locale.net.alias");
+        Prompt prompt("core.net.alias");
 
         if (id == -999) // Register your name.
         {
@@ -206,14 +205,14 @@ optional<UIMenuVotingBox::ResultType> UIMenuVotingBox::on_key(
         if (!_can_vote_now)
         {
             snd("core.fail1");
-            txt(i18n::s.get("core.locale.net.alias.need_to_wait"));
+            txt(i18n::s.get("core.net.alias.need_to_wait"));
             set_reupdate();
             return none;
         }
 
         game_data.next_voting_time = game_data.date.hours() + 7 * 24; // 7 days
-        txt(i18n::s.get("core.locale.net.alias.i_like", listn(0, *idx)));
-        txt(i18n::s.get("core.locale.net.alias.you_vote"));
+        txt(i18n::s.get("core.net.alias.i_like", listn(0, *idx)));
+        txt(i18n::s.get("core.net.alias.you_vote"));
         net_send_vote(id);
         modrank(6, 100, 5);
 

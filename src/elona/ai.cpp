@@ -321,7 +321,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 if (sell != 0)
                 {
                     txt(i18n::s.get(
-                            "core.locale.ai.ally.sells_items",
+                            "core.ai.ally.sells_items",
                             cdata[cc],
                             sell(0),
                             sell(1)),
@@ -334,8 +334,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 {
                     cdata[cc].gold -= cdata[cc].level * 500;
                     snd("core.ding3");
-                    txt(i18n::s.get(
-                            "core.locale.ai.ally.visits_trainer", cdata[cc]),
+                    txt(i18n::s.get("core.ai.ally.visits_trainer", cdata[cc]),
                         Message::color{ColorIndex::cyan});
                     for (int cnt = 0; cnt < 4; ++cnt)
                     {
@@ -420,7 +419,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 if (did_swap && is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
+                        "core.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
                 if (cdata[tc].continuous_action.type ==
                     ContinuousAction::Type::eat)
@@ -430,9 +429,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                         if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
-                                "core.locale.ai.swap.glare",
-                                cdata[cc],
-                                cdata[tc]));
+                                "core.ai.swap.glare", cdata[cc], cdata[tc]));
                         }
                         cdata[tc].continuous_action.finish();
                     }
@@ -467,7 +464,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                                         if (is_in_fov(cdata[cc]))
                                         {
                                             txt(i18n::s.get(
-                                                "core.locale.ai.crushes_wall",
+                                                "core.ai.crushes_wall",
                                                 cdata[cc]));
                                         }
                                         return TurnResult::turn_end;
@@ -797,7 +794,7 @@ label_2692_internal:
                                                         .position.x;
                                             tlocy = cdata[game_data.fire_giant]
                                                         .position.y;
-                                            txt(i18n::s.get("core.locale.ai."
+                                            txt(i18n::s.get("core.ai."
                                                             "fire_giant"),
                                                 Message::color{
                                                     ColorIndex::cyan});
@@ -850,7 +847,7 @@ label_2692_internal:
                                     {
                                         snd("core.snow");
                                         txt(i18n::s.get(
-                                            "core.locale.ai.makes_snowman",
+                                            "core.ai.makes_snowman",
                                             cdata[cc],
                                             inv[ci]));
                                         return TurnResult::turn_end;
@@ -864,7 +861,7 @@ label_2692_internal:
                                 {
                                     tlocx = cdata.player().position.x;
                                     tlocy = cdata.player().position.y;
-                                    txt(i18n::s.get("core.locale.ai.snowball"),
+                                    txt(i18n::s.get("core.ai.snowball"),
                                         Message::color{ColorIndex::cyan});
                                     return do_throw_command();
                                 }
@@ -961,7 +958,7 @@ label_2692_internal:
                         {
                             if (is_in_fov(cdata[cc]))
                             {
-                                txt(i18n::s.get("core.locale.ai.snail"),
+                                txt(i18n::s.get("core.ai.snail"),
                                     Message::color{ColorIndex::cyan});
                             }
                             return do_throw_command();

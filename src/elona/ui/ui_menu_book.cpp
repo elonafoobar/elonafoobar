@@ -26,8 +26,7 @@ bool UIMenuBook::init()
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(
-        buff, 0, ""s + _book_id + u8","s + i18n::s.get("core.locale.meta.tag"));
+    p = instr(buff, 0, ""s + _book_id + u8","s + i18n::s.get("core.meta.tag"));
     if (p == -1)
     {
         return false;

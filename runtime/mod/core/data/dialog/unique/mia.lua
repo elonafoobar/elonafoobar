@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "mia",
-   root = "core.locale.talk.unique.mia",
+   root = "core.talk.unique.mia",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("mias_dream")

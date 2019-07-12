@@ -48,15 +48,14 @@ void dump_player_info()
     ss << std::endl;
 
     ss << "  " << fixtxt(cdatan(1, 0) + cdatan(0, 0), 34)
-       << i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex) << " "
+       << i18n::s.get_enum("core.ui.sex", cdata.player().sex) << " "
        << calcage(0) << u8"歳  " << cdata.player().height << u8"cm "
        << cdata.player().weight << u8"kg" << std::endl;
 
     ss << std::endl;
 
     ss << fixtxt(
-              u8"種族       : " +
-                  i18n::s.get_m("locale.race", cdatan(2, 0), "name"),
+              u8"種族       : " + i18n::s.get_m("race", cdatan(2, 0), "name"),
               30)
        << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
        << std::endl;
@@ -128,8 +127,8 @@ void dump_player_info()
         }
         s = fixtxt(s, 15);
         s = fixtxt(
-                i18n::s.get_enum("core.locale.ui.attribute", cnt) +
-                    u8"    : "s + sdata((10 + cnt), 0) + u8"("s +
+                i18n::s.get_enum("core.ui.attribute", cnt) + u8"    : "s +
+                    sdata((10 + cnt), 0) + u8"("s +
                     sdata.get(10 + cnt, 0).original_level + u8")"s,
                 24) +
             s;
@@ -188,8 +187,8 @@ void dump_player_info()
             listmax = 0;
         }
 
-        ss << i18n::s.get_enum("core.locale.ui.body_part", body_part / 10000)
-           << u8":" << std::endl;
+        ss << i18n::s.get_enum("core.ui.body_part", body_part / 10000) << u8":"
+           << std::endl;
         ss << item_name << u8" " << item_desc << std::endl;
         for (int i = 0; i < listmax; ++i)
         {
@@ -230,9 +229,9 @@ void dump_player_info()
         }
 
         ss << cdatan(0, idx) << u8" "
-           << i18n::s.get_m("locale.race", cdatan(2, idx), "name") << u8"の"
+           << i18n::s.get_m("race", cdatan(2, idx), "name") << u8"の"
            << class_get_name(cdatan(3, idx)) << u8" "
-           << i18n::s.get_enum("core.locale.ui.sex", chara.sex) << u8" "
+           << i18n::s.get_enum("core.ui.sex", chara.sex) << u8" "
            << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
            << u8" " << chara.weight << u8"kg" << std::endl;
         ss << u8"レベル " << chara.level;

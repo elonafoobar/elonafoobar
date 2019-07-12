@@ -14,8 +14,7 @@ static int _load_talk_entries()
     int _listmax = 0;
 
     list(0, 0) = _default_tone_index;
-    listn(0, 0) =
-        i18n::s.get("core.locale.action.interact.change_tone.default_tone");
+    listn(0, 0) = i18n::s.get("core.action.interact.change_tone.default_tone");
 
     ++_listmax;
     const auto base_dir = filesystem::dirs::user() / u8"talk";
@@ -67,8 +66,8 @@ void UIMenuNPCTone::update()
 void UIMenuNPCTone::draw()
 {
     ui_display_window(
-        i18n::s.get("core.locale.action.interact.change_tone.title"),
-        i18n::s.get("core.locale.action.interact.change_tone.hint") + strhint2 +
+        i18n::s.get("core.action.interact.change_tone.title"),
+        i18n::s.get("core.action.interact.change_tone.hint") + strhint2 +
             strhint3,
         (windoww - 500) / 2 + inf_screenx,
         winposy(400),
@@ -91,7 +90,7 @@ void UIMenuNPCTone::draw()
 
     gmode(2);
     display_topic(
-        i18n::s.get("core.locale.action.interact.change_tone.tone_title"),
+        i18n::s.get("core.action.interact.change_tone.tone_title"),
         wx + 28,
         wy + 36);
 

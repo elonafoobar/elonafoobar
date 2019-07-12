@@ -44,11 +44,11 @@ std::string class_get_name(const std::string& class_id)
 {
     if (class_id.empty())
     {
-        return i18n::s.get("core.locale.class.unemployed");
+        return i18n::s.get("core.class.unemployed");
     }
     else
     {
-        return i18n::s.get_m("locale.class", class_id, "name");
+        return i18n::s.get_m("class", class_id, "name");
     }
 }
 

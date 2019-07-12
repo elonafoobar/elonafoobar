@@ -29,7 +29,7 @@ void _do_save_game()
     int save_f = 0;
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
-        txt(i18n::s.get("core.locale.misc.save.cannot_save_in_user_map"),
+        txt(i18n::s.get("core.misc.save.cannot_save_in_user_map"),
             Message::color{ColorIndex::red});
         update_screen();
         return;
@@ -135,8 +135,7 @@ void save_game(bool no_message, bool silent)
 
     if (!no_message)
     {
-        txt(i18n::s.get("core.locale.ui.save"),
-            Message::color{ColorIndex::orange});
+        txt(i18n::s.get("core.ui.save"), Message::color{ColorIndex::orange});
     }
 }
 

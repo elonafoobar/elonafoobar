@@ -196,9 +196,9 @@ void gain_special_action()
         {
             spact(29) = 1;
             txt(i18n::s.get(
-                    "core.locale.skill.gained",
+                    "core.skill.gained",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(629)->get(),
                         "name")),
                 Message::color{ColorIndex::orange});
@@ -207,9 +207,9 @@ void gain_special_action()
         {
             spact(30) = 1;
             txt(i18n::s.get(
-                    "core.locale.skill.gained",
+                    "core.skill.gained",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(630)->get(),
                         "name")),
                 Message::color{ColorIndex::orange});
@@ -221,9 +221,9 @@ void gain_special_action()
         {
             spact(31) = 1;
             txt(i18n::s.get(
-                    "core.locale.skill.gained",
+                    "core.skill.gained",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(631)->get(),
                         "name")),
                 Message::color{ColorIndex::orange});

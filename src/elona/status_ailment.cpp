@@ -68,8 +68,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.blinded.apply",
-                        chara),
+                        "core.status_ailment.message.blinded.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -97,8 +96,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.confused.apply",
-                        chara),
+                        "core.status_ailment.message.confused.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -124,8 +122,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.paralyzed.apply",
-                        chara),
+                        "core.status_ailment.message.paralyzed.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -151,8 +148,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.poisoned.apply",
-                        chara),
+                        "core.status_ailment.message.poisoned.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -178,8 +174,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sleep.apply",
-                        chara),
+                        "core.status_ailment.message.sleep.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -209,8 +204,7 @@ void status_ailment_damage(
         }
         if (is_in_fov(chara))
         {
-            txt(i18n::s.get(
-                "core.locale.status_ailment.message.fear.apply", chara));
+            txt(i18n::s.get("core.status_ailment.message.fear.apply", chara));
         }
         return;
     case StatusAilment::dimmed:
@@ -229,8 +223,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.dimmed.apply",
-                        chara),
+                        "core.status_ailment.message.dimmed.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -254,8 +247,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.bleeding.apply",
-                        chara),
+                        "core.status_ailment.message.bleeding.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -275,7 +267,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                    "core.locale.status_ailment.message.drunk.apply", chara));
+                    "core.status_ailment.message.drunk.apply", chara));
             }
         }
         else
@@ -293,8 +285,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.insane.apply",
-                        chara),
+                        "core.status_ailment.message.insane.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -314,7 +305,7 @@ void status_ailment_damage(
             if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sick.apply", chara),
+                        "core.status_ailment.message.sick.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -355,7 +346,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.fear.heal", chara));
+                        "core.status_ailment.message.fear.heal", chara));
                 }
             }
             return;
@@ -378,8 +369,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.blinded.heal",
-                        chara));
+                        "core.status_ailment.message.blinded.heal", chara));
                 }
             }
             return;
@@ -402,8 +392,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.confused.heal",
-                        chara));
+                        "core.status_ailment.message.confused.heal", chara));
                 }
             }
             return;
@@ -426,8 +415,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.paralyzed.heal",
-                        chara));
+                        "core.status_ailment.message.paralyzed.heal", chara));
                 }
             }
             return;
@@ -450,8 +438,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.poisoned.heal",
-                        chara));
+                        "core.status_ailment.message.poisoned.heal", chara));
                 }
             }
             return;
@@ -474,8 +461,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sleep.heal",
-                        chara));
+                        "core.status_ailment.message.sleep.heal", chara));
                 }
             }
             return;
@@ -498,8 +484,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.dimmed.heal",
-                        chara));
+                        "core.status_ailment.message.dimmed.heal", chara));
                 }
             }
         }
@@ -521,8 +506,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.bleeding.heal",
-                        chara));
+                        "core.status_ailment.message.bleeding.heal", chara));
                 }
             }
         }
@@ -544,8 +528,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.drunk.heal",
-                        chara));
+                        "core.status_ailment.message.drunk.heal", chara));
                 }
             }
         }
@@ -567,8 +550,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.insane.heal",
-                        chara));
+                        "core.status_ailment.message.insane.heal", chara));
                 }
             }
         }
@@ -590,7 +572,7 @@ void status_ailment_heal(
                 if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sick.heal", chara));
+                        "core.status_ailment.message.sick.heal", chara));
                 }
             }
         }

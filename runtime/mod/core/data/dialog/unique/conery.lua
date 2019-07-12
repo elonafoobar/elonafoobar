@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "conery",
-   root = "core.locale.talk.unique.conery",
+   root = "core.talk.unique.conery",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("minotaur_king")

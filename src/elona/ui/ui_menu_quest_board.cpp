@@ -88,7 +88,7 @@ bool UIMenuQuestBoard::init()
 
     if (listmax == 0)
     {
-        txt(i18n::s.get("core.locale.ui.board.no_new_notices"));
+        txt(i18n::s.get("core.ui.board.no_new_notices"));
         return false;
     }
 
@@ -113,7 +113,7 @@ void UIMenuQuestBoard::update()
 
 void UIMenuQuestBoard::_draw_window()
 {
-    s(0) = i18n::s.get("core.locale.ui.board.title");
+    s(0) = i18n::s.get("core.ui.board.title");
     s(1) = strhint2 + strhint3b;
     gmode(0);
     gcopy(4, 0, 0, windoww, inf_ver, 0, 0);
@@ -205,7 +205,7 @@ void UIMenuQuestBoard::_draw_list_entry_difficulty(
         {
             mes(wx + 270 + cnt % 5 * 13,
                 y + dy + cnt / 5 * 8 + 2,
-                i18n::s.get("core.locale.ui.board.difficulty"),
+                i18n::s.get("core.ui.board.difficulty"),
                 col);
         }
     }
@@ -213,8 +213,7 @@ void UIMenuQuestBoard::_draw_list_entry_difficulty(
     {
         mes(wx + 270,
             y + 2,
-            i18n::s.get(
-                "core.locale.ui.board.difficulty_counter", difficulty_stars),
+            i18n::s.get("core.ui.board.difficulty_counter", difficulty_stars),
             col);
     }
 }
@@ -277,7 +276,7 @@ optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     if (auto selected = get_selected_item())
     {
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
+        txt(i18n::s.get("core.ui.board.do_you_meet"));
         if (!yes_no())
         {
             set_reupdate();

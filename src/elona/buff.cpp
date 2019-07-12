@@ -153,7 +153,7 @@ void buff_add(
     {
         if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.locale.magic.buff.no_effect"));
+            txt(i18n::s.get("core.magic.buff.no_effect"));
             return;
         }
     }
@@ -193,7 +193,7 @@ void buff_add(
             if (holy_veil->power + 50 > power * 5 / 2 ||
                 rnd(holy_veil->power + 50) > rnd(power + 1))
             {
-                txt(i18n::s.get("core.locale.magic.buff.holy_veil_repels"));
+                txt(i18n::s.get("core.magic.buff.holy_veil_repels"));
                 return;
             }
         }
@@ -201,7 +201,7 @@ void buff_add(
         {
             if (is_in_fov(chara))
             {
-                txt(i18n::s.get("core.locale.magic.buff.resists", chara));
+                txt(i18n::s.get("core.magic.buff.resists", chara));
             }
             return;
         }
@@ -217,11 +217,11 @@ void buff_add(
         if (buff->type != BuffType::food)
         {
             txt(i18n::s.get_enum_property(
-                "core.locale.buff", legacy_id, "apply", chara));
+                "core.buff", legacy_id, "apply", chara));
         }
 
         add_damage_popup(
-            i18n::s.get_enum_property("core.locale.buff", "name", legacy_id),
+            i18n::s.get_enum_property("core.buff", "name", legacy_id),
             chara.index,
             {255, 255, 255});
     }
@@ -238,16 +238,16 @@ void buff_delete(Character& chara, int slot)
     if (chara.index == 0)
     {
         txt(i18n::s.get(
-                "core.locale.magic.buff.ends",
+                "core.magic.buff.ends",
                 i18n::s.get_enum_property(
-                    "core.locale.buff", "name", chara.buffs[slot].id)),
+                    "core.buff", "name", chara.buffs[slot].id)),
             Message::color{ColorIndex::purple});
     }
     if (is_in_fov(chara))
     {
         add_damage_popup(
             i18n::s.get_enum_property(
-                "core.locale.buff", "name", chara.buffs[slot].id),
+                "core.buff", "name", chara.buffs[slot].id),
             chara.index,
             {191, 191, 191});
     }

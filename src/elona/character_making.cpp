@@ -172,8 +172,7 @@ MainMenuResult character_making_select_feats()
     DIM2(spact, 500);
     gain_race_feat();
 
-    character_making_draw_background(
-        "core.locale.chara_making.select_feats.caption");
+    character_making_draw_background("core.chara_making.select_feats.caption");
 
     MenuResult result = menu_feats_character_making();
     clear_background_in_character_making();
@@ -231,7 +230,7 @@ MainMenuResult character_making_customize_appearance()
     while (true)
     {
         character_making_draw_background(
-            "core.locale.chara_making.customize_appearance.caption");
+            "core.chara_making.customize_appearance.caption");
 
         cdata.player().has_own_sprite() = true;
         switch (menu_change_appearance(cdata.player()))
@@ -283,10 +282,10 @@ static int _prompt_satisfied()
     gcopy(0, 0, 100, windoww, windowh - 100, 0, 0);
     gsel(0);
     clear_background_in_character_making();
-    ui_draw_caption(i18n::s.get(
-        "core.locale.chara_making.final_screen.are_you_satisfied.prompt"));
+    ui_draw_caption(
+        i18n::s.get("core.chara_making.final_screen.are_you_satisfied.prompt"));
 
-    Prompt prompt("core.locale.chara_making.final_screen.are_you_satisfied");
+    Prompt prompt("core.chara_making.final_screen.are_you_satisfied");
     prompt.append("yes", snail::Key::key_a);
     prompt.append("no", snail::Key::key_b);
     prompt.append("restart", snail::Key::key_c);
@@ -323,7 +322,7 @@ MainMenuResult character_making_final_phase()
         while (true)
         {
             _draw_background_and_caption(
-                "core.locale.chara_making.final_screen.caption");
+                "core.chara_making.final_screen.caption");
 
             _reroll_character();
 
@@ -365,7 +364,7 @@ MainMenuResult character_making_final_phase()
     gcopy(2, 0, 0, windoww, windowh - 100, 0, 100);
     gmode(2);
     ui_draw_caption(
-        i18n::s.get("core.locale.chara_making.final_screen.what_is_your_name"));
+        i18n::s.get("core.chara_making.final_screen.what_is_your_name"));
 
     while (true)
     {
@@ -394,9 +393,9 @@ MainMenuResult character_making_final_phase()
             gmode(0);
             gcopy(2, 0, 0, windoww, windowh - 100, 0, 100);
             gmode(2);
-            ui_draw_caption(i18n::s.get(
-                "core.locale.chara_making.final_screen.name_is_already_"
-                "taken"));
+            ui_draw_caption(
+                i18n::s.get("core.chara_making.final_screen.name_is_already_"
+                            "taken"));
         }
     }
 
@@ -437,7 +436,7 @@ void draw_race_or_class_info(const std::string& description)
     tx = wx + 200;
     ty = wy + 166;
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_race.race_info.attribute_"
+        i18n::s.get("core.chara_making.select_race.race_info.attribute_"
                     "bonus.text"),
         tx,
         ty);
@@ -446,7 +445,7 @@ void draw_race_or_class_info(const std::string& description)
     for (int cnt = 0; cnt < 8; cnt++)
     {
         s(cnt) = i18n::s.get_enum(
-            "core.locale.chara_making.select_race.race_info.attribute_"
+            "core.chara_making.select_race.race_info.attribute_"
             "bonus",
             cnt);
     }
@@ -517,7 +516,7 @@ void draw_race_or_class_info(const std::string& description)
                 ty,
                 strmid(
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(r)->get(),
                         "name"),
                     0,
@@ -529,7 +528,7 @@ void draw_race_or_class_info(const std::string& description)
     }
     ty = wy + 260;
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_race.race_info.trained_"
+        i18n::s.get("core.chara_making.select_race.race_info.trained_"
                     "skill.text"),
         tx,
         ty);
@@ -537,7 +536,7 @@ void draw_race_or_class_info(const std::string& description)
     font(14 - en * 2);
     r = 0;
     s = i18n::s.get(
-        "core.locale.chara_making.select_race.race_info.trained_skill."
+        "core.chara_making.select_race.race_info.trained_skill."
         "proficient_in");
     for (int cnt = 100; cnt < 150; ++cnt)
     {
@@ -548,7 +547,7 @@ void draw_race_or_class_info(const std::string& description)
                 s += u8","s;
             }
             s += i18n::s.get_m(
-                "locale.ability",
+                "ability",
                 the_ability_db.get_id_from_legacy(cnt)->get(),
                 "name");
             ++r;
@@ -566,7 +565,7 @@ void draw_race_or_class_info(const std::string& description)
         if (sdata.get(cnt, 0).original_level != 0)
         {
             s = i18n::s.get_m(
-                "locale.ability",
+                "ability",
                 the_ability_db.get_id_from_legacy(cnt)->get(),
                 "name");
             if (jp)
@@ -588,7 +587,7 @@ void draw_race_or_class_info(const std::string& description)
                 ty + 6);
             s(1) = i18n::s
                        .get_m_optional(
-                           "locale.ability",
+                           "ability",
                            the_ability_db.get_id_from_legacy(cnt)->get(),
                            "description")
                        .get_value_or("");

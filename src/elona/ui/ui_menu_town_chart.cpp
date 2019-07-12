@@ -47,7 +47,7 @@ void UIMenuTownChart::update()
 void UIMenuTownChart::draw()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.town_chart.title"),
+        i18n::s.get("core.ui.town_chart.title"),
         strhint3b,
         (windoww - 580) / 2 + inf_screenx,
         winposy(400),
@@ -61,15 +61,13 @@ void UIMenuTownChart::draw()
         game_data.current_dungeon_level != 1)
     {
         font(14 - en * 2);
-        mes(wx + 40,
-            wy + 50,
-            i18n::s.get("core.locale.ui.town_chart.no_economy"));
+        mes(wx + 40, wy + 50, i18n::s.get("core.ui.town_chart.no_economy"));
     }
     else
     {
         display_topic(
             i18n::s.get(
-                "core.locale.ui.town_chart.chart",
+                "core.ui.town_chart.chart",
                 mapname(area_data[game_data.current_map].id)),
             wx + 40,
             wy + 34);
@@ -103,14 +101,11 @@ void UIMenuTownChart::draw()
             ++keyrange;
             display_key(x - 30, y + 21, cnt);
             font(12 + sizefix - en * 2);
-            bmes(
-                i18n::s.get_enum("core.locale.politics.post", p),
-                x - 2,
-                y + jp * 2);
+            bmes(i18n::s.get_enum("core.politics.post", p), x - 2, y + jp * 2);
             font(14 - en * 2);
             if (podata(0 + cnt, _city) == 0)
             {
-                s = i18n::s.get("core.locale.ui.town_chart.empty");
+                s = i18n::s.get("core.ui.town_chart.empty");
             }
             cs_list(cs == cnt, s, x - 2, y + 20);
             ++j0;

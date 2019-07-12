@@ -8,7 +8,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "lomias",
-   root = "core.locale.talk.unique.lomias",
+   root = "core.talk.unique.lomias",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("tutorial")
@@ -73,7 +73,7 @@ return {
       tutorial_3 = {
          text = {
             function()
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+               GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
                local scroll = Item.create(Chara.player().position, "core.scroll_of_identify", 0)
                scroll.identify_state = "Completely"
             end,
@@ -138,7 +138,7 @@ return {
                chest.param1 = 35
                chest.param2 = 25
                Item.create(Chara.player().position, "core.lockpick", 2)
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+               GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             end,
             {"tutorial.chests.dialog._2"},
          },
@@ -192,7 +192,7 @@ return {
             local corpse = Item.create(Chara.player().position, "core.corpse", 0)
             corpse.subname = 9
             corpse.identify_state = "Completely"
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 1)
          end
       },
@@ -216,9 +216,9 @@ return {
             Chara.find("core.larnneire", "Others"):vanquish()
             Chara.find("core.lomias", "Others"):vanquish()
 
-            GUI.txt(I18N.get("core.locale.quest.completed"))
+            GUI.txt(I18N.get("core.quest.completed"))
             GUI.play_sound("core.complete1")
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             for i=0,2 do
                Item.create(Chara.player().position, {flttypemajor = 60000})
             end
@@ -253,7 +253,7 @@ return {
             item = Item.create(Chara.player().position, "core.scroll_of_vanish_curse", 0)
             item.identify_state = "Completely"
             item.curse_state = "Blessed"
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 5)
          end
       },
@@ -267,7 +267,7 @@ return {
             {"__END__", "__MORE__"}
          },
          on_finish = function()
-            GUI.txt(I18N.get("core.locale.talk.unique.lomias.tutorial.equip.done.lomias_releases"), "Cyan")
+            GUI.txt(I18N.get("core.talk.unique.lomias.tutorial.equip.done.lomias_releases"), "Cyan")
             for i=0,2 do
                local putit = Chara.create(Chara.player().position, "core.putit")
                putit:set_flag("IsNotAttackedByEnemy", true)

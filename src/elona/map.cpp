@@ -1003,7 +1003,7 @@ void map_reload_noyel()
             {
                 cdata[rc].only_christmas() = true;
                 cdata[rc].is_hung_on_sand_bag() = true;
-                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.fanatic");
+                cdatan(0, rc) = i18n::s.get("core.chara.job.fanatic");
             }
         }
         {
@@ -1071,7 +1071,7 @@ void map_reload_noyel()
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
-                    "core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
+                    "core.chara.job.souvenir_vendor", cdatan(0, rc));
             }
         }
         {
@@ -1087,7 +1087,7 @@ void map_reload_noyel()
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
-                    "core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
+                    "core.chara.job.souvenir_vendor", cdatan(0, rc));
             }
         }
         {
@@ -1114,8 +1114,8 @@ void map_reload_noyel()
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
-                cdatan(0, rc) = i18n::s.get(
-                    "core.locale.chara.job.street_vendor", cdatan(0, rc));
+                cdatan(0, rc) =
+                    i18n::s.get("core.chara.job.street_vendor", cdatan(0, rc));
             }
         }
         {
@@ -1130,8 +1130,8 @@ void map_reload_noyel()
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
-                cdatan(0, rc) = i18n::s.get(
-                    "core.locale.chara.job.street_vendor2", cdatan(0, rc));
+                cdatan(0, rc) =
+                    i18n::s.get("core.chara.job.street_vendor2", cdatan(0, rc));
             }
         }
         for (int cnt = 0; cnt < 20; ++cnt)

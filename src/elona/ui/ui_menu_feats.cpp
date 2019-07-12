@@ -59,7 +59,7 @@ static void _add_trait_desc(int tc_, const std::string& trait_desc)
     list(0, listmax) = 1;
     list(1, listmax) = trait_desc_value;
     listn(0, listmax) = i18n::s.get(
-        "core.locale.trait.window.his_equipment",
+        "core.trait.window.his_equipment",
         cnven(
             (jp) ? ((tc_ == 0) ? u8"あなたの"
                                : (cdata[tc_].sex == 0 ? u8"彼の" : u8"彼女の"))
@@ -159,10 +159,10 @@ void UIMenuFeats::_draw_window_background(bool is_chara_making)
     }
 
     ui_display_window(
-        i18n::s.get("core.locale.trait.window.title"),
-        i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 +
-            strhint3 + key_mode + u8"," + key_identify + u8" [" +
-            i18n::s.get("core.locale.trait.window.ally") + u8"]",
+        i18n::s.get("core.trait.window.title"),
+        i18n::s.get("core.trait.window.enter") + "  " + strhint2 + strhint3 +
+            key_mode + u8"," + key_identify + u8" [" +
+            i18n::s.get("core.trait.window.ally") + u8"]",
         (windoww - 730) / 2 + inf_screenx,
         winposy(430, y_adjust) + y_adjust * 15,
         730,
@@ -173,9 +173,9 @@ void UIMenuFeats::_draw_window_background(bool is_chara_making)
 
 void UIMenuFeats::_draw_window_deco()
 {
-    s(0) = i18n::s.get("core.locale.trait.window.name");
-    s(1) = i18n::s.get("core.locale.trait.window.level");
-    s(2) = i18n::s.get("core.locale.trait.window.detail");
+    s(0) = i18n::s.get("core.trait.window.name");
+    s(1) = i18n::s.get("core.trait.window.level");
+    s(2) = i18n::s.get("core.trait.window.detail");
     display_topic(s, wx + 46, wy + 36);
     display_topic(s(2), wx + 255, wy + 36);
     draw_indexed("inventory_icon", wx + 46, wy - 16, 11);
@@ -234,13 +234,13 @@ void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
     if (tc_ == 0)
     {
         note = i18n::s.get(
-            "core.locale.trait.window.you_can_acquire",
+            "core.trait.window.you_can_acquire",
             game_data.acquirable_feat_count);
     }
     else
     {
-        note = i18n::s.get(
-            "core.locale.trait.window.your_trait", cnven(cdatan(0, tc)));
+        note =
+            i18n::s.get("core.trait.window.your_trait", cnven(cdatan(0, tc)));
     }
     display_note(note, 50);
 }
@@ -363,7 +363,7 @@ static bool _gain_trait(int p_, bool show_text)
     {
         if (show_text)
         {
-            txt(i18n::s.get("core.locale.trait.window.already_maxed"));
+            txt(i18n::s.get("core.trait.window.already_maxed"));
         }
         return false;
     }

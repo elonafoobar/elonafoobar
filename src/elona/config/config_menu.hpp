@@ -46,7 +46,7 @@ public:
         }
         else
         {
-            return i18n::s.get("core.locale.config.common.no_desc");
+            return i18n::s.get("core.config.common.no_desc");
         }
     }
 };
@@ -335,7 +335,7 @@ public:
         font(12 + sizefix - en * 2);
         mes(wx + 40,
             wy + wh - 70,
-            i18n::s.get("core.locale.config.common.require_restart"));
+            i18n::s.get("core.config.common.require_restart"));
     }
 };
 

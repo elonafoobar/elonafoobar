@@ -8,7 +8,7 @@ local Rand = Elona.require("Rand")
 
 return {
    id = "slan",
-   root = "core.locale.talk.unique.slan",
+   root = "core.talk.unique.slan",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("main_quest")
@@ -41,8 +41,8 @@ return {
             local item = Item.create(Chara.player().position, "core.bejeweled_chest", 0)
             item.param2 = 0
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.locale.talk.unique.slan.you_receive"))
-            GUI.txt(I18N.get("core.locale.talk.unique.slan.dies", t.speaker))
+            GUI.txt(I18N.get("core.talk.unique.slan.you_receive"))
+            GUI.txt(I18N.get("core.talk.unique.slan.dies", t.speaker))
             t.speaker:vanquish()
          end
       }

@@ -251,15 +251,15 @@ MainMenuResult main_title_menu()
     };
     std::vector<MainMenuItem> items = {
         {u8"Restore an Adventurer",
-         i18n::s.get("core.locale.main_menu.title_menu.continue")},
+         i18n::s.get("core.main_menu.title_menu.continue")},
         {u8"Generate an Adventurer",
-         i18n::s.get("core.locale.main_menu.title_menu.new")},
+         i18n::s.get("core.main_menu.title_menu.new")},
         {u8"Incarnate an Adventurer",
-         i18n::s.get("core.locale.main_menu.title_menu.incarnate")},
-        {u8"About", i18n::s.get("core.locale.main_menu.title_menu.about")},
-        {u8"Options", i18n::s.get("core.locale.main_menu.title_menu.options")},
-        {u8"Mods", i18n::s.get("core.locale.main_menu.title_menu.mods")},
-        {u8"Exit", i18n::s.get("core.locale.main_menu.title_menu.exit")},
+         i18n::s.get("core.main_menu.title_menu.incarnate")},
+        {u8"About", i18n::s.get("core.main_menu.title_menu.about")},
+        {u8"Options", i18n::s.get("core.main_menu.title_menu.options")},
+        {u8"Mods", i18n::s.get("core.main_menu.title_menu.mods")},
+        {u8"Exit", i18n::s.get("core.main_menu.title_menu.exit")},
     };
 
     keyrange = items.size();
@@ -568,13 +568,12 @@ MainMenuResult main_menu_continue()
         }
 
         clear_background_in_continue();
-        ui_draw_caption(
-            i18n::s.get("core.locale.main_menu.continue.which_save"));
+        ui_draw_caption(i18n::s.get("core.main_menu.continue.which_save"));
         windowshadow = 1;
     savegame_draw_page:
         ui_display_window(
-            i18n::s.get("core.locale.main_menu.continue.title"),
-            i18n::s.get("core.locale.main_menu.continue.key_hint") + strhint2 +
+            i18n::s.get("core.main_menu.continue.title"),
+            i18n::s.get("core.main_menu.continue.key_hint") + strhint2 +
                 strhint3b,
             (windoww - 440) / 2 + inf_screenx,
             winposy(288, 1),
@@ -604,7 +603,7 @@ MainMenuResult main_menu_continue()
             font(14 - en * 2);
             mes(wx + 140,
                 wy + 120,
-                i18n::s.get("core.locale.main_menu.continue.no_save"));
+                i18n::s.get("core.main_menu.continue.no_save"));
         }
         redraw();
 
@@ -641,13 +640,13 @@ MainMenuResult main_menu_continue()
                     p = list(0, cs);
                     playerid = listn(0, p);
                     ui_draw_caption(i18n::s.get(
-                        "core.locale.main_menu.continue.delete", playerid));
+                        "core.main_menu.continue.delete", playerid));
                     if (!yes_no())
                     {
                         return MainMenuResult::main_menu_continue;
                     }
                     ui_draw_caption(i18n::s.get(
-                        "core.locale.main_menu.continue.delete2", playerid));
+                        "core.main_menu.continue.delete2", playerid));
                     if (yes_no())
                     {
                         snd("core.ok1");
@@ -695,7 +694,7 @@ MainMenuResult main_menu_incarnate()
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.incarnate.which_gene"));
+    ui_draw_caption(i18n::s.get("core.main_menu.incarnate.which_gene"));
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
@@ -720,7 +719,7 @@ MainMenuResult main_menu_incarnate()
     while (1)
     {
         ui_display_window(
-            i18n::s.get("core.locale.main_menu.incarnate.title"),
+            i18n::s.get("core.main_menu.incarnate.title"),
             strhint3b,
             (windoww - 440) / 2 + inf_screenx,
             winposy(288, 1),
@@ -743,7 +742,7 @@ MainMenuResult main_menu_incarnate()
             font(14 - en * 2);
             mes(wx + 140,
                 wy + 120,
-                i18n::s.get("core.locale.main_menu.incarnate.no_gene"));
+                i18n::s.get("core.main_menu.incarnate.no_gene"));
         }
         redraw();
 
@@ -792,18 +791,18 @@ MainMenuResult main_menu_about()
 
     windowshadow = 1;
     ui_display_window(
-        i18n::s.get("core.locale.main_menu.about.title"),
+        i18n::s.get("core.main_menu.about.title"),
         strhint3b,
         (windoww - 440) / 2 + inf_screenx,
         winposy(288, 1),
         440,
         288);
 
-    s(0) = i18n::s.get("core.locale.main_menu.about.vanilla_homepage");
-    s(1) = i18n::s.get("core.locale.main_menu.about.foobar_homepage");
-    s(2) = i18n::s.get("core.locale.main_menu.about.foobar_changelog");
-    s(3) = i18n::s.get("core.locale.main_menu.about.license");
-    s(4) = i18n::s.get("core.locale.main_menu.about.credits");
+    s(0) = i18n::s.get("core.main_menu.about.vanilla_homepage");
+    s(1) = i18n::s.get("core.main_menu.about.foobar_homepage");
+    s(2) = i18n::s.get("core.main_menu.about.foobar_changelog");
+    s(3) = i18n::s.get("core.main_menu.about.license");
+    s(4) = i18n::s.get("core.main_menu.about.credits");
 
     gsel(0);
 
@@ -923,7 +922,7 @@ void main_menu_about_one_changelog(const Release& release)
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about_changelog.title"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about_changelog.title"));
 
     while (true)
     {
@@ -1004,7 +1003,7 @@ MainMenuResult main_menu_about_changelogs()
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about_changelog.title"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about_changelog.title"));
 
     Changelog changelog;
     if (jp)
@@ -1182,7 +1181,7 @@ MainMenuResult main_menu_about_license()
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about.license"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about.license"));
 
     while (true)
     {
@@ -1304,7 +1303,7 @@ MainMenuResult main_menu_about_credits()
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about.credits"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about.credits"));
 
     while (true)
     {
@@ -1384,15 +1383,15 @@ MainMenuResult main_menu_mods()
 
     windowshadow = 1;
     ui_display_window(
-        i18n::s.get("core.locale.main_menu.mods.title"),
+        i18n::s.get("core.main_menu.mods.title"),
         strhint3b,
         (windoww - 440) / 2 + inf_screenx,
         winposy(288, 1),
         440,
         288);
 
-    s(0) = i18n::s.get("core.locale.main_menu.mods.menu.list");
-    s(1) = i18n::s.get("core.locale.main_menu.mods.menu.develop");
+    s(0) = i18n::s.get("core.main_menu.mods.menu.list");
+    s(1) = i18n::s.get("core.main_menu.mods.menu.develop");
 
     gsel(0);
 
@@ -1485,14 +1484,14 @@ MainMenuResult main_menu_mods_develop()
 
             clear_background_in_continue();
             ui_draw_caption(
-                i18n::s.get("core.locale.main_menu.mod_develop.lets_create"));
+                i18n::s.get("core.main_menu.mod_develop.lets_create"));
             windowshadow = 1;
         }
 
         ui_display_window(
-            i18n::s.get("core.locale.main_menu.mod_develop.title"),
-            i18n::s.get("core.locale.main_menu.mod_develop.key_hint") +
-                strhint2 + strhint3b,
+            i18n::s.get("core.main_menu.mod_develop.title"),
+            i18n::s.get("core.main_menu.mod_develop.key_hint") + strhint2 +
+                strhint3b,
             (windoww - 440) / 2 + inf_screenx,
             winposy(288, 1),
             440,
@@ -1521,7 +1520,7 @@ MainMenuResult main_menu_mods_develop()
             font(14 - en * 2);
             mes(wx + 140,
                 wy + 120,
-                i18n::s.get("core.locale.main_menu.mod_develop.no_template"));
+                i18n::s.get("core.main_menu.mod_develop.no_template"));
         }
         redraw();
 
@@ -1552,18 +1551,16 @@ MainMenuResult main_menu_mods_develop()
                 const auto new_mod_id = inputlog(0);
                 if (!lua::is_valid_mod_id(new_mod_id))
                 {
-                    ModCreatePrompt(
-                        i18n::s.get(
-                            "core.locale.main_menu.mod_develop.invalid_id",
-                            new_mod_id))
+                    ModCreatePrompt(i18n::s.get(
+                                        "core.main_menu.mod_develop.invalid_id",
+                                        new_mod_id))
                         .query();
                 }
                 else if (lua::lua->get_mod_manager().exists(new_mod_id))
                 {
                     ModCreatePrompt(
                         i18n::s.get(
-                            "core.locale.main_menu.mod_develop.exist",
-                            new_mod_id))
+                            "core.main_menu.mod_develop.exist", new_mod_id))
                         .query();
                 }
                 else

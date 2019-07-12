@@ -734,9 +734,9 @@ public:
 
     // TODO: rename
     // Typical usage:
-    // i18n::s.get_m("locale.class", "modname.classname", "name")
+    // i18n::s.get_m("class", "modname.classname", "name")
     // // The above call is equivalent to:
-    // i18n::s.get("modname.locale.class.classname.name")
+    // i18n::s.get("modname.class.classname.name")
     ELONA_NODISCARD_ATTR
     std::string get_m(
         const I18NKey& data_type_key,
@@ -752,9 +752,9 @@ public:
 
     // TODO: rename
     // Typical usage:
-    // i18n::s.get_m_optional("locale.class", "modname.classname", "name")
+    // i18n::s.get_m_optional("class", "modname.classname", "name")
     // // The above call is equivalent to:
-    // i18n::s.get_optional("modname.locale.class.classname.name")
+    // i18n::s.get_optional("modname.class.classname.name")
     ELONA_NODISCARD_ATTR
     optional<std::string> get_m_optional(
         const I18NKey& data_type_key,

@@ -202,16 +202,15 @@ namespace elona
 
 void text_set()
 {
-    strhint1 = i18n::s.get("core.locale.ui.hint.cursor");
+    strhint1 = i18n::s.get("core.ui.hint.cursor");
     strhint2 = ""s + key_pageup + u8","s + key_pagedown +
-        i18n::s.get("core.locale.ui.hint.page");
-    strhint3 = i18n::s.get("core.locale.ui.hint.close");
-    strhint3b = i18n::s.get("core.locale.ui.hint.back");
-    strhint4 = i18n::s.get("core.locale.ui.hint.enter");
-    strhint5 =
-        ""s + key_identify + i18n::s.get("core.locale.ui.hint.known_info");
-    strhint5b = ""s + key_mode + i18n::s.get("core.locale.ui.hint.mode");
-    strhint7 = i18n::s.get("core.locale.ui.hint.shortcut");
+        i18n::s.get("core.ui.hint.page");
+    strhint3 = i18n::s.get("core.ui.hint.close");
+    strhint3b = i18n::s.get("core.ui.hint.back");
+    strhint4 = i18n::s.get("core.ui.hint.enter");
+    strhint5 = ""s + key_identify + i18n::s.get("core.ui.hint.known_info");
+    strhint5b = ""s + key_mode + i18n::s.get("core.ui.hint.mode");
+    strhint7 = i18n::s.get("core.ui.hint.shortcut");
 
     SDIM4(_melee, 20, 3, 8);
     if (jp)
@@ -349,13 +348,12 @@ void show_ex_help(int id)
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(
-        buff, 0, u8"%"s + id + u8","s + i18n::s.get("core.locale.meta.tag"));
+    p = instr(buff, 0, u8"%"s + id + u8","s + i18n::s.get("core.meta.tag"));
     if (p == -1)
     {
         dialog(
             u8"help index not found %"s + id + u8","s +
-            i18n::s.get("core.locale.meta.tag"));
+            i18n::s.get("core.meta.tag"));
         return;
     }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
@@ -380,7 +378,7 @@ void show_ex_help(int id)
         draw("deco_help_b", wx + 10, wy + 42);
         font(16 - en * 2, snail::Font::Style::bold);
         bmes(
-            i18n::s.get("core.locale.ui.exhelp.title"),
+            i18n::s.get("core.ui.exhelp.title"),
             wx + 142,
             wy + 13,
             {255, 245, 235},
@@ -500,7 +498,7 @@ static std::string _make_buff_power_string(int skill_id)
     const auto description =
         buff_get_description(buff_id, calcspellpower(skill_id, cc));
     return std::to_string(duration) +
-        i18n::s.get("core.locale.ui.spell.turn_counter") + " " + description;
+        i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }
 
 std::string make_spell_description(int skill_id)
@@ -550,13 +548,13 @@ std::string make_spell_description(int skill_id)
         }
         else
         {
-            result += i18n::s.get("core.locale.ui.spell.power") + bonus;
+            result += i18n::s.get("core.ui.spell.power") + bonus;
         }
         result += u8" "s;
     }
     result += i18n::s
                   .get_m_optional(
-                      "locale.ability",
+                      "ability",
                       the_ability_db.get_id_from_legacy(skill_id)->get(),
                       "description")
                   .get_value_or("");
@@ -698,44 +696,36 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             listmax = 0;
             if (page == 0)
             {
-                s(0) = i18n::s.get("core.locale.ui.appearance.basic.done");
-                s(1) = i18n::s.get("core.locale.ui.appearance.basic.portrait");
-                s(2) = i18n::s.get("core.locale.ui.appearance.basic.hair");
-                s(3) = i18n::s.get("core.locale.ui.appearance.basic.sub_hair");
-                s(4) =
-                    i18n::s.get("core.locale.ui.appearance.basic.hair_color");
-                s(5) = i18n::s.get("core.locale.ui.appearance.basic.body");
-                s(6) = i18n::s.get("core.locale.ui.appearance.basic.cloth");
-                s(7) = i18n::s.get("core.locale.ui.appearance.basic.pants");
-                s(8) =
-                    i18n::s.get("core.locale.ui.appearance.basic.set_detail");
+                s(0) = i18n::s.get("core.ui.appearance.basic.done");
+                s(1) = i18n::s.get("core.ui.appearance.basic.portrait");
+                s(2) = i18n::s.get("core.ui.appearance.basic.hair");
+                s(3) = i18n::s.get("core.ui.appearance.basic.sub_hair");
+                s(4) = i18n::s.get("core.ui.appearance.basic.hair_color");
+                s(5) = i18n::s.get("core.ui.appearance.basic.body");
+                s(6) = i18n::s.get("core.ui.appearance.basic.cloth");
+                s(7) = i18n::s.get("core.ui.appearance.basic.pants");
+                s(8) = i18n::s.get("core.ui.appearance.basic.set_detail");
                 if (chara.index != 0)
                 {
-                    s(9) =
-                        i18n::s.get("core.locale.ui.appearance.basic.custom");
+                    s(9) = i18n::s.get("core.ui.appearance.basic.custom");
                 }
                 else
                 {
-                    s(9) =
-                        i18n::s.get("core.locale.ui.appearance.basic.riding");
+                    s(9) = i18n::s.get("core.ui.appearance.basic.riding");
                 }
                 p = 9 + (chara.index != 0) +
                     (chara.index == 0) * (game_data.mount != 0);
             }
             else
             {
-                s(0) =
-                    i18n::s.get("core.locale.ui.appearance.detail.body_color");
-                s(1) =
-                    i18n::s.get("core.locale.ui.appearance.detail.cloth_color");
-                s(2) =
-                    i18n::s.get("core.locale.ui.appearance.detail.pants_color");
-                s(3) = i18n::s.get("core.locale.ui.appearance.detail.etc_1");
-                s(4) = i18n::s.get("core.locale.ui.appearance.detail.etc_2");
-                s(5) = i18n::s.get("core.locale.ui.appearance.detail.etc_3");
-                s(6) = i18n::s.get("core.locale.ui.appearance.detail.eyes");
-                s(7) =
-                    i18n::s.get("core.locale.ui.appearance.detail.set_basic");
+                s(0) = i18n::s.get("core.ui.appearance.detail.body_color");
+                s(1) = i18n::s.get("core.ui.appearance.detail.cloth_color");
+                s(2) = i18n::s.get("core.ui.appearance.detail.pants_color");
+                s(3) = i18n::s.get("core.ui.appearance.detail.etc_1");
+                s(4) = i18n::s.get("core.ui.appearance.detail.etc_2");
+                s(5) = i18n::s.get("core.ui.appearance.detail.etc_3");
+                s(6) = i18n::s.get("core.ui.appearance.detail.eyes");
+                s(7) = i18n::s.get("core.ui.appearance.detail.set_basic");
                 p = 8;
             }
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -759,17 +749,15 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
 
         pagesize = 0;
         ui_display_window(
-            i18n::s.get("core.locale.ui.appearance.basic.title"),
-            i18n::s.get("core.locale.ui.appearance.hint"),
+            i18n::s.get("core.ui.appearance.basic.title"),
+            i18n::s.get("core.ui.appearance.hint"),
             (windoww - 380) / 2 + inf_screenx,
             winposy(340) - 12,
             380,
             340);
         pagesize = listmax;
         display_topic(
-            i18n::s.get("core.locale.ui.appearance.basic.category"),
-            wx + 34,
-            wy + 36);
+            i18n::s.get("core.ui.appearance.basic.category"), wx + 34, wy + 36);
         draw("deco_mirror_a", wx + ww - 40, wy);
         window2(wx + 234, wy + 71, 88, 120, 1, 1);
         if (cs == 1 && page == 0)
@@ -995,12 +983,12 @@ void change_appearance_equipment(Character& chara)
     cs_bk = -1;
     windowshadow = 1;
     listmax = 0;
-    s(0) = i18n::s.get("core.locale.ui.appearance.equipment.done");
-    s(1) = i18n::s.get("core.locale.ui.appearance.equipment.chest");
-    s(2) = i18n::s.get("core.locale.ui.appearance.equipment.leg");
-    s(3) = i18n::s.get("core.locale.ui.appearance.equipment.belt");
-    s(4) = i18n::s.get("core.locale.ui.appearance.equipment.glove");
-    s(5) = i18n::s.get("core.locale.ui.appearance.equipment.mantle");
+    s(0) = i18n::s.get("core.ui.appearance.equipment.done");
+    s(1) = i18n::s.get("core.ui.appearance.equipment.chest");
+    s(2) = i18n::s.get("core.ui.appearance.equipment.leg");
+    s(3) = i18n::s.get("core.ui.appearance.equipment.belt");
+    s(4) = i18n::s.get("core.ui.appearance.equipment.glove");
+    s(5) = i18n::s.get("core.ui.appearance.equipment.mantle");
     p = 6;
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
@@ -1026,13 +1014,13 @@ void change_appearance_equipment(Character& chara)
         ++tick;
         pagesize = 0;
         ui_display_window(
-            i18n::s.get("core.locale.ui.appearance.equipment.title"),
-            i18n::s.get("core.locale.ui.appearance.hint"),
+            i18n::s.get("core.ui.appearance.equipment.title"),
+            i18n::s.get("core.ui.appearance.hint"),
             (windoww - 360) / 2 + inf_screenx,
             winposy(289) - 12,
             360,
             289);
-        s = i18n::s.get("core.locale.ui.appearance.equipment.part");
+        s = i18n::s.get("core.ui.appearance.equipment.part");
         pagesize = listmax;
         display_topic(s, wx + 34, wy + 36);
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
@@ -1145,22 +1133,21 @@ void append_accuracy_info(int val0)
         {
             attackskill = inv[cw].skill;
             ++p(1);
-            s(1) =
-                i18n::s.get("core.locale.ui.chara_sheet.damage.melee") + p(1);
+            s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
             show_weapon_dice(val0);
         }
     }
     if (attackskill == 106)
     {
-        s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.unarmed");
+        s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
         show_weapon_dice(val0);
     }
     attacknum = 0;
     int stat = can_do_ranged_attack();
     if (stat == 1)
     {
-        s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.dist");
+        s(1) = i18n::s.get("core.ui.chara_sheet.damage.dist");
         show_weapon_dice(val0);
     }
 }
@@ -1173,7 +1160,7 @@ void show_weapon_dice(int val0)
     {
         mes(wx + 590,
             wy + 281 + p(2) * 16,
-            i18n::s.get("core.locale.ui.chara_sheet.damage.hit"),
+            i18n::s.get("core.ui.chara_sheet.damage.hit"),
             {20, 10, 0});
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
@@ -1399,13 +1386,13 @@ label_1965_internal:
         page = 0;
     }
     ui_display_window(
-        i18n::s.get("core.locale.ui.analysis.title"),
+        i18n::s.get("core.ui.analysis.title"),
         strhint2 + strhint3b,
         (windoww - 400) / 2 + inf_screenx,
         winposy(448),
         400,
         448);
-    s = i18n::s.get("core.locale.ui.analysis.result");
+    s = i18n::s.get("core.ui.analysis.result");
     display_topic(s, wx + 28, wy + 36);
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -1459,8 +1446,7 @@ int change_npc_tone()
 
     snd("core.ok1");
     txt(i18n::s.get(
-        "core.locale.action.interact.change_tone.is_somewhat_different",
-        cdata[tc]));
+        "core.action.interact.change_tone.is_somewhat_different", cdata[tc]));
 
     if (result.value)
     {
@@ -1488,7 +1474,7 @@ void item_show_description()
 {
     if (ci < 0)
     {
-        dialog(i18n::s.get("core.locale.item.desc.window.error"));
+        dialog(i18n::s.get("core.item.desc.window.error"));
         return;
     }
 
@@ -1503,7 +1489,7 @@ void menu_chat_dialog()
 {
     if (!net_can_send_chat_now())
     {
-        txt(i18n::s.get("core.locale.net.chat.wait_more"));
+        txt(i18n::s.get("core.net.chat.wait_more"));
         return;
     }
 
@@ -1514,8 +1500,7 @@ void menu_chat_dialog()
         return;
     }
 
-    const auto message =
-        i18n::s.get("core.locale.net.chat.message", inputlog(0));
+    const auto message = i18n::s.get("core.net.chat.message", inputlog(0));
     txt(message);
     net_send_chat(message);
 }

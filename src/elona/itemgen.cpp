@@ -242,7 +242,7 @@ optional<int> do_create_item(int slot, int x, int y)
             if (cdata[owner].character_role == 13)
             {
                 artifactlocation.push_back(i18n::s.get(
-                    "core.locale.magic.oracle.was_held_by",
+                    "core.magic.oracle.was_held_by",
                     cnven(iknownnameref(inv[ci].id)),
                     cdata[owner],
                     mapname(cdata[owner].current_map),
@@ -258,7 +258,7 @@ optional<int> do_create_item(int slot, int x, int y)
         if (owner == -1)
         {
             artifactlocation.push_back(i18n::s.get(
-                "core.locale.magic.oracle.was_created_at",
+                "core.magic.oracle.was_created_at",
                 iknownnameref(inv[ci].id),
                 mdatan(0),
                 game_data.date.day,

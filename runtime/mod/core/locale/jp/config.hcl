@@ -96,7 +96,7 @@ DOC
                 }
                 story {
                     name = "シーンの再生"
-                    yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
+                    yes_no = core.config.common.yes_no.saisei_suru_shinai
                     doc = "Elonaのメインストーリーを再生します。"
                 }
                 hide_autoidentify {
@@ -113,12 +113,12 @@ DOC
                 name = "画面と音の設定"
                 sound {
                     name = "サウンドの再生*"
-                    yes_no = core.locale.config.common.yes_no.ari_nashi
+                    yes_no = core.config.common.yes_no.ari_nashi
                     doc = "SEを再生します。"
                 }
                 music {
                     name = "BGMの再生*"
-                    yes_no = core.locale.config.common.yes_no.ari_nashi
+                    yes_no = core.config.common.yes_no.ari_nashi
                     doc = "BGMを再生します。"
                 }
                 stereo_sound {
@@ -161,7 +161,7 @@ DOC
                 }
                 high_quality_shadows {
                     name = "光源の描写"
-                    yes_no = core.locale.config.common.yes_no.kougashitsu_teigashitsu
+                    yes_no = core.config.common.yes_no.kougashitsu_teigashitsu
                     doc = <<DOC
 影の描写品質を設定します。
 高画質は描写速度がやや低下しますが、影がより綺麗に表示されます。
@@ -169,12 +169,12 @@ DOC
                 }
                 object_shadows {
                     name = "アイテムの影描写"
-                    yes_no = core.locale.config.common.yes_no.ari_nashi_slow_fast
+                    yes_no = core.config.common.yes_no.ari_nashi_slow_fast
                     doc = "地面に置かれたアイテムの下に影を表示します。"
                 }
                 heartbeat {
                     name = "心臓の音"
-                    yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
+                    yes_no = core.config.common.yes_no.saisei_suru_shinai
                     doc = "HPが残り少ないとき、心拍音を再生します。"
                 }
                 heartbeat_threshold {
@@ -253,7 +253,7 @@ DOC
                 }
                 chat_receive_interval {
                     name = "受信頻度"
-                    formatter = core.locale.config.common.formatter.every_minutes
+                    formatter = core.config.common.formatter.every_minutes
                     doc = <<DOC
 チャットや死亡ログ、願いログを受け取る頻度を設定します。
 DOC
@@ -279,11 +279,11 @@ DOC
                 }
                 general_wait {
                     name = "キーウェイト"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 anime_wait {
                     name = "アニメウェイト"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                     doc = "アニメーションの長さです。"
                 }
                 alert_wait {
@@ -309,7 +309,7 @@ DOC
                 title_effect {
                     name = "タイトルの水の波紋"
                     doc = "タイトル画面に水の波紋のエフェクトを表示します。"
-                    yes_no = core.locale.config.common.yes_no.on_off
+                    yes_no = core.config.common.yes_no.on_off
                 }
                 window_anime {
                     name = "ウィンドウアニメ"
@@ -317,7 +317,7 @@ DOC
                 }
                 screen_refresh {
                     name = "画面の更新頻度"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
             }
 
@@ -328,11 +328,11 @@ DOC
                 }
                 walk_wait {
                     name = "歩きの速さ"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 run_wait {
                     name = "走りの速さ"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 start_run_wait {
                     name = "走り開始の速さ"
@@ -340,35 +340,35 @@ DOC
                 }
                 attack_wait {
                     name = "攻撃の間隔"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 key_wait {
                     name = "キーウェイト"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 initial_key_repeat_wait {
                     name = "キーリピートウェイト(開始)"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 key_repeat_wait {
                     name = "キーリピートウェイト"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 select_wait {
                     name = "選択ウェイト"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 select_fast_start_wait {
                     name = "選択ウェイト(早い,開始)"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 select_fast_wait {
                     name = "選択ウェイト(早い)"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 joypad {
                     name = "ゲームパッド"
-                    yes_no = core.locale.config.common.yes_no.unsupported # core.locale.config.common.yes_no.shiyou_suru_shinai
+                    yes_no = core.config.common.yes_no.unsupported # core.config.common.yes_no.shiyou_suru_shinai
                 }
             }
 
@@ -483,17 +483,17 @@ DOC
                 }
                 autopick {
                     name = "Autopick"
-                    yes_no = core.locale.config.common.yes_no.tsukau_tsukawanai
+                    yes_no = core.config.common.yes_no.tsukau_tsukawanai
                     doc = "特定のアイテムの上に乗ったとき自動でそのアイテムを拾います。"
                 }
                 autosave {
                     name = "オートセーブ"
-                    yes_no = core.locale.config.common.yes_no.yuukou_mukou
+                    yes_no = core.config.common.yes_no.yuukou_mukou
                     doc = "特定の行動をした後に自動でセーブされます。"
                 }
                 damage_popup {
                     name = "ダメージポップアップ"
-                    yes_no = core.locale.config.common.yes_no.ari_nashi
+                    yes_no = core.config.common.yes_no.ari_nashi
                 }
                 max_damage_popup {
                     name = "ダメージポップアップ最大数"

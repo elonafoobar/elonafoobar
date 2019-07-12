@@ -726,7 +726,7 @@ void init()
         // If no font is specified in `config.hcl`, use a pre-defined font
         // depending on each language.
         Config::instance().font_filename =
-            i18n::s.get("core.locale.meta.default_font");
+            i18n::s.get("core.meta.default_font");
         if (jp)
         {
             // TODO: work around

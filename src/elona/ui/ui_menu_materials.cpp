@@ -61,10 +61,8 @@ void UIMenuMaterials::_draw_window()
 {
     std::string hints = strhint2 + strhint3b;
     showscroll(hints, wx, wy, ww, wh);
-    display_topic(
-        i18n::s.get("core.locale.ui.material.name"), wx + 38, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.material.detail"), wx + 296, wy + 36);
+    display_topic(i18n::s.get("core.ui.material.name"), wx + 38, wy + 36);
+    display_topic(i18n::s.get("core.ui.material.detail"), wx + 296, wy + 36);
 }
 
 void UIMenuMaterials::_draw_key(int cnt)
@@ -95,7 +93,7 @@ void UIMenuMaterials::_draw_keys()
 void UIMenuMaterials::_draw_single_list_entry_name(int cnt, int list_item)
 {
     std::string mat_name = ""s + matname(list_item) + " " +
-        i18n::s.get("core.locale.crafting.menu.x") + " " + mat(list_item);
+        i18n::s.get("core.crafting.menu.x") + " " + mat(list_item);
     cs_list(cs == cnt, mat_name, wx + 96, wy + 66 + cnt * 19 - 1);
 }
 

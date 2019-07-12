@@ -17,7 +17,7 @@ local function mod_skill_level_clamp(args, id, amount)
 end
 
 local function get_description(self, power)
-   return I18N.get_enum_property("core.locale.buff", "description", self.legacy_id, self._effect(power))
+   return I18N.get_enum_property("core.buff", "description", self.legacy_id, self._effect(power))
 end
 
 --[[

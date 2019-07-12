@@ -14,7 +14,7 @@ namespace lua
  * string doesn't exist.
  * @tparam string key the ID of the localization string
  * @treturn string the formatted string
- * @usage I18N.get("core.locale.map.you_see", "Vernis")
+ * @usage I18N.get("core.map.you_see", "Vernis")
  */
 std::string LuaApiI18N::get(const std::string& key, sol::variadic_args args)
 {

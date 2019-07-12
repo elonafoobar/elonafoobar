@@ -36,7 +36,7 @@ bool UIMenuGameHelp::init()
     }
 
     list(0, 0) = 0 /* dummy */;
-    listn(0, 0) = i18n::s.get("core.locale.ui.manual.keys.list");
+    listn(0, 0) = i18n::s.get("core.ui.manual.keys.list");
     ++listmax;
 
     _help.load(i18n::s.get_locale_dir("core") / "lazy" / "manual.txt");
@@ -73,25 +73,21 @@ void UIMenuGameHelp::_draw_key_list()
     {
         // Section "Item"
         display_topic(
-            i18n::s.get("core.locale.ui.manual.keys.item.title"),
-            x + 18,
-            y + 30);
+            i18n::s.get("core.ui.manual.keys.item.title"), x + 18, y + 30);
 
         std::vector<KeyDescPair> keys{
-            {key_get, i18n::s.get("core.locale.ui.manual.keys.item.get")},
-            {key_read, i18n::s.get("core.locale.ui.manual.keys.item.read")},
-            {key_drop, i18n::s.get("core.locale.ui.manual.keys.item.drop")},
-            {key_zap, i18n::s.get("core.locale.ui.manual.keys.item.zap")},
-            {key_inventory,
-             i18n::s.get("core.locale.ui.manual.keys.item.examine")},
-            {key_use, i18n::s.get("core.locale.ui.manual.keys.item.tool")},
-            {key_wear,
-             i18n::s.get("core.locale.ui.manual.keys.item.wear_wield")},
-            {key_dip, i18n::s.get("core.locale.ui.manual.keys.item.blend")},
-            {key_eat, i18n::s.get("core.locale.ui.manual.keys.item.eat")},
-            {key_throw, i18n::s.get("core.locale.ui.manual.keys.item.throw")},
-            {key_drink, i18n::s.get("core.locale.ui.manual.keys.item.quaff")},
-            {key_ammo, i18n::s.get("core.locale.ui.manual.keys.item.ammo")},
+            {key_get, i18n::s.get("core.ui.manual.keys.item.get")},
+            {key_read, i18n::s.get("core.ui.manual.keys.item.read")},
+            {key_drop, i18n::s.get("core.ui.manual.keys.item.drop")},
+            {key_zap, i18n::s.get("core.ui.manual.keys.item.zap")},
+            {key_inventory, i18n::s.get("core.ui.manual.keys.item.examine")},
+            {key_use, i18n::s.get("core.ui.manual.keys.item.tool")},
+            {key_wear, i18n::s.get("core.ui.manual.keys.item.wear_wield")},
+            {key_dip, i18n::s.get("core.ui.manual.keys.item.blend")},
+            {key_eat, i18n::s.get("core.ui.manual.keys.item.eat")},
+            {key_throw, i18n::s.get("core.ui.manual.keys.item.throw")},
+            {key_drink, i18n::s.get("core.ui.manual.keys.item.quaff")},
+            {key_ammo, i18n::s.get("core.ui.manual.keys.item.ammo")},
         };
 
         int index = 0;
@@ -108,27 +104,21 @@ void UIMenuGameHelp::_draw_key_list()
     // Section "Action"
     {
         display_topic(
-            i18n::s.get("core.locale.ui.manual.keys.action.title"),
-            x + 18,
-            y + 142);
+            i18n::s.get("core.ui.manual.keys.action.title"), x + 18, y + 142);
 
         std::vector<KeyDescPair> keys{
-            {key_search,
-             i18n::s.get("core.locale.ui.manual.keys.action.search")},
-            {key_target,
-             i18n::s.get("core.locale.ui.manual.keys.action.target")},
-            {key_cast, i18n::s.get("core.locale.ui.manual.keys.action.cast")},
-            {key_fire, i18n::s.get("core.locale.ui.manual.keys.action.fire")},
-            {key_interact,
-             i18n::s.get("core.locale.ui.manual.keys.action.interact")},
-            {key_skill, i18n::s.get("core.locale.ui.manual.keys.action.apply")},
-            {key_godown,
-             i18n::s.get("core.locale.ui.manual.keys.action.go_down")},
-            {key_bash, i18n::s.get("core.locale.ui.manual.keys.action.bash")},
-            {key_goup, i18n::s.get("core.locale.ui.manual.keys.action.go_up")},
-            {key_dig, i18n::s.get("core.locale.ui.manual.keys.action.dig")},
-            {key_wait, i18n::s.get("core.locale.ui.manual.keys.action.wait")},
-            {key_open, i18n::s.get("core.locale.ui.manual.keys.action.open")},
+            {key_search, i18n::s.get("core.ui.manual.keys.action.search")},
+            {key_target, i18n::s.get("core.ui.manual.keys.action.target")},
+            {key_cast, i18n::s.get("core.ui.manual.keys.action.cast")},
+            {key_fire, i18n::s.get("core.ui.manual.keys.action.fire")},
+            {key_interact, i18n::s.get("core.ui.manual.keys.action.interact")},
+            {key_skill, i18n::s.get("core.ui.manual.keys.action.apply")},
+            {key_godown, i18n::s.get("core.ui.manual.keys.action.go_down")},
+            {key_bash, i18n::s.get("core.ui.manual.keys.action.bash")},
+            {key_goup, i18n::s.get("core.ui.manual.keys.action.go_up")},
+            {key_dig, i18n::s.get("core.ui.manual.keys.action.dig")},
+            {key_wait, i18n::s.get("core.ui.manual.keys.action.wait")},
+            {key_open, i18n::s.get("core.ui.manual.keys.action.open")},
         };
 
         int index = 0;
@@ -145,20 +135,15 @@ void UIMenuGameHelp::_draw_key_list()
     // Section "Info"
     {
         display_topic(
-            i18n::s.get("core.locale.ui.manual.keys.info.title"),
-            x + 18,
-            y + 256);
+            i18n::s.get("core.ui.manual.keys.info.title"), x + 18, y + 256);
 
         std::vector<KeyDescPair> keys{
-            {key_charainfo,
-             i18n::s.get("core.locale.ui.manual.keys.info.chara")},
-            {key_msglog, i18n::s.get("core.locale.ui.manual.keys.info.log")},
-            {key_journal,
-             i18n::s.get("core.locale.ui.manual.keys.info.journal")},
-            {key_material,
-             i18n::s.get("core.locale.ui.manual.keys.info.material")},
-            {key_help, i18n::s.get("core.locale.ui.manual.keys.info.help")},
-            {key_trait, i18n::s.get("core.locale.ui.manual.keys.info.feat")},
+            {key_charainfo, i18n::s.get("core.ui.manual.keys.info.chara")},
+            {key_msglog, i18n::s.get("core.ui.manual.keys.info.log")},
+            {key_journal, i18n::s.get("core.ui.manual.keys.info.journal")},
+            {key_material, i18n::s.get("core.ui.manual.keys.info.material")},
+            {key_help, i18n::s.get("core.ui.manual.keys.info.help")},
+            {key_trait, i18n::s.get("core.ui.manual.keys.info.feat")},
         };
 
         int index = 0;
@@ -175,16 +160,14 @@ void UIMenuGameHelp::_draw_key_list()
     // Section "Other"
     {
         display_topic(
-            i18n::s.get("core.locale.ui.manual.keys.other.title"),
-            x + 18,
-            y + 328);
+            i18n::s.get("core.ui.manual.keys.other.title"), x + 18, y + 328);
 
         std::vector<KeyDescPair> keys{
-            {key_save, i18n::s.get("core.locale.ui.manual.keys.other.save")},
-            {key_close, i18n::s.get("core.locale.ui.manual.keys.other.close")},
-            {key_pray, i18n::s.get("core.locale.ui.manual.keys.other.pray")},
-            {key_give, i18n::s.get("core.locale.ui.manual.keys.other.give")},
-            {key_offer, i18n::s.get("core.locale.ui.manual.keys.other.offer")},
+            {key_save, i18n::s.get("core.ui.manual.keys.other.save")},
+            {key_close, i18n::s.get("core.ui.manual.keys.other.close")},
+            {key_pray, i18n::s.get("core.ui.manual.keys.other.pray")},
+            {key_give, i18n::s.get("core.ui.manual.keys.other.give")},
+            {key_offer, i18n::s.get("core.ui.manual.keys.other.offer")},
         };
 
         int index = 0;
@@ -201,10 +184,9 @@ void UIMenuGameHelp::_draw_key_list()
     // Misc.
     // TODO: support key bindings!
     const auto misc_keys = u8"F9 "s +
-        i18n::s.get("core.locale.ui.manual.keys.other.hide_interface") +
-        u8"  F11 " +
-        i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet") +
-        u8"  F12 " + i18n::s.get("core.locale.ui.manual.keys.other.console");
+        i18n::s.get("core.ui.manual.keys.other.hide_interface") + u8"  F11 " +
+        i18n::s.get("core.ui.manual.keys.other.export_chara_sheet") +
+        u8"  F12 " + i18n::s.get("core.ui.manual.keys.other.console");
     font(desc_font_size);
     mes(x + 38, y + 408, misc_keys);
 }
@@ -303,7 +285,7 @@ void UIMenuGameHelp::_draw_window()
         y,
         780,
         496);
-    display_topic(i18n::s.get("core.locale.ui.manual.topic"), wx + 34, wy + 36);
+    display_topic(i18n::s.get("core.ui.manual.topic"), wx + 34, wy + 36);
 
     _draw_background_vignette(page % 5, mode == 1 ? 2 : 4);
     keyrange = 0;

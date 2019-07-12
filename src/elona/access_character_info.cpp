@@ -32,7 +32,7 @@ int access_character_info()
         {
         case 2:
             refstr = i18n::s.get_m(
-                "locale.chara",
+                "chara",
                 the_character_db.get_id_from_legacy(dbid)->get(),
                 "name");
             return 0;
@@ -57,13 +57,11 @@ int access_character_info()
         creaturepack = data->creaturepack;
         cdata[rc].can_talk = data->can_talk;
         cdatan(0, rc) = i18n::s.get_m(
-            "locale.chara",
-            the_character_db.get_id_from_legacy(dbid)->get(),
-            "name");
+            "chara", the_character_db.get_id_from_legacy(dbid)->get(), "name");
         if (data->has_random_name)
         {
             cdatan(0, rc) = i18n::s.get(
-                "core.locale.chara.job.own_name", cdatan(0, rc), random_name());
+                "core.chara.job.own_name", cdatan(0, rc), random_name());
             cdata[rc].has_own_name() = true;
         }
         cdata[rc].original_relationship = cdata[rc].relationship =
@@ -150,7 +148,7 @@ int access_character_info()
         if (dbid == 176)
         {
             std::string text =
-                i18n::s.get_enum("core.locale.ui.onii", cdata.player().sex);
+                i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
             if (dbmode == 100)
             {
@@ -182,7 +180,7 @@ int access_character_info()
         else if (dbid == 249)
         {
             std::string text =
-                i18n::s.get_enum("core.locale.ui.onii", cdata.player().sex);
+                i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
             if (dbmode == 100)
             {
@@ -214,7 +212,7 @@ int access_character_info()
         else if (dbid == 210)
         {
             std::string text =
-                i18n::s.get_enum("core.locale.ui.onii", cdata.player().sex);
+                i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
             if (dbmode == 100)
             {
@@ -246,7 +244,7 @@ int access_character_info()
         else if (dbid == 205)
         {
             std::string text =
-                i18n::s.get_enum("core.locale.ui.syujin", cdata.player().sex);
+                i18n::s.get_enum("core.ui.syujin", cdata.player().sex);
 
             if (dbmode == 100)
             {
@@ -286,7 +284,7 @@ int access_character_info()
                 the_character_db.get_id_from_legacy(dbid)->get();
             const auto dialog_id = "text_" + std::to_string(dbmode);
             if (const auto text =
-                    i18n::s.get_m_optional("locale.chara", chara_id, dialog_id))
+                    i18n::s.get_m_optional("chara", chara_id, dialog_id))
             {
                 txt(*text, Message::color{ColorIndex::cyan});
             }

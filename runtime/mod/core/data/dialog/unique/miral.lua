@@ -21,7 +21,7 @@ local function upgrade_cargo_limit()
 
    GUI.txtnew()
    GUI.txt(I18N.get(
-          "core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
+          "core.talk.unique.miral.upgrade_cart.give.limit_increased",
           Item.weight_string(amount)))
    GUI.play_sound("core.build1")
 
@@ -32,7 +32,7 @@ end
 
 return {
    id = "miral",
-   root = "core.locale.talk.unique.miral",
+   root = "core.talk.unique.miral",
    nodes = {
       __start = {
          text = {

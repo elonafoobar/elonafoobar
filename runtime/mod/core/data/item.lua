@@ -34,7 +34,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bug",
+         locale_key_prefix = "core.item.bug",
       },
       {
          id = "long_sword",
@@ -68,7 +68,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.long_sword",
+         locale_key_prefix = "core.item.long_sword",
       },
       {
          id = "dagger",
@@ -102,7 +102,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.dagger",
+         locale_key_prefix = "core.item.dagger",
       },
       {
          id = "hand_axe",
@@ -136,7 +136,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.hand_axe",
+         locale_key_prefix = "core.item.hand_axe",
       },
       {
          id = "club",
@@ -170,7 +170,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.club",
+         locale_key_prefix = "core.item.club",
       },
       {
          id = "magic_hat",
@@ -204,7 +204,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.magic_hat",
+         locale_key_prefix = "core.item.magic_hat",
       },
       {
          id = "fairy_hat",
@@ -238,7 +238,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.fairy_hat",
+         locale_key_prefix = "core.item.fairy_hat",
       },
       {
          id = "breastplate",
@@ -272,7 +272,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.breastplate",
+         locale_key_prefix = "core.item.breastplate",
       },
       {
          id = "robe",
@@ -306,7 +306,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.robe",
+         locale_key_prefix = "core.item.robe",
       },
       {
          id = "decorated_gloves",
@@ -340,7 +340,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.decorated_gloves",
+         locale_key_prefix = "core.item.decorated_gloves",
       },
       {
          id = "thick_gauntlets",
@@ -374,7 +374,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.thick_gauntlets",
+         locale_key_prefix = "core.item.thick_gauntlets",
       },
       {
          id = "heavy_boots",
@@ -408,7 +408,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.heavy_boots",
+         locale_key_prefix = "core.item.heavy_boots",
       },
       {
          id = "composite_boots",
@@ -442,7 +442,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.composite_boots",
+         locale_key_prefix = "core.item.composite_boots",
       },
       {
          id = "decorative_ring",
@@ -476,7 +476,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.decorative_ring",
+         locale_key_prefix = "core.item.decorative_ring",
       },
       {
          id = "scroll_of_identify",
@@ -511,7 +511,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_identify",
+         locale_key_prefix = "core.item.scroll_of_identify",
       },
       {
          id = "scroll_of_oracle",
@@ -546,7 +546,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_oracle",
+         locale_key_prefix = "core.item.scroll_of_oracle",
       },
       {
          id = "scroll_of_teleportation",
@@ -581,7 +581,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_teleportation",
+         locale_key_prefix = "core.item.scroll_of_teleportation",
       },
       {
          id = "scroll_of_incognito",
@@ -616,7 +616,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_incognito",
+         locale_key_prefix = "core.item.scroll_of_incognito",
       },
       {
          id = "rod_of_identify",
@@ -651,7 +651,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_identify",
+         locale_key_prefix = "core.item.rod_of_identify",
       },
       {
          id = "rod_of_teleportation",
@@ -686,7 +686,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_teleportation",
+         locale_key_prefix = "core.item.rod_of_teleportation",
       },
       {
          id = "spellbook_of_teleportation",
@@ -721,7 +721,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_teleportation",
+         locale_key_prefix = "core.item.spellbook_of_teleportation",
       },
       {
          id = "spellbook_of_identify",
@@ -756,7 +756,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_identify",
+         locale_key_prefix = "core.item.spellbook_of_identify",
       },
       {
          id = "spellbook_of_uncurse",
@@ -791,7 +791,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_uncurse",
+         locale_key_prefix = "core.item.spellbook_of_uncurse",
       },
       {
          id = "book_a",
@@ -825,7 +825,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.book_a",
+         locale_key_prefix = "core.item.book_a",
       },
       {
          id = "book_b",
@@ -859,7 +859,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.book_b",
+         locale_key_prefix = "core.item.book_b",
       },
       {
          id = "bugged_book",
@@ -893,7 +893,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bugged_book",
+         locale_key_prefix = "core.item.bugged_book",
       },
       {
          id = "bottle_of_dirty_water",
@@ -927,7 +927,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_dirty_water",
+         locale_key_prefix = "core.item.bottle_of_dirty_water",
       },
       {
          id = "potion_of_blindness",
@@ -962,7 +962,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_blindness",
+         locale_key_prefix = "core.item.potion_of_blindness",
       },
       {
          id = "potion_of_confusion",
@@ -997,7 +997,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_confusion",
+         locale_key_prefix = "core.item.potion_of_confusion",
       },
       {
          id = "potion_of_paralysis",
@@ -1032,7 +1032,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_paralysis",
+         locale_key_prefix = "core.item.potion_of_paralysis",
       },
       {
          id = "sleeping_drug",
@@ -1067,7 +1067,7 @@ data:add_multi(
          tags = { "nogive" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.sleeping_drug",
+         locale_key_prefix = "core.item.sleeping_drug",
       },
       {
          id = "crim_ale",
@@ -1101,7 +1101,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.crim_ale",
+         locale_key_prefix = "core.item.crim_ale",
       },
       {
          id = "spellbook_of_ice_bolt",
@@ -1136,7 +1136,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_ice_bolt",
+         locale_key_prefix = "core.item.spellbook_of_ice_bolt",
       },
       {
          id = "spellbook_of_fire_bolt",
@@ -1171,7 +1171,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_fire_bolt",
+         locale_key_prefix = "core.item.spellbook_of_fire_bolt",
       },
       {
          id = "spellbook_of_lightning_bolt",
@@ -1206,7 +1206,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_lightning_bolt",
+         locale_key_prefix = "core.item.spellbook_of_lightning_bolt",
       },
       {
          id = "earth_crystal",
@@ -1241,7 +1241,7 @@ data:add_multi(
          tags = {},
          rftags = { "ore" },
          color = "Yellow",
-         locale_key_prefix = "core.locale.item.earth_crystal",
+         locale_key_prefix = "core.item.earth_crystal",
       },
       {
          id = "mana_crystal",
@@ -1276,7 +1276,7 @@ data:add_multi(
          tags = {},
          rftags = { "ore" },
          color = "Red",
-         locale_key_prefix = "core.locale.item.mana_crystal",
+         locale_key_prefix = "core.item.mana_crystal",
       },
       {
          id = "sun_crystal",
@@ -1311,7 +1311,7 @@ data:add_multi(
          tags = {},
          rftags = { "ore" },
          color = "Orange",
-         locale_key_prefix = "core.locale.item.sun_crystal",
+         locale_key_prefix = "core.item.sun_crystal",
       },
       {
          id = "gold_bar",
@@ -1345,7 +1345,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.gold_bar",
+         locale_key_prefix = "core.item.gold_bar",
       },
       {
          id = "raw_ore_of_rubynus",
@@ -1380,7 +1380,7 @@ data:add_multi(
          tags = {},
          rftags = { "ore" },
          color = "Red",
-         locale_key_prefix = "core.locale.item.raw_ore_of_rubynus",
+         locale_key_prefix = "core.item.raw_ore_of_rubynus",
       },
       {
          id = "raw_ore_of_mica",
@@ -1414,7 +1414,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.raw_ore_of_mica",
+         locale_key_prefix = "core.item.raw_ore_of_mica",
       },
       {
          id = "raw_ore_of_emerald",
@@ -1449,7 +1449,7 @@ data:add_multi(
          tags = {},
          rftags = { "ore" },
          color = "Green",
-         locale_key_prefix = "core.locale.item.raw_ore_of_emerald",
+         locale_key_prefix = "core.item.raw_ore_of_emerald",
       },
       {
          id = "raw_ore_of_diamond",
@@ -1484,7 +1484,7 @@ data:add_multi(
          tags = {},
          rftags = { "ore" },
          color = "Blue",
-         locale_key_prefix = "core.locale.item.raw_ore_of_diamond",
+         locale_key_prefix = "core.item.raw_ore_of_diamond",
       },
       {
          id = "wood_piece",
@@ -1518,7 +1518,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.wood_piece",
+         locale_key_prefix = "core.item.wood_piece",
       },
       {
          id = "junk_stone",
@@ -1552,7 +1552,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.junk_stone",
+         locale_key_prefix = "core.item.junk_stone",
       },
       {
          id = "garbage",
@@ -1586,7 +1586,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.garbage",
+         locale_key_prefix = "core.item.garbage",
       },
       {
          id = "broken_vase",
@@ -1620,7 +1620,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.broken_vase",
+         locale_key_prefix = "core.item.broken_vase",
       },
       {
          id = "washing",
@@ -1654,7 +1654,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.washing",
+         locale_key_prefix = "core.item.washing",
       },
       {
          id = "bonfire",
@@ -1688,7 +1688,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bonfire",
+         locale_key_prefix = "core.item.bonfire",
       },
       {
          id = "flag",
@@ -1722,7 +1722,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.flag",
+         locale_key_prefix = "core.item.flag",
       },
       {
          id = "broken_sword",
@@ -1756,7 +1756,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.broken_sword",
+         locale_key_prefix = "core.item.broken_sword",
       },
       {
          id = "bone_fragment",
@@ -1790,7 +1790,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bone_fragment",
+         locale_key_prefix = "core.item.bone_fragment",
       },
       {
          id = "skeleton",
@@ -1824,7 +1824,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.skeleton",
+         locale_key_prefix = "core.item.skeleton",
       },
       {
          id = "tombstone",
@@ -1858,7 +1858,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tombstone",
+         locale_key_prefix = "core.item.tombstone",
       },
       {
          id = "gold_piece",
@@ -1892,7 +1892,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.gold_piece",
+         locale_key_prefix = "core.item.gold_piece",
       },
       {
          id = "platinum_coin",
@@ -1926,7 +1926,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.platinum_coin",
+         locale_key_prefix = "core.item.platinum_coin",
       },
       {
          id = "diablo",
@@ -1961,7 +1961,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Grey",
-         locale_key_prefix = "core.locale.item.diablo",
+         locale_key_prefix = "core.item.diablo",
       },
       {
          id = "zantetsu",
@@ -1996,7 +1996,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.zantetsu",
+         locale_key_prefix = "core.item.zantetsu",
       },
       {
          id = "long_bow",
@@ -2030,7 +2030,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.long_bow",
+         locale_key_prefix = "core.item.long_bow",
       },
       {
          id = "knight_shield",
@@ -2064,7 +2064,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.knight_shield",
+         locale_key_prefix = "core.item.knight_shield",
       },
       {
          id = "pistol",
@@ -2098,7 +2098,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.pistol",
+         locale_key_prefix = "core.item.pistol",
       },
       {
          id = "arrow",
@@ -2132,7 +2132,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.arrow",
+         locale_key_prefix = "core.item.arrow",
       },
       {
          id = "bullet",
@@ -2166,7 +2166,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.bullet",
+         locale_key_prefix = "core.item.bullet",
       },
       {
          id = "scythe_of_void",
@@ -2201,7 +2201,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.scythe_of_void",
+         locale_key_prefix = "core.item.scythe_of_void",
       },
       {
          id = "mournblade",
@@ -2236,7 +2236,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.mournblade",
+         locale_key_prefix = "core.item.mournblade",
       },
       {
          id = "light_cloak",
@@ -2270,7 +2270,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.light_cloak",
+         locale_key_prefix = "core.item.light_cloak",
       },
       {
          id = "girdle",
@@ -2304,7 +2304,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.girdle",
+         locale_key_prefix = "core.item.girdle",
       },
       {
          id = "decorative_amulet",
@@ -2338,7 +2338,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.decorative_amulet",
+         locale_key_prefix = "core.item.decorative_amulet",
       },
       {
          id = "potion_of_cure_minor_wound",
@@ -2373,7 +2373,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_cure_minor_wound",
+         locale_key_prefix = "core.item.potion_of_cure_minor_wound",
       },
       {
          id = "potion_of_cure_major_wound",
@@ -2408,7 +2408,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_cure_major_wound",
+         locale_key_prefix = "core.item.potion_of_cure_major_wound",
       },
       {
          id = "potion_of_cure_critical_wound",
@@ -2443,7 +2443,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_cure_critical_wound",
+         locale_key_prefix = "core.item.potion_of_cure_critical_wound",
       },
       {
          id = "potion_of_healing",
@@ -2478,7 +2478,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_healing",
+         locale_key_prefix = "core.item.potion_of_healing",
       },
       {
          id = "potion_of_healer",
@@ -2513,7 +2513,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_healer",
+         locale_key_prefix = "core.item.potion_of_healer",
       },
       {
          id = "ragnarok",
@@ -2548,7 +2548,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Grey",
-         locale_key_prefix = "core.locale.item.ragnarok",
+         locale_key_prefix = "core.item.ragnarok",
       },
       {
          id = "potion_of_healer_odina",
@@ -2583,7 +2583,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_healer_odina",
+         locale_key_prefix = "core.item.potion_of_healer_odina",
       },
       {
          id = "potion_of_healer_eris",
@@ -2618,7 +2618,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_healer_eris",
+         locale_key_prefix = "core.item.potion_of_healer_eris",
       },
       {
          id = "potion_of_healer_jure",
@@ -2653,7 +2653,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_healer_jure",
+         locale_key_prefix = "core.item.potion_of_healer_jure",
       },
       {
          id = "round_chair",
@@ -2687,7 +2687,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.round_chair",
+         locale_key_prefix = "core.item.round_chair",
       },
       {
          id = "bookshelf",
@@ -2721,7 +2721,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bookshelf",
+         locale_key_prefix = "core.item.bookshelf",
       },
       {
          id = "luxury_drawer",
@@ -2755,7 +2755,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.luxury_drawer",
+         locale_key_prefix = "core.item.luxury_drawer",
       },
       {
          id = "boring_bed",
@@ -2790,7 +2790,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.boring_bed",
+         locale_key_prefix = "core.item.boring_bed",
       },
       {
          id = "rag_doll",
@@ -2825,7 +2825,7 @@ data:add_multi(
          tags = { "fest" },
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.rag_doll",
+         locale_key_prefix = "core.item.rag_doll",
       },
       {
          id = "toy",
@@ -2860,7 +2860,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.toy",
+         locale_key_prefix = "core.item.toy",
       },
       {
          id = "modern_table",
@@ -2895,7 +2895,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.modern_table",
+         locale_key_prefix = "core.item.modern_table",
       },
       {
          id = "dining_table",
@@ -2930,7 +2930,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.dining_table",
+         locale_key_prefix = "core.item.dining_table",
       },
       {
          id = "armor",
@@ -2965,7 +2965,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.armor",
+         locale_key_prefix = "core.item.armor",
       },
       {
          id = "lot_of_goods",
@@ -3000,7 +3000,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.lot_of_goods",
+         locale_key_prefix = "core.item.lot_of_goods",
       },
       {
          id = "lot_of_accessories",
@@ -3035,7 +3035,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.lot_of_accessories",
+         locale_key_prefix = "core.item.lot_of_accessories",
       },
       {
          id = "grand_piano",
@@ -3069,7 +3069,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.grand_piano",
+         locale_key_prefix = "core.item.grand_piano",
       },
       {
          id = "bar_table_alpha",
@@ -3104,7 +3104,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.bar_table_alpha",
+         locale_key_prefix = "core.item.bar_table_alpha",
       },
       {
          id = "bar_table_beta",
@@ -3139,7 +3139,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.bar_table_beta",
+         locale_key_prefix = "core.item.bar_table_beta",
       },
       {
          id = "barrel",
@@ -3173,7 +3173,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.barrel",
+         locale_key_prefix = "core.item.barrel",
       },
       {
          id = "modern_chair",
@@ -3208,7 +3208,7 @@ data:add_multi(
          tags = { "sf" },
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.modern_chair",
+         locale_key_prefix = "core.item.modern_chair",
       },
       {
          id = "pick",
@@ -3243,7 +3243,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.pick",
+         locale_key_prefix = "core.item.pick",
       },
       {
          id = "lantern",
@@ -3278,7 +3278,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.lantern",
+         locale_key_prefix = "core.item.lantern",
       },
       {
          id = "decorative_armor",
@@ -3313,7 +3313,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.decorative_armor",
+         locale_key_prefix = "core.item.decorative_armor",
       },
       {
          id = "anvil",
@@ -3348,7 +3348,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.anvil",
+         locale_key_prefix = "core.item.anvil",
       },
       {
          id = "closed_pot",
@@ -3383,7 +3383,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.closed_pot",
+         locale_key_prefix = "core.item.closed_pot",
       },
       {
          id = "open_pot",
@@ -3418,7 +3418,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.open_pot",
+         locale_key_prefix = "core.item.open_pot",
       },
       {
          id = "academic_table",
@@ -3453,7 +3453,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.academic_table",
+         locale_key_prefix = "core.item.academic_table",
       },
       {
          id = "rack_of_potions",
@@ -3487,7 +3487,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.rack_of_potions",
+         locale_key_prefix = "core.item.rack_of_potions",
       },
       {
          id = "square_chair",
@@ -3522,7 +3522,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.square_chair",
+         locale_key_prefix = "core.item.square_chair",
       },
       {
          id = "cheap_chair",
@@ -3557,7 +3557,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.cheap_chair",
+         locale_key_prefix = "core.item.cheap_chair",
       },
       {
          id = "cupboard",
@@ -3591,7 +3591,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cupboard",
+         locale_key_prefix = "core.item.cupboard",
       },
       {
          id = "barn",
@@ -3625,7 +3625,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.barn",
+         locale_key_prefix = "core.item.barn",
       },
       {
          id = "neat_shelf",
@@ -3659,7 +3659,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.neat_shelf",
+         locale_key_prefix = "core.item.neat_shelf",
       },
       {
          id = "closet",
@@ -3694,7 +3694,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.closet",
+         locale_key_prefix = "core.item.closet",
       },
       {
          id = "variety_of_tools",
@@ -3728,7 +3728,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.variety_of_tools",
+         locale_key_prefix = "core.item.variety_of_tools",
       },
       {
          id = "variety_of_goods",
@@ -3762,7 +3762,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.variety_of_goods",
+         locale_key_prefix = "core.item.variety_of_goods",
       },
       {
          id = "well",
@@ -3796,7 +3796,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.well",
+         locale_key_prefix = "core.item.well",
       },
       {
          id = "variety_of_clothes",
@@ -3831,7 +3831,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.variety_of_clothes",
+         locale_key_prefix = "core.item.variety_of_clothes",
       },
       {
          id = "furnace",
@@ -3865,7 +3865,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.furnace",
+         locale_key_prefix = "core.item.furnace",
       },
       {
          id = "oven",
@@ -3899,7 +3899,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.oven",
+         locale_key_prefix = "core.item.oven",
       },
       {
          id = "sign",
@@ -3933,7 +3933,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sign",
+         locale_key_prefix = "core.item.sign",
       },
       {
          id = "crossroad_sign",
@@ -3967,7 +3967,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.crossroad_sign",
+         locale_key_prefix = "core.item.crossroad_sign",
       },
       {
          id = "board",
@@ -4001,7 +4001,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.board",
+         locale_key_prefix = "core.item.board",
       },
       {
          id = "spellbook_of_minor_teleportation",
@@ -4036,7 +4036,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_minor_teleportation",
+         locale_key_prefix = "core.item.spellbook_of_minor_teleportation",
       },
       {
          id = "empty_basket",
@@ -4071,7 +4071,7 @@ data:add_multi(
          tags = { "fish" },
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.empty_basket",
+         locale_key_prefix = "core.item.empty_basket",
       },
       {
          id = "spellbook_of_summon_monsters",
@@ -4106,7 +4106,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_summon_monsters",
+         locale_key_prefix = "core.item.spellbook_of_summon_monsters",
       },
       {
          id = "rod_of_cure_minor_wound",
@@ -4141,7 +4141,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_cure_minor_wound",
+         locale_key_prefix = "core.item.rod_of_cure_minor_wound",
       },
       {
          id = "rod_of_magic_missile",
@@ -4176,7 +4176,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_magic_missile",
+         locale_key_prefix = "core.item.rod_of_magic_missile",
       },
       {
          id = "rod_of_summon_monsters",
@@ -4211,7 +4211,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_summon_monsters",
+         locale_key_prefix = "core.item.rod_of_summon_monsters",
       },
       {
          id = "rod_of_ice_bolt",
@@ -4246,7 +4246,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_ice_bolt",
+         locale_key_prefix = "core.item.rod_of_ice_bolt",
       },
       {
          id = "rod_of_fire_bolt",
@@ -4281,7 +4281,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_fire_bolt",
+         locale_key_prefix = "core.item.rod_of_fire_bolt",
       },
       {
          id = "show_case_of_breads",
@@ -4315,7 +4315,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.show_case_of_breads",
+         locale_key_prefix = "core.item.show_case_of_breads",
       },
       {
          id = "rod_of_heal",
@@ -4350,7 +4350,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_heal",
+         locale_key_prefix = "core.item.rod_of_heal",
       },
       {
          id = "beaker",
@@ -4385,7 +4385,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.beaker",
+         locale_key_prefix = "core.item.beaker",
       },
       {
          id = "alchemy_kit",
@@ -4420,7 +4420,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.alchemy_kit",
+         locale_key_prefix = "core.item.alchemy_kit",
       },
       {
          id = "pentagram",
@@ -4455,7 +4455,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.pentagram",
+         locale_key_prefix = "core.item.pentagram",
       },
       {
          id = "small_foliage_plant",
@@ -4490,7 +4490,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.small_foliage_plant",
+         locale_key_prefix = "core.item.small_foliage_plant",
       },
       {
          id = "rose",
@@ -4525,7 +4525,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.rose",
+         locale_key_prefix = "core.item.rose",
       },
       {
          id = "large_foliage_plant",
@@ -4560,7 +4560,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.large_foliage_plant",
+         locale_key_prefix = "core.item.large_foliage_plant",
       },
       {
          id = "sage",
@@ -4595,7 +4595,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.sage",
+         locale_key_prefix = "core.item.sage",
       },
       {
          id = "gazania",
@@ -4630,7 +4630,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.gazania",
+         locale_key_prefix = "core.item.gazania",
       },
       {
          id = "nerine",
@@ -4665,7 +4665,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.nerine",
+         locale_key_prefix = "core.item.nerine",
       },
       {
          id = "anemos",
@@ -4700,7 +4700,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.anemos",
+         locale_key_prefix = "core.item.anemos",
       },
       {
          id = "foxtail_grass",
@@ -4735,7 +4735,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.foxtail_grass",
+         locale_key_prefix = "core.item.foxtail_grass",
       },
       {
          id = "carnation",
@@ -4770,7 +4770,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.carnation",
+         locale_key_prefix = "core.item.carnation",
       },
       {
          id = "pillar_ornamented_with_plants",
@@ -4804,7 +4804,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.pillar_ornamented_with_plants",
+         locale_key_prefix = "core.item.pillar_ornamented_with_plants",
       },
       {
          id = "pillar_ornamented_with_flowers",
@@ -4838,7 +4838,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.pillar_ornamented_with_flowers",
+         locale_key_prefix = "core.item.pillar_ornamented_with_flowers",
       },
       {
          id = "canvas",
@@ -4873,7 +4873,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.canvas",
+         locale_key_prefix = "core.item.canvas",
       },
       {
          id = "map",
@@ -4908,7 +4908,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.map",
+         locale_key_prefix = "core.item.map",
       },
       {
          id = "food_maker",
@@ -4942,7 +4942,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.food_maker",
+         locale_key_prefix = "core.item.food_maker",
       },
       {
          id = "bundle_of_bows",
@@ -4976,7 +4976,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bundle_of_bows",
+         locale_key_prefix = "core.item.bundle_of_bows",
       },
       {
          id = "bundle_of_weapons",
@@ -5011,7 +5011,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.bundle_of_weapons",
+         locale_key_prefix = "core.item.bundle_of_weapons",
       },
       {
          id = "decorated_cloth",
@@ -5046,7 +5046,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.decorated_cloth",
+         locale_key_prefix = "core.item.decorated_cloth",
       },
       {
          id = "decorated_armor",
@@ -5081,7 +5081,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.decorated_armor",
+         locale_key_prefix = "core.item.decorated_armor",
       },
       {
          id = "statue_of_armor",
@@ -5116,7 +5116,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.statue_of_armor",
+         locale_key_prefix = "core.item.statue_of_armor",
       },
       {
          id = "disorderly_book",
@@ -5150,7 +5150,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.disorderly_book",
+         locale_key_prefix = "core.item.disorderly_book",
       },
       {
          id = "lot_of_books",
@@ -5184,7 +5184,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.lot_of_books",
+         locale_key_prefix = "core.item.lot_of_books",
       },
       {
          id = "craft_rack",
@@ -5219,7 +5219,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.craft_rack",
+         locale_key_prefix = "core.item.craft_rack",
       },
       {
          id = "craft_book_shelf",
@@ -5254,7 +5254,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.craft_book_shelf",
+         locale_key_prefix = "core.item.craft_book_shelf",
       },
       {
          id = "lot_of_alcohols",
@@ -5289,7 +5289,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.lot_of_alcohols",
+         locale_key_prefix = "core.item.lot_of_alcohols",
       },
       {
          id = "kitchen",
@@ -5324,7 +5324,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.kitchen",
+         locale_key_prefix = "core.item.kitchen",
       },
       {
          id = "washstand",
@@ -5359,7 +5359,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.washstand",
+         locale_key_prefix = "core.item.washstand",
       },
       {
          id = "kitchen_oven",
@@ -5394,7 +5394,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.kitchen_oven",
+         locale_key_prefix = "core.item.kitchen_oven",
       },
       {
          id = "narrow_dining_table",
@@ -5428,7 +5428,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.narrow_dining_table",
+         locale_key_prefix = "core.item.narrow_dining_table",
       },
       {
          id = "elegant_table",
@@ -5463,7 +5463,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.elegant_table",
+         locale_key_prefix = "core.item.elegant_table",
       },
       {
          id = "gorgeous_candlestick",
@@ -5497,7 +5497,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.gorgeous_candlestick",
+         locale_key_prefix = "core.item.gorgeous_candlestick",
       },
       {
          id = "simple_shelf",
@@ -5532,7 +5532,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.simple_shelf",
+         locale_key_prefix = "core.item.simple_shelf",
       },
       {
          id = "sewing_kit",
@@ -5567,7 +5567,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.sewing_kit",
+         locale_key_prefix = "core.item.sewing_kit",
       },
       {
          id = "carpenters_tool",
@@ -5602,7 +5602,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.carpenters_tool",
+         locale_key_prefix = "core.item.carpenters_tool",
       },
       {
          id = "messy_cloth",
@@ -5637,7 +5637,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.messy_cloth",
+         locale_key_prefix = "core.item.messy_cloth",
       },
       {
          id = "silk_cloth",
@@ -5672,7 +5672,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.silk_cloth",
+         locale_key_prefix = "core.item.silk_cloth",
       },
       {
          id = "collapsed_grave",
@@ -5706,7 +5706,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.collapsed_grave",
+         locale_key_prefix = "core.item.collapsed_grave",
       },
       {
          id = "crumbled_grave",
@@ -5740,7 +5740,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.crumbled_grave",
+         locale_key_prefix = "core.item.crumbled_grave",
       },
       {
          id = "grave_ornamented_with_flowers",
@@ -5774,7 +5774,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.grave_ornamented_with_flowers",
+         locale_key_prefix = "core.item.grave_ornamented_with_flowers",
       },
       {
          id = "brand_new_grave",
@@ -5808,7 +5808,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.brand_new_grave",
+         locale_key_prefix = "core.item.brand_new_grave",
       },
       {
          id = "solemn_tomb",
@@ -5842,7 +5842,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.solemn_tomb",
+         locale_key_prefix = "core.item.solemn_tomb",
       },
       {
          id = "ancient_tomb",
@@ -5876,7 +5876,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.ancient_tomb",
+         locale_key_prefix = "core.item.ancient_tomb",
       },
       {
          id = "old_grave",
@@ -5910,7 +5910,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.old_grave",
+         locale_key_prefix = "core.item.old_grave",
       },
       {
          id = "altar",
@@ -5944,7 +5944,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.altar",
+         locale_key_prefix = "core.item.altar",
       },
       {
          id = "ceremony_altar",
@@ -5978,7 +5978,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.ceremony_altar",
+         locale_key_prefix = "core.item.ceremony_altar",
       },
       {
          id = "fountain",
@@ -6012,7 +6012,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.fountain",
+         locale_key_prefix = "core.item.fountain",
       },
       {
          id = "bunk_bed",
@@ -6046,7 +6046,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bunk_bed",
+         locale_key_prefix = "core.item.bunk_bed",
       },
       {
          id = "rod_of_lightning_bolt",
@@ -6081,7 +6081,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_lightning_bolt",
+         locale_key_prefix = "core.item.rod_of_lightning_bolt",
       },
       {
          id = "rod_of_slow",
@@ -6116,7 +6116,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_slow",
+         locale_key_prefix = "core.item.rod_of_slow",
       },
       {
          id = "quwapana",
@@ -6150,7 +6150,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.quwapana",
+         locale_key_prefix = "core.item.quwapana",
       },
       {
          id = "aloe",
@@ -6184,7 +6184,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.aloe",
+         locale_key_prefix = "core.item.aloe",
       },
       {
          id = "edible_wild_plant",
@@ -6218,7 +6218,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.edible_wild_plant",
+         locale_key_prefix = "core.item.edible_wild_plant",
       },
       {
          id = "apple",
@@ -6252,7 +6252,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.apple",
+         locale_key_prefix = "core.item.apple",
       },
       {
          id = "grape",
@@ -6286,7 +6286,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.grape",
+         locale_key_prefix = "core.item.grape",
       },
       {
          id = "kiwi",
@@ -6320,7 +6320,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.kiwi",
+         locale_key_prefix = "core.item.kiwi",
       },
       {
          id = "cherry",
@@ -6354,7 +6354,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cherry",
+         locale_key_prefix = "core.item.cherry",
       },
       {
          id = "guava",
@@ -6388,7 +6388,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.guava",
+         locale_key_prefix = "core.item.guava",
       },
       {
          id = "carrot",
@@ -6422,7 +6422,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.carrot",
+         locale_key_prefix = "core.item.carrot",
       },
       {
          id = "radish",
@@ -6456,7 +6456,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.radish",
+         locale_key_prefix = "core.item.radish",
       },
       {
          id = "sweet_potato",
@@ -6490,7 +6490,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.sweet_potato",
+         locale_key_prefix = "core.item.sweet_potato",
       },
       {
          id = "lettuce",
@@ -6524,7 +6524,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.lettuce",
+         locale_key_prefix = "core.item.lettuce",
       },
       {
          id = "stack_of_dishes",
@@ -6558,7 +6558,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stack_of_dishes",
+         locale_key_prefix = "core.item.stack_of_dishes",
       },
       {
          id = "imo",
@@ -6592,7 +6592,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.imo",
+         locale_key_prefix = "core.item.imo",
       },
       {
          id = "api_nut",
@@ -6626,7 +6626,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.api_nut",
+         locale_key_prefix = "core.item.api_nut",
       },
       {
          id = "strawberry",
@@ -6660,7 +6660,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.strawberry",
+         locale_key_prefix = "core.item.strawberry",
       },
       {
          id = "healthy_leaf",
@@ -6694,7 +6694,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.healthy_leaf",
+         locale_key_prefix = "core.item.healthy_leaf",
       },
       {
          id = "rainbow_fruit",
@@ -6728,7 +6728,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.rainbow_fruit",
+         locale_key_prefix = "core.item.rainbow_fruit",
       },
       {
          id = "qucche",
@@ -6762,7 +6762,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.qucche",
+         locale_key_prefix = "core.item.qucche",
       },
       {
          id = "tangerine",
@@ -6796,7 +6796,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tangerine",
+         locale_key_prefix = "core.item.tangerine",
       },
       {
          id = "lemon",
@@ -6830,7 +6830,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.lemon",
+         locale_key_prefix = "core.item.lemon",
       },
       {
          id = "green_pea",
@@ -6864,7 +6864,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.green_pea",
+         locale_key_prefix = "core.item.green_pea",
       },
       {
          id = "cbocchi",
@@ -6898,7 +6898,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cbocchi",
+         locale_key_prefix = "core.item.cbocchi",
       },
       {
          id = "melon",
@@ -6932,7 +6932,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.melon",
+         locale_key_prefix = "core.item.melon",
       },
       {
          id = "leccho",
@@ -6966,7 +6966,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.leccho",
+         locale_key_prefix = "core.item.leccho",
       },
       {
          id = "rod_of_magic_mapping",
@@ -7001,7 +7001,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_magic_mapping",
+         locale_key_prefix = "core.item.rod_of_magic_mapping",
       },
       {
          id = "rod_of_cure",
@@ -7036,7 +7036,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_cure",
+         locale_key_prefix = "core.item.rod_of_cure",
       },
       {
          id = "corpse",
@@ -7070,7 +7070,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.corpse",
+         locale_key_prefix = "core.item.corpse",
       },
       {
          id = "bottle_of_whisky",
@@ -7104,7 +7104,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_whisky",
+         locale_key_prefix = "core.item.bottle_of_whisky",
       },
       {
          id = "ether_dagger",
@@ -7139,7 +7139,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.ether_dagger",
+         locale_key_prefix = "core.item.ether_dagger",
       },
       {
          id = "bow_of_vindale",
@@ -7174,7 +7174,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Grey",
-         locale_key_prefix = "core.locale.item.bow_of_vindale",
+         locale_key_prefix = "core.item.bow_of_vindale",
       },
       {
          id = "worthless_fake_gold_bar",
@@ -7208,7 +7208,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.worthless_fake_gold_bar",
+         locale_key_prefix = "core.item.worthless_fake_gold_bar",
       },
       {
          id = "scroll_of_uncurse",
@@ -7243,7 +7243,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_uncurse",
+         locale_key_prefix = "core.item.scroll_of_uncurse",
       },
       {
          id = "stone",
@@ -7277,7 +7277,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stone",
+         locale_key_prefix = "core.item.stone",
       },
       {
          id = "sickle",
@@ -7311,7 +7311,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sickle",
+         locale_key_prefix = "core.item.sickle",
       },
       {
          id = "staff",
@@ -7345,7 +7345,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.staff",
+         locale_key_prefix = "core.item.staff",
       },
       {
          id = "spear",
@@ -7379,7 +7379,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.spear",
+         locale_key_prefix = "core.item.spear",
       },
       {
          id = "ore_piece",
@@ -7414,7 +7414,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.ore_piece",
+         locale_key_prefix = "core.item.ore_piece",
       },
       {
          id = "lot_of_empty_bottles",
@@ -7449,7 +7449,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.lot_of_empty_bottles",
+         locale_key_prefix = "core.item.lot_of_empty_bottles",
       },
       {
          id = "basket",
@@ -7484,7 +7484,7 @@ data:add_multi(
          tags = { "fest" },
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.basket",
+         locale_key_prefix = "core.item.basket",
       },
       {
          id = "empty_bowl",
@@ -7519,7 +7519,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.empty_bowl",
+         locale_key_prefix = "core.item.empty_bowl",
       },
       {
          id = "bowl",
@@ -7554,7 +7554,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.bowl",
+         locale_key_prefix = "core.item.bowl",
       },
       {
          id = "tight_rope",
@@ -7589,7 +7589,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.tight_rope",
+         locale_key_prefix = "core.item.tight_rope",
       },
       {
          id = "dead_fish",
@@ -7623,7 +7623,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.dead_fish",
+         locale_key_prefix = "core.item.dead_fish",
       },
       {
          id = "straw",
@@ -7657,7 +7657,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.straw",
+         locale_key_prefix = "core.item.straw",
       },
       {
          id = "animal_bone",
@@ -7691,7 +7691,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.animal_bone",
+         locale_key_prefix = "core.item.animal_bone",
       },
       {
          id = "pot",
@@ -7725,7 +7725,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.pot",
+         locale_key_prefix = "core.item.pot",
       },
       {
          id = "katana",
@@ -7759,7 +7759,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.katana",
+         locale_key_prefix = "core.item.katana",
       },
       {
          id = "scimitar",
@@ -7793,7 +7793,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.scimitar",
+         locale_key_prefix = "core.item.scimitar",
       },
       {
          id = "battle_axe",
@@ -7827,7 +7827,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.battle_axe",
+         locale_key_prefix = "core.item.battle_axe",
       },
       {
          id = "hammer",
@@ -7861,7 +7861,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.hammer",
+         locale_key_prefix = "core.item.hammer",
       },
       {
          id = "trident",
@@ -7895,7 +7895,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.trident",
+         locale_key_prefix = "core.item.trident",
       },
       {
          id = "long_staff",
@@ -7929,7 +7929,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.long_staff",
+         locale_key_prefix = "core.item.long_staff",
       },
       {
          id = "short_bow",
@@ -7963,7 +7963,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.short_bow",
+         locale_key_prefix = "core.item.short_bow",
       },
       {
          id = "machine_gun",
@@ -7997,7 +7997,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.machine_gun",
+         locale_key_prefix = "core.item.machine_gun",
       },
       {
          id = "claymore",
@@ -8031,7 +8031,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.claymore",
+         locale_key_prefix = "core.item.claymore",
       },
       {
          id = "ration",
@@ -8065,7 +8065,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.ration",
+         locale_key_prefix = "core.item.ration",
       },
       {
          id = "bardiche",
@@ -8099,7 +8099,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bardiche",
+         locale_key_prefix = "core.item.bardiche",
       },
       {
          id = "halberd",
@@ -8133,7 +8133,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.halberd",
+         locale_key_prefix = "core.item.halberd",
       },
       {
          id = "scroll_of_return",
@@ -8168,7 +8168,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_return",
+         locale_key_prefix = "core.item.scroll_of_return",
       },
       {
          id = "figurine_of_warrior",
@@ -8203,7 +8203,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.figurine_of_warrior",
+         locale_key_prefix = "core.item.figurine_of_warrior",
       },
       {
          id = "figurine_of_sword",
@@ -8238,7 +8238,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.figurine_of_sword",
+         locale_key_prefix = "core.item.figurine_of_sword",
       },
       {
          id = "bejeweled_chest",
@@ -8273,7 +8273,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.bejeweled_chest",
+         locale_key_prefix = "core.item.bejeweled_chest",
       },
       {
          id = "chest",
@@ -8308,7 +8308,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.chest",
+         locale_key_prefix = "core.item.chest",
       },
       {
          id = "safe",
@@ -8343,7 +8343,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.safe",
+         locale_key_prefix = "core.item.safe",
       },
       {
          id = "scroll_of_magical_map",
@@ -8378,7 +8378,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_magical_map",
+         locale_key_prefix = "core.item.scroll_of_magical_map",
       },
       {
          id = "scroll_of_gain_attribute",
@@ -8413,7 +8413,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_gain_attribute",
+         locale_key_prefix = "core.item.scroll_of_gain_attribute",
       },
       {
          id = "scroll_of_wonder",
@@ -8448,7 +8448,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_wonder",
+         locale_key_prefix = "core.item.scroll_of_wonder",
       },
       {
          id = "scroll_of_minor_teleportation",
@@ -8483,7 +8483,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_minor_teleportation",
+         locale_key_prefix = "core.item.scroll_of_minor_teleportation",
       },
       {
          id = "spellbook_of_magic_mapping",
@@ -8518,7 +8518,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_magic_mapping",
+         locale_key_prefix = "core.item.spellbook_of_magic_mapping",
       },
       {
          id = "spellbook_of_oracle",
@@ -8553,7 +8553,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_oracle",
+         locale_key_prefix = "core.item.spellbook_of_oracle",
       },
       {
          id = "spellbook_of_return",
@@ -8588,7 +8588,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_return",
+         locale_key_prefix = "core.item.spellbook_of_return",
       },
       {
          id = "spellbook_of_cure_minor_wound",
@@ -8623,7 +8623,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_cure_minor_wound",
+         locale_key_prefix = "core.item.spellbook_of_cure_minor_wound",
       },
       {
          id = "spellbook_of_cure_critical_wound",
@@ -8658,7 +8658,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_cure_critical_wound",
+         locale_key_prefix = "core.item.spellbook_of_cure_critical_wound",
       },
       {
          id = "spellbook_of_cure_eris",
@@ -8693,7 +8693,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_cure_eris",
+         locale_key_prefix = "core.item.spellbook_of_cure_eris",
       },
       {
          id = "spellbook_of_cure_jure",
@@ -8728,7 +8728,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_cure_jure",
+         locale_key_prefix = "core.item.spellbook_of_cure_jure",
       },
       {
          id = "bottle_of_beer",
@@ -8762,7 +8762,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_beer",
+         locale_key_prefix = "core.item.bottle_of_beer",
       },
       {
          id = "horn",
@@ -8796,7 +8796,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.horn",
+         locale_key_prefix = "core.item.horn",
       },
       {
          id = "campfire",
@@ -8830,7 +8830,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.campfire",
+         locale_key_prefix = "core.item.campfire",
       },
       {
          id = "portable_cooking_tool",
@@ -8864,7 +8864,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.portable_cooking_tool",
+         locale_key_prefix = "core.item.portable_cooking_tool",
       },
       {
          id = "spellbook_of_magic_arrow",
@@ -8899,7 +8899,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_magic_arrow",
+         locale_key_prefix = "core.item.spellbook_of_magic_arrow",
       },
       {
          id = "stick_bread",
@@ -8933,7 +8933,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stick_bread",
+         locale_key_prefix = "core.item.stick_bread",
       },
       {
          id = "raw_noodle",
@@ -8967,7 +8967,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.raw_noodle",
+         locale_key_prefix = "core.item.raw_noodle",
       },
       {
          id = "sack_of_flour",
@@ -9001,7 +9001,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sack_of_flour",
+         locale_key_prefix = "core.item.sack_of_flour",
       },
       {
          id = "bomb_fish",
@@ -9035,7 +9035,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bomb_fish",
+         locale_key_prefix = "core.item.bomb_fish",
       },
       {
          id = "poison",
@@ -9070,7 +9070,7 @@ data:add_multi(
          tags = { "nogive" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.poison",
+         locale_key_prefix = "core.item.poison",
       },
       {
          id = "spellbook_of_nether_eye",
@@ -9105,7 +9105,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_nether_eye",
+         locale_key_prefix = "core.item.spellbook_of_nether_eye",
       },
       {
          id = "spellbook_of_chaos_eye",
@@ -9140,7 +9140,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_chaos_eye",
+         locale_key_prefix = "core.item.spellbook_of_chaos_eye",
       },
       {
          id = "spellbook_of_nerve_eye",
@@ -9175,7 +9175,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_nerve_eye",
+         locale_key_prefix = "core.item.spellbook_of_nerve_eye",
       },
       {
          id = "wakizashi",
@@ -9209,7 +9209,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.wakizashi",
+         locale_key_prefix = "core.item.wakizashi",
       },
       {
          id = "spellbook_of_darkness_beam",
@@ -9244,7 +9244,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_darkness_beam",
+         locale_key_prefix = "core.item.spellbook_of_darkness_beam",
       },
       {
          id = "spellbook_of_illusion_beam",
@@ -9279,7 +9279,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_illusion_beam",
+         locale_key_prefix = "core.item.spellbook_of_illusion_beam",
       },
       {
          id = "spellbook_of_ice_ball",
@@ -9314,7 +9314,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_ice_ball",
+         locale_key_prefix = "core.item.spellbook_of_ice_ball",
       },
       {
          id = "spellbook_of_fire_ball",
@@ -9349,7 +9349,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_fire_ball",
+         locale_key_prefix = "core.item.spellbook_of_fire_ball",
       },
       {
          id = "spellbook_of_sound_ball",
@@ -9384,7 +9384,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_sound_ball",
+         locale_key_prefix = "core.item.spellbook_of_sound_ball",
       },
       {
          id = "spellbook_of_chaos_ball",
@@ -9419,7 +9419,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_chaos_ball",
+         locale_key_prefix = "core.item.spellbook_of_chaos_ball",
       },
       {
          id = "fire_wood",
@@ -9454,7 +9454,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.fire_wood",
+         locale_key_prefix = "core.item.fire_wood",
       },
       {
          id = "scarecrow",
@@ -9489,7 +9489,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.scarecrow",
+         locale_key_prefix = "core.item.scarecrow",
       },
       {
          id = "broom",
@@ -9523,7 +9523,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.broom",
+         locale_key_prefix = "core.item.broom",
       },
       {
          id = "long_pillar",
@@ -9557,7 +9557,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.long_pillar",
+         locale_key_prefix = "core.item.long_pillar",
       },
       {
          id = "broken_pillar",
@@ -9591,7 +9591,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.broken_pillar",
+         locale_key_prefix = "core.item.broken_pillar",
       },
       {
          id = "street_lamp",
@@ -9625,7 +9625,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.street_lamp",
+         locale_key_prefix = "core.item.street_lamp",
       },
       {
          id = "water_tub",
@@ -9659,7 +9659,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.water_tub",
+         locale_key_prefix = "core.item.water_tub",
       },
       {
          id = "comfortable_table",
@@ -9693,7 +9693,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.comfortable_table",
+         locale_key_prefix = "core.item.comfortable_table",
       },
       {
          id = "inner_tube",
@@ -9727,7 +9727,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.inner_tube",
+         locale_key_prefix = "core.item.inner_tube",
       },
       {
          id = "mysterious_map",
@@ -9761,7 +9761,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.mysterious_map",
+         locale_key_prefix = "core.item.mysterious_map",
       },
       {
          id = "suitcase",
@@ -9795,7 +9795,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.suitcase",
+         locale_key_prefix = "core.item.suitcase",
       },
       {
          id = "wallet",
@@ -9829,7 +9829,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.wallet",
+         locale_key_prefix = "core.item.wallet",
       },
       {
          id = "potion_of_restore_body",
@@ -9864,7 +9864,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_restore_body",
+         locale_key_prefix = "core.item.potion_of_restore_body",
       },
       {
          id = "potion_of_restore_spirit",
@@ -9899,7 +9899,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_restore_spirit",
+         locale_key_prefix = "core.item.potion_of_restore_spirit",
       },
       {
          id = "potion_of_potential",
@@ -9934,7 +9934,7 @@ data:add_multi(
          tags = { "spshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_potential",
+         locale_key_prefix = "core.item.potion_of_potential",
       },
       {
          id = "scroll_of_curse",
@@ -9969,7 +9969,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_curse",
+         locale_key_prefix = "core.item.scroll_of_curse",
       },
       {
          id = "spellbook_of_wishing",
@@ -10004,7 +10004,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_wishing",
+         locale_key_prefix = "core.item.spellbook_of_wishing",
       },
       {
          id = "rod_of_wishing",
@@ -10039,7 +10039,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_wishing",
+         locale_key_prefix = "core.item.rod_of_wishing",
       },
       {
          id = "well_kept_armor",
@@ -10073,7 +10073,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.well_kept_armor",
+         locale_key_prefix = "core.item.well_kept_armor",
       },
       {
          id = "rack_of_goods",
@@ -10107,7 +10107,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.rack_of_goods",
+         locale_key_prefix = "core.item.rack_of_goods",
       },
       {
          id = "rack_of_accessories",
@@ -10141,7 +10141,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.rack_of_accessories",
+         locale_key_prefix = "core.item.rack_of_accessories",
       },
       {
          id = "towel",
@@ -10175,7 +10175,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.towel",
+         locale_key_prefix = "core.item.towel",
       },
       {
          id = "ragged_table",
@@ -10209,7 +10209,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.ragged_table",
+         locale_key_prefix = "core.item.ragged_table",
       },
       {
          id = "cabinet",
@@ -10243,7 +10243,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cabinet",
+         locale_key_prefix = "core.item.cabinet",
       },
       {
          id = "luxury_bed",
@@ -10277,7 +10277,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.luxury_bed",
+         locale_key_prefix = "core.item.luxury_bed",
       },
       {
          id = "vase",
@@ -10311,7 +10311,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.vase",
+         locale_key_prefix = "core.item.vase",
       },
       {
          id = "high_grade_dresser",
@@ -10345,7 +10345,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.high_grade_dresser",
+         locale_key_prefix = "core.item.high_grade_dresser",
       },
       {
          id = "neat_bar_table",
@@ -10379,7 +10379,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.neat_bar_table",
+         locale_key_prefix = "core.item.neat_bar_table",
       },
       {
          id = "large_bouquet",
@@ -10413,7 +10413,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.large_bouquet",
+         locale_key_prefix = "core.item.large_bouquet",
       },
       {
          id = "chest_of_clothes",
@@ -10447,7 +10447,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.chest_of_clothes",
+         locale_key_prefix = "core.item.chest_of_clothes",
       },
       {
          id = "giant_bed",
@@ -10481,7 +10481,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.giant_bed",
+         locale_key_prefix = "core.item.giant_bed",
       },
       {
          id = "plain_bed",
@@ -10515,7 +10515,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.plain_bed",
+         locale_key_prefix = "core.item.plain_bed",
       },
       {
          id = "coffin",
@@ -10549,7 +10549,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.coffin",
+         locale_key_prefix = "core.item.coffin",
       },
       {
          id = "food_processor",
@@ -10583,7 +10583,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.food_processor",
+         locale_key_prefix = "core.item.food_processor",
       },
       {
          id = "soft_bed",
@@ -10617,7 +10617,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.soft_bed",
+         locale_key_prefix = "core.item.soft_bed",
       },
       {
          id = "cheap_rack",
@@ -10651,7 +10651,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cheap_rack",
+         locale_key_prefix = "core.item.cheap_rack",
       },
       {
          id = "dresser",
@@ -10685,7 +10685,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.dresser",
+         locale_key_prefix = "core.item.dresser",
       },
       {
          id = "clean_bed",
@@ -10719,7 +10719,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.clean_bed",
+         locale_key_prefix = "core.item.clean_bed",
       },
       {
          id = "bathtub",
@@ -10753,7 +10753,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bathtub",
+         locale_key_prefix = "core.item.bathtub",
       },
       {
          id = "pachisuro_machine",
@@ -10787,7 +10787,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.pachisuro_machine",
+         locale_key_prefix = "core.item.pachisuro_machine",
       },
       {
          id = "casino_table",
@@ -10821,7 +10821,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.casino_table",
+         locale_key_prefix = "core.item.casino_table",
       },
       {
          id = "slot_machine",
@@ -10855,7 +10855,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.slot_machine",
+         locale_key_prefix = "core.item.slot_machine",
       },
       {
          id = "darts_board",
@@ -10889,7 +10889,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.darts_board",
+         locale_key_prefix = "core.item.darts_board",
       },
       {
          id = "big_foliage_plant",
@@ -10923,7 +10923,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.big_foliage_plant",
+         locale_key_prefix = "core.item.big_foliage_plant",
       },
       {
          id = "old_shelf",
@@ -10957,7 +10957,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.old_shelf",
+         locale_key_prefix = "core.item.old_shelf",
       },
       {
          id = "old_bookshelf",
@@ -10991,7 +10991,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.old_bookshelf",
+         locale_key_prefix = "core.item.old_bookshelf",
       },
       {
          id = "cheap_bed",
@@ -11025,7 +11025,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cheap_bed",
+         locale_key_prefix = "core.item.cheap_bed",
       },
       {
          id = "cheap_table",
@@ -11059,7 +11059,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cheap_table",
+         locale_key_prefix = "core.item.cheap_table",
       },
       {
          id = "neat_rack",
@@ -11093,7 +11093,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.neat_rack",
+         locale_key_prefix = "core.item.neat_rack",
       },
       {
          id = "simple_dresser",
@@ -11127,7 +11127,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.simple_dresser",
+         locale_key_prefix = "core.item.simple_dresser",
       },
       {
          id = "big_cupboard",
@@ -11161,7 +11161,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.big_cupboard",
+         locale_key_prefix = "core.item.big_cupboard",
       },
       {
          id = "sacred_altar",
@@ -11195,7 +11195,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sacred_altar",
+         locale_key_prefix = "core.item.sacred_altar",
       },
       {
          id = "comfortable_bed",
@@ -11229,7 +11229,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.comfortable_bed",
+         locale_key_prefix = "core.item.comfortable_bed",
       },
       {
          id = "simple_rack",
@@ -11263,7 +11263,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.simple_rack",
+         locale_key_prefix = "core.item.simple_rack",
       },
       {
          id = "wide_chair",
@@ -11297,7 +11297,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.wide_chair",
+         locale_key_prefix = "core.item.wide_chair",
       },
       {
          id = "upright_piano",
@@ -11331,7 +11331,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.upright_piano",
+         locale_key_prefix = "core.item.upright_piano",
       },
       {
          id = "statue_of_cross",
@@ -11365,7 +11365,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_cross",
+         locale_key_prefix = "core.item.statue_of_cross",
       },
       {
          id = "stump",
@@ -11399,7 +11399,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stump",
+         locale_key_prefix = "core.item.stump",
       },
       {
          id = "dress",
@@ -11433,7 +11433,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.dress",
+         locale_key_prefix = "core.item.dress",
       },
       {
          id = "table",
@@ -11467,7 +11467,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.table",
+         locale_key_prefix = "core.item.table",
       },
       {
          id = "cargo_travelers_food",
@@ -11501,7 +11501,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_travelers_food",
+         locale_key_prefix = "core.item.cargo_travelers_food",
       },
       {
          id = "throne",
@@ -11535,7 +11535,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.throne",
+         locale_key_prefix = "core.item.throne",
       },
       {
          id = "golden_pedestal",
@@ -11569,7 +11569,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.golden_pedestal",
+         locale_key_prefix = "core.item.golden_pedestal",
       },
       {
          id = "statue_of_money",
@@ -11603,7 +11603,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_money",
+         locale_key_prefix = "core.item.statue_of_money",
       },
       {
          id = "remains_skin",
@@ -11637,7 +11637,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.remains_skin",
+         locale_key_prefix = "core.item.remains_skin",
       },
       {
          id = "remains_blood",
@@ -11671,7 +11671,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.remains_blood",
+         locale_key_prefix = "core.item.remains_blood",
       },
       {
          id = "remains_eye",
@@ -11705,7 +11705,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.remains_eye",
+         locale_key_prefix = "core.item.remains_eye",
       },
       {
          id = "remains_heart",
@@ -11739,7 +11739,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.remains_heart",
+         locale_key_prefix = "core.item.remains_heart",
       },
       {
          id = "remains_bone",
@@ -11773,7 +11773,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.remains_bone",
+         locale_key_prefix = "core.item.remains_bone",
       },
       {
          id = "fishing_pole",
@@ -11807,7 +11807,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.fishing_pole",
+         locale_key_prefix = "core.item.fishing_pole",
       },
       {
          id = "rune",
@@ -11841,7 +11841,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.rune",
+         locale_key_prefix = "core.item.rune",
       },
       {
          id = "deed",
@@ -11876,7 +11876,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Green",
-         locale_key_prefix = "core.locale.item.deed",
+         locale_key_prefix = "core.item.deed",
       },
       {
          id = "moonfish",
@@ -11910,7 +11910,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.moonfish",
+         locale_key_prefix = "core.item.moonfish",
       },
       {
          id = "sardine",
@@ -11944,7 +11944,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.sardine",
+         locale_key_prefix = "core.item.sardine",
       },
       {
          id = "flatfish",
@@ -11978,7 +11978,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.flatfish",
+         locale_key_prefix = "core.item.flatfish",
       },
       {
          id = "manboo",
@@ -12012,7 +12012,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.manboo",
+         locale_key_prefix = "core.item.manboo",
       },
       {
          id = "seabream",
@@ -12046,7 +12046,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.seabream",
+         locale_key_prefix = "core.item.seabream",
       },
       {
          id = "salmon",
@@ -12080,7 +12080,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.salmon",
+         locale_key_prefix = "core.item.salmon",
       },
       {
          id = "globefish",
@@ -12114,7 +12114,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.globefish",
+         locale_key_prefix = "core.item.globefish",
       },
       {
          id = "tuna",
@@ -12148,7 +12148,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.tuna",
+         locale_key_prefix = "core.item.tuna",
       },
       {
          id = "cutlassfish",
@@ -12182,7 +12182,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.cutlassfish",
+         locale_key_prefix = "core.item.cutlassfish",
       },
       {
          id = "sandborer",
@@ -12216,7 +12216,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.sandborer",
+         locale_key_prefix = "core.item.sandborer",
       },
       {
          id = "gloves_of_vesda",
@@ -12251,7 +12251,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.gloves_of_vesda",
+         locale_key_prefix = "core.item.gloves_of_vesda",
       },
       {
          id = "blood_moon",
@@ -12286,7 +12286,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.blood_moon",
+         locale_key_prefix = "core.item.blood_moon",
       },
       {
          id = "ring_of_steel_dragon",
@@ -12320,7 +12320,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.ring_of_steel_dragon",
+         locale_key_prefix = "core.item.ring_of_steel_dragon",
       },
       {
          id = "staff_of_insanity",
@@ -12354,7 +12354,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.staff_of_insanity",
+         locale_key_prefix = "core.item.staff_of_insanity",
       },
       {
          id = "rankis",
@@ -12389,7 +12389,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.rankis",
+         locale_key_prefix = "core.item.rankis",
       },
       {
          id = "palmia_pride",
@@ -12423,7 +12423,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.palmia_pride",
+         locale_key_prefix = "core.item.palmia_pride",
       },
       {
          id = "shopkeepers_trunk",
@@ -12457,7 +12457,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shopkeepers_trunk",
+         locale_key_prefix = "core.item.shopkeepers_trunk",
       },
       {
          id = "scroll_of_greater_identify",
@@ -12492,7 +12492,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_greater_identify",
+         locale_key_prefix = "core.item.scroll_of_greater_identify",
       },
       {
          id = "scroll_of_vanish_curse",
@@ -12527,7 +12527,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_vanish_curse",
+         locale_key_prefix = "core.item.scroll_of_vanish_curse",
       },
       {
          id = "potion_of_defender",
@@ -12562,7 +12562,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_defender",
+         locale_key_prefix = "core.item.potion_of_defender",
       },
       {
          id = "spellbook_of_holy_shield",
@@ -12597,7 +12597,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_holy_shield",
+         locale_key_prefix = "core.item.spellbook_of_holy_shield",
       },
       {
          id = "rod_of_silence",
@@ -12632,7 +12632,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_silence",
+         locale_key_prefix = "core.item.rod_of_silence",
       },
       {
          id = "spellbook_of_silence",
@@ -12667,7 +12667,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_silence",
+         locale_key_prefix = "core.item.spellbook_of_silence",
       },
       {
          id = "potion_of_silence",
@@ -12702,7 +12702,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_silence",
+         locale_key_prefix = "core.item.potion_of_silence",
       },
       {
          id = "spellbook_of_regeneration",
@@ -12737,7 +12737,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_regeneration",
+         locale_key_prefix = "core.item.spellbook_of_regeneration",
       },
       {
          id = "potion_of_troll_blood",
@@ -12772,7 +12772,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_troll_blood",
+         locale_key_prefix = "core.item.potion_of_troll_blood",
       },
       {
          id = "spellbook_of_resistance",
@@ -12807,7 +12807,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_resistance",
+         locale_key_prefix = "core.item.spellbook_of_resistance",
       },
       {
          id = "potion_of_resistance",
@@ -12842,7 +12842,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_resistance",
+         locale_key_prefix = "core.item.potion_of_resistance",
       },
       {
          id = "spellbook_of_speed",
@@ -12877,7 +12877,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_speed",
+         locale_key_prefix = "core.item.spellbook_of_speed",
       },
       {
          id = "spellbook_of_slow",
@@ -12912,7 +12912,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_slow",
+         locale_key_prefix = "core.item.spellbook_of_slow",
       },
       {
          id = "potion_of_speed",
@@ -12947,7 +12947,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_speed",
+         locale_key_prefix = "core.item.potion_of_speed",
       },
       {
          id = "potion_of_slow",
@@ -12982,7 +12982,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_slow",
+         locale_key_prefix = "core.item.potion_of_slow",
       },
       {
          id = "rod_of_speed",
@@ -13017,7 +13017,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_speed",
+         locale_key_prefix = "core.item.rod_of_speed",
       },
       {
          id = "spellbook_of_hero",
@@ -13052,7 +13052,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_hero",
+         locale_key_prefix = "core.item.spellbook_of_hero",
       },
       {
          id = "potion_of_hero",
@@ -13087,7 +13087,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_hero",
+         locale_key_prefix = "core.item.potion_of_hero",
       },
       {
          id = "spellbook_of_weakness",
@@ -13122,7 +13122,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_weakness",
+         locale_key_prefix = "core.item.spellbook_of_weakness",
       },
       {
          id = "spellbook_of_elemental_scar",
@@ -13157,7 +13157,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_elemental_scar",
+         locale_key_prefix = "core.item.spellbook_of_elemental_scar",
       },
       {
          id = "potion_of_weakness",
@@ -13192,7 +13192,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_weakness",
+         locale_key_prefix = "core.item.potion_of_weakness",
       },
       {
          id = "spellbook_of_holy_veil",
@@ -13227,7 +13227,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_holy_veil",
+         locale_key_prefix = "core.item.spellbook_of_holy_veil",
       },
       {
          id = "scroll_of_holy_veil",
@@ -13262,7 +13262,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_holy_veil",
+         locale_key_prefix = "core.item.scroll_of_holy_veil",
       },
       {
          id = "rod_of_holy_light",
@@ -13297,7 +13297,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_holy_light",
+         locale_key_prefix = "core.item.rod_of_holy_light",
       },
       {
          id = "spellbook_of_holy_light",
@@ -13332,7 +13332,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_holy_light",
+         locale_key_prefix = "core.item.spellbook_of_holy_light",
       },
       {
          id = "spellbook_of_holy_rain",
@@ -13367,7 +13367,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_holy_rain",
+         locale_key_prefix = "core.item.spellbook_of_holy_rain",
       },
       {
          id = "scroll_of_holy_light",
@@ -13402,7 +13402,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_holy_light",
+         locale_key_prefix = "core.item.scroll_of_holy_light",
       },
       {
          id = "scroll_of_holy_rain",
@@ -13437,7 +13437,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_holy_rain",
+         locale_key_prefix = "core.item.scroll_of_holy_rain",
       },
       {
          id = "scroll_of_mana",
@@ -13472,7 +13472,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_mana",
+         locale_key_prefix = "core.item.scroll_of_mana",
       },
       {
          id = "rod_of_mana",
@@ -13507,7 +13507,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_mana",
+         locale_key_prefix = "core.item.rod_of_mana",
       },
       {
          id = "bottle_of_sulfuric",
@@ -13541,7 +13541,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "nogive" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_sulfuric",
+         locale_key_prefix = "core.item.bottle_of_sulfuric",
       },
       {
          id = "gem_cutter",
@@ -13576,7 +13576,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.gem_cutter",
+         locale_key_prefix = "core.item.gem_cutter",
       },
       {
          id = "material_box",
@@ -13610,7 +13610,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.material_box",
+         locale_key_prefix = "core.item.material_box",
       },
       {
          id = "scroll_of_gain_material",
@@ -13645,7 +13645,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_gain_material",
+         locale_key_prefix = "core.item.scroll_of_gain_material",
       },
       {
          id = "spellbook_of_nightmare",
@@ -13680,7 +13680,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_nightmare",
+         locale_key_prefix = "core.item.spellbook_of_nightmare",
       },
       {
          id = "spellbook_of_knowledge",
@@ -13715,7 +13715,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_knowledge",
+         locale_key_prefix = "core.item.spellbook_of_knowledge",
       },
       {
          id = "scroll_of_knowledge",
@@ -13750,7 +13750,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_knowledge",
+         locale_key_prefix = "core.item.scroll_of_knowledge",
       },
       {
          id = "cargo_rag_doll",
@@ -13784,7 +13784,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_rag_doll",
+         locale_key_prefix = "core.item.cargo_rag_doll",
       },
       {
          id = "cargo_barrel",
@@ -13818,7 +13818,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_barrel",
+         locale_key_prefix = "core.item.cargo_barrel",
       },
       {
          id = "cargo_piano",
@@ -13852,7 +13852,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_piano",
+         locale_key_prefix = "core.item.cargo_piano",
       },
       {
          id = "cargo_rope",
@@ -13886,7 +13886,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_rope",
+         locale_key_prefix = "core.item.cargo_rope",
       },
       {
          id = "cargo_coffin",
@@ -13920,7 +13920,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_coffin",
+         locale_key_prefix = "core.item.cargo_coffin",
       },
       {
          id = "cargo_manboo",
@@ -13954,7 +13954,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_manboo",
+         locale_key_prefix = "core.item.cargo_manboo",
       },
       {
          id = "cargo_grave",
@@ -13988,7 +13988,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_grave",
+         locale_key_prefix = "core.item.cargo_grave",
       },
       {
          id = "cargo_tuna_fish",
@@ -14022,7 +14022,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_tuna_fish",
+         locale_key_prefix = "core.item.cargo_tuna_fish",
       },
       {
          id = "cargo_whisky",
@@ -14056,7 +14056,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_whisky",
+         locale_key_prefix = "core.item.cargo_whisky",
       },
       {
          id = "cargo_noble_toy",
@@ -14090,7 +14090,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_noble_toy",
+         locale_key_prefix = "core.item.cargo_noble_toy",
       },
       {
          id = "cargo_inner_tube",
@@ -14124,7 +14124,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_inner_tube",
+         locale_key_prefix = "core.item.cargo_inner_tube",
       },
       {
          id = "spellbook_of_detect_objects",
@@ -14159,7 +14159,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_detect_objects",
+         locale_key_prefix = "core.item.spellbook_of_detect_objects",
       },
       {
          id = "scroll_of_detect_objects",
@@ -14194,7 +14194,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_detect_objects",
+         locale_key_prefix = "core.item.scroll_of_detect_objects",
       },
       {
          id = "rod_of_uncurse",
@@ -14229,7 +14229,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_uncurse",
+         locale_key_prefix = "core.item.rod_of_uncurse",
       },
       {
          id = "red_treasure_machine",
@@ -14263,7 +14263,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.red_treasure_machine",
+         locale_key_prefix = "core.item.red_treasure_machine",
       },
       {
          id = "blue_treasure_machine",
@@ -14297,7 +14297,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.blue_treasure_machine",
+         locale_key_prefix = "core.item.blue_treasure_machine",
       },
       {
          id = "treasure_ball",
@@ -14331,7 +14331,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.treasure_ball",
+         locale_key_prefix = "core.item.treasure_ball",
       },
       {
          id = "rare_treasure_ball",
@@ -14365,7 +14365,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "spshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.rare_treasure_ball",
+         locale_key_prefix = "core.item.rare_treasure_ball",
       },
       {
          id = "vegetable_seed",
@@ -14400,7 +14400,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Green",
-         locale_key_prefix = "core.locale.item.vegetable_seed",
+         locale_key_prefix = "core.item.vegetable_seed",
       },
       {
          id = "fruit_seed",
@@ -14435,7 +14435,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Yellow",
-         locale_key_prefix = "core.locale.item.fruit_seed",
+         locale_key_prefix = "core.item.fruit_seed",
       },
       {
          id = "herb_seed",
@@ -14470,7 +14470,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.herb_seed",
+         locale_key_prefix = "core.item.herb_seed",
       },
       {
          id = "unknown_seed",
@@ -14505,7 +14505,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.unknown_seed",
+         locale_key_prefix = "core.item.unknown_seed",
       },
       {
          id = "artifact_seed",
@@ -14540,7 +14540,7 @@ data:add_multi(
          tags = { "noshop", "spshop" },
          rftags = {},
          color = "Orange",
-         locale_key_prefix = "core.locale.item.artifact_seed",
+         locale_key_prefix = "core.item.artifact_seed",
       },
       {
          id = "morgia",
@@ -14574,7 +14574,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.morgia",
+         locale_key_prefix = "core.item.morgia",
       },
       {
          id = "mareilon",
@@ -14608,7 +14608,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.mareilon",
+         locale_key_prefix = "core.item.mareilon",
       },
       {
          id = "spenseweed",
@@ -14642,7 +14642,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.spenseweed",
+         locale_key_prefix = "core.item.spenseweed",
       },
       {
          id = "curaria",
@@ -14676,7 +14676,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.curaria",
+         locale_key_prefix = "core.item.curaria",
       },
       {
          id = "alraunia",
@@ -14710,7 +14710,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.alraunia",
+         locale_key_prefix = "core.item.alraunia",
       },
       {
          id = "stomafillia",
@@ -14744,7 +14744,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stomafillia",
+         locale_key_prefix = "core.item.stomafillia",
       },
       {
          id = "sleeping_bag",
@@ -14778,7 +14778,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sleeping_bag",
+         locale_key_prefix = "core.item.sleeping_bag",
       },
       {
          id = "potion_of_weaken_resistance",
@@ -14813,7 +14813,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_weaken_resistance",
+         locale_key_prefix = "core.item.potion_of_weaken_resistance",
       },
       {
          id = "scroll_of_growth",
@@ -14848,7 +14848,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_growth",
+         locale_key_prefix = "core.item.scroll_of_growth",
       },
       {
          id = "scroll_of_faith",
@@ -14883,7 +14883,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_faith",
+         locale_key_prefix = "core.item.scroll_of_faith",
       },
       {
          id = "potion_of_mutation",
@@ -14918,7 +14918,7 @@ data:add_multi(
          tags = { "nogive" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_mutation",
+         locale_key_prefix = "core.item.potion_of_mutation",
       },
       {
          id = "potion_of_cure_mutation",
@@ -14953,7 +14953,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_cure_mutation",
+         locale_key_prefix = "core.item.potion_of_cure_mutation",
       },
       {
          id = "spellbook_of_mutation",
@@ -14988,7 +14988,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_mutation",
+         locale_key_prefix = "core.item.spellbook_of_mutation",
       },
       {
          id = "banded_mail",
@@ -15022,7 +15022,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.banded_mail",
+         locale_key_prefix = "core.item.banded_mail",
       },
       {
          id = "plate_mail",
@@ -15056,7 +15056,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.plate_mail",
+         locale_key_prefix = "core.item.plate_mail",
       },
       {
          id = "ring_mail",
@@ -15090,7 +15090,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.ring_mail",
+         locale_key_prefix = "core.item.ring_mail",
       },
       {
          id = "composite_mail",
@@ -15124,7 +15124,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.composite_mail",
+         locale_key_prefix = "core.item.composite_mail",
       },
       {
          id = "chain_mail",
@@ -15158,7 +15158,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.chain_mail",
+         locale_key_prefix = "core.item.chain_mail",
       },
       {
          id = "pope_robe",
@@ -15192,7 +15192,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.pope_robe",
+         locale_key_prefix = "core.item.pope_robe",
       },
       {
          id = "light_mail",
@@ -15226,7 +15226,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.light_mail",
+         locale_key_prefix = "core.item.light_mail",
       },
       {
          id = "coat",
@@ -15260,7 +15260,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.coat",
+         locale_key_prefix = "core.item.coat",
       },
       {
          id = "breast_plate",
@@ -15294,7 +15294,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.breast_plate",
+         locale_key_prefix = "core.item.breast_plate",
       },
       {
          id = "bulletproof_jacket",
@@ -15328,7 +15328,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bulletproof_jacket",
+         locale_key_prefix = "core.item.bulletproof_jacket",
       },
       {
          id = "gloves",
@@ -15362,7 +15362,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.gloves",
+         locale_key_prefix = "core.item.gloves",
       },
       {
          id = "plate_gauntlets",
@@ -15396,7 +15396,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.plate_gauntlets",
+         locale_key_prefix = "core.item.plate_gauntlets",
       },
       {
          id = "light_gloves",
@@ -15430,7 +15430,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.light_gloves",
+         locale_key_prefix = "core.item.light_gloves",
       },
       {
          id = "composite_gauntlets",
@@ -15464,7 +15464,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.composite_gauntlets",
+         locale_key_prefix = "core.item.composite_gauntlets",
       },
       {
          id = "small_shield",
@@ -15498,7 +15498,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.small_shield",
+         locale_key_prefix = "core.item.small_shield",
       },
       {
          id = "round_shield",
@@ -15532,7 +15532,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.round_shield",
+         locale_key_prefix = "core.item.round_shield",
       },
       {
          id = "shield",
@@ -15566,7 +15566,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shield",
+         locale_key_prefix = "core.item.shield",
       },
       {
          id = "large_shield",
@@ -15600,7 +15600,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.large_shield",
+         locale_key_prefix = "core.item.large_shield",
       },
       {
          id = "kite_shield",
@@ -15634,7 +15634,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.kite_shield",
+         locale_key_prefix = "core.item.kite_shield",
       },
       {
          id = "tower_shield",
@@ -15668,7 +15668,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tower_shield",
+         locale_key_prefix = "core.item.tower_shield",
       },
       {
          id = "shoes",
@@ -15702,7 +15702,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shoes",
+         locale_key_prefix = "core.item.shoes",
       },
       {
          id = "boots",
@@ -15736,7 +15736,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.boots",
+         locale_key_prefix = "core.item.boots",
       },
       {
          id = "tight_boots",
@@ -15770,7 +15770,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tight_boots",
+         locale_key_prefix = "core.item.tight_boots",
       },
       {
          id = "armored_boots",
@@ -15804,7 +15804,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.armored_boots",
+         locale_key_prefix = "core.item.armored_boots",
       },
       {
          id = "composite_girdle",
@@ -15838,7 +15838,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.composite_girdle",
+         locale_key_prefix = "core.item.composite_girdle",
       },
       {
          id = "plate_girdle",
@@ -15872,7 +15872,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.plate_girdle",
+         locale_key_prefix = "core.item.plate_girdle",
       },
       {
          id = "armored_cloak",
@@ -15906,7 +15906,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.armored_cloak",
+         locale_key_prefix = "core.item.armored_cloak",
       },
       {
          id = "cloak",
@@ -15940,7 +15940,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cloak",
+         locale_key_prefix = "core.item.cloak",
       },
       {
          id = "feather_hat",
@@ -15974,7 +15974,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.feather_hat",
+         locale_key_prefix = "core.item.feather_hat",
       },
       {
          id = "heavy_helm",
@@ -16008,7 +16008,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.heavy_helm",
+         locale_key_prefix = "core.item.heavy_helm",
       },
       {
          id = "knight_helm",
@@ -16042,7 +16042,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.knight_helm",
+         locale_key_prefix = "core.item.knight_helm",
       },
       {
          id = "helm",
@@ -16076,7 +16076,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.helm",
+         locale_key_prefix = "core.item.helm",
       },
       {
          id = "composite_helm",
@@ -16110,7 +16110,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.composite_helm",
+         locale_key_prefix = "core.item.composite_helm",
       },
       {
          id = "peridot",
@@ -16144,7 +16144,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.peridot",
+         locale_key_prefix = "core.item.peridot",
       },
       {
          id = "talisman",
@@ -16178,7 +16178,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.talisman",
+         locale_key_prefix = "core.item.talisman",
       },
       {
          id = "neck_guard",
@@ -16212,7 +16212,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.neck_guard",
+         locale_key_prefix = "core.item.neck_guard",
       },
       {
          id = "charm",
@@ -16246,7 +16246,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.charm",
+         locale_key_prefix = "core.item.charm",
       },
       {
          id = "bejeweled_amulet",
@@ -16280,7 +16280,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bejeweled_amulet",
+         locale_key_prefix = "core.item.bejeweled_amulet",
       },
       {
          id = "engagement_amulet",
@@ -16314,7 +16314,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.engagement_amulet",
+         locale_key_prefix = "core.item.engagement_amulet",
       },
       {
          id = "composite_ring",
@@ -16348,7 +16348,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.composite_ring",
+         locale_key_prefix = "core.item.composite_ring",
       },
       {
          id = "armored_ring",
@@ -16382,7 +16382,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.armored_ring",
+         locale_key_prefix = "core.item.armored_ring",
       },
       {
          id = "ring",
@@ -16416,7 +16416,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.ring",
+         locale_key_prefix = "core.item.ring",
       },
       {
          id = "engagement_ring",
@@ -16450,7 +16450,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.engagement_ring",
+         locale_key_prefix = "core.item.engagement_ring",
       },
       {
          id = "stethoscope",
@@ -16484,7 +16484,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stethoscope",
+         locale_key_prefix = "core.item.stethoscope",
       },
       {
          id = "scroll_of_ally",
@@ -16519,7 +16519,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_ally",
+         locale_key_prefix = "core.item.scroll_of_ally",
       },
       {
          id = "rod_of_domination",
@@ -16554,7 +16554,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_domination",
+         locale_key_prefix = "core.item.rod_of_domination",
       },
       {
          id = "spellbook_of_domination",
@@ -16589,7 +16589,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_domination",
+         locale_key_prefix = "core.item.spellbook_of_domination",
       },
       {
          id = "crossbow",
@@ -16623,7 +16623,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.crossbow",
+         locale_key_prefix = "core.item.crossbow",
       },
       {
          id = "bolt",
@@ -16657,7 +16657,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bolt",
+         locale_key_prefix = "core.item.bolt",
       },
       {
          id = "spellbook_of_web",
@@ -16692,7 +16692,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_web",
+         locale_key_prefix = "core.item.spellbook_of_web",
       },
       {
          id = "rod_of_web",
@@ -16727,7 +16727,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_web",
+         locale_key_prefix = "core.item.rod_of_web",
       },
       {
          id = "machine",
@@ -16761,7 +16761,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.machine",
+         locale_key_prefix = "core.item.machine",
       },
       {
          id = "computer",
@@ -16795,7 +16795,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.computer",
+         locale_key_prefix = "core.item.computer",
       },
       {
          id = "training_machine",
@@ -16829,7 +16829,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.training_machine",
+         locale_key_prefix = "core.item.training_machine",
       },
       {
          id = "camera",
@@ -16863,7 +16863,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf", "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.camera",
+         locale_key_prefix = "core.item.camera",
       },
       {
          id = "microwave_oven",
@@ -16897,7 +16897,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.microwave_oven",
+         locale_key_prefix = "core.item.microwave_oven",
       },
       {
          id = "server",
@@ -16931,7 +16931,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.server",
+         locale_key_prefix = "core.item.server",
       },
       {
          id = "storage",
@@ -16965,7 +16965,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.storage",
+         locale_key_prefix = "core.item.storage",
       },
       {
          id = "trash_can",
@@ -16999,7 +16999,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.trash_can",
+         locale_key_prefix = "core.item.trash_can",
       },
       {
          id = "chip",
@@ -17033,7 +17033,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.chip",
+         locale_key_prefix = "core.item.chip",
       },
       {
          id = "blank_disc",
@@ -17067,7 +17067,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.blank_disc",
+         locale_key_prefix = "core.item.blank_disc",
       },
       {
          id = "shot_gun",
@@ -17101,7 +17101,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.shot_gun",
+         locale_key_prefix = "core.item.shot_gun",
       },
       {
          id = "pop_corn",
@@ -17135,7 +17135,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf", "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.pop_corn",
+         locale_key_prefix = "core.item.pop_corn",
       },
       {
          id = "fried_potato",
@@ -17169,7 +17169,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf", "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.fried_potato",
+         locale_key_prefix = "core.item.fried_potato",
       },
       {
          id = "cyber_snack",
@@ -17203,7 +17203,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf", "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.cyber_snack",
+         locale_key_prefix = "core.item.cyber_snack",
       },
       {
          id = "scroll_of_inferior_material",
@@ -17238,7 +17238,7 @@ data:add_multi(
          tags = { "neg" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_inferior_material",
+         locale_key_prefix = "core.item.scroll_of_inferior_material",
       },
       {
          id = "scroll_of_change_material",
@@ -17273,7 +17273,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_change_material",
+         locale_key_prefix = "core.item.scroll_of_change_material",
       },
       {
          id = "scroll_of_superior_material",
@@ -17308,7 +17308,7 @@ data:add_multi(
          tags = { "spshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_superior_material",
+         locale_key_prefix = "core.item.scroll_of_superior_material",
       },
       {
          id = "figurine",
@@ -17342,7 +17342,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.figurine",
+         locale_key_prefix = "core.item.figurine",
       },
       {
          id = "card",
@@ -17376,7 +17376,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.card",
+         locale_key_prefix = "core.item.card",
       },
       {
          id = "little_sisters_diary",
@@ -17411,7 +17411,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.little_sisters_diary",
+         locale_key_prefix = "core.item.little_sisters_diary",
       },
       {
          id = "scroll_of_enchant_weapon",
@@ -17446,7 +17446,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_enchant_weapon",
+         locale_key_prefix = "core.item.scroll_of_enchant_weapon",
       },
       {
          id = "scroll_of_greater_enchant_weapon",
@@ -17481,7 +17481,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_greater_enchant_weapon",
+         locale_key_prefix = "core.item.scroll_of_greater_enchant_weapon",
       },
       {
          id = "scroll_of_enchant_armor",
@@ -17516,7 +17516,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_enchant_armor",
+         locale_key_prefix = "core.item.scroll_of_enchant_armor",
       },
       {
          id = "scroll_of_greater_enchant_armor",
@@ -17551,7 +17551,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_greater_enchant_armor",
+         locale_key_prefix = "core.item.scroll_of_greater_enchant_armor",
       },
       {
          id = "heir_trunk",
@@ -17585,7 +17585,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.heir_trunk",
+         locale_key_prefix = "core.item.heir_trunk",
       },
       {
          id = "deed_of_heirship",
@@ -17619,7 +17619,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.deed_of_heirship",
+         locale_key_prefix = "core.item.deed_of_heirship",
       },
       {
          id = "laser_gun",
@@ -17653,7 +17653,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.laser_gun",
+         locale_key_prefix = "core.item.laser_gun",
       },
       {
          id = "energy_cell",
@@ -17687,7 +17687,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.energy_cell",
+         locale_key_prefix = "core.item.energy_cell",
       },
       {
          id = "rail_gun",
@@ -17721,7 +17721,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.rail_gun",
+         locale_key_prefix = "core.item.rail_gun",
       },
       {
          id = "scroll_of_recharge",
@@ -17756,7 +17756,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_recharge",
+         locale_key_prefix = "core.item.scroll_of_recharge",
       },
       {
          id = "bottle_of_water",
@@ -17790,7 +17790,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_water",
+         locale_key_prefix = "core.item.bottle_of_water",
       },
       {
          id = "rod_of_change_creature",
@@ -17825,7 +17825,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_change_creature",
+         locale_key_prefix = "core.item.rod_of_change_creature",
       },
       {
          id = "rod_of_alchemy",
@@ -17860,7 +17860,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_alchemy",
+         locale_key_prefix = "core.item.rod_of_alchemy",
       },
       {
          id = "bottle_of_dye",
@@ -17895,7 +17895,7 @@ data:add_multi(
          tags = { "nogive" },
          rftags = {},
          color = "RandomAny",
-         locale_key_prefix = "core.locale.item.bottle_of_dye",
+         locale_key_prefix = "core.item.bottle_of_dye",
       },
       {
          id = "wing",
@@ -17929,7 +17929,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.wing",
+         locale_key_prefix = "core.item.wing",
       },
       {
          id = "deed_of_museum",
@@ -17964,7 +17964,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Orange",
-         locale_key_prefix = "core.locale.item.deed_of_museum",
+         locale_key_prefix = "core.item.deed_of_museum",
       },
       {
          id = "deed_of_shop",
@@ -17999,7 +17999,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.deed_of_shop",
+         locale_key_prefix = "core.item.deed_of_shop",
       },
       {
          id = "tree_of_beech",
@@ -18033,7 +18033,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_beech",
+         locale_key_prefix = "core.item.tree_of_beech",
       },
       {
          id = "tree_of_cedar",
@@ -18067,7 +18067,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_cedar",
+         locale_key_prefix = "core.item.tree_of_cedar",
       },
       {
          id = "tree_of_fruitless",
@@ -18101,7 +18101,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_fruitless",
+         locale_key_prefix = "core.item.tree_of_fruitless",
       },
       {
          id = "tree_of_fruits",
@@ -18135,7 +18135,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_fruits",
+         locale_key_prefix = "core.item.tree_of_fruits",
       },
       {
          id = "dead_tree",
@@ -18169,7 +18169,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.dead_tree",
+         locale_key_prefix = "core.item.dead_tree",
       },
       {
          id = "tree_of_zelkova",
@@ -18203,7 +18203,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_zelkova",
+         locale_key_prefix = "core.item.tree_of_zelkova",
       },
       {
          id = "tree_of_palm",
@@ -18237,7 +18237,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_palm",
+         locale_key_prefix = "core.item.tree_of_palm",
       },
       {
          id = "tree_of_ash",
@@ -18271,7 +18271,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_ash",
+         locale_key_prefix = "core.item.tree_of_ash",
       },
       {
          id = "furnance",
@@ -18305,7 +18305,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.furnance",
+         locale_key_prefix = "core.item.furnance",
       },
       {
          id = "fireplace",
@@ -18339,7 +18339,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.fireplace",
+         locale_key_prefix = "core.item.fireplace",
       },
       {
          id = "stove",
@@ -18373,7 +18373,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stove",
+         locale_key_prefix = "core.item.stove",
       },
       {
          id = "giant_foliage_plant",
@@ -18407,7 +18407,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.giant_foliage_plant",
+         locale_key_prefix = "core.item.giant_foliage_plant",
       },
       {
          id = "big_table",
@@ -18441,7 +18441,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.big_table",
+         locale_key_prefix = "core.item.big_table",
       },
       {
          id = "painting_of_madam",
@@ -18475,7 +18475,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.painting_of_madam",
+         locale_key_prefix = "core.item.painting_of_madam",
       },
       {
          id = "painting_of_landscape",
@@ -18509,7 +18509,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.painting_of_landscape",
+         locale_key_prefix = "core.item.painting_of_landscape",
       },
       {
          id = "painting_of_sunflower",
@@ -18543,7 +18543,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.painting_of_sunflower",
+         locale_key_prefix = "core.item.painting_of_sunflower",
       },
       {
          id = "statue_of_cat",
@@ -18577,7 +18577,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_cat",
+         locale_key_prefix = "core.item.statue_of_cat",
       },
       {
          id = "black_crystal",
@@ -18611,7 +18611,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.black_crystal",
+         locale_key_prefix = "core.item.black_crystal",
       },
       {
          id = "snow_man",
@@ -18645,7 +18645,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.snow_man",
+         locale_key_prefix = "core.item.snow_man",
       },
       {
          id = "deed_of_farm",
@@ -18680,7 +18680,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "LightBlue",
-         locale_key_prefix = "core.locale.item.deed_of_farm",
+         locale_key_prefix = "core.item.deed_of_farm",
       },
       {
          id = "deed_of_storage_house",
@@ -18715,7 +18715,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "PaleRed",
-         locale_key_prefix = "core.locale.item.deed_of_storage_house",
+         locale_key_prefix = "core.item.deed_of_storage_house",
       },
       {
          id = "disc",
@@ -18750,7 +18750,7 @@ data:add_multi(
          tags = { "sf" },
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.disc",
+         locale_key_prefix = "core.item.disc",
       },
       {
          id = "rod_of_wall_creation",
@@ -18785,7 +18785,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_wall_creation",
+         locale_key_prefix = "core.item.rod_of_wall_creation",
       },
       {
          id = "spellbook_of_wall_creation",
@@ -18820,7 +18820,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_wall_creation",
+         locale_key_prefix = "core.item.spellbook_of_wall_creation",
       },
       {
          id = "salary_chest",
@@ -18854,7 +18854,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.salary_chest",
+         locale_key_prefix = "core.item.salary_chest",
       },
       {
          id = "spellbook_of_healing_rain",
@@ -18889,7 +18889,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_healing_rain",
+         locale_key_prefix = "core.item.spellbook_of_healing_rain",
       },
       {
          id = "scroll_of_healing_rain",
@@ -18924,7 +18924,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_healing_rain",
+         locale_key_prefix = "core.item.scroll_of_healing_rain",
       },
       {
          id = "spellbook_of_healing_hands",
@@ -18959,7 +18959,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_healing_hands",
+         locale_key_prefix = "core.item.spellbook_of_healing_hands",
       },
       {
          id = "rod_of_healing_hands",
@@ -18994,7 +18994,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_healing_hands",
+         locale_key_prefix = "core.item.rod_of_healing_hands",
       },
       {
          id = "feather",
@@ -19028,7 +19028,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.feather",
+         locale_key_prefix = "core.item.feather",
       },
       {
          id = "gem_seed",
@@ -19063,7 +19063,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Purple",
-         locale_key_prefix = "core.locale.item.gem_seed",
+         locale_key_prefix = "core.item.gem_seed",
       },
       {
          id = "magical_seed",
@@ -19098,7 +19098,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Cyan",
-         locale_key_prefix = "core.locale.item.magical_seed",
+         locale_key_prefix = "core.item.magical_seed",
       },
       {
          id = "shelter",
@@ -19132,7 +19132,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shelter",
+         locale_key_prefix = "core.item.shelter",
       },
       {
          id = "seven_league_boots",
@@ -19166,7 +19166,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.seven_league_boots",
+         locale_key_prefix = "core.item.seven_league_boots",
       },
       {
          id = "vindale_cloak",
@@ -19200,7 +19200,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.vindale_cloak",
+         locale_key_prefix = "core.item.vindale_cloak",
       },
       {
          id = "aurora_ring",
@@ -19234,7 +19234,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.aurora_ring",
+         locale_key_prefix = "core.item.aurora_ring",
       },
       {
          id = "potion_of_cure_corruption",
@@ -19269,7 +19269,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_cure_corruption",
+         locale_key_prefix = "core.item.potion_of_cure_corruption",
       },
       {
          id = "masters_delivery_chest",
@@ -19303,7 +19303,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.masters_delivery_chest",
+         locale_key_prefix = "core.item.masters_delivery_chest",
       },
       {
          id = "shop_strongbox",
@@ -19337,7 +19337,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shop_strongbox",
+         locale_key_prefix = "core.item.shop_strongbox",
       },
       {
          id = "register",
@@ -19371,7 +19371,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.register",
+         locale_key_prefix = "core.item.register",
       },
       {
          id = "textbook",
@@ -19405,7 +19405,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.textbook",
+         locale_key_prefix = "core.item.textbook",
       },
       {
          id = "spellbook_of_acid_ground",
@@ -19440,7 +19440,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_acid_ground",
+         locale_key_prefix = "core.item.spellbook_of_acid_ground",
       },
       {
          id = "rod_of_acid_ground",
@@ -19475,7 +19475,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_acid_ground",
+         locale_key_prefix = "core.item.rod_of_acid_ground",
       },
       {
          id = "acidproof_liquid",
@@ -19510,7 +19510,7 @@ data:add_multi(
          tags = { "nogive" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.acidproof_liquid",
+         locale_key_prefix = "core.item.acidproof_liquid",
       },
       {
          id = "fireproof_blanket",
@@ -19545,7 +19545,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.fireproof_blanket",
+         locale_key_prefix = "core.item.fireproof_blanket",
       },
       {
          id = "coldproof_blanket",
@@ -19580,7 +19580,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.coldproof_blanket",
+         locale_key_prefix = "core.item.coldproof_blanket",
       },
       {
          id = "spellbook_of_fire_wall",
@@ -19615,7 +19615,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_fire_wall",
+         locale_key_prefix = "core.item.spellbook_of_fire_wall",
       },
       {
          id = "rod_of_fire_wall",
@@ -19650,7 +19650,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_fire_wall",
+         locale_key_prefix = "core.item.rod_of_fire_wall",
       },
       {
          id = "jerky",
@@ -19684,7 +19684,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.jerky",
+         locale_key_prefix = "core.item.jerky",
       },
       {
          id = "deed_of_ranch",
@@ -19719,7 +19719,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Gold",
-         locale_key_prefix = "core.locale.item.deed_of_ranch",
+         locale_key_prefix = "core.item.deed_of_ranch",
       },
       {
          id = "egg",
@@ -19753,7 +19753,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.egg",
+         locale_key_prefix = "core.item.egg",
       },
       {
          id = "bottle_of_milk",
@@ -19787,7 +19787,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_milk",
+         locale_key_prefix = "core.item.bottle_of_milk",
       },
       {
          id = "shit",
@@ -19821,7 +19821,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shit",
+         locale_key_prefix = "core.item.shit",
       },
       {
          id = "playback_disc",
@@ -19856,7 +19856,7 @@ data:add_multi(
          tags = { "sf" },
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.playback_disc",
+         locale_key_prefix = "core.item.playback_disc",
       },
       {
          id = "molotov",
@@ -19891,7 +19891,7 @@ data:add_multi(
          tags = { "nogive" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.molotov",
+         locale_key_prefix = "core.item.molotov",
       },
       {
          id = "kitty_bank",
@@ -19925,7 +19925,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.kitty_bank",
+         locale_key_prefix = "core.item.kitty_bank",
       },
       {
          id = "freezer",
@@ -19959,7 +19959,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.freezer",
+         locale_key_prefix = "core.item.freezer",
       },
       {
          id = "modern_rack",
@@ -19993,7 +19993,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.modern_rack",
+         locale_key_prefix = "core.item.modern_rack",
       },
       {
          id = "rod_of_make_door",
@@ -20028,7 +20028,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.rod_of_make_door",
+         locale_key_prefix = "core.item.rod_of_make_door",
       },
       {
          id = "spellbook_of_make_door",
@@ -20063,7 +20063,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_make_door",
+         locale_key_prefix = "core.item.spellbook_of_make_door",
       },
       {
          id = "torch",
@@ -20097,7 +20097,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.torch",
+         locale_key_prefix = "core.item.torch",
       },
       {
          id = "candle",
@@ -20132,7 +20132,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.candle",
+         locale_key_prefix = "core.item.candle",
       },
       {
          id = "fancy_lamp",
@@ -20166,7 +20166,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.fancy_lamp",
+         locale_key_prefix = "core.item.fancy_lamp",
       },
       {
          id = "modern_lamp_a",
@@ -20200,7 +20200,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.modern_lamp_a",
+         locale_key_prefix = "core.item.modern_lamp_a",
       },
       {
          id = "handful_of_snow",
@@ -20234,7 +20234,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.handful_of_snow",
+         locale_key_prefix = "core.item.handful_of_snow",
       },
       {
          id = "tree_of_naked",
@@ -20268,7 +20268,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_naked",
+         locale_key_prefix = "core.item.tree_of_naked",
       },
       {
          id = "tree_of_fir",
@@ -20302,7 +20302,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tree_of_fir",
+         locale_key_prefix = "core.item.tree_of_fir",
       },
       {
          id = "snow_scarecrow",
@@ -20337,7 +20337,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.snow_scarecrow",
+         locale_key_prefix = "core.item.snow_scarecrow",
       },
       {
          id = "mini_snow_man",
@@ -20371,7 +20371,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.mini_snow_man",
+         locale_key_prefix = "core.item.mini_snow_man",
       },
       {
          id = "snow_barrel",
@@ -20405,7 +20405,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.snow_barrel",
+         locale_key_prefix = "core.item.snow_barrel",
       },
       {
          id = "modern_lamp_b",
@@ -20439,7 +20439,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.modern_lamp_b",
+         locale_key_prefix = "core.item.modern_lamp_b",
       },
       {
          id = "statue_of_holy_cross",
@@ -20473,7 +20473,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_holy_cross",
+         locale_key_prefix = "core.item.statue_of_holy_cross",
       },
       {
          id = "pillar",
@@ -20507,7 +20507,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.pillar",
+         locale_key_prefix = "core.item.pillar",
       },
       {
          id = "stained_glass_window",
@@ -20541,7 +20541,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stained_glass_window",
+         locale_key_prefix = "core.item.stained_glass_window",
       },
       {
          id = "cargo_christmas_tree",
@@ -20575,7 +20575,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_christmas_tree",
+         locale_key_prefix = "core.item.cargo_christmas_tree",
       },
       {
          id = "cargo_snow_man",
@@ -20609,7 +20609,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_snow_man",
+         locale_key_prefix = "core.item.cargo_snow_man",
       },
       {
          id = "christmas_tree",
@@ -20643,7 +20643,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.christmas_tree",
+         locale_key_prefix = "core.item.christmas_tree",
       },
       {
          id = "giants_shackle",
@@ -20677,7 +20677,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.giants_shackle",
+         locale_key_prefix = "core.item.giants_shackle",
       },
       {
          id = "empty_bottle",
@@ -20711,7 +20711,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.empty_bottle",
+         locale_key_prefix = "core.item.empty_bottle",
       },
       {
          id = "holy_well",
@@ -20745,7 +20745,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.holy_well",
+         locale_key_prefix = "core.item.holy_well",
       },
       {
          id = "presidents_chair",
@@ -20779,7 +20779,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.presidents_chair",
+         locale_key_prefix = "core.item.presidents_chair",
       },
       {
          id = "green_plant",
@@ -20813,7 +20813,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.green_plant",
+         locale_key_prefix = "core.item.green_plant",
       },
       {
          id = "money_tree",
@@ -20847,7 +20847,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.money_tree",
+         locale_key_prefix = "core.item.money_tree",
       },
       {
          id = "barbecue_set",
@@ -20881,7 +20881,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.barbecue_set",
+         locale_key_prefix = "core.item.barbecue_set",
       },
       {
          id = "giant_cactus",
@@ -20915,7 +20915,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.giant_cactus",
+         locale_key_prefix = "core.item.giant_cactus",
       },
       {
          id = "square_window",
@@ -20949,7 +20949,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.square_window",
+         locale_key_prefix = "core.item.square_window",
       },
       {
          id = "window",
@@ -20983,7 +20983,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.window",
+         locale_key_prefix = "core.item.window",
       },
       {
          id = "triangle_plant",
@@ -21017,7 +21017,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.triangle_plant",
+         locale_key_prefix = "core.item.triangle_plant",
       },
       {
          id = "house_board",
@@ -21051,7 +21051,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.house_board",
+         locale_key_prefix = "core.item.house_board",
       },
       {
          id = "nice_window",
@@ -21085,7 +21085,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.nice_window",
+         locale_key_prefix = "core.item.nice_window",
       },
       {
          id = "kings_bed",
@@ -21119,7 +21119,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.kings_bed",
+         locale_key_prefix = "core.item.kings_bed",
       },
       {
          id = "flower_arch",
@@ -21153,7 +21153,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.flower_arch",
+         locale_key_prefix = "core.item.flower_arch",
       },
       {
          id = "bill",
@@ -21187,7 +21187,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bill",
+         locale_key_prefix = "core.item.bill",
       },
       {
          id = "tax_masters_tax_box",
@@ -21221,7 +21221,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tax_masters_tax_box",
+         locale_key_prefix = "core.item.tax_masters_tax_box",
       },
       {
          id = "bait",
@@ -21255,7 +21255,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.bait",
+         locale_key_prefix = "core.item.bait",
       },
       {
          id = "fish_a",
@@ -21289,7 +21289,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "fish" },
-         locale_key_prefix = "core.locale.item.fish_a",
+         locale_key_prefix = "core.item.fish_a",
       },
       {
          id = "fish_b",
@@ -21323,7 +21323,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.fish_b",
+         locale_key_prefix = "core.item.fish_b",
       },
       {
          id = "love_potion",
@@ -21357,7 +21357,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "nogive" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.love_potion",
+         locale_key_prefix = "core.item.love_potion",
       },
       {
          id = "treasure_map",
@@ -21391,7 +21391,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop", "spshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.treasure_map",
+         locale_key_prefix = "core.item.treasure_map",
       },
       {
          id = "small_medal",
@@ -21425,7 +21425,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.small_medal",
+         locale_key_prefix = "core.item.small_medal",
       },
       {
          id = "cat_sisters_diary",
@@ -21460,7 +21460,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.cat_sisters_diary",
+         locale_key_prefix = "core.item.cat_sisters_diary",
       },
       {
          id = "girls_diary",
@@ -21495,7 +21495,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.girls_diary",
+         locale_key_prefix = "core.item.girls_diary",
       },
       {
          id = "shrine_gate",
@@ -21529,7 +21529,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shrine_gate",
+         locale_key_prefix = "core.item.shrine_gate",
       },
       {
          id = "bottle_of_hermes_blood",
@@ -21564,7 +21564,7 @@ data:add_multi(
          tags = { "spshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.bottle_of_hermes_blood",
+         locale_key_prefix = "core.item.bottle_of_hermes_blood",
       },
       {
          id = "sages_helm",
@@ -21599,7 +21599,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Orange",
-         locale_key_prefix = "core.locale.item.sages_helm",
+         locale_key_prefix = "core.item.sages_helm",
       },
       {
          id = "spellbook_of_incognito",
@@ -21634,7 +21634,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_incognito",
+         locale_key_prefix = "core.item.spellbook_of_incognito",
       },
       {
          id = "disguise_set",
@@ -21668,7 +21668,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.disguise_set",
+         locale_key_prefix = "core.item.disguise_set",
       },
       {
          id = "material_kit",
@@ -21702,7 +21702,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop", "spshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.material_kit",
+         locale_key_prefix = "core.item.material_kit",
       },
       {
          id = "moon_gate",
@@ -21736,7 +21736,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.moon_gate",
+         locale_key_prefix = "core.item.moon_gate",
       },
       {
          id = "flying_scroll",
@@ -21771,7 +21771,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.flying_scroll",
+         locale_key_prefix = "core.item.flying_scroll",
       },
       {
          id = "panty",
@@ -21805,7 +21805,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.panty",
+         locale_key_prefix = "core.item.panty",
       },
       {
          id = "leash",
@@ -21839,7 +21839,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.leash",
+         locale_key_prefix = "core.item.leash",
       },
       {
          id = "mine",
@@ -21873,7 +21873,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "spshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.mine",
+         locale_key_prefix = "core.item.mine",
       },
       {
          id = "lockpick",
@@ -21907,7 +21907,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.lockpick",
+         locale_key_prefix = "core.item.lockpick",
       },
       {
          id = "skeleton_key",
@@ -21941,7 +21941,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.skeleton_key",
+         locale_key_prefix = "core.item.skeleton_key",
       },
       {
          id = "scroll_of_escape",
@@ -21976,7 +21976,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_escape",
+         locale_key_prefix = "core.item.scroll_of_escape",
       },
       {
          id = "happy_apple",
@@ -22011,7 +22011,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "LightBlue",
-         locale_key_prefix = "core.locale.item.happy_apple",
+         locale_key_prefix = "core.item.happy_apple",
       },
       {
          id = "unicorn_horn",
@@ -22045,7 +22045,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop", "spshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.unicorn_horn",
+         locale_key_prefix = "core.item.unicorn_horn",
       },
       {
          id = "cooler_box",
@@ -22079,7 +22079,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cooler_box",
+         locale_key_prefix = "core.item.cooler_box",
       },
       {
          id = "rice_barrel",
@@ -22113,7 +22113,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.rice_barrel",
+         locale_key_prefix = "core.item.rice_barrel",
       },
       {
          id = "eastern_bed",
@@ -22147,7 +22147,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.eastern_bed",
+         locale_key_prefix = "core.item.eastern_bed",
       },
       {
          id = "decorated_window",
@@ -22181,7 +22181,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.decorated_window",
+         locale_key_prefix = "core.item.decorated_window",
       },
       {
          id = "king_drawer",
@@ -22215,7 +22215,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.king_drawer",
+         locale_key_prefix = "core.item.king_drawer",
       },
       {
          id = "menu_board",
@@ -22249,7 +22249,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.menu_board",
+         locale_key_prefix = "core.item.menu_board",
       },
       {
          id = "black_board",
@@ -22283,7 +22283,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.black_board",
+         locale_key_prefix = "core.item.black_board",
       },
       {
          id = "sofa",
@@ -22318,7 +22318,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.sofa",
+         locale_key_prefix = "core.item.sofa",
       },
       {
          id = "flowerbed",
@@ -22353,7 +22353,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.flowerbed",
+         locale_key_prefix = "core.item.flowerbed",
       },
       {
          id = "toilet",
@@ -22388,7 +22388,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.toilet",
+         locale_key_prefix = "core.item.toilet",
       },
       {
          id = "craft_cupboard",
@@ -22422,7 +22422,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.craft_cupboard",
+         locale_key_prefix = "core.item.craft_cupboard",
       },
       {
          id = "sink",
@@ -22456,7 +22456,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sink",
+         locale_key_prefix = "core.item.sink",
       },
       {
          id = "junk",
@@ -22490,7 +22490,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.junk",
+         locale_key_prefix = "core.item.junk",
       },
       {
          id = "double_bed",
@@ -22525,7 +22525,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.double_bed",
+         locale_key_prefix = "core.item.double_bed",
       },
       {
          id = "hero_cheese",
@@ -22560,7 +22560,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.hero_cheese",
+         locale_key_prefix = "core.item.hero_cheese",
       },
       {
          id = "eastern_lamp",
@@ -22594,7 +22594,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.eastern_lamp",
+         locale_key_prefix = "core.item.eastern_lamp",
       },
       {
          id = "eastern_window",
@@ -22628,7 +22628,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.eastern_window",
+         locale_key_prefix = "core.item.eastern_window",
       },
       {
          id = "chochin",
@@ -22662,7 +22662,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.chochin",
+         locale_key_prefix = "core.item.chochin",
       },
       {
          id = "partition",
@@ -22697,7 +22697,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.partition",
+         locale_key_prefix = "core.item.partition",
       },
       {
          id = "spellbook_of_darkness_arrow",
@@ -22732,7 +22732,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_darkness_arrow",
+         locale_key_prefix = "core.item.spellbook_of_darkness_arrow",
       },
       {
          id = "dal_i_thalion",
@@ -22767,7 +22767,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.dal_i_thalion",
+         locale_key_prefix = "core.item.dal_i_thalion",
       },
       {
          id = "magic_fruit",
@@ -22802,7 +22802,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.magic_fruit",
+         locale_key_prefix = "core.item.magic_fruit",
       },
       {
          id = "monster_heart",
@@ -22836,7 +22836,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.monster_heart",
+         locale_key_prefix = "core.item.monster_heart",
       },
       {
          id = "speed_ring",
@@ -22870,7 +22870,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.speed_ring",
+         locale_key_prefix = "core.item.speed_ring",
       },
       {
          id = "statue_of_opatos",
@@ -22904,7 +22904,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_opatos",
+         locale_key_prefix = "core.item.statue_of_opatos",
       },
       {
          id = "statue_of_lulwy",
@@ -22938,7 +22938,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_lulwy",
+         locale_key_prefix = "core.item.statue_of_lulwy",
       },
       {
          id = "sisters_love_fueled_lunch",
@@ -22972,7 +22972,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sisters_love_fueled_lunch",
+         locale_key_prefix = "core.item.sisters_love_fueled_lunch",
       },
       {
          id = "book_of_rachel",
@@ -23006,7 +23006,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.book_of_rachel",
+         locale_key_prefix = "core.item.book_of_rachel",
       },
       {
          id = "cargo_art",
@@ -23040,7 +23040,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_art",
+         locale_key_prefix = "core.item.cargo_art",
       },
       {
          id = "cargo_canvas",
@@ -23074,7 +23074,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.cargo_canvas",
+         locale_key_prefix = "core.item.cargo_canvas",
       },
       {
          id = "nuclear_bomb",
@@ -23108,7 +23108,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.nuclear_bomb",
+         locale_key_prefix = "core.item.nuclear_bomb",
       },
       {
          id = "secret_treasure",
@@ -23142,7 +23142,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.secret_treasure",
+         locale_key_prefix = "core.item.secret_treasure",
       },
       {
          id = "wind_bow",
@@ -23177,7 +23177,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "LightBlue",
-         locale_key_prefix = "core.locale.item.wind_bow",
+         locale_key_prefix = "core.item.wind_bow",
       },
       {
          id = "winchester_premium",
@@ -23212,7 +23212,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.winchester_premium",
+         locale_key_prefix = "core.item.winchester_premium",
       },
       {
          id = "kumiromi_scythe",
@@ -23247,7 +23247,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Green",
-         locale_key_prefix = "core.locale.item.kumiromi_scythe",
+         locale_key_prefix = "core.item.kumiromi_scythe",
       },
       {
          id = "elemental_staff",
@@ -23282,7 +23282,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "LightGreen",
-         locale_key_prefix = "core.locale.item.elemental_staff",
+         locale_key_prefix = "core.item.elemental_staff",
       },
       {
          id = "holy_lance",
@@ -23316,7 +23316,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.holy_lance",
+         locale_key_prefix = "core.item.holy_lance",
       },
       {
          id = "lucky_dagger",
@@ -23351,7 +23351,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Orange",
-         locale_key_prefix = "core.locale.item.lucky_dagger",
+         locale_key_prefix = "core.item.lucky_dagger",
       },
       {
          id = "gaia_hammer",
@@ -23386,7 +23386,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Orange",
-         locale_key_prefix = "core.locale.item.gaia_hammer",
+         locale_key_prefix = "core.item.gaia_hammer",
       },
       {
          id = "lulwys_gem_stone_of_god_speed",
@@ -23421,7 +23421,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.lulwys_gem_stone_of_god_speed",
+         locale_key_prefix = "core.item.lulwys_gem_stone_of_god_speed",
       },
       {
          id = "jures_gem_stone_of_holy_rain",
@@ -23456,7 +23456,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "LightBlue",
-         locale_key_prefix = "core.locale.item.jures_gem_stone_of_holy_rain",
+         locale_key_prefix = "core.item.jures_gem_stone_of_holy_rain",
       },
       {
          id = "kumiromis_gem_stone_of_rejuvenation",
@@ -23491,7 +23491,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Green",
-         locale_key_prefix = "core.locale.item.kumiromis_gem_stone_of_rejuvenation",
+         locale_key_prefix = "core.item.kumiromis_gem_stone_of_rejuvenation",
       },
       {
          id = "gem_stone_of_mani",
@@ -23526,7 +23526,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.gem_stone_of_mani",
+         locale_key_prefix = "core.item.gem_stone_of_mani",
       },
       {
          id = "gene_machine",
@@ -23560,7 +23560,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.gene_machine",
+         locale_key_prefix = "core.item.gene_machine",
       },
       {
          id = "monster_ball",
@@ -23594,7 +23594,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.monster_ball",
+         locale_key_prefix = "core.item.monster_ball",
       },
       {
          id = "statue_of_jure",
@@ -23628,7 +23628,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_jure",
+         locale_key_prefix = "core.item.statue_of_jure",
       },
       {
          id = "ancient_book",
@@ -23662,7 +23662,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.ancient_book",
+         locale_key_prefix = "core.item.ancient_book",
       },
       {
          id = "iron_maiden",
@@ -23696,7 +23696,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.iron_maiden",
+         locale_key_prefix = "core.item.iron_maiden",
       },
       {
          id = "guillotine",
@@ -23730,7 +23730,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.guillotine",
+         locale_key_prefix = "core.item.guillotine",
       },
       {
          id = "pan_flute",
@@ -23764,7 +23764,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.pan_flute",
+         locale_key_prefix = "core.item.pan_flute",
       },
       {
          id = "lute",
@@ -23798,7 +23798,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.lute",
+         locale_key_prefix = "core.item.lute",
       },
       {
          id = "harmonica",
@@ -23832,7 +23832,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.harmonica",
+         locale_key_prefix = "core.item.harmonica",
       },
       {
          id = "harp",
@@ -23866,7 +23866,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.harp",
+         locale_key_prefix = "core.item.harp",
       },
       {
          id = "eastern_partition",
@@ -23900,7 +23900,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.eastern_partition",
+         locale_key_prefix = "core.item.eastern_partition",
       },
       {
          id = "axe_of_destruction",
@@ -23935,7 +23935,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.axe_of_destruction",
+         locale_key_prefix = "core.item.axe_of_destruction",
       },
       {
          id = "spellbook_of_magic_ball",
@@ -23970,7 +23970,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_magic_ball",
+         locale_key_prefix = "core.item.spellbook_of_magic_ball",
       },
       {
          id = "spellbook_of_magic_laser",
@@ -24005,7 +24005,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_magic_laser",
+         locale_key_prefix = "core.item.spellbook_of_magic_laser",
       },
       {
          id = "potion_of_salt_solution",
@@ -24039,7 +24039,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.potion_of_salt_solution",
+         locale_key_prefix = "core.item.potion_of_salt_solution",
       },
       {
          id = "little_ball",
@@ -24074,7 +24074,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.little_ball",
+         locale_key_prefix = "core.item.little_ball",
       },
       {
          id = "town_book",
@@ -24108,7 +24108,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.town_book",
+         locale_key_prefix = "core.item.town_book",
       },
       {
          id = "deck",
@@ -24142,7 +24142,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.deck",
+         locale_key_prefix = "core.item.deck",
       },
       {
          id = "rabbits_tail",
@@ -24177,7 +24177,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.rabbits_tail",
+         locale_key_prefix = "core.item.rabbits_tail",
       },
       {
          id = "whistle",
@@ -24211,7 +24211,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.whistle",
+         locale_key_prefix = "core.item.whistle",
       },
       {
          id = "vomit",
@@ -24245,7 +24245,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.vomit",
+         locale_key_prefix = "core.item.vomit",
       },
       {
          id = "beggars_pendant",
@@ -24279,7 +24279,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.beggars_pendant",
+         locale_key_prefix = "core.item.beggars_pendant",
       },
       {
          id = "potion_of_descent",
@@ -24314,7 +24314,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_descent",
+         locale_key_prefix = "core.item.potion_of_descent",
       },
       {
          id = "stradivarius",
@@ -24348,7 +24348,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.stradivarius",
+         locale_key_prefix = "core.item.stradivarius",
       },
       {
          id = "book_of_resurrection",
@@ -24383,7 +24383,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.book_of_resurrection",
+         locale_key_prefix = "core.item.book_of_resurrection",
       },
       {
          id = "scroll_of_contingency",
@@ -24418,7 +24418,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_contingency",
+         locale_key_prefix = "core.item.scroll_of_contingency",
       },
       {
          id = "spellbook_of_contingency",
@@ -24453,7 +24453,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_contingency",
+         locale_key_prefix = "core.item.spellbook_of_contingency",
       },
       {
          id = "potion_of_evolution",
@@ -24488,7 +24488,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.potion_of_evolution",
+         locale_key_prefix = "core.item.potion_of_evolution",
       },
       {
          id = "deed_of_dungeon",
@@ -24523,7 +24523,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.deed_of_dungeon",
+         locale_key_prefix = "core.item.deed_of_dungeon",
       },
       {
          id = "shuriken",
@@ -24557,7 +24557,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.shuriken",
+         locale_key_prefix = "core.item.shuriken",
       },
       {
          id = "grenade",
@@ -24591,7 +24591,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.grenade",
+         locale_key_prefix = "core.item.grenade",
       },
       {
          id = "secret_experience_of_kumiromi",
@@ -24626,7 +24626,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "Cyan",
-         locale_key_prefix = "core.locale.item.secret_experience_of_kumiromi",
+         locale_key_prefix = "core.item.secret_experience_of_kumiromi",
       },
       {
          id = "vanilla_rock",
@@ -24660,7 +24660,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.vanilla_rock",
+         locale_key_prefix = "core.item.vanilla_rock",
       },
       {
          id = "secret_experience_of_lomias",
@@ -24695,7 +24695,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Cyan",
-         locale_key_prefix = "core.locale.item.secret_experience_of_lomias",
+         locale_key_prefix = "core.item.secret_experience_of_lomias",
       },
       {
          id = "shenas_panty",
@@ -24730,7 +24730,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.shenas_panty",
+         locale_key_prefix = "core.item.shenas_panty",
       },
       {
          id = "claymore_unique",
@@ -24764,7 +24764,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.claymore_unique",
+         locale_key_prefix = "core.item.claymore_unique",
       },
       {
          id = "happy_bed",
@@ -24799,7 +24799,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.happy_bed",
+         locale_key_prefix = "core.item.happy_bed",
       },
       {
          id = "statue_of_ehekatl",
@@ -24833,7 +24833,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_ehekatl",
+         locale_key_prefix = "core.item.statue_of_ehekatl",
       },
       {
          id = "arbalest",
@@ -24868,7 +24868,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Purple",
-         locale_key_prefix = "core.locale.item.arbalest",
+         locale_key_prefix = "core.item.arbalest",
       },
       {
          id = "twin_edge",
@@ -24903,7 +24903,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Orange",
-         locale_key_prefix = "core.locale.item.twin_edge",
+         locale_key_prefix = "core.item.twin_edge",
       },
       {
          id = "music_ticket",
@@ -24937,7 +24937,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.music_ticket",
+         locale_key_prefix = "core.item.music_ticket",
       },
       {
          id = "kill_kill_piano",
@@ -24972,7 +24972,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Orange",
-         locale_key_prefix = "core.locale.item.kill_kill_piano",
+         locale_key_prefix = "core.item.kill_kill_piano",
       },
       {
          id = "alud",
@@ -25007,7 +25007,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Yellow",
-         locale_key_prefix = "core.locale.item.alud",
+         locale_key_prefix = "core.item.alud",
       },
       {
          id = "shield_of_thorn",
@@ -25042,7 +25042,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.shield_of_thorn",
+         locale_key_prefix = "core.item.shield_of_thorn",
       },
       {
          id = "crimson_plate",
@@ -25077,7 +25077,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.crimson_plate",
+         locale_key_prefix = "core.item.crimson_plate",
       },
       {
          id = "gift",
@@ -25111,7 +25111,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "spshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.gift",
+         locale_key_prefix = "core.item.gift",
       },
       {
          id = "token_of_friendship",
@@ -25145,7 +25145,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = { "ore" },
-         locale_key_prefix = "core.locale.item.token_of_friendship",
+         locale_key_prefix = "core.item.token_of_friendship",
       },
       {
          id = "spellbook_of_4_dimensional_pocket",
@@ -25180,7 +25180,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_4_dimensional_pocket",
+         locale_key_prefix = "core.item.spellbook_of_4_dimensional_pocket",
       },
       {
          id = "spellbook_of_harvest",
@@ -25215,7 +25215,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.spellbook_of_harvest",
+         locale_key_prefix = "core.item.spellbook_of_harvest",
       },
       {
          id = "sand_bag",
@@ -25249,7 +25249,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.sand_bag",
+         locale_key_prefix = "core.item.sand_bag",
       },
       {
          id = "small_gamble_chest",
@@ -25283,7 +25283,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.small_gamble_chest",
+         locale_key_prefix = "core.item.small_gamble_chest",
       },
       {
          id = "scythe",
@@ -25317,7 +25317,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.scythe",
+         locale_key_prefix = "core.item.scythe",
       },
       {
          id = "fireproof_liquid",
@@ -25352,7 +25352,7 @@ data:add_multi(
          tags = { "nogive" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.fireproof_liquid",
+         locale_key_prefix = "core.item.fireproof_liquid",
       },
       {
          id = "scroll_of_name",
@@ -25387,7 +25387,7 @@ data:add_multi(
          tags = { "noshop" },
          rftags = {},
          color = "RandomSeeded",
-         locale_key_prefix = "core.locale.item.scroll_of_name",
+         locale_key_prefix = "core.item.scroll_of_name",
       },
       {
          id = "fortune_cookie",
@@ -25421,7 +25421,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.fortune_cookie",
+         locale_key_prefix = "core.item.fortune_cookie",
       },
       {
          id = "frisias_tail",
@@ -25455,7 +25455,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.frisias_tail",
+         locale_key_prefix = "core.item.frisias_tail",
       },
       {
          id = "unknown_shell",
@@ -25490,7 +25490,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.unknown_shell",
+         locale_key_prefix = "core.item.unknown_shell",
       },
       {
          id = "hiryu_to",
@@ -25525,7 +25525,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.hiryu_to",
+         locale_key_prefix = "core.item.hiryu_to",
       },
       {
          id = "license_of_the_void_explorer",
@@ -25559,7 +25559,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.license_of_the_void_explorer",
+         locale_key_prefix = "core.item.license_of_the_void_explorer",
       },
       {
          id = "plank_of_carneades",
@@ -25594,7 +25594,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.plank_of_carneades",
+         locale_key_prefix = "core.item.plank_of_carneades",
       },
       {
          id = "schrodingers_cat",
@@ -25629,7 +25629,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.schrodingers_cat",
+         locale_key_prefix = "core.item.schrodingers_cat",
       },
       {
          id = "heart",
@@ -25664,7 +25664,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.heart",
+         locale_key_prefix = "core.item.heart",
       },
       {
          id = "tamers_whip",
@@ -25699,7 +25699,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Red",
-         locale_key_prefix = "core.locale.item.tamers_whip",
+         locale_key_prefix = "core.item.tamers_whip",
       },
       {
          id = "book_of_bokonon",
@@ -25733,7 +25733,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.book_of_bokonon",
+         locale_key_prefix = "core.item.book_of_bokonon",
       },
       {
          id = "summoning_crystal",
@@ -25767,7 +25767,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.summoning_crystal",
+         locale_key_prefix = "core.item.summoning_crystal",
       },
       {
          id = "statue_of_creator",
@@ -25801,7 +25801,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_creator",
+         locale_key_prefix = "core.item.statue_of_creator",
       },
       {
          id = "upstairs",
@@ -25835,7 +25835,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.upstairs",
+         locale_key_prefix = "core.item.upstairs",
       },
       {
          id = "downstairs",
@@ -25869,7 +25869,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.downstairs",
+         locale_key_prefix = "core.item.downstairs",
       },
       {
          id = "new_years_gift",
@@ -25903,7 +25903,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.new_years_gift",
+         locale_key_prefix = "core.item.new_years_gift",
       },
       {
          id = "kotatsu",
@@ -25938,7 +25938,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.kotatsu",
+         locale_key_prefix = "core.item.kotatsu",
       },
       {
          id = "daruma",
@@ -25972,7 +25972,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.daruma",
+         locale_key_prefix = "core.item.daruma",
       },
       {
          id = "kagami_mochi",
@@ -26006,7 +26006,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.kagami_mochi",
+         locale_key_prefix = "core.item.kagami_mochi",
       },
       {
          id = "mochi",
@@ -26040,7 +26040,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.mochi",
+         locale_key_prefix = "core.item.mochi",
       },
       {
          id = "five_horned_helm",
@@ -26075,7 +26075,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "Blue",
-         locale_key_prefix = "core.locale.item.five_horned_helm",
+         locale_key_prefix = "core.item.five_horned_helm",
       },
       {
          id = "mauser_c96_custom",
@@ -26110,7 +26110,7 @@ data:add_multi(
          tags = { "sf" },
          rftags = {},
          color = "Grey",
-         locale_key_prefix = "core.locale.item.mauser_c96_custom",
+         locale_key_prefix = "core.item.mauser_c96_custom",
       },
       {
          id = "lightsabre",
@@ -26145,7 +26145,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.lightsabre",
+         locale_key_prefix = "core.item.lightsabre",
       },
       {
          id = "garoks_hammer",
@@ -26179,7 +26179,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.garoks_hammer",
+         locale_key_prefix = "core.item.garoks_hammer",
       },
       {
          id = "goulds_piano",
@@ -26214,7 +26214,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "White2",
-         locale_key_prefix = "core.locale.item.goulds_piano",
+         locale_key_prefix = "core.item.goulds_piano",
       },
       {
          id = "festival_wreath",
@@ -26248,7 +26248,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.festival_wreath",
+         locale_key_prefix = "core.item.festival_wreath",
       },
       {
          id = "pedestal",
@@ -26283,7 +26283,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.pedestal",
+         locale_key_prefix = "core.item.pedestal",
       },
       {
          id = "counter",
@@ -26317,7 +26317,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.counter",
+         locale_key_prefix = "core.item.counter",
       },
       {
          id = "red_stall",
@@ -26351,7 +26351,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.red_stall",
+         locale_key_prefix = "core.item.red_stall",
       },
       {
          id = "blue_stall",
@@ -26385,7 +26385,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.blue_stall",
+         locale_key_prefix = "core.item.blue_stall",
       },
       {
          id = "jures_body_pillow",
@@ -26419,7 +26419,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.jures_body_pillow",
+         locale_key_prefix = "core.item.jures_body_pillow",
       },
       {
          id = "new_years_decoration",
@@ -26453,7 +26453,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.new_years_decoration",
+         locale_key_prefix = "core.item.new_years_decoration",
       },
       {
          id = "miniature_tree",
@@ -26487,7 +26487,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.miniature_tree",
+         locale_key_prefix = "core.item.miniature_tree",
       },
       {
          id = "bottle_of_soda",
@@ -26521,7 +26521,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         locale_key_prefix = "core.locale.item.bottle_of_soda",
+         locale_key_prefix = "core.item.bottle_of_soda",
       },
       {
          id = "blue_capsule_drug",
@@ -26555,7 +26555,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.blue_capsule_drug",
+         locale_key_prefix = "core.item.blue_capsule_drug",
       },
       {
          id = "tomato",
@@ -26589,7 +26589,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.tomato",
+         locale_key_prefix = "core.item.tomato",
       },
       {
          id = "large_bookshelf",
@@ -26623,7 +26623,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.large_bookshelf",
+         locale_key_prefix = "core.item.large_bookshelf",
       },
       {
          id = "luxury_cabinet",
@@ -26657,7 +26657,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.luxury_cabinet",
+         locale_key_prefix = "core.item.luxury_cabinet",
       },
       {
          id = "special_steamed_meat_bun",
@@ -26691,7 +26691,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.special_steamed_meat_bun",
+         locale_key_prefix = "core.item.special_steamed_meat_bun",
       },
       {
          id = "statue_of_kumiromi",
@@ -26725,7 +26725,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_kumiromi",
+         locale_key_prefix = "core.item.statue_of_kumiromi",
       },
       {
          id = "statue_of_mani",
@@ -26759,7 +26759,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.statue_of_mani",
+         locale_key_prefix = "core.item.statue_of_mani",
       },
       {
          id = "luxury_sofa",
@@ -26794,7 +26794,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.luxury_sofa",
+         locale_key_prefix = "core.item.luxury_sofa",
       },
       {
          id = "deer_head",
@@ -26828,7 +26828,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.deer_head",
+         locale_key_prefix = "core.item.deer_head",
       },
       {
          id = "fur_carpet",
@@ -26862,7 +26862,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.fur_carpet",
+         locale_key_prefix = "core.item.fur_carpet",
       },
       {
          id = "kitchen_knife",
@@ -26896,7 +26896,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.kitchen_knife",
+         locale_key_prefix = "core.item.kitchen_knife",
       },
       {
          id = "dish",
@@ -26930,7 +26930,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.dish",
+         locale_key_prefix = "core.item.dish",
       },
       {
          id = "recipe",
@@ -26964,7 +26964,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.recipe",
+         locale_key_prefix = "core.item.recipe",
       },
       {
          id = "recipe_holder",
@@ -26998,7 +26998,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.recipe_holder",
+         locale_key_prefix = "core.item.recipe_holder",
       },
       {
          id = "bottle_of_salt",
@@ -27032,7 +27032,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "flavor" },
-         locale_key_prefix = "core.locale.item.bottle_of_salt",
+         locale_key_prefix = "core.item.bottle_of_salt",
       },
       {
          id = "sack_of_sugar",
@@ -27066,7 +27066,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "flavor" },
-         locale_key_prefix = "core.locale.item.sack_of_sugar",
+         locale_key_prefix = "core.item.sack_of_sugar",
       },
       {
          id = "puff_puff_bread",
@@ -27100,7 +27100,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.puff_puff_bread",
+         locale_key_prefix = "core.item.puff_puff_bread",
       },
       {
          id = "skull_bow",
@@ -27134,7 +27134,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.skull_bow",
+         locale_key_prefix = "core.item.skull_bow",
       },
       {
          id = "pot_for_testing",
@@ -27169,7 +27169,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.pot_for_testing",
+         locale_key_prefix = "core.item.pot_for_testing",
       },
       {
          id = "frying_pan_for_testing",
@@ -27204,7 +27204,7 @@ data:add_multi(
          tags = {},
          rftags = {},
          color = "RandomFurniture",
-         locale_key_prefix = "core.locale.item.frying_pan_for_testing",
+         locale_key_prefix = "core.item.frying_pan_for_testing",
       },
       {
          id = "dragon_slayer",
@@ -27238,7 +27238,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.dragon_slayer",
+         locale_key_prefix = "core.item.dragon_slayer",
       },
       {
          id = "putitoro",
@@ -27272,6 +27272,6 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         locale_key_prefix = "core.locale.item.putitoro",
+         locale_key_prefix = "core.item.putitoro",
       },
 })

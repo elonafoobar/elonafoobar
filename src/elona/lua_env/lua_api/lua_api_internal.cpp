@@ -230,7 +230,7 @@ void LuaApiInternal::strange_scientist_pick_reward()
         randomize();
     }
     txt(
-        i18n::s.get("core.locale.talk.unique.strange_scientist."
+        i18n::s.get("core.talk.unique.strange_scientist."
                     "reward.choose_one"));
     invsubroutine = 1;
     invctrl(0) = 22;

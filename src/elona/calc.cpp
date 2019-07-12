@@ -379,8 +379,7 @@ int calc_rate_to_pierce(int id)
 std::string calcage(int cc)
 {
     int n = game_data.date.year - cdata[cc].birth_year;
-    return n >= 0 ? std::to_string(n)
-                  : i18n::s.get("core.locale.chara.age_unknown");
+    return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 
 
@@ -753,7 +752,7 @@ int calcattackdmg(AttackDamageCalculationMode mode)
             pierce = 100;
             if (is_in_fov(cdata[cc]))
             {
-                txt(i18n::s.get("core.locale.damage.vorpal.melee"),
+                txt(i18n::s.get("core.damage.vorpal.melee"),
                     Message::color{ColorIndex::orange});
             }
         }
@@ -765,7 +764,7 @@ int calcattackdmg(AttackDamageCalculationMode mode)
             pierce = 60;
             if (is_in_fov(cdata[cc]))
             {
-                txt(i18n::s.get("core.locale.damage.vorpal.ranged"),
+                txt(i18n::s.get("core.damage.vorpal.ranged"),
                     Message::color{ColorIndex::orange});
             }
         }
@@ -1541,12 +1540,12 @@ void calcpartyscore2()
         if (cnt.impression >= 53 && cnt.quality >= Quality::miracle)
         {
             score += 20 + cnt.level / 2;
-            txt(i18n::s.get("core.locale.quest.party.is_satisfied", cnt));
+            txt(i18n::s.get("core.quest.party.is_satisfied", cnt));
         }
     }
     if (score != 0)
     {
-        txt(i18n::s.get("core.locale.quest.party.total_bonus", score));
+        txt(i18n::s.get("core.quest.party.total_bonus", score));
     }
     quest_data.immediate().extra_info_2 =
         quest_data.immediate().extra_info_2 * (100 + score) / 100;

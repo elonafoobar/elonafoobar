@@ -408,8 +408,8 @@ optional<int> get_shortcut(const std::string& action)
 YesNo yes_no()
 {
     Prompt prompt;
-    prompt.append(i18n::s.get("core.locale.ui.yes"), snail::Key::key_y, 0);
-    prompt.append(i18n::s.get("core.locale.ui.no"), snail::Key::key_n, 1);
+    prompt.append(i18n::s.get("core.ui.yes"), snail::Key::key_y, 0);
+    prompt.append(i18n::s.get("core.ui.no"), snail::Key::key_n, 1);
 
     const auto result = prompt.query(promptx, prompty, 160);
     if (result == 0)

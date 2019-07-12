@@ -11,13 +11,13 @@ int get_card_info(int dbid, CardInfo& card_info)
 {
     std::string card_name;
     if (const auto card_name_opt =
-            i18n::s.get_enum_optional("core.locale.card_info", dbid))
+            i18n::s.get_enum_optional("core.card_info", dbid))
     {
         card_name = *card_name_opt;
     }
     else if (const auto chara_id = the_character_db.get_id_from_legacy(dbid))
     {
-        card_name = i18n::s.get_m("locale.chara", *chara_id, "name");
+        card_name = i18n::s.get_m("chara", *chara_id, "name");
     }
     else
     {

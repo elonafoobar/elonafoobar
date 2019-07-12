@@ -54,8 +54,7 @@ void end_dmghp(const Character& victim)
             if (rnd(20) == 0)
             {
                 int picked = rnd(6);
-                txt(i18n::s.get_enum(
-                    "core.locale.damage.sand_bag", picked, victim));
+                txt(i18n::s.get_enum("core.damage.sand_bag", picked, victim));
             }
         }
     }
@@ -85,19 +84,19 @@ void dmgheal_death_by_backpack(Character& chara)
     }
     if (heaviest_item_index == -1)
     {
-        heaviest_item_name = i18n::s.get_enum_property(
-            "core.locale.death_by.other", "backpack", 6);
+        heaviest_item_name =
+            i18n::s.get_enum_property("core.death_by.other", "backpack", 6);
     }
     else
     {
         heaviest_item_name = itemname(heaviest_item_index);
     }
     txt(i18n::s.get_enum_property(
-        "core.locale.death_by.other", "text", 6, chara, heaviest_item_name));
+        "core.death_by.other", "text", 6, chara, heaviest_item_name));
     if (chara.index == 0)
     {
         ndeathcause = i18n::s.get_enum_property(
-            "core.locale.death_by.other", "death_cause", 6, heaviest_item_name);
+            "core.death_by.other", "death_cause", 6, heaviest_item_name);
     }
 }
 
@@ -379,9 +378,9 @@ int damage_hp(
                     continue;
                 }
                 cdata[cnt].is_lay_hand_available() = false;
-                txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]),
+                txt(i18n::s.get("core.damage.lay_hand", cdata[cnt]),
                     Message::color{ColorIndex::cyan});
-                txt(i18n::s.get("core.locale.damage.is_healed", victim));
+                txt(i18n::s.get("core.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim.index;
                 MiracleAnimation().play();
@@ -426,14 +425,12 @@ int damage_hp(
             if (damage_level == -1)
             {
                 txt(i18n::s.get(
-                    "core.locale.damage.levels.scratch",
-                    victim,
-                    attacker_is_player));
+                    "core.damage.levels.scratch", victim, attacker_is_player));
             }
             if (damage_level == 0)
             {
                 txt(i18n::s.get(
-                        "core.locale.damage.levels.slightly",
+                        "core.damage.levels.slightly",
                         victim,
                         attacker_is_player),
                     Message::color{ColorIndex::orange});
@@ -441,7 +438,7 @@ int damage_hp(
             if (damage_level == 1)
             {
                 txt(i18n::s.get(
-                        "core.locale.damage.levels.moderately",
+                        "core.damage.levels.moderately",
                         victim,
                         attacker_is_player),
                     Message::color{ColorIndex::gold});
@@ -449,7 +446,7 @@ int damage_hp(
             if (damage_level == 2)
             {
                 txt(i18n::s.get(
-                        "core.locale.damage.levels.severely",
+                        "core.damage.levels.severely",
                         victim,
                         attacker_is_player),
                     Message::color{ColorIndex::light_red});
@@ -457,7 +454,7 @@ int damage_hp(
             if (damage_level >= 3)
             {
                 txt(i18n::s.get(
-                        "core.locale.damage.levels.critically",
+                        "core.damage.levels.critically",
                         victim,
                         attacker_is_player),
                     Message::color{ColorIndex::red});
@@ -469,7 +466,7 @@ int damage_hp(
         {
             if (is_in_fov(victim))
             {
-                txt(i18n::s.get("core.locale.damage.reactions.screams", victim),
+                txt(i18n::s.get("core.damage.reactions.screams", victim),
                     Message::color{ColorIndex::gold});
             }
         }
@@ -478,7 +475,7 @@ int damage_hp(
             if (is_in_fov(victim))
             {
                 txt(i18n::s.get(
-                        "core.locale.damage.reactions.writhes_in_pain", victim),
+                        "core.damage.reactions.writhes_in_pain", victim),
                     Message::color{ColorIndex::light_red});
             }
         }
@@ -487,8 +484,7 @@ int damage_hp(
             if (is_in_fov(victim))
             {
                 txt(i18n::s.get(
-                        "core.locale.damage.reactions.is_severely_hurt",
-                        victim),
+                        "core.damage.reactions.is_severely_hurt", victim),
                     Message::color{ColorIndex::red});
             }
         }
@@ -500,7 +496,7 @@ int damage_hp(
             }
             if (is_in_fov(victim))
             {
-                txt(i18n::s.get("core.locale.damage.is_healed", victim),
+                txt(i18n::s.get("core.damage.is_healed", victim),
                     Message::color{ColorIndex::blue});
             }
         }
@@ -536,7 +532,7 @@ int damage_hp(
                             if (is_in_fov(victim))
                             {
                                 txt(i18n::s.get(
-                                        "core.locale.damage.runs_away_in_"
+                                        "core.damage.runs_away_in_"
                                         "terror",
                                         victim),
                                     Message::color{ColorIndex::blue});
@@ -651,8 +647,7 @@ int damage_hp(
             if (element != 54 && element != 58 && element != 59)
             {
                 victim.sleep = 0;
-                txt(i18n::s.get(
-                    "core.locale.damage.sleep_is_disturbed", victim));
+                txt(i18n::s.get("core.damage.sleep_is_disturbed", victim));
             }
         }
         if (attacker_is_player)
@@ -689,7 +684,7 @@ int damage_hp(
             if (rnd(3) == 0)
             {
                 victim.will_explode_soon() = true;
-                txt(i18n::s.get("core.locale.damage.explode_click"),
+                txt(i18n::s.get("core.damage.explode_click"),
                     Message::color{ColorIndex::cyan});
             }
         }
@@ -703,8 +698,7 @@ int damage_hp(
                     {
                         if (chara_copy(victim) != -1)
                         {
-                            txt(i18n::s.get(
-                                "core.locale.damage.splits", victim));
+                            txt(i18n::s.get("core.damage.splits", victim));
                         }
                     }
                 }
@@ -724,8 +718,7 @@ int damage_hp(
                         {
                             if (chara_copy(victim) != -1)
                             {
-                                txt(i18n::s.get(
-                                    "core.locale.damage.splits", victim));
+                                txt(i18n::s.get("core.damage.splits", victim));
                             }
                         }
                     }
@@ -743,8 +736,7 @@ int damage_hp(
                         if (is_in_fov(victim))
                         {
                             txt(i18n::s.get(
-                                    "core.locale.damage.is_engulfed_in_fury",
-                                    victim),
+                                    "core.damage.is_engulfed_in_fury", victim),
                                 Message::color{ColorIndex::blue});
                         }
                         victim.furious += rnd(30) + 15;
@@ -833,7 +825,7 @@ int damage_hp(
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat."
+                            "core.death_by.chara.transformed_into_meat."
                             "active",
                             victim,
                             attacker_is_player));
@@ -841,7 +833,7 @@ int damage_hp(
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat."
+                            "core.death_by.chara.transformed_into_meat."
                             "passive",
                             victim,
                             attacker_is_player));
@@ -854,14 +846,14 @@ int damage_hp(
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.destroyed.active",
+                            "core.death_by.chara.destroyed.active",
                             victim,
                             attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.destroyed.passive",
+                            "core.death_by.chara.destroyed.passive",
                             victim,
                             attacker_is_player));
                     }
@@ -873,14 +865,14 @@ int damage_hp(
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.minced.active",
+                            "core.death_by.chara.minced.active",
                             victim,
                             attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.minced.passive",
+                            "core.death_by.chara.minced.passive",
                             victim,
                             attacker_is_player));
                     }
@@ -892,21 +884,21 @@ int damage_hp(
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.killed.active",
+                            "core.death_by.chara.killed.active",
                             victim,
                             attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.killed.passive",
+                            "core.death_by.chara.killed.passive",
                             victim,
                             attacker_is_player));
                     }
                 }
             }
-            ndeathcause = i18n::s.get(
-                "core.locale.death_by.chara.death_cause", *attacker);
+            ndeathcause =
+                i18n::s.get("core.death_by.chara.death_cause", *attacker);
         }
         else
         {
@@ -919,13 +911,11 @@ int damage_hp(
                 int death_kind = -damage_source;
 
                 txt(i18n::s.get_enum_property(
-                    "core.locale.death_by.other", "text", death_kind, victim));
+                    "core.death_by.other", "text", death_kind, victim));
                 if (victim.index == 0)
                 {
                     ndeathcause = i18n::s.get_enum_property(
-                        "core.locale.death_by.other",
-                        "death_cause",
-                        death_kind);
+                        "core.death_by.other", "death_cause", death_kind);
                 }
             }
         }
@@ -1028,24 +1018,21 @@ int damage_hp(
                     }
                     if (victim.id == 141)
                     {
-                        txt(i18n::s.get(
-                                "core.locale.scenario.obtain_stone.fool"),
+                        txt(i18n::s.get("core.scenario.obtain_stone.fool"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_fool = 1;
                     }
                     if (victim.id == 143)
                     {
-                        txt(i18n::s.get(
-                                "core.locale.scenario.obtain_stone.king"),
+                        txt(i18n::s.get("core.scenario.obtain_stone.king"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_king = 1;
                     }
                     if (victim.id == 144)
                     {
-                        txt(i18n::s.get(
-                                "core.locale.scenario.obtain_stone.sage"),
+                        txt(i18n::s.get("core.scenario.obtain_stone.sage"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_sage = 1;
@@ -1064,7 +1051,7 @@ int damage_hp(
                         {
                             game_data.quest_flags.pyramid_trial = 1000;
                             quest_update_journal_msg();
-                            txt(i18n::s.get("core.locale.quest.completed"));
+                            txt(i18n::s.get("core.quest.completed"));
                             snd("core.complete1");
                         }
                     }
@@ -1084,7 +1071,7 @@ int damage_hp(
                     {
                         ++game_data.quest_flags.kill_count_of_little_sister;
                         txt(i18n::s.get(
-                                "core.locale.talk.unique.strange_scientist."
+                                "core.talk.unique.strange_scientist."
                                 "saved_"
                                 "count",
                                 game_data.quest_flags
@@ -1130,7 +1117,7 @@ int damage_hp(
             chara_custom_talk(victim.index, 102);
             if (victim.index < 16)
             {
-                txt(i18n::s.get("core.locale.damage.you_feel_sad"));
+                txt(i18n::s.get("core.damage.you_feel_sad"));
             }
         }
         if (victim.state() == Character::State::empty)
@@ -1143,7 +1130,7 @@ int damage_hp(
         {
             if (victim.index == game_data.mount)
             {
-                txt(i18n::s.get("core.locale.damage.get_off_corpse", victim));
+                txt(i18n::s.get("core.damage.get_off_corpse", victim));
                 ride_end();
             }
         }
@@ -1177,7 +1164,7 @@ int damage_hp(
         }
         if (victim.is_death_master() == 1)
         {
-            txt(i18n::s.get("core.locale.damage.death_word_breaks"));
+            txt(i18n::s.get("core.damage.death_word_breaks"));
             for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
                  ++chara_index)
             {
@@ -1259,7 +1246,7 @@ void damage_mp(Character& cc, int delta)
             if (damage < 10)
                 return;
         }
-        txt(i18n::s.get("core.locale.damage.magic_reaction_hurts", cc));
+        txt(i18n::s.get("core.damage.magic_reaction_hurts", cc));
         damage_hp(cc, damage, -2);
     }
 }

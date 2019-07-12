@@ -4,7 +4,7 @@ local World = Elona.require("World")
 
 return {
    id = "orphe",
-   root = "core.locale.talk.unique.orphe",
+   root = "core.talk.unique.orphe",
 
    nodes = {
       __start = function()
@@ -23,7 +23,7 @@ return {
                 else
                    sex = 0
                 end
-                return {I18N.get_enum("core.locale.ui.sex", sex)}
+                return {I18N.get_enum("core.ui.sex", sex)}
             end},
             {"dialog._1"},
             {"dialog._2"},

@@ -18,7 +18,7 @@ void fish_get(int legacy_fish_id)
     inv[ci].subname = legacy_fish_id;
     inv[ci].value = the_fish_db[legacy_fish_id]->value;
     inv[ci].weight = the_fish_db[legacy_fish_id]->weight;
-    txt(i18n::s.get("core.locale.activity.fishing.get", inv[ci]));
+    txt(i18n::s.get("core.activity.fishing.get", inv[ci]));
     item_stack(0, ci, 1);
 }
 

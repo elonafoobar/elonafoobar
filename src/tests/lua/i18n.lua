@@ -22,21 +22,21 @@ locale {
 }
 ]])
 
-        lequal(I18N.get("test.locale.foo"), "bar")
-        lequal(I18N.get("test.locale.baz", "dood", 42), "You passed in dood and 42.")
-        lequal(I18N.get("test.locale.baz", "dood"), "You passed in dood and <missing>.")
-        lequal(I18N.get("test.locale.hoge", "dood", 42), "You are nice.")
-        lequal(I18N.get("test.locale.piyo", "dood", 42), "She is nice.")
+        lequal(I18N.get("test.foo"), "bar")
+        lequal(I18N.get("test.baz", "dood", 42), "You passed in dood and 42.")
+        lequal(I18N.get("test.baz", "dood"), "You passed in dood and <missing>.")
+        lequal(I18N.get("test.hoge", "dood", 42), "You are nice.")
+        lequal(I18N.get("test.piyo", "dood", 42), "She is nice.")
 
         local chara = Chara.create(23, 23, "core.putit")
         chara.basename = "putit"
         FOV.refresh();
-        lequal(I18N.get("test.locale.hello", chara), "Hello, the putit!")
-        lequal(I18N.get("test.locale.hello_base", chara), "Hello, putit!")
+        lequal(I18N.get("test.hello", chara), "Hello, the putit!")
+        lequal(I18N.get("test.hello_base", chara), "Hello, putit!")
 
         local item = Item.create(0, 1, "core.putitoro", 3)
-        lequal(I18N.get("test.locale.item", item), "Got 3 putitoros!")
-        lequal(I18N.get("test.locale.item_base", item), "Got putitoro!")
+        lequal(I18N.get("test.item", item), "Got 3 putitoros!")
+        lequal(I18N.get("test.item_base", item), "Got putitoro!")
 end)
 
 lrun("test I18N.get_optional", function()
@@ -55,13 +55,13 @@ locale {
 }
 ]])
 
-        lequal(I18N.get_optional("test.locale.foo"), "bar")
-        lequal(I18N.get_optional("test.locale.baz", "dood", 42), "You passed in dood and 42.")
-        lequal(I18N.get_optional("test.locale.baz", "dood"), "You passed in dood and <missing>.")
-        lequal(I18N.get_optional("test.locale.hoge", "dood", 42), "You are nice.")
-        lequal(I18N.get_optional("test.locale.piyo", "dood", 42), "She is nice.")
+        lequal(I18N.get_optional("test.foo"), "bar")
+        lequal(I18N.get_optional("test.baz", "dood", 42), "You passed in dood and 42.")
+        lequal(I18N.get_optional("test.baz", "dood"), "You passed in dood and <missing>.")
+        lequal(I18N.get_optional("test.hoge", "dood", 42), "You are nice.")
+        lequal(I18N.get_optional("test.piyo", "dood", 42), "She is nice.")
 
-        lequal(I18N.get_optional("test.locale.asdfg"), nil)
+        lequal(I18N.get_optional("test.asdfg"), nil)
         lequal(I18N.get_optional(""), nil)
 end)
 
@@ -76,10 +76,10 @@ locale {
 }
 ]])
 
-        lequal(I18N.get_enum("test.locale.foo", 0), "bar")
-        lequal(I18N.get_enum("test.locale.foo", 1), "baz")
-        lequal(I18N.get_enum("test.locale.foo", 2), "hoge <missing>")
-        lequal(I18N.get_enum("test.locale.foo", 2, "quux"), "hoge quux")
+        lequal(I18N.get_enum("test.foo", 0), "bar")
+        lequal(I18N.get_enum("test.foo", 1), "baz")
+        lequal(I18N.get_enum("test.foo", 2), "hoge <missing>")
+        lequal(I18N.get_enum("test.foo", 2, "quux"), "hoge quux")
 end)
 
 lrun("test I18N.get_enum_property", function()
@@ -102,13 +102,13 @@ locale {
 }
 ]])
 
-        lequal(I18N.get_enum_property("test.locale.foo", "name", 0), "foo")
-        lequal(I18N.get_enum_property("test.locale.foo", "name", 1), "baz")
-        lequal(I18N.get_enum_property("test.locale.foo", "name", 2), "hoge")
-        lequal(I18N.get_enum_property("test.locale.foo", "desc", 0), "bar")
-        lequal(I18N.get_enum_property("test.locale.foo", "desc", 1), "quux")
-        lequal(I18N.get_enum_property("test.locale.foo", "desc", 2), "piyo <missing>")
-        lequal(I18N.get_enum_property("test.locale.foo", "desc", 2, "fuga"), "piyo fuga")
+        lequal(I18N.get_enum_property("test.foo", "name", 0), "foo")
+        lequal(I18N.get_enum_property("test.foo", "name", 1), "baz")
+        lequal(I18N.get_enum_property("test.foo", "name", 2), "hoge")
+        lequal(I18N.get_enum_property("test.foo", "desc", 0), "bar")
+        lequal(I18N.get_enum_property("test.foo", "desc", 1), "quux")
+        lequal(I18N.get_enum_property("test.foo", "desc", 2), "piyo <missing>")
+        lequal(I18N.get_enum_property("test.foo", "desc", 2, "fuga"), "piyo fuga")
 end)
 
 lrun("test I18N.get_enum_property_optional", function()
@@ -126,10 +126,10 @@ locale {
 }
 ]])
 
-        lequal(I18N.get_enum_property_optional("test.locale.foo", "name", 0), "foo")
-        lequal(I18N.get_enum_property_optional("test.locale.foo", "name", 1), "baz")
-        lequal(I18N.get_enum_property_optional("test.locale.foo", "desc", 0), nil)
-        lequal(I18N.get_enum_property_optional("test.locale.foo", "desc", 0, "hoge"), nil)
-        lequal(I18N.get_enum_property_optional("test.locale.foo", "desc", 1), "bar <missing>")
-        lequal(I18N.get_enum_property_optional("test.locale.foo", "desc", 1, "hoge"), "bar hoge")
+        lequal(I18N.get_enum_property_optional("test.foo", "name", 0), "foo")
+        lequal(I18N.get_enum_property_optional("test.foo", "name", 1), "baz")
+        lequal(I18N.get_enum_property_optional("test.foo", "desc", 0), nil)
+        lequal(I18N.get_enum_property_optional("test.foo", "desc", 0, "hoge"), nil)
+        lequal(I18N.get_enum_property_optional("test.foo", "desc", 1), "bar <missing>")
+        lequal(I18N.get_enum_property_optional("test.foo", "desc", 1, "hoge"), "bar hoge")
 end)

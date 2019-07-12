@@ -241,31 +241,31 @@ int card_ref(int id, CardInfo& card_info)
     if (card_info.cardreftype == 10)
     {
         cardrefbg = card_info.cardrefdomain;
-        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.creature") + ">  " +
-            i18n::s.get("core.locale.tcg.card.race") + ":" +
-            card_info.cardrefrace + u8"  Hp:"s + card_info.cardrefhp +
-            u8"  Atk:"s + card_info.cardrefattack;
+        rtvaln += " <" + i18n::s.get("core.tcg.card.creature") + ">  " +
+            i18n::s.get("core.tcg.card.race") + ":" + card_info.cardrefrace +
+            u8"  Hp:"s + card_info.cardrefhp + u8"  Atk:"s +
+            card_info.cardrefattack;
     }
     if (card_info.cardreftype == 30)
     {
         cardrefbg = 6;
-        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.land") + ">";
+        rtvaln += " <" + i18n::s.get("core.tcg.card.land") + ">";
     }
     if (card_info.cardreftype == 20)
     {
         cardrefbg = 5;
-        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.spell") + ">";
+        rtvaln += " <" + i18n::s.get("core.tcg.card.spell") + ">";
     }
-    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.domain") + ":" +
+    rtvaln += "  " + i18n::s.get("core.tcg.card.domain") + ":" +
         domname_at_tcg(card_info.cardrefdomain);
-    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.rare") + ":" +
+    rtvaln += "  " + i18n::s.get("core.tcg.card.rare") + ":" +
         cnvrare(card_info.cardrefrare);
     if (card_info.cardrefskill != 0)
     {
         s_at_tcg = "";
         if (card_info.cardreftype == 10)
         {
-            s_at_tcg += i18n::s.get("core.locale.tcg.card.skill") + ":";
+            s_at_tcg += i18n::s.get("core.tcg.card.skill") + ":";
         }
         s_at_tcg += cdrefn_at_tcg(card_info.cardrefskill);
         talk_conv(s_at_tcg, 95);
@@ -670,11 +670,11 @@ void tcgdraw()
                 {
                     if (selectmode_at_tcg == 0)
                     {
-                        cardhelp(i18n::s.get("core.locale.tcg.end_main_phase"));
+                        cardhelp(i18n::s.get("core.tcg.end_main_phase"));
                     }
                     else
                     {
-                        cardhelp(i18n::s.get("core.locale.tcg.no_blocker"));
+                        cardhelp(i18n::s.get("core.tcg.no_blocker"));
                     }
                 }
                 gcopy(
@@ -1230,11 +1230,11 @@ void saccard(int card_index, int player_index)
     ++sac_at_tcg;
     if (player_index == 0)
     {
-        cardhelp(i18n::s.get("core.locale.tcg.sacrifice.you"), 40);
+        cardhelp(i18n::s.get("core.tcg.sacrifice.you"), 40);
     }
     else
     {
-        cardhelp(i18n::s.get("core.locale.tcg.sacrifice.opponent"), 40);
+        cardhelp(i18n::s.get("core.tcg.sacrifice.opponent"), 40);
     }
     for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
@@ -1297,14 +1297,11 @@ void tcg_show_refs()
 {
     SDIM3(cdrefn_at_tcg, 50, 4);
     p_at_tcg = 0;
-    cdrefn_at_tcg(p_at_tcg) =
-        i18n::s.get("core.locale.tcg.ref.choose_one_card");
+    cdrefn_at_tcg(p_at_tcg) = i18n::s.get("core.tcg.ref.choose_one_card");
     p_at_tcg = 2;
-    cdrefn_at_tcg(p_at_tcg) =
-        i18n::s.get("core.locale.tcg.ref.draws_two_cards");
+    cdrefn_at_tcg(p_at_tcg) = i18n::s.get("core.tcg.ref.draws_two_cards");
     p_at_tcg = 3;
-    cdrefn_at_tcg(p_at_tcg) =
-        i18n::s.get("core.locale.tcg.ref.return_creature");
+    cdrefn_at_tcg(p_at_tcg) = i18n::s.get("core.tcg.ref.return_creature");
 }
 
 
@@ -1481,7 +1478,7 @@ int putcard(int card_index, int player_index)
         if (player_index == player_at_tcg)
         {
             snd("core.fail1");
-            cardhelp(i18n::s.get("core.locale.tcg.put.field_full"), 40);
+            cardhelp(i18n::s.get("core.tcg.put.field_full"), 40);
         }
         return -1;
     }
@@ -1490,7 +1487,7 @@ int putcard(int card_index, int player_index)
         if (player_index == player_at_tcg)
         {
             snd("core.fail1");
-            cardhelp(i18n::s.get("core.locale.tcg.put.not_enough_mana"), 40);
+            cardhelp(i18n::s.get("core.tcg.put.not_enough_mana"), 40);
         }
         return -3;
     }
@@ -1608,11 +1605,11 @@ void tcginit()
     phasen_at_tcg(2) = u8"Main"s;
     phasen_at_tcg(3) = u8"End"s;
     phasen_at_tcg(4) = "";
-    domname_at_tcg(0) = i18n::s.get("core.locale.tcg.domain.lulwy");
-    domname_at_tcg(1) = i18n::s.get("core.locale.tcg.domain.kumiromi");
-    domname_at_tcg(2) = i18n::s.get("core.locale.tcg.domain.yacatect");
-    domname_at_tcg(3) = i18n::s.get("core.locale.tcg.domain.jure");
-    domname_at_tcg(4) = i18n::s.get("core.locale.tcg.domain.mani");
+    domname_at_tcg(0) = i18n::s.get("core.tcg.domain.lulwy");
+    domname_at_tcg(1) = i18n::s.get("core.tcg.domain.kumiromi");
+    domname_at_tcg(2) = i18n::s.get("core.tcg.domain.yacatect");
+    domname_at_tcg(3) = i18n::s.get("core.tcg.domain.jure");
+    domname_at_tcg(4) = i18n::s.get("core.tcg.domain.mani");
     chainx_at_tcg = 0;
     chainy_at_tcg = 0;
     cfg_chaintime = 50;
@@ -1754,24 +1751,22 @@ void tcgdeck()
     while (1)
     {
         tcgdrawbg();
-        s_at_tcg(0) = i18n::s.get("core.locale.tcg.deck.color.white");
-        s_at_tcg(1) = i18n::s.get("core.locale.tcg.deck.color.blue");
-        s_at_tcg(2) = i18n::s.get("core.locale.tcg.deck.color.silver");
-        s_at_tcg(3) = i18n::s.get("core.locale.tcg.deck.color.red");
-        s_at_tcg(4) = i18n::s.get("core.locale.tcg.deck.color.black");
+        s_at_tcg(0) = i18n::s.get("core.tcg.deck.color.white");
+        s_at_tcg(1) = i18n::s.get("core.tcg.deck.color.blue");
+        s_at_tcg(2) = i18n::s.get("core.tcg.deck.color.silver");
+        s_at_tcg(3) = i18n::s.get("core.tcg.deck.color.red");
+        s_at_tcg(4) = i18n::s.get("core.tcg.deck.color.black");
 
         Prompt prompt;
         for (int cnt = 0; cnt < 5; ++cnt)
         {
-            s_at_tcg(cnt) =
-                i18n::s.get("core.locale.tcg.deck.name", s_at_tcg(cnt));
+            s_at_tcg(cnt) = i18n::s.get("core.tcg.deck.name", s_at_tcg(cnt));
             const auto deck_filepath =
                 filesystem::dirs::tmp() / (u8"deck_"s + cnt + u8".s2");
             tmpload(filepathutil::u8path(u8"deck_"s + cnt + u8".s2"));
             if (!fs::exists(deck_filepath))
             {
-                s_at_tcg(cnt) +=
-                    " (" + i18n::s.get("core.locale.tcg.deck.new") + ")";
+                s_at_tcg(cnt) += " (" + i18n::s.get("core.tcg.deck.new") + ")";
             }
             else
             {
@@ -1798,9 +1793,8 @@ void tcgdeck()
         if (fs::exists(
                 filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
-            prompt.append(i18n::s.get("core.locale.tcg.deck.choices.edit"));
-            prompt.append(
-                i18n::s.get("core.locale.tcg.deck.choices.set_as_main"));
+            prompt.append(i18n::s.get("core.tcg.deck.choices.edit"));
+            prompt.append(i18n::s.get("core.tcg.deck.choices.set_as_main"));
             rtval = prompt.query(400, basey_at_tcg + 230, 240);
 
             if (rtval == -1)
@@ -2270,7 +2264,7 @@ void tcg_draw_selection()
     mes(basex_at_tcg + 160,
         basey_at_tcg + 510,
         ""s + key_next + u8","s + key_prev +
-            i18n::s.get("core.locale.tcg.select.hint"),
+            i18n::s.get("core.tcg.select.hint"),
         {255, 255, 255});
     mes(basex_at_tcg + 700,
         basey_at_tcg + 510,
@@ -2456,8 +2450,8 @@ void tcg_draw_menu()
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
     SDIM3(cfname_at_tcg, 16, 10);
-    cfname_at_tcg(0) = i18n::s.get("core.locale.tcg.menu.list");
-    cfname_at_tcg(1) = i18n::s.get("core.locale.tcg.menu.deck");
+    cfname_at_tcg(0) = i18n::s.get("core.tcg.menu.list");
+    cfname_at_tcg(1) = i18n::s.get("core.tcg.menu.deck");
     cfname_at_tcg(2) = domname_at_tcg(0);
     cfname_at_tcg(3) = domname_at_tcg(1);
     cfname_at_tcg(4) = domname_at_tcg(2);
@@ -2625,8 +2619,7 @@ label_1830_internal:
                 if (card_at_tcg(10, dlist_at_tcg(0, dsc_at_tcg)) == 0)
                 {
                     snd("core.fail1");
-                    cardhelp(
-                        i18n::s.get("core.locale.tcg.card_not_available"), 40);
+                    cardhelp(i18n::s.get("core.tcg.card_not_available"), 40);
                     goto label_1830_internal;
                 }
             }
@@ -2689,7 +2682,7 @@ label_1830_internal:
     {
         if (deckmode_at_tcg == 0)
         {
-            Prompt prompt("core.locale.tcg.menu");
+            Prompt prompt("core.tcg.menu");
             prompt.append("save_and_exit");
             prompt.append("just_exit");
             rtval = prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 240);
@@ -2818,8 +2811,7 @@ void tcg_prompt_action()
                         selectmode_at_tcg == 0)
                     {
                         act_at_tcg(0) = 1;
-                        s_at_tcg +=
-                            i18n::s.get("core.locale.tcg.action.put") + "\n";
+                        s_at_tcg += i18n::s.get("core.tcg.action.put") + "\n";
                     }
                 }
                 if (sac_at_tcg == 0)
@@ -2828,8 +2820,7 @@ void tcg_prompt_action()
                     {
                         act_at_tcg(1) = 1;
                         s_at_tcg +=
-                            i18n::s.get("core.locale.tcg.action.sacrifice") +
-                            "\n";
+                            i18n::s.get("core.tcg.action.sacrifice") + "\n";
                     }
                 }
             }
@@ -2843,8 +2834,7 @@ void tcg_prompt_action()
                         {
                             act_at_tcg(0) = 1;
                             s_at_tcg +=
-                                i18n::s.get(
-                                    "core.locale.tcg.action.declare_attack") +
+                                i18n::s.get("core.tcg.action.declare_attack") +
                                 "\n";
                         }
                     }
@@ -2854,15 +2844,13 @@ void tcg_prompt_action()
                     if (cardcanblock(cc_at_tcg))
                     {
                         act_at_tcg(0) = 1;
-                        s_at_tcg +=
-                            i18n::s.get("core.locale.tcg.action.block") + "\n";
+                        s_at_tcg += i18n::s.get("core.tcg.action.block") + "\n";
                     }
                 }
                 if (cardcanuseskill(cc_at_tcg))
                 {
                     act_at_tcg(2) = 1;
-                    s_at_tcg +=
-                        i18n::s.get("core.locale.tcg.action.use_skill") + "\n";
+                    s_at_tcg += i18n::s.get("core.tcg.action.use_skill") + "\n";
                 }
             }
             f_at_tcg = 0;
@@ -2878,8 +2866,7 @@ void tcg_prompt_action()
             {
                 snd("core.fail1");
                 cardhelp(
-                    i18n::s.get("core.locale.tcg.action.no_action_available"),
-                    40);
+                    i18n::s.get("core.tcg.action.no_action_available"), 40);
                 continue;
             }
             snd("core.click1");
@@ -3009,7 +2996,7 @@ void tcg_prompt_action()
         if (action == "tcg_surrender") // TODO
         {
             Prompt prompt;
-            prompt.append("core.locale.tcg.action.surrender");
+            prompt.append("core.tcg.action.surrender");
 
             rtval = prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 200);
             if (rtval == 0)

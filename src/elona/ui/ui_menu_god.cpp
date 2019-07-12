@@ -16,18 +16,17 @@ static std::string _get_choice_name(bool already_believing, int god_id)
     {
         if (god_id == 0)
         {
-            return i18n::s.get("core.locale.god.desc.window.abandon");
+            return i18n::s.get("core.god.desc.window.abandon");
         }
         else
         {
             return i18n::s.get(
-                "core.locale.god.desc.window.convert", god_name(god_id));
+                "core.god.desc.window.convert", god_name(god_id));
         }
     }
     else
     {
-        return i18n::s.get(
-            "core.locale.god.desc.window.believe", god_name(god_id));
+        return i18n::s.get("core.god.desc.window.believe", god_name(god_id));
     }
 }
 
@@ -49,7 +48,7 @@ bool UIMenuGod::init()
     ++listmax;
 
     list(0, listmax) = _cancel_choice;
-    listn(0, listmax) = i18n::s.get("core.locale.god.desc.window.cancel");
+    listn(0, listmax) = i18n::s.get("core.god.desc.window.cancel");
     ++listmax;
 
     snd("core.pop4");
@@ -82,20 +81,16 @@ static std::string _get_god_description(int god_id)
 
     if (god_id != 0)
     {
-        buff =
-            i18n::s.get_enum_property("core.locale.god.desc", "text", god_id);
+        buff = i18n::s.get_enum_property("core.god.desc", "text", god_id);
 
-        buff += i18n::s.get("core.locale.god.desc.offering") + u8": ";
-        buff += i18n::s.get_enum_property(
-            "core.locale.god.desc", "offering", god_id);
+        buff += i18n::s.get("core.god.desc.offering") + u8": ";
+        buff += i18n::s.get_enum_property("core.god.desc", "offering", god_id);
 
-        buff += i18n::s.get("core.locale.god.desc.bonus") + u8": ";
-        buff +=
-            i18n::s.get_enum_property("core.locale.god.desc", "bonus", god_id);
+        buff += i18n::s.get("core.god.desc.bonus") + u8": ";
+        buff += i18n::s.get_enum_property("core.god.desc", "bonus", god_id);
 
-        buff += i18n::s.get("core.locale.god.desc.ability") + u8": ";
-        buff += i18n::s.get_enum_property(
-            "core.locale.god.desc", "ability", god_id);
+        buff += i18n::s.get("core.god.desc.ability") + u8": ";
+        buff += i18n::s.get_enum_property("core.god.desc", "ability", god_id);
     }
 
     return buff;
@@ -119,7 +114,7 @@ void UIMenuGod::_draw_title(int god_id)
 {
     font(18 - en * 2, snail::Font::Style::bold);
     bmes(
-        i18n::s.get("core.locale.god.desc.window.title", god_name(god_id)),
+        i18n::s.get("core.god.desc.window.title", god_name(god_id)),
         wx + 20,
         wy + 20);
 }

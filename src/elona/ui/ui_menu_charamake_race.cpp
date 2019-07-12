@@ -31,7 +31,7 @@ static void _load_race_list()
     }
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
-        listn(0, cnt) = i18n::s.get_m("locale.race", listn(1, cnt), "name");
+        listn(0, cnt) = i18n::s.get_m("race", listn(1, cnt), "name");
         if (list(0, cnt) == 1)
         {
             listn(0, cnt) = u8"(extra)"s + listn(0, cnt);
@@ -46,8 +46,7 @@ bool UIMenuCharamakeRace::init()
     pagesize = 16;
     page = 0;
 
-    character_making_draw_background(
-        "core.locale.chara_making.select_race.caption");
+    character_making_draw_background("core.chara_making.select_race.caption");
 
     windowshadow = 1;
 
@@ -83,7 +82,7 @@ void UIMenuCharamakeRace::_draw_race_info(const std::string& race_id)
 
     gmode(2);
     draw_race_or_class_info(
-        i18n::s.get_m_optional("locale.race", race_id, "description")
+        i18n::s.get_m_optional("race", race_id, "description")
             .get_value_or(""));
 }
 
@@ -92,7 +91,7 @@ void UIMenuCharamakeRace::_draw_race_info(const std::string& race_id)
 void UIMenuCharamakeRace::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.chara_making.select_race.title"),
+        i18n::s.get("core.chara_making.select_race.title"),
         strhint3b,
         (windoww - 680) / 2 + inf_screenx,
         winposy(500, 1) + 20,
@@ -114,13 +113,9 @@ void UIMenuCharamakeRace::_draw_window()
         y);
     gmode(2);
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_race.race"),
-        wx + 28,
-        wy + 30);
+        i18n::s.get("core.chara_making.select_race.race"), wx + 28, wy + 30);
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_race.detail"),
-        wx + 188,
-        wy + 30);
+        i18n::s.get("core.chara_making.select_race.detail"), wx + 188, wy + 30);
 }
 
 void UIMenuCharamakeRace::_draw_choice(int cnt, const std::string& text)

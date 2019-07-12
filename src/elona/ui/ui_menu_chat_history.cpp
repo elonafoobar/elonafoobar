@@ -62,7 +62,7 @@ optional<UIMenuChatHistory::ResultType> UIMenuChatHistory::on_key(
 
 void UIMenuChatHistory::_load_chat_history()
 {
-    std::string scroll_text = i18n::s.get("core.locale.ui.chat.key_hint");
+    std::string scroll_text = i18n::s.get("core.ui.chat.key_hint");
     showscroll(scroll_text, wx, wy, ww, wh);
 
     for (const auto& chat : net_receive_chats(false))
