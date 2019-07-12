@@ -77,8 +77,7 @@ void shop_refresh()
         item.remove();
     }
 
-    lua::call(
-        "exports:core.impl.shop_inventory.generate", lua::handle(cdata[tc]));
+    lua::call("core.impl.shop_inventory.generate", lua::handle(cdata[tc]));
 
     if (Config::instance().restock_interval)
     {

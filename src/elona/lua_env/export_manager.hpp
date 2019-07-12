@@ -32,7 +32,7 @@ public:
      * inside the API tables returned by mods. They will then be
      * accessable by the id
      *
-     * "exports:<mod_id>.<namespaces>.<...>"
+     * "<mod_id>.<namespaces>.<...>"
      *
      * corresponding to the nested table layout of the Exports table.
      */
@@ -40,7 +40,7 @@ public:
 
     /***
      * Obtains a Lua callback where name is like
-     * "exports:<mod_id>.<namespaces>", if it exists.
+     * "<mod_id>.<namespaces>", if it exists.
      */
     optional<WrappedFunction> get_exported_function(
         const std::string& name) const;

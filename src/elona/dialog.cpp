@@ -8,7 +8,7 @@ namespace elona
 
 void dialog_start(Character& speaker, const std::string& id)
 {
-    lua::call("exports:core.impl.show_dialog", lua::handle(speaker), id);
+    lua::call("core.impl.show_dialog", lua::handle(speaker), id);
 }
 
 } // namespace elona
