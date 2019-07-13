@@ -21,7 +21,7 @@ LOCAL_SHARED_LIBRARIES := boost_system util
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 
-LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO)
+LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO) -DBOOST_ALLOW_DEPRECATED_HEADERS
 
 LOCAL_LDFLAGS += $(LOCAL_CFLAGS) $(LTO) -fPIC
 

@@ -2,21 +2,12 @@
 
 mkdir lib include > nul 2>&1
 
-xcopy /y /e /s .\windows\SDL2-2.0.8\include .\include
-xcopy /y /e /s .\windows\SDL2-2.0.8\lib\x64 .\lib
-
-xcopy /y /e /s .\windows\SDL2_mixer-2.0.2\include .\include
-xcopy /y /e /s .\windows\SDL2_mixer-2.0.2\lib\x64 .\lib
-
-rem Both SDL2 ttf and SDL2 image contain zlib.lib, which conflicts with each other.
-rem As SDL2 image's zlib is newer than SDL2 ttf's, we must copy SDL2 ttf first, and then SDL2 image.
-xcopy /y /e /s .\windows\SDL2_ttf-2.0.14\include .\include
-xcopy /y /e /s .\windows\SDL2_ttf-2.0.14\lib\x64 .\lib
-
-xcopy /y /e /s .\windows\SDL2_image-2.0.3\include .\include
-xcopy /y /e /s .\windows\SDL2_image-2.0.3\lib\x64 .\lib
-
-xcopy /y /e /s .\windows\lua-5.3.4-wstring\include .\include
-xcopy /y /e /s .\windows\lua-5.3.4-wstring\lib\x64 .\lib
+for /f %%a in ('dir /b .\windows\') do (
+    echo %%a
+    xcopy /D /y /e /s .\windows\%%a\include .\include
+    xcopy /D /y /e /s .\windows\%%a\lib\x64 .\lib
+)
+rem The prebuilt SDL2_image and SDL2_ttf include their own zlib, so it should be removed to avoid conflicts.
+del .\lib\zlib1.dll
 
 echo Done.

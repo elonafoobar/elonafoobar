@@ -233,6 +233,13 @@ else()
     message(FATAL_ERROR "Unknown build mode: ${ELONA_BUILD_TARGET}")
   endif()
 
+  include(findZLIB)
+  if (NOT DEFINED ZLIB_INCLUDE_DIR OR NOT DEFINED ZLIB_LIBRARIES)
+    find_package(zlib REQUIRED)
+  endif()
+  include_directories(${ZLIB_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${ZLIB_LIBRARIES})
+
   if(WIN32)
     # Force FindBoost to look for libraries with -mt-sgd
     set(Boost_USE_STATIC_LIBS ON)
