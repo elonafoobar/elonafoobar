@@ -114,6 +114,7 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * cpp-netlib/uri: see [src/thirdparty/uri/LICENSE_1_0.txt](src/thirdparty/uri/LICENSE_1_0.txt).
 * xxHash: see [src/thirdparty/xxHash/LICENSE](src/thirdparty/xxHash/LICENSE).
 * zstr: see [src/thirdparty/zstr/LICENSE](src/thirdparty/zstr/LICENSE).
+* minizip: see [src/thirdparty/minizip/LICENSE](src/thirdparty/minizip/LICENSE).
 
 ## Lua libraries
 

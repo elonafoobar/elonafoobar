@@ -496,6 +496,9 @@ else()
     target_link_libraries(nfd)
   endif()
 
+  add_subdirectory(src/thirdparty/minizip)
+  target_link_libraries(minizip)
+
   install(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime)
