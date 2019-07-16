@@ -10,6 +10,7 @@ environment:
     BOOST_ROOT: C:\Libraries\boost_1_69_0
     PREFIX: C:\SDK
     OPENSSL_ROOT_DIR: C:\OpenSSL-v111-Win64
+    ZLIB_ROOT: C:\SDK
 
 build:
   verbosity: detailed
