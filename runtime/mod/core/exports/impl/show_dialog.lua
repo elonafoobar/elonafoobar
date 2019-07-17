@@ -17,8 +17,8 @@ end
 --- It can be one of the following.
 ---  * __MORE__                - "(More)"
 ---  * __BYE__                 - "Bye bye."
----  * key.fragment            - core.locale.dialog.root.key.fragment
----  * core.locale.dialog.key  - core.locale.dialog.key
+---  * key.fragment            - core.dialog.root.key.fragment
+---  * core.dialog.key  - core.dialog.key
 ---  * {"key.fragment", args = {"arg1", "arg2"}}  - (localized with arguments)
 local function resolve_response(obj, talk)
    local args = {}
@@ -35,9 +35,9 @@ local function resolve_response(obj, talk)
    end
 
    if key == "__BYE__" then
-      return "core.locale.ui.bye", args
+      return "core.ui.bye", args
    elseif key == "__MORE__" then
-      return "core.locale.ui.more", args
+      return "core.ui.more", args
    end
 
    get = talk.dialog.root .. "." .. key
@@ -51,7 +51,7 @@ end
 --- Opens a single talk window choice.
 -- @tparam table talk Dialog control data.
 -- @tparam string text String to display (not locale key)
--- @tparam table choices List of choices in format {"response_id", "core.locale.key"}
+-- @tparam table choices List of choices in format {"response_id", "core.key"}
 -- @tparam[opt] num default_choice index of default choice if window is canceled
 -- @treturn string Response ID of the choice selected.
 local function query(talk, text, choices, default_choice)

@@ -126,9 +126,7 @@ void draw_additional_item_info_label(int x, int y)
     case AdditionalItemInfo::resistance:
         for (int i = 0; i < 11; ++i)
         {
-            mes(x + 20 * i,
-                y,
-                i18n::s.get_enum("core.locale.ui.equip.resist", i));
+            mes(x + 20 * i, y, i18n::s.get_enum("core.ui.equip.resist", i));
         }
         break;
     case AdditionalItemInfo::maintenance_and_ailment:
@@ -136,13 +134,13 @@ void draw_additional_item_info_label(int x, int y)
         {
             mes(x - 100 + 20 * i,
                 y,
-                i18n::s.get_enum("core.locale.ui.equip.maintenance", i));
+                i18n::s.get_enum("core.ui.equip.maintenance", i));
         }
         for (int i = 0; i < 6; ++i)
         {
             mes(x + 100 + 20 * i,
                 y,
-                i18n::s.get_enum("core.locale.ui.equip.ailment", i));
+                i18n::s.get_enum("core.ui.equip.ailment", i));
         }
         break;
     }

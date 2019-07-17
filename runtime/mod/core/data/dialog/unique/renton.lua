@@ -20,7 +20,7 @@ end
 
 return {
    id = "renton",
-   root = "core.locale.talk.unique.renton",
+   root = "core.talk.unique.renton",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("rare_books")

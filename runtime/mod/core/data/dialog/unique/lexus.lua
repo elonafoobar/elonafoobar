@@ -19,10 +19,10 @@ local function join_guild()
 
     World.join_guild("mages")
 
-    GUI.txt(I18N.get("core.locale.quest.completed"))
+    GUI.txt(I18N.get("core.quest.completed"))
     GUI.play_sound("core.complete1")
     GUI.show_journal_update_message()
-    GUI.txt(I18N.get("core.locale.talk.unique.lexus.nonmember.joined"), "Orange")
+    GUI.txt(I18N.get("core.talk.unique.lexus.nonmember.joined"), "Orange")
 end
 
 local function move_self(t)
@@ -50,7 +50,7 @@ end
 
 return {
    id = "lexus",
-   root = "core.locale.talk.unique.lexus",
+   root = "core.talk.unique.lexus",
    nodes = {
       __start = function()
          if World.belongs_to_guild("mages") == false then
@@ -149,7 +149,7 @@ return {
       end,
       guild_quota_waiting = {
          text = {
-            {"core.locale.talk.unique.lexus.member.report_quota.waiting"},
+            {"core.talk.unique.lexus.member.report_quota.waiting"},
          },
          choices = {
             {"__start", "__MORE__"},
@@ -158,7 +158,7 @@ return {
       guild_quota_finish = {
          text = {
             receive_reward,
-            {"core.locale.talk.unique.lexus.member.report_quota.end"},
+            {"core.talk.unique.lexus.member.report_quota.end"},
          },
       },
    }

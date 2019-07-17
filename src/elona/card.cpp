@@ -61,7 +61,7 @@ reset_page:
     while (1)
     {
         ui_display_window(
-            i18n::s.get("core.locale.action.use.deck.title"),
+            i18n::s.get("core.action.use.deck.title"),
             strhint5,
             (windoww - 730) / 2 + inf_screenx,
             winposy(430, 0),
@@ -71,15 +71,11 @@ reset_page:
             40);
 
         display_topic(
-            i18n::s.get("core.locale.action.use.deck.npc_name"),
-            wx + 46,
-            wy + 36);
+            i18n::s.get("core.action.use.deck.npc_name"), wx + 46, wy + 36);
         display_topic(
-            i18n::s.get("core.locale.action.use.deck.kill"), wx + 385, wy + 36);
+            i18n::s.get("core.action.use.deck.kill"), wx + 385, wy + 36);
         display_topic(
-            i18n::s.get("core.locale.action.use.deck.generate"),
-            wx + 475,
-            wy + 36);
+            i18n::s.get("core.action.use.deck.generate"), wx + 475, wy + 36);
 
         keyrange = 0;
         for (int i = 0; i < pagesize; ++i)
@@ -107,7 +103,7 @@ reset_page:
             cs_list(
                 cs == i,
                 i18n::s.get_m(
-                    "locale.chara",
+                    "chara",
                     the_character_db.get_id_from_legacy(list(0, p))->get(),
                     "name"),
                 x + 30,

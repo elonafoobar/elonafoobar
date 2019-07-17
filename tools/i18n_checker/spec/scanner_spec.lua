@@ -85,9 +85,9 @@ describe("Scanner", function()
                   assert.same({name = "i18n::s.get", args = {"\"asdf\"", "2"}},
                      scan("i18n::s.get(\"asdf\", 2)", "i18n::s.get"))
                   assert.same({name = "i18n::s.get_enum_property",
-                               args = {"\"core.locale.map.unique\"", "\"name\"", "adata(16, id)"}}, scan([[
+                               args = {"\"core.map.unique\"", "\"name\"", "adata(16, id)"}}, scan([[
  name = i18n::s.get_enum_property(
- "core.locale.map.unique", "name", adata(16, id));
+ "core.map.unique", "name", adata(16, id));
 ]], "i18n::s.get"))
             end)
 

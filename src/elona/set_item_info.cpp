@@ -54,11 +54,10 @@ void set_item_info()
             int p = (data.legacy_id % game_data.random_seed) % 6;
             iknownnameref(data.legacy_id) =
                 i18n::s.get_enum(
-                    "core.locale.ui.random_item." + data.originalnameref2, p) +
+                    "core.ui.random_item." + data.originalnameref2, p) +
                 i18n::space_if_needed() +
                 i18n::s.get(
-                    "core.locale.ui.random_item." + data.originalnameref2 +
-                    ".name");
+                    "core.ui.random_item." + data.originalnameref2 + ".name");
         }
         else
         {

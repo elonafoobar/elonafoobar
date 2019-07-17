@@ -66,7 +66,7 @@ TurnResult npc_turn()
             if (rnd(30) == 0)
             {
                 tc = cc;
-                txt(i18n::s.get("core.locale.action.npc.sand_bag", cdata[tc]));
+                txt(i18n::s.get("core.action.npc.sand_bag", cdata[tc]));
             }
         }
         cdata[cc].hate = 0;
@@ -94,14 +94,14 @@ TurnResult npc_turn()
                                 if (rnd(2))
                                 {
                                     txt(i18n::s.get(
-                                        "core.locale.action.npc.leash.dialog"));
+                                        "core.action.npc.leash.dialog"));
                                     hostileaction(0, cc);
                                 }
                                 if (rnd(4) == 0)
                                 {
                                     cdata[cc].is_leashed() = false;
                                     txt(i18n::s.get(
-                                            "core.locale.action.npc.leash."
+                                            "core.action.npc.leash."
                                             "untangle",
                                             cdata[cc]),
                                         Message::color{ColorIndex::cyan});
@@ -202,7 +202,7 @@ TurnResult npc_turn()
             {
                 if (rnd(40) == 0)
                 {
-                    txt(i18n::s.get("core.locale.action.npc.arena"),
+                    txt(i18n::s.get("core.action.npc.arena"),
                         Message::color{ColorIndex::blue});
                 }
                 return ai_proc_misc_map_events();
@@ -789,7 +789,7 @@ TurnResult turn_begin()
                 game_data.left_minutes_of_executing_quest / 10)
             {
                 txt(i18n::s.get(
-                        "core.locale.quest.minutes_left",
+                        "core.quest.minutes_left",
                         (game_data.left_minutes_of_executing_quest + 1)),
                     Message::color{ColorIndex::cyan});
                 game_data.executing_immediate_quest_time_left_display_period =
@@ -882,7 +882,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             if (map_prevents_return())
             {
                 game_data.is_returning_or_escaping = 0;
-                txt(i18n::s.get("core.locale.magic.return.prevented.normal"));
+                txt(i18n::s.get("core.magic.return.prevented.normal"));
                 goto label_2740_internal;
             }
             if (game_data.is_returning_or_escaping <= 0 && !event_was_set())
@@ -901,13 +901,12 @@ TurnResult pass_one_turn(bool label_2738_flg)
                 }
                 if (f)
                 {
-                    txt(i18n::s.get("core.locale.magic.return.prevented.ally"));
+                    txt(i18n::s.get("core.magic.return.prevented.ally"));
                     goto label_2740_internal;
                 }
                 if (1 && cdata.player().inventory_weight_type >= 4)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.magic.return.prevented.overweight"));
+                    txt(i18n::s.get("core.magic.return.prevented.overweight"));
                     goto label_2740_internal;
                 }
                 if (game_data.destination_map ==
@@ -916,23 +915,21 @@ TurnResult pass_one_turn(bool label_2738_flg)
                     if (game_data.current_map ==
                         game_data.destination_outer_map)
                     {
-                        txt(i18n::s.get("core.locale.common.nothing_happens"));
+                        txt(i18n::s.get("core.common.nothing_happens"));
                         goto label_2740_internal;
                     }
                 }
                 int stat = quest_is_return_forbidden();
                 if (stat == 1)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.magic.return.you_commit_a_crime"));
+                    txt(i18n::s.get("core.magic.return.you_commit_a_crime"));
                     modify_karma(cdata.player(), -10);
                 }
                 snd("core.teleport1");
-                txt(i18n::s.get("core.locale.magic.return.door_opens"));
+                txt(i18n::s.get("core.magic.return.door_opens"));
                 if (game_data.destination_map == 41)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.magic.return.destination_changed"));
+                    txt(i18n::s.get("core.magic.return.destination_changed"));
                 }
                 msg_halt();
                 update_screen();
@@ -1065,11 +1062,11 @@ TurnResult pass_one_turn(bool label_2738_flg)
                     if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                     {
                         txt(i18n::s.get(
-                                "core.locale.action.npc.drunk.gets_the_worse",
+                                "core.action.npc.drunk.gets_the_worse",
                                 cdata[cc],
                                 cdata[tc]),
                             Message::color{ColorIndex::cyan});
-                        txt(i18n::s.get("core.locale.action.npc.drunk.dialog"));
+                        txt(i18n::s.get("core.action.npc.drunk.dialog"));
                     }
                     if (rnd(4) == 0)
                     {
@@ -1078,12 +1075,12 @@ TurnResult pass_one_turn(bool label_2738_flg)
                             if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                             {
                                 txt(i18n::s.get(
-                                        "core.locale.action.npc.drunk.annoyed."
+                                        "core.action.npc.drunk.annoyed."
                                         "text",
                                         cdata[tc]),
                                     Message::color{ColorIndex::cyan});
                                 txt(
-                                    i18n::s.get("core.locale.action.npc.drunk."
+                                    i18n::s.get("core.action.npc.drunk."
                                                 "annoyed.dialog"));
                             }
                             cdata[tc].hate = 20;
@@ -1198,7 +1195,7 @@ TurnResult turn_end()
         {
             if (rnd(20) == 0)
             {
-                txt(i18n::s.get("core.locale.action.backpack_squashing"));
+                txt(i18n::s.get("core.action.backpack_squashing"));
                 damage_hp(
                     cdata[cc],
                     cdata[cc].max_hp *
@@ -1230,7 +1227,7 @@ TurnResult turn_end()
         if (cdata[cc].state() != Character::State::alive ||
             game_data.left_turns_of_timestop == 0)
         {
-            txt(i18n::s.get("core.locale.action.time_stop.ends"),
+            txt(i18n::s.get("core.action.time_stop.ends"),
                 Message::color{ColorIndex::cyan});
         }
         else
@@ -1475,8 +1472,7 @@ TurnResult pc_turn(bool advance_time)
             update_screen();
             if (action == "go_up" || key_escape)
             {
-                txt(i18n::s.get(
-                    "core.locale.action.use_stairs.prompt_give_up_game"));
+                txt(i18n::s.get("core.action.use_stairs.prompt_give_up_game"));
                 if (yes_no())
                 {
                     petarenawin = 2;
@@ -1539,7 +1535,7 @@ label_2747:
 
     if (game_data.player_is_changing_equipment)
     {
-        txt(i18n::s.get("core.locale.action.equip.you_change"));
+        txt(i18n::s.get("core.action.equip.you_change"));
         return TurnResult::turn_end;
     }
     ++t;
@@ -1559,7 +1555,7 @@ label_2747:
     {
         time_warn = timeGetTime() / 1000;
         ++hour_played;
-        s = i18n::s.get("core.locale.action.playtime_report", hour_played);
+        s = i18n::s.get("core.action.playtime_report", hour_played);
         s += cheer_up_message(hour_played);
         txt(s, Message::color{ColorIndex::orange});
     }

@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "gilbert",
-   root = "core.locale.talk.unique.gilbert",
+   root = "core.talk.unique.gilbert",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("defense_line")

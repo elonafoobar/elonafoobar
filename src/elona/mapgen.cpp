@@ -1597,8 +1597,7 @@ void generate_debug_map()
         }
     }
 
-    mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "name", 499);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "name", 499);
     map_converttile();
 
     mapstartx = 25;
@@ -2175,7 +2174,7 @@ int initialize_quest_map_crop()
                 (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
         }
     }
-    mdatan(0) = i18n::s.get("core.locale.map.quest.field");
+    mdatan(0) = i18n::s.get("core.map.quest.field");
     map_randomtile(9, 10);
     map_randomtile(10, 10);
     map_randomtile(0, 30);
@@ -2598,7 +2597,7 @@ int initialize_quest_map_party()
     game_data.left_minutes_of_executing_quest = 60;
     game_data.executing_immediate_quest_time_left_display_period = 9999;
     rdroomsizemin = 5;
-    mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
+    mdatan(0) = i18n::s.get("core.map.quest.party_room");
     map_data.indoors_flag = 1;
     map_data.tileset = 11;
     map_data.width = 38;
@@ -2925,7 +2924,7 @@ void initialize_quest_map_town()
     map_data.max_crowd_density = 0;
     map_data.indoors_flag = 2;
     map_initcustom(map_get_custom_map_name(game_data.previous_map2));
-    mdatan(0) = i18n::s.get("core.locale.map.quest.urban_area");
+    mdatan(0) = i18n::s.get("core.map.quest.urban_area");
     randomize();
     game_data.entrance_type = 5;
     map_placeplayer();

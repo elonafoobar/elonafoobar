@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "shena",
-   root = "core.locale.talk.unique.shena",
+   root = "core.talk.unique.shena",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("thieves_hideout")

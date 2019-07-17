@@ -86,8 +86,7 @@ bool UIMenuJournal::init()
     noteadd(u8" - Title & Ranking - "s);
     noteadd(""s);
     noteadd(
-        i18n::s.get("core.locale.ui.journal.rank.fame") + ": " +
-        cdata.player().fame);
+        i18n::s.get("core.ui.journal.rank.fame") + ": " + cdata.player().fame);
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
@@ -96,12 +95,12 @@ bool UIMenuJournal::init()
             noteadd(
                 ""s + ranktitle(cnt) + u8" Rank."s +
                 game_data.ranks.at(cnt) / 100);
-            s = i18n::s.get("core.locale.ui.journal.rank.pay", calcincome(cnt));
+            s = i18n::s.get("core.ui.journal.rank.pay", calcincome(cnt));
             gold += calcincome(cnt);
             if (cnt != 3 && cnt != 4 && cnt != 5 && cnt != 8)
             {
                 s += i18n::s.get(
-                    "core.locale.ui.journal.rank.deadline",
+                    "core.ui.journal.rank.deadline",
                     game_data.rank_deadlines.at(cnt));
             }
             noteadd(s);
@@ -109,7 +108,7 @@ bool UIMenuJournal::init()
         }
     }
     noteadd(i18n::s.get(
-        "core.locale.ui.journal.rank.arena",
+        "core.ui.journal.rank.arena",
         game_data.ex_arena_wins,
         cnvrank(game_data.ex_arena_level)));
     noteadd(""s);
@@ -122,22 +121,21 @@ bool UIMenuJournal::init()
     }
     noteadd(u8" - Income & Expense - "s);
     noteadd(""s);
-    noteadd(i18n::s.get("core.locale.ui.journal.income.salary.title"));
-    noteadd(i18n::s.get("core.locale.ui.journal.income.salary.sum", gold));
+    noteadd(i18n::s.get("core.ui.journal.income.salary.title"));
+    noteadd(i18n::s.get("core.ui.journal.income.salary.sum", gold));
     noteadd(""s);
-    noteadd(i18n::s.get("core.locale.ui.journal.income.bills.title"));
+    noteadd(i18n::s.get("core.ui.journal.income.bills.title"));
     noteadd(i18n::s.get(
-        "core.locale.ui.journal.income.bills.labor", game_data.cost_to_hire));
+        "core.ui.journal.income.bills.labor", game_data.cost_to_hire));
     noteadd(i18n::s.get(
-        "core.locale.ui.journal.income.bills.maintenance", calccostbuilding()));
-    noteadd(
-        i18n::s.get("core.locale.ui.journal.income.bills.tax", calccosttax()));
+        "core.ui.journal.income.bills.maintenance", calccostbuilding()));
+    noteadd(i18n::s.get("core.ui.journal.income.bills.tax", calccosttax()));
     noteadd(i18n::s.get(
-        "core.locale.ui.journal.income.bills.sum",
+        "core.ui.journal.income.bills.sum",
         (game_data.cost_to_hire + calccostbuilding() + calccosttax())));
     noteadd(""s);
     noteadd(i18n::s.get(
-        "core.locale.ui.journal.income.bills.unpaid", game_data.left_bill));
+        "core.ui.journal.income.bills.unpaid", game_data.left_bill));
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;

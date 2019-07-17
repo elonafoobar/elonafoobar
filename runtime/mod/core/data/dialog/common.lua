@@ -8,9 +8,9 @@ local function create_downstairs(x, y, dungeon_level)
 end
 
 local function quest_completed()
-   GUI.txt(I18N.get("core.locale.quest.completed"))
+   GUI.txt(I18N.get("core.quest.completed"))
    GUI.play_sound("core.complete1")
-   GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+   GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
    GUI.show_journal_update_message()
 end
 

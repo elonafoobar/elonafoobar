@@ -8,7 +8,7 @@ module "I18N"
 --  string doesn't exist.
 --  @tparam string key the ID of the localization string
 --  @treturn string the formatted string
---  @usage I18N.get("core.locale.map.you_see", "Vernis")
+--  @usage I18N.get("core.map.you_see", "Vernis")
 --  @function get
 function get(key, ...) end
 

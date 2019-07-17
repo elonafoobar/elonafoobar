@@ -100,11 +100,11 @@ void UIMenuHire::_draw_topic()
 {
     if (_operation == HireOperation::move)
     {
-        s = i18n::s.get("core.locale.ui.npc_list.wage");
+        s = i18n::s.get("core.ui.npc_list.wage");
     }
     else
     {
-        s = i18n::s.get("core.locale.ui.npc_list.init_cost");
+        s = i18n::s.get("core.ui.npc_list.init_cost");
     }
     if (_operation != HireOperation::revive)
     {
@@ -115,16 +115,14 @@ void UIMenuHire::_draw_topic()
 void UIMenuHire::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.npc_list.title"),
+        i18n::s.get("core.ui.npc_list.title"),
         strhint2 + strhint3,
         (windoww - 700) / 2 + inf_screenx,
         winposy(448),
         700,
         448);
-    display_topic(
-        i18n::s.get("core.locale.ui.npc_list.name"), wx + 28, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.npc_list.info"), wx + 350, wy + 36);
+    display_topic(i18n::s.get("core.ui.npc_list.name"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.ui.npc_list.info"), wx + 350, wy + 36);
 
     _draw_topic();
 }
@@ -173,15 +171,14 @@ void UIMenuHire::_draw_list_entry_info(int cnt, const Character& chara)
 
     if (chara.sex == 0)
     {
-        level += cnven(i18n::s.get("core.locale.ui.sex3.male"));
+        level += cnven(i18n::s.get("core.ui.sex3.male"));
     }
     else
     {
-        level += cnven(i18n::s.get("core.locale.ui.sex3.female"));
+        level += cnven(i18n::s.get("core.ui.sex3.female"));
     }
 
-    level += i18n::s.get(
-        "core.locale.ui.npc_list.age_counter", calcage(chara.index));
+    level += i18n::s.get("core.ui.npc_list.age_counter", calcage(chara.index));
 
     mes(wx + 372, wy + 66 + cnt * 19 + 2, level);
 }
@@ -204,7 +201,7 @@ void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
 
         mes(wx + 512,
             wy + 66 + cnt * 19 + 2,
-            i18n::s.get("core.locale.ui.npc_list.gold_counter", text));
+            i18n::s.get("core.ui.npc_list.gold_counter", text));
     }
 }
 

@@ -49,7 +49,7 @@ locale {
 }
 ```
 
-These two files correspond to each other. When you add config items to `config_def.hcl`, translations for the mod's config will be expected under the `<mod_name>.locale.config` localization namespace.
+These two files correspond to each other. When you add config items to `config_def.hcl`, translations for the mod's config will be expected under the `<mod_name>.config` localization namespace.
 
 When you start the game with at least one mod supporting config options, a `Mod Settings` section will appear as the last option in the game's config menu. From there you can configure each individual mod's settings. Test it out with the settings above.
 
@@ -216,7 +216,7 @@ DOC
                     #     yes = "On"
                     #     no = "Off"
                     # }
-                    yes_no = core.locale.config.common.yes_no.on_off
+                    yes_no = core.config.common.yes_no.on_off
                 }
             }
         }

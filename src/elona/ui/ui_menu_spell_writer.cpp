@@ -57,15 +57,14 @@ void UIMenuSpellWriter::update()
 void UIMenuSpellWriter::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.reserve.title"),
+        i18n::s.get("core.ui.reserve.title"),
         strhint2 + strhint3,
         (windoww - 540) / 2 + inf_screenx,
         winposy(448),
         540,
         448);
-    display_topic(i18n::s.get("core.locale.ui.reserve.name"), wx + 28, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.reserve.status"), wx + 390, wy + 36);
+    display_topic(i18n::s.get("core.ui.reserve.name"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.ui.reserve.status"), wx + 390, wy + 36);
 }
 
 void UIMenuSpellWriter::_draw_key(int cnt)
@@ -111,14 +110,14 @@ void UIMenuSpellWriter::_draw_list_entry_reserve_status(int cnt, int item_index)
     {
         mes(wx + 400,
             wy + 66 + cnt * 19 + 2,
-            i18n::s.get("core.locale.ui.reserve.not_reserved"),
+            i18n::s.get("core.ui.reserve.not_reserved"),
             {120, 120, 120});
     }
     else
     {
         mes(wx + 400,
             wy + 66 + cnt * 19 + 2,
-            i18n::s.get("core.locale.ui.reserve.reserved"),
+            i18n::s.get("core.ui.reserve.reserved"),
             {55, 55, 255});
     }
 }
@@ -183,7 +182,7 @@ optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
         if (_book_is_unavailable(*selected))
         {
             snd("core.fail1");
-            txt(i18n::s.get("core.locale.ui.reserve.unavailable"));
+            txt(i18n::s.get("core.ui.reserve.unavailable"));
             set_reupdate();
         }
         else

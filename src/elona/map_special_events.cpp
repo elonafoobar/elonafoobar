@@ -82,7 +82,7 @@ static void _map_events_tower_of_fire()
         if (r < 6)
         {
             dmg = (6 - r) * (6 - r) * 2;
-            txt(i18n::s.get("core.locale.action.exit_map.it_is_hot"),
+            txt(i18n::s.get("core.action.exit_map.it_is_hot"),
                 Message::color{ColorIndex::red});
             damage_hp(cdata[cc], dmg, -9);
         }
@@ -137,10 +137,9 @@ static void _map_events_port_kapul()
         {
             quest_update_journal_msg();
             game_data.quest_flags.kamikaze_attack = 3;
-            txt(i18n::s.get("core.locale.misc.quest.kamikaze_attack.message"),
+            txt(i18n::s.get("core.misc.quest.kamikaze_attack.message"),
                 Message::color{ColorIndex::cyan});
-            txt(i18n::s.get(
-                "core.locale.misc.quest.kamikaze_attack.stairs_appear"));
+            txt(i18n::s.get("core.misc.quest.kamikaze_attack.stairs_appear"));
             cell_featset(18, 9, tile_downstairs, 11, 1);
         }
         flt();
@@ -157,7 +156,7 @@ static void _map_events_jail()
     {
         if (cdata.player().karma < -30)
         {
-            txt(i18n::s.get("core.locale.misc.map.jail.repent_of_sin"));
+            txt(i18n::s.get("core.misc.map.jail.repent_of_sin"));
             modify_karma(cdata.player(), 1);
             p = rnd(8) + 10;
             if (sdata.get(p, 0).original_level >= 10)
@@ -173,9 +172,9 @@ static void _map_events_jail()
             cell_featread(29, 6);
             if (feat(1) == 21)
             {
-                txt(i18n::s.get("core.locale.misc.map.jail.guard_approaches"));
-                txt(i18n::s.get("core.locale.misc.map.jail.leave_here"));
-                txt(i18n::s.get("core.locale.misc.map.jail.unlocks_your_cell"));
+                txt(i18n::s.get("core.misc.map.jail.guard_approaches"));
+                txt(i18n::s.get("core.misc.map.jail.leave_here"));
+                txt(i18n::s.get("core.misc.map.jail.unlocks_your_cell"));
                 cell_featset(29, 6, tile_dooropen, 20, 0, -1);
                 snd("core.door1");
             }
@@ -193,8 +192,7 @@ static void _map_events_shelter()
             if (cdata.player().has_anorexia() == 0)
             {
                 snd("core.eat1");
-                txt(i18n::s.get(
-                    "core.locale.misc.map.shelter.eat_stored_food"));
+                txt(i18n::s.get("core.misc.map.shelter.eat_stored_food"));
                 cdata[cc].nutrition += 5000;
                 show_eating_message();
             }
@@ -212,7 +210,7 @@ static void _map_events_shelter()
         {
             cnt.turn_cost = 0;
         }
-        txt(i18n::s.get("core.locale.misc.map.shelter.no_longer_need_to_stay"));
+        txt(i18n::s.get("core.misc.map.shelter.no_longer_need_to_stay"));
     }
 }
 
@@ -222,12 +220,12 @@ static void _map_events_museum()
     {
         if (rnd(25) == 0)
         {
-            txt(i18n::s.get("core.locale.misc.map.museum.chats"),
+            txt(i18n::s.get("core.misc.map.museum.chats"),
                 Message::color{ColorIndex::cyan});
         }
         if (rnd(25) == 0)
         {
-            txt(i18n::s.get("core.locale.misc.map.museum.chats2"),
+            txt(i18n::s.get("core.misc.map.museum.chats2"),
                 Message::color{ColorIndex::cyan});
         }
         if (rnd(15) == 0)
@@ -286,7 +284,7 @@ static void _map_events_shop()
     {
         if (rnd(25) == 0)
         {
-            txt(i18n::s.get("core.locale.misc.map.shop.chats"),
+            txt(i18n::s.get("core.misc.map.shop.chats"),
                 Message::color{ColorIndex::cyan});
         }
         return;

@@ -65,21 +65,20 @@ void UIMenuSpells::update()
 void UIMenuSpells::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.spell.title"),
+        i18n::s.get("core.ui.spell.title"),
         strhint2 + strhint3 + strhint7,
         (windoww - 720) / 2 + inf_screenx,
         winposy(438),
         720,
         438);
-    display_topic(i18n::s.get("core.locale.ui.spell.name"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.ui.spell.name"), wx + 28, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.ui.spell.cost") + "(" +
-            i18n::s.get("core.locale.ui.spell.stock") + ")" + " " +
-            i18n::s.get("core.locale.ui.spell.lv_chance"),
+        i18n::s.get("core.ui.spell.cost") + "(" +
+            i18n::s.get("core.ui.spell.stock") + ")" + " " +
+            i18n::s.get("core.ui.spell.lv_chance"),
         wx + 220,
         wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.spell.effect"), wx + 400, wy + 36);
+    display_topic(i18n::s.get("core.ui.spell.effect"), wx + 400, wy + 36);
 
     draw_indexed("inventory_icon", wx + 46, wy - 16, 13);
     elona::draw("deco_spell_a", wx + ww - 78, wy);
@@ -138,7 +137,7 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
     cs_list(
         cs == cnt,
         i18n::s.get_m(
-            "locale.ability",
+            "ability",
             the_ability_db.get_id_from_legacy(spell_id)->get(),
             "name") +
             spell_shortcut,
@@ -218,8 +217,7 @@ void UIMenuSpells::_assign_shortcut(int sc_, int spell_id)
     }
     game_data.skill_shortcuts.at(sc_) = spell_id;
     txt(i18n::s.get(
-        "core.locale.ui.assign_shortcut",
-        get_bound_shortcut_key_name_by_index(sc_)));
+        "core.ui.assign_shortcut", get_bound_shortcut_key_name_by_index(sc_)));
 }
 
 optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(

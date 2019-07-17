@@ -74,7 +74,7 @@ void UIMenuSkills::update()
 void UIMenuSkills::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.skill.title"),
+        i18n::s.get("core.ui.skill.title"),
         strhint2 + strhint3 + strhint7,
         (windoww - 600) / 2 + inf_screenx,
         winposy(438),
@@ -82,10 +82,9 @@ void UIMenuSkills::_draw_window()
         438,
         0,
         60);
-    display_topic(i18n::s.get("core.locale.ui.skill.name"), wx + 28, wy + 36);
-    display_topic(i18n::s.get("core.locale.ui.skill.cost"), wx + 220, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.skill.detail"), wx + 320, wy + 36);
+    display_topic(i18n::s.get("core.ui.skill.name"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.ui.skill.cost"), wx + 220, wy + 36);
+    display_topic(i18n::s.get("core.ui.skill.detail"), wx + 320, wy + 36);
 
     draw_indexed("inventory_icon", wx + 46, wy - 16, 14);
     elona::draw("deco_skill_a", wx + ww - 78, wy + wh - 165);
@@ -144,7 +143,7 @@ void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)
     cs_list(
         cs == cnt,
         i18n::s.get_m(
-            "locale.ability",
+            "ability",
             the_ability_db.get_id_from_legacy(skill_id)->get(),
             "name") +
             skill_shortcut,
@@ -218,8 +217,7 @@ void UIMenuSkills::_assign_shortcut(int sc_, int skill_id)
     }
     game_data.skill_shortcuts.at(sc_) = skill_id;
     txt(i18n::s.get(
-        "core.locale.ui.assign_shortcut",
-        get_bound_shortcut_key_name_by_index(sc_)));
+        "core.ui.assign_shortcut", get_bound_shortcut_key_name_by_index(sc_)));
 }
 
 optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(

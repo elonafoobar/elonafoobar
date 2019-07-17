@@ -137,7 +137,7 @@ void ConfigScreenCreator::add_item_yesno(
     else
     {
         // Fall back to a hardcoded default.
-        yes_no = "core.locale.config.common.yes_no.default";
+        yes_no = "core.config.common.yes_no.default";
     }
 
     std::string yes_text = i18n::s.get(yes_no + ".yes");
@@ -202,7 +202,7 @@ void ConfigScreenCreator::add_item_section(
 
     if (config_.get_def().get_metadata(section_key).is_visible())
     {
-        // EX: "<core.locale.config.menu>.<language>"
+        // EX: "<core.config.menu>.<language>"
         I18NKey section_locale_key = locale_key + "." + section_name;
 
         result_.at(menu_index_)
@@ -221,9 +221,7 @@ void ConfigScreenCreator::add_keybindings_section()
     // keybindings menu will be unconditionally added.
     result_.emplace_back(std::make_unique<ConfigMenuKeybindings>(menu_index_));
     result_.at(0)->items.emplace_back(std::make_unique<ConfigMenuItemSection>(
-        "core.keybindings",
-        "core.locale.config.menu.keybindings",
-        menu_index_));
+        "core.keybindings", "core.config.menu.keybindings", menu_index_));
 }
 
 
@@ -243,10 +241,7 @@ void ConfigScreenCreator::add_mod_configs_section()
     int h = menu_height + (menu_item_height * (mod_ids.size() - 1));
     int mod_menu_index = result_.size();
     result_.emplace_back(std::make_unique<ConfigMenu>(
-        i18n::s.get("core.locale.config.menu.mods.name"),
-        w,
-        h,
-        mod_menu_index));
+        i18n::s.get("core.config.menu.mods.name"), w, h, mod_menu_index));
 
     bool found_mods = false;
 
@@ -263,7 +258,7 @@ void ConfigScreenCreator::add_mod_configs_section()
         {
             found_mods = true;
 
-            I18NKey locale_key = mod_id + ".locale.config.menu";
+            I18NKey locale_key = mod_id + ".config.menu";
 
             std::string id = mod_id;
             const auto& children = config_.get_def().get_children(mod_id);
@@ -287,7 +282,7 @@ void ConfigScreenCreator::add_mod_configs_section()
     {
         result_.at(0)->items.emplace_back(
             std::make_unique<ConfigMenuItemSection>(
-                "core.mods", "core.locale.config.menu.mods", mod_menu_index));
+                "core.mods", "core.config.menu.mods", mod_menu_index));
     }
 }
 
@@ -315,7 +310,7 @@ void ConfigScreenCreator::visit_toplevel()
 
 bool ConfigScreenCreator::visit_mod_config(const std::string& mod_id)
 {
-    I18NKey locale_key = mod_id + ".locale.config.menu";
+    I18NKey locale_key = mod_id + ".config.menu";
 
     return visit_section_children(mod_id, locale_key);
 }
@@ -327,7 +322,7 @@ bool ConfigScreenCreator::visit_section_children(
     const I18NKey& locale_key)
 {
     // current_key is similar to "<core.section>"
-    // locale_key is similar to "<core.locale.config.menu.section>"
+    // locale_key is similar to "<core.config.menu.section>"
 
     I18NKey menu_name_key = locale_key + ".name";
 
@@ -381,7 +376,7 @@ bool ConfigScreenCreator::visit_section(
     const I18NKey& locale_key)
 {
     // current_key is similar to "<core>.language"
-    // locale_key is similar to "<core.locale.config.menu>.language"
+    // locale_key is similar to "<core.config.menu>.language"
 
     I18NKey menu_name_key = locale_key + ".name";
 

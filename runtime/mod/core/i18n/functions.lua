@@ -323,26 +323,26 @@ end
 i18n.all = {}
 
 function i18n.all.you()
-   return I18N.get("core.locale.chara.you")
+   return I18N.get("core.chara.you")
 end
 
 function i18n.all.name(chara)
    if not chara or not chara.name then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    return chara.name
 end
 
 function i18n.all.basename(chara)
    if not chara or not chara.name then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    return chara.basename
 end
 
 function i18n.all.itemname(item, number, needs_article)
    if not item then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    if number == nil then
       number = item.number
@@ -356,7 +356,7 @@ end
 
 function i18n.all.itembasename(item)
    if not item then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    return item.basename
 end

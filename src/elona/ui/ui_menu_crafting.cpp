@@ -127,22 +127,18 @@ bool UIMenuCrafting::init()
 void UIMenuCrafting::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.crafting.menu.title"),
+        i18n::s.get("core.crafting.menu.title"),
         strhint2 + strhint3b,
         (windoww - 640) / 2 + inf_screenx,
         winposy(448),
         640,
         448);
+    display_topic(i18n::s.get("core.crafting.menu.product"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.crafting.menu.detail"), wx + 296, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.crafting.menu.product"), wx + 28, wy + 36);
+        i18n::s.get("core.crafting.menu.requirement"), wx + 28, wy + 258);
     display_topic(
-        i18n::s.get("core.locale.crafting.menu.detail"), wx + 296, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.requirement"),
-        wx + 28,
-        wy + 258);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
+        i18n::s.get("core.crafting.menu.material"), wx + 28, wy + 304);
 }
 
 void UIMenuCrafting::_draw_key(int cnt)
@@ -174,10 +170,9 @@ void UIMenuCrafting::_draw_recipe_desc(const CraftingRecipe& recipe)
 {
     font(13 - en * 2);
 
-    std::string desc =
-        i18n::s.get("core.locale.crafting.menu.skill_needed") + u8": "s;
+    std::string desc = i18n::s.get("core.crafting.menu.skill_needed") + u8": "s;
     if (auto text = i18n::s.get_enum_optional(
-            "core.locale.crafting.menu.skills", recipe.skill_used))
+            "core.crafting.menu.skills", recipe.skill_used))
     {
         desc += *text;
     }
@@ -197,7 +192,7 @@ void UIMenuCrafting::_draw_single_recipe_required_material(
     const RequiredMaterial& required_mat)
 {
     std::string mat_desc = matname(required_mat.id) + " " +
-        i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount +
+        i18n::s.get("core.crafting.menu.x") + " " + required_mat.amount +
         u8"("s + mat(required_mat.id) + u8")"s;
 
     const auto text_color = mat(required_mat.id) >= required_mat.amount
@@ -238,8 +233,7 @@ void UIMenuCrafting::_draw_single_list_entry(
     bool can_craft)
 {
     std::string item_name = ioriginalnameref(item_id);
-    std::string item_make =
-        i18n::s.get("core.locale.crafting.menu.make", item_name);
+    std::string item_make = i18n::s.get("core.crafting.menu.make", item_name);
 
     font(14 - en * 2);
 
@@ -326,15 +320,14 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
         if (_can_produce_item(*created_item_id) == -1)
         {
             snd("core.fail1");
-            txt(i18n::s.get(
-                "core.locale.crafting.you_do_not_meet_requirements"));
+            txt(i18n::s.get("core.crafting.you_do_not_meet_requirements"));
             set_reupdate();
             return none;
         }
         if (!inv_getspace(0))
         {
             snd("core.fail1");
-            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
+            txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
             set_reupdate();
             return none;
         }

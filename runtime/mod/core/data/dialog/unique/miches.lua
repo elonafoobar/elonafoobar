@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "miches",
-   root = "core.locale.talk.unique.miches",
+   root = "core.talk.unique.miches",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("putit_attacks")

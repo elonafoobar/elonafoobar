@@ -16,8 +16,7 @@ bool UIMenuCharamakeAlias::init()
     pagemax = 0;
     page = 0;
 
-    character_making_draw_background(
-        "core.locale.chara_making.select_alias.caption");
+    character_making_draw_background("core.chara_making.select_alias.caption");
 
     windowshadow = 1;
     cs = 0;
@@ -49,8 +48,7 @@ void UIMenuCharamakeAlias::_reroll_aliases()
         }
         if (cnt == 0)
         {
-            listn(0, cnt) =
-                i18n::s.get("core.locale.chara_making.common.reroll");
+            listn(0, cnt) = i18n::s.get("core.chara_making.common.reroll");
         }
         else if (_previous_alias && cnt == 1 && *_previous_alias != "")
         {
@@ -69,10 +67,9 @@ void UIMenuCharamakeAlias::update()
 void UIMenuCharamakeAlias::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.chara_making.select_alias.title"),
+        i18n::s.get("core.chara_making.select_alias.title"),
         strhint3b + key_mode2 + " [" +
-            i18n::s.get("core.locale.chara_making.select_alias.lock_alias") +
-            "]",
+            i18n::s.get("core.chara_making.select_alias.lock_alias") + "]",
         (windoww - 400) / 2 + inf_screenx,
         winposy(458, 1) + 20,
         400,
@@ -93,7 +90,7 @@ void UIMenuCharamakeAlias::_draw_window()
         y);
     gmode(2);
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_alias.alias_list"),
+        i18n::s.get("core.chara_making.select_alias.alias_list"),
         wx + 28,
         wy + 30);
 }

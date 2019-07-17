@@ -9,7 +9,7 @@ local Rand = Elona.require("Rand")
 local eating_effect = {}
 
 local function eat_message(eater, locale_id, color)
-   local locale_key = "core.locale.food.effect.corpse." .. locale_id
+   local locale_key = "core.food.effect.corpse." .. locale_id
    if FOV.you_see(eater) then
       GUI.txt(I18N.get(locale_key, eater), color)
    end

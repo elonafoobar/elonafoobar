@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "balzak",
-   root = "core.locale.talk.unique.balzak",
+   root = "core.talk.unique.balzak",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("sewer_sweeping")

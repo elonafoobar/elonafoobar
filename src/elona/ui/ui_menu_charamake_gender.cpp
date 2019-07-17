@@ -16,8 +16,7 @@ bool UIMenuCharamakeGender::init()
     cs_bk = -1;
     pagesize = 0;
 
-    character_making_draw_background(
-        "core.locale.chara_making.select_gender.caption");
+    character_making_draw_background("core.chara_making.select_gender.caption");
 
     windowshadow = 1;
 
@@ -31,7 +30,7 @@ void UIMenuCharamakeGender::update()
 void UIMenuCharamakeGender::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.chara_making.select_gender.title"),
+        i18n::s.get("core.chara_making.select_gender.title"),
         strhint3b,
         (windoww - 370) / 2 + inf_screenx,
         winposy(168, 1) - 20,
@@ -44,7 +43,7 @@ void UIMenuCharamakeGender::_draw_window()
 
     gmode(2);
     display_topic(
-        i18n::s.get("core.locale.chara_making.select_gender.gender"),
+        i18n::s.get("core.chara_making.select_gender.gender"),
         wx + 28,
         wy + 30);
 }
@@ -58,8 +57,8 @@ void UIMenuCharamakeGender::_draw_choice(int cnt, const std::string& text)
 
 void UIMenuCharamakeGender::_draw_choices()
 {
-    listn(0, 0) = cnven(i18n::s.get("core.locale.ui.sex3.male"));
-    listn(0, 1) = cnven(i18n::s.get("core.locale.ui.sex3.female"));
+    listn(0, 0) = cnven(i18n::s.get("core.ui.sex3.male"));
+    listn(0, 1) = cnven(i18n::s.get("core.ui.sex3.female"));
     font(14 - en * 2);
     for (int cnt = 0; cnt < 2; ++cnt)
     {

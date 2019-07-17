@@ -63,7 +63,7 @@ void Store::load(
 
     const hcl::Value locale = value["locale"];
 
-    visit_object(locale.as<hcl::Object>(), mod_id + ".locale", hcl_file);
+    visit_object(locale.as<hcl::Object>(), mod_id, hcl_file);
 }
 
 void Store::visit_object(

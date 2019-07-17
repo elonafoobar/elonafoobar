@@ -9,14 +9,8 @@ namespace ui
 
 void UIMenuCompositeSkills::add_menus()
 {
-    push_back(
-        std::make_unique<UIMenuSpells>(),
-        13,
-        "core.locale.ui.menu.spell.spell");
-    push_back(
-        std::make_unique<UIMenuSkills>(),
-        14,
-        "core.locale.ui.menu.spell.skill");
+    push_back(std::make_unique<UIMenuSpells>(), 13, "core.ui.menu.spell.spell");
+    push_back(std::make_unique<UIMenuSkills>(), 14, "core.ui.menu.spell.skill");
 }
 
 } // namespace ui

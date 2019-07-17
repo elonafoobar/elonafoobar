@@ -215,7 +215,7 @@ std::string remove_extra_str(const std::string& text)
 void wish_end()
 {
     net_send_wish(
-        i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
+        i18n::s.get("core.wish.your_wish", inputlog(0)),
         cnven(log_copy_observer->get_copy()));
 
     log_copy_observer.reset();
@@ -278,8 +278,7 @@ void wish_for_card()
     inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
     cell_refresh(cdata.player().position.x, cdata.player().position.y);
-    txt(i18n::s.get(
-        "core.locale.wish.something_appears_from_nowhere", inv[ci]));
+    txt(i18n::s.get("core.wish.something_appears_from_nowhere", inv[ci]));
 }
 
 
@@ -296,8 +295,7 @@ void wish_for_figure()
     inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
     cell_refresh(cdata.player().position.x, cdata.player().position.y);
-    txt(i18n::s.get(
-        "core.locale.wish.something_appears_from_nowhere", inv[ci]));
+    txt(i18n::s.get("core.wish.something_appears_from_nowhere", inv[ci]));
 }
 
 
@@ -305,7 +303,7 @@ void wish_for_figure()
 /// Returns true if `wish` equals one of the special words. English words are
 /// available in all languages.
 /// @params key The I18N key associated with the special words. Note that it
-/// does not contain the prefix, "core.locale.wish.special_wish.".
+/// does not contain the prefix, "core.wish.special_wish.".
 bool match_special_wish(
     const std::string& wish,
     const std::string& key,
@@ -314,7 +312,7 @@ bool match_special_wish(
     return wish_match(
         wish,
         WishMatchType::perfect,
-        "core.locale.wish.special_wish." + key,
+        "core.wish.special_wish." + key,
         english_words);
 }
 
@@ -323,7 +321,7 @@ bool match_special_wish(
 /// Returns true if `wish` equals one of the special words. English words are
 /// available in all languages.
 /// @params key The I18N key associated with the special words. Note that it
-/// does not contain the prefix, "core.locale.wish.general_wish.".
+/// does not contain the prefix, "core.wish.general_wish.".
 bool match_general_wish(
     const std::string& wish,
     const std::string& key,
@@ -332,7 +330,7 @@ bool match_general_wish(
     return wish_match(
         wish,
         WishMatchType::include,
-        "core.locale.wish.general_wish." + key,
+        "core.wish.general_wish." + key,
         english_words);
 }
 
@@ -342,50 +340,50 @@ bool grant_special_wishing(const std::string& wish)
 {
     if (match_special_wish(wish, "god_inside", {"god inside"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_god_inside"));
+        txt(i18n::s.get("core.wish.wish_god_inside"));
     }
     else if (match_special_wish(wish, "man_inside", {"man inside"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_man_inside"));
+        txt(i18n::s.get("core.wish.wish_man_inside"));
     }
     else if (match_special_wish(wish, "ehekatl", {"ehekatl"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_ehekatl"));
+        txt(i18n::s.get("core.wish.wish_ehekatl"));
         flt();
         chara_create(
             -1, 331, cdata.player().position.x, cdata.player().position.y);
     }
     else if (match_special_wish(wish, "lulwy", {"lulwy"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_lulwy"));
+        txt(i18n::s.get("core.wish.wish_lulwy"));
         flt();
         chara_create(
             -1, 306, cdata.player().position.x, cdata.player().position.y);
     }
     else if (match_special_wish(wish, "opatos", {"opatos"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_opatos"));
+        txt(i18n::s.get("core.wish.wish_opatos"));
         flt();
         chara_create(
             -1, 338, cdata.player().position.x, cdata.player().position.y);
     }
     else if (match_special_wish(wish, "kumiromi", {"kumiromi"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_kumiromi"));
+        txt(i18n::s.get("core.wish.wish_kumiromi"));
         flt();
         chara_create(
             -1, 339, cdata.player().position.x, cdata.player().position.y);
     }
     else if (match_special_wish(wish, "mani", {"mani"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_mani"));
+        txt(i18n::s.get("core.wish.wish_mani"));
         flt();
         chara_create(
             -1, 342, cdata.player().position.x, cdata.player().position.y);
     }
     else if (match_special_wish(wish, "youth", {"youth", "age", "beauty"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_youth"));
+        txt(i18n::s.get("core.wish.wish_youth"));
         cdata.player().birth_year += 20;
         if (cdata.player().birth_year + 12 > game_data.date.year)
         {
@@ -397,22 +395,20 @@ bool grant_special_wishing(const std::string& wish)
     {
         if (game_data.wizard)
         {
-            txt(i18n::s.get("core.locale.wish.wish_alias.impossible"));
+            txt(i18n::s.get("core.wish.wish_alias.impossible"));
         }
         else
         {
-            txt(i18n::s.get(
-                "core.locale.wish.wish_alias.what_is_your_new_alias"));
+            txt(i18n::s.get("core.wish.wish_alias.what_is_your_new_alias"));
             int stat = select_alias(0);
             if (stat == 1)
             {
-                txt(i18n::s.get(
-                    "core.locale.wish.wish_alias.new_alias", cmaka));
+                txt(i18n::s.get("core.wish.wish_alias.new_alias", cmaka));
                 cdatan(1, 0) = cmaka;
             }
             else
             {
-                txt(i18n::s.get("core.locale.wish.wish_alias.no_change"));
+                txt(i18n::s.get("core.wish.wish_alias.no_change"));
             }
         }
     }
@@ -421,28 +417,27 @@ bool grant_special_wishing(const std::string& wish)
         cdata.player().sex = !cdata.player().sex;
 
         txt(i18n::s.get(
-            "core.locale.wish.wish_sex",
+            "core.wish.wish_sex",
             cdata.player(),
-            i18n::s.get_enum("core.locale.ui.sex", cdata.player().sex)));
+            i18n::s.get_enum("core.ui.sex", cdata.player().sex)));
     }
     else if (match_special_wish(
                  wish, "redemption", {"redemption", "atonement"}))
     {
         if (cdata.player().karma >= 0)
         {
-            txt(i18n::s.get(
-                "core.locale.wish.wish_redemption.you_are_not_a_sinner"));
+            txt(i18n::s.get("core.wish.wish_redemption.you_are_not_a_sinner"));
         }
         else
         {
             modify_karma(cdata.player(), -cdata.player().karma / 2);
             txt(i18n::s.get(
-                "core.locale.wish.wish_redemption.what_a_convenient_wish"));
+                "core.wish.wish_redemption.what_a_convenient_wish"));
         }
     }
     else if (match_special_wish(wish, "death", {"death"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_death"));
+        txt(i18n::s.get("core.wish.wish_death"));
         damage_hp(cdata.player(), 99999, -11);
     }
     else if (match_special_wish(wish, "ally", {"friend", "company", "ally"}))
@@ -452,7 +447,7 @@ bool grant_special_wishing(const std::string& wish)
     else if (match_special_wish(
                  wish, "gold", {"money", "gold", "wealth", "fortune"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_gold"),
+        txt(i18n::s.get("core.wish.wish_gold"),
             Message::color{ColorIndex::orange});
         flt();
         itemcreate(
@@ -467,7 +462,7 @@ bool grant_special_wishing(const std::string& wish)
                  "small_medal",
                  {"small medal", "small coin", "medal", "coin"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_small_medal"),
+        txt(i18n::s.get("core.wish.wish_small_medal"),
             Message::color{ColorIndex::orange});
         flt();
         itemcreate(
@@ -479,7 +474,7 @@ bool grant_special_wishing(const std::string& wish)
     }
     else if (match_special_wish(wish, "platinum", {"platinum", "platina"}))
     {
-        txt(i18n::s.get("core.locale.wish.wish_platinum"),
+        txt(i18n::s.get("core.wish.wish_platinum"),
             Message::color{ColorIndex::orange});
         flt();
         itemcreate(
@@ -629,7 +624,7 @@ bool wish_for_item(const std::string& input)
             flt();
             itemcreate(-1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
             inv[ci].curse_state = CurseState::blessed;
-            txt(i18n::s.get("core.locale.wish.it_is_sold_out"));
+            txt(i18n::s.get("core.wish.it_is_sold_out"));
         }
         if (the_item_db[inv[ci].id]->category == 52000 ||
             the_item_db[inv[ci].id]->category == 53000)
@@ -666,7 +661,7 @@ bool wish_for_item(const std::string& input)
         }
 
         item_identify(inv[ci], IdentifyState::completely_identified);
-        txt(i18n::s.get("core.locale.wish.something_appears", inv[ci]));
+        txt(i18n::s.get("core.wish.something_appears", inv[ci]));
         return true;
     }
 
@@ -695,9 +690,7 @@ bool wish_for_skill(const std::string& input)
         }
 
         auto name = i18n::s.get_m(
-            "locale.ability",
-            the_ability_db.get_id_from_legacy(id)->get(),
-            "name");
+            "ability", the_ability_db.get_id_from_legacy(id)->get(), "name");
         int similarity = 0;
         if (name == wish)
         {
@@ -727,20 +720,18 @@ bool wish_for_skill(const std::string& input)
     {
         const auto id = selector.get_force();
         const auto name = i18n::s.get_m(
-            "locale.ability",
-            the_ability_db.get_id_from_legacy(id)->get(),
-            "name");
+            "ability", the_ability_db.get_id_from_legacy(id)->get(), "name");
         if (!name.empty())
         {
             if (sdata.get(id, 0).original_level == 0)
             {
-                txt(i18n::s.get("core.locale.wish.you_learn_skill", name),
+                txt(i18n::s.get("core.wish.you_learn_skill", name),
                     Message::color{ColorIndex::orange});
                 chara_gain_skill(cdata.player(), id, 1);
             }
             else
             {
-                txt(i18n::s.get("core.locale.wish.your_skill_improves", name),
+                txt(i18n::s.get("core.wish.your_skill_improves", name),
                     Message::color{ColorIndex::orange});
                 chara_gain_fixed_skill_exp(cdata.player(), id, 1000);
                 modify_potential(cdata.player(), id, 25);
@@ -748,13 +739,13 @@ bool wish_for_skill(const std::string& input)
         }
         else
         {
-            txt(i18n::s.get("core.locale.common.nothing_happens"));
+            txt(i18n::s.get("core.common.nothing_happens"));
             return false;
         }
     }
     else
     {
-        txt(i18n::s.get("core.locale.common.nothing_happens"));
+        txt(i18n::s.get("core.common.nothing_happens"));
         return false;
     }
     return true;
@@ -766,7 +757,7 @@ bool process_wish(optional<std::string> wish)
 {
     using namespace strutil;
 
-    txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"),
+    txt(i18n::s.get("core.wish.what_do_you_wish_for"),
         Message::color{ColorIndex::orange});
 
     if (wish)
@@ -779,7 +770,7 @@ bool process_wish(optional<std::string> wish)
             (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
     }
 
-    txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
+    txt(i18n::s.get("core.wish.your_wish", inputlog(0)));
 
     save_set_autosave();
 
@@ -793,7 +784,7 @@ bool process_wish(optional<std::string> wish)
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")
     {
-        txt(i18n::s.get("core.locale.common.nothing_happens"));
+        txt(i18n::s.get("core.common.nothing_happens"));
         return false;
     }
     if (en)

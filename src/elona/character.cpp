@@ -176,7 +176,7 @@ int chara_create_internal()
     }
     if (cmshade)
     {
-        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.shade");
+        cdatan(0, rc) = i18n::s.get("core.chara.job.shade");
         cdata[rc].image = 280;
     }
     cdata[rc].quality = static_cast<Quality>(fixlv);
@@ -419,11 +419,11 @@ void failed_to_place_character(Character& cc)
     if (cc.index < 16)
     {
         cc.set_state(Character::State::pet_in_other_map);
-        txt(i18n::s.get("core.locale.chara.place_failure.ally", cc));
+        txt(i18n::s.get("core.chara.place_failure.ally", cc));
     }
     else
     {
-        txt(i18n::s.get("core.locale.chara.place_failure.other", cc));
+        txt(i18n::s.get("core.chara.place_failure.other", cc));
         cc.set_state(Character::State::empty);
         // Exclude town residents because they occupy character slots even
         // if they are dead.
@@ -1233,7 +1233,7 @@ int chara_custom_talk(int cc, int talk_type)
         default: assert(0);
         }
 
-        tag += u8"," + i18n::s.get("core.locale.meta.tag");
+        tag += u8"," + i18n::s.get("core.meta.tag");
         const auto start_text = range::find_if(
             talk_file_buffer,
             [&](const auto& line) { return strutil::contains(line, tag); });
@@ -1350,9 +1350,9 @@ void chara_modify_impression(Character& cc, int delta)
     if (level1 > level2)
     {
         txt(i18n::s.get(
-                "core.locale.chara.impression.lose",
+                "core.chara.impression.lose",
                 cc,
-                i18n::s.get_enum("core.locale.ui.impression", level2)),
+                i18n::s.get_enum("core.ui.impression", level2)),
             Message::color{ColorIndex::purple});
     }
     else if (level2 > level1)
@@ -1360,9 +1360,9 @@ void chara_modify_impression(Character& cc, int delta)
         if (cc.relationship != -3)
         {
             txt(i18n::s.get(
-                    "core.locale.chara.impression.gain",
+                    "core.chara.impression.gain",
                     cc,
-                    i18n::s.get_enum("core.locale.ui.impression", level2)),
+                    i18n::s.get_enum("core.ui.impression", level2)),
                 Message::color{ColorIndex::green});
         }
     }
@@ -1753,13 +1753,12 @@ void chara_add_quality_parens()
     if (fixlv == Quality::miracle)
     {
         cdatan(0, rc) =
-            i18n::s.get("core.locale.chara.quality.miracle", cdatan(0, rc));
+            i18n::s.get("core.chara.quality.miracle", cdatan(0, rc));
         cdata[rc].level = cdata[rc].level * 10 / 8;
     }
     else if (fixlv == Quality::godly)
     {
-        cdatan(0, rc) =
-            i18n::s.get("core.locale.chara.quality.godly", cdatan(0, rc));
+        cdatan(0, rc) = i18n::s.get("core.chara.quality.godly", cdatan(0, rc));
         cdata[rc].level = cdata[rc].level * 10 / 6;
     }
 }

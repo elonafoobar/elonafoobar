@@ -45,7 +45,7 @@ void UIMenuAlias::update()
         }
         if (cnt == 0)
         {
-            listn(0, cnt) = i18n::s.get("core.locale.ui.alias.reroll");
+            listn(0, cnt) = i18n::s.get("core.ui.alias.reroll");
         }
     }
     _seed += 17;
@@ -56,13 +56,13 @@ void UIMenuAlias::update()
 void UIMenuAlias::draw()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.alias.title"),
+        i18n::s.get("core.ui.alias.title"),
         strhint3b,
         (windoww - 400) / 2 + inf_screenx,
         winposy(458),
         400,
         458);
-    display_topic(i18n::s.get("core.locale.ui.alias.list"), wx + 28, wy + 30);
+    display_topic(i18n::s.get("core.ui.alias.list"), wx + 28, wy + 30);
 
     font(14 - en * 2);
 

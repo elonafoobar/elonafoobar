@@ -58,7 +58,7 @@ void _food_gets_rotten(int chara_idx, int food_idx)
             return;
         }
         txt(i18n::s.get(
-            "core.locale.misc.corpse_is_dried_"
+            "core.misc.corpse_is_dried_"
             "up",
             food));
         food.param3 = game_data.date.hours() + 2160;
@@ -72,7 +72,7 @@ void _food_gets_rotten(int chara_idx, int food_idx)
 
     if (0 <= chara_idx && chara_idx < 16)
     {
-        txt(i18n::s.get("core.locale.misc.get_rotten", food));
+        txt(i18n::s.get("core.misc.get_rotten", food));
     }
 
     food.param3 = -1;
@@ -87,7 +87,7 @@ void _food_gets_rotten(int chara_idx, int food_idx)
     {
         if (rnd(3) == 0)
         {
-            txt(i18n::s.get("core.locale.misc.extract_seed", food));
+            txt(i18n::s.get("core.misc.extract_seed", food));
             const auto seed_num = rnd(food.number()) + 1;
             food.modify_number(-food.number());
             flt(calcobjlv(cdata.player().level));
@@ -115,32 +115,32 @@ void show_eating_message()
 {
     if (cdata[cc].nutrition >= 12000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.bloated"),
+        txt(i18n::s.get("core.food.eating_message.bloated"),
             Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 10000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.satisfied"),
+        txt(i18n::s.get("core.food.eating_message.satisfied"),
             Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 5000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.normal"),
+        txt(i18n::s.get("core.food.eating_message.normal"),
             Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 2000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.hungry"),
+        txt(i18n::s.get("core.food.eating_message.hungry"),
             Message::color{ColorIndex::green});
     }
     else if (cdata[cc].nutrition >= 1000)
     {
-        txt(i18n::s.get("core.locale.food.eating_message.very_hungry"),
+        txt(i18n::s.get("core.food.eating_message.very_hungry"),
             Message::color{ColorIndex::green});
     }
     else
     {
-        txt(i18n::s.get("core.locale.food.eating_message.starving"),
+        txt(i18n::s.get("core.food.eating_message.starving"),
             Message::color{ColorIndex::green});
     }
 }
@@ -151,7 +151,7 @@ void eat_rotten_food()
 {
     if (cdata[cc].can_digest_rotten_food() == 1)
     {
-        txt(i18n::s.get("core.locale.food.not_affected_by_rotten", cdata[cc]));
+        txt(i18n::s.get("core.food.not_affected_by_rotten", cdata[cc]));
         return;
     }
     fdmax = 0;
@@ -218,7 +218,7 @@ void cure_anorexia(Character& cc)
     cc.has_anorexia() = false;
     if (is_in_fov(cc) || cc.index < 16)
     {
-        txt(i18n::s.get("core.locale.food.anorexia.recovers_from", cc));
+        txt(i18n::s.get("core.food.anorexia.recovers_from", cc));
         snd("core.offer1");
     }
 }
@@ -232,7 +232,7 @@ void chara_vomit(Character& cc)
     if (is_in_fov(cc))
     {
         snd("core.vomit");
-        txt(i18n::s.get("core.locale.food.vomits", cc));
+        txt(i18n::s.get("core.food.vomits", cc));
     }
 
     if (cc.is_pregnant())
@@ -240,7 +240,7 @@ void chara_vomit(Character& cc)
         cc.is_pregnant() = false;
         if (is_in_fov(cc))
         {
-            txt(i18n::s.get("core.locale.food.spits_alien_children", cc));
+            txt(i18n::s.get("core.food.spits_alien_children", cc));
         }
     }
 
@@ -304,7 +304,7 @@ void chara_vomit(Character& cc)
                 cc.has_anorexia() = true;
                 if (is_in_fov(cc))
                 {
-                    txt(i18n::s.get("core.locale.food.anorexia.develops", cc));
+                    txt(i18n::s.get("core.food.anorexia.develops", cc));
                     snd("core.offer1");
                 }
             }
@@ -332,7 +332,7 @@ void eatstatus(CurseState curse_state, int eater)
         cdata[eater].nutrition -= 1500;
         if (is_in_fov(cdata[eater]))
         {
-            txt(i18n::s.get("core.locale.food.eat_status.bad", cdata[eater]));
+            txt(i18n::s.get("core.food.eat_status.bad", cdata[eater]));
         }
         chara_vomit(cdata[eater]);
     }
@@ -340,7 +340,7 @@ void eatstatus(CurseState curse_state, int eater)
     {
         if (is_in_fov(cdata[eater]))
         {
-            txt(i18n::s.get("core.locale.food.eat_status.good", cdata[eater]));
+            txt(i18n::s.get("core.food.eat_status.good", cdata[eater]));
         }
         if (rnd(5) == 0)
         {
@@ -369,7 +369,7 @@ void get_sick_if_cursed(CurseState curse_state, Character& drinker)
 
     if (is_in_fov(drinker))
     {
-        txt(i18n::s.get("core.locale.food.eat_status.cursed_drink", drinker));
+        txt(i18n::s.get("core.food.eat_status.cursed_drink", drinker));
     }
     status_ailment_damage(drinker, StatusAilment::sick, 200);
 }
@@ -388,17 +388,17 @@ void get_hungry(Character& cc)
         if (p == 1)
         {
             msgalert = 1;
-            txt(i18n::s.get("core.locale.food.hunger_status.starving"));
+            txt(i18n::s.get("core.food.hunger_status.starving"));
         }
         else if (p == 2)
         {
             msgalert = 1;
-            txt(i18n::s.get("core.locale.food.hunger_status.very_hungry"));
+            txt(i18n::s.get("core.food.hunger_status.very_hungry"));
         }
         else if (p == 5)
         {
             msgalert = 1;
-            txt(i18n::s.get("core.locale.food.hunger_status.hungry"));
+            txt(i18n::s.get("core.food.hunger_status.hungry"));
         }
         refresh_speed(cc);
     }
@@ -451,7 +451,7 @@ void cook()
         p = 1;
     }
     make_dish(ci, p);
-    txt(i18n::s.get("core.locale.food.cook", s(0), inv[cooktool], inv[ci]));
+    txt(i18n::s.get("core.food.cook", s(0), inv[cooktool], inv[ci]));
     item_stack(0, ci, 1);
     int rank = inv[ci].param2;
     if (rank > 2)
@@ -705,7 +705,7 @@ void apply_general_eating_effect(int cieat)
                         if (strutil::contains(s(0), u8"/man/"))
                         {
                             txt(i18n::s.get(
-                                "core.locale.food.effect.human.delicious"));
+                                "core.food.effect.human.delicious"));
                             break;
                         }
                     }
@@ -715,7 +715,7 @@ void apply_general_eating_effect(int cieat)
             {
                 if (inv[ci].param3 < 0)
                 {
-                    txt(i18n::s.get("core.locale.food.effect.rotten"));
+                    txt(i18n::s.get("core.food.effect.rotten"));
                     break;
                 }
             }
@@ -723,50 +723,50 @@ void apply_general_eating_effect(int cieat)
             {
                 if (p == 1)
                 {
-                    txt(i18n::s.get("core.locale.food.effect.raw_meat"));
+                    txt(i18n::s.get("core.food.effect.raw_meat"));
                     break;
                 }
                 if (p == 7)
                 {
-                    txt(i18n::s.get("core.locale.food.effect.powder"));
+                    txt(i18n::s.get("core.food.effect.powder"));
                     break;
                 }
                 if (p == 5)
                 {
-                    txt(i18n::s.get("core.locale.food.effect.raw"));
+                    txt(i18n::s.get("core.food.effect.raw"));
                     break;
                 }
-                txt(i18n::s.get("core.locale.food.effect.boring"));
+                txt(i18n::s.get("core.food.effect.boring"));
                 break;
             }
             if (inv[ci].param2 < 3)
             {
-                txt(i18n::s.get("core.locale.food.effect.quality.bad"));
+                txt(i18n::s.get("core.food.effect.quality.bad"));
                 break;
             }
             if (inv[ci].param2 < 5)
             {
-                txt(i18n::s.get("core.locale.food.effect.quality.so_so"));
+                txt(i18n::s.get("core.food.effect.quality.so_so"));
                 break;
             }
             if (inv[ci].param2 < 7)
             {
-                txt(i18n::s.get("core.locale.food.effect.quality.good"));
+                txt(i18n::s.get("core.food.effect.quality.good"));
                 break;
             }
             if (inv[ci].param2 < 9)
             {
-                txt(i18n::s.get("core.locale.food.effect.quality.great"));
+                txt(i18n::s.get("core.food.effect.quality.great"));
                 break;
             }
-            txt(i18n::s.get("core.locale.food.effect.quality.delicious"));
+            txt(i18n::s.get("core.food.effect.quality.delicious"));
         }
     }
     else if (inv[ci].material == 35)
     {
         if (inv[ci].param3 < 0)
         {
-            txt(i18n::s.get("core.locale.food.effect.raw_glum", cdata[cc]));
+            txt(i18n::s.get("core.food.effect.raw_glum", cdata[cc]));
         }
     }
     if (inv[ci].id == 425)
@@ -823,7 +823,7 @@ void apply_general_eating_effect(int cieat)
         nutrition = 2500;
         if (cc == 0)
         {
-            txt(i18n::s.get("core.locale.food.effect.herb.curaria"),
+            txt(i18n::s.get("core.food.effect.herb.curaria"),
                 Message::color{ColorIndex::green});
         }
     }
@@ -883,7 +883,7 @@ void apply_general_eating_effect(int cieat)
         modify_potential(cdata[cc], 11, 2);
         if (cc == 0)
         {
-            txt(i18n::s.get("core.locale.food.effect.herb.morgia"),
+            txt(i18n::s.get("core.food.effect.herb.morgia"),
                 Message::color{ColorIndex::green});
         }
     }
@@ -943,7 +943,7 @@ void apply_general_eating_effect(int cieat)
         modify_potential(cdata[cc], 15, 2);
         if (cc == 0)
         {
-            txt(i18n::s.get("core.locale.food.effect.herb.mareilon"),
+            txt(i18n::s.get("core.food.effect.herb.mareilon"),
                 Message::color{ColorIndex::green});
         }
     }
@@ -1003,7 +1003,7 @@ void apply_general_eating_effect(int cieat)
         nutrition = 500;
         if (cc == 0)
         {
-            txt(i18n::s.get("core.locale.food.effect.herb.spenseweed"),
+            txt(i18n::s.get("core.food.effect.herb.spenseweed"),
                 Message::color{ColorIndex::green});
         }
     }
@@ -1063,7 +1063,7 @@ void apply_general_eating_effect(int cieat)
         modify_potential(cdata[cc], 14, 2);
         if (cc == 0)
         {
-            txt(i18n::s.get("core.locale.food.effect.herb.alraunia"),
+            txt(i18n::s.get("core.food.effect.herb.alraunia"),
                 Message::color{ColorIndex::green});
         }
     }
@@ -1143,11 +1143,11 @@ void apply_general_eating_effect(int cieat)
             {
                 if (trait(41))
                 {
-                    txt(i18n::s.get("core.locale.food.effect.human.like"));
+                    txt(i18n::s.get("core.food.effect.human.like"));
                 }
                 else
                 {
-                    txt(i18n::s.get("core.locale.food.effect.human.dislike"));
+                    txt(i18n::s.get("core.food.effect.human.dislike"));
                     damage_insanity(cdata[cc], 15);
                     status_ailment_damage(
                         cdata[cc], StatusAilment::insane, 150);
@@ -1166,7 +1166,7 @@ void apply_general_eating_effect(int cieat)
             else if (trait(41))
             {
                 txt(i18n::s.get(
-                    "core.locale.food.effect.human.would_have_rather_eaten"));
+                    "core.food.effect.human.would_have_rather_eaten"));
                 nutrition = nutrition * 2 / 3;
             }
         }
@@ -1231,8 +1231,7 @@ void apply_general_eating_effect(int cieat)
             flt(calcobjlv(cdata[cc].level));
             flttypeminor = 58500;
             itemcreate(-1, 0, cdata[cc].position.x, cdata[cc].position.y, 0);
-            txt(i18n::s.get(
-                    "core.locale.food.effect.bomb_fish", cdata[cc], inv[ci]),
+            txt(i18n::s.get("core.food.effect.bomb_fish", cdata[cc], inv[ci]),
                 Message::color{ColorIndex::cyan});
             ci = cibk;
         }
@@ -1241,7 +1240,7 @@ void apply_general_eating_effect(int cieat)
     {
         if (inv[ci].subname == 319)
         {
-            txt(i18n::s.get("core.locale.food.effect.little_sister", cdata[cc]),
+            txt(i18n::s.get("core.food.effect.little_sister", cdata[cc]),
                 Message::color{ColorIndex::green});
             if (rnd(sdata.get(2, cc).original_level *
                         sdata.get(2, cc).original_level +
@@ -1269,7 +1268,7 @@ void apply_general_eating_effect(int cieat)
     }
     if (inv[ci].id == 755)
     {
-        txt(i18n::s.get("core.locale.food.effect.hero_cheese"));
+        txt(i18n::s.get("core.food.effect.hero_cheese"));
         chara_gain_fixed_skill_exp(cdata[cc], 19, 2000);
     }
     if (inv[ci].id == 702)
@@ -1292,8 +1291,7 @@ void apply_general_eating_effect(int cieat)
     {
         if (cc < 16)
         {
-            txt(i18n::s.get(
-                "core.locale.food.effect.fortune_cookie", cdata[cc]));
+            txt(i18n::s.get("core.food.effect.fortune_cookie", cdata[cc]));
             read_talk_file(u8"%COOKIE2");
             if (inv[ci].curse_state == CurseState::blessed ||
                 (inv[ci].curse_state == CurseState::none && rnd(2)))
@@ -1306,16 +1304,15 @@ void apply_general_eating_effect(int cieat)
     if (inv[ci].id == 667)
     {
         txt(i18n::s.get(
-            "core.locale.food.effect.sisters_love_fueled_lunch", cdata[cc]));
+            "core.food.effect.sisters_love_fueled_lunch", cdata[cc]));
         heal_insanity(cdata[cc], 30);
     }
     if (inv[ci].is_poisoned())
     {
         if (is_in_fov(cdata[cc]))
         {
-            txt(i18n::s.get(
-                "core.locale.food.effect.poisoned.text", cdata[cc]));
-            txt(i18n::s.get("core.locale.food.effect.poisoned.dialog"));
+            txt(i18n::s.get("core.food.effect.poisoned.text", cdata[cc]));
+            txt(i18n::s.get("core.food.effect.poisoned.dialog"));
         }
         damage_hp(cdata[cc], rnd(250) + 250, -4);
         if (cdata[cc].state() != Character::State::alive)
@@ -1334,11 +1331,11 @@ void apply_general_eating_effect(int cieat)
     {
         if (cc == 0)
         {
-            txt(i18n::s.get("core.locale.food.effect.spiked.self"));
+            txt(i18n::s.get("core.food.effect.spiked.self"));
         }
         else
         {
-            txt(i18n::s.get("core.locale.food.effect.spiked.other", cdata[cc]),
+            txt(i18n::s.get("core.food.effect.spiked.other", cdata[cc]),
                 Message::color{ColorIndex::cyan});
             cdata[cc].emotion_icon = 317;
             chara_modify_impression(cdata[cc], 30);
@@ -1376,8 +1373,7 @@ void apply_general_eating_effect(int cieat)
         {
             if (game_data.left_turns_of_timestop == 0)
             {
-                txt(i18n::s.get(
-                        "core.locale.action.time_stop.begins", cdata[cc]),
+                txt(i18n::s.get("core.action.time_stop.begins", cdata[cc]),
                     Message::color{ColorIndex::cyan});
                 game_data.left_turns_of_timestop =
                     inv[ci].enchantments[cnt].power / 100 + 1 + 1;
@@ -1395,20 +1391,20 @@ void apply_general_eating_effect(int cieat)
                     if (inv[ci].enchantments[cnt].power / 50 + 1 >= 0)
                     {
                         txt(i18n::s.get(
-                            "core.locale.food.effect.ability.develops",
+                            "core.food.effect.ability.develops",
                             cdata[cc],
                             i18n::s.get_m(
-                                "locale.ability",
+                                "ability",
                                 the_ability_db.get_id_from_legacy(enc)->get(),
                                 "name")));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.food.effect.ability.deteriorates",
+                            "core.food.effect.ability.deteriorates",
                             cdata[cc],
                             i18n::s.get_m(
-                                "locale.ability",
+                                "ability",
                                 the_ability_db.get_id_from_legacy(enc)->get(),
                                 "name")));
                     }
@@ -1425,7 +1421,7 @@ void apply_general_eating_effect(int cieat)
                 if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get_enum_property(
-                        "core.locale.buff", enc + 10, "apply", cdata[cc]));
+                        "core.buff", enc + 10, "apply", cdata[cc]));
                 }
 
                 int legacy_id = 20 + (enc - 10);
@@ -1458,7 +1454,7 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
         if (character_id == 0)
         {
             ingredient = i18n::s.get_enum_property(
-                "core.locale.food.names", "default_origin", type);
+                "core.food.names", "default_origin", type);
         }
         else
         {
@@ -1469,13 +1465,13 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
     {
         // Food that always always has a default origin (bread and noodles)
         ingredient = i18n::s.get_enum_property(
-            "core.locale.food.names", "default_origin", type);
+            "core.food.names", "default_origin", type);
     }
     else if (ingredient == ""s)
     {
         // No ingredient name was provided
         ingredient = i18n::s.get_enum_property(
-            "core.locale.food.names", "default_origin", type);
+            "core.food.names", "default_origin", type);
     }
 
     if ((type < 1 || type > 8) || (rank < 1 || rank > 9))
@@ -1485,10 +1481,7 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
     else
     {
         return i18n::s.get_enum_property(
-            "core.locale.food.names",
-            type,
-            "_" + std::to_string(rank),
-            ingredient);
+            "core.food.names", type, "_" + std::to_string(rank), ingredient);
     }
 }
 

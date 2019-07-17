@@ -17,7 +17,7 @@ local function surrender()
 
    for _, item in Item.iter(0, 200) do
       if item.number > 0 and item.prototype.is_cargo then
-         GUI.txt(I18N.get("core.locale.talk.npc.common.hand_over", item))
+         GUI.txt(I18N.get("core.talk.npc.common.hand_over", item))
          item:remove()
       end
    end
@@ -27,7 +27,7 @@ end
 
 return {
    id = "rogue_boss",
-   root = "core.locale.talk.unique.rogue_boss",
+   root = "core.talk.unique.rogue_boss",
    nodes = {
       __start = function()
          if Chara.player().gold <= 10 then

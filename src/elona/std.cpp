@@ -120,7 +120,7 @@ void await(int msec)
         {
             ELONA_LOG("gui") << "Focus lost, quicksaving game.";
             snail::android::toast(
-                i18n::s.get("core.locale.ui.save_on_suspend"),
+                i18n::s.get("core.ui.save_on_suspend"),
                 snail::android::ToastLength::long_length);
             save_game(save_game_no_message, save_game_silent);
         }

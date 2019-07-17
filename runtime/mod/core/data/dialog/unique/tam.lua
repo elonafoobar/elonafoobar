@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "tam",
-   root = "core.locale.talk.unique.tam",
+   root = "core.talk.unique.tam",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("cat_house")

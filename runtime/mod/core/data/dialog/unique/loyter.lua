@@ -7,7 +7,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "loyter",
-   root = "core.locale.talk.unique.loyter",
+   root = "core.talk.unique.loyter",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("nightmare")

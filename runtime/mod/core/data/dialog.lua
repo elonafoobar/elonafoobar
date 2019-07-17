@@ -6,7 +6,7 @@ data:add_multi(
    {
       {
          id = "ignored",
-         root = "core.locale.talk",
+         root = "core.talk",
          nodes = {
             __start = {
                text = {

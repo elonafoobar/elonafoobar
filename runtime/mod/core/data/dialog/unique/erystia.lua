@@ -9,7 +9,7 @@ local common = require("data/dialog/common")
 
 return {
    id = "erystia",
-   root = "core.locale.talk.unique.erystia",
+   root = "core.talk.unique.erystia",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("main_quest")
@@ -47,9 +47,9 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.all_stones.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.all_stones.you_receive"), "Green")
             Item.create(Chara.player().position, "core.palmia_pride", 0)
-            GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("main_quest", 125)
          end
       },
@@ -65,7 +65,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.stones.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.stones.you_receive"), "Green")
             Internal.set_quest_flag("main_quest", 110)
          end
       },
@@ -196,7 +196,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.locale.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green")
             Internal.set_quest_flag("main_quest", 60)
          end
       },
