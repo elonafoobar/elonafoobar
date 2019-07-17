@@ -453,9 +453,9 @@ TEST_CASE("Test serialization of single handle", "[Lua: Serialization]")
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
 local Chara = Elona.require("Chara")
 
-Store.global = Chara.create(4, 8, "core.putit")
-assert(Store.global.__handle == true)
-assert(Store.global.position.x == 4)
+Store.global.cute_creature = Chara.create(4, 8, "core.putit")
+assert(Store.global.cute_creature.__handle == true)
+assert(Store.global.cute_creature.position.x == 4)
 )"));
 
     save();
@@ -469,8 +469,8 @@ Store.global = {}
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
-assert(Store.global.__handle == true)
-assert(Store.global.position.x == 4)
+assert(Store.global.cute_creature.__handle == true)
+assert(Store.global.cute_creature.position.x == 4)
 )"));
 }
 
@@ -501,5 +501,95 @@ Store.global.val = 0
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_disabled", R"(
 assert(Store.global.val == nil)
+)"));
+}
+
+
+TEST_CASE("Test private fields are not serialized", "[Lua: Serialization]")
+{
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
+        "test_serial_private", R"(
+Store.global.public = true
+Store.global.public2 = {
+   public = true,
+   public2 = {
+      public = true,
+      _private = true,
+   },
+   _private = true,
+   _private2 = {
+      public = true,
+      _private = true,
+   },
+}
+Store.global._private = true
+Store.global._private2 = {
+   public = true,
+   public2 = {
+      public = true,
+      _private = true,
+   },
+   _private = true,
+   _private2 = {
+      public = true,
+      _private = true,
+   },
+}
+)"));
+
+    save();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_private", R"(
+-- Private fields are skipped on serialization, but they are not removed from
+-- the Store table.
+assert(Store.global.public)
+assert(Store.global.public2)
+assert(Store.global.public2.public)
+assert(Store.global.public2.public2)
+assert(Store.global.public2.public2.public)
+assert(Store.global.public2.public2._private)
+assert(Store.global.public2._private)
+assert(Store.global.public2._private2)
+assert(Store.global.public2._private2.public)
+assert(Store.global.public2._private2._private)
+
+assert(Store.global._private)
+assert(Store.global._private2)
+assert(Store.global._private2.public)
+assert(Store.global._private2.public2)
+assert(Store.global._private2.public2.public)
+assert(Store.global._private2.public2._private)
+assert(Store.global._private2._private)
+assert(Store.global._private2._private2)
+assert(Store.global._private2._private2.public)
+assert(Store.global._private2._private2._private)
+
+Store.global = {} -- clear store
+)"));
+
+    load();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_private", R"(
+-- Non-private fields are restored.
+assert(Store.global.public)
+assert(Store.global.public2)
+assert(Store.global.public2.public)
+assert(Store.global.public2.public2)
+assert(Store.global.public2.public2.public)
+
+-- Non-top-level private fields are restored.
+assert(Store.global.public2.public2._private)
+assert(Store.global.public2._private)
+assert(Store.global.public2._private2)
+assert(Store.global.public2._private2.public)
+assert(Store.global.public2._private2._private)
+
+-- Top-level private fields are NOT restored.
+assert(not Store.global._private)
+assert(not Store.global._private2)
 )"));
 }
