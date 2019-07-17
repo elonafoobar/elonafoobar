@@ -111,9 +111,5 @@ locale {
         broken_cell_phone {
             name = "壊れた携帯"
         }
-        # For debug
-        strange_fish {
-            name = "謎のお魚"
-        }
     }
 }
