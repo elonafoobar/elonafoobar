@@ -75,10 +75,10 @@ enum class ColorIndex : int
 
 enum class CurseState : int
 {
-    doomed = 0,
-    cursed = 1,
-    none = 2,
-    blessed = 3,
+    doomed = -2,
+    cursed = -1,
+    none = 0,
+    blessed = 1,
 };
 
 

@@ -3096,7 +3096,6 @@ void _update_save_data_14(const fs::path& save_dir)
         const auto begin = is_invs1 ? 0 : 1320;
         const auto end = is_invs1 ? 1320 : 5480;
 
-        bool need_save = false;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -3119,7 +3118,7 @@ void _update_save_data_14(const fs::path& save_dir)
             int dv = 0;
             int pv = 0;
             int skill = 0;
-            CurseState curse_state = CurseState::none;
+            int curse_state = 0;
             int body_part = 0;
             int function = 0;
             int enhancement = 0;
@@ -3179,8 +3178,6 @@ void _update_save_data_14(const fs::path& save_dir)
                     << filepathutil::to_utf8_path(entry.path().filename())
                     << ":" << idx << ": Replace strange_fish -> whale";
                 subname = 34;
-
-                need_save = true;
             }
             // Add function to card.
             if (id == 504 && function == 0)
@@ -3189,9 +3186,12 @@ void _update_save_data_14(const fs::path& save_dir)
                     << filepathutil::to_utf8_path(entry.path().filename())
                     << ":" << idx << ": Add function 38 to card";
                 function = 38;
-
-                need_save = true;
             }
+            // Fix curse state's value.
+            ELONA_LOG("save.update")
+                << filepathutil::to_utf8_path(entry.path().filename()) << ":"
+                << idx << ": Fix curse state";
+            curse_state -= 2;
 
             // Dump item data to the memory stream.
             {
@@ -3233,7 +3233,6 @@ void _update_save_data_14(const fs::path& save_dir)
         // Close the file and reopen to write.
         fin.close();
 
-        if (need_save)
         {
             // Open the file to write.
             std::ofstream fout{entry.path().native(), std::ios::binary};
