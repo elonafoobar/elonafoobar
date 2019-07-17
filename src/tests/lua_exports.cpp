@@ -37,8 +37,8 @@ return {
     lua.get_export_manager().register_all_exports();
 
     {
-        auto function = lua.get_export_manager().get_exported_function(
-            "exports:test.my_callback");
+        auto function =
+            lua.get_export_manager().get_exported_function("test.my_callback");
         REQUIRE(static_cast<bool>(function));
         REQUIRE_NOTHROW(function->call());
         REQUIRE_NOTHROW(function->call());
@@ -46,7 +46,7 @@ return {
 
     {
         auto function = lua.get_export_manager().get_exported_function(
-            "exports:test.nesting.my_callback");
+            "test.nesting.my_callback");
         REQUIRE(static_cast<bool>(function));
         REQUIRE_NOTHROW(function->call());
         REQUIRE_NOTHROW(function->call());
@@ -66,8 +66,8 @@ TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
     testing::register_lua_function(
         lua, "test", "my_callback(arg)", "Store.global.value = arg");
 
-    auto function = lua.get_export_manager().get_exported_function(
-        "exports:test.my_callback");
+    auto function =
+        lua.get_export_manager().get_exported_function("test.my_callback");
     REQUIRE(static_cast<bool>(function));
     REQUIRE_NOTHROW(function->call(42));
 
@@ -102,7 +102,7 @@ return {
     auto handle = elona::lua::lua->get_handle_manager().get_handle(chara);
 
     auto function = elona::lua::lua->get_export_manager().get_exported_function(
-        "exports:test_registry_chara_callback.my_callback");
+        "test_registry_chara_callback.my_callback");
     REQUIRE(static_cast<bool>(function));
     REQUIRE_NOTHROW(function->call(handle));
 
@@ -135,14 +135,14 @@ TEST_CASE("test calling exported function with return type", "[Lua: Exports]")
     SECTION("wrong return type")
     {
         std::string result = lua.get_export_manager().call_with_result(
-            "exports:test.my_callback", "dood");
+            "test.my_callback", "dood");
 
         REQUIRE(result == "dood");
     }
     SECTION("correct return type")
     {
-        int result = lua.get_export_manager().call_with_result(
-            "exports:test.my_callback", -1);
+        int result =
+            lua.get_export_manager().call_with_result("test.my_callback", -1);
 
         REQUIRE(result == 42);
     }
@@ -154,8 +154,8 @@ TEST_CASE("test calling exported function with nil result", "[Lua: Exports]")
 
     testing::register_lua_function(lua, "test", "my_callback()", "return nil");
 
-    int result = lua.get_export_manager().call_with_result(
-        "exports:test.my_callback", -1);
+    int result =
+        lua.get_export_manager().call_with_result("test.my_callback", -1);
 
     REQUIRE(result == -1);
 }
@@ -167,8 +167,8 @@ TEST_CASE("test calling exported function with error", "[Lua: Exports]")
     testing::register_lua_function(
         lua, "test", "my_callback()", "error(\"error\")");
 
-    int result = lua.get_export_manager().call_with_result(
-        "exports:test.my_callback", -1);
+    int result =
+        lua.get_export_manager().call_with_result("test.my_callback", -1);
 
     REQUIRE(result == -1);
 }
@@ -181,7 +181,7 @@ TEST_CASE("test calling exported function with table result", "[Lua: Exports]")
         lua, "test", "my_callback()", "return {foo = \"bar\"}");
 
     sol::table result = lua.get_export_manager().call_with_result(
-        "exports:test.my_callback", static_cast<sol::table>(sol::lua_nil));
+        "test.my_callback", static_cast<sol::table>(sol::lua_nil));
 
     REQUIRE(result != sol::lua_nil);
 

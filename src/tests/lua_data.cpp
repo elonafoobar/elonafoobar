@@ -72,8 +72,8 @@ TEST_CASE(
         filesystem::dirs::mod(),
         {testing::get_test_data_path() / "mods" / "test_export_keys"}));
 
-    REQUIRE_NONE(lua.get_export_manager().get_exported_function(
-        "exports:test_export_keys.0"));
+    REQUIRE_NONE(
+        lua.get_export_manager().get_exported_function("test_export_keys.0"));
 }
 
 TEST_CASE("test order of script execution", "[Lua: Data]")
