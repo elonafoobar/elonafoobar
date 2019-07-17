@@ -322,7 +322,7 @@ public class SDLActivity extends Activity {
         // Reset everything in case the user re opens the app
         SDLActivity.initialize();
 
-        // HACK (ElonaFoobar): Forcibly exit the application to avoid
+        // HACK (Elonafoobar): Forcibly exit the application to avoid
         // it lingering in the cache. If the app is reopened again
         // without exiting, it will crash due to static variables
         // already being initialized. To fix this, all static

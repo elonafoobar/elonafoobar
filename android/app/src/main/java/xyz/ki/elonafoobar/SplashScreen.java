@@ -222,7 +222,7 @@ public class SplashScreen extends Activity {
     private final class StartGameRunnable implements Runnable {
         @Override
         public void run() {
-            Intent intent = new Intent(SplashScreen.this, ElonaFoobarActivity.class);
+            Intent intent = new Intent(SplashScreen.this, ElonafoobarActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             finish();

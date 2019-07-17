@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ElonaFoobarActivity"
+        <activity android:name=".ElonafoobarActivity"
                   android:label="@string/appName"
                   android:launchMode="singleInstance"
                   android:keepScreenOn="true"

@@ -61,5 +61,5 @@ See CREDITS.txt.
 
 - Twitter: https://twitter.com/ElonaFoobar
 - Discord: https://discord.gg/4htdyc2
-- GitHub: https://github.com/ElonaFoobar/ElonaFoobar/issues/new/choose
+- GitHub: https://github.com/elonafoobar/elonafoobar/issues/new/choose
 - Gmail: elonafoobar@gmail.com
