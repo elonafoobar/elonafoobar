@@ -3096,7 +3096,7 @@ void _update_save_data_14(const fs::path& save_dir)
         const auto begin = is_invs1 ? 0 : 1320;
         const auto end = is_invs1 ? 1320 : 5480;
 
-        bool strange_fish_found = false;
+        bool need_save = false;
         for (int idx = begin; idx < end; ++idx)
         {
             // DO NOT use usual serialization utilities to migrate old data
@@ -3180,7 +3180,17 @@ void _update_save_data_14(const fs::path& save_dir)
                     << ":" << idx << ": Replace strange_fish -> whale";
                 subname = 34;
 
-                strange_fish_found = true;
+                need_save = true;
+            }
+            // Add function to card.
+            if (id == 504 && function == 0)
+            {
+                ELONA_LOG("save.update")
+                    << filepathutil::to_utf8_path(entry.path().filename())
+                    << ":" << idx << ": Add function 38 to card";
+                function = 38;
+
+                need_save = true;
             }
 
             // Dump item data to the memory stream.
@@ -3223,7 +3233,7 @@ void _update_save_data_14(const fs::path& save_dir)
         // Close the file and reopen to write.
         fin.close();
 
-        if (strange_fish_found)
+        if (need_save)
         {
             // Open the file to write.
             std::ofstream fout{entry.path().native(), std::ios::binary};

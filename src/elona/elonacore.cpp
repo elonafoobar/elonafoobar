@@ -13,7 +13,6 @@
 #include "buff.hpp"
 #include "building.hpp"
 #include "calc.hpp"
-#include "card.hpp"
 #include "casino.hpp"
 #include "casino_card.hpp"
 #include "character.hpp"

@@ -14,7 +14,6 @@ set(ELONA_SOURCES
   buff.cpp
   building.cpp
   calc.cpp
-  card.cpp
   casino.cpp
   casino_card.cpp
   cell_draw.cpp

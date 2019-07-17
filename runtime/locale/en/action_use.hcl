@@ -223,11 +223,9 @@ locale {
             }
 
             deck {
-                title = "Card"
-
-                npc_name = "NPC name"
-                kill = "Kill"
-                generate = "Generate"
+                put_away = "You put away the deck."
+                no_deck = "You don't have a deck."
+                add_card = "You add ${itemname(_1, 1)} to your deck."
             }
         }
     }
