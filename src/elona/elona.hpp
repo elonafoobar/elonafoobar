@@ -556,8 +556,6 @@ void wpoke(int& x, size_t index, int y);
 
 
 
-void ematan(int, int, int);
-
 void apledit(int&, int, int = 0);
 
 void func_2(int, int, int, int, int, int);
