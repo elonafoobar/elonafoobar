@@ -19,4 +19,7 @@ xcopy /y /e /s .\windows\SDL2_image-2.0.3\lib\x64 .\lib
 xcopy /y /e /s .\windows\lua-5.3.4-wstring\include .\include
 xcopy /y /e /s .\windows\lua-5.3.4-wstring\lib\x64 .\lib
 
+xcopy /y /e /s .\windows\zlib-1.2.11\include .\include
+xcopy /y /e /s .\windows\zlib-1.2.11\lib\x64 .\lib
+
 echo Done.

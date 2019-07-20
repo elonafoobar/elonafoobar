@@ -24,7 +24,7 @@ LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem b
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 
-LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO)
+LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO) -DBOOST_ALLOW_DEPRECATED_HEADERS
 
 LOCAL_LDFLAGS += $(LOCAL_CFLAGS) $(LTO) -fPIC
 

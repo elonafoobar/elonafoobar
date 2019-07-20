@@ -233,6 +233,12 @@ else()
     message(FATAL_ERROR "Unknown build mode: ${ELONA_BUILD_TARGET}")
   endif()
 
+  if (NOT DEFINED ZLIB_INCLUDE_DIR OR NOT DEFINED ZLIB_LIBRARIES)
+    find_package(ZLIB REQUIRED)
+  endif()
+  include_directories(${ZLIB_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${ZLIB_LIBRARIES})
+
   if(WIN32)
     # Force FindBoost to look for libraries with -mt-sgd
     set(Boost_USE_STATIC_LIBS ON)
@@ -306,19 +312,11 @@ else()
     target_link_libraries(${PROJECT_NAME} pthread)
   endif()
 
-  if(WIN32)
-    if(NOT DEFINED OPENSSL_INCLUDE_DIR OR NOT DEFINED OPENSSL_LIBRARIES)
-      find_package(OpenSSL REQUIRED)
-    endif()
-    include_directories(${OPENSSL_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
-  else()
-    if(NOT DEFINED OPENSSL_INCLUDE_DIR OR NOT DEFINED OPENSSL_LIBRARIES)
-      find_package(OpenSSL REQUIRED)
-    endif()
-    include_directories(${OPENSSL_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
+  if(NOT DEFINED OPENSSL_INCLUDE_DIR OR NOT DEFINED OPENSSL_LIBRARIES)
+    find_package(OpenSSL REQUIRED)
   endif()
+  include_directories(${OPENSSL_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
 
   set(GENERAL_OPTIONS)
   set(DEBUG_OPTIONS)
@@ -486,8 +484,11 @@ else()
 
   if((ELONA_BUILD_TARGET STREQUAL "GAME") OR (ELONA_BUILD_TARGET STREQUAL "LAUNCHER"))
     add_subdirectory(src/thirdparty/nfd)
-    target_link_libraries(nfd)
+    target_link_libraries(${PROJECT_NAME} nfd)
   endif()
+
+  add_subdirectory(src/thirdparty/minizip)
+  target_link_libraries(${PROJECT_NAME} minizip)
 
   install(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime
