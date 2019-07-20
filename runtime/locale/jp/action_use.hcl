@@ -224,11 +224,9 @@ locale {
             }
 
             deck {
-                title = "カード"
-
-                npc_name = "NPCの名前"
-                kill = "殺害数"
-                generate = "生成数"
+                put_away = "デッキをしまった。"
+                no_deck = "デッキを所持していない。"
+                add_card = "${itemname(_1, 1)}をデッキに加えた。"
             }
         }
     }

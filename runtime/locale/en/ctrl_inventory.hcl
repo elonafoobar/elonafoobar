@@ -194,8 +194,6 @@ locale {
                     you_pay = "You pay ${itemname(_1)}."
                 }
 
-                deck = "You add ${itemname(_1, 1)} to your deck."
-
                 harvest = "You deliver ${itemname(_1)}. +${_2} Delivered(${_3}) Quota (${_4})"
             }
 

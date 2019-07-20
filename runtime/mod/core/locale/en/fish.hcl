@@ -111,9 +111,5 @@ locale {
         broken_cell_phone {
             name = "broken cell phone"
         }
-        # For debug
-        strange_fish {
-            name = "strange fish"
-        }
     }
 }

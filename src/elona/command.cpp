@@ -8,7 +8,6 @@
 #include "buff.hpp"
 #include "building.hpp"
 #include "calc.hpp"
-#include "card.hpp"
 #include "casino.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -39,6 +38,7 @@
 #include "random.hpp"
 #include "save.hpp"
 #include "shop.hpp"
+#include "tcg.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -2563,7 +2563,26 @@ TurnResult do_use_command()
             Message::color{ColorIndex::cyan});
         make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
         break;
-    case 37: show_card_collection(); break;
+    case 37:
+        tcgdeck();
+        draw_prepare_map_chips();
+        update_entire_screen();
+        Message::instance().linebreak();
+        txt(i18n::s.get("core.action.use.deck.put_away"));
+        break;
+    case 38:
+        if (inv_find(701, 0) == -1)
+        {
+            txt(i18n::s.get("core.action.use.deck.no_deck"));
+            update_screen();
+            return TurnResult::pc_turn_user_error;
+        }
+        snd("core.card1");
+        inv[ci].modify_number(-1);
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        txt(i18n::s.get("core.action.use.deck.add_card", inv[ci]));
+        ++card(0, inv[ci].subname);
+        break;
     }
 
     refresh_burden_state();
@@ -2611,14 +2630,6 @@ TurnResult do_open_command(bool play_sound)
         MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
-    }
-    if (inv[ci].id == 701)
-    {
-        invctrl(0) = 24;
-        invctrl(1) = 8;
-        snd_("core.inv");
-        ctrl_inventory();
-        return TurnResult::turn_end;
     }
     if (inv[ci].id == 600)
     {

@@ -315,7 +315,7 @@ config {
         type = "section"
         options = {
             restock_interval = {
-                default = 3
+                default = 7
                 min = 0
                 max = 10
             }
@@ -347,10 +347,10 @@ config {
         options = {
             hp_bar_position = {
                 type = "enum"
-                default = "right"
+                default = "hide"
                 variants = ["hide", "left", "right"]
             }
-            allow_enhanced_skill_tracking =true
+            allow_enhanced_skill_tracking = false
             enhanced_skill_tracking_lowerbound = {
                 default = 50
                 min = 0
@@ -361,11 +361,11 @@ config {
                 min = 10
                 max = 400
             }
-            leash_icon = true
-            autopick = true
+            leash_icon = false
+            autopick = false
             autosave = false
             damage_popup = {
-                default = true
+                default = false
 
                 platform_default {
                     android = false

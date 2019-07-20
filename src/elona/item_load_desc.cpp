@@ -227,26 +227,6 @@ static void _load_item_stat_text(int item_index, int& p)
             "core.item.desc.dv_pv", inv[item_index].dv, inv[item_index].pv);
         ++p;
     }
-    if (inv[item_index].id == 701)
-    {
-        int card_count{};
-        for (int i = 0; i < 1000; ++i)
-        {
-            if (card(0, i))
-                ++card_count;
-        }
-        int npc_count{};
-        for (const auto& discord : the_character_db.values())
-        {
-            UNUSED(discord);
-            ++npc_count;
-        }
-        const auto percentage = std::min(100 * card_count / npc_count, 100);
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.deck") + u8": "s +
-            card_count + u8"/" + npc_count + u8"(" + percentage + u8"%)";
-        ++p;
-    }
 }
 
 static void _load_item_enchantment_desc(int item_index, int& p)

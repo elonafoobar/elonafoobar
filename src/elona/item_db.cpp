@@ -1016,6 +1016,7 @@ void item_db_set_full_stats(Item& item, int legacy_id)
     case 512: item.skill = 110; break;
     case 511: item.param1 = 100 + rnd(200); break;
     case 505: item.is_precious() = true; break;
+    case 504: item.function = 38; break;
     case 499: item.param2 = 7; break;
     case 498: item.param2 = 6; break;
     case 497: item.param2 = 5; break;

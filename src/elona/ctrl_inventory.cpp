@@ -309,7 +309,7 @@ label_20591:
             }
             if (invctrl == 15)
             {
-                if (reftype != 72000 && item.id != 701)
+                if (reftype != 72000)
                 {
                     continue;
                 }
@@ -449,25 +449,6 @@ label_20591:
                         }
                     }
                     else if (item.own_state != 4)
-                    {
-                        continue;
-                    }
-                }
-                else if (invctrl(1) == 8)
-                {
-                    if (item.id != 504)
-                    {
-                        continue;
-                    }
-                    else if (item.own_state != 0)
-                    {
-                        continue;
-                    }
-                    else if (item.subname == 0)
-                    {
-                        continue;
-                    }
-                    else if (card(0, item.subname))
                     {
                         continue;
                     }
@@ -1825,16 +1806,6 @@ label_2061_internal:
                     Message::color{ColorIndex::green});
                 inv[ci].modify_number(-1);
                 --game_data.left_bill;
-                screenupdate = -1;
-                update_screen();
-                goto label_20591;
-            }
-            if (invctrl(1) == 8)
-            {
-                snd("core.card1");
-                inv[ci].modify_number(-1);
-                txt(i18n::s.get("core.ui.inv.put.deck", inv[ci]));
-                ++card(0, inv[ci].subname);
                 screenupdate = -1;
                 update_screen();
                 goto label_20591;
