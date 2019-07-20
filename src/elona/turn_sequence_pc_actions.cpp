@@ -25,14 +25,6 @@
 #include "wish.hpp"
 
 
-namespace
-{
-
-int mousel;
-
-}
-
-
 
 namespace elona
 {
@@ -290,27 +282,46 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
     }
 
-    if (mousel == 1)
+    const auto input = stick();
+    if (input == StickKey::mouse_left)
     {
-        ematan(p, windoww / 2 - mousex, (windowh - inf_verh) / 2 - mousey);
-        p = p * 360 / 255;
-        if (p >= 338)
+        static const char* move_actions[] = {
+            "east",
+            "northeast",
+            "north",
+            "northwest",
+            "west",
+            "southwest",
+            "south",
+            "southeast",
+        };
+
+        const auto y = (windowh - inf_verh) / 2 - mousey;
+        const auto x = mousex - windoww / 2;
+        if (y == 0 && x == 0)
         {
-            p = p - 360;
+            // Do nothing.
         }
-        s(0) = "south";
-        s(1) = "southwest";
-        s(2) = "west";
-        s(3) = "northwest";
-        s(4) = "north";
-        s(5) = "northeast";
-        s(6) = "east";
-        s(7) = "southeast";
-        for (int cnt = 0; cnt < 8; ++cnt)
+        else if (x == 0)
         {
-            if (p <= cnt * 45 + 23 && p > cnt * 45 - 23)
+            action = y < 0 ? "west" : "east";
+        }
+        else
+        {
+            constexpr auto pi = 3.141592653589793238;
+            auto angle = std::atan2(y, x);
+            if (angle < 0)
             {
-                action = s(cnt);
+                angle += 2 * pi;
+            }
+            // Then, angle is in [0, 2π]. 0 means east.
+
+            for (int i = 0; i < 8; ++i)
+            {
+                if (std::abs(angle - pi / 4 * i) < pi / 8)
+                {
+                    action = move_actions[i];
+                }
             }
         }
         await(100);

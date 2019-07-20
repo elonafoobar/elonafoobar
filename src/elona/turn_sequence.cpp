@@ -1570,7 +1570,8 @@ label_2747:
     auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
-    if (command == ""s && key == ""s)
+    const auto input = stick();
+    if (command == ""s && key == ""s && input != StickKey::mouse_left)
     {
         goto label_2747;
     }

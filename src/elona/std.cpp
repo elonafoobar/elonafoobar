@@ -1094,12 +1094,6 @@ void set_color_mod(int r, int g, int b, int window_id)
 
 
 
-void ematan(int, int, int)
-{
-}
-
-
-
 void apledit(int& out, int kind, int column_no)
 {
     UNUSED(column_no);
