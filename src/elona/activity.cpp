@@ -861,7 +861,7 @@ void continuous_action_eating_finish()
     ci = ci_save;
     if (cc == 0)
     {
-        item_identify(inv[ci], IdentifyState::partly_identified);
+        item_identify(inv[ci], IdentifyState::partly);
     }
     if (chara_unequip(ci))
     {

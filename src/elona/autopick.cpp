@@ -37,16 +37,15 @@ std::vector<ModifierMatcher> _modifier_matchers = {
      }},
     {"identify_stage1",
      [](const Item& item) {
-         return item.identification_state == IdentifyState::partly_identified;
+         return item.identification_state == IdentifyState::partly;
      }},
     {"identify_stage2",
      [](const Item& item) {
-         return item.identification_state == IdentifyState::almost_identified;
+         return item.identification_state == IdentifyState::almost;
      }},
     {"identify_stage3",
      [](const Item& item) {
-         return item.identification_state ==
-             IdentifyState::completely_identified;
+         return item.identification_state == IdentifyState::completely;
      }},
     {"worthless", [](const Item& item) { return item.value <= 10; }},
     {"rotten", [](const Item& item) { return item.param3 < 0; }},
@@ -56,52 +55,52 @@ std::vector<ModifierMatcher> _modifier_matchers = {
      }},
     {"bad",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.quality == Quality::bad;
      }},
     {"good",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.quality == Quality::good;
      }},
     {"great",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.quality == Quality::great;
      }},
     {"miracle",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.quality == Quality::miracle;
      }},
     {"godly",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.quality == Quality::godly;
      }},
     {"special",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.quality == Quality::special;
      }},
     {"precious",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.is_precious();
      }},
     {"blessed",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.curse_state == CurseState::blessed;
      }},
     {"cursed",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.curse_state == CurseState::cursed;
      }},
     {"doomed",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identification_state >= IdentifyState::almost &&
              item.curse_state == CurseState::doomed;
      }},
     {"alive", [](const Item& item) { return item.is_alive(); }},

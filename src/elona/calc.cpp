@@ -870,19 +870,12 @@ int calcitemvalue(int item_index, int situation)
         switch (inv[item_index].identification_state)
         {
         case IdentifyState::unidentified: break;
-        case IdentifyState::partly_identified:
-            ret = inv[item_index].value * 2 / 10;
-            break;
-        case IdentifyState::almost_identified:
-            ret = inv[item_index].value * 5 / 10;
-            break;
-        case IdentifyState::completely_identified:
-            ret = inv[item_index].value;
-            break;
+        case IdentifyState::partly: ret = inv[item_index].value * 2 / 10; break;
+        case IdentifyState::almost: ret = inv[item_index].value * 5 / 10; break;
+        case IdentifyState::completely: ret = inv[item_index].value; break;
         }
     }
-    if (inv[item_index].identification_state ==
-        IdentifyState::completely_identified)
+    if (inv[item_index].identification_state == IdentifyState::completely)
     {
         switch (inv[item_index].curse_state)
         {
@@ -1232,8 +1225,7 @@ int calcidentifyvalue(int type)
             {
                 continue;
             }
-            if (item.identification_state !=
-                IdentifyState::completely_identified)
+            if (item.identification_state != IdentifyState::completely)
             {
                 ++need_to_identify;
             }

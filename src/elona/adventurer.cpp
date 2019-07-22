@@ -358,7 +358,7 @@ int adventurer_discover_equipment()
     }
     if (itemcreate(rc, 0, -1, -1, 0))
     {
-        inv[ci].identification_state = IdentifyState::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely;
         if (inv[ci].quality >= Quality::miracle)
         {
             if (the_item_db[inv[ci].id]->category < 50000)

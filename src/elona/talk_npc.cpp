@@ -97,7 +97,7 @@ TalkResult talk_wizard_identify(int chatval_)
         {
             continue;
         }
-        if (item.identification_state != IdentifyState::completely_identified)
+        if (item.identification_state != IdentifyState::completely)
         {
             ++p;
         }
@@ -120,13 +120,12 @@ TalkResult talk_wizard_identify(int chatval_)
             {
                 continue;
             }
-            if (item.identification_state !=
-                IdentifyState::completely_identified)
+            if (item.identification_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
                 item_stack(0, item.index, 1);
                 ++p(1);
-                if (result >= IdentifyState::completely_identified)
+                if (result >= IdentifyState::completely)
                 {
                     ++p;
                 }
@@ -152,7 +151,7 @@ TalkResult talk_wizard_identify(int chatval_)
             buff = i18n::s.get("core.talk.npc.common.you_kidding", cdata[tc]);
             return TalkResult::talk_npc;
         }
-        if (idtresult == IdentifyState::completely_identified)
+        if (idtresult == IdentifyState::completely)
         {
             buff = i18n::s.get(
                 "core.talk.npc.wizard.identify.finished", cdata[tc]);
@@ -212,7 +211,7 @@ TalkResult talk_trade()
     {
         if (item.number() != 0)
         {
-            item.identification_state = IdentifyState::completely_identified;
+            item.identification_state = IdentifyState::completely;
         }
     }
     invctrl(0) = 20;

@@ -106,9 +106,9 @@ EnumMap<IdentifyState> IdentifyStateTable{
     "IdentifyState",
     {
         {"Unidentified", IdentifyState::unidentified},
-        {"Partly", IdentifyState::partly_identified},
-        {"Almost", IdentifyState::almost_identified},
-        {"Completely", IdentifyState::completely_identified},
+        {"Partly", IdentifyState::partly},
+        {"Almost", IdentifyState::almost},
+        {"Completely", IdentifyState::completely},
     }};
 
 

@@ -293,8 +293,7 @@ label_20591:
             }
             if (invctrl == 13)
             {
-                if (item.identification_state ==
-                    IdentifyState::completely_identified)
+                if (item.identification_state == IdentifyState::completely)
                 {
                     continue;
                 }
@@ -1476,8 +1475,7 @@ label_2061_internal:
             }
             else
             {
-                if (inv[ci].identification_state <=
-                    IdentifyState::partly_identified)
+                if (inv[ci].identification_state <= IdentifyState::partly)
                 {
                     snd("core.fail1");
                     txt(i18n::s.get("core.ui.inv.give.too_creepy", cdata[tc]));
@@ -1610,7 +1608,7 @@ label_2061_internal:
             {
                 txt(i18n::s.get("core.ui.inv.identify.need_more_power"));
             }
-            else if (identify_result != IdentifyState::completely_identified)
+            else if (identify_result != IdentifyState::completely)
             {
                 txt(i18n::s.get("core.ui.inv.identify.partially", inv[ci]));
             }

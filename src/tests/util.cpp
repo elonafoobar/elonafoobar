@@ -38,7 +38,7 @@ void normalize_item(Item& i)
 {
     i.quality = Quality::great;
     i.curse_state = CurseState::none;
-    i.identification_state = IdentifyState::completely_identified;
+    i.identification_state = IdentifyState::completely;
     i.material = 34;
     i.quality = Quality::bad;
     i.dv = 0;
