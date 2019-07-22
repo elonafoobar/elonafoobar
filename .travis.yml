@@ -51,7 +51,7 @@ before_install:
   - if [[ "$BUILD_TYPE" == "osx" ]]; then
       brew update &&
       brew upgrade cmake boost &&
-      brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua openssl clang-format;
+      brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua openssl;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
       export CC="gcc-7";
@@ -81,12 +81,6 @@ before_script:
 
 script:
   - cd "$TRAVIS_BUILD_DIR";
-  - if [[ "$BUILD_TYPE" != "android" ]]; then
-      make putit;
-    fi
-  - if [[ "$BUILD_TYPE" == "osx" ]]; then
-      make format;
-    fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
       export CC="gcc-7";
       export CXX="g++-7";
