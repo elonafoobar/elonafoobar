@@ -79,7 +79,7 @@ public:
     int weight = 0;
 
     /// @putit
-    IdentifyState identification_state = IdentifyState::unidentified;
+    IdentifyState identify_state = IdentifyState::unidentified;
 
     /// @putit
     int count = 0;

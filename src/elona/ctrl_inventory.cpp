@@ -293,7 +293,7 @@ label_20591:
             }
             if (invctrl == 13)
             {
-                if (item.identification_state == IdentifyState::completely)
+                if (item.identify_state == IdentifyState::completely)
                 {
                     continue;
                 }
@@ -1475,7 +1475,7 @@ label_2061_internal:
             }
             else
             {
-                if (inv[ci].identification_state <= IdentifyState::partly)
+                if (inv[ci].identify_state <= IdentifyState::partly)
                 {
                     snd("core.fail1");
                     txt(i18n::s.get("core.ui.inv.give.too_creepy", cdata[tc]));

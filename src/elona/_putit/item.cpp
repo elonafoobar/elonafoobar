@@ -10,7 +10,7 @@ void serialize(Archive& _putit_archive_)
     PUTIT_SERIALIZE_FIELD(quality);
     PUTIT_SERIALIZE_FIELD(position);
     PUTIT_SERIALIZE_FIELD(weight);
-    PUTIT_SERIALIZE_FIELD(identification_state);
+    PUTIT_SERIALIZE_FIELD(identify_state);
     PUTIT_SERIALIZE_FIELD(count);
     PUTIT_SERIALIZE_FIELD(dice_x);
     PUTIT_SERIALIZE_FIELD(dice_y);

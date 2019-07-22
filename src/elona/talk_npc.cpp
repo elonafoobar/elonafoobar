@@ -97,7 +97,7 @@ TalkResult talk_wizard_identify(int chatval_)
         {
             continue;
         }
-        if (item.identification_state != IdentifyState::completely)
+        if (item.identify_state != IdentifyState::completely)
         {
             ++p;
         }
@@ -120,7 +120,7 @@ TalkResult talk_wizard_identify(int chatval_)
             {
                 continue;
             }
-            if (item.identification_state != IdentifyState::completely)
+            if (item.identify_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
                 item_stack(0, item.index, 1);
@@ -211,7 +211,7 @@ TalkResult talk_trade()
     {
         if (item.number() != 0)
         {
-            item.identification_state = IdentifyState::completely;
+            item.identify_state = IdentifyState::completely;
         }
     }
     invctrl(0) = 20;

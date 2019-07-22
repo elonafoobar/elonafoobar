@@ -277,21 +277,21 @@ void item_load_desc(int item_index, int& p)
     const I18NKey& locale_key_prefix =
         the_item_db[inv[item_index].id]->locale_key_prefix;
 
-    if (inv[item_index].identification_state == IdentifyState::completely)
+    if (inv[item_index].identify_state == IdentifyState::completely)
     {
         _load_item_main_description_text(locale_key_prefix, p);
     }
-    if (inv[item_index].identification_state >= IdentifyState::almost)
+    if (inv[item_index].identify_state >= IdentifyState::almost)
     {
         _load_item_stat_text(item_index, p);
     }
-    if (inv[item_index].identification_state <= IdentifyState::partly)
+    if (inv[item_index].identify_state <= IdentifyState::partly)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::normal);
         listn(0, p) = i18n::s.get("core.item.desc.have_to_identify");
         ++p;
     }
-    if (inv[item_index].identification_state == IdentifyState::completely)
+    if (inv[item_index].identify_state == IdentifyState::completely)
     {
         _load_item_enchantment_desc(item_index, p);
         _load_item_description_text(locale_key_prefix, p);

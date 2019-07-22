@@ -421,7 +421,7 @@ void initialize_pc_character()
         {
             continue;
         }
-        item.identification_state = IdentifyState::completely;
+        item.identify_state = IdentifyState::completely;
     }
     chara_refresh(0);
 }
@@ -2988,7 +2988,7 @@ void character_drops_item()
                     }
                 }
             }
-            else if (item.identification_state == IdentifyState::completely)
+            else if (item.identify_state == IdentifyState::completely)
             {
                 if (rnd(4))
                 {
@@ -3800,7 +3800,7 @@ void auto_identify()
     for (const auto& item : inv.pc())
     {
         if (item.number() == 0 ||
-            item.identification_state == IdentifyState::completely)
+            item.identify_state == IdentifyState::completely)
         {
             continue;
         }
@@ -3823,7 +3823,7 @@ void auto_identify()
             }
             chara_gain_skill_exp(cdata.player(), 162, 50);
         }
-        if (inv[ci].identification_state <= IdentifyState::partly)
+        if (inv[ci].identify_state <= IdentifyState::partly)
         {
             if (p > rnd(p(1)))
             {
@@ -8581,7 +8581,7 @@ int pick_up_item(bool play_sound)
             {
                 cdata[tc].gold = 0;
             }
-            inv[ti].identification_state = IdentifyState::completely;
+            inv[ti].identify_state = IdentifyState::completely;
         }
         if (invctrl == 22 || invctrl == 24)
         {
