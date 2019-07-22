@@ -25,11 +25,12 @@ extern std::mt19937 engine;
 
 
 
-// TODO: pass more proper seed
-// This function is called very frequently in a certain circumstances.
-// In general, std::random_device is slower than other generators.
-inline void randomize(
-    std::random_device::result_type seed = std::random_device{}())
+// Reset random seed to the global seed.
+void randomize();
+
+
+
+inline void randomize(int seed)
 {
     detail::engine.seed(seed);
 }

@@ -418,6 +418,7 @@ void initialize_elona()
     load_random_title_table();
     load_random_name_table();
     game_data.random_seed = rnd(800) + 2;
+    game_data.random_seed_offset = 0;
     set_item_info();
     clear_trait_data();
     initialize_rankn();
@@ -564,6 +565,7 @@ void initialize_debug_globals()
     game_data.pc_y_in_world_map = 21;
     game_data.previous_map = -1;
     game_data.random_seed = rnd(800) + 2;
+    game_data.random_seed_offset = 0;
     game_data.current_map = static_cast<int>(mdata_t::MapId::north_tyris);
     game_data.current_dungeon_level = 0;
     game_data.entrance_type = 7;
