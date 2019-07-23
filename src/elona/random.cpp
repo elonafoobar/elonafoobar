@@ -8,7 +8,7 @@ namespace elona
 
 namespace detail
 {
-std::mt19937 engine{std::random_device{}()};
+xoshiro256::xoshiro256_engine engine{std::random_device{}()};
 } // namespace detail
 
 

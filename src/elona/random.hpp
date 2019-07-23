@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
+#include "../thirdparty/xoshiro256//xoshiro256.hpp"
 #include "optional.hpp"
 
 // DO NOT use `std::uniform_int_distribution` because its algorithm is
@@ -20,7 +21,7 @@ namespace elona
 
 namespace detail
 {
-extern std::mt19937 engine;
+extern xoshiro256::xoshiro256_engine engine;
 } // namespace detail
 
 
