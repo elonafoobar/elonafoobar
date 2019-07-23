@@ -9,7 +9,7 @@ data:add_multi(
          y = 0,
          width = 1440,
          height = 800,
-         file = "__BUILTIN__/graphic/interface.bmp",
+         file = "<_builtin_>/graphic/interface.bmp",
          load_type = "Buffer",
       },
       {
@@ -350,7 +350,7 @@ data:add_multi(
          width = 24,
          height = 32,
          count_x = 5,
-         file = "__core__/graphic/interface_ex7.png",
+         file = "<core>/graphic/interface_ex7.png",
          load_type = "Startup",
       },
       {
@@ -361,7 +361,7 @@ data:add_multi(
          width = 24,
          height = 32,
          count_x = 13,
-         file = "__core__/graphic/interface_ex8.png",
+         file = "<core>/graphic/interface_ex8.png",
          load_type = "Startup",
       },
       {
@@ -727,7 +727,7 @@ data:add_multi(
          y = 144,
          width = 344,
          height = 72,
-         file = "__core__/graphic/interface_ex4.png",
+         file = "<core>/graphic/interface_ex4.png",
          load_type = "Startup",
       },
 
@@ -738,7 +738,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_cm.bmp",
+         file = "<_builtin_>/graphic/deco_cm.bmp",
       },
 
       -- Map 0 atlas for clouds only
@@ -749,7 +749,7 @@ data:add_multi(
          y = 0,
          width = 1584,
          height = 1200,
-         file = "__BUILTIN__/graphic/map0.bmp",
+         file = "<_builtin_>/graphic/map0.bmp",
          load_type = "Buffer",
       },
       {
@@ -777,7 +777,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_blend.bmp",
+         file = "<_builtin_>/graphic/deco_blend.bmp",
       },
       {
          id = "deco_blend_a",
@@ -812,7 +812,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_inv.bmp",
+         file = "<_builtin_>/graphic/deco_inv.bmp",
       },
       {
          id = "deco_inv_a",
@@ -855,7 +855,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_help.bmp",
+         file = "<_builtin_>/graphic/deco_help.bmp",
       },
       {
          id = "deco_help_a",
@@ -882,7 +882,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_mirror.bmp",
+         file = "<_builtin_>/graphic/deco_mirror.bmp",
       },
       {
          id = "deco_mirror_a",
@@ -901,7 +901,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_politics.bmp",
+         file = "<_builtin_>/graphic/deco_politics.bmp",
       },
       {
          id = "deco_politics_a",
@@ -928,7 +928,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_board.bmp",
+         file = "<_builtin_>/graphic/deco_board.bmp",
       },
       {
          id = "deco_board_a",
@@ -955,7 +955,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_wear.bmp",
+         file = "<_builtin_>/graphic/deco_wear.bmp",
       },
       {
          id = "deco_wear_a",
@@ -982,7 +982,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_feat.bmp",
+         file = "<_builtin_>/graphic/deco_feat.bmp",
       },
       {
          id = "deco_feat_a",
@@ -1025,7 +1025,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_skill.bmp",
+         file = "<_builtin_>/graphic/deco_skill.bmp",
       },
       {
          id = "deco_skill_a",
@@ -1052,7 +1052,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_spell.bmp",
+         file = "<_builtin_>/graphic/deco_spell.bmp",
       },
       {
          id = "deco_spell_a",
@@ -1078,7 +1078,7 @@ data:add_multi(
          y = 0,
          width = 1584,
          height = 1200,
-         file = "__BUILTIN__/graphic/character.bmp",
+         file = "<_builtin_>/graphic/character.bmp",
          load_type = "Buffer",
       },
       {
@@ -1099,7 +1099,7 @@ data:add_multi(
          y = 96,
          width = 240,
          height = 264,
-         file = "__BUILTIN__/graphic/deco_card.bmp",
+         file = "<_builtin_>/graphic/deco_card.bmp",
       },
       {
          id = "deco_card_a",
@@ -1121,7 +1121,7 @@ local function atx_background(name, width, height)
       y = 0,
       width = width,
       height = height,
-      file = "__BUILTIN__/graphic/" .. name .. ".bmp",
+      file = "<_builtin_>/graphic/" .. name .. ".bmp",
    }
 end
 
@@ -1133,7 +1133,7 @@ local function background_card(name)
       y = 0,
       width = 180,
       height = 300,
-      file = "__BUILTIN__/graphic/" .. name .. ".bmp",
+      file = "<_builtin_>/graphic/" .. name .. ".bmp",
    }
 end
 
@@ -1214,7 +1214,7 @@ local function background(name, width, height)
       y = 0,
       width = width,
       height = height,
-      file = "__BUILTIN__/graphic/" .. name .. ".bmp",
+      file = "<_builtin_>/graphic/" .. name .. ".bmp",
       load_type = "BufferDeferred",
    }
 end
@@ -1259,7 +1259,7 @@ data:add_multi(
          y = 0,
          width = 700,
          height = 400,
-         file = "__BUILTIN__/graphic/ie_sheet.bmp",
+         file = "<_builtin_>/graphic/ie_sheet.bmp",
          load_type = "BufferDeferred",
       },
       {
@@ -1269,7 +1269,7 @@ data:add_multi(
          y = 0,
          width = 600,
          height = 380,
-         file = "__BUILTIN__/graphic/ie_chat.bmp",
+         file = "<_builtin_>/graphic/ie_chat.bmp",
          load_type = "BufferDeferred",
       },
       {
@@ -1279,7 +1279,7 @@ data:add_multi(
          y = 0,
          width = 600,
          height = 380,
-         file = "__BUILTIN__/graphic/ie_scroll.bmp",
+         file = "<_builtin_>/graphic/ie_scroll.bmp",
          load_type = "BufferDeferred",
       },
       {
@@ -1289,7 +1289,7 @@ data:add_multi(
          y = 0,
          width = 600,
          height = 380,
-         file = "__BUILTIN__/graphic/interface2.bmp",
+         file = "<_builtin_>/graphic/interface2.bmp",
          load_type = "BufferDeferred",
       }
    }

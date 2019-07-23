@@ -143,7 +143,7 @@ fs::path path(const std::string& str)
 fs::path resolve_path_for_mod(const std::string& mod_local_path)
 {
     // TODO: standardize mod naming convention.
-    std::regex mod_id_regex("^__([a-zA-Z0-9_]+)__/(.*)");
+    std::regex mod_id_regex("^<([a-zA-Z0-9_]+)>/(.*)");
     std::smatch match;
     std::string mod_id, rest;
 
@@ -158,7 +158,7 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
         throw std::runtime_error("Invalid filepath syntax: " + mod_local_path);
     }
 
-    if (mod_id == "BUILTIN")
+    if (mod_id == "_builtin_")
     {
         return dirs::exe() / rest;
     }
