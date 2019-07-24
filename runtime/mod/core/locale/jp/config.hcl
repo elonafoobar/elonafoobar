@@ -1,4 +1,4 @@
-﻿locale {
+locale {
     config {
         common {
             menu = "項目"

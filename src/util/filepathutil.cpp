@@ -1,11 +1,11 @@
 #include "filepathutil.hpp"
 #include <algorithm>
-#include <boost/locale.hpp>
 #include <boost/predef.h>
 
 // For get_executable_path()
 #if BOOST_OS_WINDOWS
 #include <windows.h> // GetModuleFileName
+#include "unicode_utf16.hpp"
 #elif BOOST_OS_MACOS
 #include <limits.h> // PATH_MAX
 #include <mach-o/dyld.h> // _NSGetExecutablePath
@@ -23,13 +23,16 @@ namespace filepathutil
 {
 
 namespace fs = boost::filesystem;
-namespace conv = boost::locale::conv;
 
 
 
 fs::path u8path(const std::string& str)
 {
-    return conv::utf_to_utf<fs::path::string_type::value_type>(str);
+#if BOOST_OS_WINDOWS
+    return lib::unicode::utf8_to_utf16(str);
+#else
+    return str;
+#endif
 }
 
 
@@ -37,14 +40,22 @@ fs::path u8path(const std::string& str)
 std::string make_preferred_path_in_utf8(const fs::path& path)
 {
     auto path_ = path;
-    return conv::utf_to_utf<char>(path_.make_preferred().native());
+#if BOOST_OS_WINDOWS
+    return lib::unicode::utf16_to_utf8(path_.make_preferred().native());
+#else
+    return path_.make_preferred().native();
+#endif
 }
 
 
 
 std::string to_utf8_path(const fs::path& path)
 {
-    return conv::utf_to_utf<char>(path.native());
+#if BOOST_OS_WINDOWS
+    return lib::unicode::utf16_to_utf8(path.native());
+#else
+    return path.native();
+#endif
 }
 
 
@@ -55,6 +66,7 @@ std::string to_forward_slashes(const fs::path& path)
     std::replace(path_str.begin(), path_str.end(), '\\', '/');
     return path_str;
 }
+
 
 
 boost::optional<boost::filesystem::path::string_type> get_executable_path()
