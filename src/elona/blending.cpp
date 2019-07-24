@@ -591,8 +591,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     mes(dx_at_m184 - 10, dy_at_m184, itemname(item_index));
     dy_at_m184 += 20;
     font(13 - en * 2);
-    if (inv[item_index].identification_state <=
-        IdentifyState::partly_identified)
+    if (inv[item_index].identify_state <= IdentifyState::partly)
     {
         mes(dx_at_m184,
             dy_at_m184,

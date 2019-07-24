@@ -91,9 +91,9 @@ inline bool is_cursed(CurseState s)
 enum class IdentifyState : int
 {
     unidentified = 0,
-    partly_identified = 1,
-    almost_identified = 2,
-    completely_identified = 3,
+    partly = 1,
+    almost = 2,
+    completely = 3,
 };
 
 

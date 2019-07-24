@@ -637,7 +637,7 @@ void _update_save_data_4(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -674,7 +674,7 @@ void _update_save_data_4(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -717,7 +717,7 @@ void _update_save_data_4(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -1920,7 +1920,7 @@ void _update_save_data_8(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -1957,7 +1957,7 @@ void _update_save_data_8(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -1994,7 +1994,7 @@ void _update_save_data_8(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -2219,7 +2219,7 @@ void _update_save_data_10(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -2256,7 +2256,7 @@ void _update_save_data_10(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -2293,7 +2293,7 @@ void _update_save_data_10(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -2824,7 +2824,7 @@ void _update_save_data_12(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -2859,7 +2859,7 @@ void _update_save_data_12(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -2910,7 +2910,7 @@ void _update_save_data_12(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -3109,7 +3109,7 @@ void _update_save_data_14(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -3144,7 +3144,7 @@ void _update_save_data_14(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -3202,7 +3202,7 @@ void _update_save_data_14(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);

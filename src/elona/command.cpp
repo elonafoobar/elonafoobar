@@ -3473,8 +3473,7 @@ TurnResult do_get_command()
                 if (itemcreate(0, 587, -1, -1, 0))
                 {
                     inv[ci].curse_state = CurseState::none;
-                    inv[ci].identification_state =
-                        IdentifyState::completely_identified;
+                    inv[ci].identify_state = IdentifyState::completely;
                     item_stack(0, ci, 1);
                 }
             }

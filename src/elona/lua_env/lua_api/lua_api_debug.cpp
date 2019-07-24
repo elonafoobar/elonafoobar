@@ -78,7 +78,7 @@ void LuaApiDebug::dump_items()
                 << item.index << ") Name: " << elona::itemname(item.index)
                 << ", Pos: " << item.position
                 << ", Curse: " << static_cast<int>(item.curse_state)
-                << ", Ident: " << static_cast<int>(item.identification_state)
+                << ", Ident: " << static_cast<int>(item.identify_state)
                 << ", Count: " << item.count;
     }
 }

@@ -660,7 +660,7 @@ bool wish_for_item(const std::string& input)
             inv[ci].curse_state = curse_state.get();
         }
 
-        item_identify(inv[ci], IdentifyState::completely_identified);
+        item_identify(inv[ci], IdentifyState::completely);
         txt(i18n::s.get("core.wish.something_appears", inv[ci]));
         return true;
     }

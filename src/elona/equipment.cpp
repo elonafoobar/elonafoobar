@@ -150,7 +150,7 @@ void draw_additional_item_info_label(int x, int y)
 
 void draw_additional_item_info(const Item& equip, int x, int y)
 {
-    if (equip.identification_state != IdentifyState::completely_identified)
+    if (equip.identify_state != IdentifyState::completely)
         return;
 
     switch (g_show_additional_item_info)
@@ -421,7 +421,7 @@ void supply_new_equipment()
         }
         if (itemcreate(rc, 0, -1, -1, 0))
         {
-            inv[ci].identification_state = IdentifyState::completely_identified;
+            inv[ci].identify_state = IdentifyState::completely;
             if (inv[ci].quality >= Quality::miracle)
             {
                 if (the_item_db[inv[ci].id]->category < 50000)

@@ -70,8 +70,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         id == other.id
         // && quality == other.quality
         && (ignore_position || position == other.position) &&
-        weight == other.weight &&
-        identification_state == other.identification_state &&
+        weight == other.weight && identify_state == other.identify_state &&
         count == other.count && dice_x == other.dice_x &&
         dice_y == other.dice_y && damage_bonus == other.damage_bonus &&
         hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv &&
@@ -614,18 +613,17 @@ bool chara_unequip(int ci)
 
 IdentifyState item_identify(Item& ci, IdentifyState level)
 {
-    if (level == IdentifyState::almost_identified &&
-        the_item_db[ci.id]->category >= 50000)
+    if (level == IdentifyState::almost && the_item_db[ci.id]->category >= 50000)
     {
-        level = IdentifyState::completely_identified;
+        level = IdentifyState::completely;
     }
-    if (ci.identification_state >= level)
+    if (ci.identify_state >= level)
     {
         idtresult = IdentifyState::unidentified;
         return idtresult;
     }
-    ci.identification_state = level;
-    if (ci.identification_state >= IdentifyState::partly_identified)
+    ci.identify_state = level;
+    if (ci.identify_state >= IdentifyState::partly)
     {
         itemmemory(0, ci.id) = 1;
     }
@@ -638,22 +636,21 @@ IdentifyState item_identify(Item& ci, int power)
 {
     return item_identify(
         ci,
-        power >= ci.difficulty_of_identification
-            ? IdentifyState::completely_identified
-            : IdentifyState::unidentified);
+        power >= ci.difficulty_of_identification ? IdentifyState::completely
+                                                 : IdentifyState::unidentified);
 }
 
 
 void item_checkknown(int ci)
 {
-    if (inv[ci].identification_state == IdentifyState::completely_identified)
+    if (inv[ci].identify_state == IdentifyState::completely)
     {
-        inv[ci].identification_state = IdentifyState::completely_identified;
+        inv[ci].identify_state = IdentifyState::completely;
     }
     if (itemmemory(0, inv[ci].id) &&
-        inv[ci].identification_state == IdentifyState::unidentified)
+        inv[ci].identify_state == IdentifyState::unidentified)
     {
-        item_identify(inv[ci], IdentifyState::partly_identified);
+        item_identify(inv[ci], IdentifyState::partly);
     }
 }
 
@@ -685,8 +682,7 @@ void itemname_additional_info(int item_index)
                 s_ += u8"解読済みの"s;
             }
         }
-        if (inv[item_index].identification_state ==
-            IdentifyState::completely_identified)
+        if (inv[item_index].identify_state == IdentifyState::completely)
         {
             s_ += lang(
                 u8"《"s +
@@ -986,8 +982,7 @@ std::string itemname(int item_index, int number, int skip_article)
         {
             s_ = "";
         }
-        if (inv[item_index].identification_state ==
-            IdentifyState::completely_identified)
+        if (inv[item_index].identify_state == IdentifyState::completely)
         {
             switch (inv[item_index].curse_state)
             {
@@ -1007,8 +1002,7 @@ std::string itemname(int item_index, int number, int skip_article)
     else
     {
         s_ = "";
-        if (inv[item_index].identification_state ==
-            IdentifyState::completely_identified)
+        if (inv[item_index].identify_state == IdentifyState::completely)
         {
             switch (inv[item_index].curse_state)
             {
@@ -1025,7 +1019,7 @@ std::string itemname(int item_index, int number, int skip_article)
             }
         }
         if (irandomname(inv[item_index].id) == 1 &&
-            inv[item_index].identification_state == IdentifyState::unidentified)
+            inv[item_index].identify_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
@@ -1046,8 +1040,7 @@ std::string itemname(int item_index, int number, int skip_article)
             {
                 s3_ = u8"of";
             }
-            if (inv[item_index].identification_state !=
-                    IdentifyState::unidentified &&
+            if (inv[item_index].identify_state != IdentifyState::unidentified &&
                 s2_ == "")
             {
                 if (inv[item_index].weight < 0)
@@ -1186,8 +1179,7 @@ std::string itemname(int item_index, int number, int skip_article)
         goto label_0313_internal;
     }
     alpha_ = 0;
-    if (inv[item_index].identification_state ==
-            IdentifyState::completely_identified &&
+    if (inv[item_index].identify_state == IdentifyState::completely &&
         a_ < 50000)
     {
         if (inv[item_index].is_eternal_force())
@@ -1250,13 +1242,11 @@ std::string itemname(int item_index, int number, int skip_article)
             }
         }
     }
-    if (inv[item_index].identification_state == IdentifyState::unidentified)
+    if (inv[item_index].identify_state == IdentifyState::unidentified)
     {
         s_ += iknownnameref(inv[item_index].id);
     }
-    else if (
-        inv[item_index].identification_state !=
-        IdentifyState::completely_identified)
+    else if (inv[item_index].identify_state != IdentifyState::completely)
     {
         if (inv[item_index].quality < Quality::miracle || a_ >= 50000)
         {
@@ -1324,8 +1314,7 @@ label_0313_internal:
     {
         if (skip_article == 0)
         {
-            if (inv[item_index].identification_state ==
-                    IdentifyState::completely_identified &&
+            if (inv[item_index].identify_state == IdentifyState::completely &&
                 (inv[item_index].quality >= Quality::miracle && a_ < 50000))
             {
                 s_ = u8"the "s + s_;
@@ -1410,8 +1399,7 @@ label_0313_internal:
         }
         itemname_additional_info(item_index);
     }
-    if (inv[item_index].identification_state ==
-        IdentifyState::completely_identified)
+    if (inv[item_index].identify_state == IdentifyState::completely)
     {
         if (inv[item_index].enhancement != 0)
         {
@@ -1490,9 +1478,7 @@ label_0313_internal:
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + inv[item_index].param2;
     }
-    if (inv[item_index].identification_state ==
-            IdentifyState::almost_identified &&
-        a_ < 50000)
+    if (inv[item_index].identify_state == IdentifyState::almost && a_ < 50000)
     {
         s_ += u8" ("s +
             cnven(i18n::s.get_enum(

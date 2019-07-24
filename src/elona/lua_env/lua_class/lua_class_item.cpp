@@ -198,7 +198,7 @@ void LuaItem::bind(sol::state& lua)
      */
     LuaItem.set(
         "identify_state",
-        LUA_API_ENUM_PROPERTY(Item, identification_state, IdentifyState));
+        LUA_API_ENUM_PROPERTY(Item, identify_state, IdentifyState));
 
     /**
      * @luadoc prototype field table

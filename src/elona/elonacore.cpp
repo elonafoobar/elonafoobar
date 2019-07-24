@@ -421,7 +421,7 @@ void initialize_pc_character()
         {
             continue;
         }
-        item.identification_state = IdentifyState::completely_identified;
+        item.identify_state = IdentifyState::completely;
     }
     chara_refresh(0);
 }
@@ -2988,9 +2988,7 @@ void character_drops_item()
                     }
                 }
             }
-            else if (
-                item.identification_state ==
-                IdentifyState::completely_identified)
+            else if (item.identify_state == IdentifyState::completely)
             {
                 if (rnd(4))
                 {
@@ -3802,7 +3800,7 @@ void auto_identify()
     for (const auto& item : inv.pc())
     {
         if (item.number() == 0 ||
-            item.identification_state == IdentifyState::completely_identified)
+            item.identify_state == IdentifyState::completely)
         {
             continue;
         }
@@ -3816,7 +3814,7 @@ void auto_identify()
         if (p > rnd(p(1) * 5))
         {
             s = itemname(ci);
-            item_identify(inv[ci], IdentifyState::completely_identified);
+            item_identify(inv[ci], IdentifyState::completely);
             itemmemory(0, inv[ci].id) = 1;
             if (!Config::instance().hide_autoidentify)
             {
@@ -3825,7 +3823,7 @@ void auto_identify()
             }
             chara_gain_skill_exp(cdata.player(), 162, 50);
         }
-        if (inv[ci].identification_state <= IdentifyState::partly_identified)
+        if (inv[ci].identify_state <= IdentifyState::partly)
         {
             if (p > rnd(p(1)))
             {
@@ -3838,7 +3836,7 @@ void auto_identify()
                             u8"core.ui.quality",
                             static_cast<int>(inv[ci].quality))));
                 }
-                item_identify(inv[ci], IdentifyState::almost_identified);
+                item_identify(inv[ci], IdentifyState::almost);
                 chara_gain_skill_exp(cdata.player(), 162, 50);
             }
         }
@@ -7226,7 +7224,7 @@ int decode_book()
         }
         txt(i18n::s.get("core.action.read.recipe.learned", inv[ci]));
         ++recipememory(inv[ci].subname);
-        item_identify(inv[ci], IdentifyState::partly_identified);
+        item_identify(inv[ci], IdentifyState::partly);
         inv[ci].modify_number(-1);
         if (is_in_fov(cdata[cc]))
         {
@@ -7237,7 +7235,7 @@ int decode_book()
     }
     if (inv[ci].id == 687)
     {
-        item_identify(inv[ci], IdentifyState::completely_identified);
+        item_identify(inv[ci], IdentifyState::completely);
         txt(i18n::s.get("core.action.read.book.finished_decoding", inv[ci]));
         inv[ci].param2 = 1;
         inv[ci].count = 1;
@@ -7259,7 +7257,7 @@ int decode_book()
             itemmemory(2, inv[ci].id) = 1;
         }
     }
-    item_identify(inv[ci], IdentifyState::partly_identified);
+    item_identify(inv[ci], IdentifyState::partly);
     if (inv[ci].id != 687)
     {
         --inv[ci].count;
@@ -7317,7 +7315,7 @@ int read_normal_book()
         return 1;
     }
     tc = cc;
-    item_identify(inv[ci], IdentifyState::partly_identified);
+    item_identify(inv[ci], IdentifyState::partly);
     show_book_window();
     return 1;
 }
@@ -7588,7 +7586,7 @@ int drink_potion()
         {
             if (tc == 0)
             {
-                item_identify(inv[ci], IdentifyState::partly_identified);
+                item_identify(inv[ci], IdentifyState::partly);
             }
         }
         inv[ci].modify_number(-1);
@@ -7857,7 +7855,7 @@ int read_scroll()
     {
         if (obvious == 1)
         {
-            item_identify(inv[ci], IdentifyState::partly_identified);
+            item_identify(inv[ci], IdentifyState::partly);
         }
     }
     return 1;
@@ -7944,7 +7942,7 @@ int do_zap()
         {
             if (obvious == 1)
             {
-                item_identify(inv[ci], IdentifyState::partly_identified);
+                item_identify(inv[ci], IdentifyState::partly);
             }
         }
         chara_gain_exp_magic_device(cdata[cc]);
@@ -8583,7 +8581,7 @@ int pick_up_item(bool play_sound)
             {
                 cdata[tc].gold = 0;
             }
-            inv[ti].identification_state = IdentifyState::completely_identified;
+            inv[ti].identify_state = IdentifyState::completely;
         }
         if (invctrl == 22 || invctrl == 24)
         {
@@ -8688,7 +8686,7 @@ int equip_item(int cc)
     item_separate(ci);
     if (cc == 0)
     {
-        item_identify(inv[ci], IdentifyState::almost_identified);
+        item_identify(inv[ci], IdentifyState::almost);
     }
     inv[ci].body_part = body;
     cdata[cc].body_parts[body - 100] =

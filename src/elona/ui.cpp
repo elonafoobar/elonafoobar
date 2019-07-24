@@ -2452,7 +2452,7 @@ snail::Color cs_list_get_item_color(const Item& item)
         return {120, 80, 0};
     }
 
-    if (item.identification_state == IdentifyState::completely_identified)
+    if (item.identify_state == IdentifyState::completely)
     {
         switch (item.curse_state)
         {
