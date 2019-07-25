@@ -1389,12 +1389,12 @@ void fmode_23_24(bool read, const fs::path& filepath)
 {
     if (read)
     {
-        Save::instance().add(filepath.filename());
-        save_v1(filepath, deck, 0, 1000);
+        load_v1(filepath, deck, 0, 1000);
     }
     else
     {
-        load_v1(filepath, deck, 0, 1000);
+        Save::instance().add(filepath.filename());
+        save_v1(filepath, deck, 0, 1000);
     }
 }
 
