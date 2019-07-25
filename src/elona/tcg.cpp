@@ -1793,6 +1793,7 @@ void tcgdeck()
         if (fs::exists(
                 filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
+            Prompt prompt;
             prompt.append(i18n::s.get("core.tcg.deck.choices.edit"));
             prompt.append(i18n::s.get("core.tcg.deck.choices.set_as_main"));
             rtval = prompt.query(400, basey_at_tcg + 230, 240);
