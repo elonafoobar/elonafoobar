@@ -43,46 +43,29 @@ TEST_CASE("test formats", "[I18N: Formatting]")
 TEST_CASE("test format chara", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(
         i18n::fmt_hil("${_1}", chara) ==
         u8"<Character: "s + std::to_string(chara.index) + u8">"s);
-}
-
-TEST_CASE("test format item", "[I18N: Formatting]")
-{
-    testing::start_in_debug_map();
-    REQUIRE_SOME(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
-    Item& i = elona::inv[elona::ci];
-
-    REQUIRE(
-        i18n::fmt_hil("${_1}", i) ==
-        u8"<Item: "s + std::to_string(i.index) + u8">"s);
-}
-
-TEST_CASE("test format character by function", "[I18N: Formatting]")
-{
-    testing::start_in_debug_map();
-    testing::set_japanese();
-    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}: ${_2}", chara, 42) == u8"プチ: 42");
 }
 
-TEST_CASE("test format item by function", "[I18N: Formatting]")
+TEST_CASE("test format item", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    testing::set_japanese();
     Item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
+
+    REQUIRE(
+        i18n::fmt_hil("${_1}", i) ==
+        u8"<Item: "s + std::to_string(i.index) + u8">"s);
 
     REQUIRE(i18n::fmt_hil("${itemname(_1)}", i) == u8"3個のプチトロ"s);
     REQUIRE(i18n::fmt_hil("${itembasename(_1)}", i) == u8"プチトロ"s);
 }
-
 
 TEST_CASE("test i18n store literal", "[I18N: Store]")
 {

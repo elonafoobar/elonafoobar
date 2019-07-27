@@ -11,7 +11,7 @@ lrun("test Map.width/Map.height", function()
 end)
 
 lrun("test Map.valid", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
 
         lequal(Map.valid(LuaPosition.new(0, 0)), true)
         lequal(Map.valid(LuaPosition.new(35, 1)), true)
@@ -25,7 +25,7 @@ lrun("test Map.valid", function()
 end)
 
 lrun("test Map.is_blocked", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
 
         local pos = LuaPosition.new(5, 5)
         lequal(Map.is_blocked(pos), false)
