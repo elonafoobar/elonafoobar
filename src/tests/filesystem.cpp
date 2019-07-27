@@ -7,16 +7,16 @@ using namespace elona;
 TEST_CASE("Test resolve_path_for_mod", "[C++: Filesystem]")
 {
     REQUIRE(
-        filesystem::resolve_path_for_mod("__BUILTIN__/dood") ==
+        filesystem::resolve_path_for_mod("<_builtin_>/dood") ==
         filesystem::dirs::exe() / "dood");
     REQUIRE(
-        filesystem::resolve_path_for_mod("__test__/dood") ==
+        filesystem::resolve_path_for_mod("<test>/dood") ==
         filesystem::dirs::for_mod("test") / "dood");
     REQUIRE(
-        filesystem::resolve_path_for_mod("__test__/__dood__/file.txt") ==
-        filesystem::dirs::for_mod("test") / "__dood__" / "file.txt");
+        filesystem::resolve_path_for_mod("<test>/<dood>/file.txt") ==
+        filesystem::dirs::for_mod("test") / "<dood>" / "file.txt");
 
     REQUIRE_THROWS(filesystem::resolve_path_for_mod("file.txt"));
-    REQUIRE_THROWS(filesystem::resolve_path_for_mod("____"));
-    REQUIRE_THROWS(filesystem::resolve_path_for_mod("__$__/file.txt"));
+    REQUIRE_THROWS(filesystem::resolve_path_for_mod("<>"));
+    REQUIRE_THROWS(filesystem::resolve_path_for_mod("<$>/file.txt"));
 }
