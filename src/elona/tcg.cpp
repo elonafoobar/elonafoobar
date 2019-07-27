@@ -1793,6 +1793,7 @@ void tcgdeck()
         if (fs::exists(
                 filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
+            Prompt prompt;
             prompt.append(i18n::s.get("core.tcg.deck.choices.edit"));
             prompt.append(i18n::s.get("core.tcg.deck.choices.set_as_main"));
             rtval = prompt.query(400, basey_at_tcg + 230, 240);
@@ -2470,244 +2471,266 @@ void tcg_draw_menu()
         cflist_at_tcg(5) = 6;
         cfmax_at_tcg = 6;
     }
-label_1829_internal:
-    dlistmax_at_tcg = 0;
-    dsc_at_tcg = 0;
-    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+
+    bool init = true;
+    while (true)
     {
-        if (card_at_tcg(0, cnt) != -1)
+        if (init)
         {
+            init = false;
+            dlistmax_at_tcg = 0;
+            dsc_at_tcg = 0;
+            for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+            {
+                if (card_at_tcg(0, cnt) != -1)
+                {
+                    continue;
+                }
+                if (card_at_tcg(1, cnt) != cp_at_tcg)
+                {
+                    continue;
+                }
+                if (cflist_at_tcg(ccf_at_tcg) == 1)
+                {
+                    if (deck(card_at_tcg(18, cnt)) == 0)
+                    {
+                        continue;
+                    }
+                }
+                if (cflist_at_tcg(ccf_at_tcg) >= 2)
+                {
+                    if (cflist_at_tcg(ccf_at_tcg) <= 6)
+                    {
+                        if (card_at_tcg(23, cnt) !=
+                            cflist_at_tcg(ccf_at_tcg) - 2)
+                        {
+                            continue;
+                        }
+                    }
+                }
+                if (deckmode_at_tcg == 1)
+                {
+                    if (cardn_at_tcg(0, cnt) != deckrefn_at_tcg)
+                    {
+                        continue;
+                    }
+                }
+                if (deckmode_at_tcg == 1 || deckmode_at_tcg == 2)
+                {
+                    f_at_tcg = 0;
+                    cnt2_at_tcg = cnt;
+                    for (int cnt = 0, cnt_end = (dlistmax_at_tcg);
+                         cnt < cnt_end;
+                         ++cnt)
+                    {
+                        c_at_tcg = dlist_at_tcg(0, cnt);
+                        if (card_at_tcg(18, c_at_tcg) ==
+                            card_at_tcg(18, cnt2_at_tcg))
+                        {
+                            f_at_tcg = 1;
+                            break;
+                        }
+                    }
+                    if (f_at_tcg)
+                    {
+                        continue;
+                    }
+                }
+                cdbitmod(1, cnt, 1);
+                dlist_at_tcg(0, dlistmax_at_tcg) = cnt;
+                ++dlistmax_at_tcg;
+            }
+            while (1)
+            {
+                f_at_tcg = 0;
+                if (dlistmax_at_tcg == 0)
+                {
+                    break;
+                }
+                for (int cnt = 0, cnt_end = (dlistmax_at_tcg - 1);
+                     cnt < cnt_end;
+                     ++cnt)
+                {
+                    p_at_tcg(0) =
+                        card_at_tcg(10, dlist_at_tcg(0, cnt)) * 10000 +
+                        card_at_tcg(18, dlist_at_tcg(0, cnt));
+                    p_at_tcg(1) =
+                        card_at_tcg(10, dlist_at_tcg(0, (cnt + 1))) * 10000 +
+                        card_at_tcg(18, dlist_at_tcg(0, (cnt + 1)));
+                    if (p_at_tcg > p_at_tcg(1))
+                    {
+                        f_at_tcg = 1;
+                        p_at_tcg(0) = dlist_at_tcg(0, cnt);
+                        p_at_tcg(1) = dlist_at_tcg(1, cnt);
+                        dlist_at_tcg(0, cnt) = dlist_at_tcg(0, cnt + 1);
+                        dlist_at_tcg(1, cnt) = dlist_at_tcg(1, cnt + 1);
+                        dlist_at_tcg(0, cnt + 1) = p_at_tcg;
+                        dlist_at_tcg(1, cnt + 1) = p_at_tcg(1);
+                    }
+                }
+                if (f_at_tcg == 0)
+                {
+                    break;
+                }
+            }
+            tcg_update_page();
+        }
+
+        tcg_draw_deck_editor();
+        tcg_draw_selection();
+        redraw();
+        await(30);
+        auto action = key_check();
+        if (action == "next_menu")
+        {
+            ++ccf_at_tcg;
+            snd("core.cursor1");
+            if (ccf_at_tcg >= cfmax_at_tcg)
+            {
+                ccf_at_tcg = 0;
+            }
+            init = true;
             continue;
         }
-        if (card_at_tcg(1, cnt) != cp_at_tcg)
+        if (action == "previous_menu")
         {
+            --ccf_at_tcg;
+            snd("core.cursor1");
+            if (ccf_at_tcg < 0)
+            {
+                ccf_at_tcg = cfmax_at_tcg - 1;
+            }
+            init = true;
             continue;
         }
-        if (cflist_at_tcg(ccf_at_tcg) == 1)
+        if (action == "west")
         {
-            if (deck(card_at_tcg(18, cnt)) == 0)
+            --dsc_at_tcg;
+            snd("core.cursor1");
+        }
+        if (action == "east")
+        {
+            ++dsc_at_tcg;
+            snd("core.cursor1");
+        }
+        if (action == "south")
+        {
+            dsc_at_tcg += 8;
+            snd("core.cursor1");
+        }
+        if (action == "north")
+        {
+            dsc_at_tcg -= 8;
+            snd("core.cursor1");
+        }
+        tcg_update_page();
+        if (action == "enter")
+        {
+            if (dlistmax_at_tcg == 0)
             {
                 continue;
             }
-        }
-        if (cflist_at_tcg(ccf_at_tcg) >= 2)
-        {
-            if (cflist_at_tcg(ccf_at_tcg) <= 6)
+            if (deckmode_at_tcg == 0)
             {
-                if (card_at_tcg(23, cnt) != cflist_at_tcg(ccf_at_tcg) - 2)
+                if (card_at_tcg(9, dlist_at_tcg(0, dsc_at_tcg)) == 10)
+                {
+                    if (card_at_tcg(10, dlist_at_tcg(0, dsc_at_tcg)) == 0)
+                    {
+                        snd("core.fail1");
+                        cardhelp(
+                            i18n::s.get("core.tcg.card_not_available"), 40);
+                        continue;
+                    }
+                }
+
+                while (true)
+                {
+                    calcdecksize();
+                    tcg_draw_deck_editor();
+                    tcg_draw_selection();
+                    act_at_tcg(0) = 0;
+                    act_at_tcg(1) = 0;
+                    act_at_tcg(2) = 0;
+                    cc_at_tcg = dlist_at_tcg(0, dsc_at_tcg);
+                    if (deck(card_at_tcg(18, cc_at_tcg)) <
+                        card(0, card_at_tcg(18, cc_at_tcg)))
+                    {
+                        act_at_tcg(0) = 1;
+                    }
+                    if (deck(card_at_tcg(18, cc_at_tcg)) != 0)
+                    {
+                        act_at_tcg(1) = 1;
+                    }
+                    if (act_at_tcg(0) == 0)
+                    {
+                        if (act_at_tcg(1) == 0)
+                        {
+                            snd("core.fail1");
+                            break;
+                        }
+                    }
+                    tcg_update_selection();
+                    if (f_at_tcg == 0)
+                    {
+                        if (act_at_tcg(0))
+                        {
+                            ++deck(card_at_tcg(18, cc_at_tcg));
+                            snd("core.card1");
+                            continue;
+                        }
+                    }
+                    if (f_at_tcg == 1)
+                    {
+                        if (act_at_tcg(1))
+                        {
+                            --deck(card_at_tcg(18, cc_at_tcg));
+                            snd("core.card1");
+                            continue;
+                        }
+                    }
+                    break;
+                }
+
+                calcdecksize();
+                continue;
+            }
+            rtval_at_tcg = dlist_at_tcg(0, dsc_at_tcg);
+            rtval_at_tcg = 1;
+            tcg_draw_background();
+            return;
+        }
+        if (action == "cancel")
+        {
+            if (deckmode_at_tcg == 0)
+            {
+                Prompt prompt("core.tcg.menu");
+                prompt.append("save_and_exit");
+                prompt.append("just_exit");
+                rtval =
+                    prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 240);
+
+                if (rtval == 0)
+                {
+                    ctrl_file(
+                        FileOperation2::deck_write,
+                        filesystem::dirs::tmp() /
+                            (u8"deck_"s + curdeck + u8".s2"));
+                    writeloadedbuff(u8"deck_"s + curdeck + u8".s2");
+                }
+                else
+                {
+                    game_data.tcg_decks.at(curdeck) = decksizebk_at_tcg;
+                }
+                if (rtval == -1)
                 {
                     continue;
                 }
             }
-        }
-        if (deckmode_at_tcg == 1)
-        {
-            if (cardn_at_tcg(0, cnt) != deckrefn_at_tcg)
-            {
-                continue;
-            }
-        }
-        if (deckmode_at_tcg == 1 || deckmode_at_tcg == 2)
-        {
-            f_at_tcg = 0;
-            cnt2_at_tcg = cnt;
-            for (int cnt = 0, cnt_end = (dlistmax_at_tcg); cnt < cnt_end; ++cnt)
-            {
-                c_at_tcg = dlist_at_tcg(0, cnt);
-                if (card_at_tcg(18, c_at_tcg) == card_at_tcg(18, cnt2_at_tcg))
-                {
-                    f_at_tcg = 1;
-                    break;
-                }
-            }
-            if (f_at_tcg)
-            {
-                continue;
-            }
-        }
-        cdbitmod(1, cnt, 1);
-        dlist_at_tcg(0, dlistmax_at_tcg) = cnt;
-        ++dlistmax_at_tcg;
-    }
-    while (1)
-    {
-        f_at_tcg = 0;
-        if (dlistmax_at_tcg == 0)
-        {
-            break;
-        }
-        for (int cnt = 0, cnt_end = (dlistmax_at_tcg - 1); cnt < cnt_end; ++cnt)
-        {
-            p_at_tcg(0) = card_at_tcg(10, dlist_at_tcg(0, cnt)) * 10000 +
-                card_at_tcg(18, dlist_at_tcg(0, cnt));
-            p_at_tcg(1) = card_at_tcg(10, dlist_at_tcg(0, (cnt + 1))) * 10000 +
-                card_at_tcg(18, dlist_at_tcg(0, (cnt + 1)));
-            if (p_at_tcg > p_at_tcg(1))
-            {
-                f_at_tcg = 1;
-                p_at_tcg(0) = dlist_at_tcg(0, cnt);
-                p_at_tcg(1) = dlist_at_tcg(1, cnt);
-                dlist_at_tcg(0, cnt) = dlist_at_tcg(0, cnt + 1);
-                dlist_at_tcg(1, cnt) = dlist_at_tcg(1, cnt + 1);
-                dlist_at_tcg(0, cnt + 1) = p_at_tcg;
-                dlist_at_tcg(1, cnt + 1) = p_at_tcg(1);
-            }
-        }
-        if (f_at_tcg == 0)
-        {
-            break;
+            rtval_at_tcg = 0;
+            tcg_draw_background();
+            return;
         }
     }
-    tcg_update_page();
-label_1830_internal:
-    tcg_draw_deck_editor();
-    tcg_draw_selection();
-    redraw();
-    await(30);
-    auto action = key_check();
-    if (action == "next_menu")
-    {
-        ++ccf_at_tcg;
-        snd("core.cursor1");
-        if (ccf_at_tcg >= cfmax_at_tcg)
-        {
-            ccf_at_tcg = 0;
-        }
-        goto label_1829_internal;
-    }
-    if (action == "previous_menu")
-    {
-        --ccf_at_tcg;
-        snd("core.cursor1");
-        if (ccf_at_tcg < 0)
-        {
-            ccf_at_tcg = cfmax_at_tcg - 1;
-        }
-        goto label_1829_internal;
-    }
-    if (action == "west")
-    {
-        --dsc_at_tcg;
-        snd("core.cursor1");
-    }
-    if (action == "east")
-    {
-        ++dsc_at_tcg;
-        snd("core.cursor1");
-    }
-    if (action == "south")
-    {
-        dsc_at_tcg += 8;
-        snd("core.cursor1");
-    }
-    if (action == "north")
-    {
-        dsc_at_tcg -= 8;
-        snd("core.cursor1");
-    }
-    tcg_update_page();
-    if (action == "enter")
-    {
-        if (dlistmax_at_tcg == 0)
-        {
-            goto label_1830_internal;
-        }
-        if (deckmode_at_tcg == 0)
-        {
-            if (card_at_tcg(9, dlist_at_tcg(0, dsc_at_tcg)) == 10)
-            {
-                if (card_at_tcg(10, dlist_at_tcg(0, dsc_at_tcg)) == 0)
-                {
-                    snd("core.fail1");
-                    cardhelp(i18n::s.get("core.tcg.card_not_available"), 40);
-                    goto label_1830_internal;
-                }
-            }
-        label_1831_internal:
-            calcdecksize();
-            tcg_draw_deck_editor();
-            tcg_draw_selection();
-            act_at_tcg(0) = 0;
-            act_at_tcg(1) = 0;
-            act_at_tcg(2) = 0;
-            cc_at_tcg = dlist_at_tcg(0, dsc_at_tcg);
-            if (deck(card_at_tcg(18, cc_at_tcg)) <
-                card(0, card_at_tcg(18, cc_at_tcg)))
-            {
-                act_at_tcg(0) = 1;
-            }
-            if (deck(card_at_tcg(18, cc_at_tcg)) != 0)
-            {
-                act_at_tcg(1) = 1;
-            }
-            if (act_at_tcg(0) == 0)
-            {
-                if (act_at_tcg(1) == 0)
-                {
-                    snd("core.fail1");
-                    goto label_1833_internal;
-                }
-            }
-            tcg_update_selection();
-            if (f_at_tcg == 0)
-            {
-                if (act_at_tcg(0))
-                {
-                    ++deck(card_at_tcg(18, cc_at_tcg));
-                    snd("core.card1");
-                    goto label_1831_internal;
-                }
-            }
-            if (f_at_tcg == 1)
-            {
-                if (act_at_tcg(1))
-                {
-                    --deck(card_at_tcg(18, cc_at_tcg));
-                    snd("core.card1");
-                    goto label_1831_internal;
-                }
-            }
-            goto label_1833_internal;
-            goto label_1831_internal;
-        label_1833_internal:
-            calcdecksize();
-            goto label_1830_internal;
-        }
-        rtval_at_tcg = dlist_at_tcg(0, dsc_at_tcg);
-        rtval_at_tcg = 1;
-        tcg_draw_background();
-        return;
-    }
-    if (action == "cancel")
-    {
-        if (deckmode_at_tcg == 0)
-        {
-            Prompt prompt("core.tcg.menu");
-            prompt.append("save_and_exit");
-            prompt.append("just_exit");
-            rtval = prompt.query(basex_at_tcg + 420, basey_at_tcg + 230, 240);
-
-            if (rtval == 0)
-            {
-                ctrl_file(
-                    FileOperation2::deck_write,
-                    filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2"));
-                writeloadedbuff(u8"deck_"s + curdeck + u8".s2");
-            }
-            else
-            {
-                game_data.tcg_decks.at(curdeck) = decksizebk_at_tcg;
-            }
-            if (rtval == -1)
-            {
-                goto label_1830_internal;
-            }
-        }
-        rtval_at_tcg = 0;
-        tcg_draw_background();
-        return;
-    }
-    goto label_1830_internal;
 }
 
 
