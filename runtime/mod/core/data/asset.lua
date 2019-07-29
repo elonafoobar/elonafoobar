@@ -421,8 +421,8 @@ data:add_multi(
          y = 656,
          width = 48,
          height = 48,
-         count_x = 33,
-         count_y = 8,
+         count_x = 4,
+         count_y = 3,
       },
       {
          id = "shadow",
@@ -433,6 +433,8 @@ data:add_multi(
          height = 24,
          count_x = 8,
          count_y = 6,
+         file = "<core>/graphic/interface_ex1.png",
+         load_type = "Startup",
       },
       {
          id = "shadow_spot",
@@ -443,6 +445,8 @@ data:add_multi(
          height = 24,
          count_x = 2,
          count_y = 6,
+         file = "<core>/graphic/interface_ex2.png",
+         load_type = "Startup",
       },
       {
          id = "shadow_edges",
@@ -452,6 +456,8 @@ data:add_multi(
          width = 48,
          height = 48,
          count_x = 18,
+         file = "<core>/graphic/interface_ex3.png",
+         load_type = "Startup",
       },
       {
          id = "politics_law",
