@@ -33,6 +33,15 @@ void LuaItem::change_material(Item& self, const std::string& material_id)
     change_item_material(self, data.legacy_id);
 }
 
+
+
+std::string LuaItem::metamethod_tostring(const Item& self)
+{
+    return Item::lua_type() + "(" + std::to_string(self.index) + ")";
+}
+
+
+
 void LuaItem::bind(sol::state& lua)
 {
     auto LuaItem = lua.create_simple_usertype<Item>();
@@ -214,6 +223,8 @@ void LuaItem::bind(sol::state& lua)
     // Methods
     LuaItem.set("remove", &LuaItem::remove);
     LuaItem.set("change_material", &LuaItem::change_material);
+
+    LuaItem.set("__tostring", &LuaItem::metamethod_tostring);
 
     auto key = Item::lua_type();
     lua.set_usertype(key, LuaItem);

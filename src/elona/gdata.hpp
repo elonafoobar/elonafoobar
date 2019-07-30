@@ -26,6 +26,10 @@ struct DateTime
     {
         return hour + (day * 24) + (month * 24 * 30) + (year * 24 * 30 * 12);
     }
+
+    // It is for debugging, not for showing to end-users.
+    // E.g., "518/02/03 14:56'30"
+    std::string to_string() const;
 };
 
 
