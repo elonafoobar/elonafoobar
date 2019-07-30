@@ -185,13 +185,13 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test", ""));
 
         mod_mgr.get_enabled_mod("test")->env.set("chara", handle);
-        REQUIRE_NOTHROW(
-            mod_mgr.run_in_mod("test", "Store.global.charas = {[0]=chara}"));
+        REQUIRE_NOTHROW(mod_mgr.run_in_mod(
+            "test", "mod.store.global.charas = {[0]=chara}"));
 
         testing::invalidate_chara(chara);
 
-        REQUIRE_THROWS(
-            mod_mgr.run_in_mod("test", "print(Store.global.charas[0].index)"));
+        REQUIRE_THROWS(mod_mgr.run_in_mod(
+            "test", "print(mod.store.global.charas[0].index)"));
     }
     SECTION("Items")
     {
@@ -203,12 +203,12 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
         mod_mgr.get_enabled_mod("test2")->env.set("item", handle);
         REQUIRE_NOTHROW(
-            mod_mgr.run_in_mod("test2", "Store.global.items = {[0]=item}"));
+            mod_mgr.run_in_mod("test2", "mod.store.global.items = {[0]=item}"));
 
         testing::invalidate_item(item);
 
-        REQUIRE_THROWS(
-            mod_mgr.run_in_mod("test2", "print(Store.global.items[0].index)"));
+        REQUIRE_THROWS(mod_mgr.run_in_mod(
+            "test2", "print(mod.store.global.items[0].index)"));
     }
 }
 
@@ -226,14 +226,14 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
 local Chara = Elona.require("Chara")
 local chara = Chara.create(0, 0, "core.putit")
 idx = chara.index
-Store.global.charas = {[0]=chara}
+mod.store.global.charas = {[0]=chara}
 )"));
         int idx = mod_mgr.get_enabled_mod("test_invalid_chara")->env["idx"];
 
         testing::invalidate_chara(elona::cdata[idx]);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod(
-            "test_invalid_chara", "print(Store.global.charas[0].index)"));
+            "test_invalid_chara", "print(mod.store.global.charas[0].index)"));
     }
     SECTION("Items")
     {
@@ -241,14 +241,14 @@ Store.global.charas = {[0]=chara}
 local Item = Elona.require("Item")
 local item = Item.create(0, 0, "core.putitoro", 3)
 idx = item.index
-Store.global.items = {[0]=items}
+mod.store.global.items = {[0]=items}
 )"));
         int idx = mod_mgr.get_enabled_mod("test_invalid_item")->env["idx"];
 
         testing::invalidate_item(elona::inv[idx]);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod(
-            "test_invalid_item", "print(Store.global.items[0].index)"));
+            "test_invalid_item", "print(mod.store.global.items[0].index)"));
     }
 }
 
@@ -268,20 +268,20 @@ TEST_CASE(
         auto handle = handle_mgr.get_handle(chara);
 
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script(
-            "test_chara_arg", "Store.global.charas = {}"));
+            "test_chara_arg", "mod.store.global.charas = {}"));
         mod_mgr.get_enabled_mod("test_chara_arg")->env.set("chara", handle);
 
         REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_chara_arg", R"(
-Store.global.charas[0] = chara
+mod.store.global.charas[0] = chara
 local Chara = Elona.require("Chara")
-print(Chara.is_ally(Store.global.charas[0]))
+print(Chara.is_ally(mod.store.global.charas[0]))
 )"));
 
         testing::invalidate_chara(chara);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod("test_chara_arg", R"(
 local Chara = Elona.require("Chara")
-print(Chara.is_ally(Store.global.charas[0]))
+print(Chara.is_ally(mod.store.global.charas[0]))
 )"));
     }
     SECTION("Items")
@@ -291,20 +291,20 @@ print(Chara.is_ally(Store.global.charas[0]))
         auto handle = handle_mgr.get_handle(item);
 
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script(
-            "test_item_arg", "Store.global.items = {}"));
+            "test_item_arg", "mod.store.global.items = {}"));
         mod_mgr.get_enabled_mod("test_item_arg")->env.set("item", handle);
 
         REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_item_arg", R"(
-Store.global.items[0] = item
+mod.store.global.items[0] = item
 local Item = Elona.require("Item")
-Item.has_enchantment(Store.global.items[0], 20)
+Item.has_enchantment(mod.store.global.items[0], 20)
 )"));
 
         testing::invalidate_item(item);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod("test_item_arg", R"(
 local Item = Elona.require("Item")
-Item.has_enchantment(Store.global.items[0], 20)
+Item.has_enchantment(mod.store.global.items[0], 20)
 )"));
     }
 }

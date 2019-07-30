@@ -19,15 +19,15 @@ local Exports = {}
 Exports.nesting = {}
 
 function Exports.my_callback()
-   Store.global.called_times_a = Store.global.called_times_a + 1
+   mod.store.global.called_times_a = mod.store.global.called_times_a + 1
 end
 
 function Exports.nesting.my_callback()
-   Store.global.called_times_b = Store.global.called_times_b + 1
+   mod.store.global.called_times_b = mod.store.global.called_times_b + 1
 end
 
-Store.global.called_times_a = 0
-Store.global.called_times_b = 0
+mod.store.global.called_times_a = 0
+mod.store.global.called_times_b = 0
 
 return {
     Exports = Exports
@@ -54,9 +54,9 @@ return {
     }
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.called_times_a == 2))"));
+        "test", R"(assert(mod.store.global.called_times_a == 2))"));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.called_times_b == 3))"));
+        "test", R"(assert(mod.store.global.called_times_b == 3))"));
 }
 
 TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
@@ -64,7 +64,7 @@ TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
     elona::lua::LuaEnv lua;
 
     testing::register_lua_function(
-        lua, "test", "my_callback(arg)", "Store.global.value = arg");
+        lua, "test", "my_callback(arg)", "mod.store.global.value = arg");
 
     auto function =
         lua.get_export_manager().get_exported_function("test.my_callback");
@@ -72,7 +72,7 @@ TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
     REQUIRE_NOTHROW(function->call(42));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.value == 42))"));
+        "test", R"(assert(mod.store.global.value == 42))"));
 }
 
 TEST_CASE(
@@ -84,10 +84,10 @@ TEST_CASE(
 local Exports = {}
 
 function Exports.my_callback(chara)
-   Store.global.found_index = chara.index
+   mod.store.global.found_index = chara.index
 end
 
-Store.global.found_index = -1
+mod.store.global.found_index = -1
 
 return {
     Exports = Exports
@@ -111,7 +111,7 @@ return {
         ->env.set("index", elona::rc);
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_registry_chara_callback",
-        R"(assert(Store.global.found_index == index))"));
+        R"(assert(mod.store.global.found_index == index))"));
 }
 
 TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")

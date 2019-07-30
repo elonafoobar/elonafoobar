@@ -26,10 +26,10 @@ TEST_CASE(
 local Event = Elona.require("Event")
 
 local function handler()
-   Store.global.test = true
+   mod.store.global.test = true
 end
 
-Store.global.test = false
+mod.store.global.test = false
 
 Event.register("core.some_unknown_event", handler)
 )"));
@@ -38,7 +38,7 @@ Event.register("core.some_unknown_event", handler)
         lua::BaseEvent("core.some_unknown_event"));
 
     REQUIRE_NOTHROW(lua::lua->get_mod_manager().run_in_mod(
-        "core", R"(assert(Store.global.test == false))"));
+        "core", R"(assert(mod.store.global.test == false))"));
 }
 
 TEST_CASE("Test registering of callback", "[Lua: Events]")
@@ -50,10 +50,10 @@ TEST_CASE("Test registering of callback", "[Lua: Events]")
 local Event = Elona.require("Event")
 
 local function my_handler()
-   Store.global.thing = "dood"
+   mod.store.global.thing = "dood"
 end
 
-Store.global.thing = nil
+mod.store.global.thing = nil
 
 Event.register("core.all_turns_finished", my_handler)
 )"));
@@ -62,7 +62,7 @@ Event.register("core.all_turns_finished", my_handler)
         elona::lua::BaseEvent("core.all_turns_finished"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.thing == "dood"))"));
+        "test", R"(assert(mod.store.global.thing == "dood"))"));
 }
 
 TEST_CASE("Test registering of callback multiple times", "[Lua: Events]")
@@ -74,10 +74,10 @@ TEST_CASE("Test registering of callback multiple times", "[Lua: Events]")
 local Event = Elona.require("Event")
 
 local function my_handler()
-   Store.global.called_times = Store.global.called_times + 1
+   mod.store.global.called_times = mod.store.global.called_times + 1
 end
 
-Store.global.called_times = 0
+mod.store.global.called_times = 0
 
 Event.register("core.all_turns_finished", my_handler)
 Event.register("core.all_turns_finished", my_handler)
@@ -97,14 +97,14 @@ TEST_CASE(
 local Event = Elona.require("Event")
 
 local function first()
-   Store.global.called_times = Store.global.called_times + 1
+   mod.store.global.called_times = mod.store.global.called_times + 1
 end
 
 local function second()
-   Store.global.called_times = Store.global.called_times + 1
+   mod.store.global.called_times = mod.store.global.called_times + 1
 end
 
-Store.global.called_times = 0
+mod.store.global.called_times = 0
 
 Event.register("core.all_turns_finished", first)
 Event.register("core.all_turns_finished", second)
@@ -114,7 +114,7 @@ Event.register("core.all_turns_finished", second)
         elona::lua::BaseEvent("core.all_turns_finished"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.called_times == 2))"));
+        "test", R"(assert(mod.store.global.called_times == 2))"));
 }
 
 TEST_CASE("Test unregistering of callback", "[Lua: Events]")
@@ -126,10 +126,10 @@ TEST_CASE("Test unregistering of callback", "[Lua: Events]")
 local Event = Elona.require("Event")
 
 local function my_handler()
-   Store.global.thing = "dood"
+   mod.store.global.thing = "dood"
 end
 
-Store.global.thing = nil
+mod.store.global.thing = nil
 
 Event.register("core.all_turns_finished", my_handler)
 Event.unregister("core.all_turns_finished", my_handler)
@@ -138,7 +138,7 @@ Event.unregister("core.all_turns_finished", my_handler)
     lua.get_event_manager().trigger(lua::BaseEvent("core.all_turns_finished"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.thing == nil))"));
+        "test", R"(assert(mod.store.global.thing == nil))"));
 }
 
 TEST_CASE("Test unregistering of callback multiple times", "[Lua: Events]")
@@ -150,10 +150,10 @@ TEST_CASE("Test unregistering of callback multiple times", "[Lua: Events]")
 local Event = Elona.require("Event")
 
 local function my_handler()
-   Store.global.called_times = Store.global.called_times + 1
+   mod.store.global.called_times = mod.store.global.called_times + 1
 end
 
-Store.global.called_times = 0
+mod.store.global.called_times = 0
 
 Event.register("core.all_turns_finished", my_handler)
 
@@ -165,7 +165,7 @@ Event.unregister("core.all_turns_finished", my_handler)
     lua.get_event_manager().trigger(lua::BaseEvent("core.all_turns_finished"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.called_times == 0))"));
+        "test", R"(assert(mod.store.global.called_times == 0))"));
 }
 
 TEST_CASE("Test unregistering of callback without registering", "[Lua: Events]")
@@ -177,10 +177,10 @@ TEST_CASE("Test unregistering of callback without registering", "[Lua: Events]")
 local Event = Elona.require("Event")
 
 local function my_handler()
-   Store.global.called_times = Store.global.called_times + 1
+   mod.store.global.called_times = mod.store.global.called_times + 1
 end
 
-Store.global.called_times = 0
+mod.store.global.called_times = 0
 
 Event.unregister("core.all_turns_finished", my_handler)
 )"));
@@ -188,7 +188,7 @@ Event.unregister("core.all_turns_finished", my_handler)
     lua.get_event_manager().trigger(lua::BaseEvent("core.all_turns_finished"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.called_times == 0))"));
+        "test", R"(assert(mod.store.global.called_times == 0))"));
 }
 
 TEST_CASE("Test unregistering of callback inside callback", "[Lua: Events]")
@@ -200,11 +200,11 @@ TEST_CASE("Test unregistering of callback inside callback", "[Lua: Events]")
 local Event = Elona.require("Event")
 
 local function my_handler()
-   Store.global.called_times = Store.global.called_times + 1
+   mod.store.global.called_times = mod.store.global.called_times + 1
    Event.unregister("core.all_turns_finished", my_handler)
 end
 
-Store.global.called_times = 0
+mod.store.global.called_times = 0
 
 Event.register("core.all_turns_finished", my_handler)
 )"));
@@ -213,7 +213,7 @@ Event.register("core.all_turns_finished", my_handler)
     lua.get_event_manager().trigger(lua::BaseEvent("core.all_turns_finished"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.called_times == 1))"));
+        "test", R"(assert(mod.store.global.called_times == 1))"));
 }
 
 TEST_CASE(
@@ -227,16 +227,16 @@ TEST_CASE(
 local Event = Elona.require("Event")
 
 local function first_handler()
-   Store.global.first = true
+   mod.store.global.first = true
    Event.trigger("core.player_turn_started", {})
 end
 
 local function second_handler()
-   Store.global.second = true
+   mod.store.global.second = true
 end
 
-Store.global.first = false
-Store.global.second = false
+mod.store.global.first = false
+mod.store.global.second = false
 
 Event.register("core.all_turns_finished", first_handler)
 Event.register("core.player_turn_started", second_handler)
@@ -245,7 +245,7 @@ Event.register("core.player_turn_started", second_handler)
     lua.get_event_manager().trigger(lua::BaseEvent("core.all_turns_finished"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.first == true))"));
+        "test", R"(assert(mod.store.global.first == true))"));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(assert(Store.global.second == true))"));
+        "test", R"(assert(mod.store.global.second == true))"));
 }
