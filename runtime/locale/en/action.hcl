@@ -723,5 +723,7 @@ locale {
         autopick {
             reloaded_autopick_file = "Reloaded autopick file."
         }
+
+        take_screenshot = "You took screenshot."
     }
 }

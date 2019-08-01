@@ -1,6 +1,7 @@
 #include "image.hpp"
 #include "application.hpp"
 #include "renderer.hpp"
+#include "surface.hpp"
 
 
 
@@ -11,26 +12,14 @@ namespace snail
 
 Image::Image(const fs::path& filepath, optional<Color> keycolor)
 {
-    auto surface = detail::enforce_img(
-        ::IMG_Load(filepathutil::to_utf8_path(filepath).c_str()));
-
-    if (keycolor)
-    {
-        detail::enforce_sdl(::SDL_SetColorKey(
-            surface,
-            true,
-            ::SDL_MapRGB(
-                surface->format, keycolor->r, keycolor->g, keycolor->b)));
-    }
+    Surface surface{filepath, keycolor};
 
     _ptr.reset(
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(
-            Application::instance().get_renderer().ptr(), surface)),
+            Application::instance().get_renderer().ptr(), surface.ptr())),
         ::SDL_DestroyTexture);
-    _width = surface->w;
-    _height = surface->h;
-
-    ::SDL_FreeSurface(surface);
+    _width = surface.width();
+    _height = surface.height();
 }
 
 

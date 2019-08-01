@@ -719,5 +719,7 @@ locale {
         autopick {
             reloaded_autopick_file = "autopickファイルを再読み込みした。"
         }
+
+        take_screenshot = "スクリーンショットを撮った。"
     }
 }

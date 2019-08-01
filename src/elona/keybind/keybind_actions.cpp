@@ -133,6 +133,7 @@ void initialize_keybind_actions(ActionMap& actions)
     actions.emplace("dump_player_info",      Action{ActionCategory::game,      {{Key::f11,             ModKey::none}}});
     actions.emplace("enable_voldemort",      Action{ActionCategory::game,      {{Key::f12,             ModKey::none}}});
     actions.emplace("reload_autopick",       Action{ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
+    actions.emplace("screenshot",            Action{ActionCategory::game,      {{Key::printscreen,     ModKey::none}}});
 
     actions.emplace("wizard_toggle_console", Action{ActionCategory::wizard,    {{Key::backquote,       ModKey::none}}});
     actions.emplace("wizard_open_console",   Action{ActionCategory::wizard,    {{Key::backquote,       ModKey::shift}}});
