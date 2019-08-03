@@ -1,4 +1,6 @@
 #include "gdata.hpp"
+#include <iomanip>
+#include <sstream>
 #include "variables.hpp"
 
 
@@ -208,6 +210,22 @@ void modify_crowd_density(int cc, int delta)
         if (game_data.crowd_density < 0)
             game_data.crowd_density = 0;
     }
+}
+
+
+
+std::string DateTime::to_string() const
+{
+    std::stringstream ss;
+    // clang-format off
+    ss << std::setfill('0') << year << '/'
+       << std::setw(2) << month << '/'
+       << std::setw(2) << day << ' '
+       << std::setw(2) << hour << ':'
+       << std::setw(2) << minute << ':'
+       << std::setw(2) << second;
+    // clang-format on
+    return ss.str();
 }
 
 } // namespace elona

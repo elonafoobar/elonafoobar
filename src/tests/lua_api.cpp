@@ -113,6 +113,11 @@ TEST_CASE("Core API: LuaCharacter", "[Lua: API]")
     lua_testcase("classes/LuaCharacter.lua");
 }
 
+TEST_CASE("Core API: tostring()", "[Lua: API]")
+{
+    lua_testcase("tostring.lua");
+}
+
 TEST_CASE("Exports: eating_effect", "[Lua: Exports]")
 {
     lua_testcase("exports/eating_effect.lua");

@@ -6,6 +6,7 @@ local inspect ={
     MIT LICENSE
 
     Copyright (c) 2013 Enrique García Cota
+    Copyright (c) 2019 KI; Add support for userdata's tostring().
 
     Permission is hereby granted, free of charge, to any person obtaining a
     copy of this software and associated documentation files (the
@@ -294,6 +295,15 @@ function Inspector:putValue(v)
   elseif tv == 'table' then
     self:putTable(v)
   else
+    if tv == 'userdata' then
+      -- Modified by KI: BEGIN
+      local mt = getmetatable(tv)
+      if type(mt) == 'table' and mt.__tostring then
+        self:puts(tostring(v))
+        return
+      end
+      -- Modified by KI: END
+    end
     self:puts('<', tv, ' ', self:getId(v), '>')
   end
 end

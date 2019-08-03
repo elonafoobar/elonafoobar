@@ -17,6 +17,8 @@ void remove(Item&);
 
 void change_material(Item&, const std::string&);
 
+std::string metamethod_tostring(const Item&);
+
 
 void bind(sol::state&);
 } // namespace LuaItem

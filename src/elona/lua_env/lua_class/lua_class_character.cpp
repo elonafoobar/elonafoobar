@@ -529,6 +529,15 @@ int LuaCharacter::get_ailment(Character& self, const EnumString& ailment)
     return 0;
 }
 
+
+
+std::string LuaCharacter::metamethod_tostring(const Character& self)
+{
+    return Character::lua_type() + "(" + std::to_string(self.index) + ")";
+}
+
+
+
 void LuaCharacter::bind(sol::state& lua)
 {
     auto LuaCharacter = lua.create_simple_usertype<Character>();
@@ -877,6 +886,8 @@ void LuaCharacter::bind(sol::state& lua)
         sol::overload(&LuaCharacter::move_to, &LuaCharacter::move_to_xy));
     LuaCharacter.set("switch_religion", &LuaCharacter::switch_religion);
     LuaCharacter.set("get_ailment", &LuaCharacter::get_ailment);
+
+    LuaCharacter.set("__tostring", &LuaCharacter::metamethod_tostring);
 
     auto key = Character::lua_type();
     lua.set_usertype(key, LuaCharacter);
