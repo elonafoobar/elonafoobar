@@ -23,72 +23,81 @@ using namespace std::literals::string_literals;
 /***
  * Stores the Lua environment and internal storage for a single mod.
  *
- * Mods each have a sanitized environment with a whitelist of safe
- * functions, so things like dofile can't be called. They also have an
- * internal C++ storage object for storing, serializing and
- * deserializing mod data alongside the base game data.
+ * Mods each have a sanitized environment with a whitelist of safe functions,
+ * so things like dofile can't be called. They also have storage object for
+ * storing, serializing and deserializing mod data alongside the base game
+ * data.
  */
 struct ModInfo
 {
     enum class StoreType
     {
+        global,
         map,
-        global
     };
 
-    explicit ModInfo(
-        const ModManifest& manifest_,
-        std::shared_ptr<sol::state> state)
-        : manifest(manifest_)
-    {
+
+
+    explicit ModInfo(const ModManifest& manifest, sol::state& state)
+        : manifest(manifest)
         // This environment is created with no globals.
-        env = sol::environment(*state, sol::create);
-
-        store_map = state->create_table();
-        store_global = state->create_table();
-
+        , env(sol::environment(state, sol::create))
+    {
         if (manifest.path)
         {
             chunk_cache = LoadedChunkCache{*manifest.path};
         }
     }
+
+
+
     ModInfo(const ModInfo&) = delete;
+    ModInfo(ModInfo&&) = delete;
     ModInfo& operator=(const ModInfo&) = delete;
+    ModInfo& operator=(ModInfo&&) = delete;
     ~ModInfo() = default;
+
+
 
     sol::object get_store(StoreType store_type) const
     {
-        std::string table_name;
-        switch (store_type)
-        {
-        case StoreType::map: table_name = "map"; break;
-        case StoreType::global: table_name = "global"; break;
-        }
-
-        return env["Store"][table_name].get<sol::object>();
+        const auto table_name = convert_store_type_to_table_name(store_type);
+        return env.get<sol::object>(std::tie("mod", "store", table_name));
     }
+
+
 
     void set_store(StoreType store_type, sol::object data)
     {
-        std::string table_name;
-        switch (store_type)
-        {
-        case StoreType::map: table_name = "map"; break;
-        case StoreType::global: table_name = "global"; break;
-        }
-
-        // bypass metatable that forces Store table reference to be
+        const auto table_name = convert_store_type_to_table_name(store_type);
+        // bypass metatable that forces store table reference to be
         // unchangeable (set in mod_manager::bind_store)
-        sol::table store = env["Store"];
+        sol::table store = env.get<sol::table>(std::tie("mod", "store"));
         store.raw_set(table_name, data);
     }
+
+
 
     ModManifest manifest;
     optional<LoadedChunkCache> chunk_cache;
     sol::environment env;
-    sol::table store_map;
-    sol::table store_global;
+
+
+
+private:
+    static constexpr const char* convert_store_type_to_table_name(
+        StoreType store_type)
+    {
+        switch (store_type)
+        {
+        case StoreType::global: return "global";
+        case StoreType::map: return "map";
+        default: assert(0); return nullptr;
+        }
+    }
 };
+
+
 
 /***
  * The stage of loading the lua environment is currently in.
@@ -100,6 +109,8 @@ enum class ModLoadingStage : unsigned
     lua_libraries_loaded,
     all_mods_loaded,
 };
+
+
 
 /***
  * The core interface to the Lua environment. Used as a central
@@ -487,9 +498,9 @@ private:
 
 
     /***
-     * Binds the Store global variable to a mod's environment.
+     * Binds the store variable to a mod table.
      */
-    static void bind_store(sol::state&, ModInfo&, sol::table&);
+    static void bind_store(sol::state&, sol::table&);
 
     /***
      * Whitelists functions that are safe for usage in user-written scripts.

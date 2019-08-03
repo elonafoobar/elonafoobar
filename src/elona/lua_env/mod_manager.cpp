@@ -283,7 +283,8 @@ void ModManager::clear_map_local_stores()
     for (auto&& pair : this->enabled_mods())
     {
         auto& mod = pair.second;
-        lua_->get_state()->safe_script(R"(Store.map = {})", mod->env);
+        mod->env.get<sol::table>(std::tie("mod", "store"))
+            .raw_set("map", lua_->get_state()->create_table());
     }
 }
 
@@ -294,7 +295,8 @@ void ModManager::clear_global_stores()
     for (auto&& pair : this->enabled_mods())
     {
         auto& mod = pair.second;
-        lua_->get_state()->safe_script(R"(Store.global = {})", mod->env);
+        mod->env.get<sol::table>(std::tie("mod", "store"))
+            .raw_set("global", lua_->get_state()->create_table());
     }
 }
 
@@ -336,47 +338,37 @@ int deny(
 
 
 
-int validate_store(
-    sol::table table,
-    sol::object key,
-    sol::object value,
-    sol::this_state ts)
+void ModManager::bind_store(sol::state& L, sol::table& table)
 {
-    if (table[key] != sol::lua_nil)
-    {
-        table.raw_set(key, value);
-        return 0;
-    }
+    sol::table store = L.create_table();
+    sol::table metatable = L.create_table();
 
-    return deny(table, key, value, ts);
-}
+    // Bind store.global and store.map.
+    store["global"] = L.create_table();
+    store["map"] = L.create_table();
 
+    // Prevent creating new variables in the store table.
+    metatable[sol::meta_function::new_index] = deny;
 
-
-void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
-{
-    sol::table Store = lua.create_table();
-    sol::table metatable = lua.create_table();
-
-    // Bind Store.global and Store.map.
-    metatable["global"] = mod.store_global;
-    metatable["map"] = mod.store_map;
-
-    // Prevent creating new variables in the Store table.
-    metatable[sol::meta_function::new_index] = validate_store;
-    metatable[sol::meta_function::index] = metatable;
-
-    Store[sol::metatable_key] = metatable;
-    table["Store"] = Store;
+    store[sol::metatable_key] = metatable;
+    table["store"] = store;
 }
 
 
 
 void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
 {
-    // Create the globals "Elona" and "Store" for this mod's
+    // Create the globals "Elona" and "store" for this mod's
     // environment.
-    bind_store(*lua_->get_state(), mod, table);
+    sol::table mod_tbl = lua_->get_state()->create_table();
+    sol::table metatable = lua_->get_state()->create_table();
+    bind_store(*lua_->get_state(), metatable);
+    // Prevent creating new variables in the store table.
+    metatable[sol::meta_function::new_index] = deny;
+    metatable[sol::meta_function::index] = metatable;
+    mod_tbl[sol::metatable_key] = metatable;
+    table["mod"] = mod_tbl;
+
     table["Elona"] = lua_->get_api_manager().bind(*lua_); // TODO move elsewhere
     table["_MOD_ID"] = mod.manifest.id;
 
@@ -421,7 +413,7 @@ void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
 {
     std::unique_ptr<ModInfo> info =
-        std::make_unique<ModInfo>(manifest, lua_->get_state());
+        std::make_unique<ModInfo>(manifest, *lua_->get_state());
 
     if (readonly)
     {

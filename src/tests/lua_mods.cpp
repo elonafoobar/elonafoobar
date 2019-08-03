@@ -40,7 +40,8 @@ TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(dood = "dood")"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(function dood() end)"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Elona = "dood")"));
-    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(Store = "dood")"));
+    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(mod = "dood")"));
+    REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(mod.store = "dood")"));
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("my_mod", R"(assert(_MOD_ID == "my_mod"))"));
 }
@@ -99,12 +100,12 @@ TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
     mod_mgr.load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(
-        mod_mgr.load_mod_from_script("test", "Store.global.thing = 1"));
+        mod_mgr.load_mod_from_script("test", "mod.store.global.thing = 1"));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
-    int thing =
-        mod_mgr.get_enabled_mod("test")->store_global["thing"].get<int>();
+        mod_mgr.run_in_mod("test", "assert(mod.store.global.thing == 1)"));
+    int thing = mod_mgr.get_enabled_mod("test")->env.get<int>(
+        std::tie("mod", "store", "global", "thing"));
     REQUIRE(thing == 1);
 }
 
@@ -115,10 +116,10 @@ TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
     mod_mgr.load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(
-        mod_mgr.load_mod_from_script("test", "Store.global.thing = 1"));
+        mod_mgr.load_mod_from_script("test", "mod.store.global.thing = 1"));
 
     // Accessed from main state, not the mod's environment
-    sol::object obj = (*lua.get_state())["Store"];
+    sol::object obj = (*lua.get_state())["mod.store"];
     REQUIRE(obj == sol::lua_nil);
 }
 
@@ -132,28 +133,28 @@ TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
 local Event = Elona.require("Event")
 
 local function my_turn_handler()
-  Store.global.thing = Store.global.thing + 1
+  mod.store.global.thing = mod.store.global.thing + 1
 end
 
-Store.global.thing = 1
+mod.store.global.thing = 1
 
 Event.register("core.all_turns_finished", my_turn_handler)
 )"));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
+        mod_mgr.run_in_mod("test", "assert(mod.store.global.thing == 1)"));
 
     lua.get_event_manager().trigger(
         elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("test", "assert(Store.global.thing == 2)"));
+        mod_mgr.run_in_mod("test", "assert(mod.store.global.thing == 2)"));
 
     lua.get_event_manager().trigger(
         elona::lua::BaseEvent("core.all_turns_finished"));
     lua.get_event_manager().trigger(
         elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("test", "assert(Store.global.thing == 4)"));
+        mod_mgr.run_in_mod("test", "assert(mod.store.global.thing == 4)"));
 }
 
 TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
@@ -162,23 +163,23 @@ TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
     auto& mod_mgr = lua.get_mod_manager();
     mod_mgr.load_mods(filesystem::dirs::mod());
 
-    REQUIRE_NOTHROW(
-        mod_mgr.load_mod_from_script("first", R"(Store.global.thing = 42)"));
     REQUIRE_NOTHROW(mod_mgr.load_mod_from_script(
-        "second", R"(Store.global.thing = "dood")"));
+        "first", R"(mod.store.global.thing = 42)"));
+    REQUIRE_NOTHROW(mod_mgr.load_mod_from_script(
+        "second", R"(mod.store.global.thing = "dood")"));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("first", R"(assert(Store.global.thing == 42))"));
+        mod_mgr.run_in_mod("first", R"(assert(mod.store.global.thing == 42))"));
     REQUIRE_NOTHROW(mod_mgr.run_in_mod(
-        "second", R"(assert(Store.global.thing == "dood"))"));
+        "second", R"(assert(mod.store.global.thing == "dood"))"));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("second", R"(Store.global.thing = false)"));
+        mod_mgr.run_in_mod("second", R"(mod.store.global.thing = false)"));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("first", R"(assert(Store.global.thing == 42))"));
-    REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("second", R"(assert(Store.global.thing == false))"));
+        mod_mgr.run_in_mod("first", R"(assert(mod.store.global.thing == 42))"));
+    REQUIRE_NOTHROW(mod_mgr.run_in_mod(
+        "second", R"(assert(mod.store.global.thing == false))"));
 }
 
 
@@ -195,7 +196,7 @@ local Event = Elona.require("Event")
 local function my_turn_handler()
    for x = 1, 20 do
       for y = 1, 20 do
-         Store.global.grid[x][y] = 1
+         mod.store.global.grid[x][y] = 1
       end
    end
 end
@@ -209,18 +210,18 @@ for i = 1, 20 do
    end
 end
 
-Store.global.grid = grid
+mod.store.global.grid = grid
 
 Event.register("core.all_turns_finished", my_turn_handler)
 )"));
 
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 0)"));
+        mod_mgr.run_in_mod("test", "assert(mod.store.global.grid[1][1] == 0)"));
 
     lua.get_event_manager().trigger(
         elona::lua::BaseEvent("core.all_turns_finished"));
     REQUIRE_NOTHROW(
-        mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 1)"));
+        mod_mgr.run_in_mod("test", "assert(mod.store.global.grid[1][1] == 1)"));
 }
 
 TEST_CASE("Test requiring Lua chunk multiple times", "[Lua: Mods]")
