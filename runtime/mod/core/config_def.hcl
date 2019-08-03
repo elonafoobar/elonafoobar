@@ -79,6 +79,7 @@ config {
                 default = 25
                 min = 1
                 max = 50
+                step = 5
             }
 
             skip_random_event_popups = false
@@ -355,11 +356,13 @@ config {
                 default = 50
                 min = 0
                 max = 390
+                step = 10
             }
             enhanced_skill_tracking_upperbound = {
                 default = 100
                 min = 10
                 max = 400
+                step = 10
             }
             leash_icon = false
             autopick = false
@@ -375,6 +378,7 @@ config {
                 default = 100
                 min = 10
                 max = 100
+                step = 10
             }
 
             startup_script = {

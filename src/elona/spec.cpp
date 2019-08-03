@@ -210,6 +210,10 @@ IntDef Object::visit_int(
 
     def.min = item.at("min").as<int>();
     def.max = item.at("max").as<int>();
+    if (item.find("step") != item.end())
+    {
+        def.step = item.at("step").as<int>();
+    }
     def.default_value = default_value;
 
     return def;

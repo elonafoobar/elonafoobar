@@ -148,6 +148,7 @@ public:
     int variable;
     int min;
     int max;
+    int step;
     std::string text;
 
     ConfigMenuItemInteger(
@@ -156,18 +157,20 @@ public:
         int variable,
         int min,
         int max,
+        int step,
         const std::string& text)
         : ConfigMenuItemBase(key, locale_key)
         , variable(variable)
         , min(min)
         , max(max)
+        , step(step)
         , text(text)
     {
     }
 
     void change(int delta) override
     {
-        variable = clamp(variable + delta, min, max);
+        variable = clamp(variable + delta * step, min, max);
         Config::instance().set(key, variable);
     }
 

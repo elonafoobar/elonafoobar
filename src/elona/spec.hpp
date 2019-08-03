@@ -68,6 +68,7 @@ struct IntDef
     int default_value = 0;
     int min = 0;
     int max = 0;
+    int step = 1;
 };
 
 struct StringDef
@@ -351,6 +352,19 @@ public:
                 key, "Cannot get min value for non-integer option " + key);
         }
         return get<IntDef>(key).min;
+    }
+
+    /**
+     * Gets the step value of an integer.
+     */
+    int get_step(const std::string& key) const
+    {
+        if (!is<IntDef>(key))
+        {
+            throw SpecError(
+                key, "Cannot get step value for non-integer option " + key);
+        }
+        return get<IntDef>(key).step;
     }
 
     // These functions allow for injecting more specific validations
