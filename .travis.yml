@@ -4,7 +4,6 @@ matrix:
   include:
     - os: linux
       env: BUILD_TYPE=linux
-      sudo: required
       compiler: gcc-7
       addons:
         apt:
