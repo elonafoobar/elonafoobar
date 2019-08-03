@@ -157,10 +157,11 @@ void ConfigScreenCreator::add_item_integer(
 {
     int min = config_.get_def().get_min(key);
     int max = config_.get_def().get_max(key);
+    int step = config_.get_def().get_step(key);
 
     result_.at(menu_index_)
         ->items.emplace_back(std::make_unique<ConfigMenuItemInteger>(
-            key, locale_key, default_value, min, max, "${_1}"));
+            key, locale_key, default_value, min, max, step, "${_1}"));
 }
 
 
@@ -448,9 +449,7 @@ bool ConfigScreenCreator::visit_config_item(
     else if (config_.get_def().is<spec::IntDef>(current_key))
     {
         add_item_integer(
-            current_key, locale_key, config_.get<int>(current_key)
-
-        );
+            current_key, locale_key, config_.get<int>(current_key));
     }
     else if (config_.get_def().is<spec::EnumDef>(current_key))
     {
