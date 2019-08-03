@@ -5530,7 +5530,8 @@ int target_position(bool target_chara)
             {
                 if (cansee == 0 || chip_data.for_cell(tlocx, tlocy).effect & 4)
                 {
-                    txt(i18n::s.get("core.action.which_direction.cannot_see"));
+                    txt(i18n::s.get(
+                        "core.action.which_direction.cannot_see_location"));
                     continue;
                 }
                 snd("core.ok1");
