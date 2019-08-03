@@ -24,7 +24,7 @@ local function get_parser()
       :help_max_width(120)
 
    parser:argument "root_path"
-      :description("Root directory of ElonaFoobar repo")
+      :description("Root directory of elonafoobar repo")
       :args(1)
       :argname "<root_path>"
 

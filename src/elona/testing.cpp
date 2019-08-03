@@ -177,7 +177,7 @@ void pre_init()
     initialize_config_defs();
     initialize_config_preload();
 
-    title(u8"Elona Foobar version "s + latest_version.short_string());
+    title(u8"Elona foobar version "s + latest_version.short_string());
 
     init_assets();
     filesystem::dirs::set_base_save_directory(fs::path("save"));

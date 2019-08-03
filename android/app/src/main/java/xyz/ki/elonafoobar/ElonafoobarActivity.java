@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 import org.libsdl.app.SDLActivity;
 
-public class ElonaFoobarActivity extends SDLActivity
+public class ElonafoobarActivity extends SDLActivity
 {
     private static final String TAG = "Elona foobar";
 

@@ -1,4 +1,4 @@
-clone_folder: C:\projects\ElonaFoobar
+clone_folder: C:\projects\elonafoobar
 
 os:
   - Visual Studio 2017
@@ -36,18 +36,18 @@ branches:
 
 cache:
   - C:\SDK -> appveyor.yml
-  - C:\projects\ElonaFoobar\bin -> appveyor.yml
+  - C:\projects\elonafoobar\bin -> appveyor.yml
 
 before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
-  - cd C:\projects\ElonaFoobar
+  - cd C:\projects\elonafoobar
   - ps: "$(git ls-files) -split \"`r`n\" | where { $_ -match '\\.(c|h|cpp|hpp|cxx|hxx|cc|hh)$' } | foreach { Set-ItemProperty $_ -Name LastWriteTime -Value $([DateTime]::Parse($(git log --format=%cI -n1 $_))) }"
   - if exist %PREFIX% set NEEDDEPENDS=rem
   - |-
     %NEEDDEPENDS% mkdir %PREFIX%
-    %NEEDDEPENDS% cp C:\projects\ElonaFoobar\deps\install.bat %PREFIX%
+    %NEEDDEPENDS% cp C:\projects\elonafoobar\deps\install.bat %PREFIX%
     %NEEDDEPENDS% cd %PREFIX%
-    %NEEDDEPENDS% git clone --depth=1 https://github.com/ElonaFoobar/windows_deps windows
+    %NEEDDEPENDS% git clone --depth=1 https://github.com/elonafoobar/windows_deps windows
     %NEEDDEPENDS% call .\install.bat
 
 build_script:
