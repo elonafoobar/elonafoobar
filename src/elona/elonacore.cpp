@@ -78,13 +78,6 @@ std::string atbuff;
 
 
 
-std::string lang(const std::string& a, const std::string& b)
-{
-    return jp ? a : b;
-}
-
-
-
 void select_house_board_tile()
 {
     snd("core.pop2");
@@ -2876,33 +2869,34 @@ void initialize_set_of_random_generation()
     giftvalue(3) = 50;
     giftvalue(4) = 75;
     giftvalue(5) = 100;
-    notesel(buff);
+
+    bool in_booktitle_definition = false;
+    int isetbook_index = 0;
+    for (const auto& line : fileutil::read_by_line(
+             i18n::s.get_locale_dir("core") / "lazy" / "book.txt"))
     {
-        buff(0).clear();
-        std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "book.txt").native(),
-            std::ios::binary};
-        std::string tmp;
-        while (std::getline(in, tmp))
+        if (line == u8"%DEFINE")
         {
-            buff(0) += tmp + '\n';
+            in_booktitle_definition = true;
         }
-    }
-    p = instr(buff, 0, u8"%DEFINE"s);
-    buff = strmid(buff, p, instr(buff, p, u8"%END"s));
-    notedel(0);
-    SDIM3(booktitle, noteinfo(), 25);
-    p = 0;
-    elona_vector1<std::string> tmp;
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
-    {
-        noteget(tmp, cnt);
-        csvsort(s, tmp, 44);
-        booktitle(elona::stoi(s(0))) = lang(s(1), s(2));
-        if (elona::stoi(s(3)) == 1)
+        else if (line == u8"%END")
         {
-            isetbook(p) = elona::stoi(s(0));
-            ++p;
+            break;
+        }
+        else if (in_booktitle_definition)
+        {
+            // E.g., 7,Book Title,T
+            const auto columns = strutil::split(line, ',');
+            const auto id = elona::stoi(columns.at(0));
+            const auto& title = columns.at(1);
+            const auto is_generated = columns.at(2) == "T";
+
+            booktitle(id) = title;
+            if (is_generated)
+            {
+                isetbook(isetbook_index) = id;
+                ++isetbook_index;
+            }
         }
     }
 }

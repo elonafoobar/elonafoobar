@@ -4,22 +4,22 @@
 Number,Japanese title,English title,		1=randomly generated
 
 %DEFINE
-0,日記,My Diary,				1
-1,迷子の兵士に送るマニュアル,Beginner's Guide,	0
-2,バグです,It's a bug,				0
-3,見るな,Don't read this,			1
-4,博物館運営マニュアル,Museum Guide,		1
-5,クラムベリー中毒,Crimberry Addict,		1
-6,目が回る,Cat's Cradle,			1
-7,ハーブの効用,Herb Effect,			1
-8,店の運用マニュアル,Shopkeeper Guide,		1
-9,初めての自家栽培,Easy Gardening,		1
-10,水を大切に！,Water!,				1
-11,牧畜のすすめ,Breeder's Guide,		1
-12,なぞの手記,Strange Diary,			1
-13,ピラミッドへの挑戦状,Pyramid Invitation,	0
-14,カードゲームのルール,Card Game Manual,	1
-15,ダンジョン運営マニュアル,Dungeon Guide,	1
+0,日記,T
+1,迷子の兵士に送るマニュアル,F
+2,バグです,F
+3,見るな,T
+4,博物館運営マニュアル,T
+5,クラムベリー中毒,T
+6,目が回る,T
+7,ハーブの効用,T
+8,店の運用マニュアル,T
+9,初めての自家栽培,T
+10,水を大切に！,T
+11,牧畜のすすめ,T
+12,なぞの手記,T
+13,ピラミッドへの挑戦状,F
+14,カードゲームのルール,T
+15,ダンジョン運営マニュアル,T
 %END
 
 /Translation Note
