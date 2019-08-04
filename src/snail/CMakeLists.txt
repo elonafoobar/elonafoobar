@@ -18,6 +18,7 @@ set(SNAIL_SOURCES
   font.cpp
   image.cpp
   input.cpp
+  surface.cpp
 
   backends/${SNAIL_DIR}/application.cpp
   backends/${SNAIL_DIR}/audio.cpp
@@ -28,6 +29,7 @@ set(SNAIL_SOURCES
   backends/${SNAIL_DIR}/renderer.cpp
   backends/${SNAIL_DIR}/touch_input.cpp
   backends/${SNAIL_DIR}/window.cpp
+  backends/${SNAIL_DIR}/surface.cpp
   )
 
 set(SNAIL_ANDROID_SOURCES
@@ -35,6 +37,7 @@ set(SNAIL_ANDROID_SOURCES
   font.cpp
   image.cpp
   input.cpp
+  surface.cpp
 
   backends/${SNAIL_DIR}/application.cpp
   backends/${SNAIL_DIR}/audio.cpp
@@ -44,6 +47,7 @@ set(SNAIL_ANDROID_SOURCES
   backends/${SNAIL_DIR}/renderer.cpp
   backends/${SNAIL_DIR}/touch_input.cpp
   backends/${SNAIL_DIR}/window.cpp
+  backends/${SNAIL_DIR}/surface.cpp
   )
 
 if(ANDROID_GENERATE_BUILD_FILES)

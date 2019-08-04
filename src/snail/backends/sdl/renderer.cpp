@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "../../detail/sdl.hpp"
+#include "../../surface.hpp"
 
 
 namespace elona
@@ -483,6 +484,23 @@ void Renderer::render_image_crop(
         ::SDL_RenderCopyEx(ptr(), image, &src, &dst, 0, 0, ::SDL_FLIP_NONE));
 }
 
+
+
+Surface Renderer::take_screenshot()
+{
+    const auto format = static_cast<Uint32>(Surface::Format::argb8888);
+    int width;
+    int height;
+    detail::enforce_sdl(
+        ::SDL_QueryTexture(render_target(), nullptr, nullptr, &width, &height));
+
+    const auto screenshot =
+        ::SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, format);
+    detail::enforce_sdl(::SDL_RenderReadPixels(
+        ptr(), nullptr, format, screenshot->pixels, screenshot->pitch));
+
+    return Surface{screenshot};
+}
 
 } // namespace snail
 } // namespace elona

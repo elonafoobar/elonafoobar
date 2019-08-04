@@ -75,6 +75,13 @@ fs::path save()
 
 
 
+fs::path screenshot()
+{
+    return current_profile() / "screenshot";
+}
+
+
+
 fs::path user()
 {
     return base_user_dir;

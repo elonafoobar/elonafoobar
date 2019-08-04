@@ -597,4 +597,9 @@ data:add_multi(
          file = "<_builtin_>/sound/offer2.wav",
          legacy_id = 121,
       },
+      {
+         id = "screenshot",
+         file = "<core>/sound/screenshot.wav",
+         legacy_id = 122,
+      },
 })

@@ -18,6 +18,8 @@ namespace elona
 namespace snail
 {
 
+class Surface;
+
 
 
 class Renderer : public lib::noncopyable
@@ -217,6 +219,8 @@ public:
         int dst_x,
         int dst_y);
 
+    Surface take_screenshot();
+
 private:
     TextAlignment _text_alignment = TextAlignment::left;
     TextBaseline _text_baseline = TextBaseline::top;
@@ -226,9 +230,8 @@ private:
 };
 
 
+
 ENUMUTIL_DEFINE_BITWISE_OPERATORS(Renderer::Flag)
-
-
 
 } // namespace snail
 } // namespace elona

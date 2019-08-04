@@ -1,3 +1,6 @@
+#include <chrono>
+#include "../snail/application.hpp"
+#include "../snail/surface.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "audio.hpp"
@@ -29,7 +32,47 @@
 namespace elona
 {
 
-static bool _proc_autodig()
+namespace
+{
+
+void _take_screenshot()
+{
+    using namespace std::chrono;
+
+    const auto now = system_clock::now();
+    const auto now_time_t = system_clock::to_time_t(now);
+    const auto now_tm = std::localtime(&now_time_t);
+
+    constexpr size_t len = 4 /*Y*/ + 2 /*m*/ + 2 /*d*/ + 2 /*H*/ + 2 /*M*/;
+    char buf[len + 1];
+    std::strftime(buf, len, "%Y%m%d%H%M", now_tm);
+
+    auto filepath =
+        filesystem::dirs::screenshot() / (playerid + "-" + buf + ".png");
+    for (int i = 2;; ++i)
+    {
+        if (fs::exists(filepath))
+        {
+            filepath = filesystem::dirs::screenshot() /
+                (playerid + "-" + buf + "-" + std::to_string(i) + ".png");
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    auto ss = snail::Application::instance().get_renderer().take_screenshot();
+    ss.save(filepath);
+    txt(i18n::s.get("core.action.take_screenshot"));
+    Message::instance().linebreak();
+    txt(filepathutil::to_utf8_path(filepath));
+    snd("core.screenshot");
+}
+
+
+
+bool _proc_autodig()
 {
     int x = cdata.player().next_position.x;
     int y = cdata.player().next_position.y;
@@ -51,6 +94,10 @@ static bool _proc_autodig()
     }
     return false;
 }
+
+} // namespace
+
+
 
 optional<TurnResult> handle_pc_action(std::string& action)
 {
@@ -793,6 +840,12 @@ optional<TurnResult> handle_pc_action(std::string& action)
         update_screen();
         return none;
     }
+    if (action == "screenshot")
+    {
+        _take_screenshot();
+        await(100);
+        return none;
+    }
     if (action != ""s && action != "cancel" /* && key != key_alter */)
     {
         txt(i18n::s.get("core.action.hit_key_for_help"),
@@ -802,6 +855,5 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     return none;
 }
-
 
 } // namespace elona

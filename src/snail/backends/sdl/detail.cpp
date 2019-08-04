@@ -27,7 +27,7 @@ void enforce_ttf(int result)
 }
 
 
-void enforce_image(int result)
+void enforce_img(int result)
 {
     if (result != 0)
     {

@@ -48,6 +48,7 @@ fs::path profile_root();
 fs::path current_profile();
 fs::path save();
 fs::path save(const std::string& player_id);
+fs::path screenshot();
 fs::path sound();
 fs::path tmp();
 fs::path user();
