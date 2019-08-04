@@ -659,6 +659,7 @@ std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
 bool is_valid_mod_id(const std::string& id)
 {
     return !id.empty() && _is_alnum_only(id) &&
+        filepathutil::is_portable_path(filepathutil::u8path(id)) &&
         !lua->get_mod_manager().mod_id_is_reserved(id);
 }
 

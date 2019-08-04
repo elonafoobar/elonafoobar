@@ -106,4 +106,42 @@ boost::optional<boost::filesystem::path::string_type> get_executable_path()
     return fs::path::string_type(buf);
 }
 
+
+
+bool is_portable_path(const boost::filesystem::path& filename)
+{
+    // General check by Boost.Filesystem such as invalid characters.
+    auto u8str = to_utf8_path(filename);
+    if (!fs::portable_name(u8str))
+        return false;
+
+    // boost::filesyste::portable_name() function does not check the paths
+    // reserved by Windows.
+    // https://www.boost.org/doc/libs/1_69_0/libs/filesystem/doc/portability_guide.htm
+    for (const auto fname : u8path(u8str))
+    {
+        // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+        static constexpr const char* reserved_names[] = {
+            "con",  "prn",  "aux",  "nul",  "com1", "com2", "com3", "com4",
+            "com5", "com6", "com7", "com8", "com9", "lpt1", "lpt2", "lpt3",
+            "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9",
+        };
+
+        bool is_reserved = std::any_of(
+            std::begin(reserved_names),
+            std::end(reserved_names),
+            [&](const char* reserved_name) {
+                // Reserved name following extensions is also reserved.
+                auto copy = fname;
+                copy.replace_extension(); // Remove extension.
+                return copy == reserved_name;
+            });
+        if (is_reserved)
+            return false;
+    }
+
+    // portable name
+    return true;
+}
+
 } // namespace filepathutil
