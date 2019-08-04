@@ -67,6 +67,7 @@ void _take_screenshot()
     txt(i18n::s.get("core.action.take_screenshot"));
     Message::instance().linebreak();
     txt(filepathutil::to_utf8_path(filepath));
+    snd("core.screenshot");
 }
 
 
