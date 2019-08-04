@@ -20,7 +20,7 @@ struct AbilityData
 
 
 
-ELONA_DEFINE_LUA_DB(AbilityDB, AbilityData, true, "core.ability")
+ELONA_DEFINE_LUA_DB(AbilityDB, AbilityData, "core.ability")
 
 
 

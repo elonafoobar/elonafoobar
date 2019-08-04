@@ -55,7 +55,7 @@ struct ItemData
 
 
 
-ELONA_DEFINE_LUA_DB(ItemDB, ItemData, true, "core.item")
+ELONA_DEFINE_LUA_DB(ItemDB, ItemData, "core.item")
 
 
 

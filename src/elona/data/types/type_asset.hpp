@@ -39,7 +39,7 @@ struct AssetData
 
 
 
-ELONA_DEFINE_LUA_DB(AssetDB, AssetData, false, "core.asset")
+ELONA_DEFINE_LUA_DB(AssetDB, AssetData, "core.asset")
 
 
 

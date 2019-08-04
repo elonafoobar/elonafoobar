@@ -17,7 +17,7 @@ struct TraitData
 
 
 
-ELONA_DEFINE_LUA_DB(TraitDB, TraitData, true, "core.trait")
+ELONA_DEFINE_LUA_DB(TraitDB, TraitData, "core.trait")
 
 
 

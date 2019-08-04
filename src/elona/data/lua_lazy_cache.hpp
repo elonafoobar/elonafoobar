@@ -1,5 +1,6 @@
 #pragma once
 
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 #include "../../thirdparty/ordered_map/ordered_map.h"
@@ -22,15 +23,31 @@ namespace elona
 namespace data
 {
 
-template <typename>
-struct LuaLazyCacheTraits;
+namespace detail
+{
 
+template <typename T, typename = void>
+struct has_legacy_id : public std::false_type
+{
+};
 
 
 template <typename T>
-class LuaLazyCacheWithLegacyIdTable : public lib::noncopyable
+struct has_legacy_id<T, decltype((void)T::legacy_id)> : public std::true_type
 {
 };
+
+
+// If T::legacy_id exists, it becomes true; otherwise false.
+template <typename T>
+constexpr bool has_legacy_id_v = has_legacy_id<T>::value;
+
+} // namespace detail
+
+
+
+template <typename>
+struct LuaLazyCacheTraits;
 
 
 
@@ -39,11 +56,9 @@ class LuaLazyCache : public lib::noncopyable
 {
 public:
     using Traits = LuaLazyCacheTraits<T>;
-    using IdType = SharedId;
-    using LegacyIdType = int;
     using DataType = typename Traits::DataType;
+    using IdType = decltype(DataType::id);
     using MapType = std::unordered_map<IdType, DataType>;
-    using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
     using ErrorMapType = std::unordered_map<IdType, std::string>;
     using KeysIterator = lib::map_key_iterator<MapType, IdType>;
     using ValuesIterator = lib::map_value_iterator<MapType, DataType>;
@@ -68,6 +83,7 @@ public:
     {
         return std::begin(_storage);
     }
+
 
 
     typename MapType::const_iterator end() const
@@ -99,7 +115,7 @@ public:
 
         for (const auto& pair : *it)
         {
-            SharedId id(pair.first.template as<std::string>());
+            IdType id(pair.first.template as<std::string>());
             if ((*this)[id])
                 continue;
 
@@ -112,8 +128,8 @@ public:
     void clear()
     {
         _storage.clear();
-        _by_legacy_id.clear();
     }
+
 
 
     optional<std::string> error(const IdType& id)
@@ -125,19 +141,7 @@ public:
         return it->second;
     }
 
-    optional<SharedId> get_id_from_legacy(const LegacyIdType& legacy_id)
-    {
-        if (!Traits::need_legacy_id)
-        {
-            return none;
-        }
 
-        const auto itr = _by_legacy_id.find(legacy_id);
-        if (itr != std::end(_by_legacy_id))
-            return itr->second;
-
-        return retrieve_legacy_id_from_lua(legacy_id);
-    }
 
     optional_ref<DataType> operator[](const IdType& id)
     {
@@ -148,27 +152,21 @@ public:
         return retrieve_from_lua(id);
     }
 
+
+
     optional_ref<DataType> operator[](const std::string& inner_id)
     {
         return (*this)[IdType(inner_id)];
     }
+
+
 
     optional_ref<DataType> operator[](const char* inner_id)
     {
         return (*this)[IdType(std::string(inner_id))];
     }
 
-    optional_ref<DataType> operator[](const LegacyIdType& legacy_id)
-    {
-        if (const auto id = get_id_from_legacy(legacy_id))
-        {
-            return (*this)[*id];
-        }
-        else
-        {
-            return none;
-        }
-    }
+
 
     const DataType& ensure(const IdType& id)
     {
@@ -183,45 +181,30 @@ public:
         return *data;
     }
 
+
+
     const DataType& ensure(const std::string& inner_id)
     {
         return this->ensure(IdType(inner_id));
     }
+
+
 
     const DataType& ensure(const char* inner_id)
     {
         return this->ensure(IdType(std::string(inner_id)));
     }
 
-    const DataType& ensure(const LegacyIdType& legacy_id)
-    {
-        const auto id = get_id_from_legacy(legacy_id);
 
-        if (!id)
-        {
-            throw sol::error{"No data entry with legacy ID \"" +
-                             std::to_string(legacy_id) + "\" of type \"" +
-                             Traits::type_id + "\" exists."};
-        }
 
-        return this->ensure(*id);
-    }
+protected:
+    lua::DataTable _data;
+    MapType _storage;
+    ErrorMapType _errors;
+
+
 
 private:
-    optional<IdType> retrieve_legacy_id_from_lua(const LegacyIdType& legacy_id)
-    {
-        optional<std::string> it = _data.by_legacy(Traits::type_id, legacy_id);
-
-        if (it)
-        {
-            IdType id(*it);
-            _by_legacy_id.emplace(legacy_id, id);
-            return id;
-        }
-
-        return none;
-    }
-
     optional_ref<DataType> retrieve_from_lua(const IdType& id)
     {
         if (_errors.find(id) != _errors.end())
@@ -260,20 +243,116 @@ private:
 
         return _storage[id];
     }
+};
+
+
+
+template <typename T>
+class LuaLazyCacheWithLegacyIdTable : public LuaLazyCache<T>
+{
+private:
+    using Self = LuaLazyCacheWithLegacyIdTable;
+    using Super = LuaLazyCache<T>;
+
+
+public:
+    using Traits = typename Super::Traits;
+    using DataType = typename Super::DataType;
+    using IdType = typename Super::IdType;
+    using MapType = typename Super::MapType;
+    using ErrorMapType = typename Super::ErrorMapType;
+    using KeysIterator = typename Super::KeysIterator;
+    using ValuesIterator = typename Super::ValuesIterator;
+
+    using LegacyIdType = decltype(DataType::legacy_id);
+    using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
+
+
+
+    void clear()
+    {
+        Super::clear();
+        _by_legacy_id.clear();
+    }
+
+
+
+    optional<IdType> get_id_from_legacy(const LegacyIdType& legacy_id)
+    {
+        static_assert(Traits::has_legacy_id, "DB does not support legacy ID.");
+
+        const auto itr = _by_legacy_id.find(legacy_id);
+        if (itr != std::end(_by_legacy_id))
+            return itr->second;
+
+        return retrieve_legacy_id_from_lua(legacy_id);
+    }
+
+
+
+    using Super::operator[]; // Don't hide overload super class has.
+
+    optional_ref<DataType> operator[](const LegacyIdType& legacy_id)
+    {
+        if (const auto id = get_id_from_legacy(legacy_id))
+        {
+            return (*this)[*id];
+        }
+        else
+        {
+            return none;
+        }
+    }
+
+
+
+    using Super::ensure; // Don't hide overload super class has.
+
+    const DataType& ensure(const LegacyIdType& legacy_id)
+    {
+        const auto id = get_id_from_legacy(legacy_id);
+
+        if (!id)
+        {
+            throw sol::error{"No data entry with legacy ID \"" +
+                             std::to_string(legacy_id) + "\" of type \"" +
+                             Traits::type_id + "\" exists."};
+        }
+
+        return this->ensure(*id);
+    }
+
+
 
 protected:
-    lua::DataTable _data;
-    MapType _storage;
     LegacyMapType _by_legacy_id;
-    ErrorMapType _errors;
+
+
+
+private:
+    optional<IdType> retrieve_legacy_id_from_lua(const LegacyIdType& legacy_id)
+    {
+        optional<std::string> it =
+            Super::_data.by_legacy(Traits::type_id, legacy_id);
+
+        if (it)
+        {
+            IdType id(*it);
+            _by_legacy_id.emplace(legacy_id, id);
+            return id;
+        }
+
+        return none;
+    }
 };
+
 
 } // namespace data
 } // namespace elona
 
 
 
-#define ELONA_DEFINE_LUA_DB(ClassName, DataTypeName, legacy_id, name) \
+#define ELONA_DEFINE_LUA_DB(ClassName, DataTypeName, name) \
     class ClassName; \
     namespace data \
     { \
@@ -281,11 +360,16 @@ protected:
     struct LuaLazyCacheTraits<ClassName> \
     { \
         using DataType = DataTypeName; \
-        static const constexpr bool need_legacy_id = legacy_id; \
+        static const constexpr bool has_legacy_id = \
+            detail::has_legacy_id_v<DataTypeName>; \
         static const constexpr char* type_id = name; \
     }; \
     } \
-    class ClassName : public data::LuaLazyCache<ClassName> \
+    class ClassName \
+        : public std::conditional_t< \
+              data::LuaLazyCacheTraits<ClassName>::has_legacy_id, \
+              data::LuaLazyCacheWithLegacyIdTable<ClassName>, \
+              data::LuaLazyCache<ClassName>> \
     { \
     public: \
         ClassName() = default; \

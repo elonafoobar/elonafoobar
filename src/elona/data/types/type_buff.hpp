@@ -19,7 +19,7 @@ struct BuffData
 
 
 
-ELONA_DEFINE_LUA_DB(BuffDB, BuffData, true, "core.buff")
+ELONA_DEFINE_LUA_DB(BuffDB, BuffData, "core.buff")
 
 
 
