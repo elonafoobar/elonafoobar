@@ -15,23 +15,21 @@ TEST_CASE("test registering Lua functions", "[Lua: Exports]")
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Exports = {}
-Exports.nesting = {}
+local exports = {}
+exports.nesting = {}
 
-function Exports.my_callback()
+function exports.my_callback()
    mod.store.global.called_times_a = mod.store.global.called_times_a + 1
 end
 
-function Exports.nesting.my_callback()
+function exports.nesting.my_callback()
    mod.store.global.called_times_b = mod.store.global.called_times_b + 1
 end
 
 mod.store.global.called_times_a = 0
 mod.store.global.called_times_b = 0
 
-return {
-    Exports = Exports
-}
+return exports
 )"));
 
     lua.get_export_manager().register_all_exports();
@@ -81,17 +79,15 @@ TEST_CASE(
 {
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_registry_chara_callback", R"(
-local Exports = {}
+local exports = {}
 
-function Exports.my_callback(chara)
+function exports.my_callback(chara)
    mod.store.global.found_index = chara.index
 end
 
 mod.store.global.found_index = -1
 
-return {
-    Exports = Exports
-}
+return exports
 )"));
 
     elona::testing::start_in_debug_map();

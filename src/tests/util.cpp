@@ -117,15 +117,13 @@ void register_lua_function(
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
         mod_id,
         "\
-local Exports = {}\
+local exports = {}\
 \
-function Exports." +
+function exports." +
             callback_signature + "\n" + callback_body + R"(
 end
 
-return {
-    Exports = Exports
-}
+return exports
 )"));
     lua.get_export_manager().register_all_exports();
 }
