@@ -68,12 +68,9 @@ TEST_CASE(
     "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mods(
+    REQUIRE_THROWS(lua.get_mod_manager().load_mods(
         filesystem::dirs::mod(),
         {testing::get_test_data_path() / "mods" / "test_export_keys"}));
-
-    REQUIRE_NONE(
-        lua.get_export_manager().get_exported_function("test_export_keys.0"));
 }
 
 TEST_CASE("test order of script execution", "[Lua: Data]")

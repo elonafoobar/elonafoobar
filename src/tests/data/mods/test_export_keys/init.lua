@@ -1,7 +1,5 @@
-local Exports = {}
+local exports = {}
 
-Exports[0] = function() end
+exports[0] = function() end
 
-return {
-    Exports = Exports
-}
+return exports
