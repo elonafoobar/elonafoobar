@@ -2035,7 +2035,7 @@ void _update_save_data_8(const fs::path& save_dir)
 /// Create new mod save data for saves without it.
 void _update_save_data_9(const fs::path& save_dir)
 {
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
 
     // Global mod data
     {
@@ -2177,7 +2177,7 @@ void _update_save_data_9(const fs::path& save_dir)
 /// files.
 void _update_save_data_10(const fs::path& save_dir)
 {
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
 
     // _update_save_data_8
     // shop*.s2 files

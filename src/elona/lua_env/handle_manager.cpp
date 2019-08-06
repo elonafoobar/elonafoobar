@@ -19,18 +19,18 @@ namespace elona
 namespace lua
 {
 
-HandleManager::HandleManager(LuaEnv* lua_)
+HandleManager::HandleManager(LuaEnv& lua)
+    : LuaSubmodule(lua)
 {
-    lua = lua_;
-    lua->get_state()->set("_IS_TEST", Config::instance().is_test);
-    handle_env = sol::environment(
-        *(lua->get_state()), sol::create, lua->get_state()->globals());
+    lua_state()->set("_IS_TEST", Config::instance().is_test);
 
     // Load the Lua chunk for storing handles.
-    lua->get_state()->safe_script(R"(Handle = require "handle")", handle_env);
+    safe_script(R"(Handle = require "handle")");
 
-    bind(*lua);
+    bind(lua);
 }
+
+
 
 void HandleManager::bind(LuaEnv& lua)
 {
@@ -42,9 +42,11 @@ void HandleManager::bind(LuaEnv& lua)
     // TODO: See if this can be migrated to Sol's iteration scheme
     // (last time I tried it didn't work because of "not a valid
     // container" errors)
-    Chara.set("iter", handle_env["Handle"]["iter_charas"]);
-    Item.set("iter", handle_env["Handle"]["iter_items"]);
+    Chara.set("iter", env()["Handle"]["iter_charas"]);
+    Item.set("iter", env()["Handle"]["iter_items"]);
 }
+
+
 
 void HandleManager::create_chara_handle(const Character& chara)
 {
@@ -56,6 +58,8 @@ void HandleManager::create_chara_handle(const Character& chara)
     create_handle(chara);
 }
 
+
+
 void HandleManager::create_item_handle(const Item& item)
 {
     if (item.number() == 0)
@@ -66,15 +70,20 @@ void HandleManager::create_item_handle(const Item& item)
     create_handle(item);
 }
 
+
+
 void HandleManager::remove_chara_handle(const Character& chara)
 {
     remove_handle(chara);
 }
 
+
+
 void HandleManager::remove_item_handle(const Item& item)
 {
     remove_handle(item);
 }
+
 
 
 // Handlers for brand-new instances of characters/objects being created
@@ -86,9 +95,11 @@ void HandleManager::create_chara_handle_run_callbacks(const Character& chara)
     auto handle = get_handle(chara);
     UNUSED(handle);
     assert(handle != sol::lua_nil);
-    lua->get_event_manager().trigger(
+    lua().get_event_manager().trigger(
         lua::CharacterInstanceEvent("core.character_created", chara));
 }
+
+
 
 void HandleManager::create_item_handle_run_callbacks(const Item& item)
 {
@@ -98,9 +109,10 @@ void HandleManager::create_item_handle_run_callbacks(const Item& item)
     auto handle = get_handle(item);
     UNUSED(handle);
     assert(handle != sol::lua_nil);
-    lua->get_event_manager().trigger(
+    lua().get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_created", item));
 }
+
 
 
 // Handlers for invalidation of characters/items (character death, item count is
@@ -120,10 +132,12 @@ void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
     UNUSED(index);
     assert(cdata[index].state() != Character::State::alive);
 
-    lua->get_event_manager().trigger(
+    lua().get_event_manager().trigger(
         lua::CharacterInstanceEvent("core.character_removed", chara));
     remove_chara_handle(chara);
 }
+
+
 
 void HandleManager::remove_item_handle_run_callbacks(const Item& item)
 {
@@ -140,16 +154,19 @@ void HandleManager::remove_item_handle_run_callbacks(const Item& item)
     UNUSED(index);
     assert(inv[index].number() == 0);
 
-    lua->get_event_manager().trigger(
+    lua().get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_removed", item));
     remove_item_handle(item);
 }
 
 
+
 void HandleManager::clear_all_handles()
 {
-    handle_env["Handle"]["clear"]();
+    env()["Handle"]["clear"]();
 }
+
+
 
 // Player/party handles are global, so don't clear them when e.g. changing maps
 void HandleManager::clear_map_local_handles()

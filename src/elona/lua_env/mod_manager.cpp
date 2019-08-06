@@ -61,16 +61,16 @@ std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
 
 
 
-ModManager::ModManager(LuaEnv* lua)
+ModManager::ModManager(LuaEnv& lua)
+    : LuaSubmodule(lua)
 {
-    lua_ = lua;
 }
 
 
 
 bool ModManager::mod_id_is_reserved(const std::string& mod_id)
 {
-    return mod_id == "script" || mod_id == "_CONSOLE_" || mod_id == "BUILTIN";
+    return mod_id == "script" || mod_id == "_builtin_";
 }
 
 
@@ -142,9 +142,7 @@ void ModManager::load_mod(ModInfo& mod)
         return;
     }
 
-    auto result = lua_->get_state()->safe_script_file(
-        filepathutil::to_utf8_path(*mod.manifest.path / u8"init.lua"s),
-        mod.env);
+    auto result = safe_script_file(*mod.manifest.path / u8"init.lua", mod.env);
 
     // Add the API table returned by the mod's init.lua, if one
     // was returned.
@@ -154,7 +152,7 @@ void ModManager::load_mod(ModInfo& mod)
         if (object && object->is<sol::table>())
         {
             sol::table api_table = object->as<sol::table>();
-            lua_->get_api_manager().add_api(mod.manifest.id, api_table);
+            lua().get_api_manager().add_api(mod.manifest.id, api_table);
         }
     }
     else
@@ -211,7 +209,7 @@ void ModManager::load_lua_support_libraries()
     // Add special API tables from data/lua to the core mod. The core
     // mod's API table will be modified in-place by the Lua API code
     // under data/lua.
-    lua_->get_api_manager().load_lua_support_libraries(*lua_);
+    lua().get_api_manager().load_lua_support_libraries(lua());
 
     stage_ = ModLoadingStage::lua_libraries_loaded;
 }
@@ -242,10 +240,10 @@ void ModManager::load_scanned_mods()
         ELONA_LOG("lua.mod") << "Loaded mod " << mod->manifest.id;
     }
 
-    lua_->get_export_manager().register_all_exports();
+    lua().get_export_manager().register_all_exports();
 
     stage_ = ModLoadingStage::all_mods_loaded;
-    lua_->get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
+    lua().get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
 }
 
 
@@ -263,12 +261,10 @@ void ModManager::run_startup_script(const std::string& name)
 
     ModInfo* script_mod = create_mod("script", none, true);
 
-    lua_->get_state()->safe_script_file(
-        filepathutil::to_utf8_path(filesystem::dirs::user_script() / name),
-        script_mod->env);
+    safe_script_file(filesystem::dirs::user_script() / name, script_mod->env);
 
     // Bypass read-only metatable
-    script_mod->env.raw_set("data", lua_->get_data_manager().get().storage());
+    script_mod->env.raw_set("data", lua().get_data_manager().get().storage());
 
     ELONA_LOG("lua.mod") << "Loaded startup script " << name;
     txt(i18n::s.get("core.mod.loaded_script", name),
@@ -284,7 +280,7 @@ void ModManager::clear_map_local_stores()
     {
         auto& mod = pair.second;
         mod->env.get<sol::table>(std::tie("mod", "store"))
-            .raw_set("map", lua_->get_state()->create_table());
+            .raw_set("map", lua_state()->create_table());
     }
 }
 
@@ -296,7 +292,7 @@ void ModManager::clear_global_stores()
     {
         auto& mod = pair.second;
         mod->env.get<sol::table>(std::tie("mod", "store"))
-            .raw_set("global", lua_->get_state()->create_table());
+            .raw_set("global", lua_state()->create_table());
     }
 }
 
@@ -360,27 +356,27 @@ void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
 {
     // Create the globals "Elona" and "store" for this mod's
     // environment.
-    sol::table mod_tbl = lua_->get_state()->create_table();
-    sol::table metatable = lua_->get_state()->create_table();
-    bind_store(*lua_->get_state(), metatable);
+    sol::table mod_tbl = lua_state()->create_table();
+    sol::table metatable = lua_state()->create_table();
+    bind_store(*lua_state(), metatable);
     // Prevent creating new variables in the store table.
     metatable[sol::meta_function::new_index] = deny;
     metatable[sol::meta_function::index] = metatable;
     mod_tbl[sol::metatable_key] = metatable;
     table["mod"] = mod_tbl;
 
-    table["Elona"] = lua_->get_api_manager().bind(*lua_); // TODO move elsewhere
+    table["Elona"] = lua().get_api_manager().bind(lua()); // TODO move elsewhere
     table["_MOD_ID"] = mod.manifest.id;
 
     // Add a list of whitelisted standard library functions to the
     // environment.
-    setup_sandbox(*lua_->get_state(), table);
+    setup_sandbox(*lua_state(), table);
 
     // Add a custom version of "require" for use within mods. (Not
     // added for scripts/console environment)
     if (mod.chunk_cache)
     {
-        auto state = lua_->get_state();
+        auto state = lua_state();
         auto& chunk_cache = *mod.chunk_cache;
         table["require"] = [state, &chunk_cache](
                                const std::string& name,
@@ -395,7 +391,7 @@ void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
 
 void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 {
-    sol::table env_metatable = lua_->get_state()->create_table_with();
+    sol::table env_metatable = lua_state()->create_table_with();
 
     // Globals have to be set on the metatable, not the mod's
     // environment itself.
@@ -413,7 +409,7 @@ void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
 {
     std::unique_ptr<ModInfo> info =
-        std::make_unique<ModInfo>(manifest, *lua_->get_state());
+        std::make_unique<ModInfo>(manifest, *lua_state());
 
     if (readonly)
     {
@@ -580,7 +576,7 @@ void ModManager::load_mod_from_script(
     ModInfo* mod = create_mod(name, none, readonly);
 
     // Run the provided script string.
-    auto result = lua_->get_state()->safe_script(script, mod->env);
+    auto result = safe_script(script, mod->env);
 
     // Add the API table returned by the mod's initialization script,
     // if one was returned.
@@ -590,7 +586,7 @@ void ModManager::load_mod_from_script(
         if (object && object->is<sol::table>())
         {
             sol::table api_table = object->as<sol::table>();
-            lua_->get_api_manager().add_api(name, api_table);
+            lua().get_api_manager().add_api(name, api_table);
         }
     }
     else
@@ -617,8 +613,7 @@ void ModManager::run_in_mod(const std::string& name, const std::string& script)
         return pfr;
     };
 
-    auto result =
-        lua_->get_state()->safe_script(script, (*val)->env, ignore_handler);
+    auto result = safe_script(script, (*val)->env, ignore_handler);
 
     if (!result.valid())
     {
