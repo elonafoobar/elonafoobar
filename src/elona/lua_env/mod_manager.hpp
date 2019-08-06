@@ -2,13 +2,11 @@
 
 #include <map>
 #include <vector>
-
 #include <boost/range/adaptor/filtered.hpp>
-
 #include "../filesystem.hpp"
 #include "../optional.hpp"
 #include "loaded_chunk_cache.hpp"
-#include "lua_env.hpp"
+#include "lua_submodule.hpp"
 #include "mod_manifest.hpp"
 
 
@@ -117,7 +115,7 @@ enum class ModLoadingStage : unsigned
  * interface for more specialized API handling mechanisms and for
  * keeping track of mods.
  */
-class ModManager
+class ModManager : public LuaSubmodule
 {
     using ModStorageType =
         std::unordered_map<std::string, std::unique_ptr<ModInfo>>;
@@ -127,7 +125,7 @@ public:
     using iterator = ModStorageType::iterator;
     using const_iterator = ModStorageType::const_iterator;
 
-    explicit ModManager(LuaEnv*);
+    explicit ModManager(LuaEnv&);
 
     static bool mod_id_is_reserved(const std::string& id);
 
@@ -543,8 +541,6 @@ private:
      * functions are run in the correct order.
      */
     ModLoadingStage stage_ = ModLoadingStage::not_started;
-
-    LuaEnv* lua_;
 };
 
 

@@ -2,26 +2,25 @@
 
 #include <regex>
 #include <sstream>
-
 #include <boost/algorithm/string/predicate.hpp>
-
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
 #include "../../snail/input.hpp"
 #include "../../spider/http.hpp"
 #include "../../util/strutil.hpp"
 #include "../ability.hpp"
+#include "../character.hpp"
 #include "../config/config.hpp"
 #include "../debug.hpp"
 #include "../filesystem.hpp"
 #include "../input.hpp"
+#include "../item.hpp"
 #include "../macro.hpp"
 #include "../putit.hpp"
 #include "../text.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
 #include "api_manager.hpp"
-#include "lua_env.hpp"
 #include "mod_manager.hpp"
 
 
@@ -43,7 +42,6 @@ constexpr int max_scrollback_count = 1000;
 
 constexpr const char* _lua_var_commands = u8"COMMANDS";
 constexpr const char* _namespace_builtin = u8"_BUILTIN_";
-constexpr const char* _console_mod_id = u8"_CONSOLE_";
 
 
 
@@ -58,10 +56,10 @@ std::string _version_string()
 
 
 
-Console::Console(LuaEnv* lua)
-    : _buf(max_scrollback_count)
+Console::Console(LuaEnv& lua)
+    : LuaSubmodule(lua)
+    , _buf(max_scrollback_count)
     , _input_history(max_scrollback_count)
-    , _lua(lua)
 {
 }
 
@@ -88,29 +86,26 @@ void Console::init_constants()
 
 void Console::init_environment()
 {
-    auto core = _lua->get_api_manager().get_core_api_table();
-    _console_mod =
-        _lua->get_mod_manager().create_mod(_console_mod_id, none, false);
+    auto core = lua().get_api_manager().get_core_api_table();
 
     // Automatically import APIs from "core" into the environment.
     for (const auto& kvp : core)
     {
-        _env().raw_set(kvp.first, kvp.second);
+        env().raw_set(kvp.first, kvp.second);
     }
 
-    _env().raw_set(
+    env().raw_set(
         "__USH__",
-        _lua->get_state()->safe_script_file(filepathutil::to_utf8_path(
-            filesystem::dirs::data() / "script" / "kernel" / "ush.lua")),
-        _env());
+        safe_script_file(
+            filesystem::dirs::data() / "script" / "kernel" / "ush.lua"));
 
-    _env().create_named(_lua_var_commands);
+    env().create_named(_lua_var_commands);
 
     // Overrides print().
-    _env().raw_set("print", [this](const std::string& msg) { print(msg); });
+    env().raw_set("print", [this](const std::string& msg) { print(msg); });
 
     // Inject environment.
-    _env()["__USH__"]["init"](_env());
+    env()["__USH__"]["init"](env());
 
     _init_builtin_lua_functions();
     _init_builtin_commands();
@@ -137,10 +132,8 @@ void Console::set_constants(
 /// Returns true on success.
 bool Console::run_userscript()
 {
-    auto result = _lua->get_state()->safe_script_file(
-        filepathutil::to_utf8_path(
-            filesystem::dirs::user_script() / "console.lua"),
-        _env());
+    auto result =
+        safe_script_file(filesystem::dirs::user_script() / "console.lua");
 
     if (!result.valid())
     {
@@ -319,7 +312,7 @@ bool Console::interpret(const std::string& input)
 /// functin always returns true.
 bool Console::interpret_command(const std::string& input)
 {
-    _env()["__USH__"]["run"](input);
+    env()["__USH__"]["run"](input);
     update_slight();
     return true;
 }
@@ -339,19 +332,18 @@ bool Console::interpret_lua(const std::string& input)
     };
 
     // First, try prepending "return" to the statement, ignoring errors.
-    auto result = _lua->get_state()->safe_script(
-        u8"return " + input, _env(), sol::script_pass_on_error);
+    auto result = safe_script(u8"return " + input, sol::script_pass_on_error);
 
     // If that fails, execute the original statement.
     if (!result.valid())
     {
-        result = _lua->get_state()->safe_script(input, _env(), handler);
+        result = safe_script(input, handler);
     }
 
     if (result.valid())
     {
         // Bypass read-only metatable on mod environment
-        _env().raw_set("_LAST_RESULT", result.get<sol::object>());
+        env().raw_set("_LAST_RESULT", result.get<sol::object>());
 
         if (result.get<sol::object>() == sol::lua_nil)
         {
@@ -359,8 +351,7 @@ bool Console::interpret_lua(const std::string& input)
         }
         else
         {
-            auto as_string = _lua->get_state()->safe_script(
-                "return inspect(_LAST_RESULT)", _env());
+            auto as_string = safe_script("return inspect(_LAST_RESULT)");
 
             if (as_string.valid())
             {
@@ -391,8 +382,6 @@ void Console::grab_input()
     bool reenable = false;
     int frame = 0;
     int history_index = -1;
-
-    assert(_console_mod);
 
     if (!_enabled)
     {
@@ -564,14 +553,14 @@ void Console::register_(
     const std::string& name,
     sol::protected_function callback)
 {
-    _env()["__USH__"]["register"](mod_id, name, callback);
+    env()["__USH__"]["register"](mod_id, name, callback);
 }
 
 
 
 sol::object Console::run(const std::string& cmdline)
 {
-    return _env()["__USH__"]["run"](cmdline);
+    return env()["__USH__"]["run"](cmdline);
 }
 
 
@@ -581,8 +570,8 @@ void Console::_init_builtin_lua_functions()
     // Table for built-in Lua functions.
     sol::table funcs = _command_table()[_namespace_builtin];
 
-    auto inspect = lua->get_state()->script_file(filepathutil::to_utf8_path(
-        filesystem::dirs::data() / "script" / "kernel" / "inspect.lua"));
+    auto inspect = safe_script_file(
+        filesystem::dirs::data() / "script" / "kernel" / "inspect.lua");
     funcs["inspect"] = inspect;
 
     funcs["dump"] = [this]() {
@@ -615,12 +604,12 @@ void Console::_init_builtin_lua_functions()
     funcs["ls"] = [this]() {
         std::vector<std::string> mods;
         range::transform(
-            _lua->get_mod_manager().calculate_loading_order(),
+            lua().get_mod_manager().calculate_loading_order(),
             std::back_inserter(mods),
             [](const auto& mod_id) { return mod_id; });
         range::sort(mods);
 
-        sol::table ret = _env().create();
+        sol::table ret = env().create();
         for (const auto& mod : mods)
         {
             ret.add(mod);
@@ -677,7 +666,7 @@ void Console::_init_builtin_lua_functions()
     // Map functions stored in COMMANDS._BUILTIN_ to global.
     for (auto&& pair : funcs)
     {
-        _env()[pair.first] = pair.second;
+        env()[pair.first] = pair.second;
     }
 }
 
@@ -698,16 +687,9 @@ void Console::_init_builtin_commands()
 
 
 
-sol::environment Console::_env()
-{
-    return _console_mod->env;
-}
-
-
-
 sol::table Console::_command_table()
 {
-    return _env()[_lua_var_commands];
+    return env()[_lua_var_commands];
 }
 
 } // namespace lua

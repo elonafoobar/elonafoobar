@@ -1,9 +1,12 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include "../filesystem.hpp"
 #include "data_table.hpp"
-#include "lua_env.hpp"
+#include "lua_submodule.hpp"
+
+
 
 namespace elona
 {
@@ -11,6 +14,8 @@ namespace lua
 {
 
 struct ModInfo;
+
+
 
 /***
  * Stores arbitrary data as Lua tables in a naive object database
@@ -22,10 +27,10 @@ struct ModInfo;
  * issue then data could be serialized in a Lua-readable format, or
  * stored in an actual database like SQLite.
  */
-class DataManager
+class DataManager : public LuaSubmodule
 {
 public:
-    explicit DataManager(LuaEnv* lua);
+    explicit DataManager(LuaEnv& lua);
 
     void clear();
 
@@ -36,11 +41,12 @@ public:
         return _data;
     }
 
+
+
 private:
     void _init_from_mod(ModInfo& mod);
 
     DataTable _data;
-    LuaEnv* _lua;
 };
 
 } // namespace lua

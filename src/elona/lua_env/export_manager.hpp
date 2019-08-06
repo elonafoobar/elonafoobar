@@ -1,18 +1,19 @@
 #pragma once
+
 #include <string>
 #include "../enums.hpp"
 #include "../filesystem.hpp"
 #include "../message.hpp"
 #include "../variables.hpp"
-#include "lua_env.hpp"
+#include "lua_submodule.hpp"
 #include "wrapped_function.hpp"
+
+
 
 namespace elona
 {
 namespace lua
 {
-
-class LuaEnv;
 
 /***
  * Stores references to Lua functions that can be provided by mods by
@@ -22,10 +23,10 @@ class LuaEnv;
  * corpse is eaten, a trap is activated, and so forth, without having
  * to hardcode anything in C++.
  */
-class ExportManager
+class ExportManager : public LuaSubmodule
 {
 public:
-    explicit ExportManager(LuaEnv*);
+    explicit ExportManager(LuaEnv&);
 
     /***
      * Registers function exports that are inside the "Exports" table
@@ -103,14 +104,6 @@ public:
             return default_value;
         }
     }
-
-private:
-    /***
-     * The isolated Lua environment where data is stored.
-     */
-    sol::environment export_env;
-
-    LuaEnv* lua_;
 };
 
 } // namespace lua

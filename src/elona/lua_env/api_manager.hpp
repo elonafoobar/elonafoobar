@@ -1,17 +1,17 @@
 #pragma once
 
-#include "../character.hpp"
-#include "../filesystem.hpp"
-#include "../item.hpp"
-#include "lua_env.hpp"
+#include "lua_submodule.hpp"
+
+
 
 namespace elona
 {
 namespace lua
 {
 
-class LuaEnv;
 struct ModInfo;
+
+
 
 /***
  * Keeps track of built-in and mod-provided API bindings. APIs are
@@ -20,7 +20,7 @@ struct ModInfo;
  * bound to each mod so that "Elona.require" can be called to retrieve
  * a reference to an API table loaded in this manager.
  */
-class APIManager
+class APIManager : public LuaSubmodule
 {
 public:
     /***
@@ -38,7 +38,7 @@ public:
     static void set_on(LuaEnv&);
 
 public:
-    explicit APIManager(LuaEnv*);
+    explicit APIManager(LuaEnv&);
 
     /***
      * Loads Lua library files in data/lua for API implementations
@@ -88,20 +88,14 @@ public:
      */
     sol::table get_core_api_table();
 
+
+
 private:
     /***
      * Returns true if the Elona table has already been loaded into
      * the API manager's Lua environment.
      */
     bool is_loaded();
-
-    /***
-     * An isolated Lua environment where all C++ function bindings are
-     * kept.
-     */
-    sol::environment api_env;
-
-    LuaEnv* lua;
 };
 
 } // namespace lua

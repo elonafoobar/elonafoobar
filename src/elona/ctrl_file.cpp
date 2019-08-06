@@ -788,7 +788,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         }
     }
 
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
     int index_start, index_end;
     if (read)
     {
@@ -1177,7 +1177,7 @@ void fmode_1_2(bool read)
     arrayfile(read, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
     arrayfile(read, u8"mdatan", dir / (u8"mdatan_"s + mid + u8".s2"));
 
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
     int index_start, index_end;
     if (read)
     {
@@ -1355,7 +1355,7 @@ void fmode_3_4(bool read, const fs::path& filename)
     // Mod handle data of map-local items
     const auto mod_filename = "mod_"s + filepathutil::to_utf8_path(filename);
     const auto mod_filepath = filesystem::dirs::tmp() / mod_filename;
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
     int index_start, index_end;
     if (read)
     {
