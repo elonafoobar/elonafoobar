@@ -44,8 +44,8 @@ public:
         for (int i = 0; i < amount; i++)
         {
             elona::lua::lua->get_mod_manager().run_in_mod("bench", R"(
-local GUI = Elona.require("GUI")
-local Event = Elona.require("Event")
+local GUI = require("game.GUI")
+local Event = require("game.Event")
 
 local function my_func(chara)
   for i=1, 100 do

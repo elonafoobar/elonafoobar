@@ -28,7 +28,7 @@ void LuaPosition::bind(sol::state& lua)
      * @luadoc new function
      *
      * Constructs a new LuaPosition.
-     * @usage local LuaPosition = Elona.require("LuaPosition")
+     * @usage local LuaPosition = require("game.LuaPosition")
      * local pos = LuaPosition.new()
      */
     LuaPosition.set("new", sol::constructors<Position(), Position(int, int)>());

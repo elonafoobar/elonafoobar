@@ -35,7 +35,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --[[
 Example:
-jarowinkler = require 'jarowinkler'
+jarowinkler = require_relative("jarowinkler")
 
 local calculator = jarowinkler.DefaultCalculator.new()
 local distance = calculator.distance("bar", "baz")

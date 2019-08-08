@@ -1,4 +1,4 @@
-local Data = Elona.require 'Data'
+local Data = require("game.Data")
 
 print('----- init -----')
 

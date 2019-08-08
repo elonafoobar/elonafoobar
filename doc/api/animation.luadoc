@@ -1,5 +1,5 @@
 --- Functions for rendering the built-in animations.
---  @usage local Animation = Elona.require("Animation")
+--  @usage local Animation = require("game.Animation")
 module "Animation"
 
 --  @function play_failure_to_cast

@@ -1,6 +1,6 @@
-local Chara = Elona.require("Chara")
-local Map = Elona.require("Map")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Map = require("game.Map")
+local Item = require("game.Item")
 
 return {
    id = "part_time_worker",

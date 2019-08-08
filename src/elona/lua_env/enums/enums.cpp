@@ -469,9 +469,9 @@ EnumMap<WishHook> WishHookTable{
 
 } // namespace LuaEnums
 
-void LuaEnums::bind(sol::table& core)
+void LuaEnums::bind(sol::table& game)
 {
-    sol::table Enums = core.create_named("Enums");
+    sol::table Enums = game.create_named("Enums");
 
     DamageSourceTable.bind(Enums);
     ColorIndexTable.bind(Enums);

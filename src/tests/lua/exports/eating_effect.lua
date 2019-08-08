@@ -1,7 +1,7 @@
-require "tests/lua/support/minctest"
+require_relative("tests/lua/support/minctest")
 
-local Chara = Elona.require("Chara")
-local eating_effect = Elona.require("core", "eating_effect")
+local Chara = require("game.Chara")
+local eating_effect = require("core.eating_effect")
 
 Testing.start_in_debug_map()
 for name, func in pairs(eating_effect) do

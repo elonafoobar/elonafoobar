@@ -1,6 +1,6 @@
-require "tests/lua/support/minctest"
+require_relative("tests/lua/support/minctest")
 
-local Trait = Elona.require("Trait")
+local Trait = require("game.Trait")
 
 lrun("test Trait.level", function()
         Testing.start_in_debug_map()

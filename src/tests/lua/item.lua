@@ -1,6 +1,6 @@
-require "tests/lua/support/minctest"
+require_relative("tests/lua/support/minctest")
 
-local Item = Elona.require("Item")
+local Item = require("game.Item")
 
 lrun("test Item.create", function()
         Testing.start_in_debug_map()

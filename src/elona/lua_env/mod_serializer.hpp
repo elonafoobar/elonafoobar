@@ -29,7 +29,7 @@ public:
         : LuaSubmodule(lua)
     {
         // Load the Lua chunk for saving/loading data.
-        safe_script(R"(Serial = require "serial")");
+        safe_script(R"(Serial = require_relative("serial"))");
     }
 
     template <typename T, typename Archive>

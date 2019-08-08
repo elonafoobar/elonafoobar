@@ -1,5 +1,5 @@
 --- Functions for prompting the player for input.
---  @usage local Input = Elona.require("Input")
+--  @usage local Input = require("game.Input")
 module "Input"
 
 --- Prompts the player to select "yes" or "no".

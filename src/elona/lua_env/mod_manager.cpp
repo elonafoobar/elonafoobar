@@ -209,7 +209,7 @@ void ModManager::load_lua_support_libraries()
     // Add special API tables from data/lua to the core mod. The core
     // mod's API table will be modified in-place by the Lua API code
     // under data/lua.
-    lua().get_api_manager().load_lua_support_libraries(lua());
+    lua().get_api_manager().load_lua_support_libraries();
 
     stage_ = ModLoadingStage::lua_libraries_loaded;
 }
@@ -365,7 +365,7 @@ void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
     mod_tbl[sol::metatable_key] = metatable;
     table["mod"] = mod_tbl;
 
-    table["Elona"] = lua().get_api_manager().bind(lua()); // TODO move elsewhere
+    lua().get_api_manager().bind(lua(), table);
     table["_MOD_ID"] = mod.manifest.id;
 
     // Add a list of whitelisted standard library functions to the
@@ -378,9 +378,9 @@ void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
     {
         auto state = lua_state();
         auto& chunk_cache = *mod.chunk_cache;
-        table["require"] = [state, &chunk_cache](
-                               const std::string& name,
-                               sol::this_environment this_env) {
+        table["require_relative"] = [state, &chunk_cache](
+                                        const std::string& name,
+                                        sol::this_environment this_env) {
             sol::environment env = this_env;
             return chunk_cache.require(name, env, *state);
         };

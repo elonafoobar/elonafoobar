@@ -26,19 +26,19 @@ void lua_testcase(const std::string& filename)
         elona::lua::lua->get_state()->safe_script(R"(assert(lresults()))"));
 }
 
-TEST_CASE("test Elona.require", "[Lua: API]")
+TEST_CASE("test require", "[Lua: API]")
 {
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Rand = Elona.require("Rand")
+local Rand = require("game.Rand")
 assert(Rand ~= nil)
 assert(type(Rand.coinflip) == "function")
 )"));
 }
 
-TEST_CASE("test Elona.require from other mods", "[Lua: API]")
+TEST_CASE("test require from other mods", "[Lua: API]")
 {
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
@@ -47,7 +47,7 @@ TEST_CASE("test Elona.require from other mods", "[Lua: API]")
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_mod_from_script("test_require_from_mods", R"(
-local Hello = Elona.require("test_require", "Hello")
+local Hello = require("test_require.Hello")
 assert(Hello ~= nil)
 assert(type(Hello.hello) == "function")
 assert(Hello.hello() == "Hello!")
@@ -74,7 +74,7 @@ TEST_CASE("Core API: Env", "[Lua: API]")
         "test_env",
         "local foobar_ver = '" + foobar_ver + "'\n" +
             R"(
-local Env = Elona.require("Env")
+local Env = require("game.Env")
 
 assert(Env.LUA_VERSION, "5.3") -- _VERSION is not available.
 assert(Env.ELONA_VERSION, "1.22")

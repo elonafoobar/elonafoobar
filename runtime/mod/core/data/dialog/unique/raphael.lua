@@ -1,10 +1,10 @@
-local Chara = Elona.require("Chara")
-local Input = Elona.require("Input")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
-local table = Elona.require("table")
+local Chara = require("game.Chara")
+local Input = require("game.Input")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
+local table = require("game.table")
 
 local function give_wife(raphael, wife)
    if not table.contains(wife.prototype.tags, "man") then

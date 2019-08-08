@@ -41,6 +41,9 @@ LuaEnv::LuaEnv()
     lua_->safe_script(
         u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
 
+    (*lua_)["require_relative"] = (*lua_)["require"];
+    (*lua_)["require"] = sol::lua_nil;
+
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like
     // the event manager registering Elona.Event)

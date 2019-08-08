@@ -87,12 +87,12 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
+        "test", R"(Rand = require("game.Rand"); assert(Rand ~= nil))"));
 
     lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
+        "test", R"(Rand = require("game.Rand"); assert(Rand ~= nil))"));
 }
 
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
@@ -118,7 +118,7 @@ TEST_CASE(
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_map_init_hook()
    mod.store.global.val = 42
@@ -228,8 +228,8 @@ TEST_CASE("Test preservation of handles across reloads", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_reload", R"(
-local Chara = Elona.require("Chara")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Item = require("game.Item")
 
 mod.store.global.chara = Chara.create(4, 8, "core.putit")
 mod.store.global.item = Item.create(4, 8, "core.putitoro", 0)
@@ -294,7 +294,7 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 
 mod.store.global.chara = Chara.create(4, 8, "core.putit")
 mod.store.global.chara_local = Chara.create(4, 8, "core.putit")
@@ -350,8 +350,8 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change_local", R"(
-local Chara = Elona.require("Chara")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Item = require("game.Item")
 
 mod.store.map.chara = Chara.create(4, 8, "core.putit")
 mod.store.map.item = Item.create(4, 8, "core.putitoro", 0)
@@ -451,7 +451,7 @@ TEST_CASE("Test serialization of single handle", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 
 mod.store.global.cute_creature = Chara.create(4, 8, "core.putit")
 assert(mod.store.global.cute_creature.__handle == true)
