@@ -14,7 +14,7 @@ MapDefData MapDefDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_REQ(appearance, int);
     DATA_ENUM(
         map_type, mdata_t::MapType, MapTypeTable, mdata_t::MapType::world_map);

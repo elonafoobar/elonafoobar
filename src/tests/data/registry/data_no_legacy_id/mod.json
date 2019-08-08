@@ -1,0 +1,9 @@
+{
+  id: "data_no_legacy_id",
+  name: "data no legacy id",
+  author: "KI",
+  version: "0.1.0",
+  license: "MIT",
+  description: "Test mod.",
+  dependencies: { core: "*" },
+}

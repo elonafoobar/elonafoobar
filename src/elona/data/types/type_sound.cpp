@@ -12,7 +12,7 @@ const constexpr char* data::DatabaseTraits<SoundDB>::type_id;
 
 SoundData SoundDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_REQ(file, std::string);
 
     const fs::path sound_file = lua::resolve_path_for_mod(file);

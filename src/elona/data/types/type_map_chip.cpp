@@ -14,7 +14,7 @@ const constexpr char* data::DatabaseTraits<MapChipDB>::type_id;
 
 MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_REQ(atlas, int);
     DATA_OPT_OR(is_feat, bool, false);
     DATA_OPT_OR(kind, int, 0);
