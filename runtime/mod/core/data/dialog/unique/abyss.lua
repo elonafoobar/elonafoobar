@@ -1,12 +1,12 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local Math = Elona.require("Math")
-local I18N = Elona.require("I18N")
-local Item = Elona.require("Item")
-local World = Elona.require("World")
-local table = Elona.require("table")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local Math = require("game.Math")
+local I18N = require("game.I18N")
+local Item = require("game.Item")
+local World = require("game.World")
+local table = require("game.table")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function start_trial()
     World.data.joining_thieves_guild = 1

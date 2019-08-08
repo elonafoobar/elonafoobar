@@ -1,5 +1,5 @@
-local Chara = Elona.require('Chara')
-local Internal = Elona.require('Internal')
+local Chara = require("game.Chara")
+local Internal = require("game.Internal")
 local map = {}
 
 function map.puppy_cave(generator)

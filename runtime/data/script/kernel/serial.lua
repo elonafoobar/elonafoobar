@@ -1,6 +1,6 @@
-local Handle = require "handle"
-local serpent = require "serpent"
-local inspect = require "inspect"
+local Handle = require_relative("handle")
+local serpent = require_relative("serpent")
+local inspect = require_relative("inspect")
 
 local Serial = {}
 

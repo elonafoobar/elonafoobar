@@ -3,8 +3,8 @@ local ush = {}
 
 
 local E
-local parse = require 'ush/parse'
-local execute = require 'ush/execute'
+local parse = require_relative("ush/parse")
+local execute = require_relative("ush/execute")
 
 
 

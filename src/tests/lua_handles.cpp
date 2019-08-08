@@ -223,7 +223,7 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
     SECTION("Characters")
     {
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test_invalid_chara", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 local chara = Chara.create(0, 0, "core.putit")
 idx = chara.index
 mod.store.global.charas = {[0]=chara}
@@ -238,7 +238,7 @@ mod.store.global.charas = {[0]=chara}
     SECTION("Items")
     {
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test_invalid_item", R"(
-local Item = Elona.require("Item")
+local Item = require("game.Item")
 local item = Item.create(0, 0, "core.putitoro", 3)
 idx = item.index
 mod.store.global.items = {[0]=items}
@@ -273,14 +273,14 @@ TEST_CASE(
 
         REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_chara_arg", R"(
 mod.store.global.charas[0] = chara
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 print(Chara.is_ally(mod.store.global.charas[0]))
 )"));
 
         testing::invalidate_chara(chara);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod("test_chara_arg", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 print(Chara.is_ally(mod.store.global.charas[0]))
 )"));
     }
@@ -296,14 +296,14 @@ print(Chara.is_ally(mod.store.global.charas[0]))
 
         REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_item_arg", R"(
 mod.store.global.items[0] = item
-local Item = Elona.require("Item")
+local Item = require("game.Item")
 Item.has_enchantment(mod.store.global.items[0], 20)
 )"));
 
         testing::invalidate_item(item);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod("test_item_arg", R"(
-local Item = Elona.require("Item")
+local Item = require("game.Item")
 Item.has_enchantment(mod.store.global.items[0], 20)
 )"));
     }
@@ -666,7 +666,7 @@ TEST_CASE("Test validity check of lua reference userdata", "[Lua: Handles]")
 
     REQUIRE_NOTHROW(mod_mgr.create_mod("test_lua_ref"));
     REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_lua_ref", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 local chara = Chara.create(0, 0, "core.putit")
 local skill = chara:get_skill("core.attribute_strength")
 assert(skill.original_level > 0)

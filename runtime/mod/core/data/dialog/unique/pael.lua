@@ -1,10 +1,10 @@
-local GUI = Elona.require("GUI")
-local Map = Elona.require("Map")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local GUI = require("game.GUI")
+local Map = require("game.Map")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function prompt_give_potion(prompt)
    return {

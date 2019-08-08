@@ -15,13 +15,13 @@ Starting the game will place you in a script testing map, isolated from your oth
 ### Module requires
 
 ```
-local Map = Elona.require("Map")
-local Enums = Elona.require("Enums")
-local Event = Elona.require("Event")
-local Rand = Elona.require("Rand")
+local Map = require("game.Map")
+local Enums = require("game.Enums")
+local Event = require("game.Event")
+local Rand = require("game.Rand")
 ```
 
-At the top, we have some defines. All modules related to the core API can be obtained by using `Elona.require`.
+At the top, we have some defines. All modules related to the core API can be obtained by using `require`.
 
 ### Grid setup
 

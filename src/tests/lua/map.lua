@@ -1,7 +1,7 @@
-require "tests/lua/support/minctest"
+require_relative("tests/lua/support/minctest")
 
-local Map = Elona.require("Map")
-local Enums = Elona.require("Enums")
+local Map = require("game.Map")
+local Enums = require("game.Enums")
 
 lrun("test Map.width/Map.height", function()
         Testing.start_in_debug_map()

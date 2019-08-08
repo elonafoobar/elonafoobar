@@ -1,5 +1,5 @@
 --- Functions for debugging scripts.
---  @usage local Debug = Elona.require("Debug")
+--  @usage local Debug = require("game.Debug")
 module "Debug"
 
 --- Logs a message to log.txt.

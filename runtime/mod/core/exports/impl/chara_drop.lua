@@ -1,6 +1,6 @@
-local Data = Elona.require("Data")
-local Item = Elona.require("Item")
-local Rand = Elona.require("Rand")
+local Data = require("game.Data")
+local Item = require("game.Item")
+local Rand = require("game.Rand")
 
 local chara_drop = {}
 

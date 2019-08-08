@@ -1,8 +1,8 @@
-local Data = Elona.require("Data")
-local Item = Elona.require("Item")
-local Math = Elona.require("Math")
-local Chara = Elona.require("Chara")
-local Rand = Elona.require("Rand")
+local Data = require("game.Data")
+local Item = require("game.Item")
+local Math = require("game.Math")
+local Chara = require("game.Chara")
+local Rand = require("game.Rand")
 
 local shop_inventory = {}
 

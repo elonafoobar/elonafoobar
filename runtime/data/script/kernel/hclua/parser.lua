@@ -1,5 +1,5 @@
-local Lexer = require "hclua.lexer"
-local Util = require "hclua.util"
+local Lexer = require_relative("hclua.lexer")
+local Util = require_relative("hclua.util")
 
 local Parser = {}
 

@@ -1,4 +1,4 @@
--- local Data = Elona.require 'Data'
+-- local Data = require("game.Data")
 --
 -- local spell = Data.get('core.ability', 'load_order.expecto_patronum')
 -- spell.cost = 100

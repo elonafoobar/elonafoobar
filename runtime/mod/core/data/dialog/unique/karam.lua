@@ -1,10 +1,10 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
-local Map = Elona.require("Map")
-local Rand = Elona.require("Rand")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
+local Map = require("game.Map")
+local Rand = require("game.Rand")
 
 return {
    id = "karam",

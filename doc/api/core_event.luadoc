@@ -1,6 +1,6 @@
 --- A set of events that can be listened for using the <code>Event</code> module.
 -- @see Event
--- @usage local Event = Elona.require("Event")
+-- @usage local Event = require("game.Event")
 -- local function my_chara_moved_handler(e)
 --    local chara = e.chara
 --    -- your code here
@@ -68,8 +68,8 @@ module "core.event"
 --- Fired when a character is about to start moving.
 -- @event core.character_moved
 -- @tfield LuaCharacter chara the character that is moving
--- @usage local GUI = Elona.require("GUI")
--- local Event = Elona.require("Event")
+-- @usage local GUI = require("game.GUI")
+-- local Event = require("game.Event")
 --
 -- local function my_chara_moved_handler(e)
 --     GUI.txt("The character " .. e.chara.name .. " is about to move. ")
@@ -89,9 +89,9 @@ module "core.event"
 -- @tfield string id ID of the map
 -- @tfield num index the instance index of the map
 -- state on load
--- @usage local Chara = Elona.require("Chara")
--- local Event = Elona.require("Event")
--- local Map = Elona.require("Map")
+-- @usage local Chara = require("game.Chara")
+-- local Event = require("game.Event")
+-- local Map = require("game.Map")
 --
 -- local function place_characters()
 --     for i=0, 50 do

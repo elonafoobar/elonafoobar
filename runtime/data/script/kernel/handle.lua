@@ -39,14 +39,14 @@ local function handle_error(handle, key)
       return
    end
 
-   if Elona and Elona.core and Elona.core.GUI then
-      Elona.core.GUI.txt_color(3)
-      Elona.core.GUI.txt("Error: handle is not valid! ")
+   if Elona and Elona.game and Elona.game.GUI then
+      Elona.game.GUI.txt_color(3)
+      Elona.game.GUI.txt("Error: handle is not valid! ")
       if key ~= nil then
-         Elona.core.GUI.txt("Indexing: " .. tostring(key) .. " ")
+         Elona.game.GUI.txt("Indexing: " .. tostring(key) .. " ")
       end
-      Elona.core.GUI.txt("This means the character/item got removed. ")
-      Elona.core.GUI.txt_color(0)
+      Elona.game.GUI.txt("This means the character/item got removed. ")
+      Elona.game.GUI.txt_color(0)
    end
 
    if handle then

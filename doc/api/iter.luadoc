@@ -1,5 +1,5 @@
 --- Various iterators.
--- @usage local Iter = Elona.require("Iter")
+-- @usage local Iter = require("game.Iter")
 
 module "Iter"
 

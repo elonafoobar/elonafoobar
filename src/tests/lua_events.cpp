@@ -23,7 +23,7 @@ TEST_CASE(
     reset_state();
 
     REQUIRE_THROWS(lua::lua->get_mod_manager().run_in_mod("core", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function handler()
    mod.store.global.test = true
@@ -47,7 +47,7 @@ TEST_CASE("Test registering of callback", "[Lua: Events]")
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_handler()
    mod.store.global.thing = "dood"
@@ -71,7 +71,7 @@ TEST_CASE("Test registering of callback multiple times", "[Lua: Events]")
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_THROWS(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_handler()
    mod.store.global.called_times = mod.store.global.called_times + 1
@@ -94,7 +94,7 @@ TEST_CASE(
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function first()
    mod.store.global.called_times = mod.store.global.called_times + 1
@@ -123,7 +123,7 @@ TEST_CASE("Test unregistering of callback", "[Lua: Events]")
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_handler()
    mod.store.global.thing = "dood"
@@ -147,7 +147,7 @@ TEST_CASE("Test unregistering of callback multiple times", "[Lua: Events]")
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_handler()
    mod.store.global.called_times = mod.store.global.called_times + 1
@@ -174,7 +174,7 @@ TEST_CASE("Test unregistering of callback without registering", "[Lua: Events]")
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_handler()
    mod.store.global.called_times = mod.store.global.called_times + 1
@@ -197,7 +197,7 @@ TEST_CASE("Test unregistering of callback inside callback", "[Lua: Events]")
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_handler()
    mod.store.global.called_times = mod.store.global.called_times + 1
@@ -224,7 +224,7 @@ TEST_CASE(
     lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function first_handler()
    mod.store.global.first = true

@@ -1,5 +1,5 @@
 --- Math utility functions.
---  @usage local Math = Elona.require("Math")
+--  @usage local Math = require("game.Math")
 module "Math"
 
 --- Clamps a number between two numbers.

@@ -1,9 +1,9 @@
-local Chara = Elona.require("Chara")
-local Map = Elona.require("Map")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Map = require("game.Map")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 return {
    id = "tam",

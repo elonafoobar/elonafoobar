@@ -1,8 +1,8 @@
-local Data = Elona.require("Data")
-local Rand = Elona.require("Rand")
-local Item = Elona.require("Item")
-local Math = Elona.require("Math")
-local World = Elona.require("World")
+local Data = require("game.Data")
+local Rand = require("game.Rand")
+local Item = require("game.Item")
+local Math = require("game.Math")
+local World = require("game.World")
 
 -- Generates a list to be used with "choices" which will set the
 -- provided field to one of the choices in "list".

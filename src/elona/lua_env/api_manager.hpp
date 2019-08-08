@@ -16,22 +16,21 @@ struct ModInfo;
 /***
  * Keeps track of built-in and mod-provided API bindings. APIs are
  * organized as tables inside a Lua environment, namespaced by mod and
- * API name. To access them from mods, a global table named "Elona" is
- * bound to each mod so that "Elona.require" can be called to retrieve
- * a reference to an API table loaded in this manager.
+ * API name. To access them from mods, "require" can be called to retrieve a
+ * reference to an API table loaded in this manager.
  */
 class APIManager : public LuaSubmodule
 {
 public:
     /***
-     * Exposes the root API table ("Elona") from the isolated Lua API
-     * environment by table reference.
+     * Exposes "require" function to import external APIs to the passed
+     * environment table.
      */
-    static sol::table bind(LuaEnv&);
+    static void bind(LuaEnv&, sol::table);
 
     /***
-     * Exposes the root API table ("Elona") from the isolated Lua API
-     * environment to the global lua state.
+     * Exposes "require" function to import external APIs to the passed Lua
+     * environment as a global variable.
      *
      * For testing use only.
      */
@@ -48,7 +47,7 @@ public:
      * any mods can be loaded, because they all implicitly depend on
      * these libraries.
      */
-    void load_lua_support_libraries(LuaEnv&);
+    void load_lua_support_libraries();
 
     /***
      * Makes all API tables read-only.
@@ -56,22 +55,8 @@ public:
     void lock();
 
     /***
-     * Attempts to locate an API module under a namespace. For
-     * example, all core API modules have module_namespace "core", and
-     * the Rand module would have module_name "Rand".
-     *
-     * This is used by Elona.require in Lua to get references to API
-     * tables. So, the Rand table would be accessed from Lua by
-     * calling Elona.require("Rand").
-     */
-    sol::optional<sol::table> try_find_api(
-        const std::string& module_namespace,
-        const std::string& module_name) const;
-
-    /***
      * Adds a new API from the return value of a mod's init.lua file.
-     * It would then be accessable by calling
-     * Elona.require("mod_id", "api_table").
+     * It would then be accessable by calling require("mod_id.api_table").
      */
     void add_api(const std::string& module_namespace, sol::table& module_table);
 
@@ -82,11 +67,11 @@ public:
     sol::table get_master_api_table();
 
     /***
-     * Returns the reference to the core API table "Elona" in the API
+     * Returns the reference to the game API table "API" in the API
      * environment. This is so other internal C++ mechanisms can add
      * their own API methods to it.
      */
-    sol::table get_core_api_table();
+    sol::table get_game_api_table();
 
 
 
@@ -96,6 +81,16 @@ private:
      * the API manager's Lua environment.
      */
     bool is_loaded();
+
+    /***
+     * Attempts to locate an API module under a namespace. For
+     * example, all game API modules have module_namespace "game", and
+     * the Rand module would have module_name "Rand".
+     *
+     * This is used by require in Lua to get references to API tables. So, the
+     * Rand table would be accessed from Lua by calling require("game.Rand").
+     */
+    sol::optional<sol::table> try_find_api(const std::string& name) const;
 };
 
 } // namespace lua
