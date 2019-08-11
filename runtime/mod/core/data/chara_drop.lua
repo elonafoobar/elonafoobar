@@ -88,7 +88,7 @@ data:add_multi(
       {
          id = "tuwen",
          on_generate = function()
-            if Map.id() == 257 then
+            if Map.id() == "core.pyramid" then
                return make_drops({ "core.statue_of_opatos",
                                    "core.platinum_coin",
                                    "core.platinum_coin",
